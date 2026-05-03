@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "check:alphabet": "node --check src/units/alphabet/unit.runtime.js",
+    "test": "npm run check:alphabet",
+    "validate:units": "node tools/validate-unit-config.js"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

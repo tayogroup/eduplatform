@@ -38,6 +38,15 @@ const UNIT_CFG = {
   },
 
   storagePrefix: 'alphabet_listen',
+
+  routes: {
+    academyHomeUrl: 'https://quraan.academy/'
+  },
+
+  storageKeys: {
+    managedProgressCache: 'alphabet_listen_managed_progress_cache',
+    speakDoneKeys: 'pq_speak_done_keys_alphabet_listen'
+  },
   
 	stepPassFilters: {
 	  listen: ['all', 'light', 'alifaa', 'vowels', 'heavy', 'distinctions'],

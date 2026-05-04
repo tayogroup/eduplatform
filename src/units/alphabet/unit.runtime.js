@@ -132,6 +132,10 @@
     }
   });
 
+  if (!Array.isArray(UNIT_CFG.steps) || !UNIT_CFG.steps.length) {
+    __pqFailConfig('Pre-Quraan unit config missing required field: steps');
+  }
+
   /**
    * Safe config reader.
    * Example: __cfg('write.chunkSize', 8)
@@ -186,6 +190,10 @@ function __cfg(path, fallback) {
 
   function __pqIdentity(path, fallback) {
     return String(__cfg(`identity.${path}`, fallback));
+  }
+
+  function __pqStorageKey(path, fallback) {
+    return String(__cfg(`storageKeys.${path}`, fallback));
   }
 
   function __stepperText(path, fallback) {
@@ -471,20 +479,7 @@ const LESSON_DEF = {
         }));
       }
 
-      // Fallback (current hardcoded behavior)
-      return [
-  { id: 'lecture',    type: 'lecture',        label: 'Lecture',  filter: 'all' },
-  { id: 'listen',     type: 'playlist',       label: 'Listen',   filter: 'all' },
-  { id: 'listenplus', type: 'listenplus',     label: 'Listen+',  filter: 'all' },
-  { id: 'watch',      type: 'video_playlist', label: 'Watch',    filter: 'all' },
-  { id: 'sound',      type: 'sound',          label: 'Sound',    filter: 'all' },
-  { id: 'repeat',     type: 'playlist',       label: 'Repeat',   filter: 'all' },
-  { id: 'speak',      type: 'speak',          label: 'Speak',    filter: 'all' },
-  { id: 'match',      type: 'match',          label: 'Match',    filter: 'all' },
-  { id: 'animate',    type: 'animate',        label: 'Animate',  filter: 'all' },
-  { id: 'trace1',     type: 'trace',          label: 'Write',    filter: 'all' },
-  { id: 'words',      type: 'words',          label: 'Words',    filter: 'all' }
-];
+      __pqFailConfig('Pre-Quraan unit config missing required field: steps');
     })()
   };
 
@@ -928,7 +923,7 @@ const LESSON_DEF = {
               managedHint: managedHint,
               keys: [
                 __PQ_MANAGED_PROGRESS_CACHE_KEY,
-                'alphabet_listen_managed_progress_cache',
+                __pqStorageKey('managedProgressCache', `${__PQ_UNIT_ID}_managed_progress_cache`),
                 'pq_managed_progress_cache_v1',
                 'pq_last_uid_v1',
                 'pq_last_uid'
@@ -939,7 +934,7 @@ const LESSON_DEF = {
 
         const keys = [
           __PQ_MANAGED_PROGRESS_CACHE_KEY,
-          'alphabet_listen_managed_progress_cache',
+          __pqStorageKey('managedProgressCache', `${__PQ_UNIT_ID}_managed_progress_cache`),
           'pq_managed_progress_cache_v1',
           'pq_last_uid_v1',
           'pq_last_uid'
@@ -1154,7 +1149,7 @@ const LS_LETTER_PLAYS_KEY =
   );
 
   const CELLS = (__cfg('canvas.cells', []) || []).map((cell, idx) => {
-    const key = cell.key || `tan_${idx + 1}`;
+    const key = cell.key || `${__pqIdentity('keyPrefix', 'unit_')}${idx + 1}`;
     const meta = __PQ_ALL_CELL_META.get(key) || {};
 
     return {
@@ -1189,7 +1184,7 @@ const LS_LETTER_PLAYS_KEY =
     const cells = (CELLS || []).slice(0, limit > 0 ? limit : undefined);
 
     return cells.map((cell, index) => {
-      const key = cell.key || `tan_${index + 1}`;
+      const key = cell.key || `${__pqIdentity('keyPrefix', 'unit_')}${index + 1}`;
 
       const fileName = (typeof AUDIO_MAP[key] === 'string')
         ? AUDIO_MAP[key]
@@ -2706,7 +2701,7 @@ function __pqBindMobileBackButton() {
       } catch (_e) {}
 
       try {
-        window.location.href = 'https://quraan.academy/';
+        window.location.href = String(__cfg('routes.academyHomeUrl', '/'));
       } catch (_e) {}
 
       return false;
@@ -5893,9 +5888,10 @@ function __pqGetSoundExplainerUrl(key) {
 
     // Safety: if soundAudioBase is not the explainer folder, use fallback.
     if (!/\/explainer\/?$/i.test(base)) {
-      base = String(__cfg('media.soundExplainerBase', '') || '') ||
-        'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/sound/explainer/';
+      base = String(__cfg('media.soundExplainerBase', '') || '');
     }
+
+    if (!base) return '';
 
     const stem = (typeof __pqSoundFileStemFromKey === 'function')
       ? __pqSoundFileStemFromKey(key)
@@ -7364,12 +7360,9 @@ let __pqSpeakUiState = {
 
 function __pqSpeakDoneStorageKeyFinal() {
   try {
-    const id =
-      (__cfg && (__cfg('identity.unitId', '') || __cfg('unitid', '') || __cfg('unitId', ''))) ||
-      'alphabet_listen';
-    return 'pq_speak_done_keys_' + String(id);
+    return __pqStorageKey('speakDoneKeys', 'pq_speak_done_keys_' + __PQ_UNIT_ID);
   } catch (_e) {
-    return 'pq_speak_done_keys_alphabet_listen';
+    return 'pq_speak_done_keys_' + __PQ_UNIT_ID;
   }
 }
 

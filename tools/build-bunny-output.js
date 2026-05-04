@@ -16,6 +16,8 @@ const distLockedScriptDir = path.join(distRoot, 'scripts', 'js', 'locked');
 const distScriptDir = path.join(distRoot, 'scripts', 'js', 'units', unitKey);
 const srcLockedStyleDir = path.join(root, 'src', 'platform', 'locked', 'styles');
 const srcLockedScriptDir = path.join(root, 'src', 'platform', 'locked', 'scripts', 'js');
+const srcRuntimeDir = path.join(srcUnitDir, 'runtime');
+const runtimeBundlePath = path.join(srcRuntimeDir, 'runtime.bundle.js');
 
 function fail(message) {
   console.error(message);
@@ -56,6 +58,14 @@ if (!fs.existsSync(indexPath)) {
   fail(`Unit index not found: ${indexPath}`);
 }
 
+try {
+  require('./build-unit-runtime-bundle.js');
+} catch (_e) {}
+
+if (!fs.existsSync(runtimeBundlePath)) {
+  fail(`Runtime bundle not found: ${runtimeBundlePath}`);
+}
+
 ensureDir(distUnitDir);
 ensureDir(distAppShellDir);
 ensureDir(distStyleDir);
@@ -69,6 +79,7 @@ copyDir(srcAppShellDir, distAppShellDir);
 copyFile(path.join(srcUnitDir, 'unit.css'), path.join(distStyleDir, `${unitKey}.css`));
 copyFile(path.join(srcUnitDir, 'unit.config.js'), path.join(distScriptDir, 'unit.config.js'));
 copyFile(path.join(srcUnitDir, 'unit.runtime.js'), path.join(distScriptDir, 'unit.runtime.js'));
+copyDir(srcRuntimeDir, path.join(distScriptDir, 'runtime'));
 copyDir(path.join(srcUnitDir, 'patches'), path.join(distScriptDir, 'patches'));
 
 let html = fs.readFileSync(indexPath, 'utf8');

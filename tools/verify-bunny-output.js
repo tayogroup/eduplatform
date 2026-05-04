@@ -24,6 +24,7 @@ const requiredPaths = [
   'styles/units/alphabet.css',
   'scripts/js/units/alphabet/unit.config.js',
   'scripts/js/units/alphabet/unit.runtime.js',
+  'scripts/js/units/alphabet/runtime/runtime.bundle.js',
 ];
 
 function fail(message) {

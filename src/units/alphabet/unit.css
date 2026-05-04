@@ -187,6 +187,25 @@
   display:none;
   margin:12px 0 14px;
 }
+
+body.pq-speak-step-active #lectureCard,
+body.pq-speak-step-active #speakMount > #pqSpeakPanel{
+  position:absolute !important;
+  left:-10000px !important;
+  top:auto !important;
+  width:1px !important;
+  height:1px !important;
+  min-width:1px !important;
+  min-height:1px !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  opacity:0 !important;
+  overflow:hidden !important;
+  pointer-events:none !important;
+  visibility:hidden !important;
+}
+
 .pq-speak-panel{
   display:block;
   background:#fff;

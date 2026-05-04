@@ -6,6 +6,20 @@ Build deployable files with:
 npm run build:bunny
 ```
 
+Preview the Bunny-style output locally with:
+
+```bash
+npm run preview:bunny
+```
+
+Then open:
+
+```text
+http://127.0.0.1:4173/pre_quraan/units/alphabet/index.html
+```
+
+Do not preview the built `index.html` with `file://`; absolute `/pre_quraan/...` CSS and JavaScript paths only resolve correctly when the files are served from a web root.
+
 The build writes Bunny-ready static files to:
 
 ```text

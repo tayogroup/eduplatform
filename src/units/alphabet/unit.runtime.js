@@ -7357,9 +7357,46 @@ let __pqSpeakUiState = {
   silenceWatchTimer: null
 };
 
+try {
+  window.__pqSpeakUiState = __pqSpeakUiState;
+} catch (_e) {}
+
+const __pqSharedSpeakRuntime = (function () {
+  try {
+    if (
+      !window.PQSharedSpeakRuntime ||
+      typeof window.PQSharedSpeakRuntime.create !== 'function'
+    ) {
+      return null;
+    }
+
+    return window.PQSharedSpeakRuntime.create({
+      state: __pqSpeakUiState,
+      getStorageKey: function () {
+        return __pqStorageKey('speakDoneKeys', 'pq_speak_done_keys_' + __PQ_UNIT_ID);
+      },
+      getTotal: function () {
+        try { if (Array.isArray(PLAY_SEQUENCE_KEYS) && PLAY_SEQUENCE_KEYS.length) return PLAY_SEQUENCE_KEYS.length; } catch (_e) {}
+        try { if (Array.isArray(LETTERS) && LETTERS.length) return LETTERS.length; } catch (_e) {}
+        try { return document.querySelectorAll('#grid .tile[data-key]').length || 0; } catch (_e) {}
+        return 0;
+      },
+      onDone: function () {
+        try { __pqSpeakSyncManagedProgressFromDoneKeys(true); } catch (_e) {}
+      },
+      onStopRecording: function () {
+        try { __pqSyncSimplifiedSpeakUi(); } catch (_e) {}
+      }
+    });
+  } catch (_e) {
+    return null;
+  }
+})();
+
 
 function __pqSpeakDoneStorageKeyFinal() {
   try {
+    if (__pqSharedSpeakRuntime) return __pqSharedSpeakRuntime.storageKey();
     return __pqStorageKey('speakDoneKeys', 'pq_speak_done_keys_' + __PQ_UNIT_ID);
   } catch (_e) {
     return 'pq_speak_done_keys_' + __PQ_UNIT_ID;
@@ -7368,6 +7405,7 @@ function __pqSpeakDoneStorageKeyFinal() {
 
 function __pqSpeakLoadDoneMapFinal() {
   try {
+    if (__pqSharedSpeakRuntime) return __pqSharedSpeakRuntime.loadDoneMap();
     const raw = localStorage.getItem(__pqSpeakDoneStorageKeyFinal());
     const parsed = raw ? JSON.parse(raw) : {};
     return parsed && typeof parsed === 'object' ? parsed : {};
@@ -7378,6 +7416,10 @@ function __pqSpeakLoadDoneMapFinal() {
 
 function __pqSpeakSaveDoneMapFinal() {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.saveDoneMap();
+      return;
+    }
     localStorage.setItem(
       __pqSpeakDoneStorageKeyFinal(),
       JSON.stringify(__pqSpeakUiState.completedKeys || {})
@@ -7394,6 +7436,7 @@ function __pqSpeakCssKeyFinal(key) {
 }
 
 function __pqSpeakTotalFinal() {
+  try { if (__pqSharedSpeakRuntime) return __pqSharedSpeakRuntime.total(); } catch (_e) {}
   try { if (Array.isArray(PLAY_SEQUENCE_KEYS) && PLAY_SEQUENCE_KEYS.length) return PLAY_SEQUENCE_KEYS.length; } catch (_e) {}
   try { if (Array.isArray(LETTERS) && LETTERS.length) return LETTERS.length; } catch (_e) {}
   try { return document.querySelectorAll('#grid .tile[data-key]').length || 0; } catch (_e) {}
@@ -7402,6 +7445,10 @@ function __pqSpeakTotalFinal() {
 
 function __pqSpeakGreyTileFinal(key) {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.greyTile(key);
+      return;
+    }
     key = String(key || '').trim();
     if (!key) return;
 
@@ -7423,6 +7470,10 @@ function __pqSpeakGreyTileFinal(key) {
 
 function __pqSpeakApplyDoneTilesFinal() {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.applyDoneTiles();
+      return;
+    }
     const doneMap = __pqSpeakUiState.completedKeys || {};
     Object.keys(doneMap).forEach(function (key) {
       if (doneMap[key]) __pqSpeakGreyTileFinal(key);
@@ -7432,6 +7483,10 @@ function __pqSpeakApplyDoneTilesFinal() {
 
 function __pqSpeakRefreshProgressFinal() {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.refreshProgress();
+      return;
+    }
     const done = __pqSpeakCompletedCount();
     const total = Number(__pqSpeakUiState.totalKeys || 0) || __pqSpeakTotalFinal();
     const text = done + '/' + total;
@@ -7446,6 +7501,9 @@ function __pqSpeakRefreshProgressFinal() {
 
 function __pqSpeakFinalizeDoneFinal() {
   try {
+    if (__pqSharedSpeakRuntime) {
+      return __pqSharedSpeakRuntime.markSelectedDone();
+    }
     const key = String(__pqSpeakUiState.selectedKey || '').trim();
     if (!key) return false;
 
@@ -7485,6 +7543,10 @@ function __pqSpeakInstallDoneBinderFinal(compareBtn) {
 
 function __pqSpeakEnsureStateShape() {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.ensureStateShape();
+      return;
+    }
     const saved = __pqSpeakLoadDoneMapFinal();
 
     if (!__pqSpeakUiState.completedKeys || typeof __pqSpeakUiState.completedKeys !== 'object') {
@@ -7505,6 +7567,7 @@ function __pqSpeakEnsureStateShape() {
 
 function __pqSpeakCompletedCount() {
   try {
+    if (__pqSharedSpeakRuntime) return __pqSharedSpeakRuntime.completedCount();
     __pqSpeakEnsureStateShape();
 
     return Object.keys(__pqSpeakUiState.completedKeys || {}).filter(function (key) {
@@ -7517,6 +7580,7 @@ function __pqSpeakCompletedCount() {
 
 function __pqSpeakIsKeyCompleted(key) {
   try {
+    if (__pqSharedSpeakRuntime) return __pqSharedSpeakRuntime.isKeyCompleted(key);
     key = String(key || '').trim();
     if (!key) return false;
 
@@ -7579,12 +7643,20 @@ function __pqSpeakMarkCurrentDone() {
 
 function __pqSpeakSetSelectedKey(key) {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.setSelectedKey(key);
+      return;
+    }
     __pqSpeakUiState.selectedKey = String(key || '').trim();
   } catch (_e) {}
 }
 
 function __pqSpeakClearRecordingTimers() {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.clearRecordingTimers();
+      return;
+    }
     if (__pqSpeakUiState.silenceStopTimer) {
       clearTimeout(__pqSpeakUiState.silenceStopTimer);
     }
@@ -7601,6 +7673,10 @@ function __pqSpeakClearRecordingTimers() {
 
 function __pqSpeakStopRecordingVisualOnly() {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.stopRecordingVisualOnly();
+      return;
+    }
     __pqSpeakUiState.isRecording = false;
     __pqSpeakUiState.lastRecordingAt = Date.now();
     __pqSpeakClearRecordingTimers();
@@ -7610,6 +7686,17 @@ function __pqSpeakStopRecordingVisualOnly() {
 
 function __pqSpeakStartSilenceAutoStop() {
   try {
+    if (__pqSharedSpeakRuntime) {
+      __pqSharedSpeakRuntime.startSilenceAutoStop(function () {
+        try {
+          const recordBtn = document.getElementById('pqSpeakBtnRecord');
+          if (recordBtn) {
+            try { recordBtn.click(); } catch (_e) {}
+          }
+        } catch (_e) {}
+      }, 2000);
+      return;
+    }
     __pqSpeakClearRecordingTimers();
 
     __pqSpeakUiState.silenceStopTimer = setTimeout(function () {

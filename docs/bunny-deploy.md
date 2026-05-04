@@ -29,6 +29,10 @@ dist/pre_quraan/
 The Alphabet unit is emitted as:
 
 ```text
+dist/pre_quraan/scripts/index_v030.html
+dist/pre_quraan/scripts/css/
+dist/pre_quraan/scripts/js/
+dist/pre_quraan/scripts/img/
 dist/pre_quraan/units/alphabet/index.html
 dist/pre_quraan/styles/locked/
 dist/pre_quraan/scripts/js/locked/

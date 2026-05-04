@@ -6,8 +6,10 @@ const path = require('path');
 const root = process.cwd();
 const unitKey = process.argv[2] || 'alphabet';
 const srcUnitDir = path.join(root, 'src', 'units', unitKey);
+const srcAppShellDir = path.join(root, 'src', 'app-shell');
 const distRoot = path.join(root, 'dist', 'pre_quraan');
 const distUnitDir = path.join(distRoot, 'units', unitKey);
+const distAppShellDir = path.join(distRoot, 'scripts');
 const distStyleDir = path.join(distRoot, 'styles', 'units');
 const distLockedStyleDir = path.join(distRoot, 'styles', 'locked');
 const distLockedScriptDir = path.join(distRoot, 'scripts', 'js', 'locked');
@@ -55,6 +57,7 @@ if (!fs.existsSync(indexPath)) {
 }
 
 ensureDir(distUnitDir);
+ensureDir(distAppShellDir);
 ensureDir(distStyleDir);
 ensureDir(distLockedStyleDir);
 ensureDir(distLockedScriptDir);
@@ -62,6 +65,7 @@ ensureDir(distScriptDir);
 
 copyDir(srcLockedStyleDir, distLockedStyleDir);
 copyDir(srcLockedScriptDir, distLockedScriptDir);
+copyDir(srcAppShellDir, distAppShellDir);
 copyFile(path.join(srcUnitDir, 'unit.css'), path.join(distStyleDir, `${unitKey}.css`));
 copyFile(path.join(srcUnitDir, 'unit.config.js'), path.join(distScriptDir, 'unit.config.js'));
 copyFile(path.join(srcUnitDir, 'unit.runtime.js'), path.join(distScriptDir, 'unit.runtime.js'));
@@ -81,6 +85,9 @@ fs.writeFileSync(path.join(distUnitDir, 'index.html'), html, 'utf8');
 
 console.log(`Built ${unitKey} for Bunny output:`);
 console.log(`  ${path.relative(root, path.join(distUnitDir, 'index.html'))}`);
+if (fs.existsSync(path.join(distAppShellDir, 'index_v030.html'))) {
+  console.log(`  ${path.relative(root, path.join(distAppShellDir, 'index_v030.html'))}`);
+}
 console.log(`  ${path.relative(root, distLockedStyleDir)}`);
 console.log(`  ${path.relative(root, distLockedScriptDir)}`);
 console.log(`  ${path.relative(root, path.join(distStyleDir, `${unitKey}.css`))}`);

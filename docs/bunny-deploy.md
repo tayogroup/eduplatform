@@ -70,4 +70,48 @@ Should become:
 https://app.quraan.academy/pre_quraan/scripts/index_v030.html
 ```
 
+## Upload Options
+
+### Option A: Dashboard Upload
+
+Use Bunny dashboard file manager if you prefer a visual first deployment:
+
+1. Open Bunny.net dashboard.
+2. Open the Storage Zone connected to `app.quraan.academy`.
+3. Browse files and open or create the `pre_quraan` folder.
+4. Upload the contents of `dist/pre_quraan/` into that folder.
+5. Confirm this URL loads:
+
+```text
+https://app.quraan.academy/pre_quraan/scripts/index_v030.html
+```
+
+### Option B: HTTP API Upload
+
+Set these in PowerShell, using the Storage Zone password from Bunny's `FTP & API Access` tab:
+
+```powershell
+$env:BUNNY_STORAGE_ZONE = "your-storage-zone-name"
+$env:BUNNY_STORAGE_ACCESS_KEY = "your-storage-zone-password"
+$env:BUNNY_STORAGE_ENDPOINT = "https://storage.bunnycdn.com"
+$env:BUNNY_REMOTE_PREFIX = "pre_quraan"
+```
+
+For regional storage zones, replace the endpoint with Bunny's regional endpoint, such as:
+
+```text
+https://ny.storage.bunnycdn.com
+https://uk.storage.bunnycdn.com
+```
+
+Then run:
+
+```powershell
+npm.cmd run build:bunny
+npm.cmd run verify:bunny
+npm.cmd run deploy:bunny
+```
+
+Do not commit real Bunny credentials.
+
 The source HTML in `src/units/alphabet/index.html` uses local relative paths for development. The build rewrites those paths to production `/pre_quraan/...` paths for Bunny output.

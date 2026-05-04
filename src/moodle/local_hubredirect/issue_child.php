@@ -202,7 +202,7 @@ $map = [
     // 'alphabet_listen' => '/pre_quraan/scripts/pq_unit_alphabet_html_v0.0_MOBILE_GUARD_FILTER_APPLY_FIX.html?managed=1&v=20260425_80',
     
      
-    'alphabet_listen' => '/pre_quraan/scripts/pq_unit_alphabet_html_v0.0_match.html?managed=1&v=20260425_240',
+    'alphabet_listen' => '/pre_quraan/units/alphabet/index.html?managed=1&v=20260504_001',
     // sssss s
     
      

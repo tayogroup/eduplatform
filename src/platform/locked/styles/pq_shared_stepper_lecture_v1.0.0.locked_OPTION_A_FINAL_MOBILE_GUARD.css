@@ -1,0 +1,558 @@
+@layer pq.tokens, pq.base, pq.header, pq.status, pq.stepper, pq.lecture, pq.tiles, pq.tajweed, pq.overrides;
+
+/* =========================================================
+   PQ Shared Stepper + Lecture (CLEAN)
+   File: pq_unit_shared_stepper_lecture_v1.3.5_clean.css
+   Goals:
+   - Deterministic one-row stepper (scroll, no wrap)
+   - Deterministic step state colors (default/active/completed/locked)
+   - Shared Play Lecture button styling (orange, readable)
+   - RTL-safe alignment
+   ========================================================= */
+
+@layer pq.stepper {
+
+  /* Stepper shell */
+  .managed-stepper{
+    max-width: 1100px;
+    margin: 12px auto 14px auto;
+    padding: 16px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.55);
+    box-shadow: 0 10px 26px rgba(13,35,69,0.10);
+  }
+
+  .managed-header{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    margin-bottom: 10px;
+    font-family: "Baloo 2", system-ui, sans-serif;
+    font-weight: 900;
+    color:#0c1d26;
+  }
+
+  /* Base step card typography (no colors here; colors live in pq.overrides) */
+  .managed-step{
+    border-radius: 22px;
+    padding: 14px 12px;
+    text-align:center;
+    font-family: "Baloo 2", system-ui, sans-serif;
+  }
+  .managed-step-index{
+    font-weight: 900;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin-bottom: 6px;
+  }
+  .managed-step-label{
+    font-weight: 900;
+    font-size: 1.0rem;
+    margin-bottom: 8px;
+  }
+  .managed-step-meta{
+    font-weight: 800;
+    opacity: 0.80;
+  }
+  .managed-step-badge{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight: 900;
+    background: rgba(0,0,0,0.06);
+  }
+
+  /* Make sure card can host absolute badge */
+  .managed-step{ position: relative; }
+}
+
+@layer pq.lecture {
+
+  /* Lecture CTA wrapper */
+  #lectureCard.lecture-card,
+  .lecture-card{
+    max-width: 1100px;
+    margin: 14px auto 10px auto;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  /* RTL-safe alignment for lecture controls row */
+  .lecture-card .lecture-body,
+  #lectureCard .lecture-body,
+  .lecture-body{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap: 12px;
+  }
+
+  /* Play Lecture button (shared across lessons) */
+  #lecturePlayBtn,
+  .lecture-play,
+  button.lecture-play{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    padding: 14px 28px;
+    min-height: 48px;
+
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+
+    color: #ffffff;
+    background: linear-gradient(135deg, #f7b34b, #f19a2a);
+    border: none;
+    border-radius: 999px;
+
+    cursor: pointer;
+    box-shadow: 0 10px 26px rgba(241,154,42,.35);
+    text-shadow: 0 1px 0 rgba(0,0,0,.18);
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  }
+
+  #lecturePlayBtn:hover,
+  .lecture-play:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(241,154,42,.45);
+    filter: saturate(1.05);
+  }
+
+  #lecturePlayBtn:active,
+  .lecture-play:active{
+    transform: translateY(0);
+    box-shadow: 0 8px 18px rgba(241,154,42,.35);
+  }
+
+  /* Never allow scripts to permanently hide the button */
+  #lecturePlayBtn[hidden],
+  #lecturePlayBtn.hidden,
+  #lecturePlayBtn.is-hidden,
+  .lecture-play[hidden],
+  .lecture-play.hidden,
+  .lecture-play.is-hidden{
+    display:inline-flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+
+  /* Video sizing */
+  #lectureVideo.lecture-video,
+  .lecture-video{
+    width: 100%;
+    max-height: 65vh;
+    border-radius: 18px;
+    background:#000;
+    display:block;
+  }
+}
+
+@layer pq.overrides {
+
+  /* ----- Stepper layout: keep ONE row (scroll instead of wrap) ----- */
+  #managedStepsList,
+  .managed-steps,
+  #managedSteps,
+  .managedSteps{
+    display:flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 14px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 6px !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    direction: rtl !important; /* Step1 at right in RTL pages */
+  }
+
+  #managedStepsList .managed-step,
+  .managed-steps .managed-step,
+  #managedSteps .managed-step{
+    flex: 0 0 170px !important;
+    max-width: 190px !important;
+  }
+
+  /* ----- Step state colors (Muqattiat reference) ----- */
+  /* Incomplete (not current) — very light orange */
+  #managedStepsList .managed-step:not(.completed):not(.active){
+    background: #fff7ec !important;
+    border: 1px solid #ffe2c2 !important;
+    box-shadow: 0 10px 26px rgba(0,0,0,.10) !important;
+    color: rgba(10,20,30,.92) !important;
+  }
+
+  /* Current step — light orange */
+  #managedStepsList .managed-step.active{
+    background: #ffe6c7 !important;
+    border: 3px solid #ffb86b !important;
+    box-shadow: 0 10px 26px rgba(241,154,42,.25) !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  /* Completed — light green */
+  #managedStepsList .managed-step.completed{
+    background: #f3fff4 !important;
+    border: 1px solid #7ad47a !important;
+  }
+  #managedStepsList .managed-step.completed .managed-step-badge{
+    background: #4caf50 !important;
+    color: #fff !important;
+  }
+
+  /* Locked — dimmed */
+  #managedStepsList .managed-step.locked{
+    opacity: .45 !important;
+    filter: grayscale(.15) !important;
+  }
+  #managedStepsList .managed-step.locked .managed-step-badge{
+    opacity: .65 !important;
+  }
+
+  /* External lecture CTA (still present in Alphabet HTML; keep styles) */
+  #pqLectureCta.pq-lecture-cta-bar,
+  .pq-lecture-cta-bar{
+    max-width:1100px !important;
+    margin: 14px auto 8px !important;
+    display:flex !important;
+    justify-content:flex-start !important; /* left-justified */
+    gap: 10px !important;
+  }
+  #pqLectureCtaBtn.pq-lecture-cta-btn,
+  .pq-lecture-cta-btn{
+    background: linear-gradient(135deg, #f7b34b, #f19a2a) !important;
+    color: #fff !important;
+    font-weight: 900 !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    padding: 14px 26px !important;
+    box-shadow: 0 10px 26px rgba(241,154,42,.35) !important;
+    cursor:pointer !important;
+  }
+  .pq-hidden{ display:none !important; }
+
+}
+
+/* ===== PQ OPTION A FINAL CLEAN DUOLINGO STEPPER START =====
+   Browser-only visual modernization for the managed stepper.
+
+   Requirements kept:
+   - No JavaScript changes
+   - No stepper logic changes
+   - No mobile UI change
+   - Existing text remains:
+     Step N
+     Listen – 5x1
+     Progress 5/5
+
+   Applies only when the HTML has:
+   <html class="pq-browser-ui">
+   ========================================================== */
+
+/* Browser stepper shell */
+html.pq-browser-ui #managedStepper.managed-stepper{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:100% !important;
+  max-width:1100px !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  margin:12px auto 14px auto !important;
+  padding:20px 18px 18px !important;
+  border-radius:30px !important;
+  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.90)) !important;
+  border:2px solid rgba(229,231,235,.95) !important;
+  box-shadow:
+    0 14px 30px rgba(15,23,42,.10),
+    inset 0 1px 0 rgba(255,255,255,.95) !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  pointer-events:auto !important;
+}
+
+/* Horizontal path row */
+html.pq-browser-ui #managedStepsList,
+html.pq-browser-ui #managedStepsList.managed-steps{
+  display:flex !important;
+  flex-direction:row !important;
+  flex-wrap:nowrap !important;
+  gap:22px !important;
+  align-items:stretch !important;
+  justify-content:flex-start !important;
+  direction:rtl !important;
+  min-width:max-content !important;
+  padding:16px 16px 18px !important;
+  position:relative !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+}
+
+/* soft path connector behind cards */
+html.pq-browser-ui #managedStepsList::before{
+  content:"";
+  position:absolute;
+  left:28px;
+  right:28px;
+  top:43px;
+  height:6px;
+  transform:translateY(-50%);
+  border-radius:999px;
+  background:linear-gradient(
+    90deg,
+    rgba(22,163,38,.25),
+    rgba(242,184,63,.22),
+    rgba(203,213,225,.34)
+  );
+  opacity:.38;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* Step card */
+html.pq-browser-ui #managedStepsList .managed-step{
+  flex:0 0 250px !important;
+  flex-basis:250px !important;
+  width:250px !important;
+  max-width:250px !important;
+  min-height:110px !important;
+  padding:38px 16px 12px !important;
+  border-radius:24px !important;
+  position:relative !important;
+  z-index:1 !important;
+  box-sizing:border-box !important;
+  text-align:center !important;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%) !important;
+  border:4px solid #e5e7eb !important;
+  box-shadow:
+    0 7px 0 rgba(148,163,184,.35),
+    0 16px 26px rgba(15,23,42,.10) !important;
+  opacity:.72 !important;
+  filter:none !important;
+  transform:translateY(0) !important;
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    border-color .16s ease,
+    background .16s ease,
+    opacity .16s ease !important;
+}
+
+/* Hide duplicate old renderer status icons/markers while preserving text nodes */
+html.pq-browser-ui #managedStepsList .managed-step > *:not(.managed-step-badge):not(.managed-step-index):not(.managed-step-label):not(.managed-step-meta){
+  display:none !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step::after{
+  display:none !important;
+  content:none !important;
+}
+
+/* Keep content above connector */
+html.pq-browser-ui #managedStepsList .managed-step > *{
+  position:relative;
+  z-index:2;
+}
+
+/* Single clean Duolingo badge in left corner */
+html.pq-browser-ui #managedStepsList .managed-step-badge{
+  position:absolute !important;
+  top:10px !important;
+  left:12px !important;
+  transform:none !important;
+  width:30px !important;
+  height:30px !important;
+  min-width:30px !important;
+  min-height:30px !important;
+  border-radius:999px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:.78rem !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+  border:3px solid #fff !important;
+  box-shadow:
+    0 6px 12px rgba(15,23,42,.16),
+    inset 0 1px 0 rgba(255,255,255,.60) !important;
+  z-index:3 !important;
+}
+
+/* Typography */
+html.pq-browser-ui #managedStepsList .managed-step-index,
+html.pq-browser-ui #managedStepsList .managed-step-label,
+html.pq-browser-ui #managedStepsList .managed-step-meta{
+  color:#111827 !important;
+  letter-spacing:.01em !important;
+  text-align:center !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step-index{
+  font-size:.74rem !important;
+  font-weight:800 !important;
+  line-height:1.12 !important;
+  margin-bottom:5px !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step-label{
+  font-size:.90rem !important;
+  font-weight:800 !important;
+  line-height:1.16 !important;
+  margin-bottom:5px !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step-meta{
+  font-size:.80rem !important;
+  font-weight:700 !important;
+  line-height:1.16 !important;
+  color:#6b7280 !important;
+  opacity:1 !important;
+}
+
+/* Incomplete/locked-looking default */
+html.pq-browser-ui #managedStepsList .managed-step:not(.completed):not(.active){
+  background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%) !important;
+  border-color:#e5e7eb !important;
+  box-shadow:
+    0 7px 0 rgba(148,163,184,.35),
+    0 16px 26px rgba(15,23,42,.10) !important;
+  opacity:.58 !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step:not(.completed):not(.active) .managed-step-badge{
+  background:linear-gradient(180deg,#f3f4f6 0%,#e5e7eb 100%) !important;
+  color:#9ca3af !important;
+}
+
+/* Completed = Duolingo green */
+html.pq-browser-ui #managedStepsList .managed-step.completed{
+  background:linear-gradient(180deg,#f2ffed 0%,#ddf7c8 100%) !important;
+  border-color:#58c448 !important;
+  opacity:1 !important;
+  box-shadow:
+    0 7px 0 rgba(45,145,53,.35),
+    0 16px 28px rgba(45,145,53,.12) !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step.completed .managed-step-badge{
+  background:linear-gradient(180deg,#35d044 0%,#16a326 100%) !important;
+  color:#fff !important;
+  box-shadow:
+    0 0 0 5px rgba(53,208,68,.14),
+    0 7px 14px rgba(15,23,42,.14) !important;
+}
+
+/* Active = floating gold node */
+html.pq-browser-ui #managedStepsList .managed-step.active{
+  background:linear-gradient(180deg,#fff8db 0%,#ffd975 100%) !important;
+  border-color:#f4b83f !important;
+  opacity:1 !important;
+  transform:translateY(-5px) scale(1.02) !important;
+  box-shadow:
+    0 0 0 6px rgba(244,184,63,.18),
+    0 9px 0 rgba(173,115,18,.26),
+    0 20px 32px rgba(15,23,42,.16) !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step.active .managed-step-badge{
+  background:linear-gradient(180deg,#ffd85a 0%,#f2ad24 100%) !important;
+  color:#111827 !important;
+  box-shadow:
+    0 0 0 5px rgba(244,184,63,.18),
+    0 7px 14px rgba(15,23,42,.16) !important;
+}
+
+/* Locked state remains muted */
+html.pq-browser-ui #managedStepsList .managed-step.locked{
+  opacity:.38 !important;
+  filter:grayscale(.20) !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step.locked .managed-step-badge{
+  background:linear-gradient(180deg,#f3f4f6 0%,#d1d5db 100%) !important;
+  color:#9ca3af !important;
+}
+
+/* Subtle Duolingo-style bounce on the active card */
+@keyframes pqStepBounce{
+  0%   { transform:translateY(-5px) scale(1.020); }
+  40%  { transform:translateY(-8px) scale(1.032); }
+  70%  { transform:translateY(-6px) scale(1.024); }
+  100% { transform:translateY(-5px) scale(1.020); }
+}
+
+html.pq-browser-ui #managedStepsList .managed-step.active{
+  animation:pqStepBounce 1.45s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html.pq-browser-ui #managedStepsList .managed-step.active{
+    animation:none !important;
+  }
+}
+
+/* ===== PQ OPTION A FINAL CLEAN DUOLINGO STEPPER END ===== */
+
+/* ===== PQ MOBILE SAFETY GUARD HIDE BROWSER STEPPER START =====
+   Absolute mobile protection:
+   If the lesson viewport is mobile-sized, never show the browser managed stepper.
+   This protects real mobile even if pq-browser-ui is accidentally present/cached.
+   ========================================================= */
+
+@media (max-width: 768px){
+  #managedStepper,
+  #managedStepper.managed-stepper,
+  html.pq-browser-ui #managedStepper,
+  html.pq-browser-ui #managedStepper.managed-stepper{
+    display:none !important;
+    visibility:hidden !important;
+    opacity:0 !important;
+    max-height:0 !important;
+    min-height:0 !important;
+    height:0 !important;
+    overflow:hidden !important;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 !important;
+    box-shadow:none !important;
+    pointer-events:none !important;
+  }
+
+  #managedStepsList,
+  html.pq-browser-ui #managedStepsList{
+    display:none !important;
+    visibility:hidden !important;
+    max-height:0 !important;
+    height:0 !important;
+    overflow:hidden !important;
+  }
+
+  .pq-mobile-step-status,
+  #pqMobileStepStatus,
+  .pq-mobile-summary-row,
+  #pqMobileSummaryRow{
+    display:flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+
+  #pqMobileStepStatus{
+    display:block !important;
+  }
+}
+
+/* ===== PQ MOBILE SAFETY GUARD HIDE BROWSER STEPPER END ===== */

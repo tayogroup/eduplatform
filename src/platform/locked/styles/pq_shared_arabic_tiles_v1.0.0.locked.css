@@ -1,0 +1,386 @@
+/* pq_core_ui_alphabet_v1.0.css
+   Shared Alphabet unit base UI (grid, tiles, settings sheet, header).
+   Source: legacy alphabet.css (renamed for clarity)
+*/
+
+:root{
+  /* Tashweed With Haroof Maddah background + ink */
+  --bg1:#ffeef7; --bg2:#e7f4ff;
+  --ink:#0c1d26; --ink-d:#08161d;
+  --card:#ffffff; --border:#d9f1ff;
+  --shadow:0 10px 30px rgba(0,0,0,.12);
+  --tile-shadow:0 8px 22px rgba(0,0,0,.14);
+  --accent:#22c1e8; --accent-weak:rgba(34,193,232,.10);
+
+  /* Category colors */
+  --c-vowel:#0ea5e9;   /* blue */
+  --c-alifaa:#f59e0b;  /* amber */
+  --c-heavy:#ef4444;   /* red */
+  --c-light:#10b981;   /* green */
+
+  /* Tashweed-style grid + candy columns */
+  --grid-bg:#fff2cf;
+  --col1:#ffcae9;  /* bright pink */
+  --col2:#ffe49a;  /* sunny yellow */
+  --col3:#c9f7a0;  /* lime green */
+  --col4:#aee9ff;  /* sky blue */
+  --col5:#d4befd;  /* soft purple */
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html,body{
+  height:100%;margin:0;
+  background:radial-gradient(circle at top, #fff5fb 0, var(--bg1) 35%, var(--bg2) 100%);
+  color:var(--ink);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+body{
+  font-family:"Baloo 2",system-ui,Segoe UI,Roboto,sans-serif;
+}
+
+.wrap{
+  max-width:960px;
+  margin-inline:auto;
+  padding:10px 12px 14px;
+  padding-top:calc(10px + var(--safe-top));
+}
+
+/* ---------- HEADER (Tashweed-style, buttons on second line) ---------- */
+.bar{
+  position:sticky; top:0; z-index:60;
+  margin:-10px -12px 12px;
+  padding:12px 16px 16px;
+  background:linear-gradient(135deg,#9af3ff,#a9ffcf,#ffe39c);
+  border-bottom:3px solid rgba(255,255,255,0.9);
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+  border-radius:0 0 24px 24px;
+}
+.bar-row{
+  display:flex;
+  flex-direction:column;   /* brand first line, controls second line */
+  align-items:stretch;
+  gap:8px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo{
+  width:46px;height:46px;border-radius:16px;
+  background:radial-gradient(circle at 30% 30%,#fff5b5,#ff7a7a);
+  display:grid;place-items:center;
+  color:#fff;font:900 20px/1 "Baloo 2";
+  box-shadow:0 4px 0 rgba(0,0,0,0.18);
+}
+.title{
+  font-size:clamp(18px,7vw,28px);
+  color:var(--ink-d);
+  letter-spacing:.2px;
+  font-weight:900;
+  text-shadow:0 2px 0 rgba(255,255,255,0.9);
+}
+
+/* Toolbar pill (second line) */
+.controls{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  direction:ltr;
+  padding:8px 10px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.7);
+  box-shadow:0 3px 0 rgba(0,0,0,0.12);
+  justify-content:flex-end;
+}
+
+/* Buttons – candy pills */
+.btn{
+  border:0;
+  background:linear-gradient(135deg,#ffffff,#ffeef5);
+  border-radius:999px;
+  padding:.65rem .9rem;
+  font:900 16px/1 "Baloo 2";
+  box-shadow:0 4px 0 rgba(0,0,0,.18);
+  cursor:pointer;
+  min-width:96px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  transform:translateY(0);
+  transition:transform .1s ease,box-shadow .1s ease, filter .1s ease;
+}
+.btn.big{
+  font-size:18px;
+  padding:.75rem 1.1rem;
+  min-width:118px;
+}
+.btn.play{
+  background:linear-gradient(135deg,#9dffb3,#eaffff);
+}
+.btn.reset{
+  background:linear-gradient(135deg,#ffd09d,#fff7e2);
+}
+.btn.pause{
+  background:linear-gradient(135deg,#ffffff,#f6f6ff);
+}
+.btn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 rgba(0,0,0,.2);
+  filter:brightness(0.98);
+}
+
+.gear{
+  width:44px;height:44px;border-radius:14px;border:0;
+  background:linear-gradient(135deg,#ffffff,#f6f6ff);
+  display:grid;place-items:center;
+  box-shadow:0 4px 0 rgba(0,0,0,.18);
+  cursor:pointer;
+}
+
+/* Legend */
+.legend{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}
+.tag{
+  display:inline-flex; align-items:center; gap:6px;
+  font:900 11px/1 "Baloo 2"; padding:.28rem .45rem; border-radius:999px;
+  color:#073642; background:#eef6ff; border:2px solid #dbeafe;
+}
+.tag.vowel{border-color:rgba(14,165,233,.35); background:rgba(14,165,233,.12)}
+.tag.alifaa{border-color:rgba(245,158,11,.35); background:rgba(245,158,11,.12)}
+.tag.heavy{border-color:rgba(239,68,68,.35); background:rgba(239,68,68,.12)}
+.tag.light{border-color:rgba(16,185,129,.35); background:rgba(16,185,129,.12)}
+
+/* ---------- GRID WRAPPER (Tashweed-style) ---------- */
+.grid-wrap{
+  margin-top:10px;
+  padding:20px 16px 18px;
+  background:radial-gradient(circle at top, #fff8da 0, var(--grid-bg) 50%, #ffeec0 100%);
+  border-radius:24px;
+  box-shadow:inset 0 0 0 2px #f2e5c1,0 3px 0 #e4d6af;
+  position:relative;
+}
+.grid-wrap::after{
+  content:"";
+  position:absolute;
+  inset:10px;
+  border-radius:18px;
+  border:2px dashed rgba(214,191,140,.9);
+  pointer-events:none;
+}
+
+/* Grid */
+.grid{
+  display:grid; gap:12px; grid-template-columns:repeat(2, minmax(0,1fr));
+  position:relative;
+  z-index:1;
+}
+@media (min-width:640px){
+  .grid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+}
+@media (min-width:900px){
+  .grid{ grid-template-columns:repeat(4, minmax(0,1fr)); }
+}
+
+.tile, .tile:link, .tile:visited{ text-decoration:none; color:inherit }
+.tile{
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-height:206px;
+  user-select:none;
+  cursor:pointer;
+  border:3px solid rgba(255,255,255,0.8);
+  box-shadow:0 6px 0 rgba(0,0,0,0.12),0 10px 18px rgba(13,35,69,.06);
+  background:linear-gradient(145deg,#fff,var(--col1)); /* default, overridden below */
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    border-color .12s ease,
+    background .12s ease,
+    filter .12s ease;
+}
+
+/* Candy backgrounds per tile slot (like Tashweed columns) */
+.grid .tile:nth-child(4n+1){
+  background:linear-gradient(145deg,#fff,var(--col1));
+}
+.grid .tile:nth-child(4n+2){
+  background:linear-gradient(145deg,#fff,var(--col2));
+}
+.grid .tile:nth-child(4n+3){
+  background:linear-gradient(145deg,#fff,var(--col3));
+}
+.grid .tile:nth-child(4n+4){
+  background:linear-gradient(145deg,#fff,var(--col4));
+}
+
+/* Solid top bar on tiles */
+.tile::before{
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  inset-block-start:0;
+  height:6px;
+  border-radius:20px 20px 0 0;
+  opacity:.9;
+}
+.grid .tile:nth-child(4n+1)::before{ background:#0ea5e9; } /* blue */
+.grid .tile:nth-child(4n+2)::before{ background:#f59e0b; } /* amber */
+.grid .tile:nth-child(4n+3)::before{ background:#ef4444; } /* red */
+.grid .tile:nth-child(4n+4)::before{ background:#10b981; } /* green */
+
+/* VERY visible active highlight for kids */
+.tile.active{
+  border-color:#ffffff;
+  transform:translateY(-4px) scale(1.05);
+  background:radial-gradient(circle at top,
+    #ffffff 0%,
+    #fdfbff 45%,
+    rgba(34,193,232,0.25) 100%);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,0.95),
+    0 0 0 9px rgba(34,193,232,0.85),
+    0 18px 32px rgba(13,35,69,0.40);
+}
+
+.thumb{
+  aspect-ratio:1/1; display:grid; place-items:center;
+  background:transparent;
+}
+.glyph{
+  font-family:"Noto Naskh Arabic","Amiri","Scheherazade New",serif;
+  font-weight:900; font-size: clamp(64px, 16vw, 96px);
+  color:#0e2733; line-height:1; position:relative;
+  text-shadow:0 2px 0 rgba(255,255,255,0.6);
+}
+.tile[data-cat~="vowel"]  .glyph{ color: var(--c-vowel); }
+.tile[data-cat~="alifaa"] .glyph{ color: var(--c-alifaa); }
+.tile[data-cat~="heavy"]  .glyph{ color: var(--c-heavy); }
+.tile[data-cat~="light"]  .glyph{ color: var(--c-light); }
+
+.mini-cluster{
+  position:absolute; font-size:.38em; line-height:1; white-space:nowrap;
+  top:-0.90em; inset-inline-start:-0.08em; color:inherit; pointer-events:none; user-select:none;
+}
+
+.caption{
+  padding:10px 12px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  background:#ffffffdd;
+}
+.name{
+  font:900 16px/1.2 "Baloo 2";
+  color:#0d3a5a;
+}
+.meta{
+  font:800 12px/1.2 system-ui;
+  color:#57727f;
+  opacity:.9;
+}
+
+.chips{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.chip{
+  font:900 11px/1 "Baloo 2";
+  padding:.25rem .42rem;
+  border-radius:999px;
+  border:2px solid transparent;
+  background:#eef6ff;
+  color:#073642;
+}
+.chip.vowel { border-color: rgba(14,165,233,.35); background: rgba(14,165,233,.12); }
+.chip.alifaa{ border-color: rgba(245,158,11,.35); background: rgba(245,158,11,.12); }
+.chip.heavy { border-color: rgba(239,68,68,.35);  background: rgba(239,68,68,.12); }
+.chip.light { border-color: rgba(16,185,129,.35); background: rgba(16,185,129,.12); }
+
+/* Settings sheet */
+.sheet{
+  position:fixed; inset:0; display:none; place-items:end center; z-index:80; background:rgba(0,0,0,.25);
+}
+.sheet[open]{ display:grid; }
+.panel{
+  width:100%;
+  max-width:560px;
+  background:#fff;
+  border-radius:24px 24px 0 0;
+  box-shadow:0 0 30px rgba(0,0,0,0.25);
+  padding:18px 16px calc(16px + var(--safe-bottom));
+}
+.panel h2{
+  margin:0 0 8px;
+  font:900 20px/1.2 "Baloo 2";
+  color:#0d3a5a;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.row-col{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  width:100%;
+}
+.row-line{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.lab{
+  font:900 17px "Baloo 2";
+  color:#0d3a5a;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.hint{
+  font:800 12px/1.3 system-ui;
+  color:#5b6b80;
+  margin-top:4px;
+}
+.sel{
+  font:900 18px "Baloo 2";
+  padding:.65rem .75rem;
+  border-radius:14px;
+  border:2px solid var(--border);
+  background:#fff;
+  min-width:56%;
+}
+.close{
+  margin-top:12px;
+  width:100%;
+  border:2px solid #bfe3ff;
+  background:#fff;
+  border-radius:16px;
+  padding:.8rem 1rem;
+  font:900 16px "Baloo 2";
+}
+
+@media (max-width:640px){
+  .controls{
+    width:100%;
+    justify-content:space-between;
+    flex-wrap:nowrap;
+  }
+  .controls .btn,
+  .controls .gear{
+    flex:1 1 0;
+  }
+  .legend{
+    justify-content:center;
+    text-align:center;
+    margin-top:6px;
+  }
+}

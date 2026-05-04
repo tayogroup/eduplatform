@@ -1,0 +1,538 @@
+@layer pq.tokens, pq.base, pq.header, pq.status, pq.stepper, pq.lecture, pq.tiles, pq.tajweed, pq.overrides;
+
+@layer pq.base {
+/* =========================================================
+   PreQuraan Lesson UI — Header + Managed Steps (CSS-only)
+   v001  (safe overlay; no JS/logic changes)
+   ---------------------------------------------------------
+   How to use:
+   1) Upload this file to: /pre_quraan/css/
+   2) Include AFTER your existing lesson CSS files:
+        <link rel="stylesheet" href="css/pq_lesson_ui_v001.css?v=20251228">
+   ---------------------------------------------------------
+   Notes:
+   - Uses conservative selectors to avoid breaking other pages.
+   - If your lesson page already defines some of these classes/ids,
+     this file will gently restyle them.
+   ========================================================= */
+
+/* ---------- Tokens (won't override if you already define them) ---------- */
+:root{
+  --pq-ink:#123047;
+  --pq-ink2:#355d75;
+  --pq-card:#ffffff;
+  --pq-stroke:rgba(18,48,71,.10);
+
+  --pq-blueA:#e3faff;
+  --pq-blueB:#c2e9ff;
+
+  --pq-greenA:#eafff3;
+  --pq-greenB:#c9f7a0;
+
+  --pq-shadow:0 14px 28px rgba(0,0,0,.12);
+  --pq-shadow-soft:0 10px 22px rgba(0,0,0,.10);
+
+  --pq-r-lg:26px;
+  --pq-r:22px;
+  --pq-pill:999px;
+
+  --pq-font-ui:"Baloo 2",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+
+/* ---------- Helpers ---------- */
+.pq-hide{ display:none !important; }
+.pq-soft{ box-shadow:var(--pq-shadow-soft) !important; }
+.pq-card{
+  background:var(--pq-card) !important;
+  border:1px solid var(--pq-stroke) !important;
+  border-radius:var(--pq-r-lg) !important;
+  box-shadow:var(--pq-shadow) !important;
+}
+
+/* =========================================================
+   A) LESSON HEADER
+   Goal: card-style header with title + subtitle + actions
+   Compatible selectors:
+     - #lessonHeader / .lesson-header
+     - .topbar / .unit-header / header.lesson
+   ========================================================= */
+
+/* Provide a generic “header card” styling when a suitable wrapper exists */
+#lessonHeader,
+.lesson-header,
+.unit-header,
+header.lesson,
+.topbar.lesson-topbar,
+.pq-lesson-header{
+  background:linear-gradient(135deg,var(--pq-blueA),var(--pq-blueB)) !important;
+  border-radius:var(--pq-r-lg) !important;
+  border:1px solid rgba(255,255,255,.85) !important;
+  box-shadow:var(--pq-shadow) !important;
+  padding:18px 20px !important;
+  margin:14px 14px 12px !important;
+  position:relative !important;
+  overflow:hidden !important;
+}
+
+/* subtle sparkles */
+#lessonHeader::before,
+.lesson-header::before,
+.unit-header::before,
+header.lesson::before,
+.topbar.lesson-topbar::before,
+.pq-lesson-header::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.55) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(255,255,255,.30) 0 2px, transparent 3px);
+  background-size: 46px 46px, 62px 62px;
+  background-position: 10px 14px, 24px 28px;
+  opacity:.35;
+  pointer-events:none;
+}
+
+/* Title: try common elements */
+#lessonHeader h1,
+.lesson-header h1,
+.unit-header h1,
+header.lesson h1,
+.pq-lesson-header h1,
+#lessonHeader .title,
+.lesson-header .title,
+.unit-header .title,
+.pq-lesson-header .title,
+#lessonHeader .unit-title,
+.lesson-header .unit-title{
+  margin:0 !important;
+  font:900 clamp(20px, 3.4vw, 28px) var(--pq-font-ui) !important;
+  color:var(--pq-ink) !important;
+  letter-spacing:.2px !important;
+  text-shadow:0 2px 0 rgba(255,255,255,.92) !important;
+}
+
+/* Subtitle: optional */
+#lessonHeader .subtitle,
+.lesson-header .subtitle,
+.unit-header .subtitle,
+.pq-lesson-header .subtitle,
+#lessonHeader p,
+.lesson-header p,
+.unit-header p{
+  margin:6px 0 0 !important;
+  font:800 14px/1.35 var(--pq-font-ui) !important;
+  color:var(--pq-ink2) !important;
+  opacity:.92 !important;
+}
+
+/* Actions row: keep existing DOM; restyle if wrapper exists */
+#lessonHeader .actions,
+.lesson-header .actions,
+.unit-header .actions,
+.pq-lesson-header .actions,
+#lessonHeader .lesson-actions,
+.lesson-header .lesson-actions,
+.unit-header .lesson-actions,
+.pq-lesson-header .lesson-actions,
+/* fallback: common “button strip” blocks */
+#lessonHeader .controls,
+.lesson-header .controls,
+.unit-header .controls{
+  display:flex !important;
+  align-items:center !important;
+  gap:12px !important;
+  flex-wrap:wrap !important;
+  margin-top:14px !important;
+}
+
+/* Buttons: match kid-friendly pills without changing functionality */
+#lessonHeader button,
+.lesson-header button,
+.unit-header button,
+.pq-lesson-header button,
+#lessonHeader .btn,
+.lesson-header .btn,
+.unit-header .btn,
+.pq-lesson-header .btn,
+/* also cover anchor buttons */
+#lessonHeader a.btn,
+.lesson-header a.btn,
+.unit-header a.btn{
+  height:48px !important;
+  padding:0 18px !important;
+  border-radius:var(--pq-pill) !important;
+  border:0 !important;
+  cursor:pointer !important;
+  font:900 15px var(--pq-font-ui) !important;
+  box-shadow:0 10px 18px rgba(0,0,0,.10), 0 4px 0 rgba(0,0,0,.14) !important;
+  transition:transform .08s ease, box-shadow .08s ease, filter .08s ease !important;
+}
+#lessonHeader button:active,
+.lesson-header button:active,
+.unit-header button:active,
+.pq-lesson-header button:active,
+#lessonHeader .btn:active,
+.lesson-header .btn:active,
+.unit-header .btn:active,
+.pq-lesson-header .btn:active{
+  transform:translateY(2px) !important;
+  box-shadow:0 8px 14px rgba(0,0,0,.10), 0 2px 0 rgba(0,0,0,.18) !important;
+  filter:brightness(.99) !important;
+}
+
+/* If your page uses explicit classes for Play/Pause, color them nicely */
+.btn-play, .playAll, #btnPlayAll, .btnPlayAll{
+  background:linear-gradient(135deg,#baf3c6,#66d992) !important;
+  color:#143b29 !important;
+}
+.btn-pause, .pause, #btnPause, .btnPause{
+  background:linear-gradient(135deg,#ffffff,#f4f7fb) !important;
+  color:#21323e !important;
+  border:1px solid rgba(18,48,71,.10) !important;
+}
+
+/* Optional progress chip */
+.pq-progress-chip,
+#lessonHeader .progress-chip,
+.lesson-header .progress-chip,
+.unit-header .progress-chip{
+  height:44px !important;
+  padding:0 14px !important;
+  border-radius:var(--pq-pill) !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  background:rgba(255,255,255,.86) !important;
+  border:1px solid rgba(18,48,71,.10) !important;
+  font:900 13px var(--pq-font-ui) !important;
+  color:var(--pq-ink2) !important;
+  box-shadow:0 8px 14px rgba(0,0,0,.08) !important;
+}
+
+/* =========================================================
+   B) MANAGED PRACTICE STEPS BLOCK
+   Goal: “level cards track” — done / active / locked states
+   Compatible selectors (you likely have one of these):
+     - #managedSteps / .managed-steps / .steps-block / .steps
+     - .ManagedPracticeSteps / .practice-steps
+   ========================================================= */
+
+/* Block wrapper */
+#managedSteps,
+.managed-steps,
+.steps-block,
+.practice-steps,
+.pq-steps-block{
+  margin:12px 14px 14px !important;
+  padding:14px 14px 10px !important;
+  border-radius:var(--pq-r-lg) !important;
+  background:rgba(255,255,255,.78) !important;
+  border:1px solid rgba(18,48,71,.08) !important;
+  box-shadow:var(--pq-shadow-soft) !important;
+}
+
+/* Block title */
+#managedSteps .title,
+.managed-steps .title,
+.steps-block .title,
+.practice-steps .title,
+.pq-steps-block .title,
+#managedSteps h2,
+.managed-steps h2,
+.steps-block h2,
+.practice-steps h2,
+.pq-steps-block h2{
+  margin:0 0 10px !important;
+  font:900 16px var(--pq-font-ui) !important;
+  color:var(--pq-ink) !important;
+}
+
+/* Track (horizontal scroll). If your markup uses a container for step tiles, it will pick up. */
+#managedSteps .track,
+.managed-steps .track,
+.steps-block .track,
+.practice-steps .track,
+.pq-steps-block .track,
+/* fallbacks */
+#managedSteps .steps,
+.managed-steps .steps,
+.steps-block .steps,
+.practice-steps .steps,
+#managedSteps .stepsRow,
+.managed-steps .stepsRow{
+  display:flex !important;
+  gap:14px !important;
+  overflow-x:auto !important;
+  padding:10px 4px 12px !important;
+  scroll-snap-type:x proximity !important;
+  -webkit-overflow-scrolling:touch !important;
+}
+#managedSteps .track::-webkit-scrollbar,
+.managed-steps .track::-webkit-scrollbar,
+.steps-block .track::-webkit-scrollbar,
+.practice-steps .track::-webkit-scrollbar,
+#managedSteps .steps::-webkit-scrollbar,
+.managed-steps .steps::-webkit-scrollbar{
+  height:8px;
+}
+#managedSteps .track::-webkit-scrollbar-thumb,
+.managed-steps .track::-webkit-scrollbar-thumb,
+.steps-block .track::-webkit-scrollbar-thumb,
+.practice-steps .track::-webkit-scrollbar-thumb,
+#managedSteps .steps::-webkit-scrollbar-thumb,
+.managed-steps .steps::-webkit-scrollbar-thumb{
+  background:rgba(0,0,0,.16);
+  border-radius:999px;
+}
+
+/* Step tile/card — support multiple class names */
+.step,
+.step-tile,
+.step-card,
+.managed-step,
+.pq-step{
+  width:120px !important;
+  min-height:112px !important;
+  border-radius:var(--pq-r) !important;
+  padding:12px 10px !important;
+  background:var(--pq-card) !important;
+  border:1px solid rgba(18,48,71,.10) !important;
+  box-shadow:var(--pq-shadow-soft) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  text-align:center !important;
+  scroll-snap-align:start !important;
+  position:relative !important;
+}
+
+/* Icon area (optional, if you already render icons or emojis inside) */
+.step .icon, .step-tile .icon, .step-card .icon, .managed-step .icon,
+.step .step-icon, .step-tile .step-icon, .step-card .step-icon{
+  font-size:28px !important;
+  line-height:1 !important;
+  margin-top:2px !important;
+}
+
+/* Step label */
+.step .label, .step-tile .label, .step-card .label, .managed-step .label,
+.step .step-title, .step-tile .step-title, .step-card .step-title{
+  font:900 13px/1.15 var(--pq-font-ui) !important;
+  color:var(--pq-ink) !important;
+  margin:4px 0 0 !important;
+}
+
+/* Step progress text */
+.step .progress, .step-tile .progress, .step-card .progress, .managed-step .progress,
+.step .step-progress, .step-tile .step-progress, .step-card .step-progress{
+  font:800 12px/1.1 var(--pq-font-ui) !important;
+  color:rgba(53,93,117,.80) !important;
+  opacity:.95 !important;
+}
+
+/* States: attempt to match common class names you already use */
+.step.done, .step.completed, .step.complete,
+.step-tile.done, .step-tile.completed, .step-tile.complete,
+.step-card.done, .step-card.completed, .step-card.complete,
+.managed-step.done, .managed-step.completed, .managed-step.complete{
+  background:linear-gradient(180deg,var(--pq-greenA),var(--pq-greenB)) !important;
+  border-color:rgba(32,158,74,.18) !important;
+}
+.step.done::after, .step.completed::after, .step.complete::after,
+.step-tile.done::after, .step-tile.completed::after, .step-tile.complete::after,
+.step-card.done::after, .step-card.completed::after, .step-card.complete::after,
+.managed-step.done::after, .managed-step.completed::after, .managed-step.complete::after{
+  content:"✓";
+  position:absolute;
+  top:10px; right:10px;
+  width:22px; height:22px;
+  border-radius:999px;
+  background:rgba(102,217,146,.95);
+  color:#0b3b25;
+  font:900 14px/22px var(--pq-font-ui);
+  box-shadow:0 6px 14px rgba(0,0,0,.12);
+}
+
+/* Active step */
+.step.active, .step.current, .step.inprogress,
+.step-tile.active, .step-tile.current, .step-tile.inprogress,
+.step-card.active, .step-card.current, .step-card.inprogress,
+.managed-step.active, .managed-step.current, .managed-step.inprogress{
+  box-shadow:0 0 0 4px rgba(34,193,232,.28), var(--pq-shadow) !important;
+  border-color:rgba(34,193,232,.32) !important;
+  transform:translateY(-1px);
+}
+@keyframes pqPulseGlow{
+  0%{ box-shadow:0 0 0 4px rgba(34,193,232,.18), var(--pq-shadow-soft); }
+  50%{ box-shadow:0 0 0 6px rgba(34,193,232,.26), var(--pq-shadow); }
+  100%{ box-shadow:0 0 0 4px rgba(34,193,232,.18), var(--pq-shadow-soft); }
+}
+@media (prefers-reduced-motion: no-preference){
+  .step.active, .step.current, .step.inprogress,
+  .step-tile.active, .step-tile.current, .step-tile.inprogress,
+  .step-card.active, .step-card.current, .step-card.inprogress,
+  .managed-step.active, .managed-step.current, .managed-step.inprogress{
+    animation:pqPulseGlow 1.6s ease-in-out infinite;
+  }
+}
+
+/* Locked step */
+.step.locked, .step.disabled, .step.inactive,
+.step-tile.locked, .step-tile.disabled, .step-tile.inactive,
+.step-card.locked, .step-card.disabled, .step-card.inactive,
+.managed-step.locked, .managed-step.disabled, .managed-step.inactive{
+  opacity:.48 !important;
+  filter:saturate(.7) grayscale(.08) !important;
+}
+.step.locked::after, .step.disabled::after, .step.inactive::after,
+.step-tile.locked::after, .step-tile.disabled::after, .step-tile.inactive::after,
+.step-card.locked::after, .step-card.disabled::after, .step-card.inactive::after,
+.managed-step.locked::after, .managed-step.disabled::after, .managed-step.inactive::after{
+  content:"🔒";
+  position:absolute;
+  top:10px; right:10px;
+  width:26px; height:26px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(18,48,71,.10);
+  box-shadow:0 6px 14px rgba(0,0,0,.10);
+  font-size:14px;
+}
+
+/* Touch-friendly sizing for mobile */
+@media (max-width: 640px){
+  #lessonHeader,
+  .lesson-header,
+  .unit-header,
+  header.lesson,
+  .topbar.lesson-topbar,
+  .pq-lesson-header{
+    padding:16px 14px !important;
+    margin:12px 10px 10px !important;
+  }
+  .step, .step-tile, .step-card, .managed-step, .pq-step{
+    width:118px !important;
+    min-height:108px !important;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .step.active, .step.current, .step.inprogress,
+  .step-tile.active, .step-tile.current, .step-tile.inprogress,
+  .step-card.active, .step-card.current, .step-card.inprogress,
+  .managed-step.active, .managed-step.current, .managed-step.inprogress{
+    animation:none !important;
+  }
+}
+}
+
+@layer pq.status {
+  .pq-status-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:14px 18px;
+    margin: 10px auto 0;
+    max-width: 1100px;
+  }
+  .pq-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    border-radius:999px;
+    background: rgba(255,255,255,.75);
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 10px 22px rgba(0,0,0,.08);
+    font-weight:900;
+    user-select:none;
+    cursor:default;
+  }
+  .pq-pill--about{
+    cursor:pointer;
+    border: 1px solid rgba(0,0,0,.08);
+  }
+  .pq-pill__text{ font-weight:900; }
+  .pq-pill__icon{ opacity:.9; }
+
+  .pq-status-right{
+    font-family: "Baloo 2",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-weight:900;
+    font-size: 18px;
+    letter-spacing:.2px;
+    opacity:.9;
+    white-space:nowrap;
+  }
+  .pq-status-unit{ opacity:.85; font-weight:900; }
+}
+
+@layer pq.overrides {
+  /* Minimal built-in start dialog (used if you don't have your own dialog module) */
+  .pq-startdlg{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,.25);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index: 9999;
+    padding: 18px;
+  }
+  .pq-startdlg__card{
+    width:min(520px, 96vw);
+    background:#fff;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    padding: 18px 18px 14px;
+  }
+  .pq-startdlg__title{
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    font-family: "Baloo 2",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  .pq-startdlg__text{ opacity:.85; margin-bottom: 14px; font-family: "Baloo 2",system-ui; font-weight:700; }
+  .pq-startdlg__actions{ display:flex; gap:10px; justify-content:flex-end; }
+  .pq-btn{
+    border: 1px solid rgba(0,0,0,.12);
+    background: rgba(255,255,255,.9);
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-weight: 900;
+    cursor:pointer;
+    font-family: "Baloo 2",system-ui;
+  }
+  .pq-btn--primary{ background: rgba(140, 220, 140, .65); }
+
+  /* Unmanaged UI helpers (bootstrap toggles these) */
+  .pq-hide-when-unmanaged{ display:none !important; }
+  .pq-unmanaged-hide-progress .pq-source,
+  .pq-unmanaged-hide-progress .pq-progress,
+  .pq-unmanaged-hide-progress .source,
+  .pq-unmanaged-hide-progress .progress { display:none !important; }
+
+  /* Legacy pages: do not show injected status row */
+  body[data-layout="legacy"] .pq-status-row{ display:none !important; }
+
+  /* Stepper: keep steps in one row (scroll instead of wrap) */
+  #managedStepsList,
+  .managed-steps{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:14px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding-bottom:6px !important;
+  }
+  #managedStepsList .managed-step,
+  .managed-steps .managed-step{
+    flex: 0 0 170px !important;
+  }
+}

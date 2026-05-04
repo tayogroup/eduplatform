@@ -9,7 +9,9 @@ const srcUnitDir = path.join(root, 'src', 'units', unitKey);
 const distRoot = path.join(root, 'dist', 'pre_quraan');
 const distUnitDir = path.join(distRoot, 'units', unitKey);
 const distStyleDir = path.join(distRoot, 'styles', 'units');
+const distLockedStyleDir = path.join(distRoot, 'styles', 'locked');
 const distScriptDir = path.join(distRoot, 'scripts', 'js', 'units', unitKey);
+const srcLockedStyleDir = path.join(root, 'src', 'platform', 'locked', 'styles');
 
 function fail(message) {
   console.error(message);
@@ -52,8 +54,10 @@ if (!fs.existsSync(indexPath)) {
 
 ensureDir(distUnitDir);
 ensureDir(distStyleDir);
+ensureDir(distLockedStyleDir);
 ensureDir(distScriptDir);
 
+copyDir(srcLockedStyleDir, distLockedStyleDir);
 copyFile(path.join(srcUnitDir, 'unit.css'), path.join(distStyleDir, `${unitKey}.css`));
 copyFile(path.join(srcUnitDir, 'unit.config.js'), path.join(distScriptDir, 'unit.config.js'));
 copyFile(path.join(srcUnitDir, 'unit.runtime.js'), path.join(distScriptDir, 'unit.runtime.js'));
@@ -73,5 +77,6 @@ fs.writeFileSync(path.join(distUnitDir, 'index.html'), html, 'utf8');
 
 console.log(`Built ${unitKey} for Bunny output:`);
 console.log(`  ${path.relative(root, path.join(distUnitDir, 'index.html'))}`);
+console.log(`  ${path.relative(root, distLockedStyleDir)}`);
 console.log(`  ${path.relative(root, path.join(distStyleDir, `${unitKey}.css`))}`);
 console.log(`  ${path.relative(root, distScriptDir)}`);

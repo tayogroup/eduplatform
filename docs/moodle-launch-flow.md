@@ -20,7 +20,7 @@ This repo keeps Moodle PHP source/reference files separate from the Bunny-hosted
 3. Bunny app shell shows the learner dashboard and routes unit buttons.
 
    ```text
-   src/app-shell/index_v030.html
+   src/app-shell/index.html
    -> dist/pre_quraan/scripts/index_v030.html
    ```
 
@@ -59,7 +59,7 @@ This repo keeps Moodle PHP source/reference files separate from the Bunny-hosted
 
    ```text
    src/units/alphabet/
-   src/platform/locked/
+   src/shared/
    src/moodle/local_prequran/services.php
    src/moodle/local_prequran/externallib_v4.php
    ```
@@ -77,7 +77,7 @@ http://127.0.0.1:4173/pre_quraan/scripts/index_v030.html
 The local-only route is controlled in:
 
 ```text
-src/app-shell/js/app-config3_v003.js
+src/app-shell/js/app-config.js
 ```
 
 The local-only access-gate exception is controlled in:

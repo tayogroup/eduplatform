@@ -36,12 +36,13 @@ The Alphabet unit is emitted as:
 
 ```text
 dist/pre_quraan/scripts/index_v030.html
+dist/pre_quraan/scripts/index.html
 dist/pre_quraan/scripts/css/
 dist/pre_quraan/scripts/js/
 dist/pre_quraan/scripts/img/
 dist/pre_quraan/units/alphabet/index.html
-dist/pre_quraan/styles/locked/
-dist/pre_quraan/scripts/js/locked/
+dist/pre_quraan/styles/shared/
+dist/pre_quraan/scripts/js/shared/
 dist/pre_quraan/styles/units/alphabet.css
 dist/pre_quraan/scripts/js/units/alphabet/unit.config.js
 dist/pre_quraan/scripts/js/units/alphabet/unit.runtime.js
@@ -69,6 +70,8 @@ Should become:
 ```text
 https://app.quraan.academy/pre_quraan/scripts/index_v030.html
 ```
+
+`index_v030.html` is currently emitted as a compatibility alias for Moodle routes. The stable source file is `src/app-shell/index.html`, and the build also emits `dist/pre_quraan/scripts/index.html`.
 
 ## Upload Options
 
@@ -114,4 +117,4 @@ npm.cmd run deploy:bunny
 
 Do not commit real Bunny credentials.
 
-The source HTML in `src/units/alphabet/index.html` uses local relative paths for development. The build rewrites those paths to production `/pre_quraan/...` paths for Bunny output.
+The source HTML in `src/units/alphabet/index.html` uses stable shared dependency names. The build rewrites unit-local paths to production `/pre_quraan/...` paths for Bunny output.

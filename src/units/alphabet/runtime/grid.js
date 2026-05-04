@@ -1253,17 +1253,9 @@ line(bottom, [], 2, __PQ_WRITE_CANVAS_UI.guideBottomColor);
               );
 
               if (done) {
-                const reloadKey =
-                  __PQ_WRITE_RELOAD_KEY;
-
-                if (sessionStorage.getItem(reloadKey) !== '1') {
-                  sessionStorage.setItem(reloadKey, '1');
-                  setTimeout(function () {
-                    try {
-                      window.location.reload();
-                    } catch (_e) {}
-                  }, 120);
-                }
+                try { __pqNormalizeCurrentStepId(); } catch (_e) {}
+                try { __pqRefreshAfterStepCompletion(); } catch (_e) {}
+                try { __pqSyncWriteUI(); } catch (_e) {}
               }
             }
           } catch (_e) {}

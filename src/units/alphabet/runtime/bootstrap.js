@@ -5,7 +5,7 @@
   It is intentionally not loaded directly in the browser.
 */
 /* ============================================================
-   tanween_movement_listen — Browser Main JS
+   Alphabet unit - Browser Main JS
    FLOW LAYOUT BASELINE v6 SPAN
    ------------------------------------------------------------
    Main-board span support added for flow layout.
@@ -15,7 +15,7 @@
    ============================================================ */
 
 // ============================================================
-// tanween_movement_listen — Flow Main JS
+// Alphabet unit - Flow Main JS
 // Part 1 of 3
 // Based on the current working file, cleaned and commented.
 // This part covers:
@@ -231,7 +231,6 @@ function __cfg(path, fallback) {
     __cfg('wsSetFunction', '')
   );
 
-  const __PQ_WRITE_RELOAD_KEY = `${__PQ_UNIT_ID}_write_terminal_reload_once_v1`;
   const __PQ_MANAGED_PROGRESS_CACHE_KEY = `${__PQ_UNIT_ID}_managed_progress_cache_v1`;
 
     const __PQ_TEXT_CACHE = Object.freeze({

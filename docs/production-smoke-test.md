@@ -40,7 +40,7 @@ Run these checks from a real Moodle login:
 2. Open the Pre-Quraan launcher from the course/dashboard.
 3. Click `Alphabet Listen`.
 4. Confirm the Alphabet unit loads with full styling.
-5. Confirm locked shared CSS and unit CSS are visible.
+5. Confirm shared CSS and unit CSS are visible.
 6. Confirm no 403 appears through Moodle launch.
 7. Click `Play Lecture`.
 8. Confirm audio/video controls do not break the page.

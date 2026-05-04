@@ -14,6 +14,8 @@ const manifest = [
   'progress.js',
   'grid.js',
   'media.js',
+  'playback.js',
+  'step-state.js',
   'speak.js',
   'write.js',
   'ui-bindings.js',

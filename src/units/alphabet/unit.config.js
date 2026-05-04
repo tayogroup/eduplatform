@@ -1,64 +1,52 @@
 // ============================================================
-// Alphabet Listen — Config File
-// FLOW LAYOUT BASELINE v2.8 SPAN READY
+// Alphabet Listen - Unit Authoring Config
 // ------------------------------------------------------------
-// Browser/mobile-ready ordered dataset.
-// Layout comes from:
-// - array order
-// - canvas.gridCols
-// - canvas.mobileGridCols
-// - optional per-cell span on the main lesson board
-//
-// This file keeps:
-// - steps
-// - messages
-// - media
-// - write settings
-// - derived canvas/play/audio/video data
-//
-// This file no longer uses row/ltrCol positioning.
-// Long-word units may optionally use:
-//   { key: '...', text: '...', span: 2 }
+// This file contains unit-specific identity, steps, content, media,
+// messages, and feature overrides. Generated runtime fields such as
+// canvas.cells, audioMap, video maps, stepOrder, and storage aliases
+// are added by shared-config-normalizer.js.
 // ============================================================
 
-const UNIT_CFG = {
-  jsVersion: 'pq_unit_alphabet_movement_config_v2.8_FLOW_LAYOUT_SPAN_READY',
-  lessonid: 'tajweed',
-  unitid: 'alphabet_listen',
-  wsGetFunction: 'local_prequran_get_alphabet_listen_state',
-  wsSetFunction: 'local_prequran_set_alphabet_listen_state',
+const __PQ_NORMALIZE_UNIT_CONFIG__ = (
+  (typeof window !== 'undefined' && window.PQUnitConfigNormalizer) ||
+  (typeof globalThis !== 'undefined' && globalThis.PQUnitConfigNormalizer)
+);
 
-  ASSET_VERSION: Date.now(),
+if (!__PQ_NORMALIZE_UNIT_CONFIG__ || typeof __PQ_NORMALIZE_UNIT_CONFIG__.normalize !== 'function') {
+  throw new Error('PQUnitConfigNormalizer must load before unit.config.js');
+}
+
+const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
+  schemaVersion: 1,
 
   identity: {
     lessonId: 'tajweed',
     unitId: 'alphabet_listen',
+    unitKey: 'alphabet',
     storagePrefix: 'alphabet_listen',
     keyPrefix: 'alph_'
   },
 
-  storagePrefix: 'alphabet_listen',
+  moodle: {
+    wsGetFunction: 'local_prequran_get_alphabet_listen_state',
+    wsSetFunction: 'local_prequran_set_alphabet_listen_state'
+  },
+
+  release: {
+    version: '1.0.0',
+    assetVersion: 'alphabet-v1.0.0'
+  },
+
+  assets: {
+    cdnRoot: 'https://ehelacademy.b-cdn.net/pre_quraan',
+    unitMediaRoot: '/lessons/alphabet/media',
+    filePrefix: 'alph_',
+    mediaPadWidth: 2
+  },
 
   routes: {
     academyHomeUrl: 'https://quraan.academy/'
   },
-
-  storageKeys: {
-    managedProgressCache: 'alphabet_listen_managed_progress_cache',
-    speakDoneKeys: 'pq_speak_done_keys_alphabet_listen'
-  },
-  
-	stepPassFilters: {
-	  listen: ['all', 'light', 'alifaa', 'vowels', 'heavy', 'distinctions'],
-	  listenplus: ['all', 'heavy', 'light', 'alifaa', 'vowels'],
-	  watch: ['all', 'heavy', 'light', 'alifaa', 'vowels'],
-	  sound: ['all', 'heavy', 'light', 'alifaa', 'vowels'],
-	  repeat: ['all', 'heavy', 'light', 'alifaa', 'vowels'],
-	  match: ['all'],
-	  words: ['all'],
-	  animate: ['all']
-	},
-
   messaging: {
     useConfigStepMessages: true,
     disableLegacyCompletionFeedback: true
@@ -74,86 +62,23 @@ const UNIT_CFG = {
       delayMs: 120
     }
   },
-
   messageUnitKey: 'alphabet_movement',
-   messageStepKeys: ['lecture', 'listen', 'listenplus', 'watch', 'sound', 'repeat', 'match', 'speak', 'animate', 'trace1', 'words'],
   // ==========================================================
   // STEP DEFINITIONS
   // ==========================================================
   steps: [
-    { id: 'speak',   type: 'speak',          label: 'Speak',   filter: 'all' },
-    { id: 'lecture', type: 'lecture',        label: 'Lecture', filter: 'all' },
-    { id: 'listen',     type: 'playlist',       label: 'Listen',  filter: 'all' },
-    { id: 'listenplus', type: 'playlist',       label: 'Listen+', filter: 'all' },
-    { id: 'watch',      type: 'video_playlist', label: 'Watch',   filter: 'all' },
-	{ id: 'sound',      type: 'sound',          label: 'Sound',   filter: 'all' },
-    { id: 'repeat',  type: 'playlist',       label: 'Repeat',  filter: 'all' },
-    { id: 'match',   type: 'match',          label: 'Match',   filter: 'all' },
-	{ id: 'animate', type: 'animate',        label: 'Animate', filter: 'all' },
-    { id: 'trace1',  type: 'trace',          label: 'Write1',  filter: 'all' },
-    { id: 'words',   type: 'playlist',       label: 'Words',   filter: 'all' }
+    { id: 'speak',      type: 'speak',          label: 'Speak',   passFilters: ['all'] },
+    { id: 'lecture',    type: 'lecture',        label: 'Lecture', passFilters: ['all'] },
+    { id: 'listen',     type: 'playlist',       label: 'Listen',  passFilters: ['all', 'light', 'alifaa', 'vowels', 'heavy', 'distinctions'] },
+    { id: 'listenplus', type: 'playlist',       label: 'Listen+', passFilters: ['all', 'heavy', 'light', 'alifaa', 'vowels'] },
+    { id: 'watch',      type: 'video_playlist', label: 'Watch',   passFilters: ['all', 'heavy', 'light', 'alifaa', 'vowels'] },
+    { id: 'sound',      type: 'sound',          label: 'Sound',   passFilters: ['all', 'heavy', 'light', 'alifaa', 'vowels'] },
+    { id: 'repeat',     type: 'playlist',       label: 'Repeat',  passFilters: ['all', 'heavy', 'light', 'alifaa', 'vowels'] },
+    { id: 'match',      type: 'match',          label: 'Match',   passFilters: ['all'] },
+    { id: 'animate',    type: 'animate',        label: 'Animate', passFilters: ['all'] },
+    { id: 'trace1',     type: 'trace',          label: 'Write1',  passFilters: ['all'] },
+    { id: 'words',      type: 'playlist',       label: 'Words',   passFilters: ['all'] }
   ],
-
-stepInjection: {
-  listenplus: {
-    id: 'listenplus',
-    type: 'playlist',
-    label: 'Listen+',
-    filter: 'all'
-  },
-  watch: {
-    id: 'watch',
-    type: 'video_playlist',
-    label: 'Watch',
-    filter: 'all'
-  },
-  sound: {
-    id: 'sound',
-    type: 'sound',
-    label: 'Sound',
-    filter: 'all'
-  },
-  
-  speak: {
-    id: 'speak',
-    type: 'speak',
-    label: 'Speak',
-    filter: 'all'
-  },
-  words: {
-    id: 'words',
-    type: 'playlist',
-    label: 'Words',
-    filter: 'all'
-  },
-  animate: {
-    id: 'animate',
-    type: 'animate',
-    label: 'Animate',
-    filter: 'all'
-  }
-},
-
-  stepOrder: {
-    speak: 0,
-    lecture: 1,
-    listen: 2,
-    listenplus: 3,
-    watch: 4,
-	sound: 5,
-    repeat: 6,
-    match: 7,
-    animate: 8,
-    write: 9,
-    trace1: 10,
-    words: 11,
-    all_letters: 12,
-    heavy: 13,
-    light: 14,
-    alifaa: 15,
-    vowels: 16
-  },
-
   writeLabelMap: [
     { from: 'Trace1', to: 'Write' },
     { from: 'Trace 1', to: 'Write' },
@@ -284,11 +209,7 @@ stepInjection: {
 	filterSets: {
 		
 	/* this can be used to overwrite "all" default filter.
-	stepPassFilters: {
-	  listen: ['selected'],
-	  watch: ['all'],
-	  repeat: ['all']
-	},
+	Add passFilters: ['selected'] to a step definition.
 
 	filterSets: {
 	  selected: ['alph_1', 'alph_24', 'alph_21']
@@ -787,18 +708,7 @@ words: {
       alph_29: { letter: 'ء', word: 'أرنب',    image: 'hamza_arnab',     audio: 'hamza_arnab' }
     }
   },
-
 	media: {
-	  // Core bases
-	  l6Base: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/audio/male/',
-	  watchBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/video/',
-	  animateBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/animate/',
-
-	  // ✅ Sound step (clean separation)
-	  soundLetterAudioBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/audio/male/',
-	  soundVideoBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/video/',
-	  soundImageBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/sound/images/',
-	  soundExplainerBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/sound/explainer/',
 
 	  // Lecture
 	  lectureUrl: 'https://ehelacademy.b-cdn.net/pre_quraan/messages/lectures/alphabet_lecture.mp4',
@@ -826,7 +736,8 @@ words: {
   // { key: 'alph_7', text: 'كهيعص', span: 2 },
   //  { key: 'alph_14', text: 'حم عسق', span: 2 },
 
-        allCells: [
+  content: {
+    items: [
 			{ key: 'alph_1', text: 'ا', en: 'alif' },
 			{ key: 'alph_2', text: 'ب', en: 'ba' },
 			{ key: 'alph_3', text: 'ت', en: 'ta' },
@@ -857,133 +768,9 @@ words: {
 			{ key: 'alph_28', text: 'ي', en: 'ya' },
 			{ key: 'alph_29', text: 'ء', en: 'hamza' }
 
-		]
-};
-
-(function applyDerivedConfig(cfg) {
-  const maxWords = Array.isArray(cfg.allCells) ? cfg.allCells.length : 0;
-
-  // 🔥 FIX: always trust config upper bound
-  cfg.wordLimit = Math.min(
-    cfg.allCells.length,
-    Number(cfg.wordLimit || cfg.allCells.length)
-  );
-  const requested = Number(cfg.wordLimit || maxWords) || maxWords;
-  const finalCount = Math.max(1, Math.min(maxWords, Math.floor(requested)));
-  const keyPrefix =
-    (cfg.identity && typeof cfg.identity.keyPrefix === 'string' && cfg.identity.keyPrefix) ||
-    'alph_';
-
-  cfg.wordLimit = finalCount;
-
-  const limitedCells = cfg.allCells.slice(0, finalCount);
-
-	cfg.canvas = {
-	  layoutMode: 'flow',
-	  gridCols: 4,
-	  mobileGridCols: 2,
-
-	  sepFontSize: '4.5rem',
-	  smallFontSize: '1.5rem',
-
-	  mobileTileMinHeight: '180px',
-	  mobileSepFontSize: '3.2rem',
-	  mobileSmallFontSize: '1.3rem',
-
-	  rtlColFromLtr: false,
-	  width: '100%',
-	  maxWidth: '100%',
-	  columnGap: '16px',
-	  rowGap: '16px',
-	  minTileWidth: '0px',
-
-cells: limitedCells.map((cell) => ({
-      key: cell.key,
-      text: cell.text,
-      ...(cell.en ? { en: cell.en } : {}),
-      ...(cell.small ? { small: cell.small } : {}),
-      ...(cell.ar ? { ar: cell.ar } : {}),
-      ...(cell.span ? { span: cell.span } : {}),
-      ...(cell.pass !== undefined ? { pass: cell.pass } : {}),
-      ...(cell.filterType ? { filterType: cell.filterType } : {})
-    })),
-
-	  playSequence: limitedCells.map((cell) => cell.key)
-	};
-
-  cfg.audioMap = (function () {
-	const map = {};
-	for (let i = 1; i <= finalCount; i += 1) {
-		map[keyPrefix + i] = 'alph_' + String(i).padStart(2, '0') + '.mp3';
-	}
-	return map;
-  })();
-
-  cfg.watchVideoByKey = (function () {
-	const map = {};
-	for (let i = 1; i <= finalCount; i += 1) {
-		map[keyPrefix + i] = 'alph_' + String(i).padStart(2, '0') + '.mp4';
-	}
-	return map;
-  })();
-  
-	  cfg.soundAudioByKey = (function () {
-	  const map = {};
-	  for (let i = 1; i <= finalCount; i += 1) {
-		map[keyPrefix + i] = 'alph_' + String(i).padStart(2, '0') + '.mp3';
-	  }
-	  return map;
-	})();
-
-	cfg.soundVideoByKey = (function () {
-	  const map = {};
-	  for (let i = 1; i <= finalCount; i += 1) {
-		map[keyPrefix + i] = 'alph_' + String(i).padStart(2, '0') + '.mp4';
-	  }
-	  return map;
-	})();
-
-	cfg.soundImageByKey = (function () {
-	  const map = {};
-	  for (let i = 1; i <= finalCount; i += 1) {
-		map[keyPrefix + i] = 'alph_' + String(i).padStart(2, '0') + '.png';
-	  }
-	  return map;
-	})();
-
-  
-	cfg.animateVideoByKey = (function () {
-	  const map = {};
-	  for (let i = 1; i <= finalCount; i += 1) {
-		map[keyPrefix + i] = 'alph_' + String(i).padStart(2, '0') + '.mp4';
-	  }
-	  return map;
-	})();
-
-})(UNIT_CFG);
-
-// DEBUG: watch wordLimit changes
-(function () {
-  let _wl = UNIT_CFG.wordLimit;
-
-  Object.defineProperty(UNIT_CFG, 'wordLimit', {
-    get() {
-      return _wl;
-    },
-    set(v) {
-      console.trace('🚨 wordLimit changed to:', v);
-      _wl = v;
-    }
-  });
-})();
-
-UNIT_CFG.debug = {
-  effectiveWordLimit: UNIT_CFG.wordLimit,
-  layoutMode: (UNIT_CFG.canvas && UNIT_CFG.canvas.layoutMode) || 'flow',
-  gridCols: (UNIT_CFG.canvas && UNIT_CFG.canvas.gridCols) || null,
-  mobileGridCols: (UNIT_CFG.canvas && UNIT_CFG.canvas.mobileGridCols) || null,
-  spanSupport: 'main-board-ready'
-};
+    ]
+  }
+});
 
 if (typeof window !== 'undefined') {
   window.UNIT_CFG = UNIT_CFG;

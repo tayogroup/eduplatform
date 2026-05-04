@@ -59,8 +59,8 @@ src/units/<unit-key>/README.md
 Do not clone these per unit unless there is a deliberate version change:
 
 ```text
-src/platform/locked/styles/
-src/platform/locked/scripts/js/
+src/shared/css/
+src/shared/js/
 src/app-shell/
 tools/
 docs/
@@ -131,5 +131,5 @@ Examples:
 ```text
 alphabet-v1-baseline
 harakat-v1-baseline
-tanween-v1-baseline
+letter-shapes-v1-baseline
 ```

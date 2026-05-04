@@ -1,4 +1,4 @@
-// js/ui_app_v010.js
+// App shell UI.
 
 import {
   I18N,
@@ -22,7 +22,7 @@ import {
   VIEW_MADD,
   VIEW_SAKOON,
   VIEW_ENDING
-} from './app-config3_v003.js';
+} from './app-config.js';
 
 import {
   MUQATTAAT_ITEMS,
@@ -38,7 +38,7 @@ import {
   MADD_ITEMS,
   SAKOON_ITEMS,
   ENDING_ITEMS
-} from './tajweed-menus_v003.js';
+} from './tajweed-menus.js';
 
 'use strict';
 

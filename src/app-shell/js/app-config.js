@@ -1,4 +1,4 @@
-// js/app-config.js 
+// App shell configuration.
 
 // Language + category labels
 export const I18N = {

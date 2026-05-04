@@ -11,11 +11,11 @@ const distRoot = path.join(root, 'dist', 'pre_quraan');
 const distUnitDir = path.join(distRoot, 'units', unitKey);
 const distAppShellDir = path.join(distRoot, 'scripts');
 const distStyleDir = path.join(distRoot, 'styles', 'units');
-const distLockedStyleDir = path.join(distRoot, 'styles', 'locked');
-const distLockedScriptDir = path.join(distRoot, 'scripts', 'js', 'locked');
+const distSharedStyleDir = path.join(distRoot, 'styles', 'shared');
+const distSharedScriptDir = path.join(distRoot, 'scripts', 'js', 'shared');
 const distScriptDir = path.join(distRoot, 'scripts', 'js', 'units', unitKey);
-const srcLockedStyleDir = path.join(root, 'src', 'platform', 'locked', 'styles');
-const srcLockedScriptDir = path.join(root, 'src', 'platform', 'locked', 'scripts', 'js');
+const srcSharedStyleDir = path.join(root, 'src', 'shared', 'css');
+const srcSharedScriptDir = path.join(root, 'src', 'shared', 'js');
 const srcRuntimeDir = path.join(srcUnitDir, 'runtime');
 const runtimeBundlePath = path.join(srcRuntimeDir, 'runtime.bundle.js');
 
@@ -26,6 +26,11 @@ function fail(message) {
 
 function ensureDir(dir) {
   fs.mkdirSync(dir, { recursive: true });
+}
+
+function cleanDir(dir) {
+  fs.rmSync(dir, { recursive: true, force: true });
+  ensureDir(dir);
 }
 
 function copyFile(src, dest) {
@@ -66,16 +71,22 @@ if (!fs.existsSync(runtimeBundlePath)) {
   fail(`Runtime bundle not found: ${runtimeBundlePath}`);
 }
 
-ensureDir(distUnitDir);
-ensureDir(distAppShellDir);
+cleanDir(distUnitDir);
+cleanDir(distAppShellDir);
 ensureDir(distStyleDir);
-ensureDir(distLockedStyleDir);
-ensureDir(distLockedScriptDir);
-ensureDir(distScriptDir);
+cleanDir(distSharedStyleDir);
+cleanDir(distSharedScriptDir);
+cleanDir(distScriptDir);
+fs.rmSync(path.join(distRoot, 'styles', 'locked'), { recursive: true, force: true });
+fs.rmSync(path.join(distRoot, 'scripts', 'js', 'locked'), { recursive: true, force: true });
 
-copyDir(srcLockedStyleDir, distLockedStyleDir);
-copyDir(srcLockedScriptDir, distLockedScriptDir);
+copyDir(srcSharedStyleDir, distSharedStyleDir);
+copyDir(srcSharedScriptDir, distSharedScriptDir);
 copyDir(srcAppShellDir, distAppShellDir);
+const appShellIndex = path.join(distAppShellDir, 'index.html');
+if (fs.existsSync(appShellIndex)) {
+  copyFile(appShellIndex, path.join(distAppShellDir, 'index_v030.html'));
+}
 copyFile(path.join(srcUnitDir, 'unit.css'), path.join(distStyleDir, `${unitKey}.css`));
 copyFile(path.join(srcUnitDir, 'unit.config.js'), path.join(distScriptDir, 'unit.config.js'));
 copyFile(path.join(srcUnitDir, 'unit.runtime.js'), path.join(distScriptDir, 'unit.runtime.js'));
@@ -96,10 +107,13 @@ fs.writeFileSync(path.join(distUnitDir, 'index.html'), html, 'utf8');
 
 console.log(`Built ${unitKey} for Bunny output:`);
 console.log(`  ${path.relative(root, path.join(distUnitDir, 'index.html'))}`);
+if (fs.existsSync(appShellIndex)) {
+  console.log(`  ${path.relative(root, appShellIndex)}`);
+}
 if (fs.existsSync(path.join(distAppShellDir, 'index_v030.html'))) {
   console.log(`  ${path.relative(root, path.join(distAppShellDir, 'index_v030.html'))}`);
 }
-console.log(`  ${path.relative(root, distLockedStyleDir)}`);
-console.log(`  ${path.relative(root, distLockedScriptDir)}`);
+console.log(`  ${path.relative(root, distSharedStyleDir)}`);
+console.log(`  ${path.relative(root, distSharedScriptDir)}`);
 console.log(`  ${path.relative(root, path.join(distStyleDir, `${unitKey}.css`))}`);
 console.log(`  ${path.relative(root, distScriptDir)}`);

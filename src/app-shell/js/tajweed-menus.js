@@ -1,4 +1,4 @@
-// js/tajweed-menus_v001.js
+// Tajweed menu configuration.
 
 export const MUQATTAAT_ITEMS = [
   {t:"Muqattiat Listen",     cat:"muqattaat", tag:"Unit 1",   tint:"purple"},

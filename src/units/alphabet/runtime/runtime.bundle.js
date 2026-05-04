@@ -13,7 +13,7 @@
   It is intentionally not loaded directly in the browser.
 */
 /* ============================================================
-   tanween_movement_listen — Browser Main JS
+   Alphabet unit - Browser Main JS
    FLOW LAYOUT BASELINE v6 SPAN
    ------------------------------------------------------------
    Main-board span support added for flow layout.
@@ -23,7 +23,7 @@
    ============================================================ */
 
 // ============================================================
-// tanween_movement_listen — Flow Main JS
+// Alphabet unit - Flow Main JS
 // Part 1 of 3
 // Based on the current working file, cleaned and commented.
 // This part covers:
@@ -239,7 +239,6 @@ function __cfg(path, fallback) {
     __cfg('wsSetFunction', '')
   );
 
-  const __PQ_WRITE_RELOAD_KEY = `${__PQ_UNIT_ID}_write_terminal_reload_once_v1`;
   const __PQ_MANAGED_PROGRESS_CACHE_KEY = `${__PQ_UNIT_ID}_managed_progress_cache_v1`;
 
     const __PQ_TEXT_CACHE = Object.freeze({
@@ -1834,7 +1833,7 @@ tiles.forEach((tile) => {
   // ============================================================
 
   // ============================================================
-// tanween_movement_listen — Flow Main JS
+// Alphabet unit - Flow Main JS
 // Part 2 of 3
 // This part covers:
 // 19) Moodle WS helpers
@@ -4656,17 +4655,9 @@ line(bottom, [], 2, __PQ_WRITE_CANVAS_UI.guideBottomColor);
               );
 
               if (done) {
-                const reloadKey =
-                  __PQ_WRITE_RELOAD_KEY;
-
-                if (sessionStorage.getItem(reloadKey) !== '1') {
-                  sessionStorage.setItem(reloadKey, '1');
-                  setTimeout(function () {
-                    try {
-                      window.location.reload();
-                    } catch (_e) {}
-                  }, 120);
-                }
+                try { __pqNormalizeCurrentStepId(); } catch (_e) {}
+                try { __pqRefreshAfterStepCompletion(); } catch (_e) {}
+                try { __pqSyncWriteUI(); } catch (_e) {}
               }
             }
           } catch (_e) {}
@@ -5535,189 +5526,14 @@ async function playLetter(key, times, rate) {
 // ============================================================
 
 
-/* ===== speak.js ===== */
+/* ===== playback.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: speak.js
-  Speak bridge, Speak modal, Speak progress, and recording controls.
+  Pre-Quraan Alphabet runtime fragment: playback.js
+  Playlist playback, Watch/Sound/Listen+/Words/Repeat/Match flows, and playing-tile effects.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
 */
-// SECTION 27B: Shared Speak bridge for Listen
-// ============================================================
-window.__pqSpeakBridge = {
-  getCurrentStepId: function () {
-    try {
-      const cur = getCurrentStep();
-      return (cur && cur.step && cur.step.id) ? String(cur.step.id) : null;
-    } catch (_e) {
-      return null;
-    }
-  },
-
-  isPracticeOnlyMode: function () {
-    try {
-      if (!__pqIsManagedUser() || !managedProgress) return false;
-
-      const stepsArr = Array.isArray(STEPS) ? STEPS : [];
-      const required = stepsArr.filter(function (step) {
-        return String((step && step.id) || '').toLowerCase() !== 'speak';
-      });
-
-      if (!required.length) return false;
-
-      return required.every(function (step) {
-        const sid = String((step && step.id) || '');
-        const prog = managedProgress && managedProgress[sid];
-
-        return !!(
-          prog &&
-          (
-            prog.completed ||
-            Number(prog.passesDone || 0) >= Number(prog.passesRequired || 1)
-          )
-        );
-      });
-    } catch (_e) {
-      return false;
-    }
-  },
-
-  shouldShowPanel: function () {
-  try {
-    const cur = getCurrentStep();
-    return !!(
-      cur &&
-      cur.step &&
-      String(cur.step.id || '').toLowerCase() === 'speak'
-    );
-  } catch (_e) {
-    return false;
-  }
-},
-
-  isSpeakStepCompleted: function () {
-    try {
-      return !!(
-        managedProgress &&
-        managedProgress.speak &&
-        (
-          managedProgress.speak.completed ||
-          Number(managedProgress.speak.passesDone || 0) >=
-            Number(managedProgress.speak.passesRequired || 1)
-        )
-      );
-    } catch (_e) {
-      return false;
-    }
-  },
-
-  getRequiredItems: function () {
-    try {
-      return (LETTERS || []).map((item) => ({
-        key: item.key,
-        label: item.name || item.ar || item.key,
-        text: item.ar || item.name || item.key
-      }));
-    } catch (_e) {
-      return [];
-    }
-  },
-
-  playReferenceForItem: async function (item) {
-    if (!item || !item.key) {
-      throw new Error('Missing Speak item key.');
-    }
-
-    const key = String(item.key || '').trim();
-    if (!key) {
-      throw new Error('Missing Speak item key.');
-    }
-
-    const fileName = AUDIO_MAP && AUDIO_MAP[key];
-    if (!fileName) {
-      throw new Error('No audio mapped for Speak reference: ' + key);
-    }
-
-    const url = __pqAppendAssetVersion(AUDIO_BASE + String(fileName));
-    const rate = parseFloat((speedSel && speedSel.value) || DEFAULTS.speed || '1') || 1;
-
-    await new Promise((resolve, reject) => {
-      try {
-        if (!audio) {
-          reject(new Error('Audio element unavailable.'));
-          return;
-        }
-
-        const cleanup = function () {
-          try { audio.removeEventListener('ended', onEnded); } catch (_e) {}
-          try { audio.removeEventListener('error', onError); } catch (_e) {}
-        };
-
-        const onEnded = function () {
-          cleanup();
-          resolve(true);
-        };
-
-        const onError = function () {
-          cleanup();
-          reject(new Error('Reference playback failed.'));
-        };
-
-        try { audio.pause(); } catch (_e) {}
-        try { audio.currentTime = 0; } catch (_e) {}
-        try { audio.src = url; } catch (_e) {}
-        try { audio.playbackRate = rate; } catch (_e) {}
-
-        audio.addEventListener('ended', onEnded, { once: true });
-        audio.addEventListener('error', onError, { once: true });
-
-        const maybe = audio.play();
-        if (maybe && typeof maybe.catch === 'function') {
-          maybe.catch(function (err) {
-            cleanup();
-            reject(err);
-          });
-        }
-      } catch (err) {
-        reject(err);
-      }
-    });
-
-    return true;
-  },
-
-  completeSpeakStep: async function () {
-    if (!__LessonRuntime || typeof __LessonRuntime.completeStep !== 'function') {
-      throw new Error('Lesson runtime not available.');
-    }
-
-    const runtimeResult = await __LessonRuntime.completeStep('speak');
-    __pqApplyRuntimeCompletion('speak', runtimeResult);
-    return runtimeResult;
-  },
-
-refreshManagedState: async function () {
-  try {
-    renderStepper();
-    renderGrid();
-    updateControlsForCurrentStep();
-    try { __pqForceWriteButtonRefresh(); } catch (_e) {}
-    try { __pqForceSpeakUiRefresh(); } catch (_e) {}
-    try { __pqSyncDynamicStepAction(); } catch (_e) {}
-    try { __pqAfterProgressChange(true); } catch (_e) {}
-  } catch (_e) {}
-},
-
-  celebrateStep: function () {
-    try { __pqRenderRewardStars(true); } catch (_e) {}
-  }
-};
-
-// Backward-compatible alias for locked adapter versions that still read the
-// original Tanween-specific bridge name.
-window.__pqTanweenSpeak = window.__pqSpeakBridge;
-
   function setPaused(value) {
     try {
       const current = getCurrentStep();
@@ -6707,6 +6523,31 @@ const __pqRepeatRecordState = {
   isRecording: false
 };
 
+function __pqStopMediaStream(stream) {
+  try {
+    if (!stream || typeof stream.getTracks !== 'function') return;
+    stream.getTracks().forEach(function (track) {
+      try { track.stop(); } catch (_e) {}
+    });
+  } catch (_e) {}
+}
+
+function __pqReleaseRepeatMicStream() {
+  try {
+    __pqStopMediaStream(__pqRepeatRecordState.stream);
+  } catch (_e) {}
+
+  __pqRepeatRecordState.stream = null;
+
+  try {
+    if (__pqRepeatRecordState.currentBlobUrl) {
+      URL.revokeObjectURL(__pqRepeatRecordState.currentBlobUrl);
+    }
+  } catch (_e) {}
+
+  __pqRepeatRecordState.currentBlobUrl = '';
+}
+
 function __pqRepeatRecordCfg(key, fallback) {
   try {
     const root = __cfg('repeatRecording', {}) || {};
@@ -6779,6 +6620,8 @@ function __pqHideRepeatRecordUi() {
     const el = document.getElementById('pqRepeatRecordOverlay');
     if (el) el.style.display = 'none';
   } catch (_e) {}
+
+  __pqReleaseRepeatMicStream();
 }
 
 async function __pqEnsureRepeatMicStream() {
@@ -7272,6 +7115,14 @@ async function playAll() {
   // ============================================================
 
 
+/* ===== step-state.js ===== */
+
+/*
+  Pre-Quraan Alphabet runtime fragment: step-state.js
+  Current step normalization, current-step lookup, and Write button refresh helpers.
+  This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
+  It is intentionally not loaded directly in the browser.
+*/
 // Part 3 of 3
 // This part covers:
 // 28) Managed progress runtime helpers
@@ -7414,6 +7265,190 @@ function __pqWaitUntil(testFn, timeoutMs, intervalMs) {
     check();
   });
 }
+
+
+/* ===== speak.js ===== */
+
+/*
+  Pre-Quraan Alphabet runtime fragment: speak.js
+  Speak bridge, Speak modal, Speak progress, and recording controls.
+  This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
+  It is intentionally not loaded directly in the browser.
+*/
+// SECTION 27B: Shared Speak bridge for Listen
+// ============================================================
+window.__pqSpeakBridge = {
+  getCurrentStepId: function () {
+    try {
+      const cur = getCurrentStep();
+      return (cur && cur.step && cur.step.id) ? String(cur.step.id) : null;
+    } catch (_e) {
+      return null;
+    }
+  },
+
+  isPracticeOnlyMode: function () {
+    try {
+      if (!__pqIsManagedUser() || !managedProgress) return false;
+
+      const stepsArr = Array.isArray(STEPS) ? STEPS : [];
+      const required = stepsArr.filter(function (step) {
+        return String((step && step.id) || '').toLowerCase() !== 'speak';
+      });
+
+      if (!required.length) return false;
+
+      return required.every(function (step) {
+        const sid = String((step && step.id) || '');
+        const prog = managedProgress && managedProgress[sid];
+
+        return !!(
+          prog &&
+          (
+            prog.completed ||
+            Number(prog.passesDone || 0) >= Number(prog.passesRequired || 1)
+          )
+        );
+      });
+    } catch (_e) {
+      return false;
+    }
+  },
+
+  shouldShowPanel: function () {
+  try {
+    const cur = getCurrentStep();
+    return !!(
+      cur &&
+      cur.step &&
+      String(cur.step.id || '').toLowerCase() === 'speak'
+    );
+  } catch (_e) {
+    return false;
+  }
+},
+
+  isSpeakStepCompleted: function () {
+    try {
+      return !!(
+        managedProgress &&
+        managedProgress.speak &&
+        (
+          managedProgress.speak.completed ||
+          Number(managedProgress.speak.passesDone || 0) >=
+            Number(managedProgress.speak.passesRequired || 1)
+        )
+      );
+    } catch (_e) {
+      return false;
+    }
+  },
+
+  getRequiredItems: function () {
+    try {
+      return (LETTERS || []).map((item) => ({
+        key: item.key,
+        label: item.name || item.ar || item.key,
+        text: item.ar || item.name || item.key
+      }));
+    } catch (_e) {
+      return [];
+    }
+  },
+
+  playReferenceForItem: async function (item) {
+    if (!item || !item.key) {
+      throw new Error('Missing Speak item key.');
+    }
+
+    const key = String(item.key || '').trim();
+    if (!key) {
+      throw new Error('Missing Speak item key.');
+    }
+
+    const fileName = AUDIO_MAP && AUDIO_MAP[key];
+    if (!fileName) {
+      throw new Error('No audio mapped for Speak reference: ' + key);
+    }
+
+    const url = __pqAppendAssetVersion(AUDIO_BASE + String(fileName));
+    const rate = parseFloat((speedSel && speedSel.value) || DEFAULTS.speed || '1') || 1;
+
+    await new Promise((resolve, reject) => {
+      try {
+        if (!audio) {
+          reject(new Error('Audio element unavailable.'));
+          return;
+        }
+
+        const cleanup = function () {
+          try { audio.removeEventListener('ended', onEnded); } catch (_e) {}
+          try { audio.removeEventListener('error', onError); } catch (_e) {}
+        };
+
+        const onEnded = function () {
+          cleanup();
+          resolve(true);
+        };
+
+        const onError = function () {
+          cleanup();
+          reject(new Error('Reference playback failed.'));
+        };
+
+        try { audio.pause(); } catch (_e) {}
+        try { audio.currentTime = 0; } catch (_e) {}
+        try { audio.src = url; } catch (_e) {}
+        try { audio.playbackRate = rate; } catch (_e) {}
+
+        audio.addEventListener('ended', onEnded, { once: true });
+        audio.addEventListener('error', onError, { once: true });
+
+        const maybe = audio.play();
+        if (maybe && typeof maybe.catch === 'function') {
+          maybe.catch(function (err) {
+            cleanup();
+            reject(err);
+          });
+        }
+      } catch (err) {
+        reject(err);
+      }
+    });
+
+    return true;
+  },
+
+  completeSpeakStep: async function () {
+    if (!__LessonRuntime || typeof __LessonRuntime.completeStep !== 'function') {
+      throw new Error('Lesson runtime not available.');
+    }
+
+    const runtimeResult = await __LessonRuntime.completeStep('speak');
+    __pqApplyRuntimeCompletion('speak', runtimeResult);
+    return runtimeResult;
+  },
+
+refreshManagedState: async function () {
+  try {
+    renderStepper();
+    renderGrid();
+    updateControlsForCurrentStep();
+    try { __pqForceWriteButtonRefresh(); } catch (_e) {}
+    try { __pqForceSpeakUiRefresh(); } catch (_e) {}
+    try { __pqSyncDynamicStepAction(); } catch (_e) {}
+    try { __pqAfterProgressChange(true); } catch (_e) {}
+  } catch (_e) {}
+},
+
+  celebrateStep: function () {
+    try { __pqRenderRewardStars(true); } catch (_e) {}
+  }
+};
+
+// Backward-compatible alias for older locked adapter versions that still read
+// the legacy shared Speak bridge name.
+window.__pqTanweenSpeak = window.__pqSpeakBridge;
 
 let __pqSpeakUiState = {
   selectedKey: '',
@@ -7567,32 +7602,77 @@ function __pqSpeakRefreshProgressFinal() {
   } catch (_e) {}
 }
 
-function __pqSpeakFinalizeDoneFinal() {
+function __pqSpeakRefreshCompletionUiFinal(key) {
   try {
-    if (__pqSharedSpeakRuntime) {
-      return __pqSharedSpeakRuntime.markSelectedDone();
-    }
-    const key = String(__pqSpeakUiState.selectedKey || '').trim();
+    __pqSpeakGreyTileFinal(key);
+    __pqSpeakRefreshProgressFinal();
+    __pqSpeakApplyDoneTilesFinal();
+
+    try { __pqSpeakFinalGreyTile(key); } catch (_e) {}
+    try { __pqSpeakFinalRefreshProgress(); } catch (_e) {}
+    try { __pqSpeakFinalRefreshDoneTiles(); } catch (_e) {}
+
+    try { __pqSpeakModalGreyTileFinal(key); } catch (_e) {}
+    try { __pqSpeakModalRefreshProgressFinal(); } catch (_e) {}
+    try { __pqSpeakModalRefreshDoneTilesFinal(); } catch (_e) {}
+  } catch (_e) {}
+}
+
+async function __pqSpeakCompleteKey(key, options) {
+  const opts = options || {};
+  const shouldPersist = opts.persist !== false;
+  const shouldCloseModal = !!opts.closeModal;
+
+  try {
+    key = String(key || __pqSpeakUiState.selectedKey || '').trim();
     if (!key) return false;
+
+    __pqSpeakEnsureStateShape();
 
     if (!__pqSpeakUiState.completedKeys || typeof __pqSpeakUiState.completedKeys !== 'object') {
       __pqSpeakUiState.completedKeys = {};
     }
 
+    __pqSpeakUiState.selectedKey = key;
     __pqSpeakUiState.completedKeys[key] = true;
-    __pqSpeakSaveDoneMapFinal();
-    __pqSpeakGreyTileFinal(key);
-    __pqSpeakRefreshProgressFinal();
-    try { __pqSpeakSyncManagedProgressFromDoneKeys(true); } catch (_e) {}
 
-    setTimeout(function(){ try { __pqSpeakGreyTileFinal(key); __pqSpeakRefreshProgressFinal(); } catch (_e) {} }, 80);
-    setTimeout(function(){ try { __pqSpeakGreyTileFinal(key); __pqSpeakRefreshProgressFinal(); } catch (_e) {} }, 300);
-    setTimeout(function(){ try { __pqSpeakGreyTileFinal(key); __pqSpeakRefreshProgressFinal(); } catch (_e) {} }, 800);
+    try {
+      if (__pqSpeakModalRecFinalState && __pqSpeakModalRecFinalState.doneKeys) {
+        __pqSpeakModalRecFinalState.doneKeys[key] = true;
+      }
+    } catch (_e) {}
+
+    __pqSpeakSaveDoneMapFinal();
+    __pqSpeakRefreshCompletionUiFinal(key);
+
+    await __pqSpeakSyncManagedProgressFromDoneKeys(shouldPersist);
+
+    if (shouldCloseModal) {
+      try {
+        const m = document.getElementById('pqSpeakChildModal');
+        if (m) m.classList.remove('is-open');
+      } catch (_e) {}
+
+      try { __pqSpeakModalReleaseMic(); } catch (_e) {}
+    }
+
+    try { __pqSyncSimplifiedSpeakUi(); } catch (_e) {}
+    try { __pqSpeakModalRefreshButtons(); } catch (_e) {}
+
+    [80, 300, 800].forEach(function (delay) {
+      setTimeout(function () {
+        try { __pqSpeakRefreshCompletionUiFinal(key); } catch (_e) {}
+      }, delay);
+    });
 
     return true;
   } catch (_e) {
     return false;
   }
+}
+
+function __pqSpeakFinalizeDoneFinal() {
+  return __pqSpeakCompleteKey(__pqSpeakUiState.selectedKey, { persist: true });
 }
 
 function __pqSpeakInstallDoneBinderFinal(compareBtn) {
@@ -7602,7 +7682,9 @@ function __pqSpeakInstallDoneBinderFinal(compareBtn) {
 
     compareBtn.addEventListener('click', function () {
       setTimeout(function () {
-        try { __pqSpeakFinalizeDoneFinal(); } catch (_e) {}
+        try {
+          Promise.resolve(__pqSpeakFinalizeDoneFinal()).catch(function () {});
+        } catch (_e) {}
       }, 40);
     }, true);
   } catch (_e) {}
@@ -8258,6 +8340,7 @@ function __pqEnsureSpeakChildModal() {
   document.body.appendChild(modal);
 
   modal.querySelector('.pq-speak-modal-close').addEventListener('click', function () {
+    try { __pqSpeakModalReleaseMic(); } catch (_e) {}
     modal.classList.remove('is-open');
   });
 
@@ -8283,7 +8366,10 @@ function __pqOpenSpeakChildModal(isVisible) {
   try {
     const modal = __pqEnsureSpeakChildModal();
     if (isVisible) modal.classList.add('is-open');
-    else modal.classList.remove('is-open');
+    else {
+      try { __pqSpeakModalReleaseMic(); } catch (_e) {}
+      modal.classList.remove('is-open');
+    }
   } catch (_e) {}
 }
 
@@ -8540,8 +8626,44 @@ function __pqSyncSimplifiedSpeakUi() {
 /* ===== SPEAK MODAL RECORDING FINAL v3 ===== */
 const __pqSpeakModalRecFinalState = {
   stream:null, recorder:null, chunks:[], blob:null, blobUrl:'',
-  attempts:Object.create(null), doneKeys:Object.create(null), stopTimer:null, playing:false
+  attempts:Object.create(null), doneKeys:Object.create(null), stopTimer:null, playing:false, cancelled:false
 };
+
+function __pqSpeakModalReleaseMic(){
+  try { if (__pqSpeakModalRecFinalState.stopTimer) clearTimeout(__pqSpeakModalRecFinalState.stopTimer); } catch(_e){}
+  __pqSpeakModalRecFinalState.stopTimer = null;
+
+  try {
+    const r = __pqSpeakModalRecFinalState.recorder;
+    if (r && r.state !== 'inactive') r.stop();
+  } catch(_e){}
+
+  try {
+    __pqStopMediaStream(__pqSpeakModalRecFinalState.stream);
+  } catch(_e){}
+
+  __pqSpeakModalRecFinalState.stream = null;
+  __pqSpeakModalRecFinalState.recorder = null;
+  __pqSpeakModalRecFinalState.chunks = [];
+  __pqSpeakModalRecFinalState.blob = null;
+  __pqSpeakModalRecFinalState.cancelled = true;
+
+  try {
+    if (__pqSpeakModalRecFinalState.blobUrl) {
+      URL.revokeObjectURL(__pqSpeakModalRecFinalState.blobUrl);
+    }
+  } catch(_e){}
+  __pqSpeakModalRecFinalState.blobUrl = '';
+
+  try { __pqSpeakUiState.isRecording = false; } catch(_e){}
+}
+
+try {
+  window.addEventListener('beforeunload', function () {
+    try { __pqSpeakModalReleaseMic(); } catch (_e) {}
+    try { __pqReleaseRepeatMicStream(); } catch (_e) {}
+  }, { once: true });
+} catch (_e) {}
 
 function __pqSpeakModalKey(){
   try { return String(__pqSpeakUiState.selectedKey || '').trim(); } catch(_e){ return ''; }
@@ -8631,6 +8753,7 @@ async function __pqSpeakModalStartRecord(){
   const stream = await __pqSpeakModalMic();
   __pqSpeakModalRecFinalState.chunks = [];
   __pqSpeakModalRecFinalState.blob = null;
+  __pqSpeakModalRecFinalState.cancelled = false;
 
   const rec = new MediaRecorder(stream);
   __pqSpeakModalRecFinalState.recorder = rec;
@@ -8641,6 +8764,12 @@ async function __pqSpeakModalStartRecord(){
 
   rec.onstop = function(){
     try {
+      if (__pqSpeakModalRecFinalState.cancelled) {
+        __pqSpeakUiState.isRecording = false;
+        try { __pqSpeakModalRefreshButtons(); } catch(_e){}
+        return;
+      }
+
       const chunks = __pqSpeakModalRecFinalState.chunks || [];
       const blob = chunks.length ? new Blob(chunks, {type: rec.mimeType || 'audio/webm'}) : null;
       __pqSpeakModalRecFinalState.blob = blob;
@@ -8807,7 +8936,7 @@ function __pqSpeakFinalRefreshDoneTiles() {
 
 
 
-function __pqSpeakModalDoneFinal(){
+async function __pqSpeakModalDoneFinal(){
   const key = __pqSpeakModalKey();
 
   if (!key) {
@@ -8822,29 +8951,7 @@ function __pqSpeakModalDoneFinal(){
     }
   } catch (_e) {}
 
-  try {
-    __pqSpeakUiState.completedKeys[key] = true;
-  } catch (_e) {}
-
-  try {
-    __pqSpeakModalRecFinalState.doneKeys[key] = true;
-  } catch (_e) {}
-
-  try { __pqSpeakMarkCurrentDone(); } catch (_e) {}
-  try { __pqSpeakSyncManagedProgressFromDoneKeys(true); } catch (_e) {}
-  try { __pqSpeakFinalGreyTile(key); } catch (_e) {}
-  try { __pqSpeakFinalRefreshProgress(); } catch (_e) {}
-  try { __pqSpeakFinalRefreshDoneTiles(); } catch (_e) {}
-
-  try {
-    const m = document.getElementById('pqSpeakChildModal');
-    if (m) m.classList.remove('is-open');
-  } catch(_e){}
-
-  try { __pqSyncSimplifiedSpeakUi(); } catch(_e){}
-  try { __pqSpeakFinalGreyTile(key); } catch (_e) {}
-  try { __pqSpeakFinalRefreshProgress(); } catch (_e) {}
-  try { __pqSpeakSyncManagedProgressFromDoneKeys(false); } catch (_e) {}
+  await __pqSpeakCompleteKey(key, { persist: true, closeModal: true });
 }
 
 
@@ -8893,7 +9000,7 @@ function __pqInstallSpeakModalRecordingFinal(recordBtn, micBtn, doneBtn){
     doneBtn.__pqSpeakModalDoneV3__ = true;
     doneBtn.addEventListener('click', function(ev){
       try { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); } catch(_e){}
-      __pqSpeakModalDoneFinal();
+      __pqSpeakModalDoneFinal().catch(function(){});
     }, true);
   }
 
@@ -8913,6 +9020,8 @@ function __pqInstallSpeakModalRecordingFinal(recordBtn, micBtn, doneBtn){
           clearInterval(__pqSpeakModalRefreshInterval);
         } catch (_e) {}
         __pqSpeakModalRefreshInterval = null;
+        try { __pqSpeakModalReleaseMic(); } catch (_ignore) {}
+        try { __pqReleaseRepeatMicStream(); } catch (_ignore) {}
       }, { once: true });
     } catch (_e) {}
   }
@@ -9027,7 +9136,7 @@ if (recordBtn.__pqSimpleSpeakBound__) return;
 
       setTimeout(function () {
         try {
-          __pqSpeakMarkCurrentDone();
+          Promise.resolve(__pqSpeakMarkCurrentDone()).catch(function () {});
         } catch (_e) {}
 
         try {
@@ -9226,7 +9335,6 @@ return engine;
 
   return window.__PQ_SPEAK_ENGINE__ || window.__PQ_TANWEEN_SPEAK_ENGINE__ || null;
 }
-
 
 
 /* ===== write.js ===== */
@@ -10138,23 +10246,6 @@ voiceSel.value = DEFAULTS.voice;
       );
     } catch (_e) {}
 
-    try {
-      const reloadKey =
-        __PQ_WRITE_RELOAD_KEY;
-
-      const writeProgress = managedProgress && managedProgress.write;
-      const stillPending = !!(
-        writeProgress &&
-        !writeProgress.completed &&
-        Number(writeProgress.passesDone || 0) <
-          Number(writeProgress.passesRequired || 1)
-      );
-
-      if (sessionStorage.getItem(reloadKey) === '1' && !stillPending) {
-        sessionStorage.removeItem(reloadKey);
-      }
-    } catch (_e) {}
-
     __pqApplyModeUI();
   }
 
@@ -10321,10 +10412,25 @@ function __pqShellRender() {
 
   async function __pqRefactoredStart() {
     let __pqTokenReadyPromise = Promise.resolve();
+    const __pqTokenPreStartWaitMs = Math.max(
+      0,
+      Number(__cfg('auth.tokenPreStartWaitMs', 350)) || 350
+    );
+
+    function __pqWaitForTokenPreStart() {
+      return Promise.race([
+        Promise.resolve(__pqTokenReadyPromise),
+        new Promise(function (resolve) {
+          setTimeout(resolve, __pqTokenPreStartWaitMs);
+        })
+      ]);
+    }
 
     try {
       if (typeof window.pqWaitForIframeTokens === 'function') {
-        __pqTokenReadyPromise = window.pqWaitForIframeTokens(5000);
+        __pqTokenReadyPromise = window.pqWaitForIframeTokens(5000).catch(function () {
+          return false;
+        });
       }
     } catch (_e) {}
 
@@ -10358,7 +10464,7 @@ function __pqShellRender() {
       pqBindLectureOnce();
     } catch (_e) {}
 
-    try { await Promise.resolve(__pqTokenReadyPromise); } catch (_e) {}
+    try { await __pqWaitForTokenPreStart(); } catch (_e) {}
 
     await window.PQLessonShell.start({
       beforeInit: function () {},
@@ -10432,7 +10538,7 @@ bindAutoCache: __pqShellBindAutoCache
       pqBindLectureOnce();
     } catch (_e) {}
 
-    try { await Promise.resolve(__pqTokenReadyPromise); } catch (_e) {}
+    try { await __pqWaitForTokenPreStart(); } catch (_e) {}
     // Start runtime init in parallel after early paint
     const fallbackStatePromise = __pqShellInitRuntime();
     const fallbackState = await fallbackStatePromise;
@@ -10523,4 +10629,3 @@ try {
     });
   }
 })();
-

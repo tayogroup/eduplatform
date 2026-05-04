@@ -284,23 +284,6 @@ voiceSel.value = DEFAULTS.voice;
       );
     } catch (_e) {}
 
-    try {
-      const reloadKey =
-        __PQ_WRITE_RELOAD_KEY;
-
-      const writeProgress = managedProgress && managedProgress.write;
-      const stillPending = !!(
-        writeProgress &&
-        !writeProgress.completed &&
-        Number(writeProgress.passesDone || 0) <
-          Number(writeProgress.passesRequired || 1)
-      );
-
-      if (sessionStorage.getItem(reloadKey) === '1' && !stillPending) {
-        sessionStorage.removeItem(reloadKey);
-      }
-    } catch (_e) {}
-
     __pqApplyModeUI();
   }
 
@@ -467,10 +450,25 @@ function __pqShellRender() {
 
   async function __pqRefactoredStart() {
     let __pqTokenReadyPromise = Promise.resolve();
+    const __pqTokenPreStartWaitMs = Math.max(
+      0,
+      Number(__cfg('auth.tokenPreStartWaitMs', 350)) || 350
+    );
+
+    function __pqWaitForTokenPreStart() {
+      return Promise.race([
+        Promise.resolve(__pqTokenReadyPromise),
+        new Promise(function (resolve) {
+          setTimeout(resolve, __pqTokenPreStartWaitMs);
+        })
+      ]);
+    }
 
     try {
       if (typeof window.pqWaitForIframeTokens === 'function') {
-        __pqTokenReadyPromise = window.pqWaitForIframeTokens(5000);
+        __pqTokenReadyPromise = window.pqWaitForIframeTokens(5000).catch(function () {
+          return false;
+        });
       }
     } catch (_e) {}
 
@@ -504,7 +502,7 @@ function __pqShellRender() {
       pqBindLectureOnce();
     } catch (_e) {}
 
-    try { await Promise.resolve(__pqTokenReadyPromise); } catch (_e) {}
+    try { await __pqWaitForTokenPreStart(); } catch (_e) {}
 
     await window.PQLessonShell.start({
       beforeInit: function () {},
@@ -578,7 +576,7 @@ bindAutoCache: __pqShellBindAutoCache
       pqBindLectureOnce();
     } catch (_e) {}
 
-    try { await Promise.resolve(__pqTokenReadyPromise); } catch (_e) {}
+    try { await __pqWaitForTokenPreStart(); } catch (_e) {}
     // Start runtime init in parallel after early paint
     const fallbackStatePromise = __pqShellInitRuntime();
     const fallbackState = await fallbackStatePromise;
@@ -669,4 +667,3 @@ try {
     });
   }
 })();
-

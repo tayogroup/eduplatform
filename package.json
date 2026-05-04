@@ -5,7 +5,8 @@
     "check:alphabet": "node --check src/units/alphabet/unit.runtime.js",
     "preview:bunny": "node tools/serve-bunny-output.js",
     "test": "npm run check:alphabet",
-    "validate:units": "node tools/validate-unit-config.js"
+    "validate:units": "node tools/validate-unit-config.js",
+    "verify:bunny": "node tools/verify-bunny-output.js"
   },
   "devDependencies": {
     "vite": "^5.0.0"

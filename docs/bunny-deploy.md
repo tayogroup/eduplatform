@@ -6,6 +6,12 @@ Build deployable files with:
 npm run build:bunny
 ```
 
+Verify the upload package before testing or deployment:
+
+```bash
+npm run verify:bunny
+```
+
 Preview the Bunny-style output locally with:
 
 ```bash
@@ -43,5 +49,25 @@ dist/pre_quraan/scripts/js/units/alphabet/patches/
 ```
 
 Upload the contents of `dist/pre_quraan/` to Bunny.net under the `/pre_quraan/` path.
+
+The upload root should contain folders like:
+
+```text
+scripts/
+styles/
+units/
+```
+
+For example, local file:
+
+```text
+dist/pre_quraan/scripts/index_v030.html
+```
+
+Should become:
+
+```text
+https://app.quraan.academy/pre_quraan/scripts/index_v030.html
+```
 
 The source HTML in `src/units/alphabet/index.html` uses local relative paths for development. The build rewrites those paths to production `/pre_quraan/...` paths for Bunny output.

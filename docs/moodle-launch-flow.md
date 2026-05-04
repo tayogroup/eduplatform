@@ -118,3 +118,10 @@ Update the Moodle `alphabet_listen` route after Bunny deployment so it points to
 ```
 
 Do this only after the Bunny upload path is confirmed.
+
+The app shell launcher route in `issue.php` should remain:
+
+```php
+$appBase = 'https://app.quraan.academy';
+$appPath = '/pre_quraan/scripts/index_v030.html';
+```

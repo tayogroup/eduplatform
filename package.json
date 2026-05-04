@@ -1,6 +1,7 @@
 {
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "build:bunny": "node tools/build-bunny-output.js alphabet",
     "check:alphabet": "node --check src/units/alphabet/unit.runtime.js",
     "test": "npm run check:alphabet",
     "validate:units": "node tools/validate-unit-config.js"

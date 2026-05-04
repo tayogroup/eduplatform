@@ -17,6 +17,7 @@ The Alphabet unit is emitted as:
 ```text
 dist/pre_quraan/units/alphabet/index.html
 dist/pre_quraan/styles/locked/
+dist/pre_quraan/scripts/js/locked/
 dist/pre_quraan/styles/units/alphabet.css
 dist/pre_quraan/scripts/js/units/alphabet/unit.config.js
 dist/pre_quraan/scripts/js/units/alphabet/unit.runtime.js

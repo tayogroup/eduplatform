@@ -10,8 +10,10 @@ const distRoot = path.join(root, 'dist', 'pre_quraan');
 const distUnitDir = path.join(distRoot, 'units', unitKey);
 const distStyleDir = path.join(distRoot, 'styles', 'units');
 const distLockedStyleDir = path.join(distRoot, 'styles', 'locked');
+const distLockedScriptDir = path.join(distRoot, 'scripts', 'js', 'locked');
 const distScriptDir = path.join(distRoot, 'scripts', 'js', 'units', unitKey);
 const srcLockedStyleDir = path.join(root, 'src', 'platform', 'locked', 'styles');
+const srcLockedScriptDir = path.join(root, 'src', 'platform', 'locked', 'scripts', 'js');
 
 function fail(message) {
   console.error(message);
@@ -55,9 +57,11 @@ if (!fs.existsSync(indexPath)) {
 ensureDir(distUnitDir);
 ensureDir(distStyleDir);
 ensureDir(distLockedStyleDir);
+ensureDir(distLockedScriptDir);
 ensureDir(distScriptDir);
 
 copyDir(srcLockedStyleDir, distLockedStyleDir);
+copyDir(srcLockedScriptDir, distLockedScriptDir);
 copyFile(path.join(srcUnitDir, 'unit.css'), path.join(distStyleDir, `${unitKey}.css`));
 copyFile(path.join(srcUnitDir, 'unit.config.js'), path.join(distScriptDir, 'unit.config.js'));
 copyFile(path.join(srcUnitDir, 'unit.runtime.js'), path.join(distScriptDir, 'unit.runtime.js'));
@@ -78,5 +82,6 @@ fs.writeFileSync(path.join(distUnitDir, 'index.html'), html, 'utf8');
 console.log(`Built ${unitKey} for Bunny output:`);
 console.log(`  ${path.relative(root, path.join(distUnitDir, 'index.html'))}`);
 console.log(`  ${path.relative(root, distLockedStyleDir)}`);
+console.log(`  ${path.relative(root, distLockedScriptDir)}`);
 console.log(`  ${path.relative(root, path.join(distStyleDir, `${unitKey}.css`))}`);
 console.log(`  ${path.relative(root, distScriptDir)}`);

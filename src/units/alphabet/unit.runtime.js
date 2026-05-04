@@ -84,404 +84,53 @@
 // ============================================================
   // SECTION 1: Safe unit configuration
   // ------------------------------------------------------------
-  // Read configuration from window.UNIT_CFG if present.
-  // Otherwise use internal defaults so the file can still run.
+  // Read configuration from window.UNIT_CFG.
+  // The runtime must not guess unit identity or Moodle web-service names.
   // ============================================================
 
-  const UNIT_CFG = (
-  typeof window !== 'undefined' &&
-  window.UNIT_CFG
-) ? window.UNIT_CFG : {
-  jsVersion: 'pq_unit_alphabet_mainjs_fallback_v5_flow_final',
-  lessonid: 'tajweed',
-  unitid: 'tanween_movement_listen',
-  wsGetFunction: 'local_prequran_get_tanween_movement_listen_state',
-  wsSetFunction: 'local_prequran_set_tanween_movement_listen_state',
-  messageUnitKey: 'alphabet',
-  messageStepKeys: [
-  'lecture',
-  'listen',
-  'listenplus',
-  'watch',
-  'sound',
-  'repeat',
-  'speak',
-  'match',
-  'animate',
-  'trace1',
-  'words'
-],
-  storagePrefix: 'tanween_movement_listen',
+  if (
+    typeof window === 'undefined' ||
+    !window.UNIT_CFG ||
+    typeof window.UNIT_CFG !== 'object'
+  ) {
+    const message = 'Pre-Quraan unit config missing: unit.config.js must load before unit.runtime.js.';
 
-  identity: {
-    lessonId: 'tajweed',
-    unitId: 'tanween_movement_listen',
-    storagePrefix: 'tanween_movement_listen'
-  },
+    try {
+      document.documentElement.innerHTML = [
+        '<div style="font-family:system-ui,sans-serif;text-align:center;margin:48px auto;max-width:720px;padding:24px;">',
+        '<h1>Unit Configuration Error</h1>',
+        '<p>',
+        message,
+        '</p>',
+        '</div>'
+      ].join('');
+    } catch (_e) {}
 
-  messaging: {
-    useConfigStepMessages: true,
-    disableLegacyCompletionFeedback: true
-  },
-
-  messageUi: {
-    titleText: '😊 Message',
-    continueText: 'Continue'
-  },
-
-  defaults: {
-    voice: 'child_boy',
-    speed: '1.0',
-    repeat: '1',
-    filter: 'all'
-  },
-
-  steps: [
-    { id: 'lecture', type: 'lecture',        label: 'Lecture', filter: 'all' },
-    { id: 'listen',     type: 'playlist',       label: 'Listen',  filter: 'all' },
-    { id: 'listenplus', type: 'playlist',       label: 'Listen+', filter: 'all' },
-    { id: 'watch',   type: 'video_playlist', label: 'Watch',   filter: 'all' },
-    { id: 'sound',   type: 'sound',          label: 'Sound',   filter: 'all' },
-    { id: 'repeat',  type: 'playlist',       label: 'Repeat',  filter: 'all' },
-	{ id: 'speak',   type: 'speak',          label: 'Speak',   filter: 'all' },
-	{ id: 'match',   type: 'match',          label: 'Match',   filter: 'all' },
-	{ id: 'animate', type: 'playlist',       label: 'Animate', filter: 'all' },
-    { id: 'trace1',  type: 'trace',          label: 'Write1',  filter: 'all' },
-    { id: 'words',   type: 'playlist',       label: 'Words',   filter: 'all' }
-  ],
-
-stepInjection: {
-  listenplus: {
-    id: 'listenplus',
-    type: 'listenplus',
-    label: 'Listen+',
-    filter: 'all'
-  },
-  watch: {
-    id: 'watch',
-    type: 'video_playlist',
-    label: 'Watch',
-    filter: 'all'
-  },
-  sound: {
-    id: 'sound',
-    type: 'sound',
-    label: 'Sound',
-    filter: 'all'
-  },
-  repeat: {
-    id: 'repeat',
-    type: 'playlist',
-    label: 'Repeat',
-    filter: 'all'
-  },
-  speak: {
-    id: 'speak',
-    type: 'speak',
-    label: 'Speak',
-    filter: 'all'
-  },
-  match: {
-    id: 'match',
-    type: 'match',
-    label: 'Match',
-    filter: 'all'
-  },
-  animate: {
-    id: 'animate',
-    type: 'animate',
-    label: 'Animate',
-    filter: 'all'
-  },
-  trace1: {
-    id: 'trace1',
-    type: 'trace',
-    label: 'Write',
-    filter: 'all'
-  },
-  words: {
-    id: 'words',
-    type: 'words',
-    label: 'Words',
-    filter: 'all'
+    throw new Error(message);
   }
-},
 
-  stepOrder: {
-    lecture: 0,
-    listen: 1,
-    watch: 2,
-    sound: 3,
-    repeat: 4,
-    speak: 5,
-	match: 6,
-	animate: 7,
-    write: 8,
-    trace1: 9,
-    all_letters: 10,
-    heavy: 11,
-    light: 12,
-    alifaa: 13,
-    vowels: 14
-  },
+  const UNIT_CFG = window.UNIT_CFG;
 
-  writeLabelMap: [
-    { from: 'Trace1', to: 'Write' },
-    { from: 'Trace 1', to: 'Write' },
-    { from: 'Trace2', to: 'Write2' },
-    { from: 'Trace 2', to: 'Write2' },
-    { from: 'Trace', to: 'Write' }
-  ],
+  function __pqFailConfig(message) {
+    try {
+      document.documentElement.innerHTML = [
+        '<div style="font-family:system-ui,sans-serif;text-align:center;margin:48px auto;max-width:720px;padding:24px;">',
+        '<h1>Unit Configuration Error</h1>',
+        '<p>',
+        message,
+        '</p>',
+        '</div>'
+      ].join('');
+    } catch (_e) {}
 
-  focusBadge: {
-    great: {
-      minScore: 120,
-      cls: 'focus-great',
-      text: 'Great Focus'
-    },
-    good: {
-      minScore: 30,
-      cls: 'focus-good',
-      text: 'Good Focus'
-    },
-    keep: {
-      cls: 'focus-keep',
-      text: 'Try to Focus'
-    }
-  },
-
-  uiText: {
-    playAll: '▶ Play All',
-    pause: '⏸ Pause',
-    resume: '▶ Resume',
-
-    writeOverlay: {
-      closeTitle: 'Close',
-      resetTitle: 'Reset',
-      resetButton: 'Reset ↺',
-      printTitle: 'Print',
-      printButton: 'Print 🖨',
-      rowsLabel: 'Rows',
-      colsLabel: 'Cols',
-      badgeAllWords: 'All Words',
-      badgePartPrefix: 'Part',
-      badgeSeparator: ' — ',
-      badgeOfWord: 'of',
-      badgeRangeOpen: '(',
-      badgeRangeDash: '–',
-      badgeRangeClose: ')'
-    },
-
-    speakPopup: {
-      okButton: 'OK'
-    }
-  },
-
-  stepperUi: {
-    stepPrefix: 'Step',
-    progressLabel: 'Progress',
-    reviewAriaPrefix: 'Review',
-    badgeCompleted: '✓',
-    badgeActive: '▶',
-    badgePending: '•'
-  },
-
-  speakUi: {
-    micEnablePopupText: 'Please enable microphone first.'
-  },
-
-  speakPopupUi: {
-    overlayBackground: 'rgba(0,0,0,0.55)',
-    zIndex: 99999,
-    box: {
-      background: '#fff',
-      borderRadius: '16px',
-      padding: '24px',
-      maxWidth: '320px',
-      width: '90%',
-      textAlign: 'center',
-      boxShadow: '0 20px 60px rgba(0,0,0,.35)',
-      fontWeight: '600'
-    },
-    message: {
-      marginBottom: '18px',
-      fontSize: '16px'
-    },
-    button: {
-      background: '#4CAF50',
-      color: '#fff',
-      padding: '10px 18px',
-      borderRadius: '10px',
-      fontWeight: '700'
-    }
-  },
-
-  media: {
-    l6Base: '',
-    watchBase: '',
-    lectureUrl: '',
-    voiceBases: {
-      child_boy: '',
-      child_girl: '',
-      adult_male: '',
-      adult_female: ''
-    },
-    adultMaleAlphaBase: '',
-    fallbackAudioBase: '',
-    fallbackWatchBase: ''
-  },
-
- playback: {
-  steps: {
-    listen: {
-      beforeStartMs: 400,
-      betweenLettersMs: 700,
-      afterCompleteMs: 500
-    },
-    watch: {
-      beforeStartMs: 400,
-      betweenLettersMs: 700,
-      afterCompleteMs: 500
-    },
-
-    // sound: audio → gap → video
-    sound: {
-      beforeStartMs: 400,
-      audioVideoGapMs: 250,
-      betweenLettersMs: 700,
-      afterCompleteMs: 500
-    },
-
-    repeat: {
-      beforeStartMs: 400,
-      betweenLettersMs: 2000,
-      afterCompleteMs: 500
-    },
-    match: {
-      beforeStartMs: 400,
-      betweenLettersMs: 2000,
-      afterCompleteMs: 500
-    },
-	listenplus: {
-	  beforeStartMs: 400,
-	  betweenLettersMs: 700,
-	  afterCompleteMs: 500
-	},
-	words: {
-	  beforeStartMs: 400,
-	  betweenLettersMs: 1200,
-	  afterCompleteMs: 500
-	},
-	animate: {
-	  beforeStartMs: 400,
-	  betweenLettersMs: 700,
-	  afterCompleteMs: 500
-	}
+    throw new Error(message);
   }
-},
 
-  filterSets: {
-    vowels: ['alif', 'waw', 'ya'],
-    heavy: ['kha', 'sad', 'dad', 'ta2', 'za2', 'ghain', 'qaf'],
-    alifaa: ['ba', 'ta', 'tha', 'ha2', 'kha', 'ra', 'zay', 'ta2', 'za2', 'fa', 'waw', 'ha', 'ya']
-  },
-
-  write: {
-    chunkSize: 14,
-    chunks: [14, 14, 14, 12],
-    rows: 11,
-    cols: 5,
-    wideWords: [],
-    spanWords: {},
-    minPassesRequired: 4,
-
-    adapter: {
-      unitKey: 'tanween_movement_listen',
-      buttonId: 'btnTrace',
-      displayLabel: 'Write'
-    },
-
-    canvas: {},
-    print: {
-      pageMargin: '16px',
-      columns: 2,
-      gap: '12px'
-    },
-
-    overlayUi: {
-      overlayBackground: 'rgba(0,0,0,.55)',
-      zIndex: 9999,
-      panel: {
-        width: 'min(1100px,92vw)',
-        height: 'min(760px,88vh)',
-        background: '#fff',
-        borderRadius: '18px',
-        boxShadow: '0 18px 70px rgba(0,0,0,.35)'
-      },
-      topbar: {
-        gap: '10px',
-        padding: '12px 14px',
-        borderBottom: '1px solid #eee'
-      },
-      closeButton: {
-        background: '#f3f4f6',
-        borderRadius: '12px',
-        padding: '10px 14px',
-        fontSize: '18px'
-      },
-      actionButton: {
-        background: '#f3f4f6',
-        borderRadius: '12px',
-        padding: '10px 14px',
-        fontWeight: '700'
-      },
-      badge: {
-        fontWeight: '800'
-      },
-      grid: {
-        padding: '16px',
-        background: '#fafafa',
-        gap: '14px',
-        previewColumns: 3
-      },
-      tile: {
-        background: '#fff',
-        border: '1px solid #eee',
-        borderRadius: '14px'
-      },
-      settings: {
-        gap: '8px',
-        marginLeft: '10px'
-      },
-      select: {
-        padding: '6px 8px',
-        borderRadius: '10px',
-        border: '1px solid #ddd'
-      },
-      label: {
-        fontSize: '12px',
-        color: '#666'
-      }
+  ['unitid', 'wsGetFunction', 'wsSetFunction'].forEach(function (key) {
+    if (!UNIT_CFG[key]) {
+      __pqFailConfig('Pre-Quraan unit config missing required field: ' + key);
     }
-  },
-
-  wordLimit: 0,
-
-  canvas: {
-    gridCols: 5,
-    rtlColFromLtr: false,
-    width: '100%',
-    maxWidth: '100%',
-    columnGap: '16px',
-    rowGap: '16px',
-    minTileWidth: '0px',
-    cells: [],
-    playSequence: []
-  },
-
-  audioMap: {},
-  watchVideoByKey: {}
-};
+  });
 
   /**
    * Safe config reader.
@@ -553,7 +202,7 @@ function __cfg(path, fallback) {
   }
 
   const __PQ_UNIT_ID = String(
-    __cfg('unitid', __pqIdentity('unitId', 'tanween_movement_listen'))
+    __cfg('unitid', __pqIdentity('unitId', ''))
   );
 
   const __PQ_MESSAGE_UNIT_KEY = String(
@@ -561,11 +210,11 @@ function __cfg(path, fallback) {
   );
 
   const __PQ_WS_GET = String(
-    __cfg('wsGetFunction', 'local_prequran_get_tanween_movement_listen_state')
+    __cfg('wsGetFunction', '')
   );
 
   const __PQ_WS_SET = String(
-    __cfg('wsSetFunction', 'local_prequran_set_tanween_movement_listen_state')
+    __cfg('wsSetFunction', '')
   );
 
   const __PQ_WRITE_RELOAD_KEY = `${__PQ_UNIT_ID}_write_terminal_reload_once_v1`;
@@ -768,7 +417,7 @@ const __PQ_PLAYBACK_CFG = Object.freeze({
   // SECTION 2: Unit identity
   // ============================================================
   const js_version_in_use = String(
-    __cfg('jsVersion', 'pq_unit_tanween_movement_listen_v1.6_FINAL')
+    __cfg('jsVersion', 'pq_unit_runtime_config_required')
   );
 
   window.js_version_in_use = js_version_in_use;
@@ -1429,7 +1078,7 @@ const LESSON_DEF = {
   const api = __pqEnsureFocusAdapter();
   return api
     ? api.focusUnitId()
-    : __pqIdentity('unitId', 'tanween_movement_listen');
+    : __pqIdentity('unitId', '');
 }
 
   function pqFocusGetSessionId(uid, lessonid, unitid) {
@@ -5150,7 +4799,7 @@ function __pqHandleGridTileClick(tile) {
     /* ===== MATCH STEP PATCH END ===== */
 
     try {
-      const bridge = window.__pqTanweenSpeak || null;
+      const bridge = window.__pqSpeakBridge || window.__pqTanweenSpeak || null;
       const speakOpen = !!(
         bridge &&
         typeof bridge.shouldShowPanel === 'function' &&
@@ -5833,7 +5482,7 @@ async function playLetter(key, times, rate) {
 // ============================================================
 // SECTION 27B: Shared Speak bridge for Listen
 // ============================================================
-window.__pqTanweenSpeak = {
+window.__pqSpeakBridge = {
   getCurrentStepId: function () {
     try {
       const cur = getCurrentStep();
@@ -6001,6 +5650,10 @@ refreshManagedState: async function () {
     try { __pqRenderRewardStars(true); } catch (_e) {}
   }
 };
+
+// Backward-compatible alias for locked adapter versions that still read the
+// original Tanween-specific bridge name.
+window.__pqTanweenSpeak = window.__pqSpeakBridge;
 
   function setPaused(value) {
     try {
@@ -9162,7 +8815,7 @@ if (micBtn && !micBtn.__pqIconMicBound__) {
 function __pqForceSpeakUiRefresh() {
   try {
     const mount = document.getElementById('speakMount');
-    const bridge = window.__pqTanweenSpeak || null;
+    const bridge = window.__pqSpeakBridge || window.__pqTanweenSpeak || null;
     const isSpeak = !!(
       bridge &&
       typeof bridge.shouldShowPanel === 'function' &&
@@ -9176,7 +8829,7 @@ function __pqForceSpeakUiRefresh() {
 
     mount.style.display = isSpeak ? 'block' : 'none';
 
-    const engine = window.__PQ_TANWEEN_SPEAK_ENGINE__;
+    const engine = window.__PQ_SPEAK_ENGINE__ || window.__PQ_TANWEEN_SPEAK_ENGINE__;
     if (!engine) {
       try { __pqSyncDynamicStepAction(); } catch (_e) {}
       return;
@@ -9194,8 +8847,9 @@ function __pqForceSpeakUiRefresh() {
 
     if (isSpeak && (!panel || !hasButtons)) {
       try {
-        if (typeof window.__pqTanweenSpeakEnsure === 'function') {
-          window.__pqTanweenSpeakEnsure();
+        const ensureSpeak = window.__pqSpeakEnsure || window.__pqTanweenSpeakEnsure;
+        if (typeof ensureSpeak === 'function') {
+          ensureSpeak();
         }
       } catch (_e) {}
 
@@ -9257,42 +8911,47 @@ function __pqEnsureSpeakBoot() {
     if (!mount) return null;
 
     // Prefer already-installed adapter engine
+    const existingEngine = window.__PQ_SPEAK_ENGINE__ || window.__PQ_TANWEEN_SPEAK_ENGINE__;
     if (
-      window.__PQ_TANWEEN_SPEAK_ENGINE__ &&
-      typeof window.__PQ_TANWEEN_SPEAK_ENGINE__.boot === 'function'
+      existingEngine &&
+      typeof existingEngine.boot === 'function'
     ) {
       try {
-        window.__PQ_TANWEEN_SPEAK_ENGINE__.boot();
+        existingEngine.boot();
       } catch (_e) {}
 
       try {
-        if (typeof window.__pqTanweenSpeakEnsure === 'function') {
-          window.__pqTanweenSpeakEnsure();
+        const ensureSpeak = window.__pqSpeakEnsure || window.__pqTanweenSpeakEnsure;
+        if (typeof ensureSpeak === 'function') {
+          ensureSpeak();
         }
       } catch (_e) {}
             try { __pqInstallSimplifiedSpeakUi(); } catch (_e) {}
-return window.__PQ_TANWEEN_SPEAK_ENGINE__;
+return existingEngine;
 
     }
 
     // If adapter has already exposed an ensure hook, use it
     try {
-      if (typeof window.__pqTanweenSpeakEnsure === 'function') {
-        window.__pqTanweenSpeakEnsure();
+      const ensureSpeak = window.__pqSpeakEnsure || window.__pqTanweenSpeakEnsure;
+      if (typeof ensureSpeak === 'function') {
+        ensureSpeak();
       }
     } catch (_e) {}
 
     // Final fallback: create engine only from the real adapter object
     if (
-      window.PQTanweenMovementSpeakAdapter &&
+      (window.PQSharedSpeakAdapter || window.PQTanweenMovementSpeakAdapter) &&
       window.PQSharedSpeakEngine &&
       typeof window.PQSharedSpeakEngine.create === 'function'
     ) {
       try {
+        const adapter = window.PQSharedSpeakAdapter || window.PQTanweenMovementSpeakAdapter;
         const engine = window.PQSharedSpeakEngine.create(
-          window.PQTanweenMovementSpeakAdapter
+          adapter
         );
 
+        window.__PQ_SPEAK_ENGINE__ = engine;
         window.__PQ_TANWEEN_SPEAK_ENGINE__ = engine;
 
         if (engine && typeof engine.boot === 'function') {
@@ -9300,8 +8959,9 @@ return window.__PQ_TANWEEN_SPEAK_ENGINE__;
         }
 
         try {
-          if (typeof window.__pqTanweenSpeakEnsure === 'function') {
-            window.__pqTanweenSpeakEnsure();
+          const ensureSpeak = window.__pqSpeakEnsure || window.__pqTanweenSpeakEnsure;
+          if (typeof ensureSpeak === 'function') {
+            ensureSpeak();
           }
         } catch (_e) {}
 
@@ -9312,7 +8972,7 @@ return engine;
     }
   } catch (_e) {}
 
-  return window.__PQ_TANWEEN_SPEAK_ENGINE__ || null;
+  return window.__PQ_SPEAK_ENGINE__ || window.__PQ_TANWEEN_SPEAK_ENGINE__ || null;
 }
 
   function updateControlsForCurrentStep() {

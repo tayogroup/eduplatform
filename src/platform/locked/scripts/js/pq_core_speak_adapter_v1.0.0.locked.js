@@ -1,11 +1,14 @@
 (function (window, document) {
   'use strict';
 
-  if (window.PQTanweenMovementSpeakAdapter && window.PQTanweenMovementSpeakAdapter.__version) {
+  if (
+    (window.PQSharedSpeakAdapter && window.PQSharedSpeakAdapter.__version) ||
+    (window.PQTanweenMovementSpeakAdapter && window.PQTanweenMovementSpeakAdapter.__version)
+  ) {
     return;
   }
 
-  const ADAPTER_VERSION = 'pq_unit_tanween_movement_speak_adapter_v1.6_manual_stop';
+  const ADAPTER_VERSION = 'pq_core_speak_adapter_v1.0.0_locked';
   const STORAGE_KEY = 'pq_tanween_movement_speak_progress_v1';
 
   const state = {
@@ -29,7 +32,7 @@
   }
 
   function getBridge() {
-    return window.__pqTanweenSpeak || null;
+    return window.__pqSpeakBridge || window.__pqTanweenSpeak || null;
   }
 
   function getCurrentStepId() {
@@ -557,7 +560,8 @@
   }
 
   function bindSelectionListener() {
-    if (document.__pqTanweenSpeakSelectionBound) return;
+    if (document.__pqSpeakSelectionBound || document.__pqTanweenSpeakSelectionBound) return;
+    document.__pqSpeakSelectionBound = true;
     document.__pqTanweenSpeakSelectionBound = true;
 
     document.addEventListener('PQ_SPEAK_SELECT', async function (ev) {
@@ -618,11 +622,17 @@
     }
   };
 
-  window.PQTanweenMovementSpeakAdapter = {
+  const adapter = {
     __version: ADAPTER_VERSION,
     mountId: 'speakMount'
   };
 
+  window.PQSharedSpeakAdapter = adapter;
+  window.__PQ_SPEAK_ENGINE__ = engine;
+  window.__pqSpeakEnsure = ensurePanel;
+
+  // Backward-compatible aliases for older unit runtimes.
+  window.PQTanweenMovementSpeakAdapter = adapter;
   window.__PQ_TANWEEN_SPEAK_ENGINE__ = engine;
   window.__pqTanweenSpeakEnsure = ensurePanel;
 

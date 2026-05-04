@@ -72,6 +72,7 @@ const UNIT_CFG = {
   // STEP DEFINITIONS
   // ==========================================================
   steps: [
+    { id: 'speak',   type: 'speak',          label: 'Speak',   filter: 'all' },
     { id: 'lecture', type: 'lecture',        label: 'Lecture', filter: 'all' },
     { id: 'listen',     type: 'playlist',       label: 'Listen',  filter: 'all' },
     { id: 'listenplus', type: 'playlist',       label: 'Listen+', filter: 'all' },
@@ -79,7 +80,6 @@ const UNIT_CFG = {
 	{ id: 'sound',      type: 'sound',          label: 'Sound',   filter: 'all' },
     { id: 'repeat',  type: 'playlist',       label: 'Repeat',  filter: 'all' },
     { id: 'match',   type: 'match',          label: 'Match',   filter: 'all' },
-    { id: 'speak',   type: 'speak',          label: 'Speak',   filter: 'all' },
 	{ id: 'animate', type: 'animate',        label: 'Animate', filter: 'all' },
     { id: 'trace1',  type: 'trace',          label: 'Write1',  filter: 'all' },
     { id: 'words',   type: 'playlist',       label: 'Words',   filter: 'all' }
@@ -126,14 +126,14 @@ stepInjection: {
 },
 
   stepOrder: {
-    lecture: 0,
-    listen: 1,
-    listenplus: 2,
-    watch: 3,
-	sound: 4,
-    repeat: 5,
-    match: 6,
-    speak: 7,
+    speak: 0,
+    lecture: 1,
+    listen: 2,
+    listenplus: 3,
+    watch: 4,
+	sound: 5,
+    repeat: 6,
+    match: 7,
     animate: 8,
     write: 9,
     trace1: 10,

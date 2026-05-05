@@ -35,18 +35,19 @@ dist/pre_quraan/
 The Alphabet unit is emitted as:
 
 ```text
+dist/pre_quraan/app/index.html
+dist/pre_quraan/app/css/
+dist/pre_quraan/app/js/
+dist/pre_quraan/app/img/
 dist/pre_quraan/scripts/index_v030.html
-dist/pre_quraan/scripts/index.html
-dist/pre_quraan/scripts/css/
-dist/pre_quraan/scripts/js/
-dist/pre_quraan/scripts/img/
+dist/pre_quraan/shared/css/
+dist/pre_quraan/shared/js/
 dist/pre_quraan/units/alphabet/index.html
-dist/pre_quraan/styles/shared/
-dist/pre_quraan/scripts/js/shared/
-dist/pre_quraan/styles/units/alphabet.css
-dist/pre_quraan/scripts/js/units/alphabet/unit.config.js
-dist/pre_quraan/scripts/js/units/alphabet/unit.runtime.js
-dist/pre_quraan/scripts/js/units/alphabet/patches/
+dist/pre_quraan/units/alphabet/css/unit.css
+dist/pre_quraan/units/alphabet/js/unit.config.js
+dist/pre_quraan/units/alphabet/js/unit.runtime.js
+dist/pre_quraan/units/alphabet/js/runtime/runtime.bundle.js
+dist/pre_quraan/units/alphabet/js/patches/
 ```
 
 Upload the contents of `dist/pre_quraan/` to Bunny.net under the `/pre_quraan/` path.
@@ -55,8 +56,9 @@ The upload root should contain folders like:
 
 ```text
 scripts/
-styles/
+shared/
 units/
+app/
 ```
 
 For example, local file:
@@ -71,7 +73,7 @@ Should become:
 https://app.quraan.academy/pre_quraan/scripts/index_v030.html
 ```
 
-`index_v030.html` is currently emitted as a compatibility alias for Moodle routes. The stable source file is `src/app-shell/index.html`, and the build also emits `dist/pre_quraan/scripts/index.html`.
+`index_v030.html` is currently emitted as a compatibility alias for Moodle routes. The stable source file is `src/app-shell/index.html`, and the canonical Bunny launcher is `dist/pre_quraan/app/index.html`.
 
 ## Upload Options
 

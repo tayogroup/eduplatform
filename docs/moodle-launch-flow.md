@@ -21,7 +21,8 @@ This repo keeps Moodle PHP source/reference files separate from the Bunny-hosted
 
    ```text
    src/app-shell/index.html
-   -> dist/pre_quraan/scripts/index_v030.html
+   -> dist/pre_quraan/app/index.html
+   -> dist/pre_quraan/scripts/index_v030.html compatibility alias
    ```
 
 4. Unit requests go back through Moodle child launcher for access, signing, and token brokering.

@@ -55,7 +55,7 @@
       return;
     }
 
-    if (stepId === 'speak' || stepId === 'trace1' || stepId === 'write') {
+    if (stepId === 'speak' || stepId === 'submit' || stepId === 'trace1' || stepId === 'write') {
       btnPause.disabled = true;
       try { __pqSyncDynamicStepAction(); } catch (_e) {}
       return;
@@ -99,6 +99,12 @@
     } catch (_e) {
       // swallow to keep UI usable
     }
+
+    try {
+      if (!__DB_ONLY && managedProgress) {
+        localStorage.setItem(LS_PROGRESS_CACHE_KEY, JSON.stringify(managedProgress));
+      }
+    } catch (_e) {}
 
     try {
       __pqForceWriteButtonRefresh();
@@ -171,6 +177,20 @@
   }
 
 function __pqRefreshAfterStepCompletion() {
+  try {
+    __pqResetGridVisualStateForStepHandoff();
+  } catch (_e) {}
+
+  try {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  } catch (_e) {
+    try { window.scrollTo(0, 0); } catch (_e2) {}
+  }
+
   __pqApplyModeUI();
 
   try {
@@ -189,10 +209,24 @@ function __pqRefreshAfterStepCompletion() {
     __pqForceSpeakUiRefresh();
   } catch (_e) {}
 
+  try {
+    __pqSyncSubmitUi();
+  } catch (_e) {}
+
   __pqAfterProgressChange(true);
 
   try {
     __pqRenderRewardStars(true);
+  } catch (_e) {}
+
+  try {
+    requestAnimationFrame(() => {
+      try {
+        __pqResetGridVisualStateForStepHandoff();
+        renderGrid();
+        updateControlsForCurrentStep();
+      } catch (_e) {}
+    });
   } catch (_e) {}
 }
 async function markLectureCompleted() {
@@ -231,6 +265,17 @@ async function markLectureCompleted() {
 
       __pqNormalizeCurrentStepId();
       __pqLectureCompleteHandled = true;
+    } else if (managedProgress && managedProgress[stepId]) {
+      const progress = managedProgress[stepId];
+      progress.passesDone = Math.max(
+        Number(progress.passesDone || 0) + 1,
+        Number(progress.passesRequired || 1)
+      );
+      progress.completed = true;
+      __pqLectureCompleteHandled = true;
+
+      advanceStepIfNeeded();
+      await persistManagedProgress();
     }
   } catch (_e) {
     // Do not throw — keep UI alive
@@ -364,6 +409,53 @@ async function markPlaylistStepCompleted(stepId) {
   function renderStepper() {
     if (!stepperRoot || !stepperList) return;
 
+    function __pqFindStepById(stepId) {
+      try {
+        const sid = String(stepId || '');
+        return (STEPS || []).find((step) => String((step && step.id) || '') === sid) || null;
+      } catch (_e) {
+        return null;
+      }
+    }
+
+    function __pqSetStepperLabel(labelEl, step, text) {
+      try {
+        labelEl.textContent = '';
+
+        const en = document.createElement('span');
+        en.className = 'managed-step-label-en';
+        en.textContent = String(text || step.label || step.id || '');
+        labelEl.appendChild(en);
+
+        if (step && step.arabicLabel) {
+          const ar = document.createElement('span');
+          ar.className = 'managed-step-label-ar';
+          ar.setAttribute('dir', 'rtl');
+          ar.textContent = String(step.arabicLabel || '');
+          labelEl.appendChild(ar);
+        }
+      } catch (_e) {
+        labelEl.textContent = String(text || (step && (step.label || step.id)) || '');
+      }
+    }
+
+    function __pqDecorateRenderedStepperLabels() {
+      try {
+        const cards = stepperList.querySelectorAll('.managed-step');
+        Array.prototype.forEach.call(cards, function (card, idx) {
+          const sid = card.getAttribute('data-stepid') || '';
+          const step = __pqFindStepById(sid) || ((STEPS || [])[idx] || null);
+          if (!step || !step.arabicLabel) return;
+
+          const label = card.querySelector('.managed-step-label');
+          if (!label || label.querySelector('.managed-step-label-ar')) return;
+
+          const englishText = String(label.textContent || step.label || step.id || '').trim();
+          __pqSetStepperLabel(label, step, englishText);
+        });
+      } catch (_e) {}
+    }
+
     // Unmanaged free-practice hides stepper.
     // Managed review mode keeps it visible.
     if (__pqShouldHideStepper()) {
@@ -389,6 +481,8 @@ async function markPlaylistStepCompleted(stepId) {
         finished: managedProgress.__finished,
         core: PQManagedCore
       });
+
+      __pqDecorateRenderedStepperLabels();
 
       return;
     }
@@ -430,6 +524,7 @@ async function markPlaylistStepCompleted(stepId) {
     const label = document.createElement('div');
     label.className = 'managed-step-label';
     label.textContent = String(step.label || step.id || '');
+    __pqSetStepperLabel(label, step, String(step.label || step.id || ''));
 
     const meta = document.createElement('div');
     meta.className = 'managed-step-meta';
@@ -545,6 +640,8 @@ async function markPlaylistStepCompleted(stepId) {
       } else {
         label.textContent = step.label;
       }
+
+      __pqSetStepperLabel(label, step, label.textContent);
 
       const meta = document.createElement('div');
       meta.className = 'managed-step-meta';

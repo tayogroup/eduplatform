@@ -33,12 +33,81 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
   },
 
   release: {
-    version: '1.0.0',
-    assetVersion: 'alphabet-v1.0.0'
+    version: '1.0.1',
+    assetVersion: 'alphabet-v1.0.1'
+  },
+
+  localization: {
+    defaultLanguage: 'en',
+    fallbackLanguage: 'en',
+    defaultScope: 'both',
+    supportedLanguages: ['en', 'ar', 'so', 'sw', 'pa', 'ur'],
+    translations: {
+      ar: {
+        ui: {
+          pageTitle: 'وحدة الحروف',
+          headerTitle: 'Alphabet Unit',
+          headerArabicTitle: 'وحدة الحروف',
+          aboutLabel: 'عن الحروف'
+        },
+        uiText: {
+          playAll: '▶ تشغيل الكل',
+          pause: '⏸ إيقاف',
+          resume: '▶ متابعة',
+          speakPopup: {
+            okButton: 'حسنا'
+          },
+          writeOverlay: {
+            closeTitle: 'إغلاق',
+            resetTitle: 'إعادة',
+            resetButton: 'إعادة ↺',
+            printTitle: 'طباعة',
+            printButton: 'طباعة',
+            rowsLabel: 'الصفوف',
+            colsLabel: 'الأعمدة',
+            badgeAllWords: 'كل الكلمات',
+            badgePartPrefix: 'جزء',
+            badgeOfWord: 'من'
+          }
+        },
+        stepperUi: {
+          stepPrefix: 'الخطوة',
+          progressLabel: 'التقدم',
+          reviewAriaPrefix: 'مراجعة'
+        },
+        focusBadge: {
+          great: { text: 'تركيز رائع' },
+          good: { text: 'تركيز جيد' },
+          keep: { text: 'ركّز' }
+        },
+        messageUi: {
+          titleText: 'رسالة 😊',
+          continueText: 'متابعة'
+        },
+        stepLabels: {
+          lecture: 'Lecture',
+          listen: 'Listen',
+          watch: 'Watch',
+          phonetics: 'Phonetics',
+          repeat: 'Repeat',
+          match: 'Match',
+          speak: 'Speak',
+          animate: 'Animate',
+          write: 'Write',
+          submit: 'Submit',
+          soundclue: 'SoundClue',
+          letterclue: 'LetterClue'
+        }
+      },
+      so: {},
+      sw: {},
+      pa: {},
+      ur: {}
+    }
   },
 
   assets: {
-    cdnRoot: 'https://ehelacademy.b-cdn.net/pre_quraan',
+    cdnRoot: '/pre_quraan',
     unitMediaRoot: '/lessons/alphabet/media',
     filePrefix: 'alph_',
     mediaPadWidth: 2
@@ -62,22 +131,37 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
       delayMs: 120
     }
   },
+
+  stepNavigation: {
+    previous: {
+      enabled: true,
+      label: '← Step',
+      title: 'Go back one step',
+      confirmTitle: 'Go back one step?',
+      confirmText: 'This will move you back to {previousStep}. Your progress for {currentStep} and {previousStep} will be reset so you can try again.',
+      confirmContinueText: 'Yes, go back',
+      confirmCancelText: 'Stay here'
+    }
+  },
   messageUnitKey: 'alphabet_movement',
   // ==========================================================
   // STEP DEFINITIONS
   // ==========================================================
+  // 	  { id: 'listen',     type: 'playlist',       label: 'Listen',  passFilters: ['all', 'light', 'alifaa', 'vowels', 'heavy', 'distinctions'] },
+ 
   steps: [
-    { id: 'speak',      type: 'speak',          label: 'Speak',   passFilters: ['all'] },
-    { id: 'lecture',    type: 'lecture',        label: 'Lecture', passFilters: ['all'] },
-    { id: 'listen',     type: 'playlist',       label: 'Listen',  passFilters: ['all', 'light', 'alifaa', 'vowels', 'heavy', 'distinctions'] },
-    { id: 'listenplus', type: 'playlist',       label: 'Listen+', passFilters: ['all', 'heavy', 'light', 'alifaa', 'vowels'] },
-    { id: 'watch',      type: 'video_playlist', label: 'Watch',   passFilters: ['all', 'heavy', 'light', 'alifaa', 'vowels'] },
-    { id: 'sound',      type: 'sound',          label: 'Sound',   passFilters: ['all', 'heavy', 'light', 'alifaa', 'vowels'] },
-    { id: 'repeat',     type: 'playlist',       label: 'Repeat',  passFilters: ['all', 'heavy', 'light', 'alifaa', 'vowels'] },
-    { id: 'match',      type: 'match',          label: 'Match',   passFilters: ['all'] },
-    { id: 'animate',    type: 'animate',        label: 'Animate', passFilters: ['all'] },
-    { id: 'trace1',     type: 'trace',          label: 'Write1',  passFilters: ['all'] },
-    { id: 'words',      type: 'playlist',       label: 'Words',   passFilters: ['all'] }
+    { id: 'lecture',    type: 'lecture',        label: 'Lecture', arabicLabel: 'شرح', passFilters: ['all'] },  
+	 { id: 'listen',     type: 'playlist',       label: 'Listen', arabicLabel: 'استمع', passFilters: ['all'] },
+    { id: 'watch',      type: 'video_playlist', label: 'Watch', arabicLabel: 'شاهد', passFilters: ['all'] },
+   { id: 'soundclue',      type: 'soundclue',       label: 'SoundClue', arabicLabel: 'تلميحات صوتية', passFilters: ['all'] },
+	{ id: 'letterclue', type: 'letterclue',       label: 'LetterClue', arabicLabel: 'تلميحات الحروف', passFilters: ['all'] },
+    { id: 'phonetics',      type: 'phonetics',          label: 'Phonetics', arabicLabel: 'النطق', passFilters: ['all'] },
+   { id: 'repeat',     type: 'playlist',       label: 'Repeat', arabicLabel: 'كرر', passFilters: ['all'] },
+    { id: 'match',      type: 'match',          label: 'Match', arabicLabel: 'طابق', passFilters: ['all'] },
+    { id: 'speak',      type: 'speak',          label: 'Speak', arabicLabel: 'تحدث', passFilters: ['all'] },
+    { id: 'animate',    type: 'animate',        label: 'Animate', arabicLabel: 'شاهد الكتابة', passFilters: ['all'] },
+    { id: 'write',      type: 'write',          label: 'Write', arabicLabel: 'اكتب', passFilters: ['all'] },
+     { id: 'submit',     type: 'submit',         label: 'Submit', arabicLabel: 'أرسل', passFilters: ['all'] }	
   ],
   writeLabelMap: [
     { from: 'Trace1', to: 'Write' },
@@ -187,6 +271,10 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
   },
 
   ui: {
+    pageTitle: 'PQ Unit - Alphabet Unit',
+    headerTitle: 'Alphabet Unit',
+    headerArabicTitle: 'وحدة الحروف',
+    aboutLabel: 'About Alphabet',
     showDbSavedToast: false
   },
 
@@ -295,9 +383,10 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
 
   layout: {
     browserGridCols: 4,
+    sepFontSize: '6.5rem',
     mobileGridCols: 2,
-    mobileTileMinHeight: '158px',
-    mobileSepFontSize: '2.45rem',
+    mobileTileMinHeight: '260px',
+    mobileSepFontSize: '5.4rem',
     mobileSmallFontSize: '1.05rem',
     width: '100%',
     maxWidth: '100%',
@@ -307,13 +396,19 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
   },
 
   playback: {
+    // Per-step letter audio mode: 'name', 'sound', or 'both'.
+    // 'name' uses audio/male; 'sound' uses audio/sound; 'both' plays name then sound.
+    letterAudioMode: 'both',
+    letterAudioSequenceGapMs: 120,
     steps: {
       listen: {
+        letterAudioMode: 'both',
         beforeStartMs: 400,
         betweenLettersMs: 700,
         afterCompleteMs: 500
       },
 listenplus: {
+  letterAudioMode: 'both',
   anchorPlaybackRate: 0.65,
   anchorRepeats: 2,
   beforeStartMs: 500,
@@ -329,44 +424,137 @@ repeatRecording: {
   enabled: true,
   recordMs: 1400,
   autoStartDelayMs: 450,
-  replayStudent: true
+  maxAttempts: 3,
+  retryDelayMs: 600,
+  replayStudent: true,
+  feedbackHoldMs: 950,
+  quality: {
+    enabled: true,
+    minDurationMs: 260,
+    minRms: 0.026,
+    minPeak: 0.075,
+    minActiveRatio: 0.14,
+    minLoudRatio: 0.035,
+    minLoudRunMs: 45,
+    minVoicedBins: 2,
+    minVoiceScore: 3,
+    hardMinPeak: 0.035,
+    hardMinRms: 0.010,
+    voiceThreshold: 0.045,
+    binVoiceThreshold: 0.030,
+    passIfAnalysisUnavailable: false,
+    minDurationRatio: 0.25,
+    maxDurationRatio: 3.2,
+    maxEnvelopeDiff: 0.75,
+    envelopeBins: 12
+  }
 },
 
 sound: {
+  letterAudioMode: 'both',
+  requireExplainerFirst: true,
+  autoVideoAfterExplainer: true,
+  videoRepeatCount: 2,
+  betweenVideoRepeatsMs: 180,
   beforeStartMs: 400,
   audioVideoGapMs: 250,
   betweenLettersMs: 700,
   afterCompleteMs: 500
 },
 
+speak: {
+  letterAudioMode: 'both',
+  letterPlaybackRate: 1.0,
+  doneConfirm: {
+    enabled: true
+  },
+  recordingUpload: {
+    enabled: true,
+    required: false,
+    wsFunction: 'local_prequran_save_speak_recording',
+    maxBytes: 3000000
+  },
+  comparison: {
+    enabled: false,
+    engine: 'dtw',
+    minScore: 0.58,
+    maxAttempts: 3,
+    allowDoneAfterMaxAttempts: true,
+    replayTeacherStudent: true,
+    passIfUnavailable: false,
+    sampleRate: 8000,
+    frameMs: 32,
+    hopMs: 16,
+    bandRatio: 0.32,
+    distanceScale: 2.7,
+    minFrames: 5,
+    silenceThreshold: 0.012,
+    requireVowelShape: true,
+    vowelWindowMs: 350,
+    vowelRegion: 'tail',
+    vowelMinScore: 0.58,
+    vowelDistanceScale: 0.62
+  }
+},
+
+submit: {
+  letterAudioMode: 'both',
+  recordingUpload: {
+    enabled: true,
+    required: true,
+    wsFunction: 'local_prequran_save_submit_recording',
+    maxBytes: 6000000
+  }
+},
+
 animate: {
+  letterAudioMode: 'both',
+  audioBeforeVideo: true,
+  audioPlaybackRate: 1.0,
+  videoPlaybackRate: 2.85,
+  audioVideoGapMs: 250,
+  modalMaxWidth: '52vw',
+  modalMaxHeight: '52vh',
   beforeStartMs: 400,
   betweenLettersMs: 700,
   afterCompleteMs: 500
 },
 
 words: {
+  letterAudioMode: 'both',
+  letterAudioSourceStep: 'listen',
+  modalLetterAudioMode: 'sound',
+  modalLetterRepeats: 1,
+  modalLetterPlaybackRate: 1.0,
   anchorPlaybackRate: 0.65,
   anchorRepeats: 3,
+  wordRepeats: 3,
   beforeStartMs: 500,
   betweenLettersMs: 3000,
   afterCompleteMs: 700,
   wordDelayMs: 0,
   syncPauseAfterLetterMs: 1200,
   wordHoldMs: 3500,
-  wordAudioTimeoutMs: 7000
+  wordAudioTimeoutMs: 7000,
+  progress: {
+    label: 'Progress',
+    checkText: '\u2713'
+  }
 },
       watch: {
+        letterAudioMode: 'both',
         beforeStartMs: 400,
         betweenLettersMs: 700,
         afterCompleteMs: 500
       },
       repeat: {
+        letterAudioMode: 'both',
         beforeStartMs: 400,
         betweenLettersMs: 2000,
         afterCompleteMs: 500
       },
 	  match: {
+        letterAudioMode: 'both',
         beforeStartMs: 400,
         betweenLettersMs: 2000,
         afterCompleteMs: 500
@@ -375,109 +563,10 @@ words: {
   },
 
   messages: {
-    base: 'https://ehelacademy.b-cdn.net/pre_quraan/messages/unit_steps/alphabet/',
-
-    entry: {
-      lecture: {
-        audio: 'alphabet_lecture step.mp3',
-        text: 'Welcome to Quraan Academy Pre-quraan course.  You are in the first unit, the Alphabet, Lecture step. Click ‘Play Lecture’ and listen to the lecture carefully. Make sure you are in a quiet space with no distractions, and stay focused throughout the entire unit.'
-      },
-      listen: {
-        audio: 'alphabet_listen_step_all_lettlers.mp3',
-        text: 'You have completed Alphabet Movement Lecture step. You have now entered Listen step, all letters. Listen carefully. Do not repeat—just focus on how each sound is different. Notice which sounds are strong, soft, or long. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-      },
-      watch: {
-        audio: 'step_watch.mp3',
-        clap: true,
-        text: 'Good Job! You have completed the Alphabet Listen step. You have now entered the Watch step, all letters section. Click “Watch” and look carefully at how each letter is pronounced and formed. Watch quietly, keep your eyes on the screen, and do not repeat yet. You will have the opportunity to repeat later.'
-      },
-      repeat: {
-        audio: 'step_repeat.mp3',
-        text: 'You have completed Alphabet Watch step. You have now entered Repeat step. Click on Play All, then listen and repeat after.'
-      },
-      speak: {
-        audio: 'step_speak.mp3',
-        text: 'You have completed Alphabet Repeat step. You have now entered Speak step. Tap a word, record your voice, and compare with the correct pronunciation.'
-      },
-	  animate: {
-        audio: 'step_animate.mp3',
-        text: 'You have completed Alphabet Repeat step. You have now entered Animate step. Tap a word, record your voice, and compare with the correct pronunciation.'
-      },
-      trace1: {
-        audio: 'step_trace1.mp3',
-        text: 'You have completed Alphabet Animate step. You have now entered Write step. Click on Write, Trace, and then Print.'
-      }
-    },
-
-	entryPasses: {	
-	  listen: [
-		{
-		  audio: 'alphabet_listen_step_heavy_letters.mp3',
-		  text: 'You have completed Listen step, all letters section.  You are now in Listen step, heavy letters section. Listen carefully. Do not repeat—just focus on the deep, strong sound. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_light_letters.mp3',
-		  text: 'You have completed Listen step, heavy letters section.  You are now in Listen step, light letters section.  Listen carefully. Do not repeat—just focus on the soft, clear sound. Notice how the tongue stays relaxed and the sound is not heavy. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_alifaa_letters.mp3',
-		  text: 'You have completed Listen step, heavy letters section. You are now in letters with Alif. Listen carefully. Do not repeat—just focus on the long, stretched sound. Notice how the sound is held longer and flows smoothly. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_vowels_letters.mp3',
-		  text: 'You have completed Listen step, letters with Alif section.  You are now in vowels section. Listen carefully. Do not repeat—just focus on the short, clear sound. Notice how each vowel changes the letter sound quickly and lightly. You will have the opportunity to watch and repeat later. Click on Watch to continue'
-		}
-	  ],	  
-	  watch: [
-		{
-		  audio: 'alphabet_listen_step_heavy_letters.mp3',
-		  text: 'You have completed Watch step, all letters section.  You are now in Listen step, heavy letters section. Listen carefully. Do not repeat—just focus on the deep, strong sound. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_light_letters.mp3',
-		  text: 'You have completed Watch step, heavy letters section.  You are now in Listen step, light letters section.  Listen carefully. Do not repeat—just focus on the soft, clear sound. Notice how the tongue stays relaxed and the sound is not heavy. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_alifaa_letters.mp3',
-		  text: 'You have completed Watch step, heavy letters section. You are now in letters with Alif. Listen carefully. Do not repeat—just focus on the long, stretched sound. Notice how the sound is held longer and flows smoothly. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_vowels_letters.mp3',
-		  text: 'You have completed Watch step, letters with Alif section.  You are now in vowels section. Listen carefully. Do not repeat—just focus on the short, clear sound. Notice how each vowel changes the letter sound quickly and lightly. You will have the opportunity to watch and repeat later. Click on Watch to continue'
-		}
-	  ],	  
-	  repeat: [
-		{
-		  audio: 'alphabet_listen_step_heavy_letters.mp3',
-		  text: 'You have completed Repeat step, all letters section.  You are now in Listen step, heavy letters section. Listen carefully. Do not repeat—just focus on the deep, strong sound. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_light_letters.mp3',
-		  text: 'You have completed Repeat step, heavy letters section.  You are now in Listen step, light letters section.  Listen carefully. Do not repeat—just focus on the soft, clear sound. Notice how the tongue stays relaxed and the sound is not heavy. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_alifaa_letters.mp3',
-		  text: 'You have completed Repeat step, heavy letters section. You are now in letters with Alif. Listen carefully. Do not repeat—just focus on the long, stretched sound. Notice how the sound is held longer and flows smoothly. You will have the opportunity to watch and repeat later. Click on Listen to continue'
-		},
-		{
-		  audio: 'alphabet_listen_step_vowels_letters.mp3',
-		  text: 'You have completed Repeat step, letters with Alif section.  You are now in vowels section. Listen carefully. Do not repeat—just focus on the short, clear sound. Notice how each vowel changes the letter sound quickly and lightly. You will have the opportunity to watch and repeat later. Click on Watch to continue'
-		}
-	  ],
-	  
-      trace1: [
-		{
-		  audio: 'step_trace1_pass2.mp3',
-		  text: '...'
-		}
-	  ]
-	},
-
-		completion: {
-		  audio: 'step_completion.mp3',
-		  text: 'Congratulations. You have completed Alphabet Learn Unit. You can now move to unmanaged mode or to the next unit.'
-		}
-	  },
+    base: "/pre_quraan/messages/unit_steps/alphabet/",
+    manifest: './unit.messages.js',
+    version: "alphabet-messages-v1.0.0"
+  },
 
   write: {
     chunkSize: 4,
@@ -628,8 +717,8 @@ words: {
 
   listenPlus: {
     enabled: true,
-    imageBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/listen_plus/animals/images/',
-    audioBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/listen_plus/animals/audio/',
+    imageBase: '/pre_quraan/lessons/alphabet/media/listen_plus/animals/images/',
+    audioBase: '/pre_quraan/lessons/alphabet/media/listen_plus/animals/audio/',
     imageExt: '.png',
     audioExt: '.mp3',
     title: 'Listen+',
@@ -670,8 +759,8 @@ words: {
 
   words: {
     enabled: true,
-    imageBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/words/images/',
-    audioBase: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/alphabet/media/words/audio/',
+    imageBase: '/pre_quraan/lessons/alphabet/media/words/images/',
+    audioBase: '/pre_quraan/lessons/alphabet/media/words/audio/',
     imageExt: '.png',
     audioExt: '.mp3',
     title: 'Words',
@@ -705,32 +794,53 @@ words: {
       alph_26: { letter: 'ه', word: 'هدهد',    image: 'ha_hudhud',       audio: 'ha_hudhud' },
       alph_27: { letter: 'و', word: 'وردة',    image: 'waw_warda',       audio: 'waw_warda' },
       alph_28: { letter: 'ي', word: 'يد',      image: 'ya_yad',          audio: 'ya_yad' },
-      alph_29: { letter: 'ء', word: 'أرنب',    image: 'hamza_arnab',     audio: 'hamza_arnab' }
+      alph_29: { letter: 'ء', word: 'أرنب',    image: 'r_rabbit',         audio: 'hamza_arnab' }
     }
   },
 	media: {
 
 	  // Lecture
-	  lectureUrl: 'https://ehelacademy.b-cdn.net/pre_quraan/messages/lectures/alphabet_lecture.mp4',
+	  lectureUrl: '/pre_quraan/messages/lectures/alphabet_lecture.mp4',
 
 	  // Voice variants
 	  voiceBases: {
-		child_boy: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/child_boy_alphabet/',
-		child_girl: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/child_girl_alphabet/',
-		adult_male: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/adult_male_alphabet/',
-		adult_female: 'https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/adult_female_alphabet/'
+		child_boy: '/pre_quraan/lessons/alphabet/media/audio/male/',
+		child_girl: '/pre_quraan/lessons/alphabet/media/audio/male/',
+		adult_male: '/pre_quraan/lessons/alphabet/media/audio/male/',
+		adult_female: '/pre_quraan/lessons/alphabet/media/audio/male/'
 	  },
 
 	  // Default voice
 	  adultMaleAlphaBase:
-		'https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/adult_male_alphabet/',
+		'/pre_quraan/lessons/alphabet/media/audio/male/',
 
 	  // Fallbacks
+	  l6Base:
+		'/pre_quraan/lessons/alphabet/media/audio/male/',
+
+	  watchBase:
+		'/pre_quraan/lessons/alphabet/media/video/',
+
+	  animateBase:
+		'/pre_quraan/lessons/alphabet/media/animate/',
+
+	  soundImageBase:
+		'/pre_quraan/lessons/alphabet/media/sound/images/',
+
+	  soundExplainerBase:
+		'/pre_quraan/lessons/alphabet/media/sound/audio/',
+
+	  letterSoundBase:
+		'/pre_quraan/lessons/alphabet/media/audio/sound/',
+
+	  soundAudioBase:
+		'/pre_quraan/lessons/alphabet/media/sound/audio/',
+
 	  fallbackAudioBase:
-		'https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson11/audios/',
+		'/pre_quraan/lessons/alphabet/media/audio/male/',
 
 	  fallbackWatchBase:
-		'https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson6/videos/'
+		'/pre_quraan/lessons/alphabet/media/video/'
 	},
   // Example long-word entries:
   // { key: 'alph_7', text: 'كهيعص', span: 2 },
@@ -738,35 +848,35 @@ words: {
 
   content: {
     items: [
-			{ key: 'alph_1', text: 'ا', en: 'alif' },
-			{ key: 'alph_2', text: 'ب', en: 'ba' },
-			{ key: 'alph_3', text: 'ت', en: 'ta' },
-			{ key: 'alph_4', text: 'ث', en: 'tha' },
-			{ key: 'alph_5', text: 'ج', en: 'jeem' },
-			{ key: 'alph_6', text: 'ح', en: 'ha' },
-			{ key: 'alph_7', text: 'خ', en: 'kha' },
-			{ key: 'alph_8', text: 'د', en: 'dal' },
-			{ key: 'alph_9', text: 'ذ', en: 'dhal' },
-			{ key: 'alph_10', text: 'ر', en: 'ra' },
-			{ key: 'alph_11', text: 'ز', en: 'zay' },
-			{ key: 'alph_12', text: 'س', en: 'seen' },
-			{ key: 'alph_13', text: 'ش', en: 'sheen' },
-			{ key: 'alph_14', text: 'ص', en: 'sad' },
-			{ key: 'alph_15', text: 'ض', en: 'dad' },
-			{ key: 'alph_16', text: 'ط', en: 'ta' },
-			{ key: 'alph_17', text: 'ظ', en: 'za' },
-			{ key: 'alph_18', text: 'ع', en: 'ayn' },
-			{ key: 'alph_19', text: 'غ', en: 'ghayn' },
-			{ key: 'alph_20', text: 'ف', en: 'fa' },
-			{ key: 'alph_21', text: 'ق', en: 'qaf' },
-			{ key: 'alph_22', text: 'ك', en: 'kaf' },
-			{ key: 'alph_23', text: 'ل', en: 'lam' },
-			{ key: 'alph_24', text: 'م', en: 'meem' },
-			{ key: 'alph_25', text: 'ن', en: 'noon' },
-			{ key: 'alph_26', text: 'ه', en: 'ha' },
-			{ key: 'alph_27', text: 'و', en: 'waw' },
-			{ key: 'alph_28', text: 'ي', en: 'ya' },
-			{ key: 'alph_29', text: 'ء', en: 'hamza' }
+			{ key: 'alph_1', text: 'ا', en: 'alif', row: 1, displayCol: 4, audio: 'alph_01.mp3', video: 'alph_01.mp4' },
+			{ key: 'alph_2', text: 'ب', en: 'ba', row: 1, displayCol: 3, audio: 'alph_02.mp3', video: 'alph_02.mp4' },
+			{ key: 'alph_3', text: 'ت', en: 'ta', row: 1, displayCol: 2, audio: 'alph_03.mp3', video: 'alph_03.mp4' },
+			{ key: 'alph_4', text: 'ث', en: 'tha', row: 1, displayCol: 1, audio: 'alph_04.mp3', video: 'alph_04.mp4' },
+			{ key: 'alph_5', text: 'ج', en: 'jeem', row: 2, displayCol: 4, audio: 'alph_05.mp3', video: 'alph_05.mp4' },
+			{ key: 'alph_6', text: 'ح', en: 'ha', row: 2, displayCol: 3, audio: 'alph_06.mp3', video: 'alph_06.mp4' },
+			{ key: 'alph_7', text: 'خ', en: 'kha', row: 2, displayCol: 2, audio: 'alph_07.mp3', video: 'alph_07.mp4' },
+			{ key: 'alph_8', text: 'د', en: 'dal', row: 2, displayCol: 1, audio: 'alph_08.mp3', video: 'alph_08.mp4' },
+			{ key: 'alph_9', text: 'ذ', en: 'dhal', row: 3, displayCol: 4, audio: 'alph_09.mp3', video: 'alph_09.mp4' },
+			{ key: 'alph_10', text: 'ر', en: 'ra', row: 3, displayCol: 3, audio: 'alph_10.mp3', video: 'alph_10.mp4' },
+			{ key: 'alph_11', text: 'ز', en: 'zay', row: 3, displayCol: 2, audio: 'alph_11.mp3', video: 'alph_11.mp4' },
+			{ key: 'alph_12', text: 'س', en: 'seen', row: 3, displayCol: 1, audio: 'alph_12.mp3', video: 'alph_12.mp4' },
+			{ key: 'alph_13', text: 'ش', en: 'sheen', row: 4, displayCol: 4, audio: 'alph_13.mp3', video: 'alph_13.mp4' },
+			{ key: 'alph_14', text: 'ص', en: 'sad', row: 4, displayCol: 3, audio: 'alph_14.mp3', video: 'alph_14.mp4' },
+			{ key: 'alph_15', text: 'ض', en: 'dad', row: 4, displayCol: 2, audio: 'alph_15.mp3', video: 'alph_15.mp4' },
+			{ key: 'alph_16', text: 'ط', en: 'ta', row: 4, displayCol: 1, audio: 'alph_16.mp3', video: 'alph_16.mp4' },
+			{ key: 'alph_17', text: 'ظ', en: 'za', row: 5, displayCol: 4, audio: 'alph_17.mp3', video: 'alph_17.mp4' },
+			{ key: 'alph_18', text: 'ع', en: 'ayn', row: 5, displayCol: 3, audio: 'alph_18.mp3', video: 'alph_18.mp4' },
+			{ key: 'alph_19', text: 'غ', en: 'ghayn', row: 5, displayCol: 2, audio: 'alph_19.mp3', video: 'alph_19.mp4' },
+			{ key: 'alph_20', text: 'ف', en: 'fa', row: 5, displayCol: 1, audio: 'alph_20.mp3', video: 'alph_20.mp4' },
+			{ key: 'alph_21', text: 'ق', en: 'qaf', row: 6, displayCol: 4, audio: 'alph_21.mp3', video: 'alph_21.mp4' },
+			{ key: 'alph_22', text: 'ك', en: 'kaf', row: 6, displayCol: 3, audio: 'alph_22.mp3', video: 'alph_22.mp4' },
+			{ key: 'alph_23', text: 'ل', en: 'lam', row: 6, displayCol: 2, audio: 'alph_23.mp3', video: 'alph_23.mp4' },
+			{ key: 'alph_24', text: 'م', en: 'meem', row: 6, displayCol: 1, audio: 'alph_24.mp3', video: 'alph_24.mp4' },
+			{ key: 'alph_25', text: 'ن', en: 'noon', row: 7, displayCol: 4, audio: 'alph_25.mp3', video: 'alph_25.mp4' },
+			{ key: 'alph_26', text: 'ه', en: 'ha', row: 7, displayCol: 3, audio: 'alph_26.mp3', video: 'alph_26.mp4' },
+			{ key: 'alph_27', text: 'و', en: 'waw', row: 7, displayCol: 2, audio: 'alph_27.mp3', video: 'alph_27.mp4' },
+			{ key: 'alph_28', text: 'ي', en: 'ya', row: 7, displayCol: 1, audio: 'alph_28.mp3', video: 'alph_28.mp4' },
+			{ key: 'alph_29', text: 'ء', en: 'hamza', row: 8, displayCol: 4, audio: 'alph_29.mp3', video: 'alph_29.mp4' }
 
     ]
   }

@@ -397,7 +397,8 @@ const closeBtn = document.getElementById('closeBtn');
         id === 'write' ||
         id === 'trace1' ||
         id === 'trace' ||
-        type === 'trace'
+        type === 'trace' ||
+        type === 'write'
       ) {
         return String((step && step.id) || 'write');
       }
@@ -420,7 +421,8 @@ const closeBtn = document.getElementById('closeBtn');
         id === 'write' ||
         id === 'trace1' ||
         id === 'trace' ||
-        type === 'trace'
+        type === 'trace' ||
+        type === 'write'
       );
     } catch (_e) {
       return false;
@@ -1370,6 +1372,14 @@ function buildTile(letterObj, idx) {
     ${letterObj.en ? `<div class="translit">${letterObj.en}</div>` : ''}
   `;
 
+  try {
+    tile.dataset.sepFontSize = String(sepFontSize || '');
+    const sep = tile.querySelector('.sep');
+    if (sep && sep.style && sep.style.setProperty) {
+      sep.style.setProperty('font-size', String(sepFontSize || ''), 'important');
+    }
+  } catch (_e) {}
+
   // Keep existing filter name badge under transliteration.
   try {
     __pqAddTileFilterTypeBadge(tile, letterObj);
@@ -1524,7 +1534,7 @@ function __pqHandleGridTileClick(tile) {
           markActive();
         } catch (_e) {}
 
-        playWatchVideoForKey(letterObj.key, rate)
+        playWatchVideoForKey(letterObj.key, rate, current && current.step && current.step.id)
           .then(() => {
             handleLetterPlayedForCurrentStep(letterObj.key);
           })
@@ -1533,7 +1543,7 @@ function __pqHandleGridTileClick(tile) {
       }
     } catch (_e) {}
 
-    playLetter(letterObj.key, repeatCount, rate)
+    playLetter(letterObj.key, repeatCount, rate, repeatStepId)
       .then(() => {
         handleLetterPlayedForCurrentStep(letterObj.key);
       })
@@ -1665,7 +1675,7 @@ function __pqLetterPassVisible(letterObj) {
 
     const cur = getCurrentStep && getCurrentStep();
     const stepId = cur && cur.step && cur.step.id
-      ? String(cur.step.id).toLowerCase()
+      ? __pqCanonicalStepId(cur.step.id)
       : '';
 
     // Listen / Listen+ / Watch / Sound / Repeat / Match / Words / Animate use stepPassFilters.
@@ -1721,7 +1731,7 @@ function __pqAddTileFilterTypeBadge(tile, letterObj) {
 
     const cur = getCurrentStep && getCurrentStep();
     const stepId = cur && cur.step && cur.step.id
-      ? String(cur.step.id).toLowerCase()
+      ? __pqCanonicalStepId(cur.step.id)
       : '';
 
     if ([
@@ -1800,8 +1810,59 @@ function __pqAddTileFilterTypeBadge(tile, letterObj) {
   }
 
   
+function __pqGridIsCurrentSpeakStep() {
+  try {
+    const cur = (typeof getCurrentStep === 'function') ? getCurrentStep() : null;
+    return !!(
+      cur &&
+      cur.step &&
+      String(cur.step.id || '').toLowerCase() === 'speak'
+    );
+  } catch (_e) {
+    return false;
+  }
+}
+
+function __pqGridClearSpeakDoneVisual(tile) {
+  try {
+    if (!tile) return;
+    tile.classList.remove('pq-speak-done');
+    tile.removeAttribute('data-speak-done');
+    if (tile.style.opacity) tile.style.opacity = '';
+    if (String(tile.style.filter || '').indexOf('grayscale') !== -1) tile.style.filter = '';
+  } catch (_e) {}
+}
+
+function __pqResetGridVisualStateForStepHandoff() {
+  try {
+    selectedIdx = -1;
+    selectedKey = null;
+  } catch (_e) {}
+
+  try { __pqClearPlayingTile(); } catch (_e) {}
+  try { __pqSpeakClearDoneTileVisualsFinal(); } catch (_e) {}
+
+  try {
+    const tiles = grid ? grid.querySelectorAll('.tile') : document.querySelectorAll('#grid .tile');
+    tiles.forEach((tile) => {
+      tile.classList.remove(
+        'active',
+        'pq-playing',
+        'is-playing',
+        'pq-speak-done'
+      );
+      tile.removeAttribute('data-speak-done');
+      tile.style.opacity = '';
+      if (String(tile.style.filter || '').indexOf('grayscale') !== -1) {
+        tile.style.filter = '';
+      }
+    });
+  } catch (_e) {}
+}
+
 function markActive() {
   const tiles = [...(grid ? grid.querySelectorAll('.tile') : [])];
+  const showSpeakDoneState = __pqGridIsCurrentSpeakStep();
 
   tiles.forEach((tile) => {
     const key = String(tile.dataset.key || '');
@@ -1816,17 +1877,21 @@ function markActive() {
     const isActiveByKey = !!(selectedKey && key === selectedKey);
     const isActiveByIdx = (!selectedKey && idx === selectedIdx);
 
-    tile.classList.toggle('active', !isDone && (isActiveByKey || isActiveByIdx));
+    tile.classList.toggle('active', !(showSpeakDoneState && isDone) && (isActiveByKey || isActiveByIdx));
 
-    if (isDone) {
+    if (showSpeakDoneState && isDone) {
       tile.classList.add('played', 'completed', 'pq-speak-done');
       tile.setAttribute('data-speak-done', '1');
       tile.style.opacity = '0.45';
       tile.style.filter = 'grayscale(0.25)';
+    } else {
+      __pqGridClearSpeakDoneVisual(tile);
     }
   });
 
-  try { __pqSpeakApplyDoneTilesFinal(); } catch (_e) {}
+  if (showSpeakDoneState) {
+    try { __pqSpeakApplyDoneTilesFinal(); } catch (_e) {}
+  }
   try { __pqSpeakRefreshProgressFinal(); } catch (_e) {}
 }
 

@@ -95,13 +95,19 @@ window.__pqSpeakBridge = {
       throw new Error('Missing Speak item key.');
     }
 
+    const rate = parseFloat((speedSel && speedSel.value) || DEFAULTS.speed || '1') || 1;
+
+    if (typeof playLetter === 'function') {
+      await playLetter(key, 1, rate, 'speak');
+      return true;
+    }
+
     const fileName = AUDIO_MAP && AUDIO_MAP[key];
     if (!fileName) {
       throw new Error('No audio mapped for Speak reference: ' + key);
     }
 
     const url = __pqAppendAssetVersion(AUDIO_BASE + String(fileName));
-    const rate = parseFloat((speedSel && speedSel.value) || DEFAULTS.speed || '1') || 1;
 
     await new Promise((resolve, reject) => {
       try {
@@ -300,8 +306,37 @@ function __pqSpeakGreyTileFinal(key) {
   } catch (_e) {}
 }
 
+function __pqSpeakIsCurrentStepFinal() {
+  try {
+    const cur = (typeof getCurrentStep === 'function') ? getCurrentStep() : null;
+    return !!(
+      cur &&
+      cur.step &&
+      String(cur.step.id || '').toLowerCase() === 'speak'
+    );
+  } catch (_e) {
+    return false;
+  }
+}
+
+function __pqSpeakClearDoneTileVisualsFinal() {
+  try {
+    const tiles = document.querySelectorAll('#grid .tile.pq-speak-done, #grid .tile[data-speak-done="1"]');
+    tiles.forEach(function (tile) {
+      tile.classList.remove('pq-speak-done');
+      tile.removeAttribute('data-speak-done');
+      if (tile.style.opacity === '0.45') tile.style.opacity = '';
+      if (String(tile.style.filter || '').indexOf('grayscale') !== -1) tile.style.filter = '';
+    });
+  } catch (_e) {}
+}
+
 function __pqSpeakApplyDoneTilesFinal() {
   try {
+    if (!__pqSpeakIsCurrentStepFinal()) {
+      __pqSpeakClearDoneTileVisualsFinal();
+      return;
+    }
     if (__pqSharedSpeakRuntime) {
       __pqSharedSpeakRuntime.applyDoneTiles();
       return;
@@ -409,10 +444,20 @@ function __pqSpeakInstallDoneBinderFinal(compareBtn) {
     if (!compareBtn || compareBtn.__pqSpeakDoneBinderFinal__) return;
     compareBtn.__pqSpeakDoneBinderFinal__ = true;
 
-    compareBtn.addEventListener('click', function () {
+    compareBtn.addEventListener('click', function (ev) {
+      try {
+        ev.preventDefault();
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+      } catch (_e) {}
+
       setTimeout(function () {
         try {
-          Promise.resolve(__pqSpeakFinalizeDoneFinal()).catch(function () {});
+          if (typeof __pqSpeakModalDoneFinal === 'function') {
+            Promise.resolve(__pqSpeakModalDoneFinal()).catch(function () {});
+          } else {
+            Promise.resolve(__pqSpeakFinalizeDoneFinal()).catch(function () {});
+          }
         } catch (_e) {}
       }, 40);
     }, true);
@@ -522,12 +567,46 @@ function __pqSpeakMarkCurrentDone() {
 
 function __pqSpeakSetSelectedKey(key) {
   try {
+    __pqSpeakUiState.selectedKey = String(key || '').trim();
     if (__pqSharedSpeakRuntime) {
       __pqSharedSpeakRuntime.setSelectedKey(key);
       return;
     }
-    __pqSpeakUiState.selectedKey = String(key || '').trim();
   } catch (_e) {}
+}
+
+function __pqSpeakGetSelectedKey() {
+  try {
+    const key = String((__pqSpeakUiState && __pqSpeakUiState.selectedKey) || '').trim();
+    if (key) return key;
+  } catch (_e) {}
+
+  try {
+    const activeTile = document.querySelector('#grid .tile.active[data-key], #grid .tile.pq-playing[data-key], #grid .tile.is-playing[data-key]');
+    const activeKey = activeTile ? String(activeTile.getAttribute('data-key') || activeTile.dataset.key || '').trim() : '';
+    if (activeKey) return activeKey;
+  } catch (_e) {}
+
+  try {
+    const selected = window.__pq_selected_alphabet || null;
+    const selectedKey = selected ? String(selected.key || selected.id || '').trim() : '';
+    if (selectedKey) return selectedKey;
+  } catch (_e) {}
+
+  return '';
+}
+
+async function __pqPlaySpeakChildModalLetter() {
+  try {
+    const key = __pqSpeakGetSelectedKey();
+    if (!key || typeof playLetter !== 'function') return false;
+
+    const rate = Number(__cfg('playback.steps.speak.letterPlaybackRate', 1) || 1) || 1;
+    await playLetter(key, 1, rate, 'speak');
+    return true;
+  } catch (_e) {
+    return false;
+  }
 }
 
 function __pqSpeakClearRecordingTimers() {
@@ -1037,7 +1116,10 @@ function __pqEnsureSpeakChildModal() {
 #pqSpeakChildModal .pq-speak-modal-close{position:absolute;top:14px;right:16px;width:44px;height:44px;border:0;border-radius:999px;background:#eef8ef;color:#17382d;font-size:1.45rem;font-weight:1000;cursor:pointer;box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)}
 #pqSpeakChildModal .pq-speak-modal-title{position:relative;font-size:1.35rem;font-weight:1000;color:#17382d;margin:8px 52px 10px;letter-spacing:0}
 #pqSpeakChildModal .pq-speak-modal-title::before{content:"";display:inline-block;width:14px;height:14px;margin-right:10px;border-radius:999px;background:#95dfaa;box-shadow:22px 0 0 #c7f3d2,-22px 0 0 #e9fbef;vertical-align:middle}
-#pqSpeakChildModal .pq-speak-modal-letter{position:relative;font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;font-size:5.7rem;line-height:1;font-weight:1000;color:#0f5137;margin:10px auto 14px;width:min(220px,70vw);padding:18px 10px 12px;border-radius:30px;background:#f7fff9;box-shadow:inset 0 0 0 3px #d8f6e0,0 10px 26px rgba(36,122,78,.12)}
+#pqSpeakChildModal .pq-speak-modal-letter{position:relative;font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;font-size:5.7rem;line-height:1;font-weight:1000;color:#0f5137;margin:10px auto 14px;width:min(220px,70vw);padding:18px 10px 12px;border-radius:30px;background:#f7fff9;box-shadow:inset 0 0 0 3px #d8f6e0,0 10px 26px rgba(36,122,78,.12);cursor:pointer;user-select:none;transition:transform .16s ease,box-shadow .16s ease,background .16s ease}
+#pqSpeakChildModal .pq-speak-modal-letter:hover{transform:translateY(-2px);background:#effbf3;box-shadow:inset 0 0 0 4px #bdebc9,0 14px 30px rgba(36,122,78,.18)}
+#pqSpeakChildModal .pq-speak-modal-letter:active{transform:translateY(0) scale(.98)}
+#pqSpeakChildModal .pq-speak-modal-letter:focus-visible{outline:4px solid #e6bc62;outline-offset:5px}
 #pqSpeakChildModal .pq-speak-modal-hint{position:relative;font-size:1.02rem;font-weight:900;color:#28413a;margin:0 auto 20px;max-width:560px;line-height:1.45;background:#f1fff5;border:2px solid #d5f4dd;border-radius:22px;padding:12px 18px}
 #pqSpeakChildModal .pq-speak-modal-actions{position:relative;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
 #pqSpeakChildModal #pqSpeakIconToolbar{display:flex!important;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;width:100%;margin:0}
@@ -1061,7 +1143,7 @@ function __pqEnsureSpeakChildModal() {
     '<div class="pq-speak-modal-card" role="dialog" aria-modal="true">' +
       '<button type="button" class="pq-speak-modal-close" aria-label="Close">×</button>' +
       '<div class="pq-speak-modal-title">Your turn — speak the letter</div>' +
-      '<div class="pq-speak-modal-letter">🎤</div>' +
+      '<div class="pq-speak-modal-letter" role="button" tabindex="0" aria-label="Play letter sound">🎤</div>' +
       '<div class="pq-speak-modal-hint">Use the big buttons below. Enable the mic, record your voice, then tap Done.</div>' +
       '<div class="pq-speak-modal-actions" id="pqSpeakModalActions"></div>' +
     '</div>';
@@ -1073,6 +1155,21 @@ function __pqEnsureSpeakChildModal() {
     modal.classList.remove('is-open');
   });
 
+  const letterEl = modal.querySelector('.pq-speak-modal-letter');
+  if (letterEl) {
+    letterEl.addEventListener('click', function (event) {
+      try { event.preventDefault(); } catch (_e) {}
+      __pqPlaySpeakChildModalLetter();
+    });
+
+    letterEl.addEventListener('keydown', function (event) {
+      const key = String((event && event.key) || '');
+      if (key !== 'Enter' && key !== ' ') return;
+      try { event.preventDefault(); } catch (_e) {}
+      __pqPlaySpeakChildModalLetter();
+    });
+  }
+
   return modal;
 }
 
@@ -1082,7 +1179,11 @@ function __pqSetSpeakChildModalLetter(text) {
     if (!modal) return;
 
     const letterEl = modal.querySelector('.pq-speak-modal-letter');
-    if (letterEl) letterEl.textContent = text || '🎤';
+    if (letterEl) {
+      letterEl.textContent = text || '🎤';
+      letterEl.setAttribute('aria-label', 'Play letter sound' + (text ? ': ' + text : ''));
+      try { letterEl.dataset.key = __pqSpeakGetSelectedKey(); } catch (_e) {}
+    }
 
     const hintEl = modal.querySelector('.pq-speak-modal-hint');
     if (hintEl) {
@@ -1355,7 +1456,8 @@ function __pqSyncSimplifiedSpeakUi() {
 /* ===== SPEAK MODAL RECORDING FINAL v3 ===== */
 const __pqSpeakModalRecFinalState = {
   stream:null, recorder:null, chunks:[], blob:null, blobUrl:'',
-  attempts:Object.create(null), doneKeys:Object.create(null), stopTimer:null, playing:false, cancelled:false
+  attempts:Object.create(null), comparisons:Object.create(null), doneKeys:Object.create(null),
+  stopTimer:null, playing:false, comparing:false, cancelled:false
 };
 
 function __pqSpeakModalReleaseMic(){
@@ -1456,15 +1558,374 @@ async function __pqSpeakModalReplayTeacherStudent(){
   __pqSpeakModalRecFinalState.playing = true;
   try {
     __pqSpeakModalHint('Listen to the teacher first, then your voice.');
-    try { await playLetter(key, 1, 1); } catch(_e){}
+    try { await playLetter(key, 1, 1, 'speak'); } catch(_e){}
     await __pqSpeakModalPlayStudent(blob);
-    __pqSpeakModalHint('You can record again, or tap Done when you are happy.');
+    if (!__pqSpeakComparisonRefreshHint(key)) {
+      __pqSpeakModalHint('You can record again, or tap Done when you are happy.');
+    }
   } finally {
     __pqSpeakModalRecFinalState.playing = false;
     __pqSpeakUiState.isRecording = false;
     try { __pqSyncSimplifiedSpeakUi(); } catch(_e){}
     try { __pqSpeakModalRefreshButtons(); } catch(_e){}
   }
+}
+
+function __pqSpeakComparisonCfg(path, fallback) {
+  return __cfg('playback.steps.speak.comparison.' + path, fallback);
+}
+
+function __pqSpeakDoneConfirmEnabled() {
+  return __cfg('playback.steps.speak.doneConfirm.enabled', true) !== false;
+}
+
+function __pqSpeakRecordingUploadCfg(path, fallback) {
+  return __cfg('playback.steps.speak.recordingUpload.' + path, fallback);
+}
+
+function __pqSpeakRecordingUploadEnabled() {
+  return __pqSpeakRecordingUploadCfg('enabled', false) === true;
+}
+
+function __pqSpeakRecordingUploadRequired() {
+  return __pqSpeakRecordingUploadCfg('required', false) === true;
+}
+
+function __pqSpeakRecordingUploadFunction() {
+  return String(__pqSpeakRecordingUploadCfg('wsFunction', 'local_prequran_save_speak_recording') || '').trim();
+}
+
+function __pqSpeakMimeToExtension(mime) {
+  const value = String(mime || '').toLowerCase();
+  if (value.indexOf('mp4') >= 0 || value.indexOf('m4a') >= 0) return 'm4a';
+  if (value.indexOf('mpeg') >= 0 || value.indexOf('mp3') >= 0) return 'mp3';
+  if (value.indexOf('ogg') >= 0) return 'ogg';
+  if (value.indexOf('wav') >= 0) return 'wav';
+  return 'webm';
+}
+
+function __pqSpeakSafeFilePart(value, fallback) {
+  const text = String(value || fallback || 'recording')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+  return text || String(fallback || 'recording');
+}
+
+function __pqSpeakBlobToBase64(blob) {
+  return new Promise(function (resolve, reject) {
+    try {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const value = String(reader.result || '');
+        resolve(value.indexOf(',') >= 0 ? value.split(',').pop() : value);
+      };
+      reader.onerror = function () {
+        reject(reader.error || new Error('Could not read recording.'));
+      };
+      reader.readAsDataURL(blob);
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+function __pqSpeakBuildRecordingFilename(uid, key, letterName, mime) {
+  const now = new Date();
+  const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
+  const extension = __pqSpeakMimeToExtension(mime);
+  return [
+    'user_' + __pqSpeakSafeFilePart(uid, 'unknown'),
+    __pqSpeakSafeFilePart(key, 'letter'),
+    __pqSpeakSafeFilePart(letterName, key || 'letter'),
+    stamp
+  ].join('_') + '.' + extension;
+}
+
+async function __pqSpeakCallMoodleWs(params) {
+  const core = (typeof pqResolveCore === 'function') ? pqResolveCore() : null;
+  if (core && typeof core.wsGet === 'function') {
+    return await core.wsGet(params);
+  }
+
+  const endpoint = String(
+    window.__prequran_ws_endpoint ||
+    (__cfg('moodle.wsEndpoint', '') || '') ||
+    '/webservice/rest/server.php'
+  );
+  const body = new URLSearchParams();
+  Object.keys(params || {}).forEach(function (key) {
+    const value = params[key];
+    if (value === undefined || value === null) return;
+    body.append(key, typeof value === 'object' ? JSON.stringify(value) : String(value));
+  });
+  body.append('moodlewsrestformat', 'json');
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    body: body.toString()
+  });
+  const text = await response.text();
+  let data;
+  try { data = JSON.parse(text); } catch (_e) {
+    throw new Error('Recording upload returned a non-JSON Moodle response.');
+  }
+  if (!response.ok || (data && data.exception)) {
+    throw new Error((data && data.message) || ('Recording upload failed with HTTP ' + response.status));
+  }
+  return data;
+}
+
+async function __pqSpeakUploadRecordingForReview(key) {
+  if (!__pqSpeakRecordingUploadEnabled()) {
+    return { ok: true, skipped: true, reason: 'disabled' };
+  }
+
+  const blob = __pqSpeakModalRecFinalState && __pqSpeakModalRecFinalState.blob;
+  if (!blob) {
+    return { ok: false, skipped: false, reason: 'missing_recording' };
+  }
+
+  const maxBytes = Number(__pqSpeakRecordingUploadCfg('maxBytes', 3000000) || 3000000);
+  if (maxBytes > 0 && blob.size > maxBytes) {
+    return { ok: false, skipped: false, reason: 'recording_too_large' };
+  }
+
+  if (
+    typeof pqWaitForIframeTokens === 'function' &&
+    (
+      !((typeof pqGetUid === 'function') ? pqGetUid() : '') ||
+      !((typeof pqGetToken === 'function') ? pqGetToken() : '')
+    )
+  ) {
+    try { await pqWaitForIframeTokens(2500); } catch (_e) {}
+  }
+
+  const uid = (typeof pqGetUid === 'function') ? pqGetUid() : '';
+  const token = (typeof pqGetToken === 'function') ? pqGetToken() : '';
+  const wsFunction = __pqSpeakRecordingUploadFunction();
+  if (!uid || !token || !wsFunction) {
+    return { ok: true, skipped: true, reason: 'missing_moodle_credentials' };
+  }
+
+  const meta = (__PQ_ALL_CELL_META && __PQ_ALL_CELL_META.get) ? (__PQ_ALL_CELL_META.get(key) || {}) : {};
+  const letterName = String(meta.en || meta.name || meta.small || meta.ar || key || '').trim();
+  const letterText = String(meta.text || meta.ar || '').trim();
+  const attempt = __pqSpeakModalRecFinalState.attempts && __pqSpeakModalRecFinalState.attempts[key]
+    ? __pqSpeakModalRecFinalState.attempts[key]
+    : {};
+  const mime = blob.type || 'audio/webm';
+  const audioBase64 = await __pqSpeakBlobToBase64(blob);
+
+  return await __pqSpeakCallMoodleWs({
+    wsfunction: wsFunction,
+    wstoken: token,
+    userid: uid,
+    lessonid: String(__cfg('lessonid', __pqIdentity('lessonId', 'tajweed'))),
+    unitid: String(__cfg('unitid', __PQ_UNIT_ID)),
+    step_id: 'speak',
+    letter_key: String(key || ''),
+    letter_name: letterName,
+    letter_text: letterText,
+    attempt_no: String((attempt && attempt.count) || 1),
+    duration_ms: String((attempt && attempt.durationMs) || __pqSpeakModalMs()),
+    mime_type: mime,
+    filename: __pqSpeakBuildRecordingFilename(uid, key, letterName, mime),
+    audio_base64: audioBase64
+  });
+}
+
+function __pqSpeakDoneConfirmMessage() {
+  const fallback = {
+    audio: '',
+    titleText: 'Message',
+    continueText: 'Continue',
+    cancelText: 'Cancel',
+    text: 'Listen carefully. If your sound matches with teacher, click Done. Otherwise, re-record and practice.'
+  };
+
+  try {
+    const messages = (UNIT_CFG && UNIT_CFG.messages) || {};
+    const message = messages.speakDoneConfirm || {};
+    return Object.assign({}, fallback, message);
+  } catch (_e) {
+    return fallback;
+  }
+}
+
+async function __pqSpeakConfirmDone() {
+  if (!__pqSpeakDoneConfirmEnabled()) return true;
+
+  const message = __pqSpeakDoneConfirmMessage();
+  try {
+    const api = (typeof __pqEnsureStepMessaging === 'function') ? __pqEnsureStepMessaging() : null;
+    if (api && typeof api.showChoice === 'function') {
+      return !!(await api.showChoice(message, message));
+    }
+  } catch (_e) {}
+
+  return true;
+}
+
+function __pqSpeakComparisonEnabled() {
+  return !!__pqSpeakComparisonCfg('enabled', false);
+}
+
+function __pqSpeakComparisonMaxAttempts() {
+  return Math.max(1, Number(__pqSpeakComparisonCfg('maxAttempts', 3) || 3) || 3);
+}
+
+function __pqSpeakComparisonForKey(key) {
+  key = String(key || '').trim();
+  if (!key) return null;
+  return __pqSpeakModalRecFinalState.comparisons[key] || null;
+}
+
+function __pqSpeakComparisonScoreText(result) {
+  try {
+    if (!result || result.reason === 'analysis_unavailable') return '';
+    const score = Math.max(0, Math.min(100, Math.round(Number(result.score || 0) * 100)));
+    return 'Score: ' + score + '%. ';
+  } catch (_e) {
+    return '';
+  }
+}
+
+function __pqSpeakComparisonFeedbackText(result) {
+  try {
+    if (!result) return '';
+    if (result.reason === 'analysis_unavailable') return 'I could not check this recording. ';
+    if (result.reason === 'not_enough_voice' || result.reason === 'missing_audio') return 'I did not hear enough. ';
+    if (result.reason === 'vowel_shape_mismatch') return 'Listen carefully to the vowel sound and try again. ';
+    if (result.reason === 'vowel_shape_unavailable') return 'I could not hear the vowel sound clearly. ';
+    if (result.passed) return 'Nice sound. ';
+    if (result.allowDone) return 'Good effort. ';
+    return 'Try to copy the teacher sound more closely. ';
+  } catch (_e) {
+    return '';
+  }
+}
+
+function __pqSpeakComparisonAllowsDone(key) {
+  if (!__pqSpeakComparisonEnabled()) return true;
+  const result = __pqSpeakComparisonForKey(key);
+  return !!(result && !result.pending && (result.passed || result.allowDone));
+}
+
+function __pqSpeakComparisonRefreshHint(key) {
+  try {
+    if (!__pqSpeakComparisonEnabled()) return false;
+    const result = __pqSpeakComparisonForKey(key);
+    if (!result) return false;
+
+    if (result.pending) {
+      __pqSpeakModalHint('Checking your voice...');
+      return true;
+    }
+
+    if (result.passed) {
+      __pqSpeakModalHint(__pqSpeakComparisonScoreText(result) + __pqSpeakComparisonFeedbackText(result) + 'Tap Done when you are ready, or record again.');
+      return true;
+    }
+
+    if (result.allowDone) {
+      __pqSpeakModalHint(__pqSpeakComparisonScoreText(result) + __pqSpeakComparisonFeedbackText(result) + 'You tried ' + result.attempts + ' times. Tap Done, or record again if you want.');
+      return true;
+    }
+
+    const left = Math.max(0, __pqSpeakComparisonMaxAttempts() - Number(result.attempts || 0));
+    __pqSpeakModalHint(
+      __pqSpeakComparisonScoreText(result) +
+      __pqSpeakComparisonFeedbackText(result) +
+      (left > 1 ? 'You have ' + left + ' tries left.' : 'One more try.')
+    );
+    return true;
+  } catch (_e) {
+    return false;
+  }
+}
+
+async function __pqSpeakRunDtwComparison(key, blob) {
+  key = String(key || '').trim();
+  if (!key || !blob || !__pqSpeakComparisonEnabled()) return null;
+
+  const maxAttempts = __pqSpeakComparisonMaxAttempts();
+  const previous = __pqSpeakComparisonForKey(key);
+  const attempts = Math.max(1, Number((previous && previous.attempts) || 0) + 1);
+
+  __pqSpeakModalRecFinalState.comparing = true;
+  __pqSpeakModalRecFinalState.comparisons[key] = {
+    pending: true,
+    passed: false,
+    allowDone: false,
+    attempts,
+    score: 0,
+    reason: 'pending'
+  };
+
+  __pqSpeakModalHint('Checking your voice...');
+  try { __pqSpeakModalRefreshButtons(); } catch (_e) {}
+
+  try {
+    if (!window.PQSpeakDtw || typeof window.PQSpeakDtw.compare !== 'function') {
+      throw new Error('DTW engine unavailable');
+    }
+
+    const referenceUrl = typeof __pqResolveAudioUrlForKey === 'function' ? __pqResolveAudioUrlForKey(key) : '';
+    if (!referenceUrl) throw new Error('reference audio unavailable');
+
+    const result = await window.PQSpeakDtw.compare({
+      referenceUrl,
+      studentBlob: blob,
+      minScore: Number(__pqSpeakComparisonCfg('minScore', 0.58) || 0.58),
+      sampleRate: Number(__pqSpeakComparisonCfg('sampleRate', 8000) || 8000),
+      frameMs: Number(__pqSpeakComparisonCfg('frameMs', 32) || 32),
+      hopMs: Number(__pqSpeakComparisonCfg('hopMs', 16) || 16),
+      bandRatio: Number(__pqSpeakComparisonCfg('bandRatio', 0.32) || 0.32),
+      distanceScale: Number(__pqSpeakComparisonCfg('distanceScale', 2.7) || 2.7),
+      minFrames: Number(__pqSpeakComparisonCfg('minFrames', 5) || 5),
+      silenceThreshold: Number(__pqSpeakComparisonCfg('silenceThreshold', 0.012) || 0.012),
+      requireVowelShape: __pqSpeakComparisonCfg('requireVowelShape', false) === true,
+      requireHarakahShape: __pqSpeakComparisonCfg('requireHarakahShape', false) === true,
+      vowelWindowMs: Number(__pqSpeakComparisonCfg('vowelWindowMs', 350) || 350),
+      vowelRegion: String(__pqSpeakComparisonCfg('vowelRegion', 'tail') || 'tail'),
+      vowelMinScore: Number(__pqSpeakComparisonCfg('vowelMinScore', 0.58) || 0.58),
+      vowelDistanceScale: Number(__pqSpeakComparisonCfg('vowelDistanceScale', 0.62) || 0.62)
+    });
+
+    const passed = !!(result && result.passed);
+    const allowAfterMax = __pqSpeakComparisonCfg('allowDoneAfterMaxAttempts', true) !== false;
+    const allowDone = passed || (allowAfterMax && attempts >= maxAttempts);
+
+    __pqSpeakModalRecFinalState.comparisons[key] = {
+      pending: false,
+      passed,
+      allowDone,
+      attempts,
+      score: Number((result && result.score) || 0) || 0,
+      reason: String((result && result.reason) || (passed ? 'dtw_pass' : 'dtw_retry')),
+      at: Date.now()
+    };
+  } catch (_e) {
+    const passIfUnavailable = __pqSpeakComparisonCfg('passIfUnavailable', false) === true;
+    __pqSpeakModalRecFinalState.comparisons[key] = {
+      pending: false,
+      passed: passIfUnavailable,
+      allowDone: passIfUnavailable || attempts >= maxAttempts,
+      attempts,
+      score: 0,
+      reason: 'analysis_unavailable',
+      at: Date.now()
+    };
+  } finally {
+    __pqSpeakModalRecFinalState.comparing = false;
+    __pqSpeakComparisonRefreshHint(key);
+    try { __pqSpeakModalRefreshButtons(); } catch (_e) {}
+  }
+
+  return __pqSpeakComparisonForKey(key);
 }
 
 async function __pqSpeakModalStartRecord(){
@@ -1483,6 +1944,18 @@ async function __pqSpeakModalStartRecord(){
   __pqSpeakModalRecFinalState.chunks = [];
   __pqSpeakModalRecFinalState.blob = null;
   __pqSpeakModalRecFinalState.cancelled = false;
+  if (__pqSpeakComparisonEnabled()) {
+    try {
+      __pqSpeakModalRecFinalState.comparisons[key] = {
+        pending: false,
+        passed: false,
+        allowDone: false,
+        attempts: Number((__pqSpeakComparisonForKey(key) && __pqSpeakComparisonForKey(key).attempts) || 0) || 0,
+        score: 0,
+        reason: 'new_recording'
+      };
+    } catch (_e) {}
+  }
 
   const rec = new MediaRecorder(stream);
   __pqSpeakModalRecFinalState.recorder = rec;
@@ -1502,13 +1975,35 @@ async function __pqSpeakModalStartRecord(){
       const chunks = __pqSpeakModalRecFinalState.chunks || [];
       const blob = chunks.length ? new Blob(chunks, {type: rec.mimeType || 'audio/webm'}) : null;
       __pqSpeakModalRecFinalState.blob = blob;
-      __pqSpeakModalRecFinalState.attempts[key] = {at:Date.now(), ok:!!blob, size:blob ? blob.size : 0};
+      const previousAttempt = __pqSpeakModalRecFinalState.attempts[key] || {};
+      __pqSpeakModalRecFinalState.attempts[key] = {
+        at: Date.now(),
+        ok: !!blob,
+        size: blob ? blob.size : 0,
+        count: Math.max(1, Number(previousAttempt.count || 0) + 1),
+        durationMs: __pqSpeakModalMs()
+      };
       __pqSpeakUiState.isRecording = false;
       __pqSpeakUiState.lastRecordingAt = Date.now();
       try { __pqSyncSimplifiedSpeakUi(); } catch(_e){}
       try { __pqSpeakModalRefreshButtons(); } catch(_e){}
-      if (blob) setTimeout(__pqSpeakModalReplayTeacherStudent, 120);
-      else __pqSpeakModalHint('No recording captured. Try again.');
+
+      if (!blob) {
+        __pqSpeakModalHint('No recording captured. Try again.');
+        return;
+      }
+
+      Promise.resolve(__pqSpeakRunDtwComparison(key, blob))
+        .then(function () {
+          const replayAfterComparison = __pqSpeakComparisonEnabled()
+            ? (__pqSpeakComparisonCfg('replayTeacherStudent', false) === true)
+            : true;
+          if (replayAfterComparison) setTimeout(__pqSpeakModalReplayTeacherStudent, 120);
+        })
+        .catch(function () {
+          try { __pqSpeakComparisonRefreshHint(key); } catch(_ignore){}
+          try { __pqSpeakModalRefreshButtons(); } catch(_ignore){}
+        });
     } catch(_e){
       __pqSpeakUiState.isRecording = false;
       try { __pqSpeakModalRefreshButtons(); } catch(_ignore){}
@@ -1680,6 +2175,66 @@ async function __pqSpeakModalDoneFinal(){
     }
   } catch (_e) {}
 
+  try {
+    if (__pqSpeakComparisonEnabled() && !__pqSpeakComparisonAllowsDone(key)) {
+      __pqSpeakComparisonRefreshHint(key);
+      return;
+    }
+  } catch (_e) {}
+
+  const confirmed = await __pqSpeakConfirmDone();
+  if (!confirmed) {
+    __pqSpeakModalHint('You can re-record and practice again.');
+    return;
+  }
+
+  try {
+    const upload = await __pqSpeakUploadRecordingForReview(key);
+    try {
+      window.__pq_last_speak_upload_result = upload;
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({
+            type: 'PQ_SPEAK_UPLOAD_RESULT',
+            result: upload,
+            href: window.location.href,
+            ts: Date.now()
+          }, '*');
+        }
+      } catch (_postErr) {}
+      if (upload && (upload.ok === false || upload.saved === false || upload.skipped)) {
+        console.warn('[PQ Speak] Recording upload did not save.', upload);
+      }
+    } catch (_e) {}
+    const uploadFailed = upload && (upload.ok === false || (__pqSpeakRecordingUploadRequired() && upload.saved !== true));
+    if (uploadFailed) {
+      if (__pqSpeakRecordingUploadRequired()) {
+        __pqSpeakModalHint('Recording was not saved. Please try again.');
+        return;
+      }
+      __pqSpeakModalHint('Recording review save is not ready yet. Continuing.');
+    }
+  } catch (_e) {
+    try {
+      window.__pq_last_speak_upload_result = { ok: false, error: String((_e && _e.message) || _e || 'Recording upload failed.') };
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({
+            type: 'PQ_SPEAK_UPLOAD_RESULT',
+            result: window.__pq_last_speak_upload_result,
+            href: window.location.href,
+            ts: Date.now()
+          }, '*');
+        }
+      } catch (_postErr) {}
+      console.error('[PQ Speak] Recording upload failed.', _e);
+    } catch (_err) {}
+    if (__pqSpeakRecordingUploadRequired()) {
+      __pqSpeakModalHint('Recording was not saved. Please try again.');
+      return;
+    }
+  }
+
   await __pqSpeakCompleteKey(key, { persist: true, closeModal: true });
 }
 
@@ -1695,16 +2250,24 @@ function __pqSpeakModalRefreshButtons(){
     const visible = speakActive || (mount && mount.style.display !== 'none');
     const key = __pqSpeakModalKey();
     const hasAttempt = !!(key && __pqSpeakModalRecFinalState.attempts[key]);
+    const comparisonReady = __pqSpeakComparisonAllowsDone(key);
+    const comparisonPending = !!(
+      __pqSpeakComparisonEnabled() &&
+      (
+        __pqSpeakModalRecFinalState.comparing ||
+        (__pqSpeakComparisonForKey(key) && __pqSpeakComparisonForKey(key).pending)
+      )
+    );
     const alreadyDone = __pqSpeakIsKeyCompleted(key);
 
     if (rec) {
-      rec.disabled = !(visible && key) || alreadyDone || !!__pqSpeakUiState.isRecording;
+      rec.disabled = !(visible && key) || alreadyDone || !!__pqSpeakUiState.isRecording || comparisonPending;
       rec.classList.toggle('pq-can-rerecord', hasAttempt && !alreadyDone && !__pqSpeakUiState.isRecording);
       rec.setAttribute('aria-disabled', rec.disabled ? 'true' : 'false');
     }
 
     if (done) {
-      done.disabled = !(visible && key && hasAttempt) || alreadyDone || !!__pqSpeakUiState.isRecording;
+      done.disabled = !(visible && key && hasAttempt && comparisonReady) || alreadyDone || !!__pqSpeakUiState.isRecording || comparisonPending;
       done.setAttribute('aria-disabled', done.disabled ? 'true' : 'false');
     }
   } catch(_e){}

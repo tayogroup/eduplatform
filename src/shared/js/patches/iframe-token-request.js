@@ -9,6 +9,12 @@
     window.__prequran_uid = p.uid;
     window.__prequran_ws_token = p.wstoken;
     if (p.wsendpoint) window.__prequran_ws_endpoint = p.wsendpoint;
+    if (p.cohortid) {
+      window.__prequran_cohortid = p.cohortid;
+      try { sessionStorage.setItem('pq_cohortid', String(p.cohortid)); } catch(e) {}
+    }
+    if (p.studentid) window.__prequran_studentid = p.studentid;
+    if (typeof p.managed !== 'undefined') window.__prequran_managed_student = p.managed;
     window.__PQ_TOKENS_READY__ = true;
     return true;
   }

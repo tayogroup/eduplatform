@@ -33,9 +33,9 @@
   }
 
   function __pqIsWatchStep(step) {
-    const id = String((step && step.id) || '').toLowerCase();
+    const id = __pqCanonicalStepId((step && step.id) || '');
     const type = String((step && step.type) || '').toLowerCase();
-    return id === 'watch' || id === 'sound' || id === 'animate' || type === 'video_playlist';
+    return id === 'watch' || id === 'sound' || id === 'animate' || type === 'video_playlist' || type === 'phonetics';
   }
 
 function __pqWatchStepDef() {
@@ -115,6 +115,40 @@ if (!hasSpeak) {
   }
 }
 
+// ============================================================
+// Inject Submit step AFTER Write/Trace (if missing)
+// ============================================================
+const hasSubmit = mapped.some(
+  (step) => String((step && step.id) || '').toLowerCase() === 'submit'
+);
+
+if (!hasSubmit) {
+  const writeIdx = mapped.findIndex((step) => {
+    const id = String((step && step.id) || '').toLowerCase();
+    const type = String((step && step.type) || '').toLowerCase();
+    return id === 'write' || id === 'trace1' || id === 'trace' || type === 'trace';
+  });
+
+  const submitCfg = __cfg('stepInjection.submit', null);
+  const submitStep = (submitCfg && typeof submitCfg === 'object') ? {
+    id: String(submitCfg.id || 'submit'),
+    type: String(submitCfg.type || 'submit'),
+    label: String(submitCfg.label || 'Submit'),
+    filter: String(submitCfg.filter || 'all')
+  } : {
+    id: 'submit',
+    type: 'submit',
+    label: 'Submit',
+    filter: 'all'
+  };
+
+  if (writeIdx >= 0) {
+    mapped.splice(writeIdx + 1, 0, submitStep);
+  } else {
+    mapped.push(submitStep);
+  }
+}
+
     return mapped.map((step, index) => ({
       ...step,
       label: __pqWriteLabel(step.label || step.title || step.id),
@@ -134,21 +168,25 @@ return {
   lecture: 0,
   listen: 1,
   listenplus: 2,
+  letterclue: 2,
   watch: 3,
   sound: 4,
+  phonetics: 4,
   repeat: 5,
   speak: 6,
   match: 7,
   animate: 8,
   write: 9,
   trace1: 10,
-  words: 11,
+  submit: 11,
+  words: 12,
+  soundclue: 12,
 
-  all_letters: 12,
-  heavy: 13,
-  light: 14,
-  alifaa: 15,
-  vowels: 16
+  all_letters: 13,
+  heavy: 14,
+  light: 15,
+  alifaa: 16,
+  vowels: 17
 };
 
   })();
@@ -357,6 +395,8 @@ function __pqRunPostModeUiRefresh() {
   try { __pqForceWriteButtonRefresh(); } catch (_e) {}
   try { __pqEnsureSpeakBoot(); } catch (_e) {}
   try { __pqForceSpeakUiRefresh(); } catch (_e) {}
+  try { __pqEnsureSubmitBoot(); } catch (_e) {}
+  try { __pqSyncSubmitUi(); } catch (_e) {}
   try { __pqRenderMobileStepPicker(); } catch (_e) {}
 }
 

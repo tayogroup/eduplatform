@@ -2,7 +2,26 @@
 
 Use this checklist after every Bunny upload and Moodle route change.
 
+For BigBlueButton live-class production checks, use:
+
+```text
+docs/bbb-group-4-production-smoke-tests.md
+src/moodle/local_prequran/sql/verify_group_4_production_smoke.sql
+```
+
 ## Target URLs
+
+Staging app shell:
+
+```text
+https://app.quraan.academy/pre_quraan_staging/scripts/index_v030.html
+```
+
+Staging protected unit direct URL:
+
+```text
+https://app.quraan.academy/pre_quraan_staging/units/alphabet/index.html
+```
 
 App shell:
 
@@ -33,6 +52,20 @@ Access Denied 403
 This is expected. The unit should load through Moodle/official portal access, not by direct Bunny URL.
 
 ## Required Smoke Test
+
+Run these checks against Bunny staging first, then repeat against production after release approval.
+
+Before staging upload:
+
+```bash
+npm.cmd run env:staging
+```
+
+Before production upload:
+
+```bash
+npm.cmd run env:production:dry-run
+```
 
 Run these checks from a real Moodle login:
 
@@ -75,12 +108,13 @@ iPad Safari or iPhone Safari
 The release passes smoke test when:
 
 1. Bunny upload succeeds.
-2. `npm.cmd run verify:bunny` passes before upload.
-3. Direct protected unit URL returns the expected 403.
-4. Moodle launcher opens the unit successfully.
-5. Styling loads.
-6. Core lesson interaction works.
-7. Refresh/re-entry does not show obvious regressions.
+2. `npm.cmd run verify:bunny:staging` passes before staging upload.
+3. `npm.cmd run verify:bunny:production` passes before production upload.
+4. Direct protected unit URL returns the expected 403.
+5. Moodle launcher opens the unit successfully.
+6. Styling loads.
+7. Core lesson interaction works.
+8. Refresh/re-entry does not show obvious regressions.
 
 ## Current Baseline
 

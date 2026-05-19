@@ -21,22 +21,12 @@
 
 <!-- Shared base 17 -->
 <link rel="stylesheet" href="/pre_quraan/shared/css/arabic-tiles.css">
-<style id="pqCanvasPrepaintGuard">
-  body[data-layout="flow-span"]:not(.pq-app-ready) .grid-wrap{
-    visibility:hidden;
-  }
-  body[data-layout="flow-span"]:not(.pq-app-ready) .tile,
-  body[data-layout="flow-span"]:not(.pq-app-ready) .tile *{
-    transition:none !important;
-    animation:none !important;
-  }
-</style>
 <link rel="stylesheet" href="/pre_quraan/shared/css/core-lesson-layout.css">
 <link rel="stylesheet" href="/pre_quraan/shared/css/stepper-lecture.css">
 <link rel="stylesheet" href="/pre_quraan/shared/css/overrides.css">
 <link rel="stylesheet" href="/pre_quraan/shared/css/child-message.css">
-<link rel="stylesheet" href="/pre_quraan/shared/css/sound-modal.css?v=sound-video-repeat-20260507">
-<link rel="stylesheet" href="/pre_quraan/shared/css/unit-canvas.css?v=canvas-flicker-20260507">
+<link rel="stylesheet" href="/pre_quraan/shared/css/sound-modal.css">
+<link rel="stylesheet" href="/pre_quraan/shared/css/unit-canvas.css">
 <link rel="stylesheet" href="/pre_quraan/shared/css/communications.css?v=comm-dashboard-20260508">
 <link rel="stylesheet" href="./unit.css">
 
@@ -131,24 +121,11 @@
         <span id="pqMobileFocusBadge" class="pq-mobile-summary-value pq-mobile-focus-badge">&#10024; Try to Focus</span>
       </div>
       <div class="pq-mobile-summary-pill">
-        <span id="pqMobileThisUnitLabel" class="pq-mobile-summary-label">
-          <span class="pq-mobile-bilingual-en">This Unit</span>
-          <span class="pq-mobile-bilingual-ar" dir="rtl">&#1575;&#1604;&#1608;&#1581;&#1583;&#1577;</span>
-        </span>
-        <span id="pqMobileThisUnitValue" class="pq-mobile-summary-value">0</span>
-      </div>
-      <div class="pq-mobile-summary-pill">
-        <span id="pqMobileTotalStarsLabel" class="pq-mobile-summary-label">
-          <span class="pq-mobile-bilingual-en">Total Stars</span>
-          <span class="pq-mobile-bilingual-ar" dir="rtl">&#1575;&#1604;&#1606;&#1580;&#1608;&#1605;</span>
-        </span>
+        <span class="pq-mobile-summary-label">Total Stars</span>
         <span id="pqMobileTotalStarsValue" class="pq-mobile-summary-value">0</span>
       </div>
       <div class="pq-mobile-summary-pill">
-        <span id="pqMobileUnitsDoneLabel" class="pq-mobile-summary-label">
-          <span class="pq-mobile-bilingual-en">Units Done</span>
-          <span class="pq-mobile-bilingual-ar" dir="rtl">&#1575;&#1604;&#1605;&#1603;&#1578;&#1605;&#1604;&#1577;</span>
-        </span>
+        <span class="pq-mobile-summary-label">Units Done</span>
         <span id="pqMobileUnitsDoneValue" class="pq-mobile-summary-value">0</span>
       </div>
     </div>
@@ -176,9 +153,6 @@
 
     <!-- Speak step mount -->
 <section id="speakMount" class="pq-speak-mount" aria-label="Speak controls"></section>
-
-    <!-- Submit step mount -->
-<section id="submitMount" class="pq-submit-mount" aria-label="Submit recording"></section>
 
     <section class="grid-wrap">
       <div id="grid" class="grid" aria-live="polite"></div>
@@ -297,7 +271,7 @@
   <script src="/pre_quraan/shared/js/core-attention.js"></script>
   <script src="/pre_quraan/shared/js/core-focus-guard-adapter.js"></script>
 
-  <script src="/pre_quraan/shared/js/core-managed-engine.js?v=localization-20260507"></script>
+  <script src="/pre_quraan/shared/js/core-managed-engine.js"></script>
   <script src="/pre_quraan/shared/js/core-lesson-bootstrap.js"></script>
 
   <script src="/pre_quraan/shared/js/core-media-lecture.js"></script>
@@ -310,29 +284,29 @@
   <!-- Shared UI JS -->
   <script src="/pre_quraan/shared/js/shared-settings-sheet.js"></script>
   <script src="/pre_quraan/shared/js/shared-settings-filter.js"></script>
-  <script src="/pre_quraan/shared/js/shared-header-utilities.js?v=bilingual-header-20260507"></script>
+  <script src="/pre_quraan/shared/js/shared-header-utilities.js"></script>
   <script src="/pre_quraan/shared/js/shared-communications-panel.js?v=comm-dashboard-20260508"></script>
 
   <script src="/pre_quraan/shared/js/shared-lecture-helpers.js"></script>
   <script src="/pre_quraan/shared/js/shared-lecture-stats.js"></script>
   <script src="/pre_quraan/shared/js/shared-lecture-cta-bridge.js"></script>
 
-  <script src="/pre_quraan/shared/js/shared-step-messaging.js?v=localization-20260507"></script>
+  <script src="/pre_quraan/shared/js/shared-step-messaging.js"></script>
   <script src="/pre_quraan/shared/js/shared-autoscroll.js"></script>
-  <script src="/pre_quraan/shared/js/shared-stepper-render.js?v=arabic-labels-20260507"></script>
+  <script src="/pre_quraan/shared/js/shared-stepper-render.js"></script>
 
-  <script src="/pre_quraan/shared/js/shared-reward-bar.js?v=progress-gap-20260508"></script>
+  <script src="/pre_quraan/shared/js/shared-reward-bar.js"></script>
 
   <script src="/pre_quraan/shared/js/shared-write-engine.js"></script>
   <script src="/pre_quraan/shared/js/shared-playlist-engine.js"></script>
   <script src="/pre_quraan/shared/js/shared-match-engine.js"></script>
-  <script src="/pre_quraan/shared/js/shared-config-normalizer.js?v=localization-20260507"></script>
+  <script src="/pre_quraan/shared/js/shared-config-normalizer.js"></script>
 
   <!-- Unit JS _208  -->
   <!-- CLONING NOTE: each cloned Listen unit owns index.html, unit.config.js, unit.messages.js, unit.css, and unit.runtime.js. -->
   <script src="./unit.messages.js"></script>
   <script src="./unit.config.js"></script>
-  <script src="/pre_quraan/shared/js/runtime/runtime.bundle.js?v=soundclue-shared-progress-20260508"></script>
+  <script src="/pre_quraan/shared/js/runtime/runtime.bundle.js"></script>
   <script src="./unit.runtime.js"></script>
 
 <!-- PQ SETTINGS FILTER RUNTIME FIX START -->
@@ -348,8 +322,7 @@
   <!-- ===================== END JS FILES ===================== -->
 
   
-<script src="/pre_quraan/shared/js/patches/mobile-ui-sync.js?v=bilingual-summary-20260507"></script>
-<script src="/pre_quraan/shared/js/patches/stepper-arabic-labels.js?v=arabic-labels-persist-20260507"></script>
+<script src="/pre_quraan/shared/js/patches/mobile-ui-sync.js"></script>
 <script src="/pre_quraan/shared/js/patches/loading-failsafe.js"></script>
 
 </body>

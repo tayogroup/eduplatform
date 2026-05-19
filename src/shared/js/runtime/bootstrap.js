@@ -99,7 +99,7 @@
     !window.UNIT_CFG ||
     typeof window.UNIT_CFG !== 'object'
   ) {
-    const message = 'Pre-Quraan unit config missing: unit.config.js must load before unit.runtime.js.';
+    const message = 'Pre-Quraan unit config missing: unit.config.js must load before the shared runtime bundle.';
 
     try {
       document.documentElement.innerHTML = [
@@ -190,8 +190,17 @@ function __cfg(path, fallback) {
     }
   }
 
+  function __pqLocalizedCfg(path, fallback, area) {
+    try {
+      if (window.PQL10n && typeof window.PQL10n.path === 'function') {
+        return window.PQL10n.path(UNIT_CFG, path, fallback, area || 'ui');
+      }
+    } catch (_e) {}
+    return __cfg(path, fallback);
+  }
+
   function __uiText(path, fallback) {
-    return String(__cfg(`uiText.${path}`, fallback));
+    return String(__pqLocalizedCfg(`uiText.${path}`, fallback, 'ui'));
   }
 
   function __pqIdentity(path, fallback) {
@@ -202,8 +211,34 @@ function __cfg(path, fallback) {
     return String(__cfg(`storageKeys.${path}`, fallback));
   }
 
+  function __pqCanonicalStepId(stepId) {
+    const raw = String(stepId || '').trim().toLowerCase();
+    if (raw === 'phonetics') return 'sound';
+    if (raw === 'letterclue') return 'listenplus';
+    if (raw === 'soundclue') return 'words';
+    if (raw === 'write') return 'trace1';
+    return raw;
+  }
+
   function __stepperText(path, fallback) {
-    return String(__cfg(`stepperUi.${path}`, fallback));
+    return String(__pqLocalizedCfg(`stepperUi.${path}`, fallback, 'ui'));
+  }
+
+  function __pqLocalizedStepLabel(step, fallback) {
+    try {
+      const s = step || {};
+      const sid = String(s.id || '').trim();
+      const base = String((s.label || s.title || fallback || sid || 'Action'));
+      const raw = sid ? __pqLocalizedCfg('stepLabels.' + sid, base, 'ui') : base;
+      if (raw && typeof raw === 'object') {
+        if (window.PQL10n && typeof window.PQL10n.value === 'function') {
+          return String(window.PQL10n.value(raw, 'ui', base));
+        }
+      }
+      return String(raw || base);
+    } catch (_e) {
+      return String(fallback || (step && step.label) || 'Action');
+    }
   }
 
   function __pqGetWordLimit() {
@@ -271,11 +306,11 @@ function __cfg(path, fallback) {
     greatMin: Number(__cfg('focusBadge.great.minScore', 120)) || 120,
     goodMin: Number(__cfg('focusBadge.good.minScore', 30)) || 30,
     greatCls: String(__cfg('focusBadge.great.cls', 'focus-great')),
-    greatText: String(__cfg('focusBadge.great.text', 'Great Focus')),
+    greatText: String(__pqLocalizedCfg('focusBadge.great.text', 'Great Focus', 'ui')),
     goodCls: String(__cfg('focusBadge.good.cls', 'focus-good')),
-    goodText: String(__cfg('focusBadge.good.text', 'Good Focus')),
+    goodText: String(__pqLocalizedCfg('focusBadge.good.text', 'Good Focus', 'ui')),
     keepCls: String(__cfg('focusBadge.keep.cls', 'focus-keep')),
-    keepText: String(__cfg('focusBadge.keep.text', 'Try to Focus'))
+    keepText: String(__pqLocalizedCfg('focusBadge.keep.text', 'Try to Focus', 'ui'))
   });
 
   const __PQ_GRID_UI = Object.freeze({
@@ -480,6 +515,7 @@ const LESSON_DEF = {
           id: String(step.id || ''),
           type: String(step.type || ''),
           label: String(step.label || step.id || ''),
+          arabicLabel: String(step.arabicLabel || step.labelAr || step.ar || ''),
           filter: String(step.filter || 'all')
         }));
       }
@@ -824,7 +860,7 @@ const LESSON_DEF = {
     __pqStepMessaging = window.PQSharedStepMessagingV2.create({
       unitCfg: window.UNIT_CFG || UNIT_CFG,
       titleText: String(__cfg('messageUi.titleText', '😊 Message')),
-      continueText: String(__cfg('messageUi.continueText', 'Continue')),
+      continueText: String(__pqLocalizedCfg('messageUi.continueText', 'Continue', 'content')),
       getProgress: () => managedProgress,
       getSteps: () => STEPS
     });
@@ -908,13 +944,16 @@ const LESSON_DEF = {
         q.get('uid') ||
         q.get('studentid') ||
         q.get('user') ||
+        sessionStorage.getItem('pq_uid') ||
         '';
 
-      const managedHint =
-        (q.get('managed_student') === 'true') ||
-        (q.get('managed') === '1') ||
-        q.has('wstoken') ||
-        q.has('userid');
+      const tokenHint =
+        q.get('wstoken') ||
+        q.get('ws') ||
+        sessionStorage.getItem('pq_ws_token') ||
+        '';
+
+      const managedHint = !!(uidHint && tokenHint);
 
       if (managedHint) {
         try {
@@ -1180,6 +1219,18 @@ const LS_LETTER_PLAYS_KEY =
         'media.fallbackAudioBase',
         ''
       )
+    )
+  )
+);
+
+  const LETTER_SOUND_MAP = (__cfg('letterSoundMap', {}) || {});
+
+  const LETTER_SOUND_BASE = String(
+  __cfg(
+    'media.letterSoundBase',
+    __cfg(
+      'media.soundLetterAudioBase',
+      ''
     )
   )
 );

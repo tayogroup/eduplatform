@@ -47,8 +47,24 @@
   }
   .managed-step-label{
     font-weight: 900;
-    font-size: 1.0rem;
+    font-size: 0.92rem;
     margin-bottom: 8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    line-height:1.08;
+  }
+  .managed-step-label-en{
+    display:block;
+  }
+  .managed-step-label-ar{
+    display:block;
+    font-family: "Noto Sans Arabic", "Tahoma", "Arial", sans-serif;
+    font-size: 1.05em;
+    font-weight: 900;
+    color:#1f7a45;
   }
   .managed-step-meta{
     font-weight: 800;
@@ -268,16 +284,17 @@ html.pq-browser-ui #managedStepper.managed-stepper{
   opacity:1 !important;
   width:100% !important;
   max-width:1100px !important;
+  box-sizing:border-box !important;
   height:auto !important;
   min-height:0 !important;
   max-height:none !important;
   margin:12px auto 14px auto !important;
-  padding:20px 18px 18px !important;
-  border-radius:30px !important;
-  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.90)) !important;
-  border:2px solid rgba(229,231,235,.95) !important;
+  padding:22px 20px 20px !important;
+  border-radius:32px !important;
+  background:linear-gradient(180deg,#fbfffc 0%,#e2ffeb 100%) !important;
+  border:2px solid #b8efc7 !important;
   box-shadow:
-    0 14px 30px rgba(15,23,42,.10),
+    0 18px 38px rgba(31,145,72,.12),
     inset 0 1px 0 rgba(255,255,255,.95) !important;
   overflow-x:auto !important;
   overflow-y:hidden !important;
@@ -290,12 +307,12 @@ html.pq-browser-ui #managedStepsList.managed-steps{
   display:flex !important;
   flex-direction:row !important;
   flex-wrap:nowrap !important;
-  gap:22px !important;
+  gap:18px !important;
   align-items:stretch !important;
   justify-content:flex-start !important;
   direction:rtl !important;
   min-width:max-content !important;
-  padding:16px 16px 18px !important;
+  padding:18px 18px 20px !important;
   position:relative !important;
   overflow-x:auto !important;
   overflow-y:hidden !important;
@@ -306,41 +323,46 @@ html.pq-browser-ui #managedStepsList.managed-steps{
 html.pq-browser-ui #managedStepsList::before{
   content:"";
   position:absolute;
-  left:28px;
-  right:28px;
-  top:43px;
-  height:6px;
+  left:42px;
+  right:42px;
+  top:50%;
+  height:10px;
   transform:translateY(-50%);
   border-radius:999px;
   background:linear-gradient(
     90deg,
-    rgba(22,163,38,.25),
-    rgba(242,184,63,.22),
-    rgba(203,213,225,.34)
+    rgba(88,204,2,.18),
+    rgba(255,197,69,.25),
+    rgba(203,213,225,.36)
   );
-  opacity:.38;
+  opacity:1;
   z-index:0;
   pointer-events:none;
 }
 
 /* Step card */
 html.pq-browser-ui #managedStepsList .managed-step{
-  flex:0 0 250px !important;
-  flex-basis:250px !important;
-  width:250px !important;
-  max-width:250px !important;
-  min-height:110px !important;
-  padding:38px 16px 12px !important;
+  flex:0 0 180px !important;
+  flex-basis:180px !important;
+  width:180px !important;
+  max-width:180px !important;
+  min-height:134px !important;
+  padding:20px 14px 16px !important;
   border-radius:24px !important;
   position:relative !important;
   z-index:1 !important;
   box-sizing:border-box !important;
   text-align:center !important;
-  background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%) !important;
-  border:4px solid #e5e7eb !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:5px !important;
+  background:#ffffff !important;
+  border:4px solid #e5edf4 !important;
   box-shadow:
-    0 7px 0 rgba(148,163,184,.35),
-    0 16px 26px rgba(15,23,42,.10) !important;
+    0 7px 0 #cad5df,
+    0 16px 28px rgba(15,23,42,.12) !important;
   opacity:.72 !important;
   filter:none !important;
   transform:translateY(0) !important;
@@ -370,24 +392,24 @@ html.pq-browser-ui #managedStepsList .managed-step > *{
 
 /* Single clean Duolingo badge in left corner */
 html.pq-browser-ui #managedStepsList .managed-step-badge{
-  position:absolute !important;
-  top:10px !important;
-  left:12px !important;
+  position:static !important;
+  top:auto !important;
+  left:auto !important;
   transform:none !important;
-  width:30px !important;
-  height:30px !important;
-  min-width:30px !important;
-  min-height:30px !important;
+  width:44px !important;
+  height:44px !important;
+  min-width:44px !important;
+  min-height:44px !important;
   border-radius:999px !important;
   display:flex !important;
   align-items:center !important;
   justify-content:center !important;
-  font-size:.78rem !important;
+  font-size:1rem !important;
   line-height:1 !important;
-  font-weight:900 !important;
-  border:3px solid #fff !important;
+  font-weight:1000 !important;
+  border:5px solid #fff !important;
   box-shadow:
-    0 6px 12px rgba(15,23,42,.16),
+    0 8px 16px rgba(15,23,42,.16),
     inset 0 1px 0 rgba(255,255,255,.60) !important;
   z-index:3 !important;
 }
@@ -402,35 +424,59 @@ html.pq-browser-ui #managedStepsList .managed-step-meta{
 }
 
 html.pq-browser-ui #managedStepsList .managed-step-index{
-  font-size:.74rem !important;
-  font-weight:800 !important;
+  font-size:.82rem !important;
+  font-weight:1000 !important;
   line-height:1.12 !important;
-  margin-bottom:5px !important;
+  margin:0 !important;
+  color:#44515f !important;
 }
 
 html.pq-browser-ui #managedStepsList .managed-step-label{
-  font-size:.90rem !important;
-  font-weight:800 !important;
-  line-height:1.16 !important;
-  margin-bottom:5px !important;
+  font-size:.94rem !important;
+  font-weight:1000 !important;
+  line-height:1.06 !important;
+  margin:0 !important;
+  color:#142334 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:2px !important;
+  min-height:2.16em !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step-label-en{
+  display:block !important;
+}
+
+html.pq-browser-ui #managedStepsList .managed-step-label-ar{
+  display:block !important;
+  direction:rtl !important;
+  font-family:"Noto Sans Arabic","Tahoma","Arial",sans-serif !important;
+  font-size:1.12rem !important;
+  font-weight:1000 !important;
+  line-height:1 !important;
+  color:#15803d !important;
+  text-shadow:0 1px 0 rgba(255,255,255,.85) !important;
 }
 
 html.pq-browser-ui #managedStepsList .managed-step-meta{
-  font-size:.80rem !important;
-  font-weight:700 !important;
+  font-size:.82rem !important;
+  font-weight:1000 !important;
   line-height:1.16 !important;
-  color:#6b7280 !important;
+  color:#64748b !important;
   opacity:1 !important;
+  margin:0 !important;
 }
 
 /* Incomplete/locked-looking default */
 html.pq-browser-ui #managedStepsList .managed-step:not(.completed):not(.active){
-  background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%) !important;
-  border-color:#e5e7eb !important;
+  background:#ffffff !important;
+  border-color:#e5edf4 !important;
   box-shadow:
-    0 7px 0 rgba(148,163,184,.35),
-    0 16px 26px rgba(15,23,42,.10) !important;
-  opacity:.58 !important;
+    0 7px 0 #cad5df,
+    0 16px 28px rgba(15,23,42,.12) !important;
+  opacity:.62 !important;
 }
 
 html.pq-browser-ui #managedStepsList .managed-step:not(.completed):not(.active) .managed-step-badge{
@@ -440,36 +486,36 @@ html.pq-browser-ui #managedStepsList .managed-step:not(.completed):not(.active) 
 
 /* Completed = Duolingo green */
 html.pq-browser-ui #managedStepsList .managed-step.completed{
-  background:linear-gradient(180deg,#f2ffed 0%,#ddf7c8 100%) !important;
-  border-color:#58c448 !important;
+  background:linear-gradient(180deg,#f5fff0 0%,#ddf7c8 100%) !important;
+  border-color:#58cc02 !important;
   opacity:1 !important;
   box-shadow:
-    0 7px 0 rgba(45,145,53,.35),
+    0 7px 0 #46a302,
     0 16px 28px rgba(45,145,53,.12) !important;
 }
 
 html.pq-browser-ui #managedStepsList .managed-step.completed .managed-step-badge{
-  background:linear-gradient(180deg,#35d044 0%,#16a326 100%) !important;
+  background:linear-gradient(180deg,#58cc02 0%,#46a302 100%) !important;
   color:#fff !important;
   box-shadow:
-    0 0 0 5px rgba(53,208,68,.14),
+    0 0 0 5px rgba(88,204,2,.14),
     0 7px 14px rgba(15,23,42,.14) !important;
 }
 
 /* Active = floating gold node */
 html.pq-browser-ui #managedStepsList .managed-step.active{
   background:linear-gradient(180deg,#fff8db 0%,#ffd975 100%) !important;
-  border-color:#f4b83f !important;
+  border-color:#ffc545 !important;
   opacity:1 !important;
-  transform:translateY(-5px) scale(1.02) !important;
+  transform:translateY(-4px) scale(1.02) !important;
   box-shadow:
-    0 0 0 6px rgba(244,184,63,.18),
-    0 9px 0 rgba(173,115,18,.26),
-    0 20px 32px rgba(15,23,42,.16) !important;
+    0 0 0 6px rgba(255,197,69,.18),
+    0 8px 0 #e7a61f,
+    0 18px 32px rgba(173,115,18,.18) !important;
 }
 
 html.pq-browser-ui #managedStepsList .managed-step.active .managed-step-badge{
-  background:linear-gradient(180deg,#ffd85a 0%,#f2ad24 100%) !important;
+  background:linear-gradient(180deg,#ffc545 0%,#f2ad24 100%) !important;
   color:#111827 !important;
   box-shadow:
     0 0 0 5px rgba(244,184,63,.18),
@@ -489,10 +535,10 @@ html.pq-browser-ui #managedStepsList .managed-step.locked .managed-step-badge{
 
 /* Subtle Duolingo-style bounce on the active card */
 @keyframes pqStepBounce{
-  0%   { transform:translateY(-5px) scale(1.020); }
-  40%  { transform:translateY(-8px) scale(1.032); }
-  70%  { transform:translateY(-6px) scale(1.024); }
-  100% { transform:translateY(-5px) scale(1.020); }
+  0%   { transform:translateY(-4px) scale(1.020); }
+  40%  { transform:translateY(-7px) scale(1.032); }
+  70%  { transform:translateY(-5px) scale(1.024); }
+  100% { transform:translateY(-4px) scale(1.020); }
 }
 
 html.pq-browser-ui #managedStepsList .managed-step.active{

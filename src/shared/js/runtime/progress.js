@@ -304,6 +304,43 @@
 
   let pqStepActionBar = document.getElementById('pqStepActionBar');
   let pqStepActionBtn = document.getElementById('pqStepActionBtn');
+  let pqStepPrevBtn = document.getElementById('pqStepPrevBtn');
+
+function __pqSetBilingualControlLabel(el, english, arabic) {
+  try {
+    if (!el) return;
+    const enText = String(english || '').replace(/^[^\w]+/u, '').trim() || String(english || '').trim();
+    const arText = String(arabic || '').trim();
+
+    el.textContent = '';
+    el.classList.add('pq-bilingual-control');
+
+    const en = document.createElement('span');
+    en.className = 'pq-bilingual-control__en';
+    en.textContent = enText;
+    el.appendChild(en);
+
+    if (arText) {
+      const ar = document.createElement('span');
+      ar.className = 'pq-bilingual-control__ar';
+      ar.setAttribute('dir', 'rtl');
+      ar.textContent = arText;
+      el.appendChild(ar);
+    }
+
+    el.setAttribute('aria-label', arText ? (enText + ' - ' + arText) : enText);
+  } catch (_e) {
+    try { el.textContent = String(english || ''); } catch (_e2) {}
+  }
+}
+
+function __pqStepArabicLabel(step, fallback) {
+  try {
+    return String((step && (step.arabicLabel || step.labelAr || step.ar)) || fallback || '').trim();
+  } catch (_e) {
+    return String(fallback || '');
+  }
+}
 
 function __pqHideLegacyPlayAllButton() {
   try {
@@ -367,6 +404,10 @@ function __pqEnsureDynamicActionHost() {
       pqStepActionBtn = document.getElementById('pqStepActionBtn');
     }
 
+    if (!pqStepPrevBtn) {
+      pqStepPrevBtn = document.getElementById('pqStepPrevBtn');
+    }
+
     if (!pqStepActionBar) {
       pqStepActionBar = document.createElement('div');
       pqStepActionBar.id = 'pqStepActionBar';
@@ -381,10 +422,22 @@ function __pqEnsureDynamicActionHost() {
       pqStepActionBtn.textContent = 'Action';
     }
 
-    if (pqStepActionBtn.parentNode !== pqStepActionBar) {
+    if (!pqStepPrevBtn) {
+      pqStepPrevBtn = document.createElement('button');
+      pqStepPrevBtn.type = 'button';
+      pqStepPrevBtn.id = 'pqStepPrevBtn';
+      pqStepPrevBtn.className = 'pq-step-prev-btn';
+      pqStepPrevBtn.textContent = '← Step';
+    }
+
+    if (
+      pqStepActionBtn.parentNode !== pqStepActionBar ||
+      pqStepPrevBtn.parentNode !== pqStepActionBar
+    ) {
       try {
         pqStepActionBar.innerHTML = '';
       } catch (_e) {}
+      pqStepActionBar.appendChild(pqStepPrevBtn);
       pqStepActionBar.appendChild(pqStepActionBtn);
     }
 
@@ -396,16 +449,18 @@ function __pqEnsureDynamicActionHost() {
 #pqStepActionBar.pq-step-action-bar{
   display:flex;
   align-items:center;
-  justify-content:center;
-  width:auto;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  min-width:300px;
   margin:0;
-  min-width:0;
   visibility:visible !important;
   opacity:1 !important;
   pointer-events:auto !important;
 }
 
-#pqStepActionBtn.pq-step-action-btn{
+#pqStepActionBtn.pq-step-action-btn,
+#pqStepPrevBtn.pq-step-prev-btn{
   appearance:none;
   -webkit-appearance:none;
   display:inline-flex !important;
@@ -430,9 +485,26 @@ function __pqEnsureDynamicActionHost() {
   pointer-events:auto !important;
 }
 
-#pqStepActionBtn.pq-step-action-btn[disabled]{
+#pqStepPrevBtn.pq-step-prev-btn{
+  background:#fff5d8;
+  color:#5a4219;
+  box-shadow:inset 0 0 0 2px #e2bd67,0 10px 24px rgba(0,0,0,.08);
+}
+
+#pqStepActionBar.pq-step-action-bar[data-prev-visible="0"]{
+  justify-content:center;
+  min-width:0;
+}
+
+#pqStepActionBtn.pq-step-action-btn[disabled],
+#pqStepPrevBtn.pq-step-prev-btn[disabled]{
   opacity:.5 !important;
   cursor:not-allowed;
+}
+
+#pqStepActionBtn.pq-step-action-btn[hidden],
+#pqStepPrevBtn.pq-step-prev-btn[hidden]{
+  display:none !important;
 }
 
 #pqUnifiedBottomBar{
@@ -501,20 +573,22 @@ function __pqEnsureDynamicActionHost() {
 
 #pqUnifiedBottomBar #pqMobileBackBtn,
 #pqUnifiedBottomBar #btnPause,
-#pqUnifiedBottomBar #pqStepActionBtn{
+#pqUnifiedBottomBar #pqStepActionBtn,
+#pqUnifiedBottomBar #pqStepPrevBtn{
   pointer-events:auto !important;
   touch-action:manipulation;
 }
 
 @media (max-width: 768px){
   #pqStepActionBar.pq-step-action-bar{
-    justify-content:center;
-    width:auto;
+    min-width:0;
+    width:100%;
   }
 
-  #pqStepActionBtn.pq-step-action-btn{
+  #pqStepActionBtn.pq-step-action-btn,
+  #pqStepPrevBtn.pq-step-prev-btn{
     min-height:50px;
-    padding:12px 18px;
+    padding:12px 16px;
     font-size:17px;
     width:auto;
   }
@@ -548,9 +622,15 @@ function __pqEnsureDynamicActionHost() {
       pqStepActionBtn.__pqBound__ = true;
     }
 
+    if (pqStepPrevBtn && !pqStepPrevBtn.__pqBound__) {
+      pqStepPrevBtn.addEventListener('click', __pqHandlePreviousStepClick);
+      pqStepPrevBtn.__pqBound__ = true;
+    }
+
     return {
       bar: pqStepActionBar,
-      button: pqStepActionBtn
+      button: pqStepActionBtn,
+      previousButton: pqStepPrevBtn
     };
   } catch (_e) {
     return null;
@@ -565,6 +645,7 @@ function __pqCanRunDynamicStepAction(meta) {
 
     if (!stepId) return false;
     if (mode === 'speak') return true;
+    if (mode === 'submit') return true;
     if (mode === 'playall') return true;
 
     if (mode === 'target') {
@@ -583,11 +664,32 @@ function __pqCanRunDynamicStepAction(meta) {
   }
 }
 
+function __pqDynamicStepLabel(step, fallback) {
+  try {
+    if (typeof __pqLocalizedStepLabel === 'function') {
+      return __pqLocalizedStepLabel(step, fallback);
+    }
+    return String(
+      (step && (step.label || step.title)) ||
+      fallback ||
+      (step && step.id) ||
+      'Action'
+    );
+  } catch (_e) {
+    return String(fallback || 'Action');
+  }
+}
+
+function __pqDynamicStepArabicLabel(step, fallback) {
+  return __pqStepArabicLabel(step, fallback);
+}
+
 function __pqGetDynamicStepActionMeta() {
   try {
     const current = getCurrentStep();
     const step = current && current.step ? current.step : null;
-    const stepId = String((step && step.id) || '').toLowerCase();
+    const rawStepId = String((step && step.id) || '').toLowerCase();
+    const stepId = __pqCanonicalStepId(rawStepId);
 
     // ✅ PATCH: hide articulation image when NOT in sound step
     try {
@@ -600,7 +702,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'lecture':
         return {
           stepId,
-          label: 'Play Lecture',
+          label: __pqDynamicStepLabel(step, 'Lecture'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'شرح'),
           mode: 'target',
           target:
             document.getElementById('pqLectureCtaBtn') ||
@@ -611,7 +714,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'listen':
         return {
           stepId,
-          label: 'Listen',
+          label: __pqDynamicStepLabel(step, 'Listen'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'استمع'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -619,7 +723,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'listenplus':
         return {
           stepId,
-          label: 'Listen+',
+          label: __pqDynamicStepLabel(step, 'Listen+'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'تلميحات الحروف'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -627,7 +732,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'watch':
         return {
           stepId,
-          label: 'Watch',
+          label: __pqDynamicStepLabel(step, 'Watch'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'شاهد'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -635,7 +741,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'sound':
         return {
           stepId,
-          label: 'Sound',
+          label: __pqDynamicStepLabel(step, 'Sound'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'النطق'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -643,7 +750,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'repeat':
         return {
           stepId,
-          label: 'Repeat',
+          label: __pqDynamicStepLabel(step, 'Repeat'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'كرر'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -651,15 +759,26 @@ function __pqGetDynamicStepActionMeta() {
       case 'speak':
         return {
           stepId,
-          label: 'Speak',
+          label: __pqDynamicStepLabel(step, 'Speak'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'تحدث'),
           mode: 'speak',
+          target: null
+        };
+
+      case 'submit':
+        return {
+          stepId,
+          label: __pqDynamicStepLabel(step, 'Submit'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'أرسل'),
+          mode: 'submit',
           target: null
         };
 
       case 'match':
         return {
           stepId,
-          label: 'Match',
+          label: __pqDynamicStepLabel(step, 'Match'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'طابق'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -667,7 +786,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'animate':
         return {
           stepId,
-          label: 'Animate',
+          label: __pqDynamicStepLabel(step, 'Animate'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'شاهد الكتابة'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -676,7 +796,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'write':
         return {
           stepId,
-          label: 'Write',
+          label: __pqDynamicStepLabel(step, 'Write'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'اكتب'),
           mode: 'target',
           target: document.getElementById('btnTrace') || null
         };
@@ -684,7 +805,8 @@ function __pqGetDynamicStepActionMeta() {
       case 'words':
         return {
           stepId,
-          label: 'Words',
+          label: __pqDynamicStepLabel(step, 'Words'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, 'تلميحات صوتية'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -707,26 +829,361 @@ function __pqGetDynamicStepActionMeta() {
   }
 }
 
+function __pqGetPreviousStepMeta() {
+  try {
+    if (__cfg('stepNavigation.previous.enabled', true) === false) return null;
+    if (!managedProgress || __pqPracticeFreeUI() || __pqIsReviewMode()) return null;
+
+    const current = getCurrentStep();
+    const currentStep = current && current.step ? current.step : null;
+    const currentId = String((currentStep && currentStep.id) || '').trim();
+    if (!currentId) return null;
+
+    const ordered = orderStepsForDisplay(STEPS || []);
+    const idx = ordered.findIndex((step) => step && step.id === currentId);
+    if (idx <= 0) return null;
+
+    const previousStep = ordered[idx - 1] || null;
+    if (!previousStep || !previousStep.id) return null;
+
+    return {
+      currentStep,
+      currentId,
+      previousStep,
+      previousId: String(previousStep.id)
+    };
+  } catch (_e) {
+    return null;
+  }
+}
+
+function __pqResetStepProgressState(stepId) {
+  try {
+    const sid = String(stepId || '').trim();
+    if (!sid || !managedProgress) return;
+
+    const existing = managedProgress[sid] || {};
+    const required = Math.max(
+      1,
+      Number(
+        existing.passesRequired ??
+        existing.passes_required ??
+        __pqGetStepPassCount(sid) ??
+        1
+      ) || 1
+    );
+    const repeats = Math.max(
+      1,
+      Number(
+        existing.repeatPerLetter ??
+        existing.repeats_per_letter ??
+        existing.repeat_per_letter ??
+        1
+      ) || 1
+    );
+
+    managedProgress[sid] = {
+      ...existing,
+      passesDone: 0,
+      passes_done: 0,
+      passesRequired: required,
+      passes_required: required,
+      repeatPerLetter: repeats,
+      repeats_per_letter: repeats,
+      completed: false,
+      step_status: 'not_started',
+      status: 'not_started'
+    };
+
+    delete managedProgress[sid].completedAt;
+    delete managedProgress[sid].completionTime;
+    delete managedProgress[sid].step_completiontime;
+    delete managedProgress[sid].lastActivity;
+    delete managedProgress[sid].step_lastactivity;
+    delete managedProgress[sid].startedAt;
+    delete managedProgress[sid].step_starttime;
+  } catch (_e) {}
+}
+
+function __pqClearStepLocalTracking(stepId) {
+  try {
+    const sid = String(stepId || '').trim();
+    if (!sid) return;
+    const canonical = __pqCanonicalStepId(sid);
+    const ids = Array.from(new Set([sid, canonical].filter(Boolean)));
+
+    try {
+      ids.forEach((id) => {
+        if (letterPlays && letterPlays[id]) {
+          letterPlays[id] = {};
+        }
+      });
+      flushLetterPlays();
+    } catch (_e) {}
+
+    try {
+      if (ids.includes('sound')) {
+        Object.keys(__pqSoundVideoCompletedByKey || {}).forEach((key) => {
+          delete __pqSoundVideoCompletedByKey[key];
+        });
+        localStorage.removeItem(__pqSoundCompletedStorageKey());
+        document.querySelectorAll('.tile.pq-sound-done').forEach((tile) => {
+          tile.classList.remove('pq-sound-done');
+          tile.removeAttribute('data-sound-done');
+          const check = tile.querySelector('.pq-sound-check');
+          if (check) check.remove();
+        });
+        try { __pqUpdateSoundProgressCounter(); } catch (_e) {}
+      }
+    } catch (_e) {}
+
+    try {
+      if (ids.includes('speak')) {
+        if (__pqSpeakUiState && __pqSpeakUiState.completedKeys) {
+          __pqSpeakUiState.completedKeys = {};
+        }
+        localStorage.removeItem(__pqSpeakDoneStorageKeyFinal());
+      }
+    } catch (_e) {}
+
+    try {
+      if (ids.includes('submit') && typeof __pqSubmitState === 'object') {
+        __pqSubmitState.submitted = false;
+        __pqSubmitState.lastResult = null;
+      }
+    } catch (_e) {}
+  } catch (_e) {}
+}
+
+function __pqResetPreviousStepVisualState() {
+  try { __pqSetPlaylistDimming(false); } catch (_e) {}
+  try { __pqCloseActiveMediaWindows(); } catch (_e) {}
+  try { __pqResetGridVisualStateForStepHandoff(); } catch (_e) {}
+  try { __pqClearPlayingTile(); } catch (_e) {}
+
+  try {
+    document.body.classList.remove('pq-playlist-active');
+    document.documentElement.style.removeProperty('--pq-playlist-overlay-bg');
+    document.documentElement.style.removeProperty('--pq-playlist-overlay-opacity');
+  } catch (_e) {}
+
+  try {
+    const modal = document.getElementById('videoModal');
+    if (modal) {
+      modal.style.display = 'none';
+      modal.classList.remove('pq-animate-video-modal');
+      modal.removeAttribute('aria-busy');
+    }
+  } catch (_e) {}
+
+  try {
+    document
+      .querySelectorAll('#grid .tile')
+      .forEach((tile) => {
+        tile.classList.remove(
+          'active',
+          'played',
+          'completed',
+          'pq-playing',
+          'is-playing',
+          'pq-speak-done'
+        );
+        tile.removeAttribute('data-speak-done');
+        tile.style.opacity = '';
+        if (String(tile.style.filter || '').indexOf('grayscale') !== -1) {
+          tile.style.filter = '';
+        }
+      });
+  } catch (_e) {}
+}
+
+async function __pqConfirmPreviousStep(meta) {
+  try {
+    const previousLabel = __pqDynamicStepLabel(meta.previousStep, meta.previousId);
+    const currentLabel = __pqDynamicStepLabel(meta.currentStep, meta.currentId);
+    const titleText = String(__cfg('stepNavigation.previous.confirmTitle', 'Go back one step?'));
+    const textTemplate = String(
+      __cfg(
+        'stepNavigation.previous.confirmText',
+        'This will move you back to {previousStep}. Your progress for this step will be reset so you can try again.'
+      )
+    );
+    const message = {
+      titleText,
+      text: textTemplate
+        .replace(/\{previousStep\}/g, previousLabel)
+        .replace(/\{currentStep\}/g, currentLabel),
+      continueText: String(__cfg('stepNavigation.previous.confirmContinueText', 'Yes, go back')),
+      cancelText: String(__cfg('stepNavigation.previous.confirmCancelText', 'Stay here'))
+    };
+
+    const api = __pqEnsureStepMessaging();
+    if (api && typeof api.showChoice === 'function') {
+      return !!(await api.showChoice(message, message));
+    }
+  } catch (_e) {}
+
+  try {
+    return window.confirm('Go back one step?');
+  } catch (_e) {
+    return false;
+  }
+}
+
+async function __pqReturnToPreviousStep() {
+  const meta = __pqGetPreviousStepMeta();
+  if (!meta) return false;
+
+  const confirmed = await __pqConfirmPreviousStep(meta);
+  if (!confirmed) return false;
+
+  try { stopAllMedia(); } catch (_e) {}
+  try { __pqResetPreviousStepVisualState(); } catch (_e) {}
+
+  __pqResetStepProgressState(meta.previousId);
+  __pqResetStepProgressState(meta.currentId);
+  __pqClearStepLocalTracking(meta.previousId);
+  __pqClearStepLocalTracking(meta.currentId);
+
+  try {
+    managedProgress.currentStepId = meta.previousId;
+    managedProgress.__finished = false;
+    managedProgress.__allCompleted = false;
+  } catch (_e) {}
+
+  try {
+    if (__DB_ONLY) {
+      localStorage.removeItem(LS_PROGRESS_CACHE_KEY);
+    } else {
+      localStorage.setItem(LS_PROGRESS_CACHE_KEY, JSON.stringify(managedProgress));
+    }
+  } catch (_e) {}
+
+  try {
+    await sendManagedToMoodle(managedProgress);
+  } catch (_e) {}
+
+  try {
+    if (__LessonRuntime && typeof __LessonRuntime.refresh === 'function') {
+      const refreshed = await __LessonRuntime.refresh();
+      const nextProgress =
+        refreshed && (refreshed.progress || (refreshed.state && refreshed.state.progress));
+      if (nextProgress) {
+        managedProgress = ensureProgressShape(nextProgress);
+        managedProgress.currentStepId = meta.previousId;
+      }
+    }
+  } catch (_e) {}
+
+  try {
+    managedProgress.currentStepId = meta.previousId;
+    managedProgress.__finished = false;
+    managedProgress.__allCompleted = false;
+  } catch (_e) {}
+
+  try { __pqResetPreviousStepVisualState(); } catch (_e) {}
+  try { fgSyncStepContext(true); } catch (_e) {}
+  try { __pqPlaylistEngine = null; } catch (_e) {}
+  try { renderStepper(); } catch (_e) {}
+  try { renderGrid(); } catch (_e) {}
+  try { markActive(); } catch (_e) {}
+  try { refreshPlayedClasses(); } catch (_e) {}
+  try { updateControlsForCurrentStep(); } catch (_e) {}
+  try { __pqSyncWriteUI(); } catch (_e) {}
+  try { __pqForceSpeakUiRefresh(); } catch (_e) {}
+  try { __pqSyncSubmitUi(); } catch (_e) {}
+  try { __pqRenderMobileStepPicker(); } catch (_e) {}
+  try { __pqAfterProgressChange(true); } catch (_e) {}
+  try {
+    window.requestAnimationFrame(() => {
+      try { __pqResetPreviousStepVisualState(); } catch (_e) {}
+      try { renderGrid(); } catch (_e) {}
+      try { markActive(); } catch (_e) {}
+      try { refreshPlayedClasses(); } catch (_e) {}
+      try { updateControlsForCurrentStep(); } catch (_e) {}
+      try { __pqSyncDynamicStepAction(); } catch (_e) {}
+      try { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); } catch (_e) {}
+    });
+  } catch (_e) {}
+  try { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); } catch (_e) {}
+
+  return true;
+}
+
+function __pqHandlePreviousStepClick(ev) {
+  try {
+    if (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+    __pqReturnToPreviousStep();
+  } catch (_e) {}
+}
+
 function __pqSyncDynamicStepAction() {
   try {
     const ensured = __pqEnsureDynamicActionHost();
     if (!ensured || !pqStepActionBar || !pqStepActionBtn) return;
 
     const meta = __pqGetDynamicStepActionMeta();
+    const previousMeta = __pqGetPreviousStepMeta();
     const stepId = String(meta.stepId || '').toLowerCase();
     const mode = String(meta.mode || 'none').toLowerCase();
 
     try { __pqSetSpeakStepActive(mode === 'speak'); } catch (_e) {}
 
-    pqStepActionBtn.textContent = String(meta.label || 'Action');
+    __pqSetBilingualControlLabel(
+      pqStepActionBtn,
+      String(meta.label || 'Action'),
+      String(meta.arabicLabel || '')
+    );
+
+    try {
+      const desktopBackBtn = document.getElementById('pqDesktopBackBtn');
+      if (desktopBackBtn) {
+        __pqSetBilingualControlLabel(desktopBackBtn, 'Back', 'رجوع');
+        desktopBackBtn.title = 'Back - رجوع';
+      }
+    } catch (_e) {}
+
+    try {
+      if (btnPause) {
+        const isPaused = !!(paused || __watchPaused);
+        __pqSetBilingualControlLabel(
+          btnPause,
+          isPaused ? 'Resume' : 'Pause',
+          isPaused ? 'استئناف' : 'إيقاف'
+        );
+      }
+    } catch (_e) {}
+
     pqStepActionBtn.dataset.stepId = stepId;
     pqStepActionBtn.dataset.mode = mode;
+
+    try {
+      const previousEnabled = !!previousMeta;
+      pqStepActionBar.dataset.prevVisible = previousEnabled ? '1' : '0';
+      if (pqStepPrevBtn) {
+        pqStepPrevBtn.hidden = !previousEnabled;
+        pqStepPrevBtn.style.display = previousEnabled ? 'inline-flex' : 'none';
+        pqStepPrevBtn.disabled = !previousEnabled;
+        pqStepPrevBtn.title = previousEnabled
+          ? String(__cfg('stepNavigation.previous.title', 'Go back one step'))
+          : '';
+        pqStepPrevBtn.setAttribute('aria-label', pqStepPrevBtn.title || 'Go back one step');
+        pqStepPrevBtn.textContent = String(__cfg('stepNavigation.previous.label', '← Step'));
+      }
+    } catch (_e) {}
 
     if (!stepId) {
       pqStepActionBar.hidden = true;
       pqStepActionBar.style.display = 'none';
       pqStepActionBtn.hidden = true;
       pqStepActionBtn.disabled = true;
+      if (pqStepPrevBtn) {
+        pqStepPrevBtn.hidden = true;
+        pqStepPrevBtn.disabled = true;
+      }
       return;
     }
 
@@ -762,6 +1219,18 @@ function __pqHandleDynamicStepActionClick() {
       try { __pqEnsureSpeakBoot(); } catch (_e) {}
       try { __pqForceSpeakUiRefresh(); } catch (_e) {}
       try { __pqScrollToSpeakActionBlock(); } catch (_e) {}
+      return;
+    }
+
+    if (mode === 'submit') {
+      try { __pqEnsureSubmitBoot(); } catch (_e) {}
+      try { __pqSyncSubmitUi(); } catch (_e) {}
+      try {
+        const mount = document.getElementById('submitMount');
+        if (mount && typeof mount.scrollIntoView === 'function') {
+          mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } catch (_e) {}
       return;
     }
 
@@ -839,6 +1308,11 @@ function __pqShouldShowBottomPause() {
 		btn.setAttribute('aria-label', 'Back');
 		btn.title = 'Back';
 		btn.className = 'pq-browser-back-btn';
+		if (typeof __pqSetBilingualControlLabel === 'function') {
+		  __pqSetBilingualControlLabel(btn, 'Back ←', 'رجوع');
+		  btn.setAttribute('aria-label', 'Back - رجوع');
+		  btn.title = 'Back - رجوع';
+		}
 
 		return btn;
 	  } catch (_e) {
@@ -900,6 +1374,11 @@ function __pqBindMobileBackButton() {
     backBtn.style.opacity = '1';
     backBtn.style.pointerEvents = 'auto';
     backBtn.style.touchAction = 'manipulation';
+    if (typeof __pqSetBilingualControlLabel === 'function') {
+      __pqSetBilingualControlLabel(backBtn, 'Back ←', 'رجوع');
+      backBtn.setAttribute('aria-label', 'Back - رجوع');
+      backBtn.title = 'Back - رجوع';
+    }
     backBtn.__pqBound__ = true;
   } catch (_e) {}
 }
@@ -1255,6 +1734,7 @@ try {
           const stateText = completed
             ? 'Completed'
             : (current ? 'Current' : 'Open');
+          const arabicLabel = String((step && step.arabicLabel) || '');
 
           item.innerHTML = `
             <div class="pq-mobile-step-picker__item-top">
@@ -1262,6 +1742,7 @@ try {
               <span class="pq-mobile-step-picker__state">${stateText}</span>
             </div>
             <div class="pq-mobile-step-picker__label">${String(step.label || sid)}</div>
+            ${arabicLabel ? `<div class="pq-mobile-step-picker__label-ar" dir="rtl">${arabicLabel}</div>` : ''}
             <div class="pq-mobile-step-picker__meta">Progress ${passesDone}/${passesRequired}</div>
           `;
 
@@ -1418,7 +1899,7 @@ try {
   // ============================================================
 
 function __pqIsPassFilterStep(stepId) {
-  const sid = String(stepId || '').toLowerCase();
+  const sid = __pqCanonicalStepId(stepId);
 
   return [
     'listen',
@@ -1434,15 +1915,16 @@ function __pqIsPassFilterStep(stepId) {
 
   function __pqGetStepPassFilters(stepId) {
     try {
-      const sid = String(stepId || '').toLowerCase();
+      const raw = String(stepId || '').toLowerCase();
+      const sid = __pqCanonicalStepId(raw);
       const cfg = __cfg('stepPassFilters', {}) || {};
-      const raw = cfg[sid] || [];
+      const rawFilters = cfg[raw] || cfg[sid] || [];
 
-      if (!Array.isArray(raw) || !raw.length) {
+      if (!Array.isArray(rawFilters) || !rawFilters.length) {
         return ['all'];
       }
 
-      return raw.map((v) => String(v || '').trim()).filter(Boolean);
+      return rawFilters.map((v) => String(v || '').trim()).filter(Boolean);
     } catch (_e) {
       return ['all'];
     }
@@ -1456,7 +1938,8 @@ function __pqIsPassFilterStep(stepId) {
   function __pqGetCurrentPassIndex(stepId) {
     try {
       const sid = String(stepId || '').toLowerCase();
-      const progress = managedProgress && managedProgress[sid];
+      const canonical = __pqCanonicalStepId(sid);
+      const progress = managedProgress && (managedProgress[sid] || managedProgress[canonical]);
       const done = Math.max(0, Number((progress && progress.passesDone) || 0));
       const filters = __pqGetStepPassFilters(sid);
       return Math.min(done, Math.max(0, filters.length - 1));

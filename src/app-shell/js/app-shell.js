@@ -22,7 +22,7 @@ import {
   VIEW_MADD,
   VIEW_SAKOON,
   VIEW_ENDING
-} from './app-config.js';
+} from './app-config.js?v=env-routing-20260519';
 
 import {
   MUQATTAAT_ITEMS,

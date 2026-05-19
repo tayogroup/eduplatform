@@ -115,9 +115,17 @@ export const I18N = {
 
 const SECURE_BASE = "https://quraan.academy/local/hubredirect/issue_child.php?goto=";
 const IS_LOCAL_PREVIEW = ["localhost", "127.0.0.1"].includes(window.location.hostname);
-const ALPHABET_LISTEN_URL = IS_LOCAL_PREVIEW
+const IS_STATIC_STAGING = window.location.pathname.indexOf("/pre_quraan_staging/") === 0;
+const USE_STATIC_UNIT_LINKS = IS_LOCAL_PREVIEW || IS_STATIC_STAGING;
+const ALPHABET_LISTEN_URL = USE_STATIC_UNIT_LINKS
   ? "/pre_quraan/units/alphabet/index.html?managed=1"
   : SECURE_BASE + "alphabet_listen";
+const MUQATTIAT_LISTEN_URL = USE_STATIC_UNIT_LINKS
+  ? "/pre_quraan/units/muqattiat/index.html?managed=1"
+  : SECURE_BASE + "muqattaat_listen";
+const TANWEEN_MOVEMENT_URL = USE_STATIC_UNIT_LINKS
+  ? "/pre_quraan/units/tanween-movement/index.html?managed=1"
+  : SECURE_BASE + "tanween_mvt1";
 
 // Lesson links
 export const LINK_MAP = {
@@ -158,7 +166,7 @@ export const LINK_MAP = {
 
   /* Rules / Tajweed root-level lesson links */
   "Tanween":             SECURE_BASE + "tanween14",
-  "Tanween & Movement":  SECURE_BASE + "tanween_mvt1",
+  "Tanween & Movement":  TANWEEN_MOVEMENT_URL,
   "Fatha-Kasra-Damma":   SECURE_BASE + "standing1",
   "MaddoLeen":           SECURE_BASE + "maddoleen3",
   "Sakoon & Jazm":       SECURE_BASE + "sakoon_jazm2",
@@ -170,7 +178,7 @@ export const LINK_MAP = {
 
   /* Muqatta'at detailed lessons (now displayed as Muqattiat) */
   "Muqattiat Intro":    SECURE_BASE + "muqattaat_intro",
-  "Muqattiat Listen":   SECURE_BASE + "muqattaat_listen",
+  "Muqattiat Listen":   MUQATTIAT_LISTEN_URL,
   "Muqattiat Match":    SECURE_BASE + "muqattaat_match",
   "Muqattiat Speak":    SECURE_BASE + "muqattaat_speak",
   "Muqattiat Write":    SECURE_BASE + "muqattaat_write",

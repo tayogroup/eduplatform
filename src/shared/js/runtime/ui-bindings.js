@@ -167,6 +167,22 @@ voiceSel.value = DEFAULTS.voice;
 
       const runtimeManagedProgress = state ? state.progress : null;
 
+      const runtimeHasServerProgress = !!(
+        runtimeManagedProgress &&
+        runtimeManagedProgress.__serverHasProgress
+      );
+      const hasMoodleIdentity = !!(pqGetUid() && pqGetToken());
+
+      if (!runtimeHasServerProgress && !hasMoodleIdentity) {
+        __LessonRuntime = null;
+        return {
+          managedProgress: null,
+          sourceDb: false,
+          sourceRuntime: false,
+          dbOnly: false
+        };
+      }
+
       try {
         const runtimeTotal = Number(state && state.totalstars);
         const runtimeUnits = Number(state && state.completedunits);
@@ -199,7 +215,7 @@ voiceSel.value = DEFAULTS.voice;
         managedProgress: ensureProgressShape(runtimeManagedProgress),
         sourceDb: true,
         sourceRuntime: true,
-        dbOnly: __pqIsManagedUser()
+        dbOnly: hasMoodleIdentity && __pqIsManagedUser()
       };
     } catch (_e) {
       return {
@@ -649,21 +665,98 @@ try {
 } catch (_e) {}
   
   // ============================================================
-  // SECTION 32: Startup
+  // SECTION 31: Config-driven unit shell text
   // ============================================================
-  if (document.readyState === 'loading') {
-    document.addEventListener(
-      'DOMContentLoaded',
-      function () {
-        __pqRefactoredStart().catch(function (e) {
-          throw e;
-        });
-      },
-      { once: true }
-    );
-  } else {
-    __pqRefactoredStart().catch(function (e) {
-      throw e;
-    });
+  function __pqApplyUnitShellText(unitConfig) {
+    const cfg = unitConfig && typeof unitConfig === 'object' ? unitConfig : UNIT_CFG;
+    const identity = cfg && cfg.identity && typeof cfg.identity === 'object' ? cfg.identity : {};
+    const unitId = String(identity.unitId || cfg.unitid || '').trim();
+    const lessonId = String(identity.lessonId || cfg.lessonid || unitId || '').trim();
+    const fallbackTitle = String(unitId || lessonId || 'Pre-Quraan Unit');
+    const readUi = (typeof __pqLocalizedCfg === 'function') ? __pqLocalizedCfg : __cfg;
+    const pageTitle = String(readUi('ui.pageTitle', readUi('ui.lessonTitle', fallbackTitle, 'ui'), 'ui')).trim() || fallbackTitle;
+    const headerTitle = String(readUi('ui.headerTitle', pageTitle, 'ui')).trim() || pageTitle;
+    const headerArabicTitle = String(readUi('ui.headerArabicTitle', '', 'ui')).trim();
+    const aboutLabel = String(readUi('ui.aboutLabel', 'About ' + headerTitle, 'ui')).trim() || ('About ' + headerTitle);
+
+    try {
+      document.title = pageTitle;
+    } catch (_e) {}
+
+    try {
+      if (unitId) document.body.setAttribute('data-unit', unitId);
+      if (lessonId) document.body.setAttribute('data-lesson', lessonId);
+    } catch (_e) {}
+
+    try {
+      const titleEl = document.querySelector('.brand .title');
+      if (titleEl) {
+        if (typeof __pqSetBilingualControlLabel === 'function') {
+          __pqSetBilingualControlLabel(titleEl, headerTitle, headerArabicTitle);
+        } else {
+          titleEl.textContent = headerTitle;
+        }
+      }
+    } catch (_e) {}
+
+    try {
+      const backBtn = document.getElementById('pqDesktopBackBtn');
+      if (backBtn && typeof __pqSetBilingualControlLabel === 'function') {
+        __pqSetBilingualControlLabel(backBtn, 'Back', 'رجوع');
+        backBtn.title = 'Back - رجوع';
+      }
+    } catch (_e) {}
+
+    try {
+      const pauseBtn = document.getElementById('btnPause');
+      if (pauseBtn && typeof __pqSetBilingualControlLabel === 'function') {
+        __pqSetBilingualControlLabel(pauseBtn, 'Pause', 'إيقاف');
+      }
+    } catch (_e) {}
+
+    try {
+      const aboutText = document.querySelector('#pqAboutBtn .pq-pill__text');
+      if (aboutText) aboutText.textContent = aboutLabel;
+    } catch (_e) {}
   }
+
+  // ============================================================
+  // SECTION 32: Public startup API
+  // ============================================================
+  window.PQUnitRuntime = window.PQUnitRuntime || {};
+  window.PQUnitRuntime.start = function startPQUnitRuntime(unitConfig) {
+    if (unitConfig && typeof unitConfig === 'object') {
+      window.UNIT_CFG = unitConfig;
+    }
+
+    __pqApplyUnitShellText(window.UNIT_CFG || unitConfig);
+
+    if (window.__PQ_UNIT_RUNTIME_STARTED__) {
+      return window.__PQ_UNIT_RUNTIME_START_PROMISE__ || Promise.resolve();
+    }
+
+    window.__PQ_UNIT_RUNTIME_STARTED__ = true;
+
+    function run() {
+      window.__PQ_UNIT_RUNTIME_START_PROMISE__ = __pqRefactoredStart().catch(function (e) {
+        throw e;
+      });
+      return window.__PQ_UNIT_RUNTIME_START_PROMISE__;
+    }
+
+    if (document.readyState === 'loading') {
+      window.__PQ_UNIT_RUNTIME_START_PROMISE__ = new Promise(function (resolve, reject) {
+        document.addEventListener(
+          'DOMContentLoaded',
+          function () {
+            run().then(resolve, reject);
+          },
+          { once: true }
+        );
+      });
+      return window.__PQ_UNIT_RUNTIME_START_PROMISE__;
+    }
+
+    return run();
+  };
 })();

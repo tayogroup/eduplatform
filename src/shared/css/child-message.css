@@ -1,0 +1,182 @@
+/* Shared child-friendly step message popup styling. */
+/* ===== PQ CHILD-FRIENDLY STEP MESSAGE POPUP START =====
+   UI-only. Works with the shared step message popup after the
+   main JS tags the popup with pq-child-message-* classes.
+   ============================================================ */
+.pq-child-message-overlay{
+  backdrop-filter: blur(5px) saturate(1.08) !important;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(210,244,220,.34), transparent 28%),
+    radial-gradient(circle at 82% 24%, rgba(232,197,128,.24), transparent 30%),
+    rgba(38,54,42,.48) !important;
+}
+
+.pq-child-message-card{
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 34px !important;
+  border: 5px solid #ffffff !important;
+  background:
+    radial-gradient(circle at top left, rgba(224,249,230,.98), rgba(255,255,255,0) 38%),
+    radial-gradient(circle at bottom right, rgba(238,210,148,.50), rgba(255,255,255,0) 42%),
+    linear-gradient(180deg, #ffffff 0%, #f8fff9 54%, #fff8e7 100%) !important;
+  box-shadow:
+    0 24px 70px rgba(43,57,42,.28),
+    0 0 0 8px rgba(96,173,111,.24),
+    0 0 0 13px rgba(178,130,57,.16),
+    inset 0 1px 0 rgba(255,255,255,.96) !important;
+  color: #2f2415 !important;
+  animation: pqChildMessagePop .36s cubic-bezier(.22,1.2,.36,1) both !important;
+}
+
+.pq-child-message-card::before{
+  content: none !important;
+}
+
+.pq-child-message-card::after{
+  content: "" !important;
+  position: absolute !important;
+  inset: 12px !important;
+  border-radius: 25px !important;
+  border: 2px dashed rgba(86,158,98,.26) !important;
+  pointer-events: none !important;
+}
+
+.pq-child-message-title{
+  color: #315c35 !important;
+  font-weight: 900 !important;
+  letter-spacing: .01em !important;
+  font-style: normal !important;
+}
+
+.pq-child-message-card p,
+.pq-child-message-card .message,
+.pq-child-message-card [class*="message"],
+.pq-child-message-card [class*="body"],
+.pq-child-message-card [class*="text"]{
+  color: #3b2d1b !important;
+  line-height: 1.52 !important;
+  font-style: normal !important;
+}
+
+.pq-child-message-continue{
+  border: 0 !important;
+  border-radius: 22px !important;
+  padding: 16px 30px !important;
+  min-width: 176px !important;
+  background: linear-gradient(180deg, #5eb16d 0%, #3f914f 100%) !important;
+  box-shadow:
+    0 10px 0 rgba(95,70,32,.22),
+    0 16px 28px rgba(64,117,73,.25) !important;
+  color: #fff !important;
+  font-weight: 900 !important;
+  font-size: 1.08rem !important;
+  font-style: normal !important;
+  transform: translateY(0) !important;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease !important;
+}
+
+.pq-child-message-continue:hover,
+.pq-child-message-continue:focus{
+  filter: brightness(1.04) !important;
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 12px 0 rgba(95,70,32,.20),
+    0 20px 32px rgba(64,117,73,.30) !important;
+}
+
+.pq-child-clap-effect{
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 18px !important;
+  pointer-events: none !important;
+}
+
+.pq-child-clap-effect span{
+  display: inline-block !important;
+  font-size: clamp(3rem, 9vw, 7rem) !important;
+  filter: drop-shadow(0 14px 18px rgba(20,30,55,.20)) !important;
+  animation: pqChildClapFloat 1.25s ease-out both !important;
+}
+.pq-child-clap-effect span:nth-child(2){ animation-delay: .09s !important; }
+.pq-child-clap-effect span:nth-child(3){ animation-delay: .18s !important; }
+
+@keyframes pqChildMessagePop{
+  0% { opacity: 0; transform: translateY(18px) scale(.94); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pqChildClapFloat{
+  0% { opacity: 0; transform: translateY(24px) scale(.70) rotate(-8deg); }
+  25% { opacity: 1; transform: translateY(0) scale(1.08) rotate(4deg); }
+  70% { opacity: 1; transform: translateY(-32px) scale(1) rotate(-3deg); }
+  100% { opacity: 0; transform: translateY(-66px) scale(.86) rotate(8deg); }
+}
+
+@media (max-width: 768px){
+  .pq-child-message-card{
+    border-radius: 26px !important;
+  }
+  .pq-child-message-card::before{
+    top: 12px !important;
+    left: 16px !important;
+    font-size: 1.18rem !important;
+    letter-spacing: 5px !important;
+  }
+  .pq-child-message-continue{
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 15px 20px !important;
+  }
+}
+/* ===== PQ CHILD-FRIENDLY STEP MESSAGE POPUP END ===== */
+
+.pq-child-message-card,
+.pq-child-message-card * {
+  font-family:
+    "Comic Sans MS",
+    "Trebuchet MS",
+    "Arial Rounded MT Bold",
+    "Noto Sans Arabic",
+    "Noto Sans",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Arial,
+    sans-serif !important;
+  font-style: normal !important;
+}
+
+.pq-child-message-card .pq-msg-head,
+.pq-child-message-card .pq-msg-body,
+.pq-child-message-card .pq-msg-btn,
+.pq-child-message-card [data-role="title"],
+.pq-child-message-card [data-role="body"],
+.pq-child-message-card [data-role="continue"] {
+  font-family:
+    "Comic Sans MS",
+    "Trebuchet MS",
+    "Arial Rounded MT Bold",
+    "Noto Sans Arabic",
+    "Noto Sans",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Arial,
+    sans-serif !important;
+  font-style: normal !important;
+}
+
+.pq-child-message-card .pq-msg-body,
+.pq-child-message-card [data-role="body"] {
+  font-weight: 700 !important;
+}
+
+.pq-child-message-card .pq-msg-head,
+.pq-child-message-card [data-role="title"] {
+  font-weight: 900 !important;
+}

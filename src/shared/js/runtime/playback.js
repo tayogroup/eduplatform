@@ -23,9 +23,17 @@
         } catch (_e) {}
 
         if (btnPause) {
-          btnPause.textContent = __watchPaused
+          if (typeof __pqSetBilingualControlLabel === 'function') {
+            __pqSetBilingualControlLabel(
+              btnPause,
+              __watchPaused ? 'Resume' : 'Pause',
+              __watchPaused ? 'استئناف' : 'إيقاف'
+            );
+          } else {
+            btnPause.textContent = __watchPaused
   ? __PQ_TEXT_CACHE.resume
   : __PQ_TEXT_CACHE.pause;
+          }
         }
 
         return __watchPaused;
@@ -72,9 +80,17 @@ try {
 
     try {
       if (btnPause) {
-        btnPause.textContent = paused
-          ? __PQ_TEXT_CACHE.resume
-          : __PQ_TEXT_CACHE.pause;
+        if (typeof __pqSetBilingualControlLabel === 'function') {
+          __pqSetBilingualControlLabel(
+            btnPause,
+            paused ? 'Resume' : 'Pause',
+            paused ? 'استئناف' : 'إيقاف'
+          );
+        } else {
+          btnPause.textContent = paused
+            ? __PQ_TEXT_CACHE.resume
+            : __PQ_TEXT_CACHE.pause;
+        }
       }
     } catch (_e) {}
 
@@ -235,6 +251,196 @@ function __pqHideSoundArticulationImage() {
 */
 
 let __pqSoundExplainerPlayer = null;
+const __pqSoundExplainerSeenByKey = Object.create(null);
+const __pqSoundVideoCompletedByKey = Object.create(null);
+
+function __pqSoundCompletedStorageKey() {
+  try {
+    return __pqStorageKey('soundDoneKeys', 'pq_sound_done_keys_' + __PQ_UNIT_ID);
+  } catch (_e) {
+    return 'pq_sound_done_keys';
+  }
+}
+
+function __pqLoadSoundCompletedMap() {
+  try {
+    const raw = localStorage.getItem(__pqSoundCompletedStorageKey());
+    const parsed = raw ? JSON.parse(raw) : null;
+    if (parsed && typeof parsed === 'object') {
+      Object.keys(parsed).forEach((key) => {
+        if (parsed[key]) __pqSoundVideoCompletedByKey[String(key)] = true;
+      });
+    }
+  } catch (_e) {}
+}
+
+function __pqSaveSoundCompletedMap() {
+  try {
+    localStorage.setItem(
+      __pqSoundCompletedStorageKey(),
+      JSON.stringify(__pqSoundVideoCompletedByKey)
+    );
+  } catch (_e) {}
+}
+
+function __pqSoundRequireExplainerFirst() {
+  try {
+    return __cfg('playback.steps.sound.requireExplainerFirst', __cfg('sound.requireExplainerFirst', true)) !== false;
+  } catch (_e) {
+    return true;
+  }
+}
+
+function __pqSoundAutoVideoAfterExplainer() {
+  try {
+    return __cfg('playback.steps.sound.autoVideoAfterExplainer', __cfg('sound.autoVideoAfterExplainer', true)) !== false;
+  } catch (_e) {
+    return true;
+  }
+}
+
+function __pqSoundVideoRepeatCount() {
+  try {
+    const value = __cfg('playback.steps.sound.videoRepeatCount', __cfg('sound.videoRepeatCount', 1));
+    return Math.max(1, Math.floor(Number(value || 1) || 1));
+  } catch (_e) {
+    return 1;
+  }
+}
+
+function __pqSoundHasSeenExplainer(key) {
+  try {
+    return !!__pqSoundExplainerSeenByKey[String(key || '')];
+  } catch (_e) {
+    return false;
+  }
+}
+
+function __pqSoundMarkExplainerSeen(key) {
+  try {
+    __pqSoundExplainerSeenByKey[String(key || '')] = true;
+  } catch (_e) {}
+}
+
+function __pqSoundProgressKeys() {
+  try {
+    if (typeof __pqGetPassSequenceKeys === 'function') {
+      const keys = __pqGetPassSequenceKeys('sound', PLAY_SEQUENCE_KEYS || []);
+      if (Array.isArray(keys) && keys.length) return keys.map(String);
+    }
+  } catch (_e) {}
+
+  try {
+    return (PLAY_SEQUENCE_KEYS || []).map(String).filter(Boolean);
+  } catch (_e) {
+    return [];
+  }
+}
+
+function __pqSoundCompletedCount() {
+  const keys = __pqSoundProgressKeys();
+  if (!keys.length) return 0;
+  return keys.reduce((sum, key) => sum + (__pqSoundVideoCompletedByKey[key] ? 1 : 0), 0);
+}
+
+function __pqSoundProgressCfg(path, fallback) {
+  try {
+    const suffix = String(path || '').trim();
+    if (!suffix) return fallback;
+    return __cfg(
+      'playback.steps.words.progress.' + suffix,
+      __cfg('playback.steps.words.' + suffix, __cfg('soundProgress.' + suffix, fallback))
+    );
+  } catch (_e) {
+    return fallback;
+  }
+}
+
+function __pqEnsureSoundProgressBadge(host, afterNode) {
+  if (!host) return null;
+  let badge = host.querySelector('.pq-sound-letter-progress-badge');
+  if (!badge) {
+    badge = document.createElement('span');
+    badge.className = 'pq-sound-letter-progress-badge';
+    if (afterNode && afterNode.parentNode === host && afterNode.nextSibling) {
+      host.insertBefore(badge, afterNode.nextSibling);
+    } else {
+      host.appendChild(badge);
+    }
+  }
+  return badge;
+}
+
+function __pqUpdateSoundProgressCounter() {
+  try {
+    const total = __pqSoundProgressKeys().length;
+    const done = __pqSoundCompletedCount();
+    const label = String(__pqSoundProgressCfg('label', 'Progress') || 'Progress').trim();
+    const text = label + ' ' + done + '/' + Math.max(1, total || 0);
+
+    const mobileFocus = document.getElementById('pqMobileFocusBadge');
+    if (mobileFocus && mobileFocus.parentNode) {
+      const badge = __pqEnsureSoundProgressBadge(mobileFocus.parentNode, mobileFocus);
+      if (badge) {
+        badge.textContent = text;
+        badge.setAttribute('aria-label', text);
+      }
+    }
+
+    const rewardFocus = document.querySelector('#pqStepRewardStars .pq-focus-label');
+    if (rewardFocus && rewardFocus.parentNode) {
+      const badge = __pqEnsureSoundProgressBadge(rewardFocus.parentNode, rewardFocus);
+      if (badge) {
+        badge.textContent = text;
+        badge.setAttribute('aria-label', text);
+      }
+    }
+  } catch (_e) {}
+}
+
+function __pqMarkSoundVideoCompleted(key) {
+  try {
+    const k = String(key || '');
+    if (!k) return;
+    __pqSoundVideoCompletedByKey[k] = true;
+    __pqSaveSoundCompletedMap();
+
+    const esc = (window.CSS && typeof window.CSS.escape === 'function')
+      ? window.CSS.escape(k)
+      : k.replace(/"/g, '\\"');
+    const tile = grid
+      ? grid.querySelector('.tile[data-key="' + esc + '"]')
+      : document.querySelector('#grid .tile[data-key="' + esc + '"]');
+    if (tile) {
+      tile.classList.add('pq-sound-done');
+      tile.setAttribute('data-sound-done', '1');
+      if (!tile.querySelector('.pq-sound-check')) {
+        const check = document.createElement('span');
+        check.className = 'pq-sound-check';
+        check.setAttribute('aria-hidden', 'true');
+        check.textContent = String(__pqSoundProgressCfg('checkText', '\u2713') || '\u2713');
+        tile.appendChild(check);
+      }
+    }
+    __pqUpdateSoundProgressCounter();
+  } catch (_e) {}
+}
+
+function __pqApplySoundCompletedVisuals() {
+  try {
+    __pqLoadSoundCompletedMap();
+    Object.keys(__pqSoundVideoCompletedByKey).forEach((key) => {
+      if (__pqSoundVideoCompletedByKey[key]) __pqMarkSoundVideoCompleted(key);
+    });
+    __pqUpdateSoundProgressCounter();
+  } catch (_e) {}
+}
+
+try {
+  __pqLoadSoundCompletedMap();
+  setTimeout(__pqApplySoundCompletedVisuals, 250);
+  setTimeout(__pqApplySoundCompletedVisuals, 1000);
+} catch (_e) {}
 
 function __pqGetSoundExplainerUrl(key) {
   try {
@@ -282,6 +488,27 @@ async function __pqPlaySoundExplainer(key) {
     __pqSoundExplainerPlayer.preload = 'auto';
 
     await __pqSoundExplainerPlayer.play();
+    await new Promise((resolve) => {
+      const audio = __pqSoundExplainerPlayer;
+      if (!audio) {
+        resolve(false);
+        return;
+      }
+
+      let settled = false;
+      function finish(ok) {
+        if (settled) return;
+        settled = true;
+        try { audio.removeEventListener('ended', onEnded); } catch (_e) {}
+        try { audio.removeEventListener('error', onError); } catch (_e) {}
+        resolve(ok);
+      }
+      function onEnded() { finish(true); }
+      function onError() { finish(false); }
+
+      audio.addEventListener('ended', onEnded, { once: true });
+      audio.addEventListener('error', onError, { once: true });
+    });
     return true;
   } catch (err) {
     console.warn('[PQ Sound] explainer audio failed:', err);
@@ -304,7 +531,7 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
 
       const primaryLabel = (opts && opts.primary) || 'Continue';
       const secondaryLabel = opts && opts.secondary ? String(opts.secondary) : '';
-      const replayLabel = (opts && opts.replay) || 'Re-play letter';
+      const replayLabel = (opts && opts.replay) || 'Play Letter';
       const explainerLabel = (opts && opts.explainer) || 'Explainer';
 
       const overlay = document.createElement('div');
@@ -337,6 +564,10 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
       const actions = document.createElement('div');
       actions.className = 'pq-sound-modal-actions';
 
+      const guardHint = document.createElement('div');
+      guardHint.className = 'pq-sound-modal-guard';
+      guardHint.textContent = 'Tap Explainer first.';
+
       function makeBtn(className, choice, label) {
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -347,9 +578,9 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
       }
 
       // Required visual/order:
-      // 1) Continue to next letter / Continue to video
-      // 2) Return to video, if present
-      // 3) Re-play letter
+      // 1) Next letter / Play video
+      // 2) Play video, if present
+      // 3) Play letter
       // 4) Explainer
       const primaryBtn = makeBtn('pq-sound-primary', 'primary', primaryLabel);
       actions.appendChild(primaryBtn);
@@ -368,9 +599,28 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
 
       card.appendChild(closeBtn);
       card.appendChild(img);
+      card.appendChild(guardHint);
       card.appendChild(actions);
       overlay.appendChild(card);
       document.body.appendChild(overlay);
+
+      const requireExplainerFirst = __pqSoundRequireExplainerFirst();
+      const autoVideoAfterExplainer = !!(opts && opts.autoPrimaryAfterExplainer) && __pqSoundAutoVideoAfterExplainer();
+
+      function syncExplainerGuard() {
+        const locked = requireExplainerFirst && !__pqSoundHasSeenExplainer(key);
+        try { overlay.classList.toggle('pq-sound-locked', locked); } catch (_e) {}
+        try { guardHint.hidden = !locked; } catch (_e) {}
+        try { primaryBtn.disabled = locked; } catch (_e) {}
+        try { replayBtn.disabled = locked; } catch (_e) {}
+        try {
+          closeBtn.disabled = locked;
+          closeBtn.setAttribute('aria-disabled', locked ? 'true' : 'false');
+        } catch (_e) {}
+        try { if (secondaryBtn) secondaryBtn.disabled = locked; } catch (_e) {}
+      }
+
+      syncExplainerGuard();
 
       function done(choice) {
         try { __pqStopSoundExplainer(); } catch (_e) {}
@@ -380,9 +630,15 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
 
       explainerBtn.addEventListener('click', async function () {
         try {
+          __pqSoundMarkExplainerSeen(key);
+          syncExplainerGuard();
           explainerBtn.disabled = true;
           explainerBtn.textContent = 'Playing explainer...';
-          await __pqPlaySoundExplainer(key);
+          const played = await __pqPlaySoundExplainer(key);
+          if (played && autoVideoAfterExplainer) {
+            done('primary');
+            return;
+          }
         } catch (_e) {
         } finally {
           try {
@@ -394,9 +650,13 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
 
       replayBtn.addEventListener('click', async function () {
         try {
+          if (requireExplainerFirst && !__pqSoundHasSeenExplainer(key)) {
+            syncExplainerGuard();
+            return;
+          }
           replayBtn.disabled = true;
           replayBtn.textContent = 'Playing sound...';
-          await playLetter(key, 1, rate);
+          await playLetter(key, 1, rate, 'sound');
         } catch (_e) {
         } finally {
           try {
@@ -407,18 +667,30 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
       });
 
       primaryBtn.addEventListener('click', function () {
+        if (requireExplainerFirst && !__pqSoundHasSeenExplainer(key)) {
+          syncExplainerGuard();
+          return;
+        }
         done('primary');
-      }, { once: true });
+      });
 
       if (secondaryBtn) {
         secondaryBtn.addEventListener('click', function () {
+          if (requireExplainerFirst && !__pqSoundHasSeenExplainer(key)) {
+            syncExplainerGuard();
+            return;
+          }
           done('secondary');
-        }, { once: true });
+        });
       }
 
       closeBtn.addEventListener('click', function () {
+        if (requireExplainerFirst && !__pqSoundHasSeenExplainer(key)) {
+          syncExplainerGuard();
+          return;
+        }
         done('primary');
-      }, { once: true });
+      });
 
       if (signal) {
         if (signal.aborted) {
@@ -452,15 +724,30 @@ function __pqCloseSoundVideo() {
   } catch (_e) {}
 }
 
-async function __pqPlaySoundGuidedFlow(key, url, rate, signal) {
-  // Step 1: audio plays first automatically.
-  await playLetter(key, 1, rate);
+async function __pqPlaySoundVideoRepeated(url, rate, signal) {
+  const repeatCount = __pqSoundVideoRepeatCount();
+  for (let i = 0; i < repeatCount; i++) {
+    if (signal && signal.aborted) return;
+    await __pqPlayVideoUrl(url, rate);
+    if (i < repeatCount - 1) {
+      __pqCloseSoundVideo();
+      await __pqStepDelay(Number(__cfg('playback.steps.sound.betweenVideoRepeatsMs', 180) || 0), null, signal);
+    }
+  }
+}
 
-  // Step 2: after audio, show image modal with Replay + Continue to video.
+async function __pqPlaySoundGuidedFlow(key, url, rate, signal) {
+  __pqUpdateSoundProgressCounter();
+
+  // Step 1: audio plays first automatically.
+  await playLetter(key, 1, rate, 'sound');
+
+  // Step 2: after audio, show image modal with Play Letter + Play Video.
   while (true) {
     const afterAudio = await __pqSoundModalChoice(key, {
-      replay: 'Re-play letter',
-      primary: 'Continue to video'
+      replay: 'Play Letter',
+      primary: 'Play Video',
+      autoPrimaryAfterExplainer: true
     }, signal, rate);
 
     if (afterAudio === 'aborted' || (signal && signal.aborted)) return false;
@@ -472,13 +759,14 @@ async function __pqPlaySoundGuidedFlow(key, url, rate, signal) {
 
   // Step 3+: play video, close video, show final image modal.
   while (true) {
-    await __pqPlayVideoUrl(url, rate);
+    await __pqPlaySoundVideoRepeated(url, rate, signal);
     __pqCloseSoundVideo();
+    __pqMarkSoundVideoCompleted(key);
 
     const afterVideo = await __pqSoundModalChoice(key, {
-      replay: 'Re-play letter',
-      secondary: 'Return to video',
-      primary: 'Continue to next letter'
+      replay: 'Play Letter',
+      secondary: 'Play Video',
+      primary: 'Next Letter'
     }, signal, rate);
 
     if (afterVideo === 'aborted' || (signal && signal.aborted)) return false;
@@ -494,7 +782,7 @@ async function __pqPlaySoundGuidedFlow(key, url, rate, signal) {
 async function playWatchVideoForKey(key, rate, stepId, signal) {
   try { __pqSetPlayingTile(key); } catch (_e) {}
 
-  const sid = String(stepId || '').toLowerCase();
+  const sid = __pqCanonicalStepId(stepId);
   const map = (sid === 'animate') ? ANIMATE_VIDEO_BY_KEY : WATCH_VIDEO_BY_KEY;
   const url = map[key];
 
@@ -506,7 +794,50 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
     return __pqPlaySoundGuidedFlow(key, url, rate, signal);
   }
 
-  await __pqPlayVideoUrl(url, rate);
+  const effectiveVideoRate = sid === 'animate'
+    ? Number(
+        __cfg('playback.steps.animate.videoPlaybackRate',
+          __cfg('playback.steps.animate.animationPlaybackRate',
+            __cfg('playback.steps.animate.playbackRate', rate)
+          )
+        ) || rate
+      ) || rate
+    : rate;
+
+  try {
+    if (videoModal) {
+      videoModal.classList.toggle('pq-animate-video-modal', sid === 'animate');
+      if (sid === 'animate') {
+        videoModal.style.setProperty(
+          '--pq-animate-video-max-width',
+          String(__cfg('playback.steps.animate.modalMaxWidth', '72vw'))
+        );
+        videoModal.style.setProperty(
+          '--pq-animate-video-max-height',
+          String(__cfg('playback.steps.animate.modalMaxHeight', '72vh'))
+        );
+      }
+    }
+  } catch (_e) {}
+
+  try {
+    if (sid === 'animate' && __cfg('playback.steps.animate.audioBeforeVideo', true) !== false) {
+      const audioRate = Number(__cfg('playback.steps.animate.audioPlaybackRate', rate) || rate) || rate;
+      await playLetter(key, 1, audioRate, stepId);
+      __pqAssertNotAborted(signal);
+      await __pqStepDelay(Number(__cfg('playback.steps.animate.audioVideoGapMs', 250) || 0), null, signal);
+    }
+
+    await __pqPlayVideoUrl(url, effectiveVideoRate);
+  } finally {
+    try {
+      if (videoModal) {
+        videoModal.classList.remove('pq-animate-video-modal');
+        videoModal.style.removeProperty('--pq-animate-video-max-width');
+        videoModal.style.removeProperty('--pq-animate-video-max-height');
+      }
+    } catch (_e) {}
+  }
   return true;
 }
 
@@ -514,8 +845,9 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
     const controller = __pqStartPlayAllController();
     const signal = controller ? controller.signal : null;
     const rate = parseFloat(speedSel.value || DEFAULTS.speed);
-    const stepId = String(stepIdOverride || 'watch').toLowerCase();
-    const keys = stepId === 'animate'
+  const rawStepId = String(stepIdOverride || 'watch').toLowerCase();
+  const stepId = __pqCanonicalStepId(rawStepId);
+  const keys = stepId === 'animate'
   ? __pqGetPassSequenceKeys('animate', PLAY_SEQUENCE_KEYS)
   : stepId === 'sound'
     ? __pqGetPassSequenceKeys('sound', PLAY_SEQUENCE_KEYS)
@@ -536,7 +868,11 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
 
     if (btnPause) {
       btnPause.disabled = false;
-      btnPause.textContent = __PQ_TEXT_CACHE.pause;
+      if (typeof __pqSetBilingualControlLabel === 'function') {
+        __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+      } else {
+        btnPause.textContent = __PQ_TEXT_CACHE.pause;
+      }
     }
 
     try {
@@ -571,7 +907,7 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
       __pqCloseActiveMediaWindows();
 
       const current = getCurrentStep();
-      if (current && current.step && (current.step.id === 'watch' || current.step.id === 'sound' || current.step.id === 'animate')) {
+      if (current && current.step && ['watch', 'sound', 'animate'].includes(__pqCanonicalStepId(current.step.id))) {
         await markPlaylistStepCompleted(current.step.id);
       }
     } catch (_e) {
@@ -614,7 +950,11 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
 
       if (btnPause) {
         btnPause.disabled = false;
-        btnPause.textContent = __PQ_TEXT_CACHE.pause;
+        if (typeof __pqSetBilingualControlLabel === 'function') {
+          __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+        } else {
+          btnPause.textContent = __PQ_TEXT_CACHE.pause;
+        }
       }
     }
   }
@@ -653,7 +993,7 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
         sid = String((current && current.step && current.step.id) || '').toLowerCase();
       }
 
-      return __pqGetPassSequenceKeys(sid, fallback);
+      return __pqGetPassSequenceKeys(__pqCanonicalStepId(sid), fallback);
     } catch (_e) {
       return fallback;
     }
@@ -663,8 +1003,9 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
   function __pqGetStepRepeatPerLetter(stepId, fallback) {
     try {
       const sid = String(stepId || '').toLowerCase();
+      const canonical = __pqCanonicalStepId(sid);
       const base = Math.max(1, Number(fallback || DEFAULTS.repeat || 1) || 1);
-      const progress = (managedProgress && sid && managedProgress[sid]) || {};
+      const progress = (managedProgress && (managedProgress[sid] || managedProgress[canonical])) || {};
 
       const raw =
         progress.repeatPerLetter ??
@@ -685,8 +1026,9 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
 function __pqGetManagedRepeatPerLetter(stepId, fallback) {
   try {
     const sid = String(stepId || '').toLowerCase();
+    const canonical = __pqCanonicalStepId(sid);
     const base = Math.max(1, Number(fallback || 1) || 1);
-    const progress = (managedProgress && sid && managedProgress[sid]) || null;
+    const progress = (managedProgress && (managedProgress[sid] || managedProgress[canonical])) || null;
 
     if (!progress) return base;
 
@@ -744,17 +1086,136 @@ function __pqListenPlusUrl(base, name, ext) {
   }
 }
 
+const __PQ_POPUP_IMAGE_BG = '#fff1c4';
+
+function __pqHexToRgb(hex, fallback) {
+  try {
+    const clean = String(hex || '').trim().replace(/^#/, '');
+    if (!/^[0-9a-f]{6}$/i.test(clean)) return fallback;
+    return {
+      r: parseInt(clean.slice(0, 2), 16),
+      g: parseInt(clean.slice(2, 4), 16),
+      b: parseInt(clean.slice(4, 6), 16)
+    };
+  } catch (_e) {
+    return fallback;
+  }
+}
+
+function __pqIsPopupImageBackgroundPixel(data, idx) {
+  const r = data[idx];
+  const g = data[idx + 1];
+  const b = data[idx + 2];
+  const a = data[idx + 3];
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+
+  return a < 245 || (min > 178 && (max - min) < 34);
+}
+
+function __pqPaintPopupImageBackground(img, src, bgColor) {
+  try {
+    if (!img || !src || !window.HTMLCanvasElement) return;
+
+    const token = String(Date.now()) + '_' + Math.random();
+    img.dataset.pqImageBgToken = token;
+
+    const source = new Image();
+    source.crossOrigin = 'anonymous';
+
+    source.onload = function () {
+      try {
+        if (img.dataset.pqImageBgToken !== token) return;
+
+        const width = Math.max(1, source.naturalWidth || source.width || 1);
+        const height = Math.max(1, source.naturalHeight || source.height || 1);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        if (!ctx) return;
+
+        ctx.drawImage(source, 0, 0, width, height);
+
+        let imageData;
+        try {
+          imageData = ctx.getImageData(0, 0, width, height);
+        } catch (_e) {
+          return;
+        }
+
+        const data = imageData.data;
+        const fill = __pqHexToRgb(bgColor, { r: 255, g: 241, b: 196 });
+        const seen = new Uint8Array(width * height);
+        const queue = [];
+
+        function push(x, y) {
+          if (x < 0 || y < 0 || x >= width || y >= height) return;
+          const pos = y * width + x;
+          if (seen[pos]) return;
+          const idx = pos * 4;
+          if (!__pqIsPopupImageBackgroundPixel(data, idx)) return;
+          seen[pos] = 1;
+          queue.push(pos);
+        }
+
+        for (let x = 0; x < width; x += 1) {
+          push(x, 0);
+          push(x, height - 1);
+        }
+        for (let y = 0; y < height; y += 1) {
+          push(0, y);
+          push(width - 1, y);
+        }
+
+        for (let cursor = 0; cursor < queue.length; cursor += 1) {
+          const pos = queue[cursor];
+          const x = pos % width;
+          const y = Math.floor(pos / width);
+          const idx = pos * 4;
+          data[idx] = fill.r;
+          data[idx + 1] = fill.g;
+          data[idx + 2] = fill.b;
+          data[idx + 3] = 255;
+          push(x + 1, y);
+          push(x - 1, y);
+          push(x, y + 1);
+          push(x, y - 1);
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+        img.src = canvas.toDataURL('image/png');
+      } catch (_e) {}
+    };
+
+    source.onerror = function () {};
+    source.src = src;
+  } catch (_e) {}
+}
+
 function __pqEnsureListenPlusOverlay() {
   let el = document.getElementById('pqListenPlusAnimalOverlay');
   if (el) return el;
   const style = document.createElement('style');
-  style.textContent = '#pqListenPlusAnimalOverlay{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;pointer-events:none;background:rgba(8,15,28,.16);backdrop-filter:blur(2px)}#pqListenPlusAnimalOverlay .card{width:min(420px,88vw);border-radius:30px;background:linear-gradient(180deg,#fff,#fff7df);border:4px solid rgba(255,255,255,.92);box-shadow:0 24px 70px rgba(18,29,52,.28);padding:18px;text-align:center;transform:scale(.94);opacity:0;transition:opacity .18s ease,transform .18s ease}#pqListenPlusAnimalOverlay.show .card{opacity:1;transform:scale(1)}#pqListenPlusAnimalOverlay img{width:min(240px,58vw);height:min(220px,48vh);object-fit:contain;display:block;margin:0 auto 10px}.pq-lp-letter{display:inline-flex;align-items:center;justify-content:center;min-width:54px;height:54px;border-radius:18px;background:#e9f5ff;color:#1168a8;font-weight:1000;font-size:1.8rem;margin-right:10px}.pq-lp-animal{font-weight:1000;font-size:1.65rem;color:#17233b}.pq-lp-title{font-weight:900;color:#24324a;margin-bottom:8px}.pq-lp-sub{margin-top:6px;font-weight:800;color:#5b6780;font-size:.95rem}';
+  style.textContent = '#pqListenPlusAnimalOverlay{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;pointer-events:none;background:rgba(8,15,28,.16);backdrop-filter:blur(2px)}#pqListenPlusAnimalOverlay .card{width:min(540px,92vw);border-radius:32px;background:linear-gradient(180deg,#fff,#fff7df);border:4px solid rgba(255,255,255,.92);box-shadow:0 24px 70px rgba(18,29,52,.28);padding:20px;text-align:center;transform:scale(.94);opacity:0;transition:opacity .18s ease,transform .18s ease}#pqListenPlusAnimalOverlay.show .card{opacity:1;transform:scale(1)}#pqListenPlusAnimalOverlay .pq-lp-arabic{display:inline-flex;align-items:center;justify-content:center;min-width:82px;min-height:82px;margin:2px auto 10px;padding:4px 18px;border-radius:26px;background:linear-gradient(180deg,#eaffef,#c8f4d4);color:#079238;font-family:"Noto Naskh Arabic","Amiri","Segoe UI",serif;font-size:4rem;font-weight:1000;line-height:1;box-shadow:inset 0 0 0 3px rgba(255,255,255,.9),0 10px 24px rgba(7,146,56,.16);direction:rtl}#pqListenPlusAnimalOverlay img{width:min(360px,72vw);height:min(330px,52vh);object-fit:contain;display:block;margin:0 auto 12px;padding:16px;border-radius:28px;background:linear-gradient(180deg,#fff8df 0%,#fff1c4 100%);box-shadow:inset 0 0 0 3px rgba(255,255,255,.82),0 10px 26px rgba(124,86,27,.16)}.pq-lp-letter{display:inline-flex;align-items:center;justify-content:center;min-width:60px;height:60px;border-radius:20px;background:#e9f5ff;color:#1168a8;font-weight:1000;font-size:2rem;margin-right:10px}.pq-lp-animal{font-weight:1000;font-size:1.95rem;color:#17233b}.pq-lp-title{font-weight:900;color:#24324a;margin-bottom:8px}.pq-lp-sub{margin-top:6px;font-weight:800;color:#5b6780;font-size:1rem}@media(max-width:700px){#pqListenPlusAnimalOverlay .card{width:min(440px,92vw);padding:16px}#pqListenPlusAnimalOverlay .pq-lp-arabic{min-width:68px;min-height:68px;font-size:3.2rem}#pqListenPlusAnimalOverlay img{width:min(310px,74vw);height:min(280px,42vh)}}';
   document.head.appendChild(style);
   el = document.createElement('div');
   el.id = 'pqListenPlusAnimalOverlay';
-  el.innerHTML = '<div class="card"><div class="pq-lp-title"></div><img alt=""><div><span class="pq-lp-letter"></span><span class="pq-lp-animal"></span></div><div class="pq-lp-sub"></div></div>';
+  el.innerHTML = '<div class="card"><div class="pq-lp-title"></div><div class="pq-lp-arabic"></div><img alt=""><div><span class="pq-lp-letter"></span><span class="pq-lp-animal"></span></div><div class="pq-lp-sub"></div></div>';
   document.body.appendChild(el);
   return el;
+}
+
+function __pqListenPlusArabicForKey(key) {
+  try {
+    key = String(key || '').trim();
+    const item = (LETTERS || []).find(function (entry) {
+      return entry && String(entry.key || '') === key;
+    });
+    return item ? String(item.ar || item.text || item.letter || '').trim() : '';
+  } catch (_e) {
+    return '';
+  }
 }
 
 function __pqHideListenPlusAnimal() {
@@ -808,12 +1269,14 @@ async function __pqMaybeRunListenPlusAnimal(stepId, key, rate, signal) {
     __pqAssertNotAborted(signal);
     const el = __pqEnsureListenPlusOverlay();
     el.querySelector('.pq-lp-title').textContent = __pqListenPlusCfg('title', 'Listen+');
+    el.querySelector('.pq-lp-arabic').textContent = __pqListenPlusArabicForKey(key);
     el.querySelector('.pq-lp-letter').textContent = item.letter || '';
     el.querySelector('.pq-lp-animal').textContent = item.animal || '';
     el.querySelector('.pq-lp-sub').textContent = __pqListenPlusCfg('subtitle', '');
     const img = el.querySelector('img');
     img.alt = item.animal || 'Animal';
     img.src = imgUrl;
+    __pqPaintPopupImageBackground(img, imgUrl, __PQ_POPUP_IMAGE_BG);
     el.style.display = 'flex';
     setTimeout(function () { el.classList.add('show'); }, 20);
     
@@ -857,6 +1320,88 @@ function __pqGetWordsCfg(path, fallback) {
   }
 }
 
+function __pqWordsLetterAudioSourceStep() {
+  try {
+    return String(
+      __cfg(
+        'playback.steps.words.letterAudioSourceStep',
+        __cfg('playback.steps.words.linkedAudioSourceStep', 'listen')
+      ) || 'listen'
+    ).trim().toLowerCase() || 'listen';
+  } catch (_e) {
+    return 'listen';
+  }
+}
+
+async function __pqPlayWordsModalLetterAudio(key, rate, signal) {
+  if (signal && signal.aborted) {
+    const err = new Error('Aborted');
+    err.name = 'AbortError';
+    throw err;
+  }
+
+  const mode = String(
+    __cfg('playback.steps.words.modalLetterAudioMode', __pqGetWordsCfg('modalLetterAudioMode', 'sound')) || 'sound'
+  ).trim().toLowerCase();
+
+  const urls = [];
+
+  try {
+    const nameUrl = typeof __pqResolveLetterNameAudioUrlForKey === 'function'
+      ? __pqResolveLetterNameAudioUrlForKey(key)
+      : '';
+    const soundUrl = typeof __pqResolveLetterSoundAudioUrlForKey === 'function'
+      ? __pqResolveLetterSoundAudioUrlForKey(key)
+      : '';
+
+    if (mode === 'name') {
+      if (nameUrl) urls.push(nameUrl);
+    } else if (mode === 'both' || mode === 'linked' || mode === 'name_sound') {
+      if (nameUrl) urls.push(nameUrl);
+      if (soundUrl && soundUrl !== nameUrl) urls.push(soundUrl);
+    } else {
+      if (soundUrl) urls.push(soundUrl);
+    }
+  } catch (_e) {}
+
+  if (!urls.length) {
+    return false;
+  }
+
+  const repeats = Math.max(
+    1,
+    Math.floor(
+      Number(
+        __cfg('playback.steps.words.modalLetterRepeats', __pqGetWordsCfg('modalLetterRepeats', 1))
+      ) || 1
+    )
+  );
+
+  for (let repeatIndex = 0; repeatIndex < repeats; repeatIndex += 1) {
+    for (let i = 0; i < urls.length; i += 1) {
+      if (signal && signal.aborted) {
+        const err = new Error('Aborted');
+        err.name = 'AbortError';
+        throw err;
+      }
+
+      const played = await __pqPlayConfiguredAudioUrl(urls[i], rate);
+      if (!played) {
+        throw new Error('words modal letter audio failed: ' + urls[i]);
+      }
+      if (i < urls.length - 1) {
+        await __pqRepeatGapDelay(__pqLetterAudioSequenceGapMs(__pqWordsLetterAudioSourceStep()));
+      }
+    }
+
+    if (repeatIndex < repeats - 1) {
+      await __pqRepeatGapDelay(350);
+    }
+  }
+
+  return true;
+}
+
 function __pqWordsAssetUrl(base, value, ext) {
   try {
     const raw = String(value || '').trim();
@@ -878,14 +1423,15 @@ function __pqEnsureWordsOverlay() {
       const style = document.createElement('style');
       style.id = 'pqWordsOverlayCss';
       style.textContent =
-        '#pqWordsOverlay{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;pointer-events:none;background:rgba(8,15,28,.16);backdrop-filter:blur(2px)}' +
-        '#pqWordsOverlay .pq-words-card{width:min(430px,88vw);border-radius:30px;background:linear-gradient(180deg,#fff 0%,#fff7df 100%);border:4px solid rgba(255,255,255,.92);box-shadow:0 24px 70px rgba(18,29,52,.28);padding:18px;text-align:center;transform:translateY(12px) scale(.94);opacity:0;transition:opacity .18s ease,transform .18s ease;direction:rtl}' +
+        '#pqWordsOverlay{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;pointer-events:none;background:rgba(8,15,28,.18);backdrop-filter:blur(3px);padding:22px}' +
+        '#pqWordsOverlay .pq-words-card{width:min(820px,94vw);border-radius:36px;background:linear-gradient(180deg,#fff 0%,#fff7df 100%);border:5px solid rgba(255,255,255,.94);box-shadow:0 30px 86px rgba(18,29,52,.32);padding:34px;text-align:center;transform:translateY(12px) scale(.94);opacity:0;transition:opacity .18s ease,transform .18s ease;direction:rtl;pointer-events:auto}' +
         '#pqWordsOverlay.pq-show .pq-words-card{opacity:1;transform:translateY(0) scale(1)}' +
-        '#pqWordsOverlay .pq-words-title{font-weight:900;font-size:1.05rem;color:#24324a;margin-bottom:8px}' +
-        '#pqWordsOverlay .pq-words-img{width:min(240px,58vw);height:min(220px,48vh);object-fit:contain;display:block;margin:0 auto 10px}' +
-        '#pqWordsOverlay .pq-words-letter{display:inline-flex;align-items:center;justify-content:center;min-width:58px;height:58px;border-radius:18px;background:#fff0d6;color:#9a4f00;font-weight:1000;font-size:2.1rem;margin-left:10px;vertical-align:middle;font-family:"Noto Sans Arabic","Amiri",system-ui,sans-serif}' +
-        '#pqWordsOverlay .pq-words-word{font-weight:1000;font-size:2.05rem;color:#17233b;vertical-align:middle;font-family:"Noto Sans Arabic","Amiri",system-ui,sans-serif}' +
-        '#pqWordsOverlay .pq-words-sub{margin-top:6px;font-weight:800;color:#5b6780;font-size:.95rem;direction:ltr}';
+        '#pqWordsOverlay .pq-words-title{font-weight:900;font-size:1.55rem;color:#24324a;margin-bottom:18px}' +
+        '#pqWordsOverlay .pq-words-img{width:min(500px,72vw);height:min(430px,54vh);object-fit:contain;display:block;margin:0 auto 24px;padding:20px;border-radius:30px;background:linear-gradient(180deg,#fff8df 0%,#fff1c4 100%);box-shadow:inset 0 0 0 4px rgba(255,255,255,.84),0 14px 32px rgba(124,86,27,.17)}' +
+        '#pqWordsOverlay .pq-words-letter{display:inline-block;color:#17233b;font-weight:1000;font-size:3.4rem;margin-left:18px;vertical-align:middle;font-family:"Noto Sans Arabic","Amiri",system-ui,sans-serif;user-select:text}' +
+        '#pqWordsOverlay .pq-words-word{font-weight:1000;font-size:3.4rem;color:#17233b;vertical-align:middle;font-family:"Noto Sans Arabic","Amiri",system-ui,sans-serif}' +
+        '#pqWordsOverlay .pq-words-sub{margin-top:14px;font-weight:800;color:#5b6780;font-size:1.2rem;direction:ltr}' +
+        '@media(max-width:700px){#pqWordsOverlay .pq-words-card{width:min(560px,94vw);padding:22px;border-radius:30px}#pqWordsOverlay .pq-words-img{width:min(340px,74vw);height:min(290px,42vh)}#pqWordsOverlay .pq-words-letter{font-size:2.35rem}#pqWordsOverlay .pq-words-word{font-size:2.35rem}}';
       document.head.appendChild(style);
     }
 
@@ -909,12 +1455,26 @@ function __pqShowWordsItem(meta) {
     const sub = el.querySelector('.pq-words-sub');
 
     if (title) title.textContent = __pqGetWordsCfg('title', 'Words');
-    if (letter) letter.textContent = String(meta.letter || '').trim();
+    el.dataset.key = String(meta.key || '').trim();
+    el.dataset.rate = String(meta.rate || '');
+
+    if (letter) {
+      letter.textContent = String(meta.letter || '').trim();
+      letter.removeAttribute('role');
+      letter.removeAttribute('tabindex');
+      letter.removeAttribute('aria-label');
+      letter.removeAttribute('title');
+      letter.onkeydown = null;
+    }
     if (word) word.textContent = String(meta.word || '').trim();
     if (sub) sub.textContent = __pqGetWordsCfg('subtitle', '');
     if (img) {
       img.alt = String(meta.word || 'Word');
-      if (meta.imageUrl) { img.style.display = 'block'; img.src = meta.imageUrl; }
+      if (meta.imageUrl) {
+        img.style.display = 'block';
+        img.src = meta.imageUrl;
+        __pqPaintPopupImageBackground(img, meta.imageUrl, __PQ_POPUP_IMAGE_BG);
+      }
       else { img.style.display = 'none'; img.removeAttribute('src'); }
     }
 
@@ -953,14 +1513,32 @@ async function __pqMaybeRunWordsItem(stepId, key, rate, signal) {
     if (delayMs > 0) await __pqDelayWithAbort(delayMs, signal);
     __pqAssertNotAborted(signal);
 
-    __pqShowWordsItem({ letter: item.letter || '', word: item.word || '', imageUrl });
-    
-const __lpRepeats = Number(__cfg('playback.steps.listenplus.anchorRepeats', 1) || 1);
+    __pqShowWordsItem({ key, rate, letter: item.letter || '', word: item.word || '', imageUrl });
 
-for (let i = 0; i < __lpRepeats; i++) {
+    await __pqPlayWordsModalLetterAudio(
+      key,
+      Number(__cfg('playback.steps.words.modalLetterPlaybackRate', 1) || 1) || 1,
+      signal
+    );
+    __pqAssertNotAborted(signal);
+    
+const __wordRepeats = Math.max(
+  1,
+  Math.floor(
+    Number(
+      __cfg(
+        'playback.steps.words.wordRepeats',
+        __cfg('playback.steps.words.animalNameRepeats', __pqGetWordsCfg('wordRepeats', 3))
+      ) || 3
+    ) || 3
+  )
+);
+const __wordRate = __cfg('playback.steps.words.wordPlaybackRate', __cfg('playback.steps.words.anchorPlaybackRate', rate));
+
+for (let i = 0; i < __wordRepeats; i++) {
   await __pqPlayListenPlusAudio(
     audioUrl,
-    __cfg('playback.steps.listenplus.anchorPlaybackRate', rate),
+    __wordRate,
     timeoutMs,
     signal
   );
@@ -1036,14 +1614,15 @@ function __pqEnsureRepeatRecordUi() {
     const style = document.createElement('style');
     style.id = 'pqRepeatRecordOverlayCss';
     style.textContent = [
-      '#pqRepeatRecordOverlay{position:fixed;inset:0;z-index:2147482900;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(12,18,31,.48);backdrop-filter:blur(4px)}',
-      '#pqRepeatRecordOverlay .pq-repeat-card{width:min(440px,92vw);border-radius:28px;background:#fffdf7;box-shadow:0 24px 70px rgba(18,29,52,.30);padding:22px;text-align:center;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif}',
-      '#pqRepeatRecordOverlay .pq-repeat-title{font-weight:1000;font-size:1.25rem;color:#17233b;margin-bottom:8px}',
-      '#pqRepeatRecordOverlay .pq-repeat-letter{font-family:"Noto Sans Arabic","Amiri",serif;font-weight:1000;font-size:4rem;line-height:1;color:#173f2b;margin:8px 0}',
-      '#pqRepeatRecordOverlay .pq-repeat-msg{font-weight:800;color:#31425d;margin:8px 0 16px}',
-      '#pqRepeatRecordOverlay .pq-repeat-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}',
-      '#pqRepeatRecordOverlay button{border:0;border-radius:20px;padding:14px 22px;font-weight:1000;font-size:1rem;cursor:pointer}',
-      '#pqRepeatRecordOverlay .pq-repeat-record{background:#eaf7ef;color:#0b5132;box-shadow:0 10px 22px rgba(57,100,184,.16)}',
+      '#pqRepeatRecordOverlay{position:fixed;inset:0;z-index:2147482900;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(8,15,28,.16);backdrop-filter:blur(4px)}',
+      '#pqRepeatRecordOverlay .pq-repeat-card{width:min(540px,92vw);border-radius:32px;background:linear-gradient(180deg,#fff,#fff7df);border:4px solid rgba(255,255,255,.92);box-shadow:0 24px 70px rgba(18,29,52,.30);padding:28px;text-align:center;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif}',
+      '#pqRepeatRecordOverlay .pq-repeat-title{font-weight:1000;font-size:1.45rem;color:#17233b;margin-bottom:10px}',
+      '#pqRepeatRecordOverlay .pq-repeat-letter{display:inline-flex;align-items:center;justify-content:center;min-width:118px;min-height:118px;padding:10px 24px;border-radius:32px;background:linear-gradient(180deg,#eaffef,#c8f4d4);font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;font-weight:1000;font-size:6.5rem;line-height:1;color:#079238;margin:8px auto 14px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.9),0 10px 24px rgba(7,146,56,.16);direction:rtl}',
+      '#pqRepeatRecordOverlay .pq-repeat-msg{font-weight:900;color:#31425d;margin:10px 0 20px;font-size:1.08rem}',
+      '#pqRepeatRecordOverlay .pq-repeat-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}',
+      '#pqRepeatRecordOverlay button{border:0;border-radius:26px;padding:20px 32px;font-weight:1000;font-size:1.35rem;cursor:pointer;min-width:180px;min-height:78px}',
+      '#pqRepeatRecordOverlay .pq-repeat-record{background:linear-gradient(180deg,#fff3cf,#ffe0a1);color:#0b5132;box-shadow:inset 0 0 0 3px rgba(255,255,255,.82),0 12px 26px rgba(124,86,27,.18)}',
+      '#pqRepeatRecordOverlay .pq-repeat-record::first-letter{font-size:1.8em}',
       '#pqRepeatRecordOverlay button:disabled{opacity:.65;cursor:wait}'
     ].join('\n');
     document.head.appendChild(style);
@@ -1195,7 +1774,7 @@ async function __pqPlayRepeatStudentBlob(blob) {
   }
 }
 
-async function __pqRepeatRecordAttempt(key, rate, signal) {
+async function __pqRepeatRecordAttempt(key, rate, signal, attemptNumber, maxAttempts) {
   try {
     if (signal && signal.aborted) return false;
 
@@ -1203,12 +1782,15 @@ async function __pqRepeatRecordAttempt(key, rate, signal) {
 
     const ms = Number(__pqRepeatRecordCfg('recordMs', 1400) || 1400);
     const replayStudent = __pqRepeatRecordCfg('replayStudent', true) !== false;
+    attemptNumber = Math.max(1, Number(attemptNumber || 1) || 1);
+    maxAttempts = Math.max(1, Number(maxAttempts || 1) || 1);
+    const chanceLabel = maxAttempts > 1 ? ' Chance ' + attemptNumber + ' of ' + maxAttempts + '.' : '';
 
     const el = __pqShowRepeatRecordUi(
       key,
       __pqRepeatRecordState.autoMode
-        ? 'Recording starts now. Say the letter.'
-        : 'Tap Record, then say the letter.'
+        ? 'Recording starts now. Say the letter.' + chanceLabel
+        : 'Tap Record, then say the letter.' + chanceLabel
     );
 
     const recordBtn = el.querySelector('.pq-repeat-record');
@@ -1226,23 +1808,35 @@ async function __pqRepeatRecordAttempt(key, rate, signal) {
         __pqRepeatRecordState.autoMode = true;
 
         const blob = await __pqRecordRepeatOnce(stream, ms, signal);
+        const quality = (typeof __pqRepeatQualityCheck === 'function')
+          ? await __pqRepeatQualityCheck(key, blob)
+          : { ok: !!blob, code: 'unchecked', message: blob ? 'Good try!' : 'Try again.' };
 
         __pqRepeatRecordState.attempts[String(key)] = {
           at: Date.now(),
+          attempt: attemptNumber,
+          maxAttempts: maxAttempts,
           ok: !!blob,
+          qualityOk: !!(quality && quality.ok),
+          qualityCode: quality && quality.code ? String(quality.code) : '',
           size: blob ? blob.size : 0
         };
 
-        if (recordBtn) {
-          recordBtn.textContent = blob ? '✅ Recorded' : '⚠️ Try again';
+        if (recordBtn && (!quality || !quality.ok)) {
+          recordBtn.textContent = 'Try again';
         }
 
-        if (blob && replayStudent) {
-          try { el.querySelector('.pq-repeat-msg').textContent = 'Good! Listen to your voice.'; } catch (_e) {}
-          await __pqPlayRepeatStudentBlob(blob);
+        if (!quality || !quality.ok) {
+          try {
+            el.querySelector('.pq-repeat-msg').textContent =
+              ((quality && quality.message) ||
+              (blob ? 'Try again.' : 'I did not hear your voice. Try again.')) +
+              chanceLabel;
+          } catch (_e) {}
+          await __pqDelayWithAbort(Number(__pqRepeatRecordCfg('feedbackHoldMs', 950) || 950), signal);
         }
 
-        return !!blob;
+        return !!(quality && quality.ok);
       } catch (_e) {
         try { el.querySelector('.pq-repeat-msg').textContent = 'Microphone was not ready. Tap Record again.'; } catch (_ignore) {}
         if (recordBtn) {
@@ -1307,7 +1901,8 @@ async function __pqPlayAllPlaylistLocal(stepId) {
     const signal = controller ? controller.signal : null;
 
     const rate = parseFloat((speedSel && speedSel.value) || DEFAULTS.speed || '1');
-    const finalStepId = String(stepId || '').toLowerCase();
+    const rawStepId = String(stepId || '').toLowerCase();
+    const finalStepId = __pqCanonicalStepId(rawStepId);
     const repeatFallback = parseInt((repeatSel && repeatSel.value) || DEFAULTS.repeat || '1', 10) || 1;
     const repeatCount = __pqGetStepRepeatPerLetter(finalStepId, repeatFallback);
     const keys = __pqGetVisibleSequenceKeys(finalStepId);
@@ -1321,7 +1916,11 @@ async function __pqPlayAllPlaylistLocal(stepId) {
     try {
       if (btnPause) {
         btnPause.disabled = false;
-        btnPause.textContent = __PQ_TEXT_CACHE.pause;
+        if (typeof __pqSetBilingualControlLabel === 'function') {
+          __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+        } else {
+          btnPause.textContent = __PQ_TEXT_CACHE.pause;
+        }
       }
     } catch (_e) {}
 
@@ -1365,10 +1964,29 @@ async function __pqPlayAllPlaylistLocal(stepId) {
         await pauseGate(signal);
         __pqAssertNotAborted(signal);
 
-        await playLetter(key, repeatCount, rate);
+        const shouldPlayLetterBeforeModal = finalStepId !== 'words';
+        const letterPlaybackStepId = finalStepId;
+
+        if (shouldPlayLetterBeforeModal) {
+          await playLetter(key, repeatCount, rate, letterPlaybackStepId);
+        }
 
         if (finalStepId === 'repeat') {
-          await __pqRepeatRecordAttempt(key, rate, signal);
+          const maxAttempts = Math.max(1, Number(__pqRepeatRecordCfg('maxAttempts', 3) || 3) || 3);
+          const retryDelayMs = Math.max(0, Number(__pqRepeatRecordCfg('retryDelayMs', 600) || 600) || 0);
+          let repeatOk = false;
+
+          for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+            repeatOk = await __pqRepeatRecordAttempt(key, rate, signal, attempt, maxAttempts);
+            __pqAssertNotAborted(signal);
+
+            if (repeatOk) break;
+            if (attempt >= maxAttempts) break;
+
+            await __pqDelayWithAbort(retryDelayMs, signal);
+            __pqAssertNotAborted(signal);
+            await playLetter(key, repeatCount, rate, letterPlaybackStepId);
+          }
         }
 
         __pqAssertNotAborted(signal);
@@ -1434,7 +2052,11 @@ async function __pqPlayAllPlaylistLocal(stepId) {
       try {
         if (btnPause) {
           btnPause.disabled = false;
-          btnPause.textContent = __PQ_TEXT_CACHE.pause;
+          if (typeof __pqSetBilingualControlLabel === 'function') {
+            __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+          } else {
+            btnPause.textContent = __PQ_TEXT_CACHE.pause;
+          }
         }
       } catch (_e) {}
     }
@@ -1480,7 +2102,9 @@ async function __pqRunMatchStep() {
       style.textContent = [
         '.tile.pq-playing{',
         '  animation:pqTilePlayBounce 850ms ease-in-out both !important;',
-        '  box-shadow:0 0 0 5px rgba(255,255,255,.95),0 0 0 12px rgba(34,193,232,.58),0 18px 34px rgba(13,35,69,.30) !important;',
+        '  border-color:#58c985 !important;',
+        '  background:radial-gradient(circle at top,#ffffff,#dff8e8 60%,rgba(122,216,156,.28)) !important;',
+        '  box-shadow:0 0 0 5px rgba(255,255,255,.95),0 0 0 12px rgba(122,216,156,.48),0 18px 34px rgba(18,91,58,.24) !important;',
         '  transform:translateY(-8px) scale(1.08) !important;',
         '  z-index:30 !important;',
         '}',
@@ -1537,7 +2161,8 @@ function __pqClearPlayingTile() {
 async function playAll() {
   try {
     const current = getCurrentStep();
-    const stepId = String((current && current.step && current.step.id) || '').toLowerCase();
+    const rawStepId = String((current && current.step && current.step.id) || '').toLowerCase();
+    const stepId = __pqCanonicalStepId(rawStepId);
 
     if (__pqLastPlayAllStepId !== stepId) {
       __pqLastPlayAllStepId = stepId;
@@ -1548,7 +2173,11 @@ async function playAll() {
 
       try {
         if (btnPause) {
-          btnPause.textContent = __PQ_TEXT_CACHE.pause;
+          if (typeof __pqSetBilingualControlLabel === 'function') {
+            __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+          } else {
+            btnPause.textContent = __PQ_TEXT_CACHE.pause;
+          }
         }
       } catch (_e) {}
     }

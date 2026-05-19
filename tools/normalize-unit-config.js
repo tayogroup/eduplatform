@@ -37,6 +37,14 @@ function loadNormalizedConfig(targetPath) {
   });
   context.window.PQUnitConfigNormalizer = context.PQUnitConfigNormalizer;
 
+  const messagesPath = path.join(path.dirname(targetPath), 'unit.messages.js');
+  if (fs.existsSync(messagesPath)) {
+    vm.runInContext(fs.readFileSync(messagesPath, 'utf8'), context, {
+      filename: messagesPath
+    });
+    context.PQ_UNIT_MESSAGES = context.window.PQ_UNIT_MESSAGES;
+  }
+
   vm.runInContext(fs.readFileSync(targetPath, 'utf8'), context, {
     filename: targetPath
   });

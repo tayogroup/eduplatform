@@ -14,7 +14,7 @@ This repo keeps Moodle PHP source/reference files separate from the Bunny-hosted
 
    ```text
    src/moodle/local_hubredirect/issue.php
-   -> https://app.quraan.academy/pre_quraan/scripts/index_v030.html?mtoken=...
+   -> https://app.quraan.academy/pre_quraan/app/index.html?mtoken=...
    ```
 
 3. Bunny app shell shows the learner dashboard and routes unit buttons.
@@ -84,10 +84,13 @@ src/app-shell/js/app-config.js
 The local-only access-gate exception is controlled in:
 
 ```text
-src/units/alphabet/patches/access-gate.js
+src/shared/js/patches/access-gate.js
 ```
 
 Production still routes through Moodle because the local overrides only apply to `localhost` and `127.0.0.1`.
+Hosted Bunny testing shortcuts may also open protected unit pages when the
+referrer host is `quraan.academy` or one of its subdomains. Direct no-referrer
+unit opens remain blocked.
 
 ## Imported Moodle Files
 
@@ -96,8 +99,25 @@ src/moodle/local_hubredirect/issue.php
 src/moodle/local_hubredirect/issue_child.php
 src/moodle/local_prequran/services.php
 src/moodle/local_prequran/externallib_v4.php
+src/moodle/local_prequran/lib.php
 src/moodle/course_format_reference/index.php
 ```
+
+## Moodle Dashboard Redirect
+
+`local_prequran` keeps learner-style accounts out of Moodle's generic `/my/`
+dashboard. When `local_prequran/redirect_moodle_dashboard` is enabled:
+
+```text
+site administrator -> stays on /my/
+unknown account    -> stays on /my/
+student profile    -> /local/hubredirect/issue.php
+teacher profile    -> /local/hubredirect/dashboard.php
+parent/guardian    -> /local/hubredirect/dashboard.php
+```
+
+This redirect is intentionally conservative so administrators keep full Moodle
+access while students land in the Bunny app launcher.
 
 ## Deployment Boundaries
 
@@ -124,5 +144,5 @@ The app shell launcher route in `issue.php` should remain:
 
 ```php
 $appBase = 'https://app.quraan.academy';
-$appPath = '/pre_quraan/scripts/index_v030.html';
+$appPath = '/pre_quraan/app/index.html';
 ```

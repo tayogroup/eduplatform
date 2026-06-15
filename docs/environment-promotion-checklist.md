@@ -3,7 +3,7 @@
 Use this flow for Pre-Quraan unit releases:
 
 ```text
-local dev -> local unit QA -> Bunny staging -> Bunny production
+local dev -> local unit QA -> Bunny integration -> Bunny staging -> Bunny production
 ```
 
 ## 1. Local Dev
@@ -38,8 +38,8 @@ Run:
 ```bash
 npm run validate:units
 npm run check:alphabet
-npm run build:bunny:staging
-npm run verify:bunny:staging
+npm run build:bunny:integration
+npm run verify:bunny:integration
 ```
 
 For each changed unit, manually test:
@@ -55,9 +55,41 @@ For each changed unit, manually test:
 
 Do not upload until this gate passes.
 
-## 3. Bunny Staging
+## 3. Bunny Integration
 
-Purpose: test real Bunny paths without affecting students.
+Purpose: active Bunny-side QA without affecting staging or production.
+
+Build and verify integration output:
+
+```bash
+npm run build:bunny:integration
+npm run verify:bunny:integration
+```
+
+Upload to integration:
+
+```bash
+npm run deploy:integration
+```
+
+Expected public path:
+
+```text
+https://app.quraan.academy/pre_quraan_integration/
+```
+
+Check:
+
+- Bunny upload completes.
+- HTML, CSS, JS, image, audio, and video paths resolve under `/pre_quraan_integration/`.
+- Moodle admin/test launch can route to integration.
+- Moodle progress, focus, speak, and submit rows are written with `environment = integration`.
+- CDN cache does not hide changed files.
+- No integration page requests staging `/pre_quraan_staging/` or production `/pre_quraan/` assets.
+
+## 4. Bunny Staging
+
+Purpose: production-ready release candidate. Staging should receive only builds that already passed integration.
 
 Build and verify staging output:
 
@@ -82,11 +114,12 @@ Check:
 
 - Bunny upload completes.
 - HTML, CSS, JS, image, audio, and video paths resolve under `/pre_quraan_staging/`.
-- Moodle admin/test launch can route to staging.
+- Moodle staging/admin launch routes to staging.
+- Moodle progress, focus, speak, and submit rows are written with `environment = staging`.
 - CDN cache does not hide changed files.
-- No staging page requests production `/pre_quraan/` assets.
+- No staging page requests integration `/pre_quraan_integration/` or production `/pre_quraan/` assets.
 
-## 4. Bunny Production
+## 5. Bunny Production
 
 Purpose: student-facing release.
 
@@ -94,6 +127,7 @@ Production receives only output that already passed:
 
 - Local validation.
 - Local preview checks.
+- Bunny integration smoke test.
 - Bunny staging smoke test.
 - Moodle staging/admin launch test.
 
@@ -134,7 +168,9 @@ Before production, record:
 
 - Git branch and commit.
 - Unit keys included.
+- Integration verification result.
 - Staging verification result.
+- Moodle environment readiness SQL result.
 - Production dry-run result.
 - Known issues or rollback notes.
 - Release tag, for example `app-v1.0.0` or `alphabet-v1.0.0`.
@@ -143,3 +179,21 @@ Before production, record:
 
 The generated Bunny output records its public base path in `dist/pre_quraan/.bunny-build.json`.
 Deployment refuses to upload when the build path and deploy target do not match.
+
+## Moodle Environment Rule
+
+Moodle launch routes and web services must stay aligned with Bunny:
+
+```text
+integration -> /pre_quraan_integration/ -> environment = integration
+staging     -> /pre_quraan_staging/     -> environment = staging
+production  -> /pre_quraan/             -> environment = production
+```
+
+After installing the Moodle plugin upgrade, run:
+
+```text
+src/moodle/local_prequran/sql/verify_environment_readiness.sql
+```
+
+Only admins, or sites with `allow_nonproduction_launch` enabled, should use `pq_env=integration` or `pq_env=staging` launch overrides.

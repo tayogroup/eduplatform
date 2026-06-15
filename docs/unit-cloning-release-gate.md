@@ -1,120 +1,146 @@
 # Unit Cloning Release Gate
 
-Use this before cloning Alphabet into additional units.
-
-The goal is to avoid copying hidden problems into many units.
+Use this gate before a cloned lesson is promoted beyond local work. The goal is to avoid copying hidden problems into many units.
 
 ## Golden Source Rule
 
-Only clone from a unit that has:
-
-1. Clean Git status.
-2. Passing local validation.
-3. Passing Bunny build verification.
-4. Successful Bunny upload.
-5. Successful Moodle production smoke test.
-6. A Git tag marking the baseline.
-
-Current golden baseline:
+Only clone from the neutral unit template:
 
 ```text
-alphabet-v1-baseline
+src/templates/unit
 ```
 
-## Pre-Clone Checks
+Existing lessons, including Alphabet, are references only. They may contain lesson-specific media maps, historical overrides, or encoding artifacts that should not become the starting point for new lessons.
+
+## Pre-Clone Gate
 
 Run:
 
 ```powershell
 git status
 npm.cmd run validate:units
-npm.cmd run check:alphabet
-npm.cmd run build:bunny
-npm.cmd run verify:bunny
+npm.cmd run build:bunny:integration
+npm.cmd run verify:bunny:integration
 ```
 
 Expected:
 
 ```text
-working tree clean
 Unit config validation passed.
 Bunny output verification passed.
 ```
 
-## Files That Should Be Unit-Owned
+If the working tree is dirty, check whether the changed files are related to the lesson cloning work before continuing.
 
-Each cloned unit should have its own:
+## Clone Gate
 
-```text
-src/units/<unit-key>/index.html
-src/units/<unit-key>/unit.config.js
-src/units/<unit-key>/unit.css
-src/units/<unit-key>/unit.runtime.js
-src/units/<unit-key>/patches/
-src/units/<unit-key>/README.md
+Create units only with:
+
+```powershell
+npm.cmd run create:unit -- --manifest <lesson-manifest-json>
 ```
 
-## Files That Should Stay Shared
+Use `--dry-run` first. Do not manually copy a folder from `src/units`. `--unit-key`, `--title`, and `--content-file` are still supported for small experiments, but production lesson clones should use the full manifest shape from `docs/examples/unit.lesson.template.json`.
 
-Do not clone these per unit unless there is a deliberate version change:
+Learner-facing step messages should be provided through `unitMessages` in the manifest or through `--messages-file`. Avoid hand-editing `unit.messages.js` unless the generated file needs final copy polish.
+
+## Five-File Contract
+
+Each cloned unit owns exactly:
+
+```text
+index.html
+unit.config.js
+unit.messages.js
+unit.css
+unit.runtime.js
+```
+
+Unit folders must not contain copied shared scripts, copied shared styles, media folders, notes, exports, or temporary files.
+
+## Shared Resource Rule
+
+Do not clone these per unit unless there is a deliberate shared version change:
 
 ```text
 src/shared/css/
 src/shared/js/
+src/shared/js/patches/
 src/app-shell/
 tools/
 docs/
 ```
 
-## Clone Checklist
+If multiple lessons need the same behavior, add it once to shared runtime/config normalization.
 
-For each new unit:
+## Validation Gate
 
-1. Create a new branch.
-2. Copy the Alphabet unit folder to `src/units/<new-unit-key>/`.
-3. Rename unit identifiers in config and docs.
-4. Change media paths in `unit.config.js`.
-5. Change Moodle web-service names only if the backend supports them.
-6. Update app-shell `LINK_MAP` only after the unit path exists.
-7. Extend `tools/build-bunny-output.js` only if the build does not already support the new unit key.
-8. Add a validation entry for the new unit.
-9. Run local preview.
-10. Run smoke test through Moodle after deployment.
+Run after every clone and after every content edit:
+
+```powershell
+npm.cmd run validate:units
+```
+
+This gate checks:
+
+```text
+JavaScript syntax
+required unit files
+unexpected files or directories
+required config fields
+Moodle function names
+step ids and filters
+content keys and media filenames
+wordLimit versus content.items length
+missing local media
+unresolved template placeholders
+Alphabet clone leftovers
+encoding/replacement artifacts
+```
+
+## Bunny Gate
+
+Before changing live Moodle routes, confirm the built route exists:
+
+```powershell
+npm.cmd run build:bunny:integration
+npm.cmd run verify:bunny:integration
+```
+
+For production dry runs:
+
+```powershell
+npm.cmd run env:production:dry-run
+```
 
 ## Moodle Route Gate
 
-Before changing live Moodle routes, confirm the Bunny URL exists:
+Only update Moodle routes after Bunny verification passes.
+
+Route format:
 
 ```text
-https://app.quraan.academy/pre_quraan/units/<unit-key>/index.html
+/pre_quraan/units/<unit-key>/index.html?managed=1&v=<assetVersion>
 ```
 
-For protected unit pages, direct access may show 403. That is acceptable if Moodle launch succeeds.
-
-Then update the matching route in:
+Typical route file:
 
 ```text
 src/moodle/local_hubredirect/issue_child.php
 ```
 
-Example:
+For protected unit pages, direct Bunny access may show 403. That is acceptable only if the Moodle launch flow succeeds.
 
-```php
-'alphabet_listen' => '/pre_quraan/units/alphabet/index.html?managed=1&v=20260504_001',
-```
+## Production Release Checklist
 
-## Release Checklist
-
-Before marking a cloned unit production-ready:
-
-1. `git status` is clean before starting release.
-2. `npm.cmd run build:bunny` passes.
-3. `npm.cmd run verify:bunny` passes.
+1. `npm.cmd run validate:units` passes.
+2. `npm.cmd run build:bunny:production` passes.
+3. `npm.cmd run verify:bunny:production` passes.
 4. Bunny upload completes.
 5. Direct Bunny route behaves as expected.
 6. Moodle route opens the unit.
 7. Styling loads.
-8. Audio/media loads.
+8. Audio and video load.
 9. Core interaction works.
 10. Progress/state behavior is checked.
 11. Desktop and mobile/tablet smoke tests pass.

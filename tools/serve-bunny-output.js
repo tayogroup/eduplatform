@@ -30,6 +30,12 @@ function normalizeBasePath(value) {
 
 const buildMetadata = readBuildMetadata();
 const publicBasePath = normalizeBasePath(process.env.PREQURAAN_PUBLIC_BASE_PATH || buildMetadata?.publicBasePath);
+const supportedBasePaths = Array.from(new Set([
+  publicBasePath,
+  '/pre_quraan/',
+  '/pre_quraan_integration/',
+  '/pre_quraan_staging/',
+]));
 
 const contentTypes = {
   '.css': 'text/css; charset=utf-8',
@@ -59,10 +65,9 @@ function resolveRequestPath(urlPath) {
     : normalized.replace(/^[/\\]+/, '');
 
   const normalizedUrlPath = `/${relativePath.split(path.sep).join('/')}`;
-  if (normalizedUrlPath.startsWith(publicBasePath)) {
-    relativePath = normalizedUrlPath.slice(publicBasePath.length);
-  } else if (normalizedUrlPath.startsWith('/pre_quraan/')) {
-    relativePath = normalizedUrlPath.slice('/pre_quraan/'.length);
+  const matchedBasePath = supportedBasePaths.find((basePath) => normalizedUrlPath.startsWith(basePath));
+  if (matchedBasePath) {
+    relativePath = normalizedUrlPath.slice(matchedBasePath.length);
   }
 
   const filePath = path.join(bunnyDistDir, relativePath);
@@ -107,5 +112,6 @@ const server = http.createServer((req, res) => {
 server.listen(port, '127.0.0.1', () => {
   console.log(`Serving Bunny output from ${bunnyDistDir}`);
   console.log(`Public base path: ${publicBasePath}`);
+  console.log(`Accepted base paths: ${supportedBasePaths.join(', ')}`);
   console.log(`Open http://127.0.0.1:${port}${publicBasePath}units/alphabet/index.html`);
 });

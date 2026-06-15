@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const vm = require('vm');
 const { loadNormalizedConfig } = require('./normalize-unit-config.js');
 
 const root = process.cwd();
@@ -157,6 +158,11 @@ function stripPreQuraanPrefix(value) {
   return String(value || '').replace(/^\/pre_quraan\/?/, '');
 }
 
+function localMediaBase(value) {
+  const base = String(value || '');
+  return base.startsWith('/pre_quraan/') ? stripPreQuraanPrefix(base) : '';
+}
+
 function validateLocalFile(unitKey, label, base, filename) {
   if (!base || !filename) return;
   if (!String(base).startsWith('/pre_quraan/')) return;
@@ -164,6 +170,16 @@ function validateLocalFile(unitKey, label, base, filename) {
   const filePath = path.join(root, 'src', 'media', stripPreQuraanPrefix(base), filename);
   if (!fs.existsSync(filePath)) {
     fail(unitKey, `Missing local ${label}: ${path.relative(root, filePath)}`);
+  }
+}
+
+function validateJavaScriptSyntax(unitKey, filePath) {
+  if (!fs.existsSync(filePath)) return;
+
+  try {
+    new vm.Script(fs.readFileSync(filePath, 'utf8'), { filename: filePath });
+  } catch (error) {
+    fail(unitKey, `JavaScript syntax error in ${path.relative(root, filePath)}: ${error.message}`);
   }
 }
 
@@ -193,6 +209,7 @@ function validateNoCloneLeaks(unitKey, unitDir, cfg) {
   const mojibakePattern = /Ã|Â|â€|â€™|â€œ|â€�|â€“|â€”|âœ|â–|â€¢|ðŸ|�|Ø|Ù/;
   const alphabetLeakPattern = /\/lessons\/alphabet\b|\/unit_steps\/alphabet\b|\/units\/alphabet\b|alphabet_|Alphabet|\balph_\d+/;
   const unitPathPattern = /\/pre_quraan\/units\/([^/"?#]+)\//g;
+  const unresolvedPlaceholderPattern = /\{\{[A-Z0-9_]+\}\}/;
 
   for (const file of files) {
     const filePath = path.join(unitDir, file);
@@ -201,6 +218,10 @@ function validateNoCloneLeaks(unitKey, unitDir, cfg) {
 
     if (mojibakePattern.test(text)) {
       fail(unitKey, `Possible mojibake/encoding artifact in ${file}.`);
+    }
+
+    if (unresolvedPlaceholderPattern.test(text)) {
+      fail(unitKey, `Unresolved template placeholder found in ${file}.`);
     }
 
     if (!allowedAlphabet && alphabetLeakPattern.test(text)) {
@@ -259,8 +280,8 @@ function validateLocalMedia(unitKey, cfg) {
   const items = cfg.content && Array.isArray(cfg.content.items)
     ? cfg.content.items
     : [];
-  const audioBase = stripPreQuraanPrefix(cfg.media && (cfg.media.l6Base || cfg.media.audioBase || cfg.media.fallbackAudioBase));
-  const videoBase = stripPreQuraanPrefix(cfg.media && (cfg.media.watchBase || cfg.media.fallbackWatchBase));
+  const audioBase = localMediaBase(cfg.media && (cfg.media.l6Base || cfg.media.audioBase || cfg.media.fallbackAudioBase));
+  const videoBase = localMediaBase(cfg.media && (cfg.media.watchBase || cfg.media.fallbackWatchBase));
   const animateBase = cfg.media && cfg.media.animateBase;
   const soundImageBase = cfg.media && cfg.media.soundImageBase;
   const soundExplainerBase = cfg.media && cfg.media.soundExplainerBase;
@@ -303,6 +324,37 @@ function validateLocalMedia(unitKey, cfg) {
       validateLocalFile(unitKey, 'message audio', cfg.messages.base, audio);
     });
   }
+}
+
+function validateContentConventions(unitKey, cfg) {
+  const items = cfg.content && Array.isArray(cfg.content.items)
+    ? cfg.content.items
+    : [];
+  const filePrefix = String(cfg.assets && cfg.assets.filePrefix || '');
+  const videoFilePrefix = String(cfg.assets && (cfg.assets.videoFilePrefix || cfg.assets.filePrefix) || '');
+  const keyPrefix = String(cfg.identity && cfg.identity.keyPrefix || '');
+
+  if (items.length && Number(cfg.wordLimit) !== items.length) {
+    fail(unitKey, `wordLimit (${cfg.wordLimit}) must match content.items length (${items.length}).`);
+  }
+
+  items.forEach((item, index) => {
+    if (!item || typeof item !== 'object') return;
+
+    if (keyPrefix && item.key && !String(item.key).startsWith(keyPrefix)) {
+      fail(unitKey, `content.items[${index}].key must start with identity.keyPrefix "${keyPrefix}".`);
+    }
+
+    const audio = String(item.audio || '');
+    if (filePrefix && audio && !audio.startsWith(filePrefix)) {
+      fail(unitKey, `content.items[${index}].audio "${audio}" must start with assets.filePrefix "${filePrefix}".`);
+    }
+
+    const video = String(item.video || '');
+    if (videoFilePrefix && video && !video.startsWith(videoFilePrefix)) {
+      fail(unitKey, `content.items[${index}].video "${video}" must start with assets.videoFilePrefix "${videoFilePrefix}".`);
+    }
+  });
 }
 
 function validateUnitFolder(unitKey, unitDir) {
@@ -355,6 +407,7 @@ function validateConfig(unitKey, cfg) {
 
   validateSteps(unitKey, cfg);
   validateContent(unitKey, cfg);
+  validateContentConventions(unitKey, cfg);
   validateGeneratedMaps(unitKey, cfg);
   validateLocalMedia(unitKey, cfg);
 }
@@ -375,6 +428,10 @@ for (const unit of fs.readdirSync(unitsDir, { withFileTypes: true })) {
     fail(unit.name, `Missing config: ${path.relative(root, configPath)}`);
     continue;
   }
+
+  validateJavaScriptSyntax(unit.name, path.join(unitDir, 'unit.config.js'));
+  validateJavaScriptSyntax(unit.name, path.join(unitDir, 'unit.messages.js'));
+  validateJavaScriptSyntax(unit.name, path.join(unitDir, 'unit.runtime.js'));
 
   try {
     const cfg = loadNormalizedConfig(configPath);

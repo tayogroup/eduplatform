@@ -51,8 +51,14 @@ function normalizePrefix(value) {
   return String(value || '').trim().replace(/^\/+|\/+$/g, '');
 }
 
+const DEPLOY_TARGET_PREFIXES = {
+  integration: 'pre_quraan_integration',
+  staging: 'pre_quraan_staging',
+  production: 'pre_quraan',
+};
+
 function defaultPrefixForTarget(target) {
-  return target === 'staging' ? 'pre_quraan_staging' : 'pre_quraan';
+  return DEPLOY_TARGET_PREFIXES[target] || '';
 }
 
 function envPrefixForTarget(target) {
@@ -66,6 +72,10 @@ const endpoint = (process.env.BUNNY_STORAGE_ENDPOINT || 'https://storage.bunnycd
 const configuredTarget = getOption('target') || process.env.BUNNY_DEPLOY_TARGET;
 const target = String(configuredTarget || 'production').toLowerCase();
 const dryRun = Boolean(getOption('dry-run') || process.env.BUNNY_DEPLOY_DRY_RUN === '1');
+const includePatterns = String(getOption('include') || process.env.BUNNY_DEPLOY_INCLUDE || '')
+  .split(',')
+  .map((value) => value.trim().replace(/\\/g, '/'))
+  .filter(Boolean);
 const remotePrefix = normalizePrefix(
   getOption('base-path') ||
   getOption('remote-prefix') ||
@@ -96,6 +106,18 @@ function walk(dir) {
   }
 
   return files;
+}
+
+function matchesInclude(relativePath) {
+  if (!includePatterns.length) return true;
+
+  const normalized = relativePath.replace(/\\/g, '/');
+  return includePatterns.some((pattern) => {
+    if (pattern.endsWith('/')) {
+      return normalized.startsWith(pattern);
+    }
+    return normalized === pattern || normalized.startsWith(`${pattern}/`);
+  });
 }
 
 function contentType(filePath) {
@@ -157,16 +179,17 @@ function readBuildMetadata() {
 }
 
 function validateTarget() {
-  if (!['staging', 'production'].includes(target)) {
-    fail(`Invalid Bunny deploy target "${target}". Use staging or production.`);
+  const validTargets = Object.keys(DEPLOY_TARGET_PREFIXES);
+  if (!validTargets.includes(target)) {
+    fail(`Invalid Bunny deploy target "${target}". Use ${validTargets.join(', ')}.`);
   }
 
   if (!remotePrefix) {
     fail('Missing Bunny deploy base path. Set BUNNY_DEPLOY_BASE_PATH or BUNNY_REMOTE_PREFIX.');
   }
 
-  if (target === 'staging' && remotePrefix === defaultPrefixForTarget('production')) {
-    fail('Refusing staging deploy to the production path "pre_quraan". Use pre_quraan_staging or an explicit staging path.');
+  if (target !== 'production' && remotePrefix === defaultPrefixForTarget('production')) {
+    fail(`Refusing ${target} deploy to the production path "pre_quraan". Use the ${target} deploy path or an explicit non-production path.`);
   }
 
   const metadata = readBuildMetadata();
@@ -209,7 +232,10 @@ async function main() {
   if (!accessKey) fail('Missing BUNNY_STORAGE_ACCESS_KEY.');
   if (!fs.existsSync(distRoot)) fail(`Missing Bunny output folder: ${distRoot}`);
 
-  const files = walk(distRoot);
+  const files = walk(distRoot).filter((file) => {
+    const relativePath = path.relative(distRoot, file).split(path.sep).join('/');
+    return matchesInclude(relativePath);
+  });
   console.log(`${dryRun ? 'Dry run: would upload' : 'Uploading'} ${files.length} files to ${endpoint}/${storageZone}/${remotePrefix}/`);
 
   if (dryRun) {

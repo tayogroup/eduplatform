@@ -29,6 +29,7 @@ const publicBasePath = normalizeBasePath(getOption('base-path'));
 const publicBasePathNoSlash = publicBasePath.replace(/\/$/, '');
 const remotePrefix = publicBasePath.replace(/^\/+|\/+$/g, '');
 const rewriteTextExtensions = new Set(['.css', '.html', '.js', '.json']);
+const alphabetReleaseKey = 'alphabet-rules-skipfix-20260615e';
 
 if (unitKey === 'all') {
   const units = fs.readdirSync(srcUnitsDir, { withFileTypes: true })
@@ -72,7 +73,9 @@ const distUnitStyleDir = path.join(distUnitDir, 'css');
 const distUnitScriptDir = path.join(distUnitDir, 'js');
 const srcSharedStyleDir = path.join(root, 'src', 'shared', 'css');
 const srcSharedScriptDir = path.join(root, 'src', 'shared', 'js');
+const srcCompatScriptDir = path.join(root, 'src', 'scripts');
 const srcMediaDir = path.join(root, 'src', 'media');
+const srcTestingLinksPath = path.join(root, 'src', 'testing-links.html');
 const srcRuntimeDir = path.join(srcSharedScriptDir, 'runtime');
 const runtimeBundlePath = path.join(srcRuntimeDir, 'runtime.bundle.js');
 
@@ -150,9 +153,18 @@ if (!fs.existsSync(runtimeBundlePath)) {
 
 cleanDir(distUnitDir);
 cleanDir(distAppShellDir);
-cleanDir(distCompatScriptDir);
-cleanDir(distSharedStyleDir);
-cleanDir(distSharedScriptDir);
+if (unitKey === 'alphabet') {
+  cleanDir(distCompatScriptDir);
+} else {
+  ensureDir(distCompatScriptDir);
+}
+if (unitKey === 'alphabet') {
+  cleanDir(distSharedStyleDir);
+  cleanDir(distSharedScriptDir);
+} else {
+  ensureDir(distSharedStyleDir);
+  ensureDir(distSharedScriptDir);
+}
 cleanDir(distUnitStyleDir);
 cleanDir(distUnitScriptDir);
 fs.rmSync(path.join(distRoot, 'styles', 'locked'), { recursive: true, force: true });
@@ -166,7 +178,11 @@ fs.rmSync(path.join(distRoot, 'scripts', 'js'), { recursive: true, force: true }
 
 copyDir(srcSharedStyleDir, distSharedStyleDir);
 copyDir(srcSharedScriptDir, distSharedScriptDir);
+copyDir(srcCompatScriptDir, distCompatScriptDir);
 copyDir(srcMediaDir, distRoot);
+if (fs.existsSync(srcTestingLinksPath)) {
+  copyFile(srcTestingLinksPath, path.join(distRoot, 'testing-links.html'));
+}
 copyDir(srcAppShellDir, distAppShellDir);
 const appShellIndex = path.join(distAppShellDir, 'index.html');
 if (fs.existsSync(appShellIndex)) {
@@ -183,21 +199,69 @@ if (fs.existsSync(path.join(srcUnitDir, 'unit.messages.js'))) {
 }
 copyFile(path.join(srcUnitDir, 'unit.runtime.js'), path.join(distUnitScriptDir, 'unit.runtime.js'));
 
+if (unitKey === 'alphabet') {
+  copyFile(path.join(srcUnitDir, 'unit.css'), path.join(distUnitStyleDir, `unit.${alphabetReleaseKey}.css`));
+  copyFile(path.join(srcUnitDir, 'unit.config.js'), path.join(distUnitScriptDir, `unit.config.${alphabetReleaseKey}.js`));
+  if (fs.existsSync(path.join(srcUnitDir, 'unit.messages.js'))) {
+    copyFile(path.join(srcUnitDir, 'unit.messages.js'), path.join(distUnitScriptDir, `unit.messages.${alphabetReleaseKey}.js`));
+  }
+  copyFile(path.join(srcUnitDir, 'unit.runtime.js'), path.join(distUnitScriptDir, `unit.runtime.${alphabetReleaseKey}.js`));
+  copyFile(runtimeBundlePath, path.join(distSharedScriptDir, 'runtime', `runtime.bundle.${alphabetReleaseKey}.js`));
+  copyFile(
+    path.join(srcSharedScriptDir, 'core-attention.js'),
+    path.join(distSharedScriptDir, `core-attention.${alphabetReleaseKey}.js`)
+  );
+  copyFile(
+    path.join(srcSharedScriptDir, 'core-focus-guard-adapter.js'),
+    path.join(distSharedScriptDir, `core-focus-guard-adapter.${alphabetReleaseKey}.js`)
+  );
+  copyFile(
+    path.join(srcSharedScriptDir, 'shared-lecture-cta-bridge.js'),
+    path.join(distSharedScriptDir, `shared-lecture-cta-bridge.${alphabetReleaseKey}.js`)
+  );
+  copyFile(
+    path.join(srcSharedScriptDir, 'shared-step-messaging.js'),
+    path.join(distSharedScriptDir, `shared-step-messaging.${alphabetReleaseKey}.js`)
+  );
+}
+
 let html = fs.readFileSync(indexPath, 'utf8');
 
 const unitScriptBase = `${publicBasePathNoSlash}/units/${unitKey}/js`;
 
 html = html
   .replace(/href="\.\/unit\.css"/g, `href="${publicBasePathNoSlash}/units/${unitKey}/css/unit.css"`)
-  .replace(/src="\.\/unit\.messages\.js"/g, `src="${unitScriptBase}/unit.messages.js"`)
-  .replace(/src="\.\/unit\.config\.js"/g, `src="${unitScriptBase}/unit.config.js"`)
-  .replace(/src="\.\/unit\.runtime\.js"/g, `src="${unitScriptBase}/unit.runtime.js"`)
+  .replace(/src="\.\/unit\.messages\.js([^"]*)"/g, `src="${unitScriptBase}/unit.messages.js$1"`)
+  .replace(/src="\.\/unit\.config\.js([^"]*)"/g, `src="${unitScriptBase}/unit.config.js$1"`)
+  .replace(/src="\.\/unit\.runtime\.js([^"]*)"/g, `src="${unitScriptBase}/unit.runtime.js$1"`)
   .replace(/src="\.\/patches\/([^"]+)"/g, `src="${publicBasePath}shared/js/patches/$1"`)
   .replace(/\/pre_quraan\/styles\/shared\//g, `${publicBasePath}shared/css/`)
   .replace(/\/pre_quraan\/scripts\/js\/shared\//g, `${publicBasePath}shared/js/`)
   .replace(/\/pre_quraan\//g, publicBasePath);
 
 fs.writeFileSync(path.join(distUnitDir, 'index.html'), html, 'utf8');
+
+if (unitKey === 'alphabet') {
+  const releaseHtml = html
+    .replace(
+      new RegExp(`${publicBasePathNoSlash.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/units/alphabet/css/unit\\.css`, 'g'),
+      `${publicBasePathNoSlash}/units/alphabet/css/unit.${alphabetReleaseKey}.css`
+    )
+    .replace(/\/units\/alphabet\/js\/unit\.messages\.js\?v=[^"]+/g, `/units/alphabet/js/unit.messages.${alphabetReleaseKey}.js`)
+    .replace(/\/units\/alphabet\/js\/unit\.config\.js\?v=[^"]+/g, `/units/alphabet/js/unit.config.${alphabetReleaseKey}.js`)
+    .replace(/\/units\/alphabet\/js\/unit\.runtime\.js\?v=[^"]+/g, `/units/alphabet/js/unit.runtime.${alphabetReleaseKey}.js`)
+    .replace(/\/shared\/js\/core-attention\.js/g, `/shared/js/core-attention.${alphabetReleaseKey}.js`)
+    .replace(/\/shared\/js\/core-focus-guard-adapter\.js\?v=[^"]+/g, `/shared/js/core-focus-guard-adapter.${alphabetReleaseKey}.js`)
+    .replace(/\/shared\/js\/runtime\/runtime\.bundle\.js\?v=[^"]+/g, `/shared/js/runtime/runtime.bundle.${alphabetReleaseKey}.js`)
+    .replace(/\/shared\/js\/shared-lecture-cta-bridge\.js\?v=[^"]+/g, `/shared/js/shared-lecture-cta-bridge.${alphabetReleaseKey}.js`)
+    .replace(/\/shared\/js\/shared-step-messaging\.js\?v=[^"]+/g, `/shared/js/shared-step-messaging.${alphabetReleaseKey}.js`);
+
+  fs.writeFileSync(
+    path.join(distCompatScriptDir, `alphabet_listen_${alphabetReleaseKey}.html`),
+    releaseHtml,
+    'utf8'
+  );
+}
 
 console.log(`Built ${unitKey} for Bunny output:`);
 console.log(`  public base path: ${publicBasePath}`);

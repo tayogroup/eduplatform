@@ -142,6 +142,45 @@ function getWsEndpoint() {
     return p.toString();
   }
 
+  function normalizeEnvironment(value) {
+    const v = String(value || '').trim().toLowerCase();
+    if (v === 'integration' || v === 'staging' || v === 'production') return v;
+    return '';
+  }
+
+  function rememberEnvironment(env) {
+    const normalized = normalizeEnvironment(env) || 'production';
+    try { window.__prequran_environment = normalized; } catch (_) {}
+    try { sessionStorage.setItem('pq_env', normalized); } catch (_) {}
+    return normalized;
+  }
+
+  function currentEnvironment() {
+    try {
+      const qs = new URLSearchParams(window.location.search || '');
+      const fromUrl = normalizeEnvironment(
+        qs.get('pq_env') ||
+        qs.get('env') ||
+        qs.get('pq_environment')
+      );
+      if (fromUrl) return rememberEnvironment(fromUrl);
+    } catch (_) {}
+    try {
+      const fromWindow = normalizeEnvironment(window.__prequran_environment);
+      if (fromWindow) return rememberEnvironment(fromWindow);
+    } catch (_) {}
+    try {
+      const stored = normalizeEnvironment(sessionStorage.getItem('pq_env'));
+      if (stored) return rememberEnvironment(stored);
+    } catch (_) {}
+    try {
+      const path = String(window.location.pathname || '');
+      if (path.indexOf('/pre_quraan_integration/') >= 0) return rememberEnvironment('integration');
+      if (path.indexOf('/pre_quraan_staging/') >= 0) return rememberEnvironment('staging');
+    } catch (_) {}
+    return rememberEnvironment('production');
+  }
+
   async function wsCall(params) {
     const endpoint = getWsEndpoint();
     try{
@@ -151,7 +190,7 @@ function getWsEndpoint() {
         __pqDiag('[PQManagedCore] WS endpoint:', endpoint, 'page origin:', window.location.origin);
       }
     }catch(_){}
-    const body = toFormBody(Object.assign({ moodlewsrestformat: "json" }, params || {}));
+    const body = toFormBody(Object.assign({ moodlewsrestformat: "json", pq_env: currentEnvironment() }, params || {}));
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
@@ -335,6 +374,7 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
     normalizeManagedPayload(payload, baseSteps) {
       // Capture managed flag if present
       this.setManagedFlagFromPayload(payload);
+      this.setLanguagePreferencesFromPayload(payload);
       const out = { raw: null, __serverHasProgress: false };
       let raw = null;
 
@@ -384,8 +424,13 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
         const q = new URLSearchParams(window.location.search);
         const ws = q.get('wstoken') || q.get('ws') || (sessionStorage.getItem('pq_ws_token') || '');
         const uid = q.get('uid') || (sessionStorage.getItem('pq_uid') || '');
+        const env = q.get('pq_env') || q.get('env') || q.get('pq_environment') || (sessionStorage.getItem('pq_env') || '');
+        const lang = q.get('pq_lang') || q.get('preferred_language') || q.get('language') || (sessionStorage.getItem('pq_preferred_language') || '');
+        const scope = q.get('pq_lang_scope') || q.get('language_scope') || q.get('translation_scope') || (sessionStorage.getItem('pq_language_scope') || '');
         if (!window.__prequran_ws_token && ws) window.__prequran_ws_token = ws;
         if (!window.__prequran_uid && uid) window.__prequran_uid = parseInt(uid, 10) || uid;
+        if (env) rememberEnvironment(env);
+        if (lang || scope) this.setLanguagePreferences(lang, scope);
       } catch (_) {}
     },
 
@@ -415,6 +460,7 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
 
         const data = await this.wsGet({ wsfunction, userid, wstoken });
         this.setManagedFlagFromPayload(data);
+        this.setLanguagePreferencesFromPayload(data);
         return (typeof this._managed_student === 'boolean') ? this._managed_student : null;
       } catch (_) {
         return null;
@@ -511,6 +557,35 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
           this._managed_student = payload.managed_student;
         }
       } catch (_) {}
+    },
+
+    setLanguagePreferences(language, scope) {
+      try {
+        if (window.PQL10n && typeof window.PQL10n.setPreferences === 'function') {
+          return window.PQL10n.setPreferences(language || '', scope || '');
+        }
+        const lang = String(language || '').trim().toLowerCase() || 'en';
+        const sc = String(scope || '').trim().toLowerCase() || 'both';
+        window.__prequran_preferred_language = lang;
+        window.__prequran_language_scope = sc;
+        try { sessionStorage.setItem('pq_preferred_language', lang); } catch (_) {}
+        try { sessionStorage.setItem('pq_language_scope', sc); } catch (_) {}
+        return { language: lang, scope: sc };
+      } catch (_) {
+        return null;
+      }
+    },
+
+    setLanguagePreferencesFromPayload(payload) {
+      try {
+        if (!payload || typeof payload !== 'object') return null;
+        const lang = payload.preferred_language || payload.language || payload.lang || '';
+        const scope = payload.language_scope || payload.translation_scope || payload.localization_scope || '';
+        if (!lang && !scope) return null;
+        return this.setLanguagePreferences(lang, scope);
+      } catch (_) {
+        return null;
+      }
     },
 
 
@@ -684,14 +759,39 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
 
       (baseSteps || []).forEach((s) => {
         const prev = raw && raw[s.id] ? raw[s.id] : {};
-        const passesReq = (typeof prev.passesRequired === 'number' && prev.passesRequired >= 1) ? prev.passesRequired : defPass;
-        const repeatPer = (typeof prev.repeatPerLetter === 'number' && prev.repeatPerLetter >= 1) ? prev.repeatPerLetter : defRep;
+        const prevPassesDone = Number(
+          prev.passesDone ??
+          prev.passes_done ??
+          0
+        );
+        const prevPassesRequired = Number(
+          prev.passesRequired ??
+          prev.passes_required ??
+          defPass
+        );
+        const prevRepeatPerLetter = Number(
+          prev.repeatPerLetter ??
+          prev.repeats_per_letter ??
+          prev.repeat_per_letter ??
+          prev.default_repeats_per_letter ??
+          defRep
+        );
+
+        const passesDone = Number.isFinite(prevPassesDone) && prevPassesDone >= 0
+          ? prevPassesDone
+          : 0;
+        const passesReq = Number.isFinite(prevPassesRequired) && prevPassesRequired >= 1
+          ? prevPassesRequired
+          : defPass;
+        const repeatPer = Number.isFinite(prevRepeatPerLetter) && prevRepeatPerLetter >= 1
+          ? prevRepeatPerLetter
+          : defRep;
 
         shaped[s.id] = {
-          passesDone:      (typeof prev.passesDone === 'number') ? prev.passesDone : 0,
+          passesDone:      passesDone,
           passesRequired:  passesReq,
           repeatPerLetter: repeatPer,
-          completed:       !!prev.completed,
+          completed:       !!(prev.completed || prev.step_status === 'completed' || passesDone >= passesReq),
         };
 
         if (!shaped.currentStepId && !shaped[s.id].completed) shaped.currentStepId = s.id;
@@ -838,6 +938,20 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
     let steps = Array.isArray(D.defaultSteps) ? D.defaultSteps.slice() : [];
     let progress = null; // shaped progress
     let rawProgress = null; // raw object returned from server (progress_json parsed)
+    let stepsSource = 'default';
+
+    function _usesGenericUnitState(wsfunction) {
+      const fn = String(wsfunction || '').trim();
+      return fn === 'local_prequran_get_unit_state' || fn === 'local_prequran_set_unit_state';
+    }
+
+    function _unitStateParams(wsfunction) {
+      if (!_usesGenericUnitState(wsfunction)) return {};
+      return {
+        lessonid: D.lessonid || '',
+        unitid: D.unitid || ''
+      };
+    }
 
     function _deriveFilterFromStepId(stepId){
       const id = String(stepId||'').toLowerCase();
@@ -891,6 +1005,12 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
       opts = opts || {};
       // For managed flows, auto-enable DB-only if tokens are present
       try { if (CORE.forceDbOnly && CORE.forceDbOnly()) CORE.setForceDbOnly(true); } catch(_){}
+      try {
+        if (typeof CORE.hydrateTokens === 'function') CORE.hydrateTokens();
+        if (D.wsGetFunction && typeof CORE.waitForTokens === 'function') {
+          await CORE.waitForTokens(2000);
+        }
+      } catch (_) {}
 
       // One-time: clear caches if user changed (prevents ghost UI)
       try{
@@ -903,12 +1023,15 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
 
       let payload = null;
       if (D.wsGetFunction && typeof CORE.wsGet === 'function') {
-        payload = await CORE.wsGet({
+        payload = await CORE.wsGet(Object.assign({
           wsfunction: D.wsGetFunction,
           userid: (window.__prequran_uid != null) ? window.__prequran_uid : (opts.userid || ''),
           wstoken: window.__prequran_ws_token || (opts.wstoken || '')
-        });
+        }, _unitStateParams(D.wsGetFunction)));
       }
+      try {
+        window.__PQ_LAST_MANAGED_PAYLOAD__ = payload || null;
+      } catch (_) {}
 
       // Normalize steps + progress
       let normalized = null;
@@ -923,12 +1046,34 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
       if (normalized && Array.isArray(normalized.steps) && normalized.steps.length) {
         // Server steps win
         steps = _coerceSteps(normalized.steps);
+        stepsSource = 'moodle';
       } else {
         // Fallback to local definition
         steps = _coerceSteps(D.defaultSteps);
+        stepsSource = 'default';
       }
+      try {
+        window.__PQ_LAST_MANAGED_SOURCE__ = stepsSource;
+        window.__PQ_LAST_MANAGED_STEPS__ = steps.slice();
+      } catch (_) {}
 
       rawProgress = (normalized && normalized.raw && typeof normalized.raw === 'object') ? normalized.raw : {};
+      try {
+        const dbOnlyNoServerProgress = !!(
+          CORE.forceDbOnly &&
+          CORE.forceDbOnly() &&
+          !(rawProgress && rawProgress.__serverHasProgress)
+        );
+
+        if (dbOnlyNoServerProgress) {
+          // PQ_DB_ONLY_NO_CACHE_MERGE: Moodle-managed launches with no DB progress
+          // must render a fresh unit, never resurrect old browser progress.
+          (Array.isArray(opts.clearKeys) ? opts.clearKeys : []).forEach((key) => {
+            try { localStorage.removeItem(String(key)); } catch (_) {}
+          });
+          try { window.__PQ_DB_ONLY_NO_CACHE_MERGE__ = true; } catch (_) {}
+        }
+      } catch (_) {}
       // Ensure shape with server passes/repeats already merged in normalizeManagedPayload
       if (typeof CORE.ensureProgressShape === 'function') {
         progress = CORE.ensureProgressShape(rawProgress, steps, { passesRequired:1, repeatPerLetter:1, currentStepId:(steps[0] ? steps[0].id : 'lecture') });
@@ -952,7 +1097,7 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
     }
 
     function getState(){
-      return { steps: steps.slice(), progress, rawProgress, managed: !!(CORE.isManagedStudent && CORE.isManagedStudent()), dbOnly: !!(CORE.forceDbOnly && CORE.forceDbOnly()) };
+      return { steps: steps.slice(), progress, rawProgress, stepsSource, managed: !!(CORE.isManagedStudent && CORE.isManagedStudent()), dbOnly: !!(CORE.forceDbOnly && CORE.forceDbOnly()) };
     }
 
     function getCurrentStep(){
@@ -966,12 +1111,12 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
     async function persist(){
       if (!D.wsSetFunction || !progress) return;
       if (typeof CORE.wsSet !== 'function') return;
-      await CORE.wsSet({
+      await CORE.wsSet(Object.assign({
         wsfunction: D.wsSetFunction,
         userid: window.__prequran_uid,
         wstoken: window.__prequran_ws_token,
         progressObj: progress
-      });
+      }, _unitStateParams(D.wsSetFunction)));
     }
 
     async function completeStep(stepId){
@@ -1005,11 +1150,14 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
     async function refresh(opts){
       // Re-hydrate from server truth (DB-only safe). Keeps local letterPlays intact.
       opts = opts || {};
-      const payload = await CORE.wsGet({
+      const payload = await CORE.wsGet(Object.assign({
         wsfunction: D.wsGetFunction,
         userid: (window.__prequran_uid != null) ? window.__prequran_uid : (opts.userid || ''),
         wstoken: window.__prequran_ws_token || (opts.wstoken || '')
-      });
+      }, _unitStateParams(D.wsGetFunction)));
+      try {
+        window.__PQ_LAST_MANAGED_PAYLOAD__ = payload || null;
+      } catch (_) {}
       let normalized = null;
       if (payload) {
         if (typeof CORE.normalizeManagedPayloadFlexible === 'function') normalized = CORE.normalizeManagedPayloadFlexible(payload);
@@ -1017,9 +1165,15 @@ pqSetDbIndicator("DB: Saved ✓", "#c8f7d0");
       }
       if (normalized && Array.isArray(normalized.steps) && normalized.steps.length) {
         steps = _coerceSteps(normalized.steps);
+        stepsSource = 'moodle';
       } else {
         steps = _coerceSteps(D.defaultSteps);
+        stepsSource = 'default';
       }
+      try {
+        window.__PQ_LAST_MANAGED_SOURCE__ = stepsSource;
+        window.__PQ_LAST_MANAGED_STEPS__ = steps.slice();
+      } catch (_) {}
       rawProgress = (normalized && normalized.raw && typeof normalized.raw === 'object') ? normalized.raw : {};
       progress = CORE.ensureProgressShape ? CORE.ensureProgressShape(rawProgress, steps, { passesRequired:1, repeatPerLetter:1, currentStepId:(steps[0]?steps[0].id:'lecture') }) : progress;
       _advance();

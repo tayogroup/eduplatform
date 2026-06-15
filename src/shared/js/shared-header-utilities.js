@@ -1,12 +1,12 @@
-/* pq_ui_header_utilities_v1.0.13_CLEAN.js
-   Production: Inbox badge + toast.
+/* pq_ui_header_utilities_v1.0.15_CLEAN.js
+   Production: Communications inbox badge + toast.
    - Badge shows exact unread count
    - Toast fires only when unread count increases
-   - Clicking "User Inbox" calls mark_seen and opens inbox
+   - Clicking "Messages" opens the new communications inbox
 */
 
 (function () {
-  const __PQ_HEADER_UTILS_VERSION = 'v1.0.14_SAFE';
+  const __PQ_HEADER_UTILS_VERSION = 'v1.0.15_COMM_INBOX';
   let __pqHU_inited = false;
   let __pqHU_visBound = false;
 
@@ -17,13 +17,13 @@
     styleId: 'pqHeaderUtilitiesStyle',
     toastId: 'pqInboxToast',
 
-    inboxHref: 'https://quraan.academy/local/quraan_contact/inbox.php',
-    label: 'User Inbox',
+    inboxHref: 'https://quraan.academy/local/hubredirect/communications.php',
+    label: 'Messages',
+    labelAr: 'الرسائل',
     icon: '📩',
 
     wsEndpointDefault: 'https://quraan.academy/webservice/rest/server.php',
-    wsGetUnread: 'local_quraan_contact_get_inbox_unread_count',
-    wsMarkSeen: 'local_quraan_contact_mark_inbox_seen',
+    wsListThreads: 'local_prequran_comm_list_threads',
 
     pollMsVisible: 30000,
     pollMsHidden: 120000,
@@ -75,21 +75,10 @@
     const row = ensurePillRow();
     if (!row) return;
 
-    function findWorkingInbox() {
-      const els = Array.from(document.querySelectorAll('a,button'));
-      for (const el of els) {
-        if (!el) continue;
-        if (el.id === 'pqUserInboxBtn') continue;
-        const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        if (t === 'user inbox') return el;
-      }
-      return null;
-    }
-
     let pill = document.getElementById('pqUserInboxBtn');
     if (!pill) {
       pill = document.createElement('a');
-      pill.href = CFG.inboxHref;
+      pill.href = buildInboxHref();
       pill.className = 'pq-pill pq-pill--about';
       pill.id = 'pqUserInboxBtn';
       pill.style.textDecoration = 'none';
@@ -102,7 +91,8 @@
       badge.style.right = '-6px';
       badge.style.display = 'none';
 
-      pill.innerHTML = `<span class="pq-pill__text">${CFG.label}</span><span class="pq-pill__icon">${CFG.icon}</span>`;
+      pill.innerHTML = `<span class="pq-pill__text pq-bilingual-control"><span class="pq-bilingual-control__en">${CFG.label}</span><span class="pq-bilingual-control__ar" dir="rtl">${CFG.labelAr}</span></span><span class="pq-pill__icon">${CFG.icon}</span>`;
+      pill.setAttribute('aria-label', CFG.label + ' - ' + CFG.labelAr);
       pill.appendChild(badge);
       pill.__badge = badge;
 
@@ -110,23 +100,21 @@
         e.preventDefault();
 
         try {
-          const uid = getUid();
-          const tok = getTok();
-          if (uid && tok) markSeenSafe();
+          pill.href = buildInboxHref();
         } catch (_e) {}
 
-        const w = findWorkingInbox();
-        if (w) {
-          if (w.tagName === 'A' && w.href) {
-            try { window.top.location.href = w.href; } catch (_) { window.open(w.href, '_blank', 'noopener'); }
-            return;
-          }
-          try { w.click(); return; } catch (_) {}
-        }
-
-        try { window.top.location.href = CFG.inboxHref; } catch (_) { window.open(CFG.inboxHref, '_blank', 'noopener'); }
+        try { window.top.location.href = pill.href; } catch (_) { window.open(pill.href, '_blank', 'noopener'); }
       });
     }
+
+    try {
+      if (!pill.querySelector('.pq-bilingual-control__ar')) {
+        pill.innerHTML = `<span class="pq-pill__text pq-bilingual-control"><span class="pq-bilingual-control__en">${CFG.label}</span><span class="pq-bilingual-control__ar" dir="rtl">${CFG.labelAr}</span></span><span class="pq-pill__icon">${CFG.icon}</span>`;
+        if (pill.__badge) pill.appendChild(pill.__badge);
+      }
+      pill.setAttribute('aria-label', CFG.label + ' - ' + CFG.labelAr);
+      pill.href = buildInboxHref();
+    } catch (_e) {}
 
     if (!row.contains(pill)) row.insertBefore(pill, row.firstChild);
 
@@ -141,6 +129,60 @@
     } catch (_e) {}
   }
 
+  function accountLabelFor(type, label) {
+    if (label && String(label).trim() !== '') return String(label).trim();
+    if (type === 'student') return 'Student ID';
+    if (type === 'teacher') return 'Teacher ID';
+    if (type === 'parent') return 'Parent ID';
+    return 'Account ID';
+  }
+
+  function getAccountIdentity() {
+    let id = '';
+    let type = '';
+    let label = '';
+    try {
+      id = String(window.__prequran_account_id || qp('pq_account_id') || sessionStorage.getItem('pq_account_id') || '').trim();
+      type = String(window.__prequran_account_type || qp('pq_account_type') || sessionStorage.getItem('pq_account_type') || '').trim();
+      label = String(window.__prequran_account_label || qp('pq_account_label') || sessionStorage.getItem('pq_account_label') || '').trim();
+      if (id) {
+        sessionStorage.setItem('pq_account_id', id);
+        sessionStorage.setItem('pq_account_type', type);
+        sessionStorage.setItem('pq_account_label', accountLabelFor(type, label));
+      }
+    } catch (_e) {}
+    if (!id) return null;
+    return { id: id, type: type, label: accountLabelFor(type, label) };
+  }
+
+  function pqInstallAccountIdPill() {
+    const row = document.querySelector('.pq-legacy-about-row') || document.querySelector('.pq-pill-row');
+    const identity = getAccountIdentity();
+    if (!row || !identity) return;
+
+    let pill = document.getElementById('pqAccountIdPill');
+    if (!pill) {
+      pill = document.createElement('div');
+      pill.id = 'pqAccountIdPill';
+      pill.className = 'pq-account-id-pill';
+      pill.setAttribute('aria-live', 'polite');
+    }
+    pill.textContent = identity.id;
+    if (!row.contains(pill)) row.appendChild(pill);
+  }
+
+  function pqRetryAccountIdPill() {
+    let tries = 0;
+    const maxTries = 20;
+    const timer = setInterval(function () {
+      tries++;
+      try { pqInstallAccountIdPill(); } catch (_e) {}
+      if (document.getElementById('pqAccountIdPill') || tries >= maxTries) {
+        clearInterval(timer);
+      }
+    }, 250);
+  }
+
   function qp(name) {
     try { return new URL(location.href).searchParams.get(name) || ''; } catch (e) { return ''; }
   }
@@ -150,6 +192,87 @@
     const uid = qp('uid');
     if (uid) window.__prequran_uid = uid;
     return uid || '';
+  }
+
+  function getStudentId() {
+    const candidates = [
+      window.__prequran_studentid,
+      window.__prequran_childid,
+      qp('studentid'),
+      qp('childid'),
+      qp('monitor_studentid')
+    ];
+    try {
+      const stored = sessionStorage.getItem('pq_studentid') || sessionStorage.getItem('pq_childid');
+      if (stored) candidates.push(stored);
+    } catch (_e) {}
+    try {
+      if (window.PQ && window.PQ.config && window.PQ.config.moodle) {
+        candidates.push(window.PQ.config.moodle.studentid, window.PQ.config.moodle.childid);
+      }
+    } catch (_e) {}
+    for (const value of candidates) {
+      const parsed = parseInt(value, 10);
+      if (parsed > 0) return parsed;
+    }
+    return 0;
+  }
+
+  function getCohortId() {
+    const candidates = [
+      window.__prequran_cohortid,
+      window.__prequran_cohort_id,
+      qp('cohortid'),
+      qp('cohort_id'),
+      qp('cid')
+    ];
+    try {
+      const stored = sessionStorage.getItem('pq_cohortid') || sessionStorage.getItem('pq_cohort_id');
+      if (stored) candidates.push(stored);
+    } catch (_e) {}
+    try {
+      if (window.PQ && window.PQ.config && window.PQ.config.moodle) {
+        candidates.push(window.PQ.config.moodle.cohortid, window.PQ.config.moodle.cohortId);
+      }
+    } catch (_e) {}
+    for (const value of candidates) {
+      const parsed = parseInt(value, 10);
+      if (parsed > 0) return parsed;
+    }
+    return 0;
+  }
+
+  function isStagingAssetPath() {
+    try {
+      if (String(window.location.pathname || '').indexOf('/pre_quraan_staging/') !== -1) return true;
+      const scripts = Array.from(document.scripts || []);
+      return scripts.some(function (script) {
+        return String(script.src || '').indexOf('/pre_quraan_staging/') !== -1;
+      });
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  function buildInboxHref() {
+    const url = new URL(CFG.inboxHref, window.location.origin);
+    url.searchParams.set('opencomm', 'messages');
+
+    const studentid = getStudentId();
+    if (studentid > 0) {
+      url.searchParams.set('studentid', String(studentid));
+    }
+
+    const cohortid = getCohortId();
+    if (cohortid > 0) {
+      url.searchParams.set('cohortid', String(cohortid));
+    }
+
+    if (isStagingAssetPath()) {
+      url.searchParams.set('assetpath', 'staging');
+    }
+
+    return url.toString();
   }
 
   function getTok() {
@@ -207,11 +330,26 @@
 
     __pqHU_unreadInFlight = true;
 
-    return wsCall(CFG.wsGetUnread, { userid: uid }).then(function (j) {
-      if (!j) return null;
-      if (j.exception) return null;
-      if (j.ok !== true) return null;
-      return (typeof j.count === 'number') ? j.count : null;
+    const baseParams = {
+      cohortid: getCohortId(),
+      studentid: getStudentId(),
+      limit: 50
+    };
+
+    return Promise.all([
+      wsCall(CFG.wsListThreads, Object.assign({}, baseParams, { type: 'parent_teacher' })),
+      wsCall(CFG.wsListThreads, Object.assign({}, baseParams, { type: 'announcement' }))
+    ]).then(function (results) {
+      let total = 0;
+      let sawResult = false;
+      results.forEach(function (j) {
+        if (!j || j.exception || j.ok !== true || !Array.isArray(j.threads)) return;
+        sawResult = true;
+        total += j.threads.reduce(function (sum, thread) {
+          return sum + Math.max(0, parseInt(thread && thread.unreadcount, 10) || 0);
+        }, 0);
+      });
+      return sawResult ? total : null;
     }).catch(function () {
       __pqHU_lastFailureAt = Date.now();
       return null;
@@ -233,10 +371,7 @@
 
       __pqHU_markSeenInFlight = true;
 
-      return wsCall(CFG.wsMarkSeen, { userid: uid }).catch(function () {
-        __pqHU_lastFailureAt = Date.now();
-        return null;
-      }).finally(function () {
+      return Promise.resolve(null).finally(function () {
         __pqHU_markSeenInFlight = false;
       });
     } catch (_e) {
@@ -331,7 +466,7 @@
     t = document.createElement('div');
     t.className = 'pq-helpbar__toast';
     t.id = CFG.toastId;
-    t.innerHTML = `📩 New message arrived. <a href="${CFG.inboxHref}" target="_blank" rel="noopener noreferrer">Open User Inbox</a>`;
+    t.innerHTML = `📩 New message arrived. <a href="${buildInboxHref()}" target="_blank" rel="noopener noreferrer">Open messages</a>`;
     document.body.appendChild(t);
     return t;
   }
@@ -347,7 +482,7 @@
 
     const a = document.createElement('a');
     a.className = 'pq-helpbar__btn';
-    a.href = CFG.inboxHref;
+    a.href = buildInboxHref();
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
     a.innerHTML = `<span>${CFG.label}</span><span style="font-size:16px">${CFG.icon}</span>`;
@@ -357,10 +492,7 @@
     a.appendChild(badge);
 
     a.addEventListener('click', function () {
-      const uid = getUid();
-      const tok = getTok();
-      if (!uid || !tok) return;
-      markSeenSafe();
+      try { a.href = buildInboxHref(); } catch (_e) {}
     });
 
     bar.appendChild(a);
@@ -402,6 +534,11 @@
     const now = Date.now();
     if (now - lastToastAt < 2000) return;
     lastToastAt = now;
+
+    try {
+      const link = t.querySelector('a');
+      if (link) link.href = buildInboxHref();
+    } catch (_e) {}
 
     t.style.display = 'block';
     clearTimeout(t.__hideT);
@@ -451,6 +588,8 @@
 
     try { pqKillLegacyAboutTopStrip(); } catch (_e) {}
     try { pqInstallInboxPill(); } catch (_e) {}
+    try { pqInstallAccountIdPill(); } catch (_e) {}
+    try { pqRetryAccountIdPill(); } catch (_e) {}
 
     try { ensureStyles(); } catch (_e) {}
     try { if (!document.getElementById('pqUserInboxBtn')) ensureBar(); } catch (_e) {}
@@ -474,6 +613,10 @@
 
   document.addEventListener('DOMContentLoaded', pqApplyHeaderUtilitiesNow);
   window.addEventListener('pageshow', pqApplyHeaderUtilitiesNow);
+  window.addEventListener('pq:account-identity-ready', function () {
+    pqApplyHeaderUtilitiesNow();
+    pqRetryAccountIdPill();
+  });
 
   try {
     window.addEventListener('pagehide', function () {

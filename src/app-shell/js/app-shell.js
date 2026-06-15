@@ -2,6 +2,7 @@
 
 import {
   I18N,
+  MOODLE_ORIGIN,
   LINK_MAP,
   ITEMS,
   LAST_CAT_KEY,
@@ -22,7 +23,7 @@ import {
   VIEW_MADD,
   VIEW_SAKOON,
   VIEW_ENDING
-} from './app-config.js?v=env-routing-20260519';
+} from './app-config.js?v=quraantest-origin-20260609a';
 
 import {
   MUQATTAAT_ITEMS,
@@ -56,15 +57,98 @@ const harakatRecordModal = document.getElementById('harakatRecordModal');
 const progressModal      = document.getElementById('progressModal');
 const settingsModal      = document.getElementById('settingsModal');
 const mobileInfoModal    = document.getElementById('mobileInfoModal');
+const btnMoodleLogin     = document.getElementById('btnMoodleLogin');
+const btnMoodleLogout    = document.getElementById('btnMoodleLogout');
+
+function currentPreQuranEnvironment() {
+  const path = String(window.location.pathname || '');
+  if (path.indexOf('/pre_quraan_integration/') === 0) return 'integration';
+  if (path.indexOf('/pre_quraan_staging/') === 0) return 'staging';
+  return 'production';
+}
+
+function wireMoodleAuthLinks() {
+  const env = currentPreQuranEnvironment();
+  if (btnMoodleLogin) {
+    const url = new URL(`${MOODLE_ORIGIN}/local/hubredirect/issue.php`);
+    if (env !== 'production') {
+      url.searchParams.set('pq_env', env);
+    }
+    btnMoodleLogin.href = url.toString();
+  }
+  if (btnMoodleLogout) {
+    btnMoodleLogout.href = `${MOODLE_ORIGIN}/login/logout.php`;
+  }
+}
+
+wireMoodleAuthLinks();
+
+function currentStaticBasePath() {
+  const path = String(window.location.pathname || '');
+  if (path.indexOf('/pre_quraan_integration/') === 0) return '/pre_quraan_integration/';
+  if (path.indexOf('/pre_quraan_staging/') === 0) return '/pre_quraan_staging/';
+  return '/pre_quraan/';
+}
+
+function arabicLetterRacewayUrl() {
+  return currentStaticBasePath() + 'scripts/arabic_letter_raceway_20260614a.html';
+}
+
+function alphabetGameLinks() {
+  const base = currentStaticBasePath();
+  return [
+    ['Sound Sniper', `${base}scripts/sound_sniper_20260614j.html`],
+    ['Know Your Dots', `${base}scripts/know_your_dots_20260612a.html`],
+    ['Transliteration Flashcard', `${base}scripts/transliteration_flashcards_20260612a.html`],
+    ['Letters Sort Order', `${base}scripts/letters_order_20260612a.html`],
+    ['Letter Conveyor Belt', `${base}scripts/letter_conveyor_belt.html`],
+    ['Letter Raceway', arabicLetterRacewayUrl()],
+    ['Sound and Letter Clue Detective', `${base}scripts/articulation_sound_letter_clues_20260613a.html`],
+    ['Articulation Maze', `${base}scripts/articulation_maze_20260615a.html`],
+  ];
+}
 
 /* ===== Dynamic games submenu content (Alphabet / Harakat / Joint) ===== */
 
 const gamesTitleEl = gamesModal ? document.getElementById('gamesTitle') : null;
 const gamesLinksEl = gamesModal ? gamesModal.querySelector('.games-links') : null;
 
-// Preserve original Alphabet Dots content as default
-const DEFAULT_GAMES_TITLE = gamesTitleEl ? gamesTitleEl.textContent : '';
+// Preserve original Alphabet games content as default
+const DEFAULT_GAMES_TITLE = 'Alphabet Games';
 const DEFAULT_GAMES_HTML  = gamesLinksEl ? gamesLinksEl.innerHTML : '';
+
+function wireDefaultGameLinks(root = document) {
+  if (!root) return;
+  if (root.classList && root.classList.contains('games-links')) {
+    root.innerHTML = '';
+    alphabetGameLinks().forEach(([label, href]) => {
+      const link = document.createElement('a');
+      link.className = 'btn-link';
+      link.href = href;
+      link.textContent = label;
+      root.appendChild(link);
+    });
+    return;
+  }
+  let racewayLink = root.querySelector('a[href*="arabic_letter_raceway_"]');
+  if (!racewayLink && root.classList && root.classList.contains('games-links')) {
+    racewayLink = document.createElement('a');
+    racewayLink.className = 'btn-link';
+    racewayLink.textContent = 'Letter Raceway';
+    const articulationLink = root.querySelector('a[href*="articulation_maze_"]');
+    if (articulationLink) {
+      root.insertBefore(racewayLink, articulationLink);
+    } else {
+      root.appendChild(racewayLink);
+    }
+  }
+  if (racewayLink) {
+    racewayLink.href = arabicLetterRacewayUrl();
+    racewayLink.textContent = 'Letter Raceway';
+  }
+}
+
+wireDefaultGameLinks(gamesLinksEl || document);
 
 // Config for Harakat Practice + Joint Practice
 const GAMES_CONFIG = {
@@ -72,11 +156,11 @@ const GAMES_CONFIG = {
     title: "Harakat Practice",
     links: [
       {
-        href: "https://ehelacademy.b-cdn.net/pre_quraan/scripts/harakat_letter_conveyor_belt.html",
+        href: "/pre_quraan/scripts/harakat_letter_conveyor_belt_20260612a.html",
         label: "Harakat Conveyor Belt"
       },
       {
-        href: "https://ehelacademy.b-cdn.net/pre_quraan/scripts/harakat_sound_sniper6.html",
+        href: "/pre_quraan/scripts/harakat_sound_sniper_20260612a.html",
         label: "Harakat Sound Sniper"
       }
     ]
@@ -117,10 +201,11 @@ function setGamesMenuContent(sourceTitle){
 
   const cfg = GAMES_CONFIG[sourceTitle];
 
-  // If no special config (e.g. Alphabet Practice), restore default Alphabet Dots links
+  // If no special config (e.g. Alphabet Practice), restore default Alphabet games links
   if (!cfg) {
     gamesTitleEl.textContent = DEFAULT_GAMES_TITLE;
     gamesLinksEl.innerHTML   = DEFAULT_GAMES_HTML;
+    wireDefaultGameLinks(gamesLinksEl);
     return;
   }
 
@@ -139,13 +224,34 @@ function setGamesMenuContent(sourceTitle){
 // New view + folder item for Extras → Pillars of Islam → 5 pillars
 // Second level menus
 const VIEW_PILLARS_MENU = 'pillars_menu';
+const VIEW_EXTRAS_DETAIL = 'extras_detail';
 const PILLARS_FOLDER_ITEM = { cat: 'Extras', t: 'Pillars of Islam', tag: '' };
 const PILLARS_OF_FAITH_FOLDER_ITEM = { cat: 'Extras', t: 'Pillars of Faith', tag: '' };
 const NAMES_ALLAH_FOLDER_ITEM  = { cat: 'Extras', t: 'Names of Allah', tag: '' };
-const COMMON_QURAN_FOLDER_ITEM = { cat: 'Extras', t: 'Common Quran',  tag: '' };
+const COMMON_QURAN_FOLDER_ITEM = { cat: 'Extras', t: 'Common Quraan', tag: '' };
 const MANNERS_AKHLAQ_FOLDER_ITEM = { cat: 'Extras', t: 'Manners Akhlaq',  tag: '' };
 const QURAN_MEMORIZATION_FOLDER_ITEM = { cat: 'Extras', t: 'Quran Memorization',  tag: '' };
 const INTRO_TO_ARABIC_FOLDER_ITEM    = { cat: 'Extras', t: 'Intro to Arabic',     tag: '' };
+const EXTRAS_DETAIL_FOLDERS = new Set([
+  'Pillars of Islam',
+  'Pillars of Faith',
+  'Names of Allah',
+  'Common Quraan',
+  'Common Quran',
+  'Manners Akhlaq'
+]);
+let activeExtrasFolder = '';
+
+function makeExtrasDetailItems(title){
+  const normalizedTitle = title === 'Common Quran' ? 'Common Quraan' : title;
+  return ['Learn', 'Practice', 'Quiz'].map(kind => ({
+    cat: 'extras',
+    t: `${normalizedTitle} ${kind}`,
+    tag: '',
+    tint: 'teal',
+    hideTag: true
+  }));
+}
 
 /* ===== Section header copy ===== */
 
@@ -201,7 +307,8 @@ function updateBackButton() {
     activeView === VIEW_SAKOON ||
     activeView === VIEW_ENDING ||
     activeView === VIEW_TASHDEED ||
-    activeView === VIEW_PILLARS_MENU
+    activeView === VIEW_PILLARS_MENU ||
+    activeView === VIEW_EXTRAS_DETAIL
   ) {
     targetView = VIEW_ROOT;
     label = (activeCat === 'rules')
@@ -279,6 +386,7 @@ function iconFor(cat){
 /* ===== Content-level unit art (icons + stickers) ===== */
 function unitKeyFromTitle(title){
   const t = (title || '').toLowerCase();
+  if (t.includes('learn')) return 'listen';
   if (t.includes('listen')) return 'listen';
   if (t.includes('watch')) return 'watch';
   if (t.includes('match')) return 'match';
@@ -487,19 +595,19 @@ function makeTile(item){
   labelSpan.className = 'artext';
   labelSpan.textContent = baseLabel;
 
-  let chipText;
-  if (item.tag) {
+  let chipText = '';
+  if (!item.hideTag && item.tag) {
     const tagStr = item.tag.toString();
     chipText = tagStr.startsWith('Unit') ? tagStr : tagStr.replace("unit","Unit ");
-  } else {
-    chipText = "Unit";
   }
 
-  const unitSpan = document.createElement('span');
-  unitSpan.className = 'unit-pill';
-  unitSpan.textContent = chipText;
-
-  ar.append(labelSpan, unitSpan);
+  ar.append(labelSpan);
+  if (chipText) {
+    const unitSpan = document.createElement('span');
+    unitSpan.className = 'unit-pill';
+    unitSpan.textContent = chipText;
+    ar.appendChild(unitSpan);
+  }
   thumb.appendChild(ar);
 
   const mark = document.createElement('div');
@@ -549,7 +657,7 @@ function makeTile(item){
     ev.stopPropagation();
     ev.preventDefault();
 
-    if (item.t === "Alphabet Listen") {
+    if (item.t === "Alphabet Listen" || item.t === "Alphabet Learn") {
       window.open(
         "",
         "_blank"
@@ -614,6 +722,8 @@ function renderGrid(){
         frag.appendChild(makeTile(it));
       }
     });
+  } else if (activeView === VIEW_EXTRAS_DETAIL) {
+    makeExtrasDetailItems(activeExtrasFolder).forEach(it => frag.appendChild(makeTile(it)));
   } else {
     if (activeCat === 'extras') {
       [
@@ -780,6 +890,7 @@ catsEl.addEventListener('click', (e) => {
   activeCat = catEl.dataset.cat;
   localStorage.setItem(LAST_CAT_KEY, activeCat);
   activeView = VIEW_ROOT;
+  activeExtrasFolder = '';
   setActiveCatUI();
   updateSectionHeader();
   renderGrid();
@@ -794,11 +905,12 @@ gridEl.addEventListener('click', (e) => {
 
   // FOLDER TILES – open submenus
 
-  // Pillars of Islam folder under Extras root
-  if (title === "Pillars of Islam" && activeCat === 'extras' && activeView === VIEW_ROOT) {
+  // Extras folders use a shared Learn / Practice / Quiz detail menu.
+  if (EXTRAS_DETAIL_FOLDERS.has(title) && activeCat === 'extras' && activeView === VIEW_ROOT) {
     e.preventDefault();
     e.stopPropagation();
-    activeView = VIEW_PILLARS_MENU;
+    activeExtrasFolder = title;
+    activeView = VIEW_EXTRAS_DETAIL;
     renderGrid();
     buzz();
     return;
@@ -845,7 +957,7 @@ gridEl.addEventListener('click', (e) => {
   }
 
   // Tashdeed folder under Rules root
-  if (title === "Tashdeed Shaddah" && activeCat === 'rules' && activeView === VIEW_ROOT) {
+  if ((title === "Tashdeed" || title === "Tashdeed Shaddah") && activeCat === 'rules' && activeView === VIEW_ROOT) {
     e.preventDefault();
     e.stopPropagation();
     activeView = VIEW_TASHDEED;
@@ -855,7 +967,7 @@ gridEl.addEventListener('click', (e) => {
   }
 
   // From Tashdeed menu → each detailed submenu
-  if (title === "Tashdeed Shaddah" && activeView === VIEW_TASHDEED) {
+  if ((title === "Tashdeed" || title === "Tashdeed Shaddah") && activeView === VIEW_TASHDEED) {
     e.preventDefault();
     e.stopPropagation();
     activeView = VIEW_TASHDEED_SHADDAH;
@@ -864,7 +976,7 @@ gridEl.addEventListener('click', (e) => {
     return;
   }
 
-  if (title === "Tashdeed With Sukoon" && activeView === VIEW_TASHDEED) {
+  if ((title === "Tashdeed with Sakoon" || title === "Tashdeed With Sukoon") && activeView === VIEW_TASHDEED) {
     e.preventDefault();
     e.stopPropagation();
     activeView = VIEW_TASHDEED_SUKOON;
@@ -873,7 +985,7 @@ gridEl.addEventListener('click', (e) => {
     return;
   }
 
-  if (title === "Tashdeed With tashdeed" && activeView === VIEW_TASHDEED) {
+  if ((title === "Tashdeed with Tashdeed" || title === "Tashdeed With tashdeed") && activeView === VIEW_TASHDEED) {
     e.preventDefault();
     e.stopPropagation();
     activeView = VIEW_TASHDEED_TASHDEED;
@@ -882,7 +994,7 @@ gridEl.addEventListener('click', (e) => {
     return;
   }
 
-  if (title === "Tashdeed With Haroof Maddah" && activeView === VIEW_TASHDEED) {
+  if ((title === "Tashdeed with Harof Madah" || title === "Tashdeed with Haroof Maddah" || title === "Tashdeed With Haroof Maddah") && activeView === VIEW_TASHDEED) {
     e.preventDefault();
     e.stopPropagation();
     activeView = VIEW_TASHDEED_MADDAH;
@@ -892,7 +1004,7 @@ gridEl.addEventListener('click', (e) => {
   }
 
   // Fatha-Kasra-Damma folder → detailed submenu
-  if (title === "Fatha-Kasra-Damma" && activeCat === 'rules' && activeView === VIEW_ROOT) {
+  if ((title === "Madd" || title === "Fatha-Kasra-Damma") && activeCat === 'rules' && activeView === VIEW_ROOT) {
     e.preventDefault();
     e.stopPropagation();
     activeView = VIEW_FKD;
@@ -990,6 +1102,7 @@ if (btnBackView) {
 
     if (targetView === VIEW_ROOT) {
       activeView = VIEW_ROOT;
+      activeExtrasFolder = '';
     } else {
       activeView = targetView;
     }

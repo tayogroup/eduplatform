@@ -163,6 +163,10 @@ voiceSel.value = DEFAULTS.voice;
             step_index: step.step_index
           }))
         );
+        try {
+          window.__PQ_RUNTIME_STEPS__ = STEPS.slice();
+          window.__PQ_RUNTIME_STEPS_SOURCE__ = state.stepsSource || 'unknown';
+        } catch (_e) {}
       }
 
       const runtimeManagedProgress = state ? state.progress : null;
@@ -244,7 +248,10 @@ voiceSel.value = DEFAULTS.voice;
       }
     } catch (_e) {}
 
-    if (!progress) {
+    const managedUser = __pqIsManagedUser();
+    const hasMoodleIdentity = !!(pqGetUid() && pqGetToken());
+
+    if (!progress && (!managedUser || !hasMoodleIdentity)) {
       try {
         const raw = localStorage.getItem(LS_PROGRESS_CACHE_KEY);
         progress = raw ? JSON.parse(raw) : null;
@@ -261,7 +268,7 @@ voiceSel.value = DEFAULTS.voice;
       managedProgress: ensureProgressShape(progress),
       sourceDb: sourceDb,
       sourceRuntime: false,
-      dbOnly: (__pqIsManagedUser() && sourceDb)
+      dbOnly: managedUser && hasMoodleIdentity
     };
   }
 
@@ -702,15 +709,15 @@ try {
     try {
       const backBtn = document.getElementById('pqDesktopBackBtn');
       if (backBtn && typeof __pqSetBilingualControlLabel === 'function') {
-        __pqSetBilingualControlLabel(backBtn, 'Back', 'رجوع');
-        backBtn.title = 'Back - رجوع';
+        __pqSetBilingualControlLabel(backBtn, 'Back', '\u0631\u062c\u0648\u0639');
+        backBtn.title = 'Back - \u0631\u062c\u0648\u0639';
       }
     } catch (_e) {}
 
     try {
       const pauseBtn = document.getElementById('btnPause');
       if (pauseBtn && typeof __pqSetBilingualControlLabel === 'function') {
-        __pqSetBilingualControlLabel(pauseBtn, 'Pause', 'إيقاف');
+        __pqSetBilingualControlLabel(pauseBtn, 'Pause', '\u0625\u064a\u0642\u0627\u0641');
       }
     } catch (_e) {}
 

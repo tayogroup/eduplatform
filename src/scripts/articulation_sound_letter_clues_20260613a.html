@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Sound and Letter Clue Detective</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Noto+Naskh+Arabic:wght@700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-a:#fff7ed;
+  --bg-b:#ecfeff;
+  --bg-c:#f0fdf4;
+  --panel:#ffffff;
+  --ink:#143044;
+  --muted:#526579;
+  --line:#cbd5e1;
+  --good:#15803d;
+  --bad:#dc2626;
+  --warn:#b45309;
+  --blue:#2563eb;
+  --violet:#7c3aed;
+  --gold:#f59e0b;
+  --shadow:0 18px 38px rgba(15,23,42,.16),0 6px 14px rgba(15,23,42,.1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;}
+body{
+  min-height:100vh;
+  font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 12%, rgba(251,191,36,.45) 0 10%, transparent 11%),
+    radial-gradient(circle at 88% 16%, rgba(45,212,191,.32) 0 9%, transparent 10%),
+    linear-gradient(135deg,var(--bg-a),var(--bg-b) 48%,var(--bg-c));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+
+button,select{font:inherit;}
+button{touch-action:manipulation;}
+
+.page{width:100%;max-width:1180px;}
+.sheet{
+  width:100%;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(148,163,184,.28);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px);
+  padding:10px 12px 8px;
+  box-shadow:0 5px 14px rgba(15,23,42,.08);
+}
+
+.head{
+  min-height:48px;
+  border-radius:16px;
+  padding:9px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(135deg,#a7f3d0,#bfdbfe 48%,#fde68a);
+  box-shadow:inset 0 -2px 0 rgba(15,23,42,.08);
+  font:900 23px/1.05 "Baloo 2";
+}
+
+.subhead{
+  margin-top:5px;
+  text-align:center;
+  color:var(--muted);
+  font:800 14px/1.2 "Baloo 2";
+}
+
+.hud{
+  margin-top:8px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+}
+.hud-group{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.pill{
+  min-height:34px;
+  border-radius:999px;
+  padding:4px 11px;
+  background:#fff;
+  border:1px solid #bfdbfe;
+  color:#1e293b;
+  font:800 14px/1 "Baloo 2";
+  display:flex;
+  gap:5px;
+  align-items:center;
+  white-space:nowrap;
+}
+.pill strong{font-weight:900;}
+.good{color:var(--good);}
+.bad{color:var(--bad);}
+
+.controls{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  margin-top:8px;
+  align-items:center;
+}
+.control-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+select,.toggle{
+  min-height:38px;
+  border-radius:12px;
+  border:2px solid #bfdbfe;
+  background:#fff;
+  color:#143044;
+  padding:5px 10px;
+  font:800 14px "Baloo 2";
+}
+.toggle{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  cursor:pointer;
+}
+.toggle input{width:18px;height:18px;accent-color:#2563eb;}
+
+.btn{
+  min-height:38px;
+  border:0;
+  border-radius:12px;
+  padding:7px 12px;
+  color:#102033;
+  background:#fde68a;
+  box-shadow:inset 0 -2px 0 rgba(15,23,42,.12);
+  font:900 14px/1 "Baloo 2";
+  cursor:pointer;
+}
+.btn:hover,.choice:hover,.clue-tab:hover{filter:brightness(1.03);}
+.btn:active,.choice:active,.clue-tab:active{transform:translateY(1px);}
+.btn.primary{background:#86efac;}
+.btn.blue{background:#bfdbfe;}
+.btn.pink{background:#fecdd3;}
+.btn:disabled{opacity:.55;cursor:not-allowed;}
+
+.main{
+  padding:12px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 320px;
+  gap:12px;
+}
+
+.play-zone,.side{
+  border:1px solid rgba(148,163,184,.32);
+  background:rgba(255,255,255,.93);
+  border-radius:18px;
+  padding:12px;
+}
+
+.clue-card{
+  min-height:224px;
+  border:2px solid #bae6fd;
+  border-radius:18px;
+  background:linear-gradient(180deg,#ffffff,#f8fafc);
+  padding:12px;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  gap:10px;
+}
+
+.clue-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+}
+.clue-tab{
+  min-height:42px;
+  border-radius:12px;
+  border:2px solid #dbeafe;
+  background:#eff6ff;
+  color:#1d4ed8;
+  cursor:pointer;
+  font:900 14px/1 "Baloo 2";
+}
+.clue-tab.active{
+  background:#2563eb;
+  color:#fff;
+  border-color:#1d4ed8;
+}
+
+.clue-body{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:12px;
+  align-items:center;
+}
+
+.mystery{
+  min-height:140px;
+  border-radius:16px;
+  background:
+    linear-gradient(135deg,rgba(254,243,199,.92),rgba(219,234,254,.88));
+  border:2px dashed #f59e0b;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+}
+.mystery .arabic{
+  font:700 70px/1 "Noto Naskh Arabic","Traditional Arabic",serif;
+  direction:rtl;
+}
+.mystery .sound{
+  font:900 22px/1 "Baloo 2";
+  color:#7c2d12;
+}
+
+.clue-text h2{
+  font:900 24px/1.08 "Baloo 2";
+  color:#15324b;
+  margin-bottom:7px;
+}
+.clue-text p{
+  font:800 17px/1.3 "Baloo 2";
+  color:#334155;
+}
+.mini-tags{
+  margin-top:8px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.tag{
+  border-radius:999px;
+  padding:4px 9px;
+  background:#ecfeff;
+  border:1px solid #67e8f9;
+  color:#155e75;
+  font:900 13px/1 "Baloo 2";
+}
+
+.coach{
+  min-height:50px;
+  border-radius:14px;
+  border:1px solid #cbd5e1;
+  background:#f8fafc;
+  padding:8px 10px;
+  color:#334155;
+  font:800 16px/1.25 "Baloo 2";
+}
+.coach strong{font-weight:900;color:#143044;}
+.coach.success{background:#ecfdf5;border-color:#86efac;color:#166534;}
+.coach.error{background:#fff1f2;border-color:#fda4af;color:#9f1239;}
+
+.choices{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(82px,1fr));
+  gap:10px;
+}
+.choice{
+  position:relative;
+  min-height:112px;
+  border-radius:16px;
+  border:2px solid #cbd5e1;
+  background:#fff;
+  color:#102033;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  box-shadow:0 6px 12px rgba(15,23,42,.08);
+}
+.choice .letter{
+  font:700 54px/1 "Noto Naskh Arabic","Traditional Arabic",serif;
+  direction:rtl;
+}
+.choice .name{
+  font:900 16px/1 "Baloo 2";
+  color:#334155;
+}
+.choice .place{
+  font:800 12px/1 "Baloo 2";
+  color:#64748b;
+}
+.choice.correct{
+  border-color:#22c55e;
+  background:#dcfce7;
+}
+.choice.wrong{
+  border-color:#ef4444;
+  background:#ffe4e6;
+}
+.choice:focus-visible,.btn:focus-visible,.clue-tab:focus-visible,select:focus-visible,.toggle:focus-within{
+  outline:4px solid rgba(37,99,235,.24);
+  outline-offset:2px;
+}
+
+.side{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.panel-title{
+  color:#143044;
+  font:900 18px/1.1 "Baloo 2";
+}
+.mouth-map{
+  display:grid;
+  gap:8px;
+}
+.map-row{
+  min-height:58px;
+  border-radius:14px;
+  padding:8px;
+  display:grid;
+  grid-template-columns:36px 1fr;
+  gap:8px;
+  align-items:center;
+  border:1px solid #dbeafe;
+  background:#f8fafc;
+}
+.map-row.active{
+  border-color:#2563eb;
+  background:#eff6ff;
+}
+.map-icon{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fde68a;
+  color:#7c2d12;
+  font:900 18px/1 "Baloo 2";
+}
+.map-copy strong{
+  display:block;
+  font:900 14px/1 "Baloo 2";
+}
+.map-copy span{
+  display:block;
+  color:#64748b;
+  font:800 12px/1.15 "Baloo 2";
+}
+
+.progress-track{
+  width:100%;
+  height:12px;
+  border-radius:999px;
+  background:#e2e8f0;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#22c55e,#38bdf8,#f59e0b);
+  transition:width .2s ease;
+}
+
+.badge-box{
+  min-height:64px;
+  border-radius:14px;
+  background:#fffbeb;
+  border:1px solid #fde68a;
+  padding:8px;
+  color:#78350f;
+  font:800 14px/1.25 "Baloo 2";
+}
+
+.review-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  min-height:38px;
+}
+.review-chip{
+  border-radius:999px;
+  background:#f1f5f9;
+  border:1px solid #cbd5e1;
+  padding:4px 8px;
+  font:900 13px/1 "Baloo 2";
+  color:#334155;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%) translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  background:#102033;
+  color:#fff;
+  border-radius:999px;
+  padding:9px 14px;
+  font:900 14px/1 "Baloo 2";
+  transition:opacity .18s ease,transform .18s ease;
+  z-index:50;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.start-overlay{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(15,23,42,.42);
+  backdrop-filter:blur(3px);
+}
+.start-overlay.hidden{display:none;}
+.start-panel{
+  width:min(470px,100%);
+  border-radius:22px;
+  border:2px solid #bfdbfe;
+  background:#fff;
+  box-shadow:var(--shadow);
+  padding:20px;
+  text-align:center;
+}
+.start-panel h2{
+  font:900 28px/1.05 "Baloo 2";
+  color:#102b3f;
+  margin-bottom:8px;
+}
+.start-panel p{
+  font:800 16px/1.25 "Baloo 2";
+  color:#475569;
+  margin-bottom:14px;
+}
+.start-panel .btn{
+  min-width:230px;
+  min-height:48px;
+  font-size:18px;
+}
+.start-status{
+  min-height:22px;
+  margin-top:12px;
+  font:800 14px/1.25 "Baloo 2";
+  color:#475569;
+}
+
+@media (max-width:900px){
+  body{align-items:flex-start;}
+  .main{grid-template-columns:1fr;}
+  .side{order:2;}
+}
+
+@media (max-width:640px){
+  body{padding:6px;}
+  .sheet{border-radius:18px;}
+  .top-bar{padding:8px;}
+  .head{font-size:20px;}
+  .controls{grid-template-columns:1fr;}
+  .control-row{width:100%;}
+  select,.toggle,.btn{flex:1 1 auto;}
+  .clue-body{grid-template-columns:1fr;}
+  .mystery{min-height:118px;}
+  .mystery .arabic{font-size:60px;}
+  .choices{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .choice{min-height:104px;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Sound and Letter Clue Detective game">
+    <section class="top-bar">
+      <div class="head">Sound and Letter Clue Detective</div>
+      <div class="subhead">Match the sound clue, the mouth clue, and the Arabic letter.</div>
+
+      <div class="hud" aria-live="polite">
+        <div class="hud-group">
+          <div class="pill">Score <strong id="score">0</strong></div>
+          <div class="pill">Streak <strong id="streak">0</strong></div>
+          <div class="pill">Hearts <strong id="hearts">5</strong></div>
+        </div>
+        <div class="hud-group">
+          <div class="pill">Round <strong id="round">1</strong>/<strong id="total">1</strong></div>
+          <div class="pill">Best <strong id="best">0</strong></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="control-row">
+          <select id="mode" aria-label="Game mode">
+            <option value="starter">Starter sounds</option>
+            <option value="all">All mouth places</option>
+            <option value="throat">Throat focus</option>
+            <option value="tongue">Tongue focus</option>
+            <option value="lips">Lip focus</option>
+            <option value="review">Review missed</option>
+          </select>
+          <label class="toggle"><input type="checkbox" id="gentle" checked/> Gentle mode</label>
+          <label class="toggle"><input type="checkbox" id="names" checked/> Show names</label>
+          <label class="toggle"><input type="checkbox" id="autoSay"/> Auto sound</label>
+        </div>
+        <div class="control-row">
+          <button class="btn blue" type="button" id="sayBtn">Say clue</button>
+          <button class="btn pink" type="button" id="hintBtn">Hint</button>
+          <button class="btn primary" type="button" id="nextBtn">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="main">
+      <section class="play-zone">
+        <div class="clue-card">
+          <div class="clue-tabs" role="tablist" aria-label="Clue type">
+            <button class="clue-tab active" type="button" data-clue="sound">Sound clue</button>
+            <button class="clue-tab" type="button" data-clue="letter">Letter clue</button>
+            <button class="clue-tab" type="button" data-clue="mouth">Mouth clue</button>
+          </div>
+
+          <div class="clue-body">
+            <div class="mystery" aria-hidden="true">
+              <div class="arabic" id="mysteryGlyph">؟</div>
+              <div class="sound" id="mysterySound">listen</div>
+            </div>
+            <div class="clue-text">
+              <h2 id="clueTitle">Find the letter</h2>
+              <p id="clueText">Listen to the sound clue, then choose the Arabic letter that matches it.</p>
+              <div class="mini-tags" id="tags"></div>
+            </div>
+          </div>
+
+          <div class="coach" id="coach"><strong>Ready?</strong> Press Say clue or read the first clue.</div>
+        </div>
+
+        <div class="choices" id="choices" aria-label="Answer choices"></div>
+      </section>
+
+      <aside class="side" aria-label="Learning helpers">
+        <div>
+          <div class="panel-title">Mouth Map</div>
+          <div class="mouth-map" id="mouthMap"></div>
+        </div>
+
+        <div>
+          <div class="panel-title">Progress</div>
+          <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <div>
+          <div class="panel-title">Badge Notes</div>
+          <div class="badge-box" id="badgeBox">Earn badges for careful listening and strong streaks.</div>
+        </div>
+
+        <div>
+          <div class="panel-title">Voice</div>
+          <div class="badge-box" id="voiceStatus">Tap Start Detective to hear the explainer.</div>
+          <button class="btn blue" type="button" id="explainerBtn">Play explainer</button>
+        </div>
+
+        <div>
+          <div class="panel-title">Review Tray</div>
+          <div class="review-list" id="reviewList"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="start-overlay" id="startOverlay">
+  <div class="start-panel" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+    <h2 id="startTitle">Ready to Detect?</h2>
+    <p>Tap Start Sound and Letter Clue Detective to hear the explainer. Then use sound, letter, and mouth clues to find the Arabic letter.</p>
+    <button class="btn primary" type="button" id="startGameBtn">Start Sound and Letter Clue Detective</button>
+    <div class="start-status" id="startStatus">Listen to the explainer first.</div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const EXPLAINER_AUDIO_VERSION = "20260615a";
+const EXPLAINER_AUDIO_PATH = "games/sound-letter-clue-detective/explainer/sound_letter_clue_detective_how_to_use.mp3";
+const EXPLAINER_SEEN_KEY = "pq_sound_letter_clue_detective_explainer_seen_v1";
+
+const LETTERS = [
+  {id:"hamza", letter:"ء", name:"Hamza", sound:"a sharp stop", family:"throat", place:"Deep throat", clue:"A tiny catch in the throat, like a clean stop before a sound.", letterClue:"This letter looks small and can sit alone or above/below another letter.", mouth:"Close the voice gently, then release.", tags:["stop","throat"]},
+  {id:"haa", letter:"ه", name:"Ha", sound:"soft h", family:"throat", place:"Deep throat", clue:"A soft open breath from deep in the throat.", letterClue:"This round letter has open spaces and a soft breathy sound.", mouth:"Open the throat. Let warm air pass without squeezing.", tags:["breath","throat"]},
+  {id:"ayn", letter:"ع", name:"Ayn", sound:"pressed throat", family:"throat", place:"Middle throat", clue:"A squeezed voice from the middle of the throat.", letterClue:"This letter has a curved open shape and needs careful throat control.", mouth:"Gently narrow the middle throat and voice the sound.", tags:["voiced","throat"]},
+  {id:"ghayn", letter:"غ", name:"Ghayn", sound:"gargly gh", family:"throat", place:"Upper throat", clue:"A voiced rough sound near the top of the throat.", letterClue:"This looks like Ayn with one dot above.", mouth:"Lift the back throat area and add voice.", tags:["dot","throat"]},
+  {id:"khaa", letter:"خ", name:"Kha", sound:"scratchy kh", family:"throat", place:"Upper throat", clue:"A scratchy airy sound from high in the throat.", letterClue:"This looks like Ha with one dot above.", mouth:"Let air rub gently near the upper throat.", tags:["air","throat"]},
+  {id:"qaaf", letter:"ق", name:"Qaf", sound:"deep q", family:"tongue", place:"Back tongue", clue:"A heavy pop from the very back of the tongue.", letterClue:"This letter has two dots above and a deep sound.", mouth:"Touch the back tongue high, then release strongly.", tags:["heavy","back tongue"]},
+  {id:"kaaf", letter:"ك", name:"Kaf", sound:"light k", family:"tongue", place:"Back tongue", clue:"A lighter pop from the back of the tongue.", letterClue:"This letter has a tall shape and sounds lighter than Qaf.", mouth:"Touch the back tongue high, release lightly.", tags:["light","back tongue"]},
+  {id:"jeem", letter:"ج", name:"Jeem", sound:"j", family:"tongue", place:"Middle tongue", clue:"A soft j sound from the middle of the tongue.", letterClue:"This letter has one dot below.", mouth:"Raise the middle tongue near the roof of the mouth.", tags:["dot below","middle tongue"]},
+  {id:"sheen", letter:"ش", name:"Sheen", sound:"sh", family:"tongue", place:"Middle tongue", clue:"A wide sh sound, like asking for quiet.", letterClue:"This letter has three dots above.", mouth:"Make a channel with the tongue and let air flow.", tags:["three dots","air"]},
+  {id:"daad", letter:"ض", name:"Dad", sound:"heavy d", family:"tongue", place:"Side tongue", clue:"A heavy sound from the side of the tongue.", letterClue:"This letter looks like Sad with one dot above.", mouth:"Press the side of the tongue against the molars.", tags:["heavy","side tongue"]},
+  {id:"laam", letter:"ل", name:"Lam", sound:"l", family:"tongue", place:"Tongue tip", clue:"A clear l sound from the tongue tip.", letterClue:"This tall letter has no dots and a clear light sound.", mouth:"Touch the tongue tip near the upper gums.", tags:["tip","clear"]},
+  {id:"raa", letter:"ر", name:"Ra", sound:"r", family:"tongue", place:"Tongue tip", clue:"A quick tongue-tip tap.", letterClue:"This small curved letter has no dots.", mouth:"Tap the tongue tip lightly near the upper gums.", tags:["tap","tip"]},
+  {id:"seen", letter:"س", name:"Seen", sound:"s", family:"tongue", place:"Tongue tip", clue:"A thin s sound with air through the front teeth.", letterClue:"This letter has little teeth and no dots.", mouth:"Keep the tongue close and let air hiss forward.", tags:["thin","hiss"]},
+  {id:"saad", letter:"ص", name:"Sad", sound:"heavy s", family:"tongue", place:"Tongue tip", clue:"A heavy s sound with a fuller mouth.", letterClue:"This looks like Seen's heavy partner and has no dots.", mouth:"Make the s sound fuller and heavier.", tags:["heavy","hiss"]},
+  {id:"taa", letter:"ت", name:"Ta", sound:"t", family:"tongue", place:"Tongue tip", clue:"A light t pop from the front of the tongue.", letterClue:"This letter has two dots above.", mouth:"Touch the tongue tip to the gums, then release.", tags:["two dots","tip"]},
+  {id:"taa-heavy", letter:"ط", name:"Taa", sound:"heavy t", family:"tongue", place:"Tongue tip", clue:"A heavy t pop with a fuller mouth.", letterClue:"This tall heavy letter has no dots.", mouth:"Make t with a raised, fuller tongue shape.", tags:["heavy","tip"]},
+  {id:"meem", letter:"م", name:"Meem", sound:"m", family:"lips", place:"Lips", clue:"A humming sound with both lips closed.", letterClue:"This letter has a small loop and no dots.", mouth:"Close both lips and let the nose hum.", tags:["hum","lips"]},
+  {id:"baa", letter:"ب", name:"Ba", sound:"b", family:"lips", place:"Lips", clue:"A soft pop from the two lips.", letterClue:"This letter has one dot below.", mouth:"Close both lips, build a little voice, then open.", tags:["dot below","lips"]},
+  {id:"faa", letter:"ف", name:"Fa", sound:"f", family:"lips", place:"Lip and teeth", clue:"Air passes between the upper teeth and lower lip.", letterClue:"This letter has one dot above.", mouth:"Touch lower lip to upper teeth and blow gently.", tags:["air","lip teeth"]},
+  {id:"waw", letter:"و", name:"Waw", sound:"w", family:"lips", place:"Rounded lips", clue:"A rounded-lip w sound.", letterClue:"This small rounded letter has no dots.", mouth:"Round the lips and voice the sound.", tags:["round","lips"]}
+];
+
+const FAMILY_COPY = {
+  throat:{title:"Throat", detail:"Sounds made deep, middle, or high in the throat.", icon:"H"},
+  tongue:{title:"Tongue", detail:"Sounds shaped by the back, middle, side, or tip of the tongue.", icon:"T"},
+  lips:{title:"Lips", detail:"Sounds made with both lips, rounded lips, or lip and teeth.", icon:"L"}
+};
+
+const STORAGE_KEY = "pq_sound_letter_clues_best_v1";
+const $ = (id) => document.getElementById(id);
+
+const els = {
+  score:$("score"), streak:$("streak"), hearts:$("hearts"), round:$("round"), total:$("total"),
+  best:$("best"), mode:$("mode"), gentle:$("gentle"), names:$("names"), autoSay:$("autoSay"),
+  sayBtn:$("sayBtn"), hintBtn:$("hintBtn"), nextBtn:$("nextBtn"), choices:$("choices"),
+  mysteryGlyph:$("mysteryGlyph"), mysterySound:$("mysterySound"), clueTitle:$("clueTitle"),
+  clueText:$("clueText"), tags:$("tags"), coach:$("coach"), mouthMap:$("mouthMap"),
+  progressFill:$("progressFill"), badgeBox:$("badgeBox"), reviewList:$("reviewList"), toast:$("toast"),
+  voiceStatus:$("voiceStatus"), explainerBtn:$("explainerBtn"), startOverlay:$("startOverlay"),
+  startGameBtn:$("startGameBtn"), startStatus:$("startStatus")
+};
+
+const state = {
+  deck:[],
+  current:null,
+  choices:[],
+  round:0,
+  score:0,
+  streak:0,
+  hearts:5,
+  answered:false,
+  activeClue:"sound",
+  missed:new Map(),
+  best:Number(localStorage.getItem(STORAGE_KEY) || 0)
+};
+
+let currentAudio = null;
+let gameStarted = false;
+
+function publicBasePath(){
+  if(window.location.protocol === "file:") return "../media/";
+  const path = String(window.location.pathname || "");
+  if(path.indexOf("/pre_quraan_integration/") === 0) return "/pre_quraan_integration/";
+  if(path.indexOf("/pre_quraan_staging/") === 0) return "/pre_quraan_staging/";
+  return "/pre_quraan/";
+}
+
+function explainerAudioUrl(){
+  return publicBasePath() + EXPLAINER_AUDIO_PATH + "?v=" + EXPLAINER_AUDIO_VERSION;
+}
+
+function hasSeenExplainer(){
+  try{ return window.localStorage.getItem(EXPLAINER_SEEN_KEY) === "1"; }catch(_e){ return false; }
+}
+
+function markExplainerSeen(){
+  try{ window.localStorage.setItem(EXPLAINER_SEEN_KEY,"1"); }catch(_e){}
+}
+
+function setVoiceStatus(text){
+  if(els.voiceStatus) els.voiceStatus.textContent = text;
+  if(els.startStatus) els.startStatus.textContent = text;
+}
+
+function stopCurrentAudio(){
+  if(currentAudio){
+    try{
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }catch(_e){}
+    currentAudio = null;
+  }
+}
+
+function playExplainerAudio(options){
+  const firstLaunch = !!(options && options.firstLaunch === true);
+  stopCurrentAudio();
+  setVoiceStatus(firstLaunch ? "Playing the explainer. The game opens when it finishes." : "Playing game explainer.");
+  els.explainerBtn.disabled = true;
+  els.explainerBtn.textContent = "Playing...";
+  els.startGameBtn.disabled = firstLaunch;
+  if(firstLaunch) els.startGameBtn.textContent = "Playing...";
+  const audio = new Audio(explainerAudioUrl());
+  currentAudio = audio;
+  audio.preload = "auto";
+  return new Promise(function(resolve){
+    const cleanup = function(){
+      if(currentAudio === audio) currentAudio = null;
+      els.explainerBtn.disabled = false;
+      els.explainerBtn.textContent = "Play explainer";
+      els.startGameBtn.disabled = false;
+      els.startGameBtn.textContent = "Start Sound and Letter Clue Detective";
+    };
+    audio.onended = function(){
+      cleanup();
+      markExplainerSeen();
+      setVoiceStatus("Tap Say clue, then choose the matching letter.");
+      resolve(true);
+    };
+    audio.onerror = function(){
+      cleanup();
+      setVoiceStatus("Explainer audio did not load. You can still play.");
+      toast("Explainer audio did not load.");
+      resolve(false);
+    };
+    audio.play().catch(function(){
+      cleanup();
+      setVoiceStatus(firstLaunch ? "Tap Start again if sound was blocked." : "Tap Play explainer again if sound was blocked.");
+      resolve(false);
+    });
+  });
+}
+
+async function startGame(){
+  if(gameStarted) return;
+  if(!hasSeenExplainer()){
+    const played = await playExplainerAudio({firstLaunch:true});
+    if(!played) setVoiceStatus("Explainer audio did not play. You can still use Say clue.");
+  }
+  gameStarted = true;
+  if(els.startOverlay) els.startOverlay.classList.add("hidden");
+  if(hasSeenExplainer()) setVoiceStatus("Tap Say clue, then choose the matching letter.");
+}
+
+function shuffle(items){
+  const copy = items.slice();
+  for(let i=copy.length-1;i>0;i-=1){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function modeLetters(){
+  const mode = els.mode.value;
+  if(mode === "review"){
+    const review = Array.from(state.missed.values());
+    return review.length ? review : LETTERS.slice(0,8);
+  }
+  if(mode === "starter"){
+    return LETTERS.filter(x => ["haa","ayn","qaaf","kaaf","sheen","seen","taa","meem","baa","faa","waw","raa"].includes(x.id));
+  }
+  if(mode === "throat") return LETTERS.filter(x => x.family === "throat");
+  if(mode === "tongue") return LETTERS.filter(x => x.family === "tongue");
+  if(mode === "lips") return LETTERS.filter(x => x.family === "lips");
+  return LETTERS;
+}
+
+function buildDeck(){
+  stopCurrentAudio();
+  const list = modeLetters();
+  state.deck = shuffle(list).slice(0, Math.min(list.length, els.mode.value === "all" ? 16 : 12));
+  state.round = 0;
+  state.score = 0;
+  state.streak = 0;
+  state.hearts = els.gentle.checked ? 5 : 3;
+  state.answered = false;
+  gameStarted = false;
+  if(els.startOverlay) els.startOverlay.classList.remove("hidden");
+  setVoiceStatus(hasSeenExplainer() ? "Tap Start Detective to begin." : "Tap Start Detective to hear the explainer.");
+  nextRound(true);
+}
+
+function distractorsFor(target){
+  const sameFamily = LETTERS.filter(x => x.family === target.family && x.id !== target.id);
+  const others = LETTERS.filter(x => x.family !== target.family);
+  return shuffle([target].concat(shuffle(sameFamily).slice(0,2), shuffle(others).slice(0,3))).slice(0,4);
+}
+
+function setCoach(html,type){
+  els.coach.innerHTML = html;
+  els.coach.className = "coach" + (type ? " " + type : "");
+}
+
+function renderMouthMap(){
+  els.mouthMap.innerHTML = "";
+  ["throat","tongue","lips"].forEach(key => {
+    const row = document.createElement("div");
+    row.className = "map-row" + (state.current && state.current.family === key ? " active" : "");
+    const icon = document.createElement("div");
+    icon.className = "map-icon";
+    icon.textContent = FAMILY_COPY[key].icon;
+    const copy = document.createElement("div");
+    copy.className = "map-copy";
+    copy.innerHTML = `<strong>${FAMILY_COPY[key].title}</strong><span>${FAMILY_COPY[key].detail}</span>`;
+    row.append(icon,copy);
+    els.mouthMap.appendChild(row);
+  });
+}
+
+function renderReview(){
+  els.reviewList.innerHTML = "";
+  const missed = Array.from(state.missed.values());
+  if(!missed.length){
+    const chip = document.createElement("span");
+    chip.className = "review-chip";
+    chip.textContent = "No missed sounds yet";
+    els.reviewList.appendChild(chip);
+    return;
+  }
+  missed.slice(0,10).forEach(item => {
+    const chip = document.createElement("span");
+    chip.className = "review-chip";
+    chip.textContent = `${item.letter} ${item.name}`;
+    els.reviewList.appendChild(chip);
+  });
+}
+
+function renderClue(){
+  const item = state.current;
+  if(!item) return;
+  els.mysteryGlyph.textContent = state.activeClue === "letter" ? item.letter : "؟";
+  els.mysterySound.textContent = state.activeClue === "sound" ? item.sound : item.name;
+  if(state.activeClue === "sound"){
+    els.clueTitle.textContent = "Sound clue";
+    els.clueText.textContent = `Find the letter with ${item.sound}: ${item.clue}`;
+  } else if(state.activeClue === "letter"){
+    els.clueTitle.textContent = "Letter clue";
+    els.clueText.textContent = item.letterClue;
+  } else {
+    els.clueTitle.textContent = "Mouth clue";
+    els.clueText.textContent = `${item.place}: ${item.mouth}`;
+  }
+  els.tags.innerHTML = "";
+  [item.place].concat(item.tags).forEach(text => {
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = text;
+    els.tags.appendChild(tag);
+  });
+  document.querySelectorAll(".clue-tab").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.clue === state.activeClue);
+  });
+}
+
+function renderChoices(){
+  els.choices.innerHTML = "";
+  state.choices.forEach((item,idx) => {
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.type = "button";
+    btn.dataset.id = item.id;
+    btn.setAttribute("aria-label", `Choice ${idx + 1}: ${item.name}`);
+    const nameDisplay = els.names.checked ? `<div class="name">${item.name}</div><div class="place">${item.place}</div>` : "";
+    btn.innerHTML = `<div class="letter">${item.letter}</div>${nameDisplay}`;
+    btn.addEventListener("click", () => choose(item,btn));
+    els.choices.appendChild(btn);
+  });
+}
+
+function renderHud(){
+  els.score.textContent = state.score;
+  els.streak.textContent = state.streak;
+  els.hearts.textContent = state.hearts;
+  els.round.textContent = Math.min(state.round + 1, Math.max(state.deck.length,1));
+  els.total.textContent = Math.max(state.deck.length,1);
+  els.best.textContent = state.best;
+  const pct = state.deck.length ? Math.round((state.round / state.deck.length) * 100) : 0;
+  els.progressFill.style.width = `${Math.min(pct,100)}%`;
+}
+
+function renderAll(){
+  renderHud();
+  renderClue();
+  renderChoices();
+  renderMouthMap();
+  renderReview();
+  els.nextBtn.disabled = !state.answered;
+}
+
+function say(text){
+  if(!("speechSynthesis" in window)){
+    toast("Speech is not available in this browser.");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 0.78;
+  utterance.pitch = 1.04;
+  utterance.lang = "en-US";
+  window.speechSynthesis.speak(utterance);
+}
+
+function sayClue(){
+  if(!gameStarted){
+    setVoiceStatus("Tap Start Detective first.");
+    return;
+  }
+  if(!state.current) return;
+  const item = state.current;
+  say(`${item.name}. Sound clue: ${item.sound}. ${item.clue}. Mouth clue: ${item.mouth}`);
+}
+
+function nextRound(fromReset){
+  if(!state.deck.length){
+    setCoach("<strong>No deck yet.</strong> Choose a mode to begin.");
+    renderAll();
+    return;
+  }
+  if(!fromReset && state.round >= state.deck.length - 1){
+    finishGame();
+    return;
+  }
+  if(!fromReset) state.round += 1;
+  state.current = state.deck[state.round];
+  state.choices = distractorsFor(state.current);
+  state.answered = false;
+  state.activeClue = state.round % 3 === 0 ? "sound" : state.round % 3 === 1 ? "letter" : "mouth";
+  setCoach("<strong>New clue.</strong> Listen, look at the clue, then choose the matching letter.");
+  renderAll();
+  if(els.autoSay.checked) window.setTimeout(sayClue, 180);
+}
+
+function choose(item,btn){
+  if(state.answered || !state.current) return;
+  const correct = item.id === state.current.id;
+  if(correct){
+    state.answered = true;
+    state.score += 10 + Math.min(state.streak,5);
+    state.streak += 1;
+    state.missed.delete(state.current.id);
+    btn.classList.add("correct");
+    setCoach(`<strong>Correct.</strong> ${state.current.name} uses ${state.current.place}. ${state.current.mouth}`,"success");
+    celebrate();
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    state.missed.set(state.current.id,state.current);
+    if(!els.gentle.checked) state.hearts = Math.max(0,state.hearts - 1);
+    setCoach(`<strong>Try again.</strong> This clue is from ${state.current.place}. Use Hint if you need a smaller choice.`,"error");
+    if(state.hearts === 0){
+      state.answered = true;
+      revealCorrect();
+      finishGame();
+    }
+  }
+  renderHud();
+  renderReview();
+  els.nextBtn.disabled = !state.answered;
+}
+
+function revealCorrect(){
+  Array.from(els.choices.children).forEach(btn => {
+    if(btn.dataset.id === state.current.id) btn.classList.add("correct");
+  });
+}
+
+function giveHint(){
+  if(!state.current || state.answered) return;
+  const wrongChoices = Array.from(els.choices.children).filter(btn => btn.dataset.id !== state.current.id && !btn.classList.contains("wrong"));
+  shuffle(wrongChoices).slice(0,2).forEach(btn => {
+    btn.disabled = true;
+    btn.style.opacity = ".42";
+  });
+  state.activeClue = "mouth";
+  renderClue();
+  setCoach(`<strong>Hint:</strong> ${state.current.name} is made at ${state.current.place}. ${state.current.mouth}`);
+}
+
+function finishGame(){
+  state.answered = true;
+  els.progressFill.style.width = "100%";
+  if(state.score > state.best){
+    state.best = state.score;
+    localStorage.setItem(STORAGE_KEY,String(state.best));
+    els.badgeBox.textContent = `New best score: ${state.best}. Careful ears and careful mouth clues.`;
+  } else if(state.missed.size){
+    els.badgeBox.textContent = "Good practice. Review missed sounds to make the clues feel easier.";
+  } else {
+    els.badgeBox.textContent = "Clean round badge: no missed sounds in this deck.";
+  }
+  setCoach(state.missed.size ? "<strong>Round complete.</strong> Try Review missed for the tricky sounds." : "<strong>Round complete.</strong> Every sound matched correctly.","success");
+  renderHud();
+  renderReview();
+}
+
+function celebrate(){
+  if(state.streak === 3) els.badgeBox.textContent = "Listening streak: 3 careful answers.";
+  if(state.streak === 5) els.badgeBox.textContent = "Mouth map badge: 5 in a row.";
+  toast(["Nice match","Careful ears","Strong clue reading","Great mouth-map work"][Math.floor(Math.random()*4)]);
+}
+
+function toast(text){
+  els.toast.textContent = text;
+  els.toast.classList.add("show");
+  window.clearTimeout(toast.timer);
+  toast.timer = window.setTimeout(() => els.toast.classList.remove("show"), 1100);
+}
+
+document.querySelectorAll(".clue-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    state.activeClue = btn.dataset.clue;
+    renderClue();
+  });
+});
+
+els.sayBtn.addEventListener("click", sayClue);
+els.hintBtn.addEventListener("click", giveHint);
+els.nextBtn.addEventListener("click", () => nextRound(false));
+els.explainerBtn.addEventListener("click", () => playExplainerAudio({firstLaunch:false}));
+els.startGameBtn.addEventListener("click", startGame);
+els.mode.addEventListener("change", buildDeck);
+els.gentle.addEventListener("change", buildDeck);
+els.names.addEventListener("change", renderChoices);
+
+document.addEventListener("keydown", (event) => {
+  if(event.target && ["SELECT","INPUT","BUTTON"].includes(event.target.tagName)) return;
+  if(!gameStarted) return;
+  if(event.code === "Space"){
+    event.preventDefault();
+    sayClue();
+    return;
+  }
+  const n = Number(event.key);
+  if(n >= 1 && n <= state.choices.length){
+    const btn = els.choices.children[n - 1];
+    if(btn) btn.click();
+  }
+});
+
+buildDeck();
+</script>
+</body>
+</html>

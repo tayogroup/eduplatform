@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Noto+Naskh+Arabic:wght@700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/app-shell.css">
+  <link rel="stylesheet" href="css/app-shell.css?v=auth-buttons-20260608a">
 
   
   <!-- Shared Design System (override layer) -->
@@ -29,6 +29,28 @@
         </div>
 
         <div class="top-actions">
+          <a class="btn-square btn-login" id="btnMoodleLogin"
+             href="https://quraan.academy/local/hubredirect/issue.php"
+             target="_blank" rel="noopener"
+             aria-label="Moodle login">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 4h5v16h-5" stroke="#0f2a1c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 12h11" stroke="#0f2a1c" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="m11 8 4 4-4 4" stroke="#0f2a1c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <a class="btn-square btn-logout" id="btnMoodleLogout"
+             href="https://quraan.academy/login/logout.php"
+             target="_blank" rel="noopener"
+             aria-label="Moodle logout">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M10 4H5v16h5" stroke="#4c170f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 12h11" stroke="#4c170f" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="m16 8 4 4-4 4" stroke="#4c170f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
           <a class="btn-square btn-intro" id="ctaIntro"
              href="https://quraan.academy" target="_blank" rel="noopener"
              aria-label="Course Introduction">
@@ -71,7 +93,7 @@
             </div>
           </div>
           <div class="hero-art" aria-hidden="true">
-            <img class="hero-ill" src="img/hero-quran-kid.png" alt="">
+            <img class="hero-ill" src="img/hero-quran-children.png" alt="">
           </div>
         </div>
       </div>
@@ -138,17 +160,19 @@
     </div>
   </div>
 
-  <!-- Alphabet Dots modal -->
+  <!-- Alphabet Games modal -->
   <div class="modal-backdrop" id="gamesMenuModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true">
-      <h3 id="gamesTitle">Alphabet Dots</h3>
+      <h3 id="gamesTitle">Alphabet Games</h3>
       <div class="games-links">
-        <a class="btn-link" href="https://ehelacademy.b-cdn.net/pre_quraan/scripts/letters_order.html">Letters Sort Order</a>
-        <a class="btn-link" href="https://ehelacademy.b-cdn.net/pre_quraan/scripts/letter_conveyor_belt.html">Letter Conveyor Belt</a>
-        <a class="btn-link" href="https://ehelacademy.b-cdn.net/pre_quraan/scripts/know_your_dots.html">Know Your Dots</a>
-        <a class="btn-link" href="https://ehelacademy.b-cdn.net/pre_quraan/scripts/transliteration_flashcards.html">Transliteration Flashcard</a>
-        <a class="btn-link" href="https://ehelacademy.b-cdn.net/pre_quraan/scripts/articulation_maze.html?v=20251127">Articulation Maze</a>
-        <a class="btn-link" href="https://ehelacademy.b-cdn.net/pre_quraan/scripts/sound_sniper.html?v=20251128">Sound Sniper</a>
+        <a class="btn-link" href="/pre_quraan/scripts/sound_sniper_20260614j.html">Sound Sniper</a>
+        <a class="btn-link" href="/pre_quraan/scripts/know_your_dots_20260612a.html">Know Your Dots</a>
+        <a class="btn-link" href="/pre_quraan/scripts/transliteration_flashcards_20260612a.html">Transliteration Flashcard</a>
+        <a class="btn-link" href="/pre_quraan/scripts/letters_order_20260612a.html">Letters Sort Order</a>
+        <a class="btn-link" href="/pre_quraan/scripts/letter_conveyor_belt.html">Letter Conveyor Belt</a>
+        <a class="btn-link" href="/pre_quraan/scripts/arabic_letter_raceway_20260614a.html">Letter Raceway</a>
+        <a class="btn-link" href="/pre_quraan/scripts/articulation_sound_letter_clues_20260613a.html">Sound and Letter Clue Detective</a>
+        <a class="btn-link" href="/pre_quraan/scripts/articulation_maze_20260615a.html">Articulation Maze</a>
       </div>
       <div class="modal-actions">
         <button class="btn btn-close" id="btnCloseGames" type="button">Close</button>
@@ -234,9 +258,9 @@
 
 
   <!-- Main app (after DOM so elements exist) -->
-  <script type="module" src="js/app-shell.js?v=env-routing-20260519"></script>
+  <script type="module" src="js/app-shell.js?v=alphabet-games-20260615c"></script>
 
   <!-- Token exchange + parent name -->
-  <script src="js/parent-badge.js"></script>
+  <script src="js/parent-badge.js?v=account-id-only-20260525b"></script>
 </body>
 </html>

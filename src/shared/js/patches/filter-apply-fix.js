@@ -16,7 +16,20 @@
       (cells[index] && (cells[index].key || cells[index].id || cells[index].cellKey)) || '';
   }
   function remember(tile){ if (tile && !tile.dataset.pqOriginalDisplay) tile.dataset.pqOriginalDisplay = tile.style.display || '__EMPTY__'; }
-  function show(tile){ if (!tile) return; var d=tile.dataset.pqOriginalDisplay; tile.style.display=(!d||d==='__EMPTY__')?'':d; tile.hidden=false; tile.removeAttribute('aria-hidden'); }
+  function show(tile){
+    if (!tile) return;
+    if (tile.dataset && tile.dataset.pqRuntimeVisible === '0') {
+      hide(tile);
+      return;
+    }
+    if (tile.dataset && tile.dataset.pqRuntimeVisible === '1') {
+      tile.style.display='';
+      tile.hidden=false;
+      tile.removeAttribute('aria-hidden');
+      return;
+    }
+    var d=tile.dataset.pqOriginalDisplay; tile.style.display=(!d||d==='__EMPTY__'||d==='none')?'':d; tile.hidden=false; tile.removeAttribute('aria-hidden');
+  }
   function hide(tile){ if (!tile) return; remember(tile); tile.style.display='none'; tile.hidden=true; tile.setAttribute('aria-hidden','true'); }
   function applyFilter(){
     try{

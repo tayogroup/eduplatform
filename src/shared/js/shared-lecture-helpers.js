@@ -76,6 +76,15 @@
       try{
         if (cfg.lectureCardEl) cfg.lectureCardEl.hidden = false;
         try{ if (cfg.lectureVideoEl) cfg.lectureVideoEl.controls = true; }catch(_){}
+        try{
+          const lectureUrl = cfg.lessonDef && cfg.lessonDef.lectureUrl;
+          if (lectureUrl) {
+            window.__PQ_LECTURE_URL__ = lectureUrl;
+            if (!window.__PQ_LECTURE_URLS__) window.__PQ_LECTURE_URLS__ = Object.create(null);
+            window.__PQ_LECTURE_URLS__.lecture = lectureUrl;
+            if (cfg.lectureVideoEl && !cfg.lectureVideoEl.src) cfg.lectureVideoEl.src = lectureUrl;
+          }
+        }catch(_){}
 
         if (window.PQLectureCore) {
           if (!window.__PQ_AL_LECTURE_CORE_CREATED__) {

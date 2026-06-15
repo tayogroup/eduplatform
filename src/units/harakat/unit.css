@@ -1,0 +1,408 @@
+.pq-harakat-rules-active .grid-wrap {
+  display: none;
+}
+
+.pq-har-rules {
+  direction: ltr;
+  width: min(1320px, calc(100% - 32px));
+  margin: 26px auto 40px;
+  color: #17324a;
+}
+
+.pq-har-rules[hidden] {
+  display: none !important;
+}
+
+.pq-har-rules__hero,
+.pq-har-rules__summary article,
+.pq-har-rule-card,
+.pq-har-rules__table,
+.pq-har-rules__practice,
+.pq-har-rules__remember {
+  border: 3px solid rgba(78, 190, 120, 0.45);
+  background: linear-gradient(135deg, rgba(255, 250, 225, 0.98), rgba(229, 255, 246, 0.96));
+  box-shadow: 0 18px 48px rgba(30, 105, 70, 0.14);
+}
+
+.pq-har-rules__hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 22px;
+  align-items: center;
+  padding: clamp(18px, 4vw, 34px);
+  border-radius: 28px;
+}
+
+.pq-har-rules__eyebrow {
+  margin: 0 0 8px;
+  color: #0e8f57;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.pq-har-rules h1,
+.pq-har-rules h2,
+.pq-har-rules h3,
+.pq-har-rules h4,
+.pq-har-rules p {
+  margin-top: 0;
+}
+
+.pq-har-rules h1 {
+  margin-bottom: 10px;
+  color: #063047;
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1.15;
+  text-align: right;
+}
+
+.pq-har-rules p {
+  margin-bottom: 0;
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  line-height: 1.55;
+  font-weight: 750;
+}
+
+.pq-har-rules__audio-btn {
+  min-height: 52px;
+  margin-top: 18px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: #3fbf71;
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(38, 145, 89, 0.24);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.pq-har-rules__audio-btn:disabled {
+  cursor: progress;
+  opacity: 0.82;
+}
+
+.pq-har-rules__audio-btn:focus-visible,
+.pq-har-rules__audio-btn:hover {
+  outline: 4px solid rgba(53, 177, 105, 0.25);
+  transform: translateY(-1px);
+}
+
+.pq-har-rules__vowel-wheel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 300px;
+  padding: 16px;
+  border-radius: 26px;
+  background: #fff5cf;
+  border: 4px solid #fffaf0;
+}
+
+.pq-har-rules__vowel-wheel span {
+  display: grid;
+  place-items: center;
+  min-height: 60px;
+  border-radius: 18px;
+  background: #fff;
+  color: #07944e;
+  font-size: 3.2rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.pq-har-rules__summary,
+.pq-har-rules__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.pq-har-rules__summary--wide {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.pq-har-rules__summary article {
+  display: grid;
+  place-items: center;
+  min-height: 190px;
+  padding: 20px;
+  border-radius: 24px;
+  text-align: center;
+}
+
+.pq-har-rules__summary article > span {
+  color: #07944e;
+  font-size: 5rem;
+  font-weight: 950;
+  line-height: 0.8;
+}
+
+.pq-har-rules__summary b {
+  color: #102f49;
+  font-size: 1.55rem;
+}
+
+.pq-har-rules__summary em {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f7b94f;
+  color: #102f49;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.pq-har-rules__summary small {
+  font-size: 1.05rem;
+  font-weight: 850;
+}
+
+.pq-har-rules__cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pq-har-rule-card {
+  min-height: 220px;
+  padding: 22px;
+  border-radius: 24px;
+}
+
+.pq-har-rule-card__num {
+  display: inline-flex;
+  margin-bottom: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #f7b94f;
+  color: #17324b;
+  font-weight: 950;
+}
+
+.pq-har-rule-card h3,
+.pq-har-rules__table h2,
+.pq-har-rules__practice h2,
+.pq-har-rules__remember h2 {
+  color: #102f49;
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.pq-har-rules__arabic {
+  color: #07944e;
+  font-size: 2.25rem;
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.pq-har-rules__examples {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.pq-har-rules__examples span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(16, 115, 79, 0.18);
+  font-size: 1.08rem;
+  font-weight: 850;
+}
+
+.pq-har-rules__practice-mini {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.pq-har-rules__position {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.pq-har-rules__position span {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(16, 115, 79, 0.18);
+  font-weight: 850;
+}
+
+.pq-har-rules__practice-mini section,
+.pq-har-rules__practice section {
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(16, 115, 79, 0.18);
+}
+
+.pq-har-rules__practice-mini h4,
+.pq-har-rules__practice h4 {
+  margin-bottom: 8px;
+  color: #0b6a47;
+}
+
+.pq-har-rules__practice-mini section div,
+.pq-har-rules__practice section div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pq-har-rules__practice-mini section span,
+.pq-har-rules__practice section span {
+  display: grid;
+  place-items: center;
+  min-width: 58px;
+  min-height: 52px;
+  border-radius: 15px;
+  background: #fff7d7;
+  color: #07944e;
+  border: 2px solid #f0c761;
+  font-size: 2rem;
+  font-weight: 950;
+}
+
+.pq-har-rules__table,
+.pq-har-rules__practice,
+.pq-har-rules__remember {
+  margin-top: 18px;
+  padding: 24px;
+  border-radius: 24px;
+}
+
+.pq-har-rules__table > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.76);
+  font-weight: 850;
+}
+
+.pq-har-rules__table > div + div {
+  margin-top: 8px;
+}
+
+.pq-har-rules__table span[dir="rtl"] {
+  color: #07944e;
+  font-size: 2.2rem;
+  font-weight: 950;
+}
+
+.pq-har-rules__practice {
+  display: grid;
+  gap: 12px;
+}
+
+.pq-har-rules__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pq-har-rules__chip {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #fff7d7;
+  color: #0b6a47;
+  border: 2px solid #f0c761;
+  font-weight: 900;
+}
+
+.pq-har-rules__footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.pq-har-rules__footer button {
+  min-width: 230px;
+  min-height: 64px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffcc61, #ff9851);
+  color: #112d44;
+  box-shadow: 0 12px 24px rgba(201, 118, 36, 0.24);
+  font: inherit;
+  font-size: 1.18rem;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.pq-har-rules__footer button:focus-visible,
+.pq-har-rules__footer button:hover {
+  outline: 4px solid rgba(53, 177, 105, 0.25);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 860px) {
+  .pq-har-rules {
+    width: min(100% - 18px, 720px);
+    margin-top: 18px;
+  }
+
+  .pq-har-rules__hero,
+  .pq-har-rules__summary,
+  .pq-har-rules__summary--wide,
+  .pq-har-rules__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .pq-har-rules h1 {
+    text-align: center;
+  }
+
+  .pq-har-rules__hero {
+    text-align: center;
+  }
+
+  .pq-har-rules__vowel-wheel {
+    justify-self: center;
+    width: min(260px, 100%);
+  }
+
+  .pq-har-rules__table > div {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+/* Rules audio/title polish. */
+.pq-har-rules__eyebrow{
+  font-size:clamp(1.45rem,2.7vw,2.2rem);
+  text-align:center;
+  text-transform:none;
+}
+.pq-har-rules h1{
+  font-size:clamp(1.45rem,2.8vw,2.7rem);
+}
+.pq-har-rules__audio-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:max-content;
+  max-width:100%;
+  margin:18px auto 18px;
+}
+
+/* Rules Muqattiat canvas standardization. */
+.pq-har-rules{width:min(1180px,calc(100% - 36px));margin:26px auto 34px;direction:ltr;color:#17243a;}
+.pq-har-rules__hero,.pq-har-rule-card,.pq-har-rules__summary,.pq-har-rules__table,.pq-har-rules__practice,.pq-har-rules__remember{border:3px solid rgba(70,189,113,.52);background:linear-gradient(180deg,#fffdf2 0%,#eafff0 100%);box-shadow:0 16px 36px rgba(29,95,61,.14);}
+.pq-har-rules__hero{border-radius:28px;padding:24px;text-align:center;}
+.pq-har-rules__eyebrow{display:inline-flex;align-items:center;justify-content:center;min-width:96px;min-height:48px;margin:0 auto 8px;padding:0 24px;border-radius:999px;background:#ffc957;color:#3c2a08;font-size:clamp(1.2rem,2.3vw,2rem);font-weight:1000;box-shadow:inset 0 0 0 3px rgba(255,255,255,.72);text-transform:none;text-align:center;white-space:normal;}
+.pq-har-rules h1{margin:4px 0 8px;color:#069746;font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;font-size:clamp(1.45rem,2.8vw,2.7rem);line-height:1.08;text-align:center;}
+.pq-har-rules p{max-width:780px;margin-left:auto;margin-right:auto;font-size:1.14rem;font-weight:800;color:#31435a;}
+.pq-har-rules__audio-btn{display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;min-height:52px;margin:0 auto 18px;padding:0 22px;border:0;border-radius:999px;background:#3fbf71;color:#fff;box-shadow:0 10px 20px rgba(38,145,89,.24);font:inherit;font-size:1rem;font-weight:950;cursor:pointer;}

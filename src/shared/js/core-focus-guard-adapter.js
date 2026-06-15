@@ -18,6 +18,7 @@
     let sessionId = null;
     let lessonId = null;
     let unitId = null;
+    let liveSessionId = '';
 
     function focusLessonId(){
       return (window.PQFocusCtx && typeof window.PQFocusCtx.lessonId === 'function')
@@ -37,7 +38,23 @@
         : (Date.now() + '-nosave');
     }
 
+    function focusLiveSessionId(){
+      return (window.PQFocusCtx && typeof window.PQFocusCtx.liveSessionId === 'function')
+        ? window.PQFocusCtx.liveSessionId()
+        : '';
+    }
+
     function pauseForFocus(reason){
+      try{
+        if (window.__PQ_LECTURE_POPUP_ACTIVE__ || window.__PQ_LECTURE_REQUIRED_ACTIVE__) {
+          return;
+        }
+      }catch(_e){}
+      try{
+        if (mediaActive()) {
+          return;
+        }
+      }catch(_e){}
       try{ cfg.setPaused(true); }catch(_e){}
     }
 
@@ -56,6 +73,7 @@
             lessonid: lessonId,
             unitid: unitId,
             session_id: sessionId,
+            live_sessionid: liveSessionId,
             step_id: 'practice',
             step_index: null
           });
@@ -73,6 +91,7 @@
           lessonid: lessonId,
           unitid: unitId,
           session_id: sessionId,
+          live_sessionid: liveSessionId,
           step_id: curId,
           step_index: stepIndex >= 0 ? (stepIndex + 1) : null
         });
@@ -83,9 +102,21 @@
       try{
         const a = cfg.audioEl;
         const v = cfg.lectureVideoEl || document.getElementById('lectureVideo');
+        const rulesAudio = window.__pqRulesAudio;
         const audioPlaying = !!(a && typeof a.paused === 'boolean' && !a.paused && !a.ended);
         const videoPlaying = !!(v && typeof v.paused === 'boolean' && !v.paused && !v.ended);
-        return !!(cfg.isPlayingAll() || audioPlaying || videoPlaying);
+        const sharedMediaPlaying = !!(
+          window.__PQ_MEDIA_ACTIVE__ === true ||
+          (Number(window.__PQ_MEDIA_ACTIVE_UNTIL__ || 0) || 0) > Date.now() ||
+          window.__pqWebAudioActive === true ||
+          window.__PQ_WEB_AUDIO_ACTIVE__ === true ||
+          (window.speechSynthesis && window.speechSynthesis.speaking)
+        );
+        const rulesAudioPlaying = !!(
+          window.__pqRulesAudioPlaying === true ||
+          (rulesAudio && typeof rulesAudio.paused === 'boolean' && !rulesAudio.paused && !rulesAudio.ended)
+        );
+        return !!(cfg.isPlayingAll() || audioPlaying || videoPlaying || rulesAudioPlaying || sharedMediaPlaying);
       }catch(_e){ return false; }
     }
 
@@ -117,6 +148,7 @@
         lessonId = focusLessonId();
         unitId = focusUnitId();
         sessionId = focusGetSessionId(uid, lessonId, unitId);
+        liveSessionId = focusLiveSessionId();
 
         window.FocusGuard.init({
           managed: !!(uid && tok),
@@ -144,6 +176,7 @@
       focusLessonId: focusLessonId,
       focusUnitId: focusUnitId,
       focusGetSessionId: focusGetSessionId,
+      focusLiveSessionId: focusLiveSessionId,
       pauseForFocus: pauseForFocus,
       resumeForFocus: resumeForFocus,
       syncStepContext: syncStepContext,

@@ -20,7 +20,7 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
   schemaVersion: 1,
 
   identity: {
-    lessonId: 'tajweed',
+    lessonId: 'alphabet',
     unitId: 'alphabet_listen',
     unitKey: 'alphabet',
     storagePrefix: 'alphabet_listen',
@@ -28,13 +28,14 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
   },
 
   moodle: {
-    wsGetFunction: 'local_prequran_get_alphabet_listen_state',
-    wsSetFunction: 'local_prequran_set_alphabet_listen_state'
+    wsGetFunction: 'local_prequran_get_unit_state',
+    wsSetFunction: 'local_prequran_set_unit_state'
   },
 
   release: {
-    version: '1.0.1',
-    assetVersion: 'alphabet-v1.0.1'
+    version: '1.0.2',
+    assetVersion: 'alphabet-rules-skipfix-20260615e',
+    marker: 'alphabet-rules-skipfix-20260615e'
   },
 
   localization: {
@@ -135,7 +136,7 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
   stepNavigation: {
     previous: {
       enabled: true,
-      label: '← Step',
+      label: 'Step Back \u2190',
       title: 'Go back one step',
       confirmTitle: 'Go back one step?',
       confirmText: 'This will move you back to {previousStep}. Your progress for {currentStep} and {previousStep} will be reset so you can try again.',
@@ -150,19 +151,48 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
   // 	  { id: 'listen',     type: 'playlist',       label: 'Listen',  passFilters: ['all', 'light', 'alifaa', 'vowels', 'heavy', 'distinctions'] },
  
   steps: [
-    { id: 'lecture',    type: 'lecture',        label: 'Lecture', arabicLabel: 'شرح', passFilters: ['all'] },  
-	 { id: 'listen',     type: 'playlist',       label: 'Listen', arabicLabel: 'استمع', passFilters: ['all'] },
-    { id: 'watch',      type: 'video_playlist', label: 'Watch', arabicLabel: 'شاهد', passFilters: ['all'] },
-   { id: 'soundclue',      type: 'soundclue',       label: 'SoundClue', arabicLabel: 'تلميحات صوتية', passFilters: ['all'] },
-	{ id: 'letterclue', type: 'letterclue',       label: 'LetterClue', arabicLabel: 'تلميحات الحروف', passFilters: ['all'] },
-    { id: 'phonetics',      type: 'phonetics',          label: 'Phonetics', arabicLabel: 'النطق', passFilters: ['all'] },
-   { id: 'repeat',     type: 'playlist',       label: 'Repeat', arabicLabel: 'كرر', passFilters: ['all'] },
-    { id: 'match',      type: 'match',          label: 'Match', arabicLabel: 'طابق', passFilters: ['all'] },
-    { id: 'speak',      type: 'speak',          label: 'Speak', arabicLabel: 'تحدث', passFilters: ['all'] },
-    { id: 'animate',    type: 'animate',        label: 'Animate', arabicLabel: 'شاهد الكتابة', passFilters: ['all'] },
-    { id: 'write',      type: 'write',          label: 'Write', arabicLabel: 'اكتب', passFilters: ['all'] },
-     { id: 'submit',     type: 'submit',         label: 'Submit', arabicLabel: 'أرسل', passFilters: ['all'] }	
+    { id: 'lecture',    step_index: 1,  type: 'lecture',        label: 'Lecture',    arabicLabel: 'شرح', passFilters: ['all'] },
+    { id: 'rules',      step_index: 2,  type: 'content',        label: 'Rules',      arabicLabel: 'القواعد', passFilters: ['all', 'all'], passes_required: 2, default_passes_required: 2 },
+    { id: 'listen',     step_index: 3,  type: 'playlist',       label: 'Listen',     arabicLabel: 'استمع', passFilters: ['all'] },
+    { id: 'watch',      step_index: 4,  type: 'video_playlist', label: 'Watch',      arabicLabel: 'شاهد', passFilters: ['all'] },
+    { id: 'phonetics',  step_index: 5,  type: 'phonetics',      label: 'Phonetics',  arabicLabel: 'النطق', passFilters: ['all'] },
+    { id: 'repeat',     step_index: 6,  type: 'playlist',       label: 'Repeat',     arabicLabel: 'كرر', passFilters: ['all'] },
+    { id: 'letterclue', step_index: 7,  type: 'letterclue',     label: 'LetterClue', arabicLabel: 'تلميحات الحروف', passFilters: ['all'] },
+    { id: 'speak',      step_index: 8,  type: 'speak',          label: 'Speak',      arabicLabel: 'تحدث', passFilters: ['all'] },
+    { id: 'match',      step_index: 9,  type: 'match',          label: 'Match',      arabicLabel: 'طابق', passFilters: ['all'] },
+    { id: 'soundclue',  step_index: 10, type: 'soundclue',      label: 'SoundClue',  arabicLabel: 'تلميحات صوتية', passFilters: ['all'] },
+    { id: 'animate',    step_index: 11, type: 'animate',        label: 'Animate',    arabicLabel: 'شاهد الكتابة', passFilters: ['all'] },
+    { id: 'write',      step_index: 12, type: 'write',          label: 'Write',      arabicLabel: 'اكتب', passFilters: ['all'] },
+    { id: 'submit',     step_index: 13, type: 'submit',         label: 'Submit',     arabicLabel: 'أرسل', passFilters: ['all'] }
   ],
+  stepInjection: {
+    beforeListen: [
+      {
+        id: 'rules',
+        type: 'content',
+        label: 'Rules',
+        arabicLabel: 'القواعد',
+        actionLabel: 'Rules',
+        actionArabicLabel: 'القواعد',
+        filter: 'all',
+        passFilters: ['all', 'all'],
+        passes_required: 2,
+        default_passes_required: 2
+      }
+    ],
+    rules: {
+      id: 'rules',
+      type: 'content',
+      label: 'Rules',
+      arabicLabel: 'القواعد',
+      actionLabel: 'Rules',
+      actionArabicLabel: 'القواعد',
+      filter: 'all',
+      passFilters: ['all', 'all'],
+      passes_required: 2,
+      default_passes_required: 2
+    }
+  },
   writeLabelMap: [
     { from: 'Trace1', to: 'Write' },
     { from: 'Trace 1', to: 'Write' },
@@ -402,13 +432,14 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
     letterAudioSequenceGapMs: 120,
     steps: {
       listen: {
-        letterAudioMode: 'both',
+        letterAudioMode: 'name',
+        letterAudioBase: '/pre_quraan/lessons/alphabet/media/audio/male/',
         beforeStartMs: 400,
         betweenLettersMs: 700,
         afterCompleteMs: 500
       },
 listenplus: {
-  letterAudioMode: 'both',
+  letterAudioMode: 'name',
   anchorPlaybackRate: 0.65,
   anchorRepeats: 2,
   beforeStartMs: 500,
@@ -452,8 +483,11 @@ repeatRecording: {
 
 sound: {
   letterAudioMode: 'both',
+  preModalPlayback: 'video',
+  resumeIncomplete: true,
   requireExplainerFirst: true,
   autoVideoAfterExplainer: true,
+  autoPlayExplainerOnModalOpen: true,
   videoRepeatCount: 2,
   betweenVideoRepeatsMs: 180,
   beforeStartMs: 400,
@@ -548,7 +582,8 @@ words: {
         afterCompleteMs: 500
       },
       repeat: {
-        letterAudioMode: 'both',
+        letterAudioMode: 'name',
+        letterAudioBase: '/pre_quraan/lessons/alphabet/media/audio/male/',
         beforeStartMs: 400,
         betweenLettersMs: 2000,
         afterCompleteMs: 500
@@ -800,7 +835,7 @@ words: {
 	media: {
 
 	  // Lecture
-	  lectureUrl: '/pre_quraan/messages/lectures/alphabet_lecture.mp4',
+      lectureUrl: '/pre_quraan/messages/lectures/alphabet_lecture_faststart_20260611a.mp4',
 
 	  // Voice variants
 	  voiceBases: {

@@ -1,0 +1,1989 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Arabic Letter Raceway</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Noto+Naskh+Arabic:wght@700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --sky:#dff7ff;
+  --grass:#dcfce7;
+  --track:#475569;
+  --track-dark:#334155;
+  --panel:#ffffff;
+  --ink:#102b3f;
+  --muted:#526579;
+  --good:#15803d;
+  --bad:#dc2626;
+  --gold:#f59e0b;
+  --blue:#2563eb;
+  --red:#e11d48;
+  --line:#cbd5e1;
+  --shadow:0 18px 38px rgba(15,23,42,.16),0 6px 14px rgba(15,23,42,.1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;}
+body{
+  min-height:100vh;
+  font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:
+    linear-gradient(180deg,var(--sky) 0 48%,var(--grass) 49% 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+button,select{font:inherit;}
+button{touch-action:manipulation;}
+
+.page{width:100%;max-width:1180px;}
+.sheet{
+  width:100%;
+  overflow:hidden;
+  border-radius:24px;
+  border:1px solid rgba(148,163,184,.32);
+  background:rgba(255,255,255,.96);
+  box-shadow:var(--shadow);
+}
+
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);
+  padding:10px 12px 8px;
+  box-shadow:0 5px 14px rgba(15,23,42,.08);
+}
+.head{
+  min-height:48px;
+  border-radius:16px;
+  padding:9px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(135deg,#bfdbfe,#fde68a 50%,#fecaca);
+  font:900 24px/1.05 "Baloo 2";
+  box-shadow:inset 0 -2px 0 rgba(15,23,42,.1);
+}
+.subhead{
+  margin-top:5px;
+  text-align:center;
+  color:var(--muted);
+  font:800 14px/1.2 "Baloo 2";
+}
+
+.hud{
+  margin-top:8px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:8px;
+}
+.hud-group{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.pill{
+  min-height:34px;
+  border-radius:999px;
+  padding:4px 11px;
+  background:#fff;
+  border:1px solid #bfdbfe;
+  color:#1e293b;
+  font:800 14px/1 "Baloo 2";
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+}
+.pill strong{font-weight:900;}
+
+.controls{
+  margin-top:8px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+}
+.control-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+select,.toggle{
+  min-height:38px;
+  border-radius:12px;
+  border:2px solid #bfdbfe;
+  background:#fff;
+  color:#143044;
+  padding:5px 10px;
+  font:800 14px "Baloo 2";
+}
+.toggle{
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.toggle input{width:18px;height:18px;accent-color:#2563eb;}
+.btn{
+  min-height:38px;
+  border:0;
+  border-radius:12px;
+  padding:7px 12px;
+  color:#102033;
+  background:#fde68a;
+  box-shadow:inset 0 -2px 0 rgba(15,23,42,.12);
+  font:900 14px/1 "Baloo 2";
+  cursor:pointer;
+}
+.btn.primary{background:#86efac;}
+.btn.blue{background:#bfdbfe;}
+.btn.pink{background:#fecdd3;}
+.btn:disabled{opacity:.55;cursor:not-allowed;}
+.btn:hover,.choice:hover{filter:brightness(1.03);}
+.btn:active,.choice:active{transform:translateY(1px);}
+.btn:focus-visible,.choice:focus-visible,select:focus-visible,.toggle:focus-within{
+  outline:4px solid rgba(37,99,235,.24);
+  outline-offset:2px;
+}
+
+.main{
+  padding:12px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 330px;
+  gap:12px;
+}
+
+.race-card,.quiz-card,.side{
+  border:1px solid rgba(148,163,184,.34);
+  border-radius:18px;
+  background:rgba(255,255,255,.94);
+  padding:12px;
+}
+.left-stack{display:grid;gap:12px;}
+
+.race-card{
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,#bae6fd 0 32%,#bbf7d0 33% 100%);
+}
+.race-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-bottom:8px;
+  color:#143044;
+  font:900 18px/1.1 "Baloo 2";
+}
+.track{
+  position:relative;
+  min-height:212px;
+  border-radius:18px;
+  overflow:hidden;
+  background:
+    repeating-linear-gradient(90deg,transparent 0 52px,rgba(255,255,255,.1) 53px 56px),
+    linear-gradient(180deg,var(--track),var(--track-dark));
+  border:4px solid #1f2937;
+}
+.finish{
+  position:absolute;
+  top:0;
+  right:18px;
+  width:22px;
+  height:100%;
+  background:
+    conic-gradient(#fff 25%,#111827 0 50%,#fff 0 75%,#111827 0) 0 0/12px 12px;
+  opacity:.94;
+}
+.lane{
+  position:absolute;
+  left:0;
+  right:0;
+  height:50%;
+}
+.lane.player{top:0;border-bottom:3px dashed rgba(255,255,255,.75);}
+.lane.rival{bottom:0;}
+.lane-label{
+  position:absolute;
+  left:10px;
+  top:8px;
+  z-index:2;
+  border-radius:999px;
+  padding:4px 8px;
+  background:rgba(255,255,255,.9);
+  color:#1e293b;
+  font:900 13px/1 "Baloo 2";
+}
+.car{
+  position:absolute;
+  left:12px;
+  width:86px;
+  height:42px;
+  transition:transform .42s cubic-bezier(.2,.9,.2,1);
+  z-index:4;
+}
+.car.player-car{top:40px;}
+.car.rival-car{bottom:28px;}
+.car-body{
+  position:absolute;
+  left:6px;
+  right:6px;
+  bottom:8px;
+  height:24px;
+  border-radius:14px 18px 9px 9px;
+  background:#ef4444;
+  box-shadow:inset 0 -3px 0 rgba(15,23,42,.2);
+}
+.rival-car .car-body{background:#38bdf8;}
+.car-cabin{
+  position:absolute;
+  left:28px;
+  top:3px;
+  width:34px;
+  height:21px;
+  border-radius:14px 14px 4px 4px;
+  background:#fef3c7;
+  border:3px solid rgba(15,23,42,.18);
+}
+.wheel{
+  position:absolute;
+  bottom:2px;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:#111827;
+  border:3px solid #e5e7eb;
+}
+.wheel.left{left:18px;}
+.wheel.right{right:18px;}
+.car.turbo .wheel{animation:spin .28s linear infinite;}
+.car.turbo{filter:drop-shadow(0 0 10px rgba(251,191,36,.9));}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.track-note{
+  margin-top:8px;
+  min-height:32px;
+  border-radius:12px;
+  padding:7px 10px;
+  background:#f8fafc;
+  border:1px solid #cbd5e1;
+  color:#334155;
+  font:800 14px/1.25 "Baloo 2";
+}
+
+.quiz-card{
+  display:grid;
+  gap:10px;
+}
+.clue-box{
+  min-height:138px;
+  border-radius:18px;
+  border:2px solid #bae6fd;
+  background:linear-gradient(180deg,#ffffff,#f8fafc);
+  padding:12px;
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:12px;
+  align-items:center;
+}
+.signal{
+  min-height:112px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fef3c7,#dbeafe);
+  border:2px dashed #f59e0b;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+}
+.signal .big{
+  font:700 56px/1 "Noto Naskh Arabic","Traditional Arabic",serif;
+  direction:rtl;
+}
+.signal .small{
+  font:900 18px/1 "Baloo 2";
+  color:#7c2d12;
+}
+.clue-copy h2{
+  font:900 24px/1.05 "Baloo 2";
+  margin-bottom:6px;
+}
+.clue-copy p{
+  color:#334155;
+  font:800 17px/1.28 "Baloo 2";
+}
+.tags{
+  margin-top:8px;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.tag{
+  border-radius:999px;
+  padding:4px 9px;
+  background:#ecfeff;
+  border:1px solid #67e8f9;
+  color:#155e75;
+  font:900 13px/1 "Baloo 2";
+}
+
+.coach{
+  min-height:48px;
+  border-radius:14px;
+  border:1px solid #cbd5e1;
+  background:#f8fafc;
+  padding:8px 10px;
+  color:#334155;
+  font:800 16px/1.25 "Baloo 2";
+}
+.coach strong{font-weight:900;color:#143044;}
+.coach.success{background:#ecfdf5;border-color:#86efac;color:#166534;}
+.coach.error{background:#fff1f2;border-color:#fda4af;color:#9f1239;}
+
+.choices{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(82px,1fr));
+  gap:10px;
+}
+.choice{
+  min-height:106px;
+  border-radius:16px;
+  border:2px solid #cbd5e1;
+  background:#fff;
+  color:#102033;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  box-shadow:0 6px 12px rgba(15,23,42,.08);
+}
+.choice .letter{
+  font:700 52px/1 "Noto Naskh Arabic","Traditional Arabic",serif;
+  direction:rtl;
+}
+.choice .name{font:900 16px/1 "Baloo 2";color:#334155;}
+.choice .place{display:none;}
+.choice.correct{border-color:#22c55e;background:#dcfce7;}
+.choice.wrong{border-color:#ef4444;background:#ffe4e6;}
+
+.side{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.panel-title{
+  font:900 18px/1.1 "Baloo 2";
+  color:#143044;
+}
+.meter{
+  width:100%;
+  height:12px;
+  border-radius:999px;
+  background:#e2e8f0;
+  overflow:hidden;
+}
+.meter span{
+  display:block;
+  width:0%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#22c55e,#38bdf8,#f59e0b);
+  transition:width .25s ease;
+}
+.pit-board,.badge-box{
+  min-height:70px;
+  border-radius:14px;
+  padding:9px;
+  background:#fffbeb;
+  border:1px solid #fde68a;
+  color:#78350f;
+  font:800 14px/1.25 "Baloo 2";
+}
+.badge-box{background:#f8fafc;border-color:#cbd5e1;color:#334155;}
+.voice-status{
+  min-height:34px;
+  border-radius:14px;
+  padding:8px 9px;
+  background:#eef6ff;
+  border:1px solid #bfdbfe;
+  color:#1e3a8a;
+  font:800 13px/1.2 "Baloo 2";
+}
+.voice-auth-link{
+  display:none;
+  margin-top:8px;
+  border-radius:12px;
+  border:1px solid #9fc5ff;
+  background:#f8fbff;
+  color:#1d4ed8;
+  padding:7px 9px;
+  font:900 13px/1.15 "Baloo 2";
+  text-decoration:none;
+}
+.voice-auth-link.show{display:block;}
+.explainer-btn{
+  width:100%;
+  margin-top:8px;
+}
+.native-audio{
+  width:100%;
+  min-height:34px;
+  margin-top:6px;
+  display:none;
+}
+.review-list{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  min-height:38px;
+}
+.review-chip{
+  border-radius:999px;
+  padding:4px 8px;
+  background:#f1f5f9;
+  border:1px solid #cbd5e1;
+  color:#334155;
+  font:900 13px/1 "Baloo 2";
+}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%) translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  z-index:50;
+  border-radius:999px;
+  padding:9px 14px;
+  background:#102033;
+  color:#fff;
+  font:900 14px/1 "Baloo 2";
+  transition:opacity .18s ease,transform .18s ease;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.start-overlay{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(15,23,42,.42);
+  backdrop-filter:blur(3px);
+}
+.start-overlay.hidden{display:none;}
+.start-panel{
+  width:min(460px,100%);
+  border-radius:22px;
+  border:2px solid #bfdbfe;
+  background:#fff;
+  box-shadow:var(--shadow);
+  padding:18px;
+  text-align:center;
+}
+.start-panel h2{
+  font:900 28px/1.05 "Baloo 2";
+  color:#102b3f;
+  margin-bottom:8px;
+}
+.start-panel p{
+  font:800 16px/1.25 "Baloo 2";
+  color:#475569;
+  margin-bottom:14px;
+}
+.start-panel .btn{
+  min-width:190px;
+  min-height:48px;
+  font-size:18px;
+}
+.start-panel audio{
+  width:100%;
+  margin-top:12px;
+  display:none;
+}
+
+@media (max-width:900px){
+  body{align-items:flex-start;}
+  .main{grid-template-columns:1fr;}
+  .side{order:2;}
+}
+@media (max-width:640px){
+  body{padding:6px;}
+  .sheet{border-radius:18px;}
+  .top-bar{padding:8px;}
+  .head{font-size:20px;}
+  .controls{grid-template-columns:1fr;}
+  .control-row{width:100%;}
+  select,.toggle,.btn{flex:1 1 auto;}
+  .clue-box{grid-template-columns:1fr;}
+  .choices{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .choice{min-height:100px;}
+  .car{width:72px;}
+  .finish{right:12px;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Arabic Letter Raceway game">
+    <section class="top-bar">
+      <div class="head">Arabic Letter Raceway</div>
+      <div class="subhead">Win 30 laps by matching sound, mouth, dot, heavy, light, and vowel clues.</div>
+
+      <div class="hud" aria-live="polite">
+        <div class="hud-group">
+          <div class="pill">Score <strong id="score">0</strong></div>
+          <div class="pill">Streak <strong id="streak">0</strong></div>
+          <div class="pill">Fuel <strong id="fuel">5</strong></div>
+        </div>
+        <div class="hud-group">
+          <div class="pill">Lap <strong id="lap">1</strong>/<strong id="total">1</strong></div>
+          <div class="pill">Best <strong id="best">0</strong></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="control-row">
+          <select id="mode" aria-label="Race mode">
+            <option value="starter">Starter race</option>
+            <option value="alphabet">Alphabet grand prix</option>
+            <option value="heavy">Heavy-letter rally</option>
+            <option value="light">Light-letter rally</option>
+            <option value="vowels">Vowel-letter rally</option>
+            <option value="dots">Dot clue race</option>
+            <option value="mouth">Mouth-place race</option>
+            <option value="review">Practice lap</option>
+          </select>
+          <label class="toggle"><input type="checkbox" id="gentle" checked/> Gentle mode</label>
+          <label class="toggle"><input type="checkbox" id="names"/> Show names</label>
+          <label class="toggle"><input type="checkbox" id="autoSay" checked/> Auto sound</label>
+        </div>
+        <div class="control-row">
+          <button class="btn blue" type="button" id="sayBtn">Listen</button>
+          <button class="btn pink" type="button" id="hintBtn">Pit stop</button>
+          <button class="btn primary" type="button" id="nextBtn">Next lap</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="main">
+      <div class="left-stack">
+        <section class="race-card">
+          <div class="race-title">
+            <span>Race Track</span>
+            <span id="raceStatus">Ready at the start line</span>
+          </div>
+          <div class="track" id="track" aria-label="Race progress">
+            <div class="finish" aria-hidden="true"></div>
+            <div class="lane player"><span class="lane-label">You</span></div>
+            <div class="lane rival"><span class="lane-label">Challenge car</span></div>
+            <div class="car player-car" id="playerCar" aria-hidden="true">
+              <div class="car-cabin"></div><div class="car-body"></div><div class="wheel left"></div><div class="wheel right"></div>
+            </div>
+            <div class="car rival-car" id="rivalCar" aria-hidden="true">
+              <div class="car-cabin"></div><div class="car-body"></div><div class="wheel left"></div><div class="wheel right"></div>
+            </div>
+          </div>
+          <div class="track-note" id="trackNote">Correct answers move your car. Careful listening beats speed.</div>
+        </section>
+
+        <section class="quiz-card">
+          <div class="clue-box">
+            <div class="signal" aria-hidden="true">
+              <div class="big" id="signalGlyph">؟</div>
+              <div class="small" id="signalText">listen</div>
+            </div>
+            <div class="clue-copy">
+              <h2 id="clueTitle">Sound clue</h2>
+              <p id="clueText">Listen to the clue, then choose the matching Arabic letter.</p>
+              <div class="tags" id="tags"></div>
+            </div>
+          </div>
+          <div class="coach" id="coach"><strong>Start engines.</strong> Press Say clue or choose a letter.</div>
+          <div class="choices" id="choices" aria-label="Letter choices"></div>
+        </section>
+      </div>
+
+      <aside class="side" aria-label="Race helpers">
+        <div>
+          <div class="panel-title">Race Progress</div>
+          <div class="meter" aria-hidden="true"><span id="playerMeter"></span></div>
+        </div>
+        <div>
+          <div class="panel-title">Pit Board</div>
+          <div class="pit-board" id="pitBoard">Use a pit stop when you need one clue removed or a mouth-place reminder.</div>
+        </div>
+        <div>
+          <div class="panel-title">Badges</div>
+          <div class="badge-box" id="badgeBox">Earn clean lap, turbo streak, and finish line badges.</div>
+        </div>
+        <div>
+          <div class="panel-title">Voice</div>
+          <div class="voice-status" id="voiceStatus">Tap Listen for the voice clue.</div>
+          <button class="btn blue explainer-btn" type="button" id="explainerBtn">Play explainer</button>
+          <a class="voice-auth-link" id="voiceAuthLink" href="https://quraan.academy/local/hubredirect/issue_child.php?goto=arabic_letter_raceway_20260614a.html&managed_student=1" target="_blank" rel="noopener">Open Raceway with academy voice</a>
+          <audio class="native-audio" id="nativeAudio" controls preload="auto"></audio>
+        </div>
+        <div>
+          <div class="panel-title">Practice Lap</div>
+          <div class="review-list" id="reviewList"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<audio id="fallbackAudio" preload="auto"></audio>
+<div class="start-overlay" id="startOverlay">
+  <div class="start-panel">
+    <h2>Ready to Race?</h2>
+    <p>Tap Start Race to hear the first clue. The timer begins after the clue starts.</p>
+    <button class="btn primary" type="button" id="startRaceBtn">Start Race</button>
+    <audio id="startAudio" controls preload="auto"></audio>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const LETTERS = [
+  {id:"alif",letter:"ا",name:"Alif",sound:"aa",dots:0,place:"throat opening",clue:"A long open sound. Keep the mouth open and smooth.",tags:["long","open"]},
+  {id:"baa",letter:"ب",name:"Ba",sound:"b",dots:1,place:"two lips",clue:"Close both lips, then release a soft b sound.",tags:["lips","one dot below"]},
+  {id:"taa",letter:"ت",name:"Ta",sound:"t",dots:2,place:"tongue tip",clue:"Touch the tongue tip near the upper gums, then release.",tags:["tip","two dots"]},
+  {id:"thaa",letter:"ث",name:"Tha",sound:"th",dots:3,place:"tongue and teeth",clue:"Let the tongue touch the front teeth for a light th sound.",tags:["teeth","three dots"]},
+  {id:"jeem",letter:"ج",name:"Jeem",sound:"j",dots:1,place:"middle tongue",clue:"Raise the middle of the tongue for a soft j sound.",tags:["middle","dot below"]},
+  {id:"haa",letter:"ح",name:"Haa",sound:"strong h",dots:0,place:"middle throat",clue:"A stronger h from the middle of the throat.",tags:["throat","no dots"]},
+  {id:"khaa",letter:"خ",name:"Kha",sound:"kh",dots:1,place:"upper throat",clue:"A scratchy airy kh from high in the throat.",tags:["throat","one dot"]},
+  {id:"daal",letter:"د",name:"Dal",sound:"d",dots:0,place:"tongue tip",clue:"A light d tap from the tongue tip.",tags:["tip","no dots"]},
+  {id:"dhaal",letter:"ذ",name:"Dhal",sound:"dh",dots:1,place:"tongue and teeth",clue:"A voiced th-like sound with the tongue near the teeth.",tags:["teeth","one dot"]},
+  {id:"raa",letter:"ر",name:"Ra",sound:"r",dots:0,place:"tongue tip",clue:"A quick tap from the tongue tip.",tags:["tap","no dots"]},
+  {id:"zay",letter:"ز",name:"Zay",sound:"z",dots:1,place:"front tongue",clue:"A buzzing z sound near the front teeth.",tags:["buzz","one dot"]},
+  {id:"seen",letter:"س",name:"Seen",sound:"s",dots:0,place:"front tongue",clue:"A thin s sound with air moving forward.",tags:["hiss","no dots"]},
+  {id:"sheen",letter:"ش",name:"Sheen",sound:"sh",dots:3,place:"middle tongue",clue:"A wide sh sound, like asking for quiet.",tags:["air","three dots"]},
+  {id:"saad",letter:"ص",name:"Sad",sound:"heavy s",dots:0,place:"tongue tip",clue:"A fuller heavy s sound.",tags:["heavy","no dots"]},
+  {id:"daad",letter:"ض",name:"Dad",sound:"heavy d",dots:1,place:"side tongue",clue:"A heavy sound from the side of the tongue.",tags:["heavy","one dot"]},
+  {id:"taa-heavy",letter:"ط",name:"Taa",sound:"heavy t",dots:0,place:"tongue tip",clue:"A heavy t with a fuller mouth shape.",tags:["heavy","no dots"]},
+  {id:"zaa-heavy",letter:"ظ",name:"Dhaa",sound:"heavy dh",dots:1,place:"tongue and teeth",clue:"A heavy voiced th sound.",tags:["heavy","one dot"]},
+  {id:"ayn",letter:"ع",name:"Ayn",sound:"ayn",dots:0,place:"middle throat",clue:"A voiced sound squeezed gently from the middle throat.",tags:["throat","no dots"]},
+  {id:"ghayn",letter:"غ",name:"Ghayn",sound:"gh",dots:1,place:"upper throat",clue:"A voiced rough gh near the upper throat.",tags:["throat","one dot"]},
+  {id:"faa",letter:"ف",name:"Fa",sound:"f",dots:1,place:"lip and teeth",clue:"Touch lower lip to upper teeth and blow gently.",tags:["air","one dot"]},
+  {id:"qaaf",letter:"ق",name:"Qaf",sound:"deep q",dots:2,place:"back tongue",clue:"A deep pop from the very back of the tongue.",tags:["deep","two dots"]},
+  {id:"kaaf",letter:"ك",name:"Kaf",sound:"k",dots:0,place:"back tongue",clue:"A lighter k from the back tongue.",tags:["light","no dots"]},
+  {id:"laam",letter:"ل",name:"Lam",sound:"l",dots:0,place:"tongue tip",clue:"A clear l from the tongue tip.",tags:["clear","no dots"]},
+  {id:"meem",letter:"م",name:"Meem",sound:"m",dots:0,place:"two lips",clue:"Close both lips and hum through the nose.",tags:["hum","no dots"]},
+  {id:"noon",letter:"ن",name:"Noon",sound:"n",dots:1,place:"tongue tip",clue:"Touch the tongue tip and let the nose hum.",tags:["nose","one dot"]},
+  {id:"haa-soft",letter:"ه",name:"Ha",sound:"soft h",dots:0,place:"deep throat",clue:"A soft breath from deep in the throat.",tags:["breath","no dots"]},
+  {id:"waw",letter:"و",name:"Waw",sound:"w",dots:0,place:"rounded lips",clue:"Round the lips for a w sound.",tags:["round","no dots"]},
+  {id:"yaa",letter:"ي",name:"Ya",sound:"y",dots:2,place:"middle tongue",clue:"Raise the middle tongue for a y sound.",tags:["middle","two dots"]}
+];
+
+const AUDIO_BASE = "https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/adult_male_alphabet/";
+const AUDIO_CACHE_BUST = "?v=a4";
+const LOCAL_PREVIEW = /^(localhost|127\.0\.0\.1|::1)$/i.test(window.location.hostname || "");
+const LOCAL_AUDIO_BASE = "/pre_quraan/media/lessons/alphabet/media/audio/male/";
+const LOCAL_AUDIO_INDEX = {
+  alif:"01", baa:"02", taa:"03", thaa:"04", jeem:"05", haa:"06", khaa:"07",
+  daal:"08", dhaal:"09", raa:"10", zay:"11", seen:"12", sheen:"13",
+  saad:"14", daad:"15", "taa-heavy":"16", "zaa-heavy":"17", ayn:"18",
+  ghayn:"19", faa:"20", qaaf:"21", kaaf:"22", laam:"23", meem:"24",
+  noon:"25", "haa-soft":"26", waw:"27", yaa:"28"
+};
+const STORAGE_KEY = "pq_arabic_letter_raceway_best_v1";
+const RACE_QUESTION_COUNT = 30;
+const LAP_TIMEOUT_MS = 10000;
+const ANSWER_ADVANCE_MS = 700;
+const TTS_REQUEST_TIMEOUT_MS = 9000;
+const STATIC_CLUE_AUDIO_VERSION = "20260614a";
+const STATIC_CLUE_AUDIO_PATH = "games/arabic-letter-raceway/clues/";
+const EXPLAINER_AUDIO_VERSION = "20260614a";
+const EXPLAINER_AUDIO_PATH = "games/arabic-letter-raceway/explainer/arabic_letter_raceway_how_to_use.mp3";
+const EXPLAINER_SEEN_KEY = "pq_arabic_letter_raceway_explainer_seen_v1";
+const HEAVY_IDS = new Set(["khaa","saad","daad","taa-heavy","zaa-heavy","ghayn","qaaf"]);
+const VOWEL_IDS = new Set(["alif","waw","yaa"]);
+const $ = (id) => document.getElementById(id);
+const els = {
+  score:$("score"),streak:$("streak"),fuel:$("fuel"),lap:$("lap"),total:$("total"),best:$("best"),
+  mode:$("mode"),gentle:$("gentle"),names:$("names"),autoSay:$("autoSay"),
+  sayBtn:$("sayBtn"),hintBtn:$("hintBtn"),nextBtn:$("nextBtn"),explainerBtn:$("explainerBtn"),choices:$("choices"),
+  signalGlyph:$("signalGlyph"),signalText:$("signalText"),clueTitle:$("clueTitle"),clueText:$("clueText"),
+  tags:$("tags"),coach:$("coach"),playerCar:$("playerCar"),rivalCar:$("rivalCar"),raceStatus:$("raceStatus"),
+  track:$("track"),trackNote:$("trackNote"),playerMeter:$("playerMeter"),pitBoard:$("pitBoard"),badgeBox:$("badgeBox"),
+  voiceStatus:$("voiceStatus"),voiceAuthLink:$("voiceAuthLink"),nativeAudio:$("nativeAudio"),reviewList:$("reviewList"),toast:$("toast"),fallbackAudio:$("fallbackAudio"),
+  startOverlay:$("startOverlay"),startRaceBtn:$("startRaceBtn"),startAudio:$("startAudio")
+};
+
+const state = {
+  deck:[],
+  round:0,
+  current:null,
+  choices:[],
+  score:0,
+  streak:0,
+  fuel:5,
+  player:0,
+  rival:0,
+  answered:false,
+  started:false,
+  clueKind:"sound",
+  voiceRunId:0,
+  missed:new Map(),
+  best:Number(localStorage.getItem(STORAGE_KEY) || 0)
+};
+
+let currentAudio = null;
+let lastElevenLabsError = "";
+let fallbackAudioRunId = 0;
+let lastPointerListenAt = 0;
+let webAudioCtx = null;
+let webAudioBuffer = null;
+let webAudioBufferUrl = "";
+let webAudioSource = null;
+let lapTimerId = null;
+let answerAdvanceTimerId = null;
+let autoAudioUnlocked = false;
+let staticClueAudioFiles = null;
+let staticClueAudioManifestPromise = null;
+const elevenLabsCache = new Map();
+const elevenLabsPending = new Map();
+
+function stripMarkup(text){
+  const div = document.createElement("div");
+  div.innerHTML = String(text || "");
+  return (div.textContent || div.innerText || "").replace(/\s+/g," ").trim();
+}
+
+function queryValue(names){
+  try{
+    const q = new URLSearchParams(window.location.search || "");
+    for(let i=0;i<names.length;i+=1){
+      const value = q.get(names[i]);
+      if(value) return value;
+    }
+  }catch(_e){}
+  return "";
+}
+
+function authToken(){
+  let stored = "";
+  try{ stored = sessionStorage.getItem("pq_ws_token") || ""; }catch(_e){}
+  return String(
+    window.__prequran_ws_token ||
+    window.prequran_ws_token ||
+    queryValue(["wstoken","ws"]) ||
+    stored ||
+    ""
+  ).trim();
+}
+
+function cacheAuthCredentials(data){
+  if(!data || typeof data !== "object") return;
+  const token = data.wstoken || data.ws || "";
+  if(token){
+    window.__prequran_ws_token = String(token);
+    try{ sessionStorage.setItem("pq_ws_token",String(token)); }catch(_e){}
+  }
+}
+
+window.addEventListener("message", function(event){
+  const data = event && event.data;
+  if(!data) return;
+  if(data.type === "PQ_TOKENS") cacheAuthCredentials(data);
+});
+
+function requestAuthCredentials(){
+  try{
+    if(window.parent && window.parent !== window){
+      window.parent.postMessage({type:"PQ_REQUEST_TOKENS",source:"arabic_letter_raceway"},"*");
+    }
+  }catch(_e){}
+}
+
+function moodleOrigin(){
+  try{
+    const params = new URLSearchParams(window.location.search || "");
+    const configured = params.get("moodle_origin") || params.get("moodle_base") || params.get("moodle");
+    if(configured) return new URL(configured).origin;
+    const host = String(window.location.hostname || "").toLowerCase();
+    if(host.indexOf("quraantest") !== -1) return "https://quraantest.academy";
+    if(document.referrer){
+      const referrerHost = new URL(document.referrer).hostname.toLowerCase();
+      if(referrerHost.indexOf("quraantest") !== -1) return "https://quraantest.academy";
+    }
+  }catch(_e){}
+  return "https://quraan.academy";
+}
+
+function currentEnvironment(){
+  const path = String(window.location.pathname || "");
+  if(path.indexOf("/pre_quraan_integration/") === 0) return "integration";
+  if(path.indexOf("/pre_quraan_staging/") === 0) return "staging";
+  return "production";
+}
+
+function academyRacewayLaunchUrl(){
+  const url = new URL(moodleOrigin() + "/local/hubredirect/issue_child.php");
+  url.searchParams.set("goto","arabic_letter_raceway_20260614a.html");
+  url.searchParams.set("managed_student","1");
+  const env = currentEnvironment();
+  if(env !== "production") url.searchParams.set("pq_env",env);
+  return url.toString();
+}
+
+function voiceCacheKey(text){
+  return text.toLowerCase().replace(/\s+/g," ").trim();
+}
+
+function publicBasePath(){
+  if(window.location.protocol === "file:") return "../media/";
+  const path = String(window.location.pathname || "");
+  if(path.indexOf("/pre_quraan_integration/") === 0) return "/pre_quraan_integration/";
+  if(path.indexOf("/pre_quraan_staging/") === 0) return "/pre_quraan_staging/";
+  return "/pre_quraan/";
+}
+
+function explainerAudioUrl(){
+  return publicBasePath() + EXPLAINER_AUDIO_PATH + "?v=" + EXPLAINER_AUDIO_VERSION;
+}
+
+function hasSeenExplainer(){
+  try{ return window.localStorage.getItem(EXPLAINER_SEEN_KEY) === "1"; }catch(_e){ return false; }
+}
+
+function markExplainerSeen(){
+  try{ window.localStorage.setItem(EXPLAINER_SEEN_KEY,"1"); }catch(_e){}
+}
+
+function setVoiceStatus(text){
+  if(els.voiceStatus) els.voiceStatus.textContent = text;
+  if(els.voiceAuthLink){
+    els.voiceAuthLink.href = academyRacewayLaunchUrl();
+    els.voiceAuthLink.classList.toggle("show", /token|login/i.test(String(text || "")));
+  }
+}
+
+function describeTtsError(error){
+  const message = String(error && error.message || error || "");
+  if(!authToken()) return "ElevenLabs needs the academy voice token. Open from the academy app or add wstoken to the URL.";
+  if(/abort|timeout/i.test(message)) return "ElevenLabs voice took too long. Tap Listen to try again.";
+  if(/401|403|login|token|credential/i.test(message)) return "ElevenLabs voice needs your academy login. You can still play.";
+  if(/network|fetch|failed|cors/i.test(message)) return "ElevenLabs voice could not connect. You can still play.";
+  return "ElevenLabs voice is not ready. You can still play.";
+}
+
+function stopCurrentAudio(){
+  if(currentAudio){
+    try{
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }catch(_e){}
+    currentAudio = null;
+  }
+  if(window.speechSynthesis){
+    try{ window.speechSynthesis.cancel(); }catch(_e){}
+  }
+}
+
+function playExplainerAudio(options){
+  const firstLaunch = !!(options && options.firstLaunch === true);
+  stopCurrentAudio();
+  setVoiceStatus(firstLaunch ? "Listen to the explainer first." : "Playing game explainer.");
+  els.explainerBtn.disabled = true;
+  els.explainerBtn.textContent = "Playing...";
+  const audio = new Audio(explainerAudioUrl());
+  currentAudio = audio;
+  audio.preload = "auto";
+  return new Promise(function(resolve){
+    const cleanup = function(){
+      if(currentAudio === audio) currentAudio = null;
+      els.explainerBtn.disabled = false;
+      els.explainerBtn.textContent = "Play explainer";
+    };
+    audio.onended = function(){
+      cleanup();
+      markExplainerSeen();
+      setVoiceStatus("Tap Listen for the voice clue.");
+      resolve(true);
+    };
+    audio.onerror = function(){
+      cleanup();
+      setVoiceStatus("Explainer audio did not load.");
+      toast("Explainer audio did not load.");
+      resolve(false);
+    };
+    audio.play().catch(function(){
+      cleanup();
+      setVoiceStatus(firstLaunch ? "Tap Start Race again if sound was blocked." : "Tap Play explainer again if sound was blocked.");
+      resolve(false);
+    });
+  });
+}
+
+function shuffle(items){
+  const copy = items.slice();
+  for(let i=copy.length-1;i>0;i-=1){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function isHeavyLetter(item){
+  return !!item && HEAVY_IDS.has(item.id);
+}
+
+function isVowelLetter(item){
+  return !!item && VOWEL_IDS.has(item.id);
+}
+
+function uniqueById(items){
+  const seen = new Set();
+  return items.filter(item => {
+    if(!item || seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
+  });
+}
+
+function modeLetters(){
+  const mode = els.mode.value;
+  if(mode === "review"){
+    const review = Array.from(state.missed.values());
+    return review.length ? review : LETTERS.slice(0,10);
+  }
+  if(mode === "starter"){
+    return LETTERS.filter(x => ["alif","baa","taa","jeem","haa","khaa","raa","seen","sheen","faa","qaaf","meem","noon","waw","yaa"].includes(x.id));
+  }
+  if(mode === "heavy"){
+    return LETTERS.filter(isHeavyLetter);
+  }
+  if(mode === "light"){
+    return LETTERS.filter(x => !isHeavyLetter(x));
+  }
+  if(mode === "vowels"){
+    return LETTERS.filter(isVowelLetter);
+  }
+  if(mode === "dots"){
+    return LETTERS.filter(x => x.dots > 0);
+  }
+  if(mode === "mouth"){
+    return LETTERS.filter(x => /throat|tongue|lips|teeth/.test(x.place));
+  }
+  return LETTERS;
+}
+
+function pickCycled(items,index,fallback){
+  const pool = items.length ? items : fallback;
+  return pool[index % pool.length];
+}
+
+function questionKindForMode(mode,index,target){
+  if(mode === "heavy") return index % 2 === 0 ? "heavy" : "sound";
+  if(mode === "light") return index % 2 === 0 ? "light" : "mouth";
+  if(mode === "vowels") return index % 2 === 0 ? "vowel" : "general";
+  if(mode === "dots") return index % 2 === 0 ? "dots" : "sound";
+  if(mode === "mouth") return index % 2 === 0 ? "mouth" : "sound";
+  const cycle = ["sound","mouth","dots","heavy","light","vowel","general"];
+  let kind = cycle[index % cycle.length];
+  if(kind === "heavy" && !isHeavyLetter(target)) kind = "general";
+  if(kind === "light" && isHeavyLetter(target)) kind = "mouth";
+  if(kind === "vowel" && !isVowelLetter(target)) kind = "sound";
+  return kind;
+}
+
+function buildQuestionDeck(list){
+  const mode = els.mode.value;
+  const base = uniqueById(list).length ? uniqueById(list) : LETTERS.slice();
+  const heavy = base.filter(isHeavyLetter);
+  const light = base.filter(x => !isHeavyLetter(x));
+  const vowels = base.filter(isVowelLetter);
+  const dotted = base.filter(x => x.dots > 0);
+  const buckets = {
+    sound: base,
+    mouth: base.filter(x => /throat|tongue|lips|teeth/.test(x.place)),
+    dots: dotted.length ? dotted : base,
+    heavy: heavy.length ? heavy : LETTERS.filter(isHeavyLetter),
+    light: light.length ? light : LETTERS.filter(x => !isHeavyLetter(x)),
+    vowel: vowels.length ? vowels : LETTERS.filter(isVowelLetter),
+    general: base
+  };
+  const deck = [];
+  for(let i=0;i<RACE_QUESTION_COUNT;i+=1){
+    let target;
+    if(mode === "heavy"){
+      target = pickCycled(buckets.heavy,i,base);
+    } else if(mode === "light"){
+      target = pickCycled(buckets.light,i,base);
+    } else if(mode === "vowels"){
+      target = pickCycled(buckets.vowel,i,base);
+    } else {
+      const kindSeed = ["sound","mouth","dots","heavy","light","vowel","general"][i % 7];
+      target = pickCycled(buckets[kindSeed] || buckets.general,i,base);
+    }
+    const qKind = questionKindForMode(mode,i,target);
+    const staticMode = mode === "review" ? "" : mode;
+    const staticAudio = staticMode ? `${staticMode}_q${String(i + 1).padStart(2,"0")}.mp3` : "";
+    deck.push(Object.assign({}, target, { qKind, staticAudio }));
+  }
+  return deck;
+}
+
+function buildDeck(){
+  clearLapTimer();
+  clearAnswerAdvanceTimer();
+  state.voiceRunId += 1;
+  stopCurrentAudio();
+  const list = modeLetters();
+  state.deck = buildQuestionDeck(list);
+  state.round = 0;
+  state.score = 0;
+  state.streak = 0;
+  state.fuel = els.gentle.checked ? 5 : 3;
+  state.player = 0;
+  state.rival = 0;
+  state.answered = false;
+  state.started = false;
+  autoAudioUnlocked = false;
+  if(els.startOverlay) els.startOverlay.classList.remove("hidden");
+  els.badgeBox.textContent = "Earn clean lap, turbo streak, and finish line badges.";
+  nextLap(true);
+}
+
+function distractorsFor(target){
+  const others = LETTERS.filter(x => x.id !== target.id);
+  let pool;
+  if(target.qKind === "heavy"){
+    pool = others.filter(x => !isHeavyLetter(x));
+  } else if(target.qKind === "light"){
+    pool = others.filter(isHeavyLetter).concat(others.filter(x => !isHeavyLetter(x)));
+  } else if(target.qKind === "vowel"){
+    pool = others.filter(x => !isVowelLetter(x));
+  } else if(target.qKind === "dots"){
+    pool = LETTERS.filter(x => x.dots === target.dots && x.id !== target.id).concat(others);
+  } else if(target.qKind === "mouth"){
+    pool = LETTERS.filter(x => x.place === target.place && x.id !== target.id).concat(others);
+  } else {
+    pool = others.filter(x => x.dots === target.dots || x.place === target.place).concat(others);
+  }
+  return shuffle([target].concat(uniqueById(shuffle(pool)).slice(0,3)));
+}
+
+function setCoach(html,type){
+  els.coach.innerHTML = html;
+  els.coach.className = "coach" + (type ? " " + type : "");
+}
+
+function questionNumber(){
+  return state.round + 1;
+}
+
+function questionLabel(){
+  return `Question ${questionNumber()} of ${Math.max(state.deck.length,1)}`;
+}
+
+function broadMouthZone(item){
+  if(/throat/.test(item.place)) return "throat area";
+  if(/lip|lips/.test(item.place)) return "lip area";
+  if(/teeth/.test(item.place)) return "teeth area";
+  if(/tongue/.test(item.place)) return "tongue area";
+  return "mouth";
+}
+
+function mouthClueText(item){
+  const zone = broadMouthZone(item);
+  if(zone === "throat area") return "This sound starts from the throat area. Listen for whether it is soft, strong, or rough.";
+  if(zone === "lip area") return "This sound uses the lips. Watch for a pop, hum, blow, or rounded shape.";
+  if(zone === "teeth area") return "This sound uses the teeth area. Listen for air or voice near the front.";
+  if(zone === "tongue area") return "This sound uses the tongue. Listen for a tap, hiss, heavy sound, or back-tongue pop.";
+  return "Use the mouth clue and the sound clue together.";
+}
+
+function dotClueText(item){
+  if(item.dots === 0) return "This letter has no dots. Listen carefully so you do not choose only by shape.";
+  if(item.dots === 1) return "This letter has one dot. Listen carefully before you choose.";
+  if(item.dots === 2) return "This letter has two dots. Match the sound before you race ahead.";
+  return "This letter has three dots. Use the voice clue too.";
+}
+
+function heavyClueText(item){
+  return "This is one of the heavy letters. Listen for the deep sound, then choose the matching Arabic letter.";
+}
+
+function lightClueText(item){
+  return "This is a light letter. Listen for the clear, lighter sound, then choose the matching Arabic letter.";
+}
+
+function vowelClueText(item){
+  return "This is from the long-vowel or madd family. Listen carefully and choose the matching Arabic letter.";
+}
+
+function generalClueText(item){
+  if(isVowelLetter(item)) return "Alphabet lesson clue: this letter can help stretch a sound. Use the voice and letter shape together.";
+  if(isHeavyLetter(item)) return "Alphabet lesson clue: this letter belongs to the heavy-letter family. Listen for the deep sound.";
+  if(item.dots === 0) return "Alphabet lesson clue: this letter has no dots. Match the voice to the shape.";
+  if(item.dots === 1) return "Alphabet lesson clue: this letter has one dot. Listen first, then check the dot.";
+  if(item.dots === 2) return "Alphabet lesson clue: this letter has two dots. Use sound, mouth place, and shape.";
+  return "Alphabet lesson clue: this letter has three dots. Use sound, mouth place, and shape.";
+}
+
+function articulationVoiceText(item){
+  const parts = [];
+  parts.push(`The mouth place is ${broadMouthZone(item)}.`);
+  if(/throat/.test(item.place)) parts.push("This letter starts from a throat position.");
+  if(/lip|lips/.test(item.place)) parts.push("This letter uses the lips.");
+  if(/teeth/.test(item.place)) parts.push("This letter uses the teeth area.");
+  if(/tongue/.test(item.place)) parts.push("This letter uses the tongue.");
+  if(item.dots === 0) parts.push("Its written shape has no dots.");
+  if(item.dots === 1) parts.push("Its written shape has one dot.");
+  if(item.dots === 2) parts.push("Its written shape has two dots.");
+  if(item.dots === 3) parts.push("Its written shape has three dots.");
+  if(isHeavyLetter(item)) parts.push("It belongs to the heavy-letter family.");
+  if(isVowelLetter(item)) parts.push("It belongs to the long-vowel or madd family.");
+  return parts.join(" ");
+}
+
+function clueTags(item){
+  const tags = [];
+  if(state.clueKind === "sound"){
+    tags.push("listen first","mystery sound");
+  } else if(state.clueKind === "mouth"){
+    tags.push(broadMouthZone(item),"not the answer");
+  } else if(state.clueKind === "dots"){
+    tags.push(item.dots === 0 ? "no-dot group" : "dotted group","use sound too");
+  } else if(state.clueKind === "heavy"){
+    tags.push("heavy letter","deep sound");
+  } else if(state.clueKind === "light"){
+    tags.push("light letter","clear sound");
+  } else if(state.clueKind === "vowel"){
+    tags.push("vowel letter","madd family");
+  } else {
+    tags.push("alphabet lesson","use sound too");
+  }
+  return tags;
+}
+
+function renderClue(){
+  const item = state.current;
+  if(!item) return;
+  state.clueKind = item.qKind || (state.round % 3 === 0 ? "sound" : state.round % 3 === 1 ? "mouth" : "dots");
+  const cluePrefix = `Clue ${questionNumber()} of ${Math.max(state.deck.length,1)}: `;
+  els.signalGlyph.textContent = "؟";
+  els.signalText.textContent = state.clueKind === "sound" ? "listen" : "clue";
+  if(state.clueKind === "sound"){
+    els.clueTitle.textContent = cluePrefix + "Sound clue";
+  } else if(state.clueKind === "mouth"){
+    els.clueTitle.textContent = cluePrefix + "Mouth clue";
+  } else if(state.clueKind === "dots"){
+    els.clueTitle.textContent = cluePrefix + "Letter clue";
+  } else if(state.clueKind === "heavy"){
+    els.clueTitle.textContent = cluePrefix + "Heavy letter clue";
+  } else if(state.clueKind === "light"){
+    els.clueTitle.textContent = cluePrefix + "Light letter clue";
+  } else if(state.clueKind === "vowel"){
+    els.clueTitle.textContent = cluePrefix + "Vowel letter clue";
+  } else {
+    els.clueTitle.textContent = cluePrefix + "Alphabet lesson clue";
+  }
+  els.clueText.textContent = clueVoiceText(item);
+  els.tags.innerHTML = "";
+  clueTags(item).forEach(text => {
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = text;
+    els.tags.appendChild(tag);
+  });
+}
+
+function renderChoices(){
+  els.choices.innerHTML = "";
+  state.choices.forEach((item,idx) => {
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.type = "button";
+    btn.dataset.id = item.id;
+    btn.setAttribute("aria-label", `Choice ${idx + 1}: ${item.name}`);
+    btn.innerHTML = `<div class="letter">${item.letter}</div>${els.names.checked ? `<div class="name">${item.name}</div>` : ""}`;
+    btn.addEventListener("click", () => choose(item,btn));
+    els.choices.appendChild(btn);
+  });
+}
+
+function renderRace(){
+  const playerPct = Math.min(state.player,100);
+  const rivalPct = Math.min(state.rival,100);
+  const trackWidth = els.track ? els.track.clientWidth : 0;
+  const carWidth = els.playerCar ? els.playerCar.offsetWidth : 86;
+  const maxTravel = Math.max(0, trackWidth - carWidth - 34);
+  els.playerCar.style.transform = `translateX(${Math.round(maxTravel * playerPct / 100)}px)`;
+  els.rivalCar.style.transform = `translateX(${Math.round(maxTravel * rivalPct / 100)}px)`;
+  els.playerMeter.style.width = `${playerPct}%`;
+  els.raceStatus.textContent = playerPct >= 100 ? "Finish line reached" : `You are ${playerPct}% down the track`;
+}
+
+function renderHud(){
+  els.score.textContent = state.score;
+  els.streak.textContent = state.streak;
+  els.fuel.textContent = state.fuel;
+  els.lap.textContent = Math.min(state.round + 1, Math.max(state.deck.length,1));
+  els.total.textContent = Math.max(state.deck.length,1);
+  els.best.textContent = state.best;
+}
+
+function renderReview(){
+  els.reviewList.innerHTML = "";
+  const missed = Array.from(state.missed.values());
+  if(!missed.length){
+    const chip = document.createElement("span");
+    chip.className = "review-chip";
+    chip.textContent = "No practice laps yet";
+    els.reviewList.appendChild(chip);
+    return;
+  }
+  missed.slice(0,10).forEach(item => {
+    const chip = document.createElement("span");
+    chip.className = "review-chip";
+    chip.textContent = `${item.letter} ${item.name}`;
+    els.reviewList.appendChild(chip);
+  });
+}
+
+function renderAll(){
+  renderHud();
+  renderRace();
+  renderClue();
+  renderChoices();
+  renderReview();
+  preloadCurrentFallbackAudio();
+  els.nextBtn.disabled = !state.answered;
+}
+
+function clearLapTimer(){
+  if(lapTimerId){
+    window.clearTimeout(lapTimerId);
+    lapTimerId = null;
+  }
+}
+
+function clearAnswerAdvanceTimer(){
+  if(answerAdvanceTimerId){
+    window.clearTimeout(answerAdvanceTimerId);
+    answerAdvanceTimerId = null;
+  }
+}
+
+function startLapTimer(){
+  clearLapTimer();
+  if(!state.current || state.answered) return;
+  lapTimerId = window.setTimeout(handleLapTimeout, LAP_TIMEOUT_MS);
+}
+
+function startTimerAfterVoice(played){
+  if(!state.current || state.answered) return;
+  if(played){
+    startLapTimer();
+    return;
+  }
+  clearLapTimer();
+  els.trackNote.textContent = "Timer paused until the clue voice plays.";
+}
+
+function handleLapTimeout(){
+  lapTimerId = null;
+  if(state.answered || !state.current) return;
+  state.answered = true;
+  state.streak = 0;
+  state.missed.set(state.current.id,state.current);
+  if(!els.gentle.checked) state.fuel = Math.max(0,state.fuel - 1);
+  advanceRival(7);
+  setCoach(`<strong>${questionLabel()} time up.</strong> This lap goes to Practice Lap. Next clue coming up.`,"error");
+  els.trackNote.textContent = "Try the next sound. Missed laps are saved for review.";
+  renderHud();
+  renderRace();
+  renderReview();
+  els.nextBtn.disabled = true;
+  if(state.fuel === 0 || state.round >= state.deck.length - 1){
+    window.setTimeout(finishRace,450);
+    return;
+  }
+  window.setTimeout(function(){ nextLap(false); },450);
+}
+
+function scheduleAdvanceAfterAnswer(){
+  clearAnswerAdvanceTimer();
+  els.nextBtn.disabled = true;
+  answerAdvanceTimerId = window.setTimeout(function(){
+    answerAdvanceTimerId = null;
+    if(state.fuel === 0 || state.round >= state.deck.length - 1){
+      finishRace();
+      return;
+    }
+    nextLap(false);
+  }, ANSWER_ADVANCE_MS);
+}
+
+async function elevenLabsObjectUrl(text){
+  const clean = stripMarkup(text);
+  if(!clean) return "";
+  const key = voiceCacheKey(clean);
+  if(elevenLabsCache.has(key)) return elevenLabsCache.get(key);
+  if(elevenLabsPending.has(key)) return elevenLabsPending.get(key);
+
+  function fetchAudio(attempt){
+    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    const timeoutId = controller ? window.setTimeout(function(){ controller.abort(); }, TTS_REQUEST_TIMEOUT_MS) : 0;
+    return fetch(moodleOrigin() + "/local/hubredirect/quiz_tts.php", {
+      method:"POST",
+      credentials:"include",
+      signal:controller ? controller.signal : undefined,
+      headers:{
+        "Accept":"audio/mpeg",
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({text:clean,wstoken:authToken()})
+    }).then(function(res){
+      if(!res.ok){
+        return res.text().then(function(body){
+          throw new Error("ElevenLabs TTS unavailable: HTTP " + res.status + " " + body.slice(0,160));
+        });
+      }
+      return res.blob();
+    }).catch(function(error){
+      if(attempt >= 1) throw error;
+      return new Promise(function(resolve){ window.setTimeout(resolve,260); }).then(function(){ return fetchAudio(attempt + 1); });
+    }).finally(function(){
+      if(timeoutId) window.clearTimeout(timeoutId);
+    });
+  }
+
+  const pending = fetchAudio(1).then(function(blob){
+    if(!blob || !/^audio\//i.test(blob.type || "audio/mpeg")){
+      throw new Error("Invalid TTS audio response");
+    }
+    const url = URL.createObjectURL(blob);
+    elevenLabsCache.set(key,url);
+    if(elevenLabsCache.size > 48){
+      const firstKey = elevenLabsCache.keys().next().value;
+      const firstUrl = elevenLabsCache.get(firstKey);
+      try{ URL.revokeObjectURL(firstUrl); }catch(_e){}
+      elevenLabsCache.delete(firstKey);
+    }
+    return url;
+  }).finally(function(){
+    elevenLabsPending.delete(key);
+  });
+
+  elevenLabsPending.set(key,pending);
+  return pending;
+}
+
+function isCurrentVoiceRun(runId,itemId,round){
+  return runId === state.voiceRunId && state.current && state.current.id === itemId && state.round === round && !state.answered;
+}
+
+async function speakWithElevenLabs(text,voiceRun){
+  const clean = stripMarkup(text);
+  if(!clean) return false;
+  if(!isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) return false;
+  setVoiceStatus("Preparing ElevenLabs voice...");
+  const url = await elevenLabsObjectUrl(clean).catch(function(error){
+    if(!isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) return "";
+    lastElevenLabsError = describeTtsError(error);
+    setVoiceStatus(lastElevenLabsError);
+    return "";
+  });
+  if(!isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) return false;
+  if(!url) return false;
+  return await new Promise(function(resolve){
+    if(!isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)){
+      resolve(false);
+      return;
+    }
+    stopCurrentAudio();
+    const audio = new Audio(url);
+    currentAudio = audio;
+    audio.onplay = function(){
+      if(isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) setVoiceStatus("ElevenLabs voice is speaking.");
+    };
+    audio.onended = function(){
+      if(currentAudio === audio) currentAudio = null;
+      if(isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) setVoiceStatus("Tap Say clue to hear it again.");
+      resolve(true);
+    };
+    audio.onerror = function(){
+      if(currentAudio === audio) currentAudio = null;
+      if(!isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)){
+        resolve(false);
+        return;
+      }
+      lastElevenLabsError = "Browser could not play the ElevenLabs audio.";
+      setVoiceStatus(lastElevenLabsError);
+      resolve(false);
+    };
+    audio.play().catch(function(){
+      if(currentAudio === audio) currentAudio = null;
+      if(!isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)){
+        resolve(false);
+        return;
+      }
+      lastElevenLabsError = "Browser blocked audio. Tap Say clue again.";
+      setVoiceStatus(lastElevenLabsError);
+      resolve(false);
+    });
+  });
+}
+
+function staticClueAudioUrl(item){
+  if(!item || !item.staticAudio) return "";
+  return publicBasePath() + STATIC_CLUE_AUDIO_PATH + item.staticAudio + "?v=" + STATIC_CLUE_AUDIO_VERSION;
+}
+
+function staticClueAudioManifestUrl(){
+  return publicBasePath() + STATIC_CLUE_AUDIO_PATH + "manifest.json?v=" + STATIC_CLUE_AUDIO_VERSION;
+}
+
+function loadStaticClueAudioManifest(){
+  if(staticClueAudioFiles) return Promise.resolve(staticClueAudioFiles);
+  if(staticClueAudioManifestPromise) return staticClueAudioManifestPromise;
+  staticClueAudioManifestPromise = fetch(staticClueAudioManifestUrl(), { cache:"force-cache" })
+    .then(function(res){
+      if(!res.ok) throw new Error("saved clue manifest unavailable");
+      return res.json();
+    })
+    .then(function(data){
+      const files = new Set();
+      (data.items || []).forEach(function(item){
+        if(item && item.audio) files.add(item.audio);
+      });
+      staticClueAudioFiles = files;
+      return files;
+    })
+    .catch(function(){
+      staticClueAudioFiles = new Set();
+      return staticClueAudioFiles;
+    });
+  return staticClueAudioManifestPromise;
+}
+
+async function speakWithStaticClueAudio(item,voiceRun){
+  const url = staticClueAudioUrl(item);
+  if(!url || !isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) return false;
+  const files = await loadStaticClueAudioManifest();
+  if(!files.has(item.staticAudio)) return false;
+  if(!isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) return false;
+  setVoiceStatus("Loading saved ElevenLabs clue...");
+  return await new Promise(function(resolve){
+    stopCurrentAudio();
+    const audio = new Audio(url);
+    currentAudio = audio;
+    audio.preload = "auto";
+    audio.onplay = function(){
+      if(isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) setVoiceStatus("Playing saved ElevenLabs clue.");
+    };
+    audio.onended = function(){
+      if(currentAudio === audio) currentAudio = null;
+      if(isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) setVoiceStatus("Tap Listen to hear the clue again.");
+      resolve(true);
+    };
+    audio.onerror = function(){
+      if(currentAudio === audio) currentAudio = null;
+      resolve(false);
+    };
+    audio.play().catch(function(){
+      if(currentAudio === audio) currentAudio = null;
+      if(isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)){
+        setVoiceStatus("Browser blocked audio. Tap Listen again.");
+      }
+      resolve(false);
+    });
+  });
+}
+
+function speakFallback(text,message){
+  if(!("speechSynthesis" in window)){
+    setVoiceStatus(lastElevenLabsError || "ElevenLabs voice is not ready. Tap Listen to try again.");
+    return false;
+  }
+  stopCurrentAudio();
+  setVoiceStatus(message || "Playing clue voice.");
+  const utterance = new SpeechSynthesisUtterance(stripMarkup(text));
+  utterance.rate = 0.78;
+  utterance.pitch = 1.04;
+  utterance.lang = "en-US";
+  utterance.onstart = function(){ setVoiceStatus(message || "Playing clue voice."); };
+  utterance.onend = function(){ setVoiceStatus("Tap Listen to hear the clue again."); };
+  window.speechSynthesis.speak(utterance);
+  return true;
+}
+
+function filenameCandidates(ar){
+  switch(ar){
+    case "ه": return ["ه","هـ","ـه"];
+    case "و": return ["و","وـ"];
+    case "ج": return ["ج","جـ"];
+    case "خ": return ["خ","خـ"];
+    default: return [ar];
+  }
+}
+
+function fallbackUrlForFilename(filename){
+  return AUDIO_BASE + encodeURIComponent(filename) + ".mp3" + AUDIO_CACHE_BUST;
+}
+
+function fallbackUrlsForItem(item){
+  const urls = [];
+  const localIndex = item && LOCAL_AUDIO_INDEX[item.id];
+  if(localIndex) urls.push(LOCAL_AUDIO_BASE + "alph_" + localIndex + ".mp3");
+  filenameCandidates(item.letter).forEach(function(candidate){
+    urls.push(fallbackUrlForFilename(candidate));
+  });
+  return urls;
+}
+
+function localFallbackUrlForItem(item){
+  const localIndex = item && LOCAL_AUDIO_INDEX[item.id];
+  return localIndex ? LOCAL_AUDIO_BASE + "alph_" + localIndex + ".mp3" : "";
+}
+
+function preloadCurrentFallbackAudio(){
+  if(!els.fallbackAudio || !state.current) return;
+  const url = localFallbackUrlForItem(state.current);
+  if(!url || els.fallbackAudio.getAttribute("src") === url) return;
+  els.fallbackAudio.pause();
+  els.fallbackAudio.src = url;
+  els.fallbackAudio.load();
+  if(els.nativeAudio){
+    els.nativeAudio.pause();
+    els.nativeAudio.src = url;
+    els.nativeAudio.load();
+  }
+  if(els.startAudio){
+    els.startAudio.pause();
+    els.startAudio.src = url;
+    els.startAudio.load();
+  }
+  preloadWebAudio(url);
+}
+
+async function playNativeCurrentSound(preferredAudio){
+  const url = localFallbackUrlForItem(state.current);
+  const audio = preferredAudio || els.startAudio || els.nativeAudio || els.fallbackAudio;
+  if(!url || !audio) return false;
+  try{
+    if(audio.getAttribute("src") !== url && audio.src !== url){
+      audio.src = url;
+      audio.load();
+    }
+    currentAudio = audio;
+    audio.currentTime = 0;
+    audio.onplay = function(){ setVoiceStatus("Playing letter voice."); };
+    audio.onended = function(){
+      if(currentAudio === audio) currentAudio = null;
+      setVoiceStatus("Tap Listen to hear it again.");
+    };
+    const played = audio.play();
+    if(played && typeof played.then === "function") await played;
+    return true;
+  }catch(_e){
+    setVoiceStatus("Use the Voice audio play button if sound was blocked.");
+    return false;
+  }
+}
+
+function ensureWebAudioContext(){
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if(!AudioCtx) return null;
+  if(!webAudioCtx) webAudioCtx = new AudioCtx();
+  return webAudioCtx;
+}
+
+function preloadWebAudio(url){
+  const ctx = ensureWebAudioContext();
+  if(!ctx || !url || webAudioBufferUrl === url) return;
+  webAudioBufferUrl = url;
+  webAudioBuffer = null;
+  fetch(url)
+    .then(function(res){
+      if(!res.ok) throw new Error("audio fetch failed");
+      return res.arrayBuffer();
+    })
+    .then(function(buf){ return ctx.decodeAudioData(buf); })
+    .then(function(decoded){
+      if(webAudioBufferUrl === url) webAudioBuffer = decoded;
+    })
+    .catch(function(){});
+}
+
+async function playWebAudioFallback(item){
+  const url = localFallbackUrlForItem(item);
+  const ctx = ensureWebAudioContext();
+  if(!ctx || !url) return false;
+  if(webAudioBufferUrl !== url || !webAudioBuffer){
+    preloadWebAudio(url);
+    return false;
+  }
+  try{
+    if(ctx.state === "suspended") await ctx.resume();
+    if(webAudioSource){
+      try{ webAudioSource.stop(); }catch(_e){}
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = webAudioBuffer;
+    src.connect(ctx.destination);
+    webAudioSource = src;
+    src.onended = function(){
+      if(webAudioSource === src) webAudioSource = null;
+      setVoiceStatus("Tap Listen to hear it again.");
+    };
+    src.start(0);
+    setVoiceStatus("Playing letter voice.");
+    return true;
+  }catch(_e){
+    return false;
+  }
+}
+
+function tryPlayFallbackUrl(url, runId){
+  return new Promise(function(resolve,reject){
+    stopCurrentAudio();
+    const audio = els.fallbackAudio || new Audio();
+    currentAudio = audio;
+    audio.preload = "auto";
+    if(runId !== fallbackAudioRunId){
+      reject(new Error("cancelled"));
+      return;
+    }
+    audio.pause();
+    audio.removeAttribute("src");
+    audio.load();
+    audio.onplay = function(){ setVoiceStatus("Playing letter voice."); };
+    audio.onended = function(){
+      if(currentAudio === audio) currentAudio = null;
+      setVoiceStatus("Tap Listen to hear it again.");
+    };
+    audio.onerror = function(){ reject(new Error("audio failed")); };
+    audio.src = url;
+    audio.play().then(resolve).catch(reject);
+  });
+}
+
+async function playLetterAudioFallback(item){
+  if(!item) return false;
+  if(await playNativeCurrentSound()) return true;
+  const localUrl = localFallbackUrlForItem(item);
+  if(localUrl && els.fallbackAudio){
+    try{
+      const audio = els.fallbackAudio;
+      if(audio.getAttribute("src") !== localUrl && audio.src !== localUrl){
+        audio.src = localUrl;
+        audio.load();
+      }
+      currentAudio = audio;
+      audio.pause();
+      audio.currentTime = 0;
+      audio.onplay = function(){ setVoiceStatus("Playing letter voice."); };
+      audio.onended = function(){
+        if(currentAudio === audio) currentAudio = null;
+        setVoiceStatus("Tap Listen to hear it again.");
+      };
+      await audio.play();
+      return true;
+    }catch(_e){
+      setVoiceStatus("Sound was blocked. Tap Listen once.");
+      return false;
+    }
+  }
+  if(await playWebAudioFallback(item)) return true;
+  const runId = ++fallbackAudioRunId;
+  stopCurrentAudio();
+  for(const url of fallbackUrlsForItem(item)){
+    try{
+      await tryPlayFallbackUrl(url, runId);
+      return true;
+    }catch(error){
+      if(error && error.message === "cancelled") return false;
+    }
+  }
+  setVoiceStatus("Audio could not play. Try Listen again.");
+  return false;
+}
+
+function clueVoiceText(item){
+  if(!item) return "";
+  const kind = item.qKind || state.clueKind;
+  if(kind === "sound"){
+    return `${articulationVoiceText(item)} Choose the matching Arabic letter.`;
+  }
+  if(kind === "mouth"){
+    return `${mouthClueText(item)} ${articulationVoiceText(item)} Choose the matching Arabic letter.`;
+  }
+  if(kind === "dots"){
+    return `${dotClueText(item)} ${articulationVoiceText(item)} Choose the matching Arabic letter.`;
+  }
+  if(kind === "heavy"){
+    return `${heavyClueText(item)} ${articulationVoiceText(item)} Choose the matching Arabic letter.`;
+  }
+  if(kind === "light"){
+    return `${lightClueText(item)} ${articulationVoiceText(item)} Choose the matching Arabic letter.`;
+  }
+  if(kind === "vowel"){
+    return `${vowelClueText(item)} ${articulationVoiceText(item)} Choose the matching Arabic letter.`;
+  }
+  return `${generalClueText(item)} ${articulationVoiceText(item)} Choose the matching Arabic letter.`;
+}
+
+async function sayClue(){
+  if(!state.current) return false;
+  const item = state.current;
+  const voiceRun = {runId:++state.voiceRunId,itemId:item.id,round:state.round};
+  const text = `${questionLabel()}. ${clueVoiceText(item)}`;
+  const staticPlayed = await speakWithStaticClueAudio(item,voiceRun);
+  if(staticPlayed) return true;
+  const token = authToken();
+  if(!token) requestAuthCredentials();
+  return speakWithElevenLabs(text,voiceRun).then(async function(played){
+    if(!played && isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) setVoiceStatus(lastElevenLabsError || "ElevenLabs voice is not ready. Tap Listen to try again.");
+    return played;
+  }).catch(async function(){
+    if(isCurrentVoiceRun(voiceRun.runId,voiceRun.itemId,voiceRun.round)) setVoiceStatus(lastElevenLabsError || "ElevenLabs voice is not ready. Tap Listen to try again.");
+    return false;
+  });
+}
+
+function autoPlayCurrentClue(){
+  if(!state.current || state.answered) return;
+  if(!els.autoSay.checked){
+    clearLapTimer();
+    setVoiceStatus("Tap Listen to hear the clue and start the timer.");
+    return;
+  }
+  if(LOCAL_PREVIEW && !authToken()){
+    if(autoAudioUnlocked){
+      window.setTimeout(function(){
+        sayClue().then(function(played){
+          startTimerAfterVoice(played);
+        });
+      },180);
+    } else {
+      setVoiceStatus("Tap Listen once to start auto clue.");
+      clearLapTimer();
+    }
+    return;
+  }
+  window.setTimeout(function(){
+    sayClue().then(function(played){
+      startTimerAfterVoice(played);
+    });
+  },180);
+}
+
+function advancePlayer(){
+  const base = 100 / Math.max(state.deck.length,1);
+  const turbo = state.streak >= 2 ? 3 : 0;
+  state.player = Math.min(100, Math.round(state.player + base + turbo));
+  els.playerCar.classList.add("turbo");
+  window.setTimeout(() => els.playerCar.classList.remove("turbo"), 520);
+}
+
+function advanceRival(amount){
+  state.rival = Math.min(100, Math.round(state.rival + amount));
+}
+
+function choose(item,btn){
+  if(state.answered || !state.current) return;
+  clearLapTimer();
+  const correct = item.id === state.current.id;
+  if(correct){
+    state.answered = true;
+    state.streak += 1;
+    state.score += 10 + Math.min(state.streak,5);
+    state.missed.delete(state.current.id);
+    btn.classList.add("correct");
+    advancePlayer();
+    setCoach(`<strong>Clean lap.</strong> Correct match for ${questionLabel()}.`,"success");
+    els.trackNote.textContent = state.streak >= 3 ? "Turbo streak. Your car gets a small boost." : "Nice driving. Correct sounds move your car.";
+    if(state.streak === 3) els.badgeBox.textContent = "Turbo streak badge: 3 clean laps in a row.";
+    toast("Clean lap");
+  } else {
+    state.answered = true;
+    btn.classList.add("wrong");
+    state.streak = 0;
+    state.missed.set(state.current.id,state.current);
+    if(!els.gentle.checked) state.fuel = Math.max(0,state.fuel - 1);
+    advanceRival(7);
+    setCoach("<strong>Pit stop needed.</strong> Listen again or use Pit stop. The answer is still hidden.","error");
+    els.trackNote.textContent = "No worry. The practice lap saves this sound for review.";
+    if(state.fuel === 0){
+      revealCorrect();
+    }
+  }
+  renderHud();
+  renderRace();
+  renderReview();
+  scheduleAdvanceAfterAnswer();
+}
+
+function revealCorrect(){
+  Array.from(els.choices.children).forEach(btn => {
+    if(btn.dataset.id === state.current.id) btn.classList.add("correct");
+  });
+}
+
+function pitStop(){
+  if(!state.current || state.answered) return;
+  const wrong = Array.from(els.choices.children).filter(btn => btn.dataset.id !== state.current.id && !btn.classList.contains("wrong"));
+  shuffle(wrong).slice(0,2).forEach(btn => {
+    btn.disabled = true;
+    btn.style.opacity = ".45";
+  });
+  els.pitBoard.textContent = "Two choices removed. Listen again and compare the remaining letter shapes.";
+  setCoach("<strong>Pit stop clue:</strong> Two wrong choices are faded. The answer is still hidden.");
+}
+
+function nextLap(fromReset){
+  clearLapTimer();
+  clearAnswerAdvanceTimer();
+  state.voiceRunId += 1;
+  stopCurrentAudio();
+  if(!state.deck.length){
+    setCoach("<strong>No race loaded.</strong> Choose a mode to begin.");
+    renderAll();
+    return;
+  }
+  if(!fromReset && state.round >= state.deck.length - 1){
+    finishRace();
+    return;
+  }
+  if(!fromReset) state.round += 1;
+  state.current = state.deck[state.round];
+  state.choices = distractorsFor(state.current);
+  state.answered = false;
+  setCoach(`<strong>${questionLabel()}.</strong> Match the clue to the correct Arabic letter.`);
+  els.pitBoard.textContent = "Use Pit stop to remove two wrong choices and see the mouth-place clue.";
+  renderAll();
+  if(state.started){
+    autoPlayCurrentClue();
+  } else {
+    clearLapTimer();
+    setVoiceStatus("Tap Start Race to hear the first clue.");
+  }
+}
+
+function finishRace(){
+  clearLapTimer();
+  clearAnswerAdvanceTimer();
+  state.voiceRunId += 1;
+  stopCurrentAudio();
+  state.answered = true;
+  state.player = Math.max(state.player,100);
+  if(state.score > state.best){
+    state.best = state.score;
+    localStorage.setItem(STORAGE_KEY,String(state.best));
+    els.badgeBox.textContent = `New best score: ${state.best}. Finish line badge earned.`;
+  } else if(state.missed.size){
+    els.badgeBox.textContent = "Finish line reached. Practice lap is ready for missed letters.";
+  } else {
+    els.badgeBox.textContent = "Perfect race badge: every lap was clean.";
+  }
+  setCoach(state.missed.size ? "<strong>Race complete.</strong> Choose Practice lap to review missed letters." : "<strong>Race complete.</strong> You matched every clue.","success");
+  renderHud();
+  renderRace();
+  renderReview();
+  els.nextBtn.disabled = true;
+}
+
+function toast(text){
+  els.toast.textContent = text;
+  els.toast.classList.add("show");
+  window.clearTimeout(toast.timer);
+  toast.timer = window.setTimeout(() => els.toast.classList.remove("show"),1100);
+}
+
+async function pointerListen(){
+  autoAudioUnlocked = true;
+  lastPointerListenAt = Date.now();
+}
+
+function unlockAutoAudio(event){
+  if(autoAudioUnlocked || !els.autoSay.checked || !state.current || state.answered) return;
+  autoAudioUnlocked = true;
+  if(event && event.target === els.sayBtn) return;
+  setVoiceStatus("Tap Listen once to start auto clue.");
+}
+
+async function startRace(){
+  if(!state.current) return;
+  state.started = true;
+  autoAudioUnlocked = true;
+  if(els.startOverlay) els.startOverlay.classList.add("hidden");
+  if(!hasSeenExplainer()){
+    setVoiceStatus("Listen to the explainer first.");
+    const played = await playExplainerAudio({firstLaunch:true});
+    if(!played) setVoiceStatus("Starting clue voice...");
+  }else{
+    setVoiceStatus("Starting clue voice...");
+  }
+  autoPlayCurrentClue();
+}
+
+function startRaceFromAudioControl(){
+  if(state.started || !state.current) return;
+  state.started = true;
+  autoAudioUnlocked = true;
+  setVoiceStatus("Starting clue voice...");
+  if(els.startOverlay) els.startOverlay.classList.add("hidden");
+  autoPlayCurrentClue();
+}
+
+els.sayBtn.addEventListener("click", () => {
+  autoAudioUnlocked = true;
+  sayClue().then(function(played){
+    startTimerAfterVoice(played);
+  });
+});
+els.sayBtn.addEventListener("pointerdown", pointerListen);
+els.sayBtn.addEventListener("mousedown", pointerListen);
+els.sayBtn.addEventListener("touchstart", pointerListen, {passive:true});
+els.hintBtn.addEventListener("click", pitStop);
+els.nextBtn.addEventListener("click", () => nextLap(false));
+els.explainerBtn.addEventListener("click", playExplainerAudio);
+els.startRaceBtn.addEventListener("click", startRace);
+els.startAudio.addEventListener("play", startRaceFromAudioControl);
+els.mode.addEventListener("change", buildDeck);
+els.gentle.addEventListener("change", buildDeck);
+els.names.addEventListener("change", renderChoices);
+els.autoSay.addEventListener("change", () => {
+  if(els.autoSay.checked && state.current && !state.answered) autoPlayCurrentClue();
+});
+document.addEventListener("pointerdown", unlockAutoAudio, {once:true});
+document.addEventListener("mousedown", unlockAutoAudio, {once:true});
+document.addEventListener("click", unlockAutoAudio, {once:true});
+window.addEventListener("resize", renderRace);
+
+document.addEventListener("keydown", (event) => {
+  if(event.target && ["SELECT","INPUT","BUTTON"].includes(event.target.tagName)) return;
+  if(event.code === "Space"){
+    event.preventDefault();
+    sayClue().then(function(played){
+      startTimerAfterVoice(played);
+    });
+    return;
+  }
+  const n = Number(event.key);
+  if(n >= 1 && n <= state.choices.length){
+    const btn = els.choices.children[n - 1];
+    if(btn) btn.click();
+  }
+});
+
+requestAuthCredentials();
+buildDeck();
+</script>
+</body>
+</html>
+

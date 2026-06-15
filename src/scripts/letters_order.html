@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>(ي ← ا) Alphabet Order — Drag to Sort</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Noto+Naskh+Arabic:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    /* Shared Unit-1 palette (matching Transliteration Match + Flashcards) */
+    --u1-bg1:#ffeef7;
+    --u1-bg2:#ffffff;
+
+    --u1-header-start:#aee8ff;  /* teal */
+    --u1-header-mid:#bff8c0;    /* mint */
+    --u1-header-end:#ffd6a5;    /* peach */
+
+    --u1-primary-start:#b9f5c7; /* Play All mint */
+    --u1-primary-end:#63d58c;   /* green */
+    --u1-primary-text:#143b29;  /* dark green text */
+
+    --panel:#ffffff;
+    --ink:#123047;
+    --good:#16a34a;
+    --bad:#f97373;
+    --card:#fffaf0;
+    --grid-gap:10px;
+    --radius-card:22px;
+    --radius-btn:18px;
+    --tile-letter-size:54px;   /* default big font */
+    --swap-speed:0.12s;        /* default swap speed */
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+    color:var(--ink);
+    line-height:1.6;
+    background:linear-gradient(180deg,var(--u1-bg1),var(--u1-bg2),var(--u1-bg1));
+  }
+  .page{
+    min-height:100%;
+    display:grid;
+    place-items:center;
+    padding:10px;
+  }
+  .sheet{
+    width:min(1120px,100vw);
+    background:var(--panel);
+    border-radius:28px;
+    box-shadow:0 16px 36px rgba(15,23,42,.18),0 6px 12px rgba(15,23,42,.10);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .top-bar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:#ffffffee;
+    padding-bottom:6px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+  .head{
+    margin:10px 12px 8px;
+    padding:10px 14px;
+    border-radius:20px;
+    background:linear-gradient(
+      135deg,
+      var(--u1-header-start),
+      var(--u1-header-mid),
+      var(--u1-header-end)
+    );
+    color:#1f2937;
+    font:900 20px/1 "Baloo 2",system-ui;
+    text-align:center;
+    box-shadow:inset 0 -2px 0 rgba(0,0,0,0.08);
+  }
+  .toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    justify-content:space-between;
+    margin:0 12px 4px;
+  }
+  .toolbar-left{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+  }
+  .toolbar-right{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    justify-content:flex-end;
+  }
+  .mini-label{
+    font:800 12px "Baloo 2",system-ui;
+    color:#1e293b;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    white-space:nowrap;
+  }
+  .mini-select{
+    border-radius:999px;
+    border:1px solid #cbd5f5;
+    padding:4px 8px;
+    font:800 12px "Baloo 2",system-ui;
+    background:#ffffff;
+    color:#0f172a;
+  }
+
+  .btn{
+    border:none;
+    border-radius:var(--radius-btn);
+    padding:.75rem 1.2rem;
+    font:900 16px "Baloo 2",system-ui;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--u1-primary-text);
+    background:linear-gradient(135deg,var(--u1-primary-start),var(--u1-primary-end));
+    box-shadow:0 6px 12px rgba(39,148,99,.4);
+    transition:transform 0.08s ease,box-shadow 0.15s ease;
+  }
+  .btn.ghost{
+    background:linear-gradient(135deg,var(--u1-primary-start),var(--u1-primary-end));
+    color:var(--u1-primary-text);
+    border:0;
+    box-shadow:0 6px 12px rgba(39,148,99,.4);
+  }
+  .btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 9px 18px rgba(39,148,99,.5);
+  }
+  .btn:active{
+    transform:translateY(1px);
+    box-shadow:0 4px 10px rgba(39,148,99,.35);
+  }
+  .note{
+    font:800 14px "Baloo 2",system-ui;
+    color:#475569;
+  }
+
+  .stats-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    justify-content:space-between;
+    margin:0 12px 8px;
+  }
+  .stats-left,.stats-right{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:6px;
+  }
+  .pill{
+    border-radius:999px;
+    padding:4px 12px;
+    background:#ffffffee;
+    border:1px solid #bfdbfe;
+    font:800 14px "Baloo 2",system-ui;
+    color:#1e293b;
+    display:flex;
+    align-items:center;
+    gap:4px;
+  }
+  .pill strong{font-weight:900;}
+  .status-good{color:var(--good);}
+  .status-bad{color:var(--bad);}
+  .status-neutral{color:#64748b;}
+  .heart{color:#f97373;font-size:18px;}
+
+  .grid-wrap{
+    margin:6px 12px 14px;
+    border-radius:22px;
+    background:linear-gradient(135deg,var(--u1-primary-start),var(--u1-primary-end));
+    border:2px solid rgba(0,0,0,0.08);
+    box-shadow:0 6px 14px rgba(0,0,0,0.16);
+    padding:12px;
+  }
+  .grid-title{
+    font:800 14px "Baloo 2",system-ui;
+    color:#0f172a;
+    margin:0 0 8px;
+  }
+  .grid{
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:row-reverse;
+    gap:var(--grid-gap);
+    justify-content:center;
+  }
+
+  .tile{
+    width:90px;
+    height:112px;
+    border-radius:var(--radius-card);
+    background:var(--card);
+    border:2px solid #ffdfb1;
+    box-shadow:0 6px 0 #f2c88c,0 9px 14px rgba(15,23,42,.12);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:6px 4px 8px;
+    cursor:grab;
+    touch-action:none;
+    transition:
+      transform var(--swap-speed) ease,
+      box-shadow var(--swap-speed) ease,
+      border-color var(--swap-speed) ease,
+      background var(--swap-speed) ease;
+  }
+  .tile:active{cursor:grabbing;}
+  .tile-letter{
+    font-family:"Noto Naskh Arabic","Baloo 2",system-ui;
+    font-weight:700;
+    font-size:var(--tile-letter-size);
+    line-height:1.2;
+    color:#111827;
+    text-align:center;
+  }
+  .tile-helper{
+    margin-top:4px;
+    font:800 13px "Baloo 2",system-ui;
+    color:#0f766e;
+  }
+  .tile.selected{
+    border-color:#60a5fa;
+    background:#f1f5ff;
+    box-shadow:0 0 0 3px rgba(96,165,250,.5),0 6px 0 #f2c88c;
+  }
+  .tile.correct{
+    border-color:#4ade80;
+  }
+  .drop-hint{
+    outline:3px dashed #60a5fa;
+    outline-offset:2px;
+  }
+
+  .overlay{
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 25% 0,#ffffffee 0,#ffffff00 50%),rgba(15,23,42,.78);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:40;
+  }
+  .overlay-card{
+    background:#ffffff;
+    border-radius:24px;
+    padding:18px 20px 16px;
+    width:min(360px,90vw);
+    box-shadow:0 20px 40px rgba(15,23,42,.7);
+    text-align:center;
+  }
+  .overlay-title{
+    font:900 20px "Baloo 2",system-ui;
+    color:#111827;
+    margin-bottom:6px;
+  }
+  .overlay-sub{
+    font:800 14px "Baloo 2",system-ui;
+    color:#4b5563;
+    margin-bottom:10px;
+  }
+
+  #toast{
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    background:#111827;
+    color:#e5e7eb;
+    padding:9px 12px;
+    border-radius:12px;
+    border:1px solid #4b5563;
+    font:800 14px "Baloo 2",system-ui;
+    display:none;
+    z-index:999;
+  }
+  #toast span{color:#fde68a;}
+
+  @media (max-width:640px){
+    .head{font-size:18px;}
+    .tile{
+      width:80px;
+      height:110px;
+    }
+    .tile-letter{
+      font-size:48px;
+      line-height:1.25;
+    }
+  }
+  @media (max-width:520px){
+    .toolbar{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .tile{
+      width:78px;
+      height:112px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Alphabet sorting game">
+
+    <div class="top-bar">
+      <div class="head">(ي ← ا) Alphabet Order — Drag to Sort</div>
+
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <button id="resetBtn" class="btn ghost" type="button">Reset ↻</button>
+          <button id="shuffleBtn" class="btn" type="button">Shuffle 🔀</button>
+        </div>
+        <div class="toolbar-right">
+          <label class="mini-label">
+            Font:
+            <select id="fontSizeSelect" class="mini-select">
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large" selected>Large</option>
+            </select>
+          </label>
+          <label class="mini-label">
+            Speed:
+            <select id="speedSelect" class="mini-select">
+              <option value="slow">Slow</option>
+              <option value="normal" selected>Normal</option>
+              <option value="fast">Fast</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div style="margin:0 12px 4px;">
+        <span class="note">Arrange the letters from right to left, starting with <b>ا</b>.</span>
+      </div>
+
+      <div class="stats-row">
+        <div class="stats-left">
+          <div class="pill">Score: <strong id="scoreVal">0</strong></div>
+          <div class="pill">Streak: <strong id="streakVal">0</strong></div>
+          <div class="pill">Remaining: <strong id="remainingVal">28</strong></div>
+          <div class="pill status-neutral" id="statusPill">Keep sorting…</div>
+        </div>
+        <div class="stats-right">
+          <div class="pill">
+            Lives:
+            <span id="hearts">
+              <span class="heart">♥</span>
+              <span class="heart">♥</span>
+              <span class="heart">♥</span>
+            </span>
+          </div>
+          <div class="pill">Level: <strong id="levelLabel">Easy</strong></div>
+          <div class="pill">Moves: <strong id="movesVal">0</strong></div>
+          <div class="pill">Best: <strong id="bestVal">–</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="grid-wrap">
+      <p class="grid-title">
+        Hint: Drag tiles, or tap one tile then tap another to swap them.
+      </p>
+      <div id="grid" class="grid" aria-label="Letter tiles"></div>
+    </section>
+
+    <div id="overlay" class="overlay" role="dialog" aria-modal="true">
+      <div class="overlay-card">
+        <div class="overlay-title" id="overlayTitle">Well done!</div>
+        <div class="overlay-sub" id="overlaySub">You put all the letters in the correct order.</div>
+        <button id="overlayBtn" class="btn" type="button">Play again 🔁</button>
+      </div>
+    </div>
+
+    <div id="toast"><span>Hint:</span> Drag letters or tap two tiles to swap them.</div>
+  </main>
+</div>
+
+<script>
+(function(){
+  const GOAL = [
+    "ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع",
+    "غ","ف","ق","ك","ل","م","ن","ه","و","ي"
+  ];
+
+  const TRANSLIT = {
+    "ا":"alif","ب":"baa","ت":"taa","ث":"thaa","ج":"jeem","ح":"haa","خ":"khaa",
+    "د":"daal","ذ":"dhaal","ر":"raa","ز":"zaay","س":"seen","ش":"sheen","ص":"saad",
+    "ض":"daad","ط":"taa (heavy)","ظ":"thaa (heavy)","ع":"ain","غ":"ghayn","ف":"faa",
+    "ق":"qaaf","ك":"kaaf","ل":"laam","م":"meem","ن":"noon","ه":"haa","و":"waaw","ي":"yaa"
+  };
+
+  const LEVELS = [
+    { id:"easy",   minScore:0,   label:"Easy" },
+    { id:"medium", minScore:80,  label:"Medium" },
+    { id:"hard",   minScore:160, label:"Hard" }
+  ];
+
+  const STORAGE_KEY_BEST = "ALPHABET_ORDER_BEST_MOVES_V2";
+
+  const $ = id => document.getElementById(id);
+
+  const gridEl      = $("grid");
+  const movesVal    = $("movesVal");
+  const bestVal     = $("bestVal");
+  const overlay     = $("overlay");
+  const overlayTitle= $("overlayTitle");
+  const overlaySub  = $("overlaySub");
+  const toastEl     = $("toast");
+
+  const shuffleBtn  = $("shuffleBtn");
+  const resetBtn    = $("resetBtn");
+  const overlayBtn  = $("overlayBtn");
+
+  const scoreEl     = $("scoreVal");
+  const streakEl    = $("streakVal");
+  const remainingEl = $("remainingVal");
+  const heartsEl    = $("hearts");
+  const levelLabel  = $("levelLabel");
+  const statusPill  = $("statusPill");
+
+  const fontSizeSelect = $("fontSizeSelect");
+  const speedSelect    = $("speedSelect");
+
+  let state = [];
+  let moves = 0;
+  let score = 0;
+  let streak = 0;
+  let lives = 3;
+  let gameOver = false;
+
+  let selectedId = null;
+  let dragFromId = null;
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function showToast(msg){
+    toastEl.innerHTML = "<span>Hint:</span> " + msg;
+    toastEl.style.display = "block";
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=>{toastEl.style.display="none";},3500);
+  }
+
+  function loadBest(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY_BEST);
+      const n = raw ? parseInt(raw,10) : NaN;
+      bestVal.textContent = (Number.isFinite(n) && n>0) ? n : "–";
+    }catch{bestVal.textContent = "–";}
+  }
+
+  function saveBest(n){
+    try{ localStorage.setItem(STORAGE_KEY_BEST,String(n)); }catch{}
+  }
+
+  function setStatus(type,text){
+    if(!statusPill) return;
+    statusPill.textContent = text;
+    statusPill.classList.remove("status-good","status-bad","status-neutral");
+    statusPill.classList.add(
+      type==="good" ? "status-good" :
+      type==="bad"  ? "status-bad"  :
+                      "status-neutral"
+    );
+  }
+
+  function arraysEqual(a,b){
+    if(a.length!==b.length) return false;
+    for(let i=0;i<a.length;i++) if(a[i]!==b[i]) return false;
+    return true;
+  }
+
+  function countCorrect(arr){
+    let c=0;
+    for(let i=0;i<GOAL.length;i++){
+      if(arr[i]===GOAL[i]) c++;
+    }
+    return c;
+  }
+
+  function updateStats(correctCount){
+    scoreEl.textContent = score;
+    streakEl.textContent = streak;
+    remainingEl.textContent = GOAL.length - (correctCount||0);
+    movesVal.textContent = moves;
+
+    heartsEl.innerHTML =
+      (lives>=1?'<span class="heart">♥</span>':'')+
+      (lives>=2?'<span class="heart">♥</span>':'')+
+      (lives>=3?'<span class="heart">♥</span>':'');
+
+    const lvl = LEVELS.slice().reverse().find(l=>score>=l.minScore) || LEVELS[0];
+    levelLabel.textContent = lvl.label;
+  }
+
+  function endGame(isWin){
+    gameOver = true;
+    if(isWin){
+      overlayTitle.textContent = "Amazing!";
+      overlaySub.textContent = "You completed the alphabet in "+moves+" moves.";
+    }else{
+      overlayTitle.textContent = "Game over 💔";
+      overlaySub.textContent = "You ran out of hearts. Tap Play again to try once more.";
+    }
+    overlay.style.display = "flex";
+  }
+
+  function checkCorrect(){
+    const tiles = gridEl.querySelectorAll(".tile");
+    let correctCount = 0;
+
+    tiles.forEach(tile=>{
+      const letter = tile.dataset.letter;
+      const idxState = state.indexOf(letter);
+      const idxGoal  = GOAL.indexOf(letter);
+      if(idxState === idxGoal){
+        tile.classList.add("correct");
+        correctCount++;
+      }else{
+        tile.classList.remove("correct");
+      }
+    });
+
+    updateStats(correctCount);
+
+    if(correctCount === GOAL.length && !gameOver){
+      setStatus("good","Perfect order!");
+      let bestRaw = bestVal.textContent === "–" ? null : parseInt(bestVal.textContent,10);
+      if(!Number.isFinite(bestRaw) || moves < bestRaw){
+        bestRaw = moves;
+        bestVal.textContent = bestRaw;
+        saveBest(bestRaw);
+        overlaySub.textContent = "New best score: "+bestRaw+" moves!";
+      }else{
+        overlaySub.textContent = "You completed it in "+moves+" moves.";
+      }
+      endGame(true);
+    }else if(correctCount < GOAL.length){
+      if(moves===0) setStatus("neutral","Keep sorting…");
+      else setStatus("neutral","Keep going…");
+    }
+  }
+
+  function render(){
+    gridEl.innerHTML = "";
+    state.forEach((letter, idx)=>{
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      tile.draggable = true;
+      tile.dataset.index = String(idx);
+      tile.dataset.letter = letter;
+
+      const mid = document.createElement("div");
+      mid.className = "tile-letter";
+      mid.textContent = letter;
+
+      const helper = document.createElement("div");
+      helper.className = "tile-helper";
+      helper.textContent = TRANSLIT[letter] || "";
+
+      tile.append(mid,helper);
+
+      // tap-to-swap
+      tile.addEventListener("click", ()=>{
+        if(gameOver) return;
+        const id = parseInt(tile.dataset.index,10);
+        if(selectedId === null){
+          selectedId = id;
+          tile.classList.add("selected");
+        }else if(selectedId === id){
+          selectedId = null;
+          tile.classList.remove("selected");
+        }else{
+          const otherTile = gridEl.querySelector(`.tile[data-index="${selectedId}"]`);
+          if(otherTile) otherTile.classList.remove("selected");
+          swapByIndex(selectedId, id);
+          selectedId = null;
+        }
+      });
+
+      // drag & drop
+      tile.addEventListener("dragstart", (e)=>{
+        if(gameOver){ e.preventDefault(); return; }
+        dragFromId = parseInt(tile.dataset.index,10);
+        e.dataTransfer.effectAllowed = "move";
+        tile.classList.add("selected");
+      });
+
+      tile.addEventListener("dragover", (e)=>{
+        if(gameOver) return;
+        e.preventDefault();
+        tile.classList.add("drop-hint");
+      });
+
+      tile.addEventListener("dragleave", ()=>{
+        tile.classList.remove("drop-hint");
+      });
+
+      tile.addEventListener("drop", (e)=>{
+        if(gameOver) return;
+        e.preventDefault();
+        tile.classList.remove("drop-hint");
+        const from = dragFromId;
+        const to   = parseInt(tile.dataset.index,10);
+        dragFromId = null;
+        const selectedTile = gridEl.querySelector(".tile.selected");
+        if(selectedTile) selectedTile.classList.remove("selected");
+        if(from != null && to != null && from !== to){
+          swapByIndex(from, to);
+        }
+      });
+
+      tile.addEventListener("dragend", ()=>{
+        const selectedTile = gridEl.querySelector(".tile.selected");
+        if(selectedTile) selectedTile.classList.remove("selected");
+        gridEl.querySelectorAll(".tile.drop-hint").forEach(t=>t.classList.remove("drop-hint"));
+        dragFromId = null;
+      });
+
+      gridEl.appendChild(tile);
+    });
+
+    checkCorrect();
+  }
+
+  function swapByIndex(from, to){
+    if(from<0 || to<0 || from>=state.length || to>=state.length) return;
+    const correctBefore = countCorrect(state);
+    const newState = state.slice();
+    const tmp = newState[from];
+    newState[from] = newState[to];
+    newState[to] = tmp;
+    state = newState;
+    moves++;
+
+    const correctAfter = countCorrect(state);
+    const diff = correctAfter - correctBefore;
+
+    if(diff > 0){
+      score += diff * 10;
+      streak += diff;
+    }else{
+      streak = 0;
+      if(diff < 0){
+        lives -= 1;
+        if(lives <= 0 && !gameOver){
+          updateStats(correctAfter);
+          endGame(false);
+        }
+      }
+    }
+
+    render();
+  }
+
+  function shuffleState(){
+    gameOver = false;
+    overlay.style.display = "none";
+    state = shuffle(GOAL);
+    if(arraysEqual(state,GOAL)) state = shuffle(GOAL);
+    moves = 0;
+    score = 0;
+    streak = 0;
+    lives = 3;
+    selectedId = null;
+    updateStats(countCorrect(state));
+    setStatus("neutral","Keep sorting…");
+    render();
+    showToast("Letters jumbled! Arrange them from right to left, starting with ا.");
+  }
+
+  function resetState(){
+    gameOver = false;
+    overlay.style.display = "none";
+    state = GOAL.slice();
+    moves = 0;
+    score = 0;
+    streak = 0;
+    lives = 3;
+    selectedId = null;
+    updateStats(countCorrect(state));
+    setStatus("neutral","This is the correct order.");
+    render();
+  }
+
+  function applyFontSize(){
+    const v = fontSizeSelect.value;
+    let size = "54px";
+    if(v === "small") size = "44px";
+    else if(v === "medium") size = "50px";
+    else if(v === "large") size = "60px";
+    document.documentElement.style.setProperty("--tile-letter-size", size);
+  }
+
+  function applySpeed(){
+    const v = speedSelect.value;
+    let s = "0.12s";
+    if(v === "slow") s = "0.18s";
+    else if(v === "fast") s = "0.06s";
+    document.documentElement.style.setProperty("--swap-speed", s);
+  }
+
+  fontSizeSelect.addEventListener("change", applyFontSize);
+  speedSelect.addEventListener("change", applySpeed);
+
+  shuffleBtn.addEventListener("click", shuffleState);
+  resetBtn.addEventListener("click", resetState);
+  overlayBtn.addEventListener("click", shuffleState);
+
+  // init
+  loadBest();
+  applyFontSize();
+  applySpeed();
+  resetState();
+  setTimeout(()=>showToast("Tap Shuffle, then drag or tap to sort the letters."),600);
+})();
+</script>
+</body>
+</html>

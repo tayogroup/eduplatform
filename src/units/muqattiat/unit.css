@@ -1,3 +1,330 @@
 /* Unit-specific CSS overrides only.
-   Shared canvas/tile/unit UI lives in /pre_quraan/shared/css/unit-canvas.css.
-   Keep this file empty unless this unit truly needs a visual exception. */
+   Shared canvas/tile/unit UI lives in /pre_quraan/shared/css/unit-canvas.css. */
+
+.pq-muq-rules-active .grid-wrap{
+  display:none;
+}
+
+.pq-muq-rules{
+  width:min(1180px,calc(100% - 36px));
+  margin:26px auto 34px;
+  direction:ltr;
+  color:#17243a;
+}
+
+.pq-muq-rules[hidden]{
+  display:none!important;
+}
+
+.pq-muq-rules__hero,
+.pq-muq-rule-card,
+.pq-muq-rules__combo-wrap{
+  border:3px solid rgba(70,189,113,.52);
+  background:linear-gradient(180deg,#fffdf2 0%,#eafff0 100%);
+  box-shadow:0 16px 36px rgba(29,95,61,.14);
+}
+
+.pq-muq-rules__hero{
+  border-radius:28px;
+  padding:24px;
+  text-align:center;
+}
+
+.pq-muq-rules__badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:96px;
+  min-height:38px;
+  margin-bottom:8px;
+  border-radius:999px;
+  background:#ffc957;
+  color:#3c2a08;
+  font-weight:1000;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.72);
+}
+
+.pq-muq-rules__hero h2{
+  margin:4px 0 8px;
+  color:#069746;
+  font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;
+  font-size:clamp(2.9rem,5vw,5.4rem);
+  line-height:1.05;
+}
+
+.pq-muq-rules__hero p{
+  max-width:780px;
+  margin:0 auto 18px;
+  font-size:1.14rem;
+  font-weight:800;
+  color:#31435a;
+}
+
+.pq-muq-rules__audio-btn{
+  min-height:52px;
+  margin:0 0 18px;
+  padding:0 22px;
+  border:0;
+  border-radius:999px;
+  background:#3fbf71;
+  color:#fff;
+  box-shadow:0 10px 20px rgba(38,145,89,.24);
+  font:inherit;
+  font-size:1rem;
+  font-weight:950;
+  cursor:pointer;
+}
+
+.pq-muq-rules__audio-btn:disabled{
+  cursor:progress;
+  opacity:.82;
+}
+
+.pq-muq-rules__audio-btn:focus-visible,
+.pq-muq-rules__audio-btn:hover{
+  outline:4px solid rgba(53,177,105,.25);
+  transform:translateY(-1px);
+}
+
+.pq-muq-rules__examples{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.pq-muq-rules__examples span{
+  display:flex;
+  min-height:54px;
+  align-items:center;
+  justify-content:center;
+  border-radius:18px;
+  background:#fff;
+  border:2px solid rgba(78,191,113,.32);
+  font-weight:1000;
+}
+
+.pq-muq-rules__examples span[dir="rtl"],
+.pq-muq-example{
+  color:#059645;
+  font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;
+  font-size:2.25rem;
+  line-height:1.05;
+}
+
+.pq-muq-rules__deck{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+
+.pq-muq-rule-card{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:14px;
+  border-radius:22px;
+  padding:18px;
+}
+
+.pq-muq-rule-card__num{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:16px;
+  background:#49c874;
+  color:#fff;
+  font-size:1.35rem;
+  font-weight:1000;
+  box-shadow:0 8px 16px rgba(20,112,62,.2);
+}
+
+.pq-muq-rule-card h3{
+  margin:0 0 6px;
+  font-size:1.18rem;
+  color:#10223a;
+}
+
+.pq-muq-rule-card p{
+  margin:0 0 12px;
+  color:#40536c;
+  font-size:1rem;
+  font-weight:750;
+}
+
+.pq-muq-rule-card__extra{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+}
+
+.pq-muq-rule-card__extra b{
+  padding:7px 11px;
+  border-radius:999px;
+  background:#dcffe8;
+  color:#08783a;
+}
+
+.pq-muq-rule-card__extra b.bad{
+  background:#fff0ec;
+  color:#b2412e;
+}
+
+.pq-muq-rule-card__extra small{
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:5px 10px;
+  border-radius:12px;
+  background:#fff;
+  font-weight:850;
+}
+
+.pq-muq-chip-row,
+.pq-muq-counts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.pq-muq-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:6px 11px;
+  border-radius:14px;
+  background:#fff;
+  border:2px solid rgba(73,200,116,.35);
+  color:#11432c;
+  font-weight:950;
+}
+
+.pq-muq-counts span{
+  width:34px;
+  height:34px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:#ffcf5f;
+  color:#3a2a05;
+  font-weight:1000;
+}
+
+.pq-muq-rule-card ul{
+  margin:0;
+  padding-left:20px;
+  font-weight:850;
+}
+
+.pq-muq-rules__combo-wrap{
+  margin-top:18px;
+  border-radius:24px;
+  padding:20px;
+}
+
+.pq-muq-rules__combo-wrap h3{
+  margin:0 0 14px;
+  text-align:center;
+  color:#10223a;
+  font-size:1.3rem;
+}
+
+.pq-muq-rules__combo-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+
+.pq-muq-combo{
+  position:relative;
+  display:flex;
+  min-height:70px;
+  align-items:center;
+  justify-content:center;
+  padding:8px 12px;
+  border-radius:18px;
+  background:#fff7d8;
+  border:2px solid rgba(225,180,67,.6);
+  color:#079746;
+  font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;
+  font-size:2rem;
+  font-weight:1000;
+  line-height:1;
+}
+
+.pq-muq-combo small{
+  position:absolute;
+  top:7px;
+  left:8px;
+  width:22px;
+  height:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:#fff;
+  color:#1e6b49;
+  font-family:inherit;
+  font-size:.78rem;
+}
+
+.pq-muq-rules__footer{
+  display:flex;
+  justify-content:center;
+  margin-top:18px;
+}
+
+.pq-muq-rules__footer button{
+  min-height:58px;
+  min-width:220px;
+  border:0;
+  border-radius:999px;
+  background:#ffbd4b;
+  color:#2d2109;
+  font-size:1.05rem;
+  font-weight:1000;
+  box-shadow:0 12px 22px rgba(126,83,17,.2);
+  cursor:pointer;
+}
+
+@media(max-width:760px){
+  .pq-muq-rules{
+    width:calc(100% - 20px);
+    margin:16px auto 24px;
+  }
+
+  .pq-muq-rules__hero{
+    padding:18px 14px;
+    border-radius:22px;
+  }
+
+  .pq-muq-rules__examples,
+  .pq-muq-rules__deck,
+  .pq-muq-rules__combo-grid{
+    grid-template-columns:1fr;
+  }
+
+  .pq-muq-rule-card{
+    grid-template-columns:1fr;
+    padding:16px;
+  }
+
+  .pq-muq-rule-card__num{
+    width:42px;
+    height:42px;
+  }
+
+  .pq-muq-combo{
+    min-height:64px;
+    font-size:1.8rem;
+  }
+}
+
+/* Rules audio/title polish. */
+.pq-muq-rules__badge{font-size:clamp(1.2rem,2.3vw,2rem);min-height:48px;padding:0 24px;text-align:center;white-space:normal;}
+.pq-muq-rules__hero h2{font-size:clamp(1.45rem,2.8vw,2.7rem);}
+.pq-muq-rules__audio-btn{display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;margin:0 auto 18px;}

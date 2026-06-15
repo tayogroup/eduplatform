@@ -1,0 +1,367 @@
+﻿<!doctype html>
+<html lang="en" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+
+<!-- PQ BROWSER UI MODE DETECTOR START -->
+<script src="/pre_quraan/shared/js/patches/browser-ui-mode.js"></script>
+<!-- PQ BROWSER UI MODE DETECTOR END -->
+
+
+<script src="/pre_quraan/shared/js/patches/access-gate.js"></script>
+
+<script src="/pre_quraan/shared/js/patches/hash-token-reader.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>PQ Unit - Pillars of Islam Unit</title>
+
+<link rel="preconnect" href="https://quraanacademy.b-cdn.net" crossorigin>
+
+<!-- Shared base 17 -->
+<link rel="stylesheet" href="/pre_quraan/shared/css/arabic-tiles.css">
+<style id="pqCanvasPrepaintGuard">
+  body[data-layout="flow-span"]:not(.pq-app-ready) .grid-wrap{
+    visibility:hidden;
+  }
+  body[data-layout="flow-span"]:not(.pq-app-ready) .tile,
+  body[data-layout="flow-span"]:not(.pq-app-ready) .tile *{
+    transition:none !important;
+    animation:none !important;
+  }
+</style>
+<link rel="stylesheet" href="/pre_quraan/shared/css/core-lesson-layout.css">
+<link rel="stylesheet" href="/pre_quraan/shared/css/stepper-lecture.css?v=single-stepper-scroll-20260527a">
+<link rel="stylesheet" href="/pre_quraan/shared/css/overrides.css">
+<link rel="stylesheet" href="/pre_quraan/shared/css/child-message.css">
+<link rel="stylesheet" href="/pre_quraan/shared/css/sound-modal.css?v=sound-video-repeat-20260507">
+<link rel="stylesheet" href="/pre_quraan/shared/css/unit-canvas.css?v=browser-ui-header-20260527a">
+<link rel="stylesheet" href="/pre_quraan/shared/css/communications.css?v=comm-dashboard-20260508">
+<link rel="stylesheet" href="./unit.css">
+
+<script src="/pre_quraan/shared/js/patches/iframe-token-request.js?v=account-id-only-20260525b"></script>
+</head>
+
+<body data-unit="pillars-of-islam" data-layout="flow-span">
+  <div class="wrap">
+    <div class="bar" id="topBar">
+
+      <div class="pq-legacy-about-row">
+        <button type="button" class="pq-pill pq-pill--about" id="pqAboutBtn">
+          <span class="pq-pill__text">About this unit</span>
+          <span class="pq-pill__icon pq-pill__icon--eye">&#128065;</span>
+          <span class="pq-pill__icon pq-pill__icon--audio">&#128266;</span>
+        </button>
+        <button class="gear pq-top-gear" id="btnGear" aria-label="Settings">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2.34l-1.62-.27a7 7 0 00-.75-1.83l1-1.33-1.41-1.41-1.33-1 1-1.33-3 1.83-.75 2.17h-2l-.27-3 2.5.26c2.83.31 5.06 2.54 5.37 5.37l.26 2.5-3-.27z" fill="#356" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="bar-row">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">Q</div>
+          <div class="title">Unit Lesson</div>
+        </div>
+
+        <div class="controls">
+          <button class="btn big play"  id="btnPlayAll" aria-label="Play all letters">Play All</button>
+          <button class="btn big pause" id="btnPause" aria-label="Pause or resume">Pause</button>
+          <button class="btn big trace disabled" id="btnTrace" aria-label="Write (Step 6)" style="opacity:.45;pointer-events:none">&#9997; Write</button>
+          <button class="btn big reset" id="btnReset" aria-label="Reset to defaults">&#8634; Reset</button>
+        </div>
+
+        <div id="pqHeaderActionRow" class="pq-header-action-row" aria-label="Header actions">
+          <div class="pq-header-action-group pq-header-action-group--primary">
+            <div id="pqHeaderActionSlot" class="pq-header-action-slot"></div>
+            <div id="pqHeaderPauseSlot" class="pq-header-pause-slot"></div>
+            <button
+              id="pqDesktopBackBtn"
+              type="button"
+              class="pq-header-back-btn"
+              aria-label="Return to previous page"
+              title="Back"
+            >Back</button>
+          </div>
+
+          <div class="pq-header-action-spacer" aria-hidden="true"></div>
+
+          <div class="pq-header-action-group pq-header-action-group--qa">
+            <div id="pqHeaderPreviousStepSlot" class="pq-header-previous-step-slot"></div>
+            <div id="pqHeaderQaSkipSlot" class="pq-header-qa-skip-slot"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <section class="pq-flow-card" aria-label="Learning flow">
+      <div class="pq-flow-top">
+        <div class="pq-mobile-step-status" id="pqMobileStepStatus" aria-label="Mobile step status">
+          <div class="pq-mobile-step-status__dots" aria-hidden="true">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot is-active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <div class="pq-mobile-step-status__text">Step progress will appear here</div>
+          <button
+            id="pqMobileChooseStepBtn"
+            type="button"
+            class="pq-mobile-choose-step-btn"
+            hidden
+            aria-haspopup="dialog"
+            aria-controls="pqMobileStepPicker"
+          >
+            Choose Step
+          </button>
+        </div>
+      </div>
+
+      <div id="managedStepper" class="managed-stepper" hidden>
+        <div class="managed-steps" id="managedStepsList"></div>
+      </div>
+      
+          <div class="pq-lecture-btn-row">
+        <button id="pqLectureCtaBtn" type="button" class="pq-lecture-cta-btn">&#127916; Lecture</button>
+      </div>
+
+      <div id="pqLectureCta" class="pq-lecture-cta-bar" aria-label="Rewards and focus"></div>
+    </section>
+
+    <div class="pq-mobile-summary-row" id="pqMobileSummaryRow" aria-label="Mobile summary">
+      <div class="pq-mobile-summary-pill pq-mobile-summary-pill--focus">
+        <span id="pqMobileFocusBadge" class="pq-mobile-summary-value pq-mobile-focus-badge">&#10024; Try to Focus</span>
+      </div>
+      <div class="pq-mobile-summary-pill">
+        <span id="pqMobileThisUnitLabel" class="pq-mobile-summary-label">
+          <span class="pq-mobile-bilingual-en">This Unit</span>
+          <span class="pq-mobile-bilingual-ar" dir="rtl">&#1575;&#1604;&#1608;&#1581;&#1583;&#1577;</span>
+        </span>
+        <span id="pqMobileThisUnitValue" class="pq-mobile-summary-value">0</span>
+      </div>
+      <div class="pq-mobile-summary-pill">
+        <span id="pqMobileTotalStarsLabel" class="pq-mobile-summary-label">
+          <span class="pq-mobile-bilingual-en">Total Stars</span>
+          <span class="pq-mobile-bilingual-ar" dir="rtl">&#1575;&#1604;&#1606;&#1580;&#1608;&#1605;</span>
+        </span>
+        <span id="pqMobileTotalStarsValue" class="pq-mobile-summary-value">0</span>
+      </div>
+      <div class="pq-mobile-summary-pill">
+        <span id="pqMobileUnitsDoneLabel" class="pq-mobile-summary-label">
+          <span class="pq-mobile-bilingual-en">Units Done</span>
+          <span class="pq-mobile-bilingual-ar" dir="rtl">&#1575;&#1604;&#1605;&#1603;&#1578;&#1605;&#1604;&#1577;</span>
+        </span>
+        <span id="pqMobileUnitsDoneValue" class="pq-mobile-summary-value">0</span>
+      </div>
+    </div>
+
+    <div class="pq-mobile-action-row" aria-label="Mobile action row">
+      <div id="pqStepActionBar" class="pq-step-action-bar" aria-label="Current step action">
+        <button
+          id="pqStepActionBtn"
+          type="button"
+          class="pq-step-action-btn"
+          hidden
+          aria-live="polite"
+        >
+          Action
+        </button>
+      </div>
+</div>
+
+    <section id="lectureCard" class="lecture-card">
+      <div class="lecture-controls">
+        <button id="lecturePlayBtn" class="lecture-play pq-hidden" type="button">&#127916; Lecture</button>
+      </div>
+      <video id="lectureVideo" class="lecture-video" preload="metadata" controls></video>
+    </section>
+
+    <!-- Speak step mount -->
+<section id="speakMount" class="pq-speak-mount" aria-label="Speak controls"></section>
+
+    <!-- Submit step mount -->
+<section id="submitMount" class="pq-submit-mount" aria-label="Submit recording"></section>
+
+    <section class="grid-wrap">
+      <div id="grid" class="grid" aria-live="polite"></div>
+    </section>
+  </div>
+
+  <dialog class="sheet" id="sheet">
+    <form method="dialog" class="panel" id="settingsForm">
+      <h2>Settings (Grown-ups)</h2>
+
+      <div class="row-col">
+        <div class="row-line">
+          <div class="lab">&#127925; Voice</div>
+          <select id="uiVoice" class="sel">
+            <option value="child_boy" selected>Child - Boy</option>
+            <option value="child_girl">Child - Girl</option>
+            <option value="adult_male">Adult - Male</option>
+            <option value="adult_female">Adult - Female</option>
+          </select>
+        </div>
+        <div class="hint">Choose who speaks the letter.</div>
+      </div>
+
+      <div class="row-col">
+        <div class="row-line">
+          <div class="lab">&#128034; Speed</div>
+          <select id="uiSpeed" class="sel">
+            <option value="1.0" selected>Normal</option>
+            <option value="0.85">Slow</option>
+            <option value="0.70">Very Slow</option>
+          </select>
+        </div>
+        <div class="hint">Slower can help early learners.</div>
+      </div>
+
+      <div class="row-col">
+        <div class="row-line">
+          <div class="lab">&#128257; Repeat</div>
+          <select id="uiRepeat" class="sel">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+          </select>
+        </div>
+        <div class="hint">How many times each letter is repeated.</div>
+      </div>
+
+      <div class="row-col">
+        <div class="row-line">
+          <div class="lab">&#127919; Filter</div>
+          <select id="uiFilter" class="sel">
+            <option value="all" selected>All letters</option>
+          </select>
+        </div>
+        <div class="hint">Choose which type of letters to practice.</div>
+      </div>
+
+      <button class="close" id="closeSheet">Done</button>
+    </form>
+  </dialog>
+  
+    <div id="pqMobileBottomDock" class="pq-mobile-bottom-dock" aria-label="Mobile bottom action dock">
+    <div class="pq-mobile-bottom-dock__inner">
+      <button
+        id="pqMobileBackBtn"
+        type="button"
+        class="pq-mobile-bottom-back"
+        aria-label="Go back"
+        title="Back"
+      >&#8592;</button>
+
+      <div id="pqMobileBottomActionSlot" class="pq-mobile-bottom-dock__action"></div>
+
+      <div id="pqMobileBottomPauseSlot" class="pq-mobile-bottom-dock__pause"></div>
+    </div>
+  </div>
+
+
+  <div id="pqMobileStepPicker" class="pq-mobile-step-picker" hidden aria-hidden="true">
+    <div class="pq-mobile-step-picker__scrim" data-close="1"></div>
+
+    <div
+      class="pq-mobile-step-picker__sheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pqMobileStepPickerTitle"
+    >
+      <div class="pq-mobile-step-picker__top">
+        <div id="pqMobileStepPickerTitle" class="pq-mobile-step-picker__title">Choose Step</div>
+        <button
+          id="pqMobileStepPickerClose"
+          type="button"
+          class="pq-mobile-step-picker__close"
+          aria-label="Close step picker"
+        >&times;</button>
+      </div>
+
+      <div id="pqMobileStepPickerList" class="pq-mobile-step-picker__list"></div>
+    </div>
+  </div>
+  <div id="videoModal" style="display:none">
+    <button id="closeBtn" type="button">&times;</button>
+    <video id="player" controls playsinline webkit-playsinline></video>
+  </div>
+  
+  <!-- ===================== BEGIN JS FILES ===================== -->
+  
+  <!-- Core JS -->
+  <script src="/pre_quraan/shared/js/core-auth-tokens.js"></script>
+  <script src="/pre_quraan/shared/js/core-iframe-resolver.js"></script>
+  <script src="/pre_quraan/shared/js/core-lesson-mode-gate.js"></script>
+  <script src="/pre_quraan/shared/js/core-progress-cache-guard.js"></script>
+  <script src="/pre_quraan/shared/js/core-audio-resolver.js"></script>
+
+  <script src="/pre_quraan/shared/js/core-focus-context.js"></script>
+  <script src="/pre_quraan/shared/js/core-attention.js"></script>
+  <script src="/pre_quraan/shared/js/core-focus-guard-adapter.js"></script>
+
+  <script src="/pre_quraan/shared/js/core-managed-engine.js?v=qa-skip-token-20260525a"></script>
+  <script src="/pre_quraan/shared/js/core-lesson-bootstrap.js"></script>
+
+  <script src="/pre_quraan/shared/js/core-media-lecture.js"></script>
+  <script src="/pre_quraan/shared/js/core-grid-helper.js"></script>
+  
+  <script src="/pre_quraan/shared/js/core-speak-engine.js"></script>
+  <script src="/pre_quraan/shared/js/core-speak-adapter.js"></script>
+  <script src="/pre_quraan/shared/js/shared-speak-runtime.js"></script>
+
+  <!-- Shared UI JS -->
+  <script src="/pre_quraan/shared/js/shared-settings-sheet.js"></script>
+  <script src="/pre_quraan/shared/js/shared-settings-filter.js"></script>
+  <script src="/pre_quraan/shared/js/shared-header-utilities.js?v=account-id-only-20260525b"></script>
+  <script src="/pre_quraan/shared/js/shared-communications-panel.js?v=comm-dashboard-20260508"></script>
+
+  <script src="/pre_quraan/shared/js/shared-lecture-helpers.js?v=lecture-src-bind-20260526a"></script>
+  <script src="/pre_quraan/shared/js/shared-lecture-stats.js"></script>
+  <script src="/pre_quraan/shared/js/shared-lecture-cta-bridge.js"></script>
+
+  <script src="/pre_quraan/shared/js/shared-step-messaging.js?v=qa-skip-token-20260525a"></script>
+  <script src="/pre_quraan/shared/js/shared-autoscroll.js"></script>
+  <script src="/pre_quraan/shared/js/shared-stepper-render.js?v=arabic-labels-20260507"></script>
+
+  <script src="/pre_quraan/shared/js/shared-reward-bar.js?v=progress-gap-20260508"></script>
+
+  <script src="/pre_quraan/shared/js/shared-write-engine.js"></script>
+  <script src="/pre_quraan/shared/js/shared-playlist-engine.js"></script>
+  <script src="/pre_quraan/shared/js/shared-match-engine.js"></script>
+  <script src="/pre_quraan/shared/js/shared-config-normalizer.js?v=qa-skip-token-20260525a"></script>
+
+  <!-- Unit JS _208  -->
+  <!-- CLONING NOTE: each cloned Listen unit owns index.html, unit.config.js, unit.messages.js, unit.css, and unit.runtime.js. -->
+  <script src="./unit.messages.js?v=pillars-of-islam-clone-20260529a"></script>
+  <script src="./unit.config.js?v=pillars-of-islam-clone-20260529a"></script>
+<script src="/pre_quraan/shared/js/runtime/runtime.bundle.js?v=numbered-listen-actions-20260527a"></script>
+  <script src="./unit.runtime.js?v=pillars-of-islam-clone-20260529a"></script>
+
+<!-- PQ SETTINGS FILTER RUNTIME FIX START -->
+<script src="/pre_quraan/shared/js/patches/filter-runtime-fix.js"></script>
+<!-- PQ SETTINGS FILTER RUNTIME FIX END -->
+
+<!-- PQ SETTINGS FILTER APPLY FIX START -->
+<script src="/pre_quraan/shared/js/patches/filter-apply-fix.js"></script>
+<!-- PQ SETTINGS FILTER APPLY FIX END -->
+
+
+  
+  <!-- ===================== END JS FILES ===================== -->
+
+  
+<script src="/pre_quraan/shared/js/patches/mobile-ui-sync.js?v=bilingual-summary-20260507"></script>
+<script src="/pre_quraan/shared/js/patches/stepper-arabic-labels.js?v=arabic-labels-persist-20260507"></script>
+<script src="/pre_quraan/shared/js/patches/loading-failsafe.js"></script>
+
+</body>
+</html>
+
+
+
+
+

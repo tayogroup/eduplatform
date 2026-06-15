@@ -28,6 +28,7 @@
     if (id === 'light') return 'light';
     if (id === 'vowels') return 'vowel';
     if (id === 'alifaa') return 'alifaa';
+    if (id === 'diacritic' || id === 'diacritics') return 'diacritic';
 
     return 'all';
   }
@@ -36,6 +37,12 @@
     const id = __pqCanonicalStepId((step && step.id) || '');
     const type = String((step && step.type) || '').toLowerCase();
     return id === 'watch' || id === 'sound' || id === 'animate' || type === 'video_playlist' || type === 'phonetics';
+  }
+
+  function __pqIsContentOnlyStep(step) {
+    const id = __pqCanonicalStepId((step && step.id) || '');
+    const type = String((step && step.type) || '').toLowerCase();
+    return id === 'rules' || type === 'rules' || type === 'content' || type === 'lesson_card';
   }
 
 function __pqWatchStepDef() {
@@ -58,15 +65,57 @@ function __pqWatchStepDef() {
     };
   }
 
+  function __pqConfiguredBeforeListenSteps() {
+    const raw = __cfg('stepInjection.beforeListen', []);
+    const list = Array.isArray(raw) ? raw : (raw ? [raw] : []);
+
+    return list
+      .filter((cfgStep) => cfgStep && typeof cfgStep === 'object' && cfgStep.enabled !== false)
+      .map((cfgStep) => ({
+        id: String(cfgStep.id || '').trim(),
+        type: String(cfgStep.type || 'playlist'),
+        label: String(cfgStep.label || cfgStep.id || 'Step'),
+        arabicLabel: cfgStep.arabicLabel == null ? undefined : String(cfgStep.arabicLabel),
+        filter: String(cfgStep.filter || __deriveFilterFromStepId(cfgStep.id)),
+        passFilters: Array.isArray(cfgStep.passFilters)
+          ? cfgStep.passFilters.map(String)
+          : (cfgStep.passFilter ? [String(cfgStep.passFilter)] : undefined),
+        step_index: cfgStep.step_index
+      }))
+      .filter((cfgStep) => cfgStep.id);
+  }
+
   function __pqInjectWatchStep(steps) {
     const arr = Array.isArray(steps) ? steps.slice() : [];
+    const watchInjectionCfg = __cfg('stepInjection.watch', null);
+    const allowWatchInjection = watchInjectionCfg !== false && !(
+      watchInjectionCfg && typeof watchInjectionCfg === 'object' && watchInjectionCfg.enabled === false
+    );
     const hasWatch = arr.some(
       (step) => String((step && step.id) || '').toLowerCase() === 'watch'
     );
 
     const mapped = arr.map((step) => ({ ...step }));
 
-    if (!hasWatch) {
+    const beforeListenSteps = __pqConfiguredBeforeListenSteps();
+    beforeListenSteps.forEach((injectedStep) => {
+      const hasInjected = mapped.some(
+        (step) => String((step && step.id) || '').toLowerCase() === injectedStep.id.toLowerCase()
+      );
+      if (hasInjected) return;
+
+      const listenIdx = mapped.findIndex(
+        (step) => String((step && step.id) || '').toLowerCase() === 'listen'
+      );
+
+      if (listenIdx >= 0) {
+        mapped.splice(listenIdx, 0, injectedStep);
+      } else {
+        mapped.push(injectedStep);
+      }
+    });
+
+    if (!hasWatch && allowWatchInjection) {
       const listenIdx = mapped.findIndex(
         (step) => String((step && step.id) || '').toLowerCase() === 'listen'
       );
@@ -87,7 +136,12 @@ const hasSpeak = mapped.some(
   (step) => String((step && step.id) || '').toLowerCase() === 'speak'
 );
 
-if (!hasSpeak) {
+const speakInjectionCfg = __cfg('stepInjection.speak', null);
+const allowSpeakInjection = speakInjectionCfg !== false && !(
+  speakInjectionCfg && typeof speakInjectionCfg === 'object' && speakInjectionCfg.enabled === false
+);
+
+if (!hasSpeak && allowSpeakInjection) {
   const repeatIdx = mapped.findIndex(
     (step) => String((step && step.id) || '').toLowerCase() === 'repeat'
   );
@@ -122,11 +176,23 @@ const hasSubmit = mapped.some(
   (step) => String((step && step.id) || '').toLowerCase() === 'submit'
 );
 
-if (!hasSubmit) {
+const submitInjectionCfg = __cfg('stepInjection.submit', null);
+const allowSubmitInjection = submitInjectionCfg !== false && !(
+  submitInjectionCfg && typeof submitInjectionCfg === 'object' && submitInjectionCfg.enabled === false
+);
+
+if (!hasSubmit && allowSubmitInjection) {
   const writeIdx = mapped.findIndex((step) => {
     const id = String((step && step.id) || '').toLowerCase();
     const type = String((step && step.type) || '').toLowerCase();
-    return id === 'write' || id === 'trace1' || id === 'trace' || type === 'trace';
+    return (
+      id === 'write' ||
+      id === 'trace1' ||
+      id === 'trace' ||
+      /^(write|trace)\d+$/.test(id) ||
+      type === 'trace' ||
+      type === 'write'
+    );
   });
 
   const submitCfg = __cfg('stepInjection.submit', null);
@@ -149,12 +215,17 @@ if (!hasSubmit) {
   }
 }
 
-    return mapped.map((step, index) => ({
+    return mapped.map((step, index) => {
+      const existingStepIndex = Number(step && step.step_index);
+      return {
       ...step,
       label: __pqWriteLabel(step.label || step.title || step.id),
       filter: step.filter || __deriveFilterFromStepId(step.id),
-      step_index: index + 1
-    }));
+      step_index: Number.isFinite(existingStepIndex) && existingStepIndex > 0
+        ? existingStepIndex
+        : index + 1
+      };
+    });
   }
 
   const __PQ_STEP_ORDER = (function () {
@@ -166,27 +237,28 @@ if (!hasSubmit) {
 
 return {
   lecture: 0,
-  listen: 1,
-  listenplus: 2,
-  letterclue: 2,
-  watch: 3,
-  sound: 4,
-  phonetics: 4,
-  repeat: 5,
-  speak: 6,
-  match: 7,
-  animate: 8,
-  write: 9,
-  trace1: 10,
-  submit: 11,
-  words: 12,
-  soundclue: 12,
+  rules: 1,
+  listen: 2,
+  listenplus: 3,
+  letterclue: 3,
+  watch: 4,
+  sound: 5,
+  phonetics: 5,
+  repeat: 6,
+  speak: 7,
+  match: 8,
+  animate: 9,
+  write: 10,
+  trace1: 11,
+  submit: 12,
+  words: 13,
+  soundclue: 13,
 
-  all_letters: 13,
-  heavy: 14,
-  light: 15,
-  alifaa: 16,
-  vowels: 17
+  all_letters: 14,
+  heavy: 15,
+  light: 16,
+  alifaa: 17,
+  vowels: 18
 };
 
   })();
@@ -362,6 +434,11 @@ function __pqApplyModeUI() {
       }
 
       managedProgress.currentStepId = sid;
+      try {
+        if (!__DB_ONLY) {
+          localStorage.setItem(LS_PROGRESS_CACHE_KEY, JSON.stringify(managedProgress));
+        }
+      } catch (_e) {}
 
       managedProgress.__allCompleted = stepsArr.every((step) => !!(
         managedProgress[step.id] &&

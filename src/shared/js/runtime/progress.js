@@ -6,6 +6,89 @@
 */
   // SECTION 19: Moodle managed-progress WS helpers
   // ============================================================
+  let __pqQaSkipHandoff = null;
+  const __PQ_QA_SKIP_HANDOFF_KEY = 'pq_qa_skip_handoff_v1';
+
+  function __pqNextStepIdAfter(stepId) {
+    try {
+      const sid = String(stepId || '').trim();
+      if (!sid || !Array.isArray(STEPS)) return '';
+      const index = STEPS.findIndex((step) => String((step && step.id) || '') === sid);
+      if (index < 0) return '';
+      const next = STEPS.slice(index + 1).find((step) => step && step.id);
+      return next ? String(next.id || '') : sid;
+    } catch (_e) {
+      return '';
+    }
+  }
+
+  function __pqStartQaSkipHandoff(skippedStepId) {
+    try {
+      const skipped = String(skippedStepId || '').trim();
+      if (!skipped) return;
+      __pqQaSkipHandoff = {
+        skipped,
+        next: __pqNextStepIdAfter(skipped),
+        until: Date.now() + 30000
+      };
+      try {
+        sessionStorage.setItem(__PQ_QA_SKIP_HANDOFF_KEY, JSON.stringify(__pqQaSkipHandoff));
+      } catch (_e) {}
+    } catch (_e) {}
+  }
+
+  function __pqGetQaSkipHandoff() {
+    try {
+      if (__pqQaSkipHandoff && Date.now() <= Number(__pqQaSkipHandoff.until || 0)) {
+        return __pqQaSkipHandoff;
+      }
+
+      const raw = sessionStorage.getItem(__PQ_QA_SKIP_HANDOFF_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      if (parsed && Date.now() <= Number(parsed.until || 0)) {
+        __pqQaSkipHandoff = parsed;
+        return __pqQaSkipHandoff;
+      }
+    } catch (_e) {}
+
+    __pqQaSkipHandoff = null;
+    try { sessionStorage.removeItem(__PQ_QA_SKIP_HANDOFF_KEY); } catch (_e) {}
+    return null;
+  }
+
+  function __pqApplyQaSkipHandoff(progress) {
+    try {
+      const handoff = __pqGetQaSkipHandoff();
+      if (!handoff) {
+        return progress;
+      }
+
+      const skipped = String(handoff.skipped || '').trim();
+      const next = String(handoff.next || '').trim();
+      if (!progress || !skipped || !next) return progress;
+
+      const existing = progress[skipped] || {};
+      const required = Math.max(
+        1,
+        Number(existing.passesRequired ?? existing.passes_required ?? 1) || 1
+      );
+      progress[skipped] = {
+        ...existing,
+        passesDone: required,
+        passes_done: required,
+        passesRequired: required,
+        passes_required: required,
+        completed: true,
+        step_status: 'completed',
+        status: 'completed'
+      };
+      progress.currentStepId = next;
+      return progress;
+    } catch (_e) {
+      return progress;
+    }
+  }
+
   async function __pqFetchTotalStarsFromMoodle() {
     const core = pqResolveCore() || PQManagedCore;
     if (!core || typeof core.wsGet !== 'function') return null;
@@ -125,7 +208,7 @@
       normalized = core.normalizeManagedPayload(data, STEPS);
     }
 
-    return normalized.raw;
+    return __pqApplyQaSkipHandoff(normalized.raw);
   }
 
   async function sendManagedToMoodle(progressObj) {
@@ -187,6 +270,52 @@
       return null;
     }
   }
+
+  function __pqGetConfiguredStepPassRequirement(step) {
+    try {
+      const sid = String((step && step.id) || '').trim();
+      if (!sid) return 1;
+
+      const candidates = [
+        step.passesRequired,
+        step.passes_required,
+        step.default_passes_required,
+        step.defaultPassesRequired
+      ];
+
+      const injected = __cfg('stepInjection.' + sid, null);
+      if (injected && typeof injected === 'object') {
+        candidates.push(
+          injected.passesRequired,
+          injected.passes_required,
+          injected.default_passes_required,
+          injected.defaultPassesRequired
+        );
+        if (Array.isArray(injected.passFilters)) {
+          candidates.push(injected.passFilters.length);
+        }
+      }
+
+      if (Array.isArray(step.passFilters)) {
+        candidates.push(step.passFilters.length);
+      }
+
+      const cfgFilters = __cfg('stepPassFilters.' + sid, null);
+      if (Array.isArray(cfgFilters)) {
+        candidates.push(cfgFilters.length);
+      }
+
+      return Math.max(
+        1,
+        ...candidates
+          .map((value) => Number(value))
+          .filter((value) => Number.isFinite(value) && value >= 1)
+      );
+    } catch (_e) {
+      return 1;
+    }
+  }
+
   function ensureProgressShape(raw) {
     STEPS = __pqInjectWatchStep(STEPS || []);
     const ordered = orderStepsForDisplay(STEPS);
@@ -210,8 +339,13 @@
       const shapedPrev = (shaped && shaped[step.id]) || {};
       const prev = rawPrev || shapedPrev || {};
 
+      const configuredPassesRequired = __pqGetConfiguredStepPassRequirement(step);
       const prevPassesDone = Number(prev.passesDone ?? prev.passes_done ?? 0);
-      const prevPassesRequired = Number(prev.passesRequired ?? prev.passes_required ?? 1);
+      const prevPassesRequired = Number(
+        prev.passesRequired ??
+        prev.passes_required ??
+        configuredPassesRequired
+      );
       const prevRepeatPerLetter = Number(
         prev.repeatPerLetter ??
         prev.repeats_per_letter ??
@@ -221,26 +355,45 @@
         1
       );
 
+      const passesRequired = Math.max(
+        configuredPassesRequired,
+        Number.isFinite(prevPassesRequired) && prevPassesRequired >= 1
+          ? prevPassesRequired
+          : 1
+      );
+      const passesDone = Number.isFinite(prevPassesDone) && prevPassesDone >= 0
+        ? Math.min(prevPassesDone, passesRequired)
+        : 0;
+      const explicitCompleted = !!(
+        prev.step_status === 'completed' ||
+        prev.status === 'completed'
+      );
+
       shaped[step.id] = {
         ...(shaped[step.id] || {}),
-        passesDone:
-          Number.isFinite(prevPassesDone) && prevPassesDone >= 0
-            ? prevPassesDone
-            : 0,
-        passesRequired:
-          Number.isFinite(prevPassesRequired) && prevPassesRequired >= 1
-            ? prevPassesRequired
-            : 1,
+        passesDone: passesDone,
+        passesRequired: passesRequired,
         repeatPerLetter:
           Number.isFinite(prevRepeatPerLetter) && prevRepeatPerLetter >= 1
             ? prevRepeatPerLetter
             : 1,
-        completed: !!(prev.completed || prev.step_status === 'completed')
+        completed: !!(explicitCompleted || passesDone >= passesRequired)
       };
 
       try {
         if (__pqIsPassFilterStep(step.id)) {
-          shaped[step.id].passesRequired = __pqGetStepPassCount(step.id);
+          shaped[step.id].passesRequired = Math.max(
+            shaped[step.id].passesRequired,
+            __pqGetStepPassCount(step.id)
+          );
+          shaped[step.id].passesDone = Math.min(
+            shaped[step.id].passesDone,
+            shaped[step.id].passesRequired
+          );
+          shaped[step.id].completed = !!(
+            explicitCompleted ||
+            shaped[step.id].passesDone >= shaped[step.id].passesRequired
+          );
         }
       } catch (_e) {}
 
@@ -265,10 +418,22 @@
     const firstIncomplete = ordered.find(
       (step) => !(shaped[step.id] && shaped[step.id].completed)
     );
+    const rawCurrentId = String((raw && raw.currentStepId) || '').trim();
+    const rawCurrentIndex = ordered.findIndex(
+      (step) => step && step.id === rawCurrentId
+    );
+    const rawCurrentIsValid = rawCurrentIndex >= 0;
+    const rawCurrentCanResume = rawCurrentIsValid && ordered
+      .slice(0, rawCurrentIndex)
+      .every((step) => !!(shaped[step.id] && shaped[step.id].completed));
 
-    shaped.currentStepId = firstIncomplete
-      ? firstIncomplete.id
-      : ((ordered[ordered.length - 1] && ordered[ordered.length - 1].id) || 'lecture');
+    shaped.currentStepId = rawCurrentCanResume
+      ? rawCurrentId
+      : (
+          firstIncomplete
+            ? firstIncomplete.id
+            : ((ordered[ordered.length - 1] && ordered[ordered.length - 1].id) || 'lecture')
+        );
 
     shaped.__finished = ordered.every(
       (step) => !!(shaped[step.id] && shaped[step.id].completed)
@@ -305,6 +470,7 @@
   let pqStepActionBar = document.getElementById('pqStepActionBar');
   let pqStepActionBtn = document.getElementById('pqStepActionBtn');
   let pqStepPrevBtn = document.getElementById('pqStepPrevBtn');
+  let pqStepSkipBtn = document.getElementById('pqStepSkipBtn');
 
 function __pqSetBilingualControlLabel(el, english, arabic) {
   try {
@@ -314,9 +480,19 @@ function __pqSetBilingualControlLabel(el, english, arabic) {
 
     el.textContent = '';
     el.classList.add('pq-bilingual-control');
+    el.setAttribute('dir', 'auto');
+    el.style.display = 'inline-flex';
+    el.style.flexDirection = 'column';
+    el.style.alignItems = 'center';
+    el.style.justifyContent = 'center';
+    el.style.gap = '2px';
+    el.style.whiteSpace = 'normal';
 
     const en = document.createElement('span');
     en.className = 'pq-bilingual-control__en';
+    en.setAttribute('dir', 'ltr');
+    en.style.display = 'block';
+    en.style.unicodeBidi = 'isolate';
     en.textContent = enText;
     el.appendChild(en);
 
@@ -324,6 +500,8 @@ function __pqSetBilingualControlLabel(el, english, arabic) {
       const ar = document.createElement('span');
       ar.className = 'pq-bilingual-control__ar';
       ar.setAttribute('dir', 'rtl');
+      ar.style.display = 'block';
+      ar.style.unicodeBidi = 'isolate';
       ar.textContent = arText;
       el.appendChild(ar);
     }
@@ -394,6 +572,43 @@ function __pqGetDynamicActionBrowserHost() {
   }
 }
 
+function __pqMountStepActionControls(forceCombined) {
+  try {
+    const actionSlot = document.getElementById('pqHeaderActionSlot');
+    const previousSlot = document.getElementById('pqHeaderPreviousStepSlot');
+    const skipSlot = document.getElementById('pqHeaderQaSkipSlot');
+    const hasSplitDesktopSlots = !forceCombined && !!(actionSlot && previousSlot && skipSlot);
+
+    if (hasSplitDesktopSlots) {
+      try {
+        Array.from(pqStepActionBar.children || []).forEach((child) => {
+          if (child !== pqStepActionBtn) child.remove();
+        });
+      } catch (_e) {}
+
+      if (pqStepActionBtn && pqStepActionBtn.parentNode !== pqStepActionBar) {
+        pqStepActionBar.appendChild(pqStepActionBtn);
+      }
+
+      if (pqStepActionBar.parentNode !== actionSlot) {
+        actionSlot.appendChild(pqStepActionBar);
+      }
+
+      if (pqStepPrevBtn && pqStepPrevBtn.parentNode !== previousSlot) {
+        previousSlot.appendChild(pqStepPrevBtn);
+      }
+
+      if (pqStepSkipBtn && pqStepSkipBtn.parentNode !== skipSlot) {
+        skipSlot.appendChild(pqStepSkipBtn);
+      }
+
+      return;
+    }
+
+    __pqMountStepActionControls();
+  } catch (_e) {}
+}
+
 function __pqEnsureDynamicActionHost() {
   try {
     if (!pqStepActionBar) {
@@ -406,6 +621,10 @@ function __pqEnsureDynamicActionHost() {
 
     if (!pqStepPrevBtn) {
       pqStepPrevBtn = document.getElementById('pqStepPrevBtn');
+    }
+
+    if (!pqStepSkipBtn) {
+      pqStepSkipBtn = document.getElementById('pqStepSkipBtn');
     }
 
     if (!pqStepActionBar) {
@@ -427,18 +646,29 @@ function __pqEnsureDynamicActionHost() {
       pqStepPrevBtn.type = 'button';
       pqStepPrevBtn.id = 'pqStepPrevBtn';
       pqStepPrevBtn.className = 'pq-step-prev-btn';
-      pqStepPrevBtn.textContent = '← Step';
+      pqStepPrevBtn.textContent = 'Step Back \u2190';
+    }
+
+    if (!pqStepSkipBtn) {
+      pqStepSkipBtn = document.createElement('button');
+      pqStepSkipBtn.type = 'button';
+      pqStepSkipBtn.id = 'pqStepSkipBtn';
+      pqStepSkipBtn.className = 'pq-step-skip-btn';
+      pqStepSkipBtn.textContent = 'Skip';
+      pqStepSkipBtn.hidden = true;
     }
 
     if (
       pqStepActionBtn.parentNode !== pqStepActionBar ||
-      pqStepPrevBtn.parentNode !== pqStepActionBar
+      pqStepPrevBtn.parentNode !== pqStepActionBar ||
+      pqStepSkipBtn.parentNode !== pqStepActionBar
     ) {
       try {
         pqStepActionBar.innerHTML = '';
       } catch (_e) {}
       pqStepActionBar.appendChild(pqStepPrevBtn);
       pqStepActionBar.appendChild(pqStepActionBtn);
+      pqStepActionBar.appendChild(pqStepSkipBtn);
     }
 
     let style = document.getElementById('pqStepActionRuntimeStyle');
@@ -449,10 +679,10 @@ function __pqEnsureDynamicActionHost() {
 #pqStepActionBar.pq-step-action-bar{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  width:100%;
-  min-width:300px;
+  justify-content:center;
+  gap:0;
+  width:auto;
+  min-width:0;
   margin:0;
   visibility:visible !important;
   opacity:1 !important;
@@ -460,14 +690,15 @@ function __pqEnsureDynamicActionHost() {
 }
 
 #pqStepActionBtn.pq-step-action-btn,
-#pqStepPrevBtn.pq-step-prev-btn{
+#pqStepPrevBtn.pq-step-prev-btn,
+#pqStepSkipBtn.pq-step-skip-btn{
   appearance:none;
   -webkit-appearance:none;
   display:inline-flex !important;
   align-items:center;
   justify-content:center;
   width:auto;
-  min-width:0;
+  min-width:160px;
   min-height:52px;
   padding:14px 24px;
   border:0;
@@ -486,9 +717,17 @@ function __pqEnsureDynamicActionHost() {
 }
 
 #pqStepPrevBtn.pq-step-prev-btn{
+  min-width:170px;
   background:#fff5d8;
   color:#5a4219;
   box-shadow:inset 0 0 0 2px #e2bd67,0 10px 24px rgba(0,0,0,.08);
+}
+
+#pqStepSkipBtn.pq-step-skip-btn{
+  min-width:180px;
+  background:#e8fff0;
+  color:#14532d;
+  box-shadow:inset 0 0 0 2px #75c98b,0 10px 24px rgba(0,0,0,.08);
 }
 
 #pqStepActionBar.pq-step-action-bar[data-prev-visible="0"]{
@@ -497,13 +736,15 @@ function __pqEnsureDynamicActionHost() {
 }
 
 #pqStepActionBtn.pq-step-action-btn[disabled],
-#pqStepPrevBtn.pq-step-prev-btn[disabled]{
+#pqStepPrevBtn.pq-step-prev-btn[disabled],
+#pqStepSkipBtn.pq-step-skip-btn[disabled]{
   opacity:.5 !important;
   cursor:not-allowed;
 }
 
 #pqStepActionBtn.pq-step-action-btn[hidden],
-#pqStepPrevBtn.pq-step-prev-btn[hidden]{
+#pqStepPrevBtn.pq-step-prev-btn[hidden],
+#pqStepSkipBtn.pq-step-skip-btn[hidden]{
   display:none !important;
 }
 
@@ -574,7 +815,8 @@ function __pqEnsureDynamicActionHost() {
 #pqUnifiedBottomBar #pqMobileBackBtn,
 #pqUnifiedBottomBar #btnPause,
 #pqUnifiedBottomBar #pqStepActionBtn,
-#pqUnifiedBottomBar #pqStepPrevBtn{
+#pqUnifiedBottomBar #pqStepPrevBtn,
+#pqUnifiedBottomBar #pqStepSkipBtn{
   pointer-events:auto !important;
   touch-action:manipulation;
 }
@@ -586,7 +828,8 @@ function __pqEnsureDynamicActionHost() {
   }
 
   #pqStepActionBtn.pq-step-action-btn,
-  #pqStepPrevBtn.pq-step-prev-btn{
+  #pqStepPrevBtn.pq-step-prev-btn,
+  #pqStepSkipBtn.pq-step-skip-btn{
     min-height:50px;
     padding:12px 16px;
     font-size:17px;
@@ -627,13 +870,515 @@ function __pqEnsureDynamicActionHost() {
       pqStepPrevBtn.__pqBound__ = true;
     }
 
+    if (pqStepSkipBtn && !pqStepSkipBtn.__pqBound__) {
+      pqStepSkipBtn.addEventListener('click', __pqHandleQaSkipStepClick);
+      pqStepSkipBtn.__pqBound__ = true;
+    }
+
     return {
       bar: pqStepActionBar,
       button: pqStepActionBtn,
-      previousButton: pqStepPrevBtn
+      previousButton: pqStepPrevBtn,
+      skipButton: pqStepSkipBtn
     };
   } catch (_e) {
     return null;
+  }
+}
+
+function __pqPreviousStepButtonLabel() {
+  const raw = String(__cfg('stepNavigation.previous.label', 'Step Back \u2190') || '').trim();
+  const normalized = raw.replace(/\s+/g, ' ').toLowerCase();
+
+  if (
+    !raw ||
+    normalized === 'step' ||
+    normalized === '\u2190 step' ||
+    normalized === 'step \u2190'
+  ) {
+    return 'Step Back \u2190';
+  }
+
+  return raw;
+}
+
+const __PQ_SHARED_STEP_NAV_MESSAGES = Object.freeze({
+  previous: Object.freeze({
+    confirmTitle: 'Go back one step?',
+    confirmText: 'This will move you back to {previousStep}. Your progress for {currentStep} and {previousStep} will be reset so you can try again.',
+    confirmContinueText: 'Yes, go back',
+    confirmCancelText: 'Stay here'
+  }),
+  skip: Object.freeze({
+    confirmTitle: 'Skip this step?',
+    confirmText: 'This will mark {currentStep} complete and move you to the next step.',
+    confirmContinueText: 'Yes, skip step',
+    confirmCancelText: 'Stay here'
+  })
+});
+
+function __pqSharedStepNavigationText(section, key) {
+  try {
+    return String(
+      __PQ_SHARED_STEP_NAV_MESSAGES &&
+      __PQ_SHARED_STEP_NAV_MESSAGES[section] &&
+      __PQ_SHARED_STEP_NAV_MESSAGES[section][key]
+    );
+  } catch (_e) {
+    return '';
+  }
+}
+
+function __pqQaEnvironment() {
+  try {
+    const q = new URLSearchParams(location.search || '');
+    const raw = String(
+      q.get('pq_env') ||
+      q.get('env') ||
+      q.get('pq_environment') ||
+      window.__prequran_environment ||
+      sessionStorage.getItem('pq_env') ||
+      ''
+    ).trim().toLowerCase().replace(/[-\s]+/g, '_');
+
+    if (raw === 'stage') return 'staging';
+    if (raw === 'int' || raw === 'qa') return 'integration';
+    if (raw === 'integration' || raw === 'staging' || raw === 'production') return raw;
+
+    const host = String(location.hostname || '').toLowerCase();
+    const path = String(location.pathname || '').toLowerCase();
+    if (
+      (host === '127.0.0.1' || host === 'localhost' || host === '::1') &&
+      path.includes('/pre_quraan_integration/')
+    ) {
+      return 'integration';
+    }
+  } catch (_e) {}
+
+  return 'production';
+}
+
+function __pqLocalIntegrationManagedTest() {
+  try {
+    const q = new URLSearchParams(location.search || '');
+    const host = String(location.hostname || '').toLowerCase();
+    const managed = String(q.get('managed') || q.get('pq_managed') || '').toLowerCase();
+    return (
+      (host === '127.0.0.1' || host === 'localhost' || host === '::1') &&
+      String(location.pathname || '').toLowerCase().includes('/pre_quraan_integration/') &&
+      (managed === '1' || managed === 'true' || managed === 'yes')
+    );
+  } catch (_e) {
+    return false;
+  }
+}
+
+function __pqQaSkipLaunchAllowed() {
+  try {
+    const q = new URLSearchParams(location.search || '');
+    const explicit = q.has('pq_can_skip_step') || q.has('pqdebug_skip_step');
+    const launched = String(
+      q.get('pq_can_skip_step') ||
+      q.get('pqdebug_skip_step') ||
+      window.__prequran_can_skip_step ||
+      ''
+    ).toLowerCase();
+    const allowed = explicit && (
+      launched === '1' ||
+      launched === 'true' ||
+      launched === 'yes'
+    );
+
+    if (allowed) {
+      try { window.__prequran_can_skip_step = true; } catch (_e) {}
+      try { sessionStorage.setItem('pq_can_skip_step', '1'); } catch (_e) {}
+    } else {
+      try { window.__prequran_can_skip_step = false; } catch (_e) {}
+      try { sessionStorage.removeItem('pq_can_skip_step'); } catch (_e) {}
+    }
+
+    return allowed;
+  } catch (_e) {
+    return false;
+  }
+}
+
+function __pqCanShowQaSkipStep() {
+  try {
+    if (__pqQaEnvironment() === 'production') return false;
+    return __pqQaSkipLaunchAllowed() || __pqLocalIntegrationManagedTest();
+  } catch (_e) {
+    return false;
+  }
+}
+
+try {
+  window.__pqQaSkipDebug = function () {
+    const target = __pqCurrentQaSkipTarget();
+    return {
+      env: __pqQaEnvironment(),
+      launchAllowed: __pqQaSkipLaunchAllowed(),
+      canShow: __pqCanShowQaSkipStep(),
+      target,
+      mounted: !!(pqStepSkipBtn && document.body.contains(pqStepSkipBtn)),
+      hidden: pqStepSkipBtn ? pqStepSkipBtn.hidden : null,
+      display: pqStepSkipBtn ? pqStepSkipBtn.style.display : null
+    };
+  };
+} catch (_e) {}
+
+function __pqCurrentQaSkipTarget() {
+  try {
+    const current = getCurrentStep();
+    const step = current && current.step ? current.step : null;
+    const progress = current && current.progress ? current.progress : null;
+    const stepId = step && step.id ? String(step.id) : '';
+    if (!stepId) return null;
+
+    return {
+      stepId,
+      completed: !!(progress && progress.completed),
+      progress
+    };
+  } catch (_e) {
+    return null;
+  }
+}
+
+function __pqQaSkipTargetUserId() {
+  try {
+    const q = new URLSearchParams(location.search || '');
+    const candidates = [
+      window.__prequran_studentid,
+      q.get('studentid'),
+      q.get('monitor_studentid'),
+      q.get('commstudentid'),
+      q.get('childid'),
+      sessionStorage.getItem('pq_studentid'),
+      sessionStorage.getItem('pq_childid'),
+      pqGetUid()
+    ];
+
+    for (const candidate of candidates) {
+      const n = parseInt(candidate, 10);
+      if (Number.isFinite(n) && n > 0) return n;
+    }
+  } catch (_e) {}
+
+  return pqGetUid();
+}
+
+function __pqSyncQaSkipStepButton() {
+  try {
+    if (!pqStepSkipBtn) return;
+
+    const target = __pqCurrentQaSkipTarget();
+    const visible = !!(__pqCanShowQaSkipStep() && target && target.stepId && !target.completed);
+
+    pqStepSkipBtn.hidden = !visible;
+    pqStepSkipBtn.style.display = visible ? 'inline-flex' : 'none';
+    pqStepSkipBtn.disabled = !visible || pqStepSkipBtn.classList.contains('is-working');
+    pqStepSkipBtn.title = visible ? 'Skip this step for QA testing' : '';
+    pqStepSkipBtn.setAttribute('aria-label', 'Skip this step for QA testing');
+
+    if (visible) {
+      __pqSetBilingualControlLabel(pqStepSkipBtn, 'Skip Step', '');
+    }
+  } catch (_e) {}
+}
+
+async function __pqRefreshAfterQaSkip() {
+  try {
+    let state = null;
+    if (__LessonRuntime && typeof __LessonRuntime.refresh === 'function') {
+      state = await __LessonRuntime.refresh();
+    }
+
+    if (state && Array.isArray(state.steps) && state.steps.length) {
+      STEPS = __pqInjectWatchStep(
+        orderStepsForDisplay(state.steps).map((step) => ({
+          id: step.id,
+          type: step.type || (step.id === 'lecture' ? 'lecture' : 'playlist'),
+          label: __pqWriteLabel(step.label || step.title || step.id),
+          filter:
+            (step.type === 'lecture')
+              ? 'all'
+              : (step.filter || __deriveFilterFromStepId(step.id)),
+          step_index: step.step_index
+        }))
+      );
+      try {
+        window.__PQ_RUNTIME_STEPS__ = STEPS.slice();
+        window.__PQ_RUNTIME_STEPS_SOURCE__ = state.stepsSource || 'db';
+      } catch (_e) {}
+    }
+
+    if (state && state.progress) {
+      managedProgress = __pqApplyQaSkipHandoff(ensureProgressShape(state.progress));
+    }
+  } catch (_e) {}
+
+  try { __pqRunPostModeUiRefresh(); } catch (_e) {}
+  try { __pqAfterProgressChange(true); } catch (_e) {}
+  try { __pqForceStepHandoffRefresh(); } catch (_e) {}
+  try { __pqSyncQaSkipStepButton(); } catch (_e) {}
+}
+
+function __pqForceStepHandoffRefresh() {
+  try { __pqStickyReviewStepId = null; } catch (_e) {}
+  try { __pqNormalizeCurrentStepId(); } catch (_e) {}
+  try { __pqResetPreviousStepVisualState(); } catch (_e) {}
+  try { fgSyncStepContext(true); } catch (_e) {}
+  try { __pqPlaylistEngine = null; } catch (_e) {}
+  try { renderStepper(); } catch (_e) {}
+  try { renderGrid(); } catch (_e) {}
+  try { markActive(); } catch (_e) {}
+  try { refreshPlayedClasses(); } catch (_e) {}
+  try { updateControlsForCurrentStep(); } catch (_e) {}
+  try { __pqSyncWriteUI(); } catch (_e) {}
+  try { __pqForceWriteButtonRefresh(); } catch (_e) {}
+  try { __pqEnsureSpeakBoot(); } catch (_e) {}
+  try { __pqForceSpeakUiRefresh(); } catch (_e) {}
+  try { __pqEnsureSubmitBoot(); } catch (_e) {}
+  try { __pqSyncSubmitUi(); } catch (_e) {}
+  try { __pqRenderMobileStepPicker(); } catch (_e) {}
+  try { __pqSyncDynamicStepAction(); } catch (_e) {}
+
+  try {
+    window.requestAnimationFrame(() => {
+      try { __pqNormalizeCurrentStepId(); } catch (_e) {}
+      try { __pqRunPostModeUiRefresh(); } catch (_e) {}
+      try { __pqSyncDynamicStepAction(); } catch (_e) {}
+    });
+  } catch (_e) {}
+}
+
+function __pqApplyQaSkipProgressState(stepId) {
+  try {
+    const sid = String(stepId || '').trim();
+    if (!sid) return false;
+
+    if (!managedProgress) {
+      managedProgress = ensureProgressShape({ currentStepId: sid });
+    }
+
+    const existing = managedProgress[sid] || {};
+    const required = Math.max(
+      1,
+      Number(existing.passesRequired ?? existing.passes_required ?? 1) || 1
+    );
+
+    managedProgress[sid] = {
+      ...existing,
+      passesDone: required,
+      passes_done: required,
+      passesRequired: required,
+      passes_required: required,
+      completed: true,
+      step_status: 'completed',
+      status: 'completed',
+      completedAt: Date.now()
+    };
+
+    const next = (STEPS || []).find((step) => {
+      const id = String((step && step.id) || '');
+      return id && !(managedProgress[id] && managedProgress[id].completed);
+    });
+
+    managedProgress.currentStepId = next
+      ? next.id
+      : ((STEPS && STEPS[STEPS.length - 1] && STEPS[STEPS.length - 1].id) || sid);
+    managedProgress.__finished = (STEPS || []).every(
+      (step) => !!(managedProgress[step.id] && managedProgress[step.id].completed)
+    );
+
+    return true;
+  } catch (_e) {
+    return false;
+  }
+}
+
+async function __pqApplyLocalQaSkipStep(stepId) {
+  try {
+    if (!__pqApplyQaSkipProgressState(stepId)) return false;
+
+    try {
+      localStorage.setItem(LS_PROGRESS_CACHE_KEY, JSON.stringify(managedProgress));
+    } catch (_e) {}
+
+    try { __pqRunPostModeUiRefresh(); } catch (_e) {}
+    try { __pqAfterProgressChange(true); } catch (_e) {}
+    try { __pqForceStepHandoffRefresh(); } catch (_e) {}
+    try { __pqSyncQaSkipStepButton(); } catch (_e) {}
+    return true;
+  } catch (_e) {
+    return false;
+  }
+}
+
+function __pqNotifyQaSkipStep(message, tone = 'info') {
+  const text = String(message || '').trim();
+  if (!text) return;
+
+  try {
+    const api = __pqEnsureStepMessaging();
+    if (api && typeof api.showToast === 'function') {
+      api.showToast({ text, tone, timeout: 3200 });
+      return;
+    }
+  } catch (_e) {}
+
+  try {
+    const prior = document.querySelector('.pq-qa-skip-toast');
+    if (prior) prior.remove();
+
+    const toast = document.createElement('div');
+    toast.className = `pq-qa-skip-toast pq-qa-skip-toast--${tone}`;
+    toast.setAttribute('role', 'status');
+    toast.textContent = text;
+    toast.style.cssText = [
+      'position:fixed',
+      'top:18px',
+      'left:50%',
+      'transform:translateX(-50%)',
+      'z-index:2147483647',
+      'max-width:min(92vw,560px)',
+      'padding:12px 16px',
+      'border-radius:16px',
+      'background:#0f172a',
+      'color:#fff',
+      'font:800 14px/1.35 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
+      'box-shadow:0 14px 28px rgba(15,23,42,.24)',
+      'text-align:center'
+    ].join(';');
+    if (tone === 'error') {
+      toast.style.background = '#991b1b';
+    } else if (tone === 'success') {
+      toast.style.background = '#166534';
+    }
+    document.body.appendChild(toast);
+    window.setTimeout(() => {
+      try { toast.remove(); } catch (_e) {}
+    }, 3400);
+  } catch (_e) {
+    try { console.log(text); } catch (__e) {}
+  }
+}
+
+async function __pqTryQaSkipStepFallback(stepId) {
+  try {
+    if (__pqQaEnvironment() === 'production') return false;
+    if (!stepId || !__pqCanShowQaSkipStep()) return false;
+    return await __pqApplyLocalQaSkipStep(stepId);
+  } catch (_e) {
+    return false;
+  }
+}
+
+async function __pqConfirmQaSkipStep(target) {
+  try {
+    const stepId = String((target && target.stepId) || '');
+    const step = (STEPS || []).find((item) => String((item && item.id) || '') === stepId) || null;
+    const stepLabel = __pqDynamicStepLabel(step, stepId);
+    const message = {
+      titleText: __pqSharedStepNavigationText('skip', 'confirmTitle'),
+      text: __pqSharedStepNavigationText('skip', 'confirmText')
+        .replace(/\{currentStep\}/g, stepLabel),
+      continueText: __pqSharedStepNavigationText('skip', 'confirmContinueText'),
+      cancelText: __pqSharedStepNavigationText('skip', 'confirmCancelText')
+    };
+
+    const api = __pqEnsureStepMessaging();
+    if (api && typeof api.showChoice === 'function') {
+      return !!(await api.showChoice(message, message));
+    }
+  } catch (_e) {}
+
+  try {
+    return window.confirm('Skip this step?');
+  } catch (_e) {
+    return false;
+  }
+}
+
+async function __pqHandleQaSkipStepClick(ev) {
+  let target = null;
+  try {
+    if (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+
+    if (!__pqCanShowQaSkipStep()) return;
+    target = __pqCurrentQaSkipTarget();
+    if (!target || !target.stepId || target.completed) return;
+
+    const ok = await __pqConfirmQaSkipStep(target);
+    if (!ok) return;
+
+    if (__pqLocalIntegrationManagedTest()) {
+      if (await __pqApplyLocalQaSkipStep(target.stepId)) return;
+    }
+
+    const core = pqResolveCore() || PQManagedCore;
+    if (!core || typeof core.wsSet !== 'function') return;
+
+    pqStepSkipBtn.classList.add('is-working');
+    pqStepSkipBtn.disabled = true;
+
+    try {
+      if (typeof core.waitForTokens === 'function') {
+        await core.waitForTokens(3000);
+      } else if (typeof window.pqWaitForIframeTokens === 'function') {
+        await window.pqWaitForIframeTokens(3000);
+      }
+    } catch (_e) {}
+
+    const targetUserId = __pqQaSkipTargetUserId();
+    const token = pqGetToken();
+    if (!targetUserId || !token) {
+      throw new Error('Missing Moodle user id or web-service token for QA skip.');
+    }
+
+    const q = new URLSearchParams(location.search || '');
+    const result = await core.wsSet({
+      wsfunction: 'local_prequran_skip_step',
+      userid: targetUserId,
+      studentid: targetUserId,
+      wstoken: token,
+      lessonid: LESSON_DEF.lessonid,
+      unitid: LESSON_DEF.unitid,
+      step_id: target.stepId,
+      cohortid: Number(q.get('cohortid') || window.__prequran_cohortid || sessionStorage.getItem('pq_cohortid') || 0) || 0,
+      pq_env: __pqQaEnvironment()
+    });
+    if (!result || result.status === false || result.ok === false) {
+      throw new Error((result && (result.message || result.reason)) || 'QA skip web-service call did not complete.');
+    }
+
+    try {
+      __pqStartQaSkipHandoff(target.stepId);
+      __pqApplyQaSkipProgressState(target.stepId);
+      __pqForceStepHandoffRefresh();
+    } catch (_e) {}
+
+    await __pqRefreshAfterQaSkip();
+  } catch (err) {
+    try {
+      console.error('[Pre-Quraan] QA skip step failed', err);
+    } catch (_e) {}
+    if (await __pqTryQaSkipStepFallback(target && target.stepId)) {
+      __pqNotifyQaSkipStep('Skipped this step in integration. Moodle progress will update after services are upgraded.', 'success');
+    } else {
+      __pqNotifyQaSkipStep('Could not skip this step. Refresh and try again, or ask an admin to upgrade Moodle services.', 'error');
+    }
+  } finally {
+    try {
+      if (pqStepSkipBtn) {
+        pqStepSkipBtn.classList.remove('is-working');
+        __pqSyncQaSkipStepButton();
+      }
+    } catch (_e) {}
   }
 }
 
@@ -647,11 +1392,16 @@ function __pqCanRunDynamicStepAction(meta) {
     if (mode === 'speak') return true;
     if (mode === 'submit') return true;
     if (mode === 'playall') return true;
+    if (mode === 'complete') return true;
 
     if (mode === 'target') {
       if (!target) return false;
 
-      if (stepId === 'trace1' || stepId === 'write') {
+      if (
+        stepId === 'trace1' ||
+        stepId === 'write' ||
+        /^(write|trace)\d+$/.test(stepId)
+      ) {
         return true;
       }
 
@@ -691,19 +1441,40 @@ function __pqGetDynamicStepActionMeta() {
     const rawStepId = String((step && step.id) || '').toLowerCase();
     const stepId = __pqCanonicalStepId(rawStepId);
 
-    // ✅ PATCH: hide articulation image when NOT in sound step
+    // Hide articulation image when NOT in sound step.
     try {
       if (stepId !== 'sound') {
         __pqHideSoundArticulationImage();
       }
     } catch (_e) {}
 
+    if (/^(write|trace)\d+$/.test(stepId)) {
+      return {
+        stepId,
+        label: __pqDynamicStepLabel(step, 'Write'),
+        arabicLabel: __pqDynamicStepArabicLabel(step, '\u0627\u0643\u062a\u0628'),
+        mode: 'target',
+        target: document.getElementById('btnTrace') || null
+      };
+    }
+
+    if (step && typeof __pqIsContentOnlyStep === 'function' && __pqIsContentOnlyStep(step)) {
+      const isRulesStep = String(stepId || '').toLowerCase() === 'rules';
+      return {
+        stepId,
+        label: String((step && step.actionLabel) || (isRulesStep ? 'Rules' : 'Complete')),
+        arabicLabel: String((step && step.actionArabicLabel) || (isRulesStep ? '\u0627\u0644\u0642\u0648\u0627\u0639\u062f' : '\u0623\u0643\u0645\u0644')),
+        mode: 'complete',
+        target: null
+      };
+    }
+
     switch (stepId) {
       case 'lecture':
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Lecture'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'شرح'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0634\u0631\u062d'),
           mode: 'target',
           target:
             document.getElementById('pqLectureCtaBtn') ||
@@ -715,7 +1486,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Listen'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'استمع'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0627\u0633\u062a\u0645\u0639'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -724,7 +1495,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Listen+'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'تلميحات الحروف'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u062a\u0644\u0645\u064a\u062d\u0627\u062a \u0627\u0644\u062d\u0631\u0648\u0641'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -733,7 +1504,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Watch'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'شاهد'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0634\u0627\u0647\u062f'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -742,7 +1513,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Sound'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'النطق'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0627\u0644\u0646\u0637\u0642'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -751,7 +1522,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Repeat'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'كرر'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0643\u0631\u0631'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -760,7 +1531,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Speak'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'تحدث'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u062a\u062d\u062f\u062b'),
           mode: 'speak',
           target: null
         };
@@ -769,7 +1540,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Submit'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'أرسل'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0623\u0631\u0633\u0644'),
           mode: 'submit',
           target: null
         };
@@ -778,7 +1549,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Match'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'طابق'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0637\u0627\u0628\u0642'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -787,7 +1558,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Animate'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'شاهد الكتابة'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0634\u0627\u0647\u062f \u0627\u0644\u0643\u062a\u0627\u0628\u0629'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
@@ -797,7 +1568,7 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Write'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'اكتب'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u0627\u0643\u062a\u0628'),
           mode: 'target',
           target: document.getElementById('btnTrace') || null
         };
@@ -806,12 +1577,22 @@ function __pqGetDynamicStepActionMeta() {
         return {
           stepId,
           label: __pqDynamicStepLabel(step, 'Words'),
-          arabicLabel: __pqDynamicStepArabicLabel(step, 'تلميحات صوتية'),
+          arabicLabel: __pqDynamicStepArabicLabel(step, '\u062a\u0644\u0645\u064a\u062d\u0627\u062a \u0635\u0648\u062a\u064a\u0629'),
           mode: 'playall',
           target: document.getElementById('btnPlayAll') || null
         };
 
       default:
+        if (step && typeof __pqIsWatchStep === 'function' && __pqIsWatchStep(step)) {
+          return {
+            stepId,
+            label: __pqDynamicStepLabel(step, 'Watch'),
+            arabicLabel: __pqDynamicStepArabicLabel(step, '\u0634\u0627\u0647\u062f'),
+            mode: 'playall',
+            target: document.getElementById('btnPlayAll') || null
+          };
+        }
+
         return {
           stepId: '',
           label: 'Action',
@@ -832,16 +1613,32 @@ function __pqGetDynamicStepActionMeta() {
 function __pqGetPreviousStepMeta() {
   try {
     if (__cfg('stepNavigation.previous.enabled', true) === false) return null;
-    if (!managedProgress || __pqPracticeFreeUI() || __pqIsReviewMode()) return null;
+    if (!__pqIsManagedUser() && !__pqCanShowQaSkipStep()) return null;
 
     const current = getCurrentStep();
     const currentStep = current && current.step ? current.step : null;
     const currentId = String((currentStep && currentStep.id) || '').trim();
     if (!currentId) return null;
 
-    const ordered = orderStepsForDisplay(STEPS || []);
+    const ordered = __pqOrderStepsForNavigation(STEPS || []);
     const idx = ordered.findIndex((step) => step && step.id === currentId);
-    if (idx <= 0) return null;
+    if (idx <= 0) {
+      const currentCanonicalId = __pqCanonicalStepId(currentId);
+      const lectureStep = ordered.find((step) => {
+        return __pqCanonicalStepId((step && step.id) || '') === 'lecture';
+      });
+
+      if (currentCanonicalId !== 'listen' || !lectureStep || lectureStep.id === currentId) {
+        return null;
+      }
+
+      return {
+        currentStep,
+        currentId,
+        previousStep: lectureStep,
+        previousId: String(lectureStep.id)
+      };
+    }
 
     const previousStep = ordered[idx - 1] || null;
     if (!previousStep || !previousStep.id) return null;
@@ -857,18 +1654,55 @@ function __pqGetPreviousStepMeta() {
   }
 }
 
+function __pqOrderStepsForNavigation(steps) {
+  try {
+    const arr = (Array.isArray(steps) ? steps : []).slice();
+
+    arr.sort((a, b) => {
+      const stepIndexA = (a && a.step_index != null && a.step_index !== '')
+        ? Number(a.step_index)
+        : NaN;
+      const stepIndexB = (b && b.step_index != null && b.step_index !== '')
+        ? Number(b.step_index)
+        : NaN;
+      const hasA = Number.isFinite(stepIndexA);
+      const hasB = Number.isFinite(stepIndexB);
+
+      if (hasA && hasB && stepIndexA !== stepIndexB) return stepIndexA - stepIndexB;
+      if (hasA && !hasB) return -1;
+      if (!hasA && hasB) return 1;
+
+      const idA = __pqCanonicalStepId((a && a.id) || '');
+      const idB = __pqCanonicalStepId((b && b.id) || '');
+      const orderA = (__PQ_STEP_ORDER[idA] != null) ? __PQ_STEP_ORDER[idA] : 999;
+      const orderB = (__PQ_STEP_ORDER[idB] != null) ? __PQ_STEP_ORDER[idB] : 999;
+
+      if (orderA !== orderB) return orderA - orderB;
+
+      return String((a && (a.label || a.title || a.id)) || '')
+        .localeCompare(String((b && (b.label || b.title || b.id)) || ''));
+    });
+
+    return arr;
+  } catch (_e) {
+    return orderStepsForDisplay(steps || []);
+  }
+}
+
 function __pqResetStepProgressState(stepId) {
   try {
     const sid = String(stepId || '').trim();
     if (!sid || !managedProgress) return;
 
     const existing = managedProgress[sid] || {};
+    const step = (STEPS || []).find((item) => String((item && item.id) || '') === sid) || { id: sid };
+    const configuredRequired = __pqGetConfiguredStepPassRequirement(step);
     const required = Math.max(
       1,
+      configuredRequired,
       Number(
         existing.passesRequired ??
         existing.passes_required ??
-        __pqGetStepPassCount(sid) ??
         1
       ) || 1
     );
@@ -997,24 +1831,32 @@ function __pqResetPreviousStepVisualState() {
   } catch (_e) {}
 }
 
+function __pqApplyPreviousStepReturnState(meta) {
+  try {
+    if (!managedProgress) return;
+    if (!meta || !meta.previousId || !meta.currentId) return;
+
+    __pqResetStepProgressState(meta.previousId);
+    __pqResetStepProgressState(meta.currentId);
+    managedProgress.currentStepId = meta.previousId;
+    managedProgress.__finished = false;
+    managedProgress.__allCompleted = false;
+  } catch (_e) {}
+}
+
 async function __pqConfirmPreviousStep(meta) {
   try {
     const previousLabel = __pqDynamicStepLabel(meta.previousStep, meta.previousId);
     const currentLabel = __pqDynamicStepLabel(meta.currentStep, meta.currentId);
-    const titleText = String(__cfg('stepNavigation.previous.confirmTitle', 'Go back one step?'));
-    const textTemplate = String(
-      __cfg(
-        'stepNavigation.previous.confirmText',
-        'This will move you back to {previousStep}. Your progress for this step will be reset so you can try again.'
-      )
-    );
+    const titleText = __pqSharedStepNavigationText('previous', 'confirmTitle');
+    const textTemplate = __pqSharedStepNavigationText('previous', 'confirmText');
     const message = {
       titleText,
       text: textTemplate
         .replace(/\{previousStep\}/g, previousLabel)
         .replace(/\{currentStep\}/g, currentLabel),
-      continueText: String(__cfg('stepNavigation.previous.confirmContinueText', 'Yes, go back')),
-      cancelText: String(__cfg('stepNavigation.previous.confirmCancelText', 'Stay here'))
+      continueText: __pqSharedStepNavigationText('previous', 'confirmContinueText'),
+      cancelText: __pqSharedStepNavigationText('previous', 'confirmCancelText')
     };
 
     const api = __pqEnsureStepMessaging();
@@ -1037,6 +1879,18 @@ async function __pqReturnToPreviousStep() {
   const confirmed = await __pqConfirmPreviousStep(meta);
   if (!confirmed) return false;
 
+  if (!managedProgress) {
+    try {
+      managedProgress = ensureProgressShape({ currentStepId: meta.currentId });
+    } catch (_e) {
+      managedProgress = {
+        currentStepId: meta.currentId,
+        __finished: false,
+        __allCompleted: false
+      };
+    }
+  }
+
   try { stopAllMedia(); } catch (_e) {}
   try { __pqResetPreviousStepVisualState(); } catch (_e) {}
 
@@ -1046,9 +1900,7 @@ async function __pqReturnToPreviousStep() {
   __pqClearStepLocalTracking(meta.currentId);
 
   try {
-    managedProgress.currentStepId = meta.previousId;
-    managedProgress.__finished = false;
-    managedProgress.__allCompleted = false;
+    __pqApplyPreviousStepReturnState(meta);
   } catch (_e) {}
 
   try {
@@ -1070,15 +1922,25 @@ async function __pqReturnToPreviousStep() {
         refreshed && (refreshed.progress || (refreshed.state && refreshed.state.progress));
       if (nextProgress) {
         managedProgress = ensureProgressShape(nextProgress);
-        managedProgress.currentStepId = meta.previousId;
+        __pqApplyPreviousStepReturnState(meta);
       }
     }
   } catch (_e) {}
 
   try {
-    managedProgress.currentStepId = meta.previousId;
-    managedProgress.__finished = false;
-    managedProgress.__allCompleted = false;
+    __pqApplyPreviousStepReturnState(meta);
+  } catch (_e) {}
+
+  try {
+    if (__DB_ONLY) {
+      localStorage.removeItem(LS_PROGRESS_CACHE_KEY);
+    } else {
+      localStorage.setItem(LS_PROGRESS_CACHE_KEY, JSON.stringify(managedProgress));
+    }
+  } catch (_e) {}
+
+  try {
+    await sendManagedToMoodle(managedProgress);
   } catch (_e) {}
 
   try { __pqResetPreviousStepVisualState(); } catch (_e) {}
@@ -1094,8 +1956,27 @@ async function __pqReturnToPreviousStep() {
   try { __pqSyncSubmitUi(); } catch (_e) {}
   try { __pqRenderMobileStepPicker(); } catch (_e) {}
   try { __pqAfterProgressChange(true); } catch (_e) {}
+  try { __pqForceStepHandoffRefresh(); } catch (_e) {}
+  try {
+    __pqApplyPreviousStepReturnState(meta);
+    if (__DB_ONLY) {
+      localStorage.removeItem(LS_PROGRESS_CACHE_KEY);
+    } else {
+      localStorage.setItem(LS_PROGRESS_CACHE_KEY, JSON.stringify(managedProgress));
+    }
+    sendManagedToMoodle(managedProgress).catch(function () {});
+  } catch (_e) {}
+  try { fgSyncStepContext(true); } catch (_e) {}
+  try { __pqPlaylistEngine = null; } catch (_e) {}
+  try { renderStepper(); } catch (_e) {}
+  try { renderGrid(); } catch (_e) {}
+  try { markActive(); } catch (_e) {}
+  try { refreshPlayedClasses(); } catch (_e) {}
+  try { updateControlsForCurrentStep(); } catch (_e) {}
+  try { __pqSyncDynamicStepAction(); } catch (_e) {}
   try {
     window.requestAnimationFrame(() => {
+      try { __pqApplyPreviousStepReturnState(meta); } catch (_e) {}
       try { __pqResetPreviousStepVisualState(); } catch (_e) {}
       try { renderGrid(); } catch (_e) {}
       try { markActive(); } catch (_e) {}
@@ -1141,8 +2022,8 @@ function __pqSyncDynamicStepAction() {
     try {
       const desktopBackBtn = document.getElementById('pqDesktopBackBtn');
       if (desktopBackBtn) {
-        __pqSetBilingualControlLabel(desktopBackBtn, 'Back', 'رجوع');
-        desktopBackBtn.title = 'Back - رجوع';
+        __pqSetBilingualControlLabel(desktopBackBtn, 'Back', '\u0631\u062c\u0648\u0639');
+        desktopBackBtn.title = 'Back - \u0631\u062c\u0648\u0639';
       }
     } catch (_e) {}
 
@@ -1152,7 +2033,7 @@ function __pqSyncDynamicStepAction() {
         __pqSetBilingualControlLabel(
           btnPause,
           isPaused ? 'Resume' : 'Pause',
-          isPaused ? 'استئناف' : 'إيقاف'
+          isPaused ? '\u0627\u0633\u062a\u0626\u0646\u0627\u0641' : '\u0625\u064a\u0642\u0627\u0641'
         );
       }
     } catch (_e) {}
@@ -1171,7 +2052,7 @@ function __pqSyncDynamicStepAction() {
           ? String(__cfg('stepNavigation.previous.title', 'Go back one step'))
           : '';
         pqStepPrevBtn.setAttribute('aria-label', pqStepPrevBtn.title || 'Go back one step');
-        pqStepPrevBtn.textContent = String(__cfg('stepNavigation.previous.label', '← Step'));
+        pqStepPrevBtn.textContent = __pqPreviousStepButtonLabel();
       }
     } catch (_e) {}
 
@@ -1184,6 +2065,7 @@ function __pqSyncDynamicStepAction() {
         pqStepPrevBtn.hidden = true;
         pqStepPrevBtn.disabled = true;
       }
+      try { __pqSyncQaSkipStepButton(); } catch (_e) {}
       return;
     }
 
@@ -1197,6 +2079,7 @@ function __pqSyncDynamicStepAction() {
     pqStepActionBtn.style.visibility = 'visible';
     pqStepActionBtn.style.opacity = '1';
     pqStepActionBtn.disabled = !__pqCanRunDynamicStepAction(meta);
+    try { __pqSyncQaSkipStepButton(); } catch (_e) {}
 
     try {
       __pqEnsureBottomDockPlacement();
@@ -1239,6 +2122,11 @@ function __pqHandleDynamicStepActionClick() {
       return;
     }
 
+    if (mode === 'complete') {
+      markPlaylistStepCompleted(stepId).catch(function () {});
+      return;
+    }
+
     if (mode === 'target') {
       if (!target || target.disabled) return;
       try { target.click(); } catch (_e) {}
@@ -1266,6 +2154,14 @@ try {
 
   function __pqIsMobileViewportMatch() {
     try {
+      const isBrowserUi = !!(
+        document.documentElement &&
+        document.documentElement.classList &&
+        document.documentElement.classList.contains('pq-browser-ui')
+      );
+      if (isBrowserUi && Number(window.outerWidth || 0) > 768) {
+        return false;
+      }
       return !!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
     } catch (_e) {
       return false;
@@ -1289,7 +2185,9 @@ function __pqShouldShowBottomPause() {
       'repeat',
       'match',
       'words',
-      'animate'
+      'animate',
+      'rules',
+      'diacritic'
     ].includes(stepId);
   } catch (_e) {
     return false;
@@ -1304,14 +2202,14 @@ function __pqShouldShowBottomPause() {
 		btn = document.createElement('button');
 		btn.type = 'button';
 		btn.id = 'pqMobileBackBtn';
-		btn.textContent = '←';
+		btn.textContent = '\u2190';
 		btn.setAttribute('aria-label', 'Back');
 		btn.title = 'Back';
 		btn.className = 'pq-browser-back-btn';
 		if (typeof __pqSetBilingualControlLabel === 'function') {
-		  __pqSetBilingualControlLabel(btn, 'Back ←', 'رجوع');
-		  btn.setAttribute('aria-label', 'Back - رجوع');
-		  btn.title = 'Back - رجوع';
+		  __pqSetBilingualControlLabel(btn, 'Back \u2190', '\u0631\u062c\u0648\u0639');
+		  btn.setAttribute('aria-label', 'Back - \u0631\u062c\u0648\u0639');
+		  btn.title = 'Back - \u0631\u062c\u0648\u0639';
 		}
 
 		return btn;
@@ -1375,9 +2273,9 @@ function __pqBindMobileBackButton() {
     backBtn.style.pointerEvents = 'auto';
     backBtn.style.touchAction = 'manipulation';
     if (typeof __pqSetBilingualControlLabel === 'function') {
-      __pqSetBilingualControlLabel(backBtn, 'Back ←', 'رجوع');
-      backBtn.setAttribute('aria-label', 'Back - رجوع');
-      backBtn.title = 'Back - رجوع';
+      __pqSetBilingualControlLabel(backBtn, 'Back \u2190', '\u0631\u062c\u0648\u0639');
+      backBtn.setAttribute('aria-label', 'Back - \u0631\u062c\u0648\u0639');
+      backBtn.title = 'Back - \u0631\u062c\u0648\u0639';
     }
     backBtn.__pqBound__ = true;
   } catch (_e) {}
@@ -1520,6 +2418,8 @@ function __pqEnsureBottomDockPlacement() {
         mounted.pauseSlot.appendChild(btnPause);
       }
 
+      __pqMountStepActionControls(true);
+
       if (pqStepActionBar.parentNode !== mounted.actionSlot) {
         mounted.actionSlot.appendChild(pqStepActionBar);
       }
@@ -1571,9 +2471,9 @@ try {
 } catch (_e) {}
 
 try {
-  if (desktopActionSlot && pqStepActionBar && pqStepActionBar.parentNode !== desktopActionSlot) {
-    desktopActionSlot.appendChild(pqStepActionBar);
-  } else if (pqStepActionBar && pqStepActionBar.parentNode !== browserHost) {
+  __pqMountStepActionControls(false);
+
+  if (!desktopActionSlot && pqStepActionBar && pqStepActionBar.parentNode !== browserHost) {
     browserHost.appendChild(pqStepActionBar);
   }
 } catch (_e) {}
@@ -1909,8 +2809,9 @@ function __pqIsPassFilterStep(stepId) {
     'repeat',
     'match',
     'words',
-    'animate'
-  ].includes(sid);
+    'animate',
+    'diacritic'
+  ].includes(sid) || /^(write|trace)\d+$/.test(String(stepId || '').toLowerCase());
 }
 
   function __pqGetStepPassFilters(stepId) {

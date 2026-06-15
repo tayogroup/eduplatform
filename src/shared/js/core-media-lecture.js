@@ -50,6 +50,7 @@
 
   function stopEmbeddedPlayback(videoEl) {
     try {
+      window.__PQ_LECTURE_MEDIA_ACTIVE__ = false;
       if (!videoEl) return;
       videoEl.pause();
       videoEl.removeAttribute('src');
@@ -101,6 +102,18 @@
 
     lectureVideoEl.addEventListener('ratechange', function () {
       forceNormalSpeed();
+    });
+
+    lectureVideoEl.addEventListener('play', function () {
+      window.__PQ_LECTURE_MEDIA_ACTIVE__ = true;
+    });
+
+    lectureVideoEl.addEventListener('playing', function () {
+      window.__PQ_LECTURE_MEDIA_ACTIVE__ = true;
+    });
+
+    lectureVideoEl.addEventListener('pause', function () {
+      window.__PQ_LECTURE_MEDIA_ACTIVE__ = false;
     });
 
     function toggleLecture() {

@@ -1,12 +1,12 @@
-/* pq_core_focus_context_v1.0.1_LOCKED.js
+/* pq_core_focus_context_v1.0.2_LOCKED.js
    Shared Focus/Attention context helpers (idempotent + safe).
-   Exposes: window.PQFocusCtx = { lessonId(), unitId(), sessionId(uid, lessonid, unitid) }
+   Exposes: window.PQFocusCtx = { lessonId(), unitId(), sessionId(uid, lessonid, unitid), liveSessionId() }
 */
 (function(){
   'use strict';
 
   var NS = 'PQFocusCtx';
-  var V  = '1.0.1-locked';
+  var V  = '1.0.2-locked';
 
   try {
     if (window[NS] && window[NS].__version && window[NS].__version >= V) return;
@@ -44,10 +44,35 @@
     }
   }
 
-  var api = window[NS] || {};
+  function liveSessionId() {
+    try {
+      if (window.__prequran_live_sessionid) return String(window.__prequran_live_sessionid);
+    } catch (_) {}
+    try {
+      var q = new URLSearchParams(String(window.location.search || '').replace(/&amp;/g, '&'));
+      var fromQuery = q.get('live_sessionid') || q.get('livesessionid') || q.get('sessionid') || '';
+      if (fromQuery) {
+        try { sessionStorage.setItem('pq_live_sessionid', String(fromQuery)); } catch (_) {}
+        return String(fromQuery);
+      }
+    } catch (_) {}
+    try {
+      return sessionStorage.getItem('pq_live_sessionid') || '';
+    } catch (_) {
+      return '';
+    }
+  }
+
+  var prior = null;
+  try { prior = window[NS] || null; } catch (_) { prior = null; }
+  var api = {};
+  try {
+    if (prior && !prior.__locked__) api = prior;
+  } catch (_) {}
   if (typeof api.lessonId !== 'function') api.lessonId = lessonId;
   if (typeof api.unitId !== 'function') api.unitId = unitId;
   if (typeof api.sessionId !== 'function') api.sessionId = sessionId;
+  if (typeof api.liveSessionId !== 'function') api.liveSessionId = liveSessionId;
 
   api.__version = V;
 

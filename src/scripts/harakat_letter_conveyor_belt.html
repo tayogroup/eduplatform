@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Harakat Letter Conveyor - Arabic Vowel Sorting</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Noto+Naskh+Arabic:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-rose:#fff1f7;
+  --bg-mint:#f0fff7;
+  --bg-sky:#eff9ff;
+  --panel:#ffffff;
+  --ink:#123047;
+  --muted:#52677a;
+  --good:#15803d;
+  --bad:#dc2626;
+  --warn:#b45309;
+  --tile:#fffaf0;
+  --tile-border:#ffcf7a;
+  --chip-border:#bfdbfe;
+  --shadow:0 16px 36px rgba(15,23,42,.16),0 6px 12px rgba(15,23,42,.1);
+  --radius-card:20px;
+  --radius-btn:16px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;}
+
+body{
+  min-height:100vh;
+  font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.45;
+  background:
+    radial-gradient(circle at 16% 11%, #ffe3a3 0 11%, transparent 12%),
+    radial-gradient(circle at 84% 14%, #b6f5d0 0 10%, transparent 11%),
+    linear-gradient(135deg,var(--bg-rose),var(--bg-sky) 48%,var(--bg-mint));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+
+button,select,input{font:inherit;}
+.page{width:100%;max-width:1180px;}
+
+.sheet{
+  width:100%;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(148,163,184,.26);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,255,255,.94);
+  padding:10px 12px 8px;
+  box-shadow:0 4px 12px rgba(15,23,42,.08);
+  backdrop-filter:blur(8px);
+}
+
+.head{
+  padding:9px 14px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#aee8ff,#bff8c0 54%,#ffd6a5);
+  color:#1f2937;
+  font:900 22px/1 "Baloo 2";
+  text-align:center;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.08);
+}
+
+.subhead-note{
+  margin-top:6px;
+  font:800 14px "Baloo 2";
+  color:var(--muted);
+  text-align:center;
+}
+
+.hud{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:space-between;
+  margin-top:8px;
+}
+
+.hud-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+}
+
+.pill{
+  min-height:34px;
+  border-radius:999px;
+  padding:4px 12px;
+  background:#ffffffee;
+  border:1px solid var(--chip-border);
+  font:800 14px "Baloo 2";
+  color:#1e293b;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+}
+
+.pill strong{font-weight:900;}
+.status-good{color:var(--good);}
+.status-bad{color:var(--bad);}
+.status-warn{color:var(--warn);}
+.status-neutral{color:#64748b;}
+.hearts span{color:#ef4444;font-size:18px;}
+.stars{color:#f59e0b;letter-spacing:1px;}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(286px,1fr);
+  gap:12px;
+  padding:12px;
+}
+
+.game-card{
+  background:linear-gradient(135deg,#c7f9d4,#6ee7b7 62%,#93c5fd);
+  border-radius:var(--radius-card);
+  padding:12px;
+  box-shadow:0 6px 14px rgba(15,23,42,.16);
+  display:grid;
+  gap:12px;
+}
+
+.board-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.board-head h2{
+  width:max-content;
+  max-width:100%;
+  font:900 19px/1.15 "Baloo 2";
+  padding:6px 12px;
+  border-radius:999px;
+  background:#ffffffee;
+  border:1px solid #bfdbfe;
+  color:#0f172a;
+}
+
+.board-sub{font:800 16px "Baloo 2";color:#1f2937;margin-top:6px;}
+
+.selected-card{
+  min-width:136px;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid #bfdbfe;
+  padding:8px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(15,23,42,.12);
+}
+
+.selected-card span{
+  display:block;
+  font:900 12px "Baloo 2";
+  color:#64748b;
+}
+
+.selected-letter{
+  min-height:52px;
+  font-family:"Noto Naskh Arabic","Scheherazade",serif;
+  font-size:46px;
+  font-weight:900;
+  line-height:1;
+  direction:rtl;
+  color:#111827;
+}
+
+.tiles-grid{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:9px;
+}
+
+.tile{
+  position:relative;
+  min-height:90px;
+  border-radius:18px;
+  border:2px solid var(--tile-border);
+  background:var(--tile);
+  box-shadow:0 6px 0 #f2c88c,0 9px 14px rgba(15,23,42,.12);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  padding:8px 5px;
+  transition:transform .08s, box-shadow .08s, border-color .08s, background .08s, opacity .12s;
+}
+
+.tile:hover:not(:disabled){transform:translateY(-2px);}
+.tile:disabled{cursor:not-allowed;opacity:.55;}
+.tile.selected{border-color:#2563eb;box-shadow:0 0 0 4px rgba(96,165,250,.35),0 6px 0 #93c5fd;}
+.tile.correct{background:#dcfce7;border-color:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.25),0 6px 0 #86efac;}
+.tile.wrong{background:#fee2e2;border-color:#f97373;animation:shake .2s;}
+
+.letter{
+  font-family:"Noto Naskh Arabic","Scheherazade",serif;
+  font-size:43px;
+  font-weight:900;
+  line-height:1;
+  direction:rtl;
+  color:#111827;
+}
+
+.tile-name{
+  position:absolute;
+  bottom:4px;
+  left:6px;
+  right:6px;
+  font:900 10px "Baloo 2";
+  color:#0f766e;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.tile-index{
+  position:absolute;
+  top:5px;
+  left:6px;
+  min-width:19px;
+  height:19px;
+  border-radius:999px;
+  background:#e0f2fe;
+  color:#1d4ed8;
+  display:grid;
+  place-items:center;
+  font:900 10px "Baloo 2";
+}
+
+.bins-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+
+.bin{
+  min-height:132px;
+  border:2px solid #d1a25b;
+  border-radius:18px;
+  background:
+    linear-gradient(135deg,#f1d29a,#e2b772 45%,#f1d29a),
+    repeating-linear-gradient(45deg,#f7d9a2 0 10px,#e2b772 10px 20px);
+  background-blend-mode:multiply;
+  box-shadow:inset 0 3px 5px rgba(0,0,0,.13),0 5px 0 #b68a4a;
+  cursor:pointer;
+  padding:10px;
+  display:grid;
+  gap:6px;
+  align-content:start;
+  color:#0f172a;
+  transition:transform .08s, border-color .08s, box-shadow .08s;
+}
+
+.bin:hover{transform:translateY(-2px);}
+.bin.drag-over,.bin.selected-target{border-color:#2563eb;box-shadow:0 0 0 4px rgba(96,165,250,.35),0 5px 0 #93c5fd;}
+.bin.good{border-color:#22c55e;}
+.bin.bad{border-color:#f97373;animation:shake .2s;}
+
+.bin-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  font:900 17px "Baloo 2";
+}
+
+.mark{
+  font-size:34px;
+  line-height:1;
+}
+
+.bin-sub{
+  font:800 12px "Baloo 2";
+  color:#334155;
+}
+
+.bin-count{
+  justify-self:start;
+  border-radius:999px;
+  background:#ffffffcc;
+  border:1px solid #e2e8f0;
+  padding:2px 8px;
+  font:900 12px "Baloo 2";
+}
+
+.feedback-card,.hint-card{
+  font:800 14px "Baloo 2";
+  border-radius:16px;
+  padding:9px 11px;
+  background:#e5f2ff;
+  border:1px dashed #93c5fd;
+  color:#4b5563;
+}
+
+.hint-card{background:#fff7ed;border-color:#fdba74;}
+.feedback-card.success{background:#dcfce7;border-color:#86efac;color:#14532d;}
+.feedback-card.error{background:#fee2e2;border-color:#fecaca;color:#7f1d1d;}
+.feedback-card strong,.hint-card strong{color:#0f172a;}
+
+.progress-wrap{
+  padding:8px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(191,219,254,.75);
+  border-radius:16px;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:5px;
+  color:#334155;
+  font:800 12px "Baloo 2";
+}
+
+.progress-track{height:12px;border-radius:999px;background:#e0f2fe;overflow:hidden;}
+.progress-fill{width:0%;height:100%;border-radius:999px;background:linear-gradient(90deg,#22c55e,#facc15,#fb923c);transition:width .25s ease;}
+
+.side-card{
+  background:#f8fafc;
+  border-radius:var(--radius-card);
+  border:1px solid #e5e7eb;
+  padding:12px;
+}
+
+.side-section-title{font:900 14px "Baloo 2";color:#0f172a;margin-bottom:4px;}
+
+.select-row{display:flex;gap:8px;align-items:center;}
+.select-row select{
+  width:100%;
+  min-width:0;
+  border-radius:999px;
+  border:1px solid #cbd5f5;
+  padding:7px 12px;
+  font:800 14px "Baloo 2";
+  background:#fff;
+  color:#0f172a;
+}
+
+.btn{
+  border:0;
+  border-radius:var(--radius-btn);
+  min-height:44px;
+  padding:.58rem 1rem;
+  font:900 15px "Baloo 2";
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:#143b29;
+  background:linear-gradient(135deg,#b9f5c7,#63d58c);
+  box-shadow:0 6px 12px rgba(39,148,99,.35);
+  transition:transform .08s, box-shadow .12s, opacity .12s;
+}
+
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 9px 18px rgba(39,148,99,.45);}
+.btn:active:not(:disabled){transform:translateY(1px);box-shadow:0 4px 10px rgba(39,148,99,.3);}
+.btn:focus-visible,.tile:focus-visible,.bin:focus-visible,select:focus-visible{outline:4px solid rgba(37,99,235,.32);outline-offset:2px;}
+.btn:disabled{cursor:not-allowed;opacity:.58;box-shadow:none;}
+.btn-ghost{background:#fff;color:#0f172a;border:1px solid #cbd5f5;box-shadow:0 3px 8px rgba(15,23,42,.16);}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+
+.toggle-row{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font:800 13px "Baloo 2";
+  color:#0f172a;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#e5f2ff;
+  border:1px solid #bfdbfe;
+}
+
+.toggle-row input{accent-color:#22c55e;}
+.settings-grid{display:grid;gap:7px;}
+.mt-3{margin-top:10px;}
+
+.coach-box,.tip-box{
+  font-size:13px;
+  font-weight:800;
+  color:#4b5563;
+  background:#fff7ed;
+  border-radius:16px;
+  padding:8px 10px;
+  border:1px dashed #fdba74;
+}
+
+.tip-box{background:#e5f2ff;border-color:#93c5fd;}
+.coach-box strong,.tip-box strong{color:#0f172a;}
+
+.toast{
+  position:fixed;
+  left:50%;
+  top:14px;
+  transform:translateX(-50%);
+  z-index:999;
+  max-width:min(92vw,520px);
+  padding:8px 14px;
+  border-radius:14px;
+  font:900 14px "Baloo 2",system-ui;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+  text-align:center;
+  transition:opacity .35s;
+}
+
+.toast-danger{background:#991b1b;color:#fee2e2;}
+.toast-success{background:#14532d;color:#bbf7d0;}
+.toast-info{background:#1d4ed8;color:#dbeafe;}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-4px);}
+  50%{transform:translateX(4px);}
+  75%{transform:translateX(-4px);}
+  100%{transform:translateX(0);}
+}
+
+@media(max-width:900px){
+  body{align-items:flex-start;padding:8px;}
+  .layout{grid-template-columns:1fr;}
+  .head{font-size:20px;}
+}
+
+@media(max-width:620px){
+  .top-bar{position:relative;}
+  .board-head{grid-template-columns:1fr;}
+  .tiles-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .bins-grid{grid-template-columns:1fr;}
+  .tile{min-height:82px;}
+  .letter{font-size:38px;}
+  .select-row{flex-direction:column;align-items:stretch;}
+  .btn{flex:1 1 auto;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Harakat Letter Conveyor game">
+    <div class="top-bar">
+      <div class="head">Harakat Letter Conveyor</div>
+      <div class="subhead-note">Sort each letter by its haraka: Fatha, Kasra, or Dammah.</div>
+      <div class="hud">
+        <div class="hud-group">
+          <div class="pill">Score <strong id="hud-score">0</strong></div>
+          <div class="pill">Streak <strong id="hud-streak">0</strong> <span id="hud-stars" class="stars"></span></div>
+          <div class="pill">Sorted <strong id="hud-sorted">0 / 0</strong></div>
+        </div>
+        <div class="hud-group">
+          <div class="pill">Tries <span id="hud-lives" class="hearts"></span></div>
+          <div class="pill status-neutral" id="status-pill">Pick a tile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="game-card" aria-labelledby="board-title">
+        <header class="board-head">
+          <div>
+            <h2 id="board-title">Sort by haraka</h2>
+            <div class="board-sub">Tap a tile, then tap the matching basket. Dragging also works.</div>
+          </div>
+          <div class="selected-card" aria-live="polite">
+            <span>Selected</span>
+            <div class="selected-letter" id="selected-letter">?</div>
+          </div>
+        </header>
+
+        <div id="tiles-grid" class="tiles-grid" aria-label="Harakat letter tiles"></div>
+
+        <div class="bins-grid" aria-label="Harakat baskets">
+          <button class="bin" type="button" data-cat="fatha">
+            <div class="bin-title"><span><span class="mark">◌َ</span> Fatha</span><strong>َ</strong></div>
+            <div class="bin-sub">Short “a” sound</div>
+            <div class="bin-count">Left <span id="count-fatha">0</span></div>
+          </button>
+          <button class="bin" type="button" data-cat="kasra">
+            <div class="bin-title"><span><span class="mark">◌ِ</span> Kasra</span><strong>ِ</strong></div>
+            <div class="bin-sub">Short “i” sound</div>
+            <div class="bin-count">Left <span id="count-kasra">0</span></div>
+          </button>
+          <button class="bin" type="button" data-cat="dammah">
+            <div class="bin-title"><span><span class="mark">◌ُ</span> Dammah</span><strong>ُ</strong></div>
+            <div class="bin-sub">Short “u” sound</div>
+            <div class="bin-count">Left <span id="count-dammah">0</span></div>
+          </button>
+        </div>
+
+        <div class="feedback-card" id="feedback-card">Choose a harakat tile to begin.</div>
+        <div class="hint-card" id="hint-card"><strong>Hint:</strong> Look for the small mark above or below the letter.</div>
+
+        <div class="progress-wrap" aria-label="Sorting progress">
+          <div class="progress-label">
+            <span id="progress-label">0 sorted</span>
+            <span id="badge-label">Badge 0</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+      </section>
+
+      <aside class="side-card">
+        <div>
+          <div class="side-section-title">Practice Mode</div>
+          <div class="select-row">
+            <select id="mode-select" aria-label="Choose practice mode">
+              <option value="starter" selected>Starter set</option>
+              <option value="all">All harakat tiles</option>
+              <option value="fatha">Fatha focus</option>
+              <option value="kasra">Kasra focus</option>
+              <option value="dammah">Dammah focus</option>
+              <option value="missed">Review missed</option>
+            </select>
+            <button class="btn btn-ghost" id="btn-apply-mode" type="button">Apply</button>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Controls</div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-say" type="button">Say</button>
+            <button class="btn btn-ghost" id="btn-hint" type="button">Hint</button>
+            <button class="btn btn-ghost" id="btn-reset" type="button">Reset</button>
+          </div>
+        </div>
+
+        <div class="mt-3 settings-grid">
+          <div class="side-section-title">Settings</div>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-gentle" checked>
+            <span>Gentle mode</span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-show-names" checked>
+            <span>Show names</span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-auto-say">
+            <span>Auto say</span>
+          </label>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Coach</div>
+          <div class="coach-box" id="coach-box">
+            <strong>Ready?</strong> Pick a tile and sort it by its small haraka mark.
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">How to play</div>
+          <div class="tip-box">
+            <strong>Tap</strong> a tile, then tap a basket.<br/>
+            <strong>Space</strong> says the selected tile.<br/>
+            <strong>Number keys 1-3</strong> choose Fatha, Kasra, Dammah.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const MAX_LIVES = 3;
+const BADGE_SIZE = 9;
+const CATS = ["fatha","kasra","dammah"];
+const HARAKAT = {
+  fatha:{ mark:"َ", label:"Fatha", sound:"short a", clue:"Fatha sits above the letter." },
+  kasra:{ mark:"ِ", label:"Kasra", sound:"short i", clue:"Kasra sits below the letter." },
+  dammah:{ mark:"ُ", label:"Dammah", sound:"short u", clue:"Dammah curls above the letter." }
+};
+const BASE_LETTERS = [
+  {base:"ا",name:"Alif"},{base:"ب",name:"Baa"},{base:"ت",name:"Taa"},{base:"ث",name:"Thaa"},
+  {base:"ج",name:"Jeem"},{base:"ح",name:"Haa"},{base:"خ",name:"Khaa"},{base:"د",name:"Daal"},
+  {base:"ذ",name:"Dhaal"},{base:"ر",name:"Raa"},{base:"ز",name:"Zay"},{base:"س",name:"Seen"},
+  {base:"ش",name:"Sheen"},{base:"ص",name:"Saad"},{base:"ض",name:"Daad"},{base:"ط",name:"Taa heavy"},
+  {base:"ظ",name:"Zaa heavy"},{base:"ع",name:"Ayn"},{base:"غ",name:"Ghayn"},{base:"ف",name:"Faa"},
+  {base:"ق",name:"Qaaf"},{base:"ك",name:"Kaaf"},{base:"ل",name:"Laam"},{base:"م",name:"Meem"},
+  {base:"ن",name:"Noon"},{base:"ه",name:"Haa soft"},{base:"و",name:"Waw"},{base:"ي",name:"Yaa"}
+];
+const STARTER_BASES = ["ب","ت","ج","د","ر","س","ف","م","ن"];
+const LETTERS = [];
+BASE_LETTERS.forEach(base=>{
+  CATS.forEach(cat=>{
+    LETTERS.push({
+      ch:base.base + HARAKAT[cat].mark,
+      base:base.base,
+      baseName:base.name,
+      cat,
+      name:base.name + " " + HARAKAT[cat].label
+    });
+  });
+});
+
+const refs = {
+  score:byId("hud-score"),
+  streak:byId("hud-streak"),
+  stars:byId("hud-stars"),
+  sorted:byId("hud-sorted"),
+  lives:byId("hud-lives"),
+  status:byId("status-pill"),
+  selectedLetter:byId("selected-letter"),
+  tilesGrid:byId("tiles-grid"),
+  feedback:byId("feedback-card"),
+  hint:byId("hint-card"),
+  progressLabel:byId("progress-label"),
+  progressFill:byId("progress-fill"),
+  badgeLabel:byId("badge-label"),
+  modeSelect:byId("mode-select"),
+  btnApplyMode:byId("btn-apply-mode"),
+  btnSay:byId("btn-say"),
+  btnHint:byId("btn-hint"),
+  btnReset:byId("btn-reset"),
+  chkGentle:byId("chk-gentle"),
+  chkShowNames:byId("chk-show-names"),
+  chkAutoSay:byId("chk-auto-say"),
+  coach:byId("coach-box"),
+  counts:{
+    fatha:byId("count-fatha"),
+    kasra:byId("count-kasra"),
+    dammah:byId("count-dammah")
+  },
+  bins:Array.from(document.querySelectorAll(".bin"))
+};
+
+let state = freshState();
+let draggedIndex = null;
+
+function byId(id){
+  const el = document.getElementById(id);
+  if(!el) throw new Error("Missing element #" + id);
+  return el;
+}
+
+function freshState(){
+  return {
+    mode:"starter",
+    deck:[],
+    sorted:new Set(),
+    missed:new Set(),
+    wrongByCard:new Map(),
+    selectedIndex:null,
+    score:0,
+    streak:0,
+    lives:MAX_LIVES,
+    badges:0
+  };
+}
+
+function shuffle(items){
+  const copy = items.slice();
+  for(let i=copy.length-1;i>0;i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function makeDeck(mode){
+  if(mode === "starter"){
+    return shuffle(LETTERS.filter(letter => STARTER_BASES.includes(letter.base)));
+  }
+  if(CATS.includes(mode)){
+    return shuffle(LETTERS.filter(letter => letter.cat === mode));
+  }
+  if(mode === "missed"){
+    const missed = LETTERS.filter((_,idx) => state.missed.has(idx));
+    return missed.length ? shuffle(missed) : shuffle(LETTERS.filter(letter => STARTER_BASES.includes(letter.base)));
+  }
+  return shuffle(LETTERS);
+}
+
+function originalIndex(letter){
+  return LETTERS.indexOf(letter);
+}
+
+function selectedTile(){
+  if(state.selectedIndex === null) return null;
+  return LETTERS[state.selectedIndex] || null;
+}
+
+function setStatus(type,text){
+  refs.status.textContent = text;
+  refs.status.classList.remove("status-good","status-bad","status-warn","status-neutral");
+  refs.status.classList.add(
+    type === "good" ? "status-good" :
+    type === "bad" ? "status-bad" :
+    type === "warn" ? "status-warn" :
+    "status-neutral"
+  );
+}
+
+function setFeedback(type,html){
+  refs.feedback.className = "feedback-card" + (type ? " " + type : "");
+  refs.feedback.innerHTML = html;
+}
+
+function setCoach(html){
+  refs.coach.innerHTML = html;
+}
+
+function flash(message,type){
+  const toast = document.createElement("div");
+  toast.className = "toast toast-" + (type || "info");
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  window.setTimeout(()=>{ toast.style.opacity = "0"; }, 1300);
+  window.setTimeout(()=>{ toast.remove(); }, 1700);
+}
+
+function saySelected(){
+  const tile = selectedTile();
+  if(!tile) {
+    setStatus("warn","Pick a tile first.");
+    return;
+  }
+  const utterText = tile.baseName + " " + HARAKAT[tile.cat].label + ", " + HARAKAT[tile.cat].sound;
+  if("speechSynthesis" in window){
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(utterText);
+    utter.rate = 0.82;
+    utter.pitch = 1.05;
+    window.speechSynthesis.speak(utter);
+  }
+  setStatus("neutral", utterText);
+}
+
+function render(){
+  refs.tilesGrid.innerHTML = "";
+  state.deck.forEach((tileData,position)=>{
+    const idx = originalIndex(tileData);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "tile";
+    btn.dataset.index = String(idx);
+    btn.draggable = true;
+    btn.disabled = state.sorted.has(idx);
+    btn.setAttribute("aria-label", tileData.name + ", sort by haraka");
+    if(state.selectedIndex === idx) btn.classList.add("selected");
+    if(state.sorted.has(idx)) btn.classList.add("correct");
+
+    const number = document.createElement("span");
+    number.className = "tile-index";
+    number.textContent = String(position + 1);
+
+    const glyph = document.createElement("span");
+    glyph.className = "letter";
+    glyph.textContent = tileData.ch;
+
+    const name = document.createElement("span");
+    name.className = "tile-name";
+    name.textContent = refs.chkShowNames.checked ? tileData.name : "";
+
+    btn.append(number,glyph,name);
+    btn.addEventListener("click",()=>selectTile(idx));
+    btn.addEventListener("dragstart",event=>{
+      draggedIndex = idx;
+      selectTile(idx);
+      if(event.dataTransfer){
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", String(idx));
+      }
+    });
+    btn.addEventListener("dragend",()=>{ draggedIndex = null; clearBinHighlights(); });
+    refs.tilesGrid.appendChild(btn);
+  });
+  updateHUD();
+}
+
+function selectTile(index){
+  if(state.sorted.has(index)) return;
+  state.selectedIndex = index;
+  const tile = selectedTile();
+  refs.selectedLetter.textContent = tile ? tile.ch : "?";
+  setStatus("neutral","Now choose a haraka basket.");
+  setFeedback("", tile ? "Selected <strong>" + tile.name + "</strong>." : "Choose a tile.");
+  setCoach(tile ? "<strong>Look closely:</strong> " + HARAKAT[tile.cat].clue : "<strong>Pick a tile.</strong>");
+  render();
+  if(refs.chkAutoSay.checked){
+    saySelected();
+  }
+}
+
+function updateHUD(){
+  refs.score.textContent = state.score;
+  refs.streak.textContent = state.streak;
+  refs.stars.textContent = state.streak > 1 ? "★".repeat(Math.min(3,state.streak)) : "";
+  refs.sorted.textContent = state.sorted.size + " / " + state.deck.length;
+  refs.lives.textContent = "";
+  for(let i=0;i<state.lives;i++){
+    const span = document.createElement("span");
+    span.textContent = "♥";
+    refs.lives.appendChild(span);
+  }
+  const total = Math.max(1,state.deck.length);
+  refs.progressLabel.textContent = state.sorted.size + " of " + total + " sorted";
+  refs.progressFill.style.width = ((state.sorted.size / total) * 100) + "%";
+  refs.badgeLabel.textContent = "Badge " + state.badges;
+
+  const counts = remainingCounts();
+  CATS.forEach(cat => refs.counts[cat].textContent = counts[cat]);
+}
+
+function remainingCounts(){
+  const counts = {fatha:0,kasra:0,dammah:0};
+  state.deck.forEach(tile => {
+    const idx = originalIndex(tile);
+    if(!state.sorted.has(idx)) counts[tile.cat] += 1;
+  });
+  return counts;
+}
+
+function submitToCat(cat,bin){
+  const tile = selectedTile();
+  if(!tile){
+    setStatus("warn","Pick a tile first.");
+    setFeedback("error","Pick a harakat tile first, then choose a basket.");
+    return;
+  }
+  if(tile.cat === cat){
+    handleCorrect(tile,bin);
+  }else{
+    handleWrong(tile,cat,bin);
+  }
+}
+
+function handleCorrect(tile,bin){
+  const idx = originalIndex(tile);
+  state.sorted.add(idx);
+  state.missed.delete(idx);
+  state.wrongByCard.delete(idx);
+  const points = 10 + Math.min(10,state.streak * 2);
+  state.score += points;
+  state.streak += 1;
+  if(state.sorted.size > 0 && state.sorted.size % BADGE_SIZE === 0){
+    state.badges = Math.max(state.badges, Math.floor(state.sorted.size / BADGE_SIZE));
+  }
+  if(bin) markBin(bin,true);
+  flash("Correct! +" + points, "success");
+  setStatus("good","Correct haraka.");
+  setFeedback("success","<strong>" + tile.name + "</strong> goes in " + HARAKAT[tile.cat].label + ".");
+  setCoach("<strong>Nice sorting.</strong> " + HARAKAT[tile.cat].clue);
+  state.selectedIndex = null;
+  refs.selectedLetter.textContent = "?";
+  render();
+  if(state.sorted.size >= state.deck.length){
+    finishDeck();
+  }
+}
+
+function handleWrong(tile,cat,bin){
+  const idx = originalIndex(tile);
+  const misses = (state.wrongByCard.get(idx) || 0) + 1;
+  state.wrongByCard.set(idx, misses);
+  state.missed.add(idx);
+  state.streak = 0;
+  if(!refs.chkGentle.checked || misses >= 2){
+    state.lives = Math.max(0,state.lives - 1);
+  }
+  if(bin) markBin(bin,false);
+  markTileWrong(idx);
+  setStatus("bad","Try again.");
+  setFeedback("error","Not " + HARAKAT[cat].label + ". Look at the small mark and try again.");
+  setCoach("<strong>Clue:</strong> " + HARAKAT[tile.cat].clue);
+  updateHUD();
+  if(misses >= 2){
+    revealSelectedHint();
+  }
+  if(state.lives <= 0){
+    flash("New try. Keep learning the harakat!", "danger");
+    window.setTimeout(()=>resetDeck({mode:state.mode, resetScore:true}),900);
+  }
+}
+
+function markTileWrong(index){
+  const tile = refs.tilesGrid.querySelector('.tile[data-index="' + index + '"]');
+  if(!tile) return;
+  tile.classList.add("wrong");
+  window.setTimeout(()=>tile.classList.remove("wrong"),240);
+}
+
+function markBin(bin,good){
+  bin.classList.remove("good","bad");
+  void bin.offsetWidth;
+  bin.classList.add(good ? "good" : "bad");
+  window.setTimeout(()=>bin.classList.remove("good","bad"),300);
+}
+
+function clearBinHighlights(){
+  refs.bins.forEach(bin => bin.classList.remove("drag-over","selected-target"));
+}
+
+function revealSelectedHint(){
+  const tile = selectedTile();
+  if(!tile){
+    setFeedback("", "Pick a tile to see a hint.");
+    return;
+  }
+  refs.hint.innerHTML = "<strong>Hint:</strong> <strong>" + tile.ch + "</strong> is <strong>" + HARAKAT[tile.cat].label + "</strong>. " + HARAKAT[tile.cat].clue;
+  setStatus("warn","Hint shown.");
+}
+
+function finishDeck(){
+  setStatus("good","Round complete.");
+  setFeedback("success","Round complete. Sorted <strong>" + state.sorted.size + " tiles</strong>.");
+  setCoach(state.missed.size ? "<strong>Great effort.</strong> Use Review missed to practice tricky harakat." : "<strong>Excellent.</strong> You sorted every tile.");
+}
+
+function resetDeck(options){
+  const opts = options || {};
+  const oldMisses = state.missed;
+  const mode = opts.mode || state.mode || "starter";
+  const keepMisses = opts.keepMisses !== false;
+  state = freshState();
+  state.mode = mode;
+  if(keepMisses) state.missed = oldMisses;
+  state.deck = makeDeck(mode);
+  refs.modeSelect.value = mode;
+  refs.selectedLetter.textContent = "?";
+  setStatus("neutral","Pick a tile.");
+  setFeedback("", "Choose a harakat tile to begin.");
+  setCoach("<strong>Ready?</strong> Sort each tile by the small vowel mark.");
+  refs.hint.innerHTML = "<strong>Hint:</strong> Look for the small mark above or below the letter.";
+  render();
+}
+
+refs.bins.forEach(bin=>{
+  bin.addEventListener("click",()=>submitToCat(bin.dataset.cat,bin));
+  bin.addEventListener("dragover",event=>{
+    if(draggedIndex === null) return;
+    event.preventDefault();
+    bin.classList.add("drag-over");
+  });
+  bin.addEventListener("dragleave",()=>bin.classList.remove("drag-over"));
+  bin.addEventListener("drop",event=>{
+    event.preventDefault();
+    const idx = Number(event.dataTransfer ? event.dataTransfer.getData("text/plain") : draggedIndex);
+    if(Number.isInteger(idx)) state.selectedIndex = idx;
+    bin.classList.remove("drag-over");
+    submitToCat(bin.dataset.cat,bin);
+    draggedIndex = null;
+  });
+});
+
+refs.btnSay.addEventListener("click",saySelected);
+refs.btnHint.addEventListener("click",revealSelectedHint);
+refs.btnReset.addEventListener("click",()=>resetDeck({mode:state.mode, resetScore:true, keepMisses:false}));
+refs.btnApplyMode.addEventListener("click",()=>resetDeck({mode:refs.modeSelect.value}));
+refs.chkShowNames.addEventListener("change",render);
+
+document.addEventListener("keydown",event=>{
+  const tag = (event.target && event.target.tagName) || "";
+  if(/INPUT|SELECT|TEXTAREA/.test(tag)) return;
+  if(event.key === " "){
+    event.preventDefault();
+    saySelected();
+  }
+  const number = Number(event.key);
+  if(Number.isInteger(number) && number >= 1 && number <= 3){
+    event.preventDefault();
+    const cat = CATS[number - 1];
+    const bin = refs.bins.find(item => item.dataset.cat === cat);
+    submitToCat(cat,bin);
+  }
+});
+
+resetDeck({mode:"starter", keepMisses:false});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* Unit-specific Tashdeed Rules lesson styles. */
+.pq-tashdeed-rules-active .grid-wrap{display:none;}
+.pq-tash-rules{width:min(1180px,96vw);margin:18px auto 30px;padding:18px;color:#18243a;}
+.pq-tash-rules[hidden]{display:none!important;}
+.pq-tash-rules__hero,.pq-tash-rule-card,.pq-tash-rules__practice,.pq-tash-rules__remember{border:2px solid rgba(82,170,130,.42);border-radius:24px;background:linear-gradient(180deg,#fffdf0 0%,#fff1cf 100%);box-shadow:0 18px 42px rgba(31,54,78,.14),inset 0 0 0 3px rgba(255,255,255,.78);}
+.pq-tash-rules__hero{padding:24px;text-align:center;background:linear-gradient(135deg,#e7fff6 0%,#fff5c9 54%,#edf8ff 100%);}
+.pq-tash-rules__badge{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 18px;border-radius:999px;background:#fff;color:#0f7a62;font-weight:1000;box-shadow:0 8px 18px rgba(15,122,98,.12);}
+.pq-tash-rules__hero h2{margin:12px 0 8px;color:#079238;font-family:"Noto Naskh Arabic","Amiri","Segoe UI",serif;font-size:clamp(2.1rem,4.5vw,4.5rem);line-height:1.12;}
+.pq-tash-rules__hero p{max-width:860px;margin:0 auto 18px;color:#34445e;font-size:1.16rem;font-weight:800;}
+.pq-tash-rules__audio-btn{min-height:52px;margin:0 0 18px;padding:0 22px;border:0;border-radius:999px;background:#3fbf71;color:#fff;box-shadow:0 10px 20px rgba(38,145,89,.24);font:inherit;font-size:1rem;font-weight:950;cursor:pointer;}
+.pq-tash-rules__audio-btn:disabled{cursor:progress;opacity:.82;}
+.pq-tash-rules__audio-btn:focus-visible,.pq-tash-rules__audio-btn:hover{outline:4px solid rgba(53,177,105,.25);transform:translateY(-1px);}
+.pq-tash-rules__examples{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:800px;margin:0 auto;}
+.pq-tash-rules__examples span,.pq-tash-example-row span,.pq-tash-stop span{display:flex;align-items:center;justify-content:center;min-height:42px;padding:6px 12px;border-radius:14px;background:#fff;border:1px solid rgba(82,170,130,.3);font-weight:900;}
+.pq-tash-rules__examples span[dir="rtl"],.pq-tash-example-row span{color:#079238;font-family:"Noto Naskh Arabic","Amiri","Segoe UI",serif;font-size:1.55rem;direction:rtl;unicode-bidi:isolate;}
+.pq-tash-rules__deck{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px;}
+.pq-tash-rule-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;padding:16px;}
+.pq-tash-rule-card__num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#50b783;color:#fff;font-weight:1000;box-shadow:0 8px 18px rgba(26,126,84,.2);}
+.pq-tash-rule-card h3,.pq-tash-rules__practice h3,.pq-tash-rules__remember h3{margin:0 0 6px;color:#10233d;font-size:1.18rem;font-weight:1000;}
+.pq-tash-rule-card p{margin:0 0 10px;color:#3a4960;font-size:1rem;font-weight:750;line-height:1.45;}
+.pq-tash-example-row,.pq-tash-stop{display:flex;flex-wrap:wrap;gap:8px;}
+.pq-tash-rule-card ul{margin:0;padding-left:18px;color:#34445e;font-weight:850;}
+.pq-tash-rules__practice,.pq-tash-rules__remember{margin-top:16px;padding:18px;}
+.pq-tash-rules__practice{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.pq-tash-rules__practice h3,.pq-tash-rules__remember h3{grid-column:1/-1;}
+.pq-tash-rules__practice section{padding:12px;border-radius:18px;background:rgba(255,255,255,.74);}
+.pq-tash-rules__practice h4{margin:0 0 10px;color:#0f7a62;font-weight:1000;}
+.pq-tash-rules__practice section div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+.pq-tash-rules__practice section span{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:14px;background:#fff;color:#079238;font-family:"Noto Naskh Arabic","Amiri","Segoe UI",serif;font-size:1.55rem;font-weight:1000;}
+.pq-tash-rules__remember{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.pq-tash-rules__remember span{padding:12px 14px;border-radius:16px;background:#fff;color:#21334f;font-weight:900;}
+.pq-tash-rules__remember span::before{content:"✓";margin-right:8px;color:#1aa358;font-weight:1000;}
+.pq-tash-rules__footer{display:flex;justify-content:center;margin-top:18px;}
+.pq-tash-rules__footer button{min-height:58px;padding:0 28px;border:0;border-radius:999px;background:linear-gradient(180deg,#ffcf55 0%,#f19a35 100%);color:#10233d;font-weight:1000;font-size:1.05rem;box-shadow:0 10px 22px rgba(166,95,27,.2);cursor:pointer;}
+@media(max-width:760px){.pq-tash-rules{width:100%;padding:12px}.pq-tash-rules__hero{padding:18px 14px}.pq-tash-rules__examples,.pq-tash-rules__deck,.pq-tash-rules__practice,.pq-tash-rules__remember{grid-template-columns:1fr}.pq-tash-rule-card{grid-template-columns:1fr}.pq-tash-rule-card__num{width:38px;height:38px}}
+
+/* Rules audio/title polish. */
+.pq-tash-rules__badge{font-size:clamp(1.2rem,2.3vw,2rem);min-height:48px;padding:0 24px;text-align:center;white-space:normal;}
+.pq-tash-rules__hero h2{font-size:clamp(1.45rem,2.8vw,2.7rem);}
+.pq-tash-rules__audio-btn{display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;margin:0 auto 18px;}
+
+/* Rules Muqattiat canvas standardization. */
+.pq-tash-rules{width:min(1180px,calc(100% - 36px));margin:26px auto 34px;direction:ltr;color:#17243a;}
+.pq-tash-rules__hero,.pq-tash-rule-card,.pq-tash-rules__practice,.pq-tash-rules__remember{border:3px solid rgba(70,189,113,.52);background:linear-gradient(180deg,#fffdf2 0%,#eafff0 100%);box-shadow:0 16px 36px rgba(29,95,61,.14);}
+.pq-tash-rules__hero{border-radius:28px;padding:24px;text-align:center;}
+.pq-tash-rules__badge{display:inline-flex;align-items:center;justify-content:center;min-width:96px;min-height:48px;margin:0 auto 8px;padding:0 24px;border-radius:999px;background:#ffc957;color:#3c2a08;font-size:clamp(1.2rem,2.3vw,2rem);font-weight:1000;box-shadow:inset 0 0 0 3px rgba(255,255,255,.72);text-align:center;white-space:normal;}
+.pq-tash-rules__hero h2{margin:4px 0 8px;color:#069746;font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;font-size:clamp(1.45rem,2.8vw,2.7rem);line-height:1.08;text-align:center;}
+.pq-tash-rules__hero p{max-width:780px;margin:0 auto 18px;font-size:1.14rem;font-weight:800;color:#31435a;}
+.pq-tash-rules__audio-btn{display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;min-height:52px;margin:0 auto 18px;padding:0 22px;border:0;border-radius:999px;background:#3fbf71;color:#fff;box-shadow:0 10px 20px rgba(38,145,89,.24);font:inherit;font-size:1rem;font-weight:950;cursor:pointer;}

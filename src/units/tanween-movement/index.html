@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en" dir="rtl">
 <head>
   <meta charset="utf-8"/>
@@ -14,26 +14,35 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>PQ Unit</title>
+<title>PQ Unit - Tanween Movement Unit</title>
 
-<link rel="preconnect" href="https://ehelacademy.b-cdn.net" crossorigin>
 <link rel="preconnect" href="https://quraanacademy.b-cdn.net" crossorigin>
 
 <!-- Shared base 17 -->
 <link rel="stylesheet" href="/pre_quraan/shared/css/arabic-tiles.css">
+<style id="pqCanvasPrepaintGuard">
+  body[data-layout="flow-span"]:not(.pq-app-ready) .grid-wrap{
+    visibility:hidden;
+  }
+  body[data-layout="flow-span"]:not(.pq-app-ready) .tile,
+  body[data-layout="flow-span"]:not(.pq-app-ready) .tile *{
+    transition:none !important;
+    animation:none !important;
+  }
+</style>
 <link rel="stylesheet" href="/pre_quraan/shared/css/core-lesson-layout.css">
-<link rel="stylesheet" href="/pre_quraan/shared/css/stepper-lecture.css">
+<link rel="stylesheet" href="/pre_quraan/shared/css/stepper-lecture.css?v=single-stepper-scroll-20260527a">
 <link rel="stylesheet" href="/pre_quraan/shared/css/overrides.css">
 <link rel="stylesheet" href="/pre_quraan/shared/css/child-message.css">
-<link rel="stylesheet" href="/pre_quraan/shared/css/sound-modal.css">
-<link rel="stylesheet" href="/pre_quraan/shared/css/unit-canvas.css">
+<link rel="stylesheet" href="/pre_quraan/shared/css/sound-modal.css?v=sound-video-repeat-20260507">
+<link rel="stylesheet" href="/pre_quraan/shared/css/unit-canvas.css?v=browser-ui-header-20260527a">
 <link rel="stylesheet" href="/pre_quraan/shared/css/communications.css?v=comm-dashboard-20260508">
 <link rel="stylesheet" href="./unit.css">
 
-<script src="/pre_quraan/shared/js/patches/iframe-token-request.js"></script>
+<script src="/pre_quraan/shared/js/patches/iframe-token-request.js?v=account-id-only-20260525b"></script>
 </head>
 
-<body data-unit="" data-layout="flow-span">
+<body data-unit="tanween-movement" data-layout="flow-span">
   <div class="wrap">
     <div class="bar" id="topBar">
 
@@ -64,17 +73,24 @@
         </div>
 
         <div id="pqHeaderActionRow" class="pq-header-action-row" aria-label="Header actions">
-          <button
-            id="pqDesktopBackBtn"
-            type="button"
-            class="pq-header-back-btn"
-            aria-label="Return to previous page"
-            title="Back"
-          >&#8592; Back</button>
+          <div class="pq-header-action-group pq-header-action-group--primary">
+            <div id="pqHeaderActionSlot" class="pq-header-action-slot"></div>
+            <div id="pqHeaderPauseSlot" class="pq-header-pause-slot"></div>
+            <button
+              id="pqDesktopBackBtn"
+              type="button"
+              class="pq-header-back-btn"
+              aria-label="Return to previous page"
+              title="Back"
+            >Back</button>
+          </div>
 
-          <div id="pqHeaderPauseSlot" class="pq-header-pause-slot"></div>
+          <div class="pq-header-action-spacer" aria-hidden="true"></div>
 
-          <div id="pqHeaderActionSlot" class="pq-header-action-slot"></div>
+          <div class="pq-header-action-group pq-header-action-group--qa">
+            <div id="pqHeaderPreviousStepSlot" class="pq-header-previous-step-slot"></div>
+            <div id="pqHeaderQaSkipSlot" class="pq-header-qa-skip-slot"></div>
+          </div>
         </div>
       </div>
 
@@ -271,7 +287,7 @@
   <script src="/pre_quraan/shared/js/core-attention.js"></script>
   <script src="/pre_quraan/shared/js/core-focus-guard-adapter.js"></script>
 
-  <script src="/pre_quraan/shared/js/core-managed-engine.js"></script>
+  <script src="/pre_quraan/shared/js/core-managed-engine.js?v=tanween-movement-rules-20260531b"></script>
   <script src="/pre_quraan/shared/js/core-lesson-bootstrap.js"></script>
 
   <script src="/pre_quraan/shared/js/core-media-lecture.js"></script>
@@ -284,30 +300,30 @@
   <!-- Shared UI JS -->
   <script src="/pre_quraan/shared/js/shared-settings-sheet.js"></script>
   <script src="/pre_quraan/shared/js/shared-settings-filter.js"></script>
-  <script src="/pre_quraan/shared/js/shared-header-utilities.js"></script>
+  <script src="/pre_quraan/shared/js/shared-header-utilities.js?v=account-id-only-20260525b"></script>
   <script src="/pre_quraan/shared/js/shared-communications-panel.js?v=comm-dashboard-20260508"></script>
 
-  <script src="/pre_quraan/shared/js/shared-lecture-helpers.js"></script>
+  <script src="/pre_quraan/shared/js/shared-lecture-helpers.js?v=lecture-src-bind-20260526a"></script>
   <script src="/pre_quraan/shared/js/shared-lecture-stats.js"></script>
   <script src="/pre_quraan/shared/js/shared-lecture-cta-bridge.js"></script>
 
-  <script src="/pre_quraan/shared/js/shared-step-messaging.js"></script>
+  <script src="/pre_quraan/shared/js/shared-step-messaging.js?v=tanween-movement-rules-20260531b"></script>
   <script src="/pre_quraan/shared/js/shared-autoscroll.js"></script>
-  <script src="/pre_quraan/shared/js/shared-stepper-render.js"></script>
+  <script src="/pre_quraan/shared/js/shared-stepper-render.js?v=arabic-labels-20260507"></script>
 
   <script src="/pre_quraan/shared/js/shared-reward-bar.js"></script>
 
   <script src="/pre_quraan/shared/js/shared-write-engine.js"></script>
   <script src="/pre_quraan/shared/js/shared-playlist-engine.js"></script>
   <script src="/pre_quraan/shared/js/shared-match-engine.js"></script>
-  <script src="/pre_quraan/shared/js/shared-config-normalizer.js"></script>
+  <script src="/pre_quraan/shared/js/shared-config-normalizer.js?v=tanween-movement-rules-20260531b"></script>
 
   <!-- Unit JS _208  -->
   <!-- CLONING NOTE: each cloned Listen unit owns index.html, unit.config.js, unit.messages.js, unit.css, and unit.runtime.js. -->
-  <script src="./unit.messages.js"></script>
-  <script src="./unit.config.js"></script>
-  <script src="/pre_quraan/shared/js/runtime/runtime.bundle.js"></script>
-  <script src="./unit.runtime.js"></script>
+  <script src="./unit.messages.js?v=tanween-movement-rules-20260531b"></script>
+  <script src="./unit.config.js?v=tanween-movement-rules-20260531b"></script>
+  <script src="/pre_quraan/shared/js/runtime/runtime.bundle.js?v=tanween-movement-rules-20260531b"></script>
+  <script src="./unit.runtime.js?v=tanween-movement-rules-20260531b"></script>
 
 <!-- PQ SETTINGS FILTER RUNTIME FIX START -->
 <script src="/pre_quraan/shared/js/patches/filter-runtime-fix.js"></script>
@@ -322,10 +338,14 @@
   <!-- ===================== END JS FILES ===================== -->
 
   
-<script src="/pre_quraan/shared/js/patches/mobile-ui-sync.js"></script>
+<script src="/pre_quraan/shared/js/patches/mobile-ui-sync.js?v=bilingual-summary-20260507"></script>
+<script src="/pre_quraan/shared/js/patches/stepper-arabic-labels.js?v=arabic-labels-persist-20260507"></script>
 <script src="/pre_quraan/shared/js/patches/loading-failsafe.js"></script>
 
 </body>
 </html>
+
+
+
 
 

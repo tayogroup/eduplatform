@@ -1,0 +1,1401 @@
+<!DOCTYPE html>  
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Letter Sorting — Conveyor Belt</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    /* Shared Unit-1 palette (matching alphabet drag & drop + flashcards) */
+    --u1-bg1:#ffeef7;
+    --u1-bg2:#ffffff;
+
+    --u1-header-start:#aee8ff;  /* teal */
+    --u1-header-mid:#bff8c0;    /* mint */
+    --u1-header-end:#ffd6a5;    /* peach */
+
+    --u1-primary-start:#b9f5c7; /* Play All mint */
+    --u1-primary-end:#63d58c;   /* green */
+    --u1-primary-text:#143b29;  /* dark green text */
+
+    --panel:#ffffff;
+    --ink:#123047;
+    --accent-soft:#c7f2ec;
+    --danger:#e11d48;
+    --success:#16a34a;
+    --belt-line:#e2c8a2;
+    --radius-card:22px;
+    --radius-btn:18px;
+    --tile-letter-size:50px; /* bigger default font */
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg,var(--u1-bg1),var(--u1-bg2),var(--u1-bg1));
+  }
+
+  .page{
+    min-height:100%;
+    display:grid;
+    place-items:center;
+    padding:10px;
+  }
+
+  .sheet{
+    width:min(1120px,100vw);
+    border-radius:28px;
+    background:var(--panel);
+    box-shadow:0 16px 36px rgba(15,23,42,.18);
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* sticky header controls */
+  .top-bar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:#ffffffee;
+    padding-bottom:6px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+
+  .head{
+    margin:10px 12px 8px;
+    padding:10px 14px;
+    border-radius:20px;
+    background:linear-gradient(
+      135deg,
+      var(--u1-header-start),
+      var(--u1-header-mid),
+      var(--u1-header-end)
+    );
+    color:#1f2937;
+    font:900 20px/1 "Baloo 2",system-ui;
+    text-align:center;
+    box-shadow:inset 0 -2px 0 rgba(0,0,0,0.08);
+  }
+
+  .toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    justify-content:space-between;
+    margin:0 10px 4px;
+  }
+  .toolbar-left{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+  }
+  .toolbar-right{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    justify-content:flex-end;
+  }
+
+  .mini-label{
+    font:800 12px "Baloo 2",system-ui;
+    color:#1e293b;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    white-space:nowrap;
+  }
+  .mini-select{
+    border-radius:999px;
+    border:1px solid #cbd5f5;
+    padding:4px 8px;
+    font:800 12px "Baloo 2",system-ui;
+    background:#ffffff;
+    color:#0f172a;
+  }
+
+  .btn{
+    border:none;
+    border-radius:var(--radius-btn);
+    padding:.75rem 1.2rem;
+    font:900 16px "Baloo 2",system-ui;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--u1-primary-text);
+    background:linear-gradient(135deg,var(--u1-primary-start),var(--u1-primary-end));
+    box-shadow:0 6px 12px rgba(39,148,99,.4);
+    transition:transform 0.08s ease,box-shadow 0.15s ease;
+  }
+  .btn.red{
+    background:linear-gradient(135deg,#fecaca,#f97373);
+    box-shadow:0 6px 12px rgba(185,28,28,.45);
+    color:#7f1d1d;
+  }
+  .btn.blue{
+    background:linear-gradient(135deg,#dbeafe,#93c5fd);
+    box-shadow:0 6px 12px rgba(37,99,235,.28);
+    color:#1e3a8a;
+  }
+  .btn.ghost{
+    background:linear-gradient(135deg,var(--u1-primary-start),var(--u1-primary-end));
+    color:var(--u1-primary-text);
+    border:0;
+  }
+  .btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 9px 18px rgba(39,148,99,.5);
+  }
+  .btn.red:hover{
+    box-shadow:0 9px 18px rgba(185,28,28,.55);
+  }
+  .btn:active{
+    transform:translateY(1px);
+    box-shadow:0 4px 10px rgba(39,148,99,.35);
+  }
+  .btn:disabled{
+    cursor:not-allowed;
+    opacity:.65;
+    transform:none;
+  }
+
+  .note{
+    font:800 14px "Baloo 2",system-ui;
+    color:#475569;
+  }
+
+  .stats-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:2px 10px 6px;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .stats-left,.stats-right{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  .pill{
+    border-radius:999px;
+    padding:4px 12px;
+    background:#ffffffdd;
+    border:1px solid #bfdbfe;
+    font:800 14px "Baloo 2",system-ui;
+    color:#1e293b;
+    display:flex;
+    align-items:center;
+    gap:4px;
+  }
+
+  .timer-pill{
+    display:none;
+    border-color:#fbbf24;
+    background:#fff7ed;
+    color:#92400e;
+  }
+  .timer-pill.show{display:flex;}
+  .pill strong{font-weight:900;}
+
+  .heart{
+    color:#f97373;
+    font-size:18px;
+  }
+
+  /* LETTERS CANVAS */
+  .belt-wrap{
+    margin:4px 10px 10px;
+    border-radius:20px;
+    background:linear-gradient(135deg,var(--u1-primary-start),var(--u1-primary-end));
+    border:2px solid rgba(0,0,0,0.08);
+    box-shadow:0 6px 14px rgba(0,0,0,0.16);
+    padding:10px 8px 14px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .belt-lines{
+    position:absolute;
+    inset:auto 6px 40px 6px;
+    height:6px;
+    background:repeating-linear-gradient(
+      90deg,
+      var(--belt-line) 0 40px,
+      #0000 40px 52px
+    );
+    border-radius:999px;
+    opacity:.8;
+  }
+
+  .belt{
+    position:relative;
+    overflow-x:hidden;
+    padding-bottom:26px;
+  }
+
+  .belt-inner{
+    display:inline-flex;
+    gap:10px;
+    align-items:flex-start;
+    animation:scroll-left 22s linear infinite;
+    will-change:transform;
+    animation-play-state:paused;
+  }
+
+  @keyframes scroll-left{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(-50%)}
+  }
+
+  .tile{
+    min-width:90px;
+    max-width:90px;
+    min-height:110px;
+    border-radius:20px;
+    border:2px solid #fed7aa;
+    background:linear-gradient(180deg,#fffef9,#ffedd5);
+    box-shadow:0 6px 0 #fdba74,0 9px 14px rgba(0,0,0,.10);
+    padding:8px 6px 10px;
+    display:grid;
+    grid-template-rows:auto auto auto;
+    align-items:center;
+    justify-items:center;
+    cursor:grab;
+    touch-action:none;
+    transition:transform .09s ease,box-shadow .09s ease, border-color .09s ease, opacity .09s ease;
+  }
+  .tile.selected{
+    outline:4px solid rgba(37,99,235,.32);
+    transform:translateY(-3px) scale(1.03);
+  }
+  .tile:hover{
+    transform:translateY(-2px);
+    box-shadow:0 7px 0 #fdba74,0 12px 18px rgba(0,0,0,.16);
+  }
+  .tile.dragging{
+    opacity:.85;
+    transform:scale(1.05);
+    box-shadow:0 10px 18px rgba(0,0,0,.28);
+    cursor:grabbing;
+  }
+
+  .tile-top-label{
+    font:800 12px "Baloo 2",system-ui;
+    color:#334155;
+    padding:2px 7px;
+    border-radius:999px;
+    background:#ffffffd9;
+    border:1px solid #e2e8f0;
+  }
+  .tile-letter{
+    font-family:"Baloo 2",system-ui;
+    font-weight:900;
+    line-height:1;
+    font-size:var(--tile-letter-size);
+    color:#111827;
+  }
+  .tile-helper{
+    font:800 13px "Baloo 2",system-ui;
+    color:#0f766e;
+    margin-top:4px;
+  }
+
+  /* BASKETS CANVAS */
+  .bins-wrap{
+    margin:4px 10px 14px;
+    padding:14px 12px;
+    border-radius:20px;
+    background:linear-gradient(135deg,var(--u1-primary-start),var(--u1-primary-end));
+    border:2px solid rgba(0,0,0,0.08);
+    box-shadow:0 6px 14px rgba(0,0,0,0.16);
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+
+  .selected-card{
+    margin:8px 10px 0;
+    border-radius:18px;
+    border:1px solid #bfdbfe;
+    background:#ffffffee;
+    padding:8px 10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    font:900 14px "Baloo 2",system-ui;
+    color:#1f2937;
+  }
+  .selected-letter{
+    min-width:72px;
+    min-height:54px;
+    border-radius:14px;
+    background:#fffaf0;
+    border:2px solid #ffcf7a;
+    display:grid;
+    place-items:center;
+    font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+    font-size:44px;
+    line-height:1;
+    direction:rtl;
+  }
+
+.bin{
+  border-radius:22px;
+  padding:8px 6px 18px;
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  cursor:pointer;
+  transition:transform .09s ease;
+  max-width:260px;
+  flex:0 0 260px;
+  position:relative;      /* ✅ needed for overlay */
+}
+
+/* Centered overlay used for ✓ / ✖ feedback */
+.bin::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:52px;
+  font-weight:900;
+  opacity:0;
+  transform:scale(0.6);
+  transition:opacity 0.15s ease, transform 0.15s ease;
+  pointer-events:none;
+  text-shadow:0 6px 12px rgba(0,0,0,.35);
+}
+
+/* Correct answer: big green check */
+.bin.good::after{
+  content:"✅";
+  color:#22c55e;
+  opacity:1;
+  transform:scale(1);
+}
+
+/* Wrong answer: big red X */
+.bin.bad::after{
+  content:"✖";
+  color:#fb7185;
+  opacity:1;
+  transform:scale(1);
+}
+
+  .bin:hover{
+    transform:translateY(-2px);
+  }
+
+  .bin-label{
+    margin:0 4px 2px;
+    font:900 16px "Baloo 2",system-ui;
+    color:#022c22;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:6px;
+  }
+  .bin-label span:first-child{
+    display:flex;
+    align-items:center;
+    gap:4px;
+  }
+  .bin-emoji{
+    font-size:20px;
+  }
+  .bin-hint{
+    font:800 13px "Baloo 2",system-ui;
+    color:#0369a1;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    text-align:right;
+  }
+  .bin-count{
+    font-size:13px;
+    font-weight:900;
+    color:#0f172a;
+  }
+
+  /* REAL WICKER BASKET BODY */
+  .bin-body{
+    flex:1;
+    margin-top:8px;
+    padding:18px 10px 10px;
+    border-radius:0 0 18px 18px;
+    position:relative;
+    min-height:120px;
+    border:3px solid #d1a25b;
+    background:
+      linear-gradient(135deg,#f1d29a 0%,#e2b772 40%,#f1d29a 80%),
+      repeating-linear-gradient(45deg,#f7d9a2 0 10px,#e2b772 10px 20px),
+      repeating-linear-gradient(-45deg,#f3cd93 0 10px,#d9aa68 10px 20px);
+    background-blend-mode:multiply;
+    box-shadow:
+      inset 0 3px 5px rgba(0,0,0,.18),
+      0 3px 0 #b68a4a;
+    overflow:hidden;
+  }
+
+  .bin-body::before{
+    content:"";
+    position:absolute;
+    inset:-12px -6px auto -6px;
+    height:20px;
+    border-radius:20px 20px 12px 12px;
+    background:linear-gradient(180deg,#f6d39a,#d8a861);
+    box-shadow:
+      0 3px 0 #b7833c,
+      inset 0 -2px 0 rgba(255,255,255,.45);
+    pointer-events:none;
+  }
+
+  .bin-body::after{
+    content:"";
+    position:absolute;
+    left:16px;
+    right:16px;
+    bottom:-8px;
+    height:10px;
+    border-radius:999px;
+    background:rgba(0,0,0,0.18);
+    filter:blur(4px);
+    pointer-events:none;
+  }
+
+  .bin.good .bin-body{
+    border-color:#22c55e;
+  }
+  .bin.bad .bin-body{
+    border-color:#fb7185;
+    animation:shake .25s ease;
+  }
+
+  .bin.drag-over .bin-body{
+    border-color:#0f766e;
+    background:
+      linear-gradient(135deg,#f0fdf4 0%,#dcfce7 40%,#fef3c7 80%),
+      repeating-linear-gradient(45deg,#f7d9a2 0 10px,#e2b772 10px 20px),
+      repeating-linear-gradient(-45deg,#f3cd93 0 10px,#d9aa68 10px 20px);
+    background-blend-mode:multiply;
+  }
+
+  @keyframes shake{
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-3px)}
+    50%{transform:translateX(3px)}
+    75%{transform:translateX(-2px)}
+  }
+
+  /* toast */
+  #toast{
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    background:#111827;
+    color:#f9fafb;
+    font:800 14px "Baloo 2",system-ui;
+    padding:9px 12px;
+    border-radius:12px;
+    border:1px solid #4b5563;
+    box-shadow:0 8px 18px rgba(15,23,42,.55);
+    display:none;
+    z-index:9999;
+  }
+  #toast span{color:#fde68a;}
+
+  .start-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:grid;
+    place-items:center;
+    padding:18px;
+    background:rgba(15,23,42,.38);
+    backdrop-filter:blur(5px);
+  }
+  .start-overlay.hidden{display:none;}
+  .start-panel{
+    width:min(480px,92vw);
+    border-radius:22px;
+    background:#ffffff;
+    border:2px solid #bfdbfe;
+    box-shadow:0 18px 44px rgba(15,23,42,.24);
+    padding:24px;
+    text-align:center;
+  }
+  .start-panel h2{
+    margin:0 0 8px;
+    font:900 30px/1.05 "Baloo 2",system-ui;
+    color:#123047;
+  }
+  .start-panel p{
+    margin:0 0 18px;
+    font:800 17px/1.25 "Baloo 2",system-ui;
+    color:#475569;
+  }
+  .start-status{
+    min-height:22px;
+    margin-top:10px;
+    font:800 14px/1.2 "Baloo 2",system-ui;
+    color:#2563eb;
+  }
+
+  /* overlay */
+  .overlay{
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 30% 0,#ffffffee 0,#ffffff00 45%),rgba(15,23,42,.75);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+  }
+  .overlay-card{
+    background:#ffffff;
+    border-radius:24px;
+    padding:18px 20px 16px;
+    width:min(360px,92vw);
+    box-shadow:0 18px 36px rgba(15,23,42,.6);
+    text-align:center;
+  }
+  .overlay-title{
+    font:900 20px "Baloo 2",system-ui;
+    color:#f9fafb;
+    margin-bottom:6px;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    padding:6px 10px;
+    border-radius:16px;
+  }
+  .overlay-sub{
+    font:800 14px "Baloo 2",system-ui;
+    color:#0f172a;
+    margin:10px 0;
+  }
+
+  @media (max-width:768px){
+    .head{font-size:18px;}
+    .tile{
+      min-width:84px;
+      max-width:84px;
+    }
+  }
+
+  @media (max-width:520px){
+    .bins-wrap{
+      flex-direction:column;
+      align-items:center;
+    }
+    .toolbar{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .toolbar-right{
+      width:100%;
+      justify-content:flex-start;
+    }
+    .belt-inner{
+      animation-duration:28s;
+    }
+    .bin-body{
+      min-height:100px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Letter sorting game">
+
+    <div class="top-bar">
+      <div class="head">Letter Sorting — Conveyor Belt</div>
+
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <button id="playBtn" class="btn" type="button">▶ Start</button>
+          <button id="pauseBtn" class="btn ghost" type="button">⏸ Pause</button>
+          <button id="explainerBtn" class="btn blue" type="button">Play explainer</button>
+          <button id="resetBtn" class="btn red" type="button">↻ Reset</button>
+        </div>
+        <div class="toolbar-right">
+          <label class="mini-label">
+            Font:
+            <select id="fontSizeSelect" class="mini-select">
+              <option value="small">Small</option>
+              <option value="medium" selected>Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </label>
+          <label class="mini-label">
+            Speed:
+            <select id="speedSelect" class="mini-select">
+              <option value="slow">Slow</option>
+              <option value="normal" selected>Normal</option>
+              <option value="fast">Fast</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div style="margin:0 10px 4px;">
+        <span class="note">Drag a letter into the correct basket 🧺.</span>
+      </div>
+
+      <div class="stats-row">
+        <div class="stats-left">
+          <div class="pill">Score: <strong id="scoreVal">0</strong></div>
+          <div class="pill">Streak: <strong id="streakVal">0</strong></div>
+        </div>
+        <div class="stats-right">
+          <div class="pill">
+            Lives:
+            <span id="hearts">
+              <span class="heart">♥</span>
+              <span class="heart">♥</span>
+              <span class="heart">♥</span>
+            </span>
+          </div>
+          <div class="pill">
+            Level:
+            <strong id="levelLabel">Easy</strong>
+          </div>
+          <div class="pill timer-pill" id="timerPill">
+            Answer in <strong id="timerVal">5</strong>s
+          </div>
+        </div>
+      </div>
+      <div class="selected-card" aria-live="polite">
+        <span>Selected letter</span>
+        <strong class="selected-letter" id="selectedLetter">?</strong>
+        <span>Tap Light or Heavy, or drag the tile.</span>
+      </div>
+    </div>
+
+    <!-- Conveyor belt -->
+    <section class="belt-wrap">
+      <div class="belt-lines" aria-hidden="true"></div>
+      <div id="belt" class="belt" aria-label="Moving letter belt">
+        <div id="beltInner" class="belt-inner"></div>
+      </div>
+    </section>
+
+    <!-- Baskets -->
+    <section class="bins-wrap" aria-label="Sorting baskets">
+      <button class="bin" type="button" data-cat="light" id="bin-light">
+        <div class="bin-label">
+          <span><span class="bin-emoji">✨</span> Light letters</span>
+          <span class="bin-hint">
+            <span>Soft sound</span>
+            <span class="bin-count">Remaining: <span id="count-light">0</span></span>
+          </span>
+        </div>
+        <div class="bin-body"></div>
+      </button>
+
+      <button class="bin" type="button" data-cat="heavy" id="bin-heavy">
+        <div class="bin-label">
+          <span><span class="bin-emoji">💪</span> Heavy letters</span>
+          <span class="bin-hint">
+            <span>Full mouth</span>
+            <span class="bin-count">Remaining: <span id="count-heavy">0</span></span>
+          </span>
+        </div>
+        <div class="bin-body"></div>
+      </button>
+    </section>
+
+    <!-- overlay -->
+    <div id="overlay" class="overlay" role="dialog" aria-modal="true">
+      <div class="overlay-card">
+        <div class="overlay-title" id="overlayTitle">Great job!</div>
+        <div class="overlay-sub" id="overlaySub">You sorted a lot of letters.</div>
+        <button id="overlayBtn" type="button" class="btn" style="margin-top:6px;">Play again</button>
+      </div>
+    </div>
+
+    <div id="toast"><span>Hint:</span> Drag a letter into the correct basket 🧺.</div>
+
+  </main>
+</div>
+
+<div class="start-overlay" id="startOverlay">
+  <div class="start-panel" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+    <h2 id="startTitle">Ready to Sort?</h2>
+    <p>Tap Start Letter Conveyor Belt to hear the explainer. Then choose a letter and sort it into Light or Heavy.</p>
+    <button class="btn" type="button" id="startConveyorBtn">Start Letter Conveyor Belt</button>
+    <div class="start-status" id="startStatus">Listen to the explainer first.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const LETTER_SOUNDS_BASE = "https://ehelacademy.b-cdn.net/pre_quraan/letters/sounds/";
+  const WRONG_SOUND_URL    = "https://ehelacademy.b-cdn.net/pre_quraan/ui/wrong.mp3";
+  const ANSWER_TIMEOUT_MS = 5000;
+  const EXPLAINER_AUDIO_PATH = "games/letter-conveyor-belt/explainer/letter_conveyor_belt_how_to_use.mp3";
+  const EXPLAINER_AUDIO_VERSION = "20260614a";
+  const EXPLAINER_SEEN_KEY = "pq_letter_conveyor_belt_explainer_seen_v1";
+
+  // 28 letters: 21 light, 7 heavy (خ ص ض ط ظ ق غ)
+  const LETTERS = [
+    // LIGHT letters (soft)
+    { ch:"ا", name:"alif",       cat:"light", audio:"alif.mp3" },
+    { ch:"ب", name:"baa",        cat:"light", audio:"ba.mp3" },
+    { ch:"ت", name:"taa",        cat:"light", audio:"ta.mp3" },
+    { ch:"ث", name:"thaa",       cat:"light", audio:"tha.mp3" },
+    { ch:"ج", name:"jeem",       cat:"light", audio:"jeem.mp3" },
+    { ch:"ح", name:"haa",        cat:"light", audio:"haa.mp3" },
+    { ch:"د", name:"daal",       cat:"light", audio:"daal.mp3" },
+    { ch:"ذ", name:"dhaal",      cat:"light", audio:"dhaal.mp3" },
+    { ch:"ر", name:"raa",        cat:"light", audio:"raa.mp3" },
+    { ch:"ز", name:"zaay",       cat:"light", audio:"za.mp3" },
+    { ch:"س", name:"seen",       cat:"light", audio:"sin.mp3" },
+    { ch:"ش", name:"sheen",      cat:"light", audio:"sheen.mp3" },
+    { ch:"ع", name:"ain",        cat:"light", audio:"ain.mp3" },
+    { ch:"ف", name:"faa",        cat:"light", audio:"fa.mp3" },
+    { ch:"ك", name:"kaaf",       cat:"light", audio:"kaf.mp3" },
+    { ch:"ل", name:"laam",       cat:"light", audio:"laam.mp3" },
+    { ch:"م", name:"meem",       cat:"light", audio:"mim.mp3" },
+    { ch:"ن", name:"noon",       cat:"light", audio:"nun.mp3" },
+    { ch:"ه", name:"haa soft",   cat:"light", audio:"haa_soft.mp3" },
+    { ch:"و", name:"waaw",       cat:"light", audio:"waw.mp3" },
+    { ch:"ي", name:"yaa",        cat:"light", audio:"ya.mp3" },
+
+    // HEAVY letters (full mouth)
+    { ch:"خ", name:"khaa",       cat:"heavy", audio:"kha.mp3" },
+    { ch:"ص", name:"saad",       cat:"heavy", audio:"sad.mp3" },
+    { ch:"ض", name:"daad",       cat:"heavy", audio:"dad.mp3" },
+    { ch:"ط", name:"taa heavy",  cat:"heavy", audio:"ta_heavy.mp3" },
+    { ch:"ظ", name:"thaa heavy", cat:"heavy", audio:"za_heavy.mp3" },
+    { ch:"ق", name:"qaaf",       cat:"heavy", audio:"qaf.mp3" },
+    { ch:"غ", name:"ghayn",      cat:"heavy", audio:"ghain.mp3" }
+  ];
+
+  const LEVELS = [
+    { id:"easy",   minScore:0,   speedMultiplier:1.0, label:"Easy" },
+    { id:"medium", minScore:70,  speedMultiplier:1.2, label:"Medium" },
+    { id:"hard",   minScore:150, speedMultiplier:1.4, label:"Hard" }
+  ];
+
+  const CATS = ["light","heavy"];
+
+  // derive totals from LETTERS
+  const totalCounts = {
+    light: LETTERS.filter(l => l.cat === "light").length,
+    heavy: LETTERS.filter(l => l.cat === "heavy").length
+  };
+  let remainingCounts = { ...totalCounts };
+
+  const beltInner   = document.getElementById("beltInner");
+  const scoreEl     = document.getElementById("scoreVal");
+  const streakEl    = document.getElementById("streakVal");
+  const heartsEl    = document.getElementById("hearts");
+  const levelLabel  = document.getElementById("levelLabel");
+  const timerPill   = document.getElementById("timerPill");
+  const timerVal    = document.getElementById("timerVal");
+  const selectedLetterEl = document.getElementById("selectedLetter");
+  const toastEl     = document.getElementById("toast");
+  const overlay     = document.getElementById("overlay");
+  const overlayTitle= document.getElementById("overlayTitle");
+  const overlaySub  = document.getElementById("overlaySub");
+
+  const playBtn     = document.getElementById("playBtn");
+  const pauseBtn    = document.getElementById("pauseBtn");
+  const explainerBtn= document.getElementById("explainerBtn");
+  const resetBtn    = document.getElementById("resetBtn");
+  const overlayBtn  = document.getElementById("overlayBtn");
+  const startOverlay = document.getElementById("startOverlay");
+  const startConveyorBtn = document.getElementById("startConveyorBtn");
+  const startStatus = document.getElementById("startStatus");
+
+  const bins = {
+    light : document.getElementById("bin-light"),
+    heavy : document.getElementById("bin-heavy")
+  };
+
+  const countEls = {
+    light : document.getElementById("count-light"),
+    heavy : document.getElementById("count-heavy")
+  };
+
+  const fontSizeSelect = document.getElementById("fontSizeSelect");
+  const speedSelect    = document.getElementById("speedSelect");
+
+  let score = 0;
+  let streak = 0;
+  let lives = 3;
+  let running = false;
+  let draggedTile = null;
+  let selectedTile = null;
+  let beltWasRunningOnDrag = null;
+  let speedFactor = 1.0;
+  let touchActive = false;
+  let answerTimer = null;
+  let answerInterval = null;
+
+  const audio = new Audio();
+  audio.crossOrigin = "anonymous";
+
+  const wrongAudio = new Audio();
+  wrongAudio.crossOrigin = "anonymous";
+  wrongAudio.src = WRONG_SOUND_URL;
+
+  let explainerAudio = null;
+
+  function publicBasePath(){
+    const path = window.location.pathname || "";
+    if(path.indexOf("/pre_quraan_integration/") === 0) return "/pre_quraan_integration/";
+    if(path.indexOf("/pre_quraan_staging/") === 0) return "/pre_quraan_staging/";
+    return "/pre_quraan/";
+  }
+
+  function explainerAudioUrl(){
+    return publicBasePath() + EXPLAINER_AUDIO_PATH + "?v=" + EXPLAINER_AUDIO_VERSION;
+  }
+
+  function hasSeenExplainer(){
+    try{ return window.localStorage.getItem(EXPLAINER_SEEN_KEY) === "1"; }catch(_e){ return false; }
+  }
+
+  function markExplainerSeen(){
+    try{ window.localStorage.setItem(EXPLAINER_SEEN_KEY,"1"); }catch(_e){}
+  }
+
+  function setStartStatus(text){
+    if(startStatus) startStatus.textContent = text;
+  }
+
+  function stopExplainerAudio(){
+    if(explainerAudio){
+      try{
+        explainerAudio.pause();
+        explainerAudio.currentTime = 0;
+      }catch(_e){}
+      explainerAudio = null;
+    }
+  }
+
+  function playExplainerAudio(options){
+    const firstLaunch = !!(options && options.firstLaunch === true);
+    stopExplainerAudio();
+    if(explainerBtn){
+      explainerBtn.disabled = true;
+      explainerBtn.textContent = "Playing...";
+    }
+    setStartStatus(firstLaunch ? "Playing the explainer..." : "Playing explainer.");
+    explainerAudio = new Audio(explainerAudioUrl());
+    explainerAudio.preload = "auto";
+    return new Promise(function(resolve){
+      const current = explainerAudio;
+      const cleanup = function(){
+        if(explainerAudio === current) explainerAudio = null;
+        if(explainerBtn){
+          explainerBtn.disabled = false;
+          explainerBtn.textContent = "Play explainer";
+        }
+      };
+      current.onended = function(){
+        cleanup();
+        markExplainerSeen();
+        setStartStatus("Choose a letter, then sort it before time runs out.");
+        resolve(true);
+      };
+      current.onerror = function(){
+        cleanup();
+        setStartStatus("Explainer audio did not load. You can still play.");
+        showToast("Explainer audio did not load. You can still play.");
+        resolve(false);
+      };
+      current.play().catch(function(){
+        cleanup();
+        setStartStatus(firstLaunch ? "Sound was blocked. Tap Start Letter Conveyor Belt again." : "Sound was blocked. Tap Play explainer again.");
+        resolve(false);
+      });
+    });
+  }
+
+  function startConveyorGame(){
+    running = true;
+    if(startOverlay) startOverlay.classList.add("hidden");
+    beltInner.style.animationPlayState = "running";
+    playBtn.textContent = "▶ Resume";
+    pauseBtn.textContent = "⏸ Pause";
+    showToast("Choose a letter, then tap Light or Heavy before the timer runs out.");
+  }
+
+  async function startFromIntro(){
+    if(!hasSeenExplainer()){
+      const played = await playExplainerAudio({firstLaunch:true});
+      if(!played && startOverlay && !startOverlay.classList.contains("hidden")) return;
+    }
+    startConveyorGame();
+  }
+
+  function shuffle(arr){
+    const copy = arr.slice();
+    for(let i=copy.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [copy[i],copy[j]]=[copy[j],copy[i]];
+    }
+    return copy;
+  }
+
+  function showToast(msg){
+    toastEl.innerHTML = "<span>Hint:</span> " + msg;
+    toastEl.style.display = "block";
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=>toastEl.style.display="none", 3500);
+  }
+
+  function updateBinCounts(){
+    CATS.forEach(cat=>{
+      if(countEls[cat]) countEls[cat].textContent = remainingCounts[cat];
+    });
+  }
+
+  function updateStats(){
+    scoreEl.textContent = score;
+    streakEl.textContent = streak;
+    heartsEl.innerHTML =
+      (lives>=1?'<span class="heart">♥</span>':'')+
+      (lives>=2?'<span class="heart">♥</span>':'')+
+      (lives>=3?'<span class="heart">♥</span>':'');
+
+    const lvl = LEVELS.slice().reverse().find(l=>score>=l.minScore) || LEVELS[0];
+    levelLabel.textContent = lvl.label;
+
+    const baseDur = 22;
+    const newDur = baseDur / (lvl.speedMultiplier * speedFactor);
+    beltInner.style.animationDuration = newDur+"s";
+  }
+
+  function clearAnswerTimer(){
+    clearTimeout(answerTimer);
+    clearInterval(answerInterval);
+    answerTimer = null;
+    answerInterval = null;
+    timerPill.classList.remove("show");
+  }
+
+  function setSelectedTile(tile){
+    if(selectedTile) selectedTile.classList.remove("selected");
+    selectedTile = tile || null;
+    if(selectedTile){
+      selectedTile.classList.add("selected");
+      const l = findLetterById(Number(selectedTile.dataset.letterId));
+      selectedLetterEl.textContent = l ? l.ch : "?";
+    }else{
+      selectedLetterEl.textContent = "?";
+    }
+  }
+
+  function startAnswerTimer(tile){
+    clearAnswerTimer();
+    let remaining = Math.ceil(ANSWER_TIMEOUT_MS / 1000);
+    timerVal.textContent = String(remaining);
+    timerPill.classList.add("show");
+    answerInterval = setInterval(()=>{
+      remaining -= 1;
+      timerVal.textContent = String(Math.max(0, remaining));
+    },1000);
+    answerTimer = setTimeout(()=>{
+      if(selectedTile === tile){
+        const l = findLetterById(Number(tile.dataset.letterId));
+        showToast((l ? l.name : "This letter") + " timed out. Try the next letter.");
+        tile.classList.remove("selected");
+        setSelectedTile(null);
+        handleWrong();
+        clearAnswerTimer();
+        if(running) beltInner.style.animationPlayState = "running";
+      }
+    },ANSWER_TIMEOUT_MS);
+  }
+
+  function resetGame(){
+    stopExplainerAudio();
+    score = 0;
+    streak = 0;
+    lives = 3;
+    running = false;
+    draggedTile = null;
+    setSelectedTile(null);
+    clearAnswerTimer();
+    touchActive = false;
+    beltWasRunningOnDrag = null;
+    remainingCounts = { ...totalCounts };
+    overlay.style.display="none";
+    beltInner.style.animationPlayState = "paused";
+    playBtn.textContent = "▶ Start";
+    pauseBtn.textContent = "⏸ Pause";
+    updateStats();
+    updateBinCounts();
+  }
+
+  function endGame(isWin){
+    running = false;
+    clearAnswerTimer();
+    setSelectedTile(null);
+    beltInner.style.animationPlayState = "paused";
+    beltWasRunningOnDrag = null;
+
+    overlayTitle.textContent = isWin ? "Round finished 🎉" : "Game over 💔";
+    overlaySub.textContent =
+      "Score: " + score +
+      " • Light left: " + remainingCounts.light +
+      " • Heavy left: " + remainingCounts.heavy;
+    overlay.style.display = "flex";
+  }
+
+  function findLetterById(id){
+    return LETTERS[id] || null;
+  }
+
+  function playLetterSound(letter){
+    if(!letter || !letter.audio) return;
+    try{
+      audio.pause();
+      audio.currentTime = 0;
+      audio.src = LETTER_SOUNDS_BASE + letter.audio;
+      const p = audio.play();
+      if(p && p.catch) p.catch(()=>{});
+    }catch(e){}
+  }
+
+  function playWrongSound(){
+    if(!WRONG_SOUND_URL) return;
+    try{
+      wrongAudio.pause();
+      wrongAudio.currentTime = 0;
+      const p = wrongAudio.play();
+      if(p && p.catch) p.catch(()=>{});
+    }catch(e){}
+  }
+
+  function markBin(binEl, good){
+    binEl.classList.remove("good","bad");
+    void binEl.offsetWidth;
+    binEl.classList.add(good ? "good" : "bad");
+    setTimeout(()=>binEl.classList.remove("good","bad"),250);
+  }
+
+  function handleCorrect(){
+    score += 10;
+    streak += 1;
+    updateStats();
+    if(score >= 200){
+      endGame(true);
+    }
+  }
+
+  function handleWrong(){
+    playWrongSound();
+    streak = 0;
+    lives -= 1;
+    if(lives <= 0){
+      updateStats();
+      endGame(false);
+    }else{
+      updateStats();
+    }
+  }
+
+  // remove from belt on correct; do not show in basket
+  function processDropOnBin(cat, binEl){
+    const activeTile = draggedTile || selectedTile;
+    if (!activeTile) {
+      showToast("Tap a letter first, or drag it into a basket.");
+      return;
+    }
+
+    const letterId = Number(activeTile.dataset.letterId);
+    const l = findLetterById(letterId);
+    if (!l) return;
+
+    if (l.cat === cat) {
+      markBin(binEl, true);
+
+      // remove the tile from the belt
+      activeTile.remove();
+      draggedTile = null;
+      setSelectedTile(null);
+      clearAnswerTimer();
+      if(running && beltWasRunningOnDrag === "running"){
+        beltInner.style.animationPlayState = "running";
+      }
+      beltWasRunningOnDrag = null;
+
+      if (remainingCounts[cat] > 0) {
+        remainingCounts[cat]--;
+        updateBinCounts();
+      }
+
+      handleCorrect();
+    } else {
+      markBin(binEl, false);
+      activeTile.classList.add("selected");
+      handleWrong();
+      showToast(l.name + " is a " + l.cat + " letter. Try the other basket.");
+    }
+  }
+
+  function startDragFromTile(tile){
+    if(!running){
+      showToast("Tap ▶ Start, then drag letters into baskets.");
+      return false;
+    }
+    draggedTile = tile;
+    setSelectedTile(tile);
+    clearAnswerTimer();
+    tile.classList.add("dragging");
+
+    beltWasRunningOnDrag = beltInner.style.animationPlayState || "running";
+    beltInner.style.animationPlayState = "paused";
+
+    const l = findLetterById(Number(tile.dataset.letterId));
+    playLetterSound(l);
+    startAnswerTimer(tile);
+    return true;
+  }
+
+  function selectTileForBasket(tile){
+    if(!running){
+      showToast("Tap ▶ Start, then choose a letter.");
+      return;
+    }
+    setSelectedTile(tile);
+    beltWasRunningOnDrag = beltInner.style.animationPlayState || "running";
+    beltInner.style.animationPlayState = "paused";
+    const l = findLetterById(Number(tile.dataset.letterId));
+    playLetterSound(l);
+    showToast("Now tap Light or Heavy before the timer runs out.");
+    startAnswerTimer(tile);
+  }
+
+  function endDragCommon(){
+    if(draggedTile){
+      draggedTile.classList.remove("dragging");
+      draggedTile = null;
+    }
+    if(running && beltWasRunningOnDrag === "running"){
+      beltInner.style.animationPlayState = "running";
+    }
+    beltWasRunningOnDrag = null;
+  }
+
+  // build belt: each letter once
+  function buildBelt(){
+    beltInner.innerHTML = "";
+    const seq = shuffle(LETTERS);
+
+    seq.forEach(letter=>{
+      const tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "tile";
+      tile.dataset.letterId = LETTERS.indexOf(letter);
+      tile.draggable = true;
+
+      const top = document.createElement("div");
+      top.className = "tile-top-label";
+      top.textContent = "Letter";
+
+      const main = document.createElement("div");
+      main.className = "tile-letter";
+      main.textContent = letter.ch;
+
+      const helper = document.createElement("div");
+      helper.className = "tile-helper";
+      helper.textContent = letter.name;
+
+      tile.append(top, main, helper);
+
+      tile.addEventListener("dragstart", (e)=>{
+        if(!startDragFromTile(tile)){
+          e.preventDefault();
+          return;
+        }
+        if(e.dataTransfer){
+          e.dataTransfer.effectAllowed = "move";
+          e.dataTransfer.setData("text/plain", tile.dataset.letterId);
+        }
+      });
+
+      tile.addEventListener("dragend", endDragCommon);
+
+      tile.addEventListener("pointerdown", (e)=>{
+        if(e.pointerType !== "mouse" || e.button !== 0) return;
+        if(draggedTile) return;
+        selectTileForBasket(tile);
+      });
+
+      tile.addEventListener("click", ()=>{
+        selectTileForBasket(tile);
+      });
+
+      tile.addEventListener("touchstart", (e)=>{
+        if(!startDragFromTile(tile)){
+          if(e.cancelable) e.preventDefault();
+          return;
+        }
+        touchActive = true;
+        if(e.cancelable) e.preventDefault();
+      }, {passive:false});
+
+      beltInner.appendChild(tile);
+    });
+
+    beltInner.style.animationPlayState = "paused";
+  }
+
+  document.addEventListener("touchmove", (e)=>{
+    if(!touchActive || !draggedTile) return;
+    if(e.cancelable) e.preventDefault();
+    const t = e.touches[0];
+    if(!t) return;
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    Object.values(bins).forEach(b=>b.classList.remove("drag-over"));
+    if(el){
+      const binEl = el.closest(".bin");
+      if(binEl) binEl.classList.add("drag-over");
+    }
+  }, {passive:false});
+
+  document.addEventListener("touchend", (e)=>{
+    if(!touchActive || !draggedTile) return;
+    const t = e.changedTouches[0];
+    if(t){
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      if(el){
+        const binEl = el.closest(".bin");
+        if(binEl){
+          const cat = binEl.dataset.cat;
+          processDropOnBin(cat, binEl);
+        }
+      }
+    }
+    Object.values(bins).forEach(b=>b.classList.remove("drag-over"));
+    touchActive = false;
+    endDragCommon();
+  });
+
+  function setupBinDnD(cat){
+    const binEl = bins[cat];
+
+    binEl.addEventListener("dragover", (e)=>{
+      if(!running || !draggedTile) return;
+      e.preventDefault();
+      if(e.dataTransfer) e.dataTransfer.dropEffect = "move";
+    });
+
+    binEl.addEventListener("dragenter", (e)=>{
+      if(!running || !draggedTile) return;
+      e.preventDefault();
+      binEl.classList.add("drag-over");
+    });
+
+    binEl.addEventListener("dragleave", ()=>binEl.classList.remove("drag-over"));
+
+    binEl.addEventListener("drop", (e)=>{
+      if(!running || !draggedTile) return;
+      e.preventDefault();
+      binEl.classList.remove("drag-over");
+      processDropOnBin(cat, binEl);
+    });
+
+    binEl.addEventListener("click", ()=>{
+      if(!running){
+        showToast("Tap ▶ Start first.");
+        return;
+      }
+      if(selectedTile){
+        processDropOnBin(cat, binEl);
+        return;
+      }
+      showToast("Tap a letter first, or drag it into this basket.");
+    });
+  }
+
+  function applyFontSize(){
+    const v = fontSizeSelect.value;
+    let size = "50px";
+    if(v === "small") size = "40px";
+    else if(v === "large") size = "60px";
+    document.documentElement.style.setProperty("--tile-letter-size", size);
+  }
+
+  function applySpeed(){
+    const v = speedSelect.value;
+    if(v === "slow") speedFactor = 0.75;
+    else if(v === "fast") speedFactor = 1.4;
+    else speedFactor = 1.0;
+    updateStats();
+  }
+
+  fontSizeSelect.addEventListener("change", applyFontSize);
+  speedSelect.addEventListener("change", applySpeed);
+
+  playBtn.addEventListener("click", ()=>{
+    if(startOverlay && !startOverlay.classList.contains("hidden")){
+      startFromIntro();
+      return;
+    }
+    if(!running){
+      startConveyorGame();
+    }else{
+      beltInner.style.animationPlayState = "running";
+    }
+  });
+
+  pauseBtn.addEventListener("click", ()=>{
+    const current = beltInner.style.animationPlayState;
+    beltInner.style.animationPlayState =
+      current === "paused" ? "running" : "paused";
+    pauseBtn.textContent =
+      beltInner.style.animationPlayState === "paused" ? "▶ Continue" : "⏸ Pause";
+  });
+
+  resetBtn.addEventListener("click", ()=>{
+    resetGame();
+    buildBelt();
+  });
+
+  overlayBtn.addEventListener("click", ()=>{
+    resetGame();
+    buildBelt();
+  });
+
+  if(explainerBtn) explainerBtn.addEventListener("click", ()=>playExplainerAudio());
+  if(startConveyorBtn) startConveyorBtn.addEventListener("click", startFromIntro);
+
+  setupBinDnD("light");
+  setupBinDnD("heavy");
+
+  // init
+  buildBelt();
+  applyFontSize();
+  applySpeed();
+  updateStats();
+  updateBinCounts();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pre-Quran Testing Links</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #10233f;
+      --muted: #5c6c7c;
+      --line: #d7e4dc;
+      --panel: #ffffff;
+      --soft: #f3fbf6;
+      --accent: #0f7b4c;
+      --accent-2: #f5b942;
+      --shadow: 0 12px 32px rgba(16, 35, 63, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #e8fbff 0%, #effbe8 48%, #fff4c9 100%);
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 24px;
+      border: 1px solid rgba(15, 123, 76, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff7dc;
+      border: 1px solid #f0d384;
+      color: #593c08;
+      font-weight: 800;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .env-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .env-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .env-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .env-head h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .env-head span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .column {
+      padding: 18px 20px 20px;
+    }
+
+    .column + .column {
+      border-left: 1px solid var(--line);
+    }
+
+    h3 {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .links {
+      display: grid;
+      gap: 9px;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 42px;
+      padding: 10px 12px;
+      border: 1px solid #d9e7de;
+      border-radius: 8px;
+      background: #fbfffc;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    a span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .link-icon {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      color: var(--accent);
+    }
+
+    a:hover,
+    a:focus {
+      border-color: #7fd19b;
+      background: #f0fbf4;
+      outline: none;
+    }
+
+    a small {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .status-line {
+      margin: -4px 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid rgba(245, 185, 66, 0.5);
+      border-radius: 8px;
+      background: rgba(255, 248, 222, 0.88);
+      color: #5c450f;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100% - 20px, 1120px);
+        padding-top: 16px;
+      }
+
+      .hero,
+      .env-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .columns {
+        grid-template-columns: 1fr;
+      }
+
+      .column + .column {
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <h1 id="page-title">Pre-Quran Testing Links</h1>
+        <p>Use this page to open the same test targets in local preview or on Bunny. Links are grouped by environment so it is clear which build you are testing.</p>
+      </div>
+      <div class="badge">Testing shortcuts</div>
+    </section>
+
+    <section class="env-list" id="environmentLinks" aria-label="Environment links"></section>
+
+    <p class="note">Local links use the preview server on port 4173. Bunny links use app.quraan.academy. Add a new version value when you want to force the browser to load fresh assets.</p>
+  </main>
+
+  <script>
+    const cacheVersion = 'testing-links-20260608b';
+    const localHost = 'http://127.0.0.1:4173';
+    const bunnyHost = 'https://app.quraan.academy';
+    const moodleLauncherUrl = 'https://quraan.academy/local/hubredirect/issue.php';
+    const moodleLogoutUrl = 'https://quraan.academy/login/logout.php';
+
+    const environments = [
+      { name: 'Integration', base: '/pre_quraan_integration/', label: 'QA and current testing' },
+      { name: 'Staging', base: '/pre_quraan_staging/', label: 'Release review' },
+      { name: 'Production', base: '/pre_' + 'quraan/', label: 'Live production path' },
+    ];
+
+    const targets = [
+      { title: 'App Shell Home', path: 'app/index.html', icon: 'home' },
+      { title: 'Legacy Scripts Page', path: 'scripts/index_v030.html', icon: 'menu' },
+      { title: 'Login to App', launcher: true, external: true, icon: 'login' },
+      { title: 'Moodle Logout', url: moodleLogoutUrl, external: true, icon: 'logout' },
+      { title: 'Alphabet Unit', path: 'units/alphabet/index.html?managed=1', icon: 'book' },
+      { title: 'Alphabet Lecture Video', path: 'messages/lectures/alphabet_lecture.mp4', icon: 'video' },
+      { title: 'Harakat Unit', path: 'units/harakat/index.html?managed=1', icon: 'book' },
+    ];
+
+    const icons = {
+      home: '<svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 10.2V21h13V10.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 21v-6h5v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      login: '<svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h5v18h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 12h11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m11 8 4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      logout: '<svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3H5v18h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12h11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m16 8 4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      menu: '<svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+      book: '<svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+      video: '<svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m17 10 4-2v8l-4-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+    };
+
+    function withVersion(url) {
+      return `${url}${url.includes('?') ? '&' : '?'}v=${encodeURIComponent(cacheVersion)}`;
+    }
+
+    function linkGroup(host, env, options = {}) {
+      return targets.map((target) => {
+        const href = target.launcher
+          ? `${moodleLauncherUrl}?pq_env=${encodeURIComponent(env.name.toLowerCase())}`
+          : (target.url ? target.url : withVersion(`${host}${env.base}${target.path}`));
+        const targetIsExternal = Boolean(target.external || options.external);
+        const preservesBunnyReferrer = options.external && href.indexOf(bunnyHost) === 0;
+        const attrs = targetIsExternal
+          ? (preservesBunnyReferrer
+            ? ' target="_blank" rel="noopener" referrerpolicy="strict-origin-when-cross-origin"'
+            : ' target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"')
+          : '';
+        return `<a href="${href}"${attrs}><span>${icons[target.icon] || icons.menu}${target.title}</span><small>${targetIsExternal ? 'Open clean' : 'Open'}</small></a>`;
+      }).join('');
+    }
+
+    document.getElementById('environmentLinks').innerHTML = environments.map((env) => `
+      <article class="env-card">
+        <header class="env-head">
+          <h2>${env.name}</h2>
+          <span>${env.base} ${env.label}</span>
+        </header>
+        <div class="columns">
+          <section class="column">
+            <h3>Local Preview</h3>
+            <p class="status-line">Served from this machine on port 4173.</p>
+            <div class="links">${linkGroup(localHost, env)}</div>
+          </section>
+          <section class="column">
+            <h3>Bunny</h3>
+            <p class="status-line">Opens in a new tab without a local referrer.</p>
+            <div class="links">${linkGroup(bunnyHost, env, { external: true })}</div>
+          </section>
+        </div>
+      </article>
+    `).join('');
+  </script>
+</body>
+</html>

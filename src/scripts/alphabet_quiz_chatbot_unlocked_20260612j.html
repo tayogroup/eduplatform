@@ -1,0 +1,1908 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Alphabet Quiz Buddy</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Noto+Naskh+Arabic:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#10253f;
+      --muted:#526173;
+      --line:#dbe7f2;
+      --paper:#ffffff;
+      --soft:#f7fbff;
+      --mint:#8be1a6;
+      --sky:#82d8f7;
+      --sun:#ffd36e;
+      --peach:#ff9b55;
+      --rose:#f6c8dc;
+      --bad:#c2410c;
+      --good:#176b3a;
+      --shadow:0 18px 45px rgba(16,37,63,.14);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Baloo 2",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(130,216,247,.34), transparent 34%),
+        radial-gradient(circle at 86% 9%, rgba(255,211,110,.38), transparent 30%),
+        linear-gradient(180deg,#fff7fb 0%,#f5fbff 48%,#fffdf4 100%);
+      padding:16px;
+    }
+    button{font:inherit}
+    .page{
+      width:min(1040px,100%);
+      margin:0 auto;
+      display:grid;
+      gap:14px;
+    }
+    .topbar{
+      min-height:78px;
+      border-radius:28px;
+      background:linear-gradient(90deg,#b6efff,#cbf7b7,#ffe6a7,#f6c4d9);
+      box-shadow:var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 16px;
+      border:1px solid rgba(255,255,255,.8);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .logo{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      background:linear-gradient(135deg,#fff4ad,#ff953d);
+      color:white;
+      display:grid;
+      place-items:center;
+      font-size:29px;
+      font-weight:900;
+      box-shadow:0 8px 0 rgba(16,37,63,.12);
+      flex:0 0 auto;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(1.7rem,4vw,2.55rem);
+      line-height:1;
+      letter-spacing:0;
+    }
+    .subtitle{
+      margin:3px 0 0;
+      color:#314760;
+      font-size:clamp(.98rem,2vw,1.12rem);
+      font-weight:800;
+      line-height:1.15;
+    }
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex:0 0 auto;
+    }
+    .icon-btn{
+      width:48px;
+      height:48px;
+      border:0;
+      border-radius:16px;
+      background:#fff;
+      color:var(--ink);
+      box-shadow:0 7px 0 rgba(16,37,63,.12), inset 0 0 0 2px rgba(16,37,63,.08);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+    }
+    .icon-btn svg{width:25px;height:25px}
+    .status-strip{
+      border-radius:22px;
+      background:rgba(255,255,255,.84);
+      border:1px solid rgba(219,231,242,.9);
+      box-shadow:0 12px 30px rgba(16,37,63,.08);
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 16px;
+    }
+    .status-text{
+      font-weight:900;
+      color:#1d334b;
+      min-width:140px;
+    }
+    .meter{
+      flex:1 1 auto;
+      height:14px;
+      border-radius:999px;
+      background:#e7eadf;
+      overflow:hidden;
+      min-width:90px;
+    }
+    .meter span{
+      display:block;
+      height:100%;
+      width:0%;
+      border-radius:inherit;
+      background:linear-gradient(90deg,#55c7e5,#86df9f);
+      transition:width .25s ease;
+    }
+    .stars{
+      display:flex;
+      gap:6px;
+      color:#d7a11b;
+      font-size:1.35rem;
+      line-height:1;
+    }
+    .stage{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 320px;
+      gap:16px;
+      align-items:stretch;
+    }
+    .chat-card,.side-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(219,231,242,.95);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .chat-card{
+      min-height:620px;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+    }
+    .chat-head{
+      padding:16px 18px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background:linear-gradient(90deg,#f8fdff,#fffdf3);
+    }
+    .buddy{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .buddy-face{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      background:linear-gradient(135deg,#ffe28a,#ff9b55);
+      display:grid;
+      place-items:center;
+      color:white;
+      font-size:30px;
+      font-weight:900;
+      box-shadow:0 7px 0 rgba(16,37,63,.10);
+    }
+    .buddy-name{
+      font-size:1.3rem;
+      font-weight:900;
+      line-height:1;
+    }
+    .buddy-mode{
+      color:var(--muted);
+      font-weight:800;
+      line-height:1.1;
+      margin-top:4px;
+    }
+    .pill{
+      border-radius:999px;
+      background:#edfdf4;
+      color:#176b3a;
+      border:2px solid #b9f0cc;
+      padding:7px 12px;
+      font-size:.95rem;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .chat-log{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      overflow:auto;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.52),rgba(255,255,255,.86)),
+        repeating-linear-gradient(0deg,transparent 0 42px,rgba(130,216,247,.08) 42px 44px);
+    }
+    .msg{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      max-width:88%;
+    }
+    .msg.child{
+      align-self:flex-end;
+      flex-direction:row-reverse;
+    }
+    .avatar{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      font-weight:900;
+      background:#ffe6a7;
+      color:#7c3a07;
+    }
+    .child .avatar{
+      background:#dff7ff;
+      color:#0f5b76;
+    }
+    .bubble{
+      border-radius:20px;
+      padding:11px 13px;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:0 6px 16px rgba(16,37,63,.08);
+      font-size:1.05rem;
+      font-weight:800;
+      line-height:1.22;
+    }
+    .child .bubble{
+      background:#edfdf4;
+      border-color:#b9f0cc;
+    }
+    .quiz-panel{
+      border-top:1px solid var(--line);
+      padding:16px;
+      background:#fff;
+      display:grid;
+      gap:12px;
+    }
+    .prompt-card{
+      border-radius:24px;
+      border:2px solid #e7eef6;
+      background:linear-gradient(135deg,#f5fcff,#fff9e8);
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+    .prompt-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .prompt-title{
+      font-weight:900;
+      font-size:1.15rem;
+      line-height:1.1;
+      flex:1 1 260px;
+    }
+    .prompt-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
+    }
+    .prompt-actions .btn,
+    .voice-actions .btn{
+      width:auto;
+    }
+    .prompt-tag{
+      background:#fff;
+      border:1px solid #e8dca6;
+      color:#7a5500;
+      border-radius:999px;
+      padding:5px 10px;
+      font-size:.88rem;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .letter-focus{
+      min-height:120px;
+      border-radius:22px;
+      background:rgba(255,255,255,.82);
+      display:grid;
+      place-items:center;
+      padding:12px;
+      border:1px dashed rgba(16,37,63,.18);
+      font-family:"Noto Naskh Arabic",serif;
+      font-size:clamp(4.2rem,14vw,7.5rem);
+      line-height:1;
+      color:#14253a;
+    }
+    .letter-focus.text-focus{
+      font-family:"Baloo 2",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      font-size:clamp(1.4rem,4vw,2.2rem);
+      line-height:1.15;
+      text-align:center;
+      color:#314760;
+    }
+    .choices{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+    .choice{
+      position:relative;
+      min-height:58px;
+      border:0;
+      border-radius:18px;
+      cursor:pointer;
+      background:#f8fbff;
+      color:var(--ink);
+      box-shadow:inset 0 0 0 2px #dce8f5,0 6px 0 rgba(16,37,63,.08);
+      font-size:1.08rem;
+      font-weight:900;
+      padding:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      line-height:1.1;
+    }
+    .choice-num{
+      position:absolute;
+      left:12px;
+      top:50%;
+      transform:translateY(-50%);
+      min-width:30px;
+      height:30px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:#fff4cf;
+      color:#7a5500;
+      box-shadow:inset 0 0 0 2px rgba(213,161,27,.22);
+      font-size:.9rem;
+      font-weight:900;
+      line-height:1;
+    }
+    .choice-label{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:0;
+      padding-inline:38px 12px;
+    }
+    .choice .arabic{
+      font-family:"Noto Naskh Arabic",serif;
+      font-size:2.2rem;
+      line-height:1;
+    }
+    .choice:hover{transform:translateY(-1px)}
+    .choice:active{transform:translateY(2px);box-shadow:inset 0 0 0 2px #dce8f5,0 3px 0 rgba(16,37,63,.08)}
+    .choice.correct{
+      background:#e9fbef;
+      box-shadow:inset 0 0 0 3px #62d488,0 6px 0 rgba(23,107,58,.14);
+    }
+    .choice.missed{
+      background:#fff0e9;
+      box-shadow:inset 0 0 0 3px #ffb083,0 6px 0 rgba(194,65,12,.12);
+    }
+    .choice:disabled{
+      cursor:default;
+      transform:none;
+      opacity:.9;
+    }
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .voice-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      border-radius:20px;
+      background:#f8fbff;
+      border:1px solid #dce8f5;
+      padding:10px;
+    }
+    .voice-status{
+      color:#344860;
+      font-size:.98rem;
+      font-weight:900;
+      line-height:1.15;
+      flex:1 1 220px;
+    }
+    .voice-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:0;
+      border-radius:18px;
+      min-height:48px;
+      padding:0 18px;
+      cursor:pointer;
+      font-weight:900;
+      color:#17324b;
+      background:linear-gradient(135deg,#ffe8a8,#ff9d55);
+      box-shadow:0 7px 0 rgba(116,60,10,.16);
+    }
+    .btn.secondary{
+      background:#f8fbff;
+      box-shadow:inset 0 0 0 2px #dce8f5,0 7px 0 rgba(16,37,63,.08);
+    }
+    .btn.voice{
+      background:linear-gradient(135deg,#c8f7d7,#82d8f7);
+      box-shadow:0 7px 0 rgba(20,88,116,.14);
+    }
+    .btn.listening{
+      background:linear-gradient(135deg,#ffe8a8,#f6c8dc);
+      box-shadow:0 0 0 4px rgba(246,200,220,.45),0 7px 0 rgba(116,60,10,.16);
+    }
+    .btn:disabled{opacity:.55;cursor:default;box-shadow:none}
+    .side-card{
+      padding:16px;
+      display:grid;
+      align-content:start;
+      gap:14px;
+    }
+    .score-box{
+      border-radius:24px;
+      background:linear-gradient(135deg,#effcff,#fff8dc);
+      border:1px solid #dce8f5;
+      padding:16px;
+      display:grid;
+      gap:10px;
+    }
+    .score-big{
+      font-size:2.8rem;
+      font-weight:900;
+      line-height:1;
+    }
+    .score-label{
+      color:var(--muted);
+      font-weight:900;
+    }
+    .mini-list{
+      display:grid;
+      gap:8px;
+    }
+    .mini-item{
+      border-radius:16px;
+      padding:9px 11px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:#344860;
+      font-weight:800;
+      line-height:1.15;
+    }
+    .gate{
+      border-radius:22px;
+      background:#fff8e1;
+      border:2px solid #f5d67b;
+      padding:12px;
+      color:#684a07;
+      font-weight:900;
+      line-height:1.2;
+    }
+    @media (max-width:850px){
+      body{padding:10px}
+      .topbar{border-radius:22px;align-items:flex-start}
+      .stage{grid-template-columns:1fr}
+      .side-card{order:-1}
+      .chat-card{min-height:560px}
+      .choices{grid-template-columns:1fr}
+      .msg{max-width:96%}
+      .status-strip{align-items:flex-start;flex-wrap:wrap}
+      .meter{flex-basis:100%}
+    }
+    @media (max-width:520px){
+      .top-actions{display:none}
+      .chat-head{align-items:flex-start;flex-direction:column}
+      .pill{white-space:normal}
+      .letter-focus{min-height:96px}
+      .controls{justify-content:stretch}
+      .btn{width:100%}
+      .prompt-actions{width:100%}
+      .prompt-actions .btn{flex:1 1 120px}
+      .voice-actions{width:100%}
+      .voice-actions .btn{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">Q</div>
+        <div>
+          <h1>Alphabet Quiz</h1>
+          <p class="subtitle">A friendly chat quiz for Arabic letters, sounds, and dots.</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="homeBtn" type="button" aria-label="Back to app">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-8.5z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="status-strip" aria-label="Quiz progress">
+        <div class="status-text" id="progressText">Pass 1 of 3</div>
+      <div class="meter" aria-hidden="true"><span id="progressFill"></span></div>
+      <div class="stars" id="stars" aria-label="Stars earned">&#9734; &#9734; &#9734;</div>
+    </section>
+
+    <section class="stage">
+      <article class="chat-card">
+        <div class="chat-head">
+          <div class="buddy">
+            <div class="buddy-face" aria-hidden="true">?</div>
+            <div>
+              <div class="buddy-name">Quiz Buddy</div>
+              <div class="buddy-mode" id="buddyMode">Ready for alphabet practice</div>
+            </div>
+          </div>
+          <div class="pill" id="unlockPill">Alphabet Quiz</div>
+        </div>
+
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+
+        <div class="quiz-panel">
+          <div class="prompt-card">
+            <div class="prompt-top">
+              <div class="prompt-title" id="questionText">Question text</div>
+              <div class="prompt-actions" aria-label="Question controls">
+                <div class="prompt-tag" id="questionTag">Letters</div>
+                <button class="btn secondary" id="speakBtn" type="button">Listen</button>
+                <button class="btn" id="nextBtn" type="button" disabled>Next</button>
+              </div>
+            </div>
+            <div class="letter-focus" id="letterFocus" aria-label="Question focus"></div>
+            <div class="choices" id="choices"></div>
+          </div>
+          <div class="voice-row">
+            <div class="voice-status" id="voiceStatus">Tap Listen if you want Quiz Buddy to read the question.</div>
+            <div class="voice-actions">
+              <button class="btn secondary" id="restartBtn" type="button">Try Again</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="side-card">
+        <div class="score-box">
+          <div class="score-big" id="scoreBig">0/45</div>
+          <div class="score-label" id="scoreLabel">Answer the first question.</div>
+        </div>
+        <div class="gate" id="gateNote">
+          Finish Alphabet Learn first, then come here for your quiz. Preview mode lets teachers test the quiz anytime.
+        </div>
+        <div class="mini-list" id="reviewList">
+          <div class="mini-item">Listen carefully.</div>
+          <div class="mini-item">Tap one answer.</div>
+          <div class="mini-item">Quiz Buddy will help you keep going.</div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      "use strict";
+
+      var QUESTIONS = [
+        {
+          id:"rules-count",
+          tag:"Rules",
+          ask:"How many letters are in the Arabic alphabet?",
+          focus:"Alphabet rules",
+          choices:[
+            {label:"27", value:"27"},
+            {label:"28", value:"28"},
+            {label:"29", value:"29"},
+            {label:"30", value:"30"}
+          ],
+          answer:"29",
+          correct:"Yes. The Arabic alphabet has 29 letters.",
+          retry:"Good try. The Arabic alphabet has 29 letters.",
+          say:"How many letters are in the Arabic alphabet?",
+          correctSay:"Yes. The Arabic alphabet has 29 letters.",
+          retrySay:"Good try. The Arabic alphabet has 29 letters."
+        },
+        {
+          id:"listen-ba",
+          tag:"Listen",
+          ask:"Listen and choose the letter Quiz Buddy says.",
+          focus:"?",
+          choices:[
+            {label:"&#1576;", value:"ba", arabic:true},
+            {label:"&#1578;", value:"ta", arabic:true},
+            {label:"&#1579;", value:"tha", arabic:true},
+            {label:"&#1606;", value:"noon", arabic:true}
+          ],
+          answer:"ba",
+          correct:"Yes, that is Ba.",
+          retry:"Good try. That sound was Ba.",
+          say:"Find Ba.",
+          correctSay:"Yes, that is Ba.",
+          retrySay:"Good try. That sound was Ba."
+        },
+        {
+          id:"watch-qaf",
+          tag:"Watch",
+          ask:"Which shape is Qaf?",
+          focus:"Match the name to the shape",
+          autoSpeak:false,
+          choices:[
+            {label:"&#1601;", value:"fa", arabic:true},
+            {label:"&#1602;", value:"qaf", arabic:true},
+            {label:"&#1603;", value:"kaf", arabic:true},
+            {label:"&#1594;", value:"ghain", arabic:true}
+          ],
+          answer:"qaf",
+          correct:"Yes, that is Qaf.",
+          retry:"Almost. Qaf is the rounded shape with two dots above.",
+          say:"Which shape is Qaf?",
+          correctSay:"Yes, that is Qaf.",
+          retrySay:"Almost. Qaf is the rounded shape with two dots above."
+        },
+        {
+          id:"dots-below",
+          tag:"Dots",
+          ask:"Which letter has two dots below?",
+          focus:"Remember the dot rule",
+          choices:[
+            {label:"Ya", value:"ya"},
+            {label:"Ta", value:"ta"},
+            {label:"Qaf", value:"qaf"},
+            {label:"Noon", value:"noon"}
+          ],
+          answer:"ya",
+          correct:"Great. Ya has two dots below.",
+          retry:"Good try. Ya is the one with two dots below.",
+          say:"Which letter has two dots below it?",
+          correctSay:"Great listening. Ya has two dots below.",
+          retrySay:"Nice try. Ya has two dots below."
+        },
+        {
+          id:"dots-three-above",
+          tag:"Dots",
+          ask:"Which letter has three dots above?",
+          focus:"Remember the dot rule",
+          choices:[
+            {label:"Tha", value:"tha"},
+            {label:"Ba", value:"ba"},
+            {label:"Dal", value:"dal"},
+            {label:"Waw", value:"waw"}
+          ],
+          answer:"tha",
+          correct:"Well done. Tha has three dots above.",
+          retry:"Almost. Tha is the letter with three dots above.",
+          say:"Which letter has three dots above it?",
+          correctSay:"Well done. Tha has three dots above.",
+          retrySay:"Close. Tha has three dots above."
+        },
+        {
+          id:"heavy-letter",
+          tag:"Heavy",
+          ask:"Which one is a heavy letter?",
+          focus:"Heavy sound",
+          choices:[
+            {label:"&#1589;", value:"saad", arabic:true},
+            {label:"&#1587;", value:"seen", arabic:true},
+            {label:"&#1604;", value:"lam", arabic:true},
+            {label:"&#1605;", value:"meem", arabic:true}
+          ],
+          answer:"saad",
+          correct:"Excellent. Saad is a heavy letter.",
+          retry:"Nice effort. Saad is read with a heavy sound.",
+          say:"Which one is a heavy letter?",
+          correctSay:"Excellent. Saad is a heavy letter.",
+          retrySay:"Good effort. Saad is the heavy letter here."
+        },
+        {
+          id:"light-letter",
+          tag:"Light",
+          ask:"Which one is a light letter?",
+          focus:"Light sound",
+          choices:[
+            {label:"&#1591;", value:"taa-heavy", arabic:true, sayLabel:"Taa"},
+            {label:"&#1602;", value:"qaf", arabic:true},
+            {label:"&#1587;", value:"seen", arabic:true},
+            {label:"&#1589;", value:"saad", arabic:true}
+          ],
+          answer:"seen",
+          correct:"Yes. Seen is a light letter.",
+          retry:"Good try. Seen is the light letter here.",
+          say:"Which one is a light letter?",
+          correctSay:"Yes. Seen is a light letter.",
+          retrySay:"Good try. Seen is the light letter here."
+        },
+        {
+          id:"long-letter",
+          tag:"Long sounds",
+          ask:"Which letters help stretch long sounds?",
+          focus:"Long letter sounds",
+          choices:[
+            {label:"Alif, Waw, Ya", value:"alif-waw-ya"},
+            {label:"Ba, Ta, Tha", value:"ba-ta-tha"},
+            {label:"Seen, Sheen, Saad", value:"seen-sheen-saad"},
+            {label:"Lam, Meem, Noon", value:"lam-meem-noon"}
+          ],
+          answer:"alif-waw-ya",
+          correct:"Correct. Alif, Waw, and Ya can help stretch long sounds.",
+          retry:"Nice try. The long sound helpers are Alif, Waw, and Ya.",
+          say:"Which letters help stretch long sounds?",
+          correctSay:"Correct. Alif, Waw, and Ya can help stretch long sounds.",
+          retrySay:"Nice try. The long sound helpers are Alif, Waw, and Ya."
+        },
+        {
+          id:"short-vowel-fatha",
+          tag:"Short vowels",
+          ask:"Which short vowel makes an 'a' sound?",
+          focus:"Short vowel sound",
+          choices:[
+            {label:"Fatha", value:"fatha"},
+            {label:"Kasra", value:"kasra"},
+            {label:"Damma", value:"damma"},
+            {label:"Sukoon", value:"sukoon"}
+          ],
+          answer:"fatha",
+          correct:"Correct. Fatha gives the short 'a' sound.",
+          retry:"Good thinking. Fatha is the short 'a' sound.",
+          say:"Which short vowel makes the sound, a?",
+          correctSay:"Correct. Fatha makes the short a sound.",
+          retrySay:"Good thinking. Fatha is the short a sound."
+        },
+        {
+          id:"articulation-lips",
+          tag:"Pronunciation",
+          ask:"Which letter is made with the lips?",
+          focus:"Where does the sound come from?",
+          choices:[
+            {label:"&#1576;", value:"ba", arabic:true},
+            {label:"&#1593;", value:"ayn", arabic:true},
+            {label:"&#1581;", value:"ha-throat", arabic:true, sayLabel:"Ha"},
+            {label:"&#1587;", value:"seen", arabic:true}
+          ],
+          answer:"ba",
+          correct:"Yes. Ba is made with the lips.",
+          retry:"Good try. Ba is made with the lips.",
+          say:"Which letter is made with the lips?",
+          correctSay:"Yes. Ba is made with the lips.",
+          retrySay:"Good try. Ba is made with the lips."
+        },
+        {
+          id:"match-sound",
+          tag:"Match",
+          ask:"Listen and match the sound to the letter.",
+          focus:"Sound match",
+          choices:[
+            {label:"&#1602;", value:"qaf", arabic:true},
+            {label:"&#1601;", value:"fa", arabic:true},
+            {label:"&#1603;", value:"kaf", arabic:true},
+            {label:"&#1594;", value:"ghain", arabic:true}
+          ],
+          answer:"qaf",
+          correct:"Yes. You matched Qaf.",
+          retry:"Almost. The sound was Qaf.",
+          say:"Match the sound Qaf.",
+          correctSay:"Yes. You matched Qaf.",
+          retrySay:"Almost. The sound was Qaf."
+        },
+        {
+          id:"word-clue-qitta",
+          tag:"Word clue",
+          ask:"The word Qitta starts with which letter?",
+          focus:"Word clue: Qitta",
+          choices:[
+            {label:"&#1602;", value:"qaf", arabic:true},
+            {label:"&#1603;", value:"kaf", arabic:true},
+            {label:"&#1601;", value:"fa", arabic:true},
+            {label:"&#1593;", value:"ayn", arabic:true}
+          ],
+          answer:"qaf",
+          correct:"Correct. Qitta starts with Qaf.",
+          retry:"Nice try. Qitta starts with Qaf.",
+          say:"The word Qitta starts with which letter?",
+          correctSay:"Correct. Qitta starts with Qaf.",
+          retrySay:"Nice try. Qitta starts with Qaf."
+        },
+        {
+          id:"writing-movement",
+          tag:"Writing",
+          ask:"When writing a letter, what should you do?",
+          focus:"Writing movement",
+          choices:[
+            {label:"Watch where it starts and ends", value:"starts-ends"},
+            {label:"Rush as fast as possible", value:"rush"},
+            {label:"Ignore the guide lines", value:"ignore"},
+            {label:"Draw any shape you like", value:"any"}
+          ],
+          answer:"starts-ends",
+          correct:"Yes. Watch where the letter starts and ends.",
+          retry:"Good try. Watch where the letter starts and ends.",
+          say:"When writing a letter, what should you do?",
+          correctSay:"Yes. Watch where the letter starts and ends.",
+          retrySay:"Good try. Watch where the letter starts and ends."
+        },
+        {
+          id:"after-alif",
+          tag:"Order",
+          ask:"Which letter comes after Alif?",
+          focus:"Alphabet order",
+          choices:[
+            {label:"Ba", value:"ba"},
+            {label:"Jeem", value:"jeem"},
+            {label:"Ra", value:"ra"},
+            {label:"Fa", value:"fa"}
+          ],
+          answer:"ba",
+          correct:"Yes. Alif, then Ba.",
+          retry:"Try remembering the start: Alif, Ba, Ta.",
+          say:"Which letter comes after Alif?",
+          correctSay:"Yes. Alif, then Ba.",
+          retrySay:"Almost. The start is Alif, Ba, Ta."
+        },
+        {
+          id:"no-dots",
+          tag:"Dots",
+          ask:"Which letter has no dots?",
+          focus:"Remember the no-dot letters",
+          choices:[
+            {label:"Meem", value:"meem"},
+            {label:"Noon", value:"noon"},
+            {label:"Fa", value:"fa"},
+            {label:"Za", value:"za"}
+          ],
+          answer:"meem",
+          correct:"Beautiful. Meem has no dots.",
+          retry:"Close. Meem has no dots.",
+          say:"Which letter has no dots?",
+          correctSay:"Beautiful. Meem has no dots.",
+          retrySay:"Close. Meem has no dots."
+        }
+      ];
+
+      var QUESTIONS_PER_PASS = QUESTIONS.length;
+      var PASS_COUNT = 3;
+
+      function cloneChoice(choice){
+        var copy = {};
+        Object.keys(choice).forEach(function(key){ copy[key] = choice[key]; });
+        return copy;
+      }
+
+      function cloneQuestion(question, passNumber){
+        var copy = {};
+        Object.keys(question).forEach(function(key){
+          if (key === "choices") return;
+          copy[key] = question[key];
+        });
+        copy.choices = question.choices.map(cloneChoice);
+        copy.baseId = question.id;
+        copy.passNumber = passNumber;
+        copy.id = "pass-" + passNumber + "-" + question.id;
+        return copy;
+      }
+
+      function applyPassChallenge(question, passNumber){
+        if (passNumber === 1) return question;
+
+        question.tag = "Pass " + passNumber + " " + question.tag;
+
+        if (question.baseId === "dots-below") {
+          question.focus = passNumber === 2 ? "Remember the dot rule" : "Use memory and the answer numbers.";
+          question.choices = [
+            {label:"Ba", value:"ba"},
+            {label:"Ya", value:"ya"},
+            {label:"Ta", value:"ta"},
+            {label:"Noon", value:"noon"}
+          ];
+        }
+
+        if (question.baseId === "dots-three-above") {
+          question.focus = passNumber === 2 ? "Remember the dot rule" : "Use memory and the answer numbers.";
+          question.choices = [
+            {label:"Ba", value:"ba"},
+            {label:"Ta", value:"ta"},
+            {label:"Tha", value:"tha"},
+            {label:"Noon", value:"noon"}
+          ];
+        }
+
+        if (question.baseId === "no-dots") {
+          question.focus = passNumber === 2 ? "Remember the no-dot letters" : "Use memory and the answer numbers.";
+          question.choices = [
+            {label:"Meem", value:"meem"},
+            {label:"Noon", value:"noon"},
+            {label:"Fa", value:"fa"},
+            {label:"Za", value:"za"}
+          ];
+        }
+
+        if (question.baseId === "after-alif" && passNumber === 3) {
+          question.ask = "Which pair starts the alphabet in the correct order?";
+          question.focus = "Alphabet order";
+          question.choices = [
+            {label:"Alif, Ba", value:"ba"},
+            {label:"Ba, Alif", value:"ba-alif"},
+            {label:"Alif, Jeem", value:"jeem"},
+            {label:"Ta, Ba", value:"ta-ba"}
+          ];
+          question.say = "Which pair starts the alphabet in the correct order?";
+        }
+
+        if (question.baseId === "watch-qaf" && passNumber === 3) {
+          question.ask = "Which letter is not Fa, Kaf, or Ghain?";
+          question.focus = "Find Qaf by elimination";
+          question.say = "Which letter is not Fa, Kaf, or Ghain?";
+        }
+
+        if (question.baseId === "listen-ba" && passNumber === 3) {
+          question.choices = [
+            {label:"&#1576;", value:"ba", arabic:true},
+            {label:"&#1578;", value:"ta", arabic:true},
+            {label:"&#1606;", value:"noon", arabic:true},
+            {label:"&#1610;", value:"ya", arabic:true}
+          ];
+        }
+
+        if (question.baseId === "rules-count" && passNumber === 3) {
+          question.ask = "What is the first big rule from the Alphabet lesson?";
+          question.focus = "Alphabet rules";
+          question.choices = [
+            {label:"Arabic has 29 letters", value:"29"},
+            {label:"Every letter is heavy", value:"all-heavy"},
+            {label:"Dots do not matter", value:"dots-no"},
+            {label:"Writing starts anywhere", value:"anywhere"}
+          ];
+          question.say = "What is the first big rule from the Alphabet lesson?";
+        }
+
+        return question;
+      }
+
+      function buildPasses(baseQuestions){
+        var built = [];
+        for (var pass = 1; pass <= PASS_COUNT; pass++) {
+          baseQuestions.forEach(function(question){
+            built.push(applyPassChallenge(cloneQuestion(question, pass), pass));
+          });
+        }
+        return built;
+      }
+
+      QUESTIONS = buildPasses(QUESTIONS);
+
+      var STORAGE_KEY = "pq_alphabet_quiz_chatbot_result_v1";
+      var SESSION_KEY = "pq_alphabet_quiz_chatbot_session_v1";
+      var PROGRESS_KEY = "alphabet_listen_managed_progress_cache_v1";
+      var LOCAL_PREVIEW = location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:";
+      var TEST_UNLOCK = true;
+
+      var state = {
+        index:0,
+        score:0,
+        answered:false,
+        selected:null,
+        missed:[],
+        results:{},
+        passScores:[0,0,0],
+        mode:"question"
+      };
+
+      var chatLog = document.getElementById("chatLog");
+      var questionText = document.getElementById("questionText");
+      var questionTag = document.getElementById("questionTag");
+      var letterFocus = document.getElementById("letterFocus");
+      var choicesEl = document.getElementById("choices");
+      var nextBtn = document.getElementById("nextBtn");
+      var restartBtn = document.getElementById("restartBtn");
+      var speakBtn = document.getElementById("speakBtn");
+      var micBtn = document.getElementById("micBtn");
+      var voiceStatus = document.getElementById("voiceStatus");
+      var progressText = document.getElementById("progressText");
+      var progressFill = document.getElementById("progressFill");
+      var scoreBig = document.getElementById("scoreBig");
+      var scoreLabel = document.getElementById("scoreLabel");
+      var stars = document.getElementById("stars");
+      var reviewList = document.getElementById("reviewList");
+      var gateNote = document.getElementById("gateNote");
+      var unlockPill = document.getElementById("unlockPill");
+      var buddyMode = document.getElementById("buddyMode");
+      var homeBtn = document.getElementById("homeBtn");
+      var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+      var recognition = null;
+      var listening = false;
+      var selectedVoiceName = "";
+      var currentAudio = null;
+      var elevenLabsCache = new Map();
+      var elevenLabsPending = new Map();
+      var lastElevenLabsError = "";
+
+      function escapeHtml(text){
+        return String(text).replace(/[&<>"']/g,function(ch){
+          return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch];
+        });
+      }
+
+      function readAlphabetComplete(){
+        try {
+          var raw = localStorage.getItem(PROGRESS_KEY);
+          if (!raw) return false;
+          var progress = JSON.parse(raw);
+          return !!(progress && progress.__finished);
+        } catch (_e) {
+          return false;
+        }
+      }
+
+      function currentPassNumber(){
+        return Math.floor(state.index / QUESTIONS_PER_PASS) + 1;
+      }
+
+      function currentPassIndex(){
+        return Math.max(0, Math.min(PASS_COUNT - 1, currentPassNumber() - 1));
+      }
+
+      function saveSession(){
+        try {
+          localStorage.setItem(SESSION_KEY, JSON.stringify({
+            index:state.index,
+            score:state.score,
+            answered:state.answered,
+            selected:state.selected,
+            missed:state.missed.slice(),
+            results:state.results,
+            passScores:state.passScores.slice(),
+            mode:state.mode,
+            savedAt:new Date().toISOString()
+          }));
+        } catch (_e) {}
+      }
+
+      function loadSession(){
+        try {
+          var raw = localStorage.getItem(SESSION_KEY);
+          if (!raw) return false;
+          var saved = JSON.parse(raw);
+          if (!saved || typeof saved.index !== "number") return false;
+          state.index = Math.max(0, Math.min(QUESTIONS.length - 1, saved.index));
+          state.score = Math.max(0, Number(saved.score) || 0);
+          state.answered = !!saved.answered;
+          state.selected = saved.selected || null;
+          state.missed = Array.isArray(saved.missed) ? saved.missed.slice() : [];
+          state.results = saved.results && typeof saved.results === "object" ? saved.results : {};
+          state.passScores = Array.isArray(saved.passScores) && saved.passScores.length === PASS_COUNT
+            ? saved.passScores.map(function(value){ return Math.max(0, Number(value) || 0); })
+            : [0,0,0];
+          state.mode = saved.mode === "passComplete" || saved.mode === "summary" ? saved.mode : "question";
+          return true;
+        } catch (_e) {
+          return false;
+        }
+      }
+
+      function clearSession(){
+        try { localStorage.removeItem(SESSION_KEY); } catch (_e) {}
+      }
+
+      function resetState(){
+        state.index = 0;
+        state.score = 0;
+        state.answered = false;
+        state.selected = null;
+        state.missed = [];
+        state.results = {};
+        state.passScores = [0,0,0];
+        state.mode = "question";
+      }
+
+      function addMessage(who,text, shouldSpeak){
+        var row = document.createElement("div");
+        row.className = "msg " + (who === "child" ? "child" : "bot");
+        var avatar = document.createElement("div");
+        avatar.className = "avatar";
+        avatar.textContent = who === "child" ? "Me" : "?";
+        var bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.innerHTML = text;
+        row.appendChild(avatar);
+        row.appendChild(bubble);
+        chatLog.appendChild(row);
+        chatLog.scrollTop = chatLog.scrollHeight;
+        if (who === "bot" && shouldSpeak !== false) speakText(text);
+      }
+
+      function stripMarkup(text){
+        var div = document.createElement("div");
+        div.innerHTML = String(text || "");
+        return (div.textContent || div.innerText || "").replace(/\s+/g," ").trim();
+      }
+
+      function getVoiceTextForQuestion(q){
+        return (q.say || q.ask) + " Choose one answer.";
+      }
+
+      function voiceCacheKey(text){
+        return stripMarkup(text).slice(0, 900);
+      }
+
+      function setVoiceStatus(text){
+        if (voiceStatus) voiceStatus.textContent = text;
+      }
+
+      function describeTtsError(error){
+        var message = error && error.message ? error.message : String(error || "unknown error");
+        return message.replace(/\s+/g," ").trim();
+      }
+
+      function moodleOrigin(){
+        try {
+          var params = new URLSearchParams(window.location.search || "");
+          var configured = params.get("moodle_origin") || params.get("moodle_base") || params.get("moodle");
+          if (configured) return new URL(configured).origin;
+          var host = String(window.location.hostname || "").toLowerCase();
+          if (host.indexOf("quraantest") !== -1) return "https://quraantest.academy";
+          if (document.referrer) {
+            var referrerHost = new URL(document.referrer).hostname.toLowerCase();
+            if (referrerHost.indexOf("quraantest") !== -1) return "https://quraantest.academy";
+          }
+        } catch (_e) {}
+        return "https://quraan.academy";
+      }
+
+      function stopCurrentAudio(){
+        if (currentAudio) {
+          try {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+          } catch (_e) {}
+          currentAudio = null;
+        }
+        if (window.speechSynthesis) {
+          try { window.speechSynthesis.cancel(); } catch (_e) {}
+        }
+      }
+
+      async function elevenLabsObjectUrl(text){
+        var clean = stripMarkup(text);
+        if (!clean) return "";
+        var key = voiceCacheKey(clean);
+        if (elevenLabsCache.has(key)) return elevenLabsCache.get(key);
+        if (elevenLabsPending.has(key)) return elevenLabsPending.get(key);
+
+        function fetchAudio(attempt){
+          return fetch(moodleOrigin() + "/local/hubredirect/quiz_tts.php", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Accept": "audio/mpeg",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: clean })
+          })
+          .then(function(res){
+            if (!res.ok) {
+              return res.text().then(function(body){
+                throw new Error("ElevenLabs TTS unavailable: HTTP " + res.status + " " + body.slice(0, 160));
+              });
+            }
+            return res.blob();
+          })
+          .catch(function(error){
+            if (attempt >= 2) throw error;
+            return new Promise(function(resolve){
+              setTimeout(resolve, 260);
+            }).then(function(){ return fetchAudio(attempt + 1); });
+          })
+        }
+
+        var pending = fetchAudio(1)
+          .then(function(blob){
+            if (!blob || !/^audio\//i.test(blob.type || "audio/mpeg")) {
+              throw new Error("Invalid TTS audio response");
+            }
+            var url = URL.createObjectURL(blob);
+            elevenLabsCache.set(key, url);
+
+            if (elevenLabsCache.size > 72) {
+              var firstKey = elevenLabsCache.keys().next().value;
+              var firstUrl = elevenLabsCache.get(firstKey);
+              try { URL.revokeObjectURL(firstUrl); } catch (_e) {}
+              elevenLabsCache.delete(firstKey);
+            }
+
+            return url;
+          })
+          .finally(function(){
+            elevenLabsPending.delete(key);
+          });
+
+        elevenLabsPending.set(key, pending);
+        return pending;
+      }
+
+      function prefetchVoiceText(text){
+        var clean = stripMarkup(text);
+        if (!clean || !window.fetch) return;
+        elevenLabsObjectUrl(clean).catch(function(error){
+          lastElevenLabsError = describeTtsError(error);
+        });
+      }
+
+      function prefetchQuestionVoice(index){
+        var q = QUESTIONS[index];
+        if (!q) return;
+        prefetchVoiceText(getVoiceTextForQuestion(q));
+        prefetchVoiceText(q.correctSay || q.correct);
+        prefetchVoiceText(q.retrySay || q.retry);
+      }
+
+      function prefetchNearbyVoices(){
+        if (!window.fetch) return;
+        [0,1,2,3].forEach(function(offset){
+          prefetchQuestionVoice(state.index + offset);
+        });
+      }
+
+      function prefetchAllQuestionVoices(){
+        if (!window.fetch) return;
+        var index = 0;
+        function step(){
+          if (index >= QUESTIONS.length) return;
+          prefetchQuestionVoice(index);
+          index += 1;
+          window.setTimeout(step, 140);
+        }
+        window.setTimeout(step, 180);
+      }
+
+      async function speakWithElevenLabs(text){
+        var clean = stripMarkup(text);
+        if (!clean) return false;
+        var url = await elevenLabsObjectUrl(clean).catch(function(error){
+          lastElevenLabsError = describeTtsError(error);
+          throw error;
+        });
+        if (!url) return false;
+
+        return await new Promise(function(resolve){
+          stopCurrentAudio();
+          var audio = new Audio(url);
+          currentAudio = audio;
+          audio.onplay = function(){
+            setVoiceStatus("Quiz Buddy is speaking with ElevenLabs.");
+          };
+          audio.onended = function(){
+            if (currentAudio === audio) currentAudio = null;
+            setVoiceStatus("Tap Listen if you want Quiz Buddy to read this question again.");
+            resolve(true);
+          };
+          audio.onerror = function(){
+            if (currentAudio === audio) currentAudio = null;
+            lastElevenLabsError = "Browser could not play the ElevenLabs audio.";
+            resolve(false);
+          };
+          audio.play().catch(function(){
+            if (currentAudio === audio) currentAudio = null;
+            lastElevenLabsError = "Browser blocked audio. Tap Listen again.";
+            resolve(false);
+          });
+        });
+      }
+
+      function chooseVoice(){
+        var list = window.speechSynthesis && window.speechSynthesis.getVoices
+          ? window.speechSynthesis.getVoices()
+          : [];
+        if (!list.length) return null;
+        var preferredNames = [
+          "Microsoft Jenny",
+          "Microsoft Aria",
+          "Microsoft Sonia",
+          "Microsoft Libby",
+          "Google US English",
+          "Google UK English Female",
+          "Samantha",
+          "Karen",
+          "Zira"
+        ];
+        var english = list.filter(function(voice){ return /^en/i.test(voice.lang || ""); });
+        for (var i = 0; i < preferredNames.length; i++) {
+          var found = english.filter(function(voice){
+            return String(voice.name || "").toLowerCase().indexOf(preferredNames[i].toLowerCase()) !== -1;
+          })[0];
+          if (found) return found;
+        }
+        var natural = english.filter(function(voice){
+          return /(natural|online|neural|female|premium)/i.test(voice.name || "");
+        })[0];
+        return natural || english[0] || list[0] || null;
+      }
+
+      function spokenChoiceLabel(choice){
+        if (choice.sayLabel) return choice.sayLabel;
+        var byValue = {
+          "27":"27",
+          "28":"28",
+          "29":"29",
+          "30":"30",
+          ba:"Ba",
+          ta:"Ta",
+          tha:"Tha",
+          noon:"Noon",
+          ya:"Ya",
+          qaf:"Qaf",
+          "taa-heavy":"Taa",
+          saad:"Saad",
+          seen:"Seen",
+          sheen:"Sheen",
+          lam:"Lam",
+          meem:"Meem",
+          jeem:"Jeem",
+          ayn:"Ayn",
+          "ha-throat":"Ha",
+          ra:"Ra",
+          fa:"Fa",
+          dal:"Dal",
+          waw:"Waw",
+          "alif-waw-ya":"Alif, Waw, Ya",
+          "ba-ta-tha":"Ba, Ta, Tha",
+          "seen-sheen-saad":"Seen, Sheen, Saad",
+          "lam-meem-noon":"Lam, Meem, Noon",
+          fatha:"Fatha",
+          kasra:"Kasra",
+          damma:"Damma",
+          sukoon:"Sukoon",
+          kaf:"Kaf",
+          ghain:"Ghain",
+          za:"Za",
+          "starts-ends":"Watch where it starts and ends",
+          rush:"Rush as fast as possible",
+          ignore:"Ignore the guide lines",
+          any:"Draw any shape you like",
+          repeat:"Repeat it clearly",
+          silent:"Stay silent every time",
+          skip:"Skip the hard sounds",
+          "talk-over":"Talk over the teacher",
+          teacher:"So the teacher can hear your practice",
+          erase:"To erase the lesson",
+          off:"To turn off your voice"
+        };
+        return byValue[choice.value] || stripMarkup(choice.label);
+      }
+
+      function splitSpeech(text){
+        var clean = stripMarkup(text);
+        if (!clean) return [];
+        return clean
+          .replace(/\s+/g," ")
+          .split(/(?<=[.!?])\s+/)
+          .reduce(function(chunks, sentence){
+            var last = chunks[chunks.length - 1] || "";
+            if (last && (last + " " + sentence).length < 135) {
+              chunks[chunks.length - 1] = last + " " + sentence;
+            } else {
+              chunks.push(sentence);
+            }
+            return chunks;
+          }, []);
+      }
+
+      function speakText(text, options){
+        options = options || {};
+        var chunks = splitSpeech(text);
+        if (!chunks.length) return;
+        stopCurrentAudio();
+        setVoiceStatus("Getting Quiz Buddy voice...");
+
+        speakWithElevenLabs(chunks.join(" ")).then(function(played){
+          if (played) return;
+          if (options.elevenLabsOnly) {
+            setVoiceStatus(lastElevenLabsError || "ElevenLabs voice is not ready. Tap Listen to try again.");
+            return;
+          }
+          speakWithBrowser(chunks);
+        }).catch(function(){
+          if (options.elevenLabsOnly) {
+            setVoiceStatus(lastElevenLabsError || "ElevenLabs voice is not ready. Tap Listen to try again.");
+            return;
+          }
+          speakWithBrowser(chunks);
+        });
+      }
+
+      function speakWithBrowser(chunks){
+        if (!window.speechSynthesis) {
+          setVoiceStatus("ElevenLabs voice is not available yet. You can still tap an answer.");
+          return;
+        }
+        try {
+          var voice = chooseVoice();
+          selectedVoiceName = voice ? voice.name : "";
+          var index = 0;
+          var speakNext = function(){
+            if (index >= chunks.length) {
+              setVoiceStatus("Tap Listen if you want Quiz Buddy to read this question again.");
+              return;
+            }
+            var utterance = new SpeechSynthesisUtterance(chunks[index]);
+            index += 1;
+            if (voice) utterance.voice = voice;
+            utterance.lang = (voice && voice.lang) || "en-US";
+            utterance.rate = 0.78;
+            utterance.pitch = 1.12;
+            utterance.volume = 1;
+            utterance.onstart = function(){
+              setVoiceStatus(selectedVoiceName ? "Quiz Buddy is speaking with " + selectedVoiceName + "." : "Quiz Buddy is speaking.");
+            };
+            utterance.onend = speakNext;
+            utterance.onerror = function(){ setVoiceStatus("I could not read that aloud. You can still tap an answer."); };
+            window.speechSynthesis.speak(utterance);
+          };
+          speakNext();
+        } catch (_e) {
+          setVoiceStatus("I could not read that aloud. You can still tap an answer.");
+        }
+      }
+
+      function speakCurrentQuestion(){
+        if (state.index >= QUESTIONS.length) return;
+        speakText(getVoiceTextForQuestion(QUESTIONS[state.index]), { elevenLabsOnly:true });
+      }
+
+      function normalizeVoiceText(text){
+        return String(text || "")
+          .toLowerCase()
+          .replace(/[^a-z0-9\s]/g," ")
+          .replace(/\s+/g," ")
+          .trim();
+      }
+
+      function voiceAliases(value){
+        var aliases = {
+          ba:["ba","baa","bar","bah","letter ba"],
+          ta:["ta","taa","tah","letter ta"],
+          tha:["tha","thaa","thah","letter tha"],
+          noon:["noon","nun","letter noon"],
+          ya:["ya","yaa","yah","letter ya"],
+          qaf:["qaf","qaaf","kaf","cough","qoph"],
+          "taa-heavy":["taa","ta heavy","heavy ta"],
+          saad:["saad","sad","sod","sawd"],
+          seen:["seen","sin"],
+          sheen:["sheen","shin"],
+          lam:["lam","laam","lamb"],
+          meem:["meem","meme","mim","meam"],
+          jeem:["jeem","jim","gym"],
+          ayn:["ayn","ain","eye in"],
+          "ha-throat":["ha","haa"],
+          ra:["ra","raa","rah"],
+          fa:["fa","faa","fah"],
+          dal:["dal","daal"],
+          waw:["waw","wow","waaw"],
+          "alif-waw-ya":["alif waw ya","alif wow ya","alif waaw ya"],
+          fatha:["fatha","fat ha","fata","fatah"],
+          kasra:["kasra","kasrah"],
+          damma:["damma","duma","dumma"],
+          sukoon:["sukoon","sukun","sakoon"],
+          kaf:["kaf","kaaf","calf"],
+          ghain:["ghain","gayn","grain"],
+          za:["za","zay"],
+          "starts-ends":["starts and ends","where it starts and ends"],
+          repeat:["repeat","repeat it clearly"],
+          teacher:["teacher","so the teacher can hear"]
+        };
+        return aliases[value] || [value];
+      }
+
+      function findChoiceFromVoice(transcript){
+        var q = QUESTIONS[state.index];
+        var heard = normalizeVoiceText(transcript);
+        if (!q || !heard) return null;
+
+        for (var i = 0; i < q.choices.length; i++) {
+          var choice = q.choices[i];
+          var aliases = voiceAliases(choice.value).concat([
+            stripMarkup(choice.label),
+            "choice " + (i + 1),
+            String(i + 1)
+          ]);
+          for (var j = 0; j < aliases.length; j++) {
+            var alias = normalizeVoiceText(aliases[j]);
+            if (alias && (heard === alias || heard.indexOf(alias) !== -1)) {
+              return choice.value;
+            }
+          }
+        }
+        return null;
+      }
+
+      function initRecognition(){
+        if (!micBtn) {
+          setVoiceStatus("Tap Listen if you want Quiz Buddy to read the question.");
+          return;
+        }
+        if (!SpeechRecognition) {
+          if (micBtn) micBtn.disabled = true;
+          setVoiceStatus("Tap Listen to hear questions. Tap an answer when you are ready.");
+          return;
+        }
+        recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 3;
+        recognition.onstart = function(){
+          listening = true;
+          micBtn.classList.add("listening");
+          micBtn.textContent = "Listening...";
+          setVoiceStatus("Listening. Say the answer name, or say choice one, two, three, or four.");
+        };
+        recognition.onend = function(){
+          listening = false;
+          micBtn.classList.remove("listening");
+          micBtn.textContent = "Answer";
+        };
+        recognition.onerror = function(){
+          setVoiceStatus("I could not hear clearly. Try again, or tap an answer.");
+        };
+        recognition.onresult = function(event){
+          var transcripts = [];
+          for (var i = 0; i < event.results.length; i++) {
+            for (var j = 0; j < event.results[i].length; j++) {
+              transcripts.push(event.results[i][j].transcript || "");
+            }
+          }
+          var heard = transcripts.join(" ");
+          var choice = findChoiceFromVoice(heard);
+          if (!choice) {
+            setVoiceStatus("I heard: " + heard + ". Try saying the answer name, or choice one, two, three, or four.");
+            return;
+          }
+          var button = Array.prototype.filter.call(choicesEl.querySelectorAll(".choice"), function(btn, idx){
+            var q = QUESTIONS[state.index];
+            return q && q.choices[idx] && q.choices[idx].value === choice;
+          })[0];
+          setVoiceStatus("I heard: " + heard + ".");
+          if (button) chooseAnswer(choice, button);
+        };
+      }
+
+      function renderChoiceLabel(choice, index){
+        var content = choice.arabic
+          ? '<span class="arabic">' + choice.label + '</span>'
+          : escapeHtml(choice.label);
+        return '<span class="choice-num" aria-hidden="true">' + (index + 1) + '</span><span class="choice-label">' + content + '</span>';
+      }
+
+      function renderFocus(q){
+        var focus = String(q.focus || "");
+        var isArabicFocus = /&#\d+;|[\u0600-\u06ff]/.test(focus);
+        letterFocus.classList.toggle("text-focus", !isArabicFocus);
+        letterFocus.innerHTML = isArabicFocus ? focus : escapeHtml(focus);
+      }
+
+      function renderQuestion(){
+        var q = QUESTIONS[state.index];
+        var passQuestionIndex = (state.index % QUESTIONS_PER_PASS) + 1;
+        var passNumber = Math.floor(state.index / QUESTIONS_PER_PASS) + 1;
+        state.mode = "question";
+        state.answered = false;
+        state.selected = null;
+        questionText.textContent = q.ask;
+        questionTag.textContent = q.tag;
+        renderFocus(q);
+        choicesEl.innerHTML = "";
+        nextBtn.disabled = true;
+        restartBtn.disabled = false;
+        restartBtn.textContent = "Try Again";
+        if (micBtn) micBtn.disabled = false;
+        if (speakBtn) speakBtn.disabled = false;
+
+        q.choices.forEach(function(choice, idx){
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "choice";
+          btn.setAttribute("aria-label", "Choice " + (idx + 1) + ": " + spokenChoiceLabel(choice));
+          btn.innerHTML = renderChoiceLabel(choice, idx);
+          btn.addEventListener("click",function(){ chooseAnswer(choice.value, btn); });
+          choicesEl.appendChild(btn);
+        });
+
+        progressText.textContent = "Pass " + passNumber + " of " + PASS_COUNT + " - Question " + passQuestionIndex + " of " + QUESTIONS_PER_PASS;
+        progressFill.style.width = ((state.index / QUESTIONS.length) * 100) + "%";
+        scoreBig.textContent = state.score + "/" + QUESTIONS.length;
+        scoreLabel.textContent = "Pass " + passNumber + " score: " + state.passScores[passNumber - 1] + "/" + QUESTIONS_PER_PASS + ".";
+        buddyMode.textContent = q.tag + " practice";
+        setVoiceStatus("Tap Listen if you want Quiz Buddy to read this question.");
+        prefetchNearbyVoices();
+        saveSession();
+      }
+
+      function chooseAnswer(value, button){
+        if (state.answered) return;
+        var q = QUESTIONS[state.index];
+        var correct = value === q.answer;
+        state.answered = true;
+        state.selected = value;
+
+        Array.prototype.forEach.call(choicesEl.querySelectorAll(".choice"),function(btn){
+          btn.disabled = true;
+        });
+        if (micBtn) micBtn.disabled = true;
+
+        if (correct) {
+          if (!state.results[q.id]) {
+            state.score += 1;
+            state.passScores[currentPassIndex()] += 1;
+          }
+          state.results[q.id] = true;
+          button.classList.add("correct");
+          addMessage("child", "I choose " + escapeHtml(button.textContent.trim()) + ".");
+          addMessage("bot", q.correct, false);
+          speakText(q.correctSay || q.correct, { elevenLabsOnly:true });
+        } else {
+          state.results[q.id] = false;
+          state.missed.push(q.id);
+          button.classList.add("missed");
+          Array.prototype.forEach.call(choicesEl.querySelectorAll(".choice"),function(btn,idx){
+            if (q.choices[idx].value === q.answer) btn.classList.add("correct");
+          });
+          addMessage("child", "I choose " + escapeHtml(button.textContent.trim()) + ".");
+          addMessage("bot", q.retry, false);
+          speakText(q.retrySay || q.retry, { elevenLabsOnly:true });
+        }
+
+        nextBtn.textContent = state.index === QUESTIONS.length - 1 ? "Finish" : "Next";
+        nextBtn.disabled = false;
+        scoreBig.textContent = state.score + "/" + QUESTIONS.length;
+        scoreLabel.textContent = correct ? "Nice answer." : "Good learning moment.";
+        saveSession();
+      }
+
+      function renderSummary(){
+        var percent = Math.round((state.score / QUESTIONS.length) * 100);
+        state.mode = "summary";
+        progressText.textContent = "Quiz complete";
+        progressFill.style.width = "100%";
+        scoreBig.textContent = state.score + "/" + QUESTIONS.length;
+        scoreLabel.textContent = percent + "% complete";
+        questionText.textContent = "Quiz finished";
+        questionTag.textContent = "Summary";
+        letterFocus.classList.remove("text-focus");
+        letterFocus.innerHTML = percent >= 80 ? "&#9733;" : "&#10003;";
+        choicesEl.innerHTML = "";
+        nextBtn.disabled = true;
+        nextBtn.textContent = "Next";
+        if (micBtn) micBtn.disabled = true;
+        if (speakBtn) speakBtn.disabled = true;
+
+        if (percent >= 80) {
+          stars.innerHTML = "&#9733; &#9733; &#9733;";
+          addMessage("bot", "Wonderful work. You are remembering the Alphabet lesson.", false);
+        } else if (percent >= 55) {
+          stars.innerHTML = "&#9733; &#9733; &#9734;";
+          addMessage("bot", "Good practice. Try again and your score can grow.", false);
+        } else {
+          stars.innerHTML = "&#9733; &#9734; &#9734;";
+          addMessage("bot", "You finished the quiz. Review the letters, then try again.", false);
+        }
+
+        saveResult(percent);
+        clearSession();
+        renderReview();
+      }
+
+      function renderPassComplete(passNumber){
+        state.mode = "passComplete";
+        passNumber = Math.max(1, Math.min(PASS_COUNT, passNumber));
+        var passScore = state.passScores[passNumber - 1] || 0;
+        var percent = Math.round((passScore / QUESTIONS_PER_PASS) * 100);
+        progressText.textContent = "Pass " + passNumber + " complete";
+        progressFill.style.width = ((passNumber / PASS_COUNT) * 100) + "%";
+        scoreBig.textContent = passScore + "/" + QUESTIONS_PER_PASS;
+        scoreLabel.textContent = "Pass " + passNumber + " score: " + percent + "%.";
+        questionText.textContent = "Pass " + passNumber + " finished";
+        questionTag.textContent = "Checkpoint";
+        letterFocus.classList.add("text-focus");
+        letterFocus.textContent = passNumber < PASS_COUNT
+          ? "Great work. Pass " + (passNumber + 1) + " will be a little more challenging."
+          : "All passes are complete.";
+        choicesEl.innerHTML = "";
+        nextBtn.disabled = false;
+        nextBtn.textContent = passNumber < PASS_COUNT ? "Start Pass " + (passNumber + 1) : "Finish";
+        restartBtn.disabled = true;
+        restartBtn.textContent = "Try Again";
+        if (micBtn) micBtn.disabled = true;
+        if (speakBtn) speakBtn.disabled = true;
+        buddyMode.textContent = "Pass " + passNumber + " complete";
+        setVoiceStatus("Pass " + passNumber + " is complete.");
+        reviewList.innerHTML = '<div class="mini-item">Pass ' + passNumber + ' score: ' + passScore + '/' + QUESTIONS_PER_PASS + '</div>' +
+          (passNumber < PASS_COUNT ? '<div class="mini-item">Next pass starts when you tap Start Pass ' + (passNumber + 1) + '.</div>' : '<div class="mini-item">You completed all passes.</div>');
+        addMessage("bot", "Pass " + passNumber + " is complete. " + (passNumber < PASS_COUNT ? "Next, Pass " + (passNumber + 1) + " will start." : "You finished every pass."), false);
+        saveSession();
+      }
+
+      function saveResult(percent){
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            quizId:"alphabet_quiz_chatbot_v1",
+            score:state.score,
+            total:QUESTIONS.length,
+            percent:percent,
+            missedQuestionIds:state.missed.slice(),
+            completedAt:new Date().toISOString()
+          }));
+        } catch (_e) {}
+      }
+
+      function renderReview(){
+        var html = "";
+        if (!state.missed.length) {
+          html = '<div class="mini-item">All answers were correct.</div><div class="mini-item">Keep practicing to stay strong.</div>';
+        } else {
+          html = '<div class="mini-item">Review these ideas:</div>' + state.missed.map(function(id){
+            var q = QUESTIONS.filter(function(item){ return item.id === id; })[0];
+            return '<div class="mini-item">' + escapeHtml(q ? q.tag + ": " + q.ask : id) + '</div>';
+          }).join("");
+        }
+        reviewList.innerHTML = html;
+      }
+
+      function next(){
+        if (state.mode === "passComplete") {
+          if (state.index >= QUESTIONS.length) {
+            renderSummary();
+            return;
+          }
+          renderQuestion();
+          addMessage("bot", QUESTIONS[state.index].ask, false);
+          return;
+        }
+        if (!state.answered) return;
+        if (state.index >= QUESTIONS.length - 1) {
+          renderSummary();
+          return;
+        }
+        state.index += 1;
+        if (state.index % QUESTIONS_PER_PASS === 0) {
+          renderPassComplete(Math.floor(state.index / QUESTIONS_PER_PASS));
+          return;
+        }
+        renderQuestion();
+        addMessage("bot", QUESTIONS[state.index].ask, false);
+      }
+
+      function retryCurrentQuestion(){
+        var q = QUESTIONS[state.index];
+        if (state.mode !== "question") return;
+        if (!q) return;
+        if (state.results[q.id]) {
+          state.score = Math.max(0, state.score - 1);
+          state.passScores[currentPassIndex()] = Math.max(0, state.passScores[currentPassIndex()] - 1);
+        }
+        delete state.results[q.id];
+        state.missed = state.missed.filter(function(id){ return id !== q.id; });
+        state.answered = false;
+        state.selected = null;
+        renderQuestion();
+        addMessage("bot", "Try this question again.", false);
+        saveSession();
+      }
+
+      function restart(){
+        var resumed = loadSession();
+        if (!resumed) resetState();
+        chatLog.innerHTML = "";
+        stars.innerHTML = "&#9734; &#9734; &#9734;";
+        addMessage("bot", "Assalamu alaikum. I am Quiz Buddy. Let us practice the Alphabet together.", false);
+        reviewList.innerHTML = '<div class="mini-item">Listen carefully.</div><div class="mini-item">Tap one answer.</div><div class="mini-item">Quiz Buddy will help you keep going.</div>';
+        if (state.mode === "passComplete") {
+          renderPassComplete(Math.max(1, Math.floor(state.index / QUESTIONS_PER_PASS)));
+          return;
+        }
+        if (state.mode === "summary") {
+          renderSummary();
+          return;
+        }
+        addMessage("bot", QUESTIONS[state.index].ask, false);
+        renderQuestion();
+      }
+
+      function setUnlockState(){
+        var complete = readAlphabetComplete();
+        if (complete) {
+          unlockPill.textContent = "Unlocked";
+          gateNote.textContent = "Alphabet Learn is complete. This quiz is ready.";
+          return true;
+        }
+        if (TEST_UNLOCK) {
+          unlockPill.textContent = "Testing";
+          gateNote.textContent = "Testing mode is open. The Alphabet Quiz is unlocked before lesson completion.";
+          return true;
+        }
+        if (LOCAL_PREVIEW) {
+          unlockPill.textContent = "Preview";
+          gateNote.textContent = "Preview mode is open for testing. In production, children use this after Alphabet Learn.";
+          return true;
+        }
+        unlockPill.textContent = "After Alphabet Learn";
+        return false;
+      }
+
+      function currentBasePath(){
+        var path = String(location.pathname || "");
+        if (path.indexOf("/pre_quraan_integration/") === 0) return "/pre_quraan_integration/";
+        if (path.indexOf("/pre_quraan_staging/") === 0) return "/pre_quraan_staging/";
+        return "/pre_quraan/";
+      }
+
+      function renderLocked(){
+        chatLog.innerHTML = "";
+        addMessage("bot", "Finish Alphabet Learn first. Then come back and I will quiz you.", false);
+        questionText.textContent = "Alphabet Quiz is waiting";
+        questionTag.textContent = "Locked";
+        letterFocus.classList.remove("text-focus");
+        letterFocus.innerHTML = "&#128274;";
+        choicesEl.innerHTML = "";
+        nextBtn.disabled = true;
+        if (micBtn) micBtn.disabled = true;
+        if (speakBtn) speakBtn.disabled = true;
+        restartBtn.textContent = "Check Again";
+        progressText.textContent = "Finish Alphabet Learn";
+        progressFill.style.width = "0%";
+        scoreBig.textContent = "0/" + QUESTIONS.length;
+        scoreLabel.textContent = "Complete the lesson to unlock the quiz.";
+        reviewList.innerHTML = '<div class="mini-item">Open Alphabet Learn.</div><div class="mini-item">Complete the lesson steps.</div><div class="mini-item">Return to Alphabet Quiz.</div>';
+      }
+
+      nextBtn.addEventListener("click", next);
+      speakBtn.addEventListener("click", speakCurrentQuestion);
+      if (micBtn) {
+        micBtn.addEventListener("click", function(){
+          if (!recognition || state.answered) return;
+          try {
+            if (listening) {
+              recognition.stop();
+            } else {
+              stopCurrentAudio();
+              recognition.start();
+            }
+          } catch (_e) {
+            setVoiceStatus("Voice listening is busy. Try again in a moment, or tap an answer.");
+          }
+        });
+      }
+      restartBtn.addEventListener("click", function(){
+        if (setUnlockState()) retryCurrentQuestion();
+        else renderLocked();
+      });
+      homeBtn.addEventListener("click",function(){
+        if (history.length > 1) history.back();
+        else location.href = currentBasePath() + "app/index.html";
+      });
+
+      if (window.speechSynthesis && window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = function(){
+          var voice = chooseVoice();
+          selectedVoiceName = voice ? voice.name : "";
+        };
+      }
+      initRecognition();
+
+      if (setUnlockState()) {
+        restart();
+        prefetchAllQuestionVoices();
+      }
+      else renderLocked();
+    })();
+  </script>
+</body>
+</html>

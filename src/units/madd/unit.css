@@ -1,0 +1,342 @@
+/* Unit-specific Madd Rules lesson styles. */
+.pq-madd-rules-active .grid-wrap{
+  display:none;
+}
+
+.pq-madd-rules{
+  width:min(1180px,96vw);
+  margin:18px auto 30px;
+  padding:18px;
+  color:#18243a;
+}
+
+.pq-madd-rules[hidden]{
+  display:none !important;
+}
+
+.pq-madd-rules__hero,
+.pq-madd-rule-card,
+.pq-madd-rules__practice,
+.pq-madd-rules__remember{
+  border:2px solid rgba(70,150,218,.4);
+  border-radius:24px;
+  background:linear-gradient(180deg,#fffdf0 0%,#fff0c8 100%);
+  box-shadow:0 18px 42px rgba(31,54,78,.14), inset 0 0 0 3px rgba(255,255,255,.78);
+}
+
+.pq-madd-rules__hero{
+  padding:24px;
+  text-align:center;
+  background:linear-gradient(135deg,#e8f5ff 0%,#fff4c7 52%,#ecffe9 100%);
+}
+
+.pq-madd-rules__badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:36px;
+  padding:0 18px;
+  border-radius:999px;
+  background:#ffffff;
+  color:#1267a7;
+  font-weight:1000;
+  box-shadow:0 8px 18px rgba(18,103,167,.12);
+}
+
+.pq-madd-rules__hero h2{
+  margin:12px 0 8px;
+  color:#079238;
+  font-family:"Noto Naskh Arabic","Amiri","Segoe UI",serif;
+  font-size:clamp(2.7rem, 5vw, 5.2rem);
+  line-height:1.05;
+}
+
+.pq-madd-rules__hero p{
+  max-width:780px;
+  margin:0 auto 18px;
+  color:#34445e;
+  font-size:1.16rem;
+  font-weight:800;
+}
+
+.pq-madd-rules__audio-btn{
+  min-height:52px;
+  margin:0 0 18px;
+  padding:0 22px;
+  border:0;
+  border-radius:999px;
+  background:#3fbf71;
+  color:#fff;
+  box-shadow:0 10px 20px rgba(38,145,89,.24);
+  font:inherit;
+  font-size:1rem;
+  font-weight:950;
+  cursor:pointer;
+}
+
+.pq-madd-rules__audio-btn:disabled{
+  cursor:progress;
+  opacity:.82;
+}
+
+.pq-madd-rules__audio-btn:focus-visible,
+.pq-madd-rules__audio-btn:hover{
+  outline:4px solid rgba(53,177,105,.25);
+  transform:translateY(-1px);
+}
+
+.pq-madd-rules__examples{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  max-width:860px;
+  margin:0 auto;
+}
+
+.pq-madd-rules__examples span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:58px;
+  border-radius:18px;
+  background:rgba(255,255,255,.86);
+  font-weight:1000;
+}
+
+.pq-madd-rules__examples span[dir="rtl"]{
+  color:#079238;
+  font-family:"Noto Naskh Arabic","Amiri","Segoe UI",serif;
+  font-size:2.6rem;
+}
+
+.pq-madd-rules__deck{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  margin-top:16px;
+}
+
+.pq-madd-rule-card{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:12px;
+  padding:16px;
+}
+
+.pq-madd-rule-card__num{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#4aa3df;
+  color:#fff;
+  font-weight:1000;
+  box-shadow:0 8px 18px rgba(40,114,174,.2);
+}
+
+.pq-madd-rule-card h3,
+.pq-madd-rules__practice h3,
+.pq-madd-rules__remember h3{
+  margin:0 0 6px;
+  color:#10233d;
+  font-size:1.18rem;
+  font-weight:1000;
+}
+
+.pq-madd-rule-card p{
+  margin:0 0 10px;
+  color:#3a4960;
+  font-size:1rem;
+  font-weight:750;
+  line-height:1.45;
+}
+
+.pq-madd-chip-row,
+.pq-madd-example-row,
+.pq-madd-stop{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.pq-madd-chip,
+.pq-madd-example-row span,
+.pq-madd-stop span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:6px 12px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid rgba(70,150,218,.3);
+  color:#17324d;
+  font-weight:900;
+}
+
+.pq-madd-example-row span{
+  direction:rtl;
+  unicode-bidi:isolate;
+  font-family:"Noto Naskh Arabic","Amiri","Segoe UI",serif;
+  font-size:1.35rem;
+  color:#078b3a;
+}
+
+.pq-madd-counts{
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.pq-madd-counts span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#ffcb55;
+  color:#19304d;
+  font-weight:1000;
+}
+
+.pq-madd-rule-card ul{
+  margin:0;
+  padding-left:18px;
+  color:#34445e;
+  font-weight:850;
+}
+
+.pq-madd-rules__practice,
+.pq-madd-rules__remember{
+  margin-top:16px;
+  padding:18px;
+}
+
+.pq-madd-rules__practice{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.pq-madd-rules__practice h3{
+  grid-column:1 / -1;
+}
+
+.pq-madd-rules__practice section{
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.74);
+}
+
+.pq-madd-rules__practice h4{
+  margin:0 0 10px;
+  color:#1267a7;
+  font-weight:1000;
+}
+
+.pq-madd-rules__practice section div{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+
+.pq-madd-rules__practice section span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  border-radius:14px;
+  background:#fff;
+  color:#079238;
+  font-family:"Noto Naskh Arabic","Amiri","Segoe UI",serif;
+  font-size:1.65rem;
+  font-weight:1000;
+}
+
+.pq-madd-rules__remember{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.pq-madd-rules__remember h3{
+  grid-column:1 / -1;
+}
+
+.pq-madd-rules__remember span{
+  padding:12px 14px;
+  border-radius:16px;
+  background:#fff;
+  color:#21334f;
+  font-weight:900;
+}
+
+.pq-madd-rules__remember span::before{
+  content:"✓";
+  margin-right:8px;
+  color:#1aa358;
+  font-weight:1000;
+}
+
+.pq-madd-rules__footer{
+  display:flex;
+  justify-content:center;
+  margin-top:18px;
+}
+
+.pq-madd-rules__footer button{
+  min-height:58px;
+  padding:0 28px;
+  border:0;
+  border-radius:999px;
+  background:linear-gradient(180deg,#ffcf55 0%,#f19a35 100%);
+  color:#10233d;
+  font-weight:1000;
+  font-size:1.05rem;
+  box-shadow:0 10px 22px rgba(166,95,27,.2);
+  cursor:pointer;
+}
+
+@media(max-width:760px){
+  .pq-madd-rules{
+    width:100%;
+    padding:12px;
+  }
+
+  .pq-madd-rules__hero{
+    padding:18px 14px;
+  }
+
+  .pq-madd-rules__examples,
+  .pq-madd-rules__deck,
+  .pq-madd-rules__practice,
+  .pq-madd-rules__remember{
+    grid-template-columns:1fr;
+  }
+
+  .pq-madd-rule-card{
+    grid-template-columns:1fr;
+  }
+
+  .pq-madd-rule-card__num{
+    width:38px;
+    height:38px;
+  }
+}
+
+/* Rules audio/title polish. */
+.pq-madd-rules__badge{font-size:clamp(1.2rem,2.3vw,2rem);min-height:48px;padding:0 24px;text-align:center;white-space:normal;}
+.pq-madd-rules__hero h2{font-size:clamp(1.45rem,2.8vw,2.7rem);}
+.pq-madd-rules__audio-btn{display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;margin:0 auto 18px;}
+
+/* Rules Muqattiat canvas standardization. */
+.pq-madd-rules{width:min(1180px,calc(100% - 36px));margin:26px auto 34px;direction:ltr;color:#17243a;}
+.pq-madd-rules__hero,.pq-madd-rule-card,.pq-madd-rules__practice,.pq-madd-rules__remember{border:3px solid rgba(70,189,113,.52);background:linear-gradient(180deg,#fffdf2 0%,#eafff0 100%);box-shadow:0 16px 36px rgba(29,95,61,.14);}
+.pq-madd-rules__hero{border-radius:28px;padding:24px;text-align:center;}
+.pq-madd-rules__badge{display:inline-flex;align-items:center;justify-content:center;min-width:96px;min-height:48px;margin:0 auto 8px;padding:0 24px;border-radius:999px;background:#ffc957;color:#3c2a08;font-size:clamp(1.2rem,2.3vw,2rem);font-weight:1000;box-shadow:inset 0 0 0 3px rgba(255,255,255,.72);text-align:center;white-space:normal;}
+.pq-madd-rules__hero h2{margin:4px 0 8px;color:#069746;font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;font-size:clamp(1.45rem,2.8vw,2.7rem);line-height:1.08;text-align:center;}
+.pq-madd-rules__hero p{max-width:780px;margin:0 auto 18px;font-size:1.14rem;font-weight:800;color:#31435a;}
+.pq-madd-rules__audio-btn{display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;min-height:52px;margin:0 auto 18px;padding:0 22px;border:0;border-radius:999px;background:#3fbf71;color:#fff;box-shadow:0 10px 20px rgba(38,145,89,.24);font:inherit;font-size:1rem;font-weight:950;cursor:pointer;}

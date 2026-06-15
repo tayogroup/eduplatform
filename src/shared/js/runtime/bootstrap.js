@@ -216,6 +216,7 @@ function __cfg(path, fallback) {
     if (raw === 'phonetics') return 'sound';
     if (raw === 'letterclue') return 'listenplus';
     if (raw === 'soundclue') return 'words';
+    if (/^listen\d+$/.test(raw)) return 'listen';
     if (raw === 'write') return 'trace1';
     return raw;
   }

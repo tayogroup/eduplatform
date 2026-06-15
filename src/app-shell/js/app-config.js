@@ -14,11 +14,11 @@ export const I18N = {
       tanween:"Tanween",
       tanween_mvt:"Tanween & Movement",
       tashdeed_menu:"Tashdeed",
-      tashdeed_shaddah:"Tashdeed Shaddah",
-      tashdeed_sukoon:"Tashdeed With Sukoon",
-      tashdeed_tashdeed:"Tashdeed With tashdeed",
-      tashdeed_maddah:"Tashdeed With Haroof Maddah",
-      fkd:"Fatha-Kasra-Damma",
+      tashdeed_shaddah:"Tashdeed",
+      tashdeed_sukoon:"Tashdeed with Sakoon",
+      tashdeed_tashdeed:"Tashdeed with Tashdeed",
+      tashdeed_maddah:"Tashdeed with Harof Madah",
+      fkd:"Madd",
       madd:"MaddoLeen",
       sakoon:"Sakoon & Jazm",
       ending:"Ending of Rules"
@@ -81,11 +81,11 @@ export const I18N = {
       tanween:"Tanween",
       tanween_mvt:"Tanween & Movement",
       tashdeed_menu:"Tashdeed",
-      tashdeed_shaddah:"Tashdeed Shaddah",
-      tashdeed_sukoon:"Tashdeed With Sukoon",
-      tashdeed_tashdeed:"Tashdeed With tashdeed",
-      tashdeed_maddah:"Tashdeed With Haroof Maddah",
-      fkd:"Fatha-Kasra-Damma",
+      tashdeed_shaddah:"Tashdeed",
+      tashdeed_sukoon:"Tashdeed with Sakoon",
+      tashdeed_tashdeed:"Tashdeed with Tashdeed",
+      tashdeed_maddah:"Tashdeed with Harof Madah",
+      fkd:"Madd",
       madd:"MaddoLeen",
       sakoon:"Sakoon & Jazm",
       ending:"Ending of Rules"
@@ -102,231 +102,390 @@ export const I18N = {
       tanween:"Tanween",
       tanween_mvt:"Tanween & Movement",
       tashdeed_menu:"Tashdeed",
-      tashdeed_shaddah:"Tashdeed Shaddah",
-      tashdeed_sukoon:"Tashdeed With Sukoon",
-      tashdeed_tashdeed:"Tashdeed With tashdeed",
-      tashdeed_maddah:"Tashdeed With Haroof Maddah",
-      fkd:"Fatha-Kasra-Damma",
+      tashdeed_shaddah:"Tashdeed",
+      tashdeed_sukoon:"Tashdeed with Sakoon",
+      tashdeed_tashdeed:"Tashdeed with Tashdeed",
+      tashdeed_maddah:"Tashdeed with Harof Madah",
+      fkd:"Madd",
       madd:"MaddoLeen",
       sakoon:"Sakoon & Jazm",
       ending:"Ending of Rules"
     } }
 };
 
-const SECURE_BASE = "https://quraan.academy/local/hubredirect/issue_child.php?goto=";
+const currentMoodleOrigin = () => {
+  try {
+    const params = new URLSearchParams(window.location.search || "");
+    const configured = params.get("moodle_origin") || params.get("moodle_base") || params.get("moodle");
+    if (configured) return new URL(configured).origin;
+
+    const host = String(window.location.hostname || "").toLowerCase();
+    if (host.includes("quraantest")) return "https://quraantest.academy";
+
+    if (document.referrer) {
+      const referrerHost = new URL(document.referrer).hostname.toLowerCase();
+      if (referrerHost.includes("quraantest")) return "https://quraantest.academy";
+    }
+  } catch (_e) {}
+  return "https://quraan.academy";
+};
+
+export const MOODLE_ORIGIN = currentMoodleOrigin();
+const SECURE_BASE = `${MOODLE_ORIGIN}/local/hubredirect/issue_child.php?goto=`;
 const IS_LOCAL_PREVIEW = ["localhost", "127.0.0.1"].includes(window.location.hostname);
-const IS_STATIC_STAGING = window.location.pathname.indexOf("/pre_quraan_staging/") === 0;
-const USE_STATIC_UNIT_LINKS = IS_LOCAL_PREVIEW || IS_STATIC_STAGING;
+const STATIC_BUNNY_QA_BASE_PATHS = ["/pre_quraan_integration/", "/pre_quraan_staging/"];
+const CURRENT_BUNNY_BASE_PATH = STATIC_BUNNY_QA_BASE_PATHS.find((basePath) => window.location.pathname.indexOf(basePath) === 0) || "/pre_quraan/";
+const CURRENT_ENVIRONMENT = CURRENT_BUNNY_BASE_PATH.indexOf("pre_quraan_integration") !== -1
+  ? "integration"
+  : (CURRENT_BUNNY_BASE_PATH.indexOf("pre_quraan_staging") !== -1 ? "staging" : "production");
+const IS_STATIC_BUNNY_QA = CURRENT_ENVIRONMENT !== "production";
+const USE_STATIC_UNIT_LINKS = IS_LOCAL_PREVIEW;
+const withEnvironment = (url) => {
+  if (CURRENT_ENVIRONMENT === "production") return url;
+  const separator = url.indexOf("?") === -1 ? "?" : "&";
+  return `${url}${separator}pq_env=${encodeURIComponent(CURRENT_ENVIRONMENT)}`;
+};
+const secureLessonUrl = (goto) => withEnvironment(SECURE_BASE + goto);
+const secureManagedLessonUrl = (goto) => withEnvironment(`${SECURE_BASE}${goto}&managed_student=1`);
+const staticUnitUrl = (path) => withEnvironment(CURRENT_BUNNY_BASE_PATH + path.replace(/^\/+/, ""));
 const ALPHABET_LISTEN_URL = USE_STATIC_UNIT_LINKS
-  ? "/pre_quraan/units/alphabet/index.html?managed=1"
-  : SECURE_BASE + "alphabet_listen";
+  ? staticUnitUrl("units/alphabet/index.html?managed=1")
+  : secureLessonUrl("alphabet_listen");
+const ALPHABET_QUIZ_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("scripts/alphabet_quiz_chatbot_unlocked_20260613b.html")
+  : secureLessonUrl("alphabet_quiz_chatbot");
+export const ARABIC_LETTER_RACEWAY_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("scripts/arabic_letter_raceway_20260614a.html")
+  : secureManagedLessonUrl("arabic_letter_raceway_20260614a.html");
+const HARAKAT_LISTEN_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/harakat/index.html?managed=1")
+  : secureLessonUrl("harakat_listen");
+const JOINT_LISTEN_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/connection-forms/index.html?managed=1")
+  : secureLessonUrl("connections_ws");
 const MUQATTIAT_LISTEN_URL = USE_STATIC_UNIT_LINKS
-  ? "/pre_quraan/units/muqattiat/index.html?managed=1"
-  : SECURE_BASE + "muqattaat_listen";
+  ? staticUnitUrl("units/muqattiat/index.html?managed=1")
+  : secureLessonUrl("muqattaat_listen");
 const TANWEEN_MOVEMENT_URL = USE_STATIC_UNIT_LINKS
-  ? "/pre_quraan/units/tanween-movement/index.html?managed=1"
-  : SECURE_BASE + "tanween_mvt1";
+  ? staticUnitUrl("units/tanween-movement/index.html?managed=1")
+  : secureLessonUrl("tanween_mvt1");
+const TANWEEN_LISTEN_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/tanween/index.html?managed=1")
+  : secureLessonUrl("tanween_listen");
+const MADD_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/madd/index.html?managed=1")
+  : secureLessonUrl("standing1");
+const MADDOLEEN_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/maddoleen/index.html?managed=1")
+  : secureLessonUrl("maddoleen3");
+const SUKOON_JAZM_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/sukoon-jazm/index.html?managed=1")
+  : secureLessonUrl("sakoon_jazm2");
+const TASHDEED_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/tashdeed/index.html?managed=1")
+  : secureLessonUrl("tashdeed_w_shaddah");
+const TASHDEED_SUKOON_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/tashdeed-sukoon/index.html?managed=1")
+  : secureLessonUrl("tashdeed_w_sukoon");
+const TASHDEED_TASHDEED_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/tashdeed-tashdeed/index.html?managed=1")
+  : secureLessonUrl("tashdeed_w_tashdeed");
+const TASHDEED_HAROOF_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/tashdeed-with-haroof/index.html?managed=1")
+  : secureLessonUrl("tashdeed_w_haroof_maddah");
+const ENDING_RULES_URL = USE_STATIC_UNIT_LINKS
+  ? "#"
+  : secureLessonUrl("ending_rules1");
+const PILLARS_OF_ISLAM_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/pillars-of-islam/index.html?managed=1")
+  : secureLessonUrl("pillars_of_islam");
+const PILLARS_OF_FAITH_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/pillars-of-faith/index.html?managed=1")
+  : secureLessonUrl("pillars_of_faith");
+const MANNERS_AKHLAQ_URL = USE_STATIC_UNIT_LINKS
+  ? staticUnitUrl("units/manners-akhlaq/index.html?managed=1")
+  : secureLessonUrl("manners_akhlaq");
 
 // Lesson links
 export const LINK_MAP = {
   /* Alphabet */
+  "Alphabet Learn":      ALPHABET_LISTEN_URL,
   "Alphabet Listen":     ALPHABET_LISTEN_URL,
-  "Alphabet Match":      SECURE_BASE + "match01",
+  "Alphabet Match":      secureLessonUrl("match01"),
   // REMOVED: Alphabet Order / Trans1 / Trans2
-  // "Alphabet Order":      SECURE_BASE + "alphabet_order",
-  // "Alphabet Trans1":     SECURE_BASE + "alphabet_trans1",
-  // "Alphabet Trans2":     SECURE_BASE + "alphabet_trans2",
-  "Alphabet Watch":      SECURE_BASE + "alphabet_watch",
-  "Alphabet Speak":      SECURE_BASE + "speak01",
-  "Alphabet Diacritics": SECURE_BASE + "diacritics01",
+  // "Alphabet Order":      secureLessonUrl("alphabet_order"),
+  // "Alphabet Trans1":     secureLessonUrl("alphabet_trans1"),
+  // "Alphabet Trans2":     secureLessonUrl("alphabet_trans2"),
+  "Alphabet Watch":      secureLessonUrl("alphabet_watch"),
+  "Alphabet Speak":      secureLessonUrl("speak01"),
+  "Alphabet Diacritics": secureLessonUrl("diacritics01"),
 
-  "Alphabet Write":      SECURE_BASE + "write03",
+  "Alphabet Write":      secureLessonUrl("write03"),
   "Alphabet Record":     "#record",
   // Alphabet & Harakat games submenu (modal)
   "Alphabet Practice":   "#games",
-  "Alphabet Quiz":       "https://quraan.academy/mod/page/view.php?id=347&inpopup=1",
+  "Alphabet Quiz":       ALPHABET_QUIZ_URL,
 
   /* Movements */
-  "Alphabet Diacritics (Harakat)": SECURE_BASE + "diacritics01",
-  "Harakat Listen":      SECURE_BASE + "harakat_listen",
-  "Harakat Watch":       SECURE_BASE + "harakat_watch",
-  "Harakat Speak":       SECURE_BASE + "harakat_speak",
-  "Harakat Match":       SECURE_BASE + "harakat_match",
-  "Harakat Write":       SECURE_BASE + "harakt_write01",
+  "Alphabet Diacritics (Harakat)": secureLessonUrl("diacritics01"),
+  "Harakat Learn":       HARAKAT_LISTEN_URL,
+  "Harakat Listen":      HARAKAT_LISTEN_URL,
+  "Harakat Watch":       secureLessonUrl("harakat_watch"),
+  "Harakat Speak":       secureLessonUrl("harakat_speak"),
+  "Harakat Match":       secureLessonUrl("harakat_match"),
+  "Harakat Write":       secureLessonUrl("harakt_write01"),
   "Harakat Record":      "#harakatRecord",
   "Harakat Practice":    "#games",
-  "Harakat Quiz":        "https://quraan.academy/mod/page/view.php?id=347&inpopup=1",
+  "Harakat Quiz":        `${MOODLE_ORIGIN}/mod/page/view.php?id=347&inpopup=1`,
 
   /* Joint */
-  "Connections":         SECURE_BASE + "connections_ws",
-  "2 Joined Letters":    SECURE_BASE + "two_joined1",
-  "3 Joined Letters":    SECURE_BASE + "three_joined1",
-  "4 Joined Letters":    SECURE_BASE + "four_joined2",
+  "Joint Learn":         JOINT_LISTEN_URL,
+  "Connections":         JOINT_LISTEN_URL,
+  "2 Joined Letters":    secureLessonUrl("two_joined1"),
+  "3 Joined Letters":    secureLessonUrl("three_joined1"),
+  "4 Joined Letters":    secureLessonUrl("four_joined2"),
   "Joint Practice":      "#games", // NEW: Joint Practice submenu (same games modal)
+  "Joint Quiz":          `${MOODLE_ORIGIN}/mod/page/view.php?id=347&inpopup=1`,
 
   /* Rules / Tajweed root-level lesson links */
-  "Tanween":             SECURE_BASE + "tanween14",
+  "Tanween":             TANWEEN_LISTEN_URL,
   "Tanween & Movement":  TANWEEN_MOVEMENT_URL,
-  "Fatha-Kasra-Damma":   SECURE_BASE + "standing1",
-  "MaddoLeen":           SECURE_BASE + "maddoleen3",
-  "Sakoon & Jazm":       SECURE_BASE + "sakoon_jazm2",
-  "Tashdeed Shaddah":            SECURE_BASE + "tashdeed_w_shaddah",
-  "Tashdeed With Sukoon":        SECURE_BASE + "tashdeed_w_sukoon",
-  "Tashdeed With tashdeed":      SECURE_BASE + "tashdeed_w_tashdeed",
-  "Tashdeed With Haroof Maddah": SECURE_BASE + "tashdeed_w_haroof_maddah",
-  "Ending of Rules":             SECURE_BASE + "ending_rules1",
+  "Madd":                MADD_URL,
+  "Fatha-Kasra-Damma":   MADD_URL,
+  "MaddoLeen":           MADDOLEEN_URL,
+  "Sakoon & Jazm":       SUKOON_JAZM_URL,
+  "Tashdeed":                    TASHDEED_URL,
+  "Tashdeed Shaddah":            TASHDEED_URL,
+  "Tashdeed with Sakoon":        TASHDEED_SUKOON_URL,
+  "Tashdeed With Sukoon":        TASHDEED_SUKOON_URL,
+  "Tashdeed with Tashdeed":      TASHDEED_TASHDEED_URL,
+  "Tashdeed With tashdeed":      TASHDEED_TASHDEED_URL,
+  "Tashdeed with Harof Madah":   TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah": TASHDEED_HAROOF_URL,
+  "Tashdeed With Haroof Maddah": TASHDEED_HAROOF_URL,
+  "Ending of Rules":             ENDING_RULES_URL,
 
   /* Muqatta'at detailed lessons (now displayed as Muqattiat) */
-  "Muqattiat Intro":    SECURE_BASE + "muqattaat_intro",
+  "Muqattiat Intro":    secureLessonUrl("muqattaat_intro"),
+  "Muqattiat Learn":    MUQATTIAT_LISTEN_URL,
   "Muqattiat Listen":   MUQATTIAT_LISTEN_URL,
-  "Muqattiat Match":    SECURE_BASE + "muqattaat_match",
-  "Muqattiat Speak":    SECURE_BASE + "muqattaat_speak",
-  "Muqattiat Write":    SECURE_BASE + "muqattaat_write",
-  "Muqattiat Record":   SECURE_BASE + "muqattaat_record",
-  "Muqattiat Practice": SECURE_BASE + "muqattaat_practice",
-  "Muqattiat Quiz":     SECURE_BASE + "muqattaat_quiz",
+  "Muqattiat Match":    secureLessonUrl("muqattaat_match"),
+  "Muqattiat Speak":    secureLessonUrl("muqattaat_speak"),
+  "Muqattiat Write":    secureLessonUrl("muqattaat_write"),
+  "Muqattiat Record":   secureLessonUrl("muqattaat_record"),
+  "Muqattiat Practice": secureLessonUrl("muqattaat_practice"),
+  "Muqattiat Quiz":     secureLessonUrl("muqattaat_quiz"),
 
   /* Tanween detailed lessons */
-  "Tanween Intro":       SECURE_BASE + "tanween_intro",
-  "Tanween Listen":      SECURE_BASE + "tanween_listen",
-  "Tanween Match":       SECURE_BASE + "tanween_match",
-  "Tanween Speak":       SECURE_BASE + "tanween_speak",
-  "Tanween Write":       SECURE_BASE + "tanween_write",
-  "Tanween Record":      SECURE_BASE + "tanween_record",
-  "Tanween Practice":    SECURE_BASE + "tanween_practice",
-  "Tanween Quiz":        SECURE_BASE + "tanween_quiz",
+  "Tanween Learn":       TANWEEN_LISTEN_URL,
+  "Tanween Intro":       secureLessonUrl("tanween_intro"),
+  "Tanween Listen":      TANWEEN_LISTEN_URL,
+  "Tanween Match":       secureLessonUrl("tanween_match"),
+  "Tanween Speak":       secureLessonUrl("tanween_speak"),
+  "Tanween Write":       secureLessonUrl("tanween_write"),
+  "Tanween Record":      secureLessonUrl("tanween_record"),
+  "Tanween Practice":    secureLessonUrl("tanween_practice"),
+  "Tanween Quiz":        secureLessonUrl("tanween_quiz"),
 
   /* Tanween & Movement detailed lessons */
-  "Tanween & Movement Intro":    SECURE_BASE + "tanween_mvt_intro",
-  "Tanween & Movement Listen":   SECURE_BASE + "tanween_mvt_listen",
-  "Tanween & Movement Match":    SECURE_BASE + "tanween_mvt_match",
-  "Tanween & Movement Speak":    SECURE_BASE + "tanween_mvt_speak",
-  "Tanween & Movement Write":    SECURE_BASE + "tanween_mvt_write",
-  "Tanween & Movement Record":   SECURE_BASE + "tanween_mvt_record",
-  "Tanween & Movement Practice": SECURE_BASE + "tanween_mvt_practice",
-  "Tanween & Movement Quiz":     SECURE_BASE + "tanween_mvt_quiz",
+  "Tanween & Movement Learn":    TANWEEN_MOVEMENT_URL,
+  "Tanween & Movement Intro":    TANWEEN_MOVEMENT_URL,
+  "Tanween & Movement Listen":   TANWEEN_MOVEMENT_URL,
+  "Tanween & Movement Match":    TANWEEN_MOVEMENT_URL,
+  "Tanween & Movement Speak":    TANWEEN_MOVEMENT_URL,
+  "Tanween & Movement Write":    TANWEEN_MOVEMENT_URL,
+  "Tanween & Movement Record":   TANWEEN_MOVEMENT_URL,
+  "Tanween & Movement Practice": TANWEEN_MOVEMENT_URL,
+  "Tanween & Movement Quiz":     TANWEEN_MOVEMENT_URL,
 
-  /* Fatha-Kasra-Damma detailed lessons */
-  "Fatha-Kasra-Damma Listen":     SECURE_BASE + "standing_listen",
-  "Fatha-Kasra-Damma Match":      SECURE_BASE + "standing_match",
-  "Fatha-Kasra-Damma Speak":      SECURE_BASE + "standing_speak",
-  "Fatha-Kasra-Damma Write":      SECURE_BASE + "standing_write",
-  "Fatha-Kasra-Damma Record":     SECURE_BASE + "standing_record",
-  "Fatha-Kasra-Damma Practice":   SECURE_BASE + "standing_practice",
-  "Fatha-Kasra-Damma Quiz":       SECURE_BASE + "standing_quiz",
+  /* Madd detailed lessons, formerly Fatha-Kasra-Damma */
+  "Madd Learn":                   MADD_URL,
+  "Madd Listen":                  MADD_URL,
+  "Madd Match":                   MADD_URL,
+  "Madd Speak":                   MADD_URL,
+  "Madd Write":                   MADD_URL,
+  "Madd Record":                  MADD_URL,
+  "Madd Practice":                MADD_URL,
+  "Madd Quiz":                    MADD_URL,
+
+  /* Legacy Fatha-Kasra-Damma detailed lesson aliases */
+  "Fatha-Kasra-Damma Listen":     MADD_URL,
+  "Fatha-Kasra-Damma Match":      MADD_URL,
+  "Fatha-Kasra-Damma Speak":      MADD_URL,
+  "Fatha-Kasra-Damma Write":      MADD_URL,
+  "Fatha-Kasra-Damma Record":     MADD_URL,
+  "Fatha-Kasra-Damma Practice":   MADD_URL,
+  "Fatha-Kasra-Damma Quiz":       MADD_URL,
 
   /* MaddoLeen detailed lessons */
-  "MaddoLeen Listen":     SECURE_BASE + "maddoleen_listen",
-  "MaddoLeen Match":      SECURE_BASE + "maddoleen_match",
-  "MaddoLeen Speak":      SECURE_BASE + "maddoleen_speak",
-  "MaddoLeen Write":      SECURE_BASE + "maddoleen_write",
-  "MaddoLeen Record":     SECURE_BASE + "maddoleen_record",
-  "MaddoLeen Practice":   SECURE_BASE + "maddoleen_practice",
-  "MaddoLeen Quiz":       SECURE_BASE + "maddoleen_quiz",
+  "MaddoLeen Learn":      MADDOLEEN_URL,
+  "MaddoLeen Listen":     MADDOLEEN_URL,
+  "MaddoLeen Match":      MADDOLEEN_URL,
+  "MaddoLeen Speak":      MADDOLEEN_URL,
+  "MaddoLeen Write":      MADDOLEEN_URL,
+  "MaddoLeen Record":     MADDOLEEN_URL,
+  "MaddoLeen Practice":   MADDOLEEN_URL,
+  "MaddoLeen Quiz":       MADDOLEEN_URL,
 
   /* Sakoon/Sukun & Jazm detailed lessons */
-  "Sukun & Jazm Listen":     SECURE_BASE + "sakoon_jazm_listen",
-  "Sukun & Jazm Match":      SECURE_BASE + "sakoon_jazm_match",
-  "Sukun & Jazm Speak":      SECURE_BASE + "sakoon_jazm_speak",
-  "Sukun & Jazm Write":      SECURE_BASE + "sakoon_jazm_write",
-  "Sukun & Jazm Record":     SECURE_BASE + "sakoon_jazm_record",
-  "Sukun & Jazm Practice":   SECURE_BASE + "sakoon_jazm_practice",
-  "Sukun & Jazm Quiz":       SECURE_BASE + "sakoon_jazm_quiz",
+  "Sukun & Jazm Learn":      SUKOON_JAZM_URL,
+  "Sukun & Jazm Listen":     SUKOON_JAZM_URL,
+  "Sukun & Jazm Match":      SUKOON_JAZM_URL,
+  "Sukun & Jazm Speak":      SUKOON_JAZM_URL,
+  "Sukun & Jazm Write":      SUKOON_JAZM_URL,
+  "Sukun & Jazm Record":     SUKOON_JAZM_URL,
+  "Sukun & Jazm Practice":   SUKOON_JAZM_URL,
+  "Sukun & Jazm Quiz":       SUKOON_JAZM_URL,
 
   /* Ending of Rules detailed lessons */
-  "Ending of Rules Listen":     SECURE_BASE + "ending_rules_listen",
-  "Ending of Rules Match":      SECURE_BASE + "ending_rules_match",
-  "Ending of Rules Speak":      SECURE_BASE + "ending_rules_speak",
-  "Ending of Rules Write":      SECURE_BASE + "ending_rules_write",
-  "Ending of Rules Record":     SECURE_BASE + "ending_rules_record",
-  "Ending of Rules Practice":   SECURE_BASE + "ending_rules_practice",
-  "Ending of Rules Quiz":       SECURE_BASE + "ending_rules_quiz",
+  "Ending of Rules Learn":      ENDING_RULES_URL,
+  "Ending of Rules Listen":     ENDING_RULES_URL,
+  "Ending of Rules Match":      ENDING_RULES_URL,
+  "Ending of Rules Speak":      ENDING_RULES_URL,
+  "Ending of Rules Write":      ENDING_RULES_URL,
+  "Ending of Rules Record":     ENDING_RULES_URL,
+  "Ending of Rules Practice":   ENDING_RULES_URL,
+  "Ending of Rules Quiz":       ENDING_RULES_URL,
 
   /* Tashdeed Shaddah detailed lessons + Intros */
-  "Tashdeed Shaddah Intro":            SECURE_BASE + "tashdeed_shaddah_intro",
-  "Tashdeed Shaddah Listen":           SECURE_BASE + "tashdeed_shaddah_listen",
-  "Tashdeed Shaddah Match":            SECURE_BASE + "tashdeed_shaddah_match",
-  "Tashdeed Shaddah Speak":            SECURE_BASE + "tashdeed_shaddah_speak",
-  "Tashdeed Shaddah Write":            SECURE_BASE + "tashdeed_shaddah_write",
-  "Tashdeed Shaddah Record":           SECURE_BASE + "tashdeed_shaddah_record",
-  "Tashdeed Shaddah Practice":         SECURE_BASE + "tashdeed_shaddah_practice",
-  "Tashdeed Shaddah Quiz":             SECURE_BASE + "tashdeed_shaddah_quiz",
+  "Tashdeed Intro":                      TASHDEED_URL,
+  "Tashdeed Learn":                      TASHDEED_URL,
+  "Tashdeed Listen":                     TASHDEED_URL,
+  "Tashdeed Match":                      TASHDEED_URL,
+  "Tashdeed Speak":                      TASHDEED_URL,
+  "Tashdeed Write":                      TASHDEED_URL,
+  "Tashdeed Record":                     TASHDEED_URL,
+  "Tashdeed Practice":                   TASHDEED_URL,
+  "Tashdeed Quiz":                       TASHDEED_URL,
 
-  "Tashdeed With Sukoon Intro":        SECURE_BASE + "tashdeed_sukoon_intro",
-  "Tashdeed With Sukoon Listen":       SECURE_BASE + "tashdeed_sukoon_listen",
-  "Tashdeed With Sukoon Match":        SECURE_BASE + "tashdeed_sukoon_match",
-  "Tashdeed With Sukoon Speak":        SECURE_BASE + "tashdeed_sukoon_speak",
-  "Tashdeed With Sukoon Write":        SECURE_BASE + "tashdeed_sukoon_write",
-  "Tashdeed With Sukoon Record":       SECURE_BASE + "tashdeed_sukoon_record",
-  "Tashdeed With Sukoon Practice":     SECURE_BASE + "tashdeed_sukoon_practice",
-  "Tashdeed With Sukoon Quiz":         SECURE_BASE + "tashdeed_sukoon_quiz",
+  /* Legacy Tashdeed Shaddah detailed lesson aliases */
+  "Tashdeed Shaddah Intro":            TASHDEED_URL,
+  "Tashdeed Shaddah Listen":           TASHDEED_URL,
+  "Tashdeed Shaddah Match":            TASHDEED_URL,
+  "Tashdeed Shaddah Speak":            TASHDEED_URL,
+  "Tashdeed Shaddah Write":            TASHDEED_URL,
+  "Tashdeed Shaddah Record":           TASHDEED_URL,
+  "Tashdeed Shaddah Practice":         TASHDEED_URL,
+  "Tashdeed Shaddah Quiz":             TASHDEED_URL,
 
-  "Tashdeed With tashdeed Intro":      SECURE_BASE + "tashdeed_tashdeed_intro",
-  "Tashdeed With tashdeed Listen":     SECURE_BASE + "tashdeed_tashdeed_listen",
-  "Tashdeed With tashdeed Match":      SECURE_BASE + "tashdeed_tashdeed_match",
-  "Tashdeed With tashdeed Speak":      SECURE_BASE + "tashdeed_tashdeed_speak",
-  "Tashdeed With tashdeed Write":      SECURE_BASE + "tashdeed_tashdeed_write",
-  "Tashdeed With tashdeed Record":     SECURE_BASE + "tashdeed_tashdeed_record",
-  "Tashdeed With tashdeed Practice":   SECURE_BASE + "tashdeed_tashdeed_practice",
-  "Tashdeed With tashdeed Quiz":       SECURE_BASE + "tashdeed_tashdeed_quiz",
+  "Tashdeed with Sakoon Intro":        TASHDEED_SUKOON_URL,
+  "Tashdeed with Sakoon Learn":        TASHDEED_SUKOON_URL,
+  "Tashdeed with Sakoon Listen":       TASHDEED_SUKOON_URL,
+  "Tashdeed with Sakoon Match":        TASHDEED_SUKOON_URL,
+  "Tashdeed with Sakoon Speak":        TASHDEED_SUKOON_URL,
+  "Tashdeed with Sakoon Write":        TASHDEED_SUKOON_URL,
+  "Tashdeed with Sakoon Record":       TASHDEED_SUKOON_URL,
+  "Tashdeed with Sakoon Practice":     TASHDEED_SUKOON_URL,
+  "Tashdeed with Sakoon Quiz":         TASHDEED_SUKOON_URL,
 
-  "Tashdeed With Haroof Maddah Intro":    SECURE_BASE + "tashdeed_maddah_intro",
-  "Tashdeed With Haroof Maddah Listen":   SECURE_BASE + "tashdeed_maddah_listen",
-  "Tashdeed With Haroof Maddah Match":    SECURE_BASE + "tashdeed_maddah_match",
-  "Tashdeed With Haroof Maddah Speak":    SECURE_BASE + "tashdeed_maddah_speak",
-  "Tashdeed With Haroof Maddah Write":    SECURE_BASE + "tashdeed_maddah_write",
-  "Tashdeed With Haroof Maddah Record":   SECURE_BASE + "tashdeed_maddah_record",
-  "Tashdeed With Haroof Maddah Practice": SECURE_BASE + "tashdeed_maddah_practice",
-  "Tashdeed With Haroof Maddah Quiz":     SECURE_BASE + "tashdeed_maddah_quiz",
+  /* Legacy Tashdeed With Sukoon detailed lesson aliases */
+  "Tashdeed With Sukoon Intro":        TASHDEED_SUKOON_URL,
+  "Tashdeed With Sukoon Listen":       TASHDEED_SUKOON_URL,
+  "Tashdeed With Sukoon Match":        TASHDEED_SUKOON_URL,
+  "Tashdeed With Sukoon Speak":        TASHDEED_SUKOON_URL,
+  "Tashdeed With Sukoon Write":        TASHDEED_SUKOON_URL,
+  "Tashdeed With Sukoon Record":       TASHDEED_SUKOON_URL,
+  "Tashdeed With Sukoon Practice":     TASHDEED_SUKOON_URL,
+  "Tashdeed With Sukoon Quiz":         TASHDEED_SUKOON_URL,
 
-  /* New short Haroof Maddah aliases */
-  "Haroof Maddah Intro":     SECURE_BASE + "tashdeed_maddah_intro",
-  "Haroof Maddah Listen":    SECURE_BASE + "tashdeed_maddah_listen",
-  "Haroof Maddah Match":     SECURE_BASE + "tashdeed_maddah_match",
-  "Haroof Maddah Speak":     SECURE_BASE + "tashdeed_maddah_speak",
-  "Haroof Maddah Write":     SECURE_BASE + "tashdeed_maddah_write",
-  "Haroof Maddah Record":    SECURE_BASE + "tashdeed_maddah_record",
-  "Haroof Maddah Practice":  SECURE_BASE + "tashdeed_maddah_practice",
-  "Haroof Maddah Quiz":      SECURE_BASE + "tashdeed_maddah_quiz"
+  "Tashdeed with Tashdeed Intro":      TASHDEED_TASHDEED_URL,
+  "Tashdeed with Tashdeed Learn":      TASHDEED_TASHDEED_URL,
+  "Tashdeed with Tashdeed Listen":     TASHDEED_TASHDEED_URL,
+  "Tashdeed with Tashdeed Match":      TASHDEED_TASHDEED_URL,
+  "Tashdeed with Tashdeed Speak":      TASHDEED_TASHDEED_URL,
+  "Tashdeed with Tashdeed Write":      TASHDEED_TASHDEED_URL,
+  "Tashdeed with Tashdeed Record":     TASHDEED_TASHDEED_URL,
+  "Tashdeed with Tashdeed Practice":   TASHDEED_TASHDEED_URL,
+  "Tashdeed with Tashdeed Quiz":       TASHDEED_TASHDEED_URL,
+
+  /* Legacy Tashdeed With tashdeed detailed lesson aliases */
+  "Tashdeed With tashdeed Intro":      TASHDEED_TASHDEED_URL,
+  "Tashdeed With tashdeed Listen":     TASHDEED_TASHDEED_URL,
+  "Tashdeed With tashdeed Match":      TASHDEED_TASHDEED_URL,
+  "Tashdeed With tashdeed Speak":      TASHDEED_TASHDEED_URL,
+  "Tashdeed With tashdeed Write":      TASHDEED_TASHDEED_URL,
+  "Tashdeed With tashdeed Record":     TASHDEED_TASHDEED_URL,
+  "Tashdeed With tashdeed Practice":   TASHDEED_TASHDEED_URL,
+  "Tashdeed With tashdeed Quiz":       TASHDEED_TASHDEED_URL,
+
+  "Tashdeed with Harof Madah Intro":       TASHDEED_HAROOF_URL,
+  "Tashdeed with Harof Madah Learn":       TASHDEED_HAROOF_URL,
+  "Tashdeed with Harof Madah Listen":      TASHDEED_HAROOF_URL,
+  "Tashdeed with Harof Madah Match":       TASHDEED_HAROOF_URL,
+  "Tashdeed with Harof Madah Speak":       TASHDEED_HAROOF_URL,
+  "Tashdeed with Harof Madah Write":       TASHDEED_HAROOF_URL,
+  "Tashdeed with Harof Madah Record":      TASHDEED_HAROOF_URL,
+  "Tashdeed with Harof Madah Practice":    TASHDEED_HAROOF_URL,
+  "Tashdeed with Harof Madah Quiz":        TASHDEED_HAROOF_URL,
+
+  /* Legacy Tashdeed with Haroof Maddah detailed lesson aliases */
+  "Tashdeed with Haroof Maddah Intro":    TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah Learn":    TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah Listen":   TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah Match":    TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah Speak":    TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah Write":    TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah Record":   TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah Practice": TASHDEED_HAROOF_URL,
+  "Tashdeed with Haroof Maddah Quiz":     TASHDEED_HAROOF_URL,
+
+  /* Legacy Tashdeed With Haroof Maddah detailed lesson aliases */
+  "Tashdeed With Haroof Maddah Intro":    TASHDEED_HAROOF_URL,
+  "Tashdeed With Haroof Maddah Listen":   TASHDEED_HAROOF_URL,
+  "Tashdeed With Haroof Maddah Match":    TASHDEED_HAROOF_URL,
+  "Tashdeed With Haroof Maddah Speak":    TASHDEED_HAROOF_URL,
+  "Tashdeed With Haroof Maddah Write":    TASHDEED_HAROOF_URL,
+  "Tashdeed With Haroof Maddah Record":   TASHDEED_HAROOF_URL,
+  "Tashdeed With Haroof Maddah Practice": TASHDEED_HAROOF_URL,
+  "Tashdeed With Haroof Maddah Quiz":     TASHDEED_HAROOF_URL,
+
+  /* Short Haroof Maddah aliases */
+  "Haroof Maddah Learn":     TASHDEED_HAROOF_URL,
+  "Haroof Maddah Intro":     TASHDEED_HAROOF_URL,
+  "Haroof Maddah Listen":    TASHDEED_HAROOF_URL,
+  "Haroof Maddah Match":     TASHDEED_HAROOF_URL,
+  "Haroof Maddah Speak":     TASHDEED_HAROOF_URL,
+  "Haroof Maddah Write":     TASHDEED_HAROOF_URL,
+  "Haroof Maddah Record":    TASHDEED_HAROOF_URL,
+  "Haroof Maddah Practice":  TASHDEED_HAROOF_URL,
+  "Haroof Maddah Quiz":      TASHDEED_HAROOF_URL,
+
+  /* Extras detailed lessons */
+  "Pillars of Islam Learn":    PILLARS_OF_ISLAM_URL,
+  "Pillars of Islam Practice": "#games",
+  "Pillars of Islam Quiz":     `${MOODLE_ORIGIN}/mod/page/view.php?id=347&inpopup=1`,
+  "Pillars of Faith Learn":    PILLARS_OF_FAITH_URL,
+  "Pillars of Faith Practice": "#games",
+  "Pillars of Faith Quiz":     `${MOODLE_ORIGIN}/mod/page/view.php?id=347&inpopup=1`,
+  "Manners Akhlaq Learn":      MANNERS_AKHLAQ_URL,
+  "Manners Akhlaq Practice":   "#games",
+  "Manners Akhlaq Quiz":       `${MOODLE_ORIGIN}/mod/page/view.php?id=347&inpopup=1`
 };
 
 // Root-level tiles
 export const ITEMS = [
   /* Alphabet */
-  {t:"Alphabet Listen",       cat:"alphabet",  tag:"unit1",    tint:"blue"},
-  {t:"Alphabet Watch",        cat:"alphabet",  tag:"unit2",    tint:"blue"},
-  {t:"Alphabet Match",        cat:"alphabet",  tag:"unit3",    tint:"blue"},
-  {t:"Alphabet Speak",        cat:"alphabet",  tag:"unit4",    tint:"blue"},
-  {t:"Alphabet Write",        cat:"alphabet",  tag:"unit5",    tint:"blue"},
-  {t:"Alphabet Record",       cat:"alphabet",  tag:"unit6",    tint:"blue"},
-  {t:"Alphabet Practice",     cat:"alphabet",  tag:"unit7",    tint:"blue"},
-  {t:"Alphabet Quiz",         cat:"alphabet",  tag:"unit8",    tint:"blue"},
+  {t:"Alphabet Learn",        cat:"alphabet",  tag:"",         tint:"blue", hideTag:true},
+  {t:"Alphabet Practice",     cat:"alphabet",  tag:"",         tint:"blue", hideTag:true},
+  {t:"Alphabet Quiz",         cat:"alphabet",  tag:"",         tint:"blue", hideTag:true},
 
   /* Movements */
-  {t:"Alphabet Diacritics",   cat:"movements", tag:"unit1",    tint:"green"},
-  {t:"Harakat Listen",        cat:"movements", tag:"unit2",    tint:"green"},
-  {t:"Harakat Watch",         cat:"movements", tag:"unit3",    tint:"green"},
-  {t:"Harakat Match",         cat:"movements", tag:"unit4",    tint:"green"},
-  {t:"Harakat Speak",         cat:"movements", tag:"unit5",    tint:"green"},
-  {t:"Harakat Write",         cat:"movements", tag:"unit6",    tint:"green"},
-  {t:"Harakat Record",        cat:"movements", tag:"unit7",    tint:"green"},
-  {t:"Harakat Practice",      cat:"movements", tag:"unit8",    tint:"green"},
-  {t:"Harakat Quiz",          cat:"movements", tag:"unit9",    tint:"green"},
+  {t:"Harakat Learn",         cat:"movements", tag:"",         tint:"green", hideTag:true},
+  {t:"Harakat Practice",      cat:"movements", tag:"",         tint:"green", hideTag:true},
+  {t:"Harakat Quiz",          cat:"movements", tag:"",         tint:"green", hideTag:true},
 
   /* Joint */
-  {t:"Connections",           cat:"joint",     tag:"unit1",    tint:"orange"},
-  {t:"2 Joined Letters",      cat:"joint",     tag:"unit2",    tint:"orange"},
-  {t:"3 Joined Letters",      cat:"joint",     tag:"unit3",    tint:"orange"},
-  {t:"4 Joined Letters",      cat:"joint",     tag:"unit4",    tint:"orange"},
-  {t:"Joint Practice",        cat:"joint",     tag:"unit5",    tint:"orange"}, // NEW tile
+  {t:"Joint Learn",           cat:"joint",     tag:"",         tint:"orange", hideTag:true},
+  {t:"Joint Practice",        cat:"joint",     tag:"",         tint:"orange", hideTag:true},
+  {t:"Joint Quiz",            cat:"joint",     tag:"",         tint:"orange", hideTag:true},
 
   /* Rules / Tajweed (first-level submenu) */
   {t:"Muqatta'at Basics",     cat:"rules",     tag:"Section 1",    tint:"purple"},
   {t:"Tanween",               cat:"rules",     tag:"Section 2",    tint:"purple"},
-  {t:"Fatha-Kasra-Damma",     cat:"rules",     tag:"Section 3",    tint:"orange"},
+  {t:"Madd",                  cat:"rules",     tag:"Section 3",    tint:"orange"},
   {t:"MaddoLeen",             cat:"rules",     tag:"Section 4",    tint:"blue"},
   {t:"Sakoon & Jazm",         cat:"rules",     tag:"Section 5",    tint:"pink"},
-  {t:"Tashdeed Shaddah",      cat:"rules",     tag:"Section 6",    tint:"blue"},
+  {t:"Tashdeed",              cat:"rules",     tag:"Section 6",    tint:"blue"},
   {t:"Ending of Rules",       cat:"rules",     tag:"Section 7",    tint:"yellow"},
 
   /* Pillars */
@@ -358,3 +517,4 @@ export const VIEW_FKD               = 'fatha_kasra_damma';
 export const VIEW_MADD              = 'maddoleen';
 export const VIEW_SAKOON            = 'sakoon_jazm';
 export const VIEW_ENDING            = 'ending_rules';
+

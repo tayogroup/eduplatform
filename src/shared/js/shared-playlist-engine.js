@@ -14,6 +14,7 @@
       getPracticeFreeUI: () => true,
       getLetters: () => [],
       getVideoByKey: () => ({}),
+      getAudioByKey: () => ({}),
       getPlaySequenceKeys: () => [],
       getGridEl: () => null,
       getAudioBases: () => [],
@@ -49,6 +50,16 @@
     }
 
     async function playLetterOnce(key, rate){
+      const audioByKey = cfg.getAudioByKey() || {};
+      const mappedAudio = audioByKey[key];
+      if (mappedAudio) {
+        const mappedUrl = /^https?:\/\//i.test(String(mappedAudio))
+          ? String(mappedAudio)
+          : String(cfg.getAudioBases()[0] || '') + String(mappedAudio);
+        await tryPlayUrl(mappedUrl + cfg.getCacheBust(), rate);
+        return;
+      }
+
       try{
         if (window.PQAudioResolver && typeof window.PQAudioResolver.playLetterOnce === 'function') {
           await window.PQAudioResolver.playLetterOnce({

@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Articulation Maze - Mouth Family Match</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Noto+Naskh+Arabic:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#102033;
+  --muted:#4b6478;
+  --good:#15803d;
+  --bad:#dc2626;
+  --warn:#b45309;
+  --blue:#2563eb;
+  --panel:#fff;
+  --soft:#f8fafc;
+  --sky:#dff6ff;
+  --mint:#dffbe9;
+  --peach:#ffe4bf;
+  --tile:#fffaf0;
+  --tile-border:#ffc86e;
+  --line:#dbeafe;
+  --shadow:0 18px 38px rgba(15,23,42,.15),0 6px 12px rgba(15,23,42,.1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;}
+
+body{
+  min-height:100vh;
+  font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 14%, #ffe1a1 0 11%, transparent 12%),
+    radial-gradient(circle at 86% 13%, #b8f5d1 0 10%, transparent 11%),
+    linear-gradient(135deg,#fff4fb,#eef9ff 48%,#effff6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+
+button,select{font:inherit;}
+
+.page{width:100%;max-width:1160px;}
+.sheet{
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(148,163,184,.28);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,255,255,.94);
+  padding:10px 12px 8px;
+  box-shadow:0 4px 12px rgba(15,23,42,.08);
+  backdrop-filter:blur(8px);
+}
+
+.head{
+  padding:10px 14px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#aee8ff,#c7f8c8 54%,#ffd8ac);
+  color:#1f2937;
+  font:900 23px/1 "Baloo 2";
+  text-align:center;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.08);
+}
+
+.subhead-note{
+  margin-top:6px;
+  color:var(--muted);
+  text-align:center;
+  font:800 15px "Baloo 2";
+}
+
+.hud{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:9px;
+}
+
+.hud-group{display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.pill{
+  min-height:35px;
+  border-radius:999px;
+  padding:4px 13px;
+  background:#fff;
+  border:1px solid #bfdbfe;
+  color:#1e293b;
+  font:900 15px "Baloo 2";
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+}
+
+.status-good{color:var(--good);}
+.status-bad{color:var(--bad);}
+.status-warn{color:var(--warn);}
+.status-neutral{color:#64748b;}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(300px,1fr);
+  gap:12px;
+  padding:12px;
+}
+
+.game-card,.side-card{
+  border-radius:22px;
+  border:1px solid rgba(191,219,254,.9);
+  background:#fff;
+  box-shadow:0 6px 14px rgba(15,23,42,.1);
+}
+
+.game-card{
+  background:linear-gradient(135deg,#c7f9d4,#88e7c4 58%,#9fd0ff);
+  padding:12px;
+  display:grid;
+  gap:12px;
+}
+
+.round-panel{
+  display:grid;
+  grid-template-columns:150px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  background:#ffffffee;
+  border:2px solid #bfdbfe;
+  border-radius:22px;
+  padding:12px;
+}
+
+.letter-tile{
+  min-height:150px;
+  border:3px solid var(--tile-border);
+  border-radius:22px;
+  background:var(--tile);
+  display:grid;
+  place-items:center;
+  cursor:grab;
+  box-shadow:0 6px 0 #f5c77a,0 10px 16px rgba(15,23,42,.12);
+  touch-action:none;
+}
+
+.letter-tile:active{cursor:grabbing;}
+.letter-tile.selected{
+  border-color:#22c55e;
+  box-shadow:0 0 0 6px rgba(34,197,94,.2),0 6px 0 #86efac,0 10px 16px rgba(15,23,42,.12);
+}
+.letter{
+  font-family:"Noto Naskh Arabic","Scheherazade New",serif;
+  font-size:94px;
+  font-weight:900;
+  direction:rtl;
+  line-height:1;
+  color:#111827;
+}
+
+.prompt h2{
+  font:900 25px/1.1 "Baloo 2";
+  color:#0f172a;
+  margin-bottom:6px;
+}
+
+.prompt p{
+  color:#334155;
+  font:900 17px/1.25 "Baloo 2";
+  margin-bottom:10px;
+}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{
+  border-radius:999px;
+  background:#ecfeff;
+  border:1px solid #67e8f9;
+  color:#155e75;
+  padding:4px 10px;
+  font:900 13px "Baloo 2";
+}
+
+.btn{
+  border:0;
+  border-radius:16px;
+  min-height:45px;
+  padding:.58rem 1rem;
+  font:900 16px "Baloo 2";
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:#143b29;
+  background:linear-gradient(135deg,#b9f5c7,#63d58c);
+  box-shadow:0 6px 12px rgba(39,148,99,.35);
+  transition:transform .08s, box-shadow .12s, opacity .12s;
+}
+
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 9px 18px rgba(39,148,99,.45);}
+.btn:active:not(:disabled){transform:translateY(1px);}
+.btn:disabled{cursor:not-allowed;opacity:.58;box-shadow:none;}
+.btn:focus-visible,.basket:focus-visible,.letter-tile:focus-visible,select:focus-visible{outline:4px solid rgba(37,99,235,.32);outline-offset:2px;}
+
+.btn-ghost{
+  background:#fff;
+  color:#0f172a;
+  border:1px solid #cbd5f5;
+  box-shadow:0 3px 8px rgba(15,23,42,.16);
+}
+
+.btn-explainer{background:linear-gradient(135deg,#dbeafe,#93c5fd);color:#1e3a8a;}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+
+.baskets{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.basket{
+  min-height:124px;
+  border:3px solid #cbd5e1;
+  border-radius:22px;
+  background:#fff;
+  color:#0f172a;
+  padding:12px;
+  cursor:pointer;
+  text-align:left;
+  display:grid;
+  gap:4px;
+  align-content:center;
+  box-shadow:inset 0 -4px 0 rgba(15,23,42,.06),0 4px 10px rgba(15,23,42,.08);
+}
+
+.basket strong{
+  display:block;
+  font:900 22px/1 "Baloo 2";
+}
+
+.basket span{
+  display:block;
+  color:#52677a;
+  font:900 14px/1.2 "Baloo 2";
+}
+
+.basket[data-family="lips"]{background:#fff7ed;border-color:#fed7aa;}
+.basket[data-family="frontTongue"]{background:#eff6ff;border-color:#bfdbfe;}
+.basket[data-family="backTongue"]{background:#f0fdf4;border-color:#bbf7d0;}
+.basket[data-family="throat"]{background:#fef2f2;border-color:#fecaca;}
+.basket.drag-over{outline:5px solid rgba(37,99,235,.28);transform:translateY(-2px);}
+.basket.select-ready{outline:4px solid rgba(34,197,94,.22);}
+.basket.good{border-color:#22c55e;box-shadow:0 0 0 5px rgba(34,197,94,.22);}
+.basket.bad{border-color:#ef4444;animation:shake .22s;}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-4px);}
+  50%{transform:translateX(4px);}
+  75%{transform:translateX(-4px);}
+  100%{transform:translateX(0);}
+}
+
+.feedback-card,.coach-box,.tip-box{
+  border-radius:18px;
+  padding:10px 12px;
+  font:900 15px/1.25 "Baloo 2";
+}
+
+.feedback-card{
+  background:#ffffffee;
+  border:1px solid #bfdbfe;
+  color:#334155;
+}
+
+.feedback-card.success{background:#dcfce7;border-color:#86efac;color:#14532d;}
+.feedback-card.error{background:#fee2e2;border-color:#fecaca;color:#7f1d1d;}
+.feedback-card.warn{background:#fffbeb;border-color:#fde68a;color:#78350f;}
+
+.progress-wrap{
+  background:#ffffffcc;
+  border-radius:18px;
+  padding:9px 12px;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:#334155;
+  font:900 14px "Baloo 2";
+}
+
+.progress-track{
+  height:18px;
+  border-radius:999px;
+  background:#e2e8f0;
+  overflow:hidden;
+  margin-top:5px;
+}
+
+.progress-fill{
+  width:0%;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#22c55e,#facc15,#fb923c);
+  transition:width .25s ease;
+}
+
+.side-card{
+  background:#f8fafc;
+  padding:12px;
+}
+
+.side-section-title{font:900 15px "Baloo 2";color:#0f172a;margin-bottom:5px;}
+.select-row{display:flex;gap:8px;align-items:center;}
+.select-row select{
+  width:100%;
+  min-width:0;
+  border-radius:999px;
+  border:1px solid #cbd5f5;
+  padding:8px 12px;
+  font:900 15px "Baloo 2";
+  background:#fff;
+  color:#0f172a;
+}
+
+.toggle-row{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font:900 14px "Baloo 2";
+  color:#0f172a;
+  padding:5px 10px;
+  border-radius:999px;
+  background:#e5f2ff;
+  border:1px solid #bfdbfe;
+}
+
+.toggle-row input{accent-color:#22c55e;}
+.settings-grid{display:grid;gap:7px;}
+.mt-3{margin-top:11px;}
+.coach-box{background:#fff7ed;border:1px dashed #fdba74;color:#4b5563;min-height:86px;}
+.tip-box{background:#e5f2ff;border:1px dashed #93c5fd;color:#4b5563;}
+.coach-box strong,.tip-box strong{color:#0f172a;}
+
+.toast{
+  position:fixed;
+  left:50%;
+  top:14px;
+  transform:translateX(-50%);
+  z-index:999;
+  max-width:min(92vw,520px);
+  padding:9px 15px;
+  border-radius:14px;
+  font:900 15px "Baloo 2",system-ui;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+  text-align:center;
+  transition:opacity .35s;
+}
+
+.toast-danger{background:#991b1b;color:#fee2e2;}
+.toast-success{background:#14532d;color:#bbf7d0;}
+.toast-info{background:#1d4ed8;color:#dbeafe;}
+
+.start-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  background:rgba(15,23,42,.38);
+  backdrop-filter:blur(5px);
+}
+
+.start-overlay.hidden{display:none;}
+.start-panel{
+  width:min(500px,92vw);
+  border-radius:22px;
+  background:#fff;
+  border:2px solid #bfdbfe;
+  box-shadow:0 18px 44px rgba(15,23,42,.24);
+  padding:24px;
+  text-align:center;
+}
+
+.start-panel h2{margin:0 0 8px;color:#0f172a;font-size:29px;line-height:1.05;}
+.start-panel p{margin:0 auto 16px;max-width:400px;color:#4b5563;font-weight:900;line-height:1.25;}
+.start-panel .btn{width:min(270px,100%);font-size:18px;}
+.start-status{margin-top:12px;color:#4b5563;font-weight:900;min-height:22px;}
+
+@media(max-width:880px){
+  body{align-items:flex-start;padding:8px;}
+  .layout{grid-template-columns:1fr;}
+}
+
+@media(max-width:620px){
+  .top-bar{position:relative;}
+  .round-panel{grid-template-columns:1fr;text-align:center;}
+  .letter-tile{min-height:130px;}
+  .letter{font-size:82px;}
+  .baskets{grid-template-columns:1fr;}
+  .basket{text-align:center;}
+  .btn{flex:1 1 auto;}
+  .select-row{align-items:stretch;flex-direction:column;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Articulation mouth family game">
+    <div class="top-bar">
+      <div class="head">Articulation Maze</div>
+      <div class="subhead-note">Listen to the letter, then match where the sound is made.</div>
+      <div class="hud">
+        <div class="hud-group">
+          <div class="pill">Round <strong id="hud-round">1 / 12</strong></div>
+          <div class="pill">Score <strong id="hud-score">0</strong></div>
+          <div class="pill">Streak <strong id="hud-streak">0</strong></div>
+        </div>
+        <div class="hud-group">
+          <div class="pill">Best <strong id="hud-best">0</strong></div>
+          <div class="pill status-neutral" id="status-pill">Ready</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="game-card" aria-labelledby="round-title">
+        <div class="round-panel">
+          <button class="letter-tile" id="letter-tile" type="button" draggable="true" aria-label="Current Arabic letter">
+            <span class="letter" id="letter-display">ب</span>
+          </button>
+          <div class="prompt">
+            <h2 id="round-title">Where is this sound made?</h2>
+            <p id="round-clue">Listen first. Then tap the letter and choose a basket, or drag the letter into it.</p>
+            <div class="chip-row">
+              <span class="chip" id="mode-chip">Starter sounds</span>
+              <span class="chip" id="answer-chip">4 baskets</span>
+              <span class="chip" id="listen-chip">Listen first</span>
+            </div>
+            <div class="btn-row">
+              <button class="btn" id="btn-listen" type="button">Listen</button>
+              <button class="btn btn-ghost btn-explainer" id="btn-clue" type="button">Play clue</button>
+              <button class="btn btn-ghost" id="btn-next" type="button">Skip</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="baskets" id="baskets" aria-label="Mouth family baskets">
+          <button class="basket" type="button" data-family="lips">
+            <strong>Lips</strong>
+            <span>Sounds made with the lips</span>
+          </button>
+          <button class="basket" type="button" data-family="frontTongue">
+            <strong>Front tongue</strong>
+            <span>Tongue touches teeth or front roof</span>
+          </button>
+          <button class="basket" type="button" data-family="backTongue">
+            <strong>Back tongue</strong>
+            <span>Back of the tongue lifts</span>
+          </button>
+          <button class="basket" type="button" data-family="throat">
+            <strong>Throat</strong>
+            <span>Sound starts in the throat</span>
+          </button>
+        </div>
+
+        <div class="feedback-card" id="feedback-card">Tap Start Articulation Maze to begin.</div>
+        <div class="progress-wrap" aria-label="Round progress">
+          <div class="progress-label">
+            <span id="progress-label">0 of 12 matched</span>
+            <span id="badge-label">Badge 0</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+      </section>
+
+      <aside class="side-card">
+        <div>
+          <div class="side-section-title">Practice Set</div>
+          <div class="select-row">
+            <select id="mode-select" aria-label="Choose practice set">
+              <option value="starter" selected>Starter sounds</option>
+              <option value="mixed">Mixed mouth places</option>
+              <option value="review">Review missed</option>
+            </select>
+            <button class="btn btn-ghost" id="btn-apply-mode" type="button">Apply</button>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Controls</div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-hint" type="button">Hint</button>
+            <button class="btn btn-ghost" id="btn-reset" type="button">Reset</button>
+            <button class="btn btn-ghost btn-explainer" id="btn-explainer" type="button">Play explainer</button>
+          </div>
+        </div>
+
+        <div class="mt-3 settings-grid">
+          <div class="side-section-title">Settings</div>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-auto-listen" checked>
+            <span>Auto listen</span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-gentle" checked>
+            <span>Gentle mode</span>
+          </label>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Coach</div>
+          <div class="coach-box" id="coach-box">
+            <strong>Ready?</strong> Match each letter to a mouth place.
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">How to play</div>
+          <div class="tip-box">
+            <strong>Listen</strong> to the letter sound.<br/>
+            <strong>Tap</strong> the letter, then tap a basket.<br/>
+            <strong>Drag</strong> the letter into a basket if you want.<br/>
+            <strong>Hint</strong> shows the mouth-place clue.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<div class="start-overlay" id="start-overlay">
+  <div class="start-panel" role="dialog" aria-modal="true" aria-labelledby="start-title">
+    <h2 id="start-title">Ready for Mouth Sounds?</h2>
+    <p>Tap Start Articulation Maze to hear the explainer. Then listen and match each Arabic letter to the place where the sound is made.</p>
+    <button class="btn" type="button" id="start-game-btn">Start Articulation Maze</button>
+    <div class="start-status" id="start-status">Listen to the explainer first.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const CACHE_BUST = "?v=a4";
+const EXPLAINER_AUDIO_PATH = "games/articulation-maze/explainer/articulation_maze_how_to_use.mp3";
+const EXPLAINER_AUDIO_VERSION = "20260615b";
+const EXPLAINER_SEEN_KEY = "pq_articulation_maze_explainer_seen_v2";
+const CLUE_AUDIO_BASE = "games/articulation-maze/clues/";
+const CLUE_AUDIO_VERSION = "20260615a";
+const ROUND_COUNT = 12;
+
+const FAMILIES = {
+  lips:{
+    label:"Lips",
+    clue:"Use your lips together or rounded.",
+    examples:"Baa, Meem, Faa, Waw",
+    sound:"lip sound",
+    letters:["ب","م","ف","و"]
+  },
+  frontTongue:{
+    label:"Front tongue",
+    clue:"The front of the tongue works near the teeth or front roof.",
+    examples:"Taa, Daal, Seen, Laam, Noon",
+    sound:"front tongue sound",
+    letters:["ت","د","س","ز","ص","ل","ن","ر","ث","ذ"]
+  },
+  backTongue:{
+    label:"Back tongue",
+    clue:"The back of the tongue lifts up.",
+    examples:"Qaaf and Kaaf",
+    sound:"back tongue sound",
+    letters:["ق","ك"]
+  },
+  throat:{
+    label:"Throat",
+    clue:"The sound starts in the throat.",
+    examples:"Ayn, Haa, Khaa, Ghayn",
+    sound:"throat sound",
+    letters:["ء","ه","ع","ح","غ","خ"]
+  }
+};
+
+const LETTERS = [
+  {ch:"ب", slug:"baa", audio:"alph_02.mp3", name:"Baa", family:"lips", hint:"Close the lips, then pop the sound."},
+  {ch:"م", slug:"meem", audio:"alph_24.mp3", name:"Meem", family:"lips", hint:"The lips close and the sound hums."},
+  {ch:"ف", slug:"faa", audio:"alph_20.mp3", name:"Faa", family:"lips", hint:"Air passes by the lip area."},
+  {ch:"و", slug:"waw", audio:"alph_27.mp3", name:"Waw", family:"lips", hint:"The lips round for this sound."},
+  {ch:"ت", slug:"taa", audio:"alph_03.mp3", name:"Taa", family:"frontTongue", hint:"The tongue touches near the upper teeth."},
+  {ch:"د", slug:"daal", audio:"alph_08.mp3", name:"Daal", family:"frontTongue", hint:"The tongue tip taps near the teeth."},
+  {ch:"س", slug:"seen", audio:"alph_12.mp3", name:"Seen", family:"frontTongue", hint:"Air slides at the front of the mouth."},
+  {ch:"ل", slug:"laam", audio:"alph_23.mp3", name:"Laam", family:"frontTongue", hint:"The tongue tip touches the front roof."},
+  {ch:"ن", slug:"noon", audio:"alph_25.mp3", name:"Noon", family:"frontTongue", hint:"The front tongue works and the sound hums."},
+  {ch:"ق", slug:"qaaf", audio:"alph_21.mp3", name:"Qaaf", family:"backTongue", hint:"The back of the tongue lifts strongly."},
+  {ch:"ك", slug:"kaaf", audio:"alph_22.mp3", name:"Kaaf", family:"backTongue", hint:"The back of the tongue touches softly."},
+  {ch:"ء", slug:"hamzah", audio:"alph_29.mp3", name:"Hamzah", family:"throat", hint:"The sound starts from the throat opening."},
+  {ch:"ه", slug:"haa", audio:"alph_26.mp3", name:"Haa", family:"throat", hint:"A soft airy throat sound."},
+  {ch:"ع", slug:"ayn", audio:"alph_18.mp3", name:"Ayn", family:"throat", hint:"A deep middle throat sound."},
+  {ch:"ح", slug:"haa_deep", audio:"alph_06.mp3", name:"Haa deep", family:"throat", hint:"A warm airy throat sound."},
+  {ch:"خ", slug:"khaa", audio:"alph_07.mp3", name:"Khaa", family:"throat", hint:"A cool scratchy throat sound."},
+  {ch:"غ", slug:"ghayn", audio:"alph_19.mp3", name:"Ghayn", family:"throat", hint:"A deep rolling throat sound."}
+];
+
+const STARTER = ["ب","م","ف","ت","د","س","ل","ق","ك","ه","ع","خ"];
+const audioEl = new Audio();
+audioEl.preload = "auto";
+const clueAudio = new Audio();
+clueAudio.preload = "auto";
+const explainerAudio = new Audio();
+explainerAudio.preload = "auto";
+
+const refs = {
+  round:byId("hud-round"),
+  score:byId("hud-score"),
+  streak:byId("hud-streak"),
+  best:byId("hud-best"),
+  status:byId("status-pill"),
+  letterTile:byId("letter-tile"),
+  letterDisplay:byId("letter-display"),
+  roundClue:byId("round-clue"),
+  modeChip:byId("mode-chip"),
+  listenChip:byId("listen-chip"),
+  btnListen:byId("btn-listen"),
+  btnClue:byId("btn-clue"),
+  btnNext:byId("btn-next"),
+  btnHint:byId("btn-hint"),
+  btnReset:byId("btn-reset"),
+  btnApplyMode:byId("btn-apply-mode"),
+  btnExplainer:byId("btn-explainer"),
+  startOverlay:byId("start-overlay"),
+  startGameBtn:byId("start-game-btn"),
+  startStatus:byId("start-status"),
+  feedback:byId("feedback-card"),
+  progressLabel:byId("progress-label"),
+  progressFill:byId("progress-fill"),
+  badgeLabel:byId("badge-label"),
+  modeSelect:byId("mode-select"),
+  chkAutoListen:byId("chk-auto-listen"),
+  chkGentle:byId("chk-gentle"),
+  coach:byId("coach-box"),
+  baskets:Array.from(document.querySelectorAll(".basket"))
+};
+
+let state = freshState();
+let audioRunId = 0;
+let gameStarted = false;
+let dragged = false;
+
+function byId(id){
+  const el = document.getElementById(id);
+  if(!el) throw new Error("Missing element #" + id);
+  return el;
+}
+
+function freshState(){
+  return {
+    mode:"starter",
+    deck:[],
+    pos:0,
+    score:0,
+    streak:0,
+    badges:0,
+  missed:new Set(),
+  answered:false,
+  selected:false,
+  locked:false
+  };
+}
+
+function publicBasePath(){
+  const path = window.location.pathname || "";
+  if(path.indexOf("/pre_quraan_integration/") === 0) return "/pre_quraan_integration/";
+  if(path.indexOf("/pre_quraan_staging/") === 0) return "/pre_quraan_staging/";
+  return "/pre_quraan/";
+}
+
+function explainerAudioUrl(){
+  return publicBasePath() + EXPLAINER_AUDIO_PATH + "?v=" + EXPLAINER_AUDIO_VERSION;
+}
+
+function clueAudioUrl(item){
+  return publicBasePath() + CLUE_AUDIO_BASE + item.slug + ".mp3?v=" + CLUE_AUDIO_VERSION;
+}
+
+function letterAudioUrl(item){
+  return publicBasePath() + "lessons/alphabet/media/audio/male/" + item.audio + CACHE_BUST;
+}
+
+function hasSeenExplainer(){
+  try{
+    return window.localStorage.getItem(EXPLAINER_SEEN_KEY) === "1";
+  }catch(_error){
+    return false;
+  }
+}
+
+function markExplainerSeen(){
+  try{
+    window.localStorage.setItem(EXPLAINER_SEEN_KEY, "1");
+  }catch(_error){}
+}
+
+function setStartStatus(text){
+  refs.startStatus.textContent = text;
+}
+
+function stopLetterAudio(){
+  audioRunId += 1;
+  audioEl.pause();
+  audioEl.removeAttribute("src");
+  audioEl.load();
+}
+
+function stopClueAudio(){
+  clueAudio.pause();
+  clueAudio.removeAttribute("src");
+  clueAudio.load();
+}
+
+function stopExplainerAudio(){
+  explainerAudio.pause();
+  explainerAudio.removeAttribute("src");
+  explainerAudio.load();
+}
+
+function waitForAudioEnd(audio){
+  return new Promise((resolve,reject)=>{
+    const cleanup = ()=>{
+      audio.removeEventListener("ended", onEnded);
+      audio.removeEventListener("error", onError);
+    };
+    const onEnded = ()=>{
+      cleanup();
+      resolve(true);
+    };
+    const onError = ()=>{
+      cleanup();
+      reject(new Error("audio-error"));
+    };
+    audio.addEventListener("ended", onEnded, {once:true});
+    audio.addEventListener("error", onError, {once:true});
+  });
+}
+
+async function playExplainerAudio(firstLaunch, waitUntilDone){
+  stopLetterAudio();
+  stopClueAudio();
+  refs.btnExplainer.disabled = true;
+  refs.btnExplainer.textContent = "Playing...";
+  if(firstLaunch){
+    refs.startGameBtn.disabled = true;
+    refs.startGameBtn.textContent = "Playing...";
+    setStartStatus("Playing the explainer. The game starts after it finishes.");
+  }
+  try{
+    explainerAudio.pause();
+    explainerAudio.currentTime = 0;
+    explainerAudio.src = explainerAudioUrl();
+    await explainerAudio.play();
+    if(waitUntilDone){
+      await waitForAudioEnd(explainerAudio);
+    }
+    markExplainerSeen();
+    return true;
+  }catch(_error){
+    flash("Explainer audio did not load.", "danger");
+    if(firstLaunch){
+      setStartStatus("The explainer must play before the game starts. Tap Start again.");
+    }
+    return false;
+  }finally{
+    refs.btnExplainer.disabled = false;
+    refs.btnExplainer.textContent = "Play explainer";
+    refs.startGameBtn.disabled = false;
+    refs.startGameBtn.textContent = "Start Articulation Maze";
+  }
+}
+
+async function startFromIntro(){
+  const played = await playExplainerAudio(true, true);
+  if(!played) return;
+  gameStarted = true;
+  refs.startOverlay.classList.add("hidden");
+  setStartStatus("Listen and match the mouth family.");
+  if(refs.chkAutoListen.checked){
+    window.setTimeout(playCurrentAudio, 120);
+  }
+}
+
+function tryPlayUrl(url, runId){
+  return new Promise((resolve,reject)=>{
+    const cleanup = ()=>{
+      audioEl.removeEventListener("loadedmetadata", onReady);
+      audioEl.removeEventListener("error", onError);
+    };
+    const onReady = ()=>{
+      cleanup();
+      if(runId !== audioRunId){
+        reject(new Error("cancelled"));
+        return;
+      }
+      audioEl.play().then(resolve).catch(reject);
+    };
+    const onError = ()=>{
+      cleanup();
+      reject(new Error("load-failed"));
+    };
+    audioEl.pause();
+    audioEl.currentTime = 0;
+    audioEl.src = url;
+    audioEl.addEventListener("loadedmetadata", onReady, {once:true});
+    audioEl.addEventListener("error", onError, {once:true});
+    audioEl.load();
+  });
+}
+
+async function playCurrentAudio(){
+  const item = currentItem();
+  if(!item) return false;
+  stopExplainerAudio();
+  stopClueAudio();
+  const runId = ++audioRunId;
+  refs.btnListen.disabled = true;
+  setStatus("neutral","Playing sound...");
+  try{
+    await tryPlayUrl(letterAudioUrl(item), runId);
+    if(runId === audioRunId) setStatus("neutral","Now choose a basket.");
+    return true;
+  }catch(error){
+    if(error && error.message === "cancelled") return false;
+    setStatus("warn","Tap Play clue for help.");
+    return false;
+  }finally{
+    refs.btnListen.disabled = false;
+  }
+}
+
+async function playCurrentClue(){
+  const item = currentItem();
+  if(!item) return false;
+  stopLetterAudio();
+  stopExplainerAudio();
+  refs.btnClue.disabled = true;
+  refs.btnClue.textContent = "Playing...";
+  setStatus("neutral","Playing clue...");
+  try{
+    clueAudio.pause();
+    clueAudio.currentTime = 0;
+    clueAudio.src = clueAudioUrl(item);
+    await clueAudio.play();
+    setStatus("neutral","Choose the mouth basket.");
+    return true;
+  }catch(_error){
+    setStatus("warn","Clue audio did not load.");
+    flash("Clue voice did not load.", "danger");
+    return false;
+  }finally{
+    refs.btnClue.disabled = false;
+    refs.btnClue.textContent = "Play clue";
+  }
+}
+
+function shuffle(items){
+  const copy = items.slice();
+  for(let i=copy.length-1;i>0;i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function currentItem(){
+  return state.deck[state.pos] || null;
+}
+
+function makeDeck(mode){
+  if(mode === "review"){
+    const missed = LETTERS.filter(item => state.missed.has(item.ch));
+    return shuffle(missed.length ? missed : LETTERS).slice(0, ROUND_COUNT);
+  }
+  if(mode === "starter"){
+    return shuffle(LETTERS.filter(item => STARTER.includes(item.ch))).slice(0, ROUND_COUNT);
+  }
+  return shuffle(LETTERS).slice(0, ROUND_COUNT);
+}
+
+function modeLabel(mode){
+  if(mode === "mixed") return "Mixed mouth places";
+  if(mode === "review") return "Review missed";
+  return "Starter sounds";
+}
+
+function setStatus(type,text){
+  refs.status.textContent = text;
+  refs.status.classList.remove("status-good","status-bad","status-warn","status-neutral");
+  refs.status.classList.add(
+    type === "good" ? "status-good" :
+    type === "bad" ? "status-bad" :
+    type === "warn" ? "status-warn" :
+    "status-neutral"
+  );
+}
+
+function setFeedback(type,html){
+  refs.feedback.className = "feedback-card" + (type ? " " + type : "");
+  refs.feedback.innerHTML = html;
+}
+
+function setCoach(html){
+  refs.coach.innerHTML = html;
+}
+
+function flash(message,type){
+  const toast = document.createElement("div");
+  toast.className = "toast toast-" + (type || "info");
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  window.setTimeout(()=>{ toast.style.opacity = "0"; }, 1300);
+  window.setTimeout(()=>{ toast.remove(); }, 1700);
+}
+
+function bestScore(){
+  try{
+    return Number(window.localStorage.getItem("pq_articulation_maze_best_v2") || "0");
+  }catch(_error){
+    return 0;
+  }
+}
+
+function saveBest(){
+  const best = Math.max(bestScore(), state.score);
+  try{
+    window.localStorage.setItem("pq_articulation_maze_best_v2", String(best));
+  }catch(_error){}
+  refs.best.textContent = best;
+}
+
+function render(){
+  const item = currentItem();
+  if(!item) return;
+  state.answered = false;
+  state.locked = false;
+  state.selected = false;
+  clearBasketMarks();
+  updateSelection(false);
+  refs.letterDisplay.textContent = item.ch;
+  refs.round.textContent = (state.pos + 1) + " / " + state.deck.length;
+  refs.score.textContent = state.score;
+  refs.streak.textContent = state.streak;
+  refs.best.textContent = bestScore();
+  refs.modeChip.textContent = modeLabel(state.mode);
+  refs.roundClue.textContent = "Listen first. Then tap " + item.name + " and choose a basket, or drag it.";
+  refs.listenChip.textContent = refs.chkAutoListen.checked ? "Auto listen" : "Manual listen";
+  refs.progressLabel.textContent = state.pos + " of " + state.deck.length + " matched";
+  refs.progressFill.style.width = ((state.pos / Math.max(1,state.deck.length)) * 100) + "%";
+  refs.badgeLabel.textContent = "Badge " + state.badges;
+  setFeedback("", "Tap Listen, then tap the letter and choose a basket. You can also drag the letter.");
+  setCoach("<strong>" + item.name + ".</strong> Listen carefully and think about the mouth place.");
+  setStatus("neutral","Ready");
+  if(refs.chkAutoListen.checked && gameStarted){
+    window.setTimeout(playCurrentAudio, 120);
+  }
+}
+
+function showHint(){
+  const item = currentItem();
+  if(!item) return;
+  const family = FAMILIES[item.family];
+  setFeedback("warn","Hint: <strong>" + item.hint + "</strong>");
+  setCoach("<strong>" + family.label + " clue:</strong> " + family.clue + " Examples: " + family.examples + ".");
+  setStatus("warn","Hint shown.");
+  playCurrentClue();
+}
+
+function submitFamily(familyKey, basket){
+  if(state.locked) return;
+  const item = currentItem();
+  if(!item) return;
+  updateSelection(false);
+  if(item.family === familyKey){
+    handleCorrect(item,basket);
+  }else{
+    handleWrong(item,basket);
+  }
+}
+
+function handleCorrect(item,basket){
+  const family = FAMILIES[item.family];
+  state.locked = true;
+  state.answered = true;
+  state.score += 10 + Math.min(10,state.streak * 2);
+  state.streak += 1;
+  if((state.pos + 1) % 4 === 0) state.badges += 1;
+  if(basket) markBasket(basket,true);
+  setFeedback("success","Correct. <strong>" + item.name + "</strong> is a " + family.sound + ".");
+  setCoach("<strong>Nice listening.</strong> " + family.clue);
+  setStatus("good","Correct!");
+  flash("Correct mouth place!", "success");
+  saveBest();
+  window.setTimeout(nextRound, 900);
+}
+
+function handleWrong(item,basket){
+  const family = FAMILIES[item.family];
+  state.missed.add(item.ch);
+  state.streak = 0;
+  if(basket) markBasket(basket,false);
+  setStatus("bad","Try the clue.");
+  setFeedback("error","Not that basket. The clue is: <strong>" + item.hint + "</strong>");
+  setCoach("<strong>Look for " + family.label + ".</strong> " + family.clue);
+  playCurrentClue();
+  if(!refs.chkGentle.checked){
+    state.locked = true;
+    window.setTimeout(nextRound, 1200);
+  }
+  refs.score.textContent = state.score;
+  refs.streak.textContent = state.streak;
+}
+
+function nextRound(){
+  if(state.pos < state.deck.length - 1){
+    state.pos += 1;
+    render();
+    return;
+  }
+  finishGame();
+}
+
+function finishGame(){
+  state.locked = true;
+  refs.progressLabel.textContent = state.deck.length + " of " + state.deck.length + " matched";
+  refs.progressFill.style.width = "100%";
+  refs.score.textContent = state.score;
+  refs.streak.textContent = state.streak;
+  saveBest();
+  setStatus("good","Finished");
+  setFeedback("success","Round complete. Score: <strong>" + state.score + "</strong>. Tap Reset to play again.");
+  setCoach(state.missed.size
+    ? "<strong>Good work.</strong> Use Review missed to practice the tricky mouth places."
+    : "<strong>Excellent.</strong> You matched every mouth sound.");
+}
+
+function markBasket(basket,good){
+  basket.classList.remove("good","bad");
+  void basket.offsetWidth;
+  basket.classList.add(good ? "good" : "bad");
+  window.setTimeout(()=>basket.classList.remove("good","bad"),650);
+}
+
+function clearBasketMarks(){
+  refs.baskets.forEach(basket=>basket.classList.remove("good","bad","drag-over","select-ready"));
+}
+
+function updateSelection(selected){
+  state.selected = !!selected;
+  refs.letterTile.classList.toggle("selected", state.selected);
+  refs.baskets.forEach(basket=>basket.classList.toggle("select-ready", state.selected));
+  if(state.selected){
+    setStatus("neutral","Now tap a basket.");
+    setFeedback("", "Letter selected. Tap the matching mouth-family basket, or drag the tile.");
+  }
+}
+
+function resetGame(options){
+  const opts = options || {};
+  const oldMissed = state.missed;
+  state = freshState();
+  state.mode = opts.mode || refs.modeSelect.value || "starter";
+  if(opts.keepMissed) state.missed = oldMissed;
+  refs.modeSelect.value = state.mode;
+  state.deck = makeDeck(state.mode);
+  render();
+}
+
+refs.baskets.forEach(basket=>{
+  basket.addEventListener("click",()=>{
+    if(!state.selected){
+      updateSelection(true);
+    }
+    submitFamily(basket.dataset.family,basket);
+  });
+  basket.addEventListener("dragover",event=>{
+    event.preventDefault();
+    basket.classList.add("drag-over");
+  });
+  basket.addEventListener("dragleave",()=>basket.classList.remove("drag-over"));
+  basket.addEventListener("drop",event=>{
+    event.preventDefault();
+    basket.classList.remove("drag-over");
+    if(dragged) submitFamily(basket.dataset.family,basket);
+    dragged = false;
+  });
+});
+
+refs.letterTile.addEventListener("click",playCurrentAudio);
+refs.letterTile.addEventListener("dblclick",playCurrentAudio);
+refs.letterTile.addEventListener("pointerdown",()=>{
+  if(state.locked) return;
+  updateSelection(true);
+});
+refs.letterTile.addEventListener("dragstart",event=>{
+  dragged = true;
+  updateSelection(true);
+  if(event.dataTransfer){
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", currentItem() ? currentItem().ch : "");
+  }
+});
+refs.letterTile.addEventListener("dragend",()=>{
+  dragged = false;
+  clearBasketMarks();
+});
+
+refs.btnListen.addEventListener("click",playCurrentAudio);
+refs.btnClue.addEventListener("click",playCurrentClue);
+refs.btnNext.addEventListener("click",nextRound);
+refs.btnHint.addEventListener("click",showHint);
+refs.btnReset.addEventListener("click",()=>{ stopExplainerAudio(); stopClueAudio(); resetGame({mode:state.mode, keepMissed:true}); });
+refs.btnApplyMode.addEventListener("click",()=>{ stopClueAudio(); resetGame({mode:refs.modeSelect.value, keepMissed:true}); });
+refs.btnExplainer.addEventListener("click",()=>playExplainerAudio(false));
+refs.startGameBtn.addEventListener("click",startFromIntro);
+refs.chkAutoListen.addEventListener("change",()=>{ refs.listenChip.textContent = refs.chkAutoListen.checked ? "Auto listen" : "Manual listen"; });
+
+document.addEventListener("keydown",event=>{
+  const tag = (event.target && event.target.tagName) || "";
+  if(/INPUT|SELECT|TEXTAREA/.test(tag)) return;
+  if(!gameStarted) return;
+  if(event.key === " "){
+    event.preventDefault();
+    playCurrentAudio();
+  }
+  if(event.key === "h" || event.key === "H"){
+    event.preventDefault();
+    showHint();
+  }
+});
+
+function init(){
+  resetGame({mode:"starter"});
+}
+
+document.addEventListener("DOMContentLoaded", init);
+if(document.readyState === "interactive" || document.readyState === "complete"){
+  init();
+}
+})();
+</script>
+</body>
+</html>

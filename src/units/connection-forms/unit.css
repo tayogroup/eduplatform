@@ -1,0 +1,367 @@
+/* Unit-specific CSS overrides only.
+   Shared canvas/tile/unit UI lives in /pre_quraan/shared/css/unit-canvas.css.
+   Keep this file empty unless this unit truly needs a visual exception. */
+
+.grid-wrap .tile.pq-hide-detail-copy .translit,
+.grid-wrap .tile.pq-hide-detail-copy .en {
+  display: none !important;
+}
+
+.pq-joint-rules-active .grid-wrap {
+  display: none;
+}
+
+.pq-joint-rules {
+  direction: ltr;
+  width: min(1320px, calc(100% - 32px));
+  margin: 26px auto 40px;
+  color: #17324a;
+}
+
+.pq-joint-rules[hidden] {
+  display: none !important;
+}
+
+.pq-joint-rules__hero,
+.pq-joint-rules__summary article,
+.pq-joint-rule-card,
+.pq-joint-rules__non-connect,
+.pq-joint-rules__practice,
+.pq-joint-rules__remember {
+  border: 3px solid rgba(78, 190, 120, 0.45);
+  background: linear-gradient(135deg, rgba(255, 250, 225, 0.98), rgba(229, 255, 246, 0.96));
+  box-shadow: 0 18px 48px rgba(30, 105, 70, 0.14);
+}
+
+.pq-joint-rules__hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 22px;
+  align-items: center;
+  padding: clamp(18px, 4vw, 34px);
+  border-radius: 28px;
+}
+
+.pq-joint-rules__eyebrow {
+  margin: 0 0 8px;
+  color: #0e8f57;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.pq-joint-rules h1,
+.pq-joint-rules h2,
+.pq-joint-rules h3,
+.pq-joint-rules h4,
+.pq-joint-rules p {
+  margin-top: 0;
+}
+
+.pq-joint-rules h1 {
+  margin-bottom: 10px;
+  color: #063047;
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1.15;
+  text-align: right;
+}
+
+.pq-joint-rules p {
+  margin-bottom: 0;
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  line-height: 1.55;
+  font-weight: 750;
+}
+
+.pq-joint-rules__audio-btn {
+  min-height: 52px;
+  margin-top: 18px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: #3fbf71;
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(38, 145, 89, 0.24);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.pq-joint-rules__audio-btn:disabled {
+  cursor: progress;
+  opacity: 0.82;
+}
+
+.pq-joint-rules__audio-btn:focus-visible,
+.pq-joint-rules__audio-btn:hover {
+  outline: 4px solid rgba(53, 177, 105, 0.25);
+  transform: translateY(-1px);
+}
+
+.pq-joint-rules__join-demo {
+  display: grid;
+  place-items: center;
+  min-width: 220px;
+  min-height: 180px;
+  padding: 18px;
+  border-radius: 26px;
+  background: #fff5cf;
+  border: 4px solid #fffaf0;
+  color: #0b6a47;
+}
+
+.pq-joint-rules__join-demo span {
+  font-size: 2rem;
+  font-weight: 950;
+}
+
+.pq-joint-rules__join-demo strong {
+  font-size: 5rem;
+  line-height: 1;
+}
+
+.pq-joint-rules__join-demo small {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.pq-joint-rules__summary,
+.pq-joint-rules__cards {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.pq-joint-rules__summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.pq-joint-rules__summary article {
+  display: grid;
+  place-items: center;
+  min-height: 170px;
+  padding: 18px;
+  border-radius: 24px;
+  text-align: center;
+}
+
+.pq-joint-rules__summary article > span {
+  color: #07944e;
+  font-size: 4rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.pq-joint-rules__summary b {
+  color: #102f49;
+  font-size: 1.35rem;
+}
+
+.pq-joint-rules__summary small {
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.pq-joint-rules__cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pq-joint-rule-card {
+  min-height: 220px;
+  padding: 22px;
+  border-radius: 24px;
+}
+
+.pq-joint-rule-card__num {
+  display: inline-flex;
+  margin-bottom: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #f7b94f;
+  color: #17324b;
+  font-weight: 950;
+}
+
+.pq-joint-rule-card h3,
+.pq-joint-rules__non-connect h2,
+.pq-joint-rules__practice h2,
+.pq-joint-rules__remember h2 {
+  color: #102f49;
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.pq-joint-rules__arabic {
+  color: #07944e;
+  font-size: 2.25rem;
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.pq-joint-rules__examples {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.pq-joint-rules__examples span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(16, 115, 79, 0.18);
+  font-size: 1.08rem;
+  font-weight: 850;
+}
+
+.pq-joint-rules__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pq-joint-rules__chip {
+  display: inline-grid;
+  place-items: center;
+  min-width: 52px;
+  min-height: 48px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fff7d7;
+  color: #0b6a47;
+  border: 2px solid #f0c761;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.pq-joint-rules__non-connect,
+.pq-joint-rules__practice,
+.pq-joint-rules__remember {
+  margin-top: 18px;
+  padding: 24px;
+  border-radius: 24px;
+}
+
+.pq-joint-rules__non-connect .pq-joint-rules__chip {
+  min-width: 70px;
+  font-size: 2.2rem;
+}
+
+.pq-joint-rules__practice {
+  display: grid;
+  gap: 12px;
+}
+
+.pq-joint-rules__practice section {
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(16, 115, 79, 0.18);
+}
+
+.pq-joint-rules__practice h4 {
+  margin-bottom: 8px;
+  color: #0b6a47;
+}
+
+.pq-joint-rules__practice section div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pq-joint-rules__practice section span {
+  display: grid;
+  place-items: center;
+  min-width: 92px;
+  min-height: 56px;
+  border-radius: 15px;
+  background: #fff7d7;
+  color: #07944e;
+  border: 2px solid #f0c761;
+  font-size: 2rem;
+  font-weight: 950;
+}
+
+.pq-joint-rules__footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.pq-joint-rules__footer button {
+  min-width: 230px;
+  min-height: 64px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffcc61, #ff9851);
+  color: #112d44;
+  box-shadow: 0 12px 24px rgba(201, 118, 36, 0.24);
+  font: inherit;
+  font-size: 1.18rem;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.pq-joint-rules__footer button:focus-visible,
+.pq-joint-rules__footer button:hover {
+  outline: 4px solid rgba(53, 177, 105, 0.25);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 860px) {
+  .pq-joint-rules {
+    width: min(100% - 18px, 720px);
+    margin-top: 18px;
+  }
+
+  .pq-joint-rules__hero,
+  .pq-joint-rules__summary,
+  .pq-joint-rules__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .pq-joint-rules h1 {
+    text-align: center;
+  }
+
+  .pq-joint-rules__hero {
+    text-align: center;
+  }
+
+  .pq-joint-rules__join-demo {
+    justify-self: center;
+    min-width: min(260px, 100%);
+  }
+}
+
+/* Rules audio/title polish. */
+.pq-joint-rules__eyebrow{
+  font-size:clamp(1.45rem,2.7vw,2.2rem);
+  text-align:center;
+  text-transform:none;
+}
+.pq-joint-rules h1{
+  font-size:clamp(1.45rem,2.8vw,2.7rem);
+}
+.pq-joint-rules__audio-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:max-content;
+  max-width:100%;
+  margin:18px auto 18px;
+}
+
+/* Rules Muqattiat canvas standardization. */
+.pq-joint-rules{width:min(1180px,calc(100% - 36px));margin:26px auto 34px;direction:ltr;color:#17243a;}
+.pq-joint-rules__hero,.pq-joint-rule-card,.pq-joint-rules__summary,.pq-joint-rules__non-connect,.pq-joint-rules__practice,.pq-joint-rules__remember{border:3px solid rgba(70,189,113,.52);background:linear-gradient(180deg,#fffdf2 0%,#eafff0 100%);box-shadow:0 16px 36px rgba(29,95,61,.14);}
+.pq-joint-rules__hero{border-radius:28px;padding:24px;text-align:center;}
+.pq-joint-rules__eyebrow{display:inline-flex;align-items:center;justify-content:center;min-width:96px;min-height:48px;margin:0 auto 8px;padding:0 24px;border-radius:999px;background:#ffc957;color:#3c2a08;font-size:clamp(1.2rem,2.3vw,2rem);font-weight:1000;box-shadow:inset 0 0 0 3px rgba(255,255,255,.72);text-transform:none;text-align:center;white-space:normal;}
+.pq-joint-rules h1{margin:4px 0 8px;color:#069746;font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;font-size:clamp(1.45rem,2.8vw,2.7rem);line-height:1.08;text-align:center;}
+.pq-joint-rules p{max-width:780px;margin-left:auto;margin-right:auto;font-size:1.14rem;font-weight:800;color:#31435a;}
+.pq-joint-rules__audio-btn{display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;min-height:52px;margin:0 auto 18px;padding:0 22px;border:0;border-radius:999px;background:#3fbf71;color:#fff;box-shadow:0 10px 20px rgba(38,145,89,.24);font:inherit;font-size:1rem;font-weight:950;cursor:pointer;}

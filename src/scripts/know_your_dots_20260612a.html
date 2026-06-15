@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Know Your Dots - Arabic Letter Sorting</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Noto+Naskh+Arabic:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-rose:#fff1f7;
+  --bg-mint:#f0fff7;
+  --bg-sky:#eff9ff;
+  --panel:#ffffff;
+  --ink:#123047;
+  --muted:#52677a;
+  --good:#15803d;
+  --bad:#dc2626;
+  --warn:#b45309;
+  --tile:#fffaf0;
+  --tile-border:#ffcf7a;
+  --chip-border:#bfdbfe;
+  --shadow:0 16px 36px rgba(15,23,42,.16),0 6px 12px rgba(15,23,42,.1);
+  --radius-card:20px;
+  --radius-btn:16px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;}
+
+body{
+  min-height:100vh;
+  font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.45;
+  background:
+    radial-gradient(circle at 16% 11%, #ffe3a3 0 11%, transparent 12%),
+    radial-gradient(circle at 84% 14%, #b6f5d0 0 10%, transparent 11%),
+    linear-gradient(135deg,var(--bg-rose),var(--bg-sky) 48%,var(--bg-mint));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+
+button,select,input{font:inherit;}
+.page{width:100%;max-width:1180px;}
+
+.sheet{
+  width:100%;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(148,163,184,.26);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,255,255,.94);
+  padding:10px 12px 8px;
+  box-shadow:0 4px 12px rgba(15,23,42,.08);
+  backdrop-filter:blur(8px);
+}
+
+.head{
+  padding:9px 14px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#aee8ff,#bff8c0 54%,#ffd6a5);
+  color:#1f2937;
+  font:900 22px/1 "Baloo 2";
+  text-align:center;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.08);
+}
+
+.subhead-note{
+  margin-top:6px;
+  font:800 14px "Baloo 2";
+  color:var(--muted);
+  text-align:center;
+}
+
+.hud{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:space-between;
+  margin-top:8px;
+}
+
+.hud-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+}
+
+.pill{
+  min-height:34px;
+  border-radius:999px;
+  padding:4px 12px;
+  background:#ffffffee;
+  border:1px solid var(--chip-border);
+  font:800 14px "Baloo 2";
+  color:#1e293b;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+}
+
+.pill strong{font-weight:900;}
+.status-good{color:var(--good);}
+.status-bad{color:var(--bad);}
+.status-warn{color:var(--warn);}
+.status-neutral{color:#64748b;}
+.hearts span{color:#ef4444;font-size:18px;}
+.stars{color:#f59e0b;letter-spacing:1px;}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(286px,1fr);
+  gap:12px;
+  padding:12px;
+}
+
+.game-card{
+  background:linear-gradient(135deg,#c7f9d4,#6ee7b7 62%,#93c5fd);
+  border-radius:var(--radius-card);
+  padding:12px;
+  box-shadow:0 6px 14px rgba(15,23,42,.16);
+  display:grid;
+  gap:12px;
+}
+
+.board-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.board-head h2{
+  width:max-content;
+  max-width:100%;
+  font:900 19px/1.15 "Baloo 2";
+  padding:6px 12px;
+  border-radius:999px;
+  background:#ffffffee;
+  border:1px solid #bfdbfe;
+  color:#0f172a;
+}
+
+.board-sub{font:800 16px "Baloo 2";color:#1f2937;margin-top:6px;}
+
+.selected-card{
+  min-width:130px;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid #bfdbfe;
+  padding:8px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(15,23,42,.12);
+}
+
+.selected-card span{
+  display:block;
+  font:900 12px "Baloo 2";
+  color:#64748b;
+}
+
+.selected-letter{
+  min-height:48px;
+  font-family:"Noto Naskh Arabic","Scheherazade",serif;
+  font-size:44px;
+  font-weight:900;
+  line-height:1;
+  direction:rtl;
+  color:#111827;
+}
+
+.tiles-grid{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:9px;
+}
+
+.tile{
+  position:relative;
+  min-height:86px;
+  border-radius:18px;
+  border:2px solid var(--tile-border);
+  background:var(--tile);
+  box-shadow:0 6px 0 #f2c88c,0 9px 14px rgba(15,23,42,.12);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  padding:8px 5px;
+  transition:transform .08s, box-shadow .08s, border-color .08s, background .08s, opacity .12s;
+}
+
+.tile:hover:not(:disabled){transform:translateY(-2px);}
+.tile:disabled{cursor:not-allowed;opacity:.55;}
+.tile.selected{border-color:#2563eb;box-shadow:0 0 0 4px rgba(96,165,250,.35),0 6px 0 #93c5fd;}
+.tile.correct{background:#dcfce7;border-color:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.25),0 6px 0 #86efac;}
+.tile.wrong{background:#fee2e2;border-color:#f97373;animation:shake .2s;}
+
+.letter{
+  font-family:"Noto Naskh Arabic","Scheherazade",serif;
+  font-size:44px;
+  font-weight:900;
+  line-height:1;
+  direction:rtl;
+  color:#111827;
+}
+
+.tile-name{
+  position:absolute;
+  bottom:4px;
+  left:6px;
+  right:6px;
+  font:900 10px "Baloo 2";
+  color:#0f766e;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.tile-index{
+  position:absolute;
+  top:5px;
+  left:6px;
+  min-width:19px;
+  height:19px;
+  border-radius:999px;
+  background:#e0f2fe;
+  color:#1d4ed8;
+  display:grid;
+  place-items:center;
+  font:900 10px "Baloo 2";
+}
+
+.bins-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+
+.bin{
+  min-height:126px;
+  border:2px solid #d1a25b;
+  border-radius:18px;
+  background:
+    linear-gradient(135deg,#f1d29a,#e2b772 45%,#f1d29a),
+    repeating-linear-gradient(45deg,#f7d9a2 0 10px,#e2b772 10px 20px);
+  background-blend-mode:multiply;
+  box-shadow:inset 0 3px 5px rgba(0,0,0,.13),0 5px 0 #b68a4a;
+  cursor:pointer;
+  padding:10px;
+  display:grid;
+  gap:6px;
+  align-content:start;
+  color:#0f172a;
+  transition:transform .08s, border-color .08s, box-shadow .08s;
+}
+
+.bin:hover{transform:translateY(-2px);}
+.bin.drag-over,.bin.selected-target{border-color:#2563eb;box-shadow:0 0 0 4px rgba(96,165,250,.35),0 5px 0 #93c5fd;}
+.bin.good{border-color:#22c55e;}
+.bin.bad{border-color:#f97373;animation:shake .2s;}
+
+.bin-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  font:900 16px "Baloo 2";
+}
+
+.bin-sub{
+  font:800 12px "Baloo 2";
+  color:#334155;
+}
+
+.bin-count{
+  justify-self:start;
+  border-radius:999px;
+  background:#ffffffcc;
+  border:1px solid #e2e8f0;
+  padding:2px 8px;
+  font:900 12px "Baloo 2";
+}
+
+.feedback-card,.hint-card{
+  font:800 14px "Baloo 2";
+  border-radius:16px;
+  padding:9px 11px;
+  background:#e5f2ff;
+  border:1px dashed #93c5fd;
+  color:#4b5563;
+}
+
+.hint-card{background:#fff7ed;border-color:#fdba74;}
+.feedback-card.success{background:#dcfce7;border-color:#86efac;color:#14532d;}
+.feedback-card.error{background:#fee2e2;border-color:#fecaca;color:#7f1d1d;}
+.feedback-card strong,.hint-card strong{color:#0f172a;}
+
+.progress-wrap{
+  padding:8px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(191,219,254,.75);
+  border-radius:16px;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:5px;
+  color:#334155;
+  font:800 12px "Baloo 2";
+}
+
+.progress-track{height:12px;border-radius:999px;background:#e0f2fe;overflow:hidden;}
+.progress-fill{width:0%;height:100%;border-radius:999px;background:linear-gradient(90deg,#22c55e,#facc15,#fb923c);transition:width .25s ease;}
+
+.side-card{
+  background:#f8fafc;
+  border-radius:var(--radius-card);
+  border:1px solid #e5e7eb;
+  padding:12px;
+}
+
+.side-section-title{font:900 14px "Baloo 2";color:#0f172a;margin-bottom:4px;}
+
+.select-row{display:flex;gap:8px;align-items:center;}
+.select-row select{
+  width:100%;
+  min-width:0;
+  border-radius:999px;
+  border:1px solid #cbd5f5;
+  padding:7px 12px;
+  font:800 14px "Baloo 2";
+  background:#fff;
+  color:#0f172a;
+}
+
+.btn{
+  border:0;
+  border-radius:var(--radius-btn);
+  min-height:44px;
+  padding:.58rem 1rem;
+  font:900 15px "Baloo 2";
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:#143b29;
+  background:linear-gradient(135deg,#b9f5c7,#63d58c);
+  box-shadow:0 6px 12px rgba(39,148,99,.35);
+  transition:transform .08s, box-shadow .12s, opacity .12s;
+}
+
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 9px 18px rgba(39,148,99,.45);}
+.btn:active:not(:disabled){transform:translateY(1px);box-shadow:0 4px 10px rgba(39,148,99,.3);}
+.btn:focus-visible,.tile:focus-visible,.bin:focus-visible,select:focus-visible{outline:4px solid rgba(37,99,235,.32);outline-offset:2px;}
+.btn:disabled{cursor:not-allowed;opacity:.58;box-shadow:none;}
+.btn-ghost{background:#fff;color:#0f172a;border:1px solid #cbd5f5;box-shadow:0 3px 8px rgba(15,23,42,.16);}
+.btn-explainer{background:linear-gradient(135deg,#dbeafe,#93c5fd);color:#1e3a8a;}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+
+.toggle-row{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font:800 13px "Baloo 2";
+  color:#0f172a;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#e5f2ff;
+  border:1px solid #bfdbfe;
+}
+
+.toggle-row input{accent-color:#22c55e;}
+.settings-grid{display:grid;gap:7px;}
+.mt-3{margin-top:10px;}
+
+.coach-box,.tip-box{
+  font-size:13px;
+  font-weight:800;
+  color:#4b5563;
+  background:#fff7ed;
+  border-radius:16px;
+  padding:8px 10px;
+  border:1px dashed #fdba74;
+}
+
+.tip-box{background:#e5f2ff;border-color:#93c5fd;}
+.coach-box strong,.tip-box strong{color:#0f172a;}
+
+.toast{
+  position:fixed;
+  left:50%;
+  top:14px;
+  transform:translateX(-50%);
+  z-index:999;
+  max-width:min(92vw,520px);
+  padding:8px 14px;
+  border-radius:14px;
+  font:900 14px "Baloo 2",system-ui;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+  text-align:center;
+  transition:opacity .35s;
+}
+
+.toast-danger{background:#991b1b;color:#fee2e2;}
+.toast-success{background:#14532d;color:#bbf7d0;}
+.toast-info{background:#1d4ed8;color:#dbeafe;}
+
+.start-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  background:rgba(15,23,42,.38);
+  backdrop-filter:blur(5px);
+}
+
+.start-overlay.hidden{display:none;}
+
+.start-panel{
+  width:min(480px,92vw);
+  border-radius:22px;
+  background:#fff;
+  border:2px solid #bfdbfe;
+  box-shadow:0 18px 44px rgba(15,23,42,.24);
+  padding:24px;
+  text-align:center;
+}
+
+.start-panel h2{
+  margin:0 0 8px;
+  color:#0f172a;
+  font-size:28px;
+  line-height:1.05;
+}
+
+.start-panel p{
+  margin:0 auto 16px;
+  max-width:380px;
+  color:#4b5563;
+  font-weight:900;
+  line-height:1.25;
+}
+
+.start-panel .btn{
+  width:min(260px,100%);
+  font-size:18px;
+}
+
+.start-status{
+  margin-top:12px;
+  color:#4b5563;
+  font-weight:900;
+  min-height:22px;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-4px);}
+  50%{transform:translateX(4px);}
+  75%{transform:translateX(-4px);}
+  100%{transform:translateX(0);}
+}
+
+@media(max-width:900px){
+  body{align-items:flex-start;padding:8px;}
+  .layout{grid-template-columns:1fr;}
+  .head{font-size:20px;}
+}
+
+@media(max-width:620px){
+  .top-bar{position:relative;}
+  .board-head{grid-template-columns:1fr;}
+  .tiles-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .bins-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .tile{min-height:78px;}
+  .letter{font-size:38px;}
+  .select-row{flex-direction:column;align-items:stretch;}
+  .btn{flex:1 1 auto;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Know Your Dots game">
+    <div class="top-bar">
+      <div class="head">Know Your Dots</div>
+      <div class="subhead-note">Listen, look at the dotless shape, then sort it into the right dots basket.</div>
+      <div class="hud">
+        <div class="hud-group">
+          <div class="pill">Score <strong id="hud-score">0</strong></div>
+          <div class="pill">Streak <strong id="hud-streak">0</strong> <span id="hud-stars" class="stars"></span></div>
+          <div class="pill">Sorted <strong id="hud-sorted">0 / 28</strong></div>
+        </div>
+        <div class="hud-group">
+          <div class="pill">Tries <span id="hud-lives" class="hearts"></span></div>
+          <div class="pill status-neutral" id="status-pill">Pick a tile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="game-card" aria-labelledby="board-title">
+        <header class="board-head">
+          <div>
+            <h2 id="board-title">Sort by dot count</h2>
+            <div class="board-sub">Tap a tile, then tap a basket. You can also drag the tile into a basket.</div>
+          </div>
+          <div class="selected-card" aria-live="polite">
+            <span>Selected</span>
+            <div class="selected-letter" id="selected-letter">?</div>
+          </div>
+        </header>
+
+        <div id="tiles-grid" class="tiles-grid" aria-label="Letter tiles"></div>
+
+        <div class="bins-grid" aria-label="Dot baskets">
+          <button class="bin" type="button" data-cat="none">
+            <div class="bin-title"><span>○ No dots</span><strong>0</strong></div>
+            <div class="bin-sub">No dot letters</div>
+            <div class="bin-count">Left <span id="count-none">0</span></div>
+          </button>
+          <button class="bin" type="button" data-cat="one">
+            <div class="bin-title"><span>• One dot</span><strong>1</strong></div>
+            <div class="bin-sub">One dot letters</div>
+            <div class="bin-count">Left <span id="count-one">0</span></div>
+          </button>
+          <button class="bin" type="button" data-cat="two">
+            <div class="bin-title"><span>•• Two dots</span><strong>2</strong></div>
+            <div class="bin-sub">Two dot letters</div>
+            <div class="bin-count">Left <span id="count-two">0</span></div>
+          </button>
+          <button class="bin" type="button" data-cat="three">
+            <div class="bin-title"><span>••• Three dots</span><strong>3</strong></div>
+            <div class="bin-sub">Three dot letters</div>
+            <div class="bin-count">Left <span id="count-three">0</span></div>
+          </button>
+        </div>
+
+        <div class="feedback-card" id="feedback-card">Choose a letter tile to begin.</div>
+        <div class="hint-card" id="hint-card"><strong>Hint:</strong> Dots may be hidden on the tile. Listen and think of the full letter.</div>
+
+        <div class="progress-wrap" aria-label="Sorting progress">
+          <div class="progress-label">
+            <span id="progress-label">0 of 28 sorted</span>
+            <span id="badge-label">Badge 0</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+      </section>
+
+      <aside class="side-card">
+        <div>
+          <div class="side-section-title">Practice Mode</div>
+          <div class="select-row">
+            <select id="mode-select" aria-label="Choose practice mode">
+              <option value="all" selected>All letters</option>
+              <option value="easy">Easy mix</option>
+              <option value="one">One-dot focus</option>
+              <option value="two-three">Two/three dots</option>
+              <option value="missed">Review missed</option>
+            </select>
+            <button class="btn btn-ghost" id="btn-apply-mode" type="button">Apply</button>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Controls</div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-listen" type="button">Listen</button>
+            <button class="btn btn-ghost" id="btn-hint" type="button">Hint</button>
+            <button class="btn btn-ghost" id="btn-reset" type="button">Reset</button>
+            <button class="btn btn-ghost btn-explainer" id="btn-explainer" type="button">Play explainer</button>
+          </div>
+        </div>
+
+        <div class="mt-3 settings-grid">
+          <div class="side-section-title">Settings</div>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-gentle" checked>
+            <span>Gentle mode</span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-show-names" checked>
+            <span>Show names</span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-auto-listen" checked>
+            <span>Auto listen</span>
+          </label>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Coach</div>
+          <div class="coach-box" id="coach-box">
+            <strong>Ready?</strong> Pick a tile and sort it by the full letter's dots.
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">How to play</div>
+          <div class="tip-box">
+            <strong>Tap</strong> a letter tile, then tap a basket.<br/>
+            <strong>Drag</strong> the tile into the basket if you want to move it by hand.<br/>
+            <strong>Space</strong> plays the selected sound.<br/>
+            <strong>Hint</strong> reveals the full dotted letter for the selected tile.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<div class="start-overlay" id="start-overlay">
+  <div class="start-panel" role="dialog" aria-modal="true" aria-labelledby="start-title">
+    <h2 id="start-title">Ready for Dots?</h2>
+    <p>Tap Start Know Your Dots to hear the explainer. Then choose a letter and sort it by how many dots it needs.</p>
+    <button class="btn" type="button" id="start-game-btn">Start Know Your Dots</button>
+    <div class="start-status" id="start-status">Listen to the explainer first.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const AUDIO_BASE = "https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/adult_male_alphabet/";
+const CACHE_BUST = "?v=a4";
+const EXPLAINER_AUDIO_PATH = "games/know-your-dots/explainer/know_your_dots_how_to_use.mp3";
+const EXPLAINER_AUDIO_VERSION = "20260615a";
+const EXPLAINER_SEEN_KEY = "pq_know_your_dots_explainer_seen_v1";
+const MAX_LIVES = 3;
+const BADGE_SIZE = 7;
+const CATS = ["none","one","two","three"];
+const CAT_LABELS = {
+  none:"no dots",
+  one:"one dot",
+  two:"two dots",
+  three:"three dots"
+};
+
+const LETTERS = [
+  { ch:"ا", displayCh:"ا", dotsCat:"none", name:"Alif" },
+  { ch:"ح", displayCh:"ح", dotsCat:"none", name:"Haa" },
+  { ch:"د", displayCh:"د", dotsCat:"none", name:"Daal" },
+  { ch:"ر", displayCh:"ر", dotsCat:"none", name:"Raa" },
+  { ch:"س", displayCh:"س", dotsCat:"none", name:"Seen" },
+  { ch:"ص", displayCh:"ص", dotsCat:"none", name:"Saad" },
+  { ch:"ط", displayCh:"ط", dotsCat:"none", name:"Taa heavy" },
+  { ch:"ع", displayCh:"ع", dotsCat:"none", name:"Ayn" },
+  { ch:"ك", displayCh:"ك", dotsCat:"none", name:"Kaaf" },
+  { ch:"ل", displayCh:"ل", dotsCat:"none", name:"Laam" },
+  { ch:"م", displayCh:"م", dotsCat:"none", name:"Meem" },
+  { ch:"ه", displayCh:"ه", dotsCat:"none", name:"Haa soft" },
+  { ch:"و", displayCh:"و", dotsCat:"none", name:"Waw" },
+  { ch:"ب", displayCh:"ٮ", dotsCat:"one", name:"Baa" },
+  { ch:"ج", displayCh:"ح", dotsCat:"one", name:"Jeem" },
+  { ch:"خ", displayCh:"ح", dotsCat:"one", name:"Khaa" },
+  { ch:"ذ", displayCh:"د", dotsCat:"one", name:"Dhaal" },
+  { ch:"ز", displayCh:"ر", dotsCat:"one", name:"Zay" },
+  { ch:"ض", displayCh:"ص", dotsCat:"one", name:"Daad" },
+  { ch:"ظ", displayCh:"ط", dotsCat:"one", name:"Zaa heavy" },
+  { ch:"غ", displayCh:"ع", dotsCat:"one", name:"Ghayn" },
+  { ch:"ف", displayCh:"ڡ", dotsCat:"one", name:"Faa" },
+  { ch:"ن", displayCh:"ں", dotsCat:"one", name:"Noon" },
+  { ch:"ت", displayCh:"ٮ", dotsCat:"two", name:"Taa" },
+  { ch:"ق", displayCh:"ٯ", dotsCat:"two", name:"Qaaf" },
+  { ch:"ي", displayCh:"ى", dotsCat:"two", name:"Yaa" },
+  { ch:"ث", displayCh:"ٮ", dotsCat:"three", name:"Thaa" },
+  { ch:"ش", displayCh:"س", dotsCat:"three", name:"Sheen" }
+];
+
+const audioEl = new Audio();
+audioEl.preload = "auto";
+const explainerAudio = new Audio();
+explainerAudio.preload = "auto";
+
+const refs = {
+  score:byId("hud-score"),
+  streak:byId("hud-streak"),
+  stars:byId("hud-stars"),
+  sorted:byId("hud-sorted"),
+  lives:byId("hud-lives"),
+  status:byId("status-pill"),
+  selectedLetter:byId("selected-letter"),
+  tilesGrid:byId("tiles-grid"),
+  feedback:byId("feedback-card"),
+  hint:byId("hint-card"),
+  progressLabel:byId("progress-label"),
+  progressFill:byId("progress-fill"),
+  badgeLabel:byId("badge-label"),
+  modeSelect:byId("mode-select"),
+  btnApplyMode:byId("btn-apply-mode"),
+  btnListen:byId("btn-listen"),
+  btnHint:byId("btn-hint"),
+  btnReset:byId("btn-reset"),
+  btnExplainer:byId("btn-explainer"),
+  startOverlay:byId("start-overlay"),
+  startGameBtn:byId("start-game-btn"),
+  startStatus:byId("start-status"),
+  chkGentle:byId("chk-gentle"),
+  chkShowNames:byId("chk-show-names"),
+  chkAutoListen:byId("chk-auto-listen"),
+  coach:byId("coach-box"),
+  counts:{
+    none:byId("count-none"),
+    one:byId("count-one"),
+    two:byId("count-two"),
+    three:byId("count-three")
+  },
+  bins:Array.from(document.querySelectorAll(".bin"))
+};
+
+let state = freshState();
+let audioRunId = 0;
+let draggedIndex = null;
+let gameStarted = false;
+
+function byId(id){
+  const el = document.getElementById(id);
+  if(!el) throw new Error("Missing element #" + id);
+  return el;
+}
+
+function publicBasePath(){
+  const path = window.location.pathname || "";
+  if(path.indexOf("/pre_quraan_integration/") === 0) return "/pre_quraan_integration/";
+  if(path.indexOf("/pre_quraan_staging/") === 0) return "/pre_quraan_staging/";
+  return "/pre_quraan/";
+}
+
+function explainerAudioUrl(){
+  return publicBasePath() + EXPLAINER_AUDIO_PATH + "?v=" + EXPLAINER_AUDIO_VERSION;
+}
+
+function hasSeenExplainer(){
+  try{
+    return window.localStorage.getItem(EXPLAINER_SEEN_KEY) === "1";
+  }catch(_error){
+    return false;
+  }
+}
+
+function markExplainerSeen(){
+  try{
+    window.localStorage.setItem(EXPLAINER_SEEN_KEY, "1");
+  }catch(_error){}
+}
+
+function setStartStatus(text){
+  refs.startStatus.textContent = text;
+}
+
+function stopLetterAudio(){
+  audioRunId += 1;
+  audioEl.pause();
+  audioEl.removeAttribute("src");
+  audioEl.load();
+}
+
+function stopExplainerAudio(){
+  explainerAudio.pause();
+  explainerAudio.removeAttribute("src");
+  explainerAudio.load();
+}
+
+function waitForAudioEnd(audio){
+  return new Promise((resolve,reject)=>{
+    const cleanup = ()=>{
+      audio.removeEventListener("ended", onEnded);
+      audio.removeEventListener("error", onError);
+    };
+    const onEnded = ()=>{
+      cleanup();
+      resolve(true);
+    };
+    const onError = ()=>{
+      cleanup();
+      reject(new Error("audio-error"));
+    };
+    audio.addEventListener("ended", onEnded, {once:true});
+    audio.addEventListener("error", onError, {once:true});
+  });
+}
+
+async function playExplainerAudio(firstLaunch, waitUntilDone){
+  stopLetterAudio();
+  refs.btnExplainer.disabled = true;
+  refs.btnExplainer.textContent = "Playing...";
+  if(firstLaunch){
+    refs.startGameBtn.disabled = true;
+    refs.startGameBtn.textContent = "Playing...";
+    setStartStatus("Playing the explainer. The game starts after it finishes.");
+  }
+  try{
+    explainerAudio.pause();
+    explainerAudio.currentTime = 0;
+    explainerAudio.src = explainerAudioUrl();
+    await explainerAudio.play();
+    if(waitUntilDone){
+      await waitForAudioEnd(explainerAudio);
+    }
+    markExplainerSeen();
+    return true;
+  }catch(_error){
+    flash("Explainer audio did not load.", "danger");
+    if(firstLaunch){
+      setStartStatus("The explainer must play before the game starts. Tap Start again.");
+    }
+    return false;
+  }finally{
+    refs.btnExplainer.disabled = false;
+    refs.btnExplainer.textContent = "Play explainer";
+    refs.startGameBtn.disabled = false;
+    refs.startGameBtn.textContent = "Start Know Your Dots";
+  }
+}
+
+function setGameStarted(started){
+  gameStarted = !!started;
+  refs.startOverlay.classList.toggle("hidden", gameStarted);
+}
+
+async function startFromIntro(){
+  const played = await playExplainerAudio(true, true);
+  if(!played) return;
+  setGameStarted(true);
+  setStartStatus("Choose a tile and sort it by dots.");
+}
+
+function freshState(){
+  return {
+    mode:"all",
+    deck:[],
+    sorted:new Set(),
+    missed:new Set(),
+    wrongByCard:new Map(),
+    selectedIndex:null,
+    score:0,
+    streak:0,
+    lives:MAX_LIVES,
+    badges:0
+  };
+}
+
+function filenameCandidates(ar){
+  switch(ar){
+    case "ه": return ["ه","هـ","ـه"];
+    case "ج": return ["ج","جـ"];
+    case "خ": return ["خ","خـ"];
+    default: return [ar];
+  }
+}
+
+function tryPlayUrl(url, runId){
+  return new Promise((resolve,reject)=>{
+    const cleanup = ()=>{
+      audioEl.removeEventListener("loadedmetadata", onReady);
+      audioEl.removeEventListener("error", onError);
+    };
+    const onReady = ()=>{
+      cleanup();
+      if(runId !== audioRunId){
+        reject(new Error("cancelled"));
+        return;
+      }
+      audioEl.play().then(resolve).catch(reject);
+    };
+    const onError = ()=>{
+      cleanup();
+      reject(new Error("load-failed"));
+    };
+    audioEl.pause();
+    audioEl.currentTime = 0;
+    audioEl.src = url;
+    audioEl.addEventListener("loadedmetadata", onReady, {once:true});
+    audioEl.addEventListener("error", onError, {once:true});
+    audioEl.load();
+  });
+}
+
+async function playLetterAudio(letter){
+  if(!letter) return false;
+  const runId = ++audioRunId;
+  refs.btnListen.disabled = true;
+  for(const candidate of filenameCandidates(letter.ch)){
+    const url = AUDIO_BASE + encodeURIComponent(candidate) + ".mp3" + CACHE_BUST;
+    try{
+      await tryPlayUrl(url, runId);
+      return true;
+    }catch(error){
+      if(error && error.message === "cancelled") return false;
+    }finally{
+      refs.btnListen.disabled = false;
+    }
+  }
+  refs.btnListen.disabled = false;
+  setStatus("bad","Audio did not load.");
+  flash("Audio not found for this letter.", "danger");
+  return false;
+}
+
+function shuffle(items){
+  const copy = items.slice();
+  for(let i=copy.length-1;i>0;i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function makeDeck(mode){
+  if(mode === "easy"){
+    return shuffle(LETTERS.filter(l => l.dotsCat === "none" || l.dotsCat === "one")).slice(0,16);
+  }
+  if(mode === "one"){
+    return shuffle(LETTERS.filter(l => l.dotsCat === "one"));
+  }
+  if(mode === "two-three"){
+    return shuffle(LETTERS.filter(l => l.dotsCat === "two" || l.dotsCat === "three"));
+  }
+  if(mode === "missed"){
+    const missed = LETTERS.filter((_,idx) => state.missed.has(idx));
+    return missed.length ? shuffle(missed) : shuffle(LETTERS).slice(0,12);
+  }
+  return shuffle(LETTERS);
+}
+
+function originalIndex(letter){
+  return LETTERS.indexOf(letter);
+}
+
+function selectedLetter(){
+  if(state.selectedIndex === null) return null;
+  return LETTERS[state.selectedIndex] || null;
+}
+
+function setStatus(type,text){
+  refs.status.textContent = text;
+  refs.status.classList.remove("status-good","status-bad","status-warn","status-neutral");
+  refs.status.classList.add(
+    type === "good" ? "status-good" :
+    type === "bad" ? "status-bad" :
+    type === "warn" ? "status-warn" :
+    "status-neutral"
+  );
+}
+
+function setFeedback(type,html){
+  refs.feedback.className = "feedback-card" + (type ? " " + type : "");
+  refs.feedback.innerHTML = html;
+}
+
+function setCoach(html){
+  refs.coach.innerHTML = html;
+}
+
+function flash(message,type){
+  const toast = document.createElement("div");
+  toast.className = "toast toast-" + (type || "info");
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  window.setTimeout(()=>{ toast.style.opacity = "0"; }, 1300);
+  window.setTimeout(()=>{ toast.remove(); }, 1700);
+}
+
+function render(){
+  refs.tilesGrid.innerHTML = "";
+  state.deck.forEach((letter,position)=>{
+    const idx = originalIndex(letter);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "tile";
+    btn.dataset.index = String(idx);
+    btn.draggable = true;
+    btn.disabled = state.sorted.has(idx);
+    btn.setAttribute("aria-label", letter.name + ", sort by dots");
+    if(state.selectedIndex === idx) btn.classList.add("selected");
+    if(state.sorted.has(idx)) btn.classList.add("correct");
+
+    const number = document.createElement("span");
+    number.className = "tile-index";
+    number.textContent = String(position + 1);
+
+    const glyph = document.createElement("span");
+    glyph.className = "letter";
+    glyph.textContent = letter.displayCh;
+
+    const name = document.createElement("span");
+    name.className = "tile-name";
+    name.textContent = refs.chkShowNames.checked ? letter.name : "";
+
+    btn.append(number,glyph,name);
+    btn.addEventListener("click",()=>selectTile(idx));
+    btn.addEventListener("dragstart",event=>{
+      draggedIndex = idx;
+      selectTile(idx);
+      if(event.dataTransfer){
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", String(idx));
+      }
+    });
+    btn.addEventListener("dragend",()=>{ draggedIndex = null; clearBinHighlights(); });
+    refs.tilesGrid.appendChild(btn);
+  });
+  refs.bins.forEach(bin => bin.classList.remove("selected-target"));
+  if(state.selectedIndex !== null){
+    markBinsReady();
+  }
+  updateHUD();
+}
+
+function selectTile(index){
+  if(state.sorted.has(index)) return;
+  state.selectedIndex = index;
+  const letter = selectedLetter();
+  refs.selectedLetter.textContent = letter ? letter.displayCh : "?";
+  setStatus("neutral","Now choose a basket.");
+  setFeedback("", letter ? "Selected <strong>" + letter.name + "</strong>. Tap a basket or drag the tile into one." : "Choose a tile.");
+  setCoach(letter ? "<strong>Listen and think:</strong> " + letter.name + " belongs to a dot basket." : "<strong>Pick a tile.</strong>");
+  render();
+  if(letter && refs.chkAutoListen.checked){
+    playLetterAudio(letter);
+  }
+}
+
+function updateHUD(){
+  refs.score.textContent = state.score;
+  refs.streak.textContent = state.streak;
+  refs.stars.textContent = state.streak > 1 ? "★".repeat(Math.min(3,state.streak)) : "";
+  refs.sorted.textContent = state.sorted.size + " / " + state.deck.length;
+  refs.lives.textContent = "";
+  for(let i=0;i<state.lives;i++){
+    const span = document.createElement("span");
+    span.textContent = "♥";
+    refs.lives.appendChild(span);
+  }
+  const total = Math.max(1,state.deck.length);
+  refs.progressLabel.textContent = state.sorted.size + " of " + total + " sorted";
+  refs.progressFill.style.width = ((state.sorted.size / total) * 100) + "%";
+  refs.badgeLabel.textContent = "Badge " + state.badges;
+
+  const counts = remainingCounts();
+  CATS.forEach(cat => refs.counts[cat].textContent = counts[cat]);
+}
+
+function remainingCounts(){
+  const counts = {none:0,one:0,two:0,three:0};
+  state.deck.forEach(letter => {
+    const idx = originalIndex(letter);
+    if(!state.sorted.has(idx)) counts[letter.dotsCat] += 1;
+  });
+  return counts;
+}
+
+function submitToCat(cat,bin){
+  const letter = selectedLetter();
+  if(!letter){
+    setStatus("warn","Pick a tile first.");
+    setFeedback("error","Pick a tile first, then choose a basket.");
+    return;
+  }
+  if(letter.dotsCat === cat){
+    handleCorrect(letter,bin);
+  }else{
+    handleWrong(letter,cat,bin);
+  }
+}
+
+function handleCorrect(letter,bin){
+  const idx = originalIndex(letter);
+  state.sorted.add(idx);
+  state.missed.delete(idx);
+  state.wrongByCard.delete(idx);
+  const points = 10 + Math.min(10,state.streak * 2);
+  state.score += points;
+  state.streak += 1;
+  if(state.sorted.size > 0 && state.sorted.size % BADGE_SIZE === 0){
+    state.badges = Math.max(state.badges, Math.floor(state.sorted.size / BADGE_SIZE));
+  }
+  if(bin) markBin(bin,true);
+  flash("Correct! +" + points, "success");
+  setStatus("good","Correct basket.");
+  setFeedback("success","<strong>" + letter.name + "</strong> has " + CAT_LABELS[letter.dotsCat] + ".");
+  setCoach("<strong>Nice sorting.</strong> " + letter.ch + " goes in " + CAT_LABELS[letter.dotsCat] + ".");
+  state.selectedIndex = null;
+  refs.selectedLetter.textContent = "?";
+  render();
+  if(state.sorted.size >= state.deck.length){
+    finishDeck();
+  }
+}
+
+function handleWrong(letter,cat,bin){
+  const idx = originalIndex(letter);
+  const misses = (state.wrongByCard.get(idx) || 0) + 1;
+  state.wrongByCard.set(idx, misses);
+  state.missed.add(idx);
+  state.streak = 0;
+  if(!refs.chkGentle.checked || misses >= 2){
+    state.lives = Math.max(0,state.lives - 1);
+  }
+  if(bin) markBin(bin,false);
+  markTileWrong(idx);
+  setStatus("bad","Try again.");
+  setFeedback("error","Not " + CAT_LABELS[cat] + ". Listen again and try the right basket.");
+  setCoach("<strong>Clue:</strong> " + letter.name + " has " + CAT_LABELS[letter.dotsCat] + ".");
+  updateHUD();
+  if(misses >= 2){
+    revealSelectedHint();
+  }
+  if(state.lives <= 0){
+    flash("New try. Keep learning the dots!", "danger");
+    window.setTimeout(()=>resetDeck({resetScore:true, mode:state.mode}),900);
+  }
+}
+
+function markTileWrong(index){
+  const tile = refs.tilesGrid.querySelector('.tile[data-index="' + index + '"]');
+  if(!tile) return;
+  tile.classList.add("wrong");
+  window.setTimeout(()=>tile.classList.remove("wrong"),240);
+}
+
+function markBin(bin,good){
+  bin.classList.remove("good","bad");
+  void bin.offsetWidth;
+  bin.classList.add(good ? "good" : "bad");
+  window.setTimeout(()=>bin.classList.remove("good","bad"),300);
+}
+
+function clearBinHighlights(){
+  refs.bins.forEach(bin => bin.classList.remove("drag-over","selected-target"));
+}
+
+function markBinsReady(){
+  refs.bins.forEach(bin => bin.classList.add("selected-target"));
+}
+
+function revealSelectedHint(){
+  const letter = selectedLetter();
+  if(!letter){
+    setFeedback("", "Pick a tile to see a hint.");
+    return;
+  }
+  refs.hint.innerHTML = "<strong>Hint:</strong> Full letter <strong>" + letter.ch + "</strong> (" + letter.name + ") has <strong>" + CAT_LABELS[letter.dotsCat] + "</strong>.";
+  setStatus("warn","Hint shown.");
+}
+
+function finishDeck(){
+  setStatus("good","Round complete.");
+  setFeedback("success","Round complete. Sorted <strong>" + state.sorted.size + " letters</strong>.");
+  setCoach(state.missed.size ? "<strong>Great effort.</strong> Use Review missed to practice tricky dot patterns." : "<strong>Excellent.</strong> You sorted every tile.");
+}
+
+function resetDeck(options){
+  const opts = options || {};
+  const oldMisses = state.missed;
+  const mode = opts.mode || state.mode || "all";
+  const keepMisses = opts.keepMisses !== false;
+  state = freshState();
+  state.mode = mode;
+  if(keepMisses) state.missed = oldMisses;
+  state.deck = makeDeck(mode);
+  refs.modeSelect.value = mode;
+  refs.selectedLetter.textContent = "?";
+  setStatus("neutral","Pick or drag a tile.");
+  setFeedback("", "Choose a letter tile, then tap or drag it into the right basket.");
+  setCoach("<strong>Ready?</strong> Sort each dotless shape by the full letter's dots.");
+  refs.hint.innerHTML = "<strong>Hint:</strong> Dots may be hidden on the tile. Listen and think of the full letter.";
+  render();
+}
+
+refs.bins.forEach(bin=>{
+  bin.addEventListener("click",()=>submitToCat(bin.dataset.cat,bin));
+  bin.addEventListener("dragover",event=>{
+    if(draggedIndex === null) return;
+    event.preventDefault();
+    bin.classList.add("drag-over");
+  });
+  bin.addEventListener("dragleave",()=>bin.classList.remove("drag-over"));
+  bin.addEventListener("drop",event=>{
+    event.preventDefault();
+    const idx = Number(event.dataTransfer ? event.dataTransfer.getData("text/plain") : draggedIndex);
+    if(Number.isInteger(idx)) state.selectedIndex = idx;
+    bin.classList.remove("drag-over");
+    submitToCat(bin.dataset.cat,bin);
+    draggedIndex = null;
+  });
+});
+
+refs.btnListen.addEventListener("click",()=>playLetterAudio(selectedLetter()));
+refs.btnHint.addEventListener("click",revealSelectedHint);
+refs.btnReset.addEventListener("click",()=>{ stopExplainerAudio(); resetDeck({resetScore:true, mode:state.mode, keepMisses:false}); });
+refs.btnApplyMode.addEventListener("click",()=>resetDeck({mode:refs.modeSelect.value}));
+refs.btnExplainer.addEventListener("click",()=>playExplainerAudio(false));
+refs.startGameBtn.addEventListener("click",startFromIntro);
+refs.chkShowNames.addEventListener("change",render);
+
+document.addEventListener("keydown",event=>{
+  const tag = (event.target && event.target.tagName) || "";
+  if(/INPUT|SELECT|TEXTAREA/.test(tag)) return;
+  if(!gameStarted) return;
+  if(event.key === " "){
+    event.preventDefault();
+    playLetterAudio(selectedLetter());
+  }
+  const number = Number(event.key);
+  if(Number.isInteger(number) && number >= 1 && number <= 4){
+    event.preventDefault();
+    const cat = CATS[number - 1];
+    const bin = refs.bins.find(item => item.dataset.cat === cat);
+    submitToCat(cat,bin);
+  }
+});
+
+resetDeck({resetScore:true, mode:"all", keepMisses:false});
+})();
+</script>
+</body>
+</html>

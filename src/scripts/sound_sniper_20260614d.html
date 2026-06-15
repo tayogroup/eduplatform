@@ -1,0 +1,1530 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Sound Sniper - Letter Audio Accuracy Challenge</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-rose:#fff1f7;
+  --bg-mint:#f0fff7;
+  --bg-sky:#eff9ff;
+  --panel:#ffffff;
+  --ink:#123047;
+  --muted:#52677a;
+  --good:#15803d;
+  --bad:#dc2626;
+  --warn:#b45309;
+  --blue:#2563eb;
+  --green:#22c55e;
+  --yellow:#facc15;
+  --orange:#fb923c;
+  --tile:#fffaf0;
+  --tile-border:#ffcf7a;
+  --chip-border:#bfdbfe;
+  --shadow:0 16px 36px rgba(15,23,42,.16),0 6px 12px rgba(15,23,42,.1);
+  --radius-card:20px;
+  --radius-btn:16px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html,body{min-height:100%;}
+
+body{
+  min-height:100vh;
+  font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.45;
+  background:
+    radial-gradient(circle at 18% 10%, #ffe3a3 0 12%, transparent 13%),
+    radial-gradient(circle at 84% 16%, #b6f5d0 0 10%, transparent 11%),
+    linear-gradient(135deg,var(--bg-rose),var(--bg-sky) 48%,var(--bg-mint));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+
+button,select,input{font:inherit;}
+
+.page{
+  width:100%;
+  max-width:1160px;
+}
+
+.sheet{
+  width:100%;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(148,163,184,.26);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,255,255,.94);
+  padding:10px 12px 8px;
+  box-shadow:0 4px 12px rgba(15,23,42,.08);
+  backdrop-filter:blur(8px);
+}
+
+.head{
+  padding:9px 14px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#aee8ff,#bff8c0 54%,#ffd6a5);
+  color:#1f2937;
+  font:900 22px/1 "Baloo 2";
+  text-align:center;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.08);
+}
+
+.subhead-note{
+  margin-top:6px;
+  font:800 14px "Baloo 2";
+  color:var(--muted);
+  text-align:center;
+}
+
+.hud{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:space-between;
+  margin-top:8px;
+}
+
+.hud-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+}
+
+.pill{
+  min-height:34px;
+  border-radius:999px;
+  padding:4px 12px;
+  background:#ffffffee;
+  border:1px solid var(--chip-border);
+  font:800 14px "Baloo 2";
+  color:#1e293b;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+}
+
+.pill strong{font-weight:900;}
+.status-good{color:var(--good);}
+.status-bad{color:var(--bad);}
+.status-warn{color:var(--warn);}
+.status-neutral{color:#64748b;}
+.hearts span{color:#ef4444;font-size:18px;}
+.stars{color:#f59e0b;letter-spacing:1px;}
+
+#countdown-pill{display:none;background:#fef3c7;border-color:#facc15;color:#92400e;}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(280px,1fr);
+  gap:12px;
+  padding:12px;
+}
+
+.board-card{
+  background:linear-gradient(135deg,#c7f9d4,#6ee7b7 62%,#93c5fd);
+  border-radius:var(--radius-card);
+  padding:12px;
+  box-shadow:0 6px 14px rgba(15,23,42,.16);
+}
+
+.board-header-main{
+  display:grid;
+  gap:8px;
+}
+
+.board-header-main h2{
+  width:max-content;
+  max-width:100%;
+  font:900 19px/1.15 "Baloo 2";
+  padding:6px 12px;
+  border-radius:999px;
+  background:#ffffffee;
+  border:1px solid #bfdbfe;
+  color:#0f172a;
+}
+
+.board-sub{font:800 16px "Baloo 2";color:#1f2937;}
+
+.board-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.board-tag{
+  background:#ffffffee;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid #bfdbfe;
+  font:800 12px "Baloo 2";
+  color:#1d4ed8;
+}
+
+.audio-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+.audio-continue,.toggle-row{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font:800 13px "Baloo 2";
+  color:#0f172a;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#e5f2ff;
+  border:1px solid #bfdbfe;
+}
+
+.audio-continue input,.toggle-row input{accent-color:#22c55e;}
+
+.btn{
+  border:0;
+  border-radius:var(--radius-btn);
+  min-height:44px;
+  padding:.58rem 1rem;
+  font:900 15px "Baloo 2";
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:#143b29;
+  background:linear-gradient(135deg,#b9f5c7,#63d58c);
+  box-shadow:0 6px 12px rgba(39,148,99,.35);
+  transition:transform .08s, box-shadow .12s, opacity .12s;
+}
+
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 9px 18px rgba(39,148,99,.45);}
+.btn:active:not(:disabled){transform:translateY(1px);box-shadow:0 4px 10px rgba(39,148,99,.3);}
+.btn:focus-visible,.choice:focus-visible,select:focus-visible{outline:4px solid rgba(37,99,235,.32);outline-offset:2px;}
+.btn:disabled{cursor:not-allowed;opacity:.58;box-shadow:none;}
+
+.btn-ghost{
+  background:#fff;
+  color:#0f172a;
+  border:1px solid #cbd5f5;
+  box-shadow:0 3px 8px rgba(15,23,42,.16);
+}
+
+.progress-wrap{
+  margin-top:12px;
+  padding:8px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(191,219,254,.75);
+  border-radius:16px;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:5px;
+  color:#334155;
+  font:800 12px "Baloo 2";
+}
+
+.progress-track{
+  height:12px;
+  border-radius:999px;
+  background:#e0f2fe;
+  overflow:hidden;
+}
+
+.progress-fill{
+  width:0%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#22c55e,#facc15,#fb923c);
+  transition:width .25s ease;
+}
+
+.choices-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin-top:12px;
+}
+
+.choice{
+  position:relative;
+  background:var(--tile);
+  border-radius:18px;
+  border:2px solid var(--tile-border);
+  padding:10px 8px;
+  min-height:122px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  box-shadow:0 6px 0 #f2c88c,0 10px 16px rgba(15,23,42,.1);
+  transition:transform .08s, box-shadow .08s, border-color .08s, background .08s;
+}
+
+.choice:hover:not(:disabled){transform:translateY(-2px);}
+.choice:disabled{cursor:not-allowed;opacity:.72;}
+
+.choice-letter{
+  font-size:68px;
+  font-weight:900;
+  line-height:1;
+  color:#111827;
+  direction:rtl;
+}
+
+.choice.correct{
+  background:#dcfce7;
+  border-color:#22c55e;
+  box-shadow:0 0 0 4px rgba(34,197,94,.32),0 6px 0 #86efac;
+}
+
+.choice.reveal{
+  background:#dcfce7;
+  border-color:#22c55e;
+  box-shadow:0 0 0 5px rgba(34,197,94,.38),0 6px 0 #86efac;
+}
+
+.choice.reveal::after{
+  content:"answer";
+  position:absolute;
+  right:8px;
+  bottom:7px;
+  border-radius:999px;
+  background:#14532d;
+  color:#dcfce7;
+  padding:2px 8px;
+  font:900 11px "Baloo 2";
+}
+
+.choice.wrong{
+  background:#fee2e2;
+  border-color:#f97373;
+  animation:shake .2s;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-4px);}
+  50%{transform:translateX(4px);}
+  75%{transform:translateX(-4px);}
+  100%{transform:translateX(0);}
+}
+
+.side-card{
+  background:#f8fafc;
+  border-radius:var(--radius-card);
+  border:1px solid #e5e7eb;
+  padding:12px;
+}
+
+.side-section-title{
+  font:900 14px "Baloo 2";
+  color:#0f172a;
+  margin-bottom:4px;
+}
+
+.select-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.select-row select{
+  width:100%;
+  border-radius:999px;
+  border:1px solid #cbd5f5;
+  padding:7px 12px;
+  font:800 14px "Baloo 2";
+  background:#fff;
+  color:#0f172a;
+}
+
+.btn-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:6px;
+}
+
+.tip-box,.coach-box{
+  font-size:13px;
+  font-weight:800;
+  color:#4b5563;
+  background:#e5f2ff;
+  border-radius:16px;
+  padding:8px 10px;
+  border:1px dashed #93c5fd;
+}
+
+.coach-box{
+  min-height:72px;
+  background:#fff7ed;
+  border-color:#fdba74;
+}
+
+.coach-box strong,.tip-box strong{color:#0f172a;}
+
+.diag-box{
+  min-height:66px;
+  max-height:118px;
+  overflow:auto;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font:800 12px/1.35 ui-monospace,SFMono-Regular,Consolas,monospace;
+  color:#334155;
+}
+
+.native-audio-box{
+  margin-top:8px;
+  padding:8px;
+  border-radius:14px;
+  background:#fff7ed;
+  border:1px solid #fdba74;
+}
+
+.native-audio-box[hidden]{display:none;}
+.native-audio-box p{margin:0 0 6px;font:800 13px "Baloo 2";color:#9a3412;}
+.native-audio-control{width:100%;height:36px;}
+
+.settings-grid{
+  display:grid;
+  gap:7px;
+}
+
+.mt-3{margin-top:10px;}
+
+.toast{
+  position:fixed;
+  left:50%;
+  top:14px;
+  transform:translateX(-50%);
+  z-index:999;
+  max-width:min(92vw,520px);
+  padding:8px 14px;
+  border-radius:14px;
+  font:900 14px "Baloo 2",system-ui;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+  text-align:center;
+  transition:opacity .35s;
+}
+
+.toast-danger{background:#991b1b;color:#fee2e2;}
+.toast-success{background:#14532d;color:#bbf7d0;}
+.toast-info{background:#1d4ed8;color:#dbeafe;}
+
+@media(max-width:820px){
+  body{align-items:flex-start;padding:8px;}
+  .layout{grid-template-columns:1fr;}
+  .head{font-size:20px;}
+}
+
+@media(max-width:560px){
+  .top-bar{position:relative;}
+  .choices-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .choice{min-height:104px;}
+  .choice-letter{font-size:58px;}
+  .btn{flex:1 1 auto;}
+  .audio-continue,.toggle-row{min-height:40px;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Sound Sniper game">
+    <div class="top-bar">
+      <div class="head">Sound Sniper - Letter Listening</div>
+      <div class="subhead-note">Listen first, then tap the Arabic letter you heard.</div>
+
+      <div class="hud">
+        <div class="hud-group">
+          <div class="pill">Pass <strong id="hud-level">1</strong></div>
+          <div class="pill">Score <strong id="hud-score">0</strong></div>
+          <div class="pill">Streak <strong id="hud-streak">0</strong> <span id="hud-stars" class="stars"></span></div>
+        </div>
+        <div class="hud-group">
+          <div class="pill">Correct <strong id="hud-correct">0%</strong></div>
+          <div class="pill">Incorrect <strong id="hud-incorrect">0%</strong></div>
+          <div class="pill status-neutral" id="status-pill">Tap Play Sound</div>
+          <div class="pill" id="countdown-pill"><span id="countdown-label">Next in</span> <strong id="countdown-seconds">3</strong>s</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="board-card" aria-labelledby="board-title">
+        <div class="board-header-main">
+          <h2 id="board-title">Round 1 - Which letter do you hear?</h2>
+          <div class="board-sub" id="board-desc">Tap Play Sound. The choices unlock after the sound starts.</div>
+          <div class="audio-row">
+            <button class="btn" id="btn-play" type="button" aria-keyshortcuts="Space">▶ Play Sound</button>
+            <button class="btn btn-ghost" id="btn-replay" type="button" disabled>↺ Replay</button>
+            <button class="btn btn-ghost" id="btn-stop" type="button">Ⅱ Pause</button>
+          </div>
+          <div class="board-tags">
+            <div class="board-tag" id="mode-tag">Mode: Mixed</div>
+            <div class="board-tag" id="difficulty-tag">4 choices</div>
+          </div>
+        </div>
+
+        <div class="progress-wrap" aria-label="Level progress">
+          <div class="progress-label">
+            <span id="progress-label">Catch 5 sounds to earn a badge</span>
+            <span id="badge-label">Badge 0</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+
+        <div id="choices-grid" class="choices-grid" aria-label="Letter choices"></div>
+      </section>
+
+      <aside class="side-card">
+        <div>
+          <div class="side-section-title">Mode</div>
+          <div class="select-row">
+            <select id="mode-select" aria-label="Choose game mode">
+              <option value="mix" selected>Mixed - sound + shape</option>
+              <option value="sound">Sound neighbours</option>
+              <option value="shape">Shape neighbours</option>
+              <option value="confusion_sets">Confusing sounds</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Controls</div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-skip" type="button">Skip</button>
+            <button class="btn btn-ghost" id="btn-reset" type="button">Reset</button>
+            <button class="btn btn-ghost" id="btn-hint" type="button">Hint</button>
+          </div>
+        </div>
+
+        <div class="mt-3 settings-grid">
+          <div class="side-section-title">Settings</div>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-keyboard" checked>
+            <span>Number keys</span>
+          </label>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Coach</div>
+          <div class="coach-box" id="coach-box">
+            <strong>Ready?</strong> Press Play Sound and use your careful listening ears.
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Audio diagnostics</div>
+          <div class="tip-box diag-box" id="audio-diag">Waiting for Play Sound.</div>
+          <div class="native-audio-box" id="audio-fallback-box" hidden>
+            <p id="audio-fallback-help">Tap the small play button below, then choose the letter.</p>
+            <audio class="native-audio-control" id="letter-audio" preload="auto" controls></audio>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">How to play</div>
+          <div class="tip-box">
+            <strong>1.</strong> Tap Play Sound.<br/>
+            <strong>2.</strong> Listen carefully.<br/>
+            <strong>3.</strong> Tap the matching letter.<br/>
+            <strong>Tip:</strong> Wrong or late answers beep, reveal the correct tile, then move on.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const CACHE_BUST = "?v=a5";
+const BADGE_SIZE = 5;
+const QUESTIONS_PER_PASS = 20;
+const TOTAL_PASSES = 3;
+const TOTAL_QUESTIONS = QUESTIONS_PER_PASS * TOTAL_PASSES;
+const ROUND_DELAY_MS = 900;
+const WRONG_REVEAL_MS = 2000;
+const ANSWER_TIMEOUT_MS = 3000;
+const AUTOPLAY_GAP_MS = 900;
+const MODE_SEQUENCE = ["mix","sound","shape","confusion_sets"];
+
+const audioEl = byId("letter-audio");
+audioEl.preload = "auto";
+audioEl.controls = true;
+
+const LETTERS = [
+  {key:"alif", ar:"ا", name:"Alif", shape:"upright"},
+  {key:"ba", ar:"ب", name:"Baa", shape:"bowl"},
+  {key:"ta", ar:"ت", name:"Taa", shape:"bowl"},
+  {key:"tha", ar:"ث", name:"Thaa", shape:"bowl"},
+  {key:"jim", ar:"ج", name:"Jeem", shape:"deep_bowl"},
+  {key:"ha2", ar:"ح", name:"Haa", shape:"deep_bowl"},
+  {key:"kha", ar:"خ", name:"Khaa", shape:"deep_bowl"},
+  {key:"dal", ar:"د", name:"Daal", shape:"stem"},
+  {key:"dhal", ar:"ذ", name:"Dhaal", shape:"stem"},
+  {key:"ra", ar:"ر", name:"Raa", shape:"semicircle"},
+  {key:"zay", ar:"ز", name:"Zay", shape:"semicircle"},
+  {key:"sin", ar:"س", name:"Seen", shape:"hat"},
+  {key:"shin", ar:"ش", name:"Sheen", shape:"hat"},
+  {key:"sad", ar:"ص", name:"Saad", shape:"block"},
+  {key:"dad", ar:"ض", name:"Daad", shape:"block"},
+  {key:"ta2", ar:"ط", name:"Taa heavy", shape:"arch"},
+  {key:"za2", ar:"ظ", name:"Zaa heavy", shape:"arch"},
+  {key:"ayn", ar:"ع", name:"Ayn", shape:"deep_throat"},
+  {key:"ghain", ar:"غ", name:"Ghayn", shape:"deep_throat"},
+  {key:"fa", ar:"ف", name:"Faa", shape:"loop"},
+  {key:"qaf", ar:"ق", name:"Qaaf", shape:"loop_double"},
+  {key:"kaf", ar:"ك", name:"Kaaf", shape:"hook"},
+  {key:"lam", ar:"ل", name:"Laam", shape:"lam"},
+  {key:"mim", ar:"م", name:"Meem", shape:"meem"},
+  {key:"nun", ar:"ن", name:"Noon", shape:"bowl"},
+  {key:"ha", ar:"ه", name:"Haa soft", shape:"haa"},
+  {key:"waw", ar:"و", name:"Waw", shape:"waw"},
+  {key:"ya", ar:"ي", name:"Yaa", shape:"bowl"}
+];
+
+const AUDIO_INDEX_BY_KEY = {
+  alif:"01", ba:"02", ta:"03", tha:"04", jim:"05", ha2:"06", kha:"07",
+  dal:"08", dhal:"09", ra:"10", zay:"11", sin:"12", shin:"13", sad:"14",
+  dad:"15", ta2:"16", za2:"17", ayn:"18", ghain:"19", fa:"20", qaf:"21",
+  kaf:"22", lam:"23", mim:"24", nun:"25", ha:"26", waw:"27", ya:"28"
+};
+
+const SOUND_GROUPS = {
+  "س":["س","ص","ز","ذ","ظ","ث","ش","ض"],
+  "ص":["ص","س","ز","ث","ط","ظ","ض","ش"],
+  "ث":["ث","س","ص","ز","ذ","ظ","ت","ش"],
+  "ت":["ت","ط","د","ض","ذ","ظ","ث","س"],
+  "ط":["ط","ت","ض","ظ","ص","س","د","ذ"],
+  "د":["د","ذ","ز","ت","ض","ظ","ر","ن"],
+  "ذ":["ذ","ز","ظ","د","ت","س","ث","ض"],
+  "ظ":["ظ","ذ","ض","ط","ص","س","ز","د"],
+  "ش":["ش","س","ث","ج","ز","ن","ي","د"],
+  "ج":["ج","ش","س","ز","ن","ي","د","ذ"],
+  "ز":["ز","ذ","ظ","س","ش","د","ن","ض"],
+  "ح":["ح","ه","ع","خ","غ","ق","ك","ف"],
+  "خ":["خ","غ","ح","ه","ق","ك","ع","ف"],
+  "ه":["ه","ح","ع","خ","غ","ق","ك","ف"],
+  "ع":["ع","غ","ح","خ","ه","ق","ك","ف"],
+  "غ":["غ","خ","ع","ق","ك","ه","ح","ف"],
+  "ق":["ق","ك","غ","خ","ح","ه","ف","ط"],
+  "ك":["ك","ق","غ","خ","ف","ت","ط","ح"],
+  "ب":["ب","م","ف","و","ن","ي","ل","ر"],
+  "م":["م","ب","ف","ن","و","ي","ل","ر"],
+  "ف":["ف","ب","ق","ك","ث","س","ص","ط"],
+  "و":["و","ب","م","ف","ي","ل","ر","ن"],
+  "ن":["ن","ر","ل","ب","م","د","ذ","ز"],
+  "ل":["ل","ر","ن","ب","د","ذ","ز","م"],
+  "ر":["ر","ل","ن","د","ذ","ز","ظ","ض"],
+  "ي":["ي","ن","ب","م","ش","ج","ز","د"]
+};
+
+const CONFUSION_SETS = [
+  ["س","ص","ث","ش","ز","ذ","ظ","ض"],
+  ["ت","ط","د","ض","ذ","ظ","ث","س"],
+  ["ح","خ","ع","غ","ه","ق","ك","ف"],
+  ["ر","ل","ن","د","ذ","ز","ظ","ض"],
+  ["ب","م","ف","و","ن","ي","ل","ر"],
+  ["ج","ش","س","ز","ي","ن","د","ذ"]
+];
+
+const MODE_LABELS = {
+  mix:"Mixed",
+  sound:"Sound neighbours",
+  shape:"Shape neighbours",
+  confusion_sets:"Confusing sounds"
+};
+
+const SHAPE_HINTS = {
+  upright:"a tall standing shape",
+  bowl:"a bowl shape with dots",
+  deep_bowl:"a deeper curved shape",
+  stem:"a short stem shape",
+  semicircle:"a small curved shape",
+  hat:"a wavy shape",
+  block:"a strong wide shape",
+  arch:"a tall arched shape",
+  deep_throat:"a deep throat letter shape",
+  loop:"a loop shape",
+  loop_double:"a loop with two dots",
+  hook:"a hook shape",
+  lam:"a tall lam shape",
+  meem:"a meem loop",
+  haa:"a round haa shape",
+  waw:"a waw curl"
+};
+
+const refs = {
+  hudLevel:byId("hud-level"),
+  hudScore:byId("hud-score"),
+  hudStreak:byId("hud-streak"),
+  hudStars:byId("hud-stars"),
+  hudCorrect:byId("hud-correct"),
+  hudIncorrect:byId("hud-incorrect"),
+  statusPill:byId("status-pill"),
+  countdownPill:byId("countdown-pill"),
+  countdownLabel:byId("countdown-label"),
+  countdownSeconds:byId("countdown-seconds"),
+  boardTitle:byId("board-title"),
+  boardDesc:byId("board-desc"),
+  modeTag:byId("mode-tag"),
+  difficultyTag:byId("difficulty-tag"),
+  progressLabel:byId("progress-label"),
+  progressFill:byId("progress-fill"),
+  badgeLabel:byId("badge-label"),
+  choicesGrid:byId("choices-grid"),
+  coachBox:byId("coach-box"),
+  audioDiag:byId("audio-diag"),
+  audioFallbackBox:byId("audio-fallback-box"),
+  audioFallbackHelp:byId("audio-fallback-help"),
+  btnPlay:byId("btn-play"),
+  btnReplay:byId("btn-replay"),
+  btnStop:byId("btn-stop"),
+  btnSkip:byId("btn-skip"),
+  btnReset:byId("btn-reset"),
+  btnHint:byId("btn-hint"),
+  modeSelect:byId("mode-select"),
+  chkKeyboard:byId("chk-keyboard")
+};
+
+const initialState = {
+  level:1,
+  score:0,
+  streak:0,
+  round:1,
+  mode:"mix",
+  completed:false,
+  correctCount:0,
+  incorrectCount:0,
+  paused:false,
+  pauseKind:"",
+  pauseRemainingMs:0,
+  pausedChoicesEnabled:false,
+  badges:0,
+  target:null,
+  options:[],
+  listened:false,
+  locked:false,
+  missesThisRound:new Set(),
+  lastAudioLetter:null
+};
+
+let state = cloneInitialState();
+let roundTimerId = null;
+let countdownIntervalId = null;
+let activeTimerKind = "";
+let activeTimerDeadline = 0;
+let audioRunId = 0;
+let lastTargetKey = null;
+let activeBlobUrl = "";
+let audioDebugLog = [];
+
+function byId(id){
+  const el = document.getElementById(id);
+  if(!el) throw new Error("Missing element #" + id);
+  return el;
+}
+
+function cloneInitialState(){
+  return {
+    ...initialState,
+    missesThisRound:new Set()
+  };
+}
+
+function filenameCandidates(ar){
+  switch(ar){
+    case "ه": return ["ه","هـ","ـه"];
+    case "ج": return ["ج","جـ"];
+    case "خ": return ["خ","خـ"];
+    default: return [ar];
+  }
+}
+
+function urlForFilename(filename){
+  return "";
+}
+
+function publicBasePath(){
+  const path = String(window.location.pathname || "");
+  if(path.indexOf("/pre_quraan_integration/") === 0) return "/pre_quraan_integration/";
+  if(path.indexOf("/pre_quraan_staging/") === 0) return "/pre_quraan_staging/";
+  return "/pre_quraan/";
+}
+
+function audioUrlForLetter(letter){
+  const index = letter && AUDIO_INDEX_BY_KEY[letter.key];
+  if(!index) return "";
+  return publicBasePath() + "lessons/alphabet/media/audio/male/alph_" + index + ".mp3" + CACHE_BUST;
+}
+
+function audioErrorText(){
+  const error = audioEl.error;
+  if(!error) return "none";
+  const names = {1:"aborted",2:"network",3:"decode",4:"unsupported"};
+  return (names[error.code] || "code-" + error.code) + (error.message ? ": " + error.message : "");
+}
+
+function logAudio(message){
+  const stamp = new Date().toLocaleTimeString();
+  audioDebugLog.push(stamp + " " + message);
+  audioDebugLog = audioDebugLog.slice(-8);
+  if(refs.audioDiag) refs.audioDiag.textContent = audioDebugLog.join("\n");
+}
+
+function revokeActiveBlobUrl(){
+  if(activeBlobUrl){
+    try{ URL.revokeObjectURL(activeBlobUrl); }catch(_e){}
+    activeBlobUrl = "";
+  }
+}
+
+function hideNativeAudioFallback(){
+  refs.audioFallbackBox.hidden = true;
+}
+
+function showNativeAudioFallback(message){
+  refs.audioFallbackHelp.textContent = message || "Tap the small play button below, then choose the letter.";
+  refs.audioFallbackBox.hidden = false;
+}
+
+function stopAudio(){
+  audioRunId += 1;
+  audioEl.pause();
+  audioEl.removeAttribute("src");
+  audioEl.load();
+  revokeActiveBlobUrl();
+  hideNativeAudioFallback();
+  logAudio("stopped");
+}
+
+function waitForPlaying(runId,label){
+  return new Promise((resolve,reject)=>{
+    let settled = false;
+    const cleanup = ()=>{
+      window.clearTimeout(timeoutId);
+      audioEl.removeEventListener("playing", onPlaying);
+      audioEl.removeEventListener("ended", onEnded);
+      audioEl.removeEventListener("error", onError);
+    };
+    const finish = ()=>{
+      if(settled) return;
+      settled = true;
+      cleanup();
+      if(runId !== audioRunId){
+        reject(new Error("cancelled"));
+        return;
+      }
+      resolve();
+    };
+    const onPlaying = ()=>{
+      logAudio(label + " playing readyState=" + audioEl.readyState + " networkState=" + audioEl.networkState);
+      finish();
+    };
+    const onEnded = ()=>{
+      logAudio(label + " ended");
+    };
+    const onError = ()=>{
+      if(settled) return;
+      settled = true;
+      cleanup();
+      reject(new Error(label + "-error: " + audioErrorText()));
+    };
+    const timeoutId = window.setTimeout(()=>{
+      if(settled) return;
+      settled = true;
+      cleanup();
+      reject(new Error(label + "-timeout readyState=" + audioEl.readyState + " networkState=" + audioEl.networkState));
+    }, 7000);
+    audioEl.addEventListener("playing", onPlaying, {once:true});
+    audioEl.addEventListener("ended", onEnded, {once:true});
+    audioEl.addEventListener("error", onError, {once:true});
+    const playAttempt = audioEl.play();
+    if(playAttempt && typeof playAttempt.then === "function"){
+      playAttempt.then(finish).catch(error => {
+        if(settled) return;
+        settled = true;
+        cleanup();
+        reject(new Error(label + "-blocked: " + (error && error.name ? error.name : "play-blocked")));
+      });
+    }
+  });
+}
+
+async function tryPlayUrl(url, runId){
+  if(!url) throw new Error("missing-url");
+  hideNativeAudioFallback();
+  revokeActiveBlobUrl();
+  audioEl.pause();
+  audioEl.src = url;
+  try{ audioEl.currentTime = 0; }catch(_e){}
+  audioEl.load();
+  logAudio("direct url " + url);
+  return waitForPlaying(runId,"direct");
+}
+
+async function tryPlayBlob(url, runId){
+  if(!url) throw new Error("missing-url");
+  logAudio("fetch " + url);
+  const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+  const timeoutId = controller ? window.setTimeout(()=>controller.abort(), 8000) : 0;
+  let res;
+  try{
+    res = await fetch(url, {cache:"reload", signal:controller ? controller.signal : undefined});
+  }finally{
+    if(timeoutId) window.clearTimeout(timeoutId);
+  }
+  if(!res.ok) throw new Error("fetch-http-" + res.status);
+  const blob = await res.blob();
+  logAudio("fetch ok " + blob.type + " " + blob.size + " bytes");
+  if(!blob.size) throw new Error("empty-audio-blob");
+  revokeActiveBlobUrl();
+  activeBlobUrl = URL.createObjectURL(blob);
+  audioEl.pause();
+  audioEl.src = activeBlobUrl;
+  try{ audioEl.currentTime = 0; }catch(_e){}
+  audioEl.load();
+  return waitForPlaying(runId,"blob");
+}
+
+async function playResolvedAudio(url, runId){
+  try{
+    await tryPlayUrl(url, runId);
+    return true;
+  }catch(error){
+    logAudio("direct failed " + (error && error.message || error));
+  }
+  if(runId !== audioRunId) return false;
+  await tryPlayBlob(url, runId);
+  return true;
+}
+
+async function playLetterAudio(ar){
+  const runId = ++audioRunId;
+  refs.btnPlay.disabled = true;
+  refs.btnReplay.disabled = true;
+  setStatus("neutral","Playing sound...");
+  const targetLetter = getLetterByAr(ar);
+  const audioUrl = audioUrlForLetter(targetLetter);
+  audioDebugLog = [];
+  logAudio("letter " + (targetLetter ? targetLetter.name + " " + targetLetter.key : "unknown"));
+
+  try{
+    await playResolvedAudio(audioUrl, runId);
+    if(runId === audioRunId && !state.paused){
+      state.listened = true;
+      state.lastAudioLetter = ar;
+      refs.btnReplay.disabled = false;
+      setChoicesEnabled(true);
+      setStatus("neutral","Choose the letter you heard.");
+      scheduleAnswerTimeout();
+    }
+    return true;
+  }catch(error){
+    if(error && error.message === "cancelled") return false;
+    logAudio("failed " + (error && error.message || error));
+    const wasBlocked = /blocked|NotAllowedError/i.test(String(error && error.message || error));
+    if(wasBlocked){
+      showNativeAudioFallback("Your browser blocked automatic sound. Tap the small play button below, listen, then choose the letter.");
+    }
+  }
+
+  if(runId === audioRunId && !state.paused){
+    state.listened = true;
+    refs.btnReplay.disabled = false;
+    refs.btnPlay.disabled = false;
+    setChoicesEnabled(true);
+    if(!refs.audioFallbackBox.hidden){
+      setStatus("warn","Tap the small audio play button, then choose.");
+      flash("Tap the small audio play button below.", "info");
+    }else{
+      setStatus("bad","Audio did not load. Try Replay or Skip.");
+      flash("Audio could not play. " + (audioUrl ? audioUrl.split("?")[0] : "No audio URL"), "danger");
+    }
+    scheduleAnswerTimeout();
+  }
+  return false;
+}
+
+function flash(message,type){
+  const toast = document.createElement("div");
+  toast.className = "toast toast-" + (type || "info");
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  window.setTimeout(()=>{ toast.style.opacity = "0"; }, 1300);
+  window.setTimeout(()=>{ toast.remove(); }, 1700);
+}
+
+function playIncorrectBeep(){
+  try{
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if(!AudioContextClass) return;
+    const ctx = new AudioContextClass();
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    oscillator.type = "square";
+    oscillator.frequency.setValueAtTime(180, ctx.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.18);
+    gain.gain.setValueAtTime(0.001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.16, ctx.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+    oscillator.start();
+    oscillator.stop(ctx.currentTime + 0.24);
+    window.setTimeout(()=>ctx.close().catch(()=>{}), 320);
+  }catch(_error){}
+}
+
+function setStatus(type,text){
+  refs.statusPill.textContent = text;
+  refs.statusPill.classList.remove("status-good","status-bad","status-warn","status-neutral");
+  refs.statusPill.classList.add(
+    type === "good" ? "status-good" :
+    type === "bad" ? "status-bad" :
+    type === "warn" ? "status-warn" :
+    "status-neutral"
+  );
+}
+
+function setCoach(html){
+  refs.coachBox.innerHTML = html;
+}
+
+function updateHUD(){
+  refs.hudLevel.textContent = currentPass() + "/" + TOTAL_PASSES + " - " + questionInPass() + "/" + QUESTIONS_PER_PASS;
+  refs.hudScore.textContent = state.score;
+  refs.hudStreak.textContent = state.streak;
+  refs.hudStars.textContent = state.streak > 1 ? "★".repeat(Math.min(3,state.streak)) : "";
+  const answered = state.correctCount + state.incorrectCount;
+  const correctPercent = answered ? Math.round((state.correctCount / answered) * 100) : 0;
+  const incorrectPercent = answered ? Math.round((state.incorrectCount / answered) * 100) : 0;
+  refs.hudCorrect.textContent = correctPercent + "%";
+  refs.hudIncorrect.textContent = incorrectPercent + "%";
+  const completedRounds = state.completed ? TOTAL_QUESTIONS : Math.min(TOTAL_QUESTIONS, answered);
+  refs.progressFill.style.width = ((completedRounds / TOTAL_QUESTIONS) * 100) + "%";
+  refs.progressLabel.textContent = "Pass " + currentPass() + " of " + TOTAL_PASSES + " · " + completedRounds + " of " + TOTAL_QUESTIONS + " questions complete";
+  refs.badgeLabel.textContent = state.correctCount + " right / " + state.incorrectCount + " wrong";
+}
+
+function shuffle(items){
+  const copy = items.slice();
+  for(let i=copy.length-1;i>0;i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function uniqueArs(ars){
+  return Array.from(new Set(ars)).filter(ar => LETTERS.some(letter => letter.ar === ar));
+}
+
+function getLetterByAr(ar){
+  return LETTERS.find(letter => letter.ar === ar) || null;
+}
+
+function getChoiceCount(){
+  return 6;
+}
+
+function currentPass(){
+  return Math.min(TOTAL_PASSES, Math.floor((Math.max(1, state.round) - 1) / QUESTIONS_PER_PASS) + 1);
+}
+
+function questionInPass(){
+  return ((Math.max(1, state.round) - 1) % QUESTIONS_PER_PASS) + 1;
+}
+
+function pickTarget(){
+  const pool = lastTargetKey
+    ? LETTERS.filter(letter => letter.key !== lastTargetKey)
+    : LETTERS;
+  const target = pool[Math.floor(Math.random() * pool.length)] || LETTERS[0];
+  lastTargetKey = target.key;
+  return target;
+}
+
+function modeForRound(round){
+  return MODE_SEQUENCE[(Math.max(1, round) - 1) % MODE_SEQUENCE.length];
+}
+
+function activeMode(){
+  return modeForRound(state.round);
+}
+
+function buildNeighbours(targetAr, mode){
+  const target = getLetterByAr(targetAr);
+  if(!target) return LETTERS.map(letter => letter.ar).filter(ar => ar !== targetAr);
+
+  const neighbours = new Set();
+  if(mode === "sound" || mode === "mix"){
+    (SOUND_GROUPS[targetAr] || []).forEach(ar => {
+      if(ar !== targetAr) neighbours.add(ar);
+    });
+  }
+  if(mode === "shape" || mode === "mix"){
+    LETTERS.forEach(letter => {
+      if(letter.shape === target.shape && letter.ar !== targetAr) neighbours.add(letter.ar);
+    });
+  }
+  if(mode === "confusion_sets"){
+    const set = CONFUSION_SETS.find(group => group.includes(targetAr));
+    (set || []).forEach(ar => {
+      if(ar !== targetAr) neighbours.add(ar);
+    });
+  }
+
+  return uniqueArs(Array.from(neighbours));
+}
+
+function pickTargetAndOptions(){
+  const target = pickTarget();
+  const targetAr = target.ar;
+  const needed = getChoiceCount();
+  const mode = activeMode();
+  let neighbours = shuffle(buildNeighbours(targetAr, mode));
+  if(neighbours.length === 0){
+    neighbours = shuffle(LETTERS.map(letter => letter.ar).filter(ar => ar !== targetAr));
+  }
+  const remaining = shuffle(
+    LETTERS
+      .map(letter => letter.ar)
+      .filter(ar => ar !== targetAr && !neighbours.includes(ar))
+  );
+  const optionArs = uniqueArs([targetAr].concat(neighbours, remaining)).slice(0, needed);
+  state.target = target;
+  state.options = shuffle(optionArs.map(getLetterByAr).filter(Boolean));
+}
+
+function renderRound(){
+  clearRoundTimer();
+  if(state.completed) return;
+  pickTargetAndOptions();
+  state.locked = false;
+  state.listened = false;
+  state.missesThisRound = new Set();
+
+  const choiceCount = getChoiceCount();
+  const mode = activeMode();
+  refs.boardTitle.textContent = "Pass " + currentPass() + " of " + TOTAL_PASSES + " - Question " + questionInPass() + " of " + QUESTIONS_PER_PASS;
+  refs.boardDesc.textContent = "Listen, then tap the Arabic letter. The game has 3 passes of 20 questions.";
+  refs.modeTag.textContent = "Mode: " + (MODE_LABELS[mode] || MODE_LABELS.mix);
+  refs.difficultyTag.textContent = choiceCount + " choices";
+  refs.choicesGrid.innerHTML = "";
+
+  state.options.forEach((letter,index)=>{
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "choice";
+    btn.dataset.key = letter.key;
+    btn.dataset.ar = letter.ar;
+    btn.disabled = true;
+    btn.setAttribute("aria-label", "Choice " + (index + 1) + ": Arabic letter " + letter.name);
+
+    const glyph = document.createElement("span");
+    glyph.className = "choice-letter";
+    glyph.textContent = letter.ar;
+
+    btn.append(glyph);
+    btn.addEventListener("click",()=>handleChoice(letter,btn));
+    refs.choicesGrid.appendChild(btn);
+  });
+
+  refs.btnPlay.disabled = false;
+  refs.btnReplay.disabled = !state.lastAudioLetter;
+  setStatus("neutral","Tap Play Sound.");
+  setCoach("<strong>Pass " + currentPass() + ", question " + questionInPass() + ".</strong> Listen first. This round uses " + (MODE_LABELS[mode] || MODE_LABELS.mix) + ".");
+  updateHUD();
+
+  scheduleAutoPlay(350);
+}
+
+function setChoicesEnabled(enabled){
+  refs.choicesGrid.querySelectorAll(".choice").forEach(btn => {
+    if(!btn.classList.contains("correct")) btn.disabled = !enabled;
+  });
+}
+
+function handleChoice(letter,button){
+  if(state.locked || state.paused) return;
+  if(!state.listened){
+    flash("Listen to the sound first.", "info");
+    setStatus("warn","Tap Play Sound first.");
+    return;
+  }
+
+  const correct = letter.key === state.target.key;
+  if(correct){
+    handleCorrect(button);
+  }else{
+    handleWrong(letter,button);
+  }
+}
+
+function handleCorrect(button){
+  clearRoundTimer();
+  state.locked = true;
+  setChoicesEnabled(false);
+  button.classList.add("correct");
+
+  const streakBonus = Math.min(5, state.streak) * 2;
+  const points = 10 + streakBonus;
+  state.score += points;
+  state.streak += 1;
+  state.level += 1;
+  state.correctCount += 1;
+  if((state.level - 1) % BADGE_SIZE === 0){
+    state.badges += 1;
+    flash("Badge earned! Great ears.", "success");
+  }else{
+    flash("Correct! +" + points, "success");
+  }
+  updateHUD();
+  setStatus("good","Great listening!");
+  setCoach("<strong>Nice!</strong> That was " + state.target.name + " " + state.target.ar + ".");
+
+  window.setTimeout(()=>{
+    advanceRound();
+  }, ROUND_DELAY_MS);
+}
+
+function handleWrong(letter,button){
+  clearRoundTimer();
+  state.locked = true;
+  setChoicesEnabled(false);
+  state.missesThisRound.add(letter.key);
+  button.classList.add("wrong");
+  window.setTimeout(()=>button.classList.remove("wrong"),240);
+  state.streak = 0;
+  state.incorrectCount += 1;
+
+  updateHUD();
+  const hint = hintForTarget();
+  setCoach("<strong>Good try.</strong> The answer was " + state.target.name + ". Clue: " + hint);
+  setStatus("bad","Incorrect. Watch the correct answer.");
+  playIncorrectBeep();
+  flash("Incorrect. Keep listening!", "danger");
+  window.setTimeout(revealAnswer, 240);
+  window.setTimeout(advanceRound, 240 + WRONG_REVEAL_MS);
+}
+
+function hintForTarget(){
+  if(!state.target) return "listen for the same sound.";
+  const shapeHint = SHAPE_HINTS[state.target.shape] || "look for its shape.";
+  const mode = activeMode();
+  if(mode === "shape"){
+    return "it has " + shapeHint + ".";
+  }
+  if(mode === "sound"){
+    return "it sounds like " + state.target.name + ".";
+  }
+  return state.target.name + " has " + shapeHint;
+}
+
+function revealAnswer(){
+  refs.choicesGrid.querySelectorAll(".choice").forEach(btn => {
+    if(btn.dataset.key === state.target.key){
+      btn.classList.add("reveal");
+    }
+    btn.disabled = true;
+  });
+}
+
+function giveHint(){
+  if(!state.target) return;
+  state.listened = true;
+  setChoicesEnabled(true);
+  refs.btnReplay.disabled = !state.lastAudioLetter;
+  setStatus("warn","Hint shown. Choose carefully.");
+  setCoach("<strong>Hint:</strong> " + hintForTarget());
+  flash("Hint: " + state.target.name, "info");
+}
+
+function clearRoundTimer(){
+  if(roundTimerId !== null){
+    clearTimeout(roundTimerId);
+    roundTimerId = null;
+  }
+  if(countdownIntervalId !== null){
+    clearInterval(countdownIntervalId);
+    countdownIntervalId = null;
+  }
+  refs.countdownPill.style.display = "none";
+  activeTimerKind = "";
+  activeTimerDeadline = 0;
+}
+
+function scheduleAutoPlay(delayMs){
+  clearRoundTimer();
+  let remaining = Math.max(1, Math.ceil(delayMs / 1000));
+  refs.countdownLabel.textContent = "Next in";
+  refs.countdownSeconds.textContent = remaining;
+  refs.countdownPill.style.display = "flex";
+  countdownIntervalId = setInterval(()=>{
+    remaining -= 1;
+    refs.countdownSeconds.textContent = Math.max(0, remaining);
+  }, 1000);
+  activeTimerKind = "auto";
+  activeTimerDeadline = Date.now() + delayMs;
+  roundTimerId = window.setTimeout(()=>{
+    clearRoundTimer();
+    if(!state.locked && state.target){
+      playLetterAudio(state.target.ar).finally(()=>{
+        refs.btnPlay.disabled = false;
+      });
+    }
+  }, delayMs);
+}
+
+function scheduleAnswerTimeout(durationMs){
+  clearRoundTimer();
+  const timeoutMs = Math.max(300, durationMs || ANSWER_TIMEOUT_MS);
+  let remaining = Math.ceil(timeoutMs / 1000);
+  refs.countdownLabel.textContent = "Answer in";
+  refs.countdownSeconds.textContent = remaining;
+  refs.countdownPill.style.display = "flex";
+  countdownIntervalId = setInterval(()=>{
+    remaining -= 1;
+    refs.countdownSeconds.textContent = Math.max(0, remaining);
+  }, 1000);
+  activeTimerKind = "answer";
+  activeTimerDeadline = Date.now() + timeoutMs;
+  roundTimerId = window.setTimeout(handleNoAnswer, timeoutMs);
+}
+
+function handleNoAnswer(){
+  clearRoundTimer();
+  if(state.locked || state.paused || !state.target) return;
+  state.locked = true;
+  state.listened = true;
+  setChoicesEnabled(false);
+  state.streak = 0;
+  state.incorrectCount += 1;
+  updateHUD();
+  setStatus("bad","Time up. Watch the correct answer.");
+  setCoach("<strong>Time up.</strong> The answer was " + state.target.name + " " + state.target.ar + ".");
+  playIncorrectBeep();
+  flash("Time up. Marked incorrect.", "danger");
+  window.setTimeout(revealAnswer, 240);
+  window.setTimeout(advanceRound, 240 + WRONG_REVEAL_MS);
+}
+
+function setPauseButton(paused){
+  refs.btnStop.textContent = paused ? "▶ Resume" : "Ⅱ Pause";
+}
+
+function pauseGame(){
+  if(state.completed || state.paused) return;
+  state.paused = true;
+  state.pauseKind = activeTimerKind;
+  state.pauseRemainingMs = activeTimerDeadline ? Math.max(300, activeTimerDeadline - Date.now()) : 0;
+  state.pausedChoicesEnabled = Array.from(refs.choicesGrid.querySelectorAll(".choice")).some(btn => !btn.disabled);
+  if(roundTimerId !== null){
+    clearTimeout(roundTimerId);
+    roundTimerId = null;
+  }
+  if(countdownIntervalId !== null){
+    clearInterval(countdownIntervalId);
+    countdownIntervalId = null;
+  }
+  audioEl.pause();
+  setChoicesEnabled(false);
+  refs.countdownPill.style.display = "none";
+  setPauseButton(true);
+  setStatus("warn","Paused.");
+  setCoach("<strong>Paused.</strong> Press Resume to continue.");
+}
+
+function resumeGame(){
+  if(!state.paused) return;
+  const kind = state.pauseKind;
+  const remaining = state.pauseRemainingMs;
+  const hadChoices = state.pausedChoicesEnabled;
+  state.paused = false;
+  state.pauseKind = "";
+  state.pauseRemainingMs = 0;
+  state.pausedChoicesEnabled = false;
+  setPauseButton(false);
+  if(state.completed || state.locked) return;
+  if(kind === "answer" && state.listened){
+    if(hadChoices) setChoicesEnabled(true);
+    setStatus("neutral","Choose the letter you heard.");
+    scheduleAnswerTimeout(remaining || ANSWER_TIMEOUT_MS);
+    return;
+  }
+  if(kind === "auto"){
+    setStatus("neutral","Resuming...");
+    scheduleAutoPlay(remaining || 350);
+    return;
+  }
+  if(state.target && !state.listened){
+    scheduleAutoPlay(250);
+  }else if(state.target && state.listened){
+    if(hadChoices) setChoicesEnabled(true);
+    scheduleAnswerTimeout(remaining || ANSWER_TIMEOUT_MS);
+  }
+}
+
+function advanceRound(){
+  if(state.round >= TOTAL_QUESTIONS){
+    finishGame();
+    return;
+  }
+  state.round += 1;
+  renderRound();
+}
+
+function finishGame(){
+  clearRoundTimer();
+  stopAudio();
+  state.completed = true;
+  state.locked = true;
+  setPauseButton(false);
+  refs.boardTitle.textContent = "Finish line - 3 passes complete!";
+  refs.boardDesc.textContent = "Great listening. Start over to race again.";
+  refs.choicesGrid.innerHTML = "";
+  refs.btnPlay.textContent = "↻ Start Over";
+  refs.btnPlay.disabled = false;
+  refs.btnReplay.disabled = true;
+  refs.progressFill.style.width = "100%";
+  refs.progressLabel.textContent = TOTAL_QUESTIONS + " of " + TOTAL_QUESTIONS + " questions complete";
+  setStatus("good","Finished!");
+  const answered = Math.max(1, state.correctCount + state.incorrectCount);
+  const correctPercent = Math.round((state.correctCount / answered) * 100);
+  const incorrectPercent = Math.round((state.incorrectCount / answered) * 100);
+  setCoach("<strong>Finished!</strong> Score " + state.score + ". Correct " + correctPercent + "%, incorrect " + incorrectPercent + "%.");
+  flash("Finish line! 3 passes complete.", "success");
+  updateHUD();
+}
+
+function resetGame(){
+  clearRoundTimer();
+  stopAudio();
+  state = cloneInitialState();
+  state.mode = refs.modeSelect.value || "mix";
+  setPauseButton(false);
+  refs.btnPlay.textContent = "▶ Play Sound";
+  updateHUD();
+  renderRound();
+}
+
+function skipRound(){
+  if(state.paused) return;
+  clearRoundTimer();
+  stopAudio();
+  state.streak = 0;
+  state.incorrectCount += 1;
+  flash("Skipped. New sound!", "info");
+  advanceRound();
+}
+
+refs.btnPlay.addEventListener("click",()=>{
+  if(state.completed){
+    resetGame();
+    return;
+  }
+  if(!state.target || state.locked || state.paused) return;
+  clearRoundTimer();
+  playLetterAudio(state.target.ar).finally(()=>{
+    refs.btnPlay.disabled = false;
+  });
+});
+
+refs.btnReplay.addEventListener("click",()=>{
+  if(state.paused) return;
+  const ar = state.lastAudioLetter || (state.target && state.target.ar);
+  if(!ar) return;
+  clearRoundTimer();
+  playLetterAudio(ar).finally(()=>{
+    refs.btnPlay.disabled = false;
+  });
+});
+
+refs.btnStop.addEventListener("click",()=>{
+  if(state.paused){
+    resumeGame();
+  }else{
+    pauseGame();
+  }
+});
+
+refs.btnSkip.addEventListener("click",skipRound);
+refs.btnReset.addEventListener("click",resetGame);
+refs.btnHint.addEventListener("click",giveHint);
+
+refs.modeSelect.addEventListener("change",()=>{
+  state.mode = refs.modeSelect.value || "mix";
+  state.round = 1;
+  state.streak = 0;
+  state.completed = false;
+  state.correctCount = 0;
+  state.incorrectCount = 0;
+  state.paused = false;
+  clearRoundTimer();
+  stopAudio();
+  setPauseButton(false);
+  flash("Three-pass race restarted.", "success");
+  renderRound();
+});
+
+document.addEventListener("keydown",(event)=>{
+  if(event.repeat) return;
+  const isTyping = /INPUT|SELECT|TEXTAREA/.test((event.target && event.target.tagName) || "");
+  if(isTyping) return;
+  if(event.code === "Space"){
+    event.preventDefault();
+    refs.btnPlay.click();
+    return;
+  }
+  if(!refs.chkKeyboard.checked) return;
+  const n = Number(event.key);
+  if(!Number.isInteger(n) || n < 1 || n > 9) return;
+  const choice = refs.choicesGrid.querySelectorAll(".choice")[n - 1];
+  if(choice && !choice.disabled) choice.click();
+});
+
+function init(){
+  state.mode = refs.modeSelect.value || "mix";
+  updateHUD();
+  renderRound();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+if(document.readyState === "interactive" || document.readyState === "complete"){
+  init();
+}
+})();
+</script>
+</body>
+</html>

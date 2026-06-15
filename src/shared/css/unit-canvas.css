@@ -33,6 +33,86 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+article[class*="-rule-card"].is-current-rule,
+.pq-rules-current-section{
+  position:relative;
+  border-color:#ffbd2e !important;
+  background:
+    linear-gradient(180deg,#fff8d9 0%,#eafff0 100%) !important;
+  box-shadow:
+    0 0 0 5px rgba(255,196,56,.28),
+    0 18px 42px rgba(36,132,78,.18) !important;
+  transform:translateY(-2px);
+  transition:box-shadow .22s ease, transform .22s ease, border-color .22s ease, background .22s ease;
+}
+
+.pq-rules-current-section::before{
+  content:"Playing now";
+  position:absolute;
+  top:10px;
+  right:12px;
+  z-index:2;
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:0 10px;
+  border-radius:999px;
+  background:#ffc957;
+  color:#3c2a08;
+  font-size:.78rem;
+  font-weight:1000;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.72);
+}
+
+article[class*="-rule-card"].is-current-rule [class*="__num"],
+article[class*="-rule-card"].is-current-rule [class*="__badge"],
+.pq-rules-current-section [class*="__num"],
+.pq-rules-current-section [class*="__badge"]{
+  background:#ffbd2e !important;
+  color:#24310b !important;
+}
+
+.pq-rules-current-cue{
+  display:inline !important;
+  border-radius:8px;
+  padding:1px 4px;
+  margin:0 1px;
+  background:#0cba63 !important;
+  color:#fff !important;
+  box-shadow:0 0 0 3px rgba(12,186,99,.16);
+  transform:none;
+  line-height:inherit;
+}
+
+.pq-rules-current-cue[dir="rtl"],
+.pq-rules-current-cue :where([dir="rtl"]){
+  font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri",serif;
+}
+
+.pq-rules-current-phrase{
+  border-radius:10px;
+  background:rgba(255,189,46,.3) !important;
+  box-shadow:0 0 0 3px rgba(255,189,46,.22);
+  color:#082238 !important;
+}
+
+p.pq-rules-current-phrase,
+li.pq-rules-current-phrase,
+h3.pq-rules-current-phrase,
+h4.pq-rules-current-phrase{
+  padding:4px 8px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  article[class*="-rule-card"].is-current-rule,
+  .pq-rules-current-section,
+  .pq-rules-current-cue,
+  .pq-rules-current-phrase{
+    transform:none;
+    transition:none;
+  }
+}
+
 .grid-wrap{
   margin-top:10px;
   padding:44px 38px 42px;
@@ -624,6 +704,20 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
   flex:0 0 auto;
 }
 
+.pq-account-id-pill{
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:2px solid rgba(37,99,235,.18);
+  background:#fff;
+  color:#17324a;
+  font:900 12px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  box-shadow:0 8px 18px rgba(16,47,76,.08);
+  overflow-wrap:anywhere;
+}
+
 .pq-mobile-mission-box,
 .pq-mobile-step-status,
 .pq-mobile-summary-row,
@@ -652,6 +746,12 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
     align-items:center;
     justify-content:center;
     border-radius:16px;
+  }
+
+  .pq-account-id-pill{
+    flex:1 1 100%;
+    justify-content:center;
+    border-radius:14px;
   }
 
   .brand{
@@ -1080,11 +1180,34 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
 .pq-header-action-row{
   display:flex;
   align-items:center;
-  justify-content:flex-end;
-  gap:12px;
-  flex-wrap:wrap;
+  gap:14px;
   width:100%;
-  margin-top:10px;
+  margin-top:12px;
+  direction:ltr;
+  flex-wrap:nowrap;
+}
+
+.pq-header-action-group{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  flex-wrap:nowrap;
+}
+
+.pq-header-action-group--primary{
+  justify-content:flex-start;
+  flex:0 1 auto;
+}
+
+.pq-header-action-group--qa{
+  justify-content:flex-end;
+  flex:0 0 auto;
+}
+
+.pq-header-action-spacer{
+  flex:1 1 24px;
+  min-width:24px;
 }
 
 .pq-header-back-btn{
@@ -1113,33 +1236,43 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
   transform:translateY(1px);
 }
 
-.pq-header-pause-slot{
+.pq-header-pause-slot,
+.pq-header-action-slot,
+.pq-header-previous-step-slot,
+.pq-header-qa-skip-slot{
   display:flex;
   align-items:stretch;
   justify-content:center;
 }
 
 .pq-header-action-slot{
-  display:flex;
-  align-items:stretch;
-  justify-content:center;
-  min-width:220px;
+  min-width:0;
+  flex:0 0 auto;
 }
 
 .pq-header-action-slot .pq-step-action-bar{
   display:flex;
-  width:100%;
+  width:auto;
   margin:0 !important;
 }
 
 .pq-header-action-slot .pq-step-action-btn{
-  width:100%;
-  min-width:220px;
+  width:auto;
+  min-width:150px;
+}
+
+.pq-header-previous-step-slot .pq-step-prev-btn{
+  min-width:150px;
+}
+
+.pq-header-qa-skip-slot .pq-step-skip-btn{
+  min-width:150px;
 }
 
 .pq-header-pause-slot #btnPause{
   min-height:52px;
   white-space:nowrap;
+  min-width:130px;
 }
 
 .pq-bilingual-control{
@@ -1150,6 +1283,10 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
   gap:2px;
   text-align:center;
   line-height:1.05;
+}
+
+.pq-bilingual-control[hidden]{
+  display:none !important;
 }
 
 .pq-bilingual-control__en,
@@ -1202,6 +1339,39 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
 @media (max-width:768px){
   .pq-header-action-row{
     display:none !important;
+  }
+
+  html.pq-browser-ui .pq-header-action-row{
+    display:flex !important;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+  }
+
+  html.pq-browser-ui .pq-header-action-group{
+    width:100%;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  html.pq-browser-ui .pq-header-action-spacer{
+    display:none;
+  }
+
+  html.pq-browser-ui .pq-header-action-slot .pq-step-action-btn,
+  html.pq-browser-ui .pq-header-previous-step-slot .pq-step-prev-btn,
+  html.pq-browser-ui .pq-header-qa-skip-slot .pq-step-skip-btn{
+    min-width:128px;
+  }
+
+  html.pq-browser-ui .pq-header-pause-slot #btnPause{
+    min-width:112px;
+  }
+
+  html.pq-browser-ui .pq-header-back-btn{
+    min-width:84px;
+    padding-inline:14px;
   }
 }
 
@@ -1520,6 +1690,14 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
 
   .wrap{
     padding-bottom:96px !important;
+  }
+
+  html.pq-browser-ui .pq-mobile-bottom-dock{
+    display:none !important;
+  }
+
+  html.pq-browser-ui .wrap{
+    padding-bottom:8px !important;
   }
 }
 

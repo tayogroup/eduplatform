@@ -1660,6 +1660,18 @@ async function __pqSpeakCallMoodleWs(params) {
     if (value === undefined || value === null) return;
     body.append(key, typeof value === 'object' ? JSON.stringify(value) : String(value));
   });
+  if (!body.has('pq_env')) {
+    try {
+      body.append('pq_env', String(
+        window.__prequran_environment ||
+        sessionStorage.getItem('pq_env') ||
+        (window.location.pathname.indexOf('/pre_quraan_integration/') >= 0 ? 'integration' :
+          (window.location.pathname.indexOf('/pre_quraan_staging/') >= 0 ? 'staging' : 'production'))
+      ));
+    } catch (_e) {
+      body.append('pq_env', 'production');
+    }
+  }
   body.append('moodlewsrestformat', 'json');
 
   const response = await fetch(endpoint, {

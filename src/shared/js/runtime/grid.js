@@ -24,6 +24,43 @@ let __pqWebAudioLogicalPromise = null;
 let __pqWebAudioPlaybackToken = 0;
 let __pqWebAudioPlaybackRate = 1;
 
+function __pqMarkWebAudioActive(durationMs) {
+  try {
+    const ms = Math.max(2500, Number(durationMs || 0) || 0);
+    window.__pqWebAudioActive = true;
+    window.__PQ_WEB_AUDIO_ACTIVE__ = true;
+    window.__PQ_MEDIA_ACTIVE__ = true;
+    window.__PQ_MEDIA_ACTIVE_UNTIL__ = Math.max(
+      Number(window.__PQ_MEDIA_ACTIVE_UNTIL__ || 0) || 0,
+      Date.now() + ms
+    );
+    if (typeof window.__PQ_MARK_MEDIA_ACTIVE__ === 'function') {
+      window.__PQ_MARK_MEDIA_ACTIVE__(ms);
+    }
+  } catch (_e) {}
+}
+
+function __pqClearWebAudioActiveSoon() {
+  try {
+    window.__PQ_MEDIA_ACTIVE_UNTIL__ = Math.max(
+      Number(window.__PQ_MEDIA_ACTIVE_UNTIL__ || 0) || 0,
+      Date.now() + 2500
+    );
+    if (typeof window.__PQ_CLEAR_MEDIA_ACTIVE_SOON__ === 'function') {
+      window.__PQ_CLEAR_MEDIA_ACTIVE_SOON__();
+    }
+    setTimeout(function () {
+      try {
+        if (__pqWebAudioCurrentSource) return;
+        if (Date.now() < (Number(window.__PQ_MEDIA_ACTIVE_UNTIL__ || 0) || 0)) return;
+        window.__pqWebAudioActive = false;
+        window.__PQ_WEB_AUDIO_ACTIVE__ = false;
+        window.__PQ_MEDIA_ACTIVE__ = false;
+      } catch (_e) {}
+    }, 2700);
+  } catch (_e) {}
+}
+
 function __pqEnsureWebAudio() {
   try {
     if (!window.AudioContext && !window.webkitAudioContext) return null;
@@ -99,6 +136,7 @@ async function __pqStartWebAudioSource(buffer, rate, offsetSec, token) {
   __pqWebAudioStartAt = ctx.currentTime - (Number(offsetSec || 0) || 0);
   __pqWebAudioPauseOffset = Number(offsetSec || 0) || 0;
   __pqWebAudioPaused = false;
+  __pqMarkWebAudioActive(((buffer.duration || 0) * 1000 / (Number(rate || 1) || 1)) + 2500);
 
   source.onended = function () {
     const stillCurrentToken = (__pqWebAudioPlaybackToken === token);
@@ -111,11 +149,13 @@ async function __pqStartWebAudioSource(buffer, rate, offsetSec, token) {
       __pqWebAudioCurrentSource = null;
       __pqWebAudioPauseOffset = 0;
     }
+    __pqClearWebAudioActiveSoon();
 
     __pqResolveLogicalPlayback(true);
   };
 
   source.start(0, __pqWebAudioPauseOffset);
+  __pqMarkWebAudioActive(((buffer.duration || 0) * 1000 / (Number(rate || 1) || 1)) + 2500);
   return true;
 }
 
@@ -148,6 +188,7 @@ async function __pqPlayBuffer(buffer, rate, offsetSec) {
   __pqWebAudioPauseOffset = Number(offsetSec || 0) || 0;
   __pqWebAudioCurrentBuffer = buffer;
   __pqWebAudioPlaybackRate = Number(rate || 1) || 1;
+  __pqMarkWebAudioActive(((buffer.duration || 0) * 1000 / __pqWebAudioPlaybackRate) + 2500);
 
   const logicalPromise = __pqEnsureLogicalPlaybackPromise();
   const started = await __pqStartWebAudioSource(
@@ -182,6 +223,7 @@ function __pqPauseWebAudio() {
     try { __pqWebAudioCurrentSource.disconnect(); } catch (_e) {}
 
     __pqWebAudioCurrentSource = null;
+    __pqClearWebAudioActiveSoon();
     return true;
   } catch (_e) {
     return false;
@@ -287,6 +329,7 @@ const closeBtn = document.getElementById('closeBtn');
   function __pqCancelPlayAll() {
     // PATCH_CLEAR_PLAYING_TILE_CANCEL
     try { __pqClearPlayingTile(); } catch (_e) {}
+    try { __pqCancelHarakatAnimation(); } catch (_e) {}
     try {
       if (__playAllController) {
         __playAllController.abort();
@@ -397,6 +440,7 @@ const closeBtn = document.getElementById('closeBtn');
         id === 'write' ||
         id === 'trace1' ||
         id === 'trace' ||
+        /^(write|trace)\d+$/.test(id) ||
         type === 'trace' ||
         type === 'write'
       ) {
@@ -421,6 +465,7 @@ const closeBtn = document.getElementById('closeBtn');
         id === 'write' ||
         id === 'trace1' ||
         id === 'trace' ||
+        /^(write|trace)\d+$/.test(id) ||
         type === 'trace' ||
         type === 'write'
       );
@@ -456,6 +501,12 @@ const closeBtn = document.getElementById('closeBtn');
   function __pqGetWriteChunkCount() {
     const keys = __pqGetWriteAllKeys();
     const plan = __pqGetWriteChunkPlan();
+
+    try {
+      const cur = getCurrentStep && getCurrentStep();
+      const id = String((cur && cur.step && cur.step.id) || '').toLowerCase();
+      if (/^(write|trace)\d+$/.test(id)) return 1;
+    } catch (_e) {}
 
     if (plan.length) return Math.max(plan.length, 1);
 
@@ -508,10 +559,10 @@ const closeBtn = document.getElementById('closeBtn');
   }
 
   function __pqGetWriteChunkInfo() {
-    const keys = __pqGetWriteAllKeys();
+    let keys = __pqGetWriteAllKeys();
     const chunkSize = Math.max(1, Number(WRITE_CFG.chunkSize || 1));
     const plan = __pqGetWriteChunkPlan();
-    const totalChunks = plan.length
+    let totalChunks = plan.length
       ? plan.length
       : Math.max(1, Math.ceil(keys.length / chunkSize));
 
@@ -538,9 +589,41 @@ const closeBtn = document.getElementById('closeBtn');
 
     try {
       const cur = getCurrentStep();
-      const prog = cur ? cur.progress : null;
-      const passesDone = Math.max(0, Number((prog && prog.passesDone) || 0));
-      chunkIndex = Math.min(totalChunks - 1, passesDone);
+      const rawStepId = String((cur && cur.step && cur.step.id) || '').toLowerCase();
+      const numbered = rawStepId.match(/^(?:write|trace)(\d+)$/);
+      const stepFilters = typeof __pqGetStepPassFilters === 'function'
+        ? __pqGetStepPassFilters(rawStepId)
+        : [];
+      const filterName = stepFilters && stepFilters.length ? String(stepFilters[0] || '') : '';
+      const filteredKeys = (
+        numbered &&
+        filterName &&
+        filterName !== 'all' &&
+        typeof __pqGetKeysForPassFilter === 'function'
+      ) ? __pqGetKeysForPassFilter(filterName) : [];
+
+      if (filteredKeys && filteredKeys.length) {
+        keys = filteredKeys.slice();
+        totalChunks = 1;
+        return {
+          keys,
+          totalChunks,
+          chunkSize,
+          chunkIndex: 0,
+          start: 0,
+          end: keys.length,
+          chunkKeys: keys.slice(),
+          chunkPlan: [keys.length]
+        };
+      }
+
+      if (numbered) {
+        chunkIndex = Math.min(totalChunks - 1, Math.max(0, Number(numbered[1]) - 1));
+      } else {
+        const prog = cur ? cur.progress : null;
+        const passesDone = Math.max(0, Number((prog && prog.passesDone) || 0));
+        chunkIndex = Math.min(totalChunks - 1, passesDone);
+      }
     } catch (_e) {}
 
     let start = 0;
@@ -1236,7 +1319,7 @@ line(bottom, [], 2, __PQ_WRITE_CANVAS_UI.guideBottomColor);
           __pqApplyRuntimeCompletion(stepId, runtimeResult);
 
           try {
-            if (stepId === 'write' || stepId === 'trace1') {
+            if (stepId === 'write' || stepId === 'trace1' || /^(write|trace)\d+$/.test(String(stepId || '').toLowerCase())) {
               const writeProgress =
                 managedProgress &&
                 (
@@ -1281,8 +1364,22 @@ line(bottom, [], 2, __PQ_WRITE_CANVAS_UI.guideBottomColor);
   // Expose media-active hook for FocusGuard idle suppression
   window.__PQ_FOCUS_MEDIA_ACTIVE_FN__ = function () {
     try {
+      if (window.__PQ_LECTURE_POPUP_ACTIVE__ || window.__PQ_LECTURE_REQUIRED_ACTIVE__) return true;
       const api = __pqEnsureFocusAdapter();
-      return api ? api.mediaActive() : false;
+      if (api && api.mediaActive()) return true;
+      const lectureVideo = document.getElementById('lectureVideo');
+      if (lectureVideo && !lectureVideo.paused && !lectureVideo.ended) return true;
+      const modalVideo = document.getElementById('videoPlayer');
+      if (modalVideo && !modalVideo.paused && !modalVideo.ended) return true;
+      const videos = document.querySelectorAll('video');
+      for (const video of videos) {
+        if (video && !video.paused && !video.ended) return true;
+      }
+      const audios = document.querySelectorAll('audio');
+      for (const audio of audios) {
+        if (audio && !audio.paused && !audio.ended) return true;
+      }
+      return false;
     } catch (_e) {
       return false;
     }
@@ -1360,6 +1457,10 @@ function buildTile(letterObj, idx) {
     ? __cfg('canvas.mobileSmallFontSize', __cfg('canvas.smallFontSize', '1.05rem'))
     : __cfg('canvas.smallFontSize', '1.2rem');
 
+  const debugAudioName = __cfg('debug.showTileAudioNames', false)
+    ? String((letterObj && letterObj.audio) || AUDIO_MAP[letterObj.key] || '').trim()
+    : '';
+
   tile.innerHTML = `
     <div class="sep" style="font-size:${sepFontSize} !important;">
       ${letterObj.ar || letterObj.text || ''}
@@ -1370,6 +1471,7 @@ function buildTile(letterObj, idx) {
     </div>
 
     ${letterObj.en ? `<div class="translit">${letterObj.en}</div>` : ''}
+    ${debugAudioName ? `<div class="audio-debug">${debugAudioName}</div>` : ''}
   `;
 
   try {
@@ -1635,9 +1737,18 @@ function __pqApplyGridLayout() {
       const isWriteStep =
         stepId === writeStepId ||
         stepId === 'write' ||
-        stepId === 'trace1';
+        stepId === 'trace1' ||
+        /^(write|trace)\d+$/.test(stepId.toLowerCase());
 
       if (isWriteStep) {
+        const numbered = stepId.toLowerCase().match(/^(?:write|trace)(\d+)$/);
+        if (numbered) {
+          const numberedPass = Number(numbered[1]);
+          if (Number.isFinite(numberedPass) && numberedPass > 0) {
+            return Math.floor(numberedPass);
+          }
+        }
+
         const prog =
           cur && cur.progress
             ? cur.progress
@@ -1678,7 +1789,8 @@ function __pqLetterPassVisible(letterObj) {
       ? __pqCanonicalStepId(cur.step.id)
       : '';
 
-    // Listen / Listen+ / Watch / Sound / Repeat / Match / Words / Animate use stepPassFilters.
+    // Listen / Listen+ / Watch / Sound / Repeat / Match / Words / Animate and
+    // numbered Write/Trace steps use stepPassFilters.
     // Pass 1 = all, pass 2 = heavy, etc.
     if ([
       'listen',
@@ -1688,8 +1800,9 @@ function __pqLetterPassVisible(letterObj) {
       'repeat',
       'match',
       'words',
-      'animate'
-    ].includes(stepId)) {
+      'animate',
+      'diacritic'
+    ].includes(stepId) || /^(write|trace)\d+$/.test(String((cur && cur.step && cur.step.id) || '').toLowerCase())) {
       const filterName = String(__pqGetCurrentPassFilter(stepId) || 'all')
         .trim()
         .toLowerCase();
@@ -1742,7 +1855,8 @@ function __pqAddTileFilterTypeBadge(tile, letterObj) {
       'repeat',
       'match',
       'words',
-      'animate'
+      'animate',
+      'diacritic'
     ].includes(stepId)) {
       const filterName = String(__pqGetCurrentPassFilter(stepId) || '').trim();
       const normalized = filterName.toLowerCase();
@@ -1780,17 +1894,37 @@ function __pqAddTileFilterTypeBadge(tile, letterObj) {
     __pqApplyGridLayout();
     __pqMountGridTilesOnce();
 
+    const currentRawStepId = (() => {
+      try {
+        const cur = (typeof getCurrentStep === 'function') ? getCurrentStep() : null;
+        return String((cur && cur.step && cur.step.id) || '').toLowerCase();
+      } catch (_e) {
+        return '';
+      }
+    })();
+    const hideWriteDetailCopy = /^write[1-3]$/.test(currentRawStepId);
+    const hideForContentOnlyStep = (() => {
+      try {
+        const cur = (typeof getCurrentStep === 'function') ? getCurrentStep() : null;
+        return !!(cur && cur.step && typeof __pqIsContentOnlyStep === 'function' && __pqIsContentOnlyStep(cur.step));
+      } catch (_e) {
+        return false;
+      }
+    })();
+
     let g = 0;
 
     (LETTERS || []).forEach((letterObj) => {
       const tile = __pqTileByKey.get(letterObj.key);
       if (!tile) return;
 
-      const visible = !!(passesFilter(letterObj.key) && __pqLetterPassVisible(letterObj));
+      const visible = !hideForContentOnlyStep && !!(passesFilter(letterObj.key) && __pqLetterPassVisible(letterObj));
 
+      tile.dataset.pqRuntimeVisible = visible ? '1' : '0';
       tile.style.display = visible ? '' : 'none';
       tile.hidden = !visible;
       tile.dataset.gidx = visible ? String(g++) : '-1';
+      tile.classList.toggle('pq-hide-detail-copy', hideWriteDetailCopy);
 
       /* PQ alphabet: refresh badge on every render/pass */
       try {
@@ -1806,6 +1940,12 @@ function __pqAddTileFilterTypeBadge(tile, letterObj) {
 
     try {
       refreshPlayedClasses();
+    } catch (_e) {}
+
+    try {
+      if (typeof __pqApplySoundCompletedVisuals === 'function') {
+        __pqApplySoundCompletedVisuals();
+      }
     } catch (_e) {}
   }
 

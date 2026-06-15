@@ -24,7 +24,8 @@
   'repeat',
   'match',
   'words',
-  'animate'
+  'animate',
+  'rules'
 ].includes(stepId);
 	  
 
@@ -55,7 +56,13 @@
       return;
     }
 
-    if (stepId === 'speak' || stepId === 'submit' || stepId === 'trace1' || stepId === 'write') {
+    if (
+      stepId === 'speak' ||
+      stepId === 'submit' ||
+      stepId === 'trace1' ||
+      stepId === 'write' ||
+      /^(write|trace)\d+$/.test(stepId)
+    ) {
       btnPause.disabled = true;
       try { __pqSyncDynamicStepAction(); } catch (_e) {}
       return;
@@ -290,6 +297,52 @@ async function markLectureCompleted() {
     __pqPlaylistEngine = null;
   } catch (_e) {}
 }
+
+function __pqExposeLectureCompletionBridge() {
+  try {
+    window.markLectureCompleted = markLectureCompleted;
+  } catch (_e) {}
+
+  try {
+    const api = window.PQUnitRuntime = window.PQUnitRuntime || {};
+    api.markLectureCompleted = markLectureCompleted;
+    api.getCurrentStepId = function () {
+      try {
+        if (typeof getCurrentStep === 'function') {
+          const current = getCurrentStep();
+          const step = current && current.step ? current.step : null;
+          return String((step && step.id) || (managedProgress && managedProgress.currentStepId) || '');
+        }
+      } catch (_e) {}
+      try {
+        return String(window.__PQ_CURRENT_STEP_ID__ || '');
+      } catch (_e) {
+        return '';
+      }
+    };
+  } catch (_e) {}
+
+  try {
+    if (window.__PQ_RUNTIME_LECTURE_ENDED_BOUND__) return;
+    window.__PQ_RUNTIME_LECTURE_ENDED_BOUND__ = true;
+    window.addEventListener('pq:lecture:ended', function (event) {
+      try {
+        const sid = String(
+          (event && event.detail && event.detail.stepId) || 'lecture'
+        ).trim();
+        if (!sid || sid === 'lecture') {
+          const result = markLectureCompleted();
+          if (result && typeof result.catch === 'function') result.catch(function () {});
+        } else if (typeof markPlaylistStepCompleted === 'function') {
+          const result = markPlaylistStepCompleted(sid);
+          if (result && typeof result.catch === 'function') result.catch(function () {});
+        }
+      } catch (_e) {}
+    });
+  } catch (_e) {}
+}
+
+__pqExposeLectureCompletionBridge();
 
 async function markPlaylistStepCompleted(stepId) {
   try {

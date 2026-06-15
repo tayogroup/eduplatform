@@ -38,6 +38,79 @@ window.FocusGuard = window.FocusGuard || (() => {
   const MIN_FLUSH_INTERVAL_MS = 15000; // hard throttle between any active_flush writes
   const MIN_ACTIVE_DELTA_MS   = 10000; // only timer-flush if >=10s new active time since last send
 
+  const PQ_MEDIA_GRACE_MS = 2500;
+
+  function pqMarkMediaActive(durationMs){
+    try{
+      const ms = Math.max(PQ_MEDIA_GRACE_MS, Number(durationMs || 0) || 0);
+      window.__PQ_MEDIA_ACTIVE_UNTIL__ = Math.max(
+        Number(window.__PQ_MEDIA_ACTIVE_UNTIL__ || 0) || 0,
+        Date.now() + ms
+      );
+      window.__PQ_MEDIA_ACTIVE__ = true;
+    }catch(_e){}
+  }
+
+  function pqClearMediaActiveSoon(){
+    try{
+      window.__PQ_MEDIA_ACTIVE_UNTIL__ = Math.max(
+        Number(window.__PQ_MEDIA_ACTIVE_UNTIL__ || 0) || 0,
+        Date.now() + PQ_MEDIA_GRACE_MS
+      );
+      setTimeout(function(){
+        try{
+          if (Date.now() >= (Number(window.__PQ_MEDIA_ACTIVE_UNTIL__ || 0) || 0)) {
+            window.__PQ_MEDIA_ACTIVE__ = false;
+          }
+        }catch(_e){}
+      }, PQ_MEDIA_GRACE_MS + 120);
+    }catch(_e){}
+  }
+
+  function pqBindMediaPresenceHooks(){
+    try{
+      if (window.__PQ_MEDIA_PRESENCE_HOOKS_BOUND__) return;
+      window.__PQ_MEDIA_PRESENCE_HOOKS_BOUND__ = true;
+      window.__PQ_MARK_MEDIA_ACTIVE__ = pqMarkMediaActive;
+      window.__PQ_CLEAR_MEDIA_ACTIVE_SOON__ = pqClearMediaActiveSoon;
+
+      const proto = window.HTMLMediaElement && window.HTMLMediaElement.prototype;
+      if (proto && typeof proto.play === 'function' && !proto.play.__pqPresenceWrapped) {
+        const originalPlay = proto.play;
+        const wrappedPlay = function(){
+          try{ pqMarkMediaActive(10000); }catch(_e){}
+          try{
+            if (!this.__pqPresenceMediaEventsBound) {
+              this.__pqPresenceMediaEventsBound = true;
+              this.addEventListener('play', function(){ pqMarkMediaActive(10000); });
+              this.addEventListener('playing', function(){ pqMarkMediaActive(10000); });
+              this.addEventListener('timeupdate', function(){ pqMarkMediaActive(4000); });
+              this.addEventListener('pause', pqClearMediaActiveSoon);
+              this.addEventListener('ended', pqClearMediaActiveSoon);
+              this.addEventListener('error', pqClearMediaActiveSoon);
+            }
+          }catch(_e){}
+          const result = originalPlay.apply(this, arguments);
+          try{
+            if (result && typeof result.then === 'function') {
+              result.then(function(){ pqMarkMediaActive(10000); }).catch(pqClearMediaActiveSoon);
+            }
+          }catch(_e){}
+          return result;
+        };
+        wrappedPlay.__pqPresenceWrapped = true;
+        proto.play = wrappedPlay;
+      }
+
+      ['play','playing','timeupdate'].forEach(function(evt){
+        document.addEventListener(evt, function(){ pqMarkMediaActive(evt === 'timeupdate' ? 4000 : 10000); }, true);
+      });
+      ['pause','ended','error'].forEach(function(evt){
+        document.addEventListener(evt, pqClearMediaActiveSoon, true);
+      });
+    }catch(_e){}
+  }
+
   
   // ------------------------------
   // Option B: Gentle Presence Prompt (no camera)
@@ -97,6 +170,7 @@ window.FocusGuard = window.FocusGuard || (() => {
 
   function pqShowPresencePrompt(){
     try{
+      if (pqIsMediaActive()) return;
       const el = pqEnsurePresencePrompt();
       if (el) el.style.display = 'flex';
     }catch(_){}
@@ -175,6 +249,12 @@ window.FocusGuard = window.FocusGuard || (() => {
 
       // Treat Play All mode as active (even between letters) if any of these flags exist
       if (window.playingAll === true || window.__pq_playingAll === true || window.__PQ_PLAYING_ALL === true) return true;
+      if (window.__PQ_LECTURE_MEDIA_ACTIVE__ === true) return true;
+      if (window.__PQ_MEDIA_ACTIVE__ === true) return true;
+      if ((Number(window.__PQ_MEDIA_ACTIVE_UNTIL__ || 0) || 0) > Date.now()) return true;
+      if (window.__pqWebAudioActive === true || window.__PQ_WEB_AUDIO_ACTIVE__ === true) return true;
+      if (window.__pqRulesAudioPlaying === true) return true;
+      if (window.speechSynthesis && window.speechSynthesis.speaking) return true;
 
       // Heuristic: Play All button state/text can indicate running mode
       const btn = document.getElementById('btnPlayAll');
@@ -191,6 +271,8 @@ window.FocusGuard = window.FocusGuard || (() => {
       }
       const a0 = window.audio;
       if (a0 && typeof a0.paused === 'boolean' && !a0.paused && !a0.ended) return true;
+      const rulesAudio = window.__pqRulesAudio;
+      if (rulesAudio && typeof rulesAudio.paused === 'boolean' && !rulesAudio.paused && !rulesAudio.ended) return true;
 
       // Any video element currently playing (lecture or otherwise)
       const vids = document.querySelectorAll('video');
@@ -225,6 +307,7 @@ window.FocusGuard = window.FocusGuard || (() => {
         lessonid: String(ctx.lessonid || ''),
         unitid: String(ctx.unitid || ''),
         session_id: String(ctx.session_id || ''),
+        live_sessionid: String(ctx.live_sessionid || ''),
 
         event_type: String(event_type || 'resume'),
 
@@ -273,6 +356,7 @@ window.FocusGuard = window.FocusGuard || (() => {
 
     if (!cfg.managed) return;
 
+    pqBindMediaPresenceHooks();
     bindVisibilityListeners();
     bindActivityListeners();
 
@@ -323,6 +407,7 @@ window.FocusGuard = window.FocusGuard || (() => {
   // Manual hook for attention module (or UI) to pause/resume
   function externalPause(reason){
     if (!active || !cfg?.managed) return;
+    if (pqIsMediaActive()) { try{ resetIdleTimer(); }catch(_e){} return; }
     pause(String(reason || 'attention'));
   }
   function externalResume(reason){
@@ -340,13 +425,18 @@ window.FocusGuard = window.FocusGuard || (() => {
   function bindVisibilityListeners(){
     document.addEventListener('visibilitychange', () => {
       if (!active || !cfg?.managed) return;
-      if (document.hidden) { leaveCount++; pause('tab_hidden'); }
+      if (document.hidden) {
+        leaveCount++;
+        if (pqIsMediaActive()) { try{ resetIdleTimer(); }catch(_e){} return; }
+        pause('tab_hidden');
+      }
       else { resume('tab_visible'); }
     });
 
     window.addEventListener('blur', () => {
       if (!active || !cfg?.managed) return;
       leaveCount++;
+      if (pqIsMediaActive()) { try{ resetIdleTimer(); }catch(_e){} return; }
       pause('blur');
     });
 
@@ -381,10 +471,11 @@ window.FocusGuard = window.FocusGuard || (() => {
   // Pause / Resume
   // ------------------------------
   function pause(reason){
+    if (pqIsMediaActive()) { try{ resetIdleTimer(); }catch(_e){} return; }
     stopActiveClock();
     try{ cfg.onPause({ reason, ctx: { ...ctx }, leaveCount, idleCount }); }catch(_){}
     // Show friendly prompt (Option B, no camera)
-    try{ if (reason === 'idle_timeout' || reason === 'tab_hidden') pqShowPresencePrompt(); }catch(_e){} // Record event immediately
+    try{ if ((reason === 'idle_timeout' || reason === 'tab_hidden') && !pqIsMediaActive()) pqShowPresencePrompt(); }catch(_e){} // Record event immediately
     const __promptShown = (reason === 'idle_timeout' || reason === 'tab_hidden') ? 1 : 0;
     wsSend(reason === 'idle_timeout' ? 'idle' : 'leave', reason, {prompt_shown: __promptShown}).catch(()=>{});
     // Also push a throttled flush to persist active_ms soon

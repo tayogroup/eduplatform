@@ -7,7 +7,7 @@
   'use strict';
 
   var NS = 'PQStepperUI';
-  var V  = '1.0.2-frozen-stepcolors';
+  var V  = '1.0.3-arabic-labels';
 
   try{
     if (window[NS] && window[NS].__version && window[NS].__version >= V) return;
@@ -53,6 +53,7 @@
 
       var item = document.createElement('div');
       item.className = 'managed-step';
+      item.setAttribute('data-stepid', String(step.id || ''));
 
       if (pr.completed) item.classList.add('completed');
       if (!pr.completed && !finished && idx === curIdx) item.classList.add('active');
@@ -101,6 +102,21 @@ if (pr.completed){
         lbl.textContent = (step.label || step.title || step.id) + ' – ' + passReq + 'x' + repReq;
       } else {
         lbl.textContent = (step.label || step.title || step.id);
+      }
+
+      var labelText = lbl.textContent;
+      lbl.textContent = '';
+      var labelEn = document.createElement('span');
+      labelEn.className = 'managed-step-label-en';
+      labelEn.textContent = labelText;
+      lbl.appendChild(labelEn);
+
+      if (step.arabicLabel) {
+        var labelAr = document.createElement('span');
+        labelAr.className = 'managed-step-label-ar';
+        labelAr.setAttribute('dir', 'rtl');
+        labelAr.textContent = step.arabicLabel;
+        lbl.appendChild(labelAr);
       }
 
       var meta = document.createElement('div');

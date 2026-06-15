@@ -1,12 +1,596 @@
-/*
+﻿/*
   Pre-Quraan Alphabet runtime fragment: playback.js
   Playlist playback, Watch/Sound/Listen+/Words/Repeat/Match flows, and playing-tile effects.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
 */
+  let __pqRulesHighlightAudio = null;
+  let __pqRulesHighlightIndex = -1;
+  let __pqRulesHighlightPaused = null;
+  let __pqRulesHighlightTimer = 0;
+  let __pqRulesCueAudioSrc = '';
+  let __pqRulesCueData = null;
+  const __pqRulesCueCache = Object.create(null);
+
+  function __pqRulesCueUrl(audio) {
+    try {
+      const src = String((audio && audio.currentSrc) || (audio && audio.src) || '');
+      if (!src) return '';
+      return src.replace(/\.(mp3|wav|m4a|ogg)(\?.*)?$/i, '.cues.json$2');
+    } catch (_e) {
+      return '';
+    }
+  }
+
+  function __pqLoadRulesCues(audio) {
+    try {
+      if (window.__pqRulesBlockOnlyHighlight) {
+        __pqRulesCueAudioSrc = '';
+        __pqRulesCueData = null;
+        return;
+      }
+      const src = String((audio && audio.currentSrc) || (audio && audio.src) || '');
+      const url = __pqRulesCueUrl(audio);
+      if (!src || !url || __pqRulesCueAudioSrc === src) return;
+
+      __pqRulesCueAudioSrc = src;
+      __pqRulesCueData = null;
+      if (__pqRulesCueCache[url]) {
+        __pqRulesCueData = __pqRulesCueCache[url];
+        return;
+      }
+
+      fetch(url, { cache: 'no-store' })
+        .then(function (res) {
+          if (!res || !res.ok) return null;
+          return res.json();
+        })
+        .then(function (json) {
+          if (!json || !Array.isArray(json.cues)) return;
+          __pqRulesCueCache[url] = json;
+          if (__pqRulesCueAudioSrc === src) {
+            __pqRulesCueData = json;
+            __pqSyncRulesHighlight();
+          }
+        })
+        .catch(function () {});
+    } catch (_e) {}
+  }
+
+  function __pqVisibleRulesSections() {
+    try {
+      const panels = Array.from(document.querySelectorAll('section[class*="-rules"], div[class*="-rules"]')).filter(function (panel) {
+        if (!panel || panel.hidden) return false;
+        const style = window.getComputedStyle(panel);
+        return style.display !== 'none' && style.visibility !== 'hidden';
+      });
+      const panel = panels.find(function (item) {
+        return item.querySelector('article[class*="-rule-card"]');
+      }) || panels[0] || null;
+      if (!panel) return [];
+
+      const selector = [
+        '[class*="-rules__hero"]',
+        '[class*="-rules__summary"]',
+        '[data-rules-subsection="true"]',
+        'article[class*="-rule-card"]',
+        '[class*="-rules__combo-wrap"]',
+        '[class*="-rules__table"]',
+        '[class*="-rules__practice"]',
+        '[class*="-rules__remember"]'
+      ].join(',');
+
+      return Array.from(panel.querySelectorAll(selector)).filter(function (section) {
+        if (!section || section.hidden) return false;
+        const style = window.getComputedStyle(section);
+        if (style.display === 'none' || style.visibility === 'hidden') return false;
+        if (section.matches('[class*="-rules__summary"]') && section.querySelector('article[class*="-rule-card"]')) return false;
+        return true;
+      });
+    } catch (_e) {
+      return [];
+    }
+  }
+
+  function __pqRulesSectionWeight(section) {
+    try {
+      const text = String((section && section.innerText) || '').replace(/\s+/g, ' ').trim();
+      const len = text.length || 1;
+      if (section.matches('[data-rules-subsection="true"]')) return Math.max(18, Math.min(45, len / 4.5));
+      if (section.matches('article[class*="-rule-card"]')) return Math.max(22, Math.min(70, len / 4));
+      if (section.matches('[class*="-rules__hero"]')) return Math.max(18, Math.min(55, len / 5));
+      if (section.matches('[class*="-rules__practice"]')) return Math.max(28, Math.min(90, len / 4));
+      if (section.matches('[class*="-rules__remember"]')) return Math.max(18, Math.min(60, len / 4.5));
+      return Math.max(12, Math.min(55, len / 5));
+    } catch (_e) {
+      return 20;
+    }
+  }
+
+  function __pqCueText(value) {
+    return String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
+  }
+
+  function __pqCueComparable(value) {
+    return __pqCueText(value)
+      .replace(/[.,;:!?"'،؛؟]+$/g, '')
+      .replace(/^[.,;:!?"'،؛؟]+/g, '')
+      .toLowerCase();
+  }
+
+  function __pqRulesTokenParts(text) {
+    try {
+      const parts = [];
+      String(text || '').split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        parts.push({ text: part, word: !/^\s+$/.test(part) });
+      });
+      return parts;
+    } catch (_e) {
+      return [];
+    }
+  }
+
+  function __pqPrepareRulesCueWords(root) {
+    try {
+      const scope = root || document;
+      const selector = 'p, h3, h4, li, span:not(.pq-rules-cue-word):not(.pq-tan-chip)';
+      Array.from(scope.querySelectorAll(selector)).forEach(function (node) {
+        if (!node || node.dataset.pqCueTokenized === '1') return;
+        if (node.closest('button, audio, video, script, style')) return;
+        if (node.querySelector('.pq-rules-cue-word')) return;
+        const textNodes = Array.from(node.childNodes).filter(function (child) {
+          return child && child.nodeType === Node.TEXT_NODE && __pqCueText(child.nodeValue);
+        });
+        if (!textNodes.length) {
+          node.dataset.pqCueTokenized = '1';
+          return;
+        }
+        textNodes.forEach(function (textNode) {
+          const frag = document.createDocumentFragment();
+          __pqRulesTokenParts(textNode.nodeValue).forEach(function (part) {
+            if (!part.word) {
+              frag.appendChild(document.createTextNode(part.text));
+              return;
+            }
+            const span = document.createElement('span');
+            span.className = 'pq-rules-cue-word';
+            span.dataset.cueText = __pqCueComparable(part.text);
+            span.textContent = part.text;
+            frag.appendChild(span);
+          });
+          textNode.parentNode.replaceChild(frag, textNode);
+        });
+        node.dataset.pqCueTokenized = '1';
+      });
+    } catch (_e) {}
+  }
+  function __pqVisibleRulesExampleNodes(root) {
+    try {
+      const scope = root || document;
+      return Array.from(scope.querySelectorAll('span, small, em, b, strong, h3, h4, li')).filter(function (node) {
+        if (!node || node.hidden) return false;
+        if (node.querySelector('.pq-rules-cue-word')) return false;
+        const text = __pqCueText(node.textContent);
+        if (!text || text.length > 80) return false;
+        const style = window.getComputedStyle(node);
+        return style.display !== 'none' && style.visibility !== 'hidden';
+      });
+    } catch (_e) {
+      return [];
+    }
+  }
+
+  function __pqClearRulesCueHighlights() {
+    try {
+      Array.from(document.querySelectorAll('.pq-rules-current-cue')).forEach(function (node) {
+        node.classList.remove('pq-rules-current-cue');
+        node.removeAttribute('aria-current');
+      });
+      Array.from(document.querySelectorAll('.pq-rules-current-phrase')).forEach(function (node) {
+        node.classList.remove('pq-rules-current-phrase');
+        node.removeAttribute('aria-current');
+      });
+    } catch (_e) {}
+  }
+
+  function __pqFindCueSection(cue, sections) {
+    try {
+      if (!cue || !sections || !sections.length) return null;
+      const sectionKey = String(cue.section || cue.target || '').toLowerCase();
+      if (sectionKey === 'hero' || sectionKey === 'intro') {
+        return sections.find(function (section) { return section.matches('[class*="-rules__hero"]'); }) || null;
+      }
+      const ruleMatch = sectionKey.match(/rule[-_\s]*(\d+)/);
+      if (ruleMatch) {
+        const n = ruleMatch[1];
+        return sections.find(function (section) {
+          if (!section.matches('article[class*="-rule-card"]')) return false;
+          const marker = section.querySelector('[class*="__num"], [class*="__badge"]');
+          return marker && __pqCueText(marker.textContent).replace(/^rule\s+/i, '') === n;
+        }) || null;
+      }
+      if (sectionKey === 'practice') {
+        return sections.find(function (section) { return section.matches('[class*="-rules__practice"]'); }) || null;
+      }
+      if (sectionKey === 'remember') {
+        return sections.find(function (section) { return section.matches('[class*="-rules__remember"]'); }) || null;
+      }
+    } catch (_e) {}
+    return null;
+  }
+
+  function __pqCueOccurrenceIndex(cue, comparableNeedle) {
+    try {
+      if (!cue || !__pqRulesCueData || !Array.isArray(__pqRulesCueData.cues)) return 0;
+      const section = String(cue.section || '').toLowerCase();
+      const cueOffset = Number(cue.offset);
+      let count = 0;
+      for (const item of __pqRulesCueData.cues) {
+        if (!item || String(item.type || '').toLowerCase() === 'section') continue;
+        if (section && String(item.section || '').toLowerCase() !== section) continue;
+        if (__pqCueComparable(item.text) !== comparableNeedle) continue;
+        const itemOffset = Number(item.offset);
+        if (Number.isFinite(cueOffset) && Number.isFinite(itemOffset) && itemOffset > cueOffset) break;
+        count += 1;
+        if (item === cue) break;
+      }
+      return Math.max(0, count - 1);
+    } catch (_e) {
+      return 0;
+    }
+  }
+
+  function __pqFindCueNodes(cue, section) {
+    try {
+      const needles = [cue.text, cue.arabic, cue.transliteration, cue.label]
+        .map(__pqCueText)
+        .filter(Boolean);
+      if (!needles.length) return [];
+      __pqPrepareRulesCueWords(section || document);
+      const scope = section || document;
+      const exactTokenNodes = Array.from(scope.querySelectorAll('.pq-rules-cue-word')).filter(function (node) {
+        if (!node || node.hidden) return false;
+        const style = window.getComputedStyle(node);
+        return style.display !== 'none' && style.visibility !== 'hidden';
+      });
+
+      for (const needle of needles) {
+        const comparableNeedle = __pqCueComparable(needle);
+        if (!comparableNeedle) continue;
+        const exactMatches = exactTokenNodes.filter(function (node) {
+          return node.dataset && node.dataset.cueText === comparableNeedle;
+        });
+        if (exactMatches.length) {
+          const index = Math.min(__pqCueOccurrenceIndex(cue, comparableNeedle), exactMatches.length - 1);
+          return [exactMatches[index]];
+        }
+      }
+
+      const haystack = __pqVisibleRulesExampleNodes(scope);
+      const fallback = haystack.filter(function (node) {
+        const value = __pqCueText(node.textContent);
+        const comparableValue = node.dataset && node.dataset.cueText ? node.dataset.cueText : __pqCueComparable(value);
+        return needles.some(function (needle) {
+          const comparableNeedle = __pqCueComparable(needle);
+          if (!comparableNeedle) return false;
+          if (comparableNeedle.length <= 2) return comparableValue === comparableNeedle;
+          return value === needle ||
+            comparableValue === comparableNeedle ||
+            comparableValue.indexOf(comparableNeedle) !== -1;
+        });
+      });
+      return fallback.length ? [fallback[0]] : [];
+    } catch (_e) {
+      return [];
+    }
+  }
+
+  function __pqFindCuePhraseNodes(cue, section) {
+    try {
+      const needle = __pqCueComparable(cue && cue.text);
+      if (!needle) return [];
+      const scope = section || document;
+      const nodes = Array.from(scope.querySelectorAll('p, h3, h4, li, span')).filter(function (node) {
+        if (!node || node.hidden) return false;
+        if (node.closest('button, audio, video, script, style')) return false;
+        const style = window.getComputedStyle(node);
+        if (style.display === 'none' || style.visibility === 'hidden') return false;
+        const value = __pqCueComparable(node.textContent);
+        if (!value) return false;
+        return value === needle || value.indexOf(needle) !== -1 || needle.indexOf(value) !== -1;
+      });
+      return nodes.length ? [nodes[0]] : [];
+    } catch (_e) {
+      return [];
+    }
+  }
+
+  function __pqActiveRulesCue(currentTime) {
+    try {
+      const cues = (__pqRulesCueData && Array.isArray(__pqRulesCueData.cues)) ? __pqRulesCueData.cues : [];
+      return cues.find(function (cue) {
+        if (String(cue.type || '').toLowerCase() === 'section') return false;
+        const start = Number(cue.start);
+        const end = Number(cue.end);
+        return Number.isFinite(start) && Number.isFinite(end) && currentTime >= start && currentTime < end;
+      }) || null;
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  function __pqRulesHighlightDelaySeconds() {
+    try {
+      if (!__pqRulesCueData) return 0;
+      const explicit = Number(__pqRulesCueData.highlightDelaySeconds);
+      if (Number.isFinite(explicit) && explicit >= 0) return explicit;
+      const provider = String(__pqRulesCueData.provider || '').toLowerCase();
+      return provider.indexOf('local-silence') !== -1 ? 0.45 : 0;
+    } catch (_e) {
+      return 0;
+    }
+  }
+
+  function __pqActiveRulesSectionCue(currentTime) {
+    try {
+      const adjustedTime = Math.max(0, Number(currentTime || 0) - __pqRulesHighlightDelaySeconds());
+      const sectionCues = (__pqRulesCueData && Array.isArray(__pqRulesCueData.sectionCues))
+        ? __pqRulesCueData.sectionCues
+        : ((__pqRulesCueData && Array.isArray(__pqRulesCueData.cues)) ? __pqRulesCueData.cues.filter(function (cue) {
+          return String(cue.type || '').toLowerCase() === 'section';
+        }) : []);
+      return sectionCues.find(function (cue) {
+        const start = Number(cue.start);
+        const end = Number(cue.end);
+        return Number.isFinite(start) && Number.isFinite(end) && adjustedTime >= start && adjustedTime < end;
+      }) || null;
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  function __pqActiveRulesUtteranceCue(currentTime) {
+    try {
+      const adjustedTime = Math.max(0, Number(currentTime || 0) - __pqRulesHighlightDelaySeconds());
+      const utteranceCues = (__pqRulesCueData && Array.isArray(__pqRulesCueData.utteranceCues))
+        ? __pqRulesCueData.utteranceCues
+        : [];
+      return utteranceCues.find(function (cue) {
+        const start = Number(cue.start);
+        const end = Number(cue.end);
+        return Number.isFinite(start) && Number.isFinite(end) && adjustedTime >= start && adjustedTime < end;
+      }) || null;
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  function __pqRulesWordCuesAreReliable() {
+    try {
+      if (!__pqRulesCueData) return false;
+      const provider = String(__pqRulesCueData.provider || '').toLowerCase();
+      if (provider && provider.indexOf('elevenlabs') === -1 && provider.indexOf('forced') === -1) return false;
+      return __pqRulesCueData.wordCueReliable === true;
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  function __pqClearRulesHighlight() {
+    try {
+      __pqVisibleRulesSections().forEach(function (section) {
+        section.classList.remove('is-current-rule', 'pq-rules-current-section');
+        section.removeAttribute('aria-current');
+      });
+    } catch (_e) {}
+    __pqRulesHighlightIndex = -1;
+    __pqRulesHighlightPaused = null;
+  }
+
+  function __pqSyncRulesHighlight() {
+    try {
+      const audio = window.__pqRulesAudio || null;
+      if (!audio || audio.ended) {
+        __pqRulesHighlightAudio = null;
+        __pqClearRulesHighlight();
+        return;
+      }
+
+      const sections = __pqVisibleRulesSections();
+      if (!sections.length) {
+        __pqClearRulesHighlight();
+        return;
+      }
+
+      const duration = Number(audio.duration || 0);
+      const currentTime = Math.max(0, Number(audio.currentTime || 0));
+      const blockOnly = !!window.__pqRulesBlockOnlyHighlight;
+      const blockLeadSeconds = blockOnly ? Math.max(0, Number(window.__pqRulesBlockHighlightLeadSeconds || 0)) : 0;
+      __pqLoadRulesCues(audio);
+      const timelineSections = blockOnly
+        ? sections.filter(function (section) { return !section.matches('[data-rules-subsection="true"]'); })
+        : sections;
+      let manualWindow = null;
+      if (blockOnly && Array.isArray(window.__pqRulesManualSectionCues) && window.__pqRulesManualSectionCues.length) {
+        const manualCues = window.__pqRulesManualSectionCues
+          .map(function (cue) {
+            const start = Number(cue && cue.start);
+            const section = String((cue && cue.section) || '').toLowerCase();
+            return Number.isFinite(start) && section ? { section, start } : null;
+          })
+          .filter(Boolean)
+          .sort(function (a, b) { return a.start - b.start; });
+        for (let i = 0; i < manualCues.length; i += 1) {
+          const cue = manualCues[i];
+          const end = Number(manualCues[i + 1] && manualCues[i + 1].start);
+          const cueEnd = Number.isFinite(end)
+            ? end
+            : (Number.isFinite(duration) && duration > cue.start ? duration : cue.start + 30);
+          if (currentTime >= cue.start && currentTime < cueEnd) {
+            const sectionNode = timelineSections.find(function (section) {
+              return String(section.getAttribute('data-rules-section') || '').toLowerCase() === cue.section;
+            }) || null;
+            if (sectionNode) manualWindow = { sectionNode, start: cue.start, end: cueEnd };
+            break;
+          }
+        }
+      }
+      const usableDuration = Number.isFinite(duration) && duration > 0
+        ? duration
+        : Math.max(timelineSections.length * 22, 1);
+      const weights = timelineSections.map(__pqRulesSectionWeight);
+      const totalWeight = weights.reduce(function (sum, weight) { return sum + weight; }, 0) || timelineSections.length;
+      const progressTime = Math.max(0, Math.min(usableDuration, currentTime + blockLeadSeconds));
+      const progressWeight = Math.max(0, Math.min(totalWeight, (progressTime / usableDuration) * totalWeight));
+      let cumulative = 0;
+      let nextIndex = timelineSections.length - 1;
+      let sectionStartWeight = 0;
+      for (let i = 0; i < weights.length; i += 1) {
+        const before = cumulative;
+        cumulative += weights[i];
+        if (progressWeight <= cumulative) {
+          nextIndex = i;
+          sectionStartWeight = before;
+          break;
+        }
+      }
+      const isPaused = !!audio.paused;
+      const activeCue = blockOnly ? null : __pqActiveRulesCue(currentTime);
+      const activeSectionCue = blockOnly ? null : __pqActiveRulesSectionCue(currentTime);
+      const activeUtteranceCue = blockOnly ? null : __pqActiveRulesUtteranceCue(currentTime);
+      const cueSection = activeSectionCue
+        ? __pqFindCueSection(activeSectionCue, sections)
+        : (activeUtteranceCue ? __pqFindCueSection(activeUtteranceCue, sections) : (activeCue ? __pqFindCueSection(activeCue, sections) : null));
+      if (cueSection) nextIndex = Math.max(0, timelineSections.indexOf(cueSection));
+
+      let activeSection = (manualWindow && manualWindow.sectionNode) || timelineSections[nextIndex] || sections[sections.length - 1];
+      if (blockOnly && activeSection && activeSection.querySelector) {
+        const childSections = Array.from(activeSection.querySelectorAll('[data-rules-subsection="true"]')).filter(function (section) {
+          if (!section || section.hidden) return false;
+          const style = window.getComputedStyle(section);
+          return style.display !== 'none' && style.visibility !== 'hidden';
+        });
+        if (childSections.length) {
+          const activeWeight = Math.max(1, weights[nextIndex] || __pqRulesSectionWeight(activeSection));
+          const localWeight = Math.max(0, progressWeight - sectionStartWeight);
+          const introWeight = Math.min(16, Math.max(6, activeWeight * 0.22));
+          const childRange = Math.max(1, activeWeight - introWeight);
+          const manualRatio = manualWindow && manualWindow.sectionNode === activeSection
+            ? Math.max(0, Math.min(1, (currentTime - manualWindow.start) / Math.max(1, manualWindow.end - manualWindow.start)))
+            : null;
+          if (manualRatio != null && manualRatio > 0.22) {
+            const childIndex = Math.max(0, Math.min(childSections.length - 1, Math.floor(((manualRatio - 0.22) / 0.78) * childSections.length)));
+            activeSection = childSections[childIndex] || activeSection;
+          } else if (manualRatio == null && localWeight > introWeight) {
+            const childIndex = Math.max(0, Math.min(childSections.length - 1, Math.floor(((localWeight - introWeight) / childRange) * childSections.length)));
+            activeSection = childSections[childIndex] || activeSection;
+          }
+        }
+      }
+      const activeIndex = Math.max(0, sections.indexOf(activeSection));
+
+      if (__pqRulesHighlightAudio !== audio || __pqRulesHighlightIndex !== activeIndex || __pqRulesHighlightPaused !== isPaused) {
+        sections.forEach(function (section) {
+          const active = section === activeSection && !isPaused;
+          section.classList.toggle('is-current-rule', active);
+          section.classList.toggle('pq-rules-current-section', active);
+          if (active) {
+            section.setAttribute('aria-current', 'step');
+          } else {
+            section.removeAttribute('aria-current');
+          }
+        });
+
+        if (!isPaused && __pqRulesHighlightIndex !== activeIndex) {
+          try {
+            activeSection.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+          } catch (_e) {}
+        }
+      }
+
+      __pqClearRulesCueHighlights();
+      if (blockOnly) {
+        __pqRulesHighlightAudio = audio;
+        __pqRulesHighlightIndex = activeIndex;
+        __pqRulesHighlightPaused = isPaused;
+        return;
+      }
+      const wordCuesReliable = __pqRulesWordCuesAreReliable();
+      if (activeCue && !isPaused && wordCuesReliable) {
+        const nodes = __pqFindCueNodes(activeCue, sections[nextIndex]);
+        nodes.forEach(function (node) {
+          node.classList.add('pq-rules-current-cue');
+          node.setAttribute('aria-current', 'true');
+        });
+      } else if (activeUtteranceCue && !isPaused) {
+        const nodes = __pqFindCuePhraseNodes(activeUtteranceCue, sections[nextIndex]);
+        nodes.forEach(function (node) {
+          node.classList.add('pq-rules-current-phrase');
+          node.setAttribute('aria-current', 'true');
+        });
+      }
+
+      __pqRulesHighlightAudio = audio;
+      __pqRulesHighlightIndex = nextIndex;
+      __pqRulesHighlightPaused = isPaused;
+    } catch (_e) {}
+  }
+
+  function __pqEnsureRulesHighlightTimer() {
+    if (__pqRulesHighlightTimer) return;
+    __pqRulesHighlightTimer = window.setInterval(__pqSyncRulesHighlight, 300);
+  }
+
+  try {
+    window.__pqStartRulesAudioHighlight = function (audio) {
+      try {
+        if (audio) window.__pqRulesAudio = audio;
+      } catch (_e) {}
+      __pqEnsureRulesHighlightTimer();
+      __pqSyncRulesHighlight();
+    };
+    __pqEnsureRulesHighlightTimer();
+  } catch (_e) {}
+
   function setPaused(value) {
     try {
       const current = getCurrentStep();
+      const stepId = String((current && current.step && current.step.id) || '').toLowerCase();
+
+      if (stepId === 'rules' && window.__pqRulesAudio) {
+        paused = !!value;
+        try {
+          if (paused) {
+            window.__pqRulesAudio.pause();
+          } else {
+            window.__pqRulesAudio.play().catch(() => {});
+          }
+        } catch (_e) {}
+
+        if (btnPause) {
+          btnPause.hidden = false;
+          btnPause.disabled = false;
+          btnPause.style.display = 'inline-flex';
+          btnPause.style.visibility = 'visible';
+          btnPause.style.opacity = '1';
+          btnPause.style.pointerEvents = 'auto';
+          btnPause.style.touchAction = 'manipulation';
+          if (typeof __pqSetBilingualControlLabel === 'function') {
+            __pqSetBilingualControlLabel(
+              btnPause,
+              paused ? 'Resume' : 'Pause',
+              paused ? '\u0627\u0633\u062a\u0626\u0646\u0627\u0641' : '\u0625\u064a\u0642\u0627\u0641'
+            );
+          } else {
+            btnPause.textContent = paused
+              ? __PQ_TEXT_CACHE.resume
+              : __PQ_TEXT_CACHE.pause;
+          }
+        }
+
+        return paused;
+      }
 
       if (current && __pqIsWatchStep(current.step)) {
         __watchPaused = !!value;
@@ -27,7 +611,7 @@
             __pqSetBilingualControlLabel(
               btnPause,
               __watchPaused ? 'Resume' : 'Pause',
-              __watchPaused ? 'استئناف' : 'إيقاف'
+              ''
             );
           } else {
             btnPause.textContent = __watchPaused
@@ -84,7 +668,7 @@ try {
           __pqSetBilingualControlLabel(
             btnPause,
             paused ? 'Resume' : 'Pause',
-            paused ? 'استئناف' : 'إيقاف'
+            ''
           );
         } else {
           btnPause.textContent = paused
@@ -120,7 +704,7 @@ try {
     return undefined;
   }
 
-  function __pqGetWatchSequenceKeys() {
+  function __pqGetWatchSequenceKeys(stepIdOverride) {
     const visible = [
       ...(grid ? grid.querySelectorAll('.tile[data-key]') : [])
     ].map((el) => String(el.dataset.key || ''));
@@ -128,7 +712,18 @@ try {
     const visibleSet = new Set(visible.filter(Boolean));
     const fallback = (PLAY_SEQUENCE_KEYS || []).filter((key) => visibleSet.has(key));
 
-    return __pqGetPassSequenceKeys('watch', fallback);
+    let stepId = 'watch';
+    try {
+      stepId = __pqCanonicalStepId(stepIdOverride || '');
+      if (!stepId) {
+        const current = getCurrentStep();
+        stepId = __pqCanonicalStepId((current && current.step && current.step.id) || 'watch');
+      }
+    } catch (_e) {
+      stepId = 'watch';
+    }
+
+    return __pqGetPassSequenceKeys(stepId || 'watch', fallback);
   }
 
   function __pqPlayVideoUrl(url, rate) {
@@ -179,6 +774,25 @@ try {
           player.playbackRate = Number(rate || 1) || 1;
         } catch (_e) {}
 
+        const failIfInterrupted = (eventName) => {
+          try { if (player && player.ended) { done(true); return; } } catch (_e) {}
+          try {
+            const maybePlay = player && player.play ? player.play() : null;
+            if (maybePlay && typeof maybePlay.catch === 'function') {
+              maybePlay.catch(function () {
+                done(false, new Error('video playback interrupted: ' + eventName));
+              });
+              return;
+            }
+          } catch (_e) {}
+          window.setTimeout(function () {
+            try {
+              if (player && !player.paused && !player.ended) return;
+            } catch (_e) {}
+            done(false, new Error('video playback interrupted: ' + eventName));
+          }, 350);
+        };
+
         player.onended = function () {
           try { if (videoModal) videoModal.style.display = 'none'; } catch (_e) {}
           done(true);
@@ -188,9 +802,12 @@ try {
           done(false, new Error('video playback failed'));
         };
 
-		player.onabort = function () {
-          try { if (videoModal) videoModal.style.display = 'none'; } catch (_e) {}
-          done(true);
+        player.onabort = function () {
+          failIfInterrupted('abort');
+        };
+
+        player.onemptied = function () {
+          failIfInterrupted('emptied');
         };
 
         player.onloadedmetadata = function () {
@@ -299,12 +916,29 @@ function __pqSoundAutoVideoAfterExplainer() {
   }
 }
 
+function __pqSoundAutoPlayExplainerOnModalOpen() {
+  try {
+    return __cfg('playback.steps.sound.autoPlayExplainerOnModalOpen', __cfg('sound.autoPlayExplainerOnModalOpen', true)) !== false;
+  } catch (_e) {
+    return true;
+  }
+}
+
 function __pqSoundVideoRepeatCount() {
   try {
     const value = __cfg('playback.steps.sound.videoRepeatCount', __cfg('sound.videoRepeatCount', 1));
     return Math.max(1, Math.floor(Number(value || 1) || 1));
   } catch (_e) {
     return 1;
+  }
+}
+
+function __pqSoundPreModalPlaybackMode() {
+  try {
+    const raw = String(__cfg('playback.steps.sound.preModalPlayback', __cfg('sound.preModalPlayback', 'video')) || 'video').trim().toLowerCase();
+    return raw === 'audio' ? 'audio' : 'video';
+  } catch (_e) {
+    return 'video';
   }
 }
 
@@ -343,6 +977,56 @@ function __pqSoundCompletedCount() {
   return keys.reduce((sum, key) => sum + (__pqSoundVideoCompletedByKey[key] ? 1 : 0), 0);
 }
 
+function __pqIsCurrentSoundVisualStep() {
+  try {
+    const current = (typeof getCurrentStep === 'function') ? getCurrentStep() : null;
+    const stepId = current && current.step ? current.step.id : '';
+    return __pqCanonicalStepId(stepId) === 'sound';
+  } catch (_e) {
+    return false;
+  }
+}
+
+function __pqClearSoundCompletedVisuals() {
+  try {
+    const tiles = grid
+      ? grid.querySelectorAll('.tile.pq-sound-done, .tile[data-sound-done]')
+      : document.querySelectorAll('#grid .tile.pq-sound-done, #grid .tile[data-sound-done]');
+    tiles.forEach((tile) => {
+      tile.classList.remove('pq-sound-done');
+      tile.removeAttribute('data-sound-done');
+      const check = tile.querySelector('.pq-sound-check');
+      if (check) check.remove();
+    });
+  } catch (_e) {}
+}
+
+function __pqSoundResumeIncomplete() {
+  try {
+    return __cfg('playback.steps.sound.resumeIncomplete', __cfg('sound.resumeIncomplete', true)) !== false;
+  } catch (_e) {
+    return true;
+  }
+}
+
+function __pqGetSoundPlaybackSequenceKeys(fallbackKeys) {
+  let keys = [];
+  try {
+    keys = __pqGetPassSequenceKeys('sound', fallbackKeys || PLAY_SEQUENCE_KEYS || []);
+  } catch (_e) {
+    keys = (fallbackKeys || PLAY_SEQUENCE_KEYS || []).slice();
+  }
+
+  keys = (keys || []).map(String).filter(Boolean);
+
+  if (!__pqSoundResumeIncomplete()) return keys;
+
+  try { __pqLoadSoundCompletedMap(); } catch (_e) {}
+
+  const remaining = keys.filter((key) => !__pqSoundVideoCompletedByKey[key]);
+  return remaining.length ? remaining : keys;
+}
+
 function __pqSoundProgressCfg(path, fallback) {
   try {
     const suffix = String(path || '').trim();
@@ -371,8 +1055,18 @@ function __pqEnsureSoundProgressBadge(host, afterNode) {
   return badge;
 }
 
+function __pqClearSoundProgressBadges() {
+  try {
+    document.querySelectorAll('.pq-sound-letter-progress-badge').forEach((badge) => badge.remove());
+  } catch (_e) {}
+}
+
 function __pqUpdateSoundProgressCounter() {
   try {
+    if (!__pqIsCurrentSoundVisualStep()) {
+      __pqClearSoundProgressBadges();
+      return;
+    }
     const total = __pqSoundProgressKeys().length;
     const done = __pqSoundCompletedCount();
     const label = String(__pqSoundProgressCfg('label', 'Progress') || 'Progress').trim();
@@ -411,6 +1105,11 @@ function __pqMarkSoundVideoCompleted(key) {
     const tile = grid
       ? grid.querySelector('.tile[data-key="' + esc + '"]')
       : document.querySelector('#grid .tile[data-key="' + esc + '"]');
+    if (!__pqIsCurrentSoundVisualStep()) {
+      __pqClearSoundCompletedVisuals();
+      __pqClearSoundProgressBadges();
+      return;
+    }
     if (tile) {
       tile.classList.add('pq-sound-done');
       tile.setAttribute('data-sound-done', '1');
@@ -429,6 +1128,11 @@ function __pqMarkSoundVideoCompleted(key) {
 function __pqApplySoundCompletedVisuals() {
   try {
     __pqLoadSoundCompletedMap();
+    if (!__pqIsCurrentSoundVisualStep()) {
+      __pqClearSoundCompletedVisuals();
+      __pqClearSoundProgressBadges();
+      return;
+    }
     Object.keys(__pqSoundVideoCompletedByKey).forEach((key) => {
       if (__pqSoundVideoCompletedByKey[key]) __pqMarkSoundVideoCompleted(key);
     });
@@ -548,7 +1252,7 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
       closeBtn.className = 'pq-sound-modal-close';
       closeBtn.setAttribute('data-choice', 'close');
       closeBtn.setAttribute('aria-label', 'Close');
-      closeBtn.textContent = '×';
+      closeBtn.textContent = 'Ã—';
 
       const img = document.createElement('img');
       img.className = 'pq-sound-modal-img';
@@ -606,9 +1310,11 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
 
       const requireExplainerFirst = __pqSoundRequireExplainerFirst();
       const autoVideoAfterExplainer = !!(opts && opts.autoPrimaryAfterExplainer) && __pqSoundAutoVideoAfterExplainer();
+      const autoPlayExplainerOnModalOpen = __pqSoundAutoPlayExplainerOnModalOpen();
+      let explainerPlayInFlight = false;
 
       function syncExplainerGuard() {
-        const locked = requireExplainerFirst && !__pqSoundHasSeenExplainer(key);
+        const locked = explainerPlayInFlight || (requireExplainerFirst && !__pqSoundHasSeenExplainer(key));
         try { overlay.classList.toggle('pq-sound-locked', locked); } catch (_e) {}
         try { guardHint.hidden = !locked; } catch (_e) {}
         try { primaryBtn.disabled = locked; } catch (_e) {}
@@ -628,7 +1334,9 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
         resolve(choice || 'primary');
       }
 
-      explainerBtn.addEventListener('click', async function () {
+      async function playExplainerFromModal() {
+        if (explainerPlayInFlight) return;
+        explainerPlayInFlight = true;
         try {
           __pqSoundMarkExplainerSeen(key);
           syncExplainerGuard();
@@ -645,8 +1353,23 @@ function __pqSoundModalChoice(key, opts, signal, rate) {
             explainerBtn.disabled = false;
             explainerBtn.textContent = explainerLabel;
           } catch (_e) {}
+          explainerPlayInFlight = false;
+          syncExplainerGuard();
         }
+      }
+
+      explainerBtn.addEventListener('click', function () {
+        playExplainerFromModal();
       });
+
+      if (autoPlayExplainerOnModalOpen && !__pqSoundHasSeenExplainer(key)) {
+        setTimeout(function () {
+          try {
+            if (!document.body.contains(overlay)) return;
+            playExplainerFromModal();
+          } catch (_e) {}
+        }, 120);
+      }
 
       replayBtn.addEventListener('click', async function () {
         try {
@@ -739,10 +1462,15 @@ async function __pqPlaySoundVideoRepeated(url, rate, signal) {
 async function __pqPlaySoundGuidedFlow(key, url, rate, signal) {
   __pqUpdateSoundProgressCounter();
 
-  // Step 1: audio plays first automatically.
-  await playLetter(key, 1, rate, 'sound');
+  // Step 1: letter video plays first automatically before the articulation modal.
+  if (__pqSoundPreModalPlaybackMode() === 'audio') {
+    await playLetter(key, 1, rate, 'sound');
+  } else {
+    await __pqPlaySoundVideoRepeated(url, rate, signal);
+    __pqCloseSoundVideo();
+  }
 
-  // Step 2: after audio, show image modal with Play Letter + Play Video.
+  // Step 2: after the opening media, show image modal with Play Letter + Play Video.
   while (true) {
     const afterAudio = await __pqSoundModalChoice(key, {
       replay: 'Play Letter',
@@ -850,8 +1578,8 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
   const keys = stepId === 'animate'
   ? __pqGetPassSequenceKeys('animate', PLAY_SEQUENCE_KEYS)
   : stepId === 'sound'
-    ? __pqGetPassSequenceKeys('sound', PLAY_SEQUENCE_KEYS)
-    : __pqGetWatchSequenceKeys();
+    ? __pqGetSoundPlaybackSequenceKeys(PLAY_SEQUENCE_KEYS)
+    : __pqGetWatchSequenceKeys(stepId);
 
     if (!keys.length) return;
 
@@ -869,7 +1597,7 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
     if (btnPause) {
       btnPause.disabled = false;
       if (typeof __pqSetBilingualControlLabel === 'function') {
-        __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+        __pqSetBilingualControlLabel(btnPause, 'Pause', '');
       } else {
         btnPause.textContent = __PQ_TEXT_CACHE.pause;
       }
@@ -907,7 +1635,7 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
       __pqCloseActiveMediaWindows();
 
       const current = getCurrentStep();
-      if (current && current.step && ['watch', 'sound', 'animate'].includes(__pqCanonicalStepId(current.step.id))) {
+      if (current && current.step && __pqIsWatchStep(current.step)) {
         await markPlaylistStepCompleted(current.step.id);
       }
     } catch (_e) {
@@ -951,7 +1679,7 @@ async function playWatchVideoForKey(key, rate, stepId, signal) {
       if (btnPause) {
         btnPause.disabled = false;
         if (typeof __pqSetBilingualControlLabel === 'function') {
-          __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+          __pqSetBilingualControlLabel(btnPause, 'Pause', '');
         } else {
           btnPause.textContent = __PQ_TEXT_CACHE.pause;
         }
@@ -1280,12 +2008,12 @@ async function __pqMaybeRunListenPlusAnimal(stepId, key, rate, signal) {
     el.style.display = 'flex';
     setTimeout(function () { el.classList.add('show'); }, 20);
     
-const __wordsRepeats = Number(__cfg('playback.steps.words.anchorRepeats', 1) || 1);
+const __listenPlusRepeats = Number(__cfg('playback.steps.listenplus.anchorRepeats', 1) || 1);
 
-for (let i = 0; i < __wordsRepeats; i++) {
+for (let i = 0; i < __listenPlusRepeats; i++) {
   await __pqPlayListenPlusAudio(
     audioUrl,
-    __cfg('playback.steps.words.anchorPlaybackRate', rate),
+    __cfg('playback.steps.listenplus.anchorPlaybackRate', rate),
     timeoutMs,
     signal
   );
@@ -1559,7 +2287,7 @@ for (let i = 0; i < __wordRepeats; i++) {
 
 
 /* ============================================================
-   REPEAT STEP — LIGHT STUDENT RECORDING
+   REPEAT STEP - LIGHT STUDENT RECORDING
    First letter requires Record click; next letters auto-record.
    ============================================================ */
 
@@ -1632,11 +2360,11 @@ function __pqEnsureRepeatRecordUi() {
   el.id = 'pqRepeatRecordOverlay';
   el.innerHTML = [
     '<div class="pq-repeat-card" role="dialog" aria-modal="true">',
-      '<div class="pq-repeat-title">Your turn — repeat the letter</div>',
+      '<div class="pq-repeat-title">Your turn - repeat the letter</div>',
       '<div class="pq-repeat-letter"></div>',
       '<div class="pq-repeat-msg">Tap Record, then say the letter.</div>',
       '<div class="pq-repeat-actions">',
-        '<button type="button" class="pq-repeat-record">🎤 Record</button>',
+        '<button type="button" class="pq-repeat-record">Record</button>',
       '</div>',
     '</div>'
   ].join('');
@@ -1801,7 +2529,7 @@ async function __pqRepeatRecordAttempt(key, rate, signal, attemptNumber, maxAtte
 
         if (recordBtn) {
           recordBtn.disabled = true;
-          recordBtn.textContent = '🔴 Recording...';
+          recordBtn.textContent = 'Recording...';
         }
 
         const stream = await __pqEnsureRepeatMicStream();
@@ -1841,7 +2569,7 @@ async function __pqRepeatRecordAttempt(key, rate, signal, attemptNumber, maxAtte
         try { el.querySelector('.pq-repeat-msg').textContent = 'Microphone was not ready. Tap Record again.'; } catch (_ignore) {}
         if (recordBtn) {
           recordBtn.disabled = false;
-          recordBtn.textContent = '🎤 Record';
+          recordBtn.textContent = 'Record';
         }
         return false;
       } finally {
@@ -1883,7 +2611,7 @@ async function __pqRepeatRecordAttempt(key, rate, signal, attemptNumber, maxAtte
       }
 
       recordBtn.disabled = false;
-      recordBtn.textContent = '🎤 Record';
+      recordBtn.textContent = 'Record';
 
       recordBtn.addEventListener('click', async function () {
         const ok = await runRecording();
@@ -1917,7 +2645,7 @@ async function __pqPlayAllPlaylistLocal(stepId) {
       if (btnPause) {
         btnPause.disabled = false;
         if (typeof __pqSetBilingualControlLabel === 'function') {
-          __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+          __pqSetBilingualControlLabel(btnPause, 'Pause', '');
         } else {
           btnPause.textContent = __PQ_TEXT_CACHE.pause;
         }
@@ -2053,7 +2781,7 @@ async function __pqPlayAllPlaylistLocal(stepId) {
         if (btnPause) {
           btnPause.disabled = false;
           if (typeof __pqSetBilingualControlLabel === 'function') {
-            __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+            __pqSetBilingualControlLabel(btnPause, 'Pause', '');
           } else {
             btnPause.textContent = __PQ_TEXT_CACHE.pause;
           }
@@ -2061,6 +2789,49 @@ async function __pqPlayAllPlaylistLocal(stepId) {
       } catch (_e) {}
     }
   }
+
+function __pqPlayingVideos() {
+  try {
+    return Array.from(document.querySelectorAll('video')).filter(function (video) {
+      return video && !video.paused && !video.ended;
+    });
+  } catch (_e) {
+    return [];
+  }
+}
+
+function __pqWaitForVideoPlaybackToSettle() {
+  const videos = __pqPlayingVideos();
+  if (!videos.length) return Promise.resolve();
+
+  return new Promise(function (resolve) {
+    let done = false;
+    const cleanupFns = [];
+
+    const finish = function () {
+      if (done) return;
+      if (__pqPlayingVideos().length) return;
+      done = true;
+      cleanupFns.forEach(function (cleanup) {
+        try { cleanup(); } catch (_e) {}
+      });
+      resolve();
+    };
+
+    videos.forEach(function (video) {
+      const onEnded = finish;
+      const onPause = finish;
+      video.addEventListener('ended', onEnded);
+      video.addEventListener('pause', onPause);
+      cleanupFns.push(function () {
+        video.removeEventListener('ended', onEnded);
+        video.removeEventListener('pause', onPause);
+      });
+    });
+
+    window.setTimeout(finish, 300);
+  });
+}
 
 async function __pqRunMatchStep() {
   if (!window.PQSharedMatchEngine) return;
@@ -2079,7 +2850,9 @@ async function __pqRunMatchStep() {
     playAudioForKey: function (key) {
           // PATCH_PLAYING_TILE_IN_MATCH_AUDIO
           try { __pqSetPlayingTile(key); } catch (_e) {}
-      return playLetterOnce(key, rate);
+      return __pqWaitForVideoPlaybackToSettle().then(function () {
+        return playLetterOnce(key, rate);
+      });
     },
 
     onComplete: function () {
@@ -2158,6 +2931,39 @@ function __pqClearPlayingTile() {
   }
   /* ===== PQ PLAYING TILE EFFECT HELPERS END ===== */
 
+try {
+  window.__pqDemoRunPlaybackAction = function (action, key, stepId) {
+    const finalAction = String(action || '').toLowerCase();
+    const finalKey = String(key || 'alph_1');
+    const finalStepId = String(stepId || '').toLowerCase();
+    const controller = new AbortController();
+    window.__pqDemoPlaybackController = controller;
+
+    if (finalAction === 'watch' || finalAction === 'phonetics' || finalAction === 'animate') {
+      const playbackStepId = finalAction === 'phonetics' ? 'sound' : (finalStepId || finalAction);
+      playWatchVideoForKey(finalKey, 1, playbackStepId, controller.signal).catch(function () {});
+      return true;
+    }
+
+    if (finalAction === 'letterclue') {
+      __pqMaybeRunListenPlusAnimal('listenplus', finalKey, 1, controller.signal).catch(function () {});
+      return true;
+    }
+
+    if (finalAction === 'soundclue') {
+      __pqMaybeRunWordsItem('words', finalKey, 1, controller.signal).catch(function () {});
+      return true;
+    }
+
+    if (finalAction === 'repeat' && typeof __pqShowRepeatRecordUi === 'function') {
+      __pqShowRepeatRecordUi(finalKey, 'Tap Record, then say the letter. Chance 1 of 3');
+      return true;
+    }
+
+    return false;
+  };
+} catch (_e) {}
+
 async function playAll() {
   try {
     const current = getCurrentStep();
@@ -2174,7 +2980,7 @@ async function playAll() {
       try {
         if (btnPause) {
           if (typeof __pqSetBilingualControlLabel === 'function') {
-            __pqSetBilingualControlLabel(btnPause, 'Pause', 'إيقاف');
+            __pqSetBilingualControlLabel(btnPause, 'Pause', '');
           } else {
             btnPause.textContent = __PQ_TEXT_CACHE.pause;
           }
@@ -2212,3 +3018,4 @@ async function playAll() {
   // ============================================================
   // PART 2 END
   // ============================================================
+

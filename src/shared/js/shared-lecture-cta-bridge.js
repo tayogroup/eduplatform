@@ -18,6 +18,11 @@
 
   function $(id){ return document.getElementById(id); }
 
+  function setLecturePopupActive(isActive){
+    try{ window.__PQ_LECTURE_POPUP_ACTIVE__ = !!isActive; }catch(_e){}
+    try{ window.__PQ_LECTURE_REQUIRED_ACTIVE__ = !!isActive; }catch(_e){}
+  }
+
   // ------------------------------
   // UI: blocking overlay prompt
   // ------------------------------
@@ -163,53 +168,15 @@
   function runCompletionHooks(stepId){
     const sid = stepId || 'lecture';
     const v = document.getElementById('lectureVideo');
-    const coreBtn = document.getElementById('lecturePlayBtn');
 
     // Always ensure embedded playback cannot happen
     if (v) stopEmbeddedPlayback(v);
 
-    // A) Best: core API
-    try{
-      if (window.PQLectureCore && typeof window.PQLectureCore.completeStep === 'function') {
-        _log('[PQ Lecture] complete via PQLectureCore.completeStep', sid);
-        window.PQLectureCore.completeStep(sid);
-      }
-    }catch(_e){}
-
-    // B) Unit legacy function (if global)
     try{
       if (typeof window.markLectureCompleted === 'function') {
         _log('[PQ Lecture] complete via window.markLectureCompleted()', sid);
         const r = window.markLectureCompleted();
         if (r && typeof r.then === 'function') r.catch(()=>{});
-      }
-    }catch(_e){}
-
-    // C) Managed engine API (if present)
-    try{
-      if (window.PQManagedCore && typeof window.PQManagedCore.completeStep === 'function') {
-        _log('[PQ Lecture] complete via PQManagedCore.completeStep', sid);
-        window.PQManagedCore.completeStep(sid);
-      } else if (window.PQManagedCore && typeof window.PQManagedCore.markStepComplete === 'function') {
-        _log('[PQ Lecture] complete via PQManagedCore.markStepComplete', sid);
-        window.PQManagedCore.markStepComplete(sid);
-      }
-    }catch(_e){}
-
-    // D) UNIVERSAL FALLBACK: dispatch 'ended' on the embedded lecture video element
-    // Many of your existing flows commit DB/step status from the embedded video's 'ended' handler.
-    try{
-      if (v) {
-        _log('[PQ Lecture] complete via dispatching ended on #lectureVideo', sid);
-        v.dispatchEvent(new Event('ended'));
-      }
-    }catch(_e){}
-
-    // E) LAST RESORT: click hidden core button AFTER unloading video (prevents background audio)
-    try{
-      if (coreBtn) {
-        _log('[PQ Lecture] fallback: click #lecturePlayBtn (video already unloaded)', sid);
-        coreBtn.click();
       }
     }catch(_e){}
 
@@ -287,7 +254,14 @@ video{width:100%;height:100%;max-height:calc(100vh - 110px);background:#000;outl
   function notify(type, extra){
     try{
       if (window.opener && window.opener !== window) {
-        window.opener.postMessage(Object.assign({ type, stepId, ts: Date.now() }, (extra||{})), '*');
+        window.opener.postMessage(Object.assign({
+          type,
+          stepId,
+          ts: Date.now(),
+          currentTime: Number(v && v.currentTime || 0),
+          duration: Number(v && v.duration || 0),
+          ended: !!(v && v.ended)
+        }, (extra||{})), '*');
       }
     }catch(_e){}
   }
@@ -374,7 +348,7 @@ video{width:100%;height:100%;max-height:calc(100vh - 110px);background:#000;outl
   v.addEventListener('ended', ()=>{
     completed = true;
     status.textContent='Completed ✓';
-    notify('PQ_LECTURE_ENDED');
+    notify('PQ_LECTURE_ENDED', { ended: true });
     setTimeout(()=>{ try{ window.close(); }catch(_e){} }, 600);
   });
 
@@ -446,23 +420,28 @@ video{width:100%;height:100%;max-height:calc(100vh - 110px);background:#000;outl
       const sid = msg.stepId || defaultStepId || 'lecture';
 
       if (msg.type === 'PQ_LECTURE_ENDED') {
+        const currentTime = Number(msg.currentTime || 0);
+        const duration = Number(msg.duration || 0);
+        const nearEnd = duration > 0 && currentTime >= Math.max(0, duration - 1.25);
+        if (!msg.ended || !nearEnd) {
+          showOverlay('Lecture is still playing. Please finish the full video.');
+          return;
+        }
+
         lectureCompleted = true;
         lectureRequired = false;
+        setLecturePopupActive(false);
         hideOverlay();
         stopMonitor();
 
-        // FIX: this now triggers the legacy/managed completion reliably
         runCompletionHooks(sid);
-
-        try{
-          window.dispatchEvent(new CustomEvent('pq:lecture:ended', {
-            detail: { stepId: sid, ts: msg.ts || Date.now() }
-          }));
-        }catch(_e){}
         return;
       }
 
       if (msg.type === 'PQ_LECTURE_ABORTED' || msg.type === 'PQ_LECTURE_HIDDEN' || msg.type === 'PQ_LECTURE_BLUR') {
+        if (msg.type === 'PQ_LECTURE_ABORTED') {
+          setLecturePopupActive(false);
+        }
         if (lectureRequired && !lectureCompleted) {
           showOverlay('Lecture is required. Please reopen and complete it.');
         }
@@ -506,8 +485,10 @@ video{width:100%;height:100%;max-height:calc(100vh - 110px);background:#000;outl
           showOverlay('Lecture URL is not ready yet. Please try again.');
           return;
         }
+        setLecturePopupActive(true);
         popupWin = openLecturePopup(title, url, stepId);
         if (!popupWin) {
+          setLecturePopupActive(false);
           showOverlay('Popup was blocked. Please allow popups, then click Reopen.');
           return;
         }
@@ -530,8 +511,10 @@ video{width:100%;height:100%;max-height:calc(100vh - 110px);background:#000;outl
         return;
       }
 
+      setLecturePopupActive(true);
       popupWin = openLecturePopup(title, url, stepId);
       if (!popupWin) {
+        setLecturePopupActive(false);
         showOverlay('Popup was blocked. Please allow popups, then click Reopen.');
         return;
       }

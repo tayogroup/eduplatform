@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Transliteration Flashcards - Arabic Letter Practice</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Noto+Naskh+Arabic:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-rose:#fff1f7;
+  --bg-mint:#f0fff7;
+  --bg-sky:#eff9ff;
+  --panel:#ffffff;
+  --ink:#123047;
+  --muted:#52677a;
+  --good:#15803d;
+  --bad:#dc2626;
+  --warn:#b45309;
+  --blue:#2563eb;
+  --tile:#fffaf0;
+  --tile-border:#ffcf7a;
+  --chip-border:#bfdbfe;
+  --shadow:0 16px 36px rgba(15,23,42,.16),0 6px 12px rgba(15,23,42,.1);
+  --radius-card:20px;
+  --radius-btn:16px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html,body{min-height:100%;}
+
+body{
+  min-height:100vh;
+  font-family:"Baloo 2",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.45;
+  background:
+    radial-gradient(circle at 16% 11%, #ffe3a3 0 11%, transparent 12%),
+    radial-gradient(circle at 84% 14%, #b6f5d0 0 10%, transparent 11%),
+    linear-gradient(135deg,var(--bg-rose),var(--bg-sky) 48%,var(--bg-mint));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+
+button,input,select{font:inherit;}
+
+.page{width:100%;max-width:1160px;}
+
+.sheet{
+  width:100%;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(148,163,184,.26);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,255,255,.94);
+  padding:10px 12px 8px;
+  box-shadow:0 4px 12px rgba(15,23,42,.08);
+  backdrop-filter:blur(8px);
+}
+
+.head{
+  padding:9px 14px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#aee8ff,#bff8c0 54%,#ffd6a5);
+  color:#1f2937;
+  font:900 22px/1 "Baloo 2";
+  text-align:center;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.08);
+}
+
+.subhead-note{
+  margin-top:6px;
+  font:800 14px "Baloo 2";
+  color:var(--muted);
+  text-align:center;
+}
+
+.hud{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:space-between;
+  margin-top:8px;
+}
+
+.hud-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+}
+
+.pill{
+  min-height:34px;
+  border-radius:999px;
+  padding:4px 12px;
+  background:#ffffffee;
+  border:1px solid var(--chip-border);
+  font:800 14px "Baloo 2";
+  color:#1e293b;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+}
+
+.pill strong{font-weight:900;}
+.status-good{color:var(--good);}
+.status-bad{color:var(--bad);}
+.status-warn{color:var(--warn);}
+.status-neutral{color:#64748b;}
+.stars{color:#f59e0b;letter-spacing:1px;}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(286px,1fr);
+  gap:12px;
+  padding:12px;
+}
+
+.practice-card{
+  background:linear-gradient(135deg,#c7f9d4,#6ee7b7 62%,#93c5fd);
+  border-radius:var(--radius-card);
+  padding:12px;
+  box-shadow:0 6px 14px rgba(15,23,42,.16);
+  display:grid;
+  gap:10px;
+}
+
+.card-header{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.card-header h2{
+  width:max-content;
+  max-width:100%;
+  font:900 19px/1.15 "Baloo 2";
+  padding:6px 12px;
+  border-radius:999px;
+  background:#ffffffee;
+  border:1px solid #bfdbfe;
+  color:#0f172a;
+}
+
+.card-sub{font:800 16px "Baloo 2";color:#1f2937;margin-top:6px;}
+
+.letter-stage{
+  min-height:214px;
+  border-radius:22px;
+  background:#fff;
+  border:1px solid rgba(191,219,254,.85);
+  display:grid;
+  place-items:center;
+  position:relative;
+  box-shadow:inset 0 -3px 0 rgba(15,23,42,.07),0 6px 14px rgba(15,23,42,.13);
+}
+
+.letter-display{
+  font-family:"Noto Naskh Arabic","Scheherazade",serif;
+  font-size:clamp(116px,22vw,170px);
+  font-weight:900;
+  line-height:1;
+  direction:rtl;
+  color:#122016;
+  text-shadow:0 7px 12px rgba(0,0,0,.2);
+}
+
+.result-mark{
+  position:absolute;
+  inset:18px 22px auto auto;
+  min-width:54px;
+  height:54px;
+  border-radius:999px;
+  display:none;
+  place-items:center;
+  font:900 28px "Baloo 2";
+  background:#fff;
+  box-shadow:0 8px 16px rgba(15,23,42,.18);
+}
+
+.result-mark.show{display:grid;}
+.result-mark.correct{color:#16a34a;border:2px solid #86efac;}
+.result-mark.wrong{color:#dc2626;border:2px solid #fecaca;}
+
+.sound-row,.answer-row,.nav-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+.answer-row input{
+  flex:1 1 220px;
+  min-width:0;
+  min-height:46px;
+  border-radius:999px;
+  border:2px solid #cbd5f5;
+  padding:8px 14px;
+  font:900 17px "Baloo 2";
+  color:#0f172a;
+  background:#fff;
+  outline:none;
+}
+
+.answer-row input:focus{
+  border-color:#22c55e;
+  box-shadow:0 0 0 4px rgba(34,197,94,.25);
+}
+
+.choices-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+}
+
+.choice{
+  min-height:58px;
+  border:2px solid var(--tile-border);
+  border-radius:16px;
+  background:var(--tile);
+  color:#111827;
+  font:900 17px "Baloo 2";
+  cursor:pointer;
+  box-shadow:0 5px 0 #f2c88c,0 8px 14px rgba(15,23,42,.1);
+  transition:transform .08s, box-shadow .08s, border-color .08s, background .08s;
+}
+
+.choice:hover:not(:disabled){transform:translateY(-2px);}
+.choice:disabled{cursor:not-allowed;opacity:.62;}
+.choice.correct{background:#dcfce7;border-color:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.25),0 5px 0 #86efac;}
+.choice.wrong{background:#fee2e2;border-color:#f97373;animation:shake .2s;}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-4px);}
+  50%{transform:translateX(4px);}
+  75%{transform:translateX(-4px);}
+  100%{transform:translateX(0);}
+}
+
+.hint-card,.feedback-card{
+  font:800 14px "Baloo 2";
+  border-radius:16px;
+  padding:9px 11px;
+  background:#fff7ed;
+  border:1px dashed #fdba74;
+  color:#4b5563;
+}
+
+.feedback-card{
+  min-height:44px;
+  background:#e5f2ff;
+  border-color:#93c5fd;
+}
+
+.feedback-card.success{background:#dcfce7;border-color:#86efac;color:#14532d;}
+.feedback-card.error{background:#fee2e2;border-color:#fecaca;color:#7f1d1d;}
+.feedback-card strong,.hint-card strong{color:#0f172a;}
+
+.progress-wrap{
+  padding:8px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(191,219,254,.75);
+  border-radius:16px;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:5px;
+  color:#334155;
+  font:800 12px "Baloo 2";
+}
+
+.progress-track{
+  height:12px;
+  border-radius:999px;
+  background:#e0f2fe;
+  overflow:hidden;
+}
+
+.progress-fill{
+  width:0%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#22c55e,#facc15,#fb923c);
+  transition:width .25s ease;
+}
+
+.side-card{
+  background:#f8fafc;
+  border-radius:var(--radius-card);
+  border:1px solid #e5e7eb;
+  padding:12px;
+}
+
+.side-section-title{
+  font:900 14px "Baloo 2";
+  color:#0f172a;
+  margin-bottom:4px;
+}
+
+.select-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.select-row select{
+  width:100%;
+  min-width:0;
+  border-radius:999px;
+  border:1px solid #cbd5f5;
+  padding:7px 12px;
+  font:800 14px "Baloo 2";
+  background:#fff;
+  color:#0f172a;
+}
+
+.btn{
+  border:0;
+  border-radius:var(--radius-btn);
+  min-height:44px;
+  padding:.58rem 1rem;
+  font:900 15px "Baloo 2";
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:#143b29;
+  background:linear-gradient(135deg,#b9f5c7,#63d58c);
+  box-shadow:0 6px 12px rgba(39,148,99,.35);
+  transition:transform .08s, box-shadow .12s, opacity .12s;
+}
+
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 9px 18px rgba(39,148,99,.45);}
+.btn:active:not(:disabled){transform:translateY(1px);box-shadow:0 4px 10px rgba(39,148,99,.3);}
+.btn:focus-visible,.choice:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid rgba(37,99,235,.32);outline-offset:2px;}
+.btn:disabled{cursor:not-allowed;opacity:.58;box-shadow:none;}
+
+.btn-ghost{
+  background:#fff;
+  color:#0f172a;
+  border:1px solid #cbd5f5;
+  box-shadow:0 3px 8px rgba(15,23,42,.16);
+}
+
+.btn-explainer{
+  background:linear-gradient(135deg,#dbeafe,#93c5fd);
+  color:#1e3a8a;
+}
+
+.btn-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:6px;
+}
+
+.toggle-row{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font:800 13px "Baloo 2";
+  color:#0f172a;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#e5f2ff;
+  border:1px solid #bfdbfe;
+}
+
+.toggle-row input{accent-color:#22c55e;}
+.settings-grid{display:grid;gap:7px;}
+.mt-3{margin-top:10px;}
+
+.coach-box,.tip-box{
+  font-size:13px;
+  font-weight:800;
+  color:#4b5563;
+  background:#fff7ed;
+  border-radius:16px;
+  padding:8px 10px;
+  border:1px dashed #fdba74;
+}
+
+.tip-box{background:#e5f2ff;border-color:#93c5fd;}
+.coach-box strong,.tip-box strong{color:#0f172a;}
+
+.toast{
+  position:fixed;
+  left:50%;
+  top:14px;
+  transform:translateX(-50%);
+  z-index:999;
+  max-width:min(92vw,520px);
+  padding:8px 14px;
+  border-radius:14px;
+  font:900 14px "Baloo 2",system-ui;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+  text-align:center;
+  transition:opacity .35s;
+}
+
+.toast-danger{background:#991b1b;color:#fee2e2;}
+.toast-success{background:#14532d;color:#bbf7d0;}
+.toast-info{background:#1d4ed8;color:#dbeafe;}
+
+.start-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  background:rgba(15,23,42,.38);
+  backdrop-filter:blur(5px);
+}
+
+.start-overlay.hidden{display:none;}
+
+.start-panel{
+  width:min(480px,92vw);
+  border-radius:22px;
+  background:#fff;
+  border:2px solid #bfdbfe;
+  box-shadow:0 18px 44px rgba(15,23,42,.24);
+  padding:24px;
+  text-align:center;
+}
+
+.start-panel h2{
+  margin:0 0 8px;
+  color:#0f172a;
+  font-size:28px;
+  line-height:1.05;
+}
+
+.start-panel p{
+  margin:0 auto 16px;
+  max-width:380px;
+  color:#4b5563;
+  font-weight:900;
+  line-height:1.25;
+}
+
+.start-panel .btn{
+  width:min(280px,100%);
+  font-size:18px;
+}
+
+.start-status{
+  margin-top:12px;
+  color:#4b5563;
+  font-weight:900;
+  min-height:22px;
+}
+
+@media(max-width:820px){
+  body{align-items:flex-start;padding:8px;}
+  .layout{grid-template-columns:1fr;}
+  .head{font-size:20px;}
+}
+
+@media(max-width:560px){
+  .top-bar{position:relative;}
+  .card-header{grid-template-columns:1fr;}
+  .letter-stage{min-height:176px;}
+  .choices-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .btn{flex:1 1 auto;}
+  .select-row{flex-direction:column;align-items:stretch;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="sheet" aria-label="Transliteration flashcards game">
+    <div class="top-bar">
+      <div class="head">Transliteration Flashcards</div>
+      <div class="subhead-note">Look, listen, then type or choose the English transliteration.</div>
+      <div class="hud">
+        <div class="hud-group">
+          <div class="pill">Card <strong id="hud-card">1 / 28</strong></div>
+          <div class="pill">Score <strong id="hud-score">0</strong></div>
+          <div class="pill">Streak <strong id="hud-streak">0</strong> <span id="hud-stars" class="stars"></span></div>
+        </div>
+        <div class="hud-group">
+          <div class="pill">Mode <strong id="hud-mode">Type</strong></div>
+          <div class="pill status-neutral" id="status-pill">Ready</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="practice-card" aria-labelledby="card-title">
+        <header class="card-header">
+          <div>
+            <h2 id="card-title">Which sound is this?</h2>
+            <div class="card-sub" id="card-sub">Type the transliteration, or switch to choices.</div>
+          </div>
+          <button class="btn" id="btn-audio" type="button" aria-keyshortcuts="Space">▶ Listen</button>
+        </header>
+
+        <div class="letter-stage">
+          <div class="letter-display" id="letter-display">ا</div>
+          <div class="result-mark" id="result-mark"></div>
+        </div>
+
+        <div class="hint-card" id="hint-card"><strong>Hint:</strong> Light letter, no dots.</div>
+
+        <div class="answer-row" id="type-row">
+          <input type="text" id="answer-input" autocomplete="off" placeholder="Type: ba, ta, saad..." aria-label="Type transliteration"/>
+          <button class="btn" id="btn-check" type="button">Check</button>
+        </div>
+
+        <div class="choices-grid" id="choices-grid" aria-label="Answer choices"></div>
+
+        <div class="feedback-card" id="feedback-card">Press Listen to hear the letter, then answer.</div>
+
+        <div class="progress-wrap" aria-label="Deck progress">
+          <div class="progress-label">
+            <span id="progress-label">0 of 28 mastered</span>
+            <span id="badge-label">Badge 0</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-ghost" id="btn-prev" type="button">Back</button>
+          <button class="btn btn-ghost" id="btn-next" type="button">Next</button>
+          <button class="btn btn-ghost" id="btn-show" type="button">Show</button>
+        </div>
+      </section>
+
+      <aside class="side-card">
+        <div>
+          <div class="side-section-title">Practice Mode</div>
+          <div class="select-row">
+            <select id="mode-select" aria-label="Choose practice mode">
+              <option value="type" selected>Type answer</option>
+              <option value="choices">Multiple choice</option>
+              <option value="learn">Learn cards</option>
+              <option value="missed">Review missed</option>
+            </select>
+            <button class="btn btn-ghost" id="btn-apply-mode" type="button">Apply</button>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Controls</div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-reshuffle" type="button">Reshuffle</button>
+            <button class="btn btn-ghost" id="btn-reset" type="button">Reset</button>
+            <button class="btn btn-ghost" id="btn-hint" type="button">Hint</button>
+            <button class="btn btn-ghost btn-explainer" id="btn-explainer" type="button">Play explainer</button>
+          </div>
+        </div>
+
+        <div class="mt-3 settings-grid">
+          <div class="side-section-title">Settings</div>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-gentle" checked>
+            <span>Gentle mode</span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="chk-auto-audio" checked>
+            <span>Auto listen</span>
+          </label>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">Coach</div>
+          <div class="coach-box" id="coach-box">
+            <strong>Ready?</strong> Start with Listen, then try the transliteration.
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="side-section-title">How to play</div>
+          <div class="tip-box">
+            <strong>Enter</strong> checks your typed answer.<br/>
+            <strong>Space</strong> plays the letter sound.<br/>
+            <strong>Show</strong> teaches without counting as correct.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<div class="start-overlay" id="start-overlay">
+  <div class="start-panel" role="dialog" aria-modal="true" aria-labelledby="start-title">
+    <h2 id="start-title">Ready for Flashcards?</h2>
+    <p>Tap Start Transliteration Flashcards to hear the explainer. Then listen to each Arabic letter and type or choose its transliteration.</p>
+    <button class="btn" type="button" id="start-game-btn">Start Transliteration Flashcards</button>
+    <div class="start-status" id="start-status">Listen to the explainer first.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const AUDIO_BASE = "https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/adult_male_alphabet/";
+const CACHE_BUST = "?v=a4";
+const EXPLAINER_AUDIO_PATH = "games/transliteration-flashcards/explainer/transliteration_flashcards_how_to_use.mp3";
+const EXPLAINER_AUDIO_VERSION = "20260615a";
+const EXPLAINER_SEEN_KEY = "pq_transliteration_flashcards_explainer_seen_v1";
+const BADGE_SIZE = 7;
+
+const CARDS = [
+  {letter:"ا", name:"Alif", hint:"Light letter, no dots.", answers:["alif"]},
+  {letter:"ب", name:"Baa", hint:"Light letter with 1 dot below.", answers:["ba","baa","b"]},
+  {letter:"ت", name:"Taa", hint:"Light letter with 2 dots above.", answers:["ta","taa","t"]},
+  {letter:"ث", name:"Thaa", hint:"3 dots above, like th in thing.", answers:["tha","thaa","th"]},
+  {letter:"ج", name:"Jeem", hint:"Curved letter with 1 dot below.", answers:["jeem","jim","j"]},
+  {letter:"ح", name:"Haa", hint:"Deep H sound, no dots.", answers:["ha","haa","h"]},
+  {letter:"خ", name:"Khaa", hint:"Strong airy kh sound, 1 dot above.", answers:["kha","khaa","kh"]},
+  {letter:"د", name:"Daal", hint:"Short shape, no dots.", answers:["dal","daal","d"]},
+  {letter:"ذ", name:"Dhaal", hint:"1 dot above, like th in this.", answers:["dhal","dhaal","dh","zaal"]},
+  {letter:"ر", name:"Raa", hint:"Rolled r sound, no dots.", answers:["ra","raa","r"]},
+  {letter:"ز", name:"Zay", hint:"1 dot above, z sound.", answers:["za","zaa","zay","zain","z"]},
+  {letter:"س", name:"Seen", hint:"Wavy letter, no dots.", answers:["seen","sin","s"]},
+  {letter:"ش", name:"Sheen", hint:"Wavy letter with 3 dots.", answers:["sheen","shin","sh"]},
+  {letter:"ص", name:"Saad", hint:"Heavy s sound, no dots.", answers:["saad","sad","saa"]},
+  {letter:"ض", name:"Daad", hint:"Heavy d sound, 1 dot above.", answers:["daad","dad","daa"]},
+  {letter:"ط", name:"Taa heavy", hint:"Heavy t sound, no dots.", answers:["taa","ta","tah"]},
+  {letter:"ظ", name:"Zaa heavy", hint:"Heavy th or z sound, 1 dot above.", answers:["zaa","za","dha","dhah"]},
+  {letter:"ع", name:"Ayn", hint:"Throat letter, no dots.", answers:["ain","ayn"]},
+  {letter:"غ", name:"Ghayn", hint:"Throat letter with 1 dot above.", answers:["ghain","ghayn","gh"]},
+  {letter:"ف", name:"Faa", hint:"Loop with 1 dot above.", answers:["fa","faa","f"]},
+  {letter:"ق", name:"Qaaf", hint:"Heavy q sound, 2 dots above.", answers:["qaf","qaaf","q"]},
+  {letter:"ك", name:"Kaaf", hint:"K sound, hook shape.", answers:["kaf","kaaf","k"]},
+  {letter:"ل", name:"Laam", hint:"Tall l sound, no dots.", answers:["lam","laam","l"]},
+  {letter:"م", name:"Meem", hint:"Lips letter, no dots.", answers:["meem","mim","m"]},
+  {letter:"ن", name:"Noon", hint:"Bowl with 1 dot above.", answers:["noon","nun","n"]},
+  {letter:"ه", name:"Haa soft", hint:"Soft h sound, no dots.", answers:["ha","haa","heh","h"]},
+  {letter:"و", name:"Waw", hint:"W or oo sound, no dots.", answers:["waw","waaw","w"]},
+  {letter:"ي", name:"Yaa", hint:"Y sound, 2 dots below.", answers:["ya","yaa","y"]}
+];
+
+const audioEl = new Audio();
+audioEl.preload = "auto";
+const explainerAudio = new Audio();
+explainerAudio.preload = "auto";
+
+const refs = {
+  hudCard:byId("hud-card"),
+  hudScore:byId("hud-score"),
+  hudStreak:byId("hud-streak"),
+  hudStars:byId("hud-stars"),
+  hudMode:byId("hud-mode"),
+  statusPill:byId("status-pill"),
+  title:byId("card-title"),
+  sub:byId("card-sub"),
+  btnAudio:byId("btn-audio"),
+  letterDisplay:byId("letter-display"),
+  resultMark:byId("result-mark"),
+  hintCard:byId("hint-card"),
+  typeRow:byId("type-row"),
+  answerInput:byId("answer-input"),
+  btnCheck:byId("btn-check"),
+  choicesGrid:byId("choices-grid"),
+  feedback:byId("feedback-card"),
+  progressLabel:byId("progress-label"),
+  progressFill:byId("progress-fill"),
+  badgeLabel:byId("badge-label"),
+  btnPrev:byId("btn-prev"),
+  btnNext:byId("btn-next"),
+  btnShow:byId("btn-show"),
+  modeSelect:byId("mode-select"),
+  btnApplyMode:byId("btn-apply-mode"),
+  btnReshuffle:byId("btn-reshuffle"),
+  btnReset:byId("btn-reset"),
+  btnHint:byId("btn-hint"),
+  btnExplainer:byId("btn-explainer"),
+  startOverlay:byId("start-overlay"),
+  startGameBtn:byId("start-game-btn"),
+  startStatus:byId("start-status"),
+  chkGentle:byId("chk-gentle"),
+  chkAutoAudio:byId("chk-auto-audio"),
+  coachBox:byId("coach-box")
+};
+
+let state = {
+  mode:"type",
+  order:[],
+  pos:0,
+  score:0,
+  streak:0,
+  badges:0,
+  statuses:CARDS.map(()=>null),
+  misses:new Set(),
+  attemptsThisCard:0,
+  locked:false
+};
+
+let audioRunId = 0;
+let gameStarted = false;
+
+function byId(id){
+  const el = document.getElementById(id);
+  if(!el) throw new Error("Missing element #" + id);
+  return el;
+}
+
+function publicBasePath(){
+  const path = window.location.pathname || "";
+  if(path.indexOf("/pre_quraan_integration/") === 0) return "/pre_quraan_integration/";
+  if(path.indexOf("/pre_quraan_staging/") === 0) return "/pre_quraan_staging/";
+  return "/pre_quraan/";
+}
+
+function explainerAudioUrl(){
+  return publicBasePath() + EXPLAINER_AUDIO_PATH + "?v=" + EXPLAINER_AUDIO_VERSION;
+}
+
+function hasSeenExplainer(){
+  try{
+    return window.localStorage.getItem(EXPLAINER_SEEN_KEY) === "1";
+  }catch(_error){
+    return false;
+  }
+}
+
+function markExplainerSeen(){
+  try{
+    window.localStorage.setItem(EXPLAINER_SEEN_KEY, "1");
+  }catch(_error){}
+}
+
+function setStartStatus(text){
+  refs.startStatus.textContent = text;
+}
+
+function stopLetterAudio(){
+  audioRunId += 1;
+  audioEl.pause();
+  audioEl.removeAttribute("src");
+  audioEl.load();
+}
+
+function stopExplainerAudio(){
+  explainerAudio.pause();
+  explainerAudio.removeAttribute("src");
+  explainerAudio.load();
+}
+
+async function playExplainerAudio(firstLaunch){
+  stopLetterAudio();
+  refs.btnExplainer.disabled = true;
+  refs.btnExplainer.textContent = "Playing...";
+  if(firstLaunch){
+    refs.startGameBtn.disabled = true;
+    refs.startGameBtn.textContent = "Playing...";
+    setStartStatus("Playing the explainer...");
+  }
+  try{
+    explainerAudio.pause();
+    explainerAudio.currentTime = 0;
+    explainerAudio.src = explainerAudioUrl();
+    await explainerAudio.play();
+    markExplainerSeen();
+    return true;
+  }catch(_error){
+    flash("Explainer audio did not load.", "danger");
+    if(firstLaunch){
+      setStartStatus("Audio did not load. Check the deployed explainer file, then tap again.");
+    }
+    return false;
+  }finally{
+    refs.btnExplainer.disabled = false;
+    refs.btnExplainer.textContent = "Play explainer";
+    refs.startGameBtn.disabled = false;
+    refs.startGameBtn.textContent = "Start Transliteration Flashcards";
+  }
+}
+
+function setGameStarted(started){
+  gameStarted = !!started;
+  refs.startOverlay.classList.toggle("hidden", gameStarted);
+}
+
+async function startFromIntro(){
+  if(!hasSeenExplainer()){
+    const played = await playExplainerAudio(true);
+    if(!played) return;
+  }
+  setGameStarted(true);
+  setStartStatus("Listen, then type or choose the transliteration.");
+  if(refs.chkAutoAudio.checked && gameStarted){
+    window.setTimeout(()=>playCurrentAudio(), 120);
+  }
+}
+
+function filenameCandidates(ar){
+  switch(ar){
+    case "ه": return ["ه","هـ","ـه"];
+    case "ج": return ["ج","جـ"];
+    case "خ": return ["خ","خـ"];
+    default: return [ar];
+  }
+}
+
+function tryPlayUrl(url, runId){
+  return new Promise((resolve,reject)=>{
+    const cleanup = ()=>{
+      audioEl.removeEventListener("loadedmetadata", onReady);
+      audioEl.removeEventListener("error", onError);
+    };
+    const onReady = ()=>{
+      cleanup();
+      if(runId !== audioRunId){
+        reject(new Error("cancelled"));
+        return;
+      }
+      audioEl.play().then(resolve).catch(reject);
+    };
+    const onError = ()=>{
+      cleanup();
+      reject(new Error("load-failed"));
+    };
+    audioEl.pause();
+    audioEl.currentTime = 0;
+    audioEl.src = url;
+    audioEl.addEventListener("loadedmetadata", onReady, {once:true});
+    audioEl.addEventListener("error", onError, {once:true});
+    audioEl.load();
+  });
+}
+
+async function playCurrentAudio(){
+  const card = currentCard();
+  if(!card) return false;
+  const runId = ++audioRunId;
+  refs.btnAudio.disabled = true;
+  setStatus("neutral","Playing sound...");
+  for(const candidate of filenameCandidates(card.letter)){
+    const url = AUDIO_BASE + encodeURIComponent(candidate) + ".mp3" + CACHE_BUST;
+    try{
+      await tryPlayUrl(url, runId);
+      if(runId === audioRunId){
+        setStatus("neutral","Now answer.");
+      }
+      return true;
+    }catch(error){
+      if(error && error.message === "cancelled") return false;
+    }finally{
+      refs.btnAudio.disabled = false;
+    }
+  }
+  refs.btnAudio.disabled = false;
+  setStatus("bad","Audio did not load.");
+  flash("Audio not found for this letter.", "danger");
+  return false;
+}
+
+function normalizeAnswer(text){
+  return String(text || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[ʿ‘'`]/g,"")
+    .replace(/[^a-z]/g,"");
+}
+
+function isCorrectAnswer(input,card){
+  const normalized = normalizeAnswer(input);
+  return card.answers.some(answer => normalizeAnswer(answer) === normalized);
+}
+
+function shuffle(items){
+  const copy = items.slice();
+  for(let i=copy.length-1;i>0;i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function currentIndex(){
+  return state.order[state.pos];
+}
+
+function currentCard(){
+  return CARDS[currentIndex()] || null;
+}
+
+function makeDeck(mode){
+  if(mode === "missed"){
+    const missed = CARDS.map((_,idx)=>idx).filter(idx => state.misses.has(idx) || state.statuses[idx] === false);
+    return missed.length ? shuffle(missed) : shuffle(CARDS.map((_,idx)=>idx));
+  }
+  return shuffle(CARDS.map((_,idx)=>idx));
+}
+
+function setStatus(type,text){
+  refs.statusPill.textContent = text;
+  refs.statusPill.classList.remove("status-good","status-bad","status-warn","status-neutral");
+  refs.statusPill.classList.add(
+    type === "good" ? "status-good" :
+    type === "bad" ? "status-bad" :
+    type === "warn" ? "status-warn" :
+    "status-neutral"
+  );
+}
+
+function setFeedback(type,html){
+  refs.feedback.className = "feedback-card" + (type ? " " + type : "");
+  refs.feedback.innerHTML = html;
+}
+
+function setCoach(html){
+  refs.coachBox.innerHTML = html;
+}
+
+function flash(message,type){
+  const toast = document.createElement("div");
+  toast.className = "toast toast-" + (type || "info");
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  window.setTimeout(()=>{ toast.style.opacity = "0"; }, 1300);
+  window.setTimeout(()=>{ toast.remove(); }, 1700);
+}
+
+function updateHUD(){
+  const mastered = state.statuses.filter(Boolean).length;
+  refs.hudCard.textContent = (state.pos + 1) + " / " + state.order.length;
+  refs.hudScore.textContent = state.score;
+  refs.hudStreak.textContent = state.streak;
+  refs.hudStars.textContent = state.streak > 1 ? "★".repeat(Math.min(3,state.streak)) : "";
+  refs.hudMode.textContent = modeLabel(state.mode);
+  refs.progressLabel.textContent = mastered + " of " + CARDS.length + " mastered";
+  refs.progressFill.style.width = ((mastered / CARDS.length) * 100) + "%";
+  refs.badgeLabel.textContent = "Badge " + state.badges;
+}
+
+function modeLabel(mode){
+  if(mode === "choices") return "Choices";
+  if(mode === "learn") return "Learn";
+  if(mode === "missed") return "Missed";
+  return "Type";
+}
+
+function renderCard(){
+  const card = currentCard();
+  if(!card) return;
+  state.locked = false;
+  state.attemptsThisCard = 0;
+
+  refs.title.textContent = state.mode === "learn" ? "Learn this letter" : "Which sound is this?";
+  refs.sub.textContent = state.mode === "choices"
+    ? "Choose the matching transliteration."
+    : state.mode === "learn"
+      ? "Listen and say the answer out loud."
+      : "Type the transliteration, then check.";
+  refs.letterDisplay.textContent = card.letter;
+  refs.hintCard.innerHTML = "<strong>Hint:</strong> " + card.hint;
+  refs.answerInput.value = "";
+  refs.answerInput.readOnly = false;
+  refs.btnCheck.disabled = false;
+  refs.btnShow.disabled = false;
+  refs.btnPrev.disabled = state.pos === 0;
+  refs.btnNext.disabled = state.pos >= state.order.length - 1;
+  clearResultMark();
+  renderChoices();
+  updateModeVisibility();
+  setFeedback("", "Press Listen to hear the letter, then answer.");
+  setStatus("neutral","Ready");
+  setCoach("<strong>" + card.name + ".</strong> Look at the shape, listen, then try.");
+  if(state.mode === "learn"){
+    showSolution(false);
+  }
+  updateHUD();
+
+  if(refs.chkAutoAudio.checked){
+    window.setTimeout(()=>playCurrentAudio(), 120);
+  }
+  window.setTimeout(()=>refs.answerInput.focus(), 80);
+}
+
+function renderChoices(){
+  refs.choicesGrid.innerHTML = "";
+  const card = currentCard();
+  if(!card) return;
+  const distractors = shuffle(CARDS.filter(other => other !== card)).slice(0,3).map(other => other.answers[0]);
+  const choices = shuffle([card.answers[0]].concat(distractors));
+  choices.forEach(choiceText=>{
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "choice";
+    btn.textContent = choiceText;
+    btn.addEventListener("click",()=>handleChoice(btn,choiceText));
+    refs.choicesGrid.appendChild(btn);
+  });
+}
+
+function updateModeVisibility(){
+  const typeVisible = state.mode === "type";
+  const choicesVisible = state.mode === "choices";
+  refs.typeRow.style.display = typeVisible ? "flex" : "none";
+  refs.choicesGrid.style.display = choicesVisible ? "grid" : "none";
+  if(state.mode === "learn"){
+    refs.typeRow.style.display = "none";
+    refs.choicesGrid.style.display = "none";
+  }
+}
+
+function markResult(type){
+  refs.resultMark.className = "result-mark " + (type === "correct" ? "correct" : "wrong") + " show";
+  refs.resultMark.textContent = type === "correct" ? "✓" : "×";
+}
+
+function clearResultMark(){
+  refs.resultMark.className = "result-mark";
+  refs.resultMark.textContent = "";
+}
+
+function handleTypedCheck(){
+  if(state.locked) return;
+  const card = currentCard();
+  const value = refs.answerInput.value;
+  if(!value.trim()){
+    setFeedback("error","Type your answer first.");
+    setStatus("warn","Type first.");
+    return;
+  }
+  handleAnswer(value, null);
+}
+
+function handleChoice(button,value){
+  if(state.locked) return;
+  handleAnswer(value, button);
+}
+
+function handleAnswer(value,button){
+  const card = currentCard();
+  const idx = currentIndex();
+  const correct = isCorrectAnswer(value,card);
+  state.attemptsThisCard += 1;
+
+  if(correct){
+    state.locked = true;
+    state.statuses[idx] = true;
+    state.misses.delete(idx);
+    const points = Math.max(6, 10 + Math.min(8,state.streak * 2) - ((state.attemptsThisCard - 1) * 2));
+    state.score += points;
+    state.streak += 1;
+    if(state.statuses.filter(Boolean).length > 0 && state.statuses.filter(Boolean).length % BADGE_SIZE === 0){
+      state.badges = Math.max(state.badges, Math.floor(state.statuses.filter(Boolean).length / BADGE_SIZE));
+    }
+    markResult("correct");
+    if(button) button.classList.add("correct");
+    refs.answerInput.readOnly = true;
+    refs.btnCheck.disabled = true;
+    setFeedback("success","Correct: <strong>" + card.answers[0] + "</strong>. +" + points);
+    setStatus("good","Correct!");
+    setCoach("<strong>Great!</strong> " + card.letter + " is " + card.name + ".");
+    disableChoices();
+    updateHUD();
+    window.setTimeout(nextCard, 900);
+    return;
+  }
+
+  state.statuses[idx] = false;
+  state.misses.add(idx);
+  state.streak = 0;
+  markResult("wrong");
+  if(button){
+    button.classList.add("wrong");
+    button.disabled = true;
+  }
+  setStatus("bad","Try again.");
+  setFeedback("error", refs.chkGentle.checked
+    ? "Not quite. Listen again and try once more."
+    : "Not quite. The answer is <strong>" + card.answers[0] + "</strong>.");
+  setCoach("<strong>Clue:</strong> " + card.hint);
+  updateHUD();
+
+  if(!refs.chkGentle.checked || state.attemptsThisCard >= 2){
+    showSolution(false);
+  }
+}
+
+function disableChoices(){
+  refs.choicesGrid.querySelectorAll(".choice").forEach(btn => btn.disabled = true);
+}
+
+function showSolution(countAsMiss){
+  const card = currentCard();
+  if(!card) return;
+  if(countAsMiss){
+    state.misses.add(currentIndex());
+    state.statuses[currentIndex()] = false;
+    state.streak = 0;
+  }
+  refs.answerInput.value = card.answers[0];
+  setFeedback("", "Answer: <strong>" + card.answers[0] + "</strong>. Also accepted: " + card.answers.slice(1).join(", "));
+  setCoach("<strong>Say it:</strong> " + card.letter + " is " + card.name + ".");
+  setStatus("neutral","Solution shown.");
+  updateHUD();
+}
+
+function giveHint(){
+  const card = currentCard();
+  if(!card) return;
+  setFeedback("", "<strong>Hint:</strong> " + card.hint + " First sound: <strong>" + card.answers[0][0] + "</strong>");
+  setStatus("warn","Hint shown.");
+}
+
+function nextCard(){
+  clearResultMark();
+  if(state.pos < state.order.length - 1){
+    state.pos += 1;
+    renderCard();
+    return;
+  }
+  finishDeck();
+}
+
+function prevCard(){
+  if(state.pos <= 0) return;
+  state.pos -= 1;
+  renderCard();
+}
+
+function finishDeck(){
+  state.locked = true;
+  const mastered = state.statuses.filter(Boolean).length;
+  refs.btnCheck.disabled = true;
+  refs.btnShow.disabled = false;
+  refs.answerInput.readOnly = true;
+  disableChoices();
+  setStatus("good","Deck complete.");
+  setFeedback("success","Deck complete. Mastered <strong>" + mastered + " / " + CARDS.length + "</strong>.");
+  setCoach(state.misses.size
+    ? "<strong>Nice work.</strong> Use Review missed to practice the tricky ones."
+    : "<strong>Excellent.</strong> You mastered every card in this deck.");
+}
+
+function resetDeck(options){
+  const opts = options || {};
+  if(opts.resetScore){
+    state.score = 0;
+    state.streak = 0;
+    state.badges = 0;
+    state.statuses = CARDS.map(()=>null);
+    state.misses = new Set();
+  }
+  state.mode = opts.mode || state.mode;
+  refs.modeSelect.value = state.mode;
+  state.order = makeDeck(state.mode);
+  state.pos = 0;
+  renderCard();
+}
+
+refs.btnAudio.addEventListener("click",playCurrentAudio);
+refs.btnCheck.addEventListener("click",handleTypedCheck);
+refs.btnShow.addEventListener("click",()=>showSolution(true));
+refs.btnPrev.addEventListener("click",prevCard);
+refs.btnNext.addEventListener("click",nextCard);
+refs.btnHint.addEventListener("click",giveHint);
+refs.btnReshuffle.addEventListener("click",()=>resetDeck({resetScore:false}));
+refs.btnReset.addEventListener("click",()=>{ stopExplainerAudio(); resetDeck({resetScore:true, mode:state.mode}); });
+refs.btnApplyMode.addEventListener("click",()=>resetDeck({resetScore:false, mode:refs.modeSelect.value}));
+refs.btnExplainer.addEventListener("click",()=>playExplainerAudio(false));
+refs.startGameBtn.addEventListener("click",startFromIntro);
+
+refs.answerInput.addEventListener("keydown",(event)=>{
+  if(!gameStarted) return;
+  if(event.key === "Enter"){
+    event.preventDefault();
+    handleTypedCheck();
+  }
+});
+
+document.addEventListener("keydown",(event)=>{
+  const tag = (event.target && event.target.tagName) || "";
+  if(/INPUT|SELECT|TEXTAREA/.test(tag)) return;
+  if(!gameStarted) return;
+  if(event.key === " "){
+    event.preventDefault();
+    playCurrentAudio();
+  }else if(event.key === "ArrowRight"){
+    event.preventDefault();
+    nextCard();
+  }else if(event.key === "ArrowLeft"){
+    event.preventDefault();
+    prevCard();
+  }
+});
+
+function init(){
+  resetDeck({resetScore:true, mode:"type"});
+}
+
+document.addEventListener("DOMContentLoaded", init);
+if(document.readyState === "interactive" || document.readyState === "complete"){
+  init();
+}
+})();
+</script>
+</body>
+</html>

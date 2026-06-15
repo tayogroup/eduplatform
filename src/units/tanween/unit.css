@@ -1,0 +1,327 @@
+/* Unit-specific Tanween Rules lesson styles. */
+.pq-tanween-rules-active .grid-wrap{
+  display:none;
+}
+
+.pq-tan-rules[hidden]{
+  display:none !important;
+}
+
+.pq-tan-rules{
+  width:min(980px,calc(100% - 34px));
+  margin:26px auto 36px;
+  color:#17243a;
+  direction:ltr;
+}
+
+.pq-tan-rules__hero,
+.pq-tan-rule-card,
+.pq-tan-rules__practice,
+.pq-tan-rules__remember{
+  border:3px solid rgba(70,189,113,.52);
+  border-radius:26px;
+  background:linear-gradient(180deg,#fffdf2 0%,#eafff0 100%);
+  box-shadow:0 16px 36px rgba(29,95,61,.14), inset 0 0 0 3px rgba(255,255,255,.7);
+}
+
+.pq-tan-rules__hero{
+  position:relative;
+  padding:26px clamp(16px,4vw,42px);
+  text-align:center;
+  background:linear-gradient(135deg,#fff2bd 0%,#e8fbff 52%,#ecffe9 100%);
+}
+
+.pq-tan-rules__badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 26px;
+  border-radius:999px;
+  background:#ffc957;
+  color:#3c2a08;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.72),0 8px 18px rgba(105,72,12,.15);
+  font-size:clamp(1.35rem,2.6vw,2.25rem);
+  font-weight:1000;
+  text-align:center;
+}
+
+.pq-tan-rules__hero h2{
+  margin:8px 0 2px;
+  color:#079238;
+  font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri","Segoe UI",serif;
+  font-size:clamp(1.55rem,3vw,2.65rem);
+  line-height:1.08;
+}
+
+.pq-tan-rules__lead{
+  max-width:720px;
+  margin:4px auto 16px;
+  color:#31435a;
+  font-size:1.08rem;
+  font-weight:850;
+  line-height:1.45;
+}
+
+.pq-tan-rules__audio-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:max-content;
+  max-width:100%;
+  min-height:54px;
+  margin:18px auto 0;
+  padding:0 24px;
+  border:0;
+  border-radius:999px;
+  background:#3fbf71;
+  color:#fff;
+  box-shadow:0 10px 20px rgba(38,145,89,.24);
+  font:inherit;
+  font-size:1rem;
+  font-weight:950;
+  cursor:pointer;
+}
+
+.pq-tan-rules__audio-btn:disabled{
+  cursor:progress;
+  opacity:.86;
+}
+
+.pq-tan-rules__audio-btn:focus-visible,
+.pq-tan-rules__audio-btn:hover{
+  outline:4px solid rgba(53,177,105,.25);
+  transform:translateY(-1px);
+}
+
+.pq-tan-script{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  max-width:760px;
+  margin:14px auto 0;
+}
+
+.pq-tan-phrase{
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  margin:0;
+  padding:10px 14px;
+  border:1px solid rgba(70,170,110,.22);
+  border-radius:16px;
+  background:rgba(255,255,255,.76);
+  color:#233750;
+  font-size:1.04rem;
+  font-weight:850;
+  line-height:1.55;
+  text-align:left;
+}
+
+.pq-tan-rules__hero .pq-tan-phrase{
+  text-align:center;
+}
+
+.pq-tan-arabic-word{
+  display:inline-block;
+  color:#078b3a;
+  font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri","Segoe UI",serif;
+  font-size:1.42em;
+  font-weight:1000;
+  line-height:1.2;
+  direction:rtl;
+  unicode-bidi:isolate;
+}
+
+.pq-tan-phrase[dir="rtl"],
+.pq-tan-phrase:dir(rtl){
+  font-family:"Noto Naskh Arabic","Noto Sans Arabic","Amiri","Segoe UI",serif;
+  color:#078b3a;
+  font-size:1.5rem;
+  font-weight:1000;
+  text-align:center;
+  direction:rtl;
+}
+
+.pq-tan-rules__deck{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  margin-top:18px;
+}
+
+.pq-tan-rule-card{
+  padding:18px clamp(14px,3vw,26px);
+}
+
+.pq-tan-rule-card__head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:8px;
+}
+
+.pq-tan-rule-card__num{
+  flex:0 0 auto;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#55bf73;
+  color:#fff;
+  box-shadow:0 8px 18px rgba(20,128,70,.2);
+  font-size:1.2rem;
+  font-weight:1000;
+}
+
+.pq-tan-rule-card h3,
+.pq-tan-rules__practice h3,
+.pq-tan-rules__remember h3{
+  margin:0;
+  color:#10233d;
+  font-size:clamp(1.28rem,2.1vw,1.75rem);
+  font-weight:1000;
+  line-height:1.15;
+}
+
+.pq-tan-rule-card__extra{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  max-width:760px;
+  margin:0 auto;
+}
+
+.pq-tan-harakat-section{
+  box-sizing:border-box;
+  width:100%;
+  max-width:760px;
+  margin:18px auto 0;
+  padding:18px clamp(12px,2.4vw,24px);
+  border:3px solid rgba(70,189,113,.36);
+  border-radius:22px;
+  background:rgba(255,255,255,.66);
+  box-shadow:0 14px 26px rgba(29,95,61,.09);
+}
+
+.pq-tan-harakat-section h4{
+  margin:0 0 14px;
+  color:#06451f;
+  font-size:clamp(1.18rem,2vw,1.6rem);
+  font-weight:1000;
+  text-align:center;
+}
+
+.pq-tan-harakat-section .pq-tan-script{
+  margin-top:0;
+}
+
+.pq-tan-harakat-section .pq-tan-phrase{
+  text-align:center;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.pq-tan-rules__practice,
+.pq-tan-rules__remember{
+  margin-top:18px;
+  padding:20px clamp(14px,3vw,26px);
+}
+
+.pq-tan-rules__practice h3,
+.pq-tan-rules__remember h3{
+  text-align:center;
+}
+
+.pq-tan-rules__practice .pq-tan-script,
+.pq-tan-rules__remember .pq-tan-script{
+  max-width:760px;
+}
+
+.pq-tan-rules__practice .pq-tan-phrase{
+  text-align:center;
+}
+
+.pq-tan-rules__remember .pq-tan-phrase::before{
+  content:"✓";
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:24px;
+  height:24px;
+  margin-right:8px;
+  border-radius:50%;
+  background:#55bf73;
+  color:#fff;
+  font-size:.9rem;
+  font-weight:1000;
+  vertical-align:middle;
+}
+
+.pq-tan-rules__footer{
+  display:flex;
+  justify-content:center;
+  margin-top:18px;
+}
+
+.pq-tan-rules__footer button{
+  min-height:58px;
+  padding:0 28px;
+  border:0;
+  border-radius:999px;
+  background:linear-gradient(180deg,#ffcf55 0%,#f19a35 100%);
+  color:#10233d;
+  box-shadow:0 10px 22px rgba(166,95,27,.2);
+  font:inherit;
+  font-size:1.05rem;
+  font-weight:1000;
+  cursor:pointer;
+}
+
+.pq-rules-current-section,
+.pq-tan-rule-card.is-current-rule,
+.pq-tan-rules__hero.is-current-rule,
+.pq-tan-rules__practice.is-current-rule,
+.pq-tan-rules__remember.is-current-rule{
+  border-color:#ffc83d;
+  box-shadow:0 18px 40px rgba(232,160,24,.22),0 0 0 5px rgba(255,200,61,.22),inset 0 0 0 3px rgba(255,255,255,.78);
+}
+
+.pq-rules-current-phrase{
+  background:#17bf69 !important;
+  border-color:#0fa85a !important;
+  color:#fff !important;
+  box-shadow:0 8px 20px rgba(19,142,83,.24);
+}
+
+@media(max-width:760px){
+  .pq-tan-rules{
+    width:100%;
+    margin-top:18px;
+    padding:0 10px;
+  }
+
+  .pq-tan-rules__hero,
+  .pq-tan-rule-card,
+  .pq-tan-rules__practice,
+  .pq-tan-rules__remember{
+    border-radius:22px;
+  }
+
+  .pq-tan-rule-card__head{
+    align-items:flex-start;
+  }
+
+  .pq-tan-rule-card__num{
+    width:40px;
+    height:40px;
+  }
+
+  .pq-tan-phrase{
+    font-size:.98rem;
+  }
+}

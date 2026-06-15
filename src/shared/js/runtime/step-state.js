@@ -16,6 +16,18 @@
   // ============================================================
   // SECTION 28: Managed progress runtime helpers
   // ============================================================
+function __pqPublishCurrentStepState() {
+  try {
+    const currentId = String((managedProgress && managedProgress.currentStepId) || '');
+    const step = (STEPS || []).find((s) => s.id === currentId) || null;
+    window.__PQ_CURRENT_STEP_ID__ = currentId;
+    window.__PQ_CURRENT_STEP__ = {
+      step,
+      progress: (managedProgress && step) ? managedProgress[step.id] : null
+    };
+  } catch (_e) {}
+}
+
 function __pqNormalizeCurrentStepId() {
   try {
     if (!managedProgress) return;
@@ -60,6 +72,7 @@ function __pqNormalizeCurrentStepId() {
     managedProgress.__finished = stepsArr.every(
       (step) => !!(managedProgress[step.id] && managedProgress[step.id].completed)
     );
+    try { __pqPublishCurrentStepState(); } catch (_e) {}
 
     try {
       const nextStepId = String(managedProgress.currentStepId || '');
@@ -90,10 +103,15 @@ function __pqNormalizeCurrentStepId() {
       (STEPS && STEPS[0]) ||
       null;
 
-    return {
+    const current = {
       step,
       progress: (managedProgress && step) ? managedProgress[step.id] : null
     };
+    try {
+      window.__PQ_CURRENT_STEP_ID__ = String((step && step.id) || '');
+      window.__PQ_CURRENT_STEP__ = current;
+    } catch (_e) {}
+    return current;
   }
 
 function __pqForceWriteButtonRefresh() {

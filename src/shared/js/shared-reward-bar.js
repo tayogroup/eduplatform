@@ -28,7 +28,12 @@
   background:linear-gradient(180deg,#fff8cf 0%,#ffe89e 100%);
   border:1px solid rgba(229,190,69,.42);
   box-shadow:0 8px 22px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.7);
-  max-width:min(100%, 860px);
+  width:min(100%, 960px);
+  max-width:100%;
+}
+#pqStepRewardStars .pq-sound-letter-progress-badge{
+  margin-inline-start:auto;
+  margin-inline-end:22px;
 }
 #pqStepRewardStars .pq-stars-group,
 #pqStepRewardStars .pq-total-group{
@@ -38,9 +43,18 @@
   width:1px;height:26px;background:rgba(128,96,0,.18);
 }
 #pqStepRewardStars .pq-group-label{
-  font-size:.78rem;font-weight:900;letter-spacing:.02em;
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  font-size:.78rem;font-weight:900;letter-spacing:.02em;line-height:1.05;
   color:#7a6400;background:rgba(255,255,255,.5);
   padding:4px 8px;border-radius:999px;
+}
+#pqStepRewardStars .pq-group-label__ar,
+#pqStepRewardStars .pq-focus-label__ar{
+  direction:rtl;
+  font-family:"Noto Sans Arabic","Tahoma","Arial",sans-serif;
+  font-size:.82em;
+  color:#15803d;
+  letter-spacing:0;
 }
 #pqStepRewardStars .pq-stars-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 #pqStepRewardStars .pq-star{
@@ -66,9 +80,9 @@
   font-size:1rem;line-height:1;
 }
 #pqStepRewardStars .pq-focus-label{
-  display:inline-flex;align-items:center;justify-content:center;
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
   min-height:34px;padding:7px 14px;border-radius:999px;
-  font-weight:900;font-size:.94rem;line-height:1;
+  font-weight:900;font-size:.94rem;line-height:1.05;
   border:1px solid rgba(0,0,0,.06);
   box-shadow:0 5px 12px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.55);
   white-space:nowrap;
@@ -163,22 +177,29 @@
           : '';
         const previousText = existingLabel ? existingLabel.textContent : '';
 
+        const focusArabicMap = {
+          'Try to Focus': 'ركّز',
+          'Good Focus': 'تركيز جيد',
+          'Great Focus': 'تركيز رائع'
+        };
+        const focusAr = focusArabicMap[String(focus.text || '')] || 'ركّز';
+
         wrap.innerHTML =
           '<span class="pq-stars-group">' +
-            '<span class="pq-group-label">This Unit</span>' +
+            '<span class="pq-group-label"><span class="pq-group-label__en">This Unit</span><span class="pq-group-label__ar" dir="rtl">الوحدة</span></span>' +
             '<span class="pq-stars-row">' + starsHtml + '</span>' +
           '</span>' +
           '<span class="pq-stars-divider" aria-hidden="true"></span>' +
           '<span class="pq-total-group">' +
-            '<span class="pq-group-label">Total Stars</span>' +
+            '<span class="pq-group-label"><span class="pq-group-label__en">Total Stars</span><span class="pq-group-label__ar" dir="rtl">النجوم</span></span>' +
             '<span class="pq-total-count">' + totalStars + ' <span class="pq-total-star" aria-hidden="true">⭐</span></span>' +
           '</span>' +
           '<span class="pq-stars-divider" aria-hidden="true"></span>' +
           '<span class="pq-total-group pq-units-group">' +
-            '<span class="pq-group-label">Units Done</span>' +
+            '<span class="pq-group-label"><span class="pq-group-label__en">Units Done</span><span class="pq-group-label__ar" dir="rtl">المكتملة</span></span>' +
             '<span class="pq-total-count">' + completedUnits + ' <span class="pq-total-star" aria-hidden="true">📘</span></span>' +
           '</span>' +
-          '<span class="pq-focus-label ' + focus.cls + '">' + focus.text + '</span>';
+          '<span class="pq-focus-label ' + focus.cls + '"><span class="pq-focus-label__en">' + focus.text + '</span><span class="pq-focus-label__ar" dir="rtl">' + focusAr + '</span></span>';
 
         const newLabel = wrap.querySelector('.pq-focus-label');
         if (newLabel && (previousClass !== focus.cls || previousText !== focus.text)) {

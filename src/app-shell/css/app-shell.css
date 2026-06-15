@@ -168,6 +168,12 @@
   .btn-progress{
     background:linear-gradient(135deg,#baf3c6,#66d992);
   }
+  .btn-login{
+    background:linear-gradient(135deg,#d8ffd8,#7ee6a0);
+  }
+  .btn-logout{
+    background:linear-gradient(135deg,#fff4d4,#ffb58f);
+  }
 
   /* ---------- Category strip ---------- */
   .cats{
@@ -465,18 +471,17 @@
   }
 
   .parent-badge{
-    position:absolute;
-    right:14px;
-    top:66px;
     background:#ffffff;
     border:2px solid #d9e7f7;
     border-radius:12px;
     box-shadow:0 10px 24px rgba(0,0,0,.08);
     padding:.45rem .7rem;
-    text-align:right;
+    text-align:left;
     z-index:50;
     font:800 12px/1.1 system-ui,"Baloo 2";
     color:#0d2c3a;
+    max-width:100%;
+    overflow-wrap:anywhere;
   }
   .parent-badge .lbl{
     opacity:.75;
@@ -521,9 +526,7 @@
       width:22px;
       height:22px;
     }
-    .parent-badge{
-      display:none !important;
-    }
+    .parent-badge{ flex:1 1 100%; }
   }
 
   /* =======================================================

@@ -35,9 +35,37 @@
     return !!value && typeof value === 'object' && !Array.isArray(value);
   }
 
+  function contentValue(node, key) {
+    try {
+      if (!isObj(node)) return '';
+      const fallback = node[key];
+      const api = window.PQL10n;
+      if (api && typeof api.enabledFor === 'function' && !api.enabledFor('content')) {
+        return fallback;
+      }
+      if (api && typeof api.getLanguage === 'function') {
+        const lang = api.getLanguage();
+        const translations = isObj(node.translations) ? node.translations : {};
+        if (translations[lang] && translations[lang][key] != null) return translations[lang][key];
+      }
+      if (api && typeof api.value === 'function') {
+        return api.value(fallback, 'content', fallback);
+      }
+      if (isObj(fallback)) {
+        return fallback.en || fallback.EN || '';
+      }
+      return fallback;
+    } catch (_e) {
+      return node && node[key];
+    }
+  }
+
   function normalizeStepId(stepId) {
     const raw = toStr(stepId).toLowerCase();
     if (!raw) return '';
+    if (raw === 'phonetics') return 'sound';
+    if (raw === 'letterclue') return 'listenplus';
+    if (raw === 'soundclue') return 'words';
     if (raw === 'write' || raw === 'trace') return 'trace1';
     return raw;
   }
@@ -97,8 +125,10 @@
     if (root) {
       const titleEl = root.querySelector('[data-role="title"]');
       const btnEl = root.querySelector('[data-role="continue"]');
+      const cancelEl = root.querySelector('[data-role="cancel"]');
       if (titleEl) titleEl.textContent = titleText || '😊 Message';
       if (btnEl) btnEl.textContent = continueText || 'Continue';
+      if (cancelEl) cancelEl.style.display = 'none';
       return root;
     }
 
@@ -135,6 +165,7 @@
 }
 #__pq_msg_v2_modal .pq-msg-foot{
   display:flex;
+  gap:12px;
   justify-content:flex-end;
   padding:0 22px 22px;
 }
@@ -147,6 +178,11 @@
   font-size:16px;
   font-weight:800;
   cursor:pointer;
+}
+#__pq_msg_v2_modal .pq-msg-btn[data-role="cancel"]{
+  background:#fff9ec;
+  color:#5f4415;
+  box-shadow:inset 0 0 0 2px #edd49a;
 }
 #__pq_msg_v2_fx{
   position:fixed; inset:0; pointer-events:none; z-index:2147483647;
@@ -171,6 +207,7 @@
         <div class="pq-msg-head" id="__pq_msg_v2_title" data-role="title">${titleText || '😊 Message'}</div>
         <div class="pq-msg-body" data-role="body"></div>
         <div class="pq-msg-foot">
+          <button class="pq-msg-btn" type="button" data-role="cancel" style="display:none">Cancel</button>
           <button class="pq-msg-btn" type="button" data-role="continue">${continueText || 'Continue'}</button>
         </div>
       </div>
@@ -249,6 +286,7 @@
     const modal = ensureModal(titleText, continueText);
     const bodyEl = modal.querySelector('[data-role="body"]');
     const btnEl = modal.querySelector('[data-role="continue"]');
+    const cancelBtnEl = modal.querySelector('[data-role="cancel"]');
     const audioCtl = createAudioController();
 
     let lastStateKey = '';
@@ -346,8 +384,8 @@
         }
       }
 
-      const audio = resolveAudio(messageBase, node.audio);
-      const text = toStr(node.text);
+      const audio = resolveAudio(messageBase, contentValue(node, 'audio'));
+      const text = toStr(contentValue(node, 'text'));
 
       if (!audio && !text) return null;
 
@@ -360,8 +398,8 @@
     }
 
     function resolveCompletionMessage() {
-      const audio = resolveAudio(messageBase, completionMap.audio);
-      const text = toStr(completionMap.text);
+      const audio = resolveAudio(messageBase, contentValue(completionMap, 'audio'));
+      const text = toStr(contentValue(completionMap, 'text'));
 
       if (!audio && !text) return null;
 
@@ -386,6 +424,12 @@
 
     async function showMessage(message) {
       if (!message || (!message.audio && !message.text)) return false;
+      const titleEl = modal.querySelector('[data-role="title"]');
+      const continueEl = modal.querySelector('[data-role="continue"]');
+
+      if (titleEl) titleEl.textContent = titleText || 'Message';
+      if (continueEl) continueEl.textContent = continueText || 'Continue';
+      if (cancelBtnEl) cancelBtnEl.style.display = 'none';
 
       modalToken += 1;
       const myToken = modalToken;
@@ -412,15 +456,68 @@
             return resolve();
           }
           modal.classList.remove('show');
-          btnEl.removeEventListener('click', close);
+          if (btnEl) btnEl.removeEventListener('click', close);
           resolve();
         }
 
-        btnEl.addEventListener('click', close, { once: true });
+        if (btnEl) btnEl.addEventListener('click', close, { once: true });
         playPromise.finally(function () {});
       });
 
       return true;
+    }
+
+    async function showChoice(message, choiceOptions) {
+      if (!message || (!message.audio && !message.text)) return false;
+
+      const choiceOpts = isObj(choiceOptions) ? choiceOptions : {};
+      const choiceContinueText = toStr(choiceOpts.continueText || message.continueText || continueText || 'Continue');
+      const choiceCancelText = toStr(choiceOpts.cancelText || message.cancelText || 'Cancel');
+      const choiceTitleText = toStr(choiceOpts.titleText || message.titleText || titleText || '😊 Message');
+
+      modalToken += 1;
+      const myToken = modalToken;
+
+      const titleEl = modal.querySelector('[data-role="title"]');
+      const continueEl = modal.querySelector('[data-role="continue"]');
+      const cancelEl = modal.querySelector('[data-role="cancel"]');
+
+      if (titleEl) titleEl.textContent = choiceTitleText;
+      if (bodyEl) bodyEl.textContent = message.text || '';
+      if (continueEl) continueEl.textContent = choiceContinueText;
+      if (cancelEl) {
+        cancelEl.textContent = choiceCancelText;
+        cancelEl.style.display = '';
+      }
+
+      modal.classList.add('show');
+
+      const playPromise = message.audio
+        ? audioCtl.play(message.audio)
+        : Promise.resolve(false);
+
+      return await new Promise(function (resolve) {
+        function cleanup(result) {
+          if (myToken !== modalToken) return resolve(false);
+          modal.classList.remove('show');
+          if (cancelEl) cancelEl.style.display = 'none';
+          if (continueEl) continueEl.removeEventListener('click', onContinue);
+          if (cancelEl) cancelEl.removeEventListener('click', onCancel);
+          resolve(!!result);
+        }
+
+        function onContinue() {
+          cleanup(true);
+        }
+
+        function onCancel() {
+          cleanup(false);
+        }
+
+        if (continueEl) continueEl.addEventListener('click', onContinue, { once: true });
+        if (cancelEl) cancelEl.addEventListener('click', onCancel, { once: true });
+        playPromise.finally(function () {});
+      });
     }
 
     async function afterProgressChange(forceStepMessage) {
@@ -468,7 +565,8 @@
       reset: reset,
       destroy: destroy,
       resolveEntryMessage: resolveEntryMessage,
-      resolveCompletionMessage: resolveCompletionMessage
+      resolveCompletionMessage: resolveCompletionMessage,
+      showChoice: showChoice
     });
   }
 

@@ -267,6 +267,14 @@ $functions = [
         'type'        => 'write',
         'ajax'        => true,
     ],
+    'local_prequran_comm_send_parent_alert' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'comm_send_parent_alert',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Communications: create an important parent alert and optionally send urgent WhatsApp delivery.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
     'local_prequran_comm_send_message' => [
         'classname'   => 'local_prequran_external',
         'methodname'  => 'comm_send_message',

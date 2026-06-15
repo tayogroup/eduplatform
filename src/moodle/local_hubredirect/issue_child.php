@@ -4,11 +4,44 @@
 require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
+require_once($CFG->libdir . '/externallib.php');
+
+$accountidshelper = __DIR__ . '/account_ids.php';
+if (is_readable($accountidshelper)) {
+    require_once($accountidshelper);
+}
+if (!function_exists('pqh_assign_account_id')) {
+    function pqh_assign_account_id(int $userid, string $accounttype): string {
+        return '';
+    }
+}
 
 function b64url(string $bin): string {
     return rtrim(strtr(base64_encode($bin), '+/', '-_'), '=');
 }
 
+function hub_current_user_ws_token(string $fallback = ''): string {
+    global $DB;
+
+    try {
+        $service = $DB->get_record('external_services', [
+            'shortname' => 'prequran_ws',
+            'enabled' => 1,
+        ]);
+        if (!$service || !function_exists('external_generate_token_for_current_user')) {
+            return $fallback;
+        }
+
+        $token = external_generate_token_for_current_user($service);
+        if (is_object($token) && !empty($token->token)) {
+            return (string)$token->token;
+        }
+    } catch (Throwable $e) {
+        return $fallback;
+    }
+
+    return $fallback;
+}
 
 function hub_origin_from_url(string $url): string {
     $p = parse_url($url);
@@ -18,17 +51,376 @@ function hub_origin_from_url(string $url): string {
     return '';
 }
 
+function hub_custom_profile_value($profile, array $shortnames): string {
+    foreach ($shortnames as $name) {
+        if (isset($profile->{$name}) && $profile->{$name} !== '' && $profile->{$name} !== null) {
+            return trim((string)$profile->{$name});
+        }
+    }
+    return '';
+}
+
+function hub_normalize_language(string $value): string {
+    $raw = strtolower(trim(str_replace('_', '-', $value)));
+    $first = explode('-', $raw)[0] ?? '';
+    $aliases = [
+        'english' => 'en', 'eng' => 'en', 'en' => 'en',
+        'arabic' => 'ar', 'ar' => 'ar',
+        'somali' => 'so', 'som' => 'so', 'so' => 'so',
+        'swahili' => 'sw', 'kiswahili' => 'sw', 'swa' => 'sw', 'sw' => 'sw',
+        'punjabi' => 'pa', 'panjabi' => 'pa', 'pa' => 'pa',
+        'urdu' => 'ur', 'ur' => 'ur',
+    ];
+    $code = $aliases[$raw] ?? ($aliases[$first] ?? $first);
+    return in_array($code, ['en', 'ar', 'so', 'sw', 'pa', 'ur'], true) ? $code : 'en';
+}
+
+function hub_normalize_language_scope(string $value): string {
+    $raw = strtolower(trim(preg_replace('/[\s\-]+/', '_', $value)));
+    $aliases = [
+        'ui' => 'ui',
+        'interface' => 'ui',
+        'ui_only' => 'ui',
+        'content' => 'content',
+        'lecture' => 'content',
+        'lectures' => 'content',
+        'message' => 'content',
+        'messages' => 'content',
+        'only_lectures' => 'content',
+        'lectures_and_messages' => 'content',
+        'content_messages' => 'content',
+        'both' => 'both',
+        'all' => 'both',
+        'ui_and_content' => 'both',
+    ];
+    return $aliases[$raw] ?? 'both';
+}
+
+function hub_table_exists(string $tablename): bool {
+    global $DB;
+
+    try {
+        return $DB->get_manager()->table_exists($tablename);
+    } catch (Throwable $e) {
+        return false;
+    }
+}
+
+function hub_activeish_status_clause(string $field = 'status'): array {
+    return [
+        '(' . $field . ' IS NULL OR ' . $field . " = '' OR " . $field . ' NOT IN (?, ?, ?, ?, ?))',
+        ['rejected', 'archived', 'inactive', 'suspended', 'deleted'],
+    ];
+}
+
+function hub_current_user_prequran_teacher_sources(int $userid): array {
+    global $DB;
+
+    $sources = [
+        'teacher_profile' => false,
+        'teacher_student_assignment' => false,
+        'class_group_assignment' => false,
+        'live_teacher_record' => false,
+    ];
+
+    if ($userid <= 0) {
+        return $sources;
+    }
+
+    try {
+        [$statussql, $statusparams] = hub_activeish_status_clause();
+
+        if (hub_table_exists('local_prequran_teacher_profile')) {
+            $sources['teacher_profile'] = $DB->record_exists_select(
+                'local_prequran_teacher_profile',
+                'userid = ? AND ' . $statussql,
+                array_merge([$userid], $statusparams)
+            );
+        }
+
+        if (hub_table_exists('local_prequran_teacher_student')) {
+            $sources['teacher_student_assignment'] = $DB->record_exists_select(
+                'local_prequran_teacher_student',
+                'teacherid = ? AND ' . $statussql,
+                array_merge([$userid], $statusparams)
+            );
+        }
+
+        if (hub_table_exists('local_prequran_class_group')) {
+            $sources['class_group_assignment'] = $DB->record_exists_select(
+                'local_prequran_class_group',
+                'teacherid = ? AND ' . $statussql,
+                array_merge([$userid], $statusparams)
+            );
+        }
+
+        foreach (['local_prequran_live_session', 'local_prequran_live_series', 'local_prequran_live_availability'] as $table) {
+            if ($sources['live_teacher_record']) {
+                break;
+            }
+            if (hub_table_exists($table)) {
+                $sources['live_teacher_record'] = $DB->record_exists_select(
+                    $table,
+                    'teacherid = ? AND ' . $statussql,
+                    array_merge([$userid], $statusparams)
+                );
+            }
+        }
+    } catch (Throwable $e) {
+        return $sources;
+    }
+
+    return $sources;
+}
+
+function hub_current_user_has_prequran_teacher_assignment(int $userid): bool {
+    return in_array(true, hub_current_user_prequran_teacher_sources($userid), true);
+}
+
+function hub_current_user_can_use_nonproduction_qa_tools(): bool {
+    global $DB, $USER;
+
+    try {
+        if (is_siteadmin((int)$USER->id)) {
+            return true;
+        }
+
+        if (hub_current_user_has_prequran_teacher_assignment((int)$USER->id)) {
+            return true;
+        }
+
+        $syscontext = context_system::instance();
+        if (has_capability('local/prequran:resetstep', $syscontext)) {
+            return true;
+        }
+
+        return $DB->record_exists_sql(
+            "SELECT 1
+               FROM {role_assignments} ra
+               JOIN {role} r ON r.id = ra.roleid
+          LEFT JOIN {role_capabilities} rc ON rc.roleid = r.id
+              WHERE ra.userid = :userid
+                AND (
+                    r.shortname IN (
+                        'admin', 'administrator', 'manager', 'coursecreator',
+                        'editingteacher', 'teacher', 'noneditingteacher'
+                    )
+                    OR r.archetype IN ('manager', 'coursecreator', 'editingteacher', 'teacher')
+                    OR rc.capability IN (
+                        'local/prequran:resetstep',
+                        'moodle/course:update',
+                        'moodle/course:manageactivities',
+                        'moodle/role:assign'
+                    )
+                )",
+            ['userid' => (int)$USER->id]
+        );
+    } catch (Throwable $e) {
+        return false;
+    }
+}
+
+function hub_current_user_nonproduction_qa_debug(): array {
+    global $DB, $USER;
+
+    $userid = (int)($USER->id ?? 0);
+    $syscontext = context_system::instance();
+    $siteadmin = $userid > 0 && is_siteadmin($userid);
+    $prequranteachersources = hub_current_user_prequran_teacher_sources($userid);
+    $prequranteacher = in_array(true, $prequranteachersources, true);
+    $hasresetstep = false;
+    $rolematch = false;
+
+    try {
+        $hasresetstep = has_capability('local/prequran:resetstep', $syscontext);
+    } catch (Throwable $e) {
+        $hasresetstep = false;
+    }
+
+    try {
+        $rolematch = $DB->record_exists_sql(
+            "SELECT 1
+               FROM {role_assignments} ra
+               JOIN {role} r ON r.id = ra.roleid
+          LEFT JOIN {role_capabilities} rc ON rc.roleid = r.id
+              WHERE ra.userid = :userid
+                AND (
+                    r.shortname IN (
+                        'admin', 'administrator', 'manager', 'coursecreator',
+                        'editingteacher', 'teacher', 'noneditingteacher'
+                    )
+                    OR r.archetype IN ('manager', 'coursecreator', 'editingteacher', 'teacher')
+                    OR rc.capability IN (
+                        'local/prequran:resetstep',
+                        'moodle/course:update',
+                        'moodle/course:manageactivities',
+                        'moodle/role:assign'
+                    )
+                )",
+            ['userid' => $userid]
+        );
+    } catch (Throwable $e) {
+        $rolematch = false;
+    }
+
+    return [
+        'logged_user_id' => $userid,
+        'is_siteadmin' => $siteadmin,
+        'has_prequran_teacher_assignment' => $prequranteacher,
+        'has_prequran_teacher_profile' => $prequranteachersources['teacher_profile'] ?? false,
+        'has_prequran_teacher_student_assignment' => $prequranteachersources['teacher_student_assignment'] ?? false,
+        'has_prequran_class_group_assignment' => $prequranteachersources['class_group_assignment'] ?? false,
+        'has_prequran_live_teacher_record' => $prequranteachersources['live_teacher_record'] ?? false,
+        'has_resetstep_capability' => $hasresetstep,
+        'has_qa_role_match' => $rolematch,
+    ];
+}
+
+function hub_user_account_identity(stdClass $user): array {
+    $userid = (int)($user->id ?? 0);
+    $accountid = trim((string)($user->idnumber ?? ''));
+    $accounttype = '';
+    if (preg_match('/^EA-(STU|TCH|PAR)-\d{4}-\d+$/', $accountid, $matches)) {
+        $accounttype = ['STU' => 'student', 'TCH' => 'teacher', 'PAR' => 'parent'][$matches[1]] ?? '';
+    }
+    if ($accountid === '') {
+        $accounttype = hub_resolve_user_account_type($userid);
+        if ($accounttype === '' && !empty($GLOBALS['pq_managed_to_send'])) {
+            $accounttype = 'student';
+        }
+        if ($accounttype === '' && !empty($GLOBALS['pq_can_skip_step_to_send'])) {
+            $accounttype = 'teacher';
+        }
+        if ($accounttype !== '') {
+            $accountid = pqh_assign_account_id($userid, $accounttype);
+        }
+    }
+    $label = ['student' => 'Student ID', 'teacher' => 'Teacher ID', 'parent' => 'Parent ID'][$accounttype] ?? 'Account ID';
+
+    return [
+        'account_id' => $accountid,
+        'account_type' => $accounttype,
+        'account_label' => $label,
+    ];
+}
+
+function hub_resolve_user_account_type(int $userid): string {
+    global $DB;
+
+    if ($userid <= 0) {
+        return '';
+    }
+
+    try {
+        if (hub_table_exists('local_prequran_student_profile')
+            && $DB->record_exists('local_prequran_student_profile', ['userid' => $userid])) {
+            return 'student';
+        }
+        if (hub_current_user_has_prequran_teacher_assignment($userid)) {
+            return 'teacher';
+        }
+        if (hub_table_exists('local_prequran_live_consent')
+            && $DB->record_exists('local_prequran_live_consent', ['guardianid' => $userid])) {
+            return 'parent';
+        }
+        if (hub_table_exists('local_prequran_comm_consent')
+            && $DB->record_exists('local_prequran_comm_consent', ['guardianid' => $userid])) {
+            return 'parent';
+        }
+    } catch (Throwable $e) {
+        return '';
+    }
+
+    return '';
+}
+
+function hub_normalize_environment(string $value): string {
+    $env = strtolower(trim($value));
+    return in_array($env, ['integration', 'staging', 'production'], true) ? $env : 'production';
+}
+
+function hub_bunny_environment_base_path(string $env): string {
+    $env = hub_normalize_environment($env);
+    $configured = trim((string)get_config('local_prequran', 'bunny_base_' . $env));
+    if ($configured === '') {
+        $configured = [
+            'integration' => '/pre_quraan_integration/',
+            'staging' => '/pre_quraan_staging/',
+            'production' => '/pre_quraan/',
+        ][$env] ?? '/pre_quraan/';
+    }
+    return '/' . trim($configured, '/') . '/';
+}
+
+function hub_selected_environment(): string {
+    $requestedRaw = optional_param('pq_env', '', PARAM_ALPHANUMEXT);
+    if ($requestedRaw === '') {
+        $requestedRaw = optional_param('env', '', PARAM_ALPHANUMEXT);
+    }
+    if ($requestedRaw === '') {
+        $requestedRaw = optional_param('pq_environment', '', PARAM_ALPHANUMEXT);
+    }
+    if ($requestedRaw !== '') {
+        return hub_normalize_environment($requestedRaw);
+    }
+    return hub_normalize_environment((string)get_config('local_prequran', 'bunny_environment'));
+}
+
+function hub_rewrite_bunny_environment_path(string $path, string $env): string {
+    $base = hub_bunny_environment_base_path($env);
+
+    if (preg_match('~^https?://~i', $path)) {
+        $parts = parse_url($path);
+        $host = strtolower((string)($parts['host'] ?? ''));
+        $isBunnyHost = $host === 'app.quraan.academy'
+            || $host === 'quraanacademy.b-cdn.net'
+            || $host === 'ehelacademy.b-cdn.net';
+        if (!$isBunnyHost || empty($parts['path'])) {
+            return $path;
+        }
+
+        $rewrittenPath = preg_replace(
+            '~^/(pre_quraan|pre_quraan_staging|pre_quraan_integration)(/|$)~',
+            rtrim($base, '/') . '$2',
+            $parts['path']
+        );
+        $rebuilt = ($parts['scheme'] ?? 'https') . '://' . $parts['host'];
+        if (!empty($parts['port'])) {
+            $rebuilt .= ':' . $parts['port'];
+        }
+        $rebuilt .= $rewrittenPath;
+        if (!empty($parts['query'])) {
+            $rebuilt .= '?' . $parts['query'];
+        }
+        if (!empty($parts['fragment'])) {
+            $rebuilt .= '#' . $parts['fragment'];
+        }
+        return $rebuilt;
+    }
+
+    if ($path === '') {
+        return $path;
+    }
+
+    return preg_replace(
+        '~^/(pre_quraan|pre_quraan_staging|pre_quraan_integration)(/|$)~',
+        rtrim($base, '/') . '$2',
+        $path
+    );
+}
+
 function hub_render_lesson_iframe_wrapper(
     string $iframeSrc,
     ?int $uidToSend,
     string $wsTokenToSend,
     string $wsEndpoint,
     string $iframeOrigin = '*',
-    string $title = 'Lesson'
+    string $title = 'Lesson',
+    bool $canSkipStepForQa = false
 ): void {
     header('Content-Type: text/html; charset=utf-8');
-    header('Permissions-Policy: microphone=(self "https://quraanacademy.b-cdn.net" "https://ehelacademy.b-cdn.net"), autoplay=(self "https://quraanacademy.b-cdn.net" "https://ehelacademy.b-cdn.net")');
-    header("Feature-Policy: microphone 'self' https://quraanacademy.b-cdn.net https://ehelacademy.b-cdn.net");
+    header('Permissions-Policy: microphone=(self "https://app.quraan.academy" "https://quraanacademy.b-cdn.net" "https://ehelacademy.b-cdn.net"), autoplay=(self "https://app.quraan.academy" "https://quraanacademy.b-cdn.net" "https://ehelacademy.b-cdn.net")');
+    header("Feature-Policy: microphone 'self' https://app.quraan.academy https://quraanacademy.b-cdn.net https://ehelacademy.b-cdn.net");
 
     ?>
 <!doctype html>
@@ -91,7 +483,15 @@ function hub_render_lesson_iframe_wrapper(
       uid: <?php echo json_encode($uidToSend); ?>,
       wstoken: <?php echo json_encode($wsTokenToSend); ?>,
       wsendpoint: <?php echo json_encode($wsEndpoint); ?>,
-      managed: 1,
+      cohortid: <?php echo json_encode($GLOBALS['pq_cohortid_to_send'] ?? 0); ?>,
+      studentid: <?php echo json_encode($uidToSend); ?>,
+      live_sessionid: <?php echo json_encode($GLOBALS['pq_live_sessionid_to_send'] ?? 0); ?>,
+      managed: <?php echo json_encode($GLOBALS['pq_managed_to_send'] ?? 0); ?>,
+      pq_env: <?php echo json_encode($GLOBALS['pq_environment_to_send'] ?? 'production'); ?>,
+      pq_can_skip_step: <?php echo json_encode($canSkipStepForQa ? 1 : 0); ?>,
+      account_id: <?php echo json_encode($GLOBALS['pq_account_id_to_send'] ?? ''); ?>,
+      account_type: <?php echo json_encode($GLOBALS['pq_account_type_to_send'] ?? ''); ?>,
+      account_label: <?php echo json_encode($GLOBALS['pq_account_label_to_send'] ?? 'Account ID'); ?>,
       ts: Date.now()
     };
 
@@ -133,7 +533,61 @@ function hub_render_lesson_iframe_wrapper(
       if(!iframeLoaded) return;
       if(ev.source !== frame.contentWindow) return;
       const msg = ev.data || {};
-      if(msg.type === "PQ_REQUEST_TOKENS") send();
+      if(msg.type === "PQ_REQUEST_TOKENS") {
+        send();
+        return;
+      }
+      if(msg.type === "PQ_SAVE_QUIZ_EVENT") {
+        try {
+          const event = msg.event || {};
+          const body = new URLSearchParams();
+          body.set("moodlewsrestformat", "json");
+          body.set("wsfunction", "local_prequran_save_quiz_event");
+          body.set("wstoken", payload.wstoken || "");
+          body.set("userid", String(payload.uid || ""));
+          body.set("event_type", String(event.event_type || ""));
+          body.set("payload_json", JSON.stringify(event.payload || {}));
+          body.set("pq_env", String(payload.pq_env || "production"));
+          fetch(payload.wsendpoint, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+            body
+          }).then(function(res){
+            return res.text().then(function(text){
+              let ok = res.ok;
+              let message = text;
+              try {
+                const parsed = JSON.parse(text);
+                if (parsed && (parsed.exception || parsed.errorcode || parsed.ok === false)) {
+                  ok = false;
+                  message = parsed.message || parsed.error || parsed.exception || text;
+                }
+              } catch(e) {}
+              tryPost(frame.contentWindow, {
+                type: "PQ_SAVE_QUIZ_RESULT",
+                ok: ok,
+                status: res.status,
+                body: String(message || '').slice(0, 240)
+              }, targetOrigin);
+            });
+          }).catch(function(error){
+            tryPost(frame.contentWindow, {
+              type: "PQ_SAVE_QUIZ_RESULT",
+              ok: false,
+              status: 0,
+              body: error && error.message ? error.message : "Quiz analytics save failed"
+            }, targetOrigin);
+          });
+        } catch (e) {
+          tryPost(frame.contentWindow, {
+            type: "PQ_SAVE_QUIZ_RESULT",
+            ok: false,
+            status: 0,
+            body: e && e.message ? e.message : "Quiz analytics save failed"
+          }, targetOrigin);
+        }
+      }
     });
 
     let tries = 0, maxTries = 50;
@@ -163,6 +617,8 @@ $useIpBind      = defined('HUB_BUNNY_IPBIND')   ? HUB_BUNNY_IPBIND   : false;
 $signHtml       = defined('HUB_BUNNY_SIGN_HTML')? HUB_BUNNY_SIGN_HTML: true;
 $ttlCdn         = defined('HUB_BUNNY_TTL_CDN')  ? (int)HUB_BUNNY_TTL_CDN  : 300;
 $ttlMTok        = defined('HUB_MTOKEN_TTL')     ? (int)HUB_MTOKEN_TTL     : 120;
+$pqEnvironment = hub_selected_environment();
+$pqBunnyBasePath = hub_bunny_environment_base_path($pqEnvironment);
 
 // Where the audio proxy might live
 $audioProxyCandidates = [
@@ -202,7 +658,7 @@ $map = [
     // 'alphabet_listen' => '/pre_quraan/scripts/pq_unit_alphabet_html_v0.0_MOBILE_GUARD_FILTER_APPLY_FIX.html?managed=1&v=20260425_80',
     
      
-    'alphabet_listen' => '/pre_quraan/units/alphabet/index.html?managed=1&v=20260504_001',
+    'alphabet_listen' => '/pre_quraan/scripts/alphabet_listen_alphabet-rules-skipfix-20260615e.html?managed=1',
     // sssss s
     
      
@@ -238,6 +694,7 @@ $map = [
 // 'match01'            => '/pre_quraan/scripts/pq_unit_alphabet_match_match_v1.1.0.html?managed=1&v=20251208041',
 
 'match01'            => '/pre_quraan/scripts/pq_unit_alphabet_match_sqa_final_v1.0.0.html?managed=1&v=20251208042',
+'alphabet_quiz_chatbot' => '/pre_quraan/scripts/alphabet_quiz_chatbot_unlocked_20260613b.html?managed=1&v=20260613b',
 
 // ss
 
@@ -837,27 +1294,27 @@ if ($goto !== '') {
 }
 
 // --- HTML path resolution ---
-$resolvePath = function(string $slugOrPath) use ($map, $mapLower): string {
+$resolvePath = function(string $slugOrPath) use ($map, $mapLower, $pqEnvironment): string {
     $s = trim($slugOrPath);
     if ($s === '') {
-        return '/pre_quraan/scripts/newui_main_menu.html';
+        return hub_rewrite_bunny_environment_path('/pre_quraan/scripts/newui_main_menu.html', $pqEnvironment);
     }
 
     // If it's a known slug, return the mapped value (can be relative path or absolute URL)
     if (array_key_exists($s, $map)) {
-        return $map[$s];
+        return hub_rewrite_bunny_environment_path($map[$s], $pqEnvironment);
     }
 
     $k = strtolower($s);
     if (array_key_exists($k, $mapLower)) {
-        return $mapLower[$k];
+        return hub_rewrite_bunny_environment_path($mapLower[$k], $pqEnvironment);
     }
 
     $low = strtolower($s);
 
     // If a direct filename is passed (e.g. pq_unit_xxx.html), allow it under /pre_quraan/scripts/
     if (preg_match('~^[a-z0-9_\-\.]+\.(html|htm)$~i', $s)) {
-        return '/pre_quraan/scripts/' . $s;
+        return hub_rewrite_bunny_environment_path('/pre_quraan/scripts/' . $s, $pqEnvironment);
     }
 
     // If it's already an absolute URL, keep as-is
@@ -867,19 +1324,19 @@ $resolvePath = function(string $slugOrPath) use ($map, $mapLower): string {
 
     // Absolute internal path
     if ($low[0] === '/') {
-        return $s;
+        return hub_rewrite_bunny_environment_path($s, $pqEnvironment);
     }
 
     // Speak pattern (legacy)
     if (preg_match('/^speak\s*0*([0-9]{1,3})$/i', $low, $m)) {
         $n  = (int)$m[1];
         $nn = ($n < 10 ? '0' . $n : (string)$n);
-        return "/pre_quraan/scripts/newui_alphabet_speak{$nn}.html";
+        return hub_rewrite_bunny_environment_path("/pre_quraan/scripts/newui_alphabet_speak{$nn}.html", $pqEnvironment);
     }
 
     // Raw html file name
     if (substr($low, -5) === '.html') {
-        return '/pre_quraan/scripts/' . $s;
+        return hub_rewrite_bunny_environment_path('/pre_quraan/scripts/' . $s, $pqEnvironment);
     }
 
     // Clean fallback
@@ -890,10 +1347,11 @@ $resolvePath = function(string $slugOrPath) use ($map, $mapLower): string {
     if (substr(strtolower($safe), -5) !== '.html') {
         $safe .= '.html';
     }
-    return '/pre_quraan/scripts/' . $safe;
+    return hub_rewrite_bunny_environment_path('/pre_quraan/scripts/' . $safe, $pqEnvironment);
 };
 
 $path = $resolvePath($goto);
+$requiresTokenLaunch = strtolower(trim($goto)) === 'alphabet_quiz_chatbot';
 
 // --- Moodle payload + mtoken ---
 
@@ -921,13 +1379,93 @@ if ($managedOverrideRaw !== '') {
         }
     }
 }
-$managedFlag = $isManagedStudent ? '1' : '0';
+$managedFlag = ($isManagedStudent || $requiresTokenLaunch) ? '1' : '0';
+$GLOBALS['pq_managed_to_send'] = ($isManagedStudent || $requiresTokenLaunch) ? 1 : 0;
+$GLOBALS['pq_environment_to_send'] = $pqEnvironment;
+
+$cohortidParam = optional_param('cohortid', 0, PARAM_INT);
+if ($cohortidParam <= 0) {
+    $cohortidParam = optional_param('cid', 0, PARAM_INT);
+}
+$GLOBALS['pq_cohortid_to_send'] = $cohortidParam > 0 ? $cohortidParam : 0;
+
+$liveSessionidParam = optional_param('live_sessionid', 0, PARAM_INT);
+if ($liveSessionidParam <= 0) {
+    $liveSessionidParam = optional_param('livesessionid', 0, PARAM_INT);
+}
+if ($liveSessionidParam <= 0) {
+    $liveSessionidParam = optional_param('sessionid', 0, PARAM_INT);
+}
+$allowedLiveSessionid = 0;
+if ($liveSessionidParam > 0 && hub_table_exists('local_prequran_live_session')) {
+    try {
+        $liveSession = $DB->get_record('local_prequran_live_session', ['id' => $liveSessionidParam]);
+        $isLiveTeacher = $liveSession && (int)$liveSession->teacherid === (int)$USER->id;
+        $isLiveStudent = $liveSession && hub_table_exists('local_prequran_live_participant')
+            && $DB->record_exists('local_prequran_live_participant', [
+                'sessionid' => $liveSessionidParam,
+                'userid' => (int)$USER->id,
+                'role' => 'student',
+                'status' => 'active',
+            ]);
+        if ($liveSession && (is_siteadmin($USER) || $isLiveTeacher || $isLiveStudent)) {
+            $allowedLiveSessionid = $liveSessionidParam;
+        }
+    } catch (Throwable $e) {
+        $allowedLiveSessionid = 0;
+    }
+}
+$GLOBALS['pq_live_sessionid_to_send'] = $allowedLiveSessionid;
+
+$preferredLanguageRaw = optional_param('pq_lang', '', PARAM_RAW_TRIMMED);
+if ($preferredLanguageRaw === '') {
+    $preferredLanguageRaw = hub_custom_profile_value($custom, [
+        'preferred_language', 'preferredlanguage', 'language_preference', 'languagepreference',
+        'prequran_language', 'prequran_lang', 'ui_language', 'uilanguage', 'langpref', 'language'
+    ]);
+}
+if ($preferredLanguageRaw === '') {
+    $preferredLanguageRaw = (string)($USER->lang ?? '');
+}
+$preferredLanguage = hub_normalize_language($preferredLanguageRaw);
+
+$languageScopeRaw = optional_param('pq_lang_scope', '', PARAM_RAW_TRIMMED);
+if ($languageScopeRaw === '') {
+    $languageScopeRaw = hub_custom_profile_value($custom, [
+        'language_scope', 'languagescope', 'translation_scope', 'translationscope',
+        'localization_scope', 'localizationscope', 'prequran_language_scope',
+        'prequran_lang_scope', 'ui_content_preference', 'uicontentpreference',
+        'translation_preference', 'translationpreference', 'preferred_language_scope', 'scope'
+    ]);
+}
+$languageScope = hub_normalize_language_scope($languageScopeRaw);
+
+$canSkipStepForQa = false;
+try {
+    $canSkipStepForQa = $pqEnvironment !== 'production'
+        && hub_current_user_can_use_nonproduction_qa_tools();
+} catch (Throwable $e) {
+    $canSkipStepForQa = false;
+}
+$GLOBALS['pq_can_skip_step_to_send'] = $canSkipStepForQa ? 1 : 0;
+
+$accountIdentity = hub_user_account_identity($USER);
+$GLOBALS['pq_account_id_to_send'] = $accountIdentity['account_id'];
+$GLOBALS['pq_account_type_to_send'] = $accountIdentity['account_type'];
+$GLOBALS['pq_account_label_to_send'] = $accountIdentity['account_label'];
 
 $payload = [
     'name'        => fullname($USER),
     'email'       => $USER->email ?? '',
     'parent_name' => $custom->parent_name ?? '',
     'lang'        => $USER->lang ?? '',
+    'preferred_language' => $preferredLanguage,
+    'language_scope' => $languageScope,
+    'pq_env' => $pqEnvironment,
+    'pq_can_skip_step' => $canSkipStepForQa ? 1 : 0,
+    'account_id' => $accountIdentity['account_id'],
+    'account_type' => $accountIdentity['account_type'],
+    'account_label' => $accountIdentity['account_label'],
 ];
 $mtoken = bin2hex(random_bytes(16));
 
@@ -983,6 +1521,18 @@ $dest = $append($dest, 'mtoken', $mtoken);
 
 // Phase 1: explicit lesson mode flag for unit scripts
 $dest = $append($dest, 'managed_student', $managedFlag);
+$dest = $append($dest, 'pq_env', $pqEnvironment);
+$dest = $append($dest, 'pq_lang', $preferredLanguage);
+$dest = $append($dest, 'pq_lang_scope', $languageScope);
+if ($canSkipStepForQa) {
+    $dest = $append($dest, 'pq_can_skip_step', '1');
+}
+if ($cohortidParam > 0) {
+    $dest = $append($dest, 'cohortid', (string)$cohortidParam);
+}
+if ($allowedLiveSessionid > 0) {
+    $dest = $append($dest, 'live_sessionid', (string)$allowedLiveSessionid);
+}
 
 // Phase 1 safety: if user is NOT managed, strip any legacy managed=1 hints from the destination URL.
 // This prevents "unmanaged" HTML pages (or map entries) from forcing managed behavior.
@@ -1044,6 +1594,11 @@ if ($debug) {
     header('Content-Type: text/plain; charset=utf-8');
     echo "mode: {$HTML_SIGN_MODE}\n";
     echo "path: {$path}\n";
+    echo "pq_env: {$pqEnvironment}\n";
+    echo "pq_can_skip_step: " . ($canSkipStepForQa ? '1' : '0') . "\n";
+    foreach (hub_current_user_nonproduction_qa_debug() as $key => $value) {
+        echo $key . ': ' . (is_bool($value) ? ($value ? '1' : '0') : $value) . "\n";
+    }
     echo "is_absolute: " . ($isAbsolute ? 'yes' : 'no') . "\n";
     echo "expires: {$expires}\n";
     echo "client_ip: " . ($useIpBind ? $clientIp : '[none]') . "\n";
@@ -1071,6 +1626,7 @@ if ($debug) {
     header('Content-Type: text/plain; charset=utf-8');
     echo "goto={$goto}\n";
     echo "resolved_path={$path}\n";
+    echo "pq_env={$pqEnvironment}\n";
     echo "dest={$dest}\n";
     echo "cdnBase={$cdnBase}\n";
     echo "isAbsolute=" . ($isAbsolute ? '1' : '0') . "\n";
@@ -1082,7 +1638,7 @@ $useIframeWrapper = false;
 try {
     // Only wrap MANAGED lessons served from CDN/relative paths.
     // Unmanaged lessons should remain free-practice and must not be wrapped.
-    if ($managedFlag === '1' && !$isAbsolute) {
+    if (!$isAbsolute && ($managedFlag === '1' || $cohortidParam > 0 || $requiresTokenLaunch)) {
         $useIframeWrapper = true;
     }
 } catch (Throwable $e) {
@@ -1111,9 +1667,28 @@ if ($useIframeWrapper) {
             parse_str($parts['query'], $queryArr);
         }
 
-        // Preserve managed hints and cache-busters, but do not leak uid/wstoken in the iframe URL.
+        // Preserve cache-busters, but do not leak uid/wstoken in the iframe URL.
         unset($queryArr['uid'], $queryArr['userid'], $queryArr['wstoken'], $queryArr['ws'], $queryArr['wsendpoint']);
-        $queryArr['managed'] = '1';
+        if ($managedFlag === '1') {
+            $queryArr['managed'] = '1';
+        } else {
+            unset($queryArr['managed']);
+        }
+        if ($cohortidParam > 0) {
+            $queryArr['cohortid'] = (string)$cohortidParam;
+        }
+        if ($allowedLiveSessionid > 0) {
+            $queryArr['live_sessionid'] = (string)$allowedLiveSessionid;
+        }
+        if (!empty($GLOBALS['pq_account_id_to_send'])) {
+            $queryArr['pq_account_id'] = (string)$GLOBALS['pq_account_id_to_send'];
+            $queryArr['pq_account_type'] = (string)($GLOBALS['pq_account_type_to_send'] ?? '');
+            $queryArr['pq_account_label'] = (string)($GLOBALS['pq_account_label_to_send'] ?? 'Account ID');
+        }
+        $openComm = optional_param('opencomm', '', PARAM_ALPHANUMEXT);
+        if ($openComm !== '') {
+            $queryArr['opencomm'] = $openComm;
+        }
 
         $iframeSrc = $iframeOrigin . $pathOnly;
         if (!empty($queryArr)) {
@@ -1130,8 +1705,11 @@ if ($useIframeWrapper) {
     }
 
     $uid_to_send = (int)$USER->id;
-    $wstoken_to_send = (string)get_config('local_prequran', 'ws_token');
-    $wsendpoint = 'https://quraan.academy/webservice/rest/server.php';
+    $configured_ws_token = (string)get_config('local_prequran', 'ws_token');
+    $wstoken_to_send = ($managedFlag === '1')
+        ? hub_current_user_ws_token($configured_ws_token)
+        : hub_current_user_ws_token('');
+    $wsendpoint = rtrim($CFG->wwwroot, '/') . '/webservice/rest/server.php';
 
     hub_render_lesson_iframe_wrapper(
         $iframeSrc,
@@ -1139,7 +1717,8 @@ if ($useIframeWrapper) {
         $wstoken_to_send,
         $wsendpoint,
         $iframeOrigin,
-        'Lesson'
+        'Lesson',
+        $canSkipStepForQa
     );
 }
 

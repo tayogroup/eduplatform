@@ -1,0 +1,22 @@
+CREATE TABLE mdlgx_local_prequran_submitrec (
+  id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  userid BIGINT(20) NOT NULL,
+  lessonid VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  unitid VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  step_id VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'submit',
+  duration_ms BIGINT(20) NOT NULL DEFAULT 0,
+  mime_type VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'audio/webm',
+  filesize BIGINT(20) NOT NULL DEFAULT 0,
+  filename VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  bunny_path VARCHAR(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  status VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'submitted',
+  score DECIMAL(10,2) NULL DEFAULT NULL,
+  teacher_feedback LONGTEXT COLLATE utf8mb4_unicode_ci NULL,
+  timecreated BIGINT(20) NOT NULL,
+  timemodified BIGINT(20) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY mdlgx_lpreqsub_user_lesson_unit_uix (userid, lessonid, unitid),
+  KEY mdlgx_lpreqsub_user_idx (userid),
+  KEY mdlgx_lpreqsub_unit_idx (unitid),
+  KEY mdlgx_lpreqsub_status_idx (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

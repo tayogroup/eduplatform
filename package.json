@@ -22,6 +22,21 @@
     "preview:bunny:production": "node tools/serve-bunny-output.js",
     "preview:bunny:staging": "node tools/serve-bunny-output.js",
     "rules:cues": "node tools/generate-rules-cues-elevenlabs.js",
+    "test:e2e": "playwright test",
+    "test:e2e:student-journey": "playwright test tests/e2e/student-journey.spec.ts",
+    "test:e2e:setup-public-course": "playwright test tests/e2e/setup-public-course.spec.ts",
+    "test:e2e:phase4": "playwright test tests/e2e/student-journey.spec.ts -g \"admissions approval\"",
+    "test:e2e:phase5": "playwright test tests/e2e/student-journey.spec.ts -g \"course enrollment\"",
+    "test:e2e:phase6": "playwright test tests/e2e/student-journey.spec.ts -g \"invoice creation\"",
+    "test:e2e:phase7": "playwright test tests/e2e/student-journey.spec.ts -g \"class completion\"",
+    "test:e2e:phase8": "playwright test tests/e2e/student-journey.spec.ts -g \"transcript issue\"",
+    "test:e2e:phase9": "playwright test tests/e2e/student-journey.spec.ts -g \"payment receipt\"",
+    "test:e2e:phase10": "playwright test tests/e2e/student-journey.spec.ts -g \"full student journey\"",
+    "test:e2e:phase11": "playwright test tests/e2e/student-journey.spec.ts -g \"reporting and cleanup readiness\"",
+    "test:e2e:phase12": "playwright test tests/e2e/student-journey.spec.ts -g \"negative controls\"",
+    "test:e2e:phase13": "node tools/verify-eduplatform-sqa-package.js",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:report": "playwright show-report test-results/playwright-report",
     "env:local-dev": "npm run validate:units && npm run build:bunny:production && npm run verify:bunny:production",
     "env:local-unit": "npm run validate:units && npm run check:alphabet && npm run build:bunny:integration && npm run verify:bunny:integration",
     "env:integration": "npm run validate:units && npm run check:alphabet && npm run build:bunny:integration && npm run verify:bunny:integration && npm run deploy:integration:dry-run",
@@ -36,6 +51,7 @@
     "verify:bunny:staging": "node tools/verify-bunny-output.js --base-path=/pre_quraan_staging/"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "vite": "^5.0.0"
   }
 }

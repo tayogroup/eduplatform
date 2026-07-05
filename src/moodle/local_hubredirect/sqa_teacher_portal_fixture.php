@@ -19,6 +19,10 @@ $runid = trim(optional_param('runid', '', PARAM_TEXT));
 $coursekey = trim(optional_param('coursekey', 'pre_quraan', PARAM_ALPHANUMEXT));
 $studentpassword = optional_param('studentpassword', 'Mock@001!', PARAM_RAW);
 $teacherpassword = optional_param('teacherpassword', 'Mock@001!', PARAM_RAW);
+$action = optional_param('action', 'create', PARAM_ALPHANUMEXT);
+$studentid = optional_param('studentid', 0, PARAM_INT);
+$sessionid = optional_param('sessionid', 0, PARAM_INT);
+$assessmentid = optional_param('assessmentid', 0, PARAM_INT);
 $result = null;
 $error = '';
 
@@ -163,6 +167,105 @@ function pqsqtf_reset_teacher_password(int $teacherid, string $password): void {
     if (function_exists('unset_user_preference')) {
         unset_user_preference('auth_forcepasswordchange', $teacherid);
     }
+}
+
+function pqsqtf_archive_user(int $userid): int {
+    global $DB;
+    if ($userid <= 0 || !$DB->record_exists('user', ['id' => $userid, 'deleted' => 0])) {
+        return 0;
+    }
+    $DB->update_record('user', (object)[
+        'id' => $userid,
+        'suspended' => 1,
+        'timemodified' => time(),
+    ]);
+    return 1;
+}
+
+function pqsqtf_archive_record(string $table, array $conditions, array $fields): int {
+    global $DB;
+    if (!pqsqtf_table_ready($table)) {
+        return 0;
+    }
+    $existing = $DB->get_record($table, $conditions, '*', IGNORE_MISSING);
+    if (!$existing) {
+        return 0;
+    }
+    $record = ['id' => (int)$existing->id, 'timemodified' => time()];
+    foreach ($fields as $field => $value) {
+        $record[$field] = $value;
+    }
+    $DB->update_record($table, pqsqtf_filter_record($table, $record));
+    return 1;
+}
+
+function pqsqtf_archive_fixture(int $workspaceid, int $teacherid, int $studentid, int $sessionid, int $assessmentid, string $runid): array {
+    global $DB;
+    $counts = [
+        'teacher_accounts_suspended' => 0,
+        'student_accounts_suspended' => 0,
+        'workspace_members_archived' => 0,
+        'teacher_profiles_archived' => 0,
+        'teacher_student_archived' => 0,
+        'live_sessions_archived' => 0,
+        'live_participants_archived' => 0,
+        'assessments_archived' => 0,
+    ];
+
+    if ($studentid <= 0 && $runid !== '') {
+        $username = 'student.portal.' . pqsqtf_token($runid);
+        $studentid = (int)$DB->get_field('user', 'id', ['username' => $username, 'deleted' => 0], IGNORE_MISSING);
+    }
+    if ($sessionid <= 0 && $runid !== '' && pqsqtf_table_ready('local_prequran_live_session')) {
+        $sessionid = (int)$DB->get_field('local_prequran_live_session', 'id', [
+            'workspaceid' => $workspaceid,
+            'teacherid' => $teacherid,
+            'bbb_meeting_id' => 'sqa-teacher-portal-' . pqsqtf_token($runid),
+        ], IGNORE_MISSING);
+    }
+    if ($assessmentid <= 0 && $runid !== '' && pqsqtf_table_ready('local_prequran_assessment')) {
+        $assessmentid = (int)$DB->get_field('local_prequran_assessment', 'id', [
+            'workspaceid' => $workspaceid,
+            'title' => 'Automated SQA Teacher Portal Assessment ' . pqsqtf_token($runid),
+        ], IGNORE_MISSING);
+    }
+
+    $counts['teacher_accounts_suspended'] += pqsqtf_archive_user($teacherid);
+    $counts['student_accounts_suspended'] += pqsqtf_archive_user($studentid);
+    foreach ([$teacherid, $studentid] as $userid) {
+        if ($userid > 0) {
+            $counts['workspace_members_archived'] += pqsqtf_archive_record('local_prequran_workspace_member', [
+                'workspaceid' => $workspaceid,
+                'userid' => $userid,
+            ], ['status' => 'archived']);
+        }
+    }
+    $counts['teacher_profiles_archived'] += pqsqtf_archive_record('local_prequran_teacher_profile', ['userid' => $teacherid], [
+        'status' => 'inactive',
+        'marketplace_status' => 'paused',
+        'marketplace_visible' => 0,
+    ]);
+    $counts['teacher_student_archived'] += pqsqtf_archive_record('local_prequran_teacher_student', [
+        'workspaceid' => $workspaceid,
+        'teacherid' => $teacherid,
+        'studentid' => $studentid,
+    ], ['status' => 'archived']);
+    $counts['live_sessions_archived'] += pqsqtf_archive_record('local_prequran_live_session', ['id' => $sessionid], ['status' => 'archived']);
+    $counts['live_participants_archived'] += pqsqtf_archive_record('local_prequran_live_participant', [
+        'sessionid' => $sessionid,
+        'userid' => $studentid,
+        'role' => 'student',
+    ], ['status' => 'archived']);
+    $counts['assessments_archived'] += pqsqtf_archive_record('local_prequran_assessment', ['id' => $assessmentid], ['status' => 'archived']);
+
+    return [
+        'mode' => 'archive',
+        'teacherid' => $teacherid,
+        'studentid' => $studentid,
+        'sessionid' => $sessionid,
+        'assessmentid' => $assessmentid,
+        'counts' => $counts,
+    ];
 }
 
 function pqsqtf_upsert_teacher_student(int $workspaceid, int $teacherid, int $studentid): int {
@@ -312,7 +415,8 @@ function pqsqtf_create_assessment(int $workspaceid, string $coursekey, string $r
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
-        foreach (['local_prequran_workspace_member', 'local_prequran_teacher_student', 'local_prequran_live_session', 'local_prequran_live_participant', 'local_prequran_assessment'] as $table) {
+        $requiredtables = ['local_prequran_workspace_member', 'local_prequran_teacher_student', 'local_prequran_live_session', 'local_prequran_live_participant', 'local_prequran_assessment'];
+        foreach ($requiredtables as $table) {
             if (!pqsqtf_table_ready($table)) {
                 throw new invalid_parameter_exception('Required table is not ready: ' . $table);
             }
@@ -328,23 +432,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new invalid_parameter_exception('Run ID is required.');
         }
 
-        pqsqtf_reset_teacher_password($teacherid, $teacherpassword);
-        pqsqtf_upsert_workspace_member($workspaceid, $teacherid, 'teacher');
-        $student = pqsqtf_create_student($workspaceid, $runid, $studentpassword);
-        $assignmentid = pqsqtf_upsert_teacher_student($workspaceid, $teacherid, (int)$student['userid']);
-        $sessionid = pqsqtf_create_session($workspaceid, $teacherid, (int)$student['userid'], $runid);
-        $assessmentid = pqsqtf_create_assessment($workspaceid, $coursekey, $runid);
+        if ($action === 'archive') {
+            $result = pqsqtf_archive_fixture($workspaceid, $teacherid, $studentid, $sessionid, $assessmentid, $runid);
+        } else {
+            pqsqtf_reset_teacher_password($teacherid, $teacherpassword);
+            pqsqtf_upsert_workspace_member($workspaceid, $teacherid, 'teacher');
+            $student = pqsqtf_create_student($workspaceid, $runid, $studentpassword);
+            $assignmentid = pqsqtf_upsert_teacher_student($workspaceid, $teacherid, (int)$student['userid']);
+            $sessionid = pqsqtf_create_session($workspaceid, $teacherid, (int)$student['userid'], $runid);
+            $assessmentid = pqsqtf_create_assessment($workspaceid, $coursekey, $runid);
 
-        $result = [
-            'teacherid' => $teacherid,
-            'workspaceid' => $workspaceid,
-            'studentid' => (int)$student['userid'],
-            'studentusername' => (string)$student['username'],
-            'studentemail' => (string)$student['email'],
-            'assignmentid' => $assignmentid,
-            'sessionid' => $sessionid,
-            'assessmentid' => $assessmentid,
-        ];
+            $result = [
+                'mode' => 'create',
+                'teacherid' => $teacherid,
+                'workspaceid' => $workspaceid,
+                'studentid' => (int)$student['userid'],
+                'studentusername' => (string)$student['username'],
+                'studentemail' => (string)$student['email'],
+                'assignmentid' => $assignmentid,
+                'sessionid' => $sessionid,
+                'assessmentid' => $assessmentid,
+            ];
+        }
     } catch (Throwable $e) {
         $error = $e->getMessage();
     }
@@ -381,6 +490,7 @@ echo $OUTPUT->header();
     <?php endif; ?>
     <form method="post">
       <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+      <input type="hidden" name="action" value="create">
       <div class="pqsqtf-grid">
         <div class="pqsqtf-field"><label>Workspace ID</label><input name="workspaceid" value="<?php echo s((string)$workspaceid); ?>"></div>
         <div class="pqsqtf-field"><label>Teacher user ID</label><input name="teacherid" value="<?php echo s((string)$teacherid); ?>"></div>

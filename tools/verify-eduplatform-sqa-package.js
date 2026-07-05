@@ -40,6 +40,7 @@ const expectedScripts = [
   'test:e2e:teacher-phase2',
   'test:e2e:teacher-phase3',
   'test:e2e:teacher-phase4',
+  'test:e2e:teacher-phase5',
   'test:e2e:teacher-controls',
   'test:e2e:phase4',
   'test:e2e:phase5',
@@ -84,6 +85,7 @@ const expectedEnvFlags = [
   'EDUPLATFORM_ENABLE_TEACHER_ONBOARDING',
   'EDUPLATFORM_ENABLE_FULL_TEACHER_JOURNEY',
   'EDUPLATFORM_ENABLE_TEACHER_PORTAL_OPS',
+  'EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH',
   'EDUPLATFORM_CLEANUP_MODE',
 ];
 
@@ -113,6 +115,7 @@ for (const groupName of [
   'full teacher onboarding live action',
   'teacher portal classroom operations live action',
   'teacher reporting and cleanup readiness',
+  'full teacher golden path live action',
   'teacher negative controls',
 ]) {
   expectIncludes('teacher-journey.spec.ts', teacherJourneySpec, groupName);
@@ -122,6 +125,7 @@ for (const command of [
   'npm.cmd run test:e2e:phase10',
   'npm.cmd run test:e2e:phase11',
   'npm.cmd run test:e2e:phase12',
+  'npm.cmd run test:e2e:teacher-phase5',
   'npx playwright show-report',
 ]) {
   expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, command);
@@ -131,10 +135,20 @@ for (const command of [
 for (const phrase of [
   'Daily control check',
   'Weekly full journey',
+  'Weekly teacher journey',
   'Public course setup',
   'Failure triage',
   'Evidence review',
 ]) {
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'sqa_teacher_portal_fixture.php',
+  'EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH',
+  'teacher accounts',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
   expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
 }
 

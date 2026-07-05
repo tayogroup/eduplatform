@@ -3,6 +3,7 @@ import type { EduPlatformEnv } from './env';
 import { buildEduPlatformUrl, HUB_ROUTES } from './routes';
 
 export interface TeacherPortalFixtureResult {
+  mode?: string;
   teacherid: number;
   workspaceid: number;
   studentid: number;
@@ -11,6 +12,15 @@ export interface TeacherPortalFixtureResult {
   assignmentid: number;
   sessionid: number;
   assessmentid: number;
+}
+
+export interface TeacherPortalArchiveResult {
+  mode: 'archive';
+  teacherid: number;
+  studentid: number;
+  sessionid: number;
+  assessmentid: number;
+  counts: Record<string, number>;
 }
 
 function normalize(text: string): string {
@@ -69,6 +79,59 @@ export class TeacherPortalFixturePage {
 
     await expect(this.page.locator('.pqsqtf-ok').first()).toContainText(/fixture ready/i);
     return parseFixtureJson((await this.page.locator('#pqsqtf-result').textContent()) || '{}');
+  }
+
+  async archive(options: {
+    runId: string;
+    teacherUserId: string;
+    fixture: TeacherPortalFixtureResult;
+  }): Promise<TeacherPortalArchiveResult> {
+    const fixtureUrl = buildEduPlatformUrl(this.env, HUB_ROUTES.sqaTeacherPortalFixture, {
+      teacherid: options.teacherUserId,
+      studentid: String(options.fixture.studentid),
+      sessionid: String(options.fixture.sessionid),
+      assessmentid: String(options.fixture.assessmentid),
+      action: 'archive',
+    });
+    await this.page.goto(fixtureUrl, { waitUntil: 'domcontentloaded' });
+    await expect(this.page.getByRole('heading', { name: /sqa teacher portal fixture/i }).first()).toBeVisible();
+
+    const fixtureForm = this.page.locator('form:has(input[name="teacherid"])').first();
+    await expect(fixtureForm).toBeVisible();
+    await fixtureForm.locator('input[name="workspaceid"]').fill(this.env.workspaceId);
+    await fixtureForm.locator('input[name="teacherid"]').fill(options.teacherUserId);
+    await fixtureForm.locator('input[name="runid"]').fill(options.runId);
+    await fixtureForm.locator('input[name="coursekey"]').fill(this.env.testCourseKey || 'pre_quraan');
+    await fixtureForm.evaluate((form) => {
+      let input = form.querySelector<HTMLInputElement>('input[name="action"]');
+      if (!input) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'action';
+        form.appendChild(input);
+      }
+      input.value = 'archive';
+    });
+    await fixtureForm.getByRole('button', { name: /create teacher portal fixture/i }).click();
+    await this.page.waitForLoadState('domcontentloaded');
+
+    const error = this.page.locator('.pqsqtf-error').first();
+    if (await error.isVisible().catch(() => false)) {
+      throw new Error(`Teacher portal fixture archive failed: ${normalize((await error.textContent()) || '')}`);
+    }
+
+    await expect(this.page.locator('.pqsqtf-ok').first()).toContainText(/fixture ready/i);
+    const archive = JSON.parse((await this.page.locator('#pqsqtf-result').textContent()) || '{}') as TeacherPortalArchiveResult;
+    if (archive.mode !== 'archive') {
+      throw new Error(
+        [
+          'Teacher portal fixture archive did not run on the target server.',
+          `Received: ${JSON.stringify(archive)}`,
+          'Upload the current src/moodle/local_hubredirect/sqa_teacher_portal_fixture.php to local/hubredirect/sqa_teacher_portal_fixture.php, then rerun teacher-phase5.',
+        ].join('\n'),
+      );
+    }
+    return archive;
   }
 }
 

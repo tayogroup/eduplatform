@@ -1,4 +1,4 @@
-import { expect, test, type TestInfo } from '@playwright/test';
+import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import {
   assertEduPlatformEnv,
@@ -37,6 +37,7 @@ const TEACHER_E2E_ENV_KEYS = [
   'EDUPLATFORM_ENABLE_TEACHER_ONBOARDING',
   'EDUPLATFORM_ENABLE_FULL_TEACHER_JOURNEY',
   'EDUPLATFORM_ENABLE_TEACHER_PORTAL_OPS',
+  'EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH',
   'EDUPLATFORM_CLEANUP_MODE',
 ] as const;
 
@@ -72,6 +73,58 @@ function teacherEvidence(testInfo: TestInfo, runId: string) {
   return new JourneyEvidence(testInfo, runId, redactedEduPlatformEnv(env), {
     artifactPrefix: 'teacher-journey',
     manifestTitle: 'EduPlatform Teacher Journey Manifest',
+  });
+}
+
+async function archiveTeacherFixtureIfRequested(options: {
+  page: Page;
+  env: ReturnType<typeof getEduPlatformEnv>;
+  evidence: JourneyEvidence;
+  fixturePage: TeacherPortalFixturePage;
+  runId: string;
+  teacherUserId: string;
+  fixture: Awaited<ReturnType<TeacherPortalFixturePage['create']>>;
+}): Promise<void> {
+  const { page, env, evidence, fixturePage, runId, teacherUserId, fixture } = options;
+  if (env.cleanupMode === 'archive') {
+    await loginToEduPlatform(page, env, adminCredentials(env));
+    const archive = await fixturePage.archive({ runId, teacherUserId, fixture });
+    evidence.recordStage('teacher-cleanup-archive-completed', 'passed', JSON.stringify(archive.counts));
+    evidence.recordCleanupAction({
+      target: 'teacher-account',
+      identifier: teacherUserId,
+      mode: env.cleanupMode,
+      status: 'completed',
+      note: 'Generated teacher account/profile/workspace membership archived by SQA fixture endpoint.',
+    });
+    evidence.recordCleanupAction({
+      target: 'teacher-portal-fixture',
+      identifier: `student=${fixture.studentid};session=${fixture.sessionid};assessment=${fixture.assessmentid}`,
+      mode: env.cleanupMode,
+      status: 'completed',
+      note: 'Generated teacher portal student, assignment, session, participant, and assessment records archived.',
+    });
+    await logoutFromEduPlatform(page, env);
+    return;
+  }
+
+  evidence.recordCleanupAction({
+    target: 'teacher-account',
+    identifier: teacherUserId,
+    mode: env.cleanupMode,
+    status: env.cleanupMode === 'delete' ? 'blocked' : 'skipped',
+    note: env.cleanupMode === 'delete'
+      ? 'Delete cleanup is blocked; use archive mode for generated teacher journey records.'
+      : 'Teacher cleanup skipped because EDUPLATFORM_CLEANUP_MODE=none.',
+  });
+  evidence.recordCleanupAction({
+    target: 'teacher-portal-fixture',
+    identifier: `student=${fixture.studentid};session=${fixture.sessionid};assessment=${fixture.assessmentid}`,
+    mode: env.cleanupMode,
+    status: env.cleanupMode === 'delete' ? 'blocked' : 'skipped',
+    note: env.cleanupMode === 'delete'
+      ? 'Delete cleanup is blocked to retain classroom operation evidence.'
+      : 'Teacher portal fixture cleanup skipped because EDUPLATFORM_CLEANUP_MODE=none.',
   });
 }
 
@@ -263,8 +316,115 @@ test.describe('EduPlatform teacher journey harness', () => {
 
       await logoutFromEduPlatform(page, env);
       evidence.recordStage('teacher-phase-14-teacher-logout', 'passed');
+      await archiveTeacherFixtureIfRequested({
+        page,
+        env,
+        evidence,
+        fixturePage,
+        runId: data.runId,
+        teacherUserId: created.teacherUserId,
+        fixture,
+      });
       await evidence.writeSummary();
 
+      expect(fixture.studentid).toBeGreaterThan(0);
+      expect(fixture.sessionid).toBeGreaterThan(0);
+      expect(fixture.assessmentid).toBeGreaterThan(0);
+    });
+  });
+
+  test.describe('full teacher golden path live action', () => {
+    test.skip(
+      !getEduPlatformEnv({ allowPartial: true }).enableFullTeacherGoldenPath,
+      'Set EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH=true to run the full teacher golden path.',
+    );
+
+    test('runs public intake through onboarding, portal operations, evidence, and archive cleanup', async ({ page }, testInfo) => {
+      test.setTimeout(150_000);
+
+      const env = getEduPlatformEnv();
+      const data = buildTeacherJourneyData();
+      const evidence = teacherEvidence(testInfo, data.runId);
+      const publicTeacherIntake = new PublicTeacherIntakePage(page, env);
+
+      await publicTeacherIntake.goto();
+      await publicTeacherIntake.expectReady();
+      evidence.recordStage('teacher-phase-5-public-form-ready', 'passed', publicTeacherIntakeUrl(env));
+      const application = await publicTeacherIntake.submitValidApplication(data);
+      evidence.recordStage('teacher-phase-5-public-application-submitted', 'passed', application.confirmationText);
+      evidence.recordId('teacherApplicationRequestId', application.requestId);
+
+      await loginToEduPlatform(page, env, adminCredentials(env));
+      evidence.recordStage('teacher-phase-5-admin-login', 'passed', env.adminUsername);
+
+      const queue = new TeacherApplicationQueuePage(page, env);
+      await queue.goto();
+      const requestId = await queue.approveAndOpenIntake(data, application.requestId);
+      evidence.recordStage('teacher-phase-5-application-approved', 'passed', `Teacher application ${requestId} approved.`);
+
+      const teacherIntake = new TeacherIntakePage(page);
+      await teacherIntake.expectPrefilled(data);
+      const created = await teacherIntake.createTeacherFromPrefill(data, requestId);
+      evidence.recordStage('teacher-phase-5-teacher-created', 'passed', created.createdText);
+      evidence.recordId('teacherUserId', created.teacherUserId);
+      evidence.recordId('teacherUsername', created.teacherUsername);
+      evidence.recordId('teacherAccountId', created.teacherAccountId);
+      evidence.recordId('teacherProfileId', created.profileId);
+      await evidence.screenshot(page, 'teacher-phase5-onboarding-created');
+
+      const marketplace = new TeacherMarketplacePage(page, env);
+      await marketplace.expectPublishedTeacher(data);
+      evidence.recordStage('teacher-phase-5-marketplace-visible', 'passed', data.teacher.displayName);
+
+      const fixturePage = new TeacherPortalFixturePage(page, env);
+      const fixture = await fixturePage.create({
+        runId: data.runId,
+        teacherUserId: created.teacherUserId,
+      });
+      evidence.recordStage('teacher-phase-5-portal-fixture-created', 'passed', JSON.stringify(fixture));
+      evidence.recordId('teacherPortalStudentId', fixture.studentid);
+      evidence.recordId('teacherPortalSessionId', fixture.sessionid);
+      evidence.recordId('teacherPortalAssessmentId', fixture.assessmentid);
+
+      await logoutFromEduPlatform(page, env);
+      const teacherPortalUrl = buildEduPlatformUrl(env, HUB_ROUTES.teacherPortal);
+      await loginToEduPlatform(page, env, {
+        username: created.teacherUsername,
+        password: env.teacherPassword,
+      }, {
+        loginUrl: consumerLoginUrl(env, teacherPortalUrl),
+      });
+      evidence.recordStage('teacher-phase-5-teacher-login', 'passed', created.teacherUsername);
+
+      const teacherPortal = new TeacherPortalPage(page, env);
+      await teacherPortal.goto();
+      await teacherPortal.expectReady(fixture);
+      evidence.recordStage('teacher-phase-5-portal-ready', 'passed', fixture.studentemail);
+      await teacherPortal.saveAttendance(data.runId, fixture);
+      evidence.recordStage('teacher-phase-5-attendance-saved', 'passed', String(fixture.sessionid));
+      await teacherPortal.saveNotesAndHomework(data.runId, fixture);
+      evidence.recordStage('teacher-phase-5-notes-homework-saved', 'passed', String(fixture.studentid));
+      await teacherPortal.saveGrade(data.runId, fixture);
+      evidence.recordStage('teacher-phase-5-grade-saved', 'passed', String(fixture.assessmentid));
+      await teacherPortal.saveProgress(data.runId, fixture);
+      evidence.recordStage('teacher-phase-5-progress-saved', 'passed', String(fixture.studentid));
+      await evidence.screenshot(page, 'teacher-phase5-progress-saved');
+
+      await logoutFromEduPlatform(page, env);
+      evidence.recordStage('teacher-phase-5-teacher-logout', 'passed');
+      await archiveTeacherFixtureIfRequested({
+        page,
+        env,
+        evidence,
+        fixturePage,
+        runId: data.runId,
+        teacherUserId: created.teacherUserId,
+        fixture,
+      });
+      evidence.recordStage('teacher-phase-5-reporting-completed', 'passed', 'Full teacher golden path manifest completed.');
+      await evidence.writeSummary();
+
+      expect(created.teacherUserId).not.toEqual('');
       expect(fixture.studentid).toBeGreaterThan(0);
       expect(fixture.sessionid).toBeGreaterThan(0);
       expect(fixture.assessmentid).toBeGreaterThan(0);
@@ -332,12 +492,14 @@ test.describe('EduPlatform teacher journey harness', () => {
         EDUPLATFORM_ENABLE_TEACHER_ONBOARDING: '',
         EDUPLATFORM_ENABLE_FULL_TEACHER_JOURNEY: '0',
         EDUPLATFORM_ENABLE_TEACHER_PORTAL_OPS: 'off',
+        EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH: 'false',
       }, async () => {
         const env = getEduPlatformEnv();
         expect(env.enableTeacherIntakeSubmit).toBe(false);
         expect(env.enableTeacherOnboarding).toBe(false);
         expect(env.enableFullTeacherJourney).toBe(false);
         expect(env.enableTeacherPortalOps).toBe(false);
+        expect(env.enableFullTeacherGoldenPath).toBe(false);
       });
     });
   });

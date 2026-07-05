@@ -39,6 +39,7 @@ export interface EduPlatformEnv {
   enableTeacherOnboarding: boolean;
   enableFullTeacherJourney: boolean;
   enableTeacherPortalOps: boolean;
+  enableFullTeacherGoldenPath: boolean;
   wsToken: string;
 }
 
@@ -135,6 +136,7 @@ export function getEduPlatformEnv(options: EnvOptions = {}): EduPlatformEnv {
     enableTeacherOnboarding: isTruthy(readEnv('EDUPLATFORM_ENABLE_TEACHER_ONBOARDING')),
     enableFullTeacherJourney: isTruthy(readEnv('EDUPLATFORM_ENABLE_FULL_TEACHER_JOURNEY')),
     enableTeacherPortalOps: isTruthy(readEnv('EDUPLATFORM_ENABLE_TEACHER_PORTAL_OPS')),
+    enableFullTeacherGoldenPath: isTruthy(readEnv('EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH')),
     wsToken: readEnv('EDUPLATFORM_WS_TOKEN'),
   };
 
@@ -215,6 +217,7 @@ export function redactedEduPlatformEnv(env = getEduPlatformEnv({ allowPartial: t
     enableTeacherOnboarding: env.enableTeacherOnboarding,
     enableFullTeacherJourney: env.enableFullTeacherJourney,
     enableTeacherPortalOps: env.enableTeacherPortalOps,
+    enableFullTeacherGoldenPath: env.enableFullTeacherGoldenPath,
     wsToken: env.wsToken ? '[redacted]' : '',
   };
 }

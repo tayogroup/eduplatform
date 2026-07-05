@@ -9,6 +9,7 @@ export interface EduPlatformEnv {
   adminUsername: string;
   adminPassword: string;
   studentPassword: string;
+  teacherPassword: string;
   testOfferingId: string;
   testCourseKey: string;
   publicCourseTitle: string;
@@ -34,6 +35,10 @@ export interface EduPlatformEnv {
   enableTranscriptIssue: boolean;
   enablePaymentReceipt: boolean;
   enableFullStudentJourney: boolean;
+  enableTeacherIntakeSubmit: boolean;
+  enableTeacherOnboarding: boolean;
+  enableFullTeacherJourney: boolean;
+  enableTeacherPortalOps: boolean;
   wsToken: string;
 }
 
@@ -96,6 +101,7 @@ export function getEduPlatformEnv(options: EnvOptions = {}): EduPlatformEnv {
     adminUsername: readEnv('EDUPLATFORM_ADMIN_USERNAME'),
     adminPassword: readEnv('EDUPLATFORM_ADMIN_PASSWORD'),
     studentPassword: readEnv('EDUPLATFORM_STUDENT_PASSWORD'),
+    teacherPassword: readEnv('EDUPLATFORM_TEACHER_PASSWORD') || readEnv('EDUPLATFORM_STUDENT_PASSWORD'),
     testOfferingId: readEnv('EDUPLATFORM_TEST_OFFERING_ID'),
     testCourseKey: readEnv('EDUPLATFORM_TEST_COURSE_KEY'),
     publicCourseTitle: readEnv('EDUPLATFORM_PUBLIC_COURSE_TITLE'),
@@ -125,6 +131,10 @@ export function getEduPlatformEnv(options: EnvOptions = {}): EduPlatformEnv {
     enableTranscriptIssue: isTruthy(readEnv('EDUPLATFORM_ENABLE_TRANSCRIPT_ISSUE')),
     enablePaymentReceipt: isTruthy(readEnv('EDUPLATFORM_ENABLE_PAYMENT_RECEIPT')),
     enableFullStudentJourney: isTruthy(readEnv('EDUPLATFORM_ENABLE_FULL_STUDENT_JOURNEY')),
+    enableTeacherIntakeSubmit: isTruthy(readEnv('EDUPLATFORM_ENABLE_TEACHER_INTAKE_SUBMIT')),
+    enableTeacherOnboarding: isTruthy(readEnv('EDUPLATFORM_ENABLE_TEACHER_ONBOARDING')),
+    enableFullTeacherJourney: isTruthy(readEnv('EDUPLATFORM_ENABLE_FULL_TEACHER_JOURNEY')),
+    enableTeacherPortalOps: isTruthy(readEnv('EDUPLATFORM_ENABLE_TEACHER_PORTAL_OPS')),
     wsToken: readEnv('EDUPLATFORM_WS_TOKEN'),
   };
 
@@ -175,6 +185,7 @@ export function redactedEduPlatformEnv(env = getEduPlatformEnv({ allowPartial: t
     adminUsername: env.adminUsername,
     adminPassword: env.adminPassword ? '[redacted]' : '',
     studentPassword: env.studentPassword ? '[redacted]' : '',
+    teacherPassword: env.teacherPassword ? '[redacted]' : '',
     testOfferingId: env.testOfferingId,
     testCourseKey: env.testCourseKey,
     publicCourseTitle: env.publicCourseTitle,
@@ -200,6 +211,10 @@ export function redactedEduPlatformEnv(env = getEduPlatformEnv({ allowPartial: t
     enableTranscriptIssue: env.enableTranscriptIssue,
     enablePaymentReceipt: env.enablePaymentReceipt,
     enableFullStudentJourney: env.enableFullStudentJourney,
+    enableTeacherIntakeSubmit: env.enableTeacherIntakeSubmit,
+    enableTeacherOnboarding: env.enableTeacherOnboarding,
+    enableFullTeacherJourney: env.enableFullTeacherJourney,
+    enableTeacherPortalOps: env.enableTeacherPortalOps,
     wsToken: env.wsToken ? '[redacted]' : '',
   };
 }

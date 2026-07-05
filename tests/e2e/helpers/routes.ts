@@ -19,6 +19,13 @@ export const HUB_ROUTES = {
   officialTranscript: '/local/hubredirect/course_transcript_official.php',
   transcriptPolicy: '/local/hubredirect/transcript_policy.php',
   transcriptVerify: '/local/hubredirect/transcript_verify.php',
+  publicTeacherIntake: '/local/hubredirect/public_teacher_intake.php',
+  teacherIntakeRequests: '/local/hubredirect/teacher_intake_requests.php',
+  teacherIntake: '/local/hubredirect/teacher_intake.php',
+  teacherMarketplace: '/local/hubredirect/teacher_marketplace.php',
+  teacherMarketplaceAdmin: '/local/hubredirect/teacher_marketplace_admin.php',
+  teacherPortal: '/local/hubredirect/teacher_portal.php',
+  sqaTeacherPortalFixture: '/local/hubredirect/sqa_teacher_portal_fixture.php',
 } as const;
 
 export function defaultWorkspaceParams(env: EduPlatformEnv): RouteParams {
@@ -47,4 +54,8 @@ export function publicIntakeUrl(env: EduPlatformEnv): string {
 
 export function courseCatalogUrl(env: EduPlatformEnv): string {
   return buildEduPlatformUrl(env, HUB_ROUTES.courseCatalog);
+}
+
+export function publicTeacherIntakeUrl(env: EduPlatformEnv): string {
+  return buildEduPlatformUrl(env, HUB_ROUTES.publicTeacherIntake);
 }

@@ -28,11 +28,19 @@ const packageJson = JSON.parse(readText('package.json'));
 const scripts = packageJson.scripts || {};
 const envExample = readText('.env.e2e.example');
 const studentJourneySpec = readText('tests/e2e/student-journey.spec.ts');
+const teacherJourneySpec = readText('tests/e2e/teacher-journey.spec.ts');
 const phase11Runbook = readText('docs/eduplatform-sqa-phase-11-runbook.md');
 const operatorChecklist = readText('docs/eduplatform-sqa-operator-checklist.md');
 
 const expectedScripts = [
+  'test:e2e:student-journey',
+  'test:e2e:teacher-journey',
   'test:e2e:setup-public-course',
+  'test:e2e:teacher-phase1',
+  'test:e2e:teacher-phase2',
+  'test:e2e:teacher-phase3',
+  'test:e2e:teacher-phase4',
+  'test:e2e:teacher-controls',
   'test:e2e:phase4',
   'test:e2e:phase5',
   'test:e2e:phase6',
@@ -61,6 +69,7 @@ const expectedEnvFlags = [
   'EDUPLATFORM_ADMIN_USERNAME',
   'EDUPLATFORM_ADMIN_PASSWORD',
   'EDUPLATFORM_STUDENT_PASSWORD',
+  'EDUPLATFORM_TEACHER_PASSWORD',
   'EDUPLATFORM_TEST_COURSE_KEY',
   'EDUPLATFORM_ENABLE_PUBLIC_COURSE_CREATE',
   'EDUPLATFORM_ENABLE_PUBLIC_INTAKE_SUBMIT',
@@ -71,6 +80,10 @@ const expectedEnvFlags = [
   'EDUPLATFORM_ENABLE_TRANSCRIPT_ISSUE',
   'EDUPLATFORM_ENABLE_PAYMENT_RECEIPT',
   'EDUPLATFORM_ENABLE_FULL_STUDENT_JOURNEY',
+  'EDUPLATFORM_ENABLE_TEACHER_INTAKE_SUBMIT',
+  'EDUPLATFORM_ENABLE_TEACHER_ONBOARDING',
+  'EDUPLATFORM_ENABLE_FULL_TEACHER_JOURNEY',
+  'EDUPLATFORM_ENABLE_TEACHER_PORTAL_OPS',
   'EDUPLATFORM_CLEANUP_MODE',
 ];
 
@@ -93,6 +106,16 @@ const expectedSpecGroups = [
 
 for (const groupName of expectedSpecGroups) {
   expectIncludes('student-journey.spec.ts', studentJourneySpec, groupName);
+}
+
+for (const groupName of [
+  'teacher public intake live action',
+  'full teacher onboarding live action',
+  'teacher portal classroom operations live action',
+  'teacher reporting and cleanup readiness',
+  'teacher negative controls',
+]) {
+  expectIncludes('teacher-journey.spec.ts', teacherJourneySpec, groupName);
 }
 
 for (const command of [

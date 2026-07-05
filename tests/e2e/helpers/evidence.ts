@@ -39,12 +39,17 @@ export interface JourneyEvidenceSummary {
 
 export class JourneyEvidence {
   private readonly summary: JourneyEvidenceSummary;
+  private readonly artifactPrefix: string;
+  private readonly manifestTitle: string;
 
   constructor(
     private readonly testInfo: TestInfo,
     runId: string,
     environment: Record<string, unknown>,
+    options: { artifactPrefix?: string; manifestTitle?: string } = {},
   ) {
+    this.artifactPrefix = options.artifactPrefix || 'student-journey';
+    this.manifestTitle = options.manifestTitle || 'EduPlatform Student Journey Manifest';
     this.summary = {
       runId,
       startedAt: new Date().toISOString(),
@@ -112,8 +117,8 @@ export class JourneyEvidence {
 
     const outputDir = this.testInfo.outputPath('summary');
     await mkdir(outputDir, { recursive: true });
-    const summaryPath = path.join(outputDir, 'student-journey-summary.json');
-    const manifestPath = path.join(outputDir, 'student-journey-manifest.md');
+    const summaryPath = path.join(outputDir, `${this.artifactPrefix}-summary.json`);
+    const manifestPath = path.join(outputDir, `${this.artifactPrefix}-manifest.md`);
 
     for (const artifactPath of [summaryPath, manifestPath]) {
       if (!this.summary.artifacts.includes(artifactPath)) {
@@ -123,11 +128,11 @@ export class JourneyEvidence {
 
     await writeFile(summaryPath, JSON.stringify(this.summary, null, 2), 'utf8');
     await writeFile(manifestPath, this.renderManifest(), 'utf8');
-    await this.testInfo.attach('student-journey-summary', {
+    await this.testInfo.attach(`${this.artifactPrefix}-summary`, {
       path: summaryPath,
       contentType: 'application/json',
     });
-    await this.testInfo.attach('student-journey-manifest', {
+    await this.testInfo.attach(`${this.artifactPrefix}-manifest`, {
       path: manifestPath,
       contentType: 'text/markdown',
     });
@@ -140,7 +145,7 @@ export class JourneyEvidence {
 
   private renderManifest(): string {
     const lines = [
-      '# EduPlatform Student Journey Manifest',
+      `# ${this.manifestTitle}`,
       '',
       `Run ID: ${this.summary.runId}`,
       `Verdict: ${this.summary.verdict || 'pending'}`,

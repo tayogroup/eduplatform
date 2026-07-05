@@ -29,12 +29,14 @@ const scripts = packageJson.scripts || {};
 const envExample = readText('.env.e2e.example');
 const studentJourneySpec = readText('tests/e2e/student-journey.spec.ts');
 const teacherJourneySpec = readText('tests/e2e/teacher-journey.spec.ts');
+const parentJourneySpec = readText('tests/e2e/parent-journey.spec.ts');
 const phase11Runbook = readText('docs/eduplatform-sqa-phase-11-runbook.md');
 const operatorChecklist = readText('docs/eduplatform-sqa-operator-checklist.md');
 
 const expectedScripts = [
   'test:e2e:student-journey',
   'test:e2e:teacher-journey',
+  'test:e2e:parent-journey',
   'test:e2e:setup-public-course',
   'test:e2e:teacher-phase1',
   'test:e2e:teacher-phase2',
@@ -42,6 +44,9 @@ const expectedScripts = [
   'test:e2e:teacher-phase4',
   'test:e2e:teacher-phase5',
   'test:e2e:teacher-controls',
+  'test:e2e:parent-phase1',
+  'test:e2e:parent-phase2',
+  'test:e2e:parent-controls',
   'test:e2e:phase4',
   'test:e2e:phase5',
   'test:e2e:phase6',
@@ -86,6 +91,8 @@ const expectedEnvFlags = [
   'EDUPLATFORM_ENABLE_FULL_TEACHER_JOURNEY',
   'EDUPLATFORM_ENABLE_TEACHER_PORTAL_OPS',
   'EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH',
+  'EDUPLATFORM_ENABLE_PARENT_PORTAL_VISIBILITY',
+  'EDUPLATFORM_ENABLE_PARENT_PAYMENT_VISIBILITY',
   'EDUPLATFORM_CLEANUP_MODE',
 ];
 
@@ -121,11 +128,21 @@ for (const groupName of [
   expectIncludes('teacher-journey.spec.ts', teacherJourneySpec, groupName);
 }
 
+for (const groupName of [
+  'parent portal visibility live action',
+  'parent payment visibility live action',
+  'parent negative controls',
+]) {
+  expectIncludes('parent-journey.spec.ts', parentJourneySpec, groupName);
+}
+
 for (const command of [
   'npm.cmd run test:e2e:phase10',
   'npm.cmd run test:e2e:phase11',
   'npm.cmd run test:e2e:phase12',
   'npm.cmd run test:e2e:teacher-phase5',
+  'npm.cmd run test:e2e:parent-phase1',
+  'npm.cmd run test:e2e:parent-phase2',
   'npx playwright show-report',
 ]) {
   expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, command);
@@ -136,6 +153,7 @@ for (const phrase of [
   'Daily control check',
   'Weekly full journey',
   'Weekly teacher journey',
+  'Weekly parent journey',
   'Public course setup',
   'Failure triage',
   'Evidence review',
@@ -147,6 +165,15 @@ for (const phrase of [
   'sqa_teacher_portal_fixture.php',
   'EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH',
   'teacher accounts',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'EDUPLATFORM_ENABLE_PARENT_PORTAL_VISIBILITY',
+  'EDUPLATFORM_ENABLE_PARENT_PAYMENT_VISIBILITY',
+  'parent accounts',
 ]) {
   expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
   expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);

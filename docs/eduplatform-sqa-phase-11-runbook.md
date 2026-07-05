@@ -83,6 +83,43 @@ Expected teacher result:
 - generated teacher/student accounts and portal fixture records are archived when cleanup mode is `archive`,
 - manifest lists teacher IDs, fixture IDs, stages, screenshots, and cleanup decisions.
 
+## Parent Journey Commands
+
+Run local parent guard checks:
+
+```powershell
+npm.cmd run test:e2e:parent-controls
+npm.cmd run test:e2e:phase13
+```
+
+Run the parent portal visibility path only in the approved EduPlatform SQA workspace:
+
+```powershell
+$env:EDUPLATFORM_ENABLE_PARENT_PORTAL_VISIBILITY="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_INVOICE_LINE_AMOUNT="25.00"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:parent-phase1
+```
+
+Run the parent payment visibility path:
+
+```powershell
+$env:EDUPLATFORM_ENABLE_PARENT_PAYMENT_VISIBILITY="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_INVOICE_LINE_AMOUNT="25.00"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:parent-phase2
+```
+
+Expected parent result:
+
+- public student intake creates linked student and parent accounts,
+- student requests enrollment and admin approves it,
+- tuition invoice is issued,
+- parent can log in and see linked child, billing, and student-parent portal finance evidence,
+- phase 2 records a manual payment and verifies paid invoice plus receipt visibility from the parent side.
+
 ## Cleanup Policy
 
 Use `EDUPLATFORM_CLEANUP_MODE=archive` by default.

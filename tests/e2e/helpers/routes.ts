@@ -14,6 +14,8 @@ export const HUB_ROUTES = {
   invoiceView: '/local/hubredirect/invoice_view.php',
   studentBilling: '/local/hubredirect/student_billing.php',
   parentBilling: '/local/hubredirect/parent_billing.php',
+  parentWorkspace: '/local/hubredirect/workspace_parent.php',
+  studentParentPortal: '/local/hubredirect/student_parent_portal.php',
   gradebookAssessment: '/local/hubredirect/gradebook_assessment.php',
   courseTranscript: '/local/hubredirect/course_transcript.php',
   officialTranscript: '/local/hubredirect/course_transcript_official.php',

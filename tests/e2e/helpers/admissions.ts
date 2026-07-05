@@ -11,6 +11,7 @@ export interface StudentCreationResult {
   studentPassword: string;
   parentAccountId: string;
   parentUserId: string;
+  parentUsername: string;
   parentPassword: string;
   parentEmailStatus: string;
   enrollmentApprovalStatus: string;
@@ -121,6 +122,9 @@ export class StudentIntakePage {
     const parentBlock = firstMatch(createdText, /Parent\/guardian\s*(.*?)\s*Referrer/i);
     const parentAccountId = firstMatch(parentBlock, /ID\s*([A-Z0-9-]+?)(?=\s*Moodle user ID)/i);
     const parentUserId = firstMatch(parentBlock, /Moodle user ID:\s*(\d+)/i);
+    const parentUsername =
+      firstMatch(parentBlock, /Username:\s*(.*?)\s*Temporary password:/i) ||
+      firstMatch(parentBlock, /Username:\s*([^\s]+)/i);
     const parentPassword = firstMatch(parentBlock, /Temporary password:\s*(.*?)\s*Email:/i);
     const parentEmailStatus = firstMatch(parentBlock, /Email:\s*([^ ]+(?: [^ ]+){0,3})/i);
     const enrollmentApprovalStatus = firstMatch(createdText, /Parent approval status:\s*([a-z_]+)/i);
@@ -133,6 +137,7 @@ export class StudentIntakePage {
       studentPassword,
       parentAccountId,
       parentUserId,
+      parentUsername,
       parentPassword,
       parentEmailStatus,
       enrollmentApprovalStatus,

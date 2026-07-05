@@ -40,6 +40,8 @@ export interface EduPlatformEnv {
   enableFullTeacherJourney: boolean;
   enableTeacherPortalOps: boolean;
   enableFullTeacherGoldenPath: boolean;
+  enableParentPortalVisibility: boolean;
+  enableParentPaymentVisibility: boolean;
   wsToken: string;
 }
 
@@ -137,6 +139,8 @@ export function getEduPlatformEnv(options: EnvOptions = {}): EduPlatformEnv {
     enableFullTeacherJourney: isTruthy(readEnv('EDUPLATFORM_ENABLE_FULL_TEACHER_JOURNEY')),
     enableTeacherPortalOps: isTruthy(readEnv('EDUPLATFORM_ENABLE_TEACHER_PORTAL_OPS')),
     enableFullTeacherGoldenPath: isTruthy(readEnv('EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH')),
+    enableParentPortalVisibility: isTruthy(readEnv('EDUPLATFORM_ENABLE_PARENT_PORTAL_VISIBILITY')),
+    enableParentPaymentVisibility: isTruthy(readEnv('EDUPLATFORM_ENABLE_PARENT_PAYMENT_VISIBILITY')),
     wsToken: readEnv('EDUPLATFORM_WS_TOKEN'),
   };
 
@@ -218,6 +222,8 @@ export function redactedEduPlatformEnv(env = getEduPlatformEnv({ allowPartial: t
     enableFullTeacherJourney: env.enableFullTeacherJourney,
     enableTeacherPortalOps: env.enableTeacherPortalOps,
     enableFullTeacherGoldenPath: env.enableFullTeacherGoldenPath,
+    enableParentPortalVisibility: env.enableParentPortalVisibility,
+    enableParentPaymentVisibility: env.enableParentPaymentVisibility,
     wsToken: env.wsToken ? '[redacted]' : '',
   };
 }

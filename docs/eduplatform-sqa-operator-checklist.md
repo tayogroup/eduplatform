@@ -73,6 +73,37 @@ Expected result:
 - teacher saves attendance, notes/homework, grade, and progress,
 - generated teacher accounts and portal fixture records are archived in cleanup mode `archive`.
 
+## Weekly parent journey
+
+Run the parent journey only in the approved EduPlatform SQA workspace.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_PARENT_PORTAL_VISIBILITY="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_INVOICE_LINE_AMOUNT="25.00"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:parent-phase1
+```
+
+For the paid parent evidence path:
+
+```powershell
+$env:EDUPLATFORM_ENABLE_PARENT_PAYMENT_VISIBILITY="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_INVOICE_LINE_AMOUNT="25.00"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:parent-phase2
+```
+
+Expected result:
+
+- linked parent/student accounts are created through admissions,
+- parent accounts are validated through a real login,
+- parent logs in successfully,
+- parent workspace shows the linked student,
+- parent billing and student-parent portal show the invoice,
+- phase 2 shows paid invoice and receipt evidence.
+
 ## Public course setup
 
 Run this only when the public intake form has no selectable SQA course or capacity has run out.
@@ -101,6 +132,8 @@ Review:
 - `student-journey-manifest` Markdown,
 - `teacher-journey-summary` JSON for teacher runs,
 - `teacher-journey-manifest` Markdown for teacher runs,
+- `parent-journey-summary` JSON for parent runs,
+- `parent-journey-manifest` Markdown for parent runs,
 - screenshots attached to the failed or final stage,
 - video/error context when a run fails.
 
@@ -126,6 +159,9 @@ npm.cmd run test:e2e:phase12
 npm.cmd run test:e2e:teacher-phase3
 npm.cmd run test:e2e:teacher-phase4
 npm.cmd run test:e2e:teacher-phase5
+npm.cmd run test:e2e:parent-phase1
+npm.cmd run test:e2e:parent-phase2
+npm.cmd run test:e2e:parent-controls
 ```
 
 ## Scheduled runner notes

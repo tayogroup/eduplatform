@@ -94,6 +94,105 @@ export class AdminInvoicesPage {
   }
 }
 
+export class FinanceOperationsPage {
+  constructor(
+    private readonly page: Page,
+    private readonly env: EduPlatformEnv,
+  ) {}
+
+  async goto(report = 'aging'): Promise<void> {
+    await this.page.goto(buildEduPlatformUrl(this.env, HUB_ROUTES.financeOperations, {
+      report,
+    }), { waitUntil: 'domcontentloaded' });
+  }
+
+  async expectReady(): Promise<void> {
+    await expect(this.page.getByRole('heading', { name: /finance operations/i }).first()).toBeVisible();
+    const bodyText = normalizeText((await this.page.locator('body').textContent()) || '');
+    expect(bodyText).toContain('open invoices');
+    expect(bodyText).toContain('payments received');
+    expect(bodyText).toContain('Payment settings');
+    expect(bodyText).toContain('Audit');
+  }
+
+  async expectInvoiceDashboard(invoice: InvoiceResult): Promise<BillingVisibilityResult> {
+    await this.goto('aging');
+    await this.expectReady();
+    await expect(this.page.getByRole('heading', { name: /invoice aging/i }).first()).toBeVisible();
+    const bodyText = normalizeText((await this.page.locator('body').textContent()) || '');
+    expect(bodyText).toContain(invoice.invoiceNumber);
+
+    return {
+      invoiceText: bodyText,
+      finalUrl: this.page.url(),
+    };
+  }
+
+  async expectPaymentReport(payment: PaymentReceiptResult): Promise<BillingVisibilityResult> {
+    await this.goto('payments');
+    await this.expectReady();
+    await expect(this.page.getByRole('heading', { name: /^payments$/i }).first()).toBeVisible();
+    const bodyText = normalizeText((await this.page.locator('body').textContent()) || '');
+    const paymentRow = this.page.locator('table.pqfops-table tbody tr', { hasText: payment.receiptNumber }).first();
+    await expect(paymentRow).toBeVisible();
+    await expect(paymentRow).toContainText(/recorded|posted|cash|manual/i);
+
+    return {
+      invoiceText: bodyText,
+      finalUrl: this.page.url(),
+    };
+  }
+}
+
+export class FinancePolicyPage {
+  constructor(
+    private readonly page: Page,
+    private readonly env: EduPlatformEnv,
+  ) {}
+
+  async goto(): Promise<void> {
+    await this.page.goto(buildEduPlatformUrl(this.env, HUB_ROUTES.financePolicy), { waitUntil: 'domcontentloaded' });
+  }
+
+  async expectReady(): Promise<BillingVisibilityResult> {
+    await expect(this.page.getByRole('heading', { name: /finance policy settings/i }).first()).toBeVisible();
+    await expect(this.page.locator('input[name="invoice_due_days"]')).toBeVisible();
+    await expect(this.page.locator('select[name="payment_required_timing"]')).toBeVisible();
+    await expect(this.page.locator('select[name="student_billing_visibility"]')).toBeVisible();
+    await expect(this.page.locator('select[name="sponsor_billing_visibility"]')).toBeVisible();
+    const bodyText = normalizeText((await this.page.locator('body').textContent()) || '');
+    expect(bodyText).toContain('billing defaults');
+    expect(bodyText).toContain('Student billing visibility');
+
+    return {
+      invoiceText: bodyText,
+      finalUrl: this.page.url(),
+    };
+  }
+}
+
+export class PaymentGatewaySettingsPage {
+  constructor(
+    private readonly page: Page,
+    private readonly env: EduPlatformEnv,
+  ) {}
+
+  async goto(): Promise<void> {
+    await this.page.goto(buildEduPlatformUrl(this.env, HUB_ROUTES.paymentGatewaySettings), { waitUntil: 'domcontentloaded' });
+  }
+
+  async expectReady(): Promise<BillingVisibilityResult> {
+    await expect(this.page.getByRole('heading', { name: /payment gateway/i }).first()).toBeVisible();
+    const bodyText = normalizeText((await this.page.locator('body').textContent()) || '');
+    expect(bodyText).toMatch(/hosted payment|payment collection|webhook/i);
+
+    return {
+      invoiceText: bodyText,
+      finalUrl: this.page.url(),
+    };
+  }
+}
+
 export class InvoiceDetailPage {
   constructor(
     private readonly page: Page,

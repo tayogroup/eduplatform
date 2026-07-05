@@ -5,10 +5,9 @@ require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/user/lib.php');
 require_once(__DIR__ . '/account_ids.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can create teacher intake records.');
-}
+pqh_require_academy_operations('Only academy operations users can create teacher intake records.');
 
 $pqtioptions = require(__DIR__ . '/teacher_intake_config.php');
 
@@ -40,7 +39,7 @@ function pqti_phone_email(string $contact, string $prefix): string {
     if ($token === '') {
         $token = uniqid($prefix, false);
     }
-    return $prefix . '.' . $token . '@quraanacademy.local';
+    return $prefix . '.' . $token . '@eduplatform.local';
 }
 
 function pqti_moodle_email_from_contact(string $contact, string $prefix): string {
@@ -71,11 +70,15 @@ function pqti_unique_username(string $seed): string {
 
 function pqti_existing_user(int $userid): stdClass {
     global $DB, $CFG;
-    return $DB->get_record('user', [
+    $user = $DB->get_record('user', [
         'id' => $userid,
         'deleted' => 0,
         'mnethostid' => $CFG->mnet_localhost_id,
-    ], '*', MUST_EXIST);
+    ], '*', IGNORE_MISSING);
+    if (!$user) {
+        throw new invalid_parameter_exception('Choose a valid existing Moodle teacher account.');
+    }
+    return $user;
 }
 
 function pqti_find_user_by_email(string $email): ?stdClass {
@@ -144,6 +147,77 @@ function pqti_labels(array $values, array $options): array {
     return $labels;
 }
 
+function pqti_values_from_labels(string $stored, array $options): array {
+    $parts = array_values(array_filter(array_map('trim', explode(',', $stored)), static function(string $value): bool {
+        return $value !== '';
+    }));
+    if (!$parts) {
+        return [];
+    }
+
+    $values = [];
+    $reverse = [];
+    foreach ($options as $value => $label) {
+        $reverse[core_text::strtolower((string)$label)] = (string)$value;
+        $reverse[core_text::strtolower((string)$value)] = (string)$value;
+    }
+    foreach ($parts as $part) {
+        $key = core_text::strtolower($part);
+        $values[] = $reverse[$key] ?? $part;
+    }
+    return array_values(array_unique($values));
+}
+
+function pqti_split_name(string $name): array {
+    $parts = array_values(array_filter(preg_split('/\s+/', trim($name)) ?: [], static function(string $part): bool {
+        return $part !== '';
+    }));
+    if (!$parts) {
+        return ['', ''];
+    }
+    if (count($parts) === 1) {
+        return [$parts[0], $parts[0]];
+    }
+    $firstname = array_shift($parts);
+    return [$firstname, implode(' ', $parts)];
+}
+
+function pqti_slots_from_availability_json(string $json): array {
+    $decoded = json_decode($json, true);
+    if (!is_array($decoded) || empty($decoded['slots']) || !is_array($decoded['slots'])) {
+        return [];
+    }
+    $slots = [];
+    foreach ($decoded['slots'] as $slot) {
+        if (!is_array($slot)) {
+            continue;
+        }
+        $day = trim((string)($slot['day'] ?? ''));
+        $time = trim((string)($slot['time'] ?? ''));
+        if ($day !== '' && $time !== '') {
+            $slots[] = $day . '|' . $time;
+        }
+    }
+    return array_values(array_unique($slots));
+}
+
+function pqti_normalize_timezone(string $timezone, array $options, string $fallback = ''): string {
+    $timezone = trim($timezone);
+    if ($timezone === '' || $timezone === '99') {
+        return $fallback;
+    }
+    if (array_key_exists($timezone, $options)) {
+        return $timezone;
+    }
+    foreach ($options as $value => $label) {
+        if (core_text::strtolower((string)$value) === core_text::strtolower($timezone)
+            || core_text::strtolower((string)$label) === core_text::strtolower($timezone)) {
+            return (string)$value;
+        }
+    }
+    return $timezone;
+}
+
 function pqti_profile_columns(): array {
     global $DB;
     static $columns = null;
@@ -187,6 +261,20 @@ function pqti_save_profile(int $teacherid, array $data): int {
     ];
     pqti_set_profile_field($record, 'teacher_phone', (string)$data['teacher_phone']);
     pqti_set_profile_field($record, 'preferred_contact', (string)$data['preferred_contact']);
+    pqti_set_profile_field($record, 'marketplace_visible', (int)$data['marketplace_visible']);
+    pqti_set_profile_field($record, 'marketplace_status', (string)$data['marketplace_status']);
+    pqti_set_profile_field($record, 'marketplace_bio', (string)$data['marketplace_bio']);
+    pqti_set_profile_field($record, 'marketplace_skills', (string)$data['marketplace_skills']);
+    pqti_set_profile_field($record, 'marketplace_experience', (string)$data['marketplace_experience']);
+    pqti_set_profile_field($record, 'marketplace_education', (string)$data['marketplace_education']);
+    pqti_set_profile_field($record, 'marketplace_teaching_style', (string)$data['marketplace_teaching_style']);
+    pqti_set_profile_field($record, 'marketplace_courses', (string)$data['marketplace_courses']);
+    pqti_set_profile_field($record, 'vetting_status', (string)$data['vetting_status']);
+    pqti_set_profile_field($record, 'vetting_summary', (string)$data['vetting_summary']);
+    pqti_set_profile_field($record, 'vetting_reviewedby', (int)$data['vetting_reviewedby']);
+    pqti_set_profile_field($record, 'vetting_reviewedat', (int)$data['vetting_reviewedat']);
+    pqti_set_profile_field($record, 'consumerid', (int)($data['consumerid'] ?? 0));
+    pqti_set_profile_field($record, 'workspaceid', (int)($data['workspaceid'] ?? 0));
 
     $existing = $DB->get_record('local_prequran_teacher_profile', ['userid' => $teacherid]);
     if ($existing) {
@@ -270,6 +358,26 @@ function pqti_save_availability_slots(int $teacherid, array $slots, string $time
     return $created;
 }
 
+function pqti_availability_slots(int $teacherid): array {
+    global $DB;
+    if ($teacherid <= 0 || !pqti_table_exists('local_prequran_live_availability')) {
+        return [];
+    }
+    $reverse = [0 => 'sun', 1 => 'mon', 2 => 'tue', 3 => 'wed', 4 => 'thu', 5 => 'fri', 6 => 'sat'];
+    $slots = [];
+    $rows = $DB->get_records('local_prequran_live_availability', ['teacherid' => $teacherid, 'status' => 'active'], 'weekday ASC, start_minute ASC');
+    foreach ($rows as $row) {
+        $weekday = (int)($row->weekday ?? -1);
+        if (!isset($reverse[$weekday])) {
+            continue;
+        }
+        $start = max(0, min(24 * 60, (int)($row->start_minute ?? 0)));
+        $hour = str_pad((string)((int)floor($start / 60)), 2, '0', STR_PAD_LEFT) . ':' . str_pad((string)($start % 60), 2, '0', STR_PAD_LEFT);
+        $slots[] = $reverse[$weekday] . '|' . $hour;
+    }
+    return array_values(array_unique($slots));
+}
+
 function pqti_slot_summary(array $slots, array $days, array $hours, int $sessioncount): string {
     if (!$slots) {
         return '';
@@ -292,6 +400,7 @@ function pqti_slot_summary(array $slots, array $days, array $hours, int $session
 function pqti_field_label(string $name): string {
     $labels = [
         'existing_teacherid' => 'Existing Moodle teacher ID',
+        'teacher_requestid' => 'Teacher application ID',
         'teacher_firstname' => 'First name',
         'teacher_lastname' => 'Last name',
         'teacher_display_name' => 'Display name',
@@ -312,6 +421,8 @@ function pqti_field_label(string $name): string {
         'safeguarding_trained' => 'Child safety training',
         'recording_qa_ack' => 'Recording and QA policy acknowledgement',
         'status' => 'Teacher status',
+        'marketplace_status' => 'Marketplace status',
+        'vetting_status' => 'Vetting status',
     ];
     return $labels[$name] ?? $name;
 }
@@ -343,6 +454,54 @@ function pqti_select(string $name, array $options, array $form, array $errors, s
     return $html;
 }
 
+function pqti_workspaceid_for_requestid(int $requestid): int {
+    global $DB;
+    if ($requestid <= 0 || !pqti_table_exists('local_prequran_teacher_intake_request')) {
+        return 0;
+    }
+    try {
+        $columns = $DB->get_columns('local_prequran_teacher_intake_request');
+    } catch (Throwable $e) {
+        return 0;
+    }
+    if (!array_key_exists('workspaceid', $columns)) {
+        return 0;
+    }
+    return (int)$DB->get_field('local_prequran_teacher_intake_request', 'workspaceid', ['id' => $requestid], IGNORE_MISSING);
+}
+
+function pqti_upsert_workspace_member(int $workspaceid, int $userid, string $role, string $note): void {
+    global $DB, $USER;
+    if ($workspaceid <= 0 || $userid <= 0 || !pqti_table_exists('local_prequran_workspace_member')) {
+        return;
+    }
+    $now = time();
+    $existing = $DB->get_record('local_prequran_workspace_member', [
+        'workspaceid' => $workspaceid,
+        'userid' => $userid,
+        'workspace_role' => $role,
+    ], '*', IGNORE_MISSING);
+    if ($existing) {
+        $existing->status = 'active';
+        if (trim((string)($existing->notes ?? '')) === '') {
+            $existing->notes = $note;
+        }
+        $existing->timemodified = $now;
+        $DB->update_record('local_prequran_workspace_member', $existing);
+        return;
+    }
+    $DB->insert_record('local_prequran_workspace_member', (object)[
+        'workspaceid' => $workspaceid,
+        'userid' => $userid,
+        'workspace_role' => $role,
+        'status' => 'active',
+        'notes' => $note,
+        'createdby' => (int)$USER->id,
+        'timecreated' => $now,
+        'timemodified' => $now,
+    ]);
+}
+
 function pqti_multi_select(string $name, array $options, array $form, array $errors, int $size = 5): string {
     $selected = isset($form[$name]) && is_array($form[$name]) ? array_map('strval', $form[$name]) : [];
     $html = '<select class="pqti-select pqti-select--multi" name="' . s($name) . '[]" multiple size="' . $size . '">';
@@ -365,8 +524,14 @@ function pqti_checkbox_group(string $name, array $options, array $form, array $e
 }
 
 $context = context_system::instance();
+$consumercontext = pqh_requested_consumer_context();
+$consumerparams = ['consumer' => (string)$consumercontext->consumerslug];
+$contextworkspaceid = (int)$consumercontext->workspaceid;
+if ($contextworkspaceid > 0) {
+    $consumerparams['workspaceid'] = $contextworkspaceid;
+}
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/teacher_intake.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/teacher_intake.php', $consumerparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Teacher Intake');
 $PAGE->set_heading('Teacher Intake');
@@ -380,6 +545,8 @@ $created = $SESSION->pqti_created ?? null;
 unset($SESSION->pqti_created);
 
 $form = [
+    'teacher_requestid' => '',
+    'workspaceid' => $contextworkspaceid > 0 ? (string)$contextworkspaceid : '',
     'existing_teacherid' => '',
     'teacher_firstname' => '',
     'teacher_lastname' => '',
@@ -406,26 +573,166 @@ $form = [
     'safeguarding_trained' => '',
     'recording_qa_ack' => '',
     'status' => 'pending',
+    'marketplace_visible' => '',
+    'marketplace_status' => 'draft',
+    'marketplace_bio' => '',
+    'marketplace_skills' => '',
+    'marketplace_experience' => '',
+    'marketplace_education' => '',
+    'marketplace_teaching_style' => '',
+    'marketplace_courses' => '',
+    'vetting_status' => 'not_reviewed',
+    'vetting_summary' => '',
     'admin_notes' => '',
 ];
+
+$sourceapplication = null;
+$prefillrequestid = optional_param('teacher_requestid', 0, PARAM_INT);
+if ($prefillrequestid <= 0) {
+    $prefillrequestid = optional_param('requestid', 0, PARAM_INT);
+}
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $prefillrequestid > 0) {
+    try {
+        if (!pqti_table_exists('local_prequran_teacher_intake_request')) {
+            throw new invalid_parameter_exception('Teacher application table is not ready.');
+        }
+        $teacherrequest = $DB->get_record('local_prequran_teacher_intake_request', ['id' => $prefillrequestid], '*', IGNORE_MISSING);
+        if (!$teacherrequest) {
+            throw new invalid_parameter_exception('The selected teacher application could not be found.');
+        }
+        $sourceapplication = clone $teacherrequest;
+        [$firstname, $lastname] = pqti_split_name((string)$teacherrequest->teacher_name);
+        $form['teacher_requestid'] = (string)$prefillrequestid;
+        if (!empty($teacherrequest->workspaceid)) {
+            $form['workspaceid'] = (string)(int)$teacherrequest->workspaceid;
+        }
+        $form['teacher_firstname'] = $firstname;
+        $form['teacher_lastname'] = $lastname;
+        $form['teacher_display_name'] = (string)$teacherrequest->teacher_name;
+        $form['teacher_contact'] = (string)$teacherrequest->email;
+        $form['teacher_phone'] = (string)$teacherrequest->phone;
+        $form['preferred_contact'] = validate_email((string)$teacherrequest->email) ? 'email' : 'phone';
+        $form['country'] = (string)$teacherrequest->country;
+        $form['city'] = (string)$teacherrequest->city;
+        $form['timezone'] = pqti_normalize_timezone((string)$teacherrequest->timezone, $pqtioptions['timezones'] ?? []);
+        $form['primary_language'] = (string)$teacherrequest->primary_language;
+        $form['other_languages'] = pqti_values_from_labels((string)$teacherrequest->other_languages, $pqtioptions['other_languages'] ?? []);
+        $form['courses_taught'] = pqti_values_from_labels((string)$teacherrequest->courses, $pqtioptions['course_types'] ?? []);
+        $form['levels_taught'] = pqti_values_from_labels((string)$teacherrequest->levels, $pqtioptions['current_levels'] ?? []);
+        $form['slots'] = pqti_slots_from_availability_json((string)$teacherrequest->availability_json);
+        $form['availability_summary'] = (string)$teacherrequest->availability_summary;
+        $form['marketplace_bio'] = (string)$teacherrequest->bio;
+        $form['marketplace_experience'] = (string)$teacherrequest->experience;
+        $form['marketplace_education'] = (string)$teacherrequest->education;
+        $form['marketplace_teaching_style'] = (string)$teacherrequest->teaching_style;
+        $form['marketplace_courses'] = (string)$teacherrequest->courses;
+        $form['marketplace_skills'] = (string)$teacherrequest->levels;
+        $form['vetting_status'] = (string)$teacherrequest->status === 'approved' ? 'approved' : 'in_review';
+        $form['vetting_summary'] = trim((string)$teacherrequest->admin_notes) !== ''
+            ? (string)$teacherrequest->admin_notes
+            : 'Loaded from public teacher application #' . $prefillrequestid . '.';
+        $form['admin_notes'] = trim((string)$teacherrequest->notes) !== ''
+            ? 'Applicant notes: ' . (string)$teacherrequest->notes
+            : 'Loaded from public teacher application #' . $prefillrequestid . '.';
+        $form['marketplace_status'] = 'review';
+        $form['marketplace_visible'] = '0';
+        if ((int)$teacherrequest->converted_userid > 0) {
+            $form['existing_teacherid'] = (string)(int)$teacherrequest->converted_userid;
+        }
+
+        if ((string)$teacherrequest->status === 'new') {
+            $teacherrequest->status = 'reviewing';
+            $teacherrequest->reviewedby = (int)$USER->id;
+            $teacherrequest->reviewedat = time();
+            $teacherrequest->timemodified = time();
+            $DB->update_record('local_prequran_teacher_intake_request', $teacherrequest);
+            $sourceapplication = clone $teacherrequest;
+        }
+    } catch (Throwable $e) {
+        $error = 'Could not load teacher application into intake: ' . $e->getMessage();
+    }
+}
+
+$prefillteacherid = optional_param('existing_teacherid', 0, PARAM_INT);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $prefillteacherid > 0) {
+    $form['existing_teacherid'] = (string)$prefillteacherid;
+    try {
+        $teacheruser = pqti_existing_user($prefillteacherid);
+        $profile = $ready ? $DB->get_record('local_prequran_teacher_profile', ['userid' => $prefillteacherid], '*', IGNORE_MISSING) : null;
+
+        $form['teacher_firstname'] = (string)($teacheruser->firstname ?? '');
+        $form['teacher_lastname'] = (string)($teacheruser->lastname ?? '');
+        $form['teacher_username'] = (string)($teacheruser->username ?? '');
+        $form['teacher_contact'] = (string)($teacheruser->email ?? '');
+        $form['country'] = (string)($teacheruser->country ?? '');
+        $form['city'] = (string)($teacheruser->city ?? '');
+        $form['timezone'] = pqti_normalize_timezone((string)($teacheruser->timezone ?? ''), $pqtioptions['timezones'] ?? []);
+
+        if ($profile) {
+            $form['teacher_display_name'] = (string)($profile->teacher_display_name ?? '');
+            $form['teacher_phone'] = (string)($profile->teacher_phone ?? '');
+            $form['preferred_contact'] = (string)($profile->preferred_contact ?? 'email');
+            $form['gender'] = (string)($profile->gender ?? '');
+            $form['country'] = (string)($profile->country ?? $form['country']);
+            $form['city'] = (string)($profile->city ?? $form['city']);
+            $form['timezone'] = pqti_normalize_timezone((string)($profile->timezone ?? ''), $pqtioptions['timezones'] ?? [], $form['timezone']);
+            $form['primary_language'] = (string)($profile->primary_language ?? '');
+            $form['other_languages'] = pqti_values_from_labels((string)($profile->other_languages ?? ''), $pqtioptions['other_languages'] ?? []);
+            $form['courses_taught'] = pqti_values_from_labels((string)($profile->courses_taught ?? ''), $pqtioptions['course_types'] ?? []);
+            $form['levels_taught'] = pqti_values_from_labels((string)($profile->levels_taught ?? ''), $pqtioptions['current_levels'] ?? []);
+            $form['max_students_per_class'] = (string)($profile->max_students_per_class ?? '9');
+            $form['max_weekly_hours'] = (string)($profile->max_weekly_hours ?? '10');
+            $form['availability_summary'] = (string)($profile->availability_summary ?? '');
+            $form['bbb_trained'] = (string)(int)($profile->bbb_trained ?? 0);
+            $form['safeguarding_trained'] = (string)(int)($profile->safeguarding_trained ?? 0);
+            $form['recording_qa_ack'] = (string)(int)($profile->recording_qa_ack ?? 0);
+            $form['status'] = (string)($profile->status ?? 'pending');
+            $form['marketplace_visible'] = isset($profile->marketplace_visible) ? (string)(int)$profile->marketplace_visible : '';
+            $form['marketplace_status'] = (string)($profile->marketplace_status ?? 'draft');
+            $form['marketplace_bio'] = (string)($profile->marketplace_bio ?? '');
+            $form['marketplace_skills'] = (string)($profile->marketplace_skills ?? '');
+            $form['marketplace_experience'] = (string)($profile->marketplace_experience ?? '');
+            $form['marketplace_education'] = (string)($profile->marketplace_education ?? '');
+            $form['marketplace_teaching_style'] = (string)($profile->marketplace_teaching_style ?? '');
+            $form['marketplace_courses'] = (string)($profile->marketplace_courses ?? '');
+            $form['vetting_status'] = (string)($profile->vetting_status ?? 'not_reviewed');
+            $form['vetting_summary'] = (string)($profile->vetting_summary ?? '');
+            $form['admin_notes'] = (string)($profile->admin_notes ?? '');
+            $form['slots'] = pqti_availability_slots($prefillteacherid);
+        }
+    } catch (Throwable $e) {
+        $error = 'Could not load existing teacher intake details: ' . $e->getMessage();
+    }
+}
 
 if ((bool)$created) {
     $message = 'Teacher intake completed. The teacher is now ready for scheduling and BBB assignment.';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '', PARAM_TEXT) === '1') {
-    require_sesskey();
     foreach ($form as $key => $default) {
         $form[$key] = is_array($default) ? pqti_array_param($key) : pqti_trim_param($key, (string)$default);
     }
 
     $transaction = null;
     try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This teacher intake form expired. Please refresh and try again.');
+        }
         if (!$ready) {
-            throw new moodle_exception('invalidrecord', '', '', 'Teacher profile table is not ready.');
+            throw new invalid_parameter_exception('Teacher profile table is not ready.');
         }
 
         $existingteacherid = (int)$form['existing_teacherid'];
+        $teacherrequestid = (int)$form['teacher_requestid'];
+        $workspaceid = (int)$form['workspaceid'];
+        if ($workspaceid <= 0 && $teacherrequestid > 0) {
+            $workspaceid = pqti_workspaceid_for_requestid($teacherrequestid);
+        }
+        if ($workspaceid <= 0) {
+            $workspaceid = $contextworkspaceid;
+        }
+        $form['workspaceid'] = $workspaceid > 0 ? (string)$workspaceid : '';
         $firstname = $form['teacher_firstname'];
         $lastname = $form['teacher_lastname'];
         $displayname = $form['teacher_display_name'] !== '' ? $form['teacher_display_name'] : trim($firstname . ' ' . $lastname);
@@ -496,6 +803,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
             if (!in_array((string)$form[$field], ['0', '1'], true)) {
                 $fielderrors[$field] = $fieldmessage;
             }
+        }
+        if (!in_array((string)$form['marketplace_visible'], ['', '0', '1'], true)) {
+            $fielderrors['marketplace_visible'] = 'Choose whether parents can see this marketplace profile.';
+        }
+        if (!in_array((string)$form['marketplace_status'], ['draft', 'review', 'published', 'paused'], true)) {
+            $fielderrors['marketplace_status'] = 'Choose a valid marketplace status.';
+        }
+        if (!in_array((string)$form['vetting_status'], ['not_reviewed', 'in_review', 'approved', 'needs_update', 'rejected'], true)) {
+            $fielderrors['vetting_status'] = 'Choose a valid vetting status.';
         }
         if ($fielderrors) {
             throw new InvalidArgumentException('__validation__');
@@ -570,10 +886,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
             'safeguarding_trained' => (int)$form['safeguarding_trained'],
             'recording_qa_ack' => (int)$form['recording_qa_ack'],
             'status' => $form['status'],
+            'marketplace_visible' => (int)($form['marketplace_visible'] === '1'),
+            'marketplace_status' => $form['marketplace_status'],
+            'marketplace_bio' => $form['marketplace_bio'],
+            'marketplace_skills' => $form['marketplace_skills'],
+            'marketplace_experience' => $form['marketplace_experience'],
+            'marketplace_education' => $form['marketplace_education'],
+            'marketplace_teaching_style' => $form['marketplace_teaching_style'],
+            'marketplace_courses' => $form['marketplace_courses'],
+            'vetting_status' => $form['vetting_status'],
+            'vetting_summary' => $form['vetting_summary'],
+            'vetting_reviewedby' => in_array((string)$form['vetting_status'], ['approved', 'needs_update', 'rejected'], true) ? (int)$USER->id : 0,
+            'vetting_reviewedat' => in_array((string)$form['vetting_status'], ['approved', 'needs_update', 'rejected'], true) ? time() : 0,
             'admin_notes' => $form['admin_notes'],
+            'consumerid' => (int)$consumercontext->consumerid,
+            'workspaceid' => $workspaceid,
         ];
 
         $profileid = pqti_save_profile($teacherid, $data);
+        if ($workspaceid > 0) {
+            pqti_upsert_workspace_member($workspaceid, $teacherid, 'teacher', 'Added from teacher intake.');
+        }
         $availabilityrows = pqti_save_availability_slots(
             $teacherid,
             $form['slots'],
@@ -587,7 +920,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
             'session_count' => (int)$form['session_count'],
             'slots_count' => count($form['slots']),
             'teacher_account_id' => $teacheraccountid,
+            'consumerid' => (int)$consumercontext->consumerid,
+            'consumerslug' => (string)$consumercontext->consumerslug,
+            'teacher_requestid' => $teacherrequestid,
+            'workspaceid' => $workspaceid,
         ]);
+
+        if ($teacherrequestid > 0 && pqti_table_exists('local_prequran_teacher_intake_request')) {
+            $teacherrequest = $DB->get_record('local_prequran_teacher_intake_request', ['id' => $teacherrequestid], '*', IGNORE_MISSING);
+            if ($teacherrequest) {
+                $teacherrequest->status = 'converted';
+                $teacherrequest->converted_userid = $teacherid;
+                $teacherrequest->converted_profileid = $profileid;
+                $teacherrequest->reviewedby = (int)$USER->id;
+                $teacherrequest->reviewedat = time();
+                $teacherrequest->timemodified = time();
+                $DB->update_record('local_prequran_teacher_intake_request', $teacherrequest);
+            }
+        }
 
         $transaction->allow_commit();
         $transaction = null;
@@ -600,8 +950,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
             'existingteacher' => $existingteacher,
             'profileid' => $profileid,
             'availabilityrows' => $availabilityrows,
+            'consumerid' => (int)$consumercontext->consumerid,
+            'consumerslug' => (string)$consumercontext->consumerslug,
+            'teacherrequestid' => $teacherrequestid,
+            'workspaceid' => $workspaceid,
         ];
-        redirect(new moodle_url('/local/hubredirect/teacher_intake.php', ['created' => 1]));
+        redirect(new moodle_url('/local/hubredirect/teacher_intake.php', ['created' => 1] + $consumerparams));
     } catch (Throwable $e) {
         if ($transaction) {
             try {
@@ -625,6 +979,48 @@ if ($formcity !== '' && $formcity !== 'Other') {
     }
 }
 
+$sourceapplicationid = (int)pqti_form_value($form, 'teacher_requestid');
+if (!$sourceapplication && $sourceapplicationid > 0 && pqti_table_exists('local_prequran_teacher_intake_request')) {
+    $sourceapplication = $DB->get_record('local_prequran_teacher_intake_request', ['id' => $sourceapplicationid], '*', IGNORE_MISSING) ?: null;
+}
+
+$missingconversion = [];
+foreach ([
+    'teacher_firstname' => 'First name',
+    'teacher_lastname' => 'Last name',
+    'teacher_contact' => 'Teacher email or phone',
+    'gender' => 'Gender',
+    'country' => 'Country',
+    'city' => 'City',
+    'timezone' => 'Time zone',
+    'primary_language' => 'Primary teaching language',
+    'bbb_trained' => 'BBB/live classroom training',
+    'safeguarding_trained' => 'Child safety training',
+    'recording_qa_ack' => 'Recording and QA acknowledgement',
+] as $field => $label) {
+    if (trim(pqti_form_value($form, $field)) === '') {
+        $missingconversion[] = $label;
+    }
+}
+if (!$form['courses_taught']) {
+    $missingconversion[] = 'Courses taught';
+}
+if (!$form['levels_taught']) {
+    $missingconversion[] = 'Levels taught';
+}
+$willpublish = pqti_form_value($form, 'status') === 'active'
+    && pqti_form_value($form, 'marketplace_visible') === '1'
+    && pqti_form_value($form, 'marketplace_status') === 'published'
+    && pqti_form_value($form, 'vetting_status') === 'approved';
+
+$isupdate = (int)pqti_form_value($form, 'existing_teacherid') > 0;
+$pagetitle = $isupdate ? 'Update Teacher Intake' : 'Teacher Intake';
+$pagesubtitle = $isupdate
+    ? 'Update an existing Moodle teacher account, marketplace profile, vetting state, and BBB availability.'
+    : 'Create or link a Moodle teacher account, capture live-class readiness, and set initial BBB availability.';
+$paneltitle = $isupdate ? 'Update Teacher Onboarding' : 'Teacher Onboarding';
+$submitlabel = $isupdate ? 'Update teacher intake' : 'Create teacher intake';
+
 echo $OUTPUT->header();
 ?>
 <style>
@@ -638,16 +1034,20 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
 .pqti-field{display:grid;gap:6px;margin-bottom:10px}.pqti-field label{font-size:12px;font-weight:900;color:#415665}.pqti-city-other{display:none}.pqti-city-other--visible{display:grid}.pqti-input,.pqti-select,.pqti-textarea{width:100%;min-height:40px;border:1px solid rgba(23,48,68,.18);border-radius:8px;padding:8px 10px;font:800 14px/1.2 system-ui;background:#fff;color:#173044}.pqti-select--multi{min-height:124px}.pqti-field--error .pqti-input,.pqti-field--error .pqti-select,.pqti-field--error .pqti-textarea,.pqti-field--error .pqti-choicegrid,.pqti-field--error .pqti-calendar{border-color:#a33a2c;background:#fff8f6}.pqti-error{font-size:12px;font-weight:900;color:#a33a2c}.pqti-textarea{min-height:86px}.pqti-choicegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fff}.pqti-choice{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:850;color:#173044}.pqti-choice input{width:17px;height:17px}
 .pqti-calendar{overflow:auto;border:2px solid #dbe8f7;border-radius:18px;background:#fff}.pqti-calendar table{width:100%;min-width:900px;border-collapse:collapse}.pqti-calendar th,.pqti-calendar td{border:1px solid #e3ebf1;text-align:center;padding:10px}.pqti-calendar th{background:#eaf7fb;color:#264055;font-size:14px;font-weight:950}.pqti-calendar td:first-child{background:#fbfaf6;text-align:left;font-size:15px;font-weight:950;color:#142233}.pqti-calendar tr:nth-child(even) td:first-child{background:#f7fcf8}.pqti-slot{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:#eef7ff;border:1px solid #d4e8fb;cursor:pointer}.pqti-slot input{width:22px;height:22px;accent-color:#2f6f4e;cursor:pointer}
 .pqti-alert{padding:12px 14px;border-radius:8px;margin-bottom:12px;font-weight:850}.pqti-alert--ok{background:#edf9ef;color:#245c35}.pqti-alert--bad{background:#fff0ed;color:#883526}.pqti-errorlist{margin:8px 0 0;padding-left:20px}.pqti-errorlist a{color:#883526!important;text-decoration:underline}.pqti-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}.pqti-result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pqti-result div{padding:12px;border-radius:8px;background:#f8fbfd;border:1px solid rgba(23,48,68,.1);font-weight:850}.pqti-result strong{display:block;color:#7a5637;margin-bottom:4px}
+.pqti-checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}.pqti-check{padding:12px;border:1px solid rgba(23,48,68,.1);border-radius:8px;background:#fbfdff;font-weight:850}.pqti-check strong{display:block;margin-bottom:4px;color:#7a5637}.pqti-pill{display:inline-flex;align-items:center;min-height:26px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:950;background:#eef4f6;color:#173044}.pqti-pill--ok{background:#edf9ef;color:#245c35}.pqti-pill--warn{background:#fff4dc;color:#7a5637}.pqti-pill--bad{background:#fff0ed;color:#883526}.pqti-linkrow{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
 @media(max-width:760px){.pqti-top{display:block}.pqti-actions{margin-top:12px}.pqti-grid,.pqti-result,.pqti-choicegrid{grid-template-columns:1fr}.pqti-title{font-size:24px}}
+@media(max-width:920px){.pqti-checks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.pqti-checks{grid-template-columns:1fr}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqti-shell">
   <div class="pqti-wrap">
-    <section class="pqti-top">
+    <section class="pqti-top pqh-workspace-top">
       <div>
-        <h1 class="pqti-title">Teacher Intake</h1>
-        <p class="pqti-sub">Create or link a Moodle teacher account, capture live-class readiness, and set initial BBB availability.</p>
+        <h1 class="pqti-title pqh-workspace-title"><?php echo s($pagetitle); ?></h1>
+        <p class="pqti-sub pqh-workspace-sub"><?php echo s($pagesubtitle); ?></p>
       </div>
-      <div class="pqti-actions">
+      <div class="pqti-actions pqh-workspace-actions">
         <a class="pqti-btn pqti-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php'))->out(false); ?>">Teacher directory</a>
         <a class="pqti-btn pqti-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php'))->out(false); ?>">Availability</a>
         <a class="pqti-btn pqti-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php'))->out(false); ?>">Capacity</a>
@@ -677,14 +1077,43 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
           <div class="pqti-result">
             <div><strong>Teacher</strong>ID <?php echo s((string)($created['teacheraccountid'] ?? '')); ?><br>Moodle user ID: <?php echo (int)$created['teacherid']; ?><br>Username: <?php echo s($created['teacherusername']); ?><?php if (empty($created['existingteacher'])): ?><br>Temporary password: <?php echo s($created['teacherpassword']); ?><?php else: ?><br>Existing Moodle account linked.<?php endif; ?></div>
             <div><strong>Onboarding</strong>Profile ID <?php echo (int)$created['profileid']; ?><br>Availability rows created: <?php echo (int)$created['availabilityrows']; ?></div>
+            <?php if (!empty($created['workspaceid'])): ?><div><strong>Workspace</strong>Linked as teacher in workspace ID <?php echo (int)$created['workspaceid']; ?>.</div><?php endif; ?>
+          </div>
+          <div class="pqti-linkrow">
+            <a class="pqti-btn pqti-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake_requests.php'))->out(false); ?>">Application queue</a>
+            <a class="pqti-btn pqti-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_profile.php', ['teacherid' => (int)$created['teacherid']] + $consumerparams))->out(false); ?>">Marketplace profile</a>
+            <a class="pqti-btn pqti-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace.php', $consumerparams))->out(false); ?>">Marketplace</a>
+          </div>
+        </section>
+      <?php endif; ?>
+
+      <?php if ($sourceapplicationid > 0): ?>
+        <section class="pqti-panel">
+          <h2>Conversion Checklist</h2>
+          <div class="pqti-checks">
+            <div class="pqti-check"><strong>Source application</strong>#<?php echo (int)$sourceapplicationid; ?><?php if ($sourceapplication): ?><br><?php echo s((string)$sourceapplication->teacher_name); ?><?php endif; ?></div>
+            <div class="pqti-check"><strong>Consumer</strong><?php echo s((string)$consumercontext->consumername); ?><br><span class="pqti-muted"><?php echo s((string)$consumercontext->consumerslug); ?></span></div>
+            <div class="pqti-check"><strong>Required fields</strong><span class="pqti-pill <?php echo !$missingconversion ? 'pqti-pill--ok' : 'pqti-pill--warn'; ?>"><?php echo !$missingconversion ? 'Ready' : count($missingconversion) . ' remaining'; ?></span><?php if ($missingconversion): ?><br><span class="pqti-muted"><?php echo s(implode(', ', array_slice($missingconversion, 0, 5))); ?><?php echo count($missingconversion) > 5 ? '...' : ''; ?></span><?php endif; ?></div>
+            <div class="pqti-check"><strong>Marketplace</strong><span class="pqti-pill <?php echo $willpublish ? 'pqti-pill--ok' : 'pqti-pill--warn'; ?>"><?php echo $willpublish ? 'Will be public' : 'Will stay hidden'; ?></span><br><span class="pqti-muted">Needs active + visible + published + approved.</span></div>
+            <div class="pqti-check"><strong>Application status</strong><span class="pqti-pill pqti-pill--ok">Will mark converted</span><br><span class="pqti-muted">After successful save.</span></div>
+            <div class="pqti-check"><strong>Current source state</strong><?php echo $sourceapplication ? s((string)$sourceapplication->status) : 'Unknown'; ?></div>
+            <div class="pqti-check"><strong>Account mode</strong><?php echo $isupdate ? 'Update existing teacher' : 'Create/link teacher account'; ?></div>
+            <div class="pqti-check"><strong>Next action</strong>Complete decisions below, then save intake.</div>
+          </div>
+          <div class="pqti-linkrow">
+            <a class="pqti-btn pqti-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake_requests.php'))->out(false); ?>">Back to queue</a>
+            <a class="pqti-btn pqti-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace.php', $consumerparams))->out(false); ?>">Preview marketplace</a>
           </div>
         </section>
       <?php endif; ?>
 
       <section class="pqti-panel">
-        <h2>Teacher Onboarding</h2>
+        <h2><?php echo s($paneltitle); ?></h2>
         <form method="post" novalidate>
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+          <input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>">
+          <input type="hidden" name="teacher_requestid" value="<?php echo s(pqti_form_value($form, 'teacher_requestid')); ?>">
+          <input type="hidden" name="workspaceid" value="<?php echo s(pqti_form_value($form, 'workspaceid')); ?>">
 
           <h3>Teacher account</h3>
           <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'existing_teacherid'); ?>" id="pqti-existing_teacherid"><label>Existing Moodle teacher ID</label><input class="pqti-input" name="existing_teacherid" type="number" min="0" value="<?php echo s(pqti_form_value($form, 'existing_teacherid')); ?>" placeholder="Optional: use only to add/update onboarding profile for an existing teacher"><?php echo pqti_form_error($fielderrors, 'existing_teacherid'); ?></div>
@@ -714,6 +1143,22 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'levels_taught'); ?>" id="pqti-levels_taught"><label>Levels taught</label><?php echo pqti_multi_select('levels_taught', $pqtioptions['current_levels'] ?? [], $form, $fielderrors, 6); ?></div>
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'max_students_per_class'); ?>" id="pqti-max_students_per_class"><label>Max students per class</label><input class="pqti-input" name="max_students_per_class" type="number" min="1" max="20" value="<?php echo s(pqti_form_value($form, 'max_students_per_class')); ?>"><?php echo pqti_form_error($fielderrors, 'max_students_per_class'); ?></div>
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'max_weekly_hours'); ?>" id="pqti-max_weekly_hours"><label>Max weekly live hours</label><input class="pqti-input" name="max_weekly_hours" type="number" min="1" max="60" value="<?php echo s(pqti_form_value($form, 'max_weekly_hours')); ?>"><?php echo pqti_form_error($fielderrors, 'max_weekly_hours'); ?></div>
+          </div>
+
+          <h3>Parent-facing marketplace profile</h3>
+          <div class="pqti-grid">
+            <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'marketplace_status'); ?>" id="pqti-marketplace_status"><label>Marketplace status</label><select class="pqti-select" name="marketplace_status"><option value="draft"<?php echo pqti_selected($form, 'marketplace_status', 'draft'); ?>>Draft</option><option value="review"<?php echo pqti_selected($form, 'marketplace_status', 'review'); ?>>Ready for academy review</option><option value="published"<?php echo pqti_selected($form, 'marketplace_status', 'published'); ?>>Published</option><option value="paused"<?php echo pqti_selected($form, 'marketplace_status', 'paused'); ?>>Paused</option></select><?php echo pqti_form_error($fielderrors, 'marketplace_status'); ?></div>
+            <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'marketplace_visible'); ?>" id="pqti-marketplace_visible"><label>Parent visibility</label><select class="pqti-select" name="marketplace_visible"><option value=""<?php echo pqti_selected($form, 'marketplace_visible', ''); ?>>Keep hidden</option><option value="0"<?php echo pqti_selected($form, 'marketplace_visible', '0'); ?>>Hidden</option><option value="1"<?php echo pqti_selected($form, 'marketplace_visible', '1'); ?>>Visible to parents after approval</option></select><?php echo pqti_form_error($fielderrors, 'marketplace_visible'); ?></div>
+            <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'vetting_status'); ?>" id="pqti-vetting_status"><label>Academy vetting status</label><select class="pqti-select" name="vetting_status"><option value="not_reviewed"<?php echo pqti_selected($form, 'vetting_status', 'not_reviewed'); ?>>Not reviewed</option><option value="in_review"<?php echo pqti_selected($form, 'vetting_status', 'in_review'); ?>>In review</option><option value="approved"<?php echo pqti_selected($form, 'vetting_status', 'approved'); ?>>Approved</option><option value="needs_update"<?php echo pqti_selected($form, 'vetting_status', 'needs_update'); ?>>Needs update</option><option value="rejected"<?php echo pqti_selected($form, 'vetting_status', 'rejected'); ?>>Rejected</option></select><?php echo pqti_form_error($fielderrors, 'vetting_status'); ?></div>
+            <div class="pqti-field"><label>Parent-visible academy vetting summary</label><textarea class="pqti-textarea" name="vetting_summary" placeholder="Short, parent-safe summary of academy review status"><?php echo s(pqti_form_value($form, 'vetting_summary')); ?></textarea></div>
+          </div>
+          <div class="pqti-grid">
+            <div class="pqti-field"><label>General profile / bio</label><textarea class="pqti-textarea" name="marketplace_bio" placeholder="Parent-safe introduction, teaching background, and learner fit"><?php echo s(pqti_form_value($form, 'marketplace_bio')); ?></textarea></div>
+            <div class="pqti-field"><label>Skills</label><textarea class="pqti-textarea" name="marketplace_skills" placeholder="Tajweed, beginner Arabic, memorization support, child engagement, etc."><?php echo s(pqti_form_value($form, 'marketplace_skills')); ?></textarea></div>
+            <div class="pqti-field"><label>Experience</label><textarea class="pqti-textarea" name="marketplace_experience" placeholder="Years taught, student ages, settings, online teaching experience"><?php echo s(pqti_form_value($form, 'marketplace_experience')); ?></textarea></div>
+            <div class="pqti-field"><label>Education and qualifications</label><textarea class="pqti-textarea" name="marketplace_education" placeholder="Formal education, ijazah, certificates, institutes, training"><?php echo s(pqti_form_value($form, 'marketplace_education')); ?></textarea></div>
+            <div class="pqti-field"><label>Teaching style</label><textarea class="pqti-textarea" name="marketplace_teaching_style" placeholder="How the teacher works with children, adults, beginners, review, practice, feedback"><?php echo s(pqti_form_value($form, 'marketplace_teaching_style')); ?></textarea></div>
+            <div class="pqti-field"><label>Courses intended to teach</label><textarea class="pqti-textarea" name="marketplace_courses" placeholder="Consumer courses and any other parent-safe course offerings"><?php echo s(pqti_form_value($form, 'marketplace_courses')); ?></textarea></div>
           </div>
 
           <h3>Preferred weekly live-session number of sessions and hours</h3>
@@ -762,7 +1207,7 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
           </div>
           <div class="pqti-field"><label>Admin notes</label><textarea class="pqti-textarea" name="admin_notes" placeholder="Background checks, onboarding notes, internal restrictions, teaching strengths"><?php echo s(pqti_form_value($form, 'admin_notes')); ?></textarea></div>
 
-          <button class="pqti-btn pqti-btn--brown" type="submit" name="submit_intake" value="1">Create teacher intake</button>
+          <button class="pqti-btn pqti-btn--brown" type="submit" name="submit_intake" value="1"><?php echo s($submitlabel); ?></button>
         </form>
       </section>
     <?php endif; ?>
@@ -774,6 +1219,7 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
   var cityLabels = <?php echo json_encode($pqtioptions['cities'] ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
   var countryTimezones = <?php echo json_encode($pqtioptions['country_timezones'] ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
   var timezoneLabels = <?php echo json_encode($pqtioptions['timezones'] ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
+  var initialTimezone = <?php echo json_encode(pqti_form_value($form, 'timezone'), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
   var country = document.querySelector('select[name="country"]');
   var city = document.querySelector('select[name="city"]');
   var timezone = document.querySelector('select[name="timezone"]');
@@ -810,17 +1256,19 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
     }
   }
   function refreshTimezones() {
-    var selected = timezone.value;
+    var selected = timezone.value || initialTimezone;
     var zones = countryTimezones[country.value] ? Object.keys(countryTimezones[country.value]) : Object.keys(timezoneLabels);
     timezone.innerHTML = '';
     timezone.appendChild(option('', 'Select', selected === ''));
+    if (selected && zones.indexOf(selected) === -1) {
+      timezone.appendChild(option(selected, timezoneLabels[selected] || selected, true));
+    }
     zones.forEach(function(zone) {
       var label = (countryTimezones[country.value] && countryTimezones[country.value][zone]) || timezoneLabels[zone] || zone;
       timezone.appendChild(option(zone, label, zone === selected));
     });
-    if (selected && zones.indexOf(selected) === -1) {
-      timezone.value = '';
-    }
+    timezone.value = selected;
+    initialTimezone = '';
   }
   country.addEventListener('change', function() {
     refreshCities();

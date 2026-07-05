@@ -9,6 +9,9 @@ export interface TeacherPortalFixtureResult {
   studentid: number;
   studentusername: string;
   studentemail: string;
+  parentid?: number;
+  parentusername?: string;
+  parentemail?: string;
   assignmentid: number;
   sessionid: number;
   assessmentid: number;
@@ -201,32 +204,45 @@ export class TeacherPortalPage {
     await expect(this.page.locator('.pqtp-notice').first()).toContainText(/notes, homework/i);
   }
 
-  async saveGrade(runId: string, fixture: TeacherPortalFixtureResult): Promise<void> {
+  async saveGrade(runId: string, fixture: TeacherPortalFixtureResult, options: {
+    scorePoints?: string;
+    scorePercent?: string;
+    letterGrade?: string;
+    status?: 'draft' | 'reviewed' | 'published';
+    feedback?: string;
+  } = {}): Promise<void> {
     const form = this.page.locator('form:has(input[name="action"][value="grade"])').first();
     await expect(form).toBeVisible();
     await form.locator('select[name="assessmentid"]').selectOption(String(fixture.assessmentid));
     await form.locator('select[name="studentid"]').selectOption(String(fixture.studentid));
     await form.locator('input[name="offeringid"]').fill('0');
-    await form.locator('input[name="score_points"]').fill('96');
-    await form.locator('input[name="score_percent"]').fill('96');
-    await form.locator('input[name="letter_grade"]').fill('A');
-    await form.locator('select[name="status"]').selectOption('published');
-    await form.locator('textarea[name="teacher_feedback"]').fill(`Automated SQA teacher portal grade feedback for ${runId}.`);
+    await form.locator('input[name="score_points"]').fill(options.scorePoints || options.scorePercent || '96');
+    await form.locator('input[name="score_percent"]').fill(options.scorePercent || '96');
+    await form.locator('input[name="letter_grade"]').fill(options.letterGrade || 'A');
+    await form.locator('select[name="status"]').selectOption(options.status || 'published');
+    await form.locator('textarea[name="teacher_feedback"]').fill(options.feedback || `Automated SQA teacher portal grade feedback for ${runId}.`);
     await form.getByRole('button', { name: /save grade/i }).click();
     await this.page.waitForLoadState('domcontentloaded');
     await expect(this.page.locator('.pqtp-notice').first()).toContainText(/assessment grade saved/i);
   }
 
-  async saveProgress(runId: string, fixture: TeacherPortalFixtureResult): Promise<void> {
+  async saveProgress(runId: string, fixture: TeacherPortalFixtureResult, options: {
+    currentLevel?: string;
+    placementLevel?: string;
+    advancementStatus?: string;
+    recommendedCourseKey?: string;
+    recommendationReason?: string;
+    teacherComment?: string;
+  } = {}): Promise<void> {
     const form = this.page.locator('form:has(input[name="action"][value="progress"])').first();
     await expect(form).toBeVisible();
     await form.locator('select[name="studentid"]').selectOption(String(fixture.studentid));
-    await form.locator('input[name="current_level"]').fill('Pre-quraan Course');
-    await form.locator('input[name="placement_level"]').fill('Level 1');
-    await form.locator('input[name="advancement_status"]').fill('on_track');
-    await form.locator('input[name="recommended_course_key"]').fill(this.env.testCourseKey || 'pre_quraan');
-    await form.locator('input[name="recommendation_reason"]').fill(`Automated SQA teacher portal recommendation for ${runId}.`);
-    await form.locator('input[name="teacher_comment"]').fill(`Automated SQA teacher portal progress comment for ${runId}.`);
+    await form.locator('input[name="current_level"]').fill(options.currentLevel || 'Pre-quraan Course');
+    await form.locator('input[name="placement_level"]').fill(options.placementLevel || 'Level 1');
+    await form.locator('input[name="advancement_status"]').fill(options.advancementStatus || 'on_track');
+    await form.locator('input[name="recommended_course_key"]').fill(options.recommendedCourseKey || this.env.testCourseKey || 'pre_quraan');
+    await form.locator('input[name="recommendation_reason"]').fill(options.recommendationReason || `Automated SQA teacher portal recommendation for ${runId}.`);
+    await form.locator('input[name="teacher_comment"]').fill(options.teacherComment || `Automated SQA teacher portal progress comment for ${runId}.`);
     await form.getByRole('button', { name: /save progress/i }).click();
     await this.page.waitForLoadState('domcontentloaded');
     await expect(this.page.locator('.pqtp-notice').first()).toContainText(/student progress updated/i);

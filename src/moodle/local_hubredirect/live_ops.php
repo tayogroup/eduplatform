@@ -3,14 +3,32 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can view live-session operations.');
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+$dashboardpath = !empty($urlparams['workspaceid'])
+    ? '/local/hubredirect/workspace_dashboard.php'
+    : '/local/hubredirect/dashboard.php';
+
+pqh_require_academy_operations(
+    'Only academy operations users can view live-session operations.',
+    new moodle_url('/local/hubredirect/live_sessions.php', $urlparams),
+    'Live operations access required'
+);
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_ops.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_ops.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Operations');
 $PAGE->set_heading('Live Operations');
@@ -54,6 +72,10 @@ function pqlo_short(string $value, int $max = 130): string {
         return $value;
     }
     return core_text::substr($value, 0, $max) . '...';
+}
+
+function pqlo_url_params(array $baseparams, array $extra = []): array {
+    return array_merge($baseparams, $extra);
 }
 
 function pqlo_ready(): bool {
@@ -104,6 +126,17 @@ $teacherworkload = [];
 $followupqueue = [];
 
 if ($ready) {
+    $workspaceid = (int)($urlparams['workspaceid'] ?? 0);
+    $workspacefilter = '';
+    $workspaceparams = [];
+    $workspacefilteralias = '';
+    $workspaceparamsalias = [];
+    if ($workspaceid > 0 && pqlo_column_exists('local_prequran_live_session', 'workspaceid')) {
+        $workspacefilter = ' AND workspaceid = :workspaceid';
+        $workspaceparams = ['workspaceid' => $workspaceid];
+        $workspacefilteralias = ' AND s.workspaceid = :workspaceid';
+        $workspaceparamsalias = ['workspaceid' => $workspaceid];
+    }
     $followupready = pqlo_column_exists('local_prequran_live_note', 'followup_status');
     $parentresponseready = pqlo_column_exists('local_prequran_live_note', 'parent_response_status');
     $qualityready = pqlo_column_exists('local_prequran_live_session', 'qa_status');
@@ -115,22 +148,25 @@ if ($ready) {
            FROM {local_prequran_live_session}
           WHERE scheduled_start >= :starttime
             AND scheduled_start < :endtime
-            AND status <> :cancelled",
-        ['starttime' => $todaystart, 'endtime' => $todayend, 'cancelled' => 'cancelled']
+            AND status <> :cancelled
+            {$workspacefilter}",
+        array_merge(['starttime' => $todaystart, 'endtime' => $todayend, 'cancelled' => 'cancelled'], $workspaceparams)
     );
     $metrics['upcoming'] = pqlo_count_sql(
         "SELECT COUNT(1)
            FROM {local_prequran_live_session}
           WHERE scheduled_start >= :nowtime
             AND scheduled_start < :untiltime
-            AND status <> :cancelled",
-        ['nowtime' => $now, 'untiltime' => $now + (7 * DAYSECS), 'cancelled' => 'cancelled']
+            AND status <> :cancelled
+            {$workspacefilter}",
+        array_merge(['nowtime' => $now, 'untiltime' => $now + (7 * DAYSECS), 'cancelled' => 'cancelled'], $workspaceparams)
     );
     $metrics['awaitingreview'] = pqlo_count_sql(
         "SELECT COUNT(1)
-           FROM {local_prequran_live_session}
-          WHERE status = :status",
-        ['status' => 'awaiting_review']
+          FROM {local_prequran_live_session}
+          WHERE status = :status
+            {$workspacefilter}",
+        array_merge(['status' => 'awaiting_review'], $workspaceparams)
     );
     $metrics['missingreview'] = pqlo_count_sql(
         "SELECT COUNT(1)
@@ -138,6 +174,7 @@ if ($ready) {
           WHERE s.scheduled_end < :nowtime
             AND s.scheduled_end >= :fromtime
             AND s.status <> :cancelled
+            {$workspacefilteralias}
             AND (
                 s.status <> :completed
                 OR (SELECT COUNT(1) FROM {local_prequran_live_attendance} a WHERE a.sessionid = s.id)
@@ -145,72 +182,86 @@ if ($ready) {
                 OR (SELECT COUNT(1) FROM {local_prequran_live_note} n WHERE n.sessionid = s.id AND n.visible_to_parent = 1 AND TRIM(CONCAT(COALESCE(n.strengths, ''), COALESCE(n.needs_practice, ''), COALESCE(n.homework, ''), COALESCE(n.parent_summary, ''))) <> '')
                    < (SELECT COUNT(1) FROM {local_prequran_live_participant} p WHERE p.sessionid = s.id AND p.role = 'student' AND p.status = 'active')
             )",
-        ['nowtime' => $now, 'fromtime' => $now - (14 * DAYSECS), 'cancelled' => 'cancelled', 'completed' => 'completed']
+        array_merge(['nowtime' => $now, 'fromtime' => $now - (14 * DAYSECS), 'cancelled' => 'cancelled', 'completed' => 'completed'], $workspaceparamsalias)
     );
     $metrics['bbberrors'] = pqlo_count_sql(
         "SELECT COUNT(1)
            FROM {local_prequran_live_session}
           WHERE bbb_last_error IS NOT NULL
-            AND bbb_last_error <> ''"
+            AND bbb_last_error <> ''
+            {$workspacefilter}",
+        $workspaceparams
     );
     $metrics['recordingqueue'] = pqlo_count_sql(
         "SELECT COUNT(1)
-           FROM {local_prequran_live_recording}
-          WHERE status = :available
-            AND (reviewedat = 0 OR visible_to_parent = 0)",
-        ['available' => 'available']
+           FROM {local_prequran_live_recording} r
+      LEFT JOIN {local_prequran_live_session} s ON s.id = r.sessionid
+          WHERE r.status = :available
+            AND (r.reviewedat = 0 OR r.visible_to_parent = 0)
+            {$workspacefilteralias}",
+        array_merge(['available' => 'available'], $workspaceparamsalias)
     );
     if ($qualityready) {
         $metrics['qualityqueue'] = pqlo_count_sql(
             "SELECT COUNT(1)
-               FROM {local_prequran_live_session}
+              FROM {local_prequran_live_session}
               WHERE status <> :cancelled
-                AND qa_status IN ('not_reviewed', 'needs_coaching', 'serious_issue')",
-            ['cancelled' => 'cancelled']
+                AND qa_status IN ('not_reviewed', 'needs_coaching', 'serious_issue')
+                {$workspacefilter}",
+            array_merge(['cancelled' => 'cancelled'], $workspaceparams)
         );
         $metrics['qualityissues'] = pqlo_count_sql(
             "SELECT COUNT(1)
-               FROM {local_prequran_live_session}
+              FROM {local_prequran_live_session}
               WHERE status <> :cancelled
-                AND qa_status IN ('needs_coaching', 'serious_issue')",
-            ['cancelled' => 'cancelled']
+                AND qa_status IN ('needs_coaching', 'serious_issue')
+                {$workspacefilter}",
+            array_merge(['cancelled' => 'cancelled'], $workspaceparams)
         );
     }
     if ($coachingready) {
         $metrics['coachingqueue'] = pqlo_count_sql(
             "SELECT COUNT(1)
-               FROM {local_prequran_live_session}
-              WHERE qa_coaching_status IN ('assigned', 'acknowledged')"
+              FROM {local_prequran_live_session}
+              WHERE qa_coaching_status IN ('assigned', 'acknowledged')
+                {$workspacefilter}",
+            $workspaceparams
         );
         $metrics['coachingoverdue'] = pqlo_count_sql(
             "SELECT COUNT(1)
                FROM {local_prequran_live_session}
               WHERE qa_coaching_status IN ('assigned', 'acknowledged')
                 AND qa_coaching_due_date > 0
-                AND qa_coaching_due_date < :nowtime",
-            ['nowtime' => $now]
+                AND qa_coaching_due_date < :nowtime
+                {$workspacefilter}",
+            array_merge(['nowtime' => $now], $workspaceparams)
         );
     }
     if ($leadershipready) {
         $metrics['leadershipqueue'] = pqlo_count_sql(
             "SELECT COUNT(1)
-               FROM {local_prequran_live_session}
-              WHERE leadership_review_status IN ('flagged', 'in_review')"
+              FROM {local_prequran_live_session}
+              WHERE leadership_review_status IN ('flagged', 'in_review')
+                {$workspacefilter}",
+            $workspaceparams
         );
     }
     if ($improvementready) {
         $metrics['improvementplans'] = pqlo_count_sql(
             "SELECT COUNT(1)
-               FROM {local_prequran_live_session}
-              WHERE improvement_plan_status IN ('assigned', 'in_progress')"
+              FROM {local_prequran_live_session}
+              WHERE improvement_plan_status IN ('assigned', 'in_progress')
+                {$workspacefilter}",
+            $workspaceparams
         );
         $metrics['improvementoverdue'] = pqlo_count_sql(
             "SELECT COUNT(1)
                FROM {local_prequran_live_session}
               WHERE improvement_plan_status IN ('assigned', 'in_progress')
                 AND improvement_plan_due_date > 0
-                AND improvement_plan_due_date < :nowtime",
-            ['nowtime' => $now]
+                AND improvement_plan_due_date < :nowtime
+                {$workspacefilter}",
+            array_merge(['nowtime' => $now], $workspaceparams)
         );
         $metrics['improvementalerts'] = pqlo_count_sql(
             "SELECT COUNT(1)
@@ -244,18 +295,24 @@ if ($ready) {
     if ($followupready) {
         $metrics['followups'] = pqlo_count_sql(
             "SELECT COUNT(1)
-               FROM {local_prequran_live_note}
+              FROM {local_prequran_live_note}
               WHERE followup_status <> :none
-                AND followup_resolved = 0",
-            ['none' => 'none']
+                AND followup_resolved = 0
+                AND sessionid IN (
+                    SELECT id FROM {local_prequran_live_session} s WHERE 1 = 1 {$workspacefilteralias}
+                )",
+            array_merge(['none' => 'none'], $workspaceparamsalias)
         );
         $metrics['overduefollowups'] = pqlo_count_sql(
             "SELECT COUNT(1)
                FROM {local_prequran_live_note}
               WHERE followup_status <> :none
                 AND followup_resolved = 0
-                AND COALESCE(NULLIF(followup_contactedat, 0), timemodified) <= :cutoff",
-            ['none' => 'none', 'cutoff' => $now - (2 * DAYSECS)]
+                AND COALESCE(NULLIF(followup_contactedat, 0), timemodified) <= :cutoff
+                AND sessionid IN (
+                    SELECT id FROM {local_prequran_live_session} s WHERE 1 = 1 {$workspacefilteralias}
+                )",
+            array_merge(['none' => 'none', 'cutoff' => $now - (2 * DAYSECS)], $workspaceparamsalias)
         );
     }
 
@@ -268,8 +325,9 @@ if ($ready) {
           WHERE s.scheduled_start >= :starttime
             AND s.scheduled_start < :endtime
             AND s.status <> :cancelled
+            {$workspacefilteralias}
        ORDER BY s.scheduled_start ASC, s.id ASC",
-        ['starttime' => $todaystart, 'endtime' => $todayend, 'cancelled' => 'cancelled'],
+        array_merge(['starttime' => $todaystart, 'endtime' => $todayend, 'cancelled' => 'cancelled'], $workspaceparamsalias),
         0,
         20
     );
@@ -284,6 +342,7 @@ if ($ready) {
           WHERE s.scheduled_end < :nowtime
             AND s.scheduled_end >= :fromtime
             AND s.status <> :cancelled
+            {$workspacefilteralias}
             AND (
                 s.status <> :completed
                 OR (SELECT COUNT(1) FROM {local_prequran_live_attendance} a WHERE a.sessionid = s.id)
@@ -292,7 +351,7 @@ if ($ready) {
                    < (SELECT COUNT(1) FROM {local_prequran_live_participant} p WHERE p.sessionid = s.id AND p.role = 'student' AND p.status = 'active')
             )
        ORDER BY s.scheduled_end DESC, s.id DESC",
-        ['nowtime' => $now, 'fromtime' => $now - (14 * DAYSECS), 'cancelled' => 'cancelled', 'completed' => 'completed'],
+        array_merge(['nowtime' => $now, 'fromtime' => $now - (14 * DAYSECS), 'cancelled' => 'cancelled', 'completed' => 'completed'], $workspaceparamsalias),
         0,
         20
     );
@@ -302,8 +361,9 @@ if ($ready) {
            FROM {local_prequran_live_session}
           WHERE bbb_last_error IS NOT NULL
             AND bbb_last_error <> ''
+            {$workspacefilter}
        ORDER BY timemodified DESC, id DESC",
-        [],
+        $workspaceparams,
         0,
         10
     );
@@ -317,8 +377,9 @@ if ($ready) {
       LEFT JOIN {local_prequran_live_session} s ON s.id = r.sessionid
           WHERE r.status = :available
             AND (r.reviewedat = 0 OR r.visible_to_parent = 0)
+            {$workspacefilteralias}
        ORDER BY r.timemodified DESC, r.id DESC",
-        ['available' => 'available'],
+        array_merge(['available' => 'available'], $workspaceparamsalias),
         0,
         20
     );
@@ -333,6 +394,7 @@ if ($ready) {
                FROM {local_prequran_live_session} s
               WHERE s.status <> :cancelled
                 AND s.qa_status IN ('not_reviewed', 'needs_coaching', 'serious_issue')
+                {$workspacefilteralias}
            ORDER BY CASE s.qa_status
                         WHEN 'serious_issue' THEN 1
                         WHEN 'needs_coaching' THEN 2
@@ -340,7 +402,7 @@ if ($ready) {
                     END,
                     s.scheduled_end DESC,
                     s.id DESC",
-            ['cancelled' => 'cancelled'],
+            array_merge(['cancelled' => 'cancelled'], $workspaceparamsalias),
             0,
             20
         );
@@ -349,8 +411,9 @@ if ($ready) {
     if ($coachingready) {
         $coachingqueue = $DB->get_records_sql(
             "SELECT *
-               FROM {local_prequran_live_session}
+              FROM {local_prequran_live_session}
               WHERE qa_coaching_status IN ('assigned', 'acknowledged')
+                {$workspacefilter}
            ORDER BY CASE qa_coaching_priority
                         WHEN 'high' THEN 1
                         WHEN 'normal' THEN 2
@@ -358,7 +421,7 @@ if ($ready) {
                     END,
                     qa_coaching_due_date ASC,
                     qa_reviewedat DESC",
-            [],
+            $workspaceparams,
             0,
             20
         );
@@ -367,8 +430,9 @@ if ($ready) {
     if ($leadershipready) {
         $leadershipqueue = $DB->get_records_sql(
             "SELECT *
-               FROM {local_prequran_live_session}
+              FROM {local_prequran_live_session}
               WHERE leadership_review_status IN ('flagged', 'in_review')
+                {$workspacefilter}
            ORDER BY CASE leadership_review_status
                         WHEN 'flagged' THEN 1
                         WHEN 'in_review' THEN 2
@@ -376,7 +440,7 @@ if ($ready) {
                     END,
                     leadership_reviewat DESC,
                     id DESC",
-            [],
+            $workspaceparams,
             0,
             20
         );
@@ -385,8 +449,9 @@ if ($ready) {
     if ($improvementready) {
         $improvementqueue = $DB->get_records_sql(
             "SELECT *
-               FROM {local_prequran_live_session}
+              FROM {local_prequran_live_session}
               WHERE improvement_plan_status IN ('assigned', 'in_progress')
+                {$workspacefilter}
            ORDER BY CASE improvement_plan_priority
                         WHEN 'high' THEN 1
                         WHEN 'normal' THEN 2
@@ -394,7 +459,7 @@ if ($ready) {
                     END,
                     improvement_plan_due_date ASC,
                     improvement_plan_assignedat DESC",
-            [],
+            $workspaceparams,
             0,
             20
         );
@@ -423,9 +488,10 @@ if ($ready) {
                     s.scheduled_end,
                     COALESCE(NULLIF(n.followup_contactedat, 0), n.timemodified) AS followup_age_start
                FROM {local_prequran_live_note} n
-               JOIN {local_prequran_live_session} s ON s.id = n.sessionid
+              JOIN {local_prequran_live_session} s ON s.id = n.sessionid
               WHERE n.followup_status <> :none
                 AND n.followup_resolved = 0
+                {$workspacefilteralias}
            ORDER BY CASE n.followup_status
                         WHEN 'admin_support_requested' THEN 1
                         WHEN 'parent_contact_requested' THEN 2
@@ -433,7 +499,7 @@ if ($ready) {
                         ELSE 4
                     END,
                     n.timemodified DESC",
-            ['none' => 'none'],
+            array_merge(['none' => 'none'], $workspaceparamsalias),
             0,
             20
         );
@@ -449,9 +515,10 @@ if ($ready) {
           WHERE scheduled_start >= :nowtime
             AND scheduled_start < :untiltime
             AND status <> :cancelled
+            {$workspacefilter}
        GROUP BY teacherid
        ORDER BY session_count DESC, next_start ASC",
-        ['nowtime' => $now, 'untiltime' => $now + (7 * DAYSECS), 'cancelled' => 'cancelled'],
+        array_merge(['nowtime' => $now, 'untiltime' => $now + (7 * DAYSECS), 'cancelled' => 'cancelled'], $workspaceparams),
         0,
         20
     );
@@ -501,34 +568,36 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
 .pqlo-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
 @media(max-width:1050px){.pqlo-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.pqlo-grid{grid-template-columns:1fr}.pqlo-top{display:block}.pqlo-actions{margin-top:12px}.pqlo-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqlo-metrics{grid-template-columns:1fr}.pqlo-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlo-shell">
   <div class="pqlo-wrap">
-    <section class="pqlo-top">
+    <section class="pqlo-top pqh-workspace-top">
       <div>
-        <h1 class="pqlo-title">Live Operations Dashboard</h1>
-        <p class="pqlo-sub">Monitor sessions, reviews, BBB errors, recordings, reminders, and teacher workload from one admin view.</p>
+        <h1 class="pqlo-title pqh-workspace-title">Live Operations Dashboard</h1>
+        <p class="pqlo-sub pqh-workspace-sub">Monitor sessions, reviews, BBB errors, recordings, reminders, and teacher workload from one admin view.</p>
       </div>
-      <div class="pqlo-actions">
-        <a class="pqlo-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php'))->out(false); ?>">Admin menu</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php'))->out(false); ?>">Create wizard</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php'))->out(false); ?>">Series wizard</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php'))->out(false); ?>">Reports</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php'))->out(false); ?>">Teachers</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php'))->out(false); ?>">Capacity</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php'))->out(false); ?>">QA analytics</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php'))->out(false); ?>">Leadership</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php'))->out(false); ?>">Improvement plans</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php'))->out(false); ?>">Follow-ups</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_audit.php'))->out(false); ?>">Parent trust audit</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_review_pack.php'))->out(false); ?>">Trust review pack</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_retention.php'))->out(false); ?>">Trust retention</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php'))->out(false); ?>">Class series</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php'))->out(false); ?>">Availability</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings_admin.php'))->out(false); ?>">Recording review</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_diagnostics.php'))->out(false); ?>">Diagnostics</a>
-        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqlo-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlo-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php', $urlparams))->out(false); ?>">Admin menu</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $urlparams))->out(false); ?>">Create wizard</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $urlparams))->out(false); ?>">Series wizard</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php', $urlparams))->out(false); ?>">Reports</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php', $urlparams))->out(false); ?>">Teachers</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Capacity</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', $urlparams))->out(false); ?>">QA analytics</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', $urlparams))->out(false); ?>">Leadership</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', $urlparams))->out(false); ?>">Improvement plans</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $urlparams))->out(false); ?>">Follow-ups</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_audit.php', $urlparams))->out(false); ?>">Parent trust audit</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_review_pack.php', $urlparams))->out(false); ?>">Trust review pack</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_retention.php', $urlparams))->out(false); ?>">Trust retention</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $urlparams))->out(false); ?>">Class series</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $urlparams))->out(false); ?>">Availability</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings_admin.php', $urlparams))->out(false); ?>">Recording review</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_diagnostics.php', $urlparams))->out(false); ?>">Diagnostics</a>
+        <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url($dashboardpath, $urlparams))->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -572,8 +641,8 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
                 <td><?php echo (int)$session->attendance_count; ?></td>
                 <td><?php echo (int)$session->visible_summary_count; ?></td>
                 <td>
-                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => (int)$session->id]))->out(false); ?>">Review</a>
-                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$session->id]))->out(false); ?>">QA</a>
+                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', pqlo_url_params($urlparams, ['sessionid' => (int)$session->id])))->out(false); ?>">Review</a>
+                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', pqlo_url_params($urlparams, ['sessionid' => (int)$session->id])))->out(false); ?>">QA</a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -592,8 +661,8 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
                 <td><span class="pqlo-pill pqlo-pill--warn"><?php echo s((string)$session->status); ?></span></td>
                 <td><?php echo (int)$session->attendance_count; ?>/<?php echo (int)$session->student_count; ?> attendance<br><?php echo (int)$session->visible_summary_count; ?>/<?php echo (int)$session->student_count; ?> parent summaries</td>
                 <td>
-                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => (int)$session->id]))->out(false); ?>">Open</a>
-                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$session->id]))->out(false); ?>">QA</a>
+                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', pqlo_url_params($urlparams, ['sessionid' => (int)$session->id])))->out(false); ?>">Open</a>
+                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', pqlo_url_params($urlparams, ['sessionid' => (int)$session->id])))->out(false); ?>">QA</a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -612,7 +681,7 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
                 <td><?php echo s(pqlo_user_name((int)$session->teacherid, 'Teacher ' . (int)$session->teacherid)); ?></td>
                 <td><span class="pqlo-pill <?php echo $overdue ? 'pqlo-pill--bad' : 'pqlo-pill--warn'; ?>"><?php echo s(str_replace('_', ' ', (string)$session->qa_coaching_status)); ?></span><br><span class="pqlo-code"><?php echo s((string)$session->qa_coaching_priority); ?></span></td>
                 <td><?php echo !empty($session->qa_coaching_due_date) ? userdate((int)$session->qa_coaching_due_date, get_string('strftimedatetimeshort')) : 'No due date'; ?><?php echo $overdue ? '<br><span class="pqlo-code">overdue</span>' : ''; ?></td>
-                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$session->id]))->out(false); ?>">Manage coaching</a></td>
+                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', pqlo_url_params($urlparams, ['sessionid' => (int)$session->id])))->out(false); ?>">Manage coaching</a></td>
               </tr>
             <?php endforeach; ?>
             <?php if (!$coachingqueue): ?><tr><td colspan="5">No active coaching assignments.</td></tr><?php endif; ?>
@@ -629,7 +698,7 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
                 <td><?php echo s(pqlo_user_name((int)$session->teacherid, 'Teacher ' . (int)$session->teacherid)); ?></td>
                 <td><?php echo s(str_replace('_', ' ', (string)$session->qa_status)); ?><br><span class="pqlo-code"><?php echo (int)$session->qa_score; ?>%</span></td>
                 <td><span class="pqlo-pill pqlo-pill--bad"><?php echo s(str_replace('_', ' ', (string)$session->leadership_review_status)); ?></span><br><span class="pqlo-code"><?php echo s(pqlo_short((string)$session->leadership_review_reason, 90)); ?></span></td>
-                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$session->id]))->out(false); ?>">Review</a></td>
+                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', pqlo_url_params($urlparams, ['sessionid' => (int)$session->id])))->out(false); ?>">Review</a></td>
               </tr>
             <?php endforeach; ?>
             <?php if (!$leadershipqueue): ?><tr><td colspan="5">No sessions in leadership review.</td></tr><?php endif; ?>
@@ -647,7 +716,7 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
                 <td><?php echo s(pqlo_user_name((int)$session->teacherid, 'Teacher ' . (int)$session->teacherid)); ?></td>
                 <td><span class="pqlo-pill <?php echo $overdue ? 'pqlo-pill--bad' : 'pqlo-pill--warn'; ?>"><?php echo s(str_replace('_', ' ', (string)$session->improvement_plan_status)); ?></span><br><span class="pqlo-code"><?php echo s((string)$session->improvement_plan_priority); ?></span></td>
                 <td><?php echo !empty($session->improvement_plan_due_date) ? userdate((int)$session->improvement_plan_due_date, get_string('strftimedatetimeshort')) : 'No due date'; ?><?php echo $overdue ? '<br><span class="pqlo-code">overdue</span>' : ''; ?></td>
-                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', ['teacherid' => (int)$session->teacherid, 'status' => 'all']))->out(false); ?>">Open leadership</a></td>
+                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', pqlo_url_params($urlparams, ['teacherid' => (int)$session->teacherid, 'status' => 'all'])))->out(false); ?>">Open leadership</a></td>
               </tr>
             <?php endforeach; ?>
             <?php if (!$improvementqueue): ?><tr><td colspan="5">No active improvement plans.</td></tr><?php endif; ?>
@@ -664,7 +733,7 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
                 <td><?php echo s(pqlo_user_name((int)$session->teacherid, 'Teacher ' . (int)$session->teacherid)); ?></td>
                 <td><span class="pqlo-pill <?php echo (string)$session->qa_status === 'serious_issue' ? 'pqlo-pill--bad' : ((string)$session->qa_status === 'needs_coaching' ? 'pqlo-pill--warn' : ''); ?>"><?php echo s(str_replace('_', ' ', (string)$session->qa_status)); ?></span><br><span class="pqlo-code"><?php echo (int)$session->qa_score; ?>%</span></td>
                 <td><?php echo (int)$session->attendance_count; ?>/<?php echo (int)$session->student_count; ?> attendance<br><?php echo (int)$session->visible_summary_count; ?> summaries<br><?php echo (int)$session->recording_count; ?> recordings</td>
-                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$session->id]))->out(false); ?>">Quality review</a></td>
+                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', pqlo_url_params($urlparams, ['sessionid' => (int)$session->id])))->out(false); ?>">Quality review</a></td>
               </tr>
             <?php endforeach; ?>
             <?php if (!$qualityqueue): ?><tr><td colspan="5">No sessions waiting for quality review.</td></tr><?php endif; ?>
@@ -680,7 +749,7 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
                 <td><?php echo s((string)$recording->name); ?><br><span class="pqlo-code"><?php echo s((string)$recording->session_title); ?></span></td>
                 <td><span class="pqlo-pill <?php echo (string)$recording->status === 'available' ? 'pqlo-pill--ok' : 'pqlo-pill--warn'; ?>"><?php echo s((string)$recording->status); ?></span></td>
                 <td><?php echo !empty($recording->visible_to_parent) ? 'parent visible' : 'hidden'; ?></td>
-                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings_admin.php'))->out(false); ?>">Review</a></td>
+                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings_admin.php', $urlparams))->out(false); ?>">Review</a></td>
               </tr>
             <?php endforeach; ?>
             <?php if (!$recordingqueue): ?><tr><td colspan="4">No recordings waiting for review.</td></tr><?php endif; ?>
@@ -708,9 +777,9 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
                   <?php endif; ?>
                 </td>
                 <td>
-                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => (int)$note->sessionid]))->out(false); ?>">Open</a>
-                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followup_message.php', ['sessionid' => (int)$note->sessionid, 'studentid' => (int)$note->studentid, 'sesskey' => sesskey()]))->out(false); ?>">Message</a>
-                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', ['childid' => (int)$note->studentid]))->out(false); ?>">Parent hub</a>
+                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', pqlo_url_params($urlparams, ['sessionid' => (int)$note->sessionid])))->out(false); ?>">Open</a>
+                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followup_message.php', pqlo_url_params($urlparams, ['sessionid' => (int)$note->sessionid, 'studentid' => (int)$note->studentid, 'sesskey' => sesskey()])))->out(false); ?>">Message</a>
+                  <a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', pqlo_url_params($urlparams, ['childid' => (int)$note->studentid])))->out(false); ?>">Parent hub</a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -726,7 +795,7 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
               <tr>
                 <td><?php echo s((string)$session->title); ?><br><span class="pqlo-code"><?php echo s((string)$session->bbb_meeting_id); ?></span></td>
                 <td><?php echo s(pqlo_short((string)$session->bbb_last_error)); ?></td>
-                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_diagnostics.php'))->out(false); ?>">Diagnostics</a></td>
+                <td><a class="pqlo-btn pqlo-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_diagnostics.php', $urlparams))->out(false); ?>">Diagnostics</a></td>
               </tr>
             <?php endforeach; ?>
             <?php if (!$bbberrors): ?><tr><td colspan="3">No BBB errors recorded.</td></tr><?php endif; ?>

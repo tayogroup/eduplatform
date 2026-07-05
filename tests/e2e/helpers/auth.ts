@@ -37,7 +37,7 @@ export async function loginToEduPlatform(
 ): Promise<void> {
   const loginUrl = options.loginUrl || new URL('/login/index.php', env.baseUrl).toString();
 
-  await page.goto(loginUrl, { waitUntil: 'domcontentloaded' });
+  await page.goto(loginUrl, { waitUntil: 'commit', timeout: 60_000 });
   await page.getByLabel(/username|email/i).fill(credentials.username);
   await page.getByLabel(/password/i).fill(credentials.password);
 

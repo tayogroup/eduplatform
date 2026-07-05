@@ -2,10 +2,15 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 
 if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can view live-session diagnostics.');
+    pqh_access_denied(
+        'Only site administrators can view live-session diagnostics.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Live diagnostics access required'
+    );
 }
 
 $context = context_system::instance();
@@ -25,6 +30,29 @@ function pqld_status(bool $ok): string {
     return $ok ? 'PASS' : 'FAIL';
 }
 
+function pqld_bbb_api_base_url(string $baseurl): string {
+    $baseurl = trim($baseurl);
+    if ($baseurl === '') {
+        return '';
+    }
+    $baseurl = rtrim($baseurl, '/') . '/';
+    if (preg_match('#/api/$#', $baseurl)) {
+        return $baseurl;
+    }
+    if (preg_match('#/bigbluebutton/$#', $baseurl)) {
+        return $baseurl . 'api/';
+    }
+    if (preg_match('#/bigbluebutton/[^/]+/$#', $baseurl)) {
+        return $baseurl . 'api/';
+    }
+    return $baseurl . 'bigbluebutton/api/';
+}
+
+function pqld_host(string $url): string {
+    $host = parse_url($url, PHP_URL_HOST);
+    return is_string($host) ? strtolower($host) : '';
+}
+
 $tables = [
     'local_prequran_live_session',
     'local_prequran_live_participant',
@@ -37,6 +65,9 @@ $tables = [
 
 $bbbbase = trim((string)get_config('local_prequran', 'bbb_base_url'));
 $bbbsecret = trim((string)get_config('local_prequran', 'bbb_shared_secret'));
+$bbbapiurl = pqld_bbb_api_base_url($bbbbase);
+$bbbhost = pqld_host($bbbbase);
+$bbbdomainmode = $bbbhost === '' ? 'NOT SET' : (preg_match('/(^|\.)biggerbluebutton\.com$/', $bbbhost) ? 'PROVIDER' : 'CUSTOM');
 $locallib = $CFG->dirroot . '/local/prequran/locallib.php';
 
 $sessions = [];
@@ -53,10 +84,19 @@ if (pqld_table_exists('local_prequran_live_session')) {
     );
 }
 if (pqld_table_exists('local_prequran_live_audit')) {
-    $recordingaudits = $DB->get_records('local_prequran_live_audit', [
-        'action' => 'recording_disabled_missing_consent',
-        'targettype' => 'session',
-    ], 'timecreated DESC', 'id, sessionid, details, timecreated', 0, 100);
+    [$actionsql, $actionparams] = $DB->get_in_or_equal([
+        'video_recording_disabled_missing_consent',
+        'recording_disabled_missing_consent',
+    ], SQL_PARAMS_NAMED, 'recordingpolicy');
+    $recordingaudits = $DB->get_records_select(
+        'local_prequran_live_audit',
+        "action {$actionsql} AND targettype = :targettype",
+        $actionparams + ['targettype' => 'session'],
+        'timecreated DESC',
+        'id, sessionid, details, timecreated',
+        0,
+        100
+    );
     foreach ($recordingaudits as $audit) {
         $sessionid = (int)$audit->sessionid;
         if ($sessionid > 0 && !isset($recordingpolicy[$sessionid])) {
@@ -108,13 +148,14 @@ body.pqh-live-diagnostics-page .main-inner{margin:0!important;padding:0!importan
 .pqld-pill--bad{background:#fff0ed;color:#883526}
 .pqld-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
 @media(max-width:850px){.pqld-grid{grid-template-columns:1fr}.pqld-top{display:block}.pqld-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqld-shell">
   <div class="pqld-wrap">
-    <section class="pqld-top">
+    <section class="pqld-top pqh-workspace-top">
       <div>
-        <h1 class="pqld-title">Live Session Diagnostics</h1>
-        <p class="pqld-sub">Check BBB configuration, live-session tables, recent sessions, and audit records.</p>
+        <h1 class="pqld-title pqh-workspace-title">Live Session Diagnostics</h1>
+        <p class="pqld-sub pqh-workspace-sub">Check BBB configuration, live-session tables, recent sessions, and audit records.</p>
       </div>
       <div>
         <a class="pqld-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Operations</a>
@@ -130,9 +171,12 @@ body.pqh-live-diagnostics-page .main-inner{margin:0!important;padding:0!importan
         <table class="pqld-table">
           <tr><th>Check</th><th>Status</th></tr>
           <tr><td>BBB base URL configured</td><td><span class="pqld-pill <?php echo $bbbbase !== '' ? 'pqld-pill--ok' : 'pqld-pill--bad'; ?>"><?php echo s(pqld_status($bbbbase !== '')); ?></span></td></tr>
+          <tr><td>Configured BBB URL</td><td class="pqld-code"><?php echo $bbbbase !== '' ? s($bbbbase) : 'Not set'; ?></td></tr>
+          <tr><td>Normalized BBB API URL</td><td class="pqld-code"><?php echo $bbbapiurl !== '' ? s($bbbapiurl) : 'Not set'; ?></td></tr>
+          <tr><td>BBB domain mode</td><td><span class="pqld-pill <?php echo $bbbdomainmode === 'CUSTOM' ? 'pqld-pill--ok' : 'pqld-pill--bad'; ?>"><?php echo s($bbbdomainmode); ?></span><?php if ($bbbhost !== ''): ?><br><span class="pqld-code"><?php echo s($bbbhost); ?></span><?php endif; ?></td></tr>
           <tr><td>BBB shared secret configured</td><td><span class="pqld-pill <?php echo $bbbsecret !== '' ? 'pqld-pill--ok' : 'pqld-pill--bad'; ?>"><?php echo s(pqld_status($bbbsecret !== '')); ?></span></td></tr>
           <tr><td>BBB helper file exists</td><td><span class="pqld-pill <?php echo file_exists($locallib) ? 'pqld-pill--ok' : 'pqld-pill--bad'; ?>"><?php echo s(pqld_status(file_exists($locallib))); ?></span></td></tr>
-          <tr><td>Recording consent policy</td><td>Recording is disabled unless every active student participant has recording consent.</td></tr>
+          <tr><td>Recording consent policy</td><td>Audio recording is enabled for safeguarding. Student camera/video is consent-controlled.</td></tr>
           <tr><td>Join before minutes</td><td><?php echo (int)get_config('local_prequran', 'bbb_join_window_before_minutes'); ?></td></tr>
           <tr><td>Join after minutes</td><td><?php echo (int)get_config('local_prequran', 'bbb_join_window_after_minutes'); ?></td></tr>
           <tr><td>Default max participants</td><td><?php echo (int)get_config('local_prequran', 'bbb_max_participants_default'); ?></td></tr>
@@ -168,10 +212,10 @@ body.pqh-live-diagnostics-page .main-inner{margin:0!important;padding:0!importan
               <td><?php echo !empty($session->bbb_created) ? 'created' : 'pending'; ?></td>
               <td>
                 <?php if ($recordingdisabled): ?>
-                  <span class="pqld-pill pqld-pill--bad">disabled: missing consent</span><br>
+                  <span class="pqld-pill pqld-pill--bad">video disabled: missing consent</span><br>
                   <span class="pqld-code"><?php echo s((string)$recordingdisabled->details); ?></span>
                 <?php else: ?>
-                  <?php echo !empty($session->recording_enabled) ? 'enabled when consent allows' : 'off'; ?>
+                  <?php echo !empty($session->recording_enabled) ? 'audio on; video consent-controlled' : 'audio policy not marked'; ?>
                 <?php endif; ?>
               </td>
               <td><?php echo s((string)$session->bbb_last_error); ?></td>

@@ -61,6 +61,34 @@ export class CourseCatalogPage {
       finalUrl: this.page.url(),
     };
   }
+
+  async requestEnrollmentForOffering(student: StudentCreationResult, offeringTitle: string): Promise<EnrollmentRequestResult> {
+    await expect(this.page.getByRole('heading', { name: /course catalog/i })).toBeVisible();
+
+    const card = this.page.locator('article.pqcb-card', { hasText: offeringTitle }).first();
+    await expect(card).toBeVisible();
+
+    const studentSelect = card.locator('select[name="studentid"]');
+    if (await studentSelect.isVisible()) {
+      await studentSelect.selectOption(student.studentUserId);
+    }
+
+    await card.locator('input[name="request_notes"]').fill(`Automated SQA enrollment request for offering ${offeringTitle}.`);
+    await card.getByRole('button', { name: /request enrollment/i }).click();
+    await this.page.waitForLoadState('domcontentloaded');
+
+    await expect(this.page.locator('.pqcb-alert--ok')).toContainText(/enrollment request sent/i);
+    const statusPanel = this.page.locator('section[aria-label="Enrollment request status"]').first();
+    await expect(statusPanel).toBeVisible();
+    await expect(statusPanel).toContainText(student.studentAccountId);
+    await expect(statusPanel).toContainText(offeringTitle);
+
+    return {
+      offeringTitle,
+      requestStatusText: (((await statusPanel.textContent()) || '').replace(/\s+/g, ' ').trim()),
+      finalUrl: this.page.url(),
+    };
+  }
 }
 
 export class CourseOfferingAdminPage {

@@ -42,6 +42,23 @@ export interface EduPlatformEnv {
   enableFullTeacherGoldenPath: boolean;
   enableParentPortalVisibility: boolean;
   enableParentPaymentVisibility: boolean;
+  enableAdminDashboardSmoke: boolean;
+  enableAdmissionsOperations: boolean;
+  enableCourseOfferingOperations: boolean;
+  enableFinanceOperations: boolean;
+  enableReportingAuditOperations: boolean;
+  enableSupportCommunications: boolean;
+  enableAcademicContentVisibility: boolean;
+  enableAcademicResourceLifecycle: boolean;
+  enableAcademicGradebookConsistency: boolean;
+  enableAcademicAttendanceProgressAudit: boolean;
+  enableAcademicQualityControls: boolean;
+  enableSecurityAccessControl: boolean;
+  enableNotificationsDelivery: boolean;
+  enableDataExportCompliance: boolean;
+  enableDataLifecycleCleanup: boolean;
+  enableFailureWorkflowControls: boolean;
+  enableCrossRoleGoldenPath: boolean;
   wsToken: string;
 }
 
@@ -141,6 +158,23 @@ export function getEduPlatformEnv(options: EnvOptions = {}): EduPlatformEnv {
     enableFullTeacherGoldenPath: isTruthy(readEnv('EDUPLATFORM_ENABLE_FULL_TEACHER_GOLDEN_PATH')),
     enableParentPortalVisibility: isTruthy(readEnv('EDUPLATFORM_ENABLE_PARENT_PORTAL_VISIBILITY')),
     enableParentPaymentVisibility: isTruthy(readEnv('EDUPLATFORM_ENABLE_PARENT_PAYMENT_VISIBILITY')),
+    enableAdminDashboardSmoke: isTruthy(readEnv('EDUPLATFORM_ENABLE_ADMIN_DASHBOARD_SMOKE')),
+    enableAdmissionsOperations: isTruthy(readEnv('EDUPLATFORM_ENABLE_ADMISSIONS_OPERATIONS')),
+    enableCourseOfferingOperations: isTruthy(readEnv('EDUPLATFORM_ENABLE_COURSE_OFFERING_OPERATIONS')),
+    enableFinanceOperations: isTruthy(readEnv('EDUPLATFORM_ENABLE_FINANCE_OPERATIONS')),
+    enableReportingAuditOperations: isTruthy(readEnv('EDUPLATFORM_ENABLE_REPORTING_AUDIT_OPERATIONS')),
+    enableSupportCommunications: isTruthy(readEnv('EDUPLATFORM_ENABLE_SUPPORT_COMMUNICATIONS')),
+    enableAcademicContentVisibility: isTruthy(readEnv('EDUPLATFORM_ENABLE_ACADEMIC_CONTENT_VISIBILITY')),
+    enableAcademicResourceLifecycle: isTruthy(readEnv('EDUPLATFORM_ENABLE_ACADEMIC_RESOURCE_LIFECYCLE')),
+    enableAcademicGradebookConsistency: isTruthy(readEnv('EDUPLATFORM_ENABLE_ACADEMIC_GRADEBOOK_CONSISTENCY')),
+    enableAcademicAttendanceProgressAudit: isTruthy(readEnv('EDUPLATFORM_ENABLE_ACADEMIC_ATTENDANCE_PROGRESS_AUDIT')),
+    enableAcademicQualityControls: isTruthy(readEnv('EDUPLATFORM_ENABLE_ACADEMIC_QUALITY_CONTROLS')),
+    enableSecurityAccessControl: isTruthy(readEnv('EDUPLATFORM_ENABLE_SECURITY_ACCESS_CONTROL')),
+    enableNotificationsDelivery: isTruthy(readEnv('EDUPLATFORM_ENABLE_NOTIFICATIONS_DELIVERY')),
+    enableDataExportCompliance: isTruthy(readEnv('EDUPLATFORM_ENABLE_DATA_EXPORT_COMPLIANCE')),
+    enableDataLifecycleCleanup: isTruthy(readEnv('EDUPLATFORM_ENABLE_DATA_LIFECYCLE_CLEANUP')),
+    enableFailureWorkflowControls: isTruthy(readEnv('EDUPLATFORM_ENABLE_FAILURE_WORKFLOW_CONTROLS')),
+    enableCrossRoleGoldenPath: isTruthy(readEnv('EDUPLATFORM_ENABLE_CROSS_ROLE_GOLDEN_PATH')),
     wsToken: readEnv('EDUPLATFORM_WS_TOKEN'),
   };
 
@@ -224,6 +258,23 @@ export function redactedEduPlatformEnv(env = getEduPlatformEnv({ allowPartial: t
     enableFullTeacherGoldenPath: env.enableFullTeacherGoldenPath,
     enableParentPortalVisibility: env.enableParentPortalVisibility,
     enableParentPaymentVisibility: env.enableParentPaymentVisibility,
+    enableAdminDashboardSmoke: env.enableAdminDashboardSmoke,
+    enableAdmissionsOperations: env.enableAdmissionsOperations,
+    enableCourseOfferingOperations: env.enableCourseOfferingOperations,
+    enableFinanceOperations: env.enableFinanceOperations,
+    enableReportingAuditOperations: env.enableReportingAuditOperations,
+    enableSupportCommunications: env.enableSupportCommunications,
+    enableAcademicContentVisibility: env.enableAcademicContentVisibility,
+    enableAcademicResourceLifecycle: env.enableAcademicResourceLifecycle,
+    enableAcademicGradebookConsistency: env.enableAcademicGradebookConsistency,
+    enableAcademicAttendanceProgressAudit: env.enableAcademicAttendanceProgressAudit,
+    enableAcademicQualityControls: env.enableAcademicQualityControls,
+    enableSecurityAccessControl: env.enableSecurityAccessControl,
+    enableNotificationsDelivery: env.enableNotificationsDelivery,
+    enableDataExportCompliance: env.enableDataExportCompliance,
+    enableDataLifecycleCleanup: env.enableDataLifecycleCleanup,
+    enableFailureWorkflowControls: env.enableFailureWorkflowControls,
+    enableCrossRoleGoldenPath: env.enableCrossRoleGoldenPath,
     wsToken: env.wsToken ? '[redacted]' : '',
   };
 }

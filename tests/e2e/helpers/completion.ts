@@ -101,10 +101,13 @@ export class GradebookAssessmentPage {
     studentEmail: string;
     offeringTitle: string;
     runId: string;
+    assessmentType?: 'assignment' | 'quiz' | 'exam' | 'oral_recitation';
+    assessmentTitlePrefix?: string;
+    assessmentDescription?: string;
   }): Promise<ClassCompletionResult> {
     await expect(this.page.getByRole('heading', { name: /gradebook and assessment/i }).first()).toBeVisible();
 
-    const assessmentTitle = `Automated SQA Completion ${options.runId}`;
+    const assessmentTitle = `${options.assessmentTitlePrefix || 'Automated SQA Completion'} ${options.runId}`;
     const categoryTitle = `Automated SQA Completion Category ${options.runId}`;
     const scorePercent = canonicalScore(this.env.completionScorePercent);
     const offeringCandidates = [
@@ -131,13 +134,13 @@ export class GradebookAssessmentPage {
     await selectOptionByText(assessmentForm.locator('select[name="offeringid"]'), [selectedOfferingLabel, ...offeringCandidates]);
     const categorySelect = assessmentForm.locator('select[name="categoryid"]');
     await selectOptionByText(categorySelect, [categoryTitle]);
-    await assessmentForm.locator('select[name="assessment_type"]').selectOption('exam');
+    await assessmentForm.locator('select[name="assessment_type"]').selectOption(options.assessmentType || 'exam');
     await assessmentForm.locator('input[name="title"]').fill(assessmentTitle);
     await assessmentForm.locator('input[name="max_points"]').fill('100');
     await assessmentForm.locator('input[name="weight_override"]').fill('100');
     await assessmentForm.locator('input[name="duedate"]').fill(todayInputValue());
     await assessmentForm.locator('input[name="status"]').fill('published');
-    await assessmentForm.locator('textarea[name="description"]').fill(`Automated SQA class completion fixture for ${options.runId}.`);
+    await assessmentForm.locator('textarea[name="description"]').fill(options.assessmentDescription || `Automated SQA class completion fixture for ${options.runId}.`);
     await assessmentForm.getByRole('button', { name: /save assessment/i }).click();
     await this.page.waitForLoadState('domcontentloaded');
     await this.expectNoticeOrRecover(/assessment saved/i, 'assessment save');
@@ -189,5 +192,24 @@ export class GradebookAssessmentPage {
       publishNotice,
       finalUrl: this.page.url(),
     };
+  }
+
+  async expectPublishedGradeVisible(options: {
+    studentEmail: string;
+    scorePercent: string;
+    offeringTitle?: string;
+  }): Promise<string> {
+    await this.goto();
+    await expect(this.page.getByRole('heading', { name: /gradebook and assessment/i }).first()).toBeVisible();
+
+    const row = this.page.locator('table.pqgb-table tbody tr', { hasText: options.studentEmail }).first();
+    await expect(row).toBeVisible();
+    await expect(row).toContainText(new RegExp(`${options.scorePercent.replace('.', '\\.')}%`));
+    await expect(row).toContainText(/published/i);
+    if (options.offeringTitle) {
+      await expect(row).toContainText(options.offeringTitle);
+    }
+
+    return normalize((await row.textContent()) || '');
   }
 }

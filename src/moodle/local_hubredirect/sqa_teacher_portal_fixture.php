@@ -324,6 +324,24 @@ function pqsqtf_archive_record(string $table, array $conditions, array $fields):
     return 1;
 }
 
+function pqsqtf_archive_records(string $table, array $conditions, array $fields): int {
+    global $DB;
+    if (!pqsqtf_table_ready($table)) {
+        return 0;
+    }
+    $existing = $DB->get_records($table, $conditions);
+    $count = 0;
+    foreach ($existing as $row) {
+        $record = ['id' => (int)$row->id, 'timemodified' => time()];
+        foreach ($fields as $field => $value) {
+            $record[$field] = $value;
+        }
+        $DB->update_record($table, pqsqtf_filter_record($table, $record));
+        $count++;
+    }
+    return $count;
+}
+
 function pqsqtf_archive_fixture(int $workspaceid, int $teacherid, int $studentid, int $sessionid, int $assessmentid, string $runid): array {
     global $DB;
     $counts = [
@@ -334,6 +352,8 @@ function pqsqtf_archive_fixture(int $workspaceid, int $teacherid, int $studentid
         'parent_links_archived' => 0,
         'teacher_profiles_archived' => 0,
         'teacher_student_archived' => 0,
+        'student_profiles_archived' => 0,
+        'teacher_availability_archived' => 0,
         'live_sessions_archived' => 0,
         'live_participants_archived' => 0,
         'assessments_archived' => 0,
@@ -396,6 +416,13 @@ function pqsqtf_archive_fixture(int $workspaceid, int $teacherid, int $studentid
         'teacherid' => $teacherid,
         'studentid' => $studentid,
     ], ['status' => 'archived']);
+    $counts['student_profiles_archived'] += pqsqtf_archive_record('local_prequran_student_profile', ['userid' => $studentid], [
+        'status' => 'archived',
+    ]);
+    $counts['teacher_availability_archived'] += pqsqtf_archive_records('local_prequran_live_availability', [
+        'teacherid' => $teacherid,
+        'status' => 'active',
+    ], ['status' => 'inactive']);
     $counts['live_sessions_archived'] += pqsqtf_archive_record('local_prequran_live_session', ['id' => $sessionid], ['status' => 'archived']);
     $counts['live_participants_archived'] += pqsqtf_archive_record('local_prequran_live_participant', [
         'sessionid' => $sessionid,

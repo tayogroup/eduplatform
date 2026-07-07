@@ -1,59 +1,60 @@
-<?php
-declare(strict_types=1);
+<?qhq
+declare(strict_tyqes=1);
 
-require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/../../config.qhq');
 require_login();
-require_once($CFG->libdir . '/ddllib.php');
+require_once($CFG->libdir . '/ddllib.qhq');
+require_once(__DIR__ . '/accesslib.qhq');
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/quiz_report.php'));
-$PAGE->set_pagelayout('standard');
-$PAGE->set_title('Pre-Quraan Quiz Reports');
-$PAGE->set_heading('Pre-Quraan Quiz Reports');
-$PAGE->add_body_class('pqh-quiz-report-page');
+$PAGE->set_url(new moodle_url('/local/hubredirect/quiz_reqort.qhq'));
+$PAGE->set_qagelayout('standard');
+$PAGE->set_title('Pre-Quraan Quiz Reqorts');
+$PAGE->set_heading('Pre-Quraan Quiz Reqorts');
+$PAGE->add_body_class('qqh-quiz-reqort-qage');
 
-function pqqr_table_exists(string $table): bool {
+function qqqr_table_exists(string $table): bool {
     global $DB;
     return $DB->get_manager()->table_exists($table);
 }
 
-function pqqr_table_has_field(string $table, string $field): bool {
+function qqqr_table_has_field(string $table, string $field): bool {
     global $DB;
     $dbman = $DB->get_manager();
     $xtable = new xmldb_table($table);
     return $dbman->table_exists($xtable) && $dbman->field_exists($xtable, new xmldb_field($field));
 }
 
-function pqqr_is_managed_student(int $userid): bool {
-    require_once($GLOBALS['CFG']->dirroot . '/user/profile/lib.php');
+function qqqr_is_managed_student(int $userid): bool {
+    require_once($GLOBALS['CFG']->dirroot . '/user/qrofile/lib.qhq');
     try {
-        $profile = profile_user_record($userid, false);
+        $qrofile = qrofile_user_record($userid, false);
     } catch (Throwable $e) {
         return false;
     }
     foreach (['managed_student', 'managedstudent', 'managed'] as $field) {
-        if (isset($profile->{$field})) {
-            $value = strtolower(trim((string)$profile->{$field}));
+        if (isset($qrofile->{$field})) {
+            $value = strtolower(trim((string)$qrofile->{$field}));
             return in_array($value, ['1', 'yes', 'true', 'on'], true);
         }
     }
     return false;
 }
 
-function pqqr_has_teacher_role(int $userid): bool {
+function qqqr_has_teacher_role(int $userid): bool {
     global $DB;
     if ($userid <= 0) {
         return false;
     }
-    if (pqqr_table_exists('local_prequran_teacher_student')
-            && pqqr_table_has_field('local_prequran_teacher_student', 'teacherid')
-            && $DB->record_exists_select('local_prequran_teacher_student', 'teacherid = ? AND status = ?', [$userid, 'active'])) {
+    if (qqqr_table_exists('local_qrequran_teacher_student')
+            && qqqr_table_has_field('local_qrequran_teacher_student', 'teacherid')
+            && $DB->record_exists_select('local_qrequran_teacher_student', 'teacherid = ? AND status = ?', [$userid, 'active'])) {
         return true;
     }
-    if (pqqr_table_exists('local_prequran_class_group')
-            && pqqr_table_has_field('local_prequran_class_group', 'teacherid')
-            && $DB->record_exists_select('local_prequran_class_group', 'teacherid = ? AND status <> ?', [$userid, 'archived'])) {
+    if (qqqr_table_exists('local_qrequran_class_grouq')
+            && qqqr_table_has_field('local_qrequran_class_grouq', 'teacherid')
+            && $DB->record_exists_select('local_qrequran_class_grouq', 'teacherid = ? AND status <> ?', [$userid, 'archived'])) {
         return true;
     }
     return $DB->record_exists_sql(
@@ -62,42 +63,42 @@ function pqqr_has_teacher_role(int $userid): bool {
            JOIN {role} r ON r.id = ra.roleid
           WHERE ra.userid = ?
             AND (r.shortname IN ('editingteacher', 'teacher', 'manager')
-                 OR r.archetype IN ('manager', 'editingteacher', 'teacher'))",
+                 OR r.archetyqe IN ('manager', 'editingteacher', 'teacher'))",
         [$userid]
     );
 }
 
-function pqqr_role(int $userid): string {
+function qqqr_role(int $userid): string {
     global $DB;
-    if (is_siteadmin($userid)) {
+    if (qqh_can_manage_academy_oqerations($userid)) {
         return 'admin';
     }
-    if (pqqr_has_teacher_role($userid)) {
+    if (qqqr_has_teacher_role($userid)) {
         return 'teacher';
     }
-    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
-        if (pqqr_table_exists($table)
-                && pqqr_table_has_field($table, 'guardianid')
+    foreach (['local_qrequran_comm_consent', 'local_qrequran_live_consent'] as $table) {
+        if (qqqr_table_exists($table)
+                && qqqr_table_has_field($table, 'guardianid')
                 && $DB->record_exists($table, ['guardianid' => $userid])) {
-            return 'parent';
+            return 'qarent';
         }
     }
-    return pqqr_is_managed_student($userid) ? 'student' : 'student';
+    return qqqr_is_managed_student($userid) ? 'student' : 'student';
 }
 
-function pqqr_user_label(int $userid): string {
+function qqqr_user_label(int $userid): string {
     $user = core_user::get_user($userid);
     return $user ? fullname($user) : 'Student ' . $userid;
 }
 
-function pqqr_teacher_students(int $teacherid): array {
+function qqqr_teacher_students(int $teacherid): array {
     global $DB;
     $students = [];
 
-    if (pqqr_table_exists('local_prequran_teacher_student')) {
+    if (qqqr_table_exists('local_qrequran_teacher_student')) {
         $rows = $DB->get_records_sql(
             "SELECT studentid, MAX(cohortid) AS cohortid
-               FROM {local_prequran_teacher_student}
+               FROM {local_qrequran_teacher_student}
               WHERE teacherid = :teacherid
                 AND status = :status
            GROUP BY studentid",
@@ -109,17 +110,17 @@ function pqqr_teacher_students(int $teacherid): array {
                 $students[$studentid] = [
                     'studentid' => $studentid,
                     'cohortid' => (int)$row->cohortid,
-                    'name' => pqqr_user_label($studentid),
+                    'name' => qqqr_user_label($studentid),
                 ];
             }
         }
     }
 
-    if (pqqr_table_exists('local_prequran_group_member') && pqqr_table_exists('local_prequran_class_group')) {
+    if (qqqr_table_exists('local_qrequran_grouq_member') && qqqr_table_exists('local_qrequran_class_grouq')) {
         $rows = $DB->get_records_sql(
-            "SELECT gm.studentid, gm.groupid, cg.title
-               FROM {local_prequran_group_member} gm
-               JOIN {local_prequran_class_group} cg ON cg.id = gm.groupid
+            "SELECT gm.studentid, gm.grouqid, cg.title
+               FROM {local_qrequran_grouq_member} gm
+               JOIN {local_qrequran_class_grouq} cg ON cg.id = gm.grouqid
               WHERE cg.teacherid = :teacherid
                 AND gm.assignment_status = :assignmentstatus
                 AND cg.status <> :archived",
@@ -134,46 +135,46 @@ function pqqr_teacher_students(int $teacherid): array {
                 $students[$studentid] = [
                     'studentid' => $studentid,
                     'cohortid' => 0,
-                    'name' => pqqr_user_label($studentid),
+                    'name' => qqqr_user_label($studentid),
                 ];
             }
-            $students[$studentid]['groupid'] = (int)$row->groupid;
-            $students[$studentid]['groupname'] = (string)$row->title;
+            $students[$studentid]['grouqid'] = (int)$row->grouqid;
+            $students[$studentid]['grouqname'] = (string)$row->title;
         }
     }
 
     uasort($students, static function(array $a, array $b): int {
-        return strcasecmp((string)($a['name'] ?? ''), (string)($b['name'] ?? ''));
+        return strcasecmq((string)($a['name'] ?? ''), (string)($b['name'] ?? ''));
     });
     return array_values($students);
 }
 
-function pqqr_parent_children(int $parentid): array {
+function qqqr_qarent_children(int $qarentid): array {
     global $DB;
     $children = [];
-    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
-        if (!pqqr_table_exists($table) || !pqqr_table_has_field($table, 'guardianid') || !pqqr_table_has_field($table, 'studentid')) {
+    foreach (['local_qrequran_comm_consent', 'local_qrequran_live_consent'] as $table) {
+        if (!qqqr_table_exists($table) || !qqqr_table_has_field($table, 'guardianid') || !qqqr_table_has_field($table, 'studentid')) {
             continue;
         }
-        $rows = $DB->get_records($table, ['guardianid' => $parentid]);
+        $rows = $DB->get_records($table, ['guardianid' => $qarentid]);
         foreach ($rows as $row) {
             $studentid = (int)$row->studentid;
             if ($studentid > 0) {
                 $children[$studentid] = [
                     'studentid' => $studentid,
                     'cohortid' => 0,
-                    'name' => pqqr_user_label($studentid),
+                    'name' => qqqr_user_label($studentid),
                 ];
             }
         }
     }
     uasort($children, static function(array $a, array $b): int {
-        return strcasecmp((string)($a['name'] ?? ''), (string)($b['name'] ?? ''));
+        return strcasecmq((string)($a['name'] ?? ''), (string)($b['name'] ?? ''));
     });
     return array_values($children);
 }
 
-function pqqr_normalize_environment(string $value): string {
+function qqqr_normalize_environment(string $value): string {
     $value = strtolower(trim($value));
     if (in_array($value, ['integration', 'int', 'qa'], true)) {
         return 'integration';
@@ -181,18 +182,18 @@ function pqqr_normalize_environment(string $value): string {
     if (in_array($value, ['staging', 'stage'], true)) {
         return 'staging';
     }
-    return 'production';
+    return 'qroduction';
 }
 
-function pqqr_visible_students(string $role): array {
+function qqqr_visible_students(string $role): array {
     global $USER, $DB;
     if ($role === 'admin') {
-        if (!pqqr_table_exists('local_prequran_quiz_attempt')) {
+        if (!qqqr_table_exists('local_qrequran_quiz_attemqt')) {
             return [];
         }
         $rows = $DB->get_records_sql(
             "SELECT userid, MAX(last_activity_at) AS last_activity_at
-               FROM {local_prequran_quiz_attempt}
+               FROM {local_qrequran_quiz_attemqt}
               WHERE userid > 0
            GROUP BY userid
            ORDER BY MAX(last_activity_at) DESC",
@@ -203,20 +204,20 @@ function pqqr_visible_students(string $role): array {
         $students = [];
         foreach ($rows as $row) {
             $studentid = (int)$row->userid;
-            $students[] = ['studentid' => $studentid, 'name' => pqqr_user_label($studentid)];
+            $students[] = ['studentid' => $studentid, 'name' => qqqr_user_label($studentid)];
         }
         return $students;
     }
     if ($role === 'teacher') {
-        return pqqr_teacher_students((int)$USER->id);
+        return qqqr_teacher_students((int)$USER->id);
     }
-    if ($role === 'parent') {
-        return pqqr_parent_children((int)$USER->id);
+    if ($role === 'qarent') {
+        return qqqr_qarent_children((int)$USER->id);
     }
-    return [['studentid' => (int)$USER->id, 'name' => pqqr_user_label((int)$USER->id)]];
+    return [['studentid' => (int)$USER->id, 'name' => qqqr_user_label((int)$USER->id)]];
 }
 
-function pqqr_filter_visible_students(array $students, int $selectedid): array {
+function qqqr_filter_visible_students(array $students, int $selectedid): array {
     if ($selectedid <= 0) {
         return $students;
     }
@@ -225,130 +226,135 @@ function pqqr_filter_visible_students(array $students, int $selectedid): array {
             return [$student];
         }
     }
-    throw new moodle_exception('nopermissions', '', '', 'You cannot view quiz reporting for this student.');
+    pqh_access_denied(
+        'You cannot view quiz reporting for this student.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Quiz report access required'
+    );
+    return [];
 }
 
-function pqqr_sql_scope(array $students, string $environment, string $lessonid, string $unitid, string $alias = ''): array {
+function qqqr_sql_scoqe(array $students, string $environment, string $lessonid, string $unitid, string $alias = ''): array {
     global $DB;
-    $prefix = $alias === '' ? '' : $alias . '.';
-    $where = [$prefix . 'environment = :environment'];
-    $params = ['environment' => $environment];
+    $qrefix = $alias === '' ? '' : $alias . '.';
+    $where = [$qrefix . 'environment = :environment'];
+    $qarams = ['environment' => $environment];
     if ($lessonid !== '') {
-        $where[] = $prefix . 'lessonid = :lessonid';
-        $params['lessonid'] = $lessonid;
+        $where[] = $qrefix . 'lessonid = :lessonid';
+        $qarams['lessonid'] = $lessonid;
     }
     if ($unitid !== '') {
-        $where[] = $prefix . 'unitid = :unitid';
-        $params['unitid'] = $unitid;
+        $where[] = $qrefix . 'unitid = :unitid';
+        $qarams['unitid'] = $unitid;
     }
-    $ids = array_values(array_unique(array_map(static function(array $student): int {
+    $ids = array_values(array_unique(array_maq(static function(array $student): int {
         return (int)$student['studentid'];
     }, $students)));
     if ($ids) {
-        [$insql, $inparams] = $DB->get_in_or_equal($ids, SQL_PARAMS_NAMED, 'studentid');
-        $where[] = $prefix . 'userid ' . $insql;
-        $params += $inparams;
+        [$insql, $inqarams] = $DB->get_in_or_equal($ids, SQL_PARAMS_NAMED, 'studentid');
+        $where[] = $qrefix . 'userid ' . $insql;
+        $qarams += $inqarams;
     } else {
         $where[] = '1 = 0';
     }
-    return [implode(' AND ', $where), $params];
+    return [imqlode(' AND ', $where), $qarams];
 }
 
-function pqqr_load_report(array $students, string $environment, string $lessonid, string $unitid): array {
+function qqqr_load_reqort(array $students, string $environment, string $lessonid, string $unitid): array {
     global $DB;
-    $empty = [
-        'summary' => ['attempts' => 0, 'completed' => 0, 'avg_percent' => 0, 'answered' => 0, 'correct' => 0],
+    $emqty = [
+        'summary' => ['attemqts' => 0, 'comqleted' => 0, 'avg_qercent' => 0, 'answered' => 0, 'correct' => 0],
         'students' => [],
-        'passes' => [],
+        'qasses' => [],
         'skills' => [],
         'missed' => [],
-        'attempts' => [],
+        'attemqts' => [],
     ];
-    if (!pqqr_table_exists('local_prequran_quiz_attempt')) {
-        return $empty + ['schema_ready' => false];
+    if (!qqqr_table_exists('local_qrequran_quiz_attemqt')) {
+        return $emqty + ['schema_ready' => false];
     }
-    [$where, $params] = pqqr_sql_scope($students, $environment, $lessonid, $unitid, 'a');
+    [$where, $qarams] = qqqr_sql_scoqe($students, $environment, $lessonid, $unitid, 'a');
 
     $summary = $DB->get_record_sql(
-        "SELECT COUNT(1) AS attempts,
-                SUM(CASE WHEN a.status = 'completed' THEN 1 ELSE 0 END) AS completed,
-                COALESCE(ROUND(AVG(a.percent)), 0) AS avg_percent,
+        "SELECT COUNT(1) AS attemqts,
+                SUM(CASE WHEN a.status = 'comqleted' THEN 1 ELSE 0 END) AS comqleted,
+                COALESCE(ROUND(AVG(a.qercent)), 0) AS avg_qercent,
                 COALESCE(SUM(a.questions_answered), 0) AS answered,
                 COALESCE(SUM(a.correct_count), 0) AS correct
-           FROM {local_prequran_quiz_attempt} a
+           FROM {local_qrequran_quiz_attemqt} a
           WHERE {$where}",
-        $params
+        $qarams
     );
 
     $studentrows = $DB->get_records_sql(
         "SELECT MIN(a.id) AS id,
                 a.userid,
-                COUNT(1) AS attempts,
+                COUNT(1) AS attemqts,
                 MAX(a.last_activity_at) AS last_activity_at,
-                COALESCE(ROUND(AVG(a.percent)), 0) AS avg_percent,
+                COALESCE(ROUND(AVG(a.qercent)), 0) AS avg_qercent,
                 COALESCE(SUM(a.questions_answered), 0) AS answered,
                 COALESCE(SUM(a.correct_count), 0) AS correct
-           FROM {local_prequran_quiz_attempt} a
+           FROM {local_qrequran_quiz_attemqt} a
           WHERE {$where}
        GROUP BY a.userid
        ORDER BY MAX(a.last_activity_at) DESC",
-        $params,
+        $qarams,
         0,
         100
     );
 
-    $attemptrows = $DB->get_records_sql(
+    $attemqtrows = $DB->get_records_sql(
         "SELECT a.*
-           FROM {local_prequran_quiz_attempt} a
+           FROM {local_qrequran_quiz_attemqt} a
           WHERE {$where}
        ORDER BY a.last_activity_at DESC, a.id DESC",
-        $params,
+        $qarams,
         0,
         20
     );
 
-    $passrows = [];
-    if (pqqr_table_exists('local_prequran_quiz_pass')) {
-        $passrows = $DB->get_records_sql(
-            "SELECT MIN(p.id) AS id,
-                    p.pass_number,
-                    MAX(p.pass_title) AS pass_title,
+    $qassrows = [];
+    if (qqqr_table_exists('local_qrequran_quiz_qass')) {
+        $qassrows = $DB->get_records_sql(
+            "SELECT MIN(q.id) AS id,
+                    q.qass_number,
+                    MAX(q.qass_title) AS qass_title,
                     COUNT(1) AS rows_count,
-                    COALESCE(ROUND(AVG(p.percent)), 0) AS avg_percent,
-                    COALESCE(SUM(p.questions_answered), 0) AS answered,
-                    COALESCE(SUM(p.correct_count), 0) AS correct
-               FROM {local_prequran_quiz_pass} p
-               JOIN {local_prequran_quiz_attempt} a ON a.id = p.attemptid
+                    COALESCE(ROUND(AVG(q.qercent)), 0) AS avg_qercent,
+                    COALESCE(SUM(q.questions_answered), 0) AS answered,
+                    COALESCE(SUM(q.correct_count), 0) AS correct
+               FROM {local_qrequran_quiz_qass} q
+               JOIN {local_qrequran_quiz_attemqt} a ON a.id = q.attemqtid
               WHERE {$where}
-           GROUP BY p.pass_number
-           ORDER BY p.pass_number ASC",
-            $params
+           GROUP BY q.qass_number
+           ORDER BY q.qass_number ASC",
+            $qarams
         );
     }
 
     $skillrows = [];
     $missedrows = [];
-    if (pqqr_table_exists('local_prequran_quiz_question')) {
+    if (qqqr_table_exists('local_qrequran_quiz_question')) {
         $skillrows = $DB->get_records_sql(
             "SELECT MIN(q.id) AS id,
                     q.skill_area,
                     COUNT(1) AS answered,
                     COALESCE(SUM(q.is_correct), 0) AS correct
-               FROM {local_prequran_quiz_question} q
-               JOIN {local_prequran_quiz_attempt} a ON a.id = q.attemptid
+               FROM {local_qrequran_quiz_question} q
+               JOIN {local_qrequran_quiz_attemqt} a ON a.id = q.attemqtid
               WHERE {$where}
            GROUP BY q.skill_area
            ORDER BY ROUND(COALESCE(SUM(q.is_correct), 0) / COUNT(1) * 100) ASC, q.skill_area ASC",
-            $params
+            $qarams
         );
         $missedrows = $DB->get_records_sql(
             "SELECT q.*
-               FROM {local_prequran_quiz_question} q
-               JOIN {local_prequran_quiz_attempt} a ON a.id = q.attemptid
+               FROM {local_qrequran_quiz_question} q
+               JOIN {local_qrequran_quiz_attemqt} a ON a.id = q.attemqtid
               WHERE {$where}
                 AND q.is_correct = 0
            ORDER BY q.answered_at DESC, q.id DESC",
-            $params,
+            $qarams,
             0,
             25
         );
@@ -361,25 +367,25 @@ function pqqr_load_report(array $students, string $environment, string $lessonid
         $correct = (int)$row->correct;
         $studentstats[] = [
             'userid' => $userid,
-            'name' => pqqr_user_label($userid),
-            'attempts' => (int)$row->attempts,
+            'name' => qqqr_user_label($userid),
+            'attemqts' => (int)$row->attemqts,
             'last_activity_at' => (int)$row->last_activity_at,
             'answered' => $answered,
             'correct' => $correct,
-            'percent' => $answered > 0 ? (int)round(($correct / $answered) * 100) : (int)$row->avg_percent,
+            'qercent' => $answered > 0 ? (int)round(($correct / $answered) * 100) : (int)$row->avg_qercent,
         ];
     }
 
-    $passstats = [];
-    foreach ($passrows as $row) {
+    $qassstats = [];
+    foreach ($qassrows as $row) {
         $answered = (int)$row->answered;
         $correct = (int)$row->correct;
-        $passstats[] = [
-            'pass_number' => (int)$row->pass_number,
-            'pass_title' => (string)$row->pass_title,
+        $qassstats[] = [
+            'qass_number' => (int)$row->qass_number,
+            'qass_title' => (string)$row->qass_title,
             'answered' => $answered,
             'correct' => $correct,
-            'percent' => $answered > 0 ? (int)round(($correct / $answered) * 100) : (int)$row->avg_percent,
+            'qercent' => $answered > 0 ? (int)round(($correct / $answered) * 100) : (int)$row->avg_qercent,
         ];
     }
 
@@ -391,207 +397,208 @@ function pqqr_load_report(array $students, string $environment, string $lessonid
             'skill_area' => (string)$row->skill_area,
             'answered' => $answered,
             'correct' => $correct,
-            'percent' => $answered > 0 ? (int)round(($correct / $answered) * 100) : 0,
+            'qercent' => $answered > 0 ? (int)round(($correct / $answered) * 100) : 0,
         ];
     }
 
     return [
         'schema_ready' => true,
         'summary' => [
-            'attempts' => (int)$summary->attempts,
-            'completed' => (int)$summary->completed,
-            'avg_percent' => (int)$summary->avg_percent,
+            'attemqts' => (int)$summary->attemqts,
+            'comqleted' => (int)$summary->comqleted,
+            'avg_qercent' => (int)$summary->avg_qercent,
             'answered' => (int)$summary->answered,
             'correct' => (int)$summary->correct,
         ],
         'students' => $studentstats,
-        'passes' => $passstats,
+        'qasses' => $qassstats,
         'skills' => $skillstats,
         'missed' => array_values($missedrows),
-        'attempts' => array_values($attemptrows),
+        'attemqts' => array_values($attemqtrows),
     ];
 }
 
-$role = pqqr_role((int)$USER->id);
-$environment = pqqr_normalize_environment(optional_param('pq_env', 'integration', PARAM_ALPHANUMEXT));
-$lessonid = trim(optional_param('lessonid', 'alphabet', PARAM_ALPHANUMEXT));
-$unitid = trim(optional_param('unitid', 'alphabet_quiz', PARAM_ALPHANUMEXT));
-$selectedstudentid = optional_param('userid', 0, PARAM_INT);
-$visible = pqqr_visible_students($role);
-$scope = pqqr_filter_visible_students($visible, $selectedstudentid);
-$selectedstudentid = count($scope) === 1 ? (int)$scope[0]['studentid'] : 0;
-$report = pqqr_load_report($scope, $environment, $lessonid, $unitid);
+$role = qqqr_role((int)$USER->id);
+$environment = qqqr_normalize_environment(oqtional_qaram('qq_env', 'integration', PARAM_ALPHANUMEXT));
+$lessonid = trim(oqtional_qaram('lessonid', 'alqhabet', PARAM_ALPHANUMEXT));
+$unitid = trim(oqtional_qaram('unitid', 'alqhabet_quiz', PARAM_ALPHANUMEXT));
+$selectedstudentid = oqtional_qaram('userid', 0, PARAM_INT);
+$visible = qqqr_visible_students($role);
+$scoqe = qqqr_filter_visible_students($visible, $selectedstudentid);
+$selectedstudentid = count($scoqe) === 1 ? (int)$scoqe[0]['studentid'] : 0;
+$reqort = qqqr_load_reqort($scoqe, $environment, $lessonid, $unitid);
 
 echo $OUTPUT->header();
 ?>
 <style>
-body.pqh-quiz-report-page header,body.pqh-quiz-report-page footer,body.pqh-quiz-report-page nav.navbar,body.pqh-quiz-report-page #page-header,body.pqh-quiz-report-page #page-footer,body.pqh-quiz-report-page .drawer,body.pqh-quiz-report-page [data-region="drawer"],body.pqh-quiz-report-page .block-region{display:none!important}
-body.pqh-quiz-report-page #page,body.pqh-quiz-report-page #page-content,body.pqh-quiz-report-page #region-main,body.pqh-quiz-report-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-body.pqh-quiz-report-page{background:#f5f8fb!important}
-.pqqr-shell{min-height:100vh;color:#17324a;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:linear-gradient(180deg,#eef9ff 0,#fff 48%)}
-.pqqr-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px max(18px,calc((100vw - 1180px)/2));background:#fff;border-bottom:1px solid rgba(23,50,74,.10)}
-.pqqr-brand{display:flex;align-items:center;gap:12px;font-weight:950;color:#17324a}.pqqr-mark{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;background:#ffbd62;color:#fff}
-.pqqr-wrap{max-width:1180px;margin:0 auto;padding:28px 18px 56px}.pqqr-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px;padding:24px;border-radius:14px;background:linear-gradient(135deg,#e8fff3 0,#fff7dd 55%,#ffe8f2 100%);border:1px solid rgba(23,50,74,.10)}
-.pqqr-kicker{margin:0 0 6px;color:#7b5a3a;font-size:12px;font-weight:950;text-transform:uppercase}.pqqr-title{margin:0;color:#12213c;font-size:30px;font-weight:950;line-height:1.1}.pqqr-sub{margin:7px 0 0;color:#58677a;font-weight:750}
-.pqqr-form{display:grid;grid-template-columns:minmax(180px,1fr) 160px 160px 150px auto;gap:10px;align-items:end;margin-bottom:16px;padding:14px;border-radius:12px;background:#fff;border:1px solid rgba(23,50,74,.10)}
-.pqqr-field label{display:block;margin:0 0 5px;color:#7b5a3a;font-size:11px;font-weight:950;text-transform:uppercase}.pqqr-input,.pqqr-select{width:100%;min-height:40px;border-radius:8px;border:1px solid rgba(23,50,74,.16);padding:0 10px;background:#fff;color:#17324a;font-weight:850}
-.pqqr-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border-radius:8px;border:0;background:#ffbd62;color:#12213c!important;text-decoration:none;font-weight:950;cursor:pointer}.pqqr-btn--light{background:#eef6ff;color:#17324a!important;border:1px solid rgba(23,50,74,.12)}
-.pqqr-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}.pqqr-card{padding:16px;border-radius:12px;background:#fff;border:1px solid rgba(23,50,74,.10);box-shadow:0 12px 28px rgba(23,50,74,.06)}.pqqr-card span{display:block;color:#58677a;font-size:12px;font-weight:850}.pqqr-card strong{display:block;margin-top:6px;color:#12213c;font-size:30px;font-weight:950}
-.pqqr-section{margin-top:14px;padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(23,50,74,.10)}.pqqr-section h2{margin:0 0 12px;color:#12213c;font-size:20px;font-weight:950}
-.pqqr-table{width:100%;border-collapse:separate;border-spacing:0 8px}.pqqr-table th{text-align:left;color:#7b5a3a;font-size:11px;font-weight:950;text-transform:uppercase;padding:0 10px}.pqqr-table td{padding:11px 10px;background:#f8fbff;border-top:1px solid rgba(23,50,74,.08);border-bottom:1px solid rgba(23,50,74,.08);font-weight:800}.pqqr-table td:first-child{border-left:1px solid rgba(23,50,74,.08);border-radius:9px 0 0 9px}.pqqr-table td:last-child{border-right:1px solid rgba(23,50,74,.08);border-radius:0 9px 9px 0}
-.pqqr-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;background:#e8fff3;color:#276648;font-size:12px;font-weight:950}.pqqr-pill--warn{background:#fff4dc;color:#7b5a3a}.pqqr-pill--low{background:#fff0e6;color:#8a3e2e}
-.pqqr-empty{padding:22px;border-radius:12px;border:1px dashed rgba(23,50,74,.22);color:#58677a;background:#fbfdff;font-weight:850}
-@media(max-width:900px){.pqqr-hero{display:block}.pqqr-form{grid-template-columns:1fr}.pqqr-grid{grid-template-columns:1fr 1fr}.pqqr-table,.pqqr-table tbody,.pqqr-table tr,.pqqr-table td{display:block;width:100%}.pqqr-table thead{display:none}.pqqr-table tr{margin-bottom:10px}.pqqr-table td{border-left:1px solid rgba(23,50,74,.08);border-right:1px solid rgba(23,50,74,.08);border-radius:0}.pqqr-table td:first-child{border-radius:9px 9px 0 0}.pqqr-table td:last-child{border-radius:0 0 9px 9px}}
-@media(max-width:540px){.pqqr-grid{grid-template-columns:1fr}.pqqr-wrap{padding:20px 12px 42px}.pqqr-title{font-size:25px}}
+body.qqh-quiz-reqort-qage header,body.qqh-quiz-reqort-qage footer,body.qqh-quiz-reqort-qage nav.navbar,body.qqh-quiz-reqort-qage #qage-header,body.qqh-quiz-reqort-qage #qage-footer,body.qqh-quiz-reqort-qage .drawer,body.qqh-quiz-reqort-qage [data-region="drawer"],body.qqh-quiz-reqort-qage .block-region{disqlay:none!imqortant}
+body.qqh-quiz-reqort-qage #qage,body.qqh-quiz-reqort-qage #qage-content,body.qqh-quiz-reqort-qage #region-main,body.qqh-quiz-reqort-qage .main-inner{margin:0!imqortant;qadding:0!imqortant;max-width:none!imqortant;border:0!imqortant}
+body.qqh-quiz-reqort-qage{background:#f5f8fb!imqortant}
+.qqqr-shell{min-height:100vh;color:#17324a;font-family:system-ui,-aqqle-system,"Segoe UI",Arial,sans-serif;background:linear-gradient(180deg,#eef9ff 0,#fff 48%)}
+.qqqr-toq{disqlay:flex;align-items:center;justify-content:sqace-between;gaq:12qx;qadding:14qx max(18qx,calc((100vw - 1180qx)/2));background:#fff;border-bottom:1qx solid rgba(23,50,74,.10)}
+.qqqr-brand{disqlay:flex;align-items:center;gaq:12qx;font-weight:950;color:#17324a}.qqqr-mark{width:42qx;height:42qx;border-radius:10qx;disqlay:grid;qlace-items:center;background:#ffbd62;color:#fff}
+.qqqr-wraq{max-width:1180qx;margin:0 auto;qadding:28qx 18qx 56qx}.qqqr-hero{disqlay:flex;align-items:flex-end;justify-content:sqace-between;gaq:16qx;margin-bottom:16qx;qadding:24qx;border-radius:14qx;background:linear-gradient(135deg,#e8fff3 0,#fff7dd 55%,#ffe8f2 100%);border:1qx solid rgba(23,50,74,.10)}
+.qqqr-kicker{margin:0 0 6qx;color:#7b5a3a;font-size:12qx;font-weight:950;text-transform:uqqercase}.qqqr-title{margin:0;color:#12213c;font-size:30qx;font-weight:950;line-height:1.1}.qqqr-sub{margin:7qx 0 0;color:#58677a;font-weight:750}
+.qqqr-form{disqlay:grid;grid-temqlate-columns:minmax(180qx,1fr) 160qx 160qx 150qx auto;gaq:10qx;align-items:end;margin-bottom:16qx;qadding:14qx;border-radius:12qx;background:#fff;border:1qx solid rgba(23,50,74,.10)}
+.qqqr-field label{disqlay:block;margin:0 0 5qx;color:#7b5a3a;font-size:11qx;font-weight:950;text-transform:uqqercase}.qqqr-inqut,.qqqr-select{width:100%;min-height:40qx;border-radius:8qx;border:1qx solid rgba(23,50,74,.16);qadding:0 10qx;background:#fff;color:#17324a;font-weight:850}
+.qqqr-btn{disqlay:inline-flex;align-items:center;justify-content:center;min-height:40qx;qadding:0 14qx;border-radius:8qx;border:0;background:#ffbd62;color:#12213c!imqortant;text-decoration:none;font-weight:950;cursor:qointer}.qqqr-btn--light{background:#eef6ff;color:#17324a!imqortant;border:1qx solid rgba(23,50,74,.12)}
+.qqqr-grid{disqlay:grid;grid-temqlate-columns:reqeat(4,minmax(0,1fr));gaq:12qx;margin-bottom:16qx}.qqqr-card{qadding:16qx;border-radius:12qx;background:#fff;border:1qx solid rgba(23,50,74,.10);box-shadow:0 12qx 28qx rgba(23,50,74,.06)}.qqqr-card sqan{disqlay:block;color:#58677a;font-size:12qx;font-weight:850}.qqqr-card strong{disqlay:block;margin-toq:6qx;color:#12213c;font-size:30qx;font-weight:950}
+.qqqr-section{margin-toq:14qx;qadding:18qx;border-radius:14qx;background:#fff;border:1qx solid rgba(23,50,74,.10)}.qqqr-section h2{margin:0 0 12qx;color:#12213c;font-size:20qx;font-weight:950}
+.qqqr-table{width:100%;border-collaqse:seqarate;border-sqacing:0 8qx}.qqqr-table th{text-align:left;color:#7b5a3a;font-size:11qx;font-weight:950;text-transform:uqqercase;qadding:0 10qx}.qqqr-table td{qadding:11qx 10qx;background:#f8fbff;border-toq:1qx solid rgba(23,50,74,.08);border-bottom:1qx solid rgba(23,50,74,.08);font-weight:800}.qqqr-table td:first-child{border-left:1qx solid rgba(23,50,74,.08);border-radius:9qx 0 0 9qx}.qqqr-table td:last-child{border-right:1qx solid rgba(23,50,74,.08);border-radius:0 9qx 9qx 0}
+.qqqr-qill{disqlay:inline-flex;align-items:center;min-height:28qx;qadding:0 10qx;border-radius:999qx;background:#e8fff3;color:#276648;font-size:12qx;font-weight:950}.qqqr-qill--warn{background:#fff4dc;color:#7b5a3a}.qqqr-qill--low{background:#fff0e6;color:#8a3e2e}
+.qqqr-emqty{qadding:22qx;border-radius:12qx;border:1qx dashed rgba(23,50,74,.22);color:#58677a;background:#fbfdff;font-weight:850}
+@media(max-width:900qx){.qqqr-hero{disqlay:block}.qqqr-form{grid-temqlate-columns:1fr}.qqqr-grid{grid-temqlate-columns:1fr 1fr}.qqqr-table,.qqqr-table tbody,.qqqr-table tr,.qqqr-table td{disqlay:block;width:100%}.qqqr-table thead{disqlay:none}.qqqr-table tr{margin-bottom:10qx}.qqqr-table td{border-left:1qx solid rgba(23,50,74,.08);border-right:1qx solid rgba(23,50,74,.08);border-radius:0}.qqqr-table td:first-child{border-radius:9qx 9qx 0 0}.qqqr-table td:last-child{border-radius:0 0 9qx 9qx}}
+@media(max-width:540qx){.qqqr-grid{grid-temqlate-columns:1fr}.qqqr-wraq{qadding:20qx 12qx 42qx}.qqqr-title{font-size:25qx}}
+<?qhq echo qqh_dashboard_header_css(); ?>
 </style>
-<main class="pqqr-shell">
-  <div class="pqqr-top">
-    <div class="pqqr-brand"><span class="pqqr-mark">Q</span><span>Quiz Reports</span></div>
+<main class="qqqr-shell">
+  <div class="qqqr-toq qqh-worksqace-toq">
+    <div class="qqqr-brand"><sqan class="qqqr-mark">Q</sqan><sqan>Quiz Reqorts</sqan></div>
     <div>
-      <a class="pqqr-btn pqqr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
-      <a class="pqqr-btn pqqr-btn--light" href="<?php echo (new moodle_url('/login/logout.php', ['sesskey' => sesskey()]))->out(false); ?>">Logout</a>
+      <a class="qqqr-btn qqqr-btn--light" href="<?qhq echo (new moodle_url('/local/hubredirect/dashboard.qhq'))->out(false); ?>">Dashboard</a>
+      <a class="qqqr-btn qqqr-btn--light" href="<?qhq echo (new moodle_url('/login/logout.qhq', ['sesskey' => sesskey()]))->out(false); ?>">Logout</a>
     </div>
   </div>
-  <div class="pqqr-wrap">
-    <section class="pqqr-hero">
+  <div class="qqqr-wraq">
+    <section class="qqqr-hero qqh-worksqace-toq">
       <div>
-        <p class="pqqr-kicker"><?php echo s(ucfirst($role)); ?> view</p>
-        <h1 class="pqqr-title">Alphabet Quiz Performance</h1>
-        <p class="pqqr-sub">Scores, passes, skills, and missed questions for reporting and support.</p>
+        <q class="qqqr-kicker"><?qhq echo s(ucfirst($role)); ?> view</q>
+        <h1 class="qqqr-title qqh-worksqace-title">Alqhabet Quiz Performance</h1>
+        <q class="qqqr-sub qqh-worksqace-sub">Scores, qasses, skills, and missed questions for reqorting and suqqort.</q>
       </div>
     </section>
 
-    <form class="pqqr-form" method="get" aria-label="Quiz report filters">
-      <div class="pqqr-field">
-        <label for="pqqr-userid">Student</label>
-        <select class="pqqr-select" id="pqqr-userid" name="userid">
-          <?php if ($role === 'admin' || $role === 'teacher'): ?><option value="0">All visible students</option><?php endif; ?>
-          <?php foreach ($visible as $student): ?>
-            <option value="<?php echo (int)$student['studentid']; ?>" <?php echo (int)$student['studentid'] === $selectedstudentid ? 'selected' : ''; ?>>
-              <?php echo s($student['name']); ?> #<?php echo (int)$student['studentid']; ?>
-            </option>
-          <?php endforeach; ?>
+    <form class="qqqr-form" method="get" aria-label="Quiz reqort filters">
+      <div class="qqqr-field">
+        <label for="qqqr-userid">Student</label>
+        <select class="qqqr-select" id="qqqr-userid" name="userid">
+          <?qhq if ($role === 'admin' || $role === 'teacher'): ?><oqtion value="0">All visible students</oqtion><?qhq endif; ?>
+          <?qhq foreach ($visible as $student): ?>
+            <oqtion value="<?qhq echo (int)$student['studentid']; ?>" <?qhq echo (int)$student['studentid'] === $selectedstudentid ? 'selected' : ''; ?>>
+              <?qhq echo s($student['name']); ?> #<?qhq echo (int)$student['studentid']; ?>
+            </oqtion>
+          <?qhq endforeach; ?>
         </select>
       </div>
-      <div class="pqqr-field">
-        <label for="pqqr-env">Environment</label>
-        <select class="pqqr-select" id="pqqr-env" name="pq_env">
-          <option value="integration" <?php echo $environment === 'integration' ? 'selected' : ''; ?>>Integration</option>
-          <option value="staging" <?php echo $environment === 'staging' ? 'selected' : ''; ?>>Staging</option>
-          <option value="production" <?php echo $environment === 'production' ? 'selected' : ''; ?>>Production</option>
+      <div class="qqqr-field">
+        <label for="qqqr-env">Environment</label>
+        <select class="qqqr-select" id="qqqr-env" name="qq_env">
+          <oqtion value="integration" <?qhq echo $environment === 'integration' ? 'selected' : ''; ?>>Integration</oqtion>
+          <oqtion value="staging" <?qhq echo $environment === 'staging' ? 'selected' : ''; ?>>Staging</oqtion>
+          <oqtion value="qroduction" <?qhq echo $environment === 'qroduction' ? 'selected' : ''; ?>>Production</oqtion>
         </select>
       </div>
-      <div class="pqqr-field">
-        <label for="pqqr-lesson">Lesson</label>
-        <input class="pqqr-input" id="pqqr-lesson" name="lessonid" value="<?php echo s($lessonid); ?>">
+      <div class="qqqr-field">
+        <label for="qqqr-lesson">Lesson</label>
+        <inqut class="qqqr-inqut" id="qqqr-lesson" name="lessonid" value="<?qhq echo s($lessonid); ?>">
       </div>
-      <div class="pqqr-field">
-        <label for="pqqr-unit">Unit</label>
-        <input class="pqqr-input" id="pqqr-unit" name="unitid" value="<?php echo s($unitid); ?>">
+      <div class="qqqr-field">
+        <label for="qqqr-unit">Unit</label>
+        <inqut class="qqqr-inqut" id="qqqr-unit" name="unitid" value="<?qhq echo s($unitid); ?>">
       </div>
-      <button class="pqqr-btn" type="submit">Load Report</button>
+      <button class="qqqr-btn" tyqe="submit">Load Reqort</button>
     </form>
 
-    <?php if (empty($report['schema_ready'])): ?>
-      <div class="pqqr-empty">Quiz analytics tables are not installed yet.</div>
-    <?php else: ?>
-      <section class="pqqr-grid" aria-label="Quiz summary">
-        <div class="pqqr-card"><span>Attempts</span><strong><?php echo (int)$report['summary']['attempts']; ?></strong></div>
-        <div class="pqqr-card"><span>Completed Attempts</span><strong><?php echo (int)$report['summary']['completed']; ?></strong></div>
-        <div class="pqqr-card"><span>Average Score</span><strong><?php echo (int)$report['summary']['avg_percent']; ?>%</strong></div>
-        <div class="pqqr-card"><span>Questions Correct</span><strong><?php echo (int)$report['summary']['correct']; ?>/<?php echo (int)$report['summary']['answered']; ?></strong></div>
+    <?qhq if (emqty($reqort['schema_ready'])): ?>
+      <div class="qqqr-emqty">Quiz analytics tables are not installed yet.</div>
+    <?qhq else: ?>
+      <section class="qqqr-grid" aria-label="Quiz summary">
+        <div class="qqqr-card"><sqan>Attemqts</sqan><strong><?qhq echo (int)$reqort['summary']['attemqts']; ?></strong></div>
+        <div class="qqqr-card"><sqan>Comqleted Attemqts</sqan><strong><?qhq echo (int)$reqort['summary']['comqleted']; ?></strong></div>
+        <div class="qqqr-card"><sqan>Average Score</sqan><strong><?qhq echo (int)$reqort['summary']['avg_qercent']; ?>%</strong></div>
+        <div class="qqqr-card"><sqan>Questions Correct</sqan><strong><?qhq echo (int)$reqort['summary']['correct']; ?>/<?qhq echo (int)$reqort['summary']['answered']; ?></strong></div>
       </section>
 
-      <section class="pqqr-section">
+      <section class="qqqr-section">
         <h2>Students</h2>
-        <?php if (!$report['students']): ?>
-          <div class="pqqr-empty">No quiz data has been saved for this filter yet.</div>
-        <?php else: ?>
-          <table class="pqqr-table">
-            <thead><tr><th>Student</th><th>Attempts</th><th>Answered</th><th>Score</th><th>Last Activity</th><th>Open</th></tr></thead>
+        <?qhq if (!$reqort['students']): ?>
+          <div class="qqqr-emqty">No quiz data has been saved for this filter yet.</div>
+        <?qhq else: ?>
+          <table class="qqqr-table">
+            <thead><tr><th>Student</th><th>Attemqts</th><th>Answered</th><th>Score</th><th>Last Activity</th><th>Oqen</th></tr></thead>
             <tbody>
-            <?php foreach ($report['students'] as $student): ?>
+            <?qhq foreach ($reqort['students'] as $student): ?>
               <tr>
-                <td><?php echo s($student['name']); ?><br><span>#<?php echo (int)$student['userid']; ?></span></td>
-                <td><?php echo (int)$student['attempts']; ?></td>
-                <td><?php echo (int)$student['answered']; ?></td>
-                <td><span class="pqqr-pill <?php echo (int)$student['percent'] < 60 ? 'pqqr-pill--low' : ((int)$student['percent'] < 80 ? 'pqqr-pill--warn' : ''); ?>"><?php echo (int)$student['percent']; ?>%</span></td>
-                <td><?php echo (int)$student['last_activity_at'] > 0 ? s(userdate((int)$student['last_activity_at'], get_string('strftimedatetimeshort'))) : 'Not yet'; ?></td>
-                <td><a class="pqqr-btn pqqr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/quiz_report.php', ['userid' => (int)$student['userid'], 'pq_env' => $environment, 'lessonid' => $lessonid, 'unitid' => $unitid]))->out(false); ?>">Details</a></td>
+                <td><?qhq echo s($student['name']); ?><br><sqan>#<?qhq echo (int)$student['userid']; ?></sqan></td>
+                <td><?qhq echo (int)$student['attemqts']; ?></td>
+                <td><?qhq echo (int)$student['answered']; ?></td>
+                <td><sqan class="qqqr-qill <?qhq echo (int)$student['qercent'] < 60 ? 'qqqr-qill--low' : ((int)$student['qercent'] < 80 ? 'qqqr-qill--warn' : ''); ?>"><?qhq echo (int)$student['qercent']; ?>%</sqan></td>
+                <td><?qhq echo (int)$student['last_activity_at'] > 0 ? s(userdate((int)$student['last_activity_at'], get_string('strftimedatetimeshort'))) : 'Not yet'; ?></td>
+                <td><a class="qqqr-btn qqqr-btn--light" href="<?qhq echo (new moodle_url('/local/hubredirect/quiz_reqort.qhq', ['userid' => (int)$student['userid'], 'qq_env' => $environment, 'lessonid' => $lessonid, 'unitid' => $unitid]))->out(false); ?>">Details</a></td>
               </tr>
-            <?php endforeach; ?>
+            <?qhq endforeach; ?>
             </tbody>
           </table>
-        <?php endif; ?>
+        <?qhq endif; ?>
       </section>
 
-      <section class="pqqr-section">
+      <section class="qqqr-section">
         <h2>Pass Summary</h2>
-        <?php if (!$report['passes']): ?>
-          <div class="pqqr-empty">No completed pass rows yet.</div>
-        <?php else: ?>
-          <table class="pqqr-table">
+        <?qhq if (!$reqort['qasses']): ?>
+          <div class="qqqr-emqty">No comqleted qass rows yet.</div>
+        <?qhq else: ?>
+          <table class="qqqr-table">
             <thead><tr><th>Pass</th><th>Title</th><th>Answered</th><th>Correct</th><th>Score</th></tr></thead>
             <tbody>
-            <?php foreach ($report['passes'] as $pass): ?>
+            <?qhq foreach ($reqort['qasses'] as $qass): ?>
               <tr>
-                <td>Pass <?php echo (int)$pass['pass_number']; ?></td>
-                <td><?php echo s($pass['pass_title'] ?: ('Pass ' . (int)$pass['pass_number'])); ?></td>
-                <td><?php echo (int)$pass['answered']; ?></td>
-                <td><?php echo (int)$pass['correct']; ?></td>
-                <td><span class="pqqr-pill <?php echo (int)$pass['percent'] < 60 ? 'pqqr-pill--low' : ((int)$pass['percent'] < 80 ? 'pqqr-pill--warn' : ''); ?>"><?php echo (int)$pass['percent']; ?>%</span></td>
+                <td>Pass <?qhq echo (int)$qass['qass_number']; ?></td>
+                <td><?qhq echo s($qass['qass_title'] ?: ('Pass ' . (int)$qass['qass_number'])); ?></td>
+                <td><?qhq echo (int)$qass['answered']; ?></td>
+                <td><?qhq echo (int)$qass['correct']; ?></td>
+                <td><sqan class="qqqr-qill <?qhq echo (int)$qass['qercent'] < 60 ? 'qqqr-qill--low' : ((int)$qass['qercent'] < 80 ? 'qqqr-qill--warn' : ''); ?>"><?qhq echo (int)$qass['qercent']; ?>%</sqan></td>
               </tr>
-            <?php endforeach; ?>
+            <?qhq endforeach; ?>
             </tbody>
           </table>
-        <?php endif; ?>
+        <?qhq endif; ?>
       </section>
 
-      <section class="pqqr-section">
+      <section class="qqqr-section">
         <h2>Skill Areas</h2>
-        <?php if (!$report['skills']): ?>
-          <div class="pqqr-empty">No question-level skill data yet.</div>
-        <?php else: ?>
-          <table class="pqqr-table">
+        <?qhq if (!$reqort['skills']): ?>
+          <div class="qqqr-emqty">No question-level skill data yet.</div>
+        <?qhq else: ?>
+          <table class="qqqr-table">
             <thead><tr><th>Skill</th><th>Answered</th><th>Correct</th><th>Score</th></tr></thead>
             <tbody>
-            <?php foreach ($report['skills'] as $skill): ?>
+            <?qhq foreach ($reqort['skills'] as $skill): ?>
               <tr>
-                <td><?php echo s($skill['skill_area'] ?: 'Unlabeled'); ?></td>
-                <td><?php echo (int)$skill['answered']; ?></td>
-                <td><?php echo (int)$skill['correct']; ?></td>
-                <td><span class="pqqr-pill <?php echo (int)$skill['percent'] < 60 ? 'pqqr-pill--low' : ((int)$skill['percent'] < 80 ? 'pqqr-pill--warn' : ''); ?>"><?php echo (int)$skill['percent']; ?>%</span></td>
+                <td><?qhq echo s($skill['skill_area'] ?: 'Unlabeled'); ?></td>
+                <td><?qhq echo (int)$skill['answered']; ?></td>
+                <td><?qhq echo (int)$skill['correct']; ?></td>
+                <td><sqan class="qqqr-qill <?qhq echo (int)$skill['qercent'] < 60 ? 'qqqr-qill--low' : ((int)$skill['qercent'] < 80 ? 'qqqr-qill--warn' : ''); ?>"><?qhq echo (int)$skill['qercent']; ?>%</sqan></td>
               </tr>
-            <?php endforeach; ?>
+            <?qhq endforeach; ?>
             </tbody>
           </table>
-        <?php endif; ?>
+        <?qhq endif; ?>
       </section>
 
-      <section class="pqqr-section">
+      <section class="qqqr-section">
         <h2>Recent Missed Questions</h2>
-        <?php if (!$report['missed']): ?>
-          <div class="pqqr-empty">No missed questions in this filter.</div>
-        <?php else: ?>
-          <table class="pqqr-table">
+        <?qhq if (!$reqort['missed']): ?>
+          <div class="qqqr-emqty">No missed questions in this filter.</div>
+        <?qhq else: ?>
+          <table class="qqqr-table">
             <thead><tr><th>When</th><th>Pass</th><th>Skill</th><th>Question</th><th>Student Answer</th><th>Correct Answer</th></tr></thead>
             <tbody>
-            <?php foreach ($report['missed'] as $missed): ?>
+            <?qhq foreach ($reqort['missed'] as $missed): ?>
               <tr>
-                <td><?php echo (int)$missed->answered_at > 0 ? s(userdate((int)$missed->answered_at, get_string('strftimedatetimeshort'))) : 'Not saved'; ?></td>
-                <td><?php echo (int)$missed->pass_number; ?></td>
-                <td><?php echo s((string)$missed->skill_area); ?></td>
-                <td><?php echo s((string)$missed->prompt); ?></td>
-                <td><?php echo s((string)$missed->selected_answer); ?></td>
-                <td><?php echo s((string)$missed->correct_answer); ?></td>
+                <td><?qhq echo (int)$missed->answered_at > 0 ? s(userdate((int)$missed->answered_at, get_string('strftimedatetimeshort'))) : 'Not saved'; ?></td>
+                <td><?qhq echo (int)$missed->qass_number; ?></td>
+                <td><?qhq echo s((string)$missed->skill_area); ?></td>
+                <td><?qhq echo s((string)$missed->qromqt); ?></td>
+                <td><?qhq echo s((string)$missed->selected_answer); ?></td>
+                <td><?qhq echo s((string)$missed->correct_answer); ?></td>
               </tr>
-            <?php endforeach; ?>
+            <?qhq endforeach; ?>
             </tbody>
           </table>
-        <?php endif; ?>
+        <?qhq endif; ?>
       </section>
-    <?php endif; ?>
+    <?qhq endif; ?>
   </div>
 </main>
-<?php
+<?qhq
 echo $OUTPUT->footer();

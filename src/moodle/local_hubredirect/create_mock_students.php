@@ -1,13 +1,19 @@
 <?php
-// This file is part of Quraan Academy custom live-class tooling.
+// This file is part of EduPlatform custom live-class tooling.
 
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/user/lib.php');
+require_once(__DIR__ . '/account_ids.php');
+require_once(__DIR__ . '/accesslib.php');
 
 require_login();
 
 if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can create mock student records.');
+    pqh_access_denied(
+        'Only site administrators can create mock student records.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Mock student setup access required'
+    );
 }
 
 $PAGE->set_context(context_system::instance());
@@ -73,9 +79,9 @@ function pqms_moodle_email(string $contact, string $fallbackprefix): string {
     }
     $digits = preg_replace('/\D+/', '', $contact);
     if ($digits !== '') {
-        return $fallbackprefix . '.' . $digits . '@phone.quraanacademy.local';
+        return $fallbackprefix . '.' . $digits . '@phone.eduplatform.local';
     }
-    return $fallbackprefix . '@quraanacademy.local';
+    return $fallbackprefix . '@eduplatform.local';
 }
 
 function pqms_find_user_by_username(string $username): ?stdClass {
@@ -123,16 +129,17 @@ function pqms_create_or_reuse_user(array $data, bool $isparent): array {
     $user->timezone = $data['timezone'];
     $user->lang = 'en';
     $user->emailstop = 1;
-    $user->description = $isparent ? 'Mock parent account for Quraan Academy testing.' : 'Mock student account for Quraan Academy testing.';
+    $user->description = $isparent ? 'Mock parent account for EduPlatform testing.' : 'Mock student account for EduPlatform testing.';
 
     $userid = user_create_user($user, true, false);
+    pqh_assign_account_id((int)$userid, $isparent ? 'parent' : 'student');
     return [$userid, true, $username];
 }
 
 function pqms_read_rows(): array {
     $path = __DIR__ . '/mock_student_data.csv';
     if (!is_readable($path)) {
-        throw new moodle_exception('missingfile', '', '', 'Missing mock_student_data.csv beside create_mock_students.php.');
+        throw new invalid_parameter_exception('Missing mock_student_data.csv beside create_mock_students.php.');
     }
 
     $handle = fopen($path, 'r');
@@ -152,7 +159,7 @@ function pqms_save_profile(int $studentid, int $parentid, array $row): int {
     global $DB, $USER;
 
     if (!pqms_table_exists('local_prequran_student_profile')) {
-        throw new moodle_exception('invalidtable', '', '', 'Student profile table is missing.');
+        throw new invalid_parameter_exception('Student profile table is missing.');
     }
 
     $columns = pqms_profile_columns();
@@ -178,7 +185,7 @@ function pqms_save_profile(int $studentid, int $parentid, array $row): int {
     pqms_set_field($record, $columns, 'student_firstname', $row['student_firstname']);
     pqms_set_field($record, $columns, 'student_lastname', $row['student_lastname']);
     pqms_set_field($record, $columns, 'student_display_name', $row['student_display_name']);
-    pqms_set_field($record, $columns, 'student_email', 'mock.student' . str_pad($row['mock_student_no'], 3, '0', STR_PAD_LEFT) . '@quraanacademy.test');
+    pqms_set_field($record, $columns, 'student_email', 'mock.student' . str_pad($row['mock_student_no'], 3, '0', STR_PAD_LEFT) . '@eduplatform.test');
     pqms_set_field($record, $columns, 'primary_language', $row['primary_language']);
     pqms_set_field($record, $columns, 'other_languages', $row['other_languages']);
     pqms_set_field($record, $columns, 'base_of_learning', $row['base_of_learning']);
@@ -308,7 +315,7 @@ function pqms_create_students(array $rows): array {
     $transaction = $DB->start_delegated_transaction();
     foreach ($rows as $row) {
         $number = str_pad($row['mock_student_no'], 3, '0', STR_PAD_LEFT);
-        $studentemail = 'mock.student' . $number . '@quraanacademy.test';
+        $studentemail = 'mock.student' . $number . '@eduplatform.test';
         [$studentid, $studentcreated, $studentusername] = pqms_create_or_reuse_user([
             'username' => 'mock.student.' . $number,
             'password' => 'Student@Test123!',
@@ -372,14 +379,27 @@ function pqms_create_students(array $rows): array {
     return $results;
 }
 
-$rows = pqms_read_rows();
 $created = optional_param('created', 0, PARAM_INT);
 $results = [];
+$error = '';
+$rows = [];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_sesskey();
-    $results = pqms_create_students($rows);
-    redirect(new moodle_url('/local/hubredirect/create_mock_students.php', ['created' => count($results)]));
+try {
+    $rows = pqms_read_rows();
+} catch (Throwable $e) {
+    $error = $e->getMessage();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
+    try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This mock student setup form expired. Refresh the page and try again.');
+        }
+        $results = pqms_create_students($rows);
+        redirect(new moodle_url('/local/hubredirect/create_mock_students.php', ['created' => count($results)]));
+    } catch (Throwable $e) {
+        $error = $e->getMessage();
+    }
 }
 
 echo $OUTPUT->header();
@@ -393,6 +413,9 @@ echo html_writer::end_div();
 
 if ($created > 0) {
     echo html_writer::div('Created/refreshed ' . $created . ' mock student records. You can now use them for grouping, Moodle course groups, and BBB live sessions.', 'pq-alert success');
+}
+if ($error !== '') {
+    echo html_writer::div(s($error), 'pq-alert error');
 }
 
 $counts = [];

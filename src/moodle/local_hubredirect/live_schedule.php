@@ -2,14 +2,22 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
 $childid = optional_param('childid', 0, PARAM_INT);
+$requestedteacherid = optional_param('teacherid', 0, PARAM_INT);
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_schedule.php', $childid > 0 ? ['childid' => $childid] : []));
+$pageparams = [];
+if ($requestedteacherid > 0) {
+    $pageparams['teacherid'] = $requestedteacherid;
+} else if ($childid > 0) {
+    $pageparams['childid'] = $childid;
+}
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_schedule.php', $pageparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Class Schedule');
 $PAGE->set_heading('Live Class Schedule');
@@ -31,6 +39,39 @@ function pqlsch_column_exists(string $table, string $column): bool {
         return false;
     }
     return array_key_exists($column, $columns);
+}
+
+function pqlsch_valid_timezone(string $timezone): string {
+    $timezone = trim($timezone);
+    if ($timezone === '') {
+        return 'Africa/Nairobi';
+    }
+    try {
+        new DateTimeZone($timezone);
+        return $timezone;
+    } catch (Throwable $e) {
+        return 'Africa/Nairobi';
+    }
+}
+
+function pqlsch_format_session_datetime($session, int $timestamp): string {
+    $timezone = pqlsch_valid_timezone((string)($session->timezone ?? ''));
+    try {
+        $dt = (new DateTimeImmutable('@' . $timestamp))->setTimezone(new DateTimeZone($timezone));
+        return $dt->format('d/m/y, H:i') . ' ' . $dt->format('T');
+    } catch (Throwable $e) {
+        return userdate($timestamp, get_string('strftimedatetimeshort'));
+    }
+}
+
+function pqlsch_format_session_time($session, int $timestamp): string {
+    $timezone = pqlsch_valid_timezone((string)($session->timezone ?? ''));
+    try {
+        $dt = (new DateTimeImmutable('@' . $timestamp))->setTimezone(new DateTimeZone($timezone));
+        return $dt->format('H:i') . ' ' . $dt->format('T');
+    } catch (Throwable $e) {
+        return userdate($timestamp, get_string('strftimetime'));
+    }
 }
 
 function pqlsch_parent_can_access_child(int $parentid, int $studentid): bool {
@@ -113,6 +154,18 @@ function pqlsch_has_teacher_role(int $userid): bool {
     }
     if (pqlsch_table_exists('local_prequran_teacher_student')
         && $DB->record_exists('local_prequran_teacher_student', ['teacherid' => $userid, 'status' => 'active'])) {
+        return true;
+    }
+    if (pqlsch_table_exists('local_prequran_teacher_profile')
+        && $DB->record_exists_select(
+            'local_prequran_teacher_profile',
+            "userid = ? AND (status IS NULL OR status = '' OR LOWER(status) NOT IN (?, ?, ?))",
+            [$userid, 'archived', 'inactive', 'rejected']
+        )) {
+        return true;
+    }
+    if (pqlsch_table_exists('local_prequran_live_session')
+        && $DB->record_exists('local_prequran_live_session', ['teacherid' => $userid])) {
         return true;
     }
     return $DB->record_exists_sql(
@@ -229,6 +282,50 @@ function pqlsch_sessions(int $studentid, int $fromtime, int $totime, int $limit 
     ));
 }
 
+function pqlsch_teacher_sessions(int $teacherid, int $fromtime, int $totime, int $limit = 20): array {
+    global $DB;
+    if (!pqlsch_table_exists('local_prequran_live_session')) {
+        return [];
+    }
+    $seriesselect = '';
+    if (!pqlsch_column_exists('local_prequran_live_session', 'seriesid')) {
+        $seriesselect .= ', 0 AS seriesid';
+    }
+    if (!pqlsch_column_exists('local_prequran_live_session', 'series_sequence')) {
+        $seriesselect .= ', 0 AS series_sequence';
+    }
+    $recordingcount = pqlsch_table_exists('local_prequran_live_recording')
+        ? "(SELECT COUNT(1)
+              FROM {local_prequran_live_recording} r
+             WHERE r.sessionid = s.id
+               AND r.visible_to_parent = 1
+               AND r.status = 'available')"
+        : "0";
+
+    return array_values($DB->get_records_sql(
+        "SELECT s.*,
+                NULL AS attendance_status,
+                NULL AS participation_status,
+                0 AS summary_visible,
+                '' AS homework,
+                '' AS homework_lessonid,
+                '' AS homework_unitid,
+                0 AS homework_due_date,
+                'normal' AS homework_priority,
+                {$recordingcount} AS visible_recordings
+                {$seriesselect}
+           FROM {local_prequran_live_session} s
+          WHERE s.teacherid = :teacherid
+            AND s.scheduled_start >= :fromtime
+            AND s.scheduled_start < :totime
+            AND s.status <> :cancelled
+       ORDER BY s.scheduled_start ASC, s.id ASC",
+        ['teacherid' => $teacherid, 'fromtime' => $fromtime, 'totime' => $totime, 'cancelled' => 'cancelled'],
+        0,
+        $limit
+    ));
+}
+
 function pqlsch_join_state($session): array {
     $before = ((int)get_config('local_prequran', 'bbb_join_window_before_minutes') ?: 10) * MINSECS;
     $after = ((int)get_config('local_prequran', 'bbb_join_window_after_minutes') ?: 15) * MINSECS;
@@ -243,17 +340,59 @@ function pqlsch_join_state($session): array {
         return ['waiting', 'Teacher has not started yet'];
     }
     if ($now < ((int)$session->scheduled_start - $before)) {
-        return ['early', 'Opens ' . userdate((int)$session->scheduled_start - $before, get_string('strftimetime'))];
+        return ['early', 'Opens ' . pqlsch_format_session_time($session, (int)$session->scheduled_start - $before)];
     }
     return ['closed', 'Join window closed'];
 }
 
+function pqlsch_recent_status_label($session, bool $isteacher): string {
+    if (!$isteacher) {
+        return (string)($session->attendance_status ?: 'attendance pending');
+    }
+    $status = strtolower(trim((string)$session->status));
+    if (in_array($status, ['completed', 'cancelled', 'failed'], true)) {
+        return str_replace('_', ' ', $status);
+    }
+    if (time() > (int)$session->scheduled_end) {
+        return 'closed';
+    }
+    return $status !== '' ? str_replace('_', ' ', $status) : 'scheduled';
+}
+
 $modechildren = [];
-if ($childid <= 0) {
-    if (pqlsch_is_managed_student((int)$USER->id)) {
+$teacherid = 0;
+if ($requestedteacherid > 0) {
+    if (!pqlsch_has_teacher_role($requestedteacherid)) {
+        pqh_access_denied(
+            'The requested teacher schedule is not available.',
+            new moodle_url('/local/hubredirect/dashboard.php'),
+            'Live class schedule unavailable'
+        );
+    }
+    if (!is_siteadmin($USER) && (int)$USER->id !== $requestedteacherid) {
+        pqh_access_denied(
+            'You cannot view this teacher live class schedule.',
+            new moodle_url('/local/hubredirect/dashboard.php'),
+            'Teacher schedule access required'
+        );
+    }
+    $teacherid = $requestedteacherid;
+    $childid = 0;
+} else if ($childid > 0 && pqlsch_has_teacher_role($childid)) {
+    if (!is_siteadmin($USER) && (int)$USER->id !== $childid) {
+        pqh_access_denied(
+            'You cannot view this teacher live class schedule.',
+            new moodle_url('/local/hubredirect/dashboard.php'),
+            'Teacher schedule access required'
+        );
+    }
+    $teacherid = $childid;
+    $childid = 0;
+} else if ($childid <= 0) {
+    if (pqlsch_has_teacher_role((int)$USER->id)) {
+        $teacherid = (int)$USER->id;
+    } else if (pqlsch_is_managed_student((int)$USER->id)) {
         $childid = (int)$USER->id;
-    } else if (pqlsch_has_teacher_role((int)$USER->id)) {
-        $modechildren = pqlsch_teacher_students((int)$USER->id);
     } else {
         $modechildren = pqlsch_parent_children((int)$USER->id);
     }
@@ -263,18 +402,31 @@ if ($childid <= 0) {
 }
 
 if ($childid > 0 && !pqlsch_user_can_access_child((int)$USER->id, $childid)) {
-    throw new moodle_exception('nopermissions', '', '', 'You cannot view this live class schedule.');
+    pqh_access_denied(
+        'You cannot view this live class schedule.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Live class schedule access required'
+    );
 }
 
 $child = $childid > 0 ? core_user::get_user($childid) : null;
-$childname = $child ? fullname($child) : ($childid > 0 ? 'Student ' . $childid : 'your student');
+$teacher = $teacherid > 0 ? core_user::get_user($teacherid) : null;
+$isscheduleteacher = $teacherid > 0;
+$childname = $isscheduleteacher
+    ? ($teacher ? fullname($teacher) : 'Teacher ' . $teacherid)
+    : ($child ? fullname($child) : ($childid > 0 ? 'Student ' . $childid : 'your student'));
 $now = time();
-$upcoming = $childid > 0 ? pqlsch_sessions($childid, $now - HOURSECS, $now + (30 * DAYSECS), 30) : [];
-$recent = $childid > 0 ? pqlsch_sessions($childid, $now - (30 * DAYSECS), $now, 20) : [];
+$upcoming = $isscheduleteacher
+    ? pqlsch_teacher_sessions($teacherid, $now - HOURSECS, $now + (30 * DAYSECS), 30)
+    : ($childid > 0 ? pqlsch_sessions($childid, $now - HOURSECS, $now + (30 * DAYSECS), 30) : []);
+$recent = $isscheduleteacher
+    ? pqlsch_teacher_sessions($teacherid, $now - (30 * DAYSECS), $now, 20)
+    : ($childid > 0 ? pqlsch_sessions($childid, $now - (30 * DAYSECS), $now, 20) : []);
 usort($recent, function($a, $b) {
     return (int)$b->scheduled_start <=> (int)$a->scheduled_start;
 });
 $nextsession = $upcoming[0] ?? null;
+$moreupcoming = $nextsession ? array_slice($upcoming, 1) : [];
 
 echo $OUTPUT->header();
 ?>
@@ -319,25 +471,32 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
 .pqlsch-student{padding:16px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07);text-decoration:none;color:#4d3522!important;font-weight:950}
 .pqlsch-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
 @media(max-width:760px){.pqlsch-top{display:block}.pqlsch-actions{margin-top:14px}.pqlsch-grid{grid-template-columns:1fr}.pqlsch-card__head{display:block}.pqlsch-title{font-size:25px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlsch-shell">
   <div class="pqlsch-wrap">
-    <section class="pqlsch-top">
+    <section class="pqlsch-top pqh-workspace-top">
       <div>
         <p class="pqlsch-kicker">Live class schedule</p>
-        <h1 class="pqlsch-title">Schedule for <?php echo s($childname); ?></h1>
-        <p class="pqlsch-subtitle">See upcoming review classes, join availability, and recent class outcomes.</p>
+        <h1 class="pqlsch-title pqh-workspace-title">Schedule for <?php echo s($childname); ?></h1>
+        <p class="pqlsch-subtitle pqh-workspace-sub"><?php echo $isscheduleteacher ? 'See this teacher\'s upcoming review classes and recent class outcomes.' : 'See upcoming review classes, join availability, and recent class outcomes.'; ?></p>
       </div>
-      <div class="pqlsch-actions">
-        <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Parent live hub</a>
-        <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_schedule.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Class series</a>
-        <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Calendar</a>
+      <div class="pqlsch-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <?php if (!$isscheduleteacher): ?>
+          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Parent live hub</a>
+          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_schedule.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Class series</a>
+          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Calendar</a>
+        <?php else: ?>
+          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php'))->out(false); ?>">Teacher workspace</a>
+          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php'))->out(false); ?>">Class series</a>
+        <?php endif; ?>
         <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
         <a class="pqlsch-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
-    <?php if ($childid <= 0): ?>
+    <?php if ($childid <= 0 && !$isscheduleteacher): ?>
       <?php if ($modechildren): ?>
         <section class="pqlsch-students" aria-label="Choose student">
           <?php foreach ($modechildren as $childrow): ?>
@@ -360,27 +519,29 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
             [$joinstate, $joinlabel] = pqlsch_join_state($nextsession);
             $teacher = core_user::get_user((int)$nextsession->teacherid);
             $joinurl = new moodle_url('/local/hubredirect/live_sessions.php', ['action' => 'join', 'sessionid' => (int)$nextsession->id, 'sesskey' => sesskey()]);
-            $lessonurl = new moodle_url('/local/hubredirect/issue_child.php', [
-                'goto' => (string)($nextsession->unitid ?: 'alphabet_listen'),
-                'managed_student' => (int)$USER->id === (int)$childid ? 1 : 0,
-                'monitor_studentid' => $childid,
-                'live_sessionid' => (int)$nextsession->id,
-            ]);
+            $lessonurl = $isscheduleteacher
+                ? new moodle_url('/local/hubredirect/live_monitor.php', ['sessionid' => (int)$nextsession->id])
+                : new moodle_url('/local/hubredirect/issue_child.php', [
+                    'goto' => (string)($nextsession->unitid ?: 'alphabet_listen'),
+                    'managed_student' => (int)$USER->id === (int)$childid ? 1 : 0,
+                    'monitor_studentid' => $childid,
+                    'live_sessionid' => (int)$nextsession->id,
+                ]);
           ?>
           <article class="pqlsch-card">
             <div class="pqlsch-card__head">
               <div>
                 <h3><?php echo s((string)$nextsession->title); ?></h3>
-                <p class="pqlsch-meta"><?php echo userdate((int)$nextsession->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$nextsession->teacherid); ?></p>
+                <p class="pqlsch-meta"><?php echo s(pqlsch_format_session_datetime($nextsession, (int)$nextsession->scheduled_start)); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$nextsession->teacherid); ?></p>
                 <p class="pqlsch-meta">Review target: <?php echo s(trim((string)$nextsession->lessonid . ' / ' . (string)$nextsession->unitid, ' /') ?: 'to be confirmed'); ?></p>
                 <?php if (!empty($nextsession->seriesid)): ?><p class="pqlsch-meta">Recurring class #<?php echo (int)$nextsession->seriesid; ?><?php echo !empty($nextsession->series_sequence) ? ' - Session ' . (int)$nextsession->series_sequence : ''; ?></p><?php endif; ?>
               </div>
               <span class="pqlsch-pill <?php echo $joinstate === 'open' ? 'pqlsch-pill--ok' : 'pqlsch-pill--warn'; ?>"><?php echo s($joinlabel); ?></span>
             </div>
-            <div class="pqlsch-actions">
+            <div class="pqlsch-actions pqh-workspace-actions">
               <?php if ($joinstate === 'open'): ?><a class="pqlsch-btn" href="<?php echo $joinurl->out(false); ?>">Join class</a><?php endif; ?>
-              <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo $lessonurl->out(false); ?>">Open lesson</a>
-              <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', ['childid' => $childid]))->out(false); ?>">Trust center</a>
+              <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo $lessonurl->out(false); ?>"><?php echo $isscheduleteacher ? 'Lesson monitor' : 'Open lesson'; ?></a>
+              <?php if (!$isscheduleteacher): ?><a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', ['childid' => $childid]))->out(false); ?>">Trust center</a><?php endif; ?>
             </div>
           </article>
         <?php endif; ?>
@@ -388,34 +549,36 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
 
       <section class="pqlsch-grid">
         <article class="pqlsch-panel">
-          <h2>Upcoming</h2>
-          <?php if (!$upcoming): ?>
-            <div class="pqlsch-empty">No upcoming classes.</div>
+          <h2>More Upcoming</h2>
+          <?php if (!$moreupcoming): ?>
+            <div class="pqlsch-empty">No additional upcoming classes.</div>
           <?php else: ?>
             <div class="pqlsch-list">
-              <?php foreach ($upcoming as $session): ?>
+              <?php foreach ($moreupcoming as $session): ?>
                 <?php
                   [$joinstate, $joinlabel] = pqlsch_join_state($session);
                   $teacher = core_user::get_user((int)$session->teacherid);
-                  $lessonurl = new moodle_url('/local/hubredirect/issue_child.php', [
-                      'goto' => (string)($session->unitid ?: 'alphabet_listen'),
-                      'managed_student' => (int)$USER->id === (int)$childid ? 1 : 0,
-                      'monitor_studentid' => $childid,
-                      'live_sessionid' => (int)$session->id,
-                  ]);
+                  $lessonurl = $isscheduleteacher
+                      ? new moodle_url('/local/hubredirect/live_monitor.php', ['sessionid' => (int)$session->id])
+                      : new moodle_url('/local/hubredirect/issue_child.php', [
+                          'goto' => (string)($session->unitid ?: 'alphabet_listen'),
+                          'managed_student' => (int)$USER->id === (int)$childid ? 1 : 0,
+                          'monitor_studentid' => $childid,
+                          'live_sessionid' => (int)$session->id,
+                      ]);
                 ?>
                 <article class="pqlsch-card">
                   <div class="pqlsch-card__head">
                     <div>
                       <h3><?php echo s((string)$session->title); ?></h3>
-                      <p class="pqlsch-meta"><?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
+                      <p class="pqlsch-meta"><?php echo s(pqlsch_format_session_datetime($session, (int)$session->scheduled_start)); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
                       <p class="pqlsch-meta">Review target: <?php echo s(trim((string)$session->lessonid . ' / ' . (string)$session->unitid, ' /') ?: 'to be confirmed'); ?></p>
                       <?php if (!empty($session->seriesid)): ?><p class="pqlsch-meta">Recurring class #<?php echo (int)$session->seriesid; ?><?php echo !empty($session->series_sequence) ? ' - Session ' . (int)$session->series_sequence : ''; ?></p><?php endif; ?>
                     </div>
                     <span class="pqlsch-pill <?php echo $joinstate === 'open' ? 'pqlsch-pill--ok' : ''; ?>"><?php echo s($joinlabel); ?></span>
                   </div>
-                  <div class="pqlsch-actions">
-                    <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo $lessonurl->out(false); ?>">Open lesson</a>
+                  <div class="pqlsch-actions pqh-workspace-actions">
+                    <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo $lessonurl->out(false); ?>"><?php echo $isscheduleteacher ? 'Lesson monitor' : 'Open lesson'; ?></a>
                   </div>
                 </article>
               <?php endforeach; ?>
@@ -435,19 +598,24 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
                   <div class="pqlsch-card__head">
                     <div>
                       <h3><?php echo s((string)$session->title); ?></h3>
-                      <p class="pqlsch-meta"><?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
+                      <p class="pqlsch-meta"><?php echo s(pqlsch_format_session_datetime($session, (int)$session->scheduled_start)); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
                       <p class="pqlsch-meta">Review target: <?php echo s(trim((string)$session->lessonid . ' / ' . (string)$session->unitid, ' /') ?: 'not set'); ?></p>
                       <?php if (!empty($session->homework) || !empty($session->homework_unitid)): ?>
                         <p class="pqlsch-meta">Homework: <?php echo s((string)($session->homework ?: $session->homework_unitid)); ?><?php echo !empty($session->homework_due_date) ? ' - Due ' . userdate((int)$session->homework_due_date, get_string('strftimedate')) : ''; ?></p>
                       <?php endif; ?>
                       <?php if (!empty($session->seriesid)): ?><p class="pqlsch-meta">Recurring class #<?php echo (int)$session->seriesid; ?><?php echo !empty($session->series_sequence) ? ' - Session ' . (int)$session->series_sequence : ''; ?></p><?php endif; ?>
                     </div>
-                    <span class="pqlsch-pill"><?php echo s((string)($session->attendance_status ?: 'attendance pending')); ?></span>
+                    <span class="pqlsch-pill"><?php echo s(pqlsch_recent_status_label($session, $isscheduleteacher)); ?></span>
                   </div>
-                  <div class="pqlsch-actions">
-                    <?php if (!empty($session->homework_unitid)): ?><a class="pqlsch-btn" href="<?php echo (new moodle_url('/local/hubredirect/issue_child.php', ['goto' => (string)$session->homework_unitid, 'managed_student' => 0, 'monitor_studentid' => $childid]))->out(false); ?>">Practice homework</a><?php endif; ?>
-                    <?php if (!empty($session->summary_visible)): ?><a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Summary</a><?php endif; ?>
-                    <?php if ((int)$session->visible_recordings > 0): ?><a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', ['childid' => $childid]))->out(false); ?>">Recording</a><?php endif; ?>
+                  <div class="pqlsch-actions pqh-workspace-actions">
+                    <?php if ($isscheduleteacher): ?>
+                      <a class="pqlsch-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_monitor.php', ['sessionid' => (int)$session->id]))->out(false); ?>">Lesson monitor</a>
+                      <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => (int)$session->id]))->out(false); ?>">Attendance &amp; notes</a>
+                    <?php else: ?>
+                      <?php if (!empty($session->homework_unitid)): ?><a class="pqlsch-btn" href="<?php echo (new moodle_url('/local/hubredirect/issue_child.php', ['goto' => (string)$session->homework_unitid, 'managed_student' => 0, 'monitor_studentid' => $childid]))->out(false); ?>">Practice homework</a><?php endif; ?>
+                      <?php if (!empty($session->summary_visible)): ?><a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Summary</a><?php endif; ?>
+                      <?php if ((int)$session->visible_recordings > 0): ?><a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', ['childid' => $childid]))->out(false); ?>">Recording</a><?php endif; ?>
+                    <?php endif; ?>
                   </div>
                 </article>
               <?php endforeach; ?>

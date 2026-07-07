@@ -3,11 +3,25 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_availability.php'));
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$workspaceid = $requestedworkspaceid > 0 ? $requestedworkspaceid : (int)($consumercontext->workspaceid ?? 0);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($workspaceid > 0) {
+    $urlparams['workspaceid'] = $workspaceid;
+}
+$dashboardpath = $workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php';
+$dashboardurl = new moodle_url($dashboardpath, $urlparams);
+
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_availability.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Teacher Availability');
 $PAGE->set_heading('Teacher Availability');
@@ -16,6 +30,26 @@ $PAGE->add_body_class('pqh-live-availability-page');
 function pqlav_table_exists(string $table): bool {
     global $DB;
     return $DB->get_manager()->table_exists($table);
+}
+
+function pqlav_url_params(array $baseparams, array $extra = []): array {
+    return array_merge($baseparams, $extra);
+}
+
+function pqlav_stop(string $message, moodle_url $returnurl, string $title = 'Teacher availability unavailable'): void {
+    pqh_access_denied($message, $returnurl, $title);
+}
+
+function pqlav_can_manage_teacher_for_workspace(int $workspaceid, int $teacherid): bool {
+    global $DB;
+    if ($workspaceid <= 0 || $teacherid <= 0 || !pqlav_table_exists('local_prequran_workspace_member')) {
+        return true;
+    }
+    return $DB->record_exists_select(
+        'local_prequran_workspace_member',
+        'workspaceid = ? AND userid = ? AND status = ? AND workspace_role IN (?, ?, ?, ?, ?)',
+        [$workspaceid, $teacherid, 'active', 'owner', 'admin', 'coordinator', 'teacher', 'assistant_teacher']
+    );
 }
 
 function pqlav_is_managed_student(int $userid): bool {
@@ -167,26 +201,44 @@ function pqlav_slot_is_checked(array $calendar, int $weekday, string $hour): boo
     return false;
 }
 
-$canmanageavailability = is_siteadmin((int)$USER->id)
+$canmanageavailability = pqh_can_manage_academy_operations((int)$USER->id)
     || has_capability('moodle/site:config', $context)
     || has_capability('moodle/site:configview', $context)
     || has_capability('moodle/user:update', $context)
     || has_capability('moodle/category:manage', $context);
 
 if (!$canmanageavailability && (!pqlav_is_teacher((int)$USER->id) || pqlav_is_managed_student((int)$USER->id))) {
-    throw new moodle_exception('nopermissions', '', '', 'Only teachers and administrators can manage availability.');
+    pqh_access_denied(
+        'Only teachers and academy operations users can manage availability.',
+        $dashboardurl,
+        'Teacher availability access required'
+    );
 }
 
 $ready = pqlav_table_exists('local_prequran_live_availability');
-$teacherid = optional_param('teacherid', (int)$USER->id, PARAM_INT);
+$requestedteacherid = optional_param('teacherid', 0, PARAM_INT);
+$teacherid = $requestedteacherid > 0 ? $requestedteacherid : (int)$USER->id;
 if (!$canmanageavailability) {
     $teacherid = (int)$USER->id;
+}
+if ($canmanageavailability && $requestedteacherid > 0 && !pqlav_can_manage_teacher_for_workspace($workspaceid, $teacherid)) {
+    pqh_access_denied(
+        'This teacher is not linked to the selected workspace.',
+        $dashboardurl,
+        'Workspace teacher access required'
+    );
 }
 $notice = '';
 $error = '';
 
 if ($ready && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'save_calendar') {
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqlav_stop(
+            'Please reopen the teacher availability page and try saving again.',
+            $dashboardurl,
+            'Teacher availability save expired'
+        );
+    }
     $slots = optional_param_array('slots', [], PARAM_TEXT);
     $validdays = array_keys(pqlav_grid_days());
     $validhours = array_keys(pqlav_grid_hours());
@@ -233,22 +285,47 @@ if ($ready && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT
             ]);
         }
         pqlav_audit($teacherid, ['slots' => $parsedslots]);
-        redirect(new moodle_url('/local/hubredirect/live_availability.php', ['teacherid' => $teacherid, 'saved' => 1]));
+        redirect(new moodle_url('/local/hubredirect/live_availability.php', pqlav_url_params($urlparams, ['teacherid' => $teacherid, 'saved' => 1])));
     }
 }
 
 if ($ready && optional_param('action', '', PARAM_ALPHANUMEXT) === 'delete') {
-    require_sesskey();
-    $id = required_param('id', PARAM_INT);
-    $row = $DB->get_record('local_prequran_live_availability', ['id' => $id], '*', MUST_EXIST);
-    if (!$canmanageavailability && (int)$row->teacherid !== (int)$USER->id) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot remove this availability window.');
+    if (!confirm_sesskey()) {
+        pqlav_stop(
+            'Please reopen the teacher availability page and try removing the window again.',
+            $dashboardurl,
+            'Teacher availability action expired'
+        );
+    }
+    $id = optional_param('id', 0, PARAM_INT);
+    if ($id <= 0) {
+        pqlav_stop(
+            'Choose a valid availability window before removing it.',
+            $dashboardurl,
+            'Teacher availability window unavailable'
+        );
+    }
+    $row = $DB->get_record('local_prequran_live_availability', ['id' => $id], '*', IGNORE_MISSING);
+    if (!$row) {
+        pqlav_stop(
+            'That availability window is no longer available. Please refresh the availability page.',
+            $dashboardurl,
+            'Teacher availability window unavailable'
+        );
+    }
+    if ((!$canmanageavailability && (int)$row->teacherid !== (int)$USER->id)
+        || ($canmanageavailability && !pqlav_can_manage_teacher_for_workspace($workspaceid, (int)$row->teacherid))) {
+        pqh_access_denied(
+            'You cannot remove this availability window for the selected workspace.',
+            $dashboardurl,
+            'Teacher availability access required'
+        );
     }
     $row->status = 'inactive';
     $row->timemodified = time();
     $DB->update_record('local_prequran_live_availability', $row);
     pqlav_audit((int)$row->teacherid, ['removed' => $id]);
-    redirect(new moodle_url('/local/hubredirect/live_availability.php', ['teacherid' => (int)$row->teacherid, 'saved' => 1]));
+    redirect(new moodle_url('/local/hubredirect/live_availability.php', pqlav_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'saved' => 1])));
 }
 
 if (optional_param('saved', 0, PARAM_BOOL)) {
@@ -315,17 +392,19 @@ body.pqh-live-availability-page .main-inner{margin:0!important;padding:0!importa
 .pqlav-alert--bad{background:#fff0ed;color:#883526;border:1px solid rgba(136,53,38,.16)}
 .pqlav-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}
 @media(max-width:760px){.pqlav-top{display:block}.pqlav-actions{margin-top:12px}.pqlav-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlav-shell">
   <div class="pqlav-wrap">
-    <section class="pqlav-top">
+    <section class="pqlav-top pqh-workspace-top">
       <div>
-        <h1 class="pqlav-title">Teacher Availability</h1>
-        <p class="pqlav-sub"><?php echo s($teacher ? fullname($teacher) : 'Teacher ' . $teacherid); ?> - weekly windows used by conflict prevention.</p>
+        <h1 class="pqlav-title pqh-workspace-title">Teacher Availability</h1>
+        <p class="pqlav-sub pqh-workspace-sub"><?php echo s($teacher ? fullname($teacher) : 'Teacher ' . $teacherid); ?> - weekly windows used by conflict prevention.</p>
       </div>
-      <div class="pqlav-actions">
-        <a class="pqlav-btn pqlav-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <a class="pqlav-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php'))->out(false); ?>">Teacher workspace</a>
+      <div class="pqlav-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlav-btn pqlav-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a>
+        <a class="pqlav-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', $urlparams))->out(false); ?>">Teacher workspace</a>
       </div>
     </section>
     <?php if ($notice !== ''): ?><div class="pqlav-alert pqlav-alert--ok"><?php echo s($notice); ?></div><?php endif; ?>
@@ -338,13 +417,16 @@ body.pqh-live-availability-page .main-inner{margin:0!important;padding:0!importa
           <form method="post">
             <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
             <input type="hidden" name="action" value="save_calendar">
+            <?php foreach ($urlparams as $paramname => $paramvalue): ?>
+              <input type="hidden" name="<?php echo s($paramname); ?>" value="<?php echo s((string)$paramvalue); ?>">
+            <?php endforeach; ?>
             <?php if ($canmanageavailability): ?>
               <div class="pqlav-field">
                 <label for="teacherid">Teacher user ID</label>
                 <input class="pqlav-input" id="teacherid" name="teacherid" type="number" min="1" value="<?php echo (int)$teacherid; ?>">
               </div>
             <?php endif; ?>
-            <h2 class="pqlav-list-title">Select all recurring times this teacher can teach</h2>
+            <h2 class="pqlav-list-title pqh-workspace-title">Select all recurring times this teacher can teach</h2>
             <p class="pqlav-helper">Checked times are saved as <?php echo s($slotlabel); ?> weekly availability windows and used by class-group matching and conflict prevention.</p>
             <div class="pqlav-matrix-wrap">
               <table class="pqlav-matrix" aria-label="Teacher weekly availability calendar">

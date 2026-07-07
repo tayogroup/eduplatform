@@ -3,10 +3,27 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can view QA analytics.');
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+$dashboardpath = !empty($urlparams['workspaceid']) ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php';
+$dashboardurl = new moodle_url($dashboardpath, $urlparams);
+
+pqh_require_academy_operations(
+    'Only academy operations users can view QA analytics.',
+    $dashboardurl,
+    'QA analytics access required'
+);
 
 function pqlqa_table_exists(string $table): bool {
     global $DB;
@@ -100,6 +117,10 @@ function pqlqa_percent(int $part, int $whole): int {
     return (int)round(($part / $whole) * 100);
 }
 
+function pqlqa_url_params(array $baseparams, array $extra = []): array {
+    return array_merge($baseparams, $extra);
+}
+
 $now = time();
 $defaultfrom = usergetmidnight($now - (90 * DAYSECS));
 $defaultto = usergetmidnight($now) + DAYSECS - 1;
@@ -108,6 +129,7 @@ $to = pqlqa_clean_date(optional_param('to', date('Y-m-d', $defaultto), PARAM_TEX
 $teacherid = optional_param('teacherid', 0, PARAM_INT);
 $export = optional_param('export', '', PARAM_ALPHANUMEXT);
 $ready = pqlqa_ready();
+$workspaceid = (int)($urlparams['workspaceid'] ?? 0);
 $coachingready = pqlqa_column_exists('local_prequran_live_session', 'qa_coaching_status');
 $leadershipready = pqlqa_column_exists('local_prequran_live_session', 'leadership_review_status');
 
@@ -124,6 +146,10 @@ $params = [
 if ($teacherid > 0) {
     $where[] = 's.teacherid = :teacherid';
     $params['teacherid'] = $teacherid;
+}
+if ($ready && $workspaceid > 0 && pqlqa_column_exists('local_prequran_live_session', 'workspaceid')) {
+    $where[] = 's.workspaceid = :workspaceid';
+    $params['workspaceid'] = $workspaceid;
 }
 $wheresql = implode(' AND ', $where);
 
@@ -282,13 +308,29 @@ if ($ready) {
         50
     ));
 
+    $reminderwheresql = "s.scheduled_start >= :reminder_session_from
+            AND s.scheduled_start <= :reminder_session_to
+            AND s.status <> :reminder_session_cancelled";
+    $reminderparams = [
+        'reminder_audit_from' => $from,
+        'reminder_audit_to' => $to,
+        'reminder_session_from' => $from,
+        'reminder_session_to' => $to,
+        'reminder_session_cancelled' => 'cancelled',
+    ];
+    if ($ready && $workspaceid > 0 && pqlqa_column_exists('local_prequran_live_session', 'workspaceid')) {
+        $reminderwheresql .= ' AND s.workspaceid = :reminder_workspaceid';
+        $reminderparams['reminder_workspaceid'] = $workspaceid;
+    }
+
     $metrics['reminders'] = (int)$DB->count_records_sql(
         "SELECT COUNT(1)
            FROM {local_prequran_live_audit}
           WHERE action IN ('quality_review_reminder_sent', 'quality_coaching_teacher_reminder_sent', 'quality_coaching_admin_escalated', 'quality_coaching_overdue')
-            AND timecreated >= :fromtime
-            AND timecreated <= :totime",
-        ['fromtime' => $from, 'totime' => $to]
+            AND timecreated >= :reminder_audit_from
+            AND timecreated <= :reminder_audit_to
+            AND sessionid IN (SELECT s.id FROM {local_prequran_live_session} s WHERE {$reminderwheresql})",
+        $reminderparams
     );
 }
 
@@ -315,7 +357,7 @@ if ($ready && $export === 'teachers') {
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_quality_analytics.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_quality_analytics.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('QA Analytics');
 $PAGE->set_heading('QA Analytics');
@@ -370,23 +412,25 @@ body.pqh-live-qa-analytics-page .main-inner{margin:0!important;padding:0!importa
 .pqlqa-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
 @media(max-width:1050px){.pqlqa-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlqa-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlqa-grid{grid-template-columns:1fr}.pqlqa-top{display:block}.pqlqa-actions{margin-top:12px}.pqlqa-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqlqa-filters,.pqlqa-metrics{grid-template-columns:1fr}.pqlqa-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlqa-shell">
   <div class="pqlqa-wrap">
-    <section class="pqlqa-top">
+    <section class="pqlqa-top pqh-workspace-top">
       <div>
-        <h1 class="pqlqa-title">QA Analytics & Teacher Performance</h1>
-        <p class="pqlqa-sub">Track live-class quality, coaching completion, checklist concerns, and teacher improvement trends.</p>
+        <h1 class="pqlqa-title pqh-workspace-title">QA Analytics & Teacher Performance</h1>
+        <p class="pqlqa-sub pqh-workspace-sub">Track live-class quality, coaching completion, checklist concerns, and teacher improvement trends.</p>
       </div>
-      <div class="pqlqa-actions">
-        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php'))->out(false); ?>">Admin menu</a>
-        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php'))->out(false); ?>">Teachers</a>
-        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Operations</a>
-        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php'))->out(false); ?>">Leadership</a>
-        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php'))->out(false); ?>">Improvement plans</a>
-        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php'))->out(false); ?>">Reports</a>
-        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <a class="pqlqa-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqlqa-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php', $urlparams))->out(false); ?>">Admin menu</a>
+        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php', $urlparams))->out(false); ?>">Teachers</a>
+        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Operations</a>
+        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', $urlparams))->out(false); ?>">Leadership</a>
+        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', $urlparams))->out(false); ?>">Improvement plans</a>
+        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php', $urlparams))->out(false); ?>">Reports</a>
+        <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a>
+        <a class="pqlqa-btn" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -395,15 +439,17 @@ body.pqh-live-qa-analytics-page .main-inner{margin:0!important;padding:0!importa
     <?php else: ?>
       <section class="pqlqa-panel pqlqa-panel--wide">
         <form method="get">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
           <div class="pqlqa-filters">
             <div class="pqlqa-field"><label for="from">From</label><input class="pqlqa-input" id="from" name="from" type="date" value="<?php echo s(date('Y-m-d', $from)); ?>"></div>
             <div class="pqlqa-field"><label for="to">To</label><input class="pqlqa-input" id="to" name="to" type="date" value="<?php echo s(date('Y-m-d', $to)); ?>"></div>
             <div class="pqlqa-field"><label for="teacherid">Teacher ID</label><input class="pqlqa-input" id="teacherid" name="teacherid" type="number" min="0" value="<?php echo (int)$teacherid; ?>"></div>
             <div class="pqlqa-field"><label>&nbsp;</label><button class="pqlqa-btn" type="submit">Apply filters</button></div>
           </div>
-          <div class="pqlqa-actions">
-            <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php'))->out(false); ?>">Reset</a>
-            <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', ['from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'teacherid' => $teacherid, 'export' => 'teachers']))->out(false); ?>">Export teacher trends CSV</a>
+          <div class="pqlqa-actions pqh-workspace-actions">
+            <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', $urlparams))->out(false); ?>">Reset</a>
+            <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', pqlqa_url_params($urlparams, ['from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'teacherid' => $teacherid, 'export' => 'teachers'])))->out(false); ?>">Export teacher trends CSV</a>
           </div>
         </form>
       </section>
@@ -454,9 +500,9 @@ body.pqh-live-qa-analytics-page .main-inner{margin:0!important;padding:0!importa
                 <td><?php echo (int)$row->coaching_overdue_count; ?></td>
                 <td><?php echo (int)$row->leadership_open_count; ?></td>
                 <td>
-                  <div class="pqlqa-actions">
-                    <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => (int)$row->teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to)]))->out(false); ?>">Profile</a>
-                    <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', ['from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'teacherid' => (int)$row->teacherid]))->out(false); ?>">View</a>
+                  <div class="pqlqa-actions pqh-workspace-actions">
+                    <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', pqlqa_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to)])))->out(false); ?>">Profile</a>
+                    <a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', pqlqa_url_params($urlparams, ['from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'teacherid' => (int)$row->teacherid])))->out(false); ?>">View</a>
                   </div>
                 </td>
               </tr>
@@ -512,7 +558,7 @@ body.pqh-live-qa-analytics-page .main-inner{margin:0!important;padding:0!importa
                 <td><?php echo s(str_replace('_', ' ', (string)$row->qa_coaching_status)); ?><?php echo $overdue ? '<br><span class="pqlqa-pill pqlqa-pill--bad">overdue</span>' : ''; ?></td>
                 <td><?php echo s(str_replace('_', ' ', (string)$row->leadership_review_status)); ?><?php echo trim((string)$row->leadership_review_reason) !== '' ? '<br><span class="pqlqa-code">' . s((string)$row->leadership_review_reason) . '</span>' : ''; ?></td>
                 <td><?php echo !empty($row->qa_coaching_due_date) ? userdate((int)$row->qa_coaching_due_date, get_string('strftimedatetimeshort')) : ''; ?></td>
-                <td><a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$row->id]))->out(false); ?>">Open QA</a></td>
+                <td><a class="pqlqa-btn pqlqa-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', pqlqa_url_params($urlparams, ['sessionid' => (int)$row->id])))->out(false); ?>">Open QA</a></td>
               </tr>
             <?php endforeach; ?>
             <?php if (!$riskrows): ?><tr><td colspan="9">No QA risks in this range.</td></tr><?php endif; ?>

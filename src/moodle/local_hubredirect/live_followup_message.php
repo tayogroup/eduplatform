@@ -2,18 +2,35 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
-$sessionid = required_param('sessionid', PARAM_INT);
-$studentid = required_param('studentid', PARAM_INT);
+$sessionid = optional_param('sessionid', 0, PARAM_INT);
+$studentid = optional_param('studentid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$workspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($workspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $workspaceid = (int)$consumercontext->workspaceid;
+}
+
+$contextparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $contextparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($workspaceid > 0) {
+    $contextparams['workspaceid'] = $workspaceid;
+}
+$pageparams = $contextparams + [
+    'sessionid' => $sessionid,
+    'studentid' => $studentid,
+];
+$returnurl = new moodle_url('/local/hubredirect/live_teacher.php', $contextparams);
+$sessionlisturl = new moodle_url('/local/hubredirect/live_sessions.php', $contextparams);
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_followup_message.php', [
-    'sessionid' => $sessionid,
-    'studentid' => $studentid,
-]));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_followup_message.php', $pageparams));
 
 function pqlfm_table_exists(string $table): bool {
     global $DB;
@@ -105,6 +122,11 @@ function pqlfm_user_can_link($session, int $studentid): bool {
     global $DB, $USER;
     $userid = (int)$USER->id;
     if (is_siteadmin($USER)) {
+        return true;
+    }
+    if (pqlfm_column_exists('local_prequran_live_session', 'workspaceid')
+            && (int)($session->workspaceid ?? 0) > 0
+            && pqh_user_can_manage_workspace($userid, (int)$session->workspaceid)) {
         return true;
     }
     if ((int)$session->teacherid === $userid) {
@@ -223,7 +245,7 @@ function pqlfm_find_existing_thread(int $cohortid, int $studentid, int $teacheri
     return $row ? (int)$row->id : 0;
 }
 
-function pqlfm_followup_body($session, $note, int $studentid, string $studentname): string {
+function pqlfm_followup_body($session, $note, int $studentid, string $studentname, string $brandname): string {
     $parts = [
         'Live class follow-up for ' . $studentname . '.',
         'Session: ' . (string)$session->title,
@@ -242,27 +264,81 @@ function pqlfm_followup_body($session, $note, int $studentid, string $studentnam
     if ($unit !== '') {
         $parts[] = 'Homework unit: ' . $unit;
     }
-    $parts[] = 'Please reply here so the follow-up stays inside Quraan Academy.';
+    $parts[] = 'Please reply here so the follow-up stays inside ' . $brandname . '.';
     return pqlfm_clean(implode("\n", $parts), 1000);
 }
 
 if (!confirm_sesskey()) {
-    throw new moodle_exception('invalidsesskey');
+    pqh_access_denied(
+        'Your security token expired. Open the follow-up again from the live review or teacher workspace.',
+        $returnurl,
+        'Live follow-up expired'
+    );
+}
+
+if ($sessionid <= 0 || $studentid <= 0) {
+    pqh_access_denied(
+        'Choose a valid live session and student before opening follow-up messaging.',
+        $sessionlisturl,
+        'Live follow-up unavailable'
+    );
 }
 
 foreach (['local_prequran_live_session', 'local_prequran_live_note', 'local_prequran_comm_thread', 'local_prequran_comm_participant', 'local_prequran_comm_message', 'local_prequran_comm_audit'] as $table) {
     if (!pqlfm_table_exists($table)) {
-        throw new moodle_exception('missingtable', 'error', '', 'Required live follow-up or communication tables are not installed.');
+        pqh_access_denied(
+            'Required live follow-up or communication tables are not installed.',
+            $returnurl,
+            'Live follow-up unavailable'
+        );
     }
 }
 if (!pqlfm_column_exists('local_prequran_live_note', 'followup_threadid')) {
-    throw new moodle_exception('missingfield', 'error', '', 'Run Phase 26 follow-up messaging SQL first.');
+    pqh_access_denied(
+        'Run the follow-up messaging database upgrade before opening live follow-up threads.',
+        $returnurl,
+        'Live follow-up unavailable'
+    );
 }
 
-$session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', MUST_EXIST);
-$note = $DB->get_record('local_prequran_live_note', ['sessionid' => $sessionid, 'studentid' => $studentid], '*', MUST_EXIST);
+$session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING);
+if (!$session) {
+    pqh_access_denied(
+        'Choose a valid live session before opening follow-up messaging.',
+        $sessionlisturl,
+        'Live follow-up unavailable'
+    );
+}
+if (!pqh_record_belongs_to_consumer_context($session)) {
+    pqh_access_denied(
+        'This live session does not belong to the active consumer.',
+        $sessionlisturl,
+        'Live follow-up unavailable'
+    );
+}
+if ($workspaceid > 0
+        && pqlfm_column_exists('local_prequran_live_session', 'workspaceid')
+        && (int)($session->workspaceid ?? 0) !== $workspaceid) {
+    pqh_access_denied(
+        'This live follow-up is not scoped to the selected workspace.',
+        $sessionlisturl,
+        'Workspace follow-up access required'
+    );
+}
+$note = $DB->get_record('local_prequran_live_note', ['sessionid' => $sessionid, 'studentid' => $studentid], '*', IGNORE_MISSING);
+if (!$note) {
+    pqh_access_denied(
+        'No follow-up note was found for this student in the selected live session.',
+        new moodle_url('/local/hubredirect/live_review.php', $pageparams),
+        'Live follow-up unavailable'
+    );
+}
 if (!pqlfm_user_can_link($session, $studentid)) {
-    throw new moodle_exception('nopermissions', '', '', 'You cannot open this live follow-up message thread.');
+    pqh_access_denied(
+        'You cannot open this live follow-up message thread.',
+        $returnurl,
+        'Live follow-up access required'
+    );
 }
 
 $guardianids = pqlfm_guardian_ids($studentid);
@@ -270,7 +346,11 @@ if (pqlfm_is_guardian((int)$USER->id, $studentid)) {
     $guardianids = [(int)$USER->id];
 }
 if (!$guardianids) {
-    throw new moodle_exception('nopermissions', '', '', 'No linked parent or guardian was found for this student.');
+    pqh_access_denied(
+        'No linked parent or guardian was found for this student.',
+        new moodle_url('/local/hubredirect/live_review.php', $pageparams),
+        'Live follow-up unavailable'
+    );
 }
 
 $cohortid = pqlfm_student_cohort($studentid, (int)$session->teacherid);
@@ -280,7 +360,7 @@ $studentname = $student ? fullname($student) : 'Student ' . $studentid;
 $teacherid = (int)$session->teacherid;
 $now = time();
 $threadid = (int)($note->followup_threadid ?? 0);
-$thread = $threadid > 0 ? $DB->get_record('local_prequran_comm_thread', ['id' => $threadid]) : null;
+$thread = $threadid > 0 ? $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', IGNORE_MISSING) : null;
 $created = false;
 $linkedmessage = false;
 
@@ -288,7 +368,7 @@ $transaction = $DB->start_delegated_transaction();
 
 if (!$thread) {
     $threadid = pqlfm_find_existing_thread($cohortid, $studentid, $teacherid, $guardianids);
-    $thread = $threadid > 0 ? $DB->get_record('local_prequran_comm_thread', ['id' => $threadid]) : null;
+    $thread = $threadid > 0 ? $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', IGNORE_MISSING) : null;
 }
 
 if (!$thread) {
@@ -306,7 +386,8 @@ if (!$thread) {
     $created = true;
 }
 
-$body = pqlfm_followup_body($session, $note, $studentid, $studentname);
+$brandname = pqlfm_clean((string)($consumercontext->consumername ?? 'EduPlatform'), 120);
+$body = pqlfm_followup_body($session, $note, $studentid, $studentname, $brandname !== '' ? $brandname : 'EduPlatform');
 $messageid = 0;
 if ($created || empty($note->followup_threadid)) {
     $messageid = (int)$DB->insert_record('local_prequran_comm_message', (object)[
@@ -322,7 +403,14 @@ if ($created || empty($note->followup_threadid)) {
         'timemodified' => $now,
     ]);
     $linkedmessage = true;
-    $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', MUST_EXIST);
+    $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', IGNORE_MISSING);
+    if (!$thread) {
+        pqh_access_denied(
+            'The follow-up message thread could not be reopened after it was created.',
+            $returnurl,
+            'Live follow-up unavailable'
+        );
+    }
     $thread->lastmessageat = $now;
     $thread->timemodified = $now;
     $DB->update_record('local_prequran_comm_thread', $thread);
@@ -362,7 +450,7 @@ pqlfm_audit_live($sessionid, 'followup_message_thread_linked', $studentid, [
 
 $transaction->allow_commit();
 
-redirect(new moodle_url('/local/hubredirect/communications.php', [
+redirect(new moodle_url('/local/hubredirect/communications.php', $contextparams + [
     'cohortid' => $cohortid,
     'studentid' => $studentid,
     'opencomm' => 'messages',

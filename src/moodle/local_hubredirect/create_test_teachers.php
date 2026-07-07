@@ -3,10 +3,16 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/user/lib.php');
+require_once(__DIR__ . '/account_ids.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 
 if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can create test teachers.');
+    pqh_access_denied(
+        'Only site administrators can create test teachers.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Test teacher setup access required'
+    );
 }
 
 $context = context_system::instance();
@@ -106,7 +112,7 @@ function pqtt_create_teacher(string $username, string $password): array {
         'password' => $password,
         'firstname' => ucfirst($username),
         'lastname' => 'Test',
-        'email' => $username . '@quraanacademy.test',
+        'email' => $username . '@eduplatform.test',
         'emailstop' => 1,
         'country' => '',
         'city' => '',
@@ -115,6 +121,7 @@ function pqtt_create_teacher(string $username, string $password): array {
     ];
 
     $userid = (int)user_create_user($user, true, false);
+    pqh_assign_account_id($userid, 'teacher');
     $profileid = pqtt_create_or_update_profile($userid, ucfirst($username));
     pqtt_audit('test_teacher_created', $userid, ['username' => $username, 'profileid' => $profileid]);
 
@@ -133,15 +140,19 @@ $error = '';
 $password = 'Teacher@Test123!';
 
 if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_sesskey();
-    $transaction = $DB->start_delegated_transaction();
     try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This test teacher setup form expired. Refresh the page and try again.');
+        }
+        $transaction = $DB->start_delegated_transaction();
         for ($i = 1; $i <= 5; $i++) {
             $results[] = pqtt_create_teacher('teacher' . $i, $password);
         }
         $transaction->allow_commit();
     } catch (Throwable $e) {
-        $transaction->rollback($e);
+        if (isset($transaction)) {
+            $transaction->rollback($e);
+        }
         $error = $e->getMessage();
     }
 }

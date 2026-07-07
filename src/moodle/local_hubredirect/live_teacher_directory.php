@@ -3,10 +3,27 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can view the teacher directory.');
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+$dashboardpath = !empty($urlparams['workspaceid']) ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php';
+$dashboardurl = new moodle_url($dashboardpath, $urlparams);
+
+pqh_require_academy_operations(
+    'Only academy operations users can view the teacher directory.',
+    $dashboardurl,
+    'Teacher directory access required'
+);
 
 function pqltd_table_exists(string $table): bool {
     global $DB;
@@ -68,9 +85,13 @@ function pqltd_csv(string $filename, array $headers, array $rows): void {
     exit;
 }
 
+function pqltd_url_params(array $baseparams, array $extra = []): array {
+    return array_merge($baseparams, $extra);
+}
+
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_teacher_directory.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_teacher_directory.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Teacher Directory');
 $PAGE->set_heading('Teacher Directory');
@@ -85,6 +106,7 @@ $query = trim(optional_param('q', '', PARAM_TEXT));
 $filter = optional_param('filter', 'all', PARAM_ALPHANUMEXT);
 $export = optional_param('export', '', PARAM_ALPHANUMEXT);
 $ready = pqltd_ready();
+$workspaceid = (int)($urlparams['workspaceid'] ?? 0);
 
 $teachers = [];
 $metrics = [
@@ -97,6 +119,12 @@ $metrics = [
 ];
 
 if ($ready) {
+    $workspacefilter = '';
+    $workspaceparams = [];
+    if ($workspaceid > 0 && pqltd_column_exists('local_prequran_live_session', 'workspaceid')) {
+        $workspacefilter = ' AND s.workspaceid = :workspaceid';
+        $workspaceparams['workspaceid'] = $workspaceid;
+    }
     $qaready = pqltd_column_exists('local_prequran_live_session', 'qa_status');
     $coachingready = pqltd_column_exists('local_prequran_live_session', 'qa_coaching_status');
     $leadershipready = pqltd_column_exists('local_prequran_live_session', 'leadership_review_status');
@@ -128,7 +156,7 @@ if ($ready) {
               JOIN {local_prequran_live_session} sn ON sn.id = n.sessionid
              WHERE sn.teacherid = s.teacherid
                AND n.followup_status <> 'none'
-               AND n.followup_resolved = 0) AS followup_open_count"
+               AND n.followup_resolved = 0" . ($workspacefilter !== '' ? " AND sn.workspaceid = :workspaceid_followup" : '') . ") AS followup_open_count"
         : "0 AS followup_open_count";
 
     $params = [
@@ -137,6 +165,10 @@ if ($ready) {
         'cancelled' => 'cancelled',
         'nowtime_upcoming' => $now,
     ];
+    if ($workspacefilter !== '') {
+        $params['workspaceid'] = $workspaceid;
+        $params['workspaceid_followup'] = $workspaceid;
+    }
     if ($coachingready) {
         $params['nowtime_coaching'] = $now;
     }
@@ -166,6 +198,7 @@ if ($ready) {
           WHERE s.scheduled_start >= :fromtime
             AND s.scheduled_start <= :totime
             AND s.status <> :cancelled
+            {$workspacefilter}
        GROUP BY s.teacherid, u.firstname, u.lastname, u.email, u.suspended, u.deleted
        ORDER BY last_session DESC, session_count DESC",
         $params,
@@ -177,6 +210,23 @@ if ($ready) {
         $indexedteachers = [];
         foreach ($teachers as $row) {
             $indexedteachers[(int)$row->teacherid] = true;
+        }
+        $profilejoinsql = '';
+        $profilewheresql = 'WHERE u.deleted = 0';
+        $profileparams = [];
+        if ($workspaceid > 0) {
+            if (pqltd_table_exists('local_prequran_workspace_member')) {
+                $profilejoinsql = " JOIN {local_prequran_workspace_member} wm ON wm.userid = tp.userid";
+                $profilewheresql .= " AND wm.workspaceid = :profileworkspaceid
+                                      AND wm.status = :profilememberstatus
+                                      AND wm.workspace_role IN ('owner', 'admin', 'teacher', 'assistant_teacher')";
+                $profileparams = [
+                    'profileworkspaceid' => $workspaceid,
+                    'profilememberstatus' => 'active',
+                ];
+            } else {
+                $profilewheresql .= ' AND 1 = 0';
+            }
         }
         $profileteachers = $DB->get_records_sql(
             "SELECT tp.userid AS teacherid,
@@ -204,9 +254,10 @@ if ($ready) {
                     0 AS followup_open_count
                FROM {local_prequran_teacher_profile} tp
                JOIN {user} u ON u.id = tp.userid
-              WHERE u.deleted = 0
+                    {$profilejoinsql}
+              {$profilewheresql}
            ORDER BY tp.timemodified DESC",
-            [],
+            $profileparams,
             0,
             1000
         );
@@ -345,21 +396,23 @@ body.pqh-live-teacher-directory-page .main-inner{margin:0!important;padding:0!im
 .pqltd-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
 @media(max-width:1100px){.pqltd-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.pqltd-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqltd-top{display:block}.pqltd-actions{margin-top:12px}.pqltd-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqltd-filters,.pqltd-metrics{grid-template-columns:1fr}.pqltd-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqltd-shell">
   <div class="pqltd-wrap">
-    <section class="pqltd-top">
+    <section class="pqltd-top pqh-workspace-top">
       <div>
-        <h1 class="pqltd-title">Teacher Directory & Profile Finder</h1>
-        <p class="pqltd-sub">Find live-class teachers, spot attention items, and open a performance profile without looking up IDs manually.</p>
+        <h1 class="pqltd-title pqh-workspace-title">Teacher Directory & Profile Finder</h1>
+        <p class="pqltd-sub pqh-workspace-sub">Find live-class teachers, spot attention items, and open a performance profile without looking up IDs manually.</p>
       </div>
-      <div class="pqltd-actions">
-        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php'))->out(false); ?>">QA analytics</a>
-        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php'))->out(false); ?>">Create wizard</a>
-        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php'))->out(false); ?>">Capacity</a>
-        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php'))->out(false); ?>">Improvement plans</a>
-        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Operations</a>
-        <a class="pqltd-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqltd-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', $urlparams))->out(false); ?>">QA analytics</a>
+        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $urlparams))->out(false); ?>">Create wizard</a>
+        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Capacity</a>
+        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', $urlparams))->out(false); ?>">Improvement plans</a>
+        <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Operations</a>
+        <a class="pqltd-btn" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -368,6 +421,8 @@ body.pqh-live-teacher-directory-page .main-inner{margin:0!important;padding:0!im
     <?php else: ?>
       <section class="pqltd-panel">
         <form method="get">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
           <div class="pqltd-filters">
             <div class="pqltd-field"><label for="q">Search</label><input class="pqltd-input" id="q" name="q" type="search" value="<?php echo s($query); ?>" placeholder="Name, email, or user ID"></div>
             <div class="pqltd-field"><label for="filter">Filter</label><select class="pqltd-select" id="filter" name="filter">
@@ -379,9 +434,9 @@ body.pqh-live-teacher-directory-page .main-inner{margin:0!important;padding:0!im
             <div class="pqltd-field"><label for="to">To</label><input class="pqltd-input" id="to" name="to" type="date" value="<?php echo s(date('Y-m-d', $to)); ?>"></div>
             <div class="pqltd-field"><label>&nbsp;</label><button class="pqltd-btn" type="submit">Find teachers</button></div>
           </div>
-          <div class="pqltd-actions">
-            <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php'))->out(false); ?>">Reset</a>
-            <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php', ['q' => $query, 'filter' => $filter, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'export' => 'directory']))->out(false); ?>">Export CSV</a>
+          <div class="pqltd-actions pqh-workspace-actions">
+            <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php', $urlparams))->out(false); ?>">Reset</a>
+            <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php', pqltd_url_params($urlparams, ['q' => $query, 'filter' => $filter, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'export' => 'directory'])))->out(false); ?>">Export CSV</a>
           </div>
         </form>
       </section>
@@ -422,12 +477,12 @@ body.pqh-live-teacher-directory-page .main-inner{margin:0!important;padding:0!im
                 <span class="pqltd-code">Last QA: <?php echo !empty($row->last_qa_time) ? s(userdate((int)$row->last_qa_time, get_string('strftimedatetimeshort'))) : 'none'; ?></span>
               </td>
               <td>
-                <div class="pqltd-actions">
-                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => (int)$row->teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to)]))->out(false); ?>">Profile</a>
-                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', ['teacherid' => (int)$row->teacherid]))->out(false); ?>">Workspace</a>
-                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', ['step' => 2, 'teacherid' => (int)$row->teacherid]))->out(false); ?>">Create</a>
-                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', ['teacherid' => (int)$row->teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to)]))->out(false); ?>">QA</a>
-                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', ['teacherid' => (int)$row->teacherid, 'status' => 'all']))->out(false); ?>">Plans</a>
+                <div class="pqltd-actions pqh-workspace-actions">
+                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to)])))->out(false); ?>">Profile</a>
+                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid])))->out(false); ?>">Workspace</a>
+                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', pqltd_url_params($urlparams, ['step' => 2, 'teacherid' => (int)$row->teacherid])))->out(false); ?>">Create</a>
+                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to)])))->out(false); ?>">QA</a>
+                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'status' => 'all'])))->out(false); ?>">Plans</a>
                 </div>
               </td>
             </tr>

@@ -2,15 +2,33 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once(__DIR__ . '/live_security.php');
 
 $childid = optional_param('childid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$workspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($workspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $workspaceid = (int)$consumercontext->workspaceid;
+}
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($workspaceid > 0) {
+    $urlparams['workspaceid'] = $workspaceid;
+}
+$returnurl = new moodle_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams);
+
+function pqlt_url(string $path, array $urlparams, array $params = []): moodle_url {
+    return new moodle_url($path, $urlparams + $params);
+}
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_trust.php', $childid > 0 ? ['childid' => $childid] : []));
+$PAGE->set_url(pqlt_url('/local/hubredirect/live_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Class Trust Center');
 $PAGE->set_heading('Live Class Trust Center');
@@ -293,12 +311,16 @@ if ($childid <= 0) {
 }
 
 if ($childid > 0 && !pqlt_user_can_access_child((int)$USER->id, $childid)) {
-    pqh_live_security_deny(
-        'You cannot view live-class trust details for this student.',
+    pqh_live_security_audit(
         'live_trust_access_denied',
         'student',
         $childid,
         ['studentid' => $childid]
+    );
+    pqh_access_denied(
+        'You cannot view live-class trust details for this student.',
+        $returnurl,
+        'Live trust center access required'
     );
 }
 
@@ -374,20 +396,22 @@ body.pqh-live-trust-page{background:#f4f7fb!important}
 .pqlt-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
 @media(max-width:860px){.pqlt-top{display:block}.pqlt-actions{margin-top:14px}.pqlt-grid,.pqlt-policy{grid-template-columns:1fr 1fr}.pqlt-title{font-size:25px}}
 @media(max-width:560px){.pqlt-grid,.pqlt-policy{grid-template-columns:1fr}.pqlt-card__head{display:block}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlt-shell">
   <div class="pqlt-wrap">
-    <section class="pqlt-top">
+    <section class="pqlt-top pqh-workspace-top">
       <div>
         <p class="pqlt-kicker">Parent trust center</p>
-        <h1 class="pqlt-title">Live class safety for <?php echo s($childname); ?></h1>
-        <p class="pqlt-subtitle">Clear visibility into sessions, attendance, recording policy, and parent-facing feedback.</p>
+        <h1 class="pqlt-title pqh-workspace-title">Live class safety for <?php echo s($childname); ?></h1>
+        <p class="pqlt-subtitle pqh-workspace-sub">Clear visibility into sessions, attendance, recording policy, and parent-facing feedback.</p>
       </div>
-      <div class="pqlt-actions">
-        <a class="pqlt-btn pqlt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Parent live hub</a>
-        <a class="pqlt-btn pqlt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Summaries</a>
-        <a class="pqlt-btn pqlt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Recordings</a>
-        <a class="pqlt-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Dashboard</a>
+      <div class="pqlt-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlt-btn pqlt-btn--light" href="<?php echo pqlt_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Parent live hub</a>
+        <a class="pqlt-btn pqlt-btn--light" href="<?php echo pqlt_url('/local/hubredirect/live_summaries.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Summaries</a>
+        <a class="pqlt-btn pqlt-btn--light" href="<?php echo pqlt_url('/local/hubredirect/live_recordings.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Recordings</a>
+        <a class="pqlt-btn" href="<?php echo pqlt_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -395,7 +419,7 @@ body.pqh-live-trust-page{background:#f4f7fb!important}
       <?php if ($modechildren): ?>
         <section class="pqlt-students" aria-label="Choose student">
           <?php foreach ($modechildren as $childrow): ?>
-            <a class="pqlt-student" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', ['childid' => (int)$childrow['studentid']]))->out(false); ?>">
+            <a class="pqlt-student" href="<?php echo pqlt_url('/local/hubredirect/live_trust.php', $urlparams, ['childid' => (int)$childrow['studentid']])->out(false); ?>">
               <?php echo s((string)$childrow['name']); ?>
               <span>Open live class trust center</span>
             </a>
@@ -458,7 +482,7 @@ body.pqh-live-trust-page{background:#f4f7fb!important}
                 <div class="pqlt-badges">
                   <span class="pqlt-pill <?php echo $attendance !== '' ? 'pqlt-pill--ok' : 'pqlt-pill--warn'; ?>">Attendance: <?php echo s($attendance !== '' ? str_replace('_', ' ', $attendance) : 'not marked'); ?></span>
                   <span class="pqlt-pill <?php echo $summaryvisible ? 'pqlt-pill--ok' : 'pqlt-pill--warn'; ?>">Summary: <?php echo $summaryvisible ? 'published' : 'not published'; ?></span>
-                  <span class="pqlt-pill <?php echo !empty($session->recording_enabled) ? 'pqlt-pill--warn' : 'pqlt-pill--ok'; ?>">Recording: <?php echo !empty($session->recording_enabled) ? 'enabled when consent allows' : 'off'; ?></span>
+                  <span class="pqlt-pill <?php echo !empty($session->recording_enabled) ? 'pqlt-pill--ok' : 'pqlt-pill--warn'; ?>">Recording: <?php echo !empty($session->recording_enabled) ? 'audio on; video consent-controlled' : 'audio policy not marked'; ?></span>
                   <span class="pqlt-pill">Capacity: <?php echo (int)$session->max_participants; ?></span>
                   <?php if (!empty($session->technical_issue)): ?><span class="pqlt-pill pqlt-pill--warn">Technical issue noted</span><?php endif; ?>
                   <?php if ((int)$session->visible_recordings > 0): ?><span class="pqlt-pill pqlt-pill--ok">Parent recording available</span><?php endif; ?>

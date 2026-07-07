@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once(__DIR__ . '/live_security.php');
 
@@ -14,8 +15,15 @@ if (!is_siteadmin($USER)) {
     );
 }
 
-$id = required_param('id', PARAM_INT);
+$id = optional_param('id', 0, PARAM_INT);
 $format = optional_param('format', '', PARAM_ALPHA);
+if ($id <= 0) {
+    pqh_access_denied(
+        'Choose a valid parent trust purge evidence record before opening this page.',
+        new moodle_url('/local/hubredirect/live_parent_trust_retention.php'),
+        'Parent trust purge evidence unavailable'
+    );
+}
 
 function pqlptpe_table_exists(string $table): bool {
     global $DB;
@@ -119,10 +127,21 @@ function pqlptpe_download_csv(stdClass $record, array $details, array $evidence,
 }
 
 if (!pqlptpe_table_exists('local_prequran_live_audit')) {
-    throw new moodle_exception('invalidrecord', '', '', 'The live audit table is not installed.');
+    pqh_access_denied(
+        'The live audit table is not installed, so purge evidence is not available yet.',
+        new moodle_url('/local/hubredirect/live_parent_trust_retention.php'),
+        'Parent trust purge evidence unavailable'
+    );
 }
 
-$record = $DB->get_record('local_prequran_live_audit', ['id' => $id], '*', MUST_EXIST);
+$record = $DB->get_record('local_prequran_live_audit', ['id' => $id], '*', IGNORE_MISSING);
+if (!$record) {
+    pqh_access_denied(
+        'That parent trust purge evidence record is no longer available.',
+        new moodle_url('/local/hubredirect/live_parent_trust_retention.php'),
+        'Parent trust purge evidence unavailable'
+    );
+}
 $allowedactions = [
     'parent_trust_purge_blocked',
     'parent_trust_purge_started',
@@ -142,7 +161,13 @@ $details = pqlptpe_decode_details((string)$record->details);
 $evidence = isset($details['evidence_snapshot']) && is_array($details['evidence_snapshot']) ? $details['evidence_snapshot'] : [];
 
 if ($format === 'json' || $format === 'csv') {
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the purge evidence page and try the export again.',
+            new moodle_url('/local/hubredirect/live_parent_trust_purge_evidence.php', ['id' => (int)$record->id]),
+            'Parent trust purge evidence export expired'
+        );
+    }
     $exportreason = pqh_live_security_clean_export_reason(optional_param('export_reason', '', PARAM_TEXT));
     if ($exportreason === '') {
         redirect(new moodle_url('/local/hubredirect/live_parent_trust_purge_evidence.php', [
@@ -246,15 +271,17 @@ body.pqh-parent-trust-purge-evidence-page .main-inner{margin:0!important;padding
 .pqlptpe-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:980px){.pqlptpe-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlptpe-grid{grid-template-columns:1fr}.pqlptpe-top{display:block}.pqlptpe-actions{margin-top:12px}.pqlptpe-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqlptpe-metrics{grid-template-columns:1fr}.pqlptpe-title{font-size:24px}.pqlptpe-btn{width:100%}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlptpe-shell">
   <div class="pqlptpe-wrap">
-    <section class="pqlptpe-top">
+    <section class="pqlptpe-top pqh-workspace-top">
       <div>
-        <h1 class="pqlptpe-title">Parent Trust Purge Evidence</h1>
-        <p class="pqlptpe-sub">Recovery snapshot for audit row #<?php echo (int)$record->id; ?>, logged <?php echo userdate((int)$record->timecreated, get_string('strftimedatetimeshort')); ?>.</p>
+        <h1 class="pqlptpe-title pqh-workspace-title">Parent Trust Purge Evidence</h1>
+        <p class="pqlptpe-sub pqh-workspace-sub">Recovery snapshot for audit row #<?php echo (int)$record->id; ?>, logged <?php echo userdate((int)$record->timecreated, get_string('strftimedatetimeshort')); ?>.</p>
       </div>
-      <div class="pqlptpe-actions">
+      <div class="pqlptpe-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlptpe-btn pqlptpe-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php'))->out(false); ?>">Admin menu</a>
         <a class="pqlptpe-btn pqlptpe-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_retention.php'))->out(false); ?>">Retention</a>
         <a class="pqlptpe-btn pqlptpe-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_audit.php'))->out(false); ?>">Audit page</a>

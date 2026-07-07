@@ -2,12 +2,27 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
 $context = context_system::instance();
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+$dashboardpath = !empty($urlparams['workspaceid'])
+    ? '/local/hubredirect/workspace_dashboard.php'
+    : '/local/hubredirect/dashboard.php';
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_followups.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_followups.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Follow-Up Command Center');
 $PAGE->set_heading('Live Follow-Up Command Center');
@@ -94,6 +109,10 @@ function pqlf_short(string $value, int $max = 150): string {
     return core_text::substr($value, 0, $max) . '...';
 }
 
+function pqlf_url_params(array $baseparams, array $extra = []): array {
+    return array_merge($baseparams, $extra);
+}
+
 function pqlf_audit(int $sessionid, string $action, string $targettype, int $targetid, array $details = []): void {
     global $DB, $USER;
     if (!pqlf_table_exists('local_prequran_live_audit')) {
@@ -155,7 +174,11 @@ function pqlf_timeline(int $sessionid, int $studentid, int $noteid): array {
 
 $isadmin = is_siteadmin($USER);
 if (!$isadmin && !pqlf_is_teacher((int)$USER->id)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only teachers and administrators can manage live follow-ups.');
+    pqh_access_denied(
+        'Only teachers and administrators can manage live follow-ups.',
+        new moodle_url($dashboardpath, $urlparams),
+        'Live follow-up access required'
+    );
 }
 
 $ready = pqlf_ready();
@@ -163,12 +186,52 @@ $now = time();
 $result = optional_param('result', '', PARAM_ALPHANUMEXT);
 
 if ($ready && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'update_followup') {
-    require_sesskey();
-    $noteid = required_param('noteid', PARAM_INT);
-    $note = $DB->get_record('local_prequran_live_note', ['id' => $noteid], '*', MUST_EXIST);
-    $session = $DB->get_record('local_prequran_live_session', ['id' => (int)$note->sessionid], '*', MUST_EXIST);
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the live follow-up page and try saving again.',
+            new moodle_url('/local/hubredirect/live_followups.php', $urlparams),
+            'Live follow-up save expired'
+        );
+    }
+    $noteid = optional_param('noteid', 0, PARAM_INT);
+    if ($noteid <= 0) {
+        pqh_access_denied(
+            'Choose a valid follow-up item before updating it.',
+            new moodle_url('/local/hubredirect/live_followups.php', $urlparams),
+            'Live follow-up unavailable'
+        );
+    }
+    $note = $DB->get_record('local_prequran_live_note', ['id' => $noteid], '*', IGNORE_MISSING);
+    if (!$note) {
+        pqh_access_denied(
+            'Choose a valid follow-up item before updating it.',
+            new moodle_url('/local/hubredirect/live_followups.php', $urlparams),
+            'Live follow-up unavailable'
+        );
+    }
+    $session = $DB->get_record('local_prequran_live_session', ['id' => (int)$note->sessionid], '*', IGNORE_MISSING);
+    if (!$session) {
+        pqh_access_denied(
+            'This follow-up is not linked to an available live session.',
+            new moodle_url('/local/hubredirect/live_followups.php', $urlparams),
+            'Live follow-up unavailable'
+        );
+    }
+    if (!empty($urlparams['workspaceid'])
+            && pqlf_column_exists('local_prequran_live_session', 'workspaceid')
+            && (int)($session->workspaceid ?? 0) !== (int)$urlparams['workspaceid']) {
+        pqh_access_denied(
+            'This follow-up is not scoped to the selected workspace.',
+            new moodle_url('/local/hubredirect/live_followups.php', $urlparams),
+            'Workspace follow-up access required'
+        );
+    }
     if (!pqlf_can_manage_note($note, $session)) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot manage this live follow-up.');
+        pqh_access_denied(
+            'You cannot manage this live follow-up.',
+            new moodle_url('/local/hubredirect/live_followups.php', $urlparams),
+            'Live follow-up access required'
+        );
     }
 
     $operation = optional_param('operation', 'resolve', PARAM_ALPHANUMEXT);
@@ -214,7 +277,7 @@ if ($ready && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT
         'newresolved' => !empty($note->followup_resolved),
         'note' => $internalnote,
     ]);
-    redirect(new moodle_url('/local/hubredirect/live_followups.php', ['result' => 'saved']));
+    redirect(new moodle_url('/local/hubredirect/live_followups.php', pqlf_url_params($urlparams, ['result' => 'saved'])));
 }
 
 $filter = optional_param('filter', 'open', PARAM_ALPHANUMEXT);
@@ -235,14 +298,21 @@ $rows = [];
 $teachers = [];
 
 if ($ready) {
+    $workspaceid = (int)($urlparams['workspaceid'] ?? 0);
+    $workspacefilteralias = '';
+    $workspaceparams = [];
+    if ($workspaceid > 0 && pqlf_column_exists('local_prequran_live_session', 'workspaceid')) {
+        $workspacefilteralias = ' AND s.workspaceid = :workspaceid';
+        $workspaceparams = ['workspaceid' => $workspaceid];
+    }
     $parentresponseready = pqlf_column_exists('local_prequran_live_note', 'parent_response_status');
     $parentresponseselect = $parentresponseready
         ? "n.parent_response_status, n.parent_response_message, n.parent_responseby, n.parent_responseat,"
         : "'none' AS parent_response_status, '' AS parent_response_message, 0 AS parent_responseby, 0 AS parent_responseat,";
     $contactexpr = "COALESCE(NULLIF(n.followup_contactedat, 0), n.timemodified)";
 
-    $baseparams = ['none' => 'none'];
-    $teachersql = $isadmin ? '' : ' AND s.teacherid = :currentteacher';
+    $baseparams = array_merge(['none' => 'none'], $workspaceparams);
+    $teachersql = ($isadmin ? '' : ' AND s.teacherid = :currentteacher') . $workspacefilteralias;
     if (!$isadmin) {
         $baseparams['currentteacher'] = (int)$USER->id;
     }
@@ -296,8 +366,9 @@ if ($ready) {
                FROM {local_prequran_live_session} s
                JOIN {local_prequran_live_note} n ON n.sessionid = s.id
               WHERE n.followup_status <> :none
+                {$workspacefilteralias}
            ORDER BY s.teacherid ASC",
-            ['none' => 'none']
+            array_merge(['none' => 'none'], $workspaceparams)
         );
     }
 
@@ -329,12 +400,19 @@ if ($ready) {
         $where[] = 'n.followup_resolved = 1';
     }
     if ($q !== '') {
-        $where[] = '(s.title LIKE :query OR n.followup_message LIKE :query OR n.parent_summary LIKE :query)';
-        $params['query'] = '%' . $DB->sql_like_escape($q) . '%';
+        $querylike = '%' . $DB->sql_like_escape($q) . '%';
+        $where[] = '(s.title LIKE :querytitle OR n.followup_message LIKE :querymessage OR n.parent_summary LIKE :querysummary)';
+        $params['querytitle'] = $querylike;
+        $params['querymessage'] = $querylike;
+        $params['querysummary'] = $querylike;
     }
     if (!$isadmin) {
         $where[] = 's.teacherid = :currentteacher';
         $params['currentteacher'] = (int)$USER->id;
+    }
+    if ($workspacefilteralias !== '') {
+        $where[] = 's.workspaceid = :workspaceid';
+        $params['workspaceid'] = $workspaceid;
     }
 
     $wheresql = implode(' AND ', $where);
@@ -416,18 +494,20 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
 .pqlf-timeline li{padding:7px 0;border-top:1px solid rgba(23,48,68,.08);color:#40586a;font-size:12px;font-weight:750}
 .pqlf-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-size:14px;font-weight:850}
 @media(max-width:900px){.pqlf-top{display:block}.pqlf-actions{margin-top:12px}.pqlf-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlf-filter,.pqlf-grid,.pqlf-update{grid-template-columns:1fr}.pqlf-filter{display:block}.pqlf-field{margin-bottom:10px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlf-shell">
   <div class="pqlf-wrap">
-    <section class="pqlf-top">
+    <section class="pqlf-top pqh-workspace-top">
       <div>
-        <h1 class="pqlf-title">Follow-Up Command Center</h1>
-        <p class="pqlf-sub">Triage parent follow-ups, responses, overdue items, escalations, and resolution history from one workspace.</p>
+        <h1 class="pqlf-title pqh-workspace-title">Follow-Up Command Center</h1>
+        <p class="pqlf-sub pqh-workspace-sub">Triage parent follow-ups, responses, overdue items, escalations, and resolution history from one workspace.</p>
       </div>
-      <div class="pqlf-actions">
-        <a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php'))->out(false); ?>">Teacher workspace</a>
-        <?php if ($isadmin): ?><a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Live ops</a><?php endif; ?>
-        <a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqlf-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', $urlparams))->out(false); ?>">Teacher workspace</a>
+        <?php if ($isadmin): ?><a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Live ops</a><?php endif; ?>
+        <a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url($dashboardpath, $urlparams))->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -438,13 +518,15 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
     <?php else: ?>
       <section class="pqlf-metrics" aria-label="Follow-up metrics">
         <?php foreach (['open' => 'open', 'needs_help' => 'parent needs help', 'overdue' => 'overdue', 'escalated' => 'admin support', 'resolved' => 'resolved'] as $key => $label): ?>
-          <a class="pqlf-metric" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', ['filter' => $key]))->out(false); ?>">
+          <a class="pqlf-metric" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', pqlf_url_params($urlparams, ['filter' => $key])))->out(false); ?>">
             <strong><?php echo (int)$metrics[$key]; ?></strong><span><?php echo s($label); ?></span>
           </a>
         <?php endforeach; ?>
       </section>
 
       <form class="pqlf-filter" method="get">
+        <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+        <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
         <div class="pqlf-field">
           <label for="pqlf-filter">Status</label>
           <select class="pqlf-select" id="pqlf-filter" name="filter">
@@ -489,9 +571,9 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
               $statuslabel = str_replace('_', ' ', (string)$note->followup_status);
               $response = (string)($note->parent_response_status ?? 'none');
               $timeline = pqlf_timeline((int)$note->sessionid, (int)$note->studentid, (int)$note->id);
-              $reviewurl = new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => (int)$note->sessionid]);
-              $messageurl = new moodle_url('/local/hubredirect/live_followup_message.php', ['sessionid' => (int)$note->sessionid, 'studentid' => (int)$note->studentid, 'sesskey' => sesskey()]);
-              $parenturl = new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => (int)$note->studentid]);
+              $reviewurl = new moodle_url('/local/hubredirect/live_review.php', pqlf_url_params($urlparams, ['sessionid' => (int)$note->sessionid]));
+              $messageurl = new moodle_url('/local/hubredirect/live_followup_message.php', pqlf_url_params($urlparams, ['sessionid' => (int)$note->sessionid, 'studentid' => (int)$note->studentid, 'sesskey' => sesskey()]));
+              $parenturl = new moodle_url('/local/hubredirect/live_summaries.php', pqlf_url_params($urlparams, ['childid' => (int)$note->studentid]));
             ?>
             <article class="pqlf-card <?php echo $overdue ? 'pqlf-card--overdue' : ''; ?>">
               <div class="pqlf-card__head">
@@ -499,7 +581,7 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
                   <h3><?php echo s($studentname); ?></h3>
                   <p class="pqlf-meta"><?php echo s((string)$note->session_title); ?> - <?php echo s($sessiondate); ?> - <?php echo s($teachername); ?></p>
                 </div>
-                <div class="pqlf-row-actions">
+                <div class="pqlf-row-actions pqh-workspace-actions">
                   <span class="pqlf-pill <?php echo (string)$note->followup_status === 'admin_support_requested' ? 'pqlf-pill--bad' : ($overdue ? 'pqlf-pill--warn' : ''); ?>"><?php echo s($statuslabel); ?></span>
                   <?php if (!empty($note->followup_resolved)): ?><span class="pqlf-pill">resolved</span><?php endif; ?>
                   <?php if ($overdue): ?><span class="pqlf-pill pqlf-pill--warn">overdue</span><?php endif; ?>
@@ -535,7 +617,7 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
                       </ul>
                     <?php endif; ?>
                   </div>
-                  <div class="pqlf-row-actions" style="margin-top:10px">
+                  <div class="pqlf-row-actions pqh-workspace-actions" style="margin-top:10px">
                     <a class="pqlf-btn pqlf-btn--light" href="<?php echo $reviewurl->out(false); ?>">Review</a>
                     <a class="pqlf-btn pqlf-btn--light" href="<?php echo $messageurl->out(false); ?>">Message</a>
                     <a class="pqlf-btn pqlf-btn--light" href="<?php echo $parenturl->out(false); ?>">Parent view</a>
@@ -547,6 +629,8 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
                 <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
                 <input type="hidden" name="action" value="update_followup">
                 <input type="hidden" name="noteid" value="<?php echo (int)$note->id; ?>">
+                <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+                <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
                 <div class="pqlf-field">
                   <label for="status-<?php echo (int)$note->id; ?>">Follow-up status</label>
                   <select class="pqlf-select" id="status-<?php echo (int)$note->id; ?>" name="followup_status">
@@ -559,7 +643,7 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
                   <label for="internal-<?php echo (int)$note->id; ?>">Internal note</label>
                   <input class="pqlf-input" id="internal-<?php echo (int)$note->id; ?>" name="internal_note" placeholder="Optional audit note">
                 </div>
-                <div class="pqlf-wide pqlf-row-actions">
+                <div class="pqlf-wide pqlf-row-actions pqh-workspace-actions">
                   <?php if (empty($note->followup_resolved)): ?>
                     <button class="pqlf-btn" type="submit" name="operation" value="resolve">Mark resolved</button>
                     <button class="pqlf-btn pqlf-btn--warn" type="submit" name="operation" value="admin_support">Escalate to admin</button>

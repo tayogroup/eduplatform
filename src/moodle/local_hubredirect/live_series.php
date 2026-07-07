@@ -5,6 +5,10 @@ require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->dirroot . '/local/prequran/notificationlib.php');
+require_once(__DIR__ . '/accesslib.php');
+
+$consumercontext = pqh_requested_consumer_context();
+$brandname = trim((string)($consumercontext->consumername ?? '')) ?: 'EduPlatform';
 
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -55,8 +59,8 @@ function pqlser_is_managed_student(int $userid): bool {
 }
 
 function pqlser_is_teacher(int $userid): bool {
-    global $DB;
-    if (is_siteadmin($userid)) {
+    global $DB, $USER;
+    if (is_siteadmin($userid) || ((int)$USER->id === $userid && is_siteadmin($USER)) || pqh_can_manage_academy_operations($userid)) {
         return true;
     }
     if (pqlser_table_exists('local_prequran_teacher_student')
@@ -297,7 +301,7 @@ function pqlser_latest_change_time(int $seriesid): int {
                 'session_cancelled',
                 'series_change_notifications_processed',
                 'series_cancel_notifications_processed',
-                'series_single_session_cancel_notifications_processed'
+                'series_single_cancel_notice'
             )",
         ['targettype' => 'series', 'seriesid' => $seriesid]
     );
@@ -326,36 +330,47 @@ function pqlser_ack_current(int $seriesid, int $studentid, int $parentid, int $l
     );
 }
 
-if (!pqlser_is_teacher((int)$USER->id) || pqlser_is_managed_student((int)$USER->id)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only teachers and administrators can manage live class series.');
+$canoperate = is_siteadmin($USER) || pqh_can_manage_academy_operations((int)$USER->id);
+if (!$canoperate && (!pqlser_is_teacher((int)$USER->id) || pqlser_is_managed_student((int)$USER->id))) {
+    pqh_access_denied(
+        'Only teachers and administrators can manage live class series.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Live class series access required'
+    );
 }
 
 $ready = pqlser_ready();
 $notice = '';
+$seriesurl = new moodle_url('/local/hubredirect/live_series.php');
 
 $action = optional_param('action', '', PARAM_ALPHANUMEXT);
 
 if ($ready && $action === 'update_series') {
-    require_sesskey();
-    $seriesid = required_param('seriesid', PARAM_INT);
-    $series = $DB->get_record('local_prequran_live_series', ['id' => $seriesid], '*', MUST_EXIST);
-    if (!is_siteadmin($USER) && (int)$series->teacherid !== (int)$USER->id) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot edit this class series.');
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please reopen the live class series page and try again.', $seriesurl, 'Live class series form expired');
+    }
+    $seriesid = optional_param('seriesid', 0, PARAM_INT);
+    $series = $seriesid > 0 ? $DB->get_record('local_prequran_live_series', ['id' => $seriesid]) : false;
+    if (!$series) {
+        pqh_access_denied('Choose a valid live class series before editing it.', $seriesurl, 'Live class series unavailable');
+    }
+    if (!$canoperate && (int)$series->teacherid !== (int)$USER->id) {
+        pqh_access_denied('You cannot edit this class series.', $seriesurl, 'Live class series access required');
     }
 
     $now = time();
-    $teacherid = is_siteadmin($USER) ? required_param('teacherid', PARAM_INT) : (int)$series->teacherid;
-    $title = required_param('title', PARAM_TEXT);
-    $lessonid = required_param('lessonid', PARAM_ALPHANUMEXT);
-    $unitid = required_param('unitid', PARAM_ALPHANUMEXT);
-    $starttime = required_param('start_time', PARAM_TEXT);
+    $teacherid = $canoperate ? optional_param('teacherid', 0, PARAM_INT) : (int)$series->teacherid;
+    $title = optional_param('title', '', PARAM_TEXT);
+    $lessonid = optional_param('lessonid', '', PARAM_ALPHANUMEXT);
+    $unitid = optional_param('unitid', '', PARAM_ALPHANUMEXT);
+    $starttime = optional_param('start_time', '', PARAM_TEXT);
     $duration = max(15, optional_param('duration_minutes', 60, PARAM_INT));
-    $studentids = pqlser_parse_students(required_param('studentids_raw', PARAM_RAW));
-    if (!$studentids) {
-        throw new moodle_exception('invalidparameter', '', '', 'At least one student is required.');
+    $studentids = pqlser_parse_students(optional_param('studentids_raw', '', PARAM_RAW));
+    if ($teacherid <= 0 || trim($title) === '' || trim($lessonid) === '' || trim($unitid) === '' || !$studentids) {
+        pqh_access_denied('Complete the required series fields before saving.', $seriesurl, 'Live class series form incomplete');
     }
     if (!preg_match('/^([0-2]?[0-9]):([0-5][0-9])$/', $starttime, $matches)) {
-        throw new moodle_exception('invalidparameter', '', '', 'Enter a valid class time.');
+        pqh_access_denied('Enter a valid class time before saving the series.', $seriesurl, 'Live class series time unavailable');
     }
     $hour = min(23, (int)$matches[1]);
     $minute = (int)$matches[2];
@@ -434,7 +449,7 @@ if ($ready && $action === 'update_series') {
     $removedstudents = array_values(array_diff($old['students'], $studentids));
     $notificationdetails = ['teachers' => 0, 'parents' => 0, 'changed_fields' => $changesummary];
     if ($changesummary) {
-        $message = 'A recurring Quraan Academy live class series was updated: ' . $title . '. Future sessions have been adjusted.';
+        $message = 'A recurring ' . $brandname . ' live class series was updated: ' . $title . '. Future sessions have been adjusted.';
         if ((int)$old['teacherid'] !== $teacherid) {
             if (pqlser_notify_teacher($seriesid, (int)$old['teacherid'], 'Live class series reassigned', 'A recurring live class series was reassigned away from you: ' . (string)$old['title'] . '.', 'series_teacher_reassigned')) {
                 $notificationdetails['teachers']++;
@@ -447,14 +462,14 @@ if ($ready && $action === 'update_series') {
         }
 
         if (array_intersect($changesummary, ['title', 'start_time', 'duration_minutes', 'teacherid'])) {
-            $parentmessage = 'A recurring Quraan Academy live class schedule was updated. Please check the live class schedule for the latest class time and teacher.';
+            $parentmessage = 'A recurring ' . $brandname . ' live class schedule was updated. Please check the live class schedule for the latest class time and teacher.';
             $notificationdetails['parents'] += pqlser_notify_parents($seriesid, $studentids, 'Live class schedule updated', $parentmessage, 'series_parent_schedule_updated');
         }
         if ($addedstudents) {
-            $notificationdetails['parents'] += pqlser_notify_parents($seriesid, $addedstudents, 'Student added to live class series', 'Your student was added to a recurring Quraan Academy live class series. Please check the live class schedule for upcoming classes.', 'series_parent_student_added');
+            $notificationdetails['parents'] += pqlser_notify_parents($seriesid, $addedstudents, 'Student added to live class series', 'Your student was added to a recurring ' . $brandname . ' live class series. Please check the live class schedule for upcoming classes.', 'series_parent_student_added');
         }
         if ($removedstudents) {
-            $notificationdetails['parents'] += pqlser_notify_parents($seriesid, $removedstudents, 'Live class schedule changed', 'Your student was removed from future sessions in a recurring Quraan Academy live class series. Please contact the academy if you have questions.', 'series_parent_student_removed');
+            $notificationdetails['parents'] += pqlser_notify_parents($seriesid, $removedstudents, 'Live class schedule changed', 'Your student was removed from future sessions in a recurring ' . $brandname . ' live class series. Please contact the academy if you have questions.', 'series_parent_student_removed');
         }
         pqlser_audit(0, 'series_change_notifications_processed', 'series', $seriesid, $notificationdetails);
     }
@@ -462,14 +477,21 @@ if ($ready && $action === 'update_series') {
 }
 
 if ($ready && $action === 'cancel_session') {
-    require_sesskey();
-    $seriesid = required_param('seriesid', PARAM_INT);
-    $sessionid = required_param('sessionid', PARAM_INT);
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please reopen the live class series page and try again.', $seriesurl, 'Live class series form expired');
+    }
+    $seriesid = optional_param('seriesid', 0, PARAM_INT);
+    $sessionid = optional_param('sessionid', 0, PARAM_INT);
     $reason = trim(optional_param('reason', '', PARAM_TEXT));
-    $series = $DB->get_record('local_prequran_live_series', ['id' => $seriesid], '*', MUST_EXIST);
-    $session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid, 'seriesid' => $seriesid], '*', MUST_EXIST);
-    if (!is_siteadmin($USER) && (int)$series->teacherid !== (int)$USER->id) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot cancel this class session.');
+    $series = $seriesid > 0 ? $DB->get_record('local_prequran_live_series', ['id' => $seriesid]) : false;
+    $session = $sessionid > 0 && $seriesid > 0
+        ? $DB->get_record('local_prequran_live_session', ['id' => $sessionid, 'seriesid' => $seriesid], '*', IGNORE_MISSING)
+        : false;
+    if (!$series || !$session) {
+        pqh_access_denied('Choose a valid live class session before cancelling it.', $seriesurl, 'Live class session unavailable');
+    }
+    if (!$canoperate && (int)$series->teacherid !== (int)$USER->id) {
+        pqh_access_denied('You cannot cancel this class session.', $seriesurl, 'Live class session access required');
     }
     $session->status = 'cancelled';
     $session->cancelledby = (int)$USER->id;
@@ -482,17 +504,22 @@ if ($ready && $action === 'cancel_session') {
     if (pqlser_notify_teacher($seriesid, (int)$series->teacherid, 'Live class session cancelled', 'One session in your recurring live class series was cancelled: ' . (string)$series->title . '.', 'series_teacher_session_cancelled')) {
         $sent++;
     }
-    $sent += pqlser_notify_parents($seriesid, $studentids, 'Live class session cancelled', 'One upcoming Quraan Academy live class session was cancelled. Please check the live class schedule for details.', 'series_parent_session_cancelled');
-    pqlser_audit((int)$session->id, 'series_single_session_cancel_notifications_processed', 'series', $seriesid, ['sent' => $sent]);
+    $sent += pqlser_notify_parents($seriesid, $studentids, 'Live class session cancelled', 'One upcoming ' . $brandname . ' live class session was cancelled. Please check the live class schedule for details.', 'series_parent_session_cancelled');
+    pqlser_audit((int)$session->id, 'series_single_cancel_notice', 'series', $seriesid, ['sent' => $sent]);
     redirect(new moodle_url('/local/hubredirect/live_series.php', ['sessioncancelled' => 1, 'notified' => $sent]));
 }
 
 if ($ready && $action === 'cancel_series') {
-    require_sesskey();
-    $seriesid = required_param('seriesid', PARAM_INT);
-    $series = $DB->get_record('local_prequran_live_series', ['id' => $seriesid], '*', MUST_EXIST);
-    if (!is_siteadmin($USER) && (int)$series->teacherid !== (int)$USER->id) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot cancel this class series.');
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please reopen the live class series page and try again.', $seriesurl, 'Live class series form expired');
+    }
+    $seriesid = optional_param('seriesid', 0, PARAM_INT);
+    $series = $seriesid > 0 ? $DB->get_record('local_prequran_live_series', ['id' => $seriesid]) : false;
+    if (!$series) {
+        pqh_access_denied('Choose a valid live class series before cancelling it.', $seriesurl, 'Live class series unavailable');
+    }
+    if (!$canoperate && (int)$series->teacherid !== (int)$USER->id) {
+        pqh_access_denied('You cannot cancel this class series.', $seriesurl, 'Live class series access required');
     }
     $reason = trim(optional_param('reason', '', PARAM_TEXT));
     $now = time();
@@ -524,20 +551,25 @@ if ($ready && $action === 'cancel_series') {
     if (pqlser_notify_teacher($seriesid, (int)$series->teacherid, 'Live class series cancelled', 'Future sessions in your recurring live class series were cancelled: ' . (string)$series->title . '.', 'series_teacher_cancelled')) {
         $sent++;
     }
-    $sent += pqlser_notify_parents($seriesid, $studentids, 'Live class series cancelled', 'Future sessions in a Quraan Academy recurring live class series were cancelled. Please check the live class schedule for details.', 'series_parent_cancelled');
+    $sent += pqlser_notify_parents($seriesid, $studentids, 'Live class series cancelled', 'Future sessions in a ' . $brandname . ' recurring live class series were cancelled. Please check the live class schedule for details.', 'series_parent_cancelled');
     pqlser_audit(0, 'series_cancel_notifications_processed', 'series', $seriesid, ['sent' => $sent]);
     redirect(new moodle_url('/local/hubredirect/live_series.php', ['cancelled' => 1, 'notified' => $sent]));
 }
 
 if ($ready && $action === 'remind_ack') {
-    require_sesskey();
-    $seriesid = required_param('seriesid', PARAM_INT);
-    $series = $DB->get_record('local_prequran_live_series', ['id' => $seriesid], '*', MUST_EXIST);
-    if (!is_siteadmin($USER) && (int)$series->teacherid !== (int)$USER->id) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot send reminders for this class series.');
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please reopen the live class series page and try again.', $seriesurl, 'Live class series form expired');
+    }
+    $seriesid = optional_param('seriesid', 0, PARAM_INT);
+    $series = $seriesid > 0 ? $DB->get_record('local_prequran_live_series', ['id' => $seriesid]) : false;
+    if (!$series) {
+        pqh_access_denied('Choose a valid live class series before sending reminders.', $seriesurl, 'Live class series unavailable');
+    }
+    if (!$canoperate && (int)$series->teacherid !== (int)$USER->id) {
+        pqh_access_denied('You cannot send reminders for this class series.', $seriesurl, 'Live class series access required');
     }
     if (!pqlser_ack_ready()) {
-        throw new moodle_exception('invalidparameter', '', '', 'Schedule acknowledgement table is not installed yet.');
+        pqh_access_denied('Schedule acknowledgement reminders are not available yet.', $seriesurl, 'Schedule acknowledgement unavailable');
     }
     $latestchange = pqlser_latest_change_time($seriesid);
     $sent = 0;
@@ -559,7 +591,7 @@ if ($ready && $action === 'remind_ack') {
                 pqlser_first_future_sessionid($seriesid),
                 (int)$parentid,
                 'Please acknowledge live class schedule change',
-                'Please review and acknowledge the latest recurring Quraan Academy live class schedule change.',
+                'Please review and acknowledge the latest recurring ' . $brandname . ' live class schedule change.',
                 new moodle_url('/local/hubredirect/live_series_schedule.php', ['childid' => $studentid]),
                 'Recurring live class schedule',
                 'series_ack_reminder',
@@ -613,8 +645,8 @@ if (($ackreminded = optional_param('ackreminded', -1, PARAM_INT)) >= 0) {
 
 $seriesrows = [];
 if ($ready) {
-    $where = is_siteadmin($USER) ? "1 = 1" : "se.teacherid = :teacherid";
-    $params = is_siteadmin($USER) ? [] : ['teacherid' => (int)$USER->id];
+    $where = $canoperate ? "1 = 1" : "se.teacherid = :teacherid";
+    $params = $canoperate ? [] : ['teacherid' => (int)$USER->id];
     $seriesrows = array_values($DB->get_records_sql(
         "SELECT se.*,
                 (SELECT COUNT(1) FROM {local_prequran_live_session} s WHERE s.seriesid = se.id) AS generated_sessions,
@@ -675,7 +707,7 @@ if ($ready && $seriesrows) {
                         'notification_skipped',
                         'series_change_notifications_processed',
                         'series_cancel_notifications_processed',
-                        'series_single_session_cancel_notifications_processed'
+                        'series_single_cancel_notice'
                     )
                ORDER BY id DESC",
                 $params,
@@ -769,17 +801,19 @@ body.pqh-live-series-page .main-inner{margin:0!important;padding:0!important;max
 .pqlser-ack{margin-top:14px;padding:12px;border-radius:10px;background:#fff7e7;border:1px solid rgba(123,90,58,.18)}.pqlser-ack--ok{background:#edf9ef;border-color:rgba(36,92,53,.16)}
 @media(max-width:900px){.pqlser-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.pqlser-top,.pqlser-head,.pqlser-session,.pqlser-comm-row{display:block}.pqlser-actions,.pqlser-field{margin-top:12px}.pqlser-field{display:grid}.pqlser-grid{grid-template-columns:1fr}.pqlser-title{font-size:24px}.pqlser-session form{margin-top:8px;display:grid}.pqlser-session .pqlser-input{width:100%}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlser-shell">
   <div class="pqlser-wrap">
-    <section class="pqlser-top">
+    <section class="pqlser-top pqh-workspace-top">
       <div>
-        <h1 class="pqlser-title">Live Class Series</h1>
-        <p class="pqlser-sub">View recurring class groups and cancel future sessions when needed.</p>
+        <h1 class="pqlser-title pqh-workspace-title">Live Class Series</h1>
+        <p class="pqlser-sub pqh-workspace-sub">View recurring class groups and cancel future sessions when needed.</p>
       </div>
-      <div class="pqlser-actions">
+      <div class="pqlser-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlser-btn pqlser-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <?php if (is_siteadmin($USER)): ?>
+        <?php if ($canoperate): ?>
           <a class="pqlser-btn pqlser-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php'))->out(false); ?>">Series wizard</a>
         <?php endif; ?>
         <a class="pqlser-btn pqlser-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php'))->out(false); ?>">Teacher workspace</a>
@@ -829,7 +863,7 @@ body.pqh-live-series-page .main-inner{margin:0!important;padding:0!important;max
                   <input type="hidden" name="seriesid" value="<?php echo (int)$series->id; ?>">
                   <div class="pqlser-grid">
                     <div><label class="pqlser-label" for="title-<?php echo (int)$series->id; ?>">Title</label><input class="pqlser-input" id="title-<?php echo (int)$series->id; ?>" name="title" value="<?php echo s((string)$series->title); ?>" required></div>
-                    <div><label class="pqlser-label" for="teacher-<?php echo (int)$series->id; ?>">Teacher ID</label><input class="pqlser-input" id="teacher-<?php echo (int)$series->id; ?>" name="teacherid" type="number" min="1" value="<?php echo (int)$series->teacherid; ?>" <?php echo is_siteadmin($USER) ? '' : 'readonly'; ?> required></div>
+                    <div><label class="pqlser-label" for="teacher-<?php echo (int)$series->id; ?>">Teacher ID</label><input class="pqlser-input" id="teacher-<?php echo (int)$series->id; ?>" name="teacherid" type="number" min="1" value="<?php echo (int)$series->teacherid; ?>" <?php echo $canoperate ? '' : 'readonly'; ?> required></div>
                     <div><label class="pqlser-label" for="time-<?php echo (int)$series->id; ?>">Class Time</label><input class="pqlser-input" id="time-<?php echo (int)$series->id; ?>" name="start_time" type="time" value="<?php echo s(substr((string)$series->start_time, 0, 5)); ?>" required></div>
                     <div><label class="pqlser-label" for="lesson-<?php echo (int)$series->id; ?>">Lesson ID</label><input class="pqlser-input" id="lesson-<?php echo (int)$series->id; ?>" name="lessonid" value="<?php echo s((string)$series->lessonid); ?>" required></div>
                     <div><label class="pqlser-label" for="unit-<?php echo (int)$series->id; ?>">Unit ID</label><input class="pqlser-input" id="unit-<?php echo (int)$series->id; ?>" name="unitid" value="<?php echo s((string)$series->unitid); ?>" required></div>
@@ -837,7 +871,7 @@ body.pqh-live-series-page .main-inner{margin:0!important;padding:0!important;max
                   </div>
                   <div style="margin-top:10px"><label class="pqlser-label" for="students-<?php echo (int)$series->id; ?>">Active Student IDs for Future Sessions</label><textarea class="pqlser-textarea" id="students-<?php echo (int)$series->id; ?>" name="studentids_raw" required><?php echo s(implode(', ', $studentids)); ?></textarea></div>
                   <p class="pqlser-meta">Saving updates the series and future sessions only. Completed and cancelled sessions keep their historical records.</p>
-                  <div class="pqlser-actions"><button class="pqlser-btn" type="submit">Save series changes</button></div>
+                  <div class="pqlser-actions pqh-workspace-actions"><button class="pqlser-btn" type="submit">Save series changes</button></div>
                 </form>
 
                 <?php if ($sessionsforseries): ?>

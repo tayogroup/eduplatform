@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 
 $context = context_system::instance();
@@ -21,6 +22,9 @@ function pqr_parent_can_access_child(int $parentid, int $studentid): bool {
     global $DB;
 
     if ($studentid <= 0) {
+        return false;
+    }
+    if (!pqh_user_belongs_to_consumer_context($studentid)) {
         return false;
     }
     if (is_siteadmin($parentid)) {
@@ -89,6 +93,9 @@ function pqr_teacher_can_access_student(int $teacherid, int $studentid): bool {
     if ($studentid <= 0 || $teacherid <= 0 || $teacherid === $studentid) {
         return false;
     }
+    if (!pqh_user_belongs_to_consumer_context($studentid)) {
+        return false;
+    }
 
     if (pqr_table_exists('local_prequran_teacher_student')) {
         $explicitcount = (int)$DB->count_records('local_prequran_teacher_student', [
@@ -138,7 +145,7 @@ function pqr_stream_bunny_file(string $path, string $mimetype): void {
         $host = 'storage.bunnycdn.com';
     }
     if ($zone === '' || $accesskey === '' || $path === '' || !function_exists('curl_init')) {
-        throw new moodle_exception('filenotfound', '', '', 'Recording storage is not configured.');
+        throw new invalid_parameter_exception('Recording storage is not configured.');
     }
 
     $url = 'https://' . $host . '/' . rawurlencode($zone) . '/' . pqr_safe_storage_path($path);
@@ -153,7 +160,7 @@ function pqr_stream_bunny_file(string $path, string $mimetype): void {
     curl_close($ch);
 
     if ($errno || $status < 200 || $status >= 300 || $bytes === false) {
-        throw new moodle_exception('filenotfound', '', '', 'Recording could not be loaded.');
+        throw new invalid_parameter_exception('Recording could not be loaded.');
     }
 
     @header('Content-Type: ' . ($mimetype !== '' ? $mimetype : 'audio/webm'));
@@ -164,19 +171,151 @@ function pqr_stream_bunny_file(string $path, string $mimetype): void {
     exit;
 }
 
-$childid = required_param('childid', PARAM_INT);
-if (!pqr_parent_can_access_child((int)$USER->id, $childid) && !pqr_teacher_can_access_student((int)$USER->id, $childid)) {
-    throw new moodle_exception('nopermissions', '', '', 'You cannot review recordings for this student.');
+function pqr_recording_student_rows(int $userid): array {
+    global $DB;
+    if (!pqr_table_exists('local_prequran_speakrec')) {
+        return [];
+    }
+
+    $rows = $DB->get_records_sql(
+        "SELECT r.userid AS studentid, COUNT(1) AS recording_count, MAX(r.timecreated) AS last_recorded
+           FROM {local_prequran_speakrec} r
+          WHERE r.status <> :failed
+       GROUP BY r.userid
+       ORDER BY last_recorded DESC",
+        ['failed' => 'upload_failed']
+    );
+
+    $students = [];
+    foreach ($rows as $row) {
+        $studentid = (int)$row->studentid;
+        if ($studentid <= 0) {
+            continue;
+        }
+        if (!is_siteadmin($userid)
+            && !pqr_teacher_can_access_student($userid, $studentid)
+            && !pqr_parent_can_access_child($userid, $studentid)
+            && $studentid !== $userid) {
+            continue;
+        }
+        $student = core_user::get_user($studentid);
+        $students[] = [
+            'studentid' => $studentid,
+            'name' => $student ? fullname($student) : 'Student ' . $studentid,
+            'recording_count' => (int)$row->recording_count,
+            'last_recorded' => (int)$row->last_recorded,
+        ];
+    }
+    return $students;
+}
+
+function pqr_render_student_picker(array $students): void {
+    global $OUTPUT;
+    echo $OUTPUT->header();
+    ?>
+<style>
+body.pqh-recordings-page header,
+body.pqh-recordings-page footer,
+body.pqh-recordings-page nav.navbar,
+body.pqh-recordings-page #page-header,
+body.pqh-recordings-page #page-footer,
+body.pqh-recordings-page .drawer,
+body.pqh-recordings-page .drawer-toggles,
+body.pqh-recordings-page .block-region,
+body.pqh-recordings-page [data-region="drawer"],
+body.pqh-recordings-page [data-region="right-hand-drawer"]{display:none!important}
+body.pqh-recordings-page #page,
+body.pqh-recordings-page #page-content,
+body.pqh-recordings-page #region-main,
+body.pqh-recordings-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
+.pqr-shell{min-height:100vh;padding:34px 18px 54px;background:linear-gradient(180deg,#f1fff4 0,#fff 50%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#4d3522}
+.pqr-wrap{max-width:980px;margin:0 auto}
+.pqr-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:16px;background:linear-gradient(135deg,#eaffea 0,#fff 54%,#fff7e7 100%);border:1px solid rgba(111,78,50,.13);box-shadow:0 16px 38px rgba(105,76,45,.08)}
+.pqr-title{margin:0;font-size:30px;line-height:1.1;font-weight:950;color:#4d3522}
+.pqr-subtitle{margin:8px 0 0;color:#64745a;font-size:15px;font-weight:750}
+.pqr-card{padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.12);box-shadow:0 14px 36px rgba(105,76,45,.08)}
+.pqr-table{width:100%;border-collapse:collapse}
+.pqr-table th,.pqr-table td{padding:13px 12px;border-bottom:1px solid rgba(111,78,50,.1);text-align:left;font-size:14px}
+.pqr-table th{color:#6f4e32;font-size:12px;font-weight:950;text-transform:uppercase}
+.pqr-name{font-weight:950;color:#2c2118}
+.pqr-muted{display:block;margin-top:3px;color:#6b7b63;font-size:12px;font-weight:750}
+.pqr-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border-radius:10px;background:#6f4e32;color:#fff!important;text-decoration:none!important;font-size:13px;font-weight:950}
+.pqr-empty{padding:28px;text-align:center;color:#64745a;font-weight:850}
+@media(max-width:720px){.pqr-top{display:block}.pqr-table,.pqr-table tbody,.pqr-table tr,.pqr-table td{display:block;width:100%}.pqr-table thead{display:none}.pqr-table td{padding:8px 0;border:0}.pqr-table tr{padding:10px 0;border-bottom:1px solid rgba(111,78,50,.1)}}
+</style>
+<main class="pqr-shell">
+  <div class="pqr-wrap">
+    <section class="pqr-top">
+      <div>
+        <h1 class="pqr-title">Speak Recordings</h1>
+        <p class="pqr-subtitle">Choose a student to review submitted Speak practice recordings.</p>
+      </div>
+    </section>
+    <section class="pqr-card">
+      <?php if (!$students): ?>
+        <div class="pqr-empty">No Speak practice recordings are available for your account yet.</div>
+      <?php else: ?>
+        <table class="pqr-table">
+          <thead><tr><th>Student</th><th>Recordings</th><th>Last Submitted</th><th>Action</th></tr></thead>
+          <tbody>
+          <?php foreach ($students as $student): ?>
+            <tr>
+              <td><span class="pqr-name"><?php echo s($student['name']); ?></span><span class="pqr-muted">ID <?php echo (int)$student['studentid']; ?></span></td>
+              <td><?php echo (int)$student['recording_count']; ?></td>
+              <td><?php echo $student['last_recorded'] > 0 ? s(userdate($student['last_recorded'], get_string('strftimedatetimeshort'))) : '-'; ?></td>
+              <td><a class="pqr-btn" href="<?php echo (new moodle_url('/local/hubredirect/recordings.php', ['childid' => (int)$student['studentid']]))->out(false); ?>">Open</a></td>
+            </tr>
+          <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
+    </section>
+  </div>
+</main>
+    <?php
+    echo $OUTPUT->footer();
+    exit;
+}
+
+$childid = optional_param('childid', 0, PARAM_INT);
+if ($childid <= 0) {
+    pqr_render_student_picker(pqr_recording_student_rows((int)$USER->id));
+}
+if ((int)$USER->id !== $childid && !pqr_parent_can_access_child((int)$USER->id, $childid) && !pqr_teacher_can_access_student((int)$USER->id, $childid)) {
+    pqh_access_denied(
+        'You cannot review recordings for this student.',
+        new moodle_url('/local/hubredirect/recordings.php'),
+        'Recording review access required'
+    );
 }
 
 $recordingid = optional_param('id', 0, PARAM_INT);
 $action = optional_param('action', '', PARAM_ALPHA);
 if ($action === 'play' && $recordingid > 0) {
     if (!pqr_table_exists('local_prequran_speakrec')) {
-        throw new moodle_exception('filenotfound', '', '', 'Speak recording table is not installed yet.');
+        pqh_access_denied(
+            'Speak recording storage is not installed yet.',
+            new moodle_url('/local/hubredirect/recordings.php', ['childid' => $childid]),
+            'Recording unavailable'
+        );
     }
-    $recording = $DB->get_record('local_prequran_speakrec', ['id' => $recordingid, 'userid' => $childid], '*', MUST_EXIST);
-    pqr_stream_bunny_file((string)$recording->bunny_path, (string)$recording->mime_type);
+    $recording = $DB->get_record('local_prequran_speakrec', ['id' => $recordingid, 'userid' => $childid], '*', IGNORE_MISSING);
+    if (!$recording) {
+        pqh_access_denied(
+            'Choose a valid recording before opening playback.',
+            new moodle_url('/local/hubredirect/recordings.php', ['childid' => $childid]),
+            'Recording unavailable'
+        );
+    }
+    try {
+        pqr_stream_bunny_file((string)$recording->bunny_path, (string)$recording->mime_type);
+    } catch (Throwable $e) {
+        pqh_access_denied(
+            $e->getMessage(),
+            new moodle_url('/local/hubredirect/recordings.php', ['childid' => $childid]),
+            'Recording unavailable'
+        );
+    }
 }
 
 $child = core_user::get_user($childid);
@@ -247,14 +386,15 @@ body.pqh-recordings-page{background:#f4f7fb!important}
 .pqr-audio{width:100%;margin-top:4px}
 .pqr-empty{max-width:980px;margin:34px auto;padding:24px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
 @media(max-width:640px){.pqr-top{display:block}.pqr-btn{margin-top:14px}.pqr-group__head{display:block}.pqr-chain{margin-top:12px}.pqr-card__head{display:block}.pqr-title{font-size:25px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqr-shell">
   <div class="pqr-wrap">
-    <section class="pqr-top">
+    <section class="pqr-top pqh-workspace-top">
       <div>
         <p class="pqr-kicker">Recording review</p>
-        <h1 class="pqr-title">Student recordings for <?php echo s($childname); ?></h1>
-        <p class="pqr-subtitle">Play submitted practice together, or review individual recordings when needed.</p>
+        <h1 class="pqr-title pqh-workspace-title">Student recordings for <?php echo s($childname); ?></h1>
+        <p class="pqr-subtitle pqh-workspace-sub">Play submitted practice together, or review individual recordings when needed.</p>
       </div>
       <a class="pqr-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', ['childid' => $childid]))->out(false); ?>">Back to dashboard</a>
     </section>

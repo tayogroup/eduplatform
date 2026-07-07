@@ -5,6 +5,8 @@ require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->libdir . '/externallib.php');
+require_once(__DIR__ . '/accesslib.php');
+require_once(__DIR__ . '/course_catalog.php');
 
 $accountidshelper = __DIR__ . '/account_ids.php';
 if (is_readable($accountidshelper)) {
@@ -104,6 +106,141 @@ function hub_table_exists(string $tablename): bool {
     } catch (Throwable $e) {
         return false;
     }
+}
+
+function hub_table_has_field(string $table, string $field): bool {
+    global $DB;
+    try {
+        $columns = $DB->get_columns($table);
+    } catch (Throwable $e) {
+        return false;
+    }
+    return array_key_exists($field, $columns);
+}
+
+function hub_enrollment_approval_status(int $studentid): array {
+    global $DB;
+    $status = [
+        'approved' => true,
+        'reason' => 'legacy_or_not_required',
+        'guardianid' => 0,
+    ];
+
+    if ($studentid <= 0) {
+        return $status;
+    }
+
+    $profileexists = false;
+    if (hub_table_exists('local_prequran_student_profile')) {
+        $profile = $DB->get_record('local_prequran_student_profile', ['userid' => $studentid], '*', IGNORE_MISSING);
+        if ($profile) {
+            $profileexists = true;
+            if (hub_table_has_field('local_prequran_student_profile', 'enrollment_approval_status')) {
+                $profileapproval = strtolower(trim((string)($profile->enrollment_approval_status ?? '')));
+                if ($profileapproval === 'approved') {
+                    return ['approved' => true, 'reason' => 'profile_approved', 'guardianid' => 0];
+                }
+                if ($profileapproval === 'pending_parent') {
+                    $status['approved'] = false;
+                    $status['reason'] = 'profile_pending_parent';
+                }
+            }
+        }
+    }
+
+    if (hub_table_exists('local_prequran_live_consent')) {
+        $approval = $DB->get_record_sql(
+            "SELECT *
+               FROM {local_prequran_live_consent}
+              WHERE studentid = :studentid
+                AND consent_type = :type
+           ORDER BY granted DESC, timemodified DESC, id DESC",
+            ['studentid' => $studentid, 'type' => 'enrollment_approval'],
+            IGNORE_MULTIPLE
+        );
+        if ($approval) {
+            return [
+                'approved' => (int)$approval->granted === 1,
+                'reason' => (int)$approval->granted === 1 ? 'consent_approved' : 'consent_pending_parent',
+                'guardianid' => (int)($approval->guardianid ?? 0),
+            ];
+        }
+        $guardianid = (int)$DB->get_field_sql(
+            "SELECT guardianid
+               FROM {local_prequran_live_consent}
+              WHERE studentid = ?
+           ORDER BY timemodified DESC, id DESC",
+            [$studentid],
+            IGNORE_MULTIPLE
+        );
+        if ($guardianid > 0) {
+            $status['guardianid'] = $guardianid;
+        }
+    }
+
+    if (hub_table_exists('local_prequran_comm_consent')) {
+        $guardianid = (int)$DB->get_field_sql(
+            "SELECT guardianid
+               FROM {local_prequran_comm_consent}
+              WHERE studentid = ?
+           ORDER BY timemodified DESC, id DESC",
+            [$studentid],
+            IGNORE_MULTIPLE
+        );
+        if ($guardianid > 0 && empty($status['guardianid'])) {
+            $status['guardianid'] = $guardianid;
+        }
+    }
+
+    if ($profileexists && !$status['approved']) {
+        return $status;
+    }
+
+    return $status;
+}
+
+function hub_render_enrollment_pending_page(int $studentid, array $approval): void {
+    global $OUTPUT, $PAGE;
+
+    $PAGE->set_context(context_system::instance());
+    $PAGE->set_url(new moodle_url('/local/hubredirect/issue_child.php'));
+    $PAGE->set_pagelayout('standard');
+    $PAGE->set_title('Enrollment Approval Needed');
+    $PAGE->set_heading('Enrollment Approval Needed');
+    $PAGE->add_body_class('pqh-enrollment-pending-page');
+
+    echo $OUTPUT->header();
+    $dashboardurl = (new moodle_url('/local/hubredirect/dashboard.php'))->out(false);
+    $studentname = 'Student';
+    try {
+        $user = core_user::get_user($studentid);
+        if ($user) {
+            $studentname = fullname($user);
+        }
+    } catch (Throwable $e) {
+        $studentname = 'Student';
+    }
+    ?>
+<style>
+body.pqh-enrollment-pending-page header,body.pqh-enrollment-pending-page footer,body.pqh-enrollment-pending-page nav.navbar,body.pqh-enrollment-pending-page #page-header,body.pqh-enrollment-pending-page #page-footer,body.pqh-enrollment-pending-page .drawer,body.pqh-enrollment-pending-page .drawer-toggles,body.pqh-enrollment-pending-page .block-region,body.pqh-enrollment-pending-page [data-region="drawer"],body.pqh-enrollment-pending-page [data-region="right-hand-drawer"]{display:none!important}
+body.pqh-enrollment-pending-page #page,body.pqh-enrollment-pending-page #page-content,body.pqh-enrollment-pending-page #region-main,body.pqh-enrollment-pending-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
+.pqep-shell{min-height:100vh;padding:42px 18px;background:#f3fbf4;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}.pqep-card{max-width:760px;margin:0 auto;background:#fff;border:1px solid rgba(122,86,55,.18);border-radius:10px;box-shadow:0 16px 38px rgba(23,48,68,.08);padding:28px}.pqep-logo{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:#7a5637;color:#fff;font-weight:950;margin-bottom:14px}.pqep-kicker{margin:0 0 8px;color:#7a5637;font-size:13px;font-weight:950;text-transform:uppercase}.pqep-title{margin:0;color:#241b24;font-size:34px;line-height:1.1;font-weight:950}.pqep-sub{margin:12px 0 18px;color:#5d6f5c;font-size:16px;font-weight:850;line-height:1.5}.pqep-panel{padding:16px;border:1px dashed rgba(122,86,55,.26);border-radius:9px;background:#fffaf0;margin:14px 0;font-weight:850}.pqep-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.pqep-btn{display:inline-flex;min-height:44px;align-items:center;justify-content:center;padding:0 16px;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:15px;font-weight:950}.pqep-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}
+</style>
+<main class="pqep-shell">
+  <section class="pqep-card">
+    <div class="pqep-logo">QA</div>
+    <p class="pqep-kicker">Enrollment approval needed</p>
+    <h1 class="pqep-title">Almost ready, <?php echo s($studentname); ?></h1>
+    <p class="pqep-sub">A parent or guardian must approve this enrollment before lessons can begin. This protects the student record and confirms the family understands how lessons, progress, audio recording, and video consent are handled.</p>
+    <div class="pqep-panel">Please ask the linked parent or guardian to sign in and approve the enrollment from their dashboard or approval link.</div>
+    <div class="pqep-actions">
+      <a class="pqep-btn" href="<?php echo s($dashboardurl); ?>">Back to dashboard</a>
+    </div>
+  </section>
+</main>
+    <?php
+    echo $OUTPUT->footer();
+    exit;
 }
 
 function hub_activeish_status_clause(string $field = 'status'): array {
@@ -352,6 +489,11 @@ function hub_bunny_environment_base_path(string $env): string {
     return '/' . trim($configured, '/') . '/';
 }
 
+function hub_cdn_base_url(string $env): string {
+    $env = hub_normalize_environment($env);
+    return pqh_shared_resource_cdn_base_url($env);
+}
+
 function hub_selected_environment(): string {
     $requestedRaw = optional_param('pq_env', '', PARAM_ALPHANUMEXT);
     if ($requestedRaw === '') {
@@ -372,10 +514,7 @@ function hub_rewrite_bunny_environment_path(string $path, string $env): string {
     if (preg_match('~^https?://~i', $path)) {
         $parts = parse_url($path);
         $host = strtolower((string)($parts['host'] ?? ''));
-        $isBunnyHost = $host === 'app.quraan.academy'
-            || $host === 'quraanacademy.b-cdn.net'
-            || $host === 'ehelacademy.b-cdn.net';
-        if (!$isBunnyHost || empty($parts['path'])) {
+        if (!pqh_is_known_resource_host($host) || empty($parts['path'])) {
             return $path;
         }
 
@@ -384,10 +523,7 @@ function hub_rewrite_bunny_environment_path(string $path, string $env): string {
             rtrim($base, '/') . '$2',
             $parts['path']
         );
-        $rebuilt = ($parts['scheme'] ?? 'https') . '://' . $parts['host'];
-        if (!empty($parts['port'])) {
-            $rebuilt .= ':' . $parts['port'];
-        }
+        $rebuilt = pqh_shared_resource_cdn_base_url($env);
         $rebuilt .= $rewrittenPath;
         if (!empty($parts['query'])) {
             $rebuilt .= '?' . $parts['query'];
@@ -419,8 +555,13 @@ function hub_render_lesson_iframe_wrapper(
     bool $canSkipStepForQa = false
 ): void {
     header('Content-Type: text/html; charset=utf-8');
-    header('Permissions-Policy: microphone=(self "https://app.quraan.academy" "https://quraanacademy.b-cdn.net" "https://ehelacademy.b-cdn.net"), autoplay=(self "https://app.quraan.academy" "https://quraanacademy.b-cdn.net" "https://ehelacademy.b-cdn.net")');
-    header("Feature-Policy: microphone 'self' https://app.quraan.academy https://quraanacademy.b-cdn.net https://ehelacademy.b-cdn.net");
+    $resourceOrigins = array_map(static function(string $origin): string {
+        return '"' . $origin . '"';
+    }, pqh_resource_allowed_origins());
+    $permissionsOrigins = implode(' ', $resourceOrigins);
+    $featureOrigins = implode(' ', pqh_resource_allowed_origins());
+    header('Permissions-Policy: microphone=(self ' . $permissionsOrigins . '), autoplay=(self ' . $permissionsOrigins . ')');
+    header("Feature-Policy: microphone 'self' " . $featureOrigins);
 
     ?>
 <!doctype html>
@@ -610,14 +751,14 @@ if (is_file($localCfg)) {
 }
 
 // Settings with fallbacks
-$cdnBase        = defined('HUB_CDN_BASE')       ? HUB_CDN_BASE       : 'https://quraanacademy.b-cdn.net';
+$pqEnvironment = hub_selected_environment();
+$cdnBase        = hub_cdn_base_url($pqEnvironment);
 $HTML_SIGN_MODE = defined('HUB_BUNNY_SIGN_MODE')? HUB_BUNNY_SIGN_MODE: 'urltoken';
 $secKey         = defined('HUB_BUNNY_URLTOKEN_KEY') ? HUB_BUNNY_URLTOKEN_KEY : '';
 $useIpBind      = defined('HUB_BUNNY_IPBIND')   ? HUB_BUNNY_IPBIND   : false;
 $signHtml       = defined('HUB_BUNNY_SIGN_HTML')? HUB_BUNNY_SIGN_HTML: true;
 $ttlCdn         = defined('HUB_BUNNY_TTL_CDN')  ? (int)HUB_BUNNY_TTL_CDN  : 300;
 $ttlMTok        = defined('HUB_MTOKEN_TTL')     ? (int)HUB_MTOKEN_TTL     : 120;
-$pqEnvironment = hub_selected_environment();
 $pqBunnyBasePath = hub_bunny_environment_base_path($pqEnvironment);
 
 // Where the audio proxy might live
@@ -658,7 +799,7 @@ $map = [
     // 'alphabet_listen' => '/pre_quraan/scripts/pq_unit_alphabet_html_v0.0_MOBILE_GUARD_FILTER_APPLY_FIX.html?managed=1&v=20260425_80',
     
      
-    'alphabet_listen' => '/pre_quraan/scripts/alphabet_listen_alphabet-rules-skipfix-20260615e.html?managed=1',
+    'alphabet_listen' => '/pre_quraan/scripts/alphabet_listen_alphabet-phonetics-completefix-20260620a.html',
     // sssss s
     
      
@@ -699,10 +840,10 @@ $map = [
 // ss
 
 
-    // Alphabet Order + Trans pages go directly to Moodle (absolute URLs, no Bunny)
-    'alphabet_order'     => 'https://quraan.academy/mod/page/view.php?id=345&inpopup=1',
-    'alphabet_trans1'    => 'https://quraan.academy/mod/page/view.php?id=344&inpopup=1',
-    'alphabet_trans2'    => 'https://quraan.academy/mod/page/view.php?id=342&inpopup=1',
+    // Alphabet Order + Trans pages go directly to the current Moodle host (no Bunny).
+    'alphabet_order'     => '/mod/page/view.php?id=345&inpopup=1',
+    'alphabet_trans1'    => '/mod/page/view.php?id=344&inpopup=1',
+    'alphabet_trans2'    => '/mod/page/view.php?id=342&inpopup=1',
 
 
     // 'speak01'            => '/pre_quraan/scripts/alphabet_speak_v9.html',
@@ -1342,7 +1483,11 @@ $resolvePath = function(string $slugOrPath) use ($map, $mapLower, $pqEnvironment
     // Clean fallback
     $safe = preg_replace('/[^A-Za-z0-9_\-\.]/', '', $s);
     if ($safe === '') {
-        print_error('invalidarg');
+        pqh_access_denied(
+            'Choose a valid lesson activity before opening the student launcher.',
+            new moodle_url('/local/hubredirect/dashboard.php'),
+            'Lesson launcher unavailable'
+        );
     }
     if (substr(strtolower($safe), -5) !== '.html') {
         $safe .= '.html';
@@ -1365,23 +1510,52 @@ $custom  = profile_user_record($USER->id, false);
 // We support common shortnames: managed_student, managedstudent, managed
 // =============================================================
 $managedOverrideRaw = optional_param('managed_student', '', PARAM_RAW_TRIMMED);
+$profileManagedStudent = false;
+$candidates = ['managed_student', 'managedstudent', 'managed'];
+foreach ($candidates as $k) {
+    if (isset($custom->{$k}) && $custom->{$k} !== '' && $custom->{$k} !== null) {
+        $vv = strtolower(trim((string)$custom->{$k}));
+        $profileManagedStudent = in_array($vv, ['1','true','yes','on'], true);
+        break;
+    }
+}
+$looksLikeStudentAccount = false;
+$accountidForMode = strtoupper(trim((string)($USER->idnumber ?? '')));
+if ($accountidForMode !== '' && preg_match('/^(EA-)?STU[-_]/', $accountidForMode)) {
+    $looksLikeStudentAccount = true;
+}
+$usernameForMode = strtolower(trim((string)($USER->username ?? '')));
+if ($usernameForMode !== '' && preg_match('/(^|[._-])student([._-]|$)/', $usernameForMode)) {
+    $looksLikeStudentAccount = true;
+}
+$emailForMode = strtolower(trim((string)($USER->email ?? '')));
+if ($emailForMode !== '' && preg_match('/(^|[._-])student[0-9._-]*@/', $emailForMode)) {
+    $looksLikeStudentAccount = true;
+}
 $isManagedStudent = false;
 if ($managedOverrideRaw !== '') {
     $v = strtolower(trim($managedOverrideRaw));
     $isManagedStudent = in_array($v, ['1','true','yes','on'], true);
-} else {
-    $candidates = ['managed_student', 'managedstudent', 'managed'];
-    foreach ($candidates as $k) {
-        if (isset($custom->{$k}) && $custom->{$k} !== '' && $custom->{$k} !== null) {
-            $vv = strtolower(trim((string)$custom->{$k}));
-            $isManagedStudent = in_array($vv, ['1','true','yes','on'], true);
-            break;
-        }
+    if ($isManagedStudent && $looksLikeStudentAccount && !$profileManagedStudent) {
+        $isManagedStudent = false;
     }
+} else {
+    $isManagedStudent = $profileManagedStudent;
 }
 $managedFlag = ($isManagedStudent || $requiresTokenLaunch) ? '1' : '0';
 $GLOBALS['pq_managed_to_send'] = ($isManagedStudent || $requiresTokenLaunch) ? 1 : 0;
 $GLOBALS['pq_environment_to_send'] = $pqEnvironment;
+
+if ($isManagedStudent) {
+    $coursekeys = pqh_user_course_keys((int)$USER->id);
+    if ($coursekeys && !in_array('pre_quraan', $coursekeys, true)) {
+        redirect(new moodle_url('/local/hubredirect/dashboard.php'));
+    }
+    $enrollmentapproval = hub_enrollment_approval_status((int)$USER->id);
+    if (empty($enrollmentapproval['approved'])) {
+        hub_render_enrollment_pending_page((int)$USER->id, $enrollmentapproval);
+    }
+}
 
 $cohortidParam = optional_param('cohortid', 0, PARAM_INT);
 if ($cohortidParam <= 0) {
@@ -1399,7 +1573,7 @@ if ($liveSessionidParam <= 0) {
 $allowedLiveSessionid = 0;
 if ($liveSessionidParam > 0 && hub_table_exists('local_prequran_live_session')) {
     try {
-        $liveSession = $DB->get_record('local_prequran_live_session', ['id' => $liveSessionidParam]);
+        $liveSession = $DB->get_record('local_prequran_live_session', ['id' => $liveSessionidParam], '*', IGNORE_MISSING);
         $isLiveTeacher = $liveSession && (int)$liveSession->teacherid === (int)$USER->id;
         $isLiveStudent = $liveSession && hub_table_exists('local_prequran_live_participant')
             && $DB->record_exists('local_prequran_live_participant', [
@@ -1486,6 +1660,32 @@ $append = function(string $url, string $k, string $v): string {
            . rawurlencode($k) . '=' . rawurlencode($v);
 };
 
+$forceNonProductionCdn = function(string $url) use ($pqEnvironment): string {
+    if (!in_array($pqEnvironment, ['integration', 'staging'], true)) {
+        return $url;
+    }
+    try {
+        $parts = parse_url($url);
+        $host = strtolower((string)($parts['host'] ?? ''));
+        if (!pqh_is_legacy_quran_resource_host($host)) {
+            return $url;
+        }
+        $rebuilt = pqh_shared_resource_cdn_base_url($pqEnvironment);
+        if (!empty($parts['path'])) {
+            $rebuilt .= $parts['path'];
+        }
+        if (!empty($parts['query'])) {
+            $rebuilt .= '?' . $parts['query'];
+        }
+        if (!empty($parts['fragment'])) {
+            $rebuilt .= '#' . $parts['fragment'];
+        }
+        return $rebuilt;
+    } catch (Throwable $e) {
+        return $url;
+    }
+};
+
 // Determine if target is absolute (http/https). If yes, DO NOT prefix with CDN or sign.
 $isAbsolute = (bool)preg_match('~^https?://~i', $path);
 
@@ -1533,6 +1733,8 @@ if ($cohortidParam > 0) {
 if ($allowedLiveSessionid > 0) {
     $dest = $append($dest, 'live_sessionid', (string)$allowedLiveSessionid);
 }
+
+$dest = $forceNonProductionCdn($dest);
 
 // Phase 1 safety: if user is NOT managed, strip any legacy managed=1 hints from the destination URL.
 // This prevents "unmanaged" HTML pages (or map entries) from forcing managed behavior.
@@ -1618,7 +1820,7 @@ if ($debug) {
 }
 
 
-// ===== Unified iframe wrapper for managed CDN-served lessons =====
+// ===== Unified iframe wrapper for authenticated CDN-served lessons =====
 
 // --- Debug (add ?debug=1) ---
 $debug = optional_param('debug', 0, PARAM_INT);
@@ -1636,9 +1838,9 @@ if ($debug) {
 
 $useIframeWrapper = false;
 try {
-    // Only wrap MANAGED lessons served from CDN/relative paths.
-    // Unmanaged lessons should remain free-practice and must not be wrapped.
-    if (!$isAbsolute && ($managedFlag === '1' || $cohortidParam > 0 || $requiresTokenLaunch)) {
+    // Wrap CDN-served lessons for both managed and unmanaged authenticated students.
+    // The managed_student flag still controls behavior; the wrapper supplies Moodle identity/tokens.
+    if (!$isAbsolute) {
         $useIframeWrapper = true;
     }
 } catch (Throwable $e) {
@@ -1706,9 +1908,7 @@ if ($useIframeWrapper) {
 
     $uid_to_send = (int)$USER->id;
     $configured_ws_token = (string)get_config('local_prequran', 'ws_token');
-    $wstoken_to_send = ($managedFlag === '1')
-        ? hub_current_user_ws_token($configured_ws_token)
-        : hub_current_user_ws_token('');
+    $wstoken_to_send = hub_current_user_ws_token($configured_ws_token);
     $wsendpoint = rtrim($CFG->wwwroot, '/') . '/webservice/rest/server.php';
 
     hub_render_lesson_iframe_wrapper(

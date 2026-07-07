@@ -2,14 +2,32 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
 $childid = optional_param('childid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$workspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($workspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $workspaceid = (int)$consumercontext->workspaceid;
+}
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($workspaceid > 0) {
+    $urlparams['workspaceid'] = $workspaceid;
+}
+$returnurl = new moodle_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams);
+
+function pqlpt_url(string $path, array $urlparams, array $params = []): moodle_url {
+    return new moodle_url($path, $urlparams + $params);
+}
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []));
+$PAGE->set_url(pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Parent Live-Class Hub');
 $PAGE->set_heading('Parent Live-Class Hub');
@@ -407,7 +425,7 @@ function pqlpt_latest_series_change(int $seriesid): int {
                 'session_cancelled',
                 'series_change_notifications_processed',
                 'series_cancel_notifications_processed',
-                'series_single_session_cancel_notifications_processed'
+                'series_single_cancel_notice'
             )",
         ['targettype' => 'series', 'targetid' => $seriesid]
     );
@@ -418,7 +436,7 @@ function pqlpt_ack_record(int $seriesid, int $studentid, int $parentid) {
     if (!pqlpt_table_exists('local_prequran_live_ack')) {
         return false;
     }
-    return $DB->get_record('local_prequran_live_ack', ['seriesid' => $seriesid, 'studentid' => $studentid, 'parentid' => $parentid]);
+    return $DB->get_record('local_prequran_live_ack', ['seriesid' => $seriesid, 'studentid' => $studentid, 'parentid' => $parentid], '*', IGNORE_MISSING);
 }
 
 function pqlpt_audit(int $sessionid, string $action, string $targettype = '', int $targetid = 0, array $details = []): void {
@@ -580,14 +598,35 @@ function pqlpt_support_reason_options(): array {
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'ack_series_change') {
     global $DB, $USER;
-    require_sesskey();
-    $seriesid = required_param('seriesid', PARAM_INT);
-    $studentid = required_param('studentid', PARAM_INT);
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Your security token expired. Open the parent live hub again before acknowledging a schedule change.',
+            pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Schedule acknowledgement expired'
+        );
+    }
+    $seriesid = optional_param('seriesid', 0, PARAM_INT);
+    $studentid = optional_param('studentid', 0, PARAM_INT);
+    if ($seriesid <= 0 || $studentid <= 0) {
+        pqh_access_denied(
+            'Choose a valid recurring class before acknowledging a schedule change.',
+            pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Schedule acknowledgement unavailable'
+        );
+    }
     if (!pqlpt_parent_can_access_child((int)$USER->id, $studentid)) {
-        throw new moodle_exception('nopermissions', '', '', 'Only linked parents can acknowledge schedule changes.');
+        pqh_access_denied(
+            'Only linked parents can acknowledge schedule changes.',
+            $returnurl,
+            'Schedule acknowledgement access required'
+        );
     }
     if (!pqlpt_table_exists('local_prequran_live_ack')) {
-        throw new moodle_exception('invalidparameter', '', '', 'Schedule acknowledgement table is not installed yet.');
+        pqh_access_denied(
+            'Schedule acknowledgement is not installed yet.',
+            pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, ['childid' => $studentid]),
+            'Schedule acknowledgement unavailable'
+        );
     }
     $latestchange = pqlpt_latest_series_change($seriesid);
     $now = time();
@@ -618,17 +657,34 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'ack
         'source' => 'parent_trust_dashboard',
         'lastchangeat' => $latestchange,
     ]);
-    redirect(new moodle_url('/local/hubredirect/live_parent_trust.php', ['childid' => $studentid, 'acknowledged' => 1]));
+    redirect(pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, ['childid' => $studentid, 'acknowledged' => 1]));
 }
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'log_support_case') {
     global $DB, $USER;
-    require_sesskey();
-    $studentid = required_param('studentid', PARAM_INT);
-    if (!pqlpt_staff_can_preview_child((int)$USER->id, $studentid)) {
-        throw new moodle_exception('nopermissions', '', '', 'Only authorized staff can log parent trust support cases.');
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Your security token expired. Open the parent live hub again before saving a support case.',
+            pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Support case expired'
+        );
     }
-    $reason = required_param('support_reason', PARAM_ALPHANUMEXT);
+    $studentid = optional_param('studentid', 0, PARAM_INT);
+    if ($studentid <= 0) {
+        pqh_access_denied(
+            'Choose a valid student before saving a support case.',
+            pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Support case unavailable'
+        );
+    }
+    if (!pqlpt_staff_can_preview_child((int)$USER->id, $studentid)) {
+        pqh_access_denied(
+            'Only authorized staff can log parent trust support cases.',
+            $returnurl,
+            'Parent trust support access required'
+        );
+    }
+    $reason = optional_param('support_reason', 'other', PARAM_ALPHANUMEXT);
     $reasonoptions = pqlpt_support_reason_options();
     if (!array_key_exists($reason, $reasonoptions)) {
         $reason = 'other';
@@ -648,11 +704,15 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'log
     ];
     pqlpt_audit(0, 'parent_trust_preview_opened', 'student', $studentid, $details);
     pqlpt_audit(0, 'parent_trust_support_case_logged', 'student', $studentid, $details);
-    redirect(new moodle_url('/local/hubredirect/live_parent_trust.php', ['childid' => $studentid, 'supportlogged' => 1]));
+    redirect(pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, ['childid' => $studentid, 'supportlogged' => 1]));
 }
 
 if ($childid > 0 && !pqlpt_user_can_access_child((int)$USER->id, $childid)) {
-    throw new moodle_exception('nopermissions', '', '', 'You cannot view the parent live-class hub for this student.');
+    pqh_access_denied(
+        'You cannot view the parent live-class hub for this student.',
+        $returnurl,
+        'Parent live hub access required'
+    );
 }
 
 $modechildren = is_siteadmin($USER) ? [] : pqlpt_parent_children((int)$USER->id);
@@ -680,7 +740,7 @@ $canackasparent = $childid > 0 && !$supportmode && pqlpt_parent_can_access_child
 $linkedparents = $supportmode ? pqlpt_linked_parents($childid) : [];
 $pendingackcount = $supportmode ? pqlpt_pending_ack_count($childid) : 0;
 $missingitems = $supportmode ? pqlpt_support_missing_items() : [];
-$supporturl = $childid > 0 ? new moodle_url('/local/hubredirect/live_parent_trust.php', ['childid' => $childid]) : null;
+$supporturl = $childid > 0 ? pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, ['childid' => $childid]) : null;
 $supportreasonoptions = pqlpt_support_reason_options();
 if ($supportmode && !pqlpt_recent_staff_preview_audit_exists($childid)) {
     pqlpt_audit(0, 'parent_trust_preview_opened', 'student', $childid, [
@@ -798,19 +858,21 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
 .pqlpt-support__wide{grid-column:1/-1}
 @media(max-width:920px){.pqlpt-layout{grid-template-columns:1fr}.pqlpt-grid{grid-template-columns:1fr 1fr}.pqlpt-top{display:block}.pqlpt-actions{margin-top:14px}}
 @media(max-width:620px){.pqlpt-shell{padding:18px 10px 42px}.pqlpt-top,.pqlpt-card{padding:16px}.pqlpt-grid,.pqlpt-mini,.pqlpt-live-activity,.pqlpt-support__grid,.pqlpt-support__form{grid-template-columns:1fr}.pqlpt-support__wide{grid-column:auto}.pqlpt-row,.pqlpt-alert{display:block}.pqlpt-title{font-size:27px}.pqlpt-btn{width:100%;margin-top:8px}.pqlpt-pill{margin-top:10px}.pqlpt-item h3{font-size:17px;overflow-wrap:anywhere}.pqlpt-meta,.pqlpt-field p{overflow-wrap:anywhere}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlpt-shell">
   <div class="pqlpt-wrap">
-    <section class="pqlpt-top">
+    <section class="pqlpt-top pqh-workspace-top">
       <div>
         <p class="pqlpt-kicker">Parent trust dashboard</p>
-        <h1 class="pqlpt-title">Live-class hub for <?php echo s($childname); ?></h1>
-        <p class="pqlpt-subtitle">Upcoming classes, teacher feedback, recordings, homework, follow-ups, and schedule acknowledgements in one place.</p>
+        <h1 class="pqlpt-title pqh-workspace-title">Live-class hub for <?php echo s($childname); ?></h1>
+        <p class="pqlpt-subtitle pqh-workspace-sub">Upcoming classes, teacher feedback, recordings, homework, follow-ups, and schedule acknowledgements in one place.</p>
       </div>
-      <div class="pqlpt-actions">
-        <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Schedule</a>
-        <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Summaries</a>
-        <a class="pqlpt-btn pqlpt-btn--warm" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqlpt-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_schedule.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Schedule</a>
+        <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_summaries.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Summaries</a>
+        <a class="pqlpt-btn pqlpt-btn--warm" href="<?php echo pqlpt_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams)->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -825,7 +887,7 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
         <?php else: ?>
           <div class="pqlpt-select">
             <?php foreach ($modechildren as $childrow): ?>
-              <a class="pqlpt-student" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', ['childid' => (int)$childrow['studentid']]))->out(false); ?>">
+              <a class="pqlpt-student" href="<?php echo pqlpt_url('/local/hubredirect/live_parent_trust.php', $urlparams, ['childid' => (int)$childrow['studentid']])->out(false); ?>">
                 <?php echo s((string)$childrow['name']); ?>
                 <span>Open parent live-class hub</span>
               </a>
@@ -856,11 +918,13 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
       <?php if ($nextjoin || $pendingackseries || $openfollowups || $homeworkrows): ?>
         <section class="pqlpt-priority" aria-label="Priority actions">
           <?php if ($nextjoin): ?>
-            <a class="pqlpt-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', ['join' => (int)$nextjoin->id]))->out(false); ?>">Join live class now</a>
+            <a class="pqlpt-btn" href="<?php echo pqlpt_url('/local/hubredirect/live_sessions.php', $urlparams, ['join' => (int)$nextjoin->id])->out(false); ?>">Join live class now</a>
           <?php endif; ?>
           <?php if ($pendingackseries && $canackasparent): ?>
             <form method="post">
               <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+              <?php if (!empty($consumercontext->consumerslug)): ?><input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>"><?php endif; ?>
+              <?php if ($workspaceid > 0): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$workspaceid; ?>"><?php endif; ?>
               <input type="hidden" name="action" value="ack_series_change">
               <input type="hidden" name="seriesid" value="<?php echo (int)$pendingackseries->id; ?>">
               <input type="hidden" name="studentid" value="<?php echo (int)$childid; ?>">
@@ -868,10 +932,10 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
             </form>
           <?php endif; ?>
           <?php if ($openfollowups): ?>
-            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Respond to teacher follow-up</a>
+            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => $childid])->out(false); ?>">Respond to teacher follow-up</a>
           <?php endif; ?>
           <?php if ($homeworkrows): ?>
-            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Open homework</a>
+            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => $childid])->out(false); ?>">Open homework</a>
           <?php endif; ?>
         </section>
       <?php endif; ?>
@@ -900,6 +964,8 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
           <input id="pqlpt-support-url" class="pqlpt-support__copy" type="text" readonly value="<?php echo s($supporturl ? $supporturl->out(false) : ''); ?>" onclick="this.select();">
           <form class="pqlpt-support__form" method="post">
             <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+            <?php if (!empty($consumercontext->consumerslug)): ?><input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>"><?php endif; ?>
+            <?php if ($workspaceid > 0): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$workspaceid; ?>"><?php endif; ?>
             <input type="hidden" name="action" value="log_support_case">
             <input type="hidden" name="studentid" value="<?php echo (int)$childid; ?>">
             <div>
@@ -926,17 +992,17 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
               <button class="pqlpt-btn" type="submit">Save support reason</button>
             </div>
           </form>
-          <div class="pqlpt-actions">
-            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', ['childid' => $childid]))->out(false); ?>">Open schedule</a>
-            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Open summaries</a>
-            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', ['childid' => $childid]))->out(false); ?>">Open recordings</a>
-            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', ['childid' => $childid]))->out(false); ?>">Trust center</a>
-            <?php if (is_siteadmin($USER)): ?><a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_audit.php', ['studentid' => $childid]))->out(false); ?>">Support audit</a><?php endif; ?>
+          <div class="pqlpt-actions pqh-workspace-actions">
+            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_schedule.php', $urlparams, ['childid' => $childid])->out(false); ?>">Open schedule</a>
+            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => $childid])->out(false); ?>">Open summaries</a>
+            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_recordings.php', $urlparams, ['childid' => $childid])->out(false); ?>">Open recordings</a>
+            <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_trust.php', $urlparams, ['childid' => $childid])->out(false); ?>">Trust center</a>
+            <?php if (is_siteadmin($USER)): ?><a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_parent_trust_audit.php', $urlparams, ['studentid' => $childid])->out(false); ?>">Support audit</a><?php endif; ?>
           </div>
           <?php if ($linkedparents): ?>
             <ul class="pqlpt-support__list">
               <?php foreach ($linkedparents as $parent): ?>
-                <li><?php echo s((string)$parent['name']); ?> (#<?php echo (int)$parent['userid']; ?><?php echo $parent['email'] !== '' ? ', ' . s((string)$parent['email']) : ''; ?>)</li>
+                <li><?php echo s((string)$parent['name']); ?> (<?php echo s(pqh_account_no_label((int)$parent['userid'])); ?>, #<?php echo (int)$parent['userid']; ?><?php echo $parent['email'] !== '' ? ', ' . s((string)$parent['email']) : ''; ?>)</li>
               <?php endforeach; ?>
             </ul>
           <?php endif; ?>
@@ -977,9 +1043,9 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
                     </div>
                     <span class="pqlpt-pill <?php echo $joinpillclass; ?>"><?php echo s($joinlabel); ?></span>
                   </div>
-                  <div class="pqlpt-actions" style="margin-top:10px">
-                    <?php if ($joinstate === 'open'): ?><a class="pqlpt-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', ['join' => (int)$session->id]))->out(false); ?>">Join class</a><?php endif; ?>
-                    <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', ['childid' => $childid]))->out(false); ?>">View schedule</a>
+                  <div class="pqlpt-actions pqh-workspace-actions" style="margin-top:10px">
+                    <?php if ($joinstate === 'open'): ?><a class="pqlpt-btn" href="<?php echo pqlpt_url('/local/hubredirect/live_sessions.php', $urlparams, ['join' => (int)$session->id])->out(false); ?>">Join class</a><?php endif; ?>
+                    <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_schedule.php', $urlparams, ['childid' => $childid])->out(false); ?>">View schedule</a>
                   </div>
                 </article>
               <?php endforeach; ?>
@@ -995,7 +1061,7 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
                 <?php
                   $followupopen = (string)($summary->followup_status ?? 'none') !== 'none' && empty($summary->followup_resolved);
                   $homeworkurl = (string)($summary->homework_unitid ?? '') !== ''
-                      ? new moodle_url('/local/hubredirect/issue_child.php', ['goto' => (string)$summary->homework_unitid, 'managed_student' => 0, 'monitor_studentid' => $childid])
+                      ? pqlpt_url('/local/hubredirect/issue_child.php', $urlparams, ['goto' => (string)$summary->homework_unitid, 'managed_student' => 0, 'monitor_studentid' => $childid])
                       : null;
                   $activity = pqlpt_focus_summary($childid, (int)$summary->sessionid);
                 ?>
@@ -1021,10 +1087,10 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
                     <div class="pqlpt-field"><strong>Homework</strong><p><?php echo s((string)$summary->homework ?: 'No homework assigned.'); ?></p></div>
                     <div class="pqlpt-field"><strong>Parent Summary</strong><p><?php echo s((string)$summary->parent_summary ?: 'Not added yet.'); ?></p></div>
                   </div>
-                  <div class="pqlpt-actions" style="margin-top:10px">
+                  <div class="pqlpt-actions pqh-workspace-actions" style="margin-top:10px">
                     <?php if ($homeworkurl): ?><a class="pqlpt-btn" href="<?php echo $homeworkurl->out(false); ?>">Open homework</a><?php endif; ?>
-                    <?php if ($followupopen): ?><a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Respond to follow-up</a><?php endif; ?>
-                    <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">View summary</a>
+                    <?php if ($followupopen): ?><a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => $childid])->out(false); ?>">Respond to follow-up</a><?php endif; ?>
+                    <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => $childid])->out(false); ?>">View summary</a>
                   </div>
                 </article>
               <?php endforeach; ?>
@@ -1053,17 +1119,19 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
                     <span class="pqlpt-pill <?php echo $current ? 'pqlpt-pill--ok' : 'pqlpt-pill--warn'; ?>"><?php echo $current ? 'Acknowledged' : 'Schedule change needs acknowledgement'; ?></span>
                   </div>
                   <?php if ($latestchange > 0 && !$current && $canackasparent): ?>
-                    <form method="post" class="pqlpt-actions" style="margin-top:10px">
+                    <form method="post" class="pqlpt-actions pqh-workspace-actions" style="margin-top:10px">
                       <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                      <?php if (!empty($consumercontext->consumerslug)): ?><input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>"><?php endif; ?>
+                      <?php if ($workspaceid > 0): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$workspaceid; ?>"><?php endif; ?>
                       <input type="hidden" name="action" value="ack_series_change">
                       <input type="hidden" name="seriesid" value="<?php echo (int)$series->id; ?>">
                       <input type="hidden" name="studentid" value="<?php echo (int)$childid; ?>">
                       <button class="pqlpt-btn" type="submit">Acknowledge change</button>
-                      <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_schedule.php', ['childid' => $childid]))->out(false); ?>">Change history</a>
+                      <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_series_schedule.php', $urlparams, ['childid' => $childid])->out(false); ?>">Change history</a>
                     </form>
                   <?php else: ?>
-                    <div class="pqlpt-actions" style="margin-top:10px">
-                      <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_schedule.php', ['childid' => $childid]))->out(false); ?>">View series</a>
+                    <div class="pqlpt-actions pqh-workspace-actions" style="margin-top:10px">
+                      <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_series_schedule.php', $urlparams, ['childid' => $childid])->out(false); ?>">View series</a>
                     </div>
                   <?php endif; ?>
                 </article>
@@ -1080,12 +1148,12 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
                 <article class="pqlpt-item">
                   <h3><?php echo s((string)$recording->session_title); ?></h3>
                   <p class="pqlpt-meta"><?php echo s(userdate((int)$recording->scheduled_start, get_string('strftimedatetimeshort'))); ?><?php echo !empty($recording->expiresat) ? ' - Expires ' . s(userdate((int)$recording->expiresat, get_string('strftimedate'))) : ''; ?></p>
-                  <div class="pqlpt-actions" style="margin-top:10px">
+                  <div class="pqlpt-actions pqh-workspace-actions" style="margin-top:10px">
                     <?php if ((string)$recording->playback_url !== ''): ?><a class="pqlpt-btn" href="<?php echo s((string)$recording->playback_url); ?>" target="_blank" rel="noopener noreferrer">Open recording</a><?php endif; ?>
                   </div>
                 </article>
               <?php endforeach; ?>
-              <div class="pqlpt-actions" style="margin-top:10px"><a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', ['childid' => $childid]))->out(false); ?>">All recordings</a></div>
+              <div class="pqlpt-actions pqh-workspace-actions" style="margin-top:10px"><a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_recordings.php', $urlparams, ['childid' => $childid])->out(false); ?>">All recordings</a></div>
             <?php endif; ?>
           </section>
 
@@ -1093,7 +1161,7 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
             <h2>Safety & Trust</h2>
             <div class="pqlpt-field"><strong>Parent-visible only</strong><p>Private teacher notes are not shown on parent pages.</p></div>
             <div class="pqlpt-field" style="margin-top:10px"><strong>Reviewed recordings</strong><p>Only recordings published for parents are listed here.</p></div>
-            <div class="pqlpt-actions" style="margin-top:12px"><a class="pqlpt-btn pqlpt-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', ['childid' => $childid]))->out(false); ?>">Trust center</a></div>
+            <div class="pqlpt-actions pqh-workspace-actions" style="margin-top:12px"><a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_trust.php', $urlparams, ['childid' => $childid])->out(false); ?>">Trust center</a></div>
           </section>
         </aside>
       </div>

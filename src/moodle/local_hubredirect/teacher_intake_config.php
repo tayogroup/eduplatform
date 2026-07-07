@@ -6,8 +6,12 @@ $countrycityoptions = require(__DIR__ . '/country_cities.php');
 
 return [
     'course_types' => [
-        'pre_quraan' => 'Pre-quraan Course',
-        'quraan_memorization' => 'Quraan Memorization Course',
+        'pre_quraan' => 'Pre-Quraan',
+        'tarbiyah_kids' => 'Tarbiyah Kids',
+        'essential_arabic' => 'Essential Arabic',
+        'quran_reading' => 'Quran Reading',
+        'quran_tafsir' => 'Quran Tafsir',
+        'quraan_memorization' => 'Quran Memorization',
     ],
     'countries' => ($countrytimezoneoptions['countries'] ?? []) + ['Other' => 'Other'],
     'cities' => ($countrycityoptions['cities'] ?? []) + ['Other' => 'Other city not listed'],

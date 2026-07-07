@@ -3,14 +3,48 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can use the guided live-session wizard.');
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+$dashboardpath = !empty($urlparams['workspaceid']) ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php';
+$dashboardurl = new moodle_url($dashboardpath, $urlparams);
+
+pqh_require_academy_operations(
+    'Only academy operations users can use the guided live-session wizard.',
+    $dashboardurl,
+    'Live session wizard access required'
+);
 
 function pqlwiz_table_exists(string $table): bool {
     global $DB;
     return $DB->get_manager()->table_exists($table);
+}
+
+function pqlwiz_column_exists(string $table, string $column): bool {
+    global $DB;
+    if (!pqlwiz_table_exists($table)) {
+        return false;
+    }
+    try {
+        $columns = $DB->get_columns($table);
+    } catch (Throwable $e) {
+        return false;
+    }
+    return array_key_exists($column, $columns);
+}
+
+function pqlwiz_url_params(array $baseparams, array $extra = []): array {
+    return array_merge($baseparams, $extra);
 }
 
 function pqlwiz_clean_date(string $value, int $fallback): int {
@@ -20,6 +54,48 @@ function pqlwiz_clean_date(string $value, int $fallback): int {
     }
     $time = strtotime($value . ' 00:00:00');
     return $time ? $time : $fallback;
+}
+
+function pqlwiz_valid_timezone(string $timezone): string {
+    $timezone = trim($timezone);
+    if ($timezone === '') {
+        return 'Africa/Nairobi';
+    }
+    try {
+        new DateTimeZone($timezone);
+        return $timezone;
+    } catch (Throwable $e) {
+        return 'Africa/Nairobi';
+    }
+}
+
+function pqlwiz_default_schedule_timezone(): string {
+    $timezone = trim((string)get_config('local_prequran', 'live_schedule_timezone'));
+    return pqlwiz_valid_timezone($timezone !== '' ? $timezone : 'Africa/Nairobi');
+}
+
+function pqlwiz_parse_local_datetime(string $date, string $time, string $timezone): int {
+    $timezone = pqlwiz_valid_timezone($timezone);
+    $value = trim($date) . ' ' . trim($time);
+    try {
+        $dt = DateTimeImmutable::createFromFormat('!Y-m-d H:i', $value, new DateTimeZone($timezone));
+        if (!$dt) {
+            return 0;
+        }
+        return $dt->getTimestamp();
+    } catch (Throwable $e) {
+        return 0;
+    }
+}
+
+function pqlwiz_format_datetime(int $timestamp, string $timezone): string {
+    $timezone = pqlwiz_valid_timezone($timezone);
+    try {
+        $dt = (new DateTimeImmutable('@' . $timestamp))->setTimezone(new DateTimeZone($timezone));
+        return $dt->format('d/m/y, H:i') . ' ' . $dt->format('T');
+    } catch (Throwable $e) {
+        return userdate($timestamp, get_string('strftimedatetimeshort'));
+    }
 }
 
 function pqlwiz_minutes(string $time): int {
@@ -45,6 +121,88 @@ function pqlwiz_weekdays(): array {
         5 => 'Friday',
         6 => 'Saturday',
     ];
+}
+
+function pqlwiz_normalize_session_type(string $sessiontype): string {
+    $sessiontype = strtolower(trim($sessiontype));
+    return in_array($sessiontype, ['teacher_led', 'supervised_practice', 'parent_meeting', 'teacher_meeting', 'student_room', 'teacher_parent_room'], true) ? $sessiontype : 'teacher_led';
+}
+
+function pqlwiz_session_type_label(string $sessiontype): string {
+    switch (pqlwiz_normalize_session_type($sessiontype)) {
+        case 'supervised_practice':
+            return 'Teacherless supervised practice';
+        case 'parent_meeting':
+            return 'Parent meeting room';
+        case 'teacher_meeting':
+            return 'Teacher meeting room';
+        case 'student_room':
+            return 'Student room';
+        case 'teacher_parent_room':
+            return 'Teacher-parent room';
+        default:
+            return 'Teacher-led live class';
+    }
+}
+
+function pqlwiz_session_is_meeting_type(string $sessiontype): bool {
+    return in_array(pqlwiz_normalize_session_type($sessiontype), ['parent_meeting', 'teacher_meeting', 'student_room', 'teacher_parent_room'], true);
+}
+
+function pqlwiz_room_owner_label(string $sessiontype): string {
+    switch (pqlwiz_normalize_session_type($sessiontype)) {
+        case 'parent_meeting':
+            return 'Parent moderator';
+        case 'teacher_meeting':
+            return 'Head teacher';
+        case 'student_room':
+            return 'Student room moderator';
+        case 'teacher_parent_room':
+            return 'Teacher-parent moderator';
+        default:
+            return 'Teacher';
+    }
+}
+
+function pqlwiz_room_detail_help(string $sessiontype): string {
+    switch (pqlwiz_normalize_session_type($sessiontype)) {
+        case 'parent_meeting':
+            return 'Use the title/details to include time zone, language, and child age group.';
+        case 'teacher_meeting':
+            return 'Use the title/details to include time zone, language, and teaching level.';
+        case 'student_room':
+            return 'Use the title/details to include level, language, and practice focus.';
+        case 'teacher_parent_room':
+            return 'Use the title/details to include time zone, language, cohort, or support topic.';
+        default:
+            return '';
+    }
+}
+
+function pqlwiz_room_owner_help(string $sessiontype): string {
+    switch (pqlwiz_normalize_session_type($sessiontype)) {
+        case 'parent_meeting':
+            return 'Teacher availability is not required. The selected user opens the room as parent moderator.';
+        case 'teacher_meeting':
+            return 'The selected head teacher opens the room and can lead the discussion.';
+        case 'student_room':
+            return 'The selected moderator opens the student room before students can join.';
+        case 'teacher_parent_room':
+            return 'The selected moderator opens the shared teacher-parent room.';
+        default:
+            return '';
+    }
+}
+
+function pqlwiz_normalize_practice_access_mode(string $mode): string {
+    $mode = strtolower(trim($mode));
+    return in_array($mode, ['bbb_and_lesson', 'lesson_only'], true) ? $mode : 'bbb_and_lesson';
+}
+
+function pqlwiz_practice_access_label(string $mode): string {
+    return pqlwiz_normalize_practice_access_mode($mode) === 'lesson_only'
+        ? 'Lesson-only supervised mode'
+        : 'BBB room plus lesson monitor';
 }
 
 function pqlwiz_format_minute(int $minute): string {
@@ -81,7 +239,7 @@ function pqlwiz_teacher_availability(int $teacherid): array {
     return $calendar;
 }
 
-function pqlwiz_render_availability_calendar(int $teacherid, int $selecteddate = 0): string {
+function pqlwiz_render_availability_calendar(int $teacherid, int $selecteddate = 0, array $urlparams = []): string {
     $days = pqlwiz_weekdays();
     $calendar = pqlwiz_teacher_availability($teacherid);
     $selectedweekday = $selecteddate > 0 ? (int)date('w', $selecteddate) : -1;
@@ -94,7 +252,7 @@ function pqlwiz_render_availability_calendar(int $teacherid, int $selecteddate =
     }
     $html .= '<p class="pqlwiz-meta">' . s($teachername) . ' #' . (int)$teacherid . ' - active weekly availability windows.</p></div>';
     $html .= '<a class="pqlwiz-btn pqlwiz-btn--light" href="' .
-        (new moodle_url('/local/hubredirect/live_availability.php', ['teacherid' => $teacherid]))->out(false) .
+        (new moodle_url('/local/hubredirect/live_availability.php', pqlwiz_url_params($urlparams, ['teacherid' => $teacherid])))->out(false) .
         '">Manage availability</a></div>';
     $html .= '<div class="pqlwiz-availability-grid">';
     foreach ($days as $weekday => $dayname) {
@@ -122,23 +280,64 @@ function pqlwiz_render_availability_calendar(int $teacherid, int $selecteddate =
     return $html;
 }
 
-function pqlwiz_teacher_candidates(): array {
+function pqlwiz_teacher_candidates(int $workspaceid = 0): array {
     global $DB;
     $ids = [];
+    if ($workspaceid > 0 && pqlwiz_table_exists('local_prequran_workspace_member')) {
+        $rows = $DB->get_records_sql(
+            "SELECT DISTINCT userid AS teacherid
+               FROM {local_prequran_workspace_member}
+              WHERE workspaceid = :workspaceid
+                AND status = :status
+                AND workspace_role IN ('owner', 'admin', 'teacher', 'assistant_teacher', 'coordinator')
+                AND userid > 0",
+            ['workspaceid' => $workspaceid, 'status' => 'active']
+        );
+        foreach ($rows as $row) {
+            $ids[(int)$row->teacherid] = true;
+        }
+    }
     if (pqlwiz_table_exists('local_prequran_live_session')) {
+        if ($workspaceid > 0 && pqlwiz_column_exists('local_prequran_live_session', 'workspaceid')) {
+            $rows = $DB->get_records_sql(
+                "SELECT DISTINCT teacherid
+                   FROM {local_prequran_live_session}
+                  WHERE teacherid > 0
+                    AND workspaceid = :workspaceid",
+                ['workspaceid' => $workspaceid]
+            );
+            foreach ($rows as $row) {
+                $ids[(int)$row->teacherid] = true;
+            }
+        } else if ($workspaceid <= 0) {
         foreach ($DB->get_records_sql("SELECT DISTINCT teacherid FROM {local_prequran_live_session} WHERE teacherid > 0") as $row) {
             $ids[(int)$row->teacherid] = true;
         }
     }
-    if (pqlwiz_table_exists('local_prequran_live_availability')) {
+    }
+    if ($workspaceid <= 0 && pqlwiz_table_exists('local_prequran_live_availability')) {
         foreach ($DB->get_records_sql("SELECT DISTINCT teacherid FROM {local_prequran_live_availability} WHERE teacherid > 0 AND status = 'active'") as $row) {
             $ids[(int)$row->teacherid] = true;
         }
     }
     if (pqlwiz_table_exists('local_prequran_teacher_student')) {
+        if ($workspaceid > 0 && pqlwiz_column_exists('local_prequran_teacher_student', 'workspaceid')) {
+            $rows = $DB->get_records_sql(
+                "SELECT DISTINCT teacherid
+                   FROM {local_prequran_teacher_student}
+                  WHERE teacherid > 0
+                    AND status = :status
+                    AND workspaceid = :workspaceid",
+                ['status' => 'active', 'workspaceid' => $workspaceid]
+            );
+            foreach ($rows as $row) {
+                $ids[(int)$row->teacherid] = true;
+            }
+        } else if ($workspaceid <= 0) {
         foreach ($DB->get_records_sql("SELECT DISTINCT teacherid FROM {local_prequran_teacher_student} WHERE teacherid > 0 AND status = 'active'") as $row) {
             $ids[(int)$row->teacherid] = true;
         }
+    }
     }
     $teachers = [];
     foreach (array_keys($ids) as $teacherid) {
@@ -162,10 +361,35 @@ function pqlwiz_profile_field($profile, string $field): string {
     return trim((string)($profile->{$field} ?? ''));
 }
 
-function pqlwiz_student_picker_profiles(int $limit = 400): array {
+function pqlwiz_student_picker_profiles(int $workspaceid = 0, int $limit = 400): array {
     global $DB;
     if (!pqlwiz_table_exists('local_prequran_student_profile')) {
         return [];
+    }
+    $join = '';
+    $where = [
+        'u.deleted = 0',
+        'u.suspended = 0',
+        'sp.status = :status',
+    ];
+    $params = ['status' => 'active'];
+    if ($workspaceid > 0) {
+        $workspacewhere = [];
+        if (pqlwiz_table_exists('local_prequran_workspace_member')) {
+            $join = "LEFT JOIN {local_prequran_workspace_member} wm
+                       ON wm.userid = sp.userid
+                      AND wm.workspaceid = :memberworkspaceid
+                      AND wm.status = :memberstatus
+                      AND wm.workspace_role = 'student'";
+            $workspacewhere[] = 'wm.id IS NOT NULL';
+            $params['memberworkspaceid'] = $workspaceid;
+            $params['memberstatus'] = 'active';
+        }
+        if (pqlwiz_column_exists('local_prequran_student_profile', 'workspaceid')) {
+            $workspacewhere[] = 'sp.workspaceid = :profileworkspaceid';
+            $params['profileworkspaceid'] = $workspaceid;
+        }
+        $where[] = $workspacewhere ? '(' . implode(' OR ', $workspacewhere) . ')' : '1 = 0';
     }
     return array_values($DB->get_records_sql(
         "SELECT sp.id AS profileid,
@@ -189,11 +413,10 @@ function pqlwiz_student_picker_profiles(int $limit = 400): array {
                 u.username
            FROM {local_prequran_student_profile} sp
            JOIN {user} u ON u.id = sp.userid
-          WHERE u.deleted = 0
-            AND u.suspended = 0
-            AND sp.status = :status
+           {$join}
+          WHERE " . implode(' AND ', $where) . "
        ORDER BY sp.timezone ASC, sp.current_level ASC, sp.student_display_name ASC, u.firstname ASC, u.lastname ASC",
-        ['status' => 'active'],
+        $params,
         0,
         $limit
     ));
@@ -225,17 +448,29 @@ function pqlwiz_parse_students(string $raw): array {
     return array_values(array_unique(array_filter(array_map('intval', $parts ?: []))));
 }
 
-function pqlwiz_class_groups(): array {
+function pqlwiz_class_groups(int $workspaceid = 0): array {
     global $DB;
     if (!pqlwiz_table_exists('local_prequran_class_group')) {
         return [];
     }
-    return $DB->get_records_select('local_prequran_class_group', "status IN ('open', 'active')", [], 'title ASC', '*', 0, 100);
+    $where = "status IN ('open', 'active')";
+    $params = [];
+    if ($workspaceid > 0 && pqlwiz_column_exists('local_prequran_class_group', 'workspaceid')) {
+        $where .= ' AND workspaceid = :workspaceid';
+        $params['workspaceid'] = $workspaceid;
+    }
+    return $DB->get_records_select('local_prequran_class_group', $where, $params, 'title ASC', '*', 0, 100);
 }
 
-function pqlwiz_group_student_ids(int $groupid): array {
+function pqlwiz_group_student_ids(int $groupid, int $workspaceid = 0): array {
     global $DB;
     if ($groupid <= 0 || !pqlwiz_table_exists('local_prequran_group_member')) {
+        return [];
+    }
+    if ($workspaceid > 0
+        && pqlwiz_table_exists('local_prequran_class_group')
+        && pqlwiz_column_exists('local_prequran_class_group', 'workspaceid')
+        && !$DB->record_exists('local_prequran_class_group', ['id' => $groupid, 'workspaceid' => $workspaceid])) {
         return [];
     }
     $ids = [];
@@ -245,14 +480,17 @@ function pqlwiz_group_student_ids(int $groupid): array {
     return array_values(array_unique(array_filter($ids)));
 }
 
-function pqlwiz_conflicts(int $teacherid, array $studentids, int $start, int $duration): array {
+function pqlwiz_conflicts(int $teacherid, array $studentids, int $start, int $duration, bool $teacherrequired = true, int $workspaceid = 0): array {
     global $DB;
     $conflicts = [];
-    if ($teacherid <= 0 || $start <= 0 || !pqlwiz_table_exists('local_prequran_live_session')) {
+    if ($start <= 0 || !pqlwiz_table_exists('local_prequran_live_session')) {
         return $conflicts;
     }
     $end = $start + (max(15, $duration) * MINSECS);
-    if (pqlwiz_table_exists('local_prequran_live_availability')) {
+    if ($teacherrequired && $teacherid <= 0) {
+        $conflicts[] = 'Choose the teacher who will lead this session.';
+    }
+    if ($teacherrequired && $teacherid > 0 && pqlwiz_table_exists('local_prequran_live_availability')) {
         $windows = $DB->get_records('local_prequran_live_availability', ['teacherid' => $teacherid, 'status' => 'active']);
         if ($windows) {
             $weekday = (int)date('w', $start);
@@ -270,52 +508,76 @@ function pqlwiz_conflicts(int $teacherid, array $studentids, int $start, int $du
             }
         }
     }
-    $teacherconflicts = $DB->get_records_sql(
-        "SELECT id, title, scheduled_start
-           FROM {local_prequran_live_session}
-          WHERE teacherid = :teacherid
-            AND status NOT IN ('cancelled', 'failed')
-            AND scheduled_start < :endtime
-            AND scheduled_end > :starttime
-       ORDER BY scheduled_start ASC",
-        ['teacherid' => $teacherid, 'starttime' => $start, 'endtime' => $end],
-        0,
-        5
-    );
-    foreach ($teacherconflicts as $session) {
-        $conflicts[] = 'Teacher overlaps with "' . (string)$session->title . '" at ' . userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')) . '.';
+    if ($teacherrequired && $teacherid > 0) {
+        $teacherwhere = [
+            'teacherid = :teacherid',
+            "status NOT IN ('cancelled', 'failed')",
+            'scheduled_start < :endtime',
+            'scheduled_end > :starttime',
+        ];
+        $teacherparams = ['teacherid' => $teacherid, 'starttime' => $start, 'endtime' => $end];
+        if ($workspaceid > 0 && pqlwiz_column_exists('local_prequran_live_session', 'workspaceid')) {
+            $teacherwhere[] = 'workspaceid = :teacher_workspaceid';
+            $teacherparams['teacher_workspaceid'] = $workspaceid;
+        }
+        $teacherconflicts = $DB->get_records_sql(
+            "SELECT id, title, scheduled_start, timezone
+               FROM {local_prequran_live_session}
+              WHERE " . implode(' AND ', $teacherwhere) . "
+           ORDER BY scheduled_start ASC",
+            $teacherparams,
+            0,
+            5
+        );
+        foreach ($teacherconflicts as $session) {
+            $conflicts[] = 'Teacher overlaps with "' . (string)$session->title . '" at ' . pqlwiz_format_datetime((int)$session->scheduled_start, (string)($session->timezone ?? '')) . '.';
+        }
     }
     if ($studentids && pqlwiz_table_exists('local_prequran_live_participant')) {
         list($insql, $inparams) = $DB->get_in_or_equal(array_values($studentids), SQL_PARAMS_NAMED, 'student');
+        $studentwhere = [
+            'p.role = :studentrole',
+            'p.status = :studentstatus',
+            "p.studentid {$insql}",
+            "s.status NOT IN ('cancelled', 'failed')",
+            's.scheduled_start < :endtime',
+            's.scheduled_end > :starttime',
+        ];
+        $studentparams = $inparams + [
+            'studentrole' => 'student',
+            'studentstatus' => 'active',
+            'starttime' => $start,
+            'endtime' => $end,
+        ];
+        if ($workspaceid > 0 && pqlwiz_column_exists('local_prequran_live_session', 'workspaceid')) {
+            $studentwhere[] = 's.workspaceid = :student_workspaceid';
+            $studentparams['student_workspaceid'] = $workspaceid;
+        }
         $studentconflicts = $DB->get_records_sql(
-            "SELECT s.id, s.title, s.scheduled_start, p.studentid
+            "SELECT s.id, s.title, s.scheduled_start, s.timezone, p.studentid
                FROM {local_prequran_live_session} s
                JOIN {local_prequran_live_participant} p ON p.sessionid = s.id
-              WHERE p.role = 'student'
-                AND p.status = 'active'
-                AND p.studentid {$insql}
-                AND s.status NOT IN ('cancelled', 'failed')
-                AND s.scheduled_start < :endtime
-                AND s.scheduled_end > :starttime
+              WHERE " . implode(' AND ', $studentwhere) . "
            ORDER BY s.scheduled_start ASC",
-            $inparams + ['starttime' => $start, 'endtime' => $end],
+            $studentparams,
             0,
             10
         );
         foreach ($studentconflicts as $session) {
-            $conflicts[] = pqlwiz_user_name((int)$session->studentid, 'Student ' . (int)$session->studentid) . ' overlaps with "' . (string)$session->title . '" at ' . userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')) . '.';
+            $conflicts[] = pqlwiz_user_name((int)$session->studentid, 'Student ' . (int)$session->studentid) . ' overlaps with "' . (string)$session->title . '" at ' . pqlwiz_format_datetime((int)$session->scheduled_start, (string)($session->timezone ?? '')) . '.';
         }
     }
     $maxparticipants = (int)get_config('local_prequran', 'bbb_max_participants_default') ?: 12;
-    if ((count($studentids) + 1) > $maxparticipants) {
-        $conflicts[] = 'Participant count is ' . (count($studentids) + 1) . ', above the configured BBB limit of ' . $maxparticipants . '.';
+    $participantcount = count($studentids) + ($teacherrequired ? 1 : 0);
+    if ($participantcount > $maxparticipants) {
+        $conflicts[] = 'Participant count is ' . $participantcount . ', above the configured BBB limit of ' . $maxparticipants . '.';
     }
     return array_slice($conflicts, 0, 20);
 }
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_create_wizard.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_create_wizard.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Create Live Session Wizard');
 $PAGE->set_heading('Create Live Session Wizard');
@@ -325,28 +587,32 @@ $step = max(1, min(6, optional_param('step', 1, PARAM_INT)));
 $teacherid = optional_param('teacherid', 0, PARAM_INT);
 $groupid = optional_param('groupid', 0, PARAM_INT);
 $studentraw = trim(optional_param('studentids_raw', '', PARAM_TEXT));
-$studentids = array_values(array_unique(array_merge(pqlwiz_group_student_ids($groupid), pqlwiz_parse_students($studentraw))));
+$workspaceid = (int)($urlparams['workspaceid'] ?? 0);
+$studentids = array_values(array_unique(array_merge(pqlwiz_group_student_ids($groupid, $workspaceid), pqlwiz_parse_students($studentraw))));
 $title = trim(optional_param('title', 'Pre-Quran review session', PARAM_TEXT));
 $lessonid = trim(optional_param('lessonid', 'alphabet', PARAM_TEXT));
 $unitid = trim(optional_param('unitid', 'alphabet_listen', PARAM_TEXT));
 $sessiondate = optional_param('sessiondate', '', PARAM_TEXT);
 $sessiontime = optional_param('sessiontime', '', PARAM_TEXT);
+$timezone = pqlwiz_valid_timezone(optional_param('timezone', pqlwiz_default_schedule_timezone(), PARAM_TEXT));
 $duration = max(15, min(240, optional_param('duration', 60, PARAM_INT)));
+$sessiontype = pqlwiz_normalize_session_type(optional_param('session_type', 'teacher_led', PARAM_ALPHANUMEXT));
+$teacherrequired = !in_array($sessiontype, ['supervised_practice', 'parent_meeting'], true);
+$meetingroom = pqlwiz_session_is_meeting_type($sessiontype);
+$practiceaccessmode = pqlwiz_normalize_practice_access_mode(optional_param('practice_access_mode', 'bbb_and_lesson', PARAM_ALPHANUMEXT));
+$participantidsraw = trim(optional_param('participantids_raw', '', PARAM_TEXT));
 $recording = optional_param('recording_enabled', 0, PARAM_BOOL);
 $override = optional_param('override_conflicts', 0, PARAM_BOOL);
 $override_reason = trim(optional_param('override_reason', '', PARAM_TEXT));
-$start = 0;
 $datevalue = pqlwiz_clean_date($sessiondate, 0);
-if ($datevalue > 0 && pqlwiz_minutes($sessiontime) >= 0) {
-    $start = usergetmidnight($datevalue) + (pqlwiz_minutes($sessiontime) * MINSECS);
-}
-$conflicts = pqlwiz_conflicts($teacherid, $studentids, $start, $duration);
-$teachers = pqlwiz_teacher_candidates();
-$classgroups = pqlwiz_class_groups();
+$start = pqlwiz_parse_local_datetime($sessiondate, $sessiontime, $timezone);
+$conflicts = pqlwiz_conflicts($teacherid, $studentids, $start, $duration, $teacherrequired, $workspaceid);
+$teachers = pqlwiz_teacher_candidates($workspaceid);
+$classgroups = pqlwiz_class_groups($workspaceid);
 $studentnames = pqlwiz_student_names($studentids);
-$studentprofiles = pqlwiz_student_picker_profiles();
+$studentprofiles = pqlwiz_student_picker_profiles($workspaceid);
 $studenttimezones = pqlwiz_student_picker_timezones($studentprofiles);
-$params = [
+$params = pqlwiz_url_params($urlparams, [
     'teacherid' => $teacherid,
     'groupid' => $groupid,
     'studentids_raw' => implode(', ', $studentids),
@@ -355,9 +621,13 @@ $params = [
     'unitid' => $unitid,
     'sessiondate' => $sessiondate,
     'sessiontime' => $sessiontime,
+    'timezone' => $timezone,
     'duration' => $duration,
+    'session_type' => $sessiontype,
+    'practice_access_mode' => $practiceaccessmode,
+    'participantids_raw' => $participantidsraw,
     'recording_enabled' => $recording ? 1 : 0,
-];
+]);
 
 echo $OUTPUT->header();
 ?>
@@ -436,14 +706,14 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
         <p class="pqlwiz-sub">Create one live review session with capacity, availability, and conflict checks before final submission.</p>
       </div>
       <div class="pqlwiz-actions">
-        <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php'))->out(false); ?>">Capacity</a>
-        <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <a class="pqlwiz-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+        <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Capacity</a>
+        <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a>
+        <a class="pqlwiz-btn" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
     <section class="pqlwiz-steps">
-      <?php foreach ([1 => 'Teacher', 2 => 'Students', 3 => 'Lesson', 4 => 'Time', 5 => 'Safety', 6 => 'Review'] as $num => $label): ?>
+      <?php foreach ([1 => 'Mode', 2 => ($meetingroom ? 'Participants' : 'Students'), 3 => ($meetingroom ? 'Details' : 'Lesson'), 4 => 'Time', 5 => 'Safety', 6 => 'Review'] as $num => $label): ?>
         <div class="pqlwiz-step <?php echo $step === $num ? 'pqlwiz-step--active' : ''; ?>"><?php echo (int)$num; ?>. <?php echo s($label); ?></div>
       <?php endforeach; ?>
     </section>
@@ -454,26 +724,48 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
       <?php else: ?>
         <?php if ($step === 1): ?>
           <form method="get">
+            <?php foreach ($urlparams as $key => $value): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endforeach; ?>
             <input type="hidden" name="step" value="2">
             <div class="pqlwiz-field">
-              <label for="teacherid">Teacher</label>
+              <label for="session_type">Session type</label>
+              <select class="pqlwiz-select" id="session_type" name="session_type" required>
+                <option value="teacher_led" <?php echo $sessiontype === 'teacher_led' ? 'selected' : ''; ?>>Teacher-led live class</option>
+                <option value="supervised_practice" <?php echo $sessiontype === 'supervised_practice' ? 'selected' : ''; ?>>Teacherless supervised practice</option>
+                <option value="parent_meeting" <?php echo $sessiontype === 'parent_meeting' ? 'selected' : ''; ?>>Parent meeting room</option>
+                <option value="teacher_meeting" <?php echo $sessiontype === 'teacher_meeting' ? 'selected' : ''; ?>>Teacher meeting room</option>
+                <option value="student_room" <?php echo $sessiontype === 'student_room' ? 'selected' : ''; ?>>Student room</option>
+                <option value="teacher_parent_room" <?php echo $sessiontype === 'teacher_parent_room' ? 'selected' : ''; ?>>Teacher-parent room</option>
+              </select>
+              <p class="pqlwiz-meta">Teacher-led sessions are student classes. Teacherless supervised practice is monitored student work. Meeting rooms are community rooms with an assigned moderator.</p>
+            </div>
+            <div class="pqlwiz-field">
+              <label for="teacherid">Teacher / reporting teacher / moderator</label>
               <select class="pqlwiz-select" id="teacherid" name="teacherid" required>
                 <option value="">Choose teacher</option>
                 <?php foreach ($teachers as $teacher): ?>
                   <option value="<?php echo (int)$teacher['id']; ?>" <?php echo $teacherid === (int)$teacher['id'] ? 'selected' : ''; ?>><?php echo s($teacher['name'] . ' #' . $teacher['id']); ?></option>
                 <?php endforeach; ?>
               </select>
+              <p class="pqlwiz-meta">For meeting rooms this is the moderator who opens the room. For classes this is the teacher or reporting teacher.</p>
+            </div>
+            <div class="pqlwiz-field">
+              <label for="practice_access_mode">Student access mode</label>
+              <select class="pqlwiz-select" id="practice_access_mode" name="practice_access_mode">
+                <option value="bbb_and_lesson" <?php echo $practiceaccessmode === 'bbb_and_lesson' ? 'selected' : ''; ?>>BBB room plus lesson monitor</option>
+                <option value="lesson_only" <?php echo $practiceaccessmode === 'lesson_only' ? 'selected' : ''; ?>>Lesson-only supervised mode</option>
+              </select>
+              <p class="pqlwiz-meta">Used only for teacherless supervised practice. Meeting rooms always use the BBB room.</p>
             </div>
             <div class="pqlwiz-actions">
-              <button class="pqlwiz-btn" type="submit">Next: students</button>
-              <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php'))->out(false); ?>">Review capacity first</a>
+              <button class="pqlwiz-btn" type="submit">Next: <?php echo $meetingroom ? 'participants' : 'students'; ?></button>
+              <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Review capacity first</a>
             </div>
           </form>
         <?php elseif ($step === 2): ?>
           <form method="get">
-            <?php foreach ($params as $key => $value): if (!in_array($key, ['studentids_raw', 'groupid'], true)): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endif; endforeach; ?>
+            <?php foreach ($params as $key => $value): if (!in_array($key, ['studentids_raw', 'groupid', 'participantids_raw'], true)): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endif; endforeach; ?>
             <input type="hidden" name="step" value="3">
-            <?php if ($classgroups): ?>
+            <?php if ($classgroups && !$meetingroom): ?>
               <div class="pqlwiz-field">
                 <label for="groupid">Class group</label>
                 <select class="pqlwiz-select" id="groupid" name="groupid">
@@ -485,17 +777,18 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
                 <p class="pqlwiz-meta">A class group automatically adds active assigned students. Extra IDs below are optional.</p>
               </div>
             <?php endif; ?>
+            <?php if (!$meetingroom): ?>
             <section class="pqlwiz-picker" aria-label="Student picker">
               <div class="pqlwiz-card">
-                <h3>Choose students</h3>
-                <p class="pqlwiz-meta">Filter first, then select students. The selected Moodle IDs are copied into the manual ID box below.</p>
+                <h3><?php echo $meetingroom ? 'Optional invitees' : 'Choose students'; ?></h3>
+                <p class="pqlwiz-meta"><?php echo $meetingroom ? 'Meeting rooms are visible by role. Add invited Moodle user IDs below only when you want explicit participants recorded on the room.' : 'Filter first, then select students. The selected Moodle IDs are copied into the manual ID box below.'; ?></p>
                 <div class="pqlwiz-filter-grid">
                   <div class="pqlwiz-field">
                     <label for="student_filter_timezone">Time zone</label>
                     <select class="pqlwiz-select" id="student_filter_timezone">
                       <option value="">All time zones</option>
-                      <?php foreach ($studenttimezones as $timezone): ?>
-                        <option value="<?php echo s($timezone); ?>"><?php echo s($timezone); ?></option>
+                      <?php foreach ($studenttimezones as $studenttimezone): ?>
+                        <option value="<?php echo s($studenttimezone); ?>"><?php echo s($studenttimezone); ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
@@ -564,7 +857,7 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
                           </td>
                           <td>
                             <span class="pqlwiz-student-main"><?php echo s($studentname); ?></span>
-                            <span class="pqlwiz-student-meta">Moodle ID <?php echo $userid; ?><?php echo pqlwiz_profile_field($profile, 'idnumber') !== '' ? ' / ' . s(pqlwiz_profile_field($profile, 'idnumber')) : ''; ?></span>
+                            <span class="pqlwiz-student-meta"><?php echo s(pqh_account_no_label($userid)); ?> / Moodle ID <?php echo $userid; ?></span>
                           </td>
                           <td><?php echo (int)$profile->age_years; ?> / <?php echo s(pqlwiz_profile_field($profile, 'gender')); ?></td>
                           <td><?php echo s(pqlwiz_profile_field($profile, 'current_level')); ?></td>
@@ -582,14 +875,24 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
                 </div>
               <?php endif; ?>
             </section>
-            <div class="pqlwiz-field pqlwiz-manual">
-              <label for="studentids_raw">Student user IDs</label>
-              <textarea class="pqlwiz-textarea" id="studentids_raw" name="studentids_raw" placeholder="101, 102, 103"><?php echo s(implode(', ', $studentids)); ?></textarea>
-              <p class="pqlwiz-meta">Manual fallback. These are Moodle user IDs and will be combined with any selected class-group students.</p>
-            </div>
+            <?php endif; ?>
+            <?php if ($meetingroom): ?>
+              <div class="pqlwiz-field pqlwiz-manual">
+                <label for="participantids_raw">Optional invited participant user IDs</label>
+                <textarea class="pqlwiz-textarea" id="participantids_raw" name="participantids_raw" placeholder="201, 202, 203"><?php echo s($participantidsraw); ?></textarea>
+                <p class="pqlwiz-meta">Leave blank for a role-based room. Parent, teacher, teacher-parent, and student rooms are visible to their matching account roles.</p>
+              </div>
+              <input type="hidden" id="studentids_raw" name="studentids_raw" value="">
+            <?php else: ?>
+              <div class="pqlwiz-field pqlwiz-manual">
+                <label for="studentids_raw">Student user IDs</label>
+                <textarea class="pqlwiz-textarea" id="studentids_raw" name="studentids_raw" placeholder="101, 102, 103"><?php echo s(implode(', ', $studentids)); ?></textarea>
+                <p class="pqlwiz-meta">Manual fallback. These are Moodle user IDs and will be combined with any selected class-group students.</p>
+              </div>
+            <?php endif; ?>
             <div class="pqlwiz-actions">
               <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $params + ['step' => 1]))->out(false); ?>">Back</a>
-              <button class="pqlwiz-btn" type="submit">Next: lesson</button>
+              <button class="pqlwiz-btn" type="submit">Next: <?php echo $meetingroom ? 'details' : 'lesson'; ?></button>
             </div>
           </form>
         <?php elseif ($step === 3): ?>
@@ -598,9 +901,12 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
             <input type="hidden" name="step" value="4">
             <div class="pqlwiz-field"><label for="title">Title</label><input class="pqlwiz-input" id="title" name="title" type="text" value="<?php echo s($title); ?>" required></div>
             <div class="pqlwiz-grid">
-              <div class="pqlwiz-field"><label for="lessonid">Lesson ID</label><input class="pqlwiz-input" id="lessonid" name="lessonid" type="text" value="<?php echo s($lessonid); ?>" required></div>
-              <div class="pqlwiz-field"><label for="unitid">Unit ID</label><input class="pqlwiz-input" id="unitid" name="unitid" type="text" value="<?php echo s($unitid); ?>" required></div>
+              <div class="pqlwiz-field"><label for="lessonid">Lesson ID<?php echo $meetingroom ? ' (optional)' : ''; ?></label><input class="pqlwiz-input" id="lessonid" name="lessonid" type="text" value="<?php echo s($lessonid); ?>" <?php echo $meetingroom ? '' : 'required'; ?>></div>
+              <div class="pqlwiz-field"><label for="unitid">Unit ID<?php echo $meetingroom ? ' (optional)' : ''; ?></label><input class="pqlwiz-input" id="unitid" name="unitid" type="text" value="<?php echo s($unitid); ?>" <?php echo $meetingroom ? '' : 'required'; ?>></div>
             </div>
+            <?php if ($meetingroom): ?>
+              <p class="pqlwiz-meta"><?php echo s(pqlwiz_room_detail_help($sessiontype)); ?></p>
+            <?php endif; ?>
             <div class="pqlwiz-actions">
               <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $params + ['step' => 2]))->out(false); ?>">Back</a>
               <button class="pqlwiz-btn" type="submit">Next: time</button>
@@ -608,13 +914,26 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
           </form>
         <?php elseif ($step === 4): ?>
           <form method="get">
-            <?php foreach ($params as $key => $value): if (!in_array($key, ['sessiondate', 'sessiontime', 'duration'], true)): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endif; endforeach; ?>
+            <?php foreach ($params as $key => $value): if (!in_array($key, ['sessiondate', 'sessiontime', 'timezone', 'duration'], true)): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endif; endforeach; ?>
             <input type="hidden" name="step" value="5">
-            <?php echo pqlwiz_render_availability_calendar($teacherid, $datevalue); ?>
+            <?php if ($meetingroom): ?>
+              <div class="pqlwiz-card">
+                <h3><?php echo s(pqlwiz_session_type_label($sessiontype)); ?></h3>
+                <p class="pqlwiz-meta"><?php echo s(pqlwiz_room_owner_help($sessiontype)); ?></p>
+              </div>
+            <?php elseif ($teacherrequired): ?>
+              <?php echo pqlwiz_render_availability_calendar($teacherid, $datevalue, $urlparams); ?>
+            <?php else: ?>
+              <div class="pqlwiz-card">
+                <h3>Teacherless supervised practice</h3>
+                <p class="pqlwiz-meta">Teacher availability is not required. The selected teacher remains the reporting teacher for Practice Coach summaries and follow-up.</p>
+              </div>
+            <?php endif; ?>
             <div class="pqlwiz-grid">
               <div class="pqlwiz-field"><label for="sessiondate">Date</label><input class="pqlwiz-input" id="sessiondate" name="sessiondate" type="date" value="<?php echo s($sessiondate); ?>" required></div>
               <div class="pqlwiz-field"><label for="sessiontime">Time</label><input class="pqlwiz-input" id="sessiontime" name="sessiontime" type="time" value="<?php echo s($sessiontime); ?>" required></div>
             </div>
+            <div class="pqlwiz-field"><label for="timezone">Class timezone</label><input class="pqlwiz-input" id="timezone" name="timezone" type="text" value="<?php echo s($timezone); ?>" placeholder="Africa/Nairobi" required><p class="pqlwiz-meta">Use Africa/Nairobi for East Africa Time. The saved class time and all schedule pages will display using this timezone.</p></div>
             <div class="pqlwiz-field"><label for="duration">Duration</label><select class="pqlwiz-select" id="duration" name="duration">
               <?php foreach ([45, 60, 75, 90] as $minutes): ?><option value="<?php echo (int)$minutes; ?>" <?php echo $duration === $minutes ? 'selected' : ''; ?>><?php echo (int)$minutes; ?> minutes</option><?php endforeach; ?>
             </select></div>
@@ -629,9 +948,16 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
             <input type="hidden" name="step" value="6">
             <div class="pqlwiz-card">
               <h3>Recording & Consent</h3>
-              <p class="pqlwiz-meta">Recording should only be enabled when guardian consent policy allows it.</p>
-              <label class="pqlwiz-check"><input type="checkbox" name="recording_enabled" value="1" <?php echo $recording ? 'checked' : ''; ?>> <span>Record session when consent policy allows</span></label>
+              <p class="pqlwiz-meta">Audio recording is always enabled for safeguarding and class quality. Student camera/video is allowed only where video consent exists.</p>
+              <label class="pqlwiz-check"><input type="checkbox" name="recording_enabled" value="1" checked disabled> <span>Audio recording required; video is opt-in and consent-controlled</span></label>
             </div>
+            <?php if ($sessiontype === 'supervised_practice'): ?>
+              <div class="pqlwiz-card">
+                <h3>Practice Coach</h3>
+                <p class="pqlwiz-meta">Chatbot Practice Coach monitors lesson activity during teacherless practice, gives short prompts, and prepares a teacher and parent-safe summary.</p>
+                <p class="pqlwiz-meta">Access mode: <?php echo s(pqlwiz_practice_access_label($practiceaccessmode)); ?></p>
+              </div>
+            <?php endif; ?>
             <div class="pqlwiz-actions">
               <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $params + ['step' => 4]))->out(false); ?>">Back</a>
               <button class="pqlwiz-btn" type="submit">Review session</button>
@@ -641,26 +967,37 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
           <?php if ($conflicts): ?><div class="pqlwiz-alert pqlwiz-alert--bad"><?php echo s(implode("\n", $conflicts)); ?></div><?php else: ?><div class="pqlwiz-alert pqlwiz-alert--ok">No schedule conflicts detected for this teacher, group, and time.</div><?php endif; ?>
           <div class="pqlwiz-card">
             <h3><?php echo s($title); ?></h3>
-            <p class="pqlwiz-meta">Teacher: <?php echo s(pqlwiz_user_name($teacherid, 'Teacher ' . $teacherid)); ?> #<?php echo (int)$teacherid; ?></p>
-            <p class="pqlwiz-meta">Students: <?php echo s(implode(', ', $studentnames)); ?></p>
-            <p class="pqlwiz-meta">Lesson: <?php echo s($lessonid); ?> / <?php echo s($unitid); ?></p>
-            <p class="pqlwiz-meta">Time: <?php echo $start > 0 ? s(userdate($start, get_string('strftimedatetimeshort'))) : 'Not set'; ?> for <?php echo (int)$duration; ?> minutes</p>
-            <p class="pqlwiz-meta">Recording: <?php echo $recording ? 'enabled when consent allows' : 'off'; ?></p>
+            <p class="pqlwiz-meta">Mode: <?php echo s(pqlwiz_session_type_label($sessiontype)); ?></p>
+            <p class="pqlwiz-meta"><?php echo s($meetingroom ? pqlwiz_room_owner_label($sessiontype) : ($teacherrequired ? 'Teacher' : 'Reporting teacher')); ?>: <?php echo s(pqlwiz_user_name($teacherid, 'User ' . $teacherid)); ?> #<?php echo (int)$teacherid; ?></p>
+            <?php if ($sessiontype === 'supervised_practice'): ?><p class="pqlwiz-meta">Access: <?php echo s(pqlwiz_practice_access_label($practiceaccessmode)); ?></p><?php endif; ?>
+            <?php if ($meetingroom): ?>
+              <p class="pqlwiz-meta">Participants: role-based room<?php echo $participantidsraw !== '' ? '; invited users ' . s($participantidsraw) : ''; ?>.</p>
+            <?php else: ?>
+              <p class="pqlwiz-meta">Students: <?php echo s(implode(', ', $studentnames)); ?></p>
+              <p class="pqlwiz-meta">Lesson: <?php echo s($lessonid); ?> / <?php echo s($unitid); ?></p>
+            <?php endif; ?>
+            <p class="pqlwiz-meta">Time: <?php echo $start > 0 ? s(pqlwiz_format_datetime($start, $timezone)) : 'Not set'; ?> for <?php echo (int)$duration; ?> minutes</p>
+            <p class="pqlwiz-meta">Recording: audio always enabled for safeguarding/class quality; video is opt-in and consent-controlled.</p>
           </div>
-          <form method="post" action="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">
+          <form method="post" action="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">
             <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+            <?php foreach ($urlparams as $key => $value): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endforeach; ?>
             <input type="hidden" name="action" value="create">
             <input type="hidden" name="created_from_wizard" value="1">
             <input type="hidden" name="teacherid" value="<?php echo (int)$teacherid; ?>">
             <input type="hidden" name="groupid" value="<?php echo (int)$groupid; ?>">
             <input type="hidden" name="studentids_raw" value="<?php echo s(implode(', ', $studentids)); ?>">
+            <input type="hidden" name="participantids_raw" value="<?php echo s($participantidsraw); ?>">
             <input type="hidden" name="title" value="<?php echo s($title); ?>">
             <input type="hidden" name="lessonid" value="<?php echo s($lessonid); ?>">
             <input type="hidden" name="unitid" value="<?php echo s($unitid); ?>">
             <input type="hidden" name="sessiondate" value="<?php echo s($sessiondate); ?>">
             <input type="hidden" name="sessiontime" value="<?php echo s($sessiontime); ?>">
+            <input type="hidden" name="timezone" value="<?php echo s($timezone); ?>">
             <input type="hidden" name="duration" value="<?php echo (int)$duration; ?>">
-            <?php if ($recording): ?><input type="hidden" name="recording_enabled" value="1"><?php endif; ?>
+            <input type="hidden" name="session_type" value="<?php echo s($sessiontype); ?>">
+            <input type="hidden" name="practice_access_mode" value="<?php echo s($practiceaccessmode); ?>">
+            <input type="hidden" name="recording_enabled" value="1">
             <?php if ($conflicts): ?>
               <div class="pqlwiz-card">
                 <h3>Admin Conflict Override</h3>

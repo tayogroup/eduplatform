@@ -3,16 +3,34 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-$sessionid = required_param('sessionid', PARAM_INT);
-
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can complete live-session quality review.');
+$sessionid = optional_param('sessionid', 0, PARAM_INT);
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+if ($sessionid > 0) {
+    $urlparams['sessionid'] = $sessionid;
+}
+$workspaceurlparams = array_diff_key($urlparams, ['sessionid' => true]);
+
+pqh_require_academy_operations(
+    'Only academy operations users can complete live-session quality review.',
+    new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+    'Live quality review access required'
+);
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => $sessionid]));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_quality.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Session Quality Review');
 $PAGE->set_heading('Live Session Quality Review');
@@ -127,16 +145,50 @@ function pqlq_score(array $checklist): int {
 }
 
 if (!pqlq_required_ready()) {
-    throw new moodle_exception('missingfield', 'error', '', 'Run Phase 30 live quality SQL first.');
+    pqh_access_denied(
+        'Live quality review fields are not installed yet. Run the live quality SQL upgrade before using this page.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live quality review unavailable'
+    );
 }
 
-$session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', MUST_EXIST);
+$session = $sessionid > 0 ? $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING) : false;
+if (!$session) {
+    pqh_access_denied(
+        'Choose a valid live session before opening the quality review.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live quality review unavailable'
+    );
+}
+if (!pqh_record_belongs_to_consumer_context($session)) {
+    pqh_access_denied(
+        'This live session does not belong to the active consumer.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live quality review unavailable'
+    );
+}
+if ($requestedworkspaceid > 0
+    && pqlq_column_exists('local_prequran_live_session', 'workspaceid')
+    && (int)($session->workspaceid ?? 0) !== $requestedworkspaceid) {
+    $actualworkspaceid = (int)($session->workspaceid ?? 0);
+    pqh_access_denied(
+        'This live session belongs to workspace #' . $actualworkspaceid . ', not workspace #' . $requestedworkspaceid . '. Choose a session from this workspace live-session list.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Workspace live quality access required'
+    );
+}
 $notice = optional_param('result', '', PARAM_ALPHANUMEXT);
 $coachingready = pqlq_column_exists('local_prequran_live_session', 'qa_coaching_status');
 $leadershipready = pqlq_column_exists('local_prequran_live_session', 'leadership_review_status');
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'save_quality') {
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the live quality review page and try saving again.',
+            new moodle_url('/local/hubredirect/live_quality.php', $urlparams),
+            'Live quality review save expired'
+        );
+    }
     $oldstatus = (string)($session->qa_status ?? 'not_reviewed');
     $oldcoachingstatus = (string)($session->qa_coaching_status ?? 'none');
     $oldleadershipstatus = (string)($session->leadership_review_status ?? 'none');
@@ -252,10 +304,24 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'sav
             'reason' => (string)($session->leadership_review_reason ?? ''),
         ]);
     }
-    redirect(new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => $sessionid, 'result' => 'saved']));
+    redirect(new moodle_url('/local/hubredirect/live_quality.php', array_merge($urlparams, ['result' => 'saved'])));
 }
 
-$session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', MUST_EXIST);
+$session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING);
+if (!$session) {
+    pqh_access_denied(
+        'Choose a valid live session before opening the quality review.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live quality review unavailable'
+    );
+}
+if (!pqh_record_belongs_to_consumer_context($session)) {
+    pqh_access_denied(
+        'This live session does not belong to the active consumer.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live quality review unavailable'
+    );
+}
 $coachingready = pqlq_column_exists('local_prequran_live_session', 'qa_coaching_status');
 $leadershipready = pqlq_column_exists('local_prequran_live_session', 'leadership_review_status');
 $teachername = pqlq_user_name((int)$session->teacherid, 'Teacher ' . (int)$session->teacherid);
@@ -351,20 +417,23 @@ body.pqh-live-quality-page .main-inner{margin:0!important;padding:0!important;ma
 .pqlq-table th{color:#40586a;background:#f8fafb;font-weight:950}
 .pqlq-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850}
 @media(max-width:900px){.pqlq-top{display:block}.pqlq-actions{margin-top:12px}.pqlq-metrics,.pqlq-grid,.pqlq-checklist{grid-template-columns:1fr}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlq-shell">
   <div class="pqlq-wrap">
-    <section class="pqlq-top">
+    <section class="pqlq-top pqh-workspace-top">
       <div>
-        <h1 class="pqlq-title">Live Session Quality Review</h1>
-        <p class="pqlq-sub"><?php echo s((string)$session->title); ?> - <?php echo s(userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort'))); ?> - <?php echo s($teachername); ?></p>
+        <h1 class="pqlq-title pqh-workspace-title">Live Session Quality Review</h1>
+        <p class="pqlq-sub pqh-workspace-sub"><?php echo s((string)$session->title); ?> - <?php echo s(userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort'))); ?> - <?php echo s($teachername); ?></p>
       </div>
-      <div class="pqlq-actions">
-        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => $sessionid]))->out(false); ?>">Class review</a>
-        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php'))->out(false); ?>">Leadership</a>
-        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings_admin.php'))->out(false); ?>">Recordings</a>
-        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Live ops</a>
-        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php'))->out(false); ?>">Reports</a>
+      <div class="pqlq-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $urlparams))->out(false); ?>">Class review</a>
+        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_monitor.php', $urlparams))->out(false); ?>">Monitor</a>
+        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', $workspaceurlparams))->out(false); ?>">Leadership</a>
+        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings_admin.php', $workspaceurlparams))->out(false); ?>">Recordings</a>
+        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $workspaceurlparams))->out(false); ?>">Live ops</a>
+        <a class="pqlq-btn pqlq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php', $workspaceurlparams))->out(false); ?>">Reports</a>
       </div>
     </section>
 
@@ -380,6 +449,8 @@ body.pqh-live-quality-page .main-inner{margin:0!important;padding:0!important;ma
     <form method="post">
       <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
       <input type="hidden" name="action" value="save_quality">
+      <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+      <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
 
       <section class="pqlq-panel">
         <h2>Quality Outcome</h2>

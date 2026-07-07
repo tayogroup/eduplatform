@@ -5,13 +5,30 @@ require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->dirroot . '/local/prequran/notificationlib.php');
+require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/live_security.php');
 
-$sessionid = required_param('sessionid', PARAM_INT);
+$sessionid = optional_param('sessionid', 0, PARAM_INT);
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$brandname = trim((string)($consumercontext->consumername ?? '')) ?: 'EduPlatform';
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+if ($sessionid > 0) {
+    $urlparams['sessionid'] = $sessionid;
+}
+$workspaceurlparams = array_diff_key($urlparams, ['sessionid' => true]);
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => $sessionid]));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_review.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Session Review');
 $PAGE->set_heading('Live Session Review');
@@ -37,7 +54,12 @@ function pqlr_column_exists(string $table, string $column): bool {
 
 function pqlr_is_teacher_or_admin($session): bool {
     global $USER;
-    if (is_siteadmin($USER)) {
+    if (pqh_can_manage_academy_operations((int)$USER->id)) {
+        return true;
+    }
+    if (pqlr_column_exists('local_prequran_live_session', 'workspaceid')
+        && (int)($session->workspaceid ?? 0) > 0
+        && pqh_user_can_manage_workspace((int)$USER->id, (int)$session->workspaceid)) {
         return true;
     }
     return (int)$session->teacherid === (int)$USER->id;
@@ -93,13 +115,13 @@ function pqlr_completion_state(int $sessionid, array $students): array {
         if ($user) {
             $name = fullname($user);
         }
-        $att = $DB->get_record('local_prequran_live_attendance', ['sessionid' => $sessionid, 'studentid' => $studentid]);
+        $att = $DB->get_record('local_prequran_live_attendance', ['sessionid' => $sessionid, 'studentid' => $studentid], '*', IGNORE_MISSING);
         if ($att && (string)$att->attendance_status !== '') {
             $attendancecomplete++;
         } else {
             $missing[] = $name . ': attendance not marked';
         }
-        $note = $DB->get_record('local_prequran_live_note', ['sessionid' => $sessionid, 'studentid' => $studentid]);
+        $note = $DB->get_record('local_prequran_live_note', ['sessionid' => $sessionid, 'studentid' => $studentid], '*', IGNORE_MISSING);
         if (pqlr_public_feedback_complete($note)) {
             $summarycomplete++;
         } else {
@@ -116,17 +138,47 @@ function pqlr_completion_state(int $sessionid, array $students): array {
 }
 
 function pqlr_redirect(int $sessionid, string $result): void {
-    redirect(new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => $sessionid, 'result' => $result]));
+    $consumercontext = pqh_requested_consumer_context();
+    $workspaceid = optional_param('workspaceid', 0, PARAM_INT);
+    $params = ['sessionid' => $sessionid, 'result' => $result];
+    if (!empty($consumercontext->consumerslug)) {
+        $params['consumer'] = (string)$consumercontext->consumerslug;
+    }
+    if ($workspaceid > 0) {
+        $params['workspaceid'] = $workspaceid;
+    }
+    redirect(new moodle_url('/local/hubredirect/live_review.php', $params));
 }
 
 if (!pqlr_table_exists('local_prequran_live_session')
     || !pqlr_table_exists('local_prequran_live_participant')
     || !pqlr_table_exists('local_prequran_live_attendance')
     || !pqlr_table_exists('local_prequran_live_note')) {
-    throw new moodle_exception('missingtable', 'error', '', 'Live session review tables are not installed.');
+    pqh_access_denied(
+        'Live session review tables are not installed yet. Run the live review upgrade before using this page.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live session review unavailable'
+    );
 }
 
-$session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', MUST_EXIST);
+$session = $sessionid > 0 ? $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING) : false;
+if (!$session) {
+    pqh_access_denied(
+        'Choose a valid live session before opening the review page.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live session review unavailable'
+    );
+}
+if ($requestedworkspaceid > 0
+    && pqlr_column_exists('local_prequran_live_session', 'workspaceid')
+    && (int)($session->workspaceid ?? 0) !== $requestedworkspaceid) {
+    $actualworkspaceid = (int)($session->workspaceid ?? 0);
+    pqh_access_denied(
+        'This live session belongs to workspace #' . $actualworkspaceid . ', not workspace #' . $requestedworkspaceid . '. Choose a session from this workspace live-session list.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Workspace live review access required'
+    );
+}
 if (!pqlr_is_teacher_or_admin($session)) {
     pqh_live_security_deny(
         'Only the assigned teacher or an administrator can review this live session.',
@@ -151,7 +203,13 @@ $students = $DB->get_records_sql(
 );
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'cancel_session') {
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the live session review page and try cancelling again.',
+            new moodle_url('/local/hubredirect/live_review.php', $urlparams),
+            'Live session cancellation expired'
+        );
+    }
     $reason = pqlr_clean_text(optional_param('cancellation_reason', '', PARAM_RAW), 1000);
     $oldstatus = (string)$session->status;
     $session->status = 'cancelled';
@@ -164,15 +222,25 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'can
 }
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'reschedule_session') {
-    require_sesskey();
-    if ((string)$session->status === 'cancelled') {
-        throw new moodle_exception('nopermissions', '', '', 'Cancelled sessions cannot be rescheduled here.');
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the live session review page and try rescheduling again.',
+            new moodle_url('/local/hubredirect/live_review.php', $urlparams),
+            'Live session reschedule expired'
+        );
     }
-    $date = required_param('reschedule_date', PARAM_TEXT);
-    $time = required_param('reschedule_time', PARAM_TEXT);
+    if ((string)$session->status === 'cancelled') {
+        pqh_access_denied(
+            'Cancelled sessions cannot be rescheduled here.',
+            new moodle_url('/local/hubredirect/live_review.php', $urlparams),
+            'Live session reschedule unavailable'
+        );
+    }
+    $date = optional_param('reschedule_date', '', PARAM_TEXT);
+    $time = optional_param('reschedule_time', '', PARAM_TEXT);
     $duration = max(15, optional_param('reschedule_duration', 60, PARAM_INT));
     $tz = core_date::get_server_timezone();
-    $start = strtotime($date . ' ' . $time . ' ' . $tz);
+    $start = trim($date) !== '' && trim($time) !== '' ? strtotime($date . ' ' . $time . ' ' . $tz) : false;
     if (!$start) {
         $notice = 'Enter a valid reschedule date and time.';
     } else {
@@ -197,7 +265,13 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'res
 }
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'save_review') {
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the live session review page and try saving again.',
+            new moodle_url('/local/hubredirect/live_review.php', $urlparams),
+            'Live session review save expired'
+        );
+    }
     $now = time();
     $summarynotifications = [];
     $homeworknotifications = [];
@@ -219,8 +293,11 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'sav
         $att = $DB->get_record('local_prequran_live_attendance', [
             'sessionid' => $sessionid,
             'studentid' => $studentid,
-        ]);
+        ], '*', IGNORE_MISSING);
         if ($att) {
+            if (pqlr_column_exists('local_prequran_live_attendance', 'workspaceid')) {
+                $att->workspaceid = (int)($session->workspaceid ?? 0);
+            }
             $att->userid = (int)$participant->userid;
             $att->attendance_status = $attendance;
             $att->participation_status = pqlr_clean_text($participation, 100);
@@ -230,7 +307,7 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'sav
             $att->timemodified = $now;
             $DB->update_record('local_prequran_live_attendance', $att);
         } else {
-            $DB->insert_record('local_prequran_live_attendance', (object)[
+            $attrecord = (object)[
                 'sessionid' => $sessionid,
                 'userid' => (int)$participant->userid,
                 'studentid' => $studentid,
@@ -243,14 +320,18 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'sav
                 'markedby' => (int)$USER->id,
                 'timecreated' => $now,
                 'timemodified' => $now,
-            ]);
+            ];
+            if (pqlr_column_exists('local_prequran_live_attendance', 'workspaceid')) {
+                $attrecord->workspaceid = (int)($session->workspaceid ?? 0);
+            }
+            $DB->insert_record('local_prequran_live_attendance', $attrecord);
         }
 
         $visible = optional_param($prefix . 'visible_to_parent', 0, PARAM_BOOL);
         $note = $DB->get_record('local_prequran_live_note', [
             'sessionid' => $sessionid,
             'studentid' => $studentid,
-        ]);
+        ], '*', IGNORE_MISSING);
         $wasvisible = $note ? !empty($note->visible_to_parent) : false;
         $oldhomework = $note ? trim((string)($note->homework ?? '') . ' ' . (string)($note->homework_unitid ?? '')) : '';
         $oldfollowupstatus = $note && isset($note->followup_status) ? (string)$note->followup_status : 'none';
@@ -297,17 +378,24 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'sav
             foreach ($payload as $key => $value) {
                 $note->{$key} = $value;
             }
+            if (pqlr_column_exists('local_prequran_live_note', 'workspaceid')) {
+                $note->workspaceid = (int)($session->workspaceid ?? 0);
+            }
             $note->teacherid = (int)$session->teacherid;
             $note->timemodified = $now;
             $DB->update_record('local_prequran_live_note', $note);
         } else {
-            $DB->insert_record('local_prequran_live_note', (object)array_merge($payload, [
+            $noterecord = (object)array_merge($payload, [
                 'sessionid' => $sessionid,
                 'studentid' => $studentid,
                 'teacherid' => (int)$session->teacherid,
                 'timecreated' => $now,
                 'timemodified' => $now,
-            ]));
+            ]);
+            if (pqlr_column_exists('local_prequran_live_note', 'workspaceid')) {
+                $noterecord->workspaceid = (int)($session->workspaceid ?? 0);
+            }
+            $DB->insert_record('local_prequran_live_note', $noterecord);
         }
         $publicfeedback = trim(implode(' ', [
             (string)$payload['strengths'],
@@ -375,34 +463,37 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'sav
         pqlr_audit($sessionid, 'session_completion_blocked', 'session', $sessionid, $completion);
     }
     foreach (array_unique($summarynotifications) as $studentid) {
+        $summaryurlparams = array_merge($workspaceurlparams, ['childid' => (int)$studentid]);
         local_prequran_notify_parent_live_update(
             $sessionid,
             (int)$studentid,
             'Live class summary is ready',
-            'A teacher summary from your child\'s Quraan Academy live class is ready to review.',
-            new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => (int)$studentid]),
+            'A teacher summary from your child\'s ' . $brandname . ' live class is ready to review.',
+            new moodle_url('/local/hubredirect/live_summaries.php', $summaryurlparams),
             'View live summary',
             'live_summary_published'
         );
     }
     foreach ($homeworknotifications as $studentid => $homework) {
+        $summaryurlparams = array_merge($workspaceurlparams, ['childid' => (int)$studentid]);
         local_prequran_notify_parent_live_update(
             $sessionid,
             (int)$studentid,
             'Live class homework is ready',
-            'Homework from your child\'s Quraan Academy live class is ready to review.',
-            new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => (int)$studentid]),
+            'Homework from your child\'s ' . $brandname . ' live class is ready to review.',
+            new moodle_url('/local/hubredirect/live_summaries.php', $summaryurlparams),
             'View homework',
             'live_homework_published'
         );
     }
     foreach ($followupnotifications as $studentid => $followup) {
+        $summaryurlparams = array_merge($workspaceurlparams, ['childid' => (int)$studentid]);
         local_prequran_notify_parent_live_update(
             $sessionid,
             (int)$studentid,
             'Live class follow-up requested',
-            'A teacher follow-up from your child\'s Quraan Academy live class is ready to review.',
-            new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => (int)$studentid]),
+            'A teacher follow-up from your child\'s ' . $brandname . ' live class is ready to review.',
+            new moodle_url('/local/hubredirect/live_summaries.php', $summaryurlparams),
             'View follow-up',
             'live_followup_requested'
         );
@@ -495,20 +586,25 @@ body.pqh-live-review-page .main-inner{margin:0!important;padding:0!important;max
 .pqlr-missing{margin:0 0 12px;padding-left:18px;color:#7b5419;font-size:13px;font-weight:800}
 .pqlr-footer{position:sticky;bottom:0;margin-top:16px;padding:14px;background:rgba(245,248,251,.92);backdrop-filter:blur(8px);border-top:1px solid rgba(23,48,68,.1)}
 @media(max-width:980px){.pqlr-grid,.pqlr-checklist,.pqlr-lifecycle__forms,.pqlr-inline{grid-template-columns:1fr}.pqlr-top{display:block}.pqlr-actions{margin-top:12px}.pqlr-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlr-shell">
   <div class="pqlr-wrap">
-    <section class="pqlr-top">
+    <section class="pqlr-top pqh-workspace-top">
       <div>
-        <h1 class="pqlr-title">Live Session Review</h1>
-        <p class="pqlr-sub"><?php echo s($session->title); ?> - <?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
-        <p class="pqlr-sub">Target: <?php echo s(trim((string)$session->lessonid . ' / ' . (string)$session->unitid, ' /') ?: 'not set'); ?></p>
+        <h1 class="pqlr-title pqh-workspace-title">Live Session Review</h1>
+        <p class="pqlr-sub pqh-workspace-sub"><?php echo s($session->title); ?> - <?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
+        <p class="pqlr-sub pqh-workspace-sub">Target: <?php echo s(trim((string)$session->lessonid . ' / ' . (string)$session->unitid, ' /') ?: 'not set'); ?></p>
       </div>
-      <div class="pqlr-actions">
-        <a class="pqlr-btn pqlr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_monitor.php', ['sessionid' => $sessionid]))->out(false); ?>">Lesson monitor</a>
-        <?php if (is_siteadmin($USER)): ?><a class="pqlr-btn pqlr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => $sessionid]))->out(false); ?>">Quality review</a><?php endif; ?>
-        <a class="pqlr-btn pqlr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <a class="pqlr-btn pqlr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqlr-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlr-btn pqlr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_monitor.php', $urlparams))->out(false); ?>">Lesson monitor</a>
+        <?php if (pqh_can_manage_academy_operations((int)$USER->id)): ?><a class="pqlr-btn pqlr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', $urlparams))->out(false); ?>">Quality review</a><?php endif; ?>
+        <a class="pqlr-btn pqlr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams))->out(false); ?>">Live sessions</a>
+        <?php
+          $dashboardpath = !empty($workspaceurlparams['workspaceid']) ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php';
+        ?>
+        <a class="pqlr-btn pqlr-btn--light" href="<?php echo (new moodle_url($dashboardpath, $workspaceurlparams))->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -542,6 +638,8 @@ body.pqh-live-review-page .main-inner{margin:0!important;padding:0!important;max
         <form method="post">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="reschedule_session">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
           <div class="pqlr-inline">
             <div class="pqlr-field">
               <label for="reschedule_date">New Date</label>
@@ -562,6 +660,8 @@ body.pqh-live-review-page .main-inner{margin:0!important;padding:0!important;max
         <form class="pqlr-danger" method="post">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="cancel_session">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
           <div class="pqlr-field">
             <label for="cancellation_reason">Cancellation Reason</label>
             <input class="pqlr-input" id="cancellation_reason" name="cancellation_reason" value="<?php echo s((string)($session->cancellation_reason ?? '')); ?>" placeholder="Reason shown in audit history">
@@ -574,6 +674,8 @@ body.pqh-live-review-page .main-inner{margin:0!important;padding:0!important;max
     <form method="post">
       <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
       <input type="hidden" name="action" value="save_review">
+      <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+      <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
 
       <?php foreach ($students as $participant): ?>
         <?php

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can manage student grouping.');
-}
+pqh_require_academy_operations('Only academy operations users can manage student grouping.');
 
 $pqlgrpoptions = require(__DIR__ . '/student_intake_config.php');
 
@@ -438,11 +437,19 @@ $error = '';
 $now = time();
 
 if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_sesskey();
-    $action = required_param('action', PARAM_ALPHANUMEXT);
     try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This grouping form expired. Please refresh and try again.');
+        }
+        $action = optional_param('action', '', PARAM_ALPHANUMEXT);
+        if ($action === '') {
+            throw new invalid_parameter_exception('Choose a valid grouping action.');
+        }
         if ($action === 'save_profile') {
-            $userid = required_param('userid', PARAM_INT);
+            $userid = optional_param('userid', 0, PARAM_INT);
+            if ($userid <= 0) {
+                throw new invalid_parameter_exception('Choose a valid student before saving the profile.');
+            }
             $age = max(0, min(25, optional_param('age_years', 0, PARAM_INT)));
             $primarylanguage = pqlgrp_trim_param('primary_language');
             $otherlanguages = pqlgrp_trim_param('language');
@@ -549,10 +556,16 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             pqlgrp_audit('class_group_created', 'group', $id, ['title' => $record->title, 'poolid' => $poolid, 'teacherid' => (int)$record->teacherid]);
             $message = 'Class group created.';
         } elseif ($action === 'assign_student') {
-            $groupid = required_param('groupid', PARAM_INT);
-            $studentid = required_param('studentid', PARAM_INT);
-            $group = $DB->get_record('local_prequran_class_group', ['id' => $groupid], '*', MUST_EXIST);
-            $profile = $DB->get_record('local_prequran_student_profile', ['userid' => $studentid], '*', MUST_EXIST);
+            $groupid = optional_param('groupid', 0, PARAM_INT);
+            $studentid = optional_param('studentid', 0, PARAM_INT);
+            $group = $groupid > 0 ? $DB->get_record('local_prequran_class_group', ['id' => $groupid]) : false;
+            $profile = $studentid > 0 ? $DB->get_record('local_prequran_student_profile', ['userid' => $studentid]) : false;
+            if (!$group) {
+                throw new invalid_parameter_exception('Choose a valid class group before assigning a student.');
+            }
+            if (!$profile) {
+                throw new invalid_parameter_exception('Choose a valid student profile before assigning a group.');
+            }
             [$score, $matchstatus, $details] = pqlgrp_match_score($profile, $group);
             $record = (object)[
                 'groupid' => $groupid,
@@ -677,15 +690,17 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
 .pqlgrp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.pqlgrp-panel{padding:18px;margin-bottom:16px}.pqlgrp-panel--wide{grid-column:1/-1}.pqlgrp-panel h2{margin:0 0 12px;font-size:21px;font-weight:950}.pqlgrp-panel h3{margin:16px 0 10px;font-size:15px;font-weight:950;color:#7a5637}.pqlgrp-formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.pqlgrp-field{display:grid;gap:6px;margin-bottom:10px}.pqlgrp-field label{font-size:12px;font-weight:900;color:#415665}.pqlgrp-input,.pqlgrp-select,.pqlgrp-textarea{width:100%;min-height:38px;border:1px solid rgba(23,48,68,.18);border-radius:8px;padding:8px 10px;font:800 14px/1.2 system-ui;background:#fff;color:#173044}.pqlgrp-textarea{min-height:78px}.pqlgrp-checkrow{display:flex;gap:10px;align-items:flex-start;margin:8px 0 12px;color:#173044;font-size:13px;font-weight:900}.pqlgrp-checkrow input{width:18px;height:18px;margin-top:1px}.pqlgrp-table{width:100%;border-collapse:collapse}.pqlgrp-table th,.pqlgrp-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;font-size:13px;vertical-align:top}.pqlgrp-table th{font-weight:950;color:#415665;background:#f8fbfd}.pqlgrp-pill{display:inline-flex;align-items:center;justify-content:center;min-height:24px;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}.pqlgrp-pill--ok{background:#edf9ef;color:#245c35}.pqlgrp-pill--warn{background:#fff6df;color:#7a5637}.pqlgrp-alert{padding:12px 14px;border-radius:8px;margin-bottom:12px;font-weight:850}.pqlgrp-alert--ok{background:#edf9ef;color:#245c35}.pqlgrp-alert--bad{background:#fff0ed;color:#883526}.pqlgrp-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}
 .pqlgrp-teacher-match{margin-top:8px;padding:10px;border:1px solid rgba(23,48,68,.1);border-radius:8px;background:#f8fbfd;color:#415665;font-size:12px;font-weight:850;line-height:1.45}.pqlgrp-teacher-match strong{color:#173044}.pqlgrp-teacher-match div+div{margin-top:5px}.pqlgrp-teacher-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.pqlgrp-teacher-links a{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 9px;border:1px solid rgba(23,48,68,.12);border-radius:999px;background:#eef4f6;color:#173044!important;text-decoration:none;font-size:11px;font-weight:950}.pqlgrp-teacher-links a:hover{background:#e6f2e8;color:#245c35!important}
 @media(max-width:920px){.pqlgrp-top{display:block}.pqlgrp-actions{margin-top:12px}.pqlgrp-grid,.pqlgrp-formgrid,.pqlgrp-metrics{grid-template-columns:1fr}.pqlgrp-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlgrp-shell">
   <div class="pqlgrp-wrap">
-    <section class="pqlgrp-top">
+    <section class="pqlgrp-top pqh-workspace-top">
       <div>
-        <h1 class="pqlgrp-title">Student Grouping</h1>
-        <p class="pqlgrp-sub">Manage student profiles, matching pools, live class groups, and suggested assignments.</p>
+        <h1 class="pqlgrp-title pqh-workspace-title">Student Grouping</h1>
+        <p class="pqlgrp-sub pqh-workspace-sub">Manage student profiles, matching pools, live class groups, and suggested assignments.</p>
       </div>
-      <div class="pqlgrp-actions">
+      <div class="pqlgrp-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/student_intake.php'))->out(false); ?>">New student intake</a>
         <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php'))->out(false); ?>">Create session</a>
         <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php'))->out(false); ?>">Create series</a>

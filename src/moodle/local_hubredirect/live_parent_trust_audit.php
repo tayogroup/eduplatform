@@ -2,10 +2,15 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 
 if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can review parent trust support access.');
+    pqh_access_denied(
+        'Only site administrators can review parent trust support access.',
+        new moodle_url('/local/hubredirect/live_trust.php'),
+        'Parent trust audit access required'
+    );
 }
 
 $context = context_system::instance();
@@ -90,8 +95,21 @@ function pqlpta_audit(int $sessionid, string $action, string $targettype = '', i
 }
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'resolve_support_case') {
-    require_sesskey();
-    $studentid = required_param('studentid', PARAM_INT);
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the parent trust support audit page and try saving again.',
+            new moodle_url('/local/hubredirect/live_parent_trust_audit.php'),
+            'Parent trust support update expired'
+        );
+    }
+    $studentid = optional_param('studentid', 0, PARAM_INT);
+    if ($studentid <= 0) {
+        pqh_access_denied(
+            'Choose a valid student before resolving a parent trust support case.',
+            new moodle_url('/local/hubredirect/live_parent_trust_audit.php'),
+            'Parent trust support case unavailable'
+        );
+    }
     $note = optional_param('resolution_note', '', PARAM_TEXT);
     pqlpta_audit(0, 'parent_trust_support_case_resolved', 'student', $studentid, [
         'case_status' => 'resolved',
@@ -313,15 +331,17 @@ body.pqh-parent-trust-audit-page .main-inner{margin:0!important;padding:0!import
 .pqlpta-note{padding:13px;border-radius:10px;background:#f6fff8;border:1px solid rgba(47,125,79,.18);color:#315b3f;font-size:13px;font-weight:850;margin-bottom:14px}
 @media(max-width:1050px){.pqlpta-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.pqlpta-top{display:block}.pqlpta-actions{margin-top:12px}.pqlpta-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqlpta-metrics{grid-template-columns:1fr}.pqlpta-title{font-size:24px}.pqlpta-form{display:grid}.pqlpta-btn{width:100%}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlpta-shell">
   <div class="pqlpta-wrap">
-    <section class="pqlpta-top">
+    <section class="pqlpta-top pqh-workspace-top">
       <div>
-        <h1 class="pqlpta-title">Parent Trust Support Audit</h1>
-        <p class="pqlpta-sub">Review staff access to parent dashboard previews and spot unusual support patterns.</p>
+        <h1 class="pqlpta-title pqh-workspace-title">Parent Trust Support Audit</h1>
+        <p class="pqlpta-sub pqh-workspace-sub">Review staff access to parent dashboard previews and spot unusual support patterns.</p>
       </div>
-      <div class="pqlpta-actions">
+      <div class="pqlpta-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlpta-btn pqlpta-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_review_pack.php', $reviewpackparams))->out(false); ?>">Review pack</a>
         <a class="pqlpta-btn pqlpta-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Admin ops</a>
         <a class="pqlpta-btn pqlpta-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php'))->out(false); ?>">Parent hub</a>

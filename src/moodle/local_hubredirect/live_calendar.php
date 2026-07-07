@@ -2,12 +2,30 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
 $childid = optional_param('childid', 0, PARAM_INT);
 $action = optional_param('action', '', PARAM_ALPHANUMEXT);
 $sessionid = optional_param('sessionid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$workspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($workspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $workspaceid = (int)$consumercontext->workspaceid;
+}
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($workspaceid > 0) {
+    $urlparams['workspaceid'] = $workspaceid;
+}
+$returnurl = new moodle_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams);
+
+function pqlcal_url(string $path, array $urlparams, array $params = []): moodle_url {
+    return new moodle_url($path, $urlparams + $params);
+}
 
 function pqlcal_table_exists(string $table): bool {
     global $DB;
@@ -244,6 +262,13 @@ function pqlcal_ics_escape(string $value): string {
     return str_replace([',', ';'], ['\,', '\;'], $value);
 }
 
+function pqlcal_ics_token(string $value): string {
+    $token = strtolower(trim($value));
+    $token = preg_replace('/[^a-z0-9]+/', '-', $token) ?? '';
+    $token = trim($token, '-');
+    return $token !== '' ? $token : 'eduplatform';
+}
+
 $modechildren = [];
 if ($childid <= 0) {
     if (pqlcal_is_managed_student((int)$USER->id)) {
@@ -259,13 +284,27 @@ if ($childid <= 0) {
 }
 
 if ($childid > 0 && !pqlcal_user_can_access_child((int)$USER->id, $childid)) {
-    throw new moodle_exception('nopermissions', '', '', 'You cannot view this live class calendar.');
+    pqh_access_denied(
+        'You cannot view this live class calendar.',
+        $returnurl,
+        'Live calendar access required'
+    );
 }
 
 if ($action === 'ics') {
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Your security token expired. Open the calendar again before downloading this event.',
+            pqlcal_url('/local/hubredirect/live_calendar.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Calendar download expired'
+        );
+    }
     if ($childid <= 0 || $sessionid <= 0) {
-        throw new moodle_exception('invalidrequest');
+        pqh_access_denied(
+            'Choose a valid student and live class before downloading a calendar event.',
+            pqlcal_url('/local/hubredirect/live_calendar.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Calendar download unavailable'
+        );
     }
     $sessions = pqlcal_sessions($childid, time() - (365 * DAYSECS), time() + (365 * DAYSECS), 500);
     $session = null;
@@ -276,17 +315,24 @@ if ($action === 'ics') {
         }
     }
     if (!$session) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot download this calendar event.');
+        pqh_access_denied(
+            'You cannot download this calendar event.',
+            pqlcal_url('/local/hubredirect/live_calendar.php', $urlparams, ['childid' => $childid]),
+            'Calendar download access required'
+        );
     }
     $teacher = core_user::get_user((int)$session->teacherid);
-    $joinurl = new moodle_url('/local/hubredirect/live_sessions.php', ['action' => 'join', 'sessionid' => (int)$session->id, 'sesskey' => sesskey()]);
+    $joinurl = pqlcal_url('/local/hubredirect/live_sessions.php', $urlparams, ['action' => 'join', 'sessionid' => (int)$session->id, 'sesskey' => sesskey()]);
     $summary = (string)$session->title . ' with ' . ($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid);
-    $description = 'Quraan Academy live review class. Join from Moodle: ' . $joinurl->out(false);
+    $brandname = trim((string)($consumercontext->consumername ?? '')) ?: 'EduPlatform';
+    $brandslug = pqlcal_ics_token((string)($consumercontext->consumerslug ?? $brandname));
+    $domainhost = parse_url($CFG->wwwroot, PHP_URL_HOST) ?: 'eduplatform.ai';
+    $description = $brandname . ' live review class. Join from Moodle: ' . $joinurl->out(false);
     $ics = "BEGIN:VCALENDAR\r\n";
     $ics .= "VERSION:2.0\r\n";
-    $ics .= "PRODID:-//Quraan Academy//Live Classes//EN\r\n";
+    $ics .= "PRODID:-//" . pqlcal_ics_escape($brandname) . "//Live Classes//EN\r\n";
     $ics .= "BEGIN:VEVENT\r\n";
-    $ics .= "UID:quraan-academy-live-" . (int)$session->id . "@quraan.academy\r\n";
+    $ics .= "UID:" . $brandslug . "-live-" . (int)$session->id . "@" . $domainhost . "\r\n";
     $ics .= "DTSTAMP:" . gmdate('Ymd\THis\Z') . "\r\n";
     $ics .= "DTSTART:" . gmdate('Ymd\THis\Z', (int)$session->scheduled_start) . "\r\n";
     $ics .= "DTEND:" . gmdate('Ymd\THis\Z', (int)$session->scheduled_end) . "\r\n";
@@ -297,14 +343,14 @@ if ($action === 'ics') {
     $ics .= "END:VCALENDAR\r\n";
     pqlcal_audit((int)$session->id, 'calendar_downloaded', 'student', $childid);
     @header('Content-Type: text/calendar; charset=utf-8');
-    @header('Content-Disposition: attachment; filename="quraan-academy-live-' . (int)$session->id . '.ics"');
+    @header('Content-Disposition: attachment; filename="' . $brandslug . '-live-' . (int)$session->id . '.ics"');
     echo $ics;
     exit;
 }
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_calendar.php', $childid > 0 ? ['childid' => $childid] : []));
+$PAGE->set_url(pqlcal_url('/local/hubredirect/live_calendar.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Class Calendar');
 $PAGE->set_heading('Live Class Calendar');
@@ -372,17 +418,19 @@ body.pqh-live-calendar-page .main-inner{margin:0!important;padding:0!important;m
 .pqlcal-pill--ok{background:#edf9ef;color:#245c35}
 .pqlcal-pill--warn{background:#fff4dc;color:#7b5a3a}
 @media(max-width:820px){.pqlcal-top,.pqlcal-head{display:block}.pqlcal-actions{margin-top:12px}.pqlcal-calendar{display:grid;grid-template-columns:1fr}.pqlcal-dayname{display:none}.pqlcal-day{min-height:auto}.pqlcal-title{font-size:25px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlcal-shell">
   <div class="pqlcal-wrap">
-    <section class="pqlcal-top">
+    <section class="pqlcal-top pqh-workspace-top">
       <div>
-        <h1 class="pqlcal-title">Live Class Calendar</h1>
-        <p class="pqlcal-sub"><?php echo s($childname); ?> - <?php echo userdate($monthstart, '%B %Y'); ?> classes and calendar downloads.</p>
+        <h1 class="pqlcal-title pqh-workspace-title">Live Class Calendar</h1>
+        <p class="pqlcal-sub pqh-workspace-sub"><?php echo s($childname); ?> - <?php echo userdate($monthstart, '%B %Y'); ?> classes and calendar downloads.</p>
       </div>
-      <div class="pqlcal-actions">
-        <a class="pqlcal-btn pqlcal-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Schedule</a>
-        <a class="pqlcal-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Dashboard</a>
+      <div class="pqlcal-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlcal-btn pqlcal-btn--light" href="<?php echo pqlcal_url('/local/hubredirect/live_schedule.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Schedule</a>
+        <a class="pqlcal-btn" href="<?php echo pqlcal_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -390,7 +438,7 @@ body.pqh-live-calendar-page .main-inner{margin:0!important;padding:0!important;m
       <?php if ($modechildren): ?>
         <section class="pqlcal-students" aria-label="Choose student">
           <?php foreach ($modechildren as $childrow): ?>
-            <a class="pqlcal-student" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => (int)$childrow['studentid']]))->out(false); ?>"><?php echo s((string)$childrow['name']); ?><span>Open live class calendar</span></a>
+            <a class="pqlcal-student" href="<?php echo pqlcal_url('/local/hubredirect/live_calendar.php', $urlparams, ['childid' => (int)$childrow['studentid']])->out(false); ?>"><?php echo s((string)$childrow['name']); ?><span>Open live class calendar</span></a>
           <?php endforeach; ?>
         </section>
       <?php else: ?>
@@ -421,8 +469,8 @@ body.pqh-live-calendar-page .main-inner{margin:0!important;padding:0!important;m
           <?php
             [$joinstate, $joinlabel] = pqlcal_join_state($session);
             $teacher = core_user::get_user((int)$session->teacherid);
-            $joinurl = new moodle_url('/local/hubredirect/live_sessions.php', ['action' => 'join', 'sessionid' => (int)$session->id, 'sesskey' => sesskey()]);
-            $icsurl = new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => $childid, 'action' => 'ics', 'sessionid' => (int)$session->id, 'sesskey' => sesskey()]);
+            $joinurl = pqlcal_url('/local/hubredirect/live_sessions.php', $urlparams, ['action' => 'join', 'sessionid' => (int)$session->id, 'sesskey' => sesskey()]);
+            $icsurl = pqlcal_url('/local/hubredirect/live_calendar.php', $urlparams, ['childid' => $childid, 'action' => 'ics', 'sessionid' => (int)$session->id, 'sesskey' => sesskey()]);
           ?>
           <article class="pqlcal-card" id="session-<?php echo (int)$session->id; ?>">
             <div class="pqlcal-head">
@@ -433,12 +481,12 @@ body.pqh-live-calendar-page .main-inner{margin:0!important;padding:0!important;m
               </div>
               <span class="pqlcal-pill <?php echo $joinstate === 'open' ? 'pqlcal-pill--ok' : ($joinstate === 'waiting' ? 'pqlcal-pill--warn' : ''); ?>"><?php echo s($joinlabel); ?></span>
             </div>
-            <div class="pqlcal-actions">
+            <div class="pqlcal-actions pqh-workspace-actions">
               <?php if ($joinstate === 'open'): ?><a class="pqlcal-btn" href="<?php echo $joinurl->out(false); ?>">Join class</a><?php endif; ?>
               <a class="pqlcal-btn pqlcal-btn--light" href="<?php echo $icsurl->out(false); ?>">Add to calendar</a>
-              <a class="pqlcal-btn pqlcal-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', ['childid' => $childid]))->out(false); ?>">Trust center</a>
-              <?php if (!empty($session->summary_visible)): ?><a class="pqlcal-btn pqlcal-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Summary</a><?php endif; ?>
-              <?php if ((int)$session->visible_recordings > 0): ?><a class="pqlcal-btn pqlcal-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', ['childid' => $childid]))->out(false); ?>">Recording</a><?php endif; ?>
+              <a class="pqlcal-btn pqlcal-btn--light" href="<?php echo pqlcal_url('/local/hubredirect/live_trust.php', $urlparams, ['childid' => $childid])->out(false); ?>">Trust center</a>
+              <?php if (!empty($session->summary_visible)): ?><a class="pqlcal-btn pqlcal-btn--light" href="<?php echo pqlcal_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => $childid])->out(false); ?>">Summary</a><?php endif; ?>
+              <?php if ((int)$session->visible_recordings > 0): ?><a class="pqlcal-btn pqlcal-btn--light" href="<?php echo pqlcal_url('/local/hubredirect/live_recordings.php', $urlparams, ['childid' => $childid])->out(false); ?>">Recording</a><?php endif; ?>
             </div>
           </article>
         <?php endforeach; ?>

@@ -2,10 +2,15 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 
 if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can review parent trust retention readiness.');
+    pqh_access_denied(
+        'Only site administrators can review parent trust retention readiness.',
+        new moodle_url('/local/hubredirect/live_trust.php'),
+        'Parent trust retention access required'
+    );
 }
 
 $context = context_system::instance();
@@ -179,7 +184,13 @@ $cutoff = time() - ($retentiondays * DAYSECS);
 
 if (data_submitted()) {
     global $DB;
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the parent trust retention page and try the action again.',
+            new moodle_url('/local/hubredirect/live_parent_trust_retention.php', ['retentiondays' => $retentiondays]),
+            'Parent trust retention action expired'
+        );
+    }
     $action = optional_param('action', '', PARAM_ALPHANUMEXT);
     $note = optional_param('review_note', '', PARAM_TEXT);
     $details = [
@@ -429,15 +440,17 @@ body.pqh-parent-trust-retention-page .main-inner{margin:0!important;padding:0!im
 .pqlptr-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:980px){.pqlptr-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlptr-grid{grid-template-columns:1fr}.pqlptr-top{display:block}.pqlptr-actions{margin-top:12px}.pqlptr-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqlptr-metrics{grid-template-columns:1fr}.pqlptr-title{font-size:24px}.pqlptr-form{display:grid}.pqlptr-btn{width:100%}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlptr-shell">
   <div class="pqlptr-wrap">
-    <section class="pqlptr-top">
+    <section class="pqlptr-top pqh-workspace-top">
       <div>
-        <h1 class="pqlptr-title">Parent Trust Retention Readiness</h1>
-        <p class="pqlptr-sub">Dry-run, approval, guarded purge, and recovery evidence for parent trust support audit retention.</p>
+        <h1 class="pqlptr-title pqh-workspace-title">Parent Trust Retention Readiness</h1>
+        <p class="pqlptr-sub pqh-workspace-sub">Dry-run, approval, guarded purge, and recovery evidence for parent trust support audit retention.</p>
       </div>
-      <div class="pqlptr-actions">
+      <div class="pqlptr-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlptr-btn pqlptr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php'))->out(false); ?>">Admin menu</a>
         <a class="pqlptr-btn pqlptr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_review_pack.php', $reviewparams))->out(false); ?>">Export review pack first</a>
         <a class="pqlptr-btn pqlptr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_audit.php'))->out(false); ?>">Audit page</a>
@@ -499,7 +512,7 @@ body.pqh-parent-trust-retention-page .main-inner{margin:0!important;padding:0!im
             <label for="review_note">Review note</label>
             <textarea id="review_note" class="pqlptr-textarea" name="review_note" placeholder="Reason, export reference, or approval/rejection note"></textarea>
           </div>
-          <div class="pqlptr-actions">
+          <div class="pqlptr-actions pqh-workspace-actions">
             <button class="pqlptr-btn pqlptr-btn--light" type="submit" name="action" value="request_purge_review">Request purge review</button>
             <button class="pqlptr-btn" type="submit" name="action" value="approve_purge_review">Approve readiness</button>
             <button class="pqlptr-btn pqlptr-btn--light" type="submit" name="action" value="reject_purge_review">Reject with note</button>

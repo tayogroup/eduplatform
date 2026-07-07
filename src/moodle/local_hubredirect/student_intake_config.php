@@ -6,8 +6,12 @@ $countrycityoptions = require(__DIR__ . '/country_cities.php');
 
 return [
     'course_types' => [
-        'pre_quraan' => 'Pre-quraan Course',
-        'quraan_memorization' => 'Quraan Memorization Course',
+        'pre_quraan' => 'Pre-Quraan',
+        'tarbiyah_kids' => 'Tarbiyah Kids',
+        'essential_arabic' => 'Essential Arabic',
+        'quran_reading' => 'Quran Reading',
+        'quran_tafsir' => 'Quran Tafsir',
+        'quraan_memorization' => 'Quran Memorization',
     ],
     'countries' => ($countrytimezoneoptions['countries'] ?? []) + ['Other' => 'Other'],
     'cities' => ($countrycityoptions['cities'] ?? []) + ['Other' => 'Other city not listed'],
@@ -30,19 +34,61 @@ return [
         'Other' => 'Other',
     ],
     'current_levels' => [
-        'alphabet' => 'Alphabet',
-        'alphabet, level 1' => 'Alphabet, Level 1',
-        'level 1' => 'Level 1',
-        'level 2' => 'Level 2',
-        'level 3' => 'Level 3',
-        'placement_needed' => 'Placement needed',
+        'level_0' => 'Level 0',
+        'level_1' => 'Level 1',
+        'level_2' => 'Level 2',
+        'level_3' => 'Level 3',
+        'level_4' => 'Level 4',
+    ],
+    'student_access_types' => [
+        'managed' => 'Managed Student',
+        'unmanaged' => 'Unmanaged Student',
+    ],
+    'tajweed_sub_levels' => [
+        'beginner' => 'Beginner',
+        'middle' => 'Middle',
+        'advanced' => 'Advanced',
+    ],
+    'level_definitions' => [
+        'pre_quraan' => [
+            'level_0' => 'New to Arabic letters, sounds, or harakat.',
+            'level_1' => 'Can recognize, pronounce, and write the Arabic alphabet.',
+            'level_2' => 'Can write 2 joined letters, 3 joined letters, 4 joined letters, and 5 joined letters.',
+            'level_3' => 'Tajweed level - Beginner, Middle, or Advanced.',
+            'level_4' => 'Can read simple Arabic words and is preparing to read the Quran fluently.',
+        ],
+        'tarbiyah_kids' => [
+            'level 1' => 'Needs basic Islamic manners, habits, stories, and daily routines.',
+            'level 2' => 'Understands simple values and can discuss guided stories or examples.',
+            'level 3' => 'Can reflect on manners, choices, and Islamic values with more independence.',
+        ],
+        'essential_arabic' => [
+            'level 1' => 'Beginning Arabic letters, sounds, basic words, and simple writing.',
+            'level 2' => 'Can read and write simple words and is building vocabulary and sentences.',
+            'level 3' => 'Can read short passages and is developing comprehension and expression.',
+        ],
+        'quran_reading' => [
+            'level 1' => 'Can read short Arabic or Quran words with support.',
+            'level 2' => 'Can read short passages but needs fluency, correction, and confidence.',
+            'level 3' => 'Reads longer passages and needs tajweed, pace, and consistency support.',
+        ],
+        'quran_tafsir' => [
+            'level 1' => 'Ready for simple meanings, vocabulary, stories, and guided reflection.',
+            'level 2' => 'Can discuss short surahs or themes with teacher guidance.',
+            'level 3' => 'Can connect meanings, lessons, and reflections across longer passages.',
+        ],
+        'quraan_memorization' => [
+            'level 1' => 'Starting short surahs or needs a first memorization routine.',
+            'level 2' => 'Has memorized some surahs and needs revision structure and listening.',
+            'level 3' => 'Has ongoing memorization and needs stronger retention, review, and targets.',
+        ],
     ],
     'learning_bases' => [
         'new learner' => 'New learner',
-        'knows letters' => 'Knows letters',
-        'new learner, knows letters' => 'New learner, knows letters',
-        'can blend sounds' => 'Can blend sounds',
-        'can read short words' => 'Can read short words',
+        'some_prior_learning' => 'Some prior learning',
+        'can_read_basic_arabic' => 'Can read basic Arabic',
+        'can_write_basic_arabic' => 'Can write basic Arabic',
+        'can_understand_basic_arabic' => 'Can understand basic Arabic',
         'needs assessment' => 'Needs assessment',
     ],
     'availability_days' => [

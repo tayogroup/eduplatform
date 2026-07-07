@@ -59,6 +59,21 @@ export interface EduPlatformEnv {
   enableDataLifecycleCleanup: boolean;
   enableFailureWorkflowControls: boolean;
   enableCrossRoleGoldenPath: boolean;
+  enablePerformanceReliabilitySmoke: boolean;
+  enableAccessibilityResponsiveSmoke: boolean;
+  enableLiveBbbOperationsSmoke: boolean;
+  enableLiveBbbMeetingLifecycle: boolean;
+  enableLiveBbbPostClassEvidence: boolean;
+  enableLiveBbbStudentParentVisibility: boolean;
+  enableLiveBbbTrustRetentionAudit: boolean;
+  enableLiveBbbInstructionalReadiness: boolean;
+  enableLiveBbbQualityLeadership: boolean;
+  enableLiveBbbSchedulingCapacity: boolean;
+  enableLiveBbbOperationalResilience: boolean;
+  enableLiveBbbBackupDrReadiness: boolean;
+  enableLiveBbbRetentionControls: boolean;
+  enableLiveBbbConsentGrouping: boolean;
+  enableLiveBbbPilotReadiness: boolean;
   wsToken: string;
 }
 
@@ -175,6 +190,21 @@ export function getEduPlatformEnv(options: EnvOptions = {}): EduPlatformEnv {
     enableDataLifecycleCleanup: isTruthy(readEnv('EDUPLATFORM_ENABLE_DATA_LIFECYCLE_CLEANUP')),
     enableFailureWorkflowControls: isTruthy(readEnv('EDUPLATFORM_ENABLE_FAILURE_WORKFLOW_CONTROLS')),
     enableCrossRoleGoldenPath: isTruthy(readEnv('EDUPLATFORM_ENABLE_CROSS_ROLE_GOLDEN_PATH')),
+    enablePerformanceReliabilitySmoke: isTruthy(readEnv('EDUPLATFORM_ENABLE_PERFORMANCE_RELIABILITY_SMOKE')),
+    enableAccessibilityResponsiveSmoke: isTruthy(readEnv('EDUPLATFORM_ENABLE_ACCESSIBILITY_RESPONSIVE_SMOKE')),
+    enableLiveBbbOperationsSmoke: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_OPERATIONS_SMOKE')),
+    enableLiveBbbMeetingLifecycle: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_MEETING_LIFECYCLE')),
+    enableLiveBbbPostClassEvidence: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_POST_CLASS_EVIDENCE')),
+    enableLiveBbbStudentParentVisibility: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_STUDENT_PARENT_VISIBILITY')),
+    enableLiveBbbTrustRetentionAudit: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_TRUST_RETENTION_AUDIT')),
+    enableLiveBbbInstructionalReadiness: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_INSTRUCTIONAL_READINESS')),
+    enableLiveBbbQualityLeadership: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_QUALITY_LEADERSHIP')),
+    enableLiveBbbSchedulingCapacity: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_SCHEDULING_CAPACITY')),
+    enableLiveBbbOperationalResilience: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_OPERATIONAL_RESILIENCE')),
+    enableLiveBbbBackupDrReadiness: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_BACKUP_DR_READINESS')),
+    enableLiveBbbRetentionControls: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_RETENTION_CONTROLS')),
+    enableLiveBbbConsentGrouping: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_CONSENT_GROUPING')),
+    enableLiveBbbPilotReadiness: isTruthy(readEnv('EDUPLATFORM_ENABLE_LIVE_BBB_PILOT_READINESS')),
     wsToken: readEnv('EDUPLATFORM_WS_TOKEN'),
   };
 
@@ -275,6 +305,21 @@ export function redactedEduPlatformEnv(env = getEduPlatformEnv({ allowPartial: t
     enableDataLifecycleCleanup: env.enableDataLifecycleCleanup,
     enableFailureWorkflowControls: env.enableFailureWorkflowControls,
     enableCrossRoleGoldenPath: env.enableCrossRoleGoldenPath,
+    enablePerformanceReliabilitySmoke: env.enablePerformanceReliabilitySmoke,
+    enableAccessibilityResponsiveSmoke: env.enableAccessibilityResponsiveSmoke,
+    enableLiveBbbOperationsSmoke: env.enableLiveBbbOperationsSmoke,
+    enableLiveBbbMeetingLifecycle: env.enableLiveBbbMeetingLifecycle,
+    enableLiveBbbPostClassEvidence: env.enableLiveBbbPostClassEvidence,
+    enableLiveBbbStudentParentVisibility: env.enableLiveBbbStudentParentVisibility,
+    enableLiveBbbTrustRetentionAudit: env.enableLiveBbbTrustRetentionAudit,
+    enableLiveBbbInstructionalReadiness: env.enableLiveBbbInstructionalReadiness,
+    enableLiveBbbQualityLeadership: env.enableLiveBbbQualityLeadership,
+    enableLiveBbbSchedulingCapacity: env.enableLiveBbbSchedulingCapacity,
+    enableLiveBbbOperationalResilience: env.enableLiveBbbOperationalResilience,
+    enableLiveBbbBackupDrReadiness: env.enableLiveBbbBackupDrReadiness,
+    enableLiveBbbRetentionControls: env.enableLiveBbbRetentionControls,
+    enableLiveBbbConsentGrouping: env.enableLiveBbbConsentGrouping,
+    enableLiveBbbPilotReadiness: env.enableLiveBbbPilotReadiness,
     wsToken: env.wsToken ? '[redacted]' : '',
   };
 }

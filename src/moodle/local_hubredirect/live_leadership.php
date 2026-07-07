@@ -3,10 +3,22 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can manage leadership reviews.');
+$consumercontext = pqh_requested_consumer_context();
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+
+pqh_require_academy_operations(
+    'Only academy operations users can manage leadership reviews.',
+    new moodle_url('/local/hubredirect/live_sessions.php', $urlparams),
+    'Leadership review access required'
+);
 
 function pqll_table_exists(string $table): bool {
     global $DB;
@@ -111,13 +123,33 @@ $to = pqll_clean_date(optional_param('to', date('Y-m-d', $defaultto), PARAM_TEXT
 $teacherid = optional_param('teacherid', 0, PARAM_INT);
 $status = optional_param('status', 'open', PARAM_ALPHANUMEXT);
 $reasonfilter = optional_param('reason', '', PARAM_TEXT);
-$export = optional_param('export', '', PARAM_ALPHANUMEXT);
+$export = optional_param('export', optional_param('exqort', '', PARAM_ALPHANUMEXT), PARAM_ALPHANUMEXT);
 $notice = optional_param('result', '', PARAM_ALPHANUMEXT);
 
 if ($ready && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'update_case') {
-    require_sesskey();
-    $sessionid = required_param('sessionid', PARAM_INT);
-    $session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', MUST_EXIST);
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the leadership review page and try saving again.',
+            new moodle_url('/local/hubredirect/live_leadership.php', $urlparams),
+            'Leadership review save expired'
+        );
+    }
+    $sessionid = optional_param('sessionid', 0, PARAM_INT);
+    if ($sessionid <= 0) {
+        pqh_access_denied(
+            'Choose a valid live session before updating a leadership case.',
+            new moodle_url('/local/hubredirect/live_leadership.php', $urlparams),
+            'Leadership review unavailable'
+        );
+    }
+    $session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING);
+    if (!$session) {
+        pqh_access_denied(
+            'Choose a valid live session before updating a leadership case.',
+            new moodle_url('/local/hubredirect/live_leadership.php', $urlparams),
+            'Leadership review unavailable'
+        );
+    }
     $oldstatus = (string)$session->leadership_review_status;
     $newstatus = optional_param('leadership_review_status', 'flagged', PARAM_ALPHANUMEXT);
     if (!in_array($newstatus, ['flagged', 'in_review', 'cleared'], true)) {
@@ -141,7 +173,7 @@ if ($ready && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT
         $priority = optional_param('improvement_plan_priority', 'normal', PARAM_ALPHANUMEXT);
         $session->improvement_plan_priority = in_array($priority, ['high', 'normal', 'low'], true) ? $priority : 'normal';
         $session->improvement_plan_mentorid = optional_param('improvement_plan_mentorid', 0, PARAM_INT);
-        $session->improvement_plan_completion_notes = pqll_clean_text(optional_param('improvement_plan_completion_notes', '', PARAM_RAW), 6000);
+        $session->improvement_plan_completion_notes = pqll_clean_text(optional_param('improvement_plan_completion_notes', optional_param('improvement_plan_comqletion_notes', '', PARAM_RAW), PARAM_RAW), 6000);
         if ($newplanstatus !== 'none' && $oldplanstatus === 'none') {
             $session->improvement_plan_assignedby = (int)$USER->id;
             $session->improvement_plan_assignedat = time();
@@ -201,13 +233,13 @@ if ($ready && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT
             'duedate' => (int)$session->improvement_plan_due_date,
         ]);
     }
-    redirect(new moodle_url('/local/hubredirect/live_leadership.php', [
+    redirect(new moodle_url('/local/hubredirect/live_leadership.php', array_merge($urlparams, [
         'status' => $status,
         'teacherid' => $teacherid,
         'from' => date('Y-m-d', $from),
         'to' => date('Y-m-d', $to),
         'result' => 'saved',
-    ]));
+    ])));
 }
 
 $where = ['s.scheduled_start >= :fromtime', 's.scheduled_start <= :totime'];
@@ -226,7 +258,17 @@ if (trim($reasonfilter) !== '') {
     $where[] = $DB->sql_like('s.leadership_review_reason', ':reasonfilter', false);
     $params['reasonfilter'] = '%' . $DB->sql_like_escape($reasonfilter) . '%';
 }
+if (!empty($urlparams['workspaceid']) && pqll_column_exists('local_prequran_live_session', 'workspaceid')) {
+    $where[] = 's.workspaceid = :workspaceid';
+    $params['workspaceid'] = (int)$urlparams['workspaceid'];
+}
 $wheresql = implode(' AND ', $where);
+$metricwhere = '';
+$metricparams = [];
+if (!empty($urlparams['workspaceid']) && pqll_column_exists('local_prequran_live_session', 'workspaceid')) {
+    $metricwhere = ' AND workspaceid = :metricworkspaceid';
+    $metricparams['metricworkspaceid'] = (int)$urlparams['workspaceid'];
+}
 
 $cases = [];
 $metrics = ['open' => 0, 'flagged' => 0, 'inreview' => 0, 'cleared' => 0, 'serious' => 0, 'overduecoaching' => 0, 'plansopen' => 0, 'plansoverdue' => 0, 'planscompleted' => 0];
@@ -252,34 +294,53 @@ if ($ready) {
         200
     ));
 
-    $metrics['open'] = (int)$DB->count_records_sql("SELECT COUNT(1) FROM {local_prequran_live_session} WHERE leadership_review_status IN ('flagged', 'in_review')");
-    $metrics['flagged'] = (int)$DB->count_records('local_prequran_live_session', ['leadership_review_status' => 'flagged']);
-    $metrics['inreview'] = (int)$DB->count_records('local_prequran_live_session', ['leadership_review_status' => 'in_review']);
-    $metrics['cleared'] = (int)$DB->count_records('local_prequran_live_session', ['leadership_review_status' => 'cleared']);
-    $metrics['serious'] = (int)$DB->count_records('local_prequran_live_session', ['qa_status' => 'serious_issue']);
+    $metrics['open'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE leadership_review_status IN ('flagged', 'in_review'){$metricwhere}",
+        $metricparams
+    );
+    $metrics['flagged'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE leadership_review_status = :status{$metricwhere}",
+        ['status' => 'flagged'] + $metricparams
+    );
+    $metrics['inreview'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE leadership_review_status = :status{$metricwhere}",
+        ['status' => 'in_review'] + $metricparams
+    );
+    $metrics['cleared'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE leadership_review_status = :status{$metricwhere}",
+        ['status' => 'cleared'] + $metricparams
+    );
+    $metrics['serious'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE qa_status = :status{$metricwhere}",
+        ['status' => 'serious_issue'] + $metricparams
+    );
     $metrics['overduecoaching'] = (int)$DB->count_records_sql(
         "SELECT COUNT(1)
            FROM {local_prequran_live_session}
           WHERE qa_coaching_status IN ('assigned', 'acknowledged')
             AND qa_coaching_due_date > 0
-            AND qa_coaching_due_date < :nowtime",
-        ['nowtime' => $now]
+            AND qa_coaching_due_date < :nowtime{$metricwhere}",
+        ['nowtime' => $now] + $metricparams
     );
     if ($improvementready) {
         $metrics['plansopen'] = (int)$DB->count_records_sql(
             "SELECT COUNT(1)
                FROM {local_prequran_live_session}
-              WHERE improvement_plan_status IN ('assigned', 'in_progress')"
+              WHERE improvement_plan_status IN ('assigned', 'in_progress'){$metricwhere}",
+            $metricparams
         );
         $metrics['plansoverdue'] = (int)$DB->count_records_sql(
             "SELECT COUNT(1)
                FROM {local_prequran_live_session}
               WHERE improvement_plan_status IN ('assigned', 'in_progress')
                 AND improvement_plan_due_date > 0
-                AND improvement_plan_due_date < :nowtime",
-            ['nowtime' => $now]
+                AND improvement_plan_due_date < :nowtime{$metricwhere}",
+            ['nowtime' => $now] + $metricparams
         );
-        $metrics['planscompleted'] = (int)$DB->count_records('local_prequran_live_session', ['improvement_plan_status' => 'completed']);
+        $metrics['planscompleted'] = (int)$DB->count_records_sql(
+            "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE improvement_plan_status = :status{$metricwhere}",
+            ['status' => 'completed'] + $metricparams
+        );
     }
 
     $audits = array_values($DB->get_records_sql(
@@ -335,7 +396,7 @@ if ($ready && $export === 'cases') {
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_leadership.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_leadership.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Leadership Reviews');
 $PAGE->set_heading('Leadership Reviews');
@@ -398,20 +459,22 @@ body.pqh-live-leadership-page .main-inner{margin:0!important;padding:0!important
 .pqll-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
 @media(max-width:1050px){.pqll-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.pqll-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqll-case-body{grid-template-columns:1fr}.pqll-top{display:block}.pqll-actions{margin-top:12px}.pqll-kv{grid-template-columns:repeat(2,minmax(0,1fr))}.pqll-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqll-filters,.pqll-metrics,.pqll-kv{grid-template-columns:1fr}.pqll-title{font-size:24px}.pqll-case-head{display:block}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqll-shell">
   <div class="pqll-wrap">
-    <section class="pqll-top">
+    <section class="pqll-top pqh-workspace-top">
       <div>
-        <h1 class="pqll-title">Leadership Review Command Center</h1>
-        <p class="pqll-sub">Manage flagged QA cases, leadership notes, case status, and resolution history.</p>
+        <h1 class="pqll-title pqh-workspace-title">Leadership Review Command Center</h1>
+        <p class="pqll-sub pqh-workspace-sub">Manage flagged QA cases, leadership notes, case status, and resolution history.</p>
       </div>
-      <div class="pqll-actions">
-        <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Operations</a>
-        <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php'))->out(false); ?>">QA analytics</a>
-        <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php'))->out(false); ?>">Improvement plans</a>
-        <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php'))->out(false); ?>">Reports</a>
-        <a class="pqll-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqll-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Operations</a>
+        <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', $urlparams))->out(false); ?>">QA analytics</a>
+        <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', $urlparams))->out(false); ?>">Improvement plans</a>
+        <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php', $urlparams))->out(false); ?>">Reports</a>
+        <a class="pqll-btn" href="<?php echo (new moodle_url(!empty($urlparams['workspaceid']) ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams))->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -422,6 +485,8 @@ body.pqh-live-leadership-page .main-inner{margin:0!important;padding:0!important
     <?php else: ?>
       <section class="pqll-panel">
         <form method="get">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
           <div class="pqll-filters">
             <div class="pqll-field"><label for="from">From</label><input class="pqll-input" id="from" name="from" type="date" value="<?php echo s(date('Y-m-d', $from)); ?>"></div>
             <div class="pqll-field"><label for="to">To</label><input class="pqll-input" id="to" name="to" type="date" value="<?php echo s(date('Y-m-d', $to)); ?>"></div>
@@ -433,10 +498,10 @@ body.pqh-live-leadership-page .main-inner{margin:0!important;padding:0!important
             </select></div>
             <div class="pqll-field"><label for="reason">Reason contains</label><input class="pqll-input" id="reason" name="reason" value="<?php echo s($reasonfilter); ?>"></div>
           </div>
-          <div class="pqll-actions">
+          <div class="pqll-actions pqh-workspace-actions">
             <button class="pqll-btn" type="submit">Apply filters</button>
-            <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php'))->out(false); ?>">Reset</a>
-            <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', ['from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'teacherid' => $teacherid, 'status' => $status, 'reason' => $reasonfilter, 'export' => 'cases']))->out(false); ?>">Export cases CSV</a>
+            <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', $urlparams))->out(false); ?>">Reset</a>
+            <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', array_merge($urlparams, ['from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'teacherid' => $teacherid, 'status' => $status, 'reason' => $reasonfilter, 'export' => 'cases'])))->out(false); ?>">Export cases CSV</a>
           </div>
         </form>
       </section>
@@ -458,6 +523,7 @@ body.pqh-live-leadership-page .main-inner{margin:0!important;padding:0!important
           <?php
             $overdue = in_array((string)$case->qa_coaching_status, ['assigned', 'acknowledged'], true) && !empty($case->qa_coaching_due_date) && (int)$case->qa_coaching_due_date < $now;
             $pillclass = (string)$case->leadership_review_status === 'cleared' ? 'pqll-pill--ok' : ((string)$case->leadership_review_status === 'in_review' ? 'pqll-pill--warn' : 'pqll-pill--bad');
+            $caseurlparams = array_merge($urlparams, ['sessionid' => (int)$case->id]);
           ?>
           <article class="pqll-case">
             <div class="pqll-case-head">
@@ -486,15 +552,17 @@ body.pqh-live-leadership-page .main-inner{margin:0!important;padding:0!important
                   <p><strong>Improvement plan:</strong> <?php echo s(str_replace('_', ' ', (string)$case->improvement_plan_status)); ?><?php echo !empty($case->improvement_plan_due_date) ? ' - due ' . s(userdate((int)$case->improvement_plan_due_date, get_string('strftimedatetimeshort'))) : ''; ?></p>
                   <?php if (!empty($case->improvement_plan_ackat)): ?><p><strong>Teacher acknowledged:</strong> <?php echo s(userdate((int)$case->improvement_plan_ackat, get_string('strftimedatetimeshort'))); ?></p><?php endif; ?>
                 <?php endif; ?>
-                <div class="pqll-actions">
-                  <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$case->id]))->out(false); ?>">Open QA</a>
-                  <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => (int)$case->id]))->out(false); ?>">Class review</a>
+                <div class="pqll-actions pqh-workspace-actions">
+                  <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', $caseurlparams))->out(false); ?>">Open QA</a>
+                  <a class="pqll-btn pqll-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $caseurlparams))->out(false); ?>">Class review</a>
                 </div>
               </div>
               <form method="post">
                 <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
                 <input type="hidden" name="action" value="update_case">
                 <input type="hidden" name="sessionid" value="<?php echo (int)$case->id; ?>">
+                <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+                <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
                 <div class="pqll-field">
                   <label>Status</label>
                   <select class="pqll-select" name="leadership_review_status">
@@ -548,7 +616,7 @@ body.pqh-live-leadership-page .main-inner{margin:0!important;padding:0!important
                   </div>
                   <div class="pqll-field">
                     <label>Completion Notes</label>
-                    <textarea class="pqll-textarea" name="improvement_plan_completion_notes"><?php echo s((string)$case->improvement_plan_completion_notes); ?></textarea>
+                    <textarea class="pqll-textarea" name="improvement_plan_completion_notes"><?php echo s((string)($case->improvement_plan_completion_notes ?? '')); ?></textarea>
                   </div>
                 <?php endif; ?>
                 <button class="pqll-btn pqll-btn--brown" type="submit">Update case</button>

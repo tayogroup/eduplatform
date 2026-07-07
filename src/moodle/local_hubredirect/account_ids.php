@@ -4,39 +4,20 @@ declare(strict_types=1);
 defined('MOODLE_INTERNAL') || die();
 
 function pqh_account_id_prefix(string $accounttype): string {
-    $prefixes = [
-        'student' => 'STU',
-        'teacher' => 'TCH',
-        'parent' => 'PAR',
-    ];
-
-    if (!isset($prefixes[$accounttype])) {
-        throw new invalid_parameter_exception('Unknown account type for Quraan Academy ID.');
-    }
-
-    return 'EA-' . $prefixes[$accounttype] . '-' . date('Y') . '-';
+    return '';
 }
 
 function pqh_next_account_id(string $accounttype): string {
     global $DB;
 
-    $prefix = pqh_account_id_prefix($accounttype);
-    $records = $DB->get_records_select(
-        'user',
-        'idnumber LIKE :pattern',
-        ['pattern' => $prefix . '%'],
-        '',
-        'id,idnumber'
-    );
-
-    $max = 0;
-    foreach ($records as $record) {
-        if (preg_match('/^' . preg_quote($prefix, '/') . '(\d+)$/', (string)$record->idnumber, $matches)) {
-            $max = max($max, (int)$matches[1]);
+    for ($attempt = 0; $attempt < 120; $attempt++) {
+        $accountid = (string)random_int(10000, 99999);
+        if (!$DB->record_exists('user', ['idnumber' => $accountid])) {
+            return $accountid;
         }
     }
 
-    return $prefix . str_pad((string)($max + 1), 6, '0', STR_PAD_LEFT);
+    throw new invalid_parameter_exception('Could not generate a unique 5-digit ID number.');
 }
 
 function pqh_assign_account_id(int $userid, string $accounttype): string {
@@ -50,10 +31,14 @@ function pqh_assign_account_id(int $userid, string $accounttype): string {
         'id' => $userid,
         'deleted' => 0,
         'mnethostid' => $CFG->mnet_localhost_id,
-    ], 'id,idnumber', MUST_EXIST);
+    ], 'id,idnumber', IGNORE_MISSING);
+
+    if (!$user) {
+        throw new invalid_parameter_exception('Choose a valid Moodle user before assigning an account ID.');
+    }
 
     $existing = trim((string)($user->idnumber ?? ''));
-    if ($existing !== '') {
+    if (preg_match('/^[0-9]{5}$/', $existing)) {
         return $existing;
     }
 
@@ -65,5 +50,5 @@ function pqh_assign_account_id(int $userid, string $accounttype): string {
         }
     }
 
-    throw new moodle_exception('Could not generate a unique Quraan Academy account ID.');
+    throw new invalid_parameter_exception('Could not generate a unique EduPlatform account ID.');
 }

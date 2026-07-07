@@ -4,6 +4,8 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
+require_once(__DIR__ . '/accesslib.php');
+require_once(__DIR__ . '/course_catalog.php');
 
 $accountidshelper = __DIR__ . '/account_ids.php';
 if (is_readable($accountidshelper)) {
@@ -16,6 +18,10 @@ if (!function_exists('pqh_assign_account_id')) {
 }
 
 $userid = (int)$USER->id;
+$coursekeys = pqh_user_course_keys($userid);
+if (!is_siteadmin($userid) && $coursekeys && !in_array('pre_quraan', $coursekeys, true)) {
+    redirect(new moodle_url('/local/hubredirect/dashboard.php'));
+}
 
 /* A) Build user payload for your exchange.php */
 $custom = profile_user_record($userid, false);
@@ -151,24 +157,33 @@ $envbasepath = function(string $env): string {
 $appbaseurl = function(): string {
     global $CFG;
 
+    $wwwroot = rtrim((string)$CFG->wwwroot, '/');
+    $host = strtolower((string)(parse_url($wwwroot, PHP_URL_HOST) ?: ''));
+    $isNonProductionHost = $host !== '' && (
+        strpos($host, 'test') !== false
+        || preg_match('/(^|[.\-])(staging|integration|qa)([.\-]|$)/', $host)
+    );
+
     $configured = '';
     if (function_exists('get_config')) {
         $configured = trim((string)get_config('local_prequran', 'bunny_app_base_url'));
     }
+    if ($isNonProductionHost) {
+        return pqh_shared_resource_cdn_base_url('production');
+    }
     if ($configured !== '') {
+        $configuredhost = pqh_normalize_url_host($configured);
+        if (pqh_is_legacy_quran_resource_host($configuredhost)) {
+            return pqh_shared_resource_cdn_base_url('production');
+        }
         return rtrim($configured, '/');
     }
 
-    $wwwroot = rtrim((string)$CFG->wwwroot, '/');
-    $host = strtolower((string)(parse_url($wwwroot, PHP_URL_HOST) ?: ''));
-    if ($host !== '' && (
-        strpos($host, 'test') !== false
-        || preg_match('/(^|[.\-])(staging|integration|qa)([.\-]|$)/', $host)
-    )) {
+    if ($isNonProductionHost) {
         return $wwwroot;
     }
 
-    return 'https://app.quraan.academy';
+    return pqh_shared_resource_cdn_base_url('production');
 };
 
 $requestedEnvRaw = optional_param('pq_env', '', PARAM_ALPHANUMEXT);

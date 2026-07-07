@@ -3,9 +3,14 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can view live-session reports.');
+if (!pqh_can_manage_academy_operations((int)$USER->id)) {
+    pqh_access_denied(
+        'Live-session reports are available to academy operations users only.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Reports are not available for this account'
+    );
 }
 
 function pqlrep_table_exists(string $table): bool {
@@ -426,15 +431,17 @@ body.pqh-live-reports-page .main-inner{margin:0!important;padding:0!important;ma
 .pqlrep-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
 @media(max-width:1050px){.pqlrep-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlrep-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlrep-grid{grid-template-columns:1fr}.pqlrep-top{display:block}.pqlrep-actions{margin-top:12px}.pqlrep-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqlrep-filters,.pqlrep-metrics{grid-template-columns:1fr}.pqlrep-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlrep-shell">
   <div class="pqlrep-wrap">
-    <section class="pqlrep-top">
+    <section class="pqlrep-top pqh-workspace-top">
       <div>
-        <h1 class="pqlrep-title">Live Reports</h1>
-        <p class="pqlrep-sub">Attendance, completion, parent-trust, recording, conflict, and notification reporting.</p>
+        <h1 class="pqlrep-title pqh-workspace-title">Live Reports</h1>
+        <p class="pqlrep-sub pqh-workspace-sub">Attendance, completion, parent-trust, recording, conflict, and notification reporting.</p>
       </div>
-      <div class="pqlrep-actions">
+      <div class="pqlrep-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlrep-btn pqlrep-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Operations</a>
         <a class="pqlrep-btn pqlrep-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php'))->out(false); ?>">QA analytics</a>
         <a class="pqlrep-btn pqlrep-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_links.php'))->out(false); ?>">Parent links</a>
@@ -456,7 +463,7 @@ body.pqh-live-reports-page .main-inner{margin:0!important;padding:0!important;ma
             <div class="pqlrep-field"><label for="status">Status</label><input class="pqlrep-input" id="status" name="status" value="<?php echo s($status); ?>" placeholder="scheduled, completed"></div>
             <div class="pqlrep-field"><label for="seriesid">Series ID</label><input class="pqlrep-input" id="seriesid" name="seriesid" type="number" min="0" value="<?php echo (int)$seriesid; ?>"></div>
           </div>
-          <div class="pqlrep-actions">
+          <div class="pqlrep-actions pqh-workspace-actions">
             <button class="pqlrep-btn" type="submit">Apply filters</button>
             <a class="pqlrep-btn pqlrep-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php'))->out(false); ?>">Reset</a>
             <a class="pqlrep-btn pqlrep-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_reports.php', pqlrep_link_params($from, $to, $teacherid, $studentid, $status, $seriesid, ['export' => 'sessions'])))->out(false); ?>">Export sessions CSV</a>

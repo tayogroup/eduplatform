@@ -39,7 +39,16 @@ function pqh_live_security_deny(
         'request_uri' => $_SERVER['REQUEST_URI'] ?? '',
         'remote_addr' => $_SERVER['REMOTE_ADDR'] ?? '',
     ]);
-    throw new moodle_exception('nopermissions', '', '', $message);
+    if (function_exists('pqh_access_denied')) {
+        pqh_access_denied($message, null, 'Live-session access required');
+    }
+    http_response_code(403);
+    header('Content-Type: text/html; charset=utf-8');
+    echo '<!doctype html><html><head><meta charset="utf-8"><title>Live-session access required</title></head><body>';
+    echo '<h1>Live-session access required</h1>';
+    echo '<p>' . s($message) . '</p>';
+    echo '</body></html>';
+    exit;
 }
 
 function pqh_live_security_clean_export_reason(string $value, int $max = 255): string {

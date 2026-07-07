@@ -12,28 +12,11 @@ $brandlogo = trim((string)($consumer->logourl ?? ''));
 $consumertype = (string)($consumer->consumer_type ?? '');
 $usesworkspacecontext = $workspaceid > 0 && !in_array($consumertype, ['academy_consumer', 'platform_foundation'], true);
 
-$theme = json_decode((string)($consumer->themejson ?? ''), true);
-$theme = is_array($theme) ? $theme : [];
-$copy = json_decode((string)($consumer->copyjson ?? ''), true);
-$copy = is_array($copy) ? $copy : [];
-$copyinitial = trim((string)($copy['brand_initials'] ?? ''));
-$brandinitialsource = preg_replace('/[^a-z0-9]/i', '', $brand);
-$brandinitial = $copyinitial !== '' ? strtoupper(substr($copyinitial, 0, 6)) : strtoupper(substr((string)$brandinitialsource, 0, 1));
-if ($brandinitial === '') {
-    $brandinitial = 'W';
-}
-$heroimage = trim(str_replace(["\r", "\n", '"', "'", '\\'], '', (string)($copy['hero_image_url'] ?? '')));
-if ($heroimage === '' || !filter_var($heroimage, FILTER_VALIDATE_URL)) {
-    $heroimage = '/local/ehelhome/pix/landing-welcome.jpg';
-}
-$primarycolor = (string)($theme['primary_color'] ?? '#2f6f4e');
-$accentcolor = (string)($theme['accent_color'] ?? '#d99a26');
-if (!preg_match('/^#[0-9a-fA-F]{6}$/', $primarycolor)) {
-    $primarycolor = '#2f6f4e';
-}
-if (!preg_match('/^#[0-9a-fA-F]{6}$/', $accentcolor)) {
-    $accentcolor = '#d99a26';
-}
+$theme = pqh_consumer_theme($consumer);
+$brandinitial = pqh_consumer_brand_initials($consumer);
+$heroimage = pqh_consumer_hero_image_url($consumer);
+$primarycolor = (string)$theme['primary_color'];
+$accentcolor = (string)$theme['accent_color'];
 
 $params = ['consumer' => $slug];
 if ($usesworkspacecontext) {

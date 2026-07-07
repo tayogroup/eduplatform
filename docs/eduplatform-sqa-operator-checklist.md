@@ -12,11 +12,66 @@ npm.cmd run test:e2e:phase12
 npm.cmd run test:e2e:phase13
 ```
 
+For CI or Windows Task Scheduler, use the single scheduled smoke runner:
+
+```powershell
+npm.cmd run test:e2e:schedule:daily
+```
+
+For a full package, route smoke, and negative-control verification sweep:
+
+```powershell
+npm.cmd run test:e2e:sqa-sweep
+```
+
+Before live phases, check for stale cPanel uploads:
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+npm.cmd run test:e2e:deployment-drift
+```
+
+For exact checksums, deploy `local/hubredirect/deployment_drift_probe.php`. If the live server sets `EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN`, set the same token locally before running the command.
+
 Expected result:
 
 - Phase 11 passes and writes JSON/Markdown reporting artifacts.
 - Phase 12 passes and confirms guardrails.
 - Phase 13 passes and confirms scripts, docs, env flags, and spec groups are packaged.
+- The full SQA verification sweep confirms package verifier, route smoke, negative controls, docs, env flags, scripts, and endpoint registrations.
+- The scheduled smoke summary is written under `test-results\sqa-schedule`.
+- The sweep summary is written under `test-results\sqa-verification-sweep`.
+- The deployment drift verifier reports matching live checksums when `local/hubredirect/deployment_drift_probe.php` is deployed, or at least confirms direct URL presence in fallback mode.
+
+## Full SQA Verification Sweep
+
+Run this after implementing or deploying a new SQA surface:
+
+```powershell
+npm.cmd run test:e2e:sqa-sweep
+```
+
+Expected result:
+
+- package verifier passes,
+- route smoke passes for registered route helpers,
+- negative controls pass with live flags disabled,
+- `test-results/sqa-verification-sweep` contains a JSON summary.
+
+## Evidence Bundle Finalizer
+
+After the run window, create a timestamped evidence bundle. Use `EDUPLATFORM_EVIDENCE_BUNDLE_LABEL` to customize the package name:
+
+```powershell
+npm.cmd run test:e2e:evidence-bundle
+```
+
+Expected result:
+
+- `test-results/sqa-evidence-bundles/<bundle-id>` contains the Playwright report, artifacts, manifests, screenshots, downloaded CSV/PDF evidence, and run summaries.
+- On Windows, a sibling `<bundle-id>.zip` is created when `Compress-Archive` is available.
 
 ## Weekly full journey
 
@@ -446,6 +501,46 @@ Expected full cross-role golden path result:
 - audit rows are retained in live, course, and finance audit tables,
 - `cross-role-golden-path-summary` and `cross-role-golden-path-manifest` are attached.
 
+## Performance / Reliability Smoke
+
+Run this only in the approved SQA workspace. Keep `src/moodle/local_hubredirect/performance_reliability_smoke.php` synchronized to the live server first.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_PERFORMANCE_RELIABILITY_SMOKE="true"
+$env:EDUPLATFORM_PERFORMANCE_LOAD_THRESHOLD_MS="12000"
+$env:EDUPLATFORM_PERFORMANCE_EXPORT_THRESHOLD_MS="15000"
+$env:EDUPLATFORM_PERFORMANCE_ENDPOINT_THRESHOLD_MS="2500"
+npm.cmd run test:e2e:performance-phase1
+```
+
+Expected performance/reliability smoke result:
+
+- Dashboard load time passes within the configured threshold,
+- report export time is proven by downloading the CSV diagnostics export,
+- repeated login/session stability keeps the admin session active across repeated dashboard loads,
+- slow endpoint detection passes for the read-only diagnostic queries,
+- `performance-reliability-summary` and `performance-reliability-manifest` are attached.
+
+## Accessibility / Responsive Smoke
+
+Run this only in the approved SQA workspace. Keep `src/moodle/local_hubredirect/sqa_teacher_portal_fixture.php` synchronized to the live server first.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_ACCESSIBILITY_RESPONSIVE_SMOKE="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:accessibility-phase1
+```
+
+Expected accessibility/responsive smoke result:
+
+- Admin, student, parent, and teacher portal pages pass at mobile widths,
+- visible form controls have labels,
+- links and buttons have accessible names,
+- each role page supports basic keyboard Tab navigation,
+- `accessibility-responsive-summary` and `accessibility-responsive-manifest` are attached.
+
 ## Public course setup
 
 Run this only when the public intake form has no selectable SQA course or capacity has run out.
@@ -492,6 +587,10 @@ Review:
 - `failure-workflow-controls-manifest` Markdown for failure/negative workflow controls runs,
 - `cross-role-golden-path-summary` JSON for full cross-role golden path runs,
 - `cross-role-golden-path-manifest` Markdown for full cross-role golden path runs,
+- `performance-reliability-summary` JSON for performance/reliability smoke runs,
+- `performance-reliability-manifest` Markdown for performance/reliability smoke runs,
+- `accessibility-responsive-summary` JSON for accessibility/responsive smoke runs,
+- `accessibility-responsive-manifest` Markdown for accessibility/responsive smoke runs,
 - screenshots attached to the failed or final stage,
 - video/error context when a run fails.
 
@@ -546,6 +645,17 @@ npm.cmd run test:e2e:failure-phase1
 npm.cmd run test:e2e:failure-controls
 npm.cmd run test:e2e:cross-role-phase1
 npm.cmd run test:e2e:cross-role-controls
+npm.cmd run test:e2e:performance-phase1
+npm.cmd run test:e2e:performance-controls
+npm.cmd run test:e2e:accessibility-phase1
+npm.cmd run test:e2e:accessibility-controls
+npm.cmd run test:e2e:bbb-phase1
+npm.cmd run test:e2e:bbb-phase2
+npm.cmd run test:e2e:bbb-phase3
+npm.cmd run test:e2e:bbb-phase4
+npm.cmd run test:e2e:bbb-phase5
+npm.cmd run test:e2e:bbb-phase6
+npm.cmd run test:e2e:bbb-controls
 ```
 
 ## Scheduled runner notes
@@ -553,8 +663,311 @@ npm.cmd run test:e2e:cross-role-controls
 For CI or Windows Task Scheduler:
 
 - Store EduPlatform credentials as secrets or machine-level protected variables.
+- Run daily non-live controls with `npm.cmd run test:e2e:schedule:daily`.
+- Run weekly selected live phases with `EDUPLATFORM_SQA_ALLOW_LIVE_WEEKLY=true` and `npm.cmd run test:e2e:schedule:weekly`.
+- Set `EDUPLATFORM_SQA_WEEKLY_PHASES` to a comma-separated script list such as `test:e2e:cross-role-phase1,test:e2e:lifecycle-phase1` when the runner should execute only selected weekly phases.
 - Keep `EDUPLATFORM_ENABLE_FULL_STUDENT_JOURNEY=true` only in the approved SQA runner.
 - Upload or retain `test-results` after every run.
 - Use `EDUPLATFORM_CLEANUP_MODE=archive` by default.
 - Treat paid invoices, payments, receipts, and issued transcripts as retained audit artifacts.
 - Keep `src/moodle/local_hubredirect/sqa_teacher_portal_fixture.php` synchronized to the live Moodle server before teacher portal checks.
+- Keep `src/moodle/local_hubredirect/performance_reliability_smoke.php` synchronized to the live Moodle server before performance/reliability checks.
+
+## Live BBB Operations Smoke
+
+Use this smoke before a BBB pilot or after uploading live-session hubredirect files. It verifies operations readiness and does not create, join, or record a real meeting.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_OPERATIONS_SMOKE="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase1
+```
+
+Expected Live BBB Operations Smoke result:
+
+- Live Operations Dashboard, Live Sessions, create wizard, live session diagnostics, and recording review pages load for the admin account.
+- BBB configuration surfaces are visible in diagnostics without exposing secrets.
+- The run records `live-bbb-summary` and `live-bbb-manifest` evidence.
+
+## Live BBB Meeting Lifecycle
+
+Run this only in an approved live BBB provider test window. It creates a generated teacher/student fixture, schedules one class, starts the teacher bridge, and checks diagnostics evidence.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_MEETING_LIFECYCLE="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase2
+```
+
+Expected Live BBB Meeting Lifecycle result:
+
+- The teacher Start Class URL returns the Moodle BBB launch bridge.
+- live session diagnostics shows BBB-created status and recent audit evidence.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+## Live BBB Post-Class Evidence
+
+Run this only in an approved live BBB provider test window after Phase 2 is stable. It creates a generated teacher/student fixture, schedules a recording-enabled class, starts the teacher bridge, saves post-class attendance/notes/follow-up, and checks admin evidence.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_POST_CLASS_EVIDENCE="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase3
+```
+
+Expected Live BBB Post-Class Evidence result:
+
+- Teacher post-class attendance, participation, homework, parent summary, and follow-up request are saved.
+- Admin follow-up command center shows generated BBB follow-up evidence.
+- Recording review shows session-level recording policy/readiness evidence.
+- Live diagnostics shows BBB-created and recent audit evidence.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+## Live BBB Student and Parent Visibility
+
+Run this only in an approved live BBB provider test window after Phase 3 is stable. It creates a generated teacher/student/parent fixture, schedules and starts a BBB class, saves parent-visible post-class feedback, verifies the student live schedule, verifies the parent live hub and summaries, saves a parent follow-up response, and checks family-facing pages for BBB secret hygiene.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_STUDENT_PARENT_VISIBILITY="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase4
+```
+
+Expected Live BBB Student and Parent Visibility result:
+
+- Student schedule shows the generated BBB class.
+- Parent live hub shows upcoming/feedback evidence for the linked child.
+- Parent summaries show parent-visible teacher feedback and hide private teacher notes.
+- Parent follow-up response is saved and reflected in admin follow-up evidence.
+- Family-facing BBB pages do not expose shared secrets, checksums, or meeting passwords.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+## Live BBB Trust and Retention Audit
+
+Run this only in an approved live BBB provider test window after Phase 4 is stable. It saves a parent-trust support reason/case, verifies admin audit evidence, downloads the compliance review pack CSV, checks retention readiness, and confirms admin/family review surfaces do not leak BBB secrets or private teacher notes.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_TRUST_RETENTION_AUDIT="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase5
+```
+
+Expected Live BBB Trust and Retention Audit result:
+
+- Parent-trust support reason and case note are saved for the generated student.
+- Admin parent-trust support audit shows the generated case and access reason.
+- Compliance review pack CSV downloads and contains the audit row.
+- Retention readiness page shows purge/export governance signals.
+- Recording and trust audit surfaces hide BBB shared secrets, checksums, meeting passwords, and private teacher notes.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+## Live BBB Instructional Readiness
+
+Run this only in an approved live BBB provider test window after Phase 5 is stable. It checks the live-session guide, Quraan Materials, Practice Coach report, Virtual Tutor, diagnostics, and learner-facing secret hygiene.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_INSTRUCTIONAL_READINESS="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase6
+```
+
+Expected Live BBB Instructional Readiness result:
+
+- Live-session guide loads with the walkthrough video.
+- Teacher starts the BBB bridge for the generated class.
+- Quraan Materials shows agenda/material readiness for the session.
+- Practice Coach report loads for the generated session/student.
+- Student Virtual Tutor opens for the generated live session.
+- Learner-facing guide and tutor surfaces hide BBB shared secrets, checksums, and meeting passwords.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+## Live BBB Quality And Leadership Analytics
+
+Run this only in an approved live BBB provider test window after Phase 6 is stable. It checks QA review, leadership case handling, improvement-plan assignment, analytics, reports, monitor evidence, diagnostics, and secret hygiene.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_QUALITY_LEADERSHIP="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase7
+```
+
+Expected Live BBB Quality And Leadership Analytics result:
+
+- Teacher starts the BBB bridge and saves post-class attendance/summary evidence.
+- Admin saves QA review and coaching/leadership signals.
+- Leadership command center assigns an improvement plan for the generated class.
+- QA analytics, Teacher Improvement Plans, Live Reports, Live Lesson Monitor, and diagnostics reflect the quality signal.
+- Leadership, analytics, reports, and monitor surfaces hide BBB shared secrets, checksums, and meeting passwords.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+## Live BBB Scheduling Capacity And Calendar
+
+Run this only in an approved live BBB provider test window after Phase 7 is stable. It checks recurring series creation, capacity planning export, teacher directory/profile visibility, student and parent calendars, diagnostics, and secret hygiene.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_SCHEDULING_CAPACITY="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase8
+```
+
+Expected Live BBB Scheduling Capacity And Calendar result:
+
+- Admin creates a two-session recurring live class series.
+- Live Class Series dashboard, Teacher Assignment & Capacity Planning CSV, Teacher Directory, and teacher profile reflect the generated series.
+- Student and parent recurring schedule and Live Class Calendar pages show the generated class.
+- Schedule, calendar, capacity, directory, and profile surfaces hide BBB shared secrets, checksums, and meeting passwords.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+## Live BBB Operational Resilience
+
+Run this only in an approved live BBB provider test window after Phase 8 is stable. It checks single-session cancellation, full series cancellation, active schedule hiding, direct join blocking, diagnostics audit evidence, and secret hygiene.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_OPERATIONAL_RESILIENCE="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase9
+```
+
+Expected Live BBB Operational Resilience result:
+
+- Admin creates a two-session recurring live class series.
+- Admin cancels one generated session and then cancels the remaining future series with audit reasons.
+- Cancelled session direct join URL is blocked.
+- Active schedule hiding is verified for cancelled student and parent live schedules.
+- Student and parent active schedule pages no longer show the cancelled series.
+- Diagnostics audit evidence shows single-session and full-series cancellation events.
+- Schedule, cancellation, direct URL, and audit surfaces hide BBB shared secrets, checksums, and meeting passwords.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+## Live BBB Backup And DR Readiness
+
+Run this only after Phase 9 is stable. It records Backup/DR readiness evidence, verifies live diagnostics and reports readiness, and checks operational secret hygiene.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_BACKUP_DR_READINESS="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+npm.cmd run test:e2e:bbb-phase10
+```
+
+Expected Live BBB Backup And DR Readiness result:
+
+- Admin records a Backup/DR readiness evidence check.
+- Backup/DR readiness remains available as backup DR readiness operational evidence.
+- Backup And DR Checks shows current findings, backup scope, and check history.
+- Live Session Diagnostics shows configuration, table health, recent sessions, and recent audit.
+- Live Reports shows session summary, teacher workload, and risk/trust audit evidence.
+- Backup/DR, diagnostics, and reports surfaces hide BBB shared secrets, checksums, and meeting passwords.
+
+## Live BBB Retention Controls
+
+Run this only after Phase 10 is stable. It checks parent-trust retention review workflow, blocked guarded purge behavior, recovery evidence, and secret hygiene without deleting live evidence.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_RETENTION_CONTROLS="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+npm.cmd run test:e2e:bbb-phase11
+```
+
+Expected Live BBB Retention Controls result:
+
+- Admin requests and rejects parent-trust purge review with audit notes.
+- Guarded purge execution is blocked when confirmation requirements are incomplete.
+- `guarded purge execution is blocked` is retained as a checklist signal for the package verifier.
+- Guarded purge block evidence remains available for recovery review.
+- Blocked purge evidence opens from the retention workflow table.
+- Retention, purge, and evidence surfaces hide BBB shared secrets, checksums, and meeting passwords.
+
+## Live BBB Consent Availability And Grouping
+
+Run this only after Phase 11 is stable. It checks teacher availability, student grouping consent, parent-link refresh/export, cleanup readiness, and secret hygiene.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_CONSENT_GROUPING="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_TEACHER_PASSWORD="Mock@001!"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:bbb-phase12
+```
+
+Expected Live BBB Consent Availability And Grouping result:
+
+- Teacher availability calendar saves recurring availability.
+- Student Grouping shows live and recording consent for the generated student.
+- Student Parent Links refreshes linked guardian consent and exports CSV evidence.
+- Availability, grouping, parent-link, and CSV surfaces hide BBB shared secrets, checksums, and meeting passwords.
+- The generated fixture is archived afterward when cleanup mode is `archive`.
+
+### Live BBB Phase 13: Rollup / Pilot Readiness
+
+Run this after Phase 12 passes and after generated fixture cleanup has completed. It checks reports, diagnostics, final rollup evidence, stale active SQA leftovers, and final CSV export readiness.
+
+Keep `src/moodle/local_hubredirect/live_pilot_readiness.php` synchronized to `local/hubredirect/live_pilot_readiness.php` before running this phase. The page is the final BBB readiness evidence surface and checks for stale active SQA sessions.
+
+```powershell
+$env:EDUPLATFORM_BASE_URL="https://quraantest.academy"
+$env:EDUPLATFORM_CONSUMER="quraan-academy"
+$env:EDUPLATFORM_WORKSPACE_ID="1"
+$env:EDUPLATFORM_ENABLE_LIVE_BBB_PILOT_READINESS="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+npm.cmd run test:e2e:bbb-phase13
+```
+
+Expected Live BBB Rollup / Pilot Readiness result:
+
+- Phase evidence rollup rows all show PASS.
+- Live Reports and Live Diagnostics expose accumulated session/audit evidence.
+- Stale active generated SQA sessions, users, and parent links are zero.
+- Final BBB readiness CSV downloads and hides BBB shared secrets, checksums, and meeting passwords.

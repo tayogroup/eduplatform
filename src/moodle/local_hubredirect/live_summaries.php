@@ -2,15 +2,33 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once(__DIR__ . '/live_security.php');
 
 $childid = optional_param('childid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$workspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($workspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $workspaceid = (int)$consumercontext->workspaceid;
+}
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($workspaceid > 0) {
+    $urlparams['workspaceid'] = $workspaceid;
+}
+$returnurl = new moodle_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams);
+
+function pqls_url(string $path, array $urlparams, array $params = []): moodle_url {
+    return new moodle_url($path, $urlparams + $params);
+}
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_summaries.php', $childid > 0 ? ['childid' => $childid] : []));
+$PAGE->set_url(pqls_url('/local/hubredirect/live_summaries.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Session Summaries');
 $PAGE->set_heading('Live Session Summaries');
@@ -295,6 +313,59 @@ function pqls_focus_summary(int $studentid, int $sessionid): array {
     return $summary;
 }
 
+function pqls_practice_coach_summary(int $studentid, int $sessionid): array {
+    global $DB;
+    $summary = [
+        'ready' => false,
+        'hasdata' => false,
+        'count' => 0,
+        'idle' => 0,
+        'away' => 0,
+        'latest_message' => '',
+        'latest_recommendation' => '',
+        'latest_time' => 0,
+    ];
+    if (!pqls_table_exists('local_prequran_practice_coach_event')) {
+        return $summary;
+    }
+    $summary['ready'] = true;
+    $row = $DB->get_record_sql(
+        "SELECT COUNT(1) AS coach_count,
+                SUM(CASE WHEN trigger_key = 'idle_nudge' THEN 1 ELSE 0 END) AS idle_count,
+                SUM(CASE WHEN trigger_key IN ('screen_return', 'focus_return') THEN 1 ELSE 0 END) AS away_count,
+                MAX(timecreated) AS latest_time
+           FROM {local_prequran_practice_coach_event}
+          WHERE userid = :userid
+            AND live_sessionid = :sessionid",
+        ['userid' => $studentid, 'sessionid' => $sessionid]
+    );
+    if ($row) {
+        $summary['count'] = (int)$row->coach_count;
+        $summary['idle'] = (int)$row->idle_count;
+        $summary['away'] = (int)$row->away_count;
+        $summary['latest_time'] = (int)$row->latest_time;
+        $summary['hasdata'] = $summary['count'] > 0;
+    }
+    $recommendationselect = pqls_column_exists('local_prequran_practice_coach_event', 'recommendation_message')
+        ? 'recommendation_message,'
+        : "'' AS recommendation_message,";
+    $latest = $DB->get_record_sql(
+        "SELECT message, {$recommendationselect} timecreated
+           FROM {local_prequran_practice_coach_event}
+          WHERE userid = :userid
+            AND live_sessionid = :sessionid
+       ORDER BY timecreated DESC, id DESC",
+        ['userid' => $studentid, 'sessionid' => $sessionid],
+        IGNORE_MULTIPLE
+    );
+    if ($latest) {
+        $summary['latest_message'] = (string)$latest->message;
+        $summary['latest_recommendation'] = (string)($latest->recommendation_message ?? '');
+        $summary['latest_time'] = (int)$latest->timecreated;
+    }
+    return $summary;
+}
+
 function pqls_format_minutes(int $ms): string {
     return (int)round($ms / 60000) . ' min';
 }
@@ -370,37 +441,69 @@ if ($childid <= 0) {
 }
 
 if ($childid > 0 && !pqls_user_can_access_child((int)$USER->id, $childid)) {
-    pqh_live_security_deny(
-        'You cannot view live-session summaries for this student.',
+    pqh_live_security_audit(
         'live_summary_access_denied',
         'student',
         $childid,
         ['studentid' => $childid]
     );
+    pqh_access_denied(
+        'You cannot view live-session summaries for this student.',
+        $returnurl,
+        'Live summary access required'
+    );
 }
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'parent_followup_response') {
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Your security token expired. Open the summary again before saving your response.',
+            pqls_url('/local/hubredirect/live_summaries.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Follow-up response expired'
+        );
+    }
     $responsefieldsready = pqls_column_exists('local_prequran_live_note', 'parent_response_status');
     if (!$responsefieldsready) {
-        throw new moodle_exception('missingfield', 'error', '', 'Parent follow-up response fields are not installed.');
+        pqh_access_denied(
+            'Parent follow-up response fields are not installed yet.',
+            pqls_url('/local/hubredirect/live_summaries.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Follow-up response unavailable'
+        );
     }
-    $sessionid = required_param('sessionid', PARAM_INT);
-    $studentid = required_param('studentid', PARAM_INT);
+    $sessionid = optional_param('sessionid', 0, PARAM_INT);
+    $studentid = optional_param('studentid', 0, PARAM_INT);
+    if ($sessionid <= 0 || $studentid <= 0) {
+        pqh_access_denied(
+            'Choose a valid live summary before saving a follow-up response.',
+            pqls_url('/local/hubredirect/live_summaries.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []),
+            'Follow-up response unavailable'
+        );
+    }
     if (!pqls_parent_can_access_child((int)$USER->id, $studentid) && !is_siteadmin($USER)) {
-        pqh_live_security_deny(
-            'Only a linked parent or guardian can respond to this follow-up.',
+        pqh_live_security_audit(
             'live_summary_response_denied',
             'student',
             $studentid,
             ['sessionid' => $sessionid, 'studentid' => $studentid]
+        );
+        pqh_access_denied(
+            'Only a linked parent or guardian can respond to this follow-up.',
+            $returnurl,
+            'Follow-up response access required'
         );
     }
     $note = $DB->get_record('local_prequran_live_note', [
         'sessionid' => $sessionid,
         'studentid' => $studentid,
         'visible_to_parent' => 1,
-    ], '*', MUST_EXIST);
+    ]);
+    if (!$note) {
+        pqh_access_denied(
+            'This parent-visible live summary is no longer available.',
+            pqls_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => $studentid]),
+            'Follow-up response unavailable'
+        );
+    }
     $status = optional_param('parent_response_status', 'reviewed', PARAM_ALPHANUMEXT);
     if (!in_array($status, ['reviewed', 'homework_completed', 'needs_help'], true)) {
         $status = 'reviewed';
@@ -429,7 +532,7 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'par
         'status' => $status,
         'message' => (string)$note->parent_response_message,
     ]);
-    redirect(new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $studentid, 'result' => 'followup_response_saved']));
+    redirect(pqls_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => $studentid, 'result' => 'followup_response_saved']));
 }
 
 $child = $childid > 0 ? core_user::get_user($childid) : null;
@@ -493,24 +596,33 @@ body.pqh-live-summaries-page{background:#f4f7fb!important}
 .pqls-activity__item{padding:12px;border-radius:12px;background:#f8fbf6;border:1px solid rgba(111,78,50,.10)}
 .pqls-activity__item strong{display:block;color:#4d3522;font-size:18px;font-weight:950}
 .pqls-activity__item span{display:block;margin-top:3px;color:#64745a;font-size:12px;font-weight:850}
+.pqls-coach{margin:0 0 12px;padding:14px;border-radius:12px;background:#f3fff7;border:1px solid rgba(47,111,78,.14)}
+.pqls-coach h3{margin:0 0 8px;color:#2f6f4e;font-size:16px;font-weight:950}
+.pqls-coach__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.pqls-coach__item{padding:10px;border-radius:10px;background:#fff;border:1px solid rgba(47,111,78,.1)}
+.pqls-coach__item strong{display:block;color:#2f6f4e;font-size:18px;font-weight:950}
+.pqls-coach__item span{display:block;margin-top:3px;color:#64745a;font-size:12px;font-weight:850}
+.pqls-coach p{margin:9px 0 0;color:#40586a;font-size:13px;font-weight:750;line-height:1.42}
 .pqls-empty{padding:24px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
 .pqls-students{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .pqls-student{padding:16px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07);text-decoration:none;color:#4d3522!important;font-weight:950}
 .pqls-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
-@media(max-width:720px){.pqls-top{display:block}.pqls-actions{margin-top:14px}.pqls-title{font-size:25px}.pqls-card__head{display:block}.pqls-pill{margin-top:10px}.pqls-grid,.pqls-activity{grid-template-columns:1fr}}
+@media(max-width:720px){.pqls-top{display:block}.pqls-actions{margin-top:14px}.pqls-title{font-size:25px}.pqls-card__head{display:block}.pqls-pill{margin-top:10px}.pqls-grid,.pqls-activity,.pqls-coach__grid{grid-template-columns:1fr}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqls-shell">
   <div class="pqls-wrap">
-    <section class="pqls-top">
+    <section class="pqls-top pqh-workspace-top">
       <div>
         <p class="pqls-kicker">Live review summaries</p>
-        <h1 class="pqls-title">Teacher feedback for <?php echo s($childname); ?></h1>
-        <p class="pqls-subtitle">Parent-visible class notes only. Private teacher notes are never shown here.</p>
+        <h1 class="pqls-title pqh-workspace-title">Teacher feedback for <?php echo s($childname); ?></h1>
+        <p class="pqls-subtitle pqh-workspace-sub">Parent-visible class notes only. Private teacher notes are never shown here.</p>
       </div>
-      <div class="pqls-actions">
-        <a class="pqls-btn pqls-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Parent live hub</a>
-        <a class="pqls-btn pqls-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <a class="pqls-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Dashboard</a>
+      <div class="pqls-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqls-btn pqls-btn--light" href="<?php echo pqls_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Parent live hub</a>
+        <a class="pqls-btn pqls-btn--light" href="<?php echo pqls_url('/local/hubredirect/live_sessions.php', $urlparams)->out(false); ?>">Live sessions</a>
+        <a class="pqls-btn" href="<?php echo pqls_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -518,7 +630,7 @@ body.pqh-live-summaries-page{background:#f4f7fb!important}
       <?php if ($modechildren): ?>
         <section class="pqls-students" aria-label="Choose student">
           <?php foreach ($modechildren as $childrow): ?>
-            <a class="pqls-student" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => (int)$childrow['studentid']]))->out(false); ?>">
+            <a class="pqls-student" href="<?php echo pqls_url('/local/hubredirect/live_summaries.php', $urlparams, ['childid' => (int)$childrow['studentid']])->out(false); ?>">
               <?php echo s((string)$childrow['name']); ?>
               <span>Open live-session summaries</span>
             </a>
@@ -552,14 +664,15 @@ body.pqh-live-summaries-page{background:#f4f7fb!important}
               $participation = trim((string)($summary->participation_status ?? ''));
               $homeworkunit = trim((string)($summary->homework_lessonid ?? '') . ' / ' . (string)($summary->homework_unitid ?? ''), ' /');
               $homeworkurl = (string)($summary->homework_unitid ?? '') !== ''
-                  ? new moodle_url('/local/hubredirect/issue_child.php', ['goto' => (string)$summary->homework_unitid, 'managed_student' => 0, 'monitor_studentid' => $childid])
+                  ? pqls_url('/local/hubredirect/issue_child.php', $urlparams, ['goto' => (string)$summary->homework_unitid, 'managed_student' => 0, 'monitor_studentid' => $childid])
                   : null;
-              $followupurl = new moodle_url('/local/hubredirect/live_followup_message.php', [
+              $followupurl = pqls_url('/local/hubredirect/live_followup_message.php', $urlparams, [
                   'sessionid' => (int)$summary->sessionid,
                   'studentid' => $childid,
                   'sesskey' => sesskey(),
               ]);
               $activity = pqls_focus_summary($childid, (int)$summary->sessionid);
+              $coach = pqls_practice_coach_summary($childid, (int)$summary->sessionid);
             ?>
             <article class="pqls-card">
               <div class="pqls-card__head">
@@ -580,6 +693,22 @@ body.pqh-live-summaries-page{background:#f4f7fb!important}
                   <div class="pqls-activity__item"><strong><?php echo (int)$activity['idle_count']; ?></strong><span>focus reminders</span></div>
                   <div class="pqls-activity__item"><strong><?php echo !empty($activity['last_time']) ? userdate((int)$activity['last_time'], get_string('strftimetime')) : 'n/a'; ?></strong><span>last activity</span></div>
                 </div>
+              <?php endif; ?>
+              <?php if (!empty($coach['hasdata'])): ?>
+                <section class="pqls-coach" aria-label="Chatbot Practice Coach support">
+                  <h3>Chatbot Practice Coach Support</h3>
+                  <div class="pqls-coach__grid">
+                    <div class="pqls-coach__item"><strong><?php echo (int)$coach['count']; ?></strong><span>support prompts</span></div>
+                    <div class="pqls-coach__item"><strong><?php echo (int)$coach['idle']; ?></strong><span>focus reminders</span></div>
+                    <div class="pqls-coach__item"><strong><?php echo (int)$coach['away']; ?></strong><span>screen-return prompts</span></div>
+                  </div>
+                  <?php if ((string)$coach['latest_message'] !== ''): ?>
+                    <p>Latest coach feedback: <?php echo s((string)$coach['latest_message']); ?><?php echo !empty($coach['latest_time']) ? ' - ' . s(userdate((int)$coach['latest_time'], get_string('strftimetime'))) : ''; ?></p>
+                  <?php endif; ?>
+                  <?php if ((string)$coach['latest_recommendation'] !== ''): ?>
+                    <p>Suggested next step: <?php echo s((string)$coach['latest_recommendation']); ?></p>
+                  <?php endif; ?>
+                </section>
               <?php endif; ?>
               <div class="pqls-grid">
                 <div class="pqls-field">
@@ -612,12 +741,14 @@ body.pqh-live-summaries-page{background:#f4f7fb!important}
                     <?php if (pqls_column_exists('local_prequran_live_note', 'parent_response_status') && pqls_parent_can_access_child((int)$USER->id, $childid)): ?>
                       <form class="pqls-response" method="post">
                         <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                        <?php if (!empty($consumercontext->consumerslug)): ?><input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>"><?php endif; ?>
+                        <?php if ($workspaceid > 0): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$workspaceid; ?>"><?php endif; ?>
                         <input type="hidden" name="action" value="parent_followup_response">
                         <input type="hidden" name="sessionid" value="<?php echo (int)$summary->sessionid; ?>">
                         <input type="hidden" name="studentid" value="<?php echo (int)$childid; ?>">
                         <strong>Your Response</strong>
                         <textarea name="parent_response_message" placeholder="Optional note for the teacher"><?php echo s((string)($summary->parent_response_message ?? '')); ?></textarea>
-                        <div class="pqls-response__actions">
+                        <div class="pqls-response__actions pqh-workspace-actions">
                           <button class="pqls-btn pqls-btn--light" type="submit" name="parent_response_status" value="reviewed">Marked as reviewed</button>
                           <button class="pqls-btn pqls-btn--light" type="submit" name="parent_response_status" value="homework_completed">Homework completed</button>
                           <button class="pqls-btn" type="submit" name="parent_response_status" value="needs_help">Need teacher help</button>

@@ -3,10 +3,27 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can view teacher capacity planning.');
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+$dashboardpath = !empty($urlparams['workspaceid']) ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php';
+$dashboardurl = new moodle_url($dashboardpath, $urlparams);
+
+pqh_require_academy_operations(
+    'Only academy operations users can view teacher capacity planning.',
+    $dashboardurl,
+    'Teacher capacity access required'
+);
 
 function pqlcap_table_exists(string $table): bool {
     global $DB;
@@ -69,6 +86,10 @@ function pqlcap_csv(string $filename, array $headers, array $rows): void {
     exit;
 }
 
+function pqlcap_url_params(array $baseparams, array $extra = []): array {
+    return array_merge($baseparams, $extra);
+}
+
 function pqlcap_week_start(int $date): int {
     $midnight = usergetmidnight($date);
     $weekday = (int)date('N', $midnight);
@@ -77,7 +98,7 @@ function pqlcap_week_start(int $date): int {
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_capacity.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_capacity.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Teacher Capacity Planning');
 $PAGE->set_heading('Teacher Capacity Planning');
@@ -94,6 +115,7 @@ $studentcount = max(1, min(30, optional_param('students', 9, PARAM_INT)));
 $filter = optional_param('filter', 'all', PARAM_ALPHANUMEXT);
 $export = optional_param('export', '', PARAM_ALPHANUMEXT);
 $ready = pqlcap_ready();
+$workspaceid = (int)($urlparams['workspaceid'] ?? 0);
 $proposedstart = 0;
 if ($proposeddate > 0 && pqlcap_minutes($proposedtime) >= 0) {
     $proposedstart = usergetmidnight($proposeddate) + (pqlcap_minutes($proposedtime) * MINSECS);
@@ -111,6 +133,11 @@ $metrics = [
 
 if ($ready) {
     $availabilityready = pqlcap_table_exists('local_prequran_live_availability');
+    $sessionscoped = $workspaceid > 0 && pqlcap_column_exists('local_prequran_live_session', 'workspaceid');
+    $assignmentscoped = $workspaceid > 0
+        && pqlcap_table_exists('local_prequran_teacher_student')
+        && pqlcap_column_exists('local_prequran_teacher_student', 'workspaceid');
+    $membersready = $workspaceid > 0 && pqlcap_table_exists('local_prequran_workspace_member');
     $qaready = pqlcap_column_exists('local_prequran_live_session', 'qa_status');
     $coachingready = pqlcap_column_exists('local_prequran_live_session', 'qa_coaching_status');
     $leadershipready = pqlcap_column_exists('local_prequran_live_session', 'leadership_review_status');
@@ -118,18 +145,43 @@ if ($ready) {
     $followupready = pqlcap_table_exists('local_prequran_live_note') && pqlcap_column_exists('local_prequran_live_note', 'followup_status');
 
     $candidateids = [];
-    $sources = [
-        "SELECT DISTINCT teacherid FROM {local_prequran_live_session} WHERE teacherid > 0",
-    ];
-    if ($availabilityready) {
+    $sources = [];
+    $candidateparams = [];
+    if ($sessionscoped) {
+        $sources[] = "SELECT DISTINCT teacherid FROM {local_prequran_live_session} WHERE teacherid > 0 AND workspaceid = :candidate_session_workspaceid";
+        $candidateparams['candidate_session_workspaceid'] = $workspaceid;
+    } else if ($workspaceid <= 0) {
+        $sources[] = "SELECT DISTINCT teacherid FROM {local_prequran_live_session} WHERE teacherid > 0";
+    }
+    if ($membersready) {
+        $sources[] = "SELECT DISTINCT userid AS teacherid
+                        FROM {local_prequran_workspace_member}
+                       WHERE userid > 0
+                         AND workspaceid = :candidate_member_workspaceid
+                         AND status = :candidate_member_status
+                         AND workspace_role IN ('owner', 'admin', 'teacher', 'assistant_teacher', 'coordinator')";
+        $candidateparams['candidate_member_workspaceid'] = $workspaceid;
+        $candidateparams['candidate_member_status'] = 'active';
+    }
+    if ($availabilityready && $workspaceid <= 0) {
         $sources[] = "SELECT DISTINCT teacherid FROM {local_prequran_live_availability} WHERE teacherid > 0 AND status = 'active'";
     }
-    if (pqlcap_table_exists('local_prequran_teacher_student')) {
+    if ($assignmentscoped) {
+        $sources[] = "SELECT DISTINCT teacherid
+                        FROM {local_prequran_teacher_student}
+                       WHERE teacherid > 0
+                         AND status = :candidate_assignment_status
+                         AND workspaceid = :candidate_assignment_workspaceid";
+        $candidateparams['candidate_assignment_status'] = 'active';
+        $candidateparams['candidate_assignment_workspaceid'] = $workspaceid;
+    } else if ($workspaceid <= 0 && pqlcap_table_exists('local_prequran_teacher_student')) {
         $sources[] = "SELECT DISTINCT teacherid FROM {local_prequran_teacher_student} WHERE teacherid > 0 AND status = 'active'";
     }
-    $candidatequery = implode(' UNION ', $sources);
-    foreach ($DB->get_records_sql("SELECT teacherid FROM ({$candidatequery}) candidates ORDER BY teacherid ASC") as $row) {
-        $candidateids[(int)$row->teacherid] = true;
+    if ($sources) {
+        $candidatequery = implode(' UNION ', $sources);
+        foreach ($DB->get_records_sql("SELECT teacherid FROM ({$candidatequery}) candidates ORDER BY teacherid ASC", $candidateparams) as $row) {
+            $candidateids[(int)$row->teacherid] = true;
+        }
     }
 
     foreach (array_keys($candidateids) as $teacherid) {
@@ -197,6 +249,16 @@ if ($ready) {
         ? "SUM(CASE WHEN s.improvement_plan_status IN ('assigned', 'in_progress') THEN 1 ELSE 0 END) AS plans_open,"
         : "0 AS plans_open,";
 
+    $sessionwhere = [
+        's.scheduled_start >= :weekstart',
+        's.scheduled_start < :weekend',
+        "s.status NOT IN ('cancelled', 'failed')",
+    ];
+    $sessionparams = ['nowtime' => $now, 'weekstart' => $weekstart, 'weekend' => $weekend];
+    if ($sessionscoped) {
+        $sessionwhere[] = 's.workspaceid = :session_workspaceid';
+        $sessionparams['session_workspaceid'] = $workspaceid;
+    }
     $sessionrows = $DB->get_records_sql(
         "SELECT s.teacherid,
                 COUNT(1) AS sessions,
@@ -210,11 +272,9 @@ if ($ready) {
                 MAX(s.scheduled_start) AS last_session
            FROM {local_prequran_live_session} s
       LEFT JOIN {local_prequran_live_participant} p ON p.sessionid = s.id AND p.role = 'student' AND p.status = 'active'
-          WHERE s.scheduled_start >= :weekstart
-            AND s.scheduled_start < :weekend
-            AND s.status NOT IN ('cancelled', 'failed')
+          WHERE " . implode(' AND ', $sessionwhere) . "
        GROUP BY s.teacherid",
-        ['nowtime' => $now, 'weekstart' => $weekstart, 'weekend' => $weekend]
+        $sessionparams
     );
     foreach ($sessionrows as $row) {
         $teacherid = (int)$row->teacherid;
@@ -234,14 +294,22 @@ if ($ready) {
     }
 
     if ($followupready) {
+        $followupwhere = [
+            'n.followup_status <> :none',
+            'n.followup_resolved = 0',
+        ];
+        $followupparams = ['none' => 'none'];
+        if ($sessionscoped) {
+            $followupwhere[] = 's.workspaceid = :followup_workspaceid';
+            $followupparams['followup_workspaceid'] = $workspaceid;
+        }
         $followups = $DB->get_records_sql(
             "SELECT s.teacherid, COUNT(1) AS followups_open
                FROM {local_prequran_live_note} n
                JOIN {local_prequran_live_session} s ON s.id = n.sessionid
-              WHERE n.followup_status <> :none
-                AND n.followup_resolved = 0
+              WHERE " . implode(' AND ', $followupwhere) . "
            GROUP BY s.teacherid",
-            ['none' => 'none']
+            $followupparams
         );
         foreach ($followups as $row) {
             $teacherid = (int)$row->teacherid;
@@ -252,14 +320,22 @@ if ($ready) {
     }
 
     if ($proposedstart > 0) {
+        $conflictwhere = [
+            'scheduled_start < :proposedend',
+            'scheduled_end > :proposedstart',
+            "status NOT IN ('cancelled', 'failed')",
+        ];
+        $conflictparams = ['proposedstart' => $proposedstart, 'proposedend' => $proposedend];
+        if ($sessionscoped) {
+            $conflictwhere[] = 'workspaceid = :conflict_workspaceid';
+            $conflictparams['conflict_workspaceid'] = $workspaceid;
+        }
         $conflictrows = $DB->get_records_sql(
             "SELECT teacherid, COUNT(1) AS conflict_count
                FROM {local_prequran_live_session}
-              WHERE scheduled_start < :proposedend
-                AND scheduled_end > :proposedstart
-                AND status NOT IN ('cancelled', 'failed')
+              WHERE " . implode(' AND ', $conflictwhere) . "
            GROUP BY teacherid",
-            ['proposedstart' => $proposedstart, 'proposedend' => $proposedend]
+            $conflictparams
         );
         foreach ($conflictrows as $row) {
             $teacherid = (int)$row->teacherid;
@@ -425,21 +501,23 @@ body.pqh-live-capacity-page .main-inner{margin:0!important;padding:0!important;m
 .pqlcap-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
 @media(max-width:1120px){.pqlcap-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlcap-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlcap-top{display:block}.pqlcap-actions{margin-top:12px}.pqlcap-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqlcap-filters,.pqlcap-metrics{grid-template-columns:1fr}.pqlcap-title{font-size:24px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlcap-shell">
   <div class="pqlcap-wrap">
-    <section class="pqlcap-top">
+    <section class="pqlcap-top pqh-workspace-top">
       <div>
-        <h1 class="pqlcap-title">Teacher Assignment & Capacity Planning</h1>
-        <p class="pqlcap-sub">Compare availability, assigned hours, quality workload, and slot conflicts before assigning live classes.</p>
+        <h1 class="pqlcap-title pqh-workspace-title">Teacher Assignment & Capacity Planning</h1>
+        <p class="pqlcap-sub pqh-workspace-sub">Compare availability, assigned hours, quality workload, and slot conflicts before assigning live classes.</p>
       </div>
-      <div class="pqlcap-actions">
-        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php'))->out(false); ?>">Teacher directory</a>
-        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php'))->out(false); ?>">Series wizard</a>
-        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php'))->out(false); ?>">Availability</a>
-        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Operations</a>
-        <a class="pqlcap-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqlcap-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php', $urlparams))->out(false); ?>">Teacher directory</a>
+        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $urlparams))->out(false); ?>">Series wizard</a>
+        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a>
+        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $urlparams))->out(false); ?>">Availability</a>
+        <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Operations</a>
+        <a class="pqlcap-btn" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -448,6 +526,9 @@ body.pqh-live-capacity-page .main-inner{margin:0!important;padding:0!important;m
     <?php else: ?>
       <section class="pqlcap-panel">
         <form method="get">
+          <?php foreach ($urlparams as $name => $value): ?>
+            <input type="hidden" name="<?php echo s($name); ?>" value="<?php echo s((string)$value); ?>">
+          <?php endforeach; ?>
           <div class="pqlcap-filters">
             <div class="pqlcap-field"><label for="week">Week</label><input class="pqlcap-input" id="week" name="week" type="date" value="<?php echo s(date('Y-m-d', $weekstart)); ?>"></div>
             <div class="pqlcap-field"><label for="classdate">Proposed Date</label><input class="pqlcap-input" id="classdate" name="classdate" type="date" value="<?php echo $proposedstart > 0 ? s(date('Y-m-d', $proposedstart)) : ''; ?>"></div>
@@ -460,10 +541,10 @@ body.pqh-live-capacity-page .main-inner{margin:0!important;padding:0!important;m
               <?php endforeach; ?>
             </select></div>
           </div>
-          <div class="pqlcap-actions">
+          <div class="pqlcap-actions pqh-workspace-actions">
             <button class="pqlcap-btn" type="submit">Calculate capacity</button>
-            <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php'))->out(false); ?>">Reset</a>
-            <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', ['week' => date('Y-m-d', $weekstart), 'classdate' => $proposedstart > 0 ? date('Y-m-d', $proposedstart) : '', 'classtime' => $proposedstart > 0 ? date('H:i', $proposedstart) : '', 'duration' => $duration, 'students' => $studentcount, 'filter' => $filter, 'export' => 'capacity']))->out(false); ?>">Export CSV</a>
+            <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Reset</a>
+            <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', pqlcap_url_params($urlparams, ['week' => date('Y-m-d', $weekstart), 'classdate' => $proposedstart > 0 ? date('Y-m-d', $proposedstart) : '', 'classtime' => $proposedstart > 0 ? date('H:i', $proposedstart) : '', 'duration' => $duration, 'students' => $studentcount, 'filter' => $filter, 'export' => 'capacity'])))->out(false); ?>">Export CSV</a>
           </div>
         </form>
       </section>
@@ -503,10 +584,10 @@ body.pqh-live-capacity-page .main-inner{margin:0!important;padding:0!important;m
               </td>
               <td><span class="pqlcap-pill <?php echo $fitclass; ?>"><?php echo s((string)$teacher->fit_label); ?> <?php echo (int)$teacher->fit_score; ?></span><br><span class="pqlcap-code"><?php echo s(implode(', ', $teacher->flags) ?: 'No major flags'); ?></span></td>
               <td>
-                <div class="pqlcap-actions">
-                  <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => (int)$teacher->teacherid]))->out(false); ?>">Profile</a>
-                  <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', ['teacherid' => (int)$teacher->teacherid]))->out(false); ?>">Availability</a>
-                  <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', ['step' => 2, 'teacherid' => (int)$teacher->teacherid, 'sessiondate' => $proposedstart > 0 ? date('Y-m-d', $proposedstart) : '', 'sessiontime' => $proposedstart > 0 ? date('H:i', $proposedstart) : '', 'duration' => $duration]))->out(false); ?>">Schedule</a>
+                <div class="pqlcap-actions pqh-workspace-actions">
+                  <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', pqlcap_url_params($urlparams, ['teacherid' => (int)$teacher->teacherid])))->out(false); ?>">Profile</a>
+                  <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', pqlcap_url_params($urlparams, ['teacherid' => (int)$teacher->teacherid])))->out(false); ?>">Availability</a>
+                  <a class="pqlcap-btn pqlcap-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', pqlcap_url_params($urlparams, ['step' => 2, 'teacherid' => (int)$teacher->teacherid, 'sessiondate' => $proposedstart > 0 ? date('Y-m-d', $proposedstart) : '', 'sessiontime' => $proposedstart > 0 ? date('H:i', $proposedstart) : '', 'duration' => $duration])))->out(false); ?>">Schedule</a>
                 </div>
               </td>
             </tr>

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
@@ -207,7 +208,7 @@ function pqlps_parent_safe_change_label(string $action): string {
         'session_cancelled' => 'Class cancelled',
         'series_change_notifications_processed' => 'Family notification processed',
         'series_cancel_notifications_processed' => 'Cancellation notification processed',
-        'series_single_session_cancel_notifications_processed' => 'Class cancellation notification processed',
+        'series_single_cancel_notice' => 'Class cancellation notification processed',
     ];
     return $labels[$action] ?? 'Schedule changed';
 }
@@ -327,7 +328,7 @@ function pqlps_change_history(array $seriesids): array {
                 'session_cancelled',
                 'series_change_notifications_processed',
                 'series_cancel_notifications_processed',
-                'series_single_session_cancel_notifications_processed'
+                'series_single_cancel_notice'
             )
        ORDER BY id DESC",
         ['targettype' => 'series'] + $params,
@@ -356,7 +357,11 @@ if ($childid <= 0) {
 }
 
 if ($childid > 0 && !pqlps_user_can_access_child((int)$USER->id, $childid)) {
-    throw new moodle_exception('nopermissions', '', '', 'You cannot view this recurring live class schedule.');
+    pqh_access_denied(
+        'You cannot view this recurring live class schedule.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Recurring schedule access required'
+    );
 }
 
 $child = $childid > 0 ? core_user::get_user($childid) : null;
@@ -369,14 +374,35 @@ foreach ($sessions as $session) {
 $history = pqlps_change_history(array_keys($seriesgroups));
 
 if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'ack_series_change') {
-    require_sesskey();
-    $seriesid = required_param('seriesid', PARAM_INT);
-    $studentid = required_param('studentid', PARAM_INT);
+    if (!confirm_sesskey()) {
+        pqh_access_denied(
+            'Please reopen the recurring class schedule and try the acknowledgement again.',
+            new moodle_url('/local/hubredirect/live_series_schedule.php', $childid > 0 ? ['childid' => $childid] : []),
+            'Schedule acknowledgement form expired'
+        );
+    }
+    $seriesid = optional_param('seriesid', 0, PARAM_INT);
+    $studentid = optional_param('studentid', 0, PARAM_INT);
+    if ($seriesid <= 0 || $studentid <= 0) {
+        pqh_access_denied(
+            'Choose a valid recurring class schedule before acknowledging a change.',
+            new moodle_url('/local/hubredirect/live_series_schedule.php', $childid > 0 ? ['childid' => $childid] : []),
+            'Schedule acknowledgement unavailable'
+        );
+    }
     if ($studentid !== $childid || !pqlps_parent_can_access_child((int)$USER->id, $studentid)) {
-        throw new moodle_exception('nopermissions', '', '', 'Only a linked parent can acknowledge this schedule change.');
+        pqh_access_denied(
+            'Only a linked parent can acknowledge this schedule change.',
+            new moodle_url('/local/hubredirect/dashboard.php'),
+            'Schedule acknowledgement access required'
+        );
     }
     if (!pqlps_ack_ready()) {
-        throw new moodle_exception('invalidparameter', '', '', 'Schedule acknowledgement table is not installed yet.');
+        pqh_access_denied(
+            'Schedule acknowledgement is not available yet.',
+            new moodle_url('/local/hubredirect/live_series_schedule.php', ['childid' => $childid]),
+            'Schedule acknowledgement unavailable'
+        );
     }
     $changetime = pqlps_latest_change_time($history[$seriesid] ?? []);
     if ($changetime <= 0) {
@@ -444,11 +470,13 @@ body.pqh-live-series-schedule-page .main-inner{margin:0!important;padding:0!impo
 .pqlps-ack{margin-top:12px;padding:12px;border-radius:10px;background:#fff7e7;border:1px solid rgba(111,78,50,.16)}.pqlps-ack--done{background:#eaffea}.pqlps-ack form{margin-top:8px}.pqlps-notice{margin-bottom:14px;padding:12px 14px;border-radius:10px;background:#eaffea;border:1px solid rgba(47,111,78,.18);color:#2f6f4e;font-size:14px;font-weight:900}
 .pqlps-empty{padding:18px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
 @media(max-width:760px){.pqlps-top,.pqlps-head,.pqlps-session,.pqlps-change{display:block}.pqlps-actions{margin-top:12px}.pqlps-title{font-size:25px}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlps-shell"><div class="pqlps-wrap">
-  <section class="pqlps-top">
-    <div><p class="pqlps-kicker">Recurring live classes</p><h1 class="pqlps-title">Series schedule for <?php echo s($childname); ?></h1><p class="pqlps-sub">Latest class times, cancellations, summaries, recordings, and parent-safe change history.</p></div>
-    <div class="pqlps-actions">
+  <section class="pqlps-top pqh-workspace-top">
+    <div><p class="pqlps-kicker">Recurring live classes</p><h1 class="pqlps-title pqh-workspace-title">Series schedule for <?php echo s($childname); ?></h1><p class="pqlps-sub pqh-workspace-sub">Latest class times, cancellations, summaries, recordings, and parent-safe change history.</p></div>
+    <div class="pqlps-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
       <a class="pqlps-btn pqlps-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Parent live hub</a>
       <a class="pqlps-btn pqlps-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Schedule</a>
       <a class="pqlps-btn pqlps-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Calendar</a>
@@ -496,7 +524,7 @@ body.pqh-live-series-schedule-page .main-inner{margin:0!important;padding:0!impo
                   <strong>Session <?php echo (int)$session->series_sequence; ?> - <?php echo s(userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort'))); ?></strong>
                   <p class="pqlps-meta"><?php echo (string)$session->status === 'cancelled' ? 'Cancelled' : 'Scheduled'; ?><?php echo (string)$session->status === 'cancelled' && (string)$session->cancellation_reason !== '' ? ' - ' . s((string)$session->cancellation_reason) : ''; ?></p>
                 </div>
-                <div class="pqlps-actions">
+                <div class="pqlps-actions pqh-workspace-actions">
                   <?php if ($joinstate === 'open'): ?><a class="pqlps-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', ['action' => 'join', 'sessionid' => (int)$session->id, 'sesskey' => sesskey()]))->out(false); ?>">Join</a><?php else: ?><span class="pqlps-pill <?php echo $joinstate === 'cancelled' ? 'pqlps-pill--bad' : ''; ?>"><?php echo s($joinlabel); ?></span><?php endif; ?>
                   <?php if ((int)$session->noteid > 0): ?><a class="pqlps-btn pqlps-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Summary</a><?php endif; ?>
                   <?php if ((int)$session->visible_recordings > 0): ?><a class="pqlps-btn pqlps-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', ['childid' => $childid]))->out(false); ?>">Recording</a><?php endif; ?>

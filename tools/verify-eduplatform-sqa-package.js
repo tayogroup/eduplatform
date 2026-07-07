@@ -39,6 +39,14 @@ const dataExportComplianceSpec = readText('tests/e2e/data-export-compliance.spec
 const dataLifecycleCleanupSpec = readText('tests/e2e/data-lifecycle-cleanup.spec.ts');
 const failureWorkflowControlsSpec = readText('tests/e2e/failure-workflow-controls.spec.ts');
 const crossRoleGoldenPathSpec = readText('tests/e2e/cross-role-golden-path.spec.ts');
+const performanceReliabilitySpec = readText('tests/e2e/performance-reliability.spec.ts');
+const accessibilityResponsiveSpec = readText('tests/e2e/accessibility-responsive.spec.ts');
+const liveBbbSpec = readText('tests/e2e/live-bbb.spec.ts');
+const envHelper = readText('tests/e2e/helpers/env.ts');
+const routesHelper = readText('tests/e2e/helpers/routes.ts');
+const liveBbbHelper = readText('tests/e2e/helpers/live-bbb.ts');
+const livePilotReadinessEndpoint = readText('src/moodle/local_hubredirect/live_pilot_readiness.php');
+const sqaVerificationSweep = readText('tools/run-eduplatform-sqa-verification-sweep.js');
 const phase11Runbook = readText('docs/eduplatform-sqa-phase-11-runbook.md');
 const operatorChecklist = readText('docs/eduplatform-sqa-operator-checklist.md');
 
@@ -55,6 +63,9 @@ const expectedScripts = [
   'test:e2e:data-lifecycle-cleanup',
   'test:e2e:failure-workflow-controls',
   'test:e2e:cross-role-golden-path',
+  'test:e2e:performance-reliability',
+  'test:e2e:accessibility-responsive',
+  'test:e2e:live-bbb',
   'test:e2e:setup-public-course',
   'test:e2e:teacher-phase1',
   'test:e2e:teacher-phase2',
@@ -91,6 +102,29 @@ const expectedScripts = [
   'test:e2e:failure-controls',
   'test:e2e:cross-role-phase1',
   'test:e2e:cross-role-controls',
+  'test:e2e:performance-phase1',
+  'test:e2e:performance-controls',
+  'test:e2e:accessibility-phase1',
+  'test:e2e:accessibility-controls',
+  'test:e2e:bbb-phase1',
+  'test:e2e:bbb-phase2',
+  'test:e2e:bbb-phase3',
+  'test:e2e:bbb-phase4',
+  'test:e2e:bbb-phase5',
+  'test:e2e:bbb-phase6',
+  'test:e2e:bbb-phase7',
+  'test:e2e:bbb-phase8',
+  'test:e2e:bbb-phase9',
+  'test:e2e:bbb-phase10',
+  'test:e2e:bbb-phase11',
+  'test:e2e:bbb-phase12',
+  'test:e2e:bbb-phase13',
+  'test:e2e:bbb-controls',
+  'test:e2e:sqa-sweep',
+  'test:e2e:schedule:daily',
+  'test:e2e:schedule:weekly',
+  'test:e2e:deployment-drift',
+  'test:e2e:evidence-bundle',
   'test:e2e:phase4',
   'test:e2e:phase5',
   'test:e2e:phase6',
@@ -154,6 +188,30 @@ const expectedEnvFlags = [
   'EDUPLATFORM_ENABLE_DATA_LIFECYCLE_CLEANUP',
   'EDUPLATFORM_ENABLE_FAILURE_WORKFLOW_CONTROLS',
   'EDUPLATFORM_ENABLE_CROSS_ROLE_GOLDEN_PATH',
+  'EDUPLATFORM_ENABLE_PERFORMANCE_RELIABILITY_SMOKE',
+  'EDUPLATFORM_PERFORMANCE_LOAD_THRESHOLD_MS',
+  'EDUPLATFORM_PERFORMANCE_EXPORT_THRESHOLD_MS',
+  'EDUPLATFORM_PERFORMANCE_ENDPOINT_THRESHOLD_MS',
+  'EDUPLATFORM_ENABLE_ACCESSIBILITY_RESPONSIVE_SMOKE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_OPERATIONS_SMOKE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_MEETING_LIFECYCLE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_POST_CLASS_EVIDENCE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_STUDENT_PARENT_VISIBILITY',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_TRUST_RETENTION_AUDIT',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_INSTRUCTIONAL_READINESS',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_QUALITY_LEADERSHIP',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_SCHEDULING_CAPACITY',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_OPERATIONAL_RESILIENCE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_BACKUP_DR_READINESS',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_RETENTION_CONTROLS',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_CONSENT_GROUPING',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_PILOT_READINESS',
+  'EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN',
+  'EDUPLATFORM_HUBREDIRECT_DRIFT_PROBE_URL',
+  'EDUPLATFORM_HUBREDIRECT_DRIFT_INCLUDE',
+  'EDUPLATFORM_EVIDENCE_BUNDLE_LABEL',
+  'EDUPLATFORM_SQA_ALLOW_LIVE_WEEKLY',
+  'EDUPLATFORM_SQA_WEEKLY_PHASES',
   'EDUPLATFORM_CLEANUP_MODE',
 ];
 
@@ -268,6 +326,39 @@ for (const groupName of [
   expectIncludes('cross-role-golden-path.spec.ts', crossRoleGoldenPathSpec, groupName);
 }
 
+for (const groupName of [
+  'performance reliability smoke live action',
+  'performance reliability negative controls',
+]) {
+  expectIncludes('performance-reliability.spec.ts', performanceReliabilitySpec, groupName);
+}
+
+for (const groupName of [
+  'accessibility responsive smoke live action',
+  'accessibility responsive negative controls',
+]) {
+  expectIncludes('accessibility-responsive.spec.ts', accessibilityResponsiveSpec, groupName);
+}
+
+for (const groupName of [
+  'live BBB operations smoke live action',
+  'live BBB meeting lifecycle live action',
+  'live BBB post-class evidence live action',
+  'live BBB student and parent visibility live action',
+  'live BBB trust and retention audit live action',
+  'live BBB instructional readiness live action',
+  'live BBB quality and leadership analytics live action',
+  'live BBB scheduling capacity and calendar live action',
+  'live BBB operational resilience live action',
+  'live BBB backup and DR readiness live action',
+  'live BBB retention controls live action',
+  'live BBB consent availability and grouping live action',
+  'live BBB rollup pilot readiness live action',
+  'live BBB negative controls',
+]) {
+  expectIncludes('live-bbb.spec.ts', liveBbbSpec, groupName);
+}
+
 for (const command of [
   'npm.cmd run test:e2e:phase10',
   'npm.cmd run test:e2e:phase11',
@@ -292,6 +383,26 @@ for (const command of [
   'npm.cmd run test:e2e:lifecycle-phase1',
   'npm.cmd run test:e2e:failure-phase1',
   'npm.cmd run test:e2e:cross-role-phase1',
+  'npm.cmd run test:e2e:performance-phase1',
+  'npm.cmd run test:e2e:accessibility-phase1',
+  'npm.cmd run test:e2e:bbb-phase1',
+  'npm.cmd run test:e2e:bbb-phase2',
+  'npm.cmd run test:e2e:bbb-phase3',
+  'npm.cmd run test:e2e:bbb-phase4',
+  'npm.cmd run test:e2e:bbb-phase5',
+  'npm.cmd run test:e2e:bbb-phase6',
+  'npm.cmd run test:e2e:bbb-phase7',
+  'npm.cmd run test:e2e:bbb-phase8',
+  'npm.cmd run test:e2e:bbb-phase9',
+  'npm.cmd run test:e2e:bbb-phase10',
+  'npm.cmd run test:e2e:bbb-phase11',
+  'npm.cmd run test:e2e:bbb-phase12',
+  'npm.cmd run test:e2e:bbb-phase13',
+  'npm.cmd run test:e2e:sqa-sweep',
+  'npm.cmd run test:e2e:deployment-drift',
+  'npm.cmd run test:e2e:evidence-bundle',
+  'npm.cmd run test:e2e:schedule:daily',
+  'npm.cmd run test:e2e:schedule:weekly',
   'npx playwright show-report',
 ]) {
   expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, command);
@@ -304,6 +415,7 @@ for (const phrase of [
   'Weekly teacher journey',
   'Weekly parent journey',
   'Weekly admin operations',
+  'Scheduled runner notes',
   'Public course setup',
   'Failure triage',
   'Evidence review',
@@ -442,6 +554,159 @@ for (const phrase of [
   'security boundary evidence',
   'compliance export readiness',
   'audit and cleanup readiness',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'EDUPLATFORM_ENABLE_PERFORMANCE_RELIABILITY_SMOKE',
+  'performance-reliability-summary',
+  'Dashboard load time',
+  'report export time',
+  'repeated login/session stability',
+  'slow endpoint detection',
+  'performance_reliability_smoke.php',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'EDUPLATFORM_ENABLE_ACCESSIBILITY_RESPONSIVE_SMOKE',
+  'accessibility-responsive-summary',
+  'mobile widths',
+  'visible form controls have labels',
+  'keyboard Tab navigation',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'EDUPLATFORM_ENABLE_LIVE_BBB_OPERATIONS_SMOKE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_MEETING_LIFECYCLE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_POST_CLASS_EVIDENCE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_STUDENT_PARENT_VISIBILITY',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_TRUST_RETENTION_AUDIT',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_INSTRUCTIONAL_READINESS',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_QUALITY_LEADERSHIP',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_SCHEDULING_CAPACITY',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_OPERATIONAL_RESILIENCE',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_BACKUP_DR_READINESS',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_RETENTION_CONTROLS',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_CONSENT_GROUPING',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_PILOT_READINESS',
+  'live-bbb-summary',
+  'Live BBB Operations Smoke',
+  'Live BBB Meeting Lifecycle',
+  'Live BBB Post-Class Evidence',
+  'Live BBB Student and Parent Visibility',
+  'Live BBB Trust and Retention Audit',
+  'Live BBB Instructional Readiness',
+  'Live BBB Quality And Leadership Analytics',
+  'Live BBB Scheduling Capacity And Calendar',
+  'Live BBB Operational Resilience',
+  'Live BBB Backup And DR Readiness',
+  'Live BBB Retention Controls',
+  'Live BBB Consent Availability And Grouping',
+  'Live BBB Rollup / Pilot Readiness',
+  'BBB configuration',
+  'recording review',
+  'live session diagnostics',
+  'follow-up command center',
+  'parent live hub',
+  'compliance review pack',
+  'retention readiness',
+  'Quraan Materials',
+  'Virtual Tutor',
+  'Practice Coach',
+  'QA analytics',
+  'Teacher Improvement Plans',
+  'Live Lesson Monitor',
+  'Live Class Series',
+  'Teacher Assignment & Capacity Planning',
+  'Teacher Directory',
+  'Live Class Calendar',
+  'active schedule hiding',
+  'Backup/DR readiness',
+  'guarded purge execution is blocked',
+  'teacher availability',
+  'student grouping consent',
+  'live_pilot_readiness.php',
+  'stale active SQA sessions',
+  'final BBB readiness evidence',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'deployment_drift_probe.php',
+  'EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN',
+  'stale cPanel uploads',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'Full SQA Verification Sweep',
+  'test-results/sqa-verification-sweep',
+  'package verifier',
+  'route smoke',
+  'negative controls',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'livePilotReadiness',
+  '/local/hubredirect/live_pilot_readiness.php',
+]) {
+  expectIncludes('tests/e2e/helpers/routes.ts', routesHelper, phrase);
+  expectIncludes('tests/e2e/live-bbb.spec.ts', liveBbbSpec, phrase);
+}
+
+for (const phrase of [
+  'enableLiveBbbPilotReadiness',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_PILOT_READINESS',
+]) {
+  expectIncludes('tests/e2e/helpers/env.ts', envHelper, phrase);
+}
+
+for (const phrase of [
+  'verifyPilotReadinessRollup',
+  'LiveBbbPilotReadinessResult',
+  'final BBB readiness export',
+]) {
+  expectIncludes('tests/e2e/helpers/live-bbb.ts', liveBbbHelper, phrase);
+}
+
+for (const phrase of [
+  'Live BBB Pilot Readiness',
+  'Phase 1-12 evidence rollup',
+  'No stale active SQA sessions',
+]) {
+  expectIncludes('src/moodle/local_hubredirect/live_pilot_readiness.php', livePilotReadinessEndpoint, phrase);
+}
+
+for (const phrase of [
+  'SQA package verifier',
+  'SQA route smoke',
+  'negativeControlScripts',
+  'test-results',
+  'sqa-verification-sweep',
+]) {
+  expectIncludes('tools/run-eduplatform-sqa-verification-sweep.js', sqaVerificationSweep, phrase);
+}
+
+for (const phrase of [
+  'Evidence Bundle Finalizer',
+  'test-results/sqa-evidence-bundles',
+  'EDUPLATFORM_EVIDENCE_BUNDLE_LABEL',
+  'downloaded CSV/PDF evidence',
 ]) {
   expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
   expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);

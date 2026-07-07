@@ -4,10 +4,12 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once($CFG->dirroot . '/local/prequran/notificationlib.php');
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can review live-session recordings.');
-}
+pqh_require_academy_operations('Only academy operations users can review live-session recordings.');
+
+$consumercontext = pqh_requested_consumer_context();
+$brandname = trim((string)($consumercontext->consumername ?? '')) ?: 'EduPlatform';
 
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -76,7 +78,7 @@ function pqlra_recording_playback($recording): array {
 function pqlra_local_recording_status(string $bbbstate, string $playbackurl): string {
     $state = strtolower(trim($bbbstate));
     if (in_array($state, ['processing', 'processed', 'queued'], true)) {
-        return 'processing';
+        return $playbackurl !== '' ? 'available' : 'processing';
     }
     if (in_array($state, ['deleted', 'removed'], true)) {
         return 'deleted';
@@ -92,7 +94,7 @@ function pqlra_sync_session_recordings($session): array {
 
     $locallib = $CFG->dirroot . '/local/prequran/locallib.php';
     if (!file_exists($locallib)) {
-        throw new moodle_exception('missingfile', 'error', '', 'Missing local/prequran/locallib.php.');
+        throw new invalid_parameter_exception('Live recording sync is unavailable because the BBB helper library is not installed.');
     }
     require_once($locallib);
 
@@ -101,6 +103,7 @@ function pqlra_sync_session_recordings($session): array {
     $created = 0;
     $updated = 0;
     $now = time();
+    $recordingcolumns = $DB->get_columns('local_prequran_live_recording');
     $retentiondays = (int)get_config('local_prequran', 'bbb_recording_retention_days');
     if ($retentiondays <= 0) {
         $retentiondays = 90;
@@ -126,6 +129,9 @@ function pqlra_sync_session_recordings($session): array {
         $record = $DB->get_record('local_prequran_live_recording', ['bbb_record_id' => $recordid]);
         if ($record) {
             $record->sessionid = (int)$session->id;
+            if (array_key_exists('workspaceid', $recordingcolumns)) {
+                $record->workspaceid = (int)($session->workspaceid ?? 0);
+            }
             $record->bbb_meeting_id = (string)$session->bbb_meeting_id;
             $record->name = pqlra_bbb_text($bbbrecording, 'name') ?: (string)$session->title;
             $record->playback_url = $playbackurl;
@@ -139,7 +145,7 @@ function pqlra_sync_session_recordings($session): array {
             $DB->update_record('local_prequran_live_recording', $record);
             $updated++;
         } else {
-            $DB->insert_record('local_prequran_live_recording', (object)[
+            $newrecord = (object)[
                 'sessionid' => (int)$session->id,
                 'bbb_record_id' => $recordid,
                 'bbb_meeting_id' => (string)$session->bbb_meeting_id,
@@ -156,7 +162,11 @@ function pqlra_sync_session_recordings($session): array {
                 'raw_metadata' => $raw,
                 'timecreated' => $now,
                 'timemodified' => $now,
-            ]);
+            ];
+            if (array_key_exists('workspaceid', $recordingcolumns)) {
+                $newrecord->workspaceid = (int)($session->workspaceid ?? 0);
+            }
+            $DB->insert_record('local_prequran_live_recording', $newrecord);
             $created++;
         }
         $synced++;
@@ -230,12 +240,20 @@ if (!pqlra_table_exists('local_prequran_live_session') || !pqlra_table_exists('l
 }
 
 if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) !== '') {
-    require_sesskey();
-    $action = required_param('action', PARAM_ALPHANUMEXT);
     try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This recording review form expired. Please refresh and try again.');
+        }
+        $action = optional_param('action', '', PARAM_ALPHANUMEXT);
+        if ($action === '') {
+            throw new invalid_parameter_exception('Choose a valid recording action.');
+        }
         if ($action === 'sync_session') {
-            $sessionid = required_param('sessionid', PARAM_INT);
-            $session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', MUST_EXIST);
+            $sessionid = optional_param('sessionid', 0, PARAM_INT);
+            $session = $sessionid > 0 ? $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING) : false;
+            if (!$session) {
+                throw new invalid_parameter_exception('Choose a valid live session before syncing recordings.');
+            }
             $result = pqlra_sync_session_recordings($session);
             $notice = 'BBB sync complete: ' . (int)$result['synced'] . ' synced, ' . (int)$result['created'] . ' created, ' . (int)$result['updated'] . ' updated.';
         } else if ($action === 'sync_all') {
@@ -258,16 +276,19 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) !== '') {
             }
             $notice = 'BBB sync complete: ' . (int)$total['synced'] . ' synced, ' . (int)$total['created'] . ' created, ' . (int)$total['updated'] . ' updated.';
         } else if (in_array($action, ['publish', 'unpublish', 'mark_reviewed', 'archive'], true)) {
-            $recordingid = required_param('recordingid', PARAM_INT);
-            $recording = $DB->get_record('local_prequran_live_recording', ['id' => $recordingid], '*', MUST_EXIST);
+            $recordingid = optional_param('recordingid', 0, PARAM_INT);
+            $recording = $recordingid > 0 ? $DB->get_record('local_prequran_live_recording', ['id' => $recordingid]) : false;
+            if (!$recording) {
+                throw new invalid_parameter_exception('Choose a valid recording before changing its review state.');
+            }
             $wasvisible = !empty($recording->visible_to_parent);
             $auditaction = 'recording_reviewed';
             if ($action === 'publish') {
                 if ((string)$recording->playback_url === '') {
-                    throw new moodle_exception('invalidrecording', 'error', '', 'Recording cannot be published because it has no playback URL.');
+                    throw new invalid_parameter_exception('Recording cannot be published because it has no playback URL.');
                 }
                 if (!empty($recording->expiresat) && (int)$recording->expiresat < time()) {
-                    throw new moodle_exception('invalidrecording', 'error', '', 'Recording cannot be published because its retention expiry has passed.');
+                    throw new invalid_parameter_exception('Recording cannot be published because its retention expiry has passed.');
                 }
                 $recording->visible_to_parent = 1;
                 $recording->status = 'available';
@@ -302,7 +323,7 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) !== '') {
                         (int)$recording->sessionid,
                         (int)$studentid,
                         'Live class recording is ready',
-                        'An approved recording from your child\'s Quraan Academy live class is ready to view.',
+                        'An approved recording from your child\'s ' . $brandname . ' live class is ready to view.',
                         new moodle_url('/local/hubredirect/live_recordings.php', ['childid' => (int)$studentid]),
                         'View live recording',
                         'live_recording_published'
@@ -418,6 +439,26 @@ $lastexpiry = pqlra_table_exists('local_prequran_live_audit')
         IGNORE_MULTIPLE
     )
     : false;
+$lastautosync = pqlra_table_exists('local_prequran_live_audit')
+    ? $DB->get_record_sql(
+        "SELECT *
+           FROM {local_prequran_live_audit}
+          WHERE action = :action
+       ORDER BY timecreated DESC, id DESC",
+        ['action' => 'recordings_auto_synced'],
+        IGNORE_MULTIPLE
+    )
+    : false;
+$lastqueue = pqlra_table_exists('local_prequran_live_audit')
+    ? $DB->get_record_sql(
+        "SELECT *
+           FROM {local_prequran_live_audit}
+          WHERE action = :action
+       ORDER BY timecreated DESC, id DESC",
+        ['action' => 'recording_review_queue_reminder'],
+        IGNORE_MULTIPLE
+    )
+    : false;
 
 echo $OUTPUT->header();
 ?>
@@ -463,15 +504,17 @@ body.pqh-live-recordings-page .main-inner{margin:0!important;padding:0!important
 .pqlra-pill--warn{background:#fff4dc;color:#7b5a3a}
 .pqlra-row-actions{display:flex;flex-wrap:wrap;gap:6px}
 @media(max-width:900px){.pqlra-top{display:block}.pqlra-actions{margin-top:12px}.pqlra-table{display:block;overflow:auto}.pqlra-title{font-size:24px}.pqlra-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlra-shell">
   <div class="pqlra-wrap">
-    <section class="pqlra-top">
+    <section class="pqlra-top pqh-workspace-top">
       <div>
-        <h1 class="pqlra-title">Live Recording Review</h1>
-        <p class="pqlra-sub">Sync BBB recordings, keep them hidden by default, review quality, publish safely, and expire old recordings.</p>
+        <h1 class="pqlra-title pqh-workspace-title">Live Recording Review</h1>
+        <p class="pqlra-sub pqh-workspace-sub">Sync BBB recordings, keep them hidden by default, review quality, publish safely, and monitor retention automation.</p>
       </div>
-      <div class="pqlra-actions">
+      <div class="pqlra-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <form method="post">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="sync_all">
@@ -504,9 +547,11 @@ body.pqh-live-recordings-page .main-inner{margin:0!important;padding:0!important
       <h2>Pilot Operations Checklist</h2>
       <table class="pqlra-table">
         <tr><th>Item</th><th>Status</th></tr>
-        <tr><td>Operating model</td><td>Manual admin sync during pilot week. Do not automate BBB recording sync until provider processing timing is observed.</td></tr>
-        <tr><td>Retention policy</td><td><?php echo (int)$retentiondays; ?> day(s). Use Apply retention expiry daily during pilot.</td></tr>
+        <tr><td>Operating model</td><td>Scheduled Moodle cron sync checks recent ended BBB sessions hourly. Manual sync remains available for immediate checks.</td></tr>
+        <tr><td>Retention policy</td><td><?php echo (int)$retentiondays; ?> day(s). Expired recordings are automatically hidden from parents and marked expired.</td></tr>
         <tr><td>Last sync</td><td><?php echo $lastsync ? userdate((int)$lastsync->timecreated, get_string('strftimedatetimeshort')) : 'No sync audit yet'; ?></td></tr>
+        <tr><td>Last automated sync</td><td><?php echo $lastautosync ? userdate((int)$lastautosync->timecreated, get_string('strftimedatetimeshort')) : 'No automated sync audit yet'; ?></td></tr>
+        <tr><td>Last review queue reminder</td><td><?php echo $lastqueue ? userdate((int)$lastqueue->timecreated, get_string('strftimedatetimeshort')) : 'No review queue reminder audit yet'; ?></td></tr>
         <tr><td>Last expiry run</td><td><?php echo $lastexpiry ? userdate((int)$lastexpiry->timecreated, get_string('strftimedatetimeshort')) : 'No expired recording audit yet'; ?></td></tr>
         <tr><td>Publish rule</td><td>Recordings remain hidden until admin review. Expired recordings and recordings without playback URLs cannot be published.</td></tr>
       </table>
@@ -559,7 +604,7 @@ body.pqh-live-recordings-page .main-inner{margin:0!important;padding:0!important
             <td><?php echo !empty($recording->expiresat) ? userdate((int)$recording->expiresat, get_string('strftimedatetimeshort')) : 'not set'; ?><?php echo $expired ? '<br><span class="pqlra-pill pqlra-pill--warn">expired</span>' : ''; ?></td>
             <td><?php echo $reviewed ? 'Reviewed by #' . (int)$recording->reviewedby . '<br>' . userdate((int)$recording->reviewedat, get_string('strftimedatetimeshort')) : 'Not reviewed'; ?></td>
             <td>
-              <div class="pqlra-row-actions">
+              <div class="pqlra-row-actions pqh-workspace-actions">
                 <?php foreach ([
                     'mark_reviewed' => 'Mark reviewed',
                     'publish' => 'Publish',

@@ -3,10 +3,27 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can view teacher improvement plans.');
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+$dashboardpath = !empty($urlparams['workspaceid']) ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php';
+$dashboardurl = new moodle_url($dashboardpath, $urlparams);
+
+pqh_require_academy_operations(
+    'Only academy operations users can view teacher improvement plans.',
+    $dashboardurl,
+    'Teacher improvement plan access required'
+);
 
 function pqlip_table_exists(string $table): bool {
     global $DB;
@@ -68,9 +85,13 @@ function pqlip_csv(string $filename, array $headers, array $rows): void {
     exit;
 }
 
+function pqlip_url_params(array $baseparams, array $extra = []): array {
+    return array_merge($baseparams, $extra);
+}
+
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_improvement_plans.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_improvement_plans.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Teacher Improvement Plans');
 $PAGE->set_heading('Teacher Improvement Plans');
@@ -88,6 +109,14 @@ $priority = optional_param('priority', 'all', PARAM_ALPHANUMEXT);
 $overdueonly = optional_param('overdue', 0, PARAM_BOOL);
 $export = optional_param('export', '', PARAM_ALPHANUMEXT);
 $ready = pqlip_ready();
+$workspaceid = (int)($urlparams['workspaceid'] ?? 0);
+if ($workspaceid > 0 && !pqh_consumer_context_allows_workspace($consumercontext, $workspaceid)) {
+    pqh_access_denied(
+        'This workspace is not available for the current institution.',
+        $dashboardurl,
+        'Workspace access required'
+    );
+}
 
 $plans = [];
 $teacherhistory = [];
@@ -104,6 +133,35 @@ $metrics = [
 ];
 
 if ($ready) {
+    $workspacefilter = '';
+    $workspacefilteralias = '';
+    $workspacewherealias = '';
+    $workspaceparams = [];
+    if (pqlip_column_exists('local_prequran_live_session', 'workspaceid')) {
+        if ($workspaceid > 0) {
+            $workspacefilter = ' AND workspaceid = :workspaceid';
+            $workspacefilteralias = ' AND s.workspaceid = :workspaceid';
+            $workspacewherealias = 's.workspaceid = :workspaceid';
+            $workspaceparams['workspaceid'] = $workspaceid;
+        } else if (!pqh_context_is_platform_foundation($consumercontext)) {
+            $workspaceids = pqh_consumer_context_workspace_ids($consumercontext);
+            if ($workspaceids) {
+                [$workspacesql, $workspaceparams] = $DB->get_in_or_equal($workspaceids, SQL_PARAMS_NAMED, 'lipworkspace');
+                $workspacefilter = " AND workspaceid {$workspacesql}";
+                $workspacefilteralias = " AND s.workspaceid {$workspacesql}";
+                $workspacewherealias = "s.workspaceid {$workspacesql}";
+            } else {
+                $workspacefilter = ' AND 1 = 0';
+                $workspacefilteralias = ' AND 1 = 0';
+                $workspacewherealias = '1 = 0';
+            }
+        }
+    } else if (!pqh_context_is_platform_foundation($consumercontext)) {
+        $workspacefilter = ' AND 1 = 0';
+        $workspacefilteralias = ' AND 1 = 0';
+        $workspacewherealias = '1 = 0';
+    }
+
     $where = [
         's.improvement_plan_status <> :nostatus',
         'COALESCE(NULLIF(s.improvement_plan_assignedat, 0), s.scheduled_start) >= :fromtime',
@@ -114,6 +172,10 @@ if ($ready) {
         'fromtime' => $from,
         'totime' => $to,
     ];
+    if ($workspacewherealias !== '') {
+        $where[] = $workspacewherealias;
+        $params = array_merge($params, $workspaceparams);
+    }
     if ($teacherid > 0) {
         $where[] = 's.teacherid = :teacherid';
         $params['teacherid'] = $teacherid;
@@ -166,38 +228,51 @@ if ($ready) {
     ));
 
     $metrics['open'] = (int)$DB->count_records_sql(
-        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE improvement_plan_status IN ('assigned', 'in_progress')"
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE improvement_plan_status IN ('assigned', 'in_progress'){$workspacefilter}",
+        $workspaceparams
     );
-    $metrics['assigned'] = (int)$DB->count_records('local_prequran_live_session', ['improvement_plan_status' => 'assigned']);
-    $metrics['inprogress'] = (int)$DB->count_records('local_prequran_live_session', ['improvement_plan_status' => 'in_progress']);
-    $metrics['completed'] = (int)$DB->count_records('local_prequran_live_session', ['improvement_plan_status' => 'completed']);
+    $metrics['assigned'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE improvement_plan_status = :status{$workspacefilter}",
+        array_merge(['status' => 'assigned'], $workspaceparams)
+    );
+    $metrics['inprogress'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE improvement_plan_status = :status{$workspacefilter}",
+        array_merge(['status' => 'in_progress'], $workspaceparams)
+    );
+    $metrics['completed'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session} WHERE improvement_plan_status = :status{$workspacefilter}",
+        array_merge(['status' => 'completed'], $workspaceparams)
+    );
     $metrics['overdue'] = (int)$DB->count_records_sql(
         "SELECT COUNT(1)
            FROM {local_prequran_live_session}
           WHERE improvement_plan_status IN ('assigned', 'in_progress')
             AND improvement_plan_due_date > 0
-            AND improvement_plan_due_date < :nowtime",
-        ['nowtime' => $now]
+            AND improvement_plan_due_date < :nowtime{$workspacefilter}",
+        array_merge(['nowtime' => $now], $workspaceparams)
     );
     $metrics['due7'] = (int)$DB->count_records_sql(
         "SELECT COUNT(1)
            FROM {local_prequran_live_session}
           WHERE improvement_plan_status IN ('assigned', 'in_progress')
-            AND improvement_plan_due_date BETWEEN :nowtime AND :untiltime",
-        ['nowtime' => $now, 'untiltime' => $now + (7 * DAYSECS)]
+            AND improvement_plan_due_date BETWEEN :nowtime AND :untiltime{$workspacefilter}",
+        array_merge(['nowtime' => $now, 'untiltime' => $now + (7 * DAYSECS)], $workspaceparams)
     );
+    $alertsworkspacefilter = $workspacefilteralias !== ''
+        ? " AND sessionid IN (SELECT s.id FROM {local_prequran_live_session} s WHERE 1 = 1{$workspacefilteralias})"
+        : '';
     $metrics['alerts7'] = (int)$DB->count_records_sql(
         "SELECT COUNT(1)
            FROM {local_prequran_live_audit}
           WHERE action IN ('improvement_plan_teacher_reminder_sent', 'improvement_plan_due_soon_sent', 'improvement_plan_overdue', 'improvement_plan_admin_escalated')
-            AND timecreated >= :fromtime",
-        ['fromtime' => $now - (7 * DAYSECS)]
+            AND timecreated >= :fromtime{$alertsworkspacefilter}",
+        array_merge(['fromtime' => $now - (7 * DAYSECS)], $workspaceparams)
     );
     $metrics['teachers'] = (int)$DB->count_records_sql(
         "SELECT COUNT(DISTINCT teacherid)
            FROM {local_prequran_live_session}
-          WHERE improvement_plan_status <> :none",
-        ['none' => 'none']
+          WHERE improvement_plan_status <> :none{$workspacefilter}",
+        array_merge(['none' => 'none'], $workspaceparams)
     );
 
     $teacherhistory = array_values($DB->get_records_sql(
@@ -211,10 +286,10 @@ if ($ready) {
                 SUM(CASE WHEN s.qa_status = 'serious_issue' THEN 1 ELSE 0 END) AS serious_issue_count,
                 MAX(COALESCE(NULLIF(s.improvement_plan_completedat, 0), NULLIF(s.improvement_plan_assignedat, 0), s.scheduled_start)) AS latest_plan_time
            FROM {local_prequran_live_session} s
-          WHERE s.improvement_plan_status <> :none
+          WHERE s.improvement_plan_status <> :none{$workspacefilteralias}
        GROUP BY s.teacherid
        ORDER BY open_count DESC, overdue_count DESC, latest_plan_time DESC",
-        ['nowtime' => $now, 'none' => 'none'],
+        array_merge(['nowtime' => $now, 'none' => 'none'], $workspaceparams),
         0,
         100
     ));
@@ -233,8 +308,9 @@ if ($ready) {
               'improvement_plan_overdue',
               'improvement_plan_admin_escalated'
           )
+            {$alertsworkspacefilter}
        ORDER BY timecreated DESC, id DESC",
-        [],
+        $workspaceparams,
         0,
         80
     ));
@@ -261,7 +337,7 @@ if ($ready && $export === 'plans') {
             !empty($plan->improvement_plan_completedat) ? userdate((int)$plan->improvement_plan_completedat, get_string('strftimedatetimeshort')) : '',
             (string)$plan->improvement_plan_goals,
             (string)$plan->improvement_plan_actions,
-            (string)$plan->improvement_plan_completion_notes,
+            (string)($plan->improvement_plan_completion_notes ?? ''),
         ];
     }
     pqlip_csv('quraan-teacher-improvement-plans.csv', ['sessionid', 'title', 'teacherid', 'teacher', 'mentorid', 'students', 'qa_status', 'qa_score', 'leadership_status', 'plan_status', 'priority', 'assigned_at', 'acknowledged_at', 'due_date', 'completed_at', 'goals', 'actions', 'completion_notes'], $rows);
@@ -324,20 +400,22 @@ body.pqh-live-improvement-page .main-inner{margin:0!important;padding:0!importan
 .pqlip-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
 @media(max-width:1100px){.pqlip-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlip-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlip-grid{grid-template-columns:1fr}.pqlip-top{display:block}.pqlip-actions{margin-top:12px}.pqlip-table{display:block;overflow:auto}.pqlip-kv{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.pqlip-filters,.pqlip-metrics,.pqlip-kv{grid-template-columns:1fr}.pqlip-title{font-size:24px}.pqlip-card-head{display:block}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlip-shell">
   <div class="pqlip-wrap">
-    <section class="pqlip-top">
+    <section class="pqlip-top pqh-workspace-top">
       <div>
-        <h1 class="pqlip-title">Teacher Improvement Plans</h1>
-        <p class="pqlip-sub">Review active plans, overdue items, completed history, teacher trends, and improvement-plan audit activity.</p>
+        <h1 class="pqlip-title pqh-workspace-title">Teacher Improvement Plans</h1>
+        <p class="pqlip-sub pqh-workspace-sub">Review active plans, overdue items, completed history, teacher trends, and improvement-plan audit activity.</p>
       </div>
-      <div class="pqlip-actions">
-        <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php'))->out(false); ?>">Teachers</a>
-        <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php'))->out(false); ?>">Leadership</a>
-        <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php'))->out(false); ?>">QA analytics</a>
-        <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Operations</a>
-        <a class="pqlip-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
+      <div class="pqlip-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php', $urlparams))->out(false); ?>">Teachers</a>
+        <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', $urlparams))->out(false); ?>">Leadership</a>
+        <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', $urlparams))->out(false); ?>">QA analytics</a>
+        <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Operations</a>
+        <a class="pqlip-btn" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
       </div>
     </section>
 
@@ -346,6 +424,8 @@ body.pqh-live-improvement-page .main-inner{margin:0!important;padding:0!importan
     <?php else: ?>
       <section class="pqlip-panel">
         <form method="get">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
           <div class="pqlip-filters">
             <div class="pqlip-field"><label for="from">From</label><input class="pqlip-input" id="from" name="from" type="date" value="<?php echo s(date('Y-m-d', $from)); ?>"></div>
             <div class="pqlip-field"><label for="to">To</label><input class="pqlip-input" id="to" name="to" type="date" value="<?php echo s(date('Y-m-d', $to)); ?>"></div>
@@ -363,10 +443,10 @@ body.pqh-live-improvement-page .main-inner{margin:0!important;padding:0!importan
             </select></div>
             <label class="pqlip-check"><input type="checkbox" name="overdue" value="1" <?php echo $overdueonly ? 'checked' : ''; ?>> Overdue only</label>
           </div>
-          <div class="pqlip-actions">
+          <div class="pqlip-actions pqh-workspace-actions">
             <button class="pqlip-btn" type="submit">Apply filters</button>
-            <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php'))->out(false); ?>">Reset</a>
-            <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', ['from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'teacherid' => $teacherid, 'mentorid' => $mentorid, 'status' => $status, 'priority' => $priority, 'overdue' => $overdueonly ? 1 : 0, 'export' => 'plans']))->out(false); ?>">Export CSV</a>
+            <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', $urlparams))->out(false); ?>">Reset</a>
+            <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', pqlip_url_params($urlparams, ['from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'teacherid' => $teacherid, 'mentorid' => $mentorid, 'status' => $status, 'priority' => $priority, 'overdue' => $overdueonly ? 1 : 0, 'export' => 'plans'])))->out(false); ?>">Export CSV</a>
           </div>
         </form>
       </section>
@@ -412,12 +492,12 @@ body.pqh-live-improvement-page .main-inner{margin:0!important;padding:0!importan
                 <p class="pqlip-meta">Due: <?php echo !empty($plan->improvement_plan_due_date) ? s(userdate((int)$plan->improvement_plan_due_date, get_string('strftimedatetimeshort'))) : 'no due date'; ?><?php echo !empty($plan->improvement_plan_completedat) ? ' - Completed: ' . s(userdate((int)$plan->improvement_plan_completedat, get_string('strftimedatetimeshort'))) : ''; ?></p>
                 <?php if (trim((string)$plan->improvement_plan_goals) !== ''): ?><p class="pqlip-meta"><strong>Goals:</strong> <?php echo s(pqlip_short((string)$plan->improvement_plan_goals, 260)); ?></p><?php endif; ?>
                 <?php if (trim((string)$plan->improvement_plan_actions) !== ''): ?><p class="pqlip-meta"><strong>Actions:</strong> <?php echo s(pqlip_short((string)$plan->improvement_plan_actions, 260)); ?></p><?php endif; ?>
-                <div class="pqlip-actions">
-                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => (int)$plan->teacherid]))->out(false); ?>">Teacher profile</a>
-                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', ['teacherid' => (int)$plan->teacherid, 'status' => 'all']))->out(false); ?>">Leadership case</a>
-                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$plan->id]))->out(false); ?>">QA review</a>
-                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => (int)$plan->id]))->out(false); ?>">Class review</a>
-                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', ['teacherid' => (int)$plan->teacherid]))->out(false); ?>">Teacher workspace</a>
+                <div class="pqlip-actions pqh-workspace-actions">
+                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', pqlip_url_params($urlparams, ['teacherid' => (int)$plan->teacherid])))->out(false); ?>">Teacher profile</a>
+                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', pqlip_url_params($urlparams, ['teacherid' => (int)$plan->teacherid, 'status' => 'all'])))->out(false); ?>">Leadership case</a>
+                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', pqlip_url_params($urlparams, ['sessionid' => (int)$plan->id])))->out(false); ?>">QA review</a>
+                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', pqlip_url_params($urlparams, ['sessionid' => (int)$plan->id])))->out(false); ?>">Class review</a>
+                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', pqlip_url_params($urlparams, ['teacherid' => (int)$plan->teacherid])))->out(false); ?>">Teacher workspace</a>
                 </div>
               </article>
             <?php endforeach; ?>
@@ -437,9 +517,9 @@ body.pqh-live-improvement-page .main-inner{margin:0!important;padding:0!importan
                 <td><span class="pqlip-pill <?php echo (int)$row->overdue_count > 0 ? 'pqlip-pill--bad' : 'pqlip-pill--ok'; ?>"><?php echo (int)$row->overdue_count; ?></span></td>
                 <td><?php echo (int)$row->avg_qa_score; ?>%<br><span class="pqlip-code"><?php echo (int)$row->needs_coaching_count; ?> coaching, <?php echo (int)$row->serious_issue_count; ?> serious</span></td>
                 <td>
-                  <div class="pqlip-actions">
-                    <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => (int)$row->teacherid]))->out(false); ?>">Profile</a>
-                    <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', ['teacherid' => (int)$row->teacherid, 'status' => 'all']))->out(false); ?>">Filter</a>
+                  <div class="pqlip-actions pqh-workspace-actions">
+                    <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', pqlip_url_params($urlparams, ['teacherid' => (int)$row->teacherid])))->out(false); ?>">Profile</a>
+                    <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', pqlip_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'status' => 'all'])))->out(false); ?>">Filter</a>
                   </div>
                 </td>
               </tr>

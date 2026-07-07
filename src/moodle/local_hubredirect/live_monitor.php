@@ -4,12 +4,26 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
+require_once(__DIR__ . '/accesslib.php');
 
-$sessionid = required_param('sessionid', PARAM_INT);
+$sessionid = optional_param('sessionid', 0, PARAM_INT);
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+if ($requestedworkspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $requestedworkspaceid = (int)$consumercontext->workspaceid;
+}
+$urlparams = ['sessionid' => $sessionid];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+}
+$workspaceurlparams = array_diff_key($urlparams, ['sessionid' => true]);
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_monitor.php', ['sessionid' => $sessionid]));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_monitor.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Lesson Monitor');
 $PAGE->set_heading('Live Lesson Monitor');
@@ -35,7 +49,15 @@ function pqlmon_column_exists(string $table, string $column): bool {
 
 function pqlmon_is_teacher_or_admin($session): bool {
     global $USER;
-    return is_siteadmin($USER) || (int)$session->teacherid === (int)$USER->id;
+    if (pqh_can_manage_academy_operations((int)$USER->id)) {
+        return true;
+    }
+    if (pqlmon_column_exists('local_prequran_live_session', 'workspaceid')
+        && (int)($session->workspaceid ?? 0) > 0
+        && pqh_user_can_manage_workspace((int)$USER->id, (int)$session->workspaceid)) {
+        return true;
+    }
+    return (int)$session->teacherid === (int)$USER->id;
 }
 
 function pqlmon_student_cohort(int $studentid, int $fallback = 0): int {
@@ -51,11 +73,11 @@ function pqlmon_student_cohort(int $studentid, int $fallback = 0): int {
     return $cohortid ? (int)$cohortid : 0;
 }
 
-function pqlmon_lesson_link(int $studentid, int $cohortid, string $unitid, int $sessionid): moodle_url {
+function pqlmon_lesson_link(int $studentid, int $cohortid, string $unitid, int $sessionid, array $workspaceurlparams = []): moodle_url {
     $params = [
         'goto' => $unitid !== '' ? $unitid : 'alphabet_listen',
         'managed_student' => 0,
-    ];
+    ] + $workspaceurlparams;
     if ($cohortid > 0) {
         $params['cohortid'] = $cohortid;
     }
@@ -168,6 +190,60 @@ function pqlmon_speak(int $studentid): array {
         [$studentid, 'upload_failed'],
         IGNORE_MULTIPLE
     );
+    return $summary;
+}
+
+function pqlmon_practice_coach(int $studentid, int $sessionid): array {
+    global $DB;
+    $summary = [
+        'ready' => false,
+        'count' => 0,
+        'idle' => 0,
+        'away' => 0,
+        'latest' => null,
+        'events' => [],
+    ];
+    if (!pqlmon_table_exists('local_prequran_practice_coach_event')) {
+        return $summary;
+    }
+    $summary['ready'] = true;
+    $recommendationselect = pqlmon_column_exists('local_prequran_practice_coach_event', 'recommendation_key')
+        ? 'recommendation_key, recommendation_message, message_source, ai_model,'
+        : "'' AS recommendation_key, '' AS recommendation_message, '' AS message_source, '' AS ai_model,";
+    $row = $DB->get_record_sql(
+        "SELECT COUNT(1) AS coach_count,
+                SUM(CASE WHEN trigger_key = 'idle_nudge' THEN 1 ELSE 0 END) AS idle_count,
+                SUM(CASE WHEN trigger_key IN ('screen_return', 'focus_return') THEN 1 ELSE 0 END) AS away_count,
+                MAX(timecreated) AS latest_time
+           FROM {local_prequran_practice_coach_event}
+          WHERE userid = :userid
+            AND live_sessionid = :sessionid",
+        ['userid' => $studentid, 'sessionid' => $sessionid]
+    );
+    if ($row) {
+        $summary['count'] = (int)$row->coach_count;
+        $summary['idle'] = (int)$row->idle_count;
+        $summary['away'] = (int)$row->away_count;
+    }
+    $summary['latest'] = $DB->get_record_sql(
+        "SELECT trigger_key, {$recommendationselect} message, timecreated
+           FROM {local_prequran_practice_coach_event}
+          WHERE userid = :userid
+            AND live_sessionid = :sessionid
+       ORDER BY timecreated DESC, id DESC",
+        ['userid' => $studentid, 'sessionid' => $sessionid],
+        IGNORE_MULTIPLE
+    );
+    $summary['events'] = array_values($DB->get_records_sql(
+        "SELECT id, trigger_key, event_type, step_id, {$recommendationselect} message, timecreated
+           FROM {local_prequran_practice_coach_event}
+          WHERE userid = :userid
+            AND live_sessionid = :sessionid
+       ORDER BY timecreated DESC, id DESC",
+        ['userid' => $studentid, 'sessionid' => $sessionid],
+        0,
+        5
+    ));
     return $summary;
 }
 
@@ -290,12 +366,37 @@ function pqlmon_audit(int $sessionid, string $action, string $targettype = '', i
 }
 
 if (!pqlmon_table_exists('local_prequran_live_session') || !pqlmon_table_exists('local_prequran_live_participant')) {
-    throw new moodle_exception('missingtable', 'error', '', 'Live session tables are not installed.');
+    pqh_access_denied(
+        'Live session tables are not installed yet.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live lesson monitor unavailable'
+    );
 }
 
-$session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', MUST_EXIST);
+$session = $sessionid > 0 ? $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING) : false;
+if (!$session) {
+    pqh_access_denied(
+        'Choose a valid live session before opening the lesson monitor.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live lesson monitor unavailable'
+    );
+}
+if ($requestedworkspaceid > 0
+    && pqlmon_column_exists('local_prequran_live_session', 'workspaceid')
+    && (int)($session->workspaceid ?? 0) !== $requestedworkspaceid) {
+    $actualworkspaceid = (int)($session->workspaceid ?? 0);
+    pqh_access_denied(
+        'This live session belongs to workspace #' . $actualworkspaceid . ', not workspace #' . $requestedworkspaceid . '. Choose a session from this workspace live-session list.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Workspace live monitor access required'
+    );
+}
 if (!pqlmon_is_teacher_or_admin($session)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only the assigned teacher or an administrator can monitor this live session.');
+    pqh_access_denied(
+        'Only the assigned teacher or a workspace administrator can monitor this live session.',
+        new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams),
+        'Live monitor access required'
+    );
 }
 pqlmon_audit($sessionid, 'lesson_monitor_opened', 'session', $sessionid);
 
@@ -357,20 +458,31 @@ body.pqh-live-monitor-page .main-inner{margin:0!important;padding:0!important;ma
 .pqlmon-live__status--away{background:#fff0ee;border-color:#e7a19b}
 .pqlmon-live__status--muted{background:#f8fafc}
 .pqlmon-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}
+.pqlmon-coach{margin:12px 0;padding:12px;border:1px solid rgba(47,111,78,.16);border-radius:8px;background:#f3fff7}
+.pqlmon-coach h3{margin:0 0 8px;color:#2f6f4e;font-size:15px;font-weight:950}
+.pqlmon-coach__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pqlmon-coach__item{padding:9px;border:1px solid rgba(47,111,78,.13);border-radius:7px;background:#fff}
+.pqlmon-coach__item strong{display:block;color:#2f6f4e;font-size:16px;font-weight:950}
+.pqlmon-coach__item span{display:block;margin-top:2px;color:#5e7280;font-size:11px;font-weight:850}
+.pqlmon-coach__events{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+.pqlmon-coach__events li{padding:8px;border-radius:7px;background:#fff;border:1px solid rgba(47,111,78,.1);color:#173044;font-size:12px;font-weight:800}
 @media(max-width:900px){.pqlmon-grid,.pqlmon-live{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlmon-top,.pqlmon-card__head{display:block}.pqlmon-actions{margin-top:12px}.pqlmon-title{font-size:24px}}
-@media(max-width:560px){.pqlmon-grid,.pqlmon-live{grid-template-columns:1fr}}
+@media(max-width:560px){.pqlmon-grid,.pqlmon-live,.pqlmon-coach__grid{grid-template-columns:1fr}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlmon-shell">
   <div class="pqlmon-wrap">
-    <section class="pqlmon-top">
+    <section class="pqlmon-top pqh-workspace-top">
       <div>
-        <h1 class="pqlmon-title">Live Lesson Monitor</h1>
-        <p class="pqlmon-sub"><?php echo s((string)$session->title); ?> - <?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
+        <h1 class="pqlmon-title pqh-workspace-title">Live Lesson Monitor</h1>
+        <p class="pqlmon-sub pqh-workspace-sub"><?php echo s((string)$session->title); ?> - <?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
       </div>
-      <div class="pqlmon-actions">
-        <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => $sessionid]))->out(false); ?>">Attendance &amp; notes</a>
-        <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php'))->out(false); ?>">Teacher workspace</a>
-        <a class="pqlmon-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', ['action' => 'join', 'sessionid' => $sessionid, 'sesskey' => sesskey()]))->out(false); ?>">Start class</a>
+      <div class="pqlmon-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $urlparams))->out(false); ?>">Attendance &amp; notes</a>
+        <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', $workspaceurlparams))->out(false); ?>">Teacher workspace</a>
+        <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams))->out(false); ?>">Live sessions</a>
+        <a class="pqlmon-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', array_merge($urlparams, ['action' => 'join', 'sesskey' => sesskey()])))->out(false); ?>">Start class</a>
       </div>
     </section>
 
@@ -391,10 +503,11 @@ body.pqh-live-monitor-page .main-inner{margin:0!important;padding:0!important;ma
             $progress = pqlmon_progress($studentid);
             $focus = pqlmon_focus($studentid, $sessionid);
             $speak = pqlmon_speak($studentid);
+            $coach = pqlmon_practice_coach($studentid, $sessionid);
             $indicators = pqlmon_live_indicators($focus, $progress);
             $cohortid = pqlmon_student_cohort($studentid, (int)$session->cohortid);
             $unitid = (string)$session->unitid !== '' ? (string)$session->unitid : ($progress['latest'] ? (string)$progress['latest']->unitid : '');
-            $lessonurl = pqlmon_lesson_link($studentid, $cohortid, $unitid, $sessionid);
+            $lessonurl = pqlmon_lesson_link($studentid, $cohortid, $unitid, $sessionid, $workspaceurlparams);
           ?>
           <article class="pqlmon-card">
             <div class="pqlmon-card__head">
@@ -425,9 +538,29 @@ body.pqh-live-monitor-page .main-inner{margin:0!important;padding:0!important;ma
               Speak practice: <?php echo $speak['ready'] ? (int)$speak['count'] . ' recordings' : 'not available'; ?>
               <?php echo $speak['latest'] ? ' - latest ' . s((string)($speak['latest']->letter_name ?: $speak['latest']->unitid)) : ''; ?>
             </p>
-            <div class="pqlmon-actions">
+            <?php if ($coach['ready']): ?>
+              <section class="pqlmon-coach" aria-label="Chatbot Practice Coach activity">
+                <h3>Chatbot Practice Coach</h3>
+                <div class="pqlmon-coach__grid">
+                  <div class="pqlmon-coach__item"><strong><?php echo (int)$coach['count']; ?></strong><span>coach prompts</span></div>
+                  <div class="pqlmon-coach__item"><strong><?php echo (int)$coach['idle']; ?></strong><span>idle nudges</span></div>
+                  <div class="pqlmon-coach__item"><strong><?php echo (int)$coach['away']; ?></strong><span>screen returns</span></div>
+                  <div class="pqlmon-coach__item"><strong><?php echo $coach['latest'] ? s(pqlmon_time_ago((int)$coach['latest']->timecreated)) : 'none'; ?></strong><span>latest coach event</span></div>
+                </div>
+                <?php if ($coach['events']): ?>
+                  <ul class="pqlmon-coach__events">
+                    <?php foreach ($coach['events'] as $event): ?>
+                      <li><strong><?php echo s(ucwords(str_replace('_', ' ', (string)$event->trigger_key))); ?></strong> - <?php echo s((string)$event->message); ?> <span class="pqlmon-meta"><?php echo s(userdate((int)$event->timecreated, get_string('strftimetime'))); ?><?php echo !empty($event->message_source) ? ' - ' . s(str_replace('_', ' ', (string)$event->message_source)) : ''; ?></span><?php echo !empty($event->recommendation_message) ? '<br><span class="pqlmon-meta">Recommendation: ' . s((string)$event->recommendation_message) . '</span>' : ''; ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                <?php else: ?>
+                  <p class="pqlmon-meta">No Practice Coach prompts recorded for this student yet.</p>
+                <?php endif; ?>
+              </section>
+            <?php endif; ?>
+            <div class="pqlmon-actions pqh-workspace-actions">
               <a class="pqlmon-btn" href="<?php echo $lessonurl->out(false); ?>">Open lesson</a>
-              <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/recordings.php', ['childid' => $studentid]))->out(false); ?>">Speak recordings</a>
+              <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/recordings.php', array_merge($workspaceurlparams, ['childid' => $studentid])))->out(false); ?>">Speak recordings</a>
             </div>
           </article>
         <?php endforeach; ?>

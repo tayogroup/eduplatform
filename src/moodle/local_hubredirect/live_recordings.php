@@ -2,15 +2,33 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once(__DIR__ . '/live_security.php');
 
 $childid = optional_param('childid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$workspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($workspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $workspaceid = (int)$consumercontext->workspaceid;
+}
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($workspaceid > 0) {
+    $urlparams['workspaceid'] = $workspaceid;
+}
+$returnurl = new moodle_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams);
+
+function pqlrp_url(string $path, array $urlparams, array $params = []): moodle_url {
+    return new moodle_url($path, $urlparams + $params);
+}
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_recordings.php', $childid > 0 ? ['childid' => $childid] : []));
+$PAGE->set_url(pqlrp_url('/local/hubredirect/live_recordings.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Class Recordings');
 $PAGE->set_heading('Live Class Recordings');
@@ -193,12 +211,16 @@ if ($childid <= 0) {
 }
 
 if ($childid > 0 && !pqlrp_user_can_access_child((int)$USER->id, $childid)) {
-    pqh_live_security_deny(
-        'You cannot view live-class recordings for this student.',
+    pqh_live_security_audit(
         'live_recording_access_denied',
         'student',
         $childid,
         ['studentid' => $childid]
+    );
+    pqh_access_denied(
+        'You cannot view live-class recordings for this student.',
+        $returnurl,
+        'Live recording access required'
     );
 }
 
@@ -242,18 +264,20 @@ body.pqh-live-recordings-parent-page .main-inner{margin:0!important;padding:0!im
 .pqlrp-student{padding:16px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07);text-decoration:none;color:#4d3522!important;font-weight:950}
 .pqlrp-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
 @media(max-width:720px){.pqlrp-top{display:block}.pqlrp-title{font-size:25px}.pqlrp-actions{margin-top:12px}.pqlrp-btn{width:100%}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlrp-shell">
   <div class="pqlrp-wrap">
-    <section class="pqlrp-top">
+    <section class="pqlrp-top pqh-workspace-top">
       <div>
         <p class="pqlrp-kicker">Approved recordings</p>
-        <h1 class="pqlrp-title">Live class recordings for <?php echo s($childname); ?></h1>
-        <p class="pqlrp-subtitle">Only recordings reviewed and published by Quraan Academy are shown here.</p>
+        <h1 class="pqlrp-title pqh-workspace-title">Live class recordings for <?php echo s($childname); ?></h1>
+        <p class="pqlrp-subtitle pqh-workspace-sub">Only recordings reviewed and published by <?php echo s((string)($consumercontext->consumername ?? 'EduPlatform')); ?> are shown here.</p>
       </div>
-      <div class="pqlrp-actions">
-        <a class="pqlrp-btn pqlrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Parent live hub</a>
-        <a class="pqlrp-btn pqlrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Trust center</a>
+      <div class="pqlrp-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <a class="pqlrp-btn pqlrp-btn--light" href="<?php echo pqlrp_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Parent live hub</a>
+        <a class="pqlrp-btn pqlrp-btn--light" href="<?php echo pqlrp_url('/local/hubredirect/live_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Trust center</a>
       </div>
     </section>
 
@@ -261,7 +285,7 @@ body.pqh-live-recordings-parent-page .main-inner{margin:0!important;padding:0!im
       <?php if ($modechildren): ?>
         <section class="pqlrp-students" aria-label="Choose student">
           <?php foreach ($modechildren as $childrow): ?>
-            <a class="pqlrp-student" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', ['childid' => (int)$childrow['studentid']]))->out(false); ?>">
+            <a class="pqlrp-student" href="<?php echo pqlrp_url('/local/hubredirect/live_recordings.php', $urlparams, ['childid' => (int)$childrow['studentid']])->out(false); ?>">
               <?php echo s((string)$childrow['name']); ?>
               <span>Open approved live recordings</span>
             </a>
@@ -288,7 +312,7 @@ body.pqh-live-recordings-parent-page .main-inner{margin:0!important;padding:0!im
               </p>
               <?php if ($lesson !== ''): ?><p class="pqlrp-meta"><?php echo s($lesson); ?></p><?php endif; ?>
               <p class="pqlrp-meta">Expires: <?php echo !empty($recording->expiresat) ? userdate((int)$recording->expiresat, get_string('strftimedatetimeshort')) : 'not set'; ?></p>
-              <div class="pqlrp-actions">
+              <div class="pqlrp-actions pqh-workspace-actions">
                 <?php if ((string)$recording->playback_url !== ''): ?>
                   <a class="pqlrp-btn" href="<?php echo s((string)$recording->playback_url); ?>" target="_blank" rel="noopener noreferrer">Open recording</a>
                 <?php endif; ?>

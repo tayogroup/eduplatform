@@ -2,6 +2,7 @@
 // Server-side ElevenLabs TTS proxy for child quiz chatbots.
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 
 function pqh_quiz_tts_origin_allowed(string $origin): bool {
     global $CFG;
@@ -18,15 +19,13 @@ function pqh_quiz_tts_origin_allowed(string $origin): bool {
 
     $appbase = (string)get_config('local_prequran', 'bunny_app_base_url');
     $app = parse_url($appbase);
-    if (!empty($app['scheme']) && !empty($app['host'])) {
+    if (!empty($app['scheme']) && !empty($app['host']) && !pqh_is_legacy_quran_resource_host((string)$app['host'])) {
         $allowed[] = $app['scheme'] . '://' . $app['host'] . (!empty($app['port']) ? ':' . $app['port'] : '');
     }
 
-    $allowed[] = 'https://app.quraan.academy';
-    $allowed[] = 'https://quraanacademy.b-cdn.net';
-    $allowed[] = 'https://ehelacademy.b-cdn.net';
-    $allowed[] = 'https://quraan.academy';
-    $allowed[] = 'https://quraantest.academy';
+    $allowed = array_merge($allowed, pqh_resource_allowed_origins());
+    $allowed[] = 'https://eduplatform.ai';
+    $allowed[] = 'https://app.eduplatform.ai';
     $allowed[] = 'http://127.0.0.1:4173';
     $allowed[] = 'http://localhost:4173';
 
@@ -151,19 +150,40 @@ if ($apikey === '') {
     pqh_quiz_tts_json_error(503, 'ElevenLabs voice is not configured.');
 }
 
-$voiceid = pqh_quiz_tts_config_value(
+$purpose = trim((string)($payload['purpose'] ?? ''));
+$voiceid = '';
+if ($purpose === 'practice_coach') {
+    $voiceid = pqh_quiz_tts_config_value(
+        'practice_coach_voice_id',
+        'local_prequran_practice_coach_voice_id',
+        'PREQURAN_PRACTICE_COACH_VOICE_ID'
+    );
+}
+if ($voiceid === '') {
+    $voiceid = pqh_quiz_tts_config_value(
     'quiz_tts_voice_id',
     'local_prequran_quiz_tts_voice_id',
     'PREQURAN_QUIZ_TTS_VOICE_ID',
     'B5xxC4eQoOFJnY4R5XkI'
-);
+    );
+}
 
-$modelid = pqh_quiz_tts_config_value(
+$modelid = '';
+if ($purpose === 'practice_coach') {
+    $modelid = pqh_quiz_tts_config_value(
+        'practice_coach_model_id',
+        'local_prequran_practice_coach_model_id',
+        'PREQURAN_PRACTICE_COACH_MODEL_ID'
+    );
+}
+if ($modelid === '') {
+    $modelid = pqh_quiz_tts_config_value(
     'quiz_tts_model_id',
     'local_prequran_quiz_tts_model_id',
     'PREQURAN_QUIZ_TTS_MODEL_ID',
     'eleven_multilingual_v2'
-);
+    );
+}
 
 $url = 'https://api.elevenlabs.io/v1/text-to-speech/' . rawurlencode($voiceid) . '?output_format=mp3_44100_128';
 $body = json_encode([

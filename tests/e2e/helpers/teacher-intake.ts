@@ -30,6 +30,28 @@ function firstMatch(text: string, pattern: RegExp): string {
   return text.match(pattern)?.[1]?.trim() || '';
 }
 
+function isTransientNavigationError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error || '');
+  return /ERR_INTERNET_DISCONNECTED|ERR_NETWORK_CHANGED|ERR_CONNECTION_RESET|ERR_CONNECTION_CLOSED|ERR_TIMED_OUT|Timeout|502|503|504/i.test(message);
+}
+
+async function gotoWithTransientRetry(page: Page, url: string, attempts = 3): Promise<void> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      await page.goto(url, { waitUntil: 'commit', timeout: 60_000 });
+      return;
+    } catch (error) {
+      lastError = error;
+      if (attempt >= attempts || !isTransientNavigationError(error)) {
+        throw error;
+      }
+      await page.waitForTimeout(2_000 * attempt);
+    }
+  }
+  throw lastError;
+}
+
 function parseTeacherUsername(createdText: string): string {
   const username =
     firstMatch(createdText, /Username:\s*(.*?)\s*Temporary password:/i) ||
@@ -88,7 +110,7 @@ export class PublicTeacherIntakePage {
   ) {}
 
   async goto(): Promise<void> {
-    await this.page.goto(publicTeacherIntakeUrl(this.env), { waitUntil: 'commit', timeout: 60_000 });
+    await gotoWithTransientRetry(this.page, publicTeacherIntakeUrl(this.env));
   }
 
   private intakeForm() {

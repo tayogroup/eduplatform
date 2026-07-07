@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_login();
+require_once(__DIR__ . '/accesslib.php');
 
-if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can view teacher performance profiles.');
-}
+pqh_require_academy_operations('Only academy operations users can view teacher performance profiles.');
+
+$pqltpconsumercontext = pqh_requested_consumer_context();
+$pqltpbrandname = trim((string)($pqltpconsumercontext->consumername ?? 'EduPlatform')) ?: 'EduPlatform';
 
 function pqltp_table_exists(string $table): bool {
     global $DB;
@@ -116,8 +118,8 @@ $defaultto = usergetmidnight($now) + DAYSECS - 1;
 $from = pqltp_clean_date(optional_param('from', date('Y-m-d', $defaultfrom), PARAM_TEXT), $defaultfrom);
 $to = pqltp_clean_date(optional_param('to', date('Y-m-d', $defaultto), PARAM_TEXT), $defaultto) + DAYSECS - 1;
 $teacherid = optional_param('teacherid', 0, PARAM_INT);
-$export = optional_param('export', '', PARAM_ALPHANUMEXT);
-$printpack = optional_param('print', 0, PARAM_BOOL);
+$export = optional_param('export', optional_param('exqort', '', PARAM_ALPHANUMEXT), PARAM_ALPHANUMEXT);
+$printpack = optional_param('print', optional_param('qrint', 0, PARAM_BOOL), PARAM_BOOL);
 $ready = pqltp_ready();
 if ($printpack) {
     $PAGE->add_body_class('pqltp-print-pack');
@@ -530,15 +532,17 @@ body.pqh-live-teacher-profile-page .main-inner{margin:0!important;padding:0!impo
   .pqltp-metrics{grid-template-columns:repeat(5,minmax(0,1fr))}
   .pqltp-grid,.pqltp-review{grid-template-columns:1fr}
 }
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqltp-shell">
   <div class="pqltp-wrap">
-    <section class="pqltp-top">
+    <section class="pqltp-top pqh-workspace-top">
       <div>
-        <h1 class="pqltp-title">Teacher Performance Profile</h1>
-        <p class="pqltp-sub"><?php echo s($teachername); ?> - QA, coaching, leadership, improvement plans, and class timeline.</p>
+        <h1 class="pqltp-title pqh-workspace-title">Teacher Performance Profile</h1>
+        <p class="pqltp-sub pqh-workspace-sub"><?php echo s($teachername); ?> - QA, coaching, leadership, improvement plans, and class timeline.</p>
       </div>
-      <div class="pqltp-actions">
+      <div class="pqltp-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php'))->out(false); ?>">Teacher directory</a>
         <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php'))->out(false); ?>">Improvement plans</a>
         <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php'))->out(false); ?>">QA analytics</a>
@@ -560,7 +564,7 @@ body.pqh-live-teacher-profile-page .main-inner{margin:0!important;padding:0!impo
             <div class="pqltp-field"><label>&nbsp;</label><button class="pqltp-btn" type="submit">Load profile</button></div>
           </div>
           <?php if ($teacherid > 0): ?>
-            <div class="pqltp-actions">
+            <div class="pqltp-actions pqh-workspace-actions">
               <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => $teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'export' => 'profile']))->out(false); ?>">Export CSV</a>
               <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => $teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'export' => 'reviewpack']))->out(false); ?>">Export review pack</a>
               <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => $teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'print' => 1]))->out(false); ?>">Printable review pack</a>
@@ -587,7 +591,7 @@ body.pqh-live-teacher-profile-page .main-inner{margin:0!important;padding:0!impo
         </section>
 
         <section class="pqltp-panel" style="margin-bottom:16px">
-          <p class="pqltp-print-note">Quraan Academy teacher review pack - generated <?php echo s(userdate(time(), get_string('strftimedatetimeshort'))); ?>.</p>
+          <p class="pqltp-print-note"><?php echo s($pqltpbrandname); ?> teacher review pack - generated <?php echo s(userdate(time(), get_string('strftimedatetimeshort'))); ?>.</p>
           <div class="pqltp-card-head">
             <div>
               <h2>Leadership Review Pack</h2>
@@ -638,7 +642,7 @@ body.pqh-live-teacher-profile-page .main-inner{margin:0!important;padding:0!impo
                   </div>
                   <p class="pqltp-meta"><?php echo s($item['detail']); ?></p>
                   <?php if ((int)$item['sessionid'] > 0): ?>
-                    <div class="pqltp-actions">
+                    <div class="pqltp-actions pqh-workspace-actions">
                       <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$item['sessionid']]))->out(false); ?>">QA</a>
                       <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', ['sessionid' => (int)$item['sessionid']]))->out(false); ?>">Review</a>
                     </div>

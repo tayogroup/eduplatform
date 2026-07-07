@@ -256,6 +256,67 @@ function pqh_consumer_context_from_records(stdClass $consumer, ?stdClass $domain
     ];
 }
 
+function pqh_json_array(string $json): array {
+    $decoded = json_decode($json, true);
+    return is_array($decoded) ? $decoded : [];
+}
+
+function pqh_clean_brand_url(string $value): string {
+    $value = trim(str_replace(["\r", "\n", '"', "'", '\\'], '', $value));
+    if ($value === '') {
+        return '';
+    }
+    if (preg_match('/^https?:\/\//i', $value)) {
+        $url = clean_param($value, PARAM_URL);
+        return filter_var($url, FILTER_VALIDATE_URL) ? $url : '';
+    }
+    if ($value[0] !== '/') {
+        return '';
+    }
+    $path = clean_param($value, PARAM_LOCALURL);
+    if ($path === '' || strpos($path, '//') === 0 || preg_match('/^\/?https?:/i', $path)) {
+        return '';
+    }
+    return $path;
+}
+
+function pqh_consumer_theme(?stdClass $consumer = null): array {
+    $theme = pqh_json_array((string)($consumer->themejson ?? ''));
+    $primary = (string)($theme['primary_color'] ?? '#2f6f4e');
+    $accent = (string)($theme['accent_color'] ?? '#d99a26');
+    $surface = (string)($theme['surface_color'] ?? '#f4f8fb');
+    return [
+        'primary_color' => preg_match('/^#[0-9a-fA-F]{6}$/', $primary) ? $primary : '#2f6f4e',
+        'accent_color' => preg_match('/^#[0-9a-fA-F]{6}$/', $accent) ? $accent : '#d99a26',
+        'surface_color' => preg_match('/^#[0-9a-fA-F]{6}$/', $surface) ? $surface : '#f4f8fb',
+    ];
+}
+
+function pqh_consumer_copy(?stdClass $consumer = null): array {
+    return pqh_json_array((string)($consumer->copyjson ?? ''));
+}
+
+function pqh_consumer_hero_image_url(?stdClass $consumer = null, string $fallback = '/local/ehelhome/pix/landing-welcome.jpg'): string {
+    $copy = pqh_consumer_copy($consumer);
+    $hero = pqh_clean_brand_url((string)($copy['hero_image_url'] ?? ''));
+    if ($hero !== '') {
+        return $hero;
+    }
+    return pqh_clean_brand_url($fallback) ?: '/local/ehelhome/pix/landing-welcome.jpg';
+}
+
+function pqh_consumer_brand_initials(?stdClass $consumer = null, string $fallback = 'W'): string {
+    $brand = trim((string)($consumer->consumername ?? $consumer->name ?? ''));
+    $copy = pqh_consumer_copy($consumer);
+    $initials = strtoupper(substr(trim((string)($copy['brand_initials'] ?? '')), 0, 6));
+    if ($initials !== '') {
+        return $initials;
+    }
+    $source = preg_replace('/[^a-z0-9]/i', '', $brand);
+    $initials = strtoupper(substr((string)$source, 0, 1));
+    return $initials !== '' ? $initials : $fallback;
+}
+
 function pqh_consumer_context_by_slug(string $slug): stdClass {
     global $DB;
     $slug = clean_param(trim($slug), PARAM_ALPHANUMEXT);
@@ -783,20 +844,20 @@ function pqh_current_workspace_id(int $userid, int $requestedid = 0): int {
 
 function pqh_workspace_header_css(): string {
     return <<<'CSS'
-.pqh-workspace-top,.qqh-worksqace-toq{position:relative;overflow:hidden;grid-template-columns:minmax(0,1fr) auto!important;padding:22px 24px!important;border-color:rgba(105,76,45,.14)!important;border-radius:16px!important;background:linear-gradient(135deg,#eaffea 0%,#fff 58%,#fff7e7 100%)!important;box-shadow:0 16px 38px rgba(105,76,45,.08)!important}
-.pqh-workspace-title,.qqh-worksqace-title{display:flex!important;align-items:center!important;gap:14px!important;margin:0!important;color:#221b22!important;font-size:30px!important;font-weight:950!important;line-height:1.08!important;letter-spacing:0!important}
+.pqh-workspace-top{position:relative;overflow:hidden;grid-template-columns:minmax(0,1fr) auto!important;padding:22px 24px!important;border-color:rgba(105,76,45,.14)!important;border-radius:16px!important;background:linear-gradient(135deg,#eaffea 0%,#fff 58%,#fff7e7 100%)!important;box-shadow:0 16px 38px rgba(105,76,45,.08)!important}
+.pqh-workspace-title{display:flex!important;align-items:center!important;gap:14px!important;margin:0!important;color:#221b22!important;font-size:30px!important;font-weight:950!important;line-height:1.08!important;letter-spacing:0!important}
 .pqh-brand-mark{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:#2f6f4e;color:#fff;font-size:16px;font-weight:950;letter-spacing:.2px;overflow:hidden}
 .pqh-brand-mark img{display:block;width:100%;height:100%;object-fit:cover}
-.pqh-workspace-sub,.qqh-worksqace-sub{margin:7px 0 0!important;color:#60735f!important;font-size:14px!important;font-weight:850!important}
-.pqh-workspace-actions,.qqh-worksqace-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:9px!important;flex-wrap:wrap!important}
-.pqh-workspace-actions a,.pqh-workspace-actions button,.qqh-worksqace-actions a,.qqh-worksqace-actions button{min-height:40px!important;padding:0 14px!important;border-radius:10px!important;border:1px solid rgba(23,48,68,.12)!important;background:#eef7ee!important;color:#173044!important;text-decoration:none!important;font-size:13px!important;font-weight:950!important;box-shadow:0 2px 0 rgba(23,48,68,.04)!important;cursor:pointer!important}
-.pqh-workspace-actions a:hover,.pqh-workspace-actions button:hover,.qqh-worksqace-actions a:hover,.qqh-worksqace-actions button:hover{background:#e1f2e1!important;border-color:rgba(47,111,78,.24)!important}
-.pqh-workspace-actions a.pqh-live-guide-link,.qqh-worksqace-actions a.pqh-live-guide-link,.pqh-live-guide-link,.pqh-workspace-actions a.pqh-live-template-link,.qqh-worksqace-actions a.pqh-live-template-link,.pqh-live-template-link{background:#fff4dc!important;border-color:rgba(214,166,66,.54)!important;color:#4d3522!important}
-.pqh-workspace-actions a.pqh-live-guide-link:hover,.qqh-worksqace-actions a.pqh-live-guide-link:hover,.pqh-live-guide-link:hover,.pqh-workspace-actions a.pqh-live-template-link:hover,.qqh-worksqace-actions a.pqh-live-template-link:hover,.pqh-live-template-link:hover{background:#ffe9b5!important;border-color:rgba(214,166,66,.78)!important;color:#4d3522!important}
-.pqh-workspace-actions a.pqh-workspace-logout,.qqh-worksqace-actions a.pqh-workspace-logout{background:#d6a642!important;border-color:#d6a642!important;color:#221b22!important}
-.pqh-workspace-actions a.pqh-workspace-logout:hover,.qqh-worksqace-actions a.pqh-workspace-logout:hover{background:#c89632!important;border-color:#c89632!important}
-.pqh-workspace-actions select,.qqh-worksqace-actions select{min-height:40px!important;border-radius:10px!important;border:1px solid rgba(23,48,68,.18)!important;background:#fff!important;color:#173044!important;font-size:13px!important;font-weight:900!important}
-@media(max-width:760px){.pqh-workspace-top,.qqh-worksqace-toq{grid-template-columns:1fr!important;padding:18px!important}.pqh-brand-mark{width:38px;height:38px}.pqh-workspace-actions,.qqh-worksqace-actions{justify-content:flex-start!important}.pqh-workspace-actions a,.pqh-workspace-actions button,.pqh-workspace-actions select,.qqh-worksqace-actions a,.qqh-worksqace-actions button,.qqh-worksqace-actions select{width:auto;max-width:100%}}
+.pqh-workspace-sub{margin:7px 0 0!important;color:#60735f!important;font-size:14px!important;font-weight:850!important}
+.pqh-workspace-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:9px!important;flex-wrap:wrap!important}
+.pqh-workspace-actions a,.pqh-workspace-actions button{min-height:40px!important;padding:0 14px!important;border-radius:10px!important;border:1px solid rgba(23,48,68,.12)!important;background:#eef7ee!important;color:#173044!important;text-decoration:none!important;font-size:13px!important;font-weight:950!important;box-shadow:0 2px 0 rgba(23,48,68,.04)!important;cursor:pointer!important}
+.pqh-workspace-actions a:hover,.pqh-workspace-actions button:hover{background:#e1f2e1!important;border-color:rgba(47,111,78,.24)!important}
+.pqh-workspace-actions a.pqh-live-guide-link,.pqh-live-guide-link,.pqh-workspace-actions a.pqh-live-template-link,.pqh-live-template-link{background:#fff4dc!important;border-color:rgba(214,166,66,.54)!important;color:#4d3522!important}
+.pqh-workspace-actions a.pqh-live-guide-link:hover,.pqh-live-guide-link:hover,.pqh-workspace-actions a.pqh-live-template-link:hover,.pqh-live-template-link:hover{background:#ffe9b5!important;border-color:rgba(214,166,66,.78)!important;color:#4d3522!important}
+.pqh-workspace-actions a.pqh-workspace-logout{background:#d6a642!important;border-color:#d6a642!important;color:#221b22!important}
+.pqh-workspace-actions a.pqh-workspace-logout:hover{background:#c89632!important;border-color:#c89632!important}
+.pqh-workspace-actions select{min-height:40px!important;border-radius:10px!important;border:1px solid rgba(23,48,68,.18)!important;background:#fff!important;color:#173044!important;font-size:13px!important;font-weight:900!important}
+@media(max-width:760px){.pqh-workspace-top{grid-template-columns:1fr!important;padding:18px!important}.pqh-brand-mark{width:38px;height:38px}.pqh-workspace-actions{justify-content:flex-start!important}.pqh-workspace-actions a,.pqh-workspace-actions button,.pqh-workspace-actions select{width:auto;max-width:100%}}
 CSS;
 }
 

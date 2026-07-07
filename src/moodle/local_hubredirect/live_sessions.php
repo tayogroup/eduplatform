@@ -2,16 +2,38 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
+$pageworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+$pqlbrandname = trim((string)($consumercontext->consumername ?? 'EduPlatform'));
+if ($pqlbrandname === '') {
+    $pqlbrandname = 'EduPlatform';
+}
+if ($pageworkspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $pageworkspaceid = (int)$consumercontext->workspaceid;
+}
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($pageworkspaceid > 0) {
+    $urlparams['workspaceid'] = $pageworkspaceid;
+}
+$returnurl = new moodle_url($pageworkspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams);
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_sessions.php'));
+$PAGE->set_url(pql_url('/local/hubredirect/live_sessions.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Live Sessions');
 $PAGE->set_heading('Live Sessions');
 $PAGE->add_body_class('pqh-live-page');
+
+function pql_url(string $path, array $urlparams, array $params = []): moodle_url {
+    return new moodle_url($path, $urlparams + $params);
+}
 
 function pql_table_exists(string $table): bool {
     global $DB;
@@ -35,6 +57,48 @@ function pql_column_exists(string $table, string $column): bool {
         return false;
     }
     return array_key_exists($column, $columns);
+}
+
+function pql_valid_timezone(string $timezone): string {
+    $timezone = trim($timezone);
+    if ($timezone === '') {
+        return 'Africa/Nairobi';
+    }
+    try {
+        new DateTimeZone($timezone);
+        return $timezone;
+    } catch (Throwable $e) {
+        return 'Africa/Nairobi';
+    }
+}
+
+function pql_default_schedule_timezone(): string {
+    $timezone = trim((string)get_config('local_prequran', 'live_schedule_timezone'));
+    return pql_valid_timezone($timezone !== '' ? $timezone : 'Africa/Nairobi');
+}
+
+function pql_parse_local_datetime(string $date, string $time, string $timezone): int {
+    $timezone = pql_valid_timezone($timezone);
+    $value = trim($date) . ' ' . trim($time);
+    try {
+        $dt = DateTimeImmutable::createFromFormat('!Y-m-d H:i', $value, new DateTimeZone($timezone));
+        if (!$dt) {
+            return 0;
+        }
+        return $dt->getTimestamp();
+    } catch (Throwable $e) {
+        return 0;
+    }
+}
+
+function pql_format_session_datetime(int $timestamp, string $timezone): string {
+    $timezone = pql_valid_timezone($timezone);
+    try {
+        $dt = (new DateTimeImmutable('@' . $timestamp))->setTimezone(new DateTimeZone($timezone));
+        return $dt->format('d/m/y, H:i');
+    } catch (Throwable $e) {
+        return userdate($timestamp, get_string('strftimedatetimeshort'), $timezone);
+    }
 }
 
 function pql_series_ready(): bool {
@@ -151,12 +215,261 @@ function pql_user_can_view_session($session): bool {
     ]);
 }
 
+function pql_agenda_slides_ready(): bool {
+    return pql_column_exists('local_prequran_live_session', 'agenda_slides_path')
+        && pql_column_exists('local_prequran_live_session', 'agenda_slides_filename');
+}
+
+function pql_agenda_slides_controls($session, string $returnurl): string {
+    if (!pql_agenda_slides_ready()) {
+        return '';
+    }
+    $sessionid = (int)$session->id;
+    $html = html_writer::start_div('pql-agenda');
+    if (trim((string)($session->agenda_slides_path ?? '')) !== '') {
+        $filename = trim((string)($session->agenda_slides_filename ?? 'Agenda slides'));
+        $html .= html_writer::link(
+            pqh_live_session_agenda_file_url($sessionid),
+            'Open agenda slides',
+            ['class' => 'pql-btn pql-btn--light']
+        );
+        $html .= html_writer::link(
+            pqh_live_session_agenda_editor_url($sessionid),
+            'Edit online',
+            ['class' => 'pql-btn pql-btn--light']
+        );
+        $html .= html_writer::link(
+            pqh_live_session_materials_url($sessionid),
+            'Quraan Materials',
+            ['class' => 'pql-btn pql-btn--light', 'target' => '_blank', 'rel' => 'noopener']
+        );
+        $html .= html_writer::span('Attached: ' . s($filename), 'pql-agenda__status');
+    } else {
+        $html .= html_writer::span('No completed agenda slides attached yet.', 'pql-agenda__status');
+        $html .= html_writer::link(
+            pqh_live_session_agenda_editor_url($sessionid),
+            'Create and edit online',
+            ['class' => 'pql-btn pql-btn--light']
+        );
+        $html .= html_writer::link(
+            pqh_live_session_materials_url($sessionid),
+            'Quraan Materials',
+            ['class' => 'pql-btn pql-btn--light', 'target' => '_blank', 'rel' => 'noopener']
+        );
+    }
+    $html .= html_writer::start_tag('form', [
+        'method' => 'post',
+        'action' => pqh_live_session_agenda_upload_url($sessionid)->out(false),
+        'enctype' => 'multipart/form-data',
+        'class' => 'pql-agenda__form',
+    ]);
+    $html .= html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()]);
+    $html .= html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'return', 'value' => $returnurl]);
+    $html .= html_writer::empty_tag('input', [
+        'type' => 'file',
+        'name' => 'agenda_file',
+        'accept' => '.ppt,.pptx,.pdf',
+        'required' => 'required',
+        'class' => 'pql-agenda__file',
+    ]);
+    $html .= html_writer::tag('button', 'Attach agenda slides', ['class' => 'pql-btn pql-btn--light', 'type' => 'submit']);
+    $html .= html_writer::end_tag('form');
+    $html .= html_writer::end_div();
+    return $html;
+}
+
 function pql_bbb_password($session, string $role): string {
     $secret = trim((string)get_config('local_prequran', 'bbb_shared_secret'));
     if ($secret === '') {
-        throw new moodle_exception('bbb_config_missing', 'local_prequran');
+        return '';
     }
     return substr(sha1('prequran-live|' . (int)$session->id . '|' . (string)$session->bbb_meeting_id . '|' . $role . '|' . $secret), 0, 24);
+}
+
+function pql_bbb_is_configured(): bool {
+    return trim((string)get_config('local_prequran', 'bbb_shared_secret')) !== '';
+}
+
+function pql_live_tutor_url($session, int $studentid = 0, bool $floating = true): moodle_url {
+    $params = [
+        'sessionid' => (int)$session->id,
+        'embed' => 1,
+        'panel' => 1,
+        'frombbb' => 1,
+    ];
+    $context = pqh_requested_consumer_context();
+    if (!empty($context->consumerslug)) {
+        $params['consumer'] = (string)$context->consumerslug;
+    }
+    if ($floating) {
+        $params['floating'] = 1;
+    }
+    if ($studentid > 0) {
+        $params['studentid'] = $studentid;
+    }
+    if (!empty($session->workspaceid)) {
+        $params['workspaceid'] = (int)$session->workspaceid;
+    }
+    return pql_url('/local/hubredirect/live_virtual_tutor.php', [], $params);
+}
+
+function pql_live_tutor_studentid($session, $participant): int {
+    global $DB;
+    if ($participant && (int)($participant->studentid ?? 0) > 0) {
+        return (int)$participant->studentid;
+    }
+    if ($participant && (string)($participant->role ?? '') === 'student') {
+        return (int)$participant->userid;
+    }
+    if (!pql_table_exists('local_prequran_live_participant')) {
+        return 0;
+    }
+    $studentid = $DB->get_field_select(
+        'local_prequran_live_participant',
+        'studentid',
+        'sessionid = ? AND status = ? AND role = ? AND studentid > 0',
+        [(int)$session->id, 'active', 'student'],
+        IGNORE_MULTIPLE
+    );
+    return $studentid ? (int)$studentid : 0;
+}
+
+function pql_live_launch_bridge(string $joinurl, moodle_url $tutorurl, moodle_url $lessonurl, $session, ?moodle_url $materialsurl = null, string $role = ''): void {
+    global $OUTPUT, $PAGE;
+
+    $PAGE->set_pagelayout('embedded');
+    $PAGE->set_title('Please wait while the Live Session is being loaded');
+    $PAGE->set_heading('Please wait while the Live Session is being loaded');
+
+    $joinurljson = json_encode($joinurl);
+    $tutorurljson = json_encode($tutorurl->out(false));
+    $lessonurljson = json_encode($lessonurl->out(false));
+    $materialsurljson = json_encode($materialsurl ? $materialsurl->out(false) : '');
+    $openmaterialsjson = json_encode(in_array($role, ['teacher', 'admin_observer'], true));
+    $sessiontitle = s((string)$session->title);
+
+    echo $OUTPUT->header();
+    ?>
+<style>
+html,body{min-height:100%;background:#f4f8f6!important}
+body{margin:0!important}
+body.pqh-live-page header,
+body.pqh-live-page footer,
+body.pqh-live-page nav.navbar,
+body.pqh-live-page #page-header,
+body.pqh-live-page #page-footer,
+body.pqh-live-page .drawer,
+body.pqh-live-page .drawer-toggles,
+body.pqh-live-page .secondary-navigation{display:none!important}
+.pql-bridge{min-height:100vh;display:grid;place-items:center;padding:24px;color:#243325;font-family:inherit}
+.pql-bridge__card{width:min(560px,100%);padding:24px;border:1px solid rgba(105,76,45,.14);border-radius:14px;background:#fff;box-shadow:0 24px 70px rgba(23,48,68,.14)}
+.pql-bridge__card h1{margin:0 0 8px;color:#221b22;font-size:28px;line-height:1.1;font-weight:950;letter-spacing:0}
+.pql-bridge__card p{margin:0 0 18px;color:#60735f;font-size:15px;font-weight:800}
+.pql-bridge__actions{display:flex;flex-wrap:wrap;gap:10px}
+.pql-bridge__btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid rgba(105,76,45,.18);background:#6f4e32;color:#fff!important;text-decoration:none!important;font-size:14px;font-weight:950;cursor:pointer}
+.pql-bridge__btn--light{background:#fff7e7;color:#3f2c1f!important}
+</style>
+<main class="pql-bridge">
+  <section class="pql-bridge__card">
+    <h1><?php echo $sessiontitle; ?></h1>
+    <p id="pql-bridge-status">Opening the BBB classroom. Open Virtual Tutor and Quraan Materials after the room is stable.</p>
+    <div class="pql-bridge__actions">
+      <button id="pql-open-tools" class="pql-bridge__btn pql-bridge__btn--light" type="button">Open Tutor + Materials</button>
+      <?php if ($materialsurl): ?><a id="pql-open-materials" class="pql-bridge__btn pql-bridge__btn--light" target="_blank" rel="noopener" href="<?php echo $materialsurl->out(false); ?>">Open Quraan Materials</a><?php endif; ?>
+      <button id="pql-open-class" class="pql-bridge__btn" type="button">Continue to Class</button>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var joinUrl = <?php echo $joinurljson; ?>;
+  var tutorUrl = <?php echo $tutorurljson; ?>;
+  var materialsUrl = <?php echo $materialsurljson; ?>;
+  var shouldOpenMaterials = <?php echo $openmaterialsjson; ?>;
+  var popupName = 'pqa_virtual_tutor_<?php echo (int)$session->id; ?>';
+  var materialsPopupName = 'pqa_quraan_materials_<?php echo (int)$session->id; ?>';
+
+  function parkedFeatures(index) {
+    var screenWidth = window.screen && window.screen.availWidth ? window.screen.availWidth : 1280;
+    var screenHeight = window.screen && window.screen.availHeight ? window.screen.availHeight : 820;
+    var width = 320;
+    var height = 220;
+    var left = Math.max(0, screenWidth - width - 18);
+    var top = Math.min(Math.max(0, screenHeight - height - 18), 24 + (index * 58));
+    return 'popup=yes,width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+  }
+
+  function openTutor() {
+    var popup = window.open('about:blank', popupName, parkedFeatures(0));
+    if (popup) {
+      try {
+        popup.opener = null;
+      } catch (e) {}
+      try {
+        popup.location.replace(tutorUrl);
+      } catch (e) {
+        popup.location.href = tutorUrl;
+      }
+      window.focus();
+    }
+    return !!popup;
+  }
+
+  function openMaterials() {
+    if (!materialsUrl || !shouldOpenMaterials) {
+      return false;
+    }
+    var popup = window.open(materialsUrl, materialsPopupName, parkedFeatures(1));
+    if (popup) {
+      window.focus();
+      return true;
+    }
+    return false;
+  }
+
+  function openParkedTools() {
+    openTutor();
+    openMaterials();
+  }
+
+  function openClass() {
+    window.location.replace(joinUrl);
+  }
+
+  var tutorButton = document.getElementById('pql-open-tutor');
+  var toolsButton = document.getElementById('pql-open-tools');
+  var materialsButton = document.getElementById('pql-open-materials');
+  var classButton = document.getElementById('pql-open-class');
+  var status = document.getElementById('pql-bridge-status');
+  if (tutorButton) {
+    tutorButton.addEventListener('click', openTutor);
+  }
+  if (materialsButton) {
+    materialsButton.addEventListener('click', function(event){
+      event.preventDefault();
+      openMaterials();
+    });
+  }
+  if (toolsButton) {
+    toolsButton.addEventListener('click', openParkedTools);
+  }
+  if (classButton) {
+    classButton.addEventListener('click', function(){
+      openClass();
+    });
+  }
+
+  window.setTimeout(function(){
+    openClass();
+    if (status) {
+      status.textContent = 'Please wait while the Live Session is being loaded';
+    }
+  }, 200);
+})();
+</script>
+    <?php
+    echo $OUTPUT->footer();
+    exit;
 }
 
 function pql_audit(int $sessionid, string $action, string $targettype = '', int $targetid = 0, array $details = []): void {
@@ -362,8 +675,17 @@ function pql_insert_live_session(int $teacherid, array $studentids, array $paylo
     if (pql_column_exists('local_prequran_live_session', 'groupid')) {
         $record->groupid = (int)($payload['groupid'] ?? 0);
     }
+    if (pql_column_exists('local_prequran_live_session', 'workspaceid')) {
+        $record->workspaceid = (int)($payload['workspaceid'] ?? 0);
+    }
     $sessionid = (int)$DB->insert_record('local_prequran_live_session', $record);
     $DB->set_field('local_prequran_live_session', 'bbb_meeting_id', 'prequran-live-' . $sessionid, ['id' => $sessionid]);
+    try {
+        pqh_attach_default_agenda_to_live_session($sessionid, (int)$USER->id);
+        pql_audit($sessionid, 'agenda_slides_auto_attached', 'session', $sessionid, ['source' => 'live_session_create']);
+    } catch (Throwable $e) {
+        pql_audit($sessionid, 'agenda_slides_auto_attach_failed', 'session', $sessionid, ['error' => $e->getMessage()]);
+    }
 
     $teacher = core_user::get_user($teacherid);
     $DB->insert_record('local_prequran_live_participant', (object)[
@@ -443,7 +765,7 @@ function pql_visible_sessions(): array {
             "SELECT * FROM {local_prequran_live_session}
               WHERE scheduled_end >= :fromtime
            ORDER BY scheduled_start ASC, id ASC",
-            ['fromtime' => time() - DAYSECS]
+            ['fromtime' => time()]
         ));
     }
     return array_values($DB->get_records_sql(
@@ -453,8 +775,48 @@ function pql_visible_sessions(): array {
           WHERE s.scheduled_end >= :fromtime
             AND (s.teacherid = :teacherid OR (p.userid = :userid AND p.status = :status))
        ORDER BY s.scheduled_start ASC, s.id ASC",
-        ['fromtime' => time() - DAYSECS, 'teacherid' => (int)$USER->id, 'userid' => (int)$USER->id, 'status' => 'active']
+        ['fromtime' => time(), 'teacherid' => (int)$USER->id, 'userid' => (int)$USER->id, 'status' => 'active']
     ));
+}
+
+function pql_delete_expired_live_sessions(int $beforetime): int {
+    global $DB;
+    if (!pql_live_tables_ready()) {
+        return 0;
+    }
+    $sessionids = $DB->get_fieldset_select(
+        'local_prequran_live_session',
+        'id',
+        'scheduled_end < ?',
+        [max(0, $beforetime)]
+    );
+    $sessionids = array_values(array_filter(array_map('intval', $sessionids)));
+    if (!$sessionids) {
+        return 0;
+    }
+
+    [$insql, $params] = $DB->get_in_or_equal($sessionids, SQL_PARAMS_NAMED, 'expiredsession');
+    $transaction = $DB->start_delegated_transaction();
+    foreach ([
+        'local_prequran_live_participant',
+        'local_prequran_live_attendance',
+        'local_prequran_live_note',
+        'local_prequran_live_recording',
+        'local_prequran_live_audit',
+    ] as $table) {
+        if (pql_table_exists($table)) {
+            $DB->delete_records_select($table, "sessionid $insql", $params);
+        }
+    }
+    $DB->delete_records_select('local_prequran_live_session', "id $insql", $params);
+    $transaction->allow_commit();
+
+    pql_audit(0, 'expired_sessions_deleted', 'session', 0, [
+        'count' => count($sessionids),
+        'beforetime' => $beforetime,
+        'sessionids' => $sessionids,
+    ]);
+    return count($sessionids);
 }
 
 $notice = '';
@@ -478,15 +840,45 @@ if (!pql_live_tables_ready()) {
     $error = 'Live-session tables are not installed yet.';
 }
 
+if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'delete_expired') {
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please refresh the live sessions page and try again.', $returnurl, 'Live sessions action expired');
+    }
+    if (!is_siteadmin($USER)) {
+        pqh_access_denied('Only site administrators can delete expired live sessions.', $returnurl, 'Live sessions access required');
+    }
+    $deletedcount = pql_delete_expired_live_sessions(time());
+    redirect(pql_url('/local/hubredirect/live_sessions.php', $urlparams, ['expireddeleted' => $deletedcount]));
+}
+
 if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join') {
-    require_sesskey();
-    $sessionid = required_param('sessionid', PARAM_INT);
-    $session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', MUST_EXIST);
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please reopen the live session from the schedule.', $returnurl, 'Live session link expired');
+    }
+    $sessionid = optional_param('sessionid', 0, PARAM_INT);
+    $workspaceid = optional_param('workspaceid', 0, PARAM_INT);
+    if ($workspaceid <= 0) {
+        $workspaceid = $pageworkspaceid;
+    }
+    if ($sessionid <= 0) {
+        pqh_access_denied('Choose a valid live session before joining.', $returnurl, 'Live session unavailable');
+    }
+    $session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING);
+    if (!$session) {
+        pqh_access_denied('This live session could not be found. It may have expired or been removed.', $returnurl, 'Live session unavailable');
+    }
+    if ($workspaceid <= 0 && !empty($session->workspaceid)) {
+        $workspaceid = (int)$session->workspaceid;
+    }
+    $sessionurlparams = $urlparams;
+    if ($workspaceid > 0) {
+        $sessionurlparams['workspaceid'] = $workspaceid;
+    }
     if (!pql_user_can_view_session($session)) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot join this live session.');
+        pqh_access_denied('You cannot join this live session.', $returnurl, 'Live session access required');
     }
     if (in_array((string)$session->status, ['cancelled', 'failed'], true)) {
-        throw new moodle_exception('nopermissions', '', '', 'This live session is not available.');
+        pqh_access_denied('This live session is not available.', $returnurl, 'Live session unavailable');
     }
 
     $participant = $DB->get_record('local_prequran_live_participant', [
@@ -505,7 +897,7 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
         $role = 'parent_observer';
     }
     if ($role === '') {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot join this live session.');
+        pqh_access_denied('You cannot join this live session.', $returnurl, 'Live session access required');
     }
 
     if (in_array($role, ['student', 'parent_observer'], true)) {
@@ -515,19 +907,35 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
         $teacherstarted = !empty($session->bbb_created) && (string)$session->status === 'live';
         if ($now > ((int)$session->scheduled_end + $after)
             || (!$teacherstarted && $now < ((int)$session->scheduled_start - $before))) {
-            throw new moodle_exception('nopermissions', '', '', 'This live session is outside the student join window.');
+            pqh_access_denied('This live session is outside the student join window.', $returnurl, 'Live session not open yet');
         }
     }
 
     $locallib = $CFG->dirroot . '/local/prequran/locallib.php';
     if (!file_exists($locallib)) {
-        throw new moodle_exception('missingfile', 'error', '', 'Missing local/prequran/locallib.php.');
+        pqh_access_denied('The live classroom service is not ready. Please ask support to review the live-room configuration.', $returnurl, 'Live classroom unavailable');
     }
     require_once($locallib);
 
+    $studentid = pql_live_tutor_studentid($session, $participant);
+    $tutorurl = pql_live_tutor_url($session, $studentid, true);
+    $tutorurlout = $tutorurl->out(false);
+    $unitid = trim((string)($session->unitid ?? ''));
+    $lessonurl = pql_url('/local/hubredirect/issue_child.php', $sessionurlparams, [
+        'goto' => $unitid !== '' ? $unitid : 'alphabet_listen',
+        'managed_student' => 0,
+        'monitor_studentid' => $studentid,
+        'live_sessionid' => $sessionid,
+    ]);
+    $lessonurlout = $lessonurl->out(false);
+    $welcometext = 'Welcome to ' . $pqlbrandname . '.';
+
     if (empty($session->bbb_created)) {
         if (!in_array($role, ['teacher', 'admin_observer'], true)) {
-            throw new moodle_exception('nopermissions', '', '', 'The teacher has not started this live session yet.');
+            pqh_access_denied('The teacher has not started this live session yet.', $returnurl, 'Live session not started');
+        }
+        if (!pql_bbb_is_configured()) {
+            pqh_access_denied('The live room could not be started. Please ask support to review the BigBlueButton configuration.', $returnurl, 'Live room unavailable');
         }
         $recordingdecision = local_prequran_live_recording_consent_decision($session);
         $recordingallowed = !empty($recordingdecision['allowed']);
@@ -539,7 +947,7 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
             ]);
         }
         try {
-            $xml = local_prequran_bbb_create_meeting([
+            $meetingparams = [
                 'meetingID' => (string)$session->bbb_meeting_id,
                 'name' => (string)$session->title,
                 'attendeePW' => pql_bbb_password($session, 'attendee'),
@@ -549,14 +957,18 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
                 'muteOnStart' => true,
                 'maxParticipants' => (int)$session->max_participants,
                 'duration' => max(60, (int)ceil(((int)$session->scheduled_end - (int)$session->scheduled_start) / 60) + 30),
-                'logoutURL' => (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false),
-            ]);
+                'logoutURL' => pql_url('/local/hubredirect/live_sessions.php', $sessionurlparams)->out(false),
+                'welcome' => $welcometext,
+                'lockSettingsDisableCam' => true,
+                'disabledFeatures' => 'virtualBackgrounds,customVirtualBackgrounds,cameraAsContent',
+            ];
+            $xml = local_prequran_bbb_create_meeting($meetingparams);
         } catch (Throwable $e) {
             $session->bbb_last_error = $e->getMessage();
             $session->timemodified = time();
             $DB->update_record('local_prequran_live_session', $session);
             pql_audit((int)$session->id, 'bbb_create_failed', 'session', (int)$session->id, ['error' => $e->getMessage()]);
-            throw $e;
+            pqh_access_denied('The live room could not be started. Please ask support to review the BigBlueButton configuration.', $returnurl, 'Live room unavailable');
         }
         $session->bbb_internal_meeting_id = (string)($xml->internalMeetingID ?? '');
         $session->bbb_created = 1;
@@ -574,29 +986,44 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
         ]);
     }
 
-    $joinurl = local_prequran_bbb_join_url(
-        (string)$session->bbb_meeting_id,
-        fullname($USER),
-        in_array($role, ['teacher', 'admin_observer'], true) ? pql_bbb_password($session, 'moderator') : pql_bbb_password($session, 'attendee'),
-        (int)$USER->id,
-        ['userdata-prequran-role' => $role]
-    );
+    try {
+        if (!pql_bbb_is_configured()) {
+            pqh_access_denied('The live room is not available yet. Please ask support to review the live-room configuration.', $returnurl, 'Live room unavailable');
+        }
+        $joinurl = local_prequran_bbb_join_url(
+            (string)$session->bbb_meeting_id,
+            fullname($USER),
+            in_array($role, ['teacher', 'admin_observer'], true) ? pql_bbb_password($session, 'moderator') : pql_bbb_password($session, 'attendee'),
+            (int)$USER->id,
+            [
+                'userdata-prequran-role' => $role,
+                'userdata-prequran-sessionid' => (int)$session->id,
+                'userdata-prequran-workspaceid' => $workspaceid > 0 ? $workspaceid : (int)($session->workspaceid ?? 0),
+                'userdata-prequran-studentid' => $studentid,
+            ]
+        );
+    } catch (Throwable $e) {
+        pql_audit((int)$session->id, 'bbb_join_failed', 'session', (int)$session->id, ['error' => $e->getMessage()]);
+        pqh_access_denied('The live room is not available yet. Please ask support to review the live-room configuration.', $returnurl, 'Live room unavailable');
+    }
     pql_audit((int)$session->id, 'join_redirect', 'user', (int)$USER->id, ['role' => $role]);
     pql_mark_student_join($session, $participant, $role);
-    redirect($joinurl);
+    pql_live_launch_bridge($joinurl, $tutorurl, $lessonurl, $session, pqh_live_session_materials_control_url((int)$session->id), $role);
 }
 
 if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'create') {
-    require_sesskey();
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please refresh the live sessions page and try again.', $returnurl, 'Live sessions action expired');
+    }
     if (!$canmanage) {
-        throw new moodle_exception('nopermissions', '', '', 'You cannot create live sessions.');
+        pqh_access_denied('You cannot create live sessions.', $returnurl, 'Live sessions access required');
     }
     $createdfromwizard = optional_param('created_from_wizard', 0, PARAM_BOOL);
 
-    $teacherid = is_siteadmin($USER) ? required_param('teacherid', PARAM_INT) : (int)$USER->id;
-    $title = required_param('title', PARAM_TEXT);
-    $date = required_param('sessiondate', PARAM_TEXT);
-    $time = required_param('sessiontime', PARAM_TEXT);
+    $teacherid = is_siteadmin($USER) ? optional_param('teacherid', 0, PARAM_INT) : (int)$USER->id;
+    $title = trim(optional_param('title', '', PARAM_TEXT));
+    $date = trim(optional_param('sessiondate', '', PARAM_TEXT));
+    $time = trim(optional_param('sessiontime', '', PARAM_TEXT));
     $duration = optional_param('duration', 60, PARAM_INT);
     $lessonid = optional_param('lessonid', '', PARAM_ALPHANUMEXT);
     $unitid = optional_param('unitid', '', PARAM_ALPHANUMEXT);
@@ -622,13 +1049,19 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
         }
     }
     $studentids = array_values(array_unique(array_filter(array_map('intval', $studentids))));
-    if ($lessonid === '' || $unitid === '') {
+    if ($teacherid <= 0) {
+        $error = 'Choose a teacher user ID.';
+    } else if ($title === '') {
+        $error = 'Enter a live session title.';
+    } else if ($date === '' || $time === '') {
+        $error = 'Choose a live session date and time.';
+    } else if ($lessonid === '' || $unitid === '') {
         $error = 'Choose the lesson ID and unit ID for this live review session.';
     } else if (!$studentids) {
         $error = 'Choose at least one student.';
     } else {
-        $tz = core_date::get_server_timezone();
-        $start = strtotime($date . ' ' . $time . ' ' . $tz);
+        $tz = pql_valid_timezone(optional_param('timezone', pql_default_schedule_timezone(), PARAM_TEXT));
+        $start = pql_parse_local_datetime($date, $time, $tz);
         if (!$start) {
             $error = 'Enter a valid date and time.';
         } else {
@@ -638,6 +1071,7 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
                 $payload = [
                     'cohortid' => $cohortid,
                     'groupid' => $groupid,
+                    'workspaceid' => $pageworkspaceid,
                     'lessonid' => $lessonid,
                     'unitid' => $unitid,
                     'title' => $title,
@@ -690,6 +1124,9 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
                     if (pql_column_exists('local_prequran_live_series', 'groupid')) {
                         $seriesrecord->groupid = $groupid;
                     }
+                    if (pql_column_exists('local_prequran_live_series', 'workspaceid')) {
+                        $seriesrecord->workspaceid = $pageworkspaceid;
+                    }
                     $seriesid = (int)$DB->insert_record('local_prequran_live_series', $seriesrecord);
                     pql_audit(0, $createdfromwizard ? 'series_created_from_wizard' : 'series_created', 'series', $seriesid, ['students' => $studentids, 'sessions' => count($starts), 'pattern' => $recurrencepattern]);
                     $sequence = 1;
@@ -704,7 +1141,7 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
                     $sessionids[] = $sessionid;
                     pql_audit($sessionid, $createdfromwizard ? 'created_from_wizard' : 'created_from_ui', 'session', $sessionid, ['students' => $studentids]);
                 }
-                redirect(new moodle_url('/local/hubredirect/live_sessions.php', ['created' => count($sessionids), 'seriesid' => $seriesid, 'wizard' => $createdfromwizard ? 1 : 0]));
+                redirect(pql_url('/local/hubredirect/live_sessions.php', $urlparams, ['created' => count($sessionids), 'seriesid' => $seriesid, 'wizard' => $createdfromwizard ? 1 : 0]));
             }
         }
     }
@@ -716,6 +1153,12 @@ if ($createdcount > 0) {
     if (optional_param('wizard', 0, PARAM_BOOL)) {
         $notice = $createdcount > 1 ? $createdcount . ' recurring live sessions created from wizard.' : 'Live session created from wizard.';
     }
+}
+$expireddeleted = optional_param('expireddeleted', -1, PARAM_INT);
+if ($expireddeleted >= 0) {
+    $notice = $expireddeleted > 0
+        ? $expireddeleted . ' expired live session(s) deleted.'
+        : 'No expired live sessions were found.';
 }
 
 $teacherstudents = $canmanage && !is_siteadmin($USER) ? pql_teacher_students((int)$USER->id) : [];
@@ -758,6 +1201,8 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
 .pql-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950;cursor:pointer}
 .pql-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}
 .pql-btn--start{background:#6f4e32}
+.pql-btn--danger{background:#8a332b}
+.pql-inline-form{display:inline-flex;margin:0}
 .pql-alert{margin-bottom:14px;padding:12px 14px;border-radius:8px;font-size:14px;font-weight:850;white-space:pre-line}
 .pql-alert--ok{background:#edf9ef;color:#245c35;border:1px solid rgba(36,92,53,.16)}
 .pql-alert--bad{background:#fff0ed;color:#883526;border:1px solid rgba(136,53,38,.16)}
@@ -773,38 +1218,52 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
 .pql-subgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .pql-recurring{margin:12px 0;padding:12px;border:1px solid rgba(23,48,68,.12);border-radius:10px;background:#fbfdff}
 .pql-recurring h3{margin:0 0 10px;font-size:16px;font-weight:950;color:#173044}
-@media(max-width:850px){.pql-grid{grid-template-columns:1fr}.pql-top{display:block}.pql-title{font-size:24px}}
+.pql-agenda{display:flex;flex:1 0 100%;flex-wrap:wrap;align-items:center;gap:9px;margin-top:12px;padding:10px;border:1px solid rgba(23,48,68,.1);border-radius:10px;background:#fbfdff}
+.pql-agenda__form{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0}
+.pql-agenda__file{max-width:260px;font-size:12px;font-weight:800;color:#415665}
+.pql-agenda__status{color:#5e7280;font-size:12px;font-weight:850}
+@media(max-width:850px){.pql-grid{grid-template-columns:1fr}.pql-top{display:block}.pql-title{font-size:24px}.pql-agenda__file{max-width:100%}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pql-shell">
   <div class="pql-wrap">
-    <section class="pql-top">
+    <section class="pql-top pqh-workspace-top">
       <div>
-        <h1 class="pql-title">Live Sessions</h1>
-        <p class="pql-sub">Schedule, start, and join Quraan Academy review classes through BigBlueButton.</p>
+        <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton.</p>
       </div>
-      <div class="pql-actions">
+      <div class="pql-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
+        <?php echo pqh_live_session_agenda_template_link(); ?>
+        <button class="pql-btn pql-btn--light" type="button" onclick="window.history.back()">Back</button>
+        <a class="pql-btn pql-btn--light" href="<?php echo $returnurl->out(false); ?>">Dashboard</a>
         <?php if (is_siteadmin($USER)): ?>
-          <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php'))->out(false); ?>">Admin menu</a>
-          <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Operations</a>
-          <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_diagnostics.php'))->out(false); ?>">Diagnostics</a>
-          <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings_admin.php'))->out(false); ?>">Recording review</a>
+          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_admin.php', $urlparams)->out(false); ?>">Admin menu</a>
+          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_ops.php', $urlparams)->out(false); ?>">Operations</a>
+          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_diagnostics.php', $urlparams)->out(false); ?>">Diagnostics</a>
+          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_recordings_admin.php', $urlparams)->out(false); ?>">Recording review</a>
+          <form method="post" class="pql-inline-form" onsubmit="return confirm('Delete all expired live sessions and their participant, attendance, note, recording metadata, and audit rows? This cannot be undone.');">
+            <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+            <input type="hidden" name="action" value="delete_expired">
+            <button class="pql-btn pql-btn--danger" type="submit">Delete expired sessions</button>
+          </form>
         <?php endif; ?>
         <?php if ($canmanage): ?>
           <?php if (is_siteadmin($USER)): ?>
-            <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php'))->out(false); ?>">Create wizard</a>
-            <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php'))->out(false); ?>">Series wizard</a>
+            <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_create_wizard.php', $urlparams)->out(false); ?>">Create wizard</a>
+            <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_series_wizard.php', $urlparams)->out(false); ?>">Series wizard</a>
           <?php endif; ?>
-          <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php'))->out(false); ?>">Teacher workspace</a>
+          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_teacher.php', $urlparams)->out(false); ?>">Teacher workspace</a>
           <?php if (is_siteadmin($USER)): ?>
-            <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php'))->out(false); ?>">Capacity planning</a>
+            <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_capacity.php', $urlparams)->out(false); ?>">Capacity planning</a>
           <?php endif; ?>
-          <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php'))->out(false); ?>">Class series</a>
-          <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php'))->out(false); ?>">Availability</a>
+          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_series.php', $urlparams)->out(false); ?>">Class series</a>
+          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_availability.php', $urlparams)->out(false); ?>">Availability</a>
         <?php endif; ?>
-        <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php'))->out(false); ?>">Live schedule</a>
-        <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php'))->out(false); ?>">Calendar</a>
-        <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php'))->out(false); ?>">Live summaries</a>
-        <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Back to dashboard</a>
+        <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_schedule.php', $urlparams)->out(false); ?>">Live schedule</a>
+        <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_calendar.php', $urlparams)->out(false); ?>">Calendar</a>
+        <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_summaries.php', $urlparams)->out(false); ?>">Live summaries</a>
+        <a class="pql-btn pqh-workspace-logout" href="<?php echo pql_url('/local/hubredirect/logout.php', $urlparams)->out(false); ?>">Logout</a>
       </div>
     </section>
 
@@ -818,6 +1277,9 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
         <form method="post">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="create">
+          <input type="hidden" name="timezone" value="<?php echo s(pql_default_schedule_timezone()); ?>">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
           <?php if ($prefillcreatedfromwizard): ?><input type="hidden" name="created_from_wizard" value="1"><?php endif; ?>
           <?php if (is_siteadmin($USER)): ?>
             <div class="pql-field">
@@ -901,7 +1363,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
                 </label>
               <?php endforeach; ?>
             </div>
-            <div class="pql-subgrid">
+            <div class="pql-subgrid pqh-workspace-sub">
               <div class="pql-field">
                 <label for="recurrence_count">Max Sessions</label>
                 <input class="pql-input" id="recurrence_count" name="recurrence_count" type="number" min="1" max="60" value="8" <?php echo pql_series_ready() ? '' : 'disabled'; ?>>
@@ -952,24 +1414,29 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
             <?php foreach ($sessions as $session): ?>
               <?php
                 $teacher = core_user::get_user((int)$session->teacherid);
-                $joinurl = new moodle_url('/local/hubredirect/live_sessions.php', [
+                $sessionurlparams = $urlparams;
+                if (empty($sessionurlparams['workspaceid']) && !empty($session->workspaceid)) {
+                    $sessionurlparams['workspaceid'] = (int)$session->workspaceid;
+                }
+                $joinurl = pql_url('/local/hubredirect/live_sessions.php', $sessionurlparams, [
                     'action' => 'join',
                     'sessionid' => (int)$session->id,
                     'sesskey' => sesskey(),
                 ]);
-                $reviewurl = new moodle_url('/local/hubredirect/live_review.php', [
+                $reviewurl = pql_url('/local/hubredirect/live_review.php', $sessionurlparams, [
                     'sessionid' => (int)$session->id,
                 ]);
-                $monitorurl = new moodle_url('/local/hubredirect/live_monitor.php', [
+                $monitorurl = pql_url('/local/hubredirect/live_monitor.php', $sessionurlparams, [
                     'sessionid' => (int)$session->id,
                 ]);
                 $buttontext = ((int)$session->teacherid === (int)$USER->id || is_siteadmin($USER)) ? 'Start class' : 'Join class';
+                $sessiontimezone = pql_valid_timezone((string)($session->timezone ?? ''));
               ?>
               <article class="pql-card">
                 <div class="pql-card__head">
                   <div>
                     <h3><?php echo s($session->title); ?></h3>
-                    <p class="pql-meta"><?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
+                    <p class="pql-meta"><?php echo s(pql_format_session_datetime((int)$session->scheduled_start, $sessiontimezone)); ?> - <?php echo s($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid); ?></p>
                     <?php if ((string)$session->lessonid !== '' || (string)$session->unitid !== ''): ?>
                       <p class="pql-meta"><?php echo s(trim((string)$session->lessonid . ' / ' . (string)$session->unitid, ' /')); ?></p>
                     <?php endif; ?>
@@ -979,7 +1446,10 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
                   </div>
                   <span class="pql-pill"><?php echo s((string)$session->status); ?></span>
                 </div>
-                <div class="pql-actions">
+                <div class="pql-actions pqh-workspace-actions">
+                  <?php if ((int)$session->teacherid === (int)$USER->id || $canmanage || pqh_can_manage_academy_operations((int)$USER->id)): ?>
+                    <?php echo pql_agenda_slides_controls($session, pql_url('/local/hubredirect/live_sessions.php', $sessionurlparams)->out(false)); ?>
+                  <?php endif; ?>
                   <a class="pql-btn pql-btn--start" href="<?php echo $joinurl->out(false); ?>"><?php echo s($buttontext); ?></a>
                   <?php if ((int)$session->teacherid === (int)$USER->id || is_siteadmin($USER)): ?>
                     <a class="pql-btn pql-btn--light" href="<?php echo $monitorurl->out(false); ?>">Lesson monitor</a>

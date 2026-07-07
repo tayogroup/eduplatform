@@ -2,10 +2,18 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/accesslib.php');
 require_login();
 
+$pqlptrpconsumercontext = pqh_requested_consumer_context();
+$pqlptrpbrandname = trim((string)($pqlptrpconsumercontext->consumername ?? 'EduPlatform')) ?: 'EduPlatform';
+
 if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can export parent trust compliance review packs.');
+    pqh_access_denied(
+        'Only site administrators can export parent trust compliance review packs.',
+        new moodle_url('/local/hubredirect/live_trust.php'),
+        'Parent trust review pack access required'
+    );
 }
 
 function pqlptrp_table_exists(string $table): bool {
@@ -166,7 +174,7 @@ if ($format === 'csv') {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename="' . $filename . '"');
     $out = fopen('php://output', 'w');
-    fputcsv($out, ['Quraan Academy Parent Trust Compliance Review Pack']);
+    fputcsv($out, [$pqlptrpbrandname . ' Parent Trust Compliance Review Pack']);
     fputcsv($out, ['Generated', userdate(time(), '%Y-%m-%d %H:%M:%S')]);
     fputcsv($out, ['From', userdate($fromtime, '%Y-%m-%d'), 'To', userdate($totime, '%Y-%m-%d'), 'Staff ID', $staffid ?: 'all', 'Student ID', $studentid ?: 'all', 'Reason', $reasonoptions[$reason]]);
     fputcsv($out, []);
@@ -250,15 +258,17 @@ body.pqh-parent-trust-pack-page .main-inner{margin:0!important;padding:0!importa
 @media print{.pqlptrp-actions,.pqlptrp-form,.pqlptrp-btn{display:none!important}.pqlptrp-shell{padding:0;background:#fff}.pqlptrp-panel,.pqlptrp-top,.pqlptrp-metric{box-shadow:none}}
 @media(max-width:980px){.pqlptrp-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlptrp-top{display:block}.pqlptrp-actions{margin-top:12px}.pqlptrp-table{display:block;overflow:auto}}
 @media(max-width:620px){.pqlptrp-metrics{grid-template-columns:1fr}.pqlptrp-title{font-size:24px}.pqlptrp-form{display:grid}.pqlptrp-btn{width:100%}}
+<?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlptrp-shell">
   <div class="pqlptrp-wrap">
-    <section class="pqlptrp-top">
+    <section class="pqlptrp-top pqh-workspace-top">
       <div>
-        <h1 class="pqlptrp-title">Parent Trust Compliance Review Pack</h1>
-        <p class="pqlptrp-sub">Printable and exportable record of staff parent-dashboard previews, reasons, and support case outcomes.</p>
+        <h1 class="pqlptrp-title pqh-workspace-title">Parent Trust Compliance Review Pack</h1>
+        <p class="pqlptrp-sub pqh-workspace-sub">Printable and exportable record of staff parent-dashboard previews, reasons, and support case outcomes.</p>
       </div>
-      <div class="pqlptrp-actions">
+      <div class="pqlptrp-actions pqh-workspace-actions">
+        <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlptrp-btn pqlptrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_audit.php', $filterurlparams))->out(false); ?>">Audit page</a>
         <a class="pqlptrp-btn pqlptrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust_retention.php'))->out(false); ?>">Retention dry-run</a>
         <a class="pqlptrp-btn pqlptrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php'))->out(false); ?>">Admin ops</a>

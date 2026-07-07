@@ -1,15 +1,21 @@
 <?php
-// This file is part of Quraan Academy custom live-class tooling.
+// This file is part of EduPlatform custom live-class tooling.
 
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/user/lib.php');
+require_once(__DIR__ . '/account_ids.php');
+require_once(__DIR__ . '/accesslib.php');
 
 require_login();
 
 if (!is_siteadmin($USER)) {
-    throw new moodle_exception('nopermissions', '', '', 'Only site administrators can create mock teacher records.');
+    pqh_access_denied(
+        'Only site administrators can create mock teacher records.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Mock teacher setup access required'
+    );
 }
 
 $PAGE->set_context(context_system::instance());
@@ -71,9 +77,9 @@ function pqmt_moodle_email(string $contact, string $username): string {
     }
     $digits = preg_replace('/\D+/', '', $contact);
     if ($digits !== '') {
-        return 'teacher.' . $digits . '@phone.quraanacademy.local';
+        return 'teacher.' . $digits . '@phone.eduplatform.local';
     }
-    return $username . '@quraanacademy.local';
+    return $username . '@eduplatform.local';
 }
 
 function pqmt_find_user_by_username(string $username): ?stdClass {
@@ -102,12 +108,12 @@ function pqmt_find_user_by_email(string $email): ?stdClass {
 function pqmt_read_rows(): array {
     $path = __DIR__ . '/mock_teacher_data.csv';
     if (!is_readable($path)) {
-        throw new moodle_exception('missingfile', '', '', 'Missing mock_teacher_data.csv beside create_mock_teachers.php.');
+        throw new invalid_parameter_exception('Missing mock_teacher_data.csv beside create_mock_teachers.php.');
     }
 
     $handle = fopen($path, 'r');
     if (!$handle) {
-        throw new moodle_exception('error', '', '', 'Could not open mock_teacher_data.csv.');
+        throw new invalid_parameter_exception('Could not open mock_teacher_data.csv.');
     }
     $headers = fgetcsv($handle);
     if (!$headers) {
@@ -162,9 +168,10 @@ function pqmt_create_or_reuse_user(array $row): array {
     $user->city = (string)$row['city'];
     $user->timezone = (string)$row['timezone'];
     $user->lang = $CFG->lang ?? 'en';
-    $user->description = 'Mock teacher account for Quraan Academy live-session testing.';
+    $user->description = 'Mock teacher account for EduPlatform live-session testing.';
 
     $userid = (int)user_create_user($user, true, false);
+    pqh_assign_account_id($userid, 'teacher');
     return [$userid, true, $username, $password];
 }
 
@@ -172,7 +179,7 @@ function pqmt_save_profile(int $teacherid, array $row): int {
     global $DB, $USER;
 
     if (!pqmt_table_exists('local_prequran_teacher_profile')) {
-        throw new moodle_exception('invalidtable', '', '', 'Teacher profile table is missing.');
+        throw new invalid_parameter_exception('Teacher profile table is missing.');
     }
 
     $columns = pqmt_teacher_profile_columns();
@@ -335,6 +342,7 @@ function pqmt_create_teachers(array $rows): array {
                 'mock_teacher_no' => $row['mock_teacher_no'],
                 'username' => $username,
                 'userid' => $userid,
+                'accountno' => pqh_account_no_value($userid),
                 'profileid' => $profileid,
                 'displayname' => $row['teacher_display_name'],
                 'country' => $row['country'],
@@ -348,19 +356,29 @@ function pqmt_create_teachers(array $rows): array {
         $transaction->allow_commit();
     } catch (Throwable $e) {
         $transaction->rollback($e);
+        throw $e;
     }
     return $results;
 }
 
-$rows = pqmt_read_rows();
-$ready = pqmt_table_exists('local_prequran_teacher_profile');
-$availabilityready = pqmt_table_exists('local_prequran_live_availability');
 $results = [];
 $error = '';
+$rows = [];
 
-if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_sesskey();
+try {
+    $rows = pqmt_read_rows();
+} catch (Throwable $e) {
+    $error = $e->getMessage();
+}
+
+$ready = pqmt_table_exists('local_prequran_teacher_profile');
+$availabilityready = pqmt_table_exists('local_prequran_live_availability');
+
+if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
     try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This mock teacher setup form expired. Refresh the page and try again.');
+        }
         $results = pqmt_create_teachers($rows);
     } catch (Throwable $e) {
         $error = $e->getMessage();
@@ -434,6 +452,7 @@ echo $OUTPUT->header();
             <th>Mock</th>
             <th>Teacher</th>
             <th>Username</th>
+            <th>Account No.</th>
             <th>Moodle ID</th>
             <th>Profile ID</th>
             <th>Location</th>
@@ -448,6 +467,7 @@ echo $OUTPUT->header();
               <td><?php echo s($result['mock_teacher_no']); ?></td>
               <td><?php echo s($result['displayname']); ?></td>
               <td><?php echo s($result['username']); ?></td>
+              <td><?php echo s((string)($result['accountno'] ?? '')); ?></td>
               <td><?php echo (int)$result['userid']; ?></td>
               <td><?php echo (int)$result['profileid']; ?></td>
               <td><?php echo s($result['country'] . ' / ' . $result['timezone']); ?></td>

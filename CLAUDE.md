@@ -52,7 +52,6 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 
 - Work on `main` (or feature branches off it). History before 2026-07-16 lived on `codex/*` branches, now merged and deleted.
 - Local backup remote `backup` → `C:\Users\inawa\Documents\Claude Code\EduPlatform-backup\eduplatform.git`. Refresh with `git push backup --all --follow-tags` after significant work.
-- `OpenMAIC/` is an unrelated nested repo, gitignored, no longer needed — leave it alone.
 
 ## Verification before committing
 

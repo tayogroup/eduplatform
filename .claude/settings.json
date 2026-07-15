@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm run check:alphabet:*)",
+      "Bash(npm run validate:units:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run verify:*)",
+      "Bash(npm run preview:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run env:*)",
+      "Bash(npm test:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(node --check:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "PowerShell(npm run check:alphabet:*)",
+      "PowerShell(npm run validate:units:*)",
+      "PowerShell(npm run build:*)",
+      "PowerShell(npm run verify:*)",
+      "PowerShell(npm run test:*)",
+      "PowerShell(git status:*)",
+      "PowerShell(git diff:*)",
+      "PowerShell(git log:*)"
+    ],
+    "ask": [
+      "Bash(npm run deploy:*)",
+      "PowerShell(npm run deploy:*)"
+    ]
+  }
+}

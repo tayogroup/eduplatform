@@ -34,8 +34,8 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
 
   release: {
     version: '1.0.2',
-    assetVersion: 'alphabet-rules-skipfix-20260615e',
-    marker: 'alphabet-rules-skipfix-20260615e'
+    assetVersion: 'alphabet-phonetics-completefix-20260620a',
+    marker: 'alphabet-phonetics-completefix-20260620a'
   },
 
   localization: {
@@ -152,7 +152,7 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
  
   steps: [
     { id: 'lecture',    step_index: 1,  type: 'lecture',        label: 'Lecture',    arabicLabel: 'شرح', passFilters: ['all'] },
-    { id: 'rules',      step_index: 2,  type: 'content',        label: 'Rules',      arabicLabel: 'القواعد', passFilters: ['all', 'all'], passes_required: 2, default_passes_required: 2 },
+    { id: 'rules',      step_index: 2,  type: 'content',        label: 'Rules',      arabicLabel: 'القواعد', passFilters: ['all'], passes_required: 1, default_passes_required: 1 },
     { id: 'listen',     step_index: 3,  type: 'playlist',       label: 'Listen',     arabicLabel: 'استمع', passFilters: ['all'] },
     { id: 'watch',      step_index: 4,  type: 'video_playlist', label: 'Watch',      arabicLabel: 'شاهد', passFilters: ['all'] },
     { id: 'phonetics',  step_index: 5,  type: 'phonetics',      label: 'Phonetics',  arabicLabel: 'النطق', passFilters: ['all'] },
@@ -175,9 +175,9 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
         actionLabel: 'Rules',
         actionArabicLabel: 'القواعد',
         filter: 'all',
-        passFilters: ['all', 'all'],
-        passes_required: 2,
-        default_passes_required: 2
+        passFilters: ['all'],
+        passes_required: 1,
+        default_passes_required: 1
       }
     ],
     rules: {
@@ -188,9 +188,9 @@ const UNIT_CFG = __PQ_NORMALIZE_UNIT_CONFIG__.normalize({
       actionLabel: 'Rules',
       actionArabicLabel: 'القواعد',
       filter: 'all',
-      passFilters: ['all', 'all'],
-      passes_required: 2,
-      default_passes_required: 2
+      passFilters: ['all'],
+      passes_required: 1,
+      default_passes_required: 1
     }
   },
   writeLabelMap: [
@@ -578,7 +578,8 @@ words: {
       watch: {
         letterAudioMode: 'both',
         beforeStartMs: 400,
-        betweenLettersMs: 700,
+        afterVideoHoldMs: 7000,
+        betweenLettersMs: 2000,
         afterCompleteMs: 500
       },
       repeat: {
@@ -859,6 +860,9 @@ words: {
 	  animateBase:
 		'/pre_quraan/lessons/alphabet/media/animate/',
 
+	  articulationCaptionAudioBase:
+		'/pre_quraan/lessons/alphabet/media/captions/audio/',
+
 	  soundImageBase:
 		'/pre_quraan/lessons/alphabet/media/sound/images/',
 
@@ -883,35 +887,35 @@ words: {
 
   content: {
     items: [
-			{ key: 'alph_1', text: 'ا', en: 'alif', row: 1, displayCol: 4, audio: 'alph_01.mp3', video: 'alph_01.mp4' },
-			{ key: 'alph_2', text: 'ب', en: 'ba', row: 1, displayCol: 3, audio: 'alph_02.mp3', video: 'alph_02.mp4' },
-			{ key: 'alph_3', text: 'ت', en: 'ta', row: 1, displayCol: 2, audio: 'alph_03.mp3', video: 'alph_03.mp4' },
-			{ key: 'alph_4', text: 'ث', en: 'tha', row: 1, displayCol: 1, audio: 'alph_04.mp3', video: 'alph_04.mp4' },
-			{ key: 'alph_5', text: 'ج', en: 'jeem', row: 2, displayCol: 4, audio: 'alph_05.mp3', video: 'alph_05.mp4' },
-			{ key: 'alph_6', text: 'ح', en: 'ha', row: 2, displayCol: 3, audio: 'alph_06.mp3', video: 'alph_06.mp4' },
-			{ key: 'alph_7', text: 'خ', en: 'kha', row: 2, displayCol: 2, audio: 'alph_07.mp3', video: 'alph_07.mp4' },
-			{ key: 'alph_8', text: 'د', en: 'dal', row: 2, displayCol: 1, audio: 'alph_08.mp3', video: 'alph_08.mp4' },
-			{ key: 'alph_9', text: 'ذ', en: 'dhal', row: 3, displayCol: 4, audio: 'alph_09.mp3', video: 'alph_09.mp4' },
-			{ key: 'alph_10', text: 'ر', en: 'ra', row: 3, displayCol: 3, audio: 'alph_10.mp3', video: 'alph_10.mp4' },
-			{ key: 'alph_11', text: 'ز', en: 'zay', row: 3, displayCol: 2, audio: 'alph_11.mp3', video: 'alph_11.mp4' },
-			{ key: 'alph_12', text: 'س', en: 'seen', row: 3, displayCol: 1, audio: 'alph_12.mp3', video: 'alph_12.mp4' },
-			{ key: 'alph_13', text: 'ش', en: 'sheen', row: 4, displayCol: 4, audio: 'alph_13.mp3', video: 'alph_13.mp4' },
-			{ key: 'alph_14', text: 'ص', en: 'sad', row: 4, displayCol: 3, audio: 'alph_14.mp3', video: 'alph_14.mp4' },
-			{ key: 'alph_15', text: 'ض', en: 'dad', row: 4, displayCol: 2, audio: 'alph_15.mp3', video: 'alph_15.mp4' },
-			{ key: 'alph_16', text: 'ط', en: 'ta', row: 4, displayCol: 1, audio: 'alph_16.mp3', video: 'alph_16.mp4' },
-			{ key: 'alph_17', text: 'ظ', en: 'za', row: 5, displayCol: 4, audio: 'alph_17.mp3', video: 'alph_17.mp4' },
-			{ key: 'alph_18', text: 'ع', en: 'ayn', row: 5, displayCol: 3, audio: 'alph_18.mp3', video: 'alph_18.mp4' },
-			{ key: 'alph_19', text: 'غ', en: 'ghayn', row: 5, displayCol: 2, audio: 'alph_19.mp3', video: 'alph_19.mp4' },
-			{ key: 'alph_20', text: 'ف', en: 'fa', row: 5, displayCol: 1, audio: 'alph_20.mp3', video: 'alph_20.mp4' },
-			{ key: 'alph_21', text: 'ق', en: 'qaf', row: 6, displayCol: 4, audio: 'alph_21.mp3', video: 'alph_21.mp4' },
-			{ key: 'alph_22', text: 'ك', en: 'kaf', row: 6, displayCol: 3, audio: 'alph_22.mp3', video: 'alph_22.mp4' },
-			{ key: 'alph_23', text: 'ل', en: 'lam', row: 6, displayCol: 2, audio: 'alph_23.mp3', video: 'alph_23.mp4' },
-			{ key: 'alph_24', text: 'م', en: 'meem', row: 6, displayCol: 1, audio: 'alph_24.mp3', video: 'alph_24.mp4' },
-			{ key: 'alph_25', text: 'ن', en: 'noon', row: 7, displayCol: 4, audio: 'alph_25.mp3', video: 'alph_25.mp4' },
-			{ key: 'alph_26', text: 'ه', en: 'ha', row: 7, displayCol: 3, audio: 'alph_26.mp3', video: 'alph_26.mp4' },
-			{ key: 'alph_27', text: 'و', en: 'waw', row: 7, displayCol: 2, audio: 'alph_27.mp3', video: 'alph_27.mp4' },
-			{ key: 'alph_28', text: 'ي', en: 'ya', row: 7, displayCol: 1, audio: 'alph_28.mp3', video: 'alph_28.mp4' },
-			{ key: 'alph_29', text: 'ء', en: 'hamza', row: 8, displayCol: 4, audio: 'alph_29.mp3', video: 'alph_29.mp4' }
+			{ key: 'alph_1', text: 'ا', en: 'alif', row: 1, displayCol: 4, audio: 'alph_01.mp3', video: 'alph_01.mp4', articulationCaption: 'Alif / hamzah starts from the deepest throat; stop the airflow gently, then release the sound.' },
+			{ key: 'alph_2', text: 'ب', en: 'ba', row: 1, displayCol: 3, audio: 'alph_02.mp3', video: 'alph_02.mp4', articulationCaption: 'Ba is made by closing both lips, holding the air for a moment, then releasing it.' },
+			{ key: 'alph_3', text: 'ت', en: 'ta', row: 1, displayCol: 2, audio: 'alph_03.mp3', video: 'alph_03.mp4', articulationCaption: 'Ta is made when the tongue tip touches the gum ridge behind the upper front teeth.' },
+			{ key: 'alph_4', text: 'ث', en: 'tha', row: 1, displayCol: 1, audio: 'alph_04.mp3', video: 'alph_04.mp4', articulationCaption: 'Tha is made by placing the tongue tip lightly between the teeth and letting air pass.' },
+			{ key: 'alph_5', text: 'ج', en: 'jeem', row: 2, displayCol: 4, audio: 'alph_05.mp3', video: 'alph_05.mp4', articulationCaption: 'Jeem is made from the middle of the tongue touching the middle of the upper palate.' },
+			{ key: 'alph_6', text: 'ح', en: 'ha', row: 2, displayCol: 3, audio: 'alph_06.mp3', video: 'alph_06.mp4', articulationCaption: 'Ha is made from the middle throat with an open, breathy sound.' },
+			{ key: 'alph_7', text: 'خ', en: 'kha', row: 2, displayCol: 2, audio: 'alph_07.mp3', video: 'alph_07.mp4', articulationCaption: 'Kha is made from the upper throat with a rough, airy sound.' },
+			{ key: 'alph_8', text: 'د', en: 'dal', row: 2, displayCol: 1, audio: 'alph_08.mp3', video: 'alph_08.mp4', articulationCaption: 'Dal is made when the tongue tip touches the gum ridge behind the upper front teeth.' },
+			{ key: 'alph_9', text: 'ذ', en: 'dhal', row: 3, displayCol: 4, audio: 'alph_09.mp3', video: 'alph_09.mp4', articulationCaption: 'Dhal is made by placing the tongue tip lightly between the teeth and vibrating the voice.' },
+			{ key: 'alph_10', text: 'ر', en: 'ra', row: 3, displayCol: 3, audio: 'alph_10.mp3', video: 'alph_10.mp4', articulationCaption: 'Ra is made with the tongue tip near the gum ridge, allowing a light tap or trill.' },
+			{ key: 'alph_11', text: 'ز', en: 'zay', row: 3, displayCol: 2, audio: 'alph_11.mp3', video: 'alph_11.mp4', articulationCaption: 'Zay is made by bringing the tongue near the lower front teeth and letting a buzzing sound pass.' },
+			{ key: 'alph_12', text: 'س', en: 'seen', row: 3, displayCol: 1, audio: 'alph_12.mp3', video: 'alph_12.mp4', articulationCaption: 'Seen is made by bringing the tongue near the lower front teeth and letting a clear hiss pass.' },
+			{ key: 'alph_13', text: 'ش', en: 'sheen', row: 4, displayCol: 4, audio: 'alph_13.mp3', video: 'alph_13.mp4', articulationCaption: 'Sheen is made from the middle of the tongue near the upper palate with spread airflow.' },
+			{ key: 'alph_14', text: 'ص', en: 'sad', row: 4, displayCol: 3, audio: 'alph_14.mp3', video: 'alph_14.mp4', articulationCaption: 'Sad is made like Seen, but with a heavier, fuller sound from the back of the mouth.' },
+			{ key: 'alph_15', text: 'ض', en: 'dad', row: 4, displayCol: 2, audio: 'alph_15.mp3', video: 'alph_15.mp4', articulationCaption: 'Dad is made from the side of the tongue touching the upper molars, with a heavy sound.' },
+			{ key: 'alph_16', text: 'ط', en: 'ta', row: 4, displayCol: 1, audio: 'alph_16.mp3', video: 'alph_16.mp4', articulationCaption: 'Ta is made like Ta, but heavier; raise the back of the tongue to make a full sound.' },
+			{ key: 'alph_17', text: 'ظ', en: 'za', row: 5, displayCol: 4, audio: 'alph_17.mp3', video: 'alph_17.mp4', articulationCaption: 'Za is made like Dhal, but heavier; place the tongue near the teeth and keep the sound full.' },
+			{ key: 'alph_18', text: 'ع', en: 'ayn', row: 5, displayCol: 3, audio: 'alph_18.mp3', video: 'alph_18.mp4', articulationCaption: 'Ayn is made from the middle throat with a pressed, voiced sound.' },
+			{ key: 'alph_19', text: 'غ', en: 'ghayn', row: 5, displayCol: 2, audio: 'alph_19.mp3', video: 'alph_19.mp4', articulationCaption: 'Ghayn is made from the upper throat with a voiced, rough sound.' },
+			{ key: 'alph_20', text: 'ف', en: 'fa', row: 5, displayCol: 1, audio: 'alph_20.mp3', video: 'alph_20.mp4', articulationCaption: 'Fa is made by touching the upper front teeth to the lower lip and letting air pass.' },
+			{ key: 'alph_21', text: 'ق', en: 'qaf', row: 6, displayCol: 4, audio: 'alph_21.mp3', video: 'alph_21.mp4', articulationCaption: 'Qaf is made from the back of the tongue touching the soft palate, with a deep sound.' },
+			{ key: 'alph_22', text: 'ك', en: 'kaf', row: 6, displayCol: 3, audio: 'alph_22.mp3', video: 'alph_22.mp4', articulationCaption: 'Kaf is made from the back of the tongue touching the upper palate, lighter than Qaf.' },
+			{ key: 'alph_23', text: 'ل', en: 'lam', row: 6, displayCol: 2, audio: 'alph_23.mp3', video: 'alph_23.mp4', articulationCaption: 'Lam is made when the tongue tip and sides touch the gum ridge near the upper front teeth.' },
+			{ key: 'alph_24', text: 'م', en: 'meem', row: 6, displayCol: 1, audio: 'alph_24.mp3', video: 'alph_24.mp4', articulationCaption: 'Meem is made by closing both lips and letting the sound pass through the nose.' },
+			{ key: 'alph_25', text: 'ن', en: 'noon', row: 7, displayCol: 4, audio: 'alph_25.mp3', video: 'alph_25.mp4', articulationCaption: 'Noon is made with the tongue tip on the gum ridge while the sound passes through the nose.' },
+			{ key: 'alph_26', text: 'ه', en: 'ha', row: 7, displayCol: 3, audio: 'alph_26.mp3', video: 'alph_26.mp4', articulationCaption: 'Ha is made from the deepest throat with a soft, open breath.' },
+			{ key: 'alph_27', text: 'و', en: 'waw', row: 7, displayCol: 2, audio: 'alph_27.mp3', video: 'alph_27.mp4', articulationCaption: 'Waw is made by rounding both lips while the voice flows smoothly.' },
+			{ key: 'alph_28', text: 'ي', en: 'ya', row: 7, displayCol: 1, audio: 'alph_28.mp3', video: 'alph_28.mp4', articulationCaption: 'Ya is made from the middle of the tongue near the upper palate while the voice flows.' },
+			{ key: 'alph_29', text: 'ء', en: 'hamza', row: 8, displayCol: 4, audio: 'alph_29.mp3', video: 'alph_29.mp4', articulationCaption: 'Hamzah starts from the deepest throat; stop the airflow gently, then release the sound.' }
 
     ]
   }

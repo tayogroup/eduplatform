@@ -1,12 +1,12 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'PreQuran';
+$string['pluginname'] = 'EduPlatform';
 
 $string['bbb_heading'] = 'BigBlueButton live sessions';
-$string['bbb_heading_desc'] = 'Configure the hosted BigBlueButton server used for Quraan Academy live review sessions. The shared secret is used only by Moodle server-side code.';
+$string['bbb_heading_desc'] = 'Configure the hosted BigBlueButton server used for EduPlatform live review sessions. The shared secret is used only by Moodle server-side code.';
 $string['bbb_base_url'] = 'BigBlueButton base URL';
-$string['bbb_base_url_desc'] = 'The hosted BigBlueButton API base URL, for example https://bbb.example.com/bigbluebutton/ or https://bbb.example.com/bigbluebutton/api/.';
+$string['bbb_base_url_desc'] = 'The hosted BigBlueButton base URL used for create, join, and recording API calls. When the BiggerBlueButton custom domain is active, use the custom-domain account path, for example https://live.example.edu/bigbluebutton/account/. Moodle normalizes the value to the /api/ endpoint.';
 $string['bbb_shared_secret'] = 'BigBlueButton shared secret';
 $string['bbb_shared_secret_desc'] = 'The API shared secret from your hosted BigBlueButton provider. Never expose this value in frontend JavaScript.';
 $string['bbb_record_default'] = 'Default recording policy';
@@ -22,6 +22,12 @@ $string['bbb_max_participants_default'] = 'Default max participants';
 $string['bbb_max_participants_default_desc'] = 'Default BigBlueButton room capacity. For 1 teacher and 9 students, 12 leaves room for an admin or parent helper.';
 $string['bbb_recording_retention_days'] = 'Recording retention days';
 $string['bbb_recording_retention_days_desc'] = 'Default number of days to keep live-session recordings before review, unpublishing, or deletion.';
+$string['bbb_recording_sync_lookback_days'] = 'Recording sync lookback days';
+$string['bbb_recording_sync_lookback_days_desc'] = 'How many days of ended BBB sessions the scheduled recording sync checks on each run.';
+$string['bbb_recording_sync_limit'] = 'Recording sync session limit';
+$string['bbb_recording_sync_limit_desc'] = 'Maximum number of recent BBB sessions the scheduled recording sync checks on each run.';
+$string['bbb_recording_expiry_reminder_days'] = 'Recording expiry reminder days';
+$string['bbb_recording_expiry_reminder_days_desc'] = 'How many days before retention expiry administrators receive a recording reminder.';
 $string['parent_trust_heading'] = 'Parent trust retention';
 $string['parent_trust_heading_desc'] = 'Configure governance settings for parent trust support audit retention. These settings control readiness and approval workflow only; they do not delete records.';
 $string['parent_trust_retention_days'] = 'Parent trust retention days';
@@ -31,8 +37,30 @@ $string['parent_trust_purge_requires_export_desc'] = 'Require administrators to 
 $string['parent_trust_purge_approval_required'] = 'Require approval before purge';
 $string['parent_trust_purge_approval_required_desc'] = 'Require an administrator approval workflow before any future parent trust support audit purge.';
 
-$string['bbb_config_missing'] = 'BigBlueButton is not configured. Add the base URL and shared secret in PreQuran plugin settings.';
+$string['prequran:supportusechat'] = 'Use allowed support chat';
+$string['prequran:supportreply'] = 'Reply to support conversations as staff';
+$string['prequran:supportviewqueue'] = 'View assigned support queues';
+$string['prequran:supportconvert'] = 'Convert support conversations to tickets';
+$string['prequran:supportassignticket'] = 'Assign or transfer support tickets';
+$string['prequran:supportupdateticket'] = 'Update support ticket fields and status';
+$string['prequran:supportinternalnote'] = 'View and add support internal notes';
+$string['prequran:supportmanagesla'] = 'Manage support SLA and routing settings';
+$string['prequran:supportviewrestricted'] = 'View restricted support tickets';
+$string['prequran:supportreports'] = 'View and export support reports';
+$string['prequran:supportaudit'] = 'Review support audit events';
+
+$string['bbb_config_missing'] = 'BigBlueButton is not configured. Add the base URL and shared secret in EduPlatform plugin settings.';
 $string['bbb_api_error'] = 'BigBlueButton API error: {$a}';
 $string['bbb_api_parse_error'] = 'BigBlueButton returned an invalid response: {$a}';
 $string['messageprovider:live_session_update'] = 'Live session updates';
+$string['messageprovider:transcript_update'] = 'Transcript updates';
+$string['messageprovider:finance_update'] = 'Finance billing updates';
 $string['task_live_session_reminders'] = 'Live session reminders and follow-ups';
+$string['task_live_recording_automation'] = 'Live recording sync, review queue, and retention automation';
+$string['task_workspace_weekly_digest'] = 'Weekly workspace digest notifications';
+$string['task_course_request_digest'] = 'Weekly course request digest notifications';
+$string['task_course_data_maintenance'] = 'Course data retention and archive maintenance';
+$string['task_transcript_maintenance'] = 'Transcript stale document maintenance';
+$string['task_finance_operations_refresh'] = 'Finance operations reporting refresh';
+$string['task_finance_api_hardening'] = 'Finance API hardening and scale controls';
+$string['task_support_sla_monitor'] = 'Support SLA warning and breach monitor';

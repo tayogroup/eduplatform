@@ -63,6 +63,10 @@ function pqpc_update_consumer(
     string $name,
     string $slug,
     string $consumertype,
+    string $institutiontype,
+    string $faithsubcategory,
+    string $teachingmethod,
+    string $operatortype,
     string $status,
     string $supportemail,
     string $publicpath,
@@ -100,6 +104,11 @@ function pqpc_update_consumer(
     $consumer->name = $name;
     $consumer->slug = $slug;
     $consumer->consumer_type = $consumertype;
+    $cleaninstitutiontype = $consumertype === 'institution' ? pqhi_clean_institution_type($institutiontype) : '';
+    $consumer->institution_type = $cleaninstitutiontype;
+    $consumer->faith_subcategory = $cleaninstitutiontype === 'faith_based_education' ? pqhi_clean_faith_subcategory($faithsubcategory) : '';
+    $consumer->teaching_method = $consumertype === 'institution' ? pqhi_clean_teaching_method($teachingmethod) : '';
+    $consumer->operator_type = $consumertype === 'institution' ? pqhi_clean_operator_type($operatortype) : '';
     $consumer->status = $status;
     $supportemail = clean_param(trim($supportemail), PARAM_EMAIL);
     if ($supportemail !== '' && !validate_email($supportemail)) {
@@ -228,7 +237,8 @@ function pqpc_consumer_rows(): array {
         return [];
     }
     return array_values($DB->get_records_sql(
-        "SELECT c.id, c.slug, c.name, c.consumer_type, c.status, c.primaryworkspaceid, c.owneruserid,
+        "SELECT c.id, c.slug, c.name, c.consumer_type, c.institution_type, c.faith_subcategory, c.teaching_method, c.status, c.primaryworkspaceid, c.owneruserid,
+                c.operator_type,
                 c.supportemail, c.emailfromname, c.emailreplyto, c.defaultpublicpath, c.defaultdashboardpath,
                 c.logourl, c.themejson, c.copyjson, c.timemodified,
                 w.name AS workspacename, w.slug AS workspaceslug, w.status AS workspacestatus,
@@ -288,6 +298,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 optional_param('consumer_name', '', PARAM_TEXT),
                 optional_param('consumer_slug', '', PARAM_TEXT),
                 optional_param('consumer_type', 'institution', PARAM_ALPHANUMEXT),
+                optional_param('institution_type', 'primary_education', PARAM_ALPHANUMEXT),
+                optional_param('faith_subcategory', '', PARAM_ALPHANUMEXT),
+                optional_param('teaching_method', 'regular', PARAM_ALPHANUMEXT),
+                optional_param('operator_type', 'private_entity', PARAM_ALPHANUMEXT),
                 optional_param('consumer_status', 'active', PARAM_ALPHANUMEXT),
                 optional_param('supportemail', '', PARAM_EMAIL),
                 optional_param('defaultpublicpath', '/', PARAM_LOCALURL),
@@ -387,12 +401,22 @@ body.pqpc-page #page,body.pqpc-page #page-content,body.pqpc-page #region-main,bo
           $theme = pqhi_default_theme(pqhi_json_array((string)($consumer->themejson ?? '')));
           $copy = pqhi_default_copy((string)$consumer->name, pqhi_json_array((string)($consumer->copyjson ?? '')));
           $heroimage = pqh_consumer_hero_image_url($consumer);
+          $institutiontype = pqhi_clean_institution_type((string)($consumer->institution_type ?? 'primary_education'));
+          $faithsubcategory = pqhi_clean_faith_subcategory((string)($consumer->faith_subcategory ?? ''));
+          $teachingmethod = pqhi_clean_teaching_method((string)($consumer->teaching_method ?? 'regular'));
+          $operatortype = pqhi_clean_operator_type((string)($consumer->operator_type ?? 'private_entity'));
+          $consumercontext = pqh_consumer_context_by_slug((string)$consumer->slug);
+          $workspaceurl = pqh_consumer_url('/local/hubredirect/workspace_dashboard.php', $consumercontext, $params);
           ?>
           <article class="pqpc-row">
             <div class="pqpc-card">
               <h2><?php echo s((string)$consumer->name); ?></h2>
               <span class="pqpc-pill"><?php echo s((string)$consumer->slug); ?></span>
               <span class="pqpc-pill">type: <?php echo s((string)$consumer->consumer_type); ?></span>
+              <?php if ((string)$consumer->consumer_type === 'institution'): ?><span class="pqpc-pill">institution: <?php echo s(pqhi_institution_type_label($institutiontype)); ?></span><?php endif; ?>
+              <?php if ((string)$consumer->consumer_type === 'institution' && $faithsubcategory !== ''): ?><span class="pqpc-pill">faith: <?php echo s(pqhi_faith_subcategory_label($faithsubcategory)); ?></span><?php endif; ?>
+              <?php if ((string)$consumer->consumer_type === 'institution'): ?><span class="pqpc-pill">method: <?php echo s(pqhi_teaching_method_label($teachingmethod)); ?></span><?php endif; ?>
+              <?php if ((string)$consumer->consumer_type === 'institution'): ?><span class="pqpc-pill">operator: <?php echo s(pqhi_operator_type_label($operatortype)); ?></span><?php endif; ?>
               <span class="pqpc-pill">consumer: <?php echo s((string)$consumer->status); ?></span>
               <span class="pqpc-pill">workspace: <?php echo s((string)($consumer->workspacestatus ?? 'missing')); ?></span>
               <span class="pqpc-muted">Workspace #<?php echo $workspaceid; ?> / <?php echo s((string)($consumer->workspacename ?? 'missing')); ?></span>
@@ -400,7 +424,7 @@ body.pqpc-page #page,body.pqpc-page #page-content,body.pqpc-page #region-main,bo
               <div class="pqpc-actions" style="justify-content:flex-start;margin-top:10px">
                 <?php if ($workspaceid > 0): ?>
                   <a class="pqpc-btn pqpc-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/institution_settings.php', $params))->out(false); ?>">Settings</a>
-                  <a class="pqpc-btn pqpc-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_dashboard.php', $params))->out(false); ?>">Workspace</a>
+                  <a class="pqpc-btn pqpc-btn--light" href="<?php echo $workspaceurl->out(false); ?>">Workspace</a>
                   <a class="pqpc-btn pqpc-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/institution_profile.php', $params))->out(false); ?>">Profile</a>
                 <?php else: ?>
                   <a class="pqpc-btn pqpc-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/institution_onboarding.php'))->out(false); ?>">Create workspace</a>
@@ -417,16 +441,20 @@ body.pqpc-page #page,body.pqpc-page #page-content,body.pqpc-page #region-main,bo
                 <div class="pqpc-formgrid">
                   <div class="pqpc-field"><label>Name</label><input class="pqpc-input" name="consumer_name" value="<?php echo s((string)$consumer->name); ?>"></div>
                   <div class="pqpc-field"><label>Slug</label><input class="pqpc-input" name="consumer_slug" value="<?php echo s((string)$consumer->slug); ?>"></div>
-                  <div class="pqpc-field" style="grid-column:1/-1"><label>Consumer type</label><select class="pqpc-select" name="consumer_type"><?php foreach (pqhi_consumer_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>" <?php echo (string)$consumer->consumer_type === $value ? 'selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+                  <div class="pqpc-field"><label>Consumer type</label><select class="pqpc-select" name="consumer_type"><?php foreach (pqhi_consumer_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>" <?php echo (string)$consumer->consumer_type === $value ? 'selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+                  <div class="pqpc-field"><label>Institution type</label><select class="pqpc-select" name="institution_type"><?php foreach (pqhi_institution_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>" <?php echo $institutiontype === $value ? 'selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+                  <div class="pqpc-field pqhi-faith-subcategory-field"><label>Faith sub-category</label><select class="pqpc-select" name="faith_subcategory"><option value="">Select</option><?php foreach (pqhi_faith_subcategory_options() as $value => $label): ?><option value="<?php echo s($value); ?>" <?php echo $faithsubcategory === $value ? 'selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+                  <div class="pqpc-field"><label>Teaching method</label><select class="pqpc-select" name="teaching_method"><?php foreach (pqhi_teaching_method_options() as $value => $label): ?><option value="<?php echo s($value); ?>" <?php echo $teachingmethod === $value ? 'selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+                  <div class="pqpc-field"><label>Operator type</label><select class="pqpc-select" name="operator_type"><?php foreach (pqhi_operator_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>" <?php echo $operatortype === $value ? 'selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
                   <div class="pqpc-field"><label>Consumer status</label><select class="pqpc-select" name="consumer_status"><?php foreach (pqpc_status_options() as $value => $label): ?><option value="<?php echo s($value); ?>" <?php echo (string)$consumer->status === $value ? 'selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
                   <div class="pqpc-field"><label>Workspace status</label><select class="pqpc-select" name="workspace_status"><?php foreach (pqpc_status_options() as $value => $label): ?><option value="<?php echo s($value); ?>" <?php echo (string)($consumer->workspacestatus ?? '') === $value ? 'selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
                   <div class="pqpc-field" style="grid-column:1/-1"><label>Support email</label><input class="pqpc-input" name="supportemail" value="<?php echo s((string)$consumer->supportemail); ?>"></div>
-                  <div class="pqpc-field" style="grid-column:1/-1"><label>Logo URL</label><input class="pqpc-input" name="logourl" value="<?php echo s((string)($consumer->logourl ?? '')); ?>" placeholder="https://app.eduplatform.ai/... or /local/..."></div>
+                  <div class="pqpc-field" style="grid-column:1/-1"><label>Logo URL</label><input class="pqpc-input" name="logourl" value="<?php echo s((string)($consumer->logourl ?? '')); ?>" placeholder="https://app.example.org/... or /local/..."></div>
                   <div class="pqpc-field"><label>Initials</label><input class="pqpc-input" name="brandinitials" value="<?php echo s((string)$copy['brand_initials']); ?>" maxlength="6"></div>
                   <div class="pqpc-field"><label>Primary color</label><input class="pqpc-input" name="primarycolor" value="<?php echo s((string)$theme['primary_color']); ?>" placeholder="#2f6f4e"></div>
                   <div class="pqpc-field"><label>Accent color</label><input class="pqpc-input" name="accentcolor" value="<?php echo s((string)$theme['accent_color']); ?>" placeholder="#d99a26"></div>
                   <div class="pqpc-field"><label>Surface color</label><input class="pqpc-input" name="surfacecolor" value="<?php echo s((string)$theme['surface_color']); ?>" placeholder="#f4f8fb"></div>
-                  <div class="pqpc-field" style="grid-column:1/-1"><label>Hero image URL</label><input class="pqpc-input" name="heroimage" value="<?php echo s((string)$copy['hero_image_url']); ?>" placeholder="https://app.eduplatform.ai/consumers/example/hero.jpg"></div>
+                  <div class="pqpc-field" style="grid-column:1/-1"><label>Hero image URL</label><input class="pqpc-input" name="heroimage" value="<?php echo s((string)$copy['hero_image_url']); ?>" placeholder="https://app.example.org/consumers/example/hero.jpg"></div>
                   <div class="pqpc-field" style="grid-column:1/-1"><label>Effective hero</label><input class="pqpc-input" value="<?php echo s($heroimage); ?>" readonly></div>
                   <div class="pqpc-field" style="grid-column:1/-1"><label>Landing headline</label><input class="pqpc-input" name="headline" value="<?php echo s((string)$copy['landing_headline']); ?>"></div>
                   <div class="pqpc-field" style="grid-column:1/-1"><label>Landing subtitle</label><textarea class="pqpc-textarea" name="subtitle"><?php echo s((string)$copy['landing_subtitle']); ?></textarea></div>
@@ -508,5 +536,27 @@ body.pqpc-page #page,body.pqpc-page #page-content,body.pqpc-page #region-main,bo
     <?php endif; ?>
   </div>
 </main>
+<script>
+(function() {
+  document.querySelectorAll('form').forEach(function(form) {
+    var type = form.querySelector('select[name="institution_type"]');
+    var field = form.querySelector('.pqhi-faith-subcategory-field');
+    var subcategory = field ? field.querySelector('select[name="faith_subcategory"]') : null;
+    function syncFaithSubcategory() {
+      var show = type && type.value === 'faith_based_education';
+      if (field) {
+        field.style.display = show ? '' : 'none';
+      }
+      if (!show && subcategory) {
+        subcategory.value = '';
+      }
+    }
+    if (type && field) {
+      type.addEventListener('change', syncFaithSubcategory);
+      syncFaithSubcategory();
+    }
+  });
+})();
+</script>
 <?php
 echo $OUTPUT->footer();

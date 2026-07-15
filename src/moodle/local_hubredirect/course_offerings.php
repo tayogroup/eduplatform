@@ -20,15 +20,30 @@ if ($workspaceid > 0) {
     $urlparams['workspaceid'] = $workspaceid;
 }
 
-if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
+function pqcoa_user_can_manage_offerings(int $userid, int $workspaceid, ?stdClass $workspace): bool {
+    if ($workspaceid <= 0 || !$workspace) {
+        return false;
+    }
+    if (pqh_user_can_manage_workspace($userid, $workspaceid)) {
+        return true;
+    }
+    return (string)($workspace->workspace_type ?? '') === 'solo_teacher'
+        && pqh_has_independent_teacher_profile($userid)
+        && pqh_user_workspace_role($userid, $workspaceid) === 'teacher';
+}
+
+$workspace = $workspaceid > 0
+    ? $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', IGNORE_MISSING)
+    : false;
+
+if (!$workspace || !pqcoa_user_can_manage_offerings((int)$USER->id, $workspaceid, $workspace ?: null)) {
     pqh_access_denied(
-        'Only workspace owners and admins can manage course offerings.',
+        'Only workspace admins or approved independent teachers can manage course offerings.',
         new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams),
         'Course offering access required'
     );
 }
 
-$workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/hubredirect/course_offerings.php', $urlparams));
@@ -127,6 +142,19 @@ function pqcoa_review_enrollment_request(int $requestid, string $decision, strin
         }
         if (pqco_enrol_student_in_moodle_course((int)$request->studentid, (int)$request->moodlecourseid)) {
             pqco_append_profile_course((int)$request->studentid, (string)$request->course_key);
+            $teacherenrolledcount = pqco_enrol_assigned_teachers_in_moodle_course(
+                (int)$request->studentid,
+                (int)$request->moodlecourseid,
+                $workspaceid,
+                [
+                    'consumerid' => (int)($request->consumerid ?? $consumercontext->consumerid ?? 0),
+                    'workspaceid' => $workspaceid,
+                    'offeringid' => (int)$request->offeringid,
+                    'requestid' => (int)$request->id,
+                    'studentid' => (int)$request->studentid,
+                    'moodlecourseid' => (int)$request->moodlecourseid,
+                ]
+            );
             $updatedrequest->status = 'enrolled';
             $updatedrequest->moodleenrolledat = time();
             $message = 'Enrollment approved and Moodle enrollment completed.';
@@ -137,6 +165,7 @@ function pqcoa_review_enrollment_request(int $requestid, string $decision, strin
                 'requestid' => (int)$request->id,
                 'studentid' => (int)$request->studentid,
                 'moodlecourseid' => (int)$request->moodlecourseid,
+                'teacher_enrollment_count' => $teacherenrolledcount,
             ]);
         } else {
             $message = 'Enrollment approved. Moodle auto-enrollment was not completed; check the linked Moodle course manual enrollment setup.';
@@ -680,6 +709,19 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 pqcoa_validation_error('Moodle enrollment could not be completed. Confirm the linked Moodle course has an enabled manual enrollment method.');
             }
             pqco_append_profile_course((int)$request->studentid, (string)$request->course_key);
+            $teacherenrolledcount = pqco_enrol_assigned_teachers_in_moodle_course(
+                (int)$request->studentid,
+                (int)$request->moodlecourseid,
+                $workspaceid,
+                [
+                    'consumerid' => (int)($request->consumerid ?? $consumercontext->consumerid ?? 0),
+                    'workspaceid' => $workspaceid,
+                    'offeringid' => (int)$request->offeringid,
+                    'requestid' => (int)$request->id,
+                    'studentid' => (int)$request->studentid,
+                    'moodlecourseid' => (int)$request->moodlecourseid,
+                ]
+            );
             $updatedrequest = (object)[
                 'id' => (int)$request->id,
                 'status' => 'enrolled',
@@ -695,6 +737,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'studentid' => (int)$request->studentid,
                 'moodlecourseid' => (int)$request->moodlecourseid,
                 'status' => 'enrolled',
+                'teacher_enrollment_count' => $teacherenrolledcount,
             ]);
             $request->status = 'enrolled';
             pqco_notify_request_outcome(

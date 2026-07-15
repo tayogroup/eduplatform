@@ -36,6 +36,14 @@ $prequrannotificationlib = $CFG->dirroot . '/local/prequran/notificationlib.php'
 if (file_exists($prequrannotificationlib)) {
     require_once($prequrannotificationlib);
 }
+$prequrantranscriptlib = $CFG->dirroot . '/local/hubredirect/course_transcriptlib.php';
+if (file_exists($prequrantranscriptlib)) {
+    require_once($prequrantranscriptlib);
+}
+$prequranfinancelib = $CFG->dirroot . '/local/hubredirect/finance_lib.php';
+if (file_exists($prequranfinancelib)) {
+    require_once($prequranfinancelib);
+}
 
 // PQ_FOCUS_PATCH_VER: 20251224_4
 
@@ -7619,6 +7627,3046 @@ $validate = [
             'tables_ready' => new \external_value(PARAM_BOOL, 'False if communication tables are missing'),
             'messageid' => new \external_value(PARAM_INT, 'Created message id'),
             'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    // -------------------------------------------------------------------------
+    // Support Phase 2: asynchronous conversations
+    // -------------------------------------------------------------------------
+    protected static function support_tables_ready(): bool {
+        global $DB;
+        $manager = $DB->get_manager();
+        if (!$manager->table_exists('local_prequran_comm_thread')
+            || !$manager->table_exists('local_prequran_comm_participant')
+            || !$manager->table_exists('local_prequran_comm_message')
+            || !$manager->table_exists('local_prequran_comm_audit')
+            || !$manager->table_exists('local_prequran_support_policy')
+            || !$manager->table_exists('local_prequran_support_audit')) {
+            return false;
+        }
+        return $manager->field_exists(new xmldb_table('local_prequran_comm_thread'), new xmldb_field('support_category'))
+            && $manager->field_exists(new xmldb_table('local_prequran_comm_message'), new xmldb_field('visibility'));
+    }
+
+    protected static function support_allowed_types(): array {
+        return ['student_helpdesk', 'student_teacher', 'parent_teacher'];
+    }
+
+    protected static function support_context(): \context_system {
+        $context = \context_system::instance();
+        self::validate_context($context);
+        return $context;
+    }
+
+    protected static function support_effective_policy(int $workspaceid = 0, int $consumerid = 0): array {
+        if (function_exists('local_prequran_support_effective_policy')) {
+            return local_prequran_support_effective_policy($workspaceid, $consumerid);
+        }
+        return [
+            'async_enabled' => false,
+            'student_helpdesk_enabled' => false,
+            'student_teacher_enabled' => false,
+            'parent_teacher_enabled' => true,
+            'student_free_text_policy' => 'topic_only',
+            'parent_visible_default' => true,
+            'categories' => ['other'],
+            'routing' => ['other' => 'help_desk'],
+            'restricted_categories' => ['safeguarding_concern'],
+            'student_hidden_categories' => ['payment_billing'],
+        ];
+    }
+
+    protected static function support_type_enabled(string $type, array $policy): bool {
+        if (empty($policy['async_enabled'])) {
+            return false;
+        }
+        if ($type === 'student_helpdesk') {
+            return !empty($policy['student_helpdesk_enabled']);
+        }
+        if ($type === 'student_teacher') {
+            return !empty($policy['student_teacher_enabled']);
+        }
+        if ($type === 'parent_teacher') {
+            return !empty($policy['parent_teacher_enabled']);
+        }
+        return false;
+    }
+
+    protected static function support_user_role_for_student(int $userid, int $studentid): string {
+        if ($userid > 0 && $studentid > 0 && $userid === $studentid && self::is_managed_student($userid)) {
+            return 'student';
+        }
+        if (function_exists('local_prequran_support_is_guardian_for_student')
+            && local_prequran_support_is_guardian_for_student($userid, $studentid)) {
+            return 'parent';
+        }
+        if (function_exists('local_prequran_support_teacher_has_student')
+            && local_prequran_support_teacher_has_student($userid, $studentid)) {
+            return 'teacher';
+        }
+        if (is_siteadmin($userid)) {
+            return 'admin';
+        }
+        $context = \context_system::instance();
+        if (has_capability('local/prequran:supportviewqueue', $context, $userid)) {
+            return 'agent';
+        }
+        return 'participant';
+    }
+
+    protected static function support_guardian_ids_for_student(int $studentid): array {
+        global $DB;
+        if ($studentid <= 0) {
+            return [];
+        }
+        if (function_exists('local_prequran_notify_parent_ids_for_student')) {
+            return array_values(array_unique(array_filter(array_map('intval', local_prequran_notify_parent_ids_for_student($studentid)))));
+        }
+        $ids = [];
+        foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
+            if ($DB->get_manager()->table_exists($table)) {
+                foreach ($DB->get_records($table, ['studentid' => $studentid]) as $row) {
+                    $guardianid = (int)($row->guardianid ?? 0);
+                    if ($guardianid > 0) {
+                        $ids[$guardianid] = $guardianid;
+                    }
+                }
+            }
+        }
+        return array_values($ids);
+    }
+
+    protected static function support_clean_category(string $category, array $policy): string {
+        $category = clean_param(trim($category), PARAM_ALPHANUMEXT);
+        $allowed = $policy['categories'] ?? [];
+        if (!is_array($allowed) || !$allowed) {
+            $allowed = ['other'];
+        }
+        return in_array($category, $allowed, true) ? $category : 'other';
+    }
+
+    protected static function support_clean_priority(string $priority): string {
+        $priority = clean_param(trim($priority), PARAM_ALPHANUMEXT);
+        return in_array($priority, ['urgent', 'high', 'normal', 'low'], true) ? $priority : 'normal';
+    }
+
+    protected static function support_clean_context_json(string $contextjson): string {
+        $contextjson = trim($contextjson);
+        if ($contextjson === '') {
+            return '';
+        }
+        $decoded = json_decode($contextjson, true);
+        if (!is_array($decoded)) {
+            return '';
+        }
+        return json_encode($decoded);
+    }
+
+    protected static function support_clean_message_body(string $body, array $policy, bool $studentcreated = false, int $max = 1200): string {
+        $body = self::comm_clean_message_body($body, $max);
+        if ($body === '') {
+            return '';
+        }
+        $freepolicy = (string)($policy['student_free_text_policy'] ?? 'topic_only');
+        if ($studentcreated && $freepolicy === 'disabled') {
+            throw new \moodle_exception('nopermissions', '', '', 'Student support free text is disabled.');
+        }
+        if ($studentcreated && preg_match('/(https?:\/\/|www\.|[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}|\+?\d[\d\s().-]{7,}|@[A-Z0-9_.-]+)/i', $body)) {
+            throw new \invalid_parameter_exception('Student support messages cannot include links, contact details, or social handles.');
+        }
+        return $body;
+    }
+
+    protected static function support_can_read_thread_as($thread, int $userid): bool {
+        global $DB;
+        if (!$thread || $userid <= 0) {
+            return false;
+        }
+        if (is_siteadmin($userid)) {
+            return true;
+        }
+        if ($DB->record_exists('local_prequran_comm_participant', ['threadid' => (int)$thread->id, 'userid' => $userid])) {
+            return true;
+        }
+        if (!empty($thread->studentid)
+            && function_exists('local_prequran_support_user_can_access_student')
+            && local_prequran_support_user_can_access_student($userid, (int)$thread->studentid)) {
+            return true;
+        }
+        $context = \context_system::instance();
+        if (has_capability('local/prequran:supportviewqueue', $context, $userid)) {
+            return true;
+        }
+        return false;
+    }
+
+    protected static function support_can_reply_thread($thread, int $userid): bool {
+        global $DB;
+        if (!$thread || (string)$thread->status !== 'active') {
+            return false;
+        }
+        if ($DB->record_exists('local_prequran_comm_participant', [
+            'threadid' => (int)$thread->id,
+            'userid' => $userid,
+            'canreply' => 1,
+        ])) {
+            return true;
+        }
+        $context = \context_system::instance();
+        return has_capability('local/prequran:supportreply', $context, $userid)
+            && self::support_can_read_thread_as($thread, $userid);
+    }
+
+    protected static function support_message_visible_to_user($message, $thread, int $userid): bool {
+        $visibility = (string)($message->visibility ?? 'public');
+        if ($visibility === '' || $visibility === 'public') {
+            return true;
+        }
+        if (function_exists('local_prequran_support_visibility_allowed')) {
+            return local_prequran_support_visibility_allowed($visibility, $userid, empty($thread->studentid) ? 0 : (int)$thread->studentid);
+        }
+        return is_siteadmin($userid);
+    }
+
+    protected static function support_message_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'id' => new \external_value(PARAM_INT, 'Message id'),
+            'conversationid' => new \external_value(PARAM_INT, 'Conversation/thread id'),
+            'senderid' => new \external_value(PARAM_INT, 'Sender user id'),
+            'senderrole' => new \external_value(PARAM_TEXT, 'Sender role'),
+            'studentid' => new \external_value(PARAM_INT, 'Student context user id, or 0'),
+            'messagekind' => new \external_value(PARAM_TEXT, 'Message kind'),
+            'body' => new \external_value(PARAM_RAW, 'Message body'),
+            'visibility' => new \external_value(PARAM_TEXT, 'Visibility'),
+            'status' => new \external_value(PARAM_TEXT, 'Message status'),
+            'ticketid' => new \external_value(PARAM_INT, 'Linked ticket id, or 0'),
+            'timecreated' => new \external_value(PARAM_INT, 'Created timestamp'),
+            'timemodified' => new \external_value(PARAM_INT, 'Modified timestamp'),
+        ]);
+    }
+
+    protected static function support_conversation_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'id' => new \external_value(PARAM_INT, 'Conversation/thread id'),
+            'type' => new \external_value(PARAM_TEXT, 'Conversation type'),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id'),
+            'cohortid' => new \external_value(PARAM_INT, 'Cohort id'),
+            'studentid' => new \external_value(PARAM_INT, 'Student id, or 0'),
+            'createdby' => new \external_value(PARAM_INT, 'Creator user id'),
+            'status' => new \external_value(PARAM_TEXT, 'Conversation status'),
+            'subject' => new \external_value(PARAM_TEXT, 'Subject'),
+            'category' => new \external_value(PARAM_TEXT, 'Support category'),
+            'priority' => new \external_value(PARAM_TEXT, 'Support priority'),
+            'assignedto' => new \external_value(PARAM_INT, 'Assigned user id, or 0'),
+            'assignmentgroupid' => new \external_value(PARAM_INT, 'Assignment group id, or 0'),
+            'visibility' => new \external_value(PARAM_TEXT, 'Conversation visibility'),
+            'linkedticketid' => new \external_value(PARAM_INT, 'Linked ticket id, or 0'),
+            'lastmessageat' => new \external_value(PARAM_INT, 'Last message timestamp'),
+            'lastmessageid' => new \external_value(PARAM_INT, 'Last visible message id'),
+            'lastsenderid' => new \external_value(PARAM_INT, 'Last visible sender id'),
+            'lastmessagebody' => new \external_value(PARAM_RAW, 'Last message body preview'),
+            'unreadcount' => new \external_value(PARAM_INT, 'Unread visible message count'),
+            'canreply' => new \external_value(PARAM_BOOL, 'Whether current user can reply'),
+            'timecreated' => new \external_value(PARAM_INT, 'Created timestamp'),
+            'timemodified' => new \external_value(PARAM_INT, 'Modified timestamp'),
+        ]);
+    }
+
+    protected static function support_format_conversation($thread, int $userid): array {
+        $summary = self::comm_format_thread_summary($thread, $userid);
+        return [
+            'id' => (int)$thread->id,
+            'type' => (string)$thread->type,
+            'workspaceid' => empty($thread->workspaceid) ? 0 : (int)$thread->workspaceid,
+            'cohortid' => (int)$thread->cohortid,
+            'studentid' => empty($thread->studentid) ? 0 : (int)$thread->studentid,
+            'createdby' => (int)$thread->createdby,
+            'status' => (string)$thread->status,
+            'subject' => (string)$thread->subject,
+            'category' => (string)($thread->support_category ?? ''),
+            'priority' => (string)($thread->support_priority ?? 'normal'),
+            'assignedto' => empty($thread->assignedto) ? 0 : (int)$thread->assignedto,
+            'assignmentgroupid' => empty($thread->assignmentgroupid) ? 0 : (int)$thread->assignmentgroupid,
+            'visibility' => (string)($thread->visibility ?? 'public'),
+            'linkedticketid' => empty($thread->linkedticketid) ? 0 : (int)$thread->linkedticketid,
+            'lastmessageat' => (int)$thread->lastmessageat,
+            'lastmessageid' => (int)$summary['lastmessageid'],
+            'lastsenderid' => (int)$summary['lastsenderid'],
+            'lastmessagebody' => (string)$summary['lastmessagebody'],
+            'unreadcount' => (int)$summary['unreadcount'],
+            'canreply' => self::support_can_reply_thread($thread, $userid),
+            'timecreated' => (int)$thread->timecreated,
+            'timemodified' => (int)$thread->timemodified,
+        ];
+    }
+
+    protected static function support_seed_participant(int $threadid, int $userid, string $role, int $canreply, int $lastreadmessageid, int $now): void {
+        global $DB;
+        if ($userid <= 0 || $DB->record_exists('local_prequran_comm_participant', ['threadid' => $threadid, 'userid' => $userid])) {
+            return;
+        }
+        $DB->insert_record('local_prequran_comm_participant', (object)[
+            'threadid' => $threadid,
+            'userid' => $userid,
+            'role' => clean_param($role, PARAM_ALPHANUMEXT),
+            'canreply' => $canreply,
+            'lastreadmessageid' => $lastreadmessageid,
+            'muted' => 0,
+            'timecreated' => $now,
+            'timemodified' => $now,
+        ]);
+    }
+
+    public static function support_start_conversation_parameters() {
+        return new \external_function_parameters([
+            'type' => new \external_value(PARAM_ALPHANUMEXT, 'student_helpdesk|student_teacher|parent_teacher', VALUE_REQUIRED),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id', VALUE_DEFAULT, 0),
+            'consumerid' => new \external_value(PARAM_INT, 'Consumer id', VALUE_DEFAULT, 0),
+            'cohortid' => new \external_value(PARAM_INT, 'Cohort id', VALUE_DEFAULT, 0),
+            'studentid' => new \external_value(PARAM_INT, 'Student user id', VALUE_DEFAULT, 0),
+            'teacherid' => new \external_value(PARAM_INT, 'Teacher user id for student/parent teacher conversations', VALUE_DEFAULT, 0),
+            'subject' => new \external_value(PARAM_TEXT, 'Conversation subject', VALUE_REQUIRED),
+            'body' => new \external_value(PARAM_RAW, 'Initial message body', VALUE_REQUIRED),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Support category', VALUE_DEFAULT, 'other'),
+            'priority' => new \external_value(PARAM_ALPHANUMEXT, 'Support priority', VALUE_DEFAULT, 'normal'),
+            'contextjson' => new \external_value(PARAM_RAW, 'Optional route/session/unit/device context JSON', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function support_start_conversation($type, $workspaceid = 0, $consumerid = 0, $cohortid = 0, $studentid = 0, $teacherid = 0, $subject = '', $body = '', $category = 'other', $priority = 'normal', $contextjson = '') {
+        global $DB, $USER;
+
+        $params = self::validate_parameters(self::support_start_conversation_parameters(), compact('type', 'workspaceid', 'consumerid', 'cohortid', 'studentid', 'teacherid', 'subject', 'body', 'category', 'priority', 'contextjson'));
+        $context = self::support_context();
+        if (!self::support_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'conversation' => self::support_empty_conversation(), 'messageid' => 0, 'message' => 'Support tables are not installed.'];
+        }
+
+        $type = clean_param((string)$params['type'], PARAM_ALPHANUMEXT);
+        if (!in_array($type, self::support_allowed_types(), true)) {
+            throw new \invalid_parameter_exception('Unsupported support conversation type.');
+        }
+
+        $workspaceid = (int)$params['workspaceid'];
+        $consumerid = (int)$params['consumerid'];
+        $cohortid = (int)$params['cohortid'];
+        $studentid = (int)$params['studentid'];
+        $teacherid = (int)$params['teacherid'];
+        $userid = (int)$USER->id;
+        $policy = self::support_effective_policy($workspaceid, $consumerid);
+        if (!self::support_type_enabled($type, $policy)) {
+            throw new \moodle_exception('nopermissions', '', '', 'This support conversation type is not enabled.');
+        }
+        if (!has_capability('local/prequran:supportusechat', $context) && !has_capability('local/prequran:supportreply', $context)) {
+            throw new \moodle_exception('nopermissions', '', '', 'You cannot start support conversations.');
+        }
+
+        if ($studentid <= 0 && self::is_managed_student($userid)) {
+            $studentid = $userid;
+        }
+        if ($studentid <= 0) {
+            throw new \invalid_parameter_exception('studentid is required for support conversations.');
+        }
+
+        $requesterrole = self::support_user_role_for_student($userid, $studentid);
+        if ($type === 'student_helpdesk'
+            && $userid !== $studentid
+            && !has_capability('local/prequran:supportreply', $context)
+            && !is_siteadmin($userid)) {
+            throw new \moodle_exception('nopermissions', '', '', 'Students can start only their own help desk conversations.');
+        }
+        if ($type === 'student_teacher') {
+            if ($userid !== $studentid) {
+                throw new \moodle_exception('nopermissions', '', '', 'Students can start only their own teacher support conversations.');
+            }
+            if ($teacherid <= 0 || !local_prequran_support_teacher_has_student($teacherid, $studentid)) {
+                throw new \moodle_exception('nopermissions', '', '', 'The selected teacher is not assigned to this student.');
+            }
+        }
+        if ($type === 'parent_teacher') {
+            if (!local_prequran_support_is_guardian_for_student($userid, $studentid)
+                && !has_capability('local/prequran:supportreply', $context)
+                && !is_siteadmin($userid)) {
+                throw new \moodle_exception('nopermissions', '', '', 'Only a linked parent/guardian or authorized staff can start this parent-teacher support conversation.');
+            }
+            if ($teacherid > 0 && !local_prequran_support_teacher_has_student($teacherid, $studentid)) {
+                throw new \moodle_exception('nopermissions', '', '', 'The selected teacher is not assigned to this student.');
+            }
+        }
+
+        $category = self::support_clean_category((string)$params['category'], $policy);
+        if (in_array($category, (array)($policy['restricted_categories'] ?? []), true)
+            && !has_capability('local/prequran:supportviewrestricted', $context)) {
+            throw new \moodle_exception('nopermissions', '', '', 'You cannot create restricted support conversations.');
+        }
+        $priority = self::support_clean_priority((string)$params['priority']);
+        $subject = trim(clean_param((string)$params['subject'], PARAM_TEXT));
+        if ($subject === '') {
+            throw new \invalid_parameter_exception('subject is required.');
+        }
+        if (core_text::strlen($subject) > 255) {
+            $subject = core_text::substr($subject, 0, 255);
+        }
+        $studentcreated = $userid === $studentid && self::is_managed_student($userid);
+        $body = self::support_clean_message_body((string)$params['body'], $policy, $studentcreated, 1200);
+        if ($body === '') {
+            throw new \invalid_parameter_exception('body is required.');
+        }
+
+        $now = time();
+        $visibility = ($studentcreated && !empty($policy['parent_visible_default'])) ? 'parent_visible' : 'public';
+        if ($category === 'payment_billing') {
+            $visibility = 'parent_visible';
+        }
+        if ($category === 'safeguarding_concern') {
+            $visibility = 'restricted';
+        }
+
+        $transaction = $DB->start_delegated_transaction();
+        $threadid = (int)$DB->insert_record('local_prequran_comm_thread', (object)[
+            'type' => $type,
+            'workspaceid' => $workspaceid,
+            'cohortid' => $cohortid,
+            'studentid' => $studentid,
+            'caseid' => 0,
+            'createdby' => $userid,
+            'status' => 'active',
+            'subject' => $subject,
+            'lastmessageat' => $now,
+            'linkedticketid' => 0,
+            'support_category' => $category,
+            'support_priority' => $priority,
+            'assignedto' => $teacherid,
+            'assignmentgroupid' => 0,
+            'visibility' => $visibility,
+            'contextjson' => self::support_clean_context_json((string)$params['contextjson']),
+            'timecreated' => $now,
+            'timemodified' => $now,
+        ]);
+
+        $messageid = (int)$DB->insert_record('local_prequran_comm_message', (object)[
+            'threadid' => $threadid,
+            'senderid' => $userid,
+            'senderrole' => $requesterrole,
+            'studentid' => $studentid,
+            'messagekind' => 'text',
+            'body' => $body,
+            'templatekey' => '',
+            'status' => 'visible',
+            'moderationflags' => '',
+            'visibility' => 'public',
+            'ticketid' => 0,
+            'timecreated' => $now,
+            'timemodified' => $now,
+        ]);
+
+        self::support_seed_participant($threadid, $userid, $requesterrole, 1, $messageid, $now);
+        if ($type === 'student_helpdesk' && $userid !== $studentid) {
+            self::support_seed_participant($threadid, $studentid, 'student', 1, 0, $now);
+        }
+        if ($teacherid > 0) {
+            self::support_seed_participant($threadid, $teacherid, 'teacher', 1, 0, $now);
+        }
+        if (($studentcreated || $type === 'student_helpdesk') && !empty($policy['parent_visible_default'])) {
+            foreach (self::support_guardian_ids_for_student($studentid) as $guardianid) {
+                self::support_seed_participant($threadid, (int)$guardianid, 'parent', 1, 0, $now);
+            }
+        }
+
+        $DB->insert_record('local_prequran_comm_audit', (object)[
+            'threadid' => $threadid,
+            'messageid' => $messageid,
+            'actorid' => $userid,
+            'action' => 'support_conversation_created',
+            'details' => json_encode(['type' => $type, 'studentid' => $studentid, 'category' => $category, 'priority' => $priority]),
+            'timecreated' => $now,
+        ]);
+        if (function_exists('local_prequran_support_audit')) {
+            local_prequran_support_audit($workspaceid, 'conversation_created', 'conversation', $threadid, ['type' => $type, 'studentid' => $studentid, 'category' => $category, 'priority' => $priority], 0, $threadid, $messageid);
+        }
+        $transaction->allow_commit();
+
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', MUST_EXIST);
+        return ['ok' => true, 'tables_ready' => true, 'conversation' => self::support_format_conversation($thread, $userid), 'messageid' => $messageid, 'message' => 'created'];
+    }
+
+    protected static function support_empty_conversation(): array {
+        return [
+            'id' => 0, 'type' => '', 'workspaceid' => 0, 'cohortid' => 0, 'studentid' => 0, 'createdby' => 0,
+            'status' => '', 'subject' => '', 'category' => '', 'priority' => '', 'assignedto' => 0, 'assignmentgroupid' => 0,
+            'visibility' => '', 'linkedticketid' => 0, 'lastmessageat' => 0, 'lastmessageid' => 0, 'lastsenderid' => 0,
+            'lastmessagebody' => '', 'unreadcount' => 0, 'canreply' => false, 'timecreated' => 0, 'timemodified' => 0,
+        ];
+    }
+
+    public static function support_start_conversation_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if created'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'conversation' => self::support_conversation_structure(),
+            'messageid' => new \external_value(PARAM_INT, 'Initial message id'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_send_message_parameters() {
+        return new \external_function_parameters([
+            'conversationid' => new \external_value(PARAM_INT, 'Conversation/thread id', VALUE_REQUIRED),
+            'body' => new \external_value(PARAM_RAW, 'Message body', VALUE_REQUIRED),
+        ]);
+    }
+
+    public static function support_send_message($conversationid, $body) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_send_message_parameters(), compact('conversationid', 'body'));
+        self::support_context();
+        if (!self::support_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'messageid' => 0, 'message' => 'Support tables are not installed.'];
+        }
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)$params['conversationid']]);
+        if (!$thread || !in_array((string)$thread->type, self::support_allowed_types(), true) || !self::support_can_reply_thread($thread, (int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'You cannot reply to this support conversation.');
+        }
+        $policy = self::support_effective_policy(empty($thread->workspaceid) ? 0 : (int)$thread->workspaceid, 0);
+        $studentcreated = !empty($thread->studentid) && (int)$USER->id === (int)$thread->studentid;
+        $body = self::support_clean_message_body((string)$params['body'], $policy, $studentcreated, 1200);
+        if ($body === '') {
+            throw new \invalid_parameter_exception('body is required.');
+        }
+        $now = time();
+        $senderrole = self::support_user_role_for_student((int)$USER->id, empty($thread->studentid) ? 0 : (int)$thread->studentid);
+        $transaction = $DB->start_delegated_transaction();
+        $messageid = (int)$DB->insert_record('local_prequran_comm_message', (object)[
+            'threadid' => (int)$thread->id,
+            'senderid' => (int)$USER->id,
+            'senderrole' => $senderrole,
+            'studentid' => empty($thread->studentid) ? 0 : (int)$thread->studentid,
+            'messagekind' => 'text',
+            'body' => $body,
+            'templatekey' => '',
+            'status' => 'visible',
+            'moderationflags' => '',
+            'visibility' => 'public',
+            'ticketid' => empty($thread->linkedticketid) ? 0 : (int)$thread->linkedticketid,
+            'timecreated' => $now,
+            'timemodified' => $now,
+        ]);
+        $thread->lastmessageat = $now;
+        $thread->timemodified = $now;
+        $DB->update_record('local_prequran_comm_thread', $thread);
+        $participant = $DB->get_record('local_prequran_comm_participant', ['threadid' => (int)$thread->id, 'userid' => (int)$USER->id]);
+        if ($participant) {
+            $participant->lastreadmessageid = $messageid;
+            $participant->timemodified = $now;
+            $DB->update_record('local_prequran_comm_participant', $participant);
+        }
+        $DB->insert_record('local_prequran_comm_audit', (object)[
+            'threadid' => (int)$thread->id,
+            'messageid' => $messageid,
+            'actorid' => (int)$USER->id,
+            'action' => 'support_message_created',
+            'details' => json_encode(['type' => (string)$thread->type, 'ticketid' => empty($thread->linkedticketid) ? 0 : (int)$thread->linkedticketid]),
+            'timecreated' => $now,
+        ]);
+        if (function_exists('local_prequran_support_audit')) {
+            local_prequran_support_audit(empty($thread->workspaceid) ? 0 : (int)$thread->workspaceid, 'message_created', 'message', $messageid, ['type' => (string)$thread->type], empty($thread->linkedticketid) ? 0 : (int)$thread->linkedticketid, (int)$thread->id, $messageid);
+        }
+        if (!empty($thread->linkedticketid) && $DB->get_manager()->table_exists('local_prequran_support_event')) {
+            self::support_write_ticket_event(
+                (int)$thread->linkedticketid,
+                (int)$thread->id,
+                $messageid,
+                (int)$USER->id,
+                'public_reply',
+                'public',
+                '',
+                '',
+                '',
+                ['senderrole' => $senderrole]
+            );
+        }
+        $transaction->allow_commit();
+        return ['ok' => true, 'tables_ready' => true, 'messageid' => $messageid, 'message' => 'created'];
+    }
+
+    public static function support_send_message_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if created'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'messageid' => new \external_value(PARAM_INT, 'Created message id'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_mark_read_parameters() {
+        return new \external_function_parameters([
+            'conversationid' => new \external_value(PARAM_INT, 'Conversation/thread id', VALUE_REQUIRED),
+            'lastmessageid' => new \external_value(PARAM_INT, 'Last message id read, or 0 for latest visible', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_mark_read($conversationid, $lastmessageid = 0) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_mark_read_parameters(), compact('conversationid', 'lastmessageid'));
+        self::support_context();
+        if (!self::support_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'lastmessageid' => 0, 'message' => 'Support tables are not installed.'];
+        }
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)$params['conversationid']]);
+        if (!$thread || !self::support_can_read_thread_as($thread, (int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'You cannot read this support conversation.');
+        }
+        $lastmessageid = (int)$params['lastmessageid'];
+        if ($lastmessageid <= 0) {
+            $last = $DB->get_record_sql(
+                "SELECT id
+                   FROM {local_prequran_comm_message}
+                  WHERE threadid = :threadid
+                    AND status = :status
+               ORDER BY id DESC",
+                ['threadid' => (int)$thread->id, 'status' => 'visible'],
+                IGNORE_MULTIPLE
+            );
+            $lastmessageid = $last ? (int)$last->id : 0;
+        }
+        $now = time();
+        $participant = $DB->get_record('local_prequran_comm_participant', ['threadid' => (int)$thread->id, 'userid' => (int)$USER->id]);
+        if ($participant) {
+            $participant->lastreadmessageid = max((int)$participant->lastreadmessageid, $lastmessageid);
+            $participant->timemodified = $now;
+            $DB->update_record('local_prequran_comm_participant', $participant);
+        } else {
+            self::support_seed_participant((int)$thread->id, (int)$USER->id, self::support_user_role_for_student((int)$USER->id, empty($thread->studentid) ? 0 : (int)$thread->studentid), 0, $lastmessageid, $now);
+        }
+        return ['ok' => true, 'tables_ready' => true, 'lastmessageid' => $lastmessageid, 'message' => 'read'];
+    }
+
+    public static function support_mark_read_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if marked read'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'lastmessageid' => new \external_value(PARAM_INT, 'Last read message id'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_list_conversations_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'studentid' => new \external_value(PARAM_INT, 'Student id filter', VALUE_DEFAULT, 0),
+            'type' => new \external_value(PARAM_ALPHANUMEXT, 'Type filter or all', VALUE_DEFAULT, 'all'),
+            'status' => new \external_value(PARAM_ALPHANUMEXT, 'Status filter or all', VALUE_DEFAULT, 'active'),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Category filter or all', VALUE_DEFAULT, 'all'),
+            'assignedto' => new \external_value(PARAM_INT, 'Assignee filter, 0 for all, -1 for current user', VALUE_DEFAULT, 0),
+            'limit' => new \external_value(PARAM_INT, 'Maximum rows', VALUE_DEFAULT, 20),
+            'before' => new \external_value(PARAM_INT, 'Return conversations older than this lastmessageat timestamp', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_list_conversations($workspaceid = 0, $studentid = 0, $type = 'all', $status = 'active', $category = 'all', $assignedto = 0, $limit = 20, $before = 0) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_list_conversations_parameters(), compact('workspaceid', 'studentid', 'type', 'status', 'category', 'assignedto', 'limit', 'before'));
+        self::support_context();
+        if (!self::support_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'conversations' => []];
+        }
+        $where = [];
+        $sqlparams = [];
+        $types = self::support_allowed_types();
+        $where[] = "t.type IN ('" . implode("','", $types) . "')";
+        if ((int)$params['workspaceid'] > 0) {
+            $where[] = 't.workspaceid = :workspaceid';
+            $sqlparams['workspaceid'] = (int)$params['workspaceid'];
+        }
+        if ((int)$params['studentid'] > 0) {
+            $where[] = 't.studentid = :studentid';
+            $sqlparams['studentid'] = (int)$params['studentid'];
+        }
+        $type = clean_param((string)$params['type'], PARAM_ALPHANUMEXT);
+        if ($type !== '' && $type !== 'all') {
+            if (!in_array($type, $types, true)) {
+                throw new \invalid_parameter_exception('Unsupported support conversation type.');
+            }
+            $where[] = 't.type = :type';
+            $sqlparams['type'] = $type;
+        }
+        $status = clean_param((string)$params['status'], PARAM_ALPHANUMEXT);
+        if ($status !== '' && $status !== 'all') {
+            $where[] = 't.status = :status';
+            $sqlparams['status'] = $status;
+        }
+        $category = clean_param((string)$params['category'], PARAM_ALPHANUMEXT);
+        if ($category !== '' && $category !== 'all') {
+            $where[] = 't.support_category = :category';
+            $sqlparams['category'] = $category;
+        }
+        $assignedto = (int)$params['assignedto'];
+        if ($assignedto === -1) {
+            $assignedto = (int)$USER->id;
+        }
+        if ($assignedto > 0) {
+            $where[] = 't.assignedto = :assignedto';
+            $sqlparams['assignedto'] = $assignedto;
+        }
+        if ((int)$params['before'] > 0) {
+            $where[] = 't.lastmessageat < :before';
+            $sqlparams['before'] = (int)$params['before'];
+        }
+        $limit = max(1, min(100, (int)$params['limit']));
+        $records = $DB->get_records_sql(
+            "SELECT t.*
+               FROM {local_prequran_comm_thread} t
+              WHERE " . implode(' AND ', $where) . "
+           ORDER BY t.lastmessageat DESC, t.id DESC",
+            $sqlparams,
+            0,
+            $limit
+        );
+        $out = [];
+        foreach ($records as $thread) {
+            if (self::support_can_read_thread_as($thread, (int)$USER->id)) {
+                $out[] = self::support_format_conversation($thread, (int)$USER->id);
+            }
+        }
+        return ['ok' => true, 'tables_ready' => true, 'conversations' => $out];
+    }
+
+    public static function support_list_conversations_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'conversations' => new \external_multiple_structure(self::support_conversation_structure()),
+        ]);
+    }
+
+    public static function support_get_conversation_parameters() {
+        return new \external_function_parameters([
+            'conversationid' => new \external_value(PARAM_INT, 'Conversation/thread id', VALUE_REQUIRED),
+            'limit' => new \external_value(PARAM_INT, 'Maximum messages', VALUE_DEFAULT, 50),
+            'before' => new \external_value(PARAM_INT, 'Return messages older than this message id', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_get_conversation($conversationid, $limit = 50, $before = 0) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_get_conversation_parameters(), compact('conversationid', 'limit', 'before'));
+        self::support_context();
+        if (!self::support_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'conversation' => self::support_empty_conversation(), 'messages' => []];
+        }
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)$params['conversationid']]);
+        if (!$thread || !in_array((string)$thread->type, self::support_allowed_types(), true) || !self::support_can_read_thread_as($thread, (int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'You cannot read this support conversation.');
+        }
+        $limit = max(1, min(100, (int)$params['limit']));
+        $where = 'threadid = :threadid AND status = :status';
+        $sqlparams = ['threadid' => (int)$thread->id, 'status' => 'visible'];
+        if ((int)$params['before'] > 0) {
+            $where .= ' AND id < :before';
+            $sqlparams['before'] = (int)$params['before'];
+        }
+        $records = $DB->get_records_sql(
+            "SELECT *
+               FROM {local_prequran_comm_message}
+              WHERE {$where}
+           ORDER BY timecreated DESC, id DESC",
+            $sqlparams,
+            0,
+            $limit
+        );
+        $messages = [];
+        $lastmessageid = 0;
+        foreach (array_reverse($records) as $message) {
+            if (!self::support_message_visible_to_user($message, $thread, (int)$USER->id)) {
+                continue;
+            }
+            $lastmessageid = max($lastmessageid, (int)$message->id);
+            $messages[] = [
+                'id' => (int)$message->id,
+                'conversationid' => (int)$message->threadid,
+                'senderid' => (int)$message->senderid,
+                'senderrole' => (string)($message->senderrole ?? ''),
+                'studentid' => empty($message->studentid) ? 0 : (int)$message->studentid,
+                'messagekind' => (string)$message->messagekind,
+                'body' => (string)$message->body,
+                'visibility' => (string)($message->visibility ?? 'public'),
+                'status' => (string)$message->status,
+                'ticketid' => empty($message->ticketid) ? 0 : (int)$message->ticketid,
+                'timecreated' => (int)$message->timecreated,
+                'timemodified' => (int)$message->timemodified,
+            ];
+        }
+        if ($lastmessageid > 0) {
+            self::support_mark_read((int)$thread->id, $lastmessageid);
+        }
+        return ['ok' => true, 'tables_ready' => true, 'conversation' => self::support_format_conversation($thread, (int)$USER->id), 'messages' => $messages];
+    }
+
+    public static function support_get_conversation_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'conversation' => self::support_conversation_structure(),
+            'messages' => new \external_multiple_structure(self::support_message_structure()),
+        ]);
+    }
+
+    protected static function support_live_availability(array $policy): array {
+        $liveenabled = !empty($policy['livechat_enabled']) && !empty($policy['async_enabled']);
+        if (!$liveenabled) {
+            return ['status' => 'offline', 'message' => 'Support is available as an async message.'];
+        }
+        try {
+            $tz = new \DateTimeZone((string)($policy['business_timezone'] ?? 'UTC') ?: 'UTC');
+            $now = new \DateTimeImmutable('now', $tz);
+            $weekday = (int)$now->format('N');
+            $hour = (int)$now->format('G');
+            if ($weekday >= 1 && $weekday <= 5 && $hour >= 8 && $hour < 18) {
+                return ['status' => 'online', 'message' => 'Live support is online.'];
+            }
+        } catch (\Throwable $e) {
+            return ['status' => 'away', 'message' => 'Support is checking messages.'];
+        }
+        return ['status' => 'away', 'message' => 'Support is away, but your message will stay in the queue.'];
+    }
+
+    protected static function support_live_indicator_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'userid' => new \external_value(PARAM_INT, 'Other actor user id'),
+            'role' => new \external_value(PARAM_TEXT, 'Other actor role'),
+            'indicator' => new \external_value(PARAM_TEXT, 'typing|viewing'),
+            'timecreated' => new \external_value(PARAM_INT, 'Indicator timestamp'),
+        ]);
+    }
+
+    protected static function support_write_conversation_signal($thread, int $userid, string $eventtype): void {
+        global $DB;
+        if (!$thread || !$DB->get_manager()->table_exists('local_prequran_support_event')) {
+            return;
+        }
+        $now = time();
+        $DB->insert_record('local_prequran_support_event', (object)[
+            'ticketid' => empty($thread->linkedticketid) ? 0 : (int)$thread->linkedticketid,
+            'conversationid' => (int)$thread->id,
+            'messageid' => 0,
+            'actorid' => $userid,
+            'eventtype' => clean_param($eventtype, PARAM_ALPHANUMEXT),
+            'visibility' => 'public',
+            'oldvalue' => '',
+            'newvalue' => self::support_user_role_for_student($userid, empty($thread->studentid) ? 0 : (int)$thread->studentid),
+            'body' => '',
+            'detailsjson' => '',
+            'timecreated' => $now,
+        ]);
+    }
+
+    protected static function support_recent_conversation_indicators(int $conversationid, int $userid): array {
+        global $DB;
+        if ($conversationid <= 0 || !$DB->get_manager()->table_exists('local_prequran_support_event')) {
+            return [];
+        }
+        $cutoff = time() - 45;
+        $records = $DB->get_records_sql(
+            "SELECT MAX(id) AS id, actorid, eventtype, newvalue, MAX(timecreated) AS timecreated
+               FROM {local_prequran_support_event}
+              WHERE conversationid = :conversationid
+                AND actorid <> :userid
+                AND eventtype IN ('support_typing', 'support_viewing')
+                AND timecreated >= :cutoff
+           GROUP BY actorid, eventtype, newvalue
+           ORDER BY timecreated DESC",
+            ['conversationid' => $conversationid, 'userid' => $userid, 'cutoff' => $cutoff],
+            0,
+            10
+        );
+        $out = [];
+        foreach ($records as $record) {
+            $out[] = [
+                'userid' => (int)$record->actorid,
+                'role' => (string)$record->newvalue,
+                'indicator' => ((string)$record->eventtype === 'support_typing') ? 'typing' : 'viewing',
+                'timecreated' => (int)$record->timecreated,
+            ];
+        }
+        return $out;
+    }
+
+    public static function support_live_poll_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'studentid' => new \external_value(PARAM_INT, 'Student id filter', VALUE_DEFAULT, 0),
+            'conversationid' => new \external_value(PARAM_INT, 'Active conversation/thread id', VALUE_DEFAULT, 0),
+            'since' => new \external_value(PARAM_INT, 'Last message id already seen by the client', VALUE_DEFAULT, 0),
+            'typing' => new \external_value(PARAM_BOOL, 'Whether the caller is currently typing', VALUE_DEFAULT, false),
+            'viewing' => new \external_value(PARAM_BOOL, 'Whether the caller is actively viewing the conversation', VALUE_DEFAULT, true),
+            'listlimit' => new \external_value(PARAM_INT, 'Maximum conversation rows', VALUE_DEFAULT, 30),
+            'consumerid' => new \external_value(PARAM_INT, 'Consumer id for EduPlatform-level support policy inheritance', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_live_poll($workspaceid = 0, $studentid = 0, $conversationid = 0, $since = 0, $typing = false, $viewing = true, $listlimit = 30, $consumerid = 0) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_live_poll_parameters(), compact('workspaceid', 'studentid', 'conversationid', 'since', 'typing', 'viewing', 'listlimit', 'consumerid'));
+        self::support_context();
+        if (!self::support_tables_ready()) {
+            return [
+                'ok' => false,
+                'tables_ready' => false,
+                'server_time' => time(),
+                'poll_ms' => 30000,
+                'availability_status' => 'offline',
+                'availability_message' => 'Support tables are not installed.',
+                'agent_load' => 0,
+                'agent_load_limit' => 5,
+                'load_state' => 'unknown',
+                'conversations' => [],
+                'conversation' => self::support_empty_conversation(),
+                'messages' => [],
+                'indicators' => [],
+            ];
+        }
+
+        $workspaceid = (int)$params['workspaceid'];
+        $consumerid = (int)$params['consumerid'];
+        $studentid = (int)$params['studentid'];
+        $conversationid = (int)$params['conversationid'];
+        $since = max(0, (int)$params['since']);
+        $policy = self::support_effective_policy($workspaceid, $consumerid);
+        $availability = self::support_live_availability($policy);
+        $conversation = self::support_empty_conversation();
+        $messages = [];
+        $indicators = [];
+        $thread = null;
+
+        if ($conversationid > 0) {
+            $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $conversationid]);
+            if (!$thread || !in_array((string)$thread->type, self::support_allowed_types(), true) || !self::support_can_read_thread_as($thread, (int)$USER->id)) {
+                throw new \moodle_exception('nopermissions', '', '', 'You cannot poll this support conversation.');
+            }
+            if ($workspaceid <= 0 && !empty($thread->workspaceid)) {
+                $workspaceid = (int)$thread->workspaceid;
+            }
+            if (!empty($params['viewing'])) {
+                self::support_write_conversation_signal($thread, (int)$USER->id, 'support_viewing');
+            }
+            if (!empty($params['typing']) && self::support_can_reply_thread($thread, (int)$USER->id)) {
+                self::support_write_conversation_signal($thread, (int)$USER->id, 'support_typing');
+            }
+            $records = $DB->get_records_sql(
+                "SELECT *
+                   FROM {local_prequran_comm_message}
+                  WHERE threadid = :threadid
+                    AND status = :status
+                    AND id > :since
+               ORDER BY id ASC",
+                ['threadid' => $conversationid, 'status' => 'visible', 'since' => $since],
+                0,
+                100
+            );
+            $lastmessageid = $since;
+            foreach ($records as $message) {
+                if (!self::support_message_visible_to_user($message, $thread, (int)$USER->id)) {
+                    continue;
+                }
+                $lastmessageid = max($lastmessageid, (int)$message->id);
+                $messages[] = [
+                    'id' => (int)$message->id,
+                    'conversationid' => (int)$message->threadid,
+                    'senderid' => (int)$message->senderid,
+                    'senderrole' => (string)($message->senderrole ?? ''),
+                    'studentid' => empty($message->studentid) ? 0 : (int)$message->studentid,
+                    'messagekind' => (string)$message->messagekind,
+                    'body' => (string)$message->body,
+                    'visibility' => (string)($message->visibility ?? 'public'),
+                    'status' => (string)$message->status,
+                    'ticketid' => empty($message->ticketid) ? 0 : (int)$message->ticketid,
+                    'timecreated' => (int)$message->timecreated,
+                    'timemodified' => (int)$message->timemodified,
+                ];
+            }
+            if ($lastmessageid > $since) {
+                self::support_mark_read($conversationid, $lastmessageid);
+            }
+            $freshthread = $DB->get_record('local_prequran_comm_thread', ['id' => $conversationid], '*', MUST_EXIST);
+            $conversation = self::support_format_conversation($freshthread, (int)$USER->id);
+            $indicators = self::support_recent_conversation_indicators($conversationid, (int)$USER->id);
+        }
+
+        $list = self::support_list_conversations($workspaceid, $studentid, 'all', 'active', 'all', 0, max(1, min(50, (int)$params['listlimit'])), 0);
+        $agentload = 0;
+        if (has_capability('local/prequran:supportreply', \context_system::instance())) {
+            $agentload = (int)$DB->count_records_select(
+                'local_prequran_comm_thread',
+                "assignedto = :userid AND status = 'active' AND type IN ('student_helpdesk', 'student_teacher', 'parent_teacher')",
+                ['userid' => (int)$USER->id]
+            );
+        }
+        $loadlimit = max(1, (int)($policy['live_chat_agent_limit'] ?? 5));
+        return [
+            'ok' => true,
+            'tables_ready' => true,
+            'server_time' => time(),
+            'poll_ms' => $conversationid > 0 ? 6000 : 30000,
+            'availability_status' => $availability['status'],
+            'availability_message' => $availability['message'],
+            'agent_load' => $agentload,
+            'agent_load_limit' => $loadlimit,
+            'load_state' => ($agentload >= $loadlimit) ? 'full' : 'available',
+            'conversations' => $list['conversations'],
+            'conversation' => $conversation,
+            'messages' => $messages,
+            'indicators' => $indicators,
+        ];
+    }
+
+    public static function support_live_poll_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'server_time' => new \external_value(PARAM_INT, 'Server unix timestamp'),
+            'poll_ms' => new \external_value(PARAM_INT, 'Recommended client poll interval in milliseconds'),
+            'availability_status' => new \external_value(PARAM_TEXT, 'online|away|offline'),
+            'availability_message' => new \external_value(PARAM_TEXT, 'Availability message safe for display'),
+            'agent_load' => new \external_value(PARAM_INT, 'Current agent active assigned chat load'),
+            'agent_load_limit' => new \external_value(PARAM_INT, 'Recommended max active live chat load'),
+            'load_state' => new \external_value(PARAM_TEXT, 'available|full|unknown'),
+            'conversations' => new \external_multiple_structure(self::support_conversation_structure()),
+            'conversation' => self::support_conversation_structure(),
+            'messages' => new \external_multiple_structure(self::support_message_structure()),
+            'indicators' => new \external_multiple_structure(self::support_live_indicator_structure()),
+        ]);
+    }
+
+    protected static function support_audit_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'id' => new \external_value(PARAM_INT, 'Audit row id'),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id'),
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id, or 0'),
+            'conversationid' => new \external_value(PARAM_INT, 'Conversation id, or 0'),
+            'messageid' => new \external_value(PARAM_INT, 'Message id, or 0'),
+            'actorid' => new \external_value(PARAM_INT, 'Actor user id'),
+            'action' => new \external_value(PARAM_TEXT, 'Audit action'),
+            'targettype' => new \external_value(PARAM_TEXT, 'Target type'),
+            'targetid' => new \external_value(PARAM_INT, 'Target id'),
+            'detailsjson' => new \external_value(PARAM_RAW, 'Details JSON'),
+            'timecreated' => new \external_value(PARAM_INT, 'Created timestamp'),
+        ]);
+    }
+
+    protected static function support_gate_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'gate' => new \external_value(PARAM_TEXT, 'Gate key'),
+            'status' => new \external_value(PARAM_TEXT, 'pass|warn|fail'),
+            'detail' => new \external_value(PARAM_TEXT, 'Human-readable gate detail'),
+        ]);
+    }
+
+    protected static function support_metric_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'key' => new \external_value(PARAM_TEXT, 'Metric key'),
+            'value' => new \external_value(PARAM_TEXT, 'Metric value'),
+        ]);
+    }
+
+    public static function support_audit_log_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id filter', VALUE_DEFAULT, 0),
+            'conversationid' => new \external_value(PARAM_INT, 'Conversation id filter', VALUE_DEFAULT, 0),
+            'action' => new \external_value(PARAM_ALPHANUMEXT, 'Audit action filter or all', VALUE_DEFAULT, 'all'),
+            'limit' => new \external_value(PARAM_INT, 'Maximum rows', VALUE_DEFAULT, 100),
+        ]);
+    }
+
+    public static function support_audit_log($workspaceid = 0, $ticketid = 0, $conversationid = 0, $action = 'all', $limit = 100) {
+        global $DB;
+        $params = self::validate_parameters(self::support_audit_log_parameters(), compact('workspaceid', 'ticketid', 'conversationid', 'action', 'limit'));
+        self::support_require_ticket_queue_access('local/prequran:supportaudit');
+        if (!$DB->get_manager()->table_exists('local_prequran_support_audit') || !$DB->get_manager()->table_exists('local_prequran_support_event')) {
+            return ['ok' => false, 'tables_ready' => false, 'audit' => [], 'events' => [], 'coverage' => []];
+        }
+        $where = ['1 = 1'];
+        $sqlparams = [];
+        if (!self::support_can_view_restricted_tickets()) {
+            $where[] = "(ticketid = 0 OR ticketid NOT IN (SELECT id FROM {local_prequran_support_ticket} WHERE visibility = :restrictedvisibility))";
+            $sqlparams['restrictedvisibility'] = 'restricted';
+        }
+        foreach (['workspaceid', 'ticketid', 'conversationid'] as $field) {
+            if ((int)$params[$field] > 0) {
+                $where[] = $field . ' = :' . $field;
+                $sqlparams[$field] = (int)$params[$field];
+            }
+        }
+        $action = clean_param((string)$params['action'], PARAM_ALPHANUMEXT);
+        if ($action !== '' && $action !== 'all') {
+            $where[] = 'action = :action';
+            $sqlparams['action'] = $action;
+        }
+        $limit = max(1, min(250, (int)$params['limit']));
+        $audit = [];
+        foreach ($DB->get_records_sql("SELECT * FROM {local_prequran_support_audit} WHERE " . implode(' AND ', $where) . " ORDER BY timecreated DESC, id DESC", $sqlparams, 0, $limit) as $row) {
+            $audit[] = [
+                'id' => (int)$row->id,
+                'workspaceid' => (int)$row->workspaceid,
+                'ticketid' => (int)$row->ticketid,
+                'conversationid' => (int)$row->conversationid,
+                'messageid' => (int)$row->messageid,
+                'actorid' => (int)$row->actorid,
+                'action' => (string)$row->action,
+                'targettype' => (string)$row->targettype,
+                'targetid' => (int)$row->targetid,
+                'detailsjson' => (string)$row->detailsjson,
+                'timecreated' => (int)$row->timecreated,
+            ];
+        }
+        $eventwhere = ['1 = 1'];
+        $eventparams = [];
+        if (!self::support_can_view_restricted_tickets()) {
+            $eventwhere[] = "(ticketid = 0 OR ticketid NOT IN (SELECT id FROM {local_prequran_support_ticket} WHERE visibility = :e_restrictedvisibility))";
+            $eventparams['e_restrictedvisibility'] = 'restricted';
+        }
+        foreach (['ticketid', 'conversationid'] as $field) {
+            if ((int)$params[$field] > 0) {
+                $eventwhere[] = $field . ' = :e_' . $field;
+                $eventparams['e_' . $field] = (int)$params[$field];
+            }
+        }
+        $events = [];
+        foreach ($DB->get_records_sql("SELECT * FROM {local_prequran_support_event} WHERE " . implode(' AND ', $eventwhere) . " ORDER BY timecreated DESC, id DESC", $eventparams, 0, $limit) as $event) {
+            $events[] = [
+                'id' => (int)$event->id,
+                'ticketid' => (int)$event->ticketid,
+                'conversationid' => (int)$event->conversationid,
+                'messageid' => (int)$event->messageid,
+                'actorid' => (int)$event->actorid,
+                'eventtype' => (string)$event->eventtype,
+                'visibility' => (string)$event->visibility,
+                'oldvalue' => (string)$event->oldvalue,
+                'newvalue' => (string)$event->newvalue,
+                'body' => (string)$event->body,
+                'detailsjson' => (string)$event->detailsjson,
+                'timecreated' => (int)$event->timecreated,
+            ];
+        }
+        $coverage = [];
+        foreach ($DB->get_records_sql("SELECT action AS keyname, COUNT(1) AS c FROM {local_prequran_support_audit} GROUP BY action ORDER BY c DESC, action ASC") as $row) {
+            $coverage[] = ['key' => (string)$row->keyname, 'value' => (string)(int)$row->c];
+        }
+        return ['ok' => true, 'tables_ready' => true, 'audit' => $audit, 'events' => $events, 'coverage' => $coverage];
+    }
+
+    public static function support_audit_log_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'audit' => new \external_multiple_structure(self::support_audit_structure()),
+            'events' => new \external_multiple_structure(self::support_event_structure()),
+            'coverage' => new \external_multiple_structure(self::support_metric_structure()),
+        ]);
+    }
+
+    public static function support_pilot_readiness_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id to review', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_pilot_readiness($workspaceid = 0) {
+        global $DB;
+        $params = self::validate_parameters(self::support_pilot_readiness_parameters(), compact('workspaceid'));
+        self::support_require_ticket_queue_access('local/prequran:supportaudit');
+        if (!self::support_ticket_tables_ready() || !$DB->get_manager()->table_exists('local_prequran_support_audit')) {
+            return ['ok' => false, 'tables_ready' => false, 'workspaceid' => (int)$params['workspaceid'], 'gates' => [], 'metrics' => [], 'rollback_plan' => 'Run Moodle upgrade before pilot readiness review.'];
+        }
+        $workspaceid = (int)$params['workspaceid'];
+        $ticketwhere = $workspaceid > 0 ? 'workspaceid = :workspaceid' : '1 = 1';
+        $sqlparams = $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [];
+        $policy = self::support_effective_policy($workspaceid, 0);
+        $open = (int)$DB->count_records_select('local_prequran_support_ticket', $ticketwhere . " AND status NOT IN ('resolved', 'closed')", $sqlparams);
+        $breached = (int)$DB->count_records_select('local_prequran_support_ticket', $ticketwhere . " AND status NOT IN ('resolved', 'closed') AND sla_resolution_due > 0 AND sla_resolution_due < :nowtime", $sqlparams + ['nowtime' => time()]);
+        $restricted = (int)$DB->count_records_select('local_prequran_support_ticket', $ticketwhere . " AND visibility = 'restricted'", $sqlparams);
+        $auditcount = (int)$DB->count_records_select('local_prequran_support_audit', $workspaceid > 0 ? 'workspaceid = :workspaceid' : '1 = 1', $sqlparams);
+        $events = (int)$DB->count_records_select('local_prequran_support_event', $workspaceid > 0 ? 'conversationid IN (SELECT id FROM {local_prequran_comm_thread} WHERE workspaceid = :workspaceid)' : '1 = 1', $sqlparams);
+        $gates = [
+            ['gate' => 'schema', 'status' => 'pass', 'detail' => 'Support conversation, ticket, event, and audit tables are installed.'],
+            ['gate' => 'feature_flags', 'status' => !empty($policy['async_enabled']) ? 'pass' : 'warn', 'detail' => !empty($policy['async_enabled']) ? 'Async support is enabled for this scope.' : 'Async support is disabled; enable only for the selected pilot workspace when ready.'],
+            ['gate' => 'live_chat_flag', 'status' => !empty($policy['livechat_enabled']) ? 'pass' : 'warn', 'detail' => !empty($policy['livechat_enabled']) ? 'Live chat entry points are enabled for this scope.' : 'Live chat is disabled; async fallback remains available when allowed.'],
+            ['gate' => 'audit_evidence', 'status' => $auditcount > 0 ? 'pass' : 'warn', 'detail' => $auditcount > 0 ? 'Support audit rows exist.' : 'No support audit rows yet; complete a pilot smoke test before launch.'],
+            ['gate' => 'sla_risk', 'status' => $breached > 0 ? 'warn' : 'pass', 'detail' => $breached > 0 ? 'There are breached active support tickets to triage before pilot expansion.' : 'No active breached support tickets found.'],
+            ['gate' => 'restricted_review', 'status' => $restricted > 0 ? 'warn' : 'pass', 'detail' => $restricted > 0 ? 'Restricted tickets exist; confirm authorized reviewer coverage.' : 'No restricted tickets found in this scope.'],
+        ];
+        $metrics = [
+            ['key' => 'open_tickets', 'value' => (string)$open],
+            ['key' => 'breached_tickets', 'value' => (string)$breached],
+            ['key' => 'restricted_tickets', 'value' => (string)$restricted],
+            ['key' => 'support_audit_rows', 'value' => (string)$auditcount],
+            ['key' => 'support_event_rows', 'value' => (string)$events],
+            ['key' => 'policy_source', 'value' => (string)($policy['source'] ?? 'defaults')],
+        ];
+        return [
+            'ok' => true,
+            'tables_ready' => true,
+            'workspaceid' => $workspaceid,
+            'gates' => $gates,
+            'metrics' => $metrics,
+            'rollback_plan' => 'Disable support_livechat_enabled and support_async_enabled for non-pilot scopes, keep support records read-only, stop relying on live polling, and preserve audit/ticket history.',
+        ];
+    }
+
+    public static function support_pilot_readiness_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id reviewed'),
+            'gates' => new \external_multiple_structure(self::support_gate_structure()),
+            'metrics' => new \external_multiple_structure(self::support_metric_structure()),
+            'rollback_plan' => new \external_value(PARAM_TEXT, 'Rollback plan summary'),
+        ]);
+    }
+
+    // -------------------------------------------------------------------------
+    // Support Phase 4: ticket conversion and lifecycle workflow
+    // -------------------------------------------------------------------------
+    protected static function support_ticket_tables_ready(): bool {
+        global $DB;
+        $manager = $DB->get_manager();
+        return self::support_tables_ready()
+            && $manager->table_exists('local_prequran_support_ticket')
+            && $manager->table_exists('local_prequran_support_event')
+            && $manager->field_exists(new xmldb_table('local_prequran_comm_thread'), new xmldb_field('linkedticketid'))
+            && $manager->field_exists(new xmldb_table('local_prequran_comm_message'), new xmldb_field('ticketid'));
+    }
+
+    protected static function support_ticket_statuses(): array {
+        return ['open', 'assigned', 'waiting_for_user', 'in_progress', 'resolved', 'closed'];
+    }
+
+    protected static function support_clean_ticket_status(string $status, string $fallback = 'open'): string {
+        $status = clean_param(trim($status), PARAM_ALPHANUMEXT);
+        return in_array($status, self::support_ticket_statuses(), true) ? $status : $fallback;
+    }
+
+    protected static function support_require_ticket_queue_access(string $capability = 'local/prequran:supportviewqueue'): \context_system {
+        global $USER;
+        $context = self::support_context();
+        if (!is_siteadmin((int)$USER->id) && !has_capability($capability, $context)) {
+            throw new \moodle_exception('nopermissions', '', '', 'Support ticket access required.');
+        }
+        return $context;
+    }
+
+    protected static function support_ticket_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'id' => new \external_value(PARAM_INT, 'Ticket id'),
+            'ticketnumber' => new \external_value(PARAM_TEXT, 'Human-readable ticket number'),
+            'sourceconversationid' => new \external_value(PARAM_INT, 'Source conversation/thread id'),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id'),
+            'consumerid' => new \external_value(PARAM_INT, 'Consumer id'),
+            'studentid' => new \external_value(PARAM_INT, 'Student id, or 0'),
+            'requesterid' => new \external_value(PARAM_INT, 'Requester user id'),
+            'requesterrole' => new \external_value(PARAM_TEXT, 'Requester role'),
+            'subject' => new \external_value(PARAM_TEXT, 'Subject'),
+            'description' => new \external_value(PARAM_RAW, 'Ticket description'),
+            'category' => new \external_value(PARAM_TEXT, 'Category'),
+            'priority' => new \external_value(PARAM_TEXT, 'Priority'),
+            'status' => new \external_value(PARAM_TEXT, 'Lifecycle status'),
+            'assigneeid' => new \external_value(PARAM_INT, 'Assigned user id, or 0'),
+            'assignmentgroupid' => new \external_value(PARAM_INT, 'Assignment group id, or 0'),
+            'sla_policy_id' => new \external_value(PARAM_INT, 'SLA policy id, or 0'),
+            'sla_first_response_due' => new \external_value(PARAM_INT, 'First response due timestamp, or 0'),
+            'sla_next_response_due' => new \external_value(PARAM_INT, 'Next response due timestamp, or 0'),
+            'sla_resolution_due' => new \external_value(PARAM_INT, 'Resolution due timestamp, or 0'),
+            'firstrespondedat' => new \external_value(PARAM_INT, 'First staff response timestamp, or 0'),
+            'resolvedat' => new \external_value(PARAM_INT, 'Resolved timestamp, or 0'),
+            'closedat' => new \external_value(PARAM_INT, 'Closed timestamp, or 0'),
+            'visibility' => new \external_value(PARAM_TEXT, 'Ticket visibility'),
+            'metadatajson' => new \external_value(PARAM_RAW, 'Metadata JSON'),
+            'timecreated' => new \external_value(PARAM_INT, 'Created timestamp'),
+            'timemodified' => new \external_value(PARAM_INT, 'Modified timestamp'),
+        ]);
+    }
+
+    protected static function support_event_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'id' => new \external_value(PARAM_INT, 'Event id'),
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id'),
+            'conversationid' => new \external_value(PARAM_INT, 'Conversation id'),
+            'messageid' => new \external_value(PARAM_INT, 'Message id, or 0'),
+            'actorid' => new \external_value(PARAM_INT, 'Actor user id'),
+            'eventtype' => new \external_value(PARAM_TEXT, 'Event type'),
+            'visibility' => new \external_value(PARAM_TEXT, 'Event visibility'),
+            'oldvalue' => new \external_value(PARAM_RAW, 'Old value'),
+            'newvalue' => new \external_value(PARAM_RAW, 'New value'),
+            'body' => new \external_value(PARAM_RAW, 'Event body'),
+            'detailsjson' => new \external_value(PARAM_RAW, 'Details JSON'),
+            'timecreated' => new \external_value(PARAM_INT, 'Created timestamp'),
+        ]);
+    }
+
+    protected static function support_queue_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'id' => new \external_value(PARAM_INT, 'Queue id'),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id'),
+            'queuekey' => new \external_value(PARAM_TEXT, 'Queue key'),
+            'name' => new \external_value(PARAM_TEXT, 'Queue name'),
+            'category' => new \external_value(PARAM_TEXT, 'Default category'),
+            'restricted' => new \external_value(PARAM_BOOL, 'Whether restricted access is required'),
+            'default_assigneeid' => new \external_value(PARAM_INT, 'Default assignee user id, or 0'),
+            'status' => new \external_value(PARAM_TEXT, 'Queue status'),
+            'settingsjson' => new \external_value(PARAM_RAW, 'Settings JSON'),
+            'timecreated' => new \external_value(PARAM_INT, 'Created timestamp'),
+            'timemodified' => new \external_value(PARAM_INT, 'Modified timestamp'),
+        ]);
+    }
+
+    protected static function support_canned_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'id' => new \external_value(PARAM_INT, 'Canned response id'),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id'),
+            'responsekey' => new \external_value(PARAM_TEXT, 'Response key'),
+            'title' => new \external_value(PARAM_TEXT, 'Title'),
+            'category' => new \external_value(PARAM_TEXT, 'Category'),
+            'body' => new \external_value(PARAM_RAW, 'Response body'),
+            'restricted' => new \external_value(PARAM_BOOL, 'Whether restricted access is required'),
+            'status' => new \external_value(PARAM_TEXT, 'Status'),
+            'timecreated' => new \external_value(PARAM_INT, 'Created timestamp'),
+            'timemodified' => new \external_value(PARAM_INT, 'Modified timestamp'),
+        ]);
+    }
+
+    protected static function support_format_ticket($ticket): array {
+        return [
+            'id' => (int)$ticket->id,
+            'ticketnumber' => (string)$ticket->ticketnumber,
+            'sourceconversationid' => (int)$ticket->sourceconversationid,
+            'workspaceid' => empty($ticket->workspaceid) ? 0 : (int)$ticket->workspaceid,
+            'consumerid' => empty($ticket->consumerid) ? 0 : (int)$ticket->consumerid,
+            'studentid' => empty($ticket->studentid) ? 0 : (int)$ticket->studentid,
+            'requesterid' => empty($ticket->requesterid) ? 0 : (int)$ticket->requesterid,
+            'requesterrole' => (string)$ticket->requesterrole,
+            'subject' => (string)$ticket->subject,
+            'description' => (string)$ticket->description,
+            'category' => (string)$ticket->category,
+            'priority' => (string)$ticket->priority,
+            'status' => (string)$ticket->status,
+            'assigneeid' => empty($ticket->assigneeid) ? 0 : (int)$ticket->assigneeid,
+            'assignmentgroupid' => empty($ticket->assignmentgroupid) ? 0 : (int)$ticket->assignmentgroupid,
+            'sla_policy_id' => empty($ticket->sla_policy_id) ? 0 : (int)$ticket->sla_policy_id,
+            'sla_first_response_due' => empty($ticket->sla_first_response_due) ? 0 : (int)$ticket->sla_first_response_due,
+            'sla_next_response_due' => empty($ticket->sla_next_response_due) ? 0 : (int)$ticket->sla_next_response_due,
+            'sla_resolution_due' => empty($ticket->sla_resolution_due) ? 0 : (int)$ticket->sla_resolution_due,
+            'firstrespondedat' => empty($ticket->firstrespondedat) ? 0 : (int)$ticket->firstrespondedat,
+            'resolvedat' => empty($ticket->resolvedat) ? 0 : (int)$ticket->resolvedat,
+            'closedat' => empty($ticket->closedat) ? 0 : (int)$ticket->closedat,
+            'visibility' => (string)($ticket->visibility ?? 'public'),
+            'metadatajson' => (string)($ticket->metadatajson ?? ''),
+            'timecreated' => (int)$ticket->timecreated,
+            'timemodified' => (int)$ticket->timemodified,
+        ];
+    }
+
+    protected static function support_format_event($event): array {
+        return [
+            'id' => (int)$event->id,
+            'ticketid' => (int)$event->ticketid,
+            'conversationid' => empty($event->conversationid) ? 0 : (int)$event->conversationid,
+            'messageid' => empty($event->messageid) ? 0 : (int)$event->messageid,
+            'actorid' => empty($event->actorid) ? 0 : (int)$event->actorid,
+            'eventtype' => (string)$event->eventtype,
+            'visibility' => (string)$event->visibility,
+            'oldvalue' => (string)($event->oldvalue ?? ''),
+            'newvalue' => (string)($event->newvalue ?? ''),
+            'body' => (string)($event->body ?? ''),
+            'detailsjson' => (string)($event->detailsjson ?? ''),
+            'timecreated' => (int)$event->timecreated,
+        ];
+    }
+
+    protected static function support_format_queue($queue): array {
+        return [
+            'id' => (int)$queue->id,
+            'workspaceid' => empty($queue->workspaceid) ? 0 : (int)$queue->workspaceid,
+            'queuekey' => (string)$queue->queuekey,
+            'name' => (string)$queue->name,
+            'category' => (string)$queue->category,
+            'restricted' => !empty($queue->restricted),
+            'default_assigneeid' => empty($queue->default_assigneeid) ? 0 : (int)$queue->default_assigneeid,
+            'status' => (string)$queue->status,
+            'settingsjson' => (string)($queue->settingsjson ?? ''),
+            'timecreated' => (int)$queue->timecreated,
+            'timemodified' => (int)$queue->timemodified,
+        ];
+    }
+
+    protected static function support_format_canned($canned): array {
+        return [
+            'id' => (int)$canned->id,
+            'workspaceid' => empty($canned->workspaceid) ? 0 : (int)$canned->workspaceid,
+            'responsekey' => (string)$canned->responsekey,
+            'title' => (string)$canned->title,
+            'category' => (string)$canned->category,
+            'body' => (string)$canned->body,
+            'restricted' => !empty($canned->restricted),
+            'status' => (string)$canned->status,
+            'timecreated' => (int)$canned->timecreated,
+            'timemodified' => (int)$canned->timemodified,
+        ];
+    }
+
+    protected static function support_write_ticket_event(int $ticketid, int $conversationid, int $messageid, int $actorid, string $eventtype, string $visibility = 'staff_only', string $oldvalue = '', string $newvalue = '', string $body = '', array $details = []): int {
+        global $DB;
+        if ($ticketid <= 0 || !$DB->get_manager()->table_exists('local_prequran_support_event')) {
+            return 0;
+        }
+        return (int)$DB->insert_record('local_prequran_support_event', (object)[
+            'ticketid' => $ticketid,
+            'conversationid' => $conversationid,
+            'messageid' => $messageid,
+            'actorid' => $actorid,
+            'eventtype' => clean_param($eventtype, PARAM_ALPHANUMEXT),
+            'visibility' => clean_param($visibility, PARAM_ALPHANUMEXT),
+            'oldvalue' => $oldvalue,
+            'newvalue' => $newvalue,
+            'body' => $body,
+            'detailsjson' => $details ? json_encode($details) : '',
+            'timecreated' => time(),
+        ]);
+    }
+
+    protected static function support_match_sla(int $workspaceid, string $category, string $priority): ?stdClass {
+        global $DB;
+        if (!$DB->get_manager()->table_exists('local_prequran_support_sla')) {
+            return null;
+        }
+        foreach ([$workspaceid, 0] as $scopeid) {
+            foreach ([[$category, $priority], [$category, 'normal'], ['other', $priority], ['other', 'normal']] as $match) {
+                $sla = $DB->get_record('local_prequran_support_sla', [
+                    'workspaceid' => $scopeid,
+                    'category' => $match[0],
+                    'priority' => $match[1],
+                    'status' => 'active',
+                ], '*', IGNORE_MULTIPLE);
+                if ($sla) {
+                    return $sla;
+                }
+            }
+        }
+        return null;
+    }
+
+    protected static function support_route_queue(int $workspaceid, string $category): ?stdClass {
+        global $DB;
+        if (!$DB->get_manager()->table_exists('local_prequran_support_queue')) {
+            return null;
+        }
+        foreach ([$workspaceid, 0] as $scopeid) {
+            $queue = $DB->get_record('local_prequran_support_queue', [
+                'workspaceid' => $scopeid,
+                'category' => $category,
+                'status' => 'active',
+            ], '*', IGNORE_MULTIPLE);
+            if ($queue) {
+                return $queue;
+            }
+        }
+        return $DB->get_record('local_prequran_support_queue', ['workspaceid' => 0, 'queuekey' => 'help_desk', 'status' => 'active'], '*', IGNORE_MULTIPLE) ?: null;
+    }
+
+    protected static function support_recalculate_ticket_sla($ticket, int $now = 0) {
+        if ($now <= 0) {
+            $now = time();
+        }
+        $sla = self::support_match_sla((int)$ticket->workspaceid, (string)$ticket->category, (string)$ticket->priority);
+        $ticket->sla_policy_id = $sla ? (int)$sla->id : 0;
+        $ticket->sla_first_response_due = $sla ? $now + ((int)$sla->first_response_minutes * 60) : 0;
+        $ticket->sla_next_response_due = $sla ? $now + ((int)$sla->next_response_minutes * 60) : 0;
+        $ticket->sla_resolution_due = $sla ? $now + ((int)$sla->resolution_minutes * 60) : 0;
+        return $ticket;
+    }
+
+    protected static function support_canned_body_for_ticket(string $body, $ticket): string {
+        $replacements = [
+            '{{ticketnumber}}' => (string)$ticket->ticketnumber,
+            '{{subject}}' => (string)$ticket->subject,
+            '{{category}}' => (string)$ticket->category,
+            '{{priority}}' => (string)$ticket->priority,
+        ];
+        return strtr($body, $replacements);
+    }
+
+    protected static function support_ticket_empty(): array {
+        return [
+            'id' => 0, 'ticketnumber' => '', 'sourceconversationid' => 0, 'workspaceid' => 0, 'consumerid' => 0,
+            'studentid' => 0, 'requesterid' => 0, 'requesterrole' => '', 'subject' => '', 'description' => '',
+            'category' => '', 'priority' => '', 'status' => '', 'assigneeid' => 0, 'assignmentgroupid' => 0,
+            'sla_policy_id' => 0, 'sla_first_response_due' => 0, 'sla_next_response_due' => 0, 'sla_resolution_due' => 0,
+            'firstrespondedat' => 0, 'resolvedat' => 0, 'closedat' => 0, 'visibility' => '', 'metadatajson' => '',
+            'timecreated' => 0, 'timemodified' => 0,
+        ];
+    }
+
+    public static function support_convert_to_ticket_parameters() {
+        return new \external_function_parameters([
+            'conversationid' => new \external_value(PARAM_INT, 'Conversation/thread id', VALUE_REQUIRED),
+            'priority' => new \external_value(PARAM_ALPHANUMEXT, 'Ticket priority', VALUE_DEFAULT, ''),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Ticket category', VALUE_DEFAULT, ''),
+            'assigneeid' => new \external_value(PARAM_INT, 'Assignee user id, 0 for unassigned, -1 for current user', VALUE_DEFAULT, 0),
+            'assignmentgroupid' => new \external_value(PARAM_INT, 'Assignment group id', VALUE_DEFAULT, 0),
+            'status' => new \external_value(PARAM_ALPHANUMEXT, 'Initial ticket status', VALUE_DEFAULT, 'open'),
+            'metadatajson' => new \external_value(PARAM_RAW, 'Optional metadata JSON', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function support_convert_to_ticket($conversationid, $priority = '', $category = '', $assigneeid = 0, $assignmentgroupid = 0, $status = 'open', $metadatajson = '') {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_convert_to_ticket_parameters(), compact('conversationid', 'priority', 'category', 'assigneeid', 'assignmentgroupid', 'status', 'metadatajson'));
+        self::support_require_ticket_queue_access('local/prequran:supportconvert');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'ticket' => self::support_ticket_empty(), 'conversation' => self::support_empty_conversation(), 'message' => 'Support ticket tables are not installed.'];
+        }
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)$params['conversationid']]);
+        if (!$thread || !in_array((string)$thread->type, self::support_allowed_types(), true)) {
+            throw new \invalid_parameter_exception('Support conversation not found.');
+        }
+        if (!self::support_can_read_thread_as($thread, (int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'You cannot convert this conversation.');
+        }
+        if (!empty($thread->linkedticketid)) {
+            $existing = $DB->get_record('local_prequran_support_ticket', ['id' => (int)$thread->linkedticketid], '*', MUST_EXIST);
+            return ['ok' => true, 'tables_ready' => true, 'ticket' => self::support_format_ticket($existing), 'conversation' => self::support_format_conversation($thread, (int)$USER->id), 'message' => 'already_converted'];
+        }
+
+        $workspaceid = empty($thread->workspaceid) ? 0 : (int)$thread->workspaceid;
+        $category = clean_param((string)$params['category'], PARAM_ALPHANUMEXT);
+        if ($category === '') {
+            $category = (string)($thread->support_category ?? 'other');
+        }
+        $priority = (string)$params['priority'] === '' ? (string)($thread->support_priority ?? 'normal') : self::support_clean_priority((string)$params['priority']);
+        $status = self::support_clean_ticket_status((string)$params['status'], 'open');
+        $assigneeid = (int)$params['assigneeid'];
+        if ($assigneeid === -1) {
+            $assigneeid = (int)$USER->id;
+        }
+        if ($assigneeid > 0 && !has_capability('local/prequran:supportassignticket', \context_system::instance()) && !is_siteadmin((int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'Ticket assignment access required.');
+        }
+        $assignmentgroupid = max(0, (int)$params['assignmentgroupid']);
+        $queue = $assignmentgroupid > 0 ? null : self::support_route_queue($workspaceid, $category ?: 'other');
+        if ($queue && $assignmentgroupid <= 0) {
+            $assignmentgroupid = (int)$queue->id;
+            if ($assigneeid <= 0 && !empty($queue->default_assigneeid)) {
+                $assigneeid = (int)$queue->default_assigneeid;
+            }
+        }
+        $now = time();
+        $description = '';
+        $firstmessage = $DB->get_record_sql(
+            "SELECT body
+               FROM {local_prequran_comm_message}
+              WHERE threadid = :threadid
+                AND status = :status
+           ORDER BY timecreated ASC, id ASC",
+            ['threadid' => (int)$thread->id, 'status' => 'visible'],
+            IGNORE_MULTIPLE
+        );
+        if ($firstmessage) {
+            $description = self::comm_clean_message_body((string)$firstmessage->body, 4000);
+        }
+        $metadata = self::support_clean_context_json((string)$params['metadatajson']);
+        $messagecount = (int)$DB->count_records('local_prequran_comm_message', ['threadid' => (int)$thread->id, 'status' => 'visible']);
+
+        $transaction = $DB->start_delegated_transaction();
+        $ticketrecord = (object)[
+            'ticketnumber' => '',
+            'sourceconversationid' => (int)$thread->id,
+            'workspaceid' => $workspaceid,
+            'consumerid' => 0,
+            'studentid' => empty($thread->studentid) ? 0 : (int)$thread->studentid,
+            'requesterid' => (int)$thread->createdby,
+            'requesterrole' => self::support_user_role_for_student((int)$thread->createdby, empty($thread->studentid) ? 0 : (int)$thread->studentid),
+            'subject' => (string)$thread->subject,
+            'description' => $description,
+            'category' => $category ?: 'other',
+            'priority' => $priority ?: 'normal',
+            'status' => $status,
+            'assigneeid' => max(0, $assigneeid),
+            'assignmentgroupid' => $assignmentgroupid,
+            'sla_policy_id' => 0,
+            'sla_first_response_due' => 0,
+            'sla_next_response_due' => 0,
+            'sla_resolution_due' => 0,
+            'firstrespondedat' => 0,
+            'resolvedat' => $status === 'resolved' ? $now : 0,
+            'closedat' => $status === 'closed' ? $now : 0,
+            'visibility' => (string)($thread->visibility ?? 'public'),
+            'metadatajson' => $metadata,
+            'timecreated' => $now,
+            'timemodified' => $now,
+        ];
+        $ticketrecord = self::support_recalculate_ticket_sla($ticketrecord, $now);
+        $ticketid = (int)$DB->insert_record('local_prequran_support_ticket', $ticketrecord);
+        $ticketnumber = 'SUP-' . gmdate('Ymd', $now) . '-' . str_pad((string)$ticketid, 6, '0', STR_PAD_LEFT);
+        $DB->set_field('local_prequran_support_ticket', 'ticketnumber', $ticketnumber, ['id' => $ticketid]);
+        $thread->linkedticketid = $ticketid;
+        $thread->support_category = $category ?: (string)($thread->support_category ?? 'other');
+        $thread->support_priority = $priority ?: (string)($thread->support_priority ?? 'normal');
+        $thread->assignedto = max(0, $assigneeid);
+        $thread->assignmentgroupid = $assignmentgroupid;
+        $thread->timemodified = $now;
+        $DB->update_record('local_prequran_comm_thread', $thread);
+        $DB->set_field('local_prequran_comm_message', 'ticketid', $ticketid, ['threadid' => (int)$thread->id]);
+        self::support_write_ticket_event($ticketid, (int)$thread->id, 0, (int)$USER->id, 'converted', 'staff_only', '', $ticketnumber, '', ['messagecount' => $messagecount]);
+        if ($assigneeid > 0) {
+            self::support_write_ticket_event($ticketid, (int)$thread->id, 0, (int)$USER->id, 'assigned', 'staff_only', '', (string)$assigneeid);
+        }
+        if (function_exists('local_prequran_support_audit')) {
+            local_prequran_support_audit($workspaceid, 'ticket_converted', 'ticket', $ticketid, ['conversationid' => (int)$thread->id, 'messagecount' => $messagecount], $ticketid, (int)$thread->id, 0);
+        }
+        $transaction->allow_commit();
+
+        $ticket = $DB->get_record('local_prequran_support_ticket', ['id' => $ticketid], '*', MUST_EXIST);
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)$thread->id], '*', MUST_EXIST);
+        return ['ok' => true, 'tables_ready' => true, 'ticket' => self::support_format_ticket($ticket), 'conversation' => self::support_format_conversation($thread, (int)$USER->id), 'message' => 'converted'];
+    }
+
+    public static function support_convert_to_ticket_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if converted'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'ticket' => self::support_ticket_structure(),
+            'conversation' => self::support_conversation_structure(),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_update_ticket_parameters() {
+        return new \external_function_parameters([
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED),
+            'status' => new \external_value(PARAM_ALPHANUMEXT, 'Lifecycle status, or empty to keep current', VALUE_DEFAULT, ''),
+            'priority' => new \external_value(PARAM_ALPHANUMEXT, 'Priority, or empty to keep current', VALUE_DEFAULT, ''),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Category, or empty to keep current', VALUE_DEFAULT, ''),
+            'assigneeid' => new \external_value(PARAM_INT, 'Assignee user id, -1 current user, -2 keep current', VALUE_DEFAULT, -2),
+            'assignmentgroupid' => new \external_value(PARAM_INT, 'Assignment group id, -1 keep current', VALUE_DEFAULT, -1),
+            'note' => new \external_value(PARAM_RAW, 'Optional staff-only update note', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function support_update_ticket($ticketid, $status = '', $priority = '', $category = '', $assigneeid = -2, $assignmentgroupid = -1, $note = '') {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_update_ticket_parameters(), compact('ticketid', 'status', 'priority', 'category', 'assigneeid', 'assignmentgroupid', 'note'));
+        self::support_require_ticket_queue_access('local/prequran:supportupdateticket');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'ticket' => self::support_ticket_empty(), 'message' => 'Support ticket tables are not installed.'];
+        }
+        $ticket = $DB->get_record('local_prequran_support_ticket', ['id' => (int)$params['ticketid']], '*', MUST_EXIST);
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)$ticket->sourceconversationid], '*', IGNORE_MISSING);
+        $now = time();
+        $changes = [];
+        $status = clean_param((string)$params['status'], PARAM_ALPHANUMEXT);
+        if ($status !== '') {
+            $cleanstatus = self::support_clean_ticket_status($status, (string)$ticket->status);
+            if ($cleanstatus !== (string)$ticket->status) {
+                $changes['status'] = [(string)$ticket->status, $cleanstatus];
+                $ticket->status = $cleanstatus;
+                if ($cleanstatus === 'resolved' && empty($ticket->resolvedat)) {
+                    $ticket->resolvedat = $now;
+                }
+                if ($cleanstatus === 'closed' && empty($ticket->closedat)) {
+                    $ticket->closedat = $now;
+                }
+            }
+        }
+        if ((string)$params['priority'] !== '') {
+            $newpriority = self::support_clean_priority((string)$params['priority']);
+            if ($newpriority !== (string)$ticket->priority) {
+                $changes['priority'] = [(string)$ticket->priority, $newpriority];
+                $ticket->priority = $newpriority;
+            }
+        }
+        if ((string)$params['category'] !== '') {
+            $newcategory = clean_param((string)$params['category'], PARAM_ALPHANUMEXT) ?: 'other';
+            if ($newcategory !== (string)$ticket->category) {
+                $changes['category'] = [(string)$ticket->category, $newcategory];
+                $ticket->category = $newcategory;
+            }
+        }
+        $newassignee = (int)$params['assigneeid'];
+        if ($newassignee === -1) {
+            $newassignee = (int)$USER->id;
+        }
+        if ($newassignee >= 0 && $newassignee !== (int)$ticket->assigneeid) {
+            if (!has_capability('local/prequran:supportassignticket', \context_system::instance()) && !is_siteadmin((int)$USER->id)) {
+                throw new \moodle_exception('nopermissions', '', '', 'Ticket assignment access required.');
+            }
+            $changes['assigneeid'] = [(string)(int)$ticket->assigneeid, (string)$newassignee];
+            $ticket->assigneeid = $newassignee;
+        }
+        $newgroup = (int)$params['assignmentgroupid'];
+        if ($newgroup >= 0 && $newgroup !== (int)$ticket->assignmentgroupid) {
+            $changes['assignmentgroupid'] = [(string)(int)$ticket->assignmentgroupid, (string)$newgroup];
+            $ticket->assignmentgroupid = $newgroup;
+        }
+        $note = self::comm_clean_message_body((string)$params['note'], 2000);
+        if ($note !== '' && !has_capability('local/prequran:supportinternalnote', \context_system::instance()) && !is_siteadmin((int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'Internal note access required.');
+        }
+        $transaction = $DB->start_delegated_transaction();
+        if ($changes) {
+            $ticket->timemodified = $now;
+            $DB->update_record('local_prequran_support_ticket', $ticket);
+            if ($thread) {
+                $thread->support_category = (string)$ticket->category;
+                $thread->support_priority = (string)$ticket->priority;
+                $thread->assignedto = (int)$ticket->assigneeid;
+                $thread->assignmentgroupid = (int)$ticket->assignmentgroupid;
+                if (in_array((string)$ticket->status, ['resolved', 'closed'], true)) {
+                    $thread->status = 'closed';
+                } else if ((string)$thread->status === 'closed') {
+                    $thread->status = 'active';
+                }
+                $thread->timemodified = $now;
+                $DB->update_record('local_prequran_comm_thread', $thread);
+            }
+            foreach ($changes as $field => $pair) {
+                self::support_write_ticket_event((int)$ticket->id, (int)$ticket->sourceconversationid, 0, (int)$USER->id, $field . '_changed', 'staff_only', $pair[0], $pair[1]);
+            }
+        }
+        if ($note !== '') {
+            self::support_write_ticket_event((int)$ticket->id, (int)$ticket->sourceconversationid, 0, (int)$USER->id, 'internal_note', 'staff_only', '', '', $note);
+        }
+        if (function_exists('local_prequran_support_audit')) {
+            local_prequran_support_audit((int)$ticket->workspaceid, 'ticket_updated', 'ticket', (int)$ticket->id, ['changes' => array_keys($changes), 'note' => $note !== ''], (int)$ticket->id, (int)$ticket->sourceconversationid, 0);
+        }
+        $transaction->allow_commit();
+        $ticket = $DB->get_record('local_prequran_support_ticket', ['id' => (int)$ticket->id], '*', MUST_EXIST);
+        return ['ok' => true, 'tables_ready' => true, 'ticket' => self::support_format_ticket($ticket), 'message' => 'updated'];
+    }
+
+    public static function support_update_ticket_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if updated'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'ticket' => self::support_ticket_structure(),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_list_tickets_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'status' => new \external_value(PARAM_ALPHANUMEXT, 'Status filter or all', VALUE_DEFAULT, 'all'),
+            'priority' => new \external_value(PARAM_ALPHANUMEXT, 'Priority filter or all', VALUE_DEFAULT, 'all'),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Category filter or all', VALUE_DEFAULT, 'all'),
+            'assigneeid' => new \external_value(PARAM_INT, 'Assignee filter, 0 all, -1 current user, -2 unassigned', VALUE_DEFAULT, 0),
+            'studentid' => new \external_value(PARAM_INT, 'Student id filter', VALUE_DEFAULT, 0),
+            'limit' => new \external_value(PARAM_INT, 'Maximum rows', VALUE_DEFAULT, 30),
+            'before' => new \external_value(PARAM_INT, 'Return tickets older than this timemodified timestamp', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_list_tickets($workspaceid = 0, $status = 'all', $priority = 'all', $category = 'all', $assigneeid = 0, $studentid = 0, $limit = 30, $before = 0) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_list_tickets_parameters(), compact('workspaceid', 'status', 'priority', 'category', 'assigneeid', 'studentid', 'limit', 'before'));
+        self::support_require_ticket_queue_access('local/prequran:supportviewqueue');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'tickets' => []];
+        }
+        $where = ['1 = 1'];
+        $sqlparams = [];
+        foreach (['workspaceid' => 'workspaceid', 'studentid' => 'studentid'] as $param => $field) {
+            if ((int)$params[$param] > 0) {
+                $where[] = "{$field} = :{$param}";
+                $sqlparams[$param] = (int)$params[$param];
+            }
+        }
+        foreach (['status', 'priority', 'category'] as $field) {
+            $value = clean_param((string)$params[$field], PARAM_ALPHANUMEXT);
+            if ($value !== '' && $value !== 'all') {
+                $where[] = "{$field} = :{$field}";
+                $sqlparams[$field] = $value;
+            }
+        }
+        $assigneeid = (int)$params['assigneeid'];
+        if ($assigneeid === -1) {
+            $assigneeid = (int)$USER->id;
+        }
+        if ($assigneeid === -2) {
+            $where[] = 'assigneeid = 0';
+        } else if ($assigneeid > 0) {
+            $where[] = 'assigneeid = :assigneeid';
+            $sqlparams['assigneeid'] = $assigneeid;
+        }
+        if ((int)$params['before'] > 0) {
+            $where[] = 'timemodified < :before';
+            $sqlparams['before'] = (int)$params['before'];
+        }
+        $records = $DB->get_records_sql(
+            "SELECT *
+               FROM {local_prequran_support_ticket}
+              WHERE " . implode(' AND ', $where) . "
+           ORDER BY timemodified DESC, id DESC",
+            $sqlparams,
+            0,
+            max(1, min(100, (int)$params['limit']))
+        );
+        $tickets = [];
+        foreach ($records as $ticket) {
+            $tickets[] = self::support_format_ticket($ticket);
+        }
+        return ['ok' => true, 'tables_ready' => true, 'tickets' => $tickets];
+    }
+
+    public static function support_list_tickets_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'tickets' => new \external_multiple_structure(self::support_ticket_structure()),
+        ]);
+    }
+
+    public static function support_get_ticket_parameters() {
+        return new \external_function_parameters([
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED),
+            'includemessages' => new \external_value(PARAM_BOOL, 'Include linked conversation messages', VALUE_DEFAULT, true),
+            'includeevents' => new \external_value(PARAM_BOOL, 'Include ticket timeline events', VALUE_DEFAULT, true),
+        ]);
+    }
+
+    public static function support_get_ticket($ticketid, $includemessages = true, $includeevents = true) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_get_ticket_parameters(), compact('ticketid', 'includemessages', 'includeevents'));
+        self::support_require_ticket_queue_access('local/prequran:supportviewqueue');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'ticket' => self::support_ticket_empty(), 'conversation' => self::support_empty_conversation(), 'messages' => [], 'events' => []];
+        }
+        $ticket = $DB->get_record('local_prequran_support_ticket', ['id' => (int)$params['ticketid']], '*', MUST_EXIST);
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)$ticket->sourceconversationid], '*', IGNORE_MISSING);
+        $messages = [];
+        if (!empty($params['includemessages']) && $thread) {
+            $records = $DB->get_records('local_prequran_comm_message', ['threadid' => (int)$thread->id, 'status' => 'visible'], 'timecreated ASC, id ASC');
+            foreach ($records as $message) {
+                $messages[] = [
+                    'id' => (int)$message->id,
+                    'conversationid' => (int)$message->threadid,
+                    'senderid' => (int)$message->senderid,
+                    'senderrole' => (string)($message->senderrole ?? ''),
+                    'studentid' => empty($message->studentid) ? 0 : (int)$message->studentid,
+                    'messagekind' => (string)$message->messagekind,
+                    'body' => (string)$message->body,
+                    'visibility' => (string)($message->visibility ?? 'public'),
+                    'status' => (string)$message->status,
+                    'ticketid' => empty($message->ticketid) ? 0 : (int)$message->ticketid,
+                    'timecreated' => (int)$message->timecreated,
+                    'timemodified' => (int)$message->timemodified,
+                ];
+            }
+        }
+        $events = [];
+        if (!empty($params['includeevents'])) {
+            foreach ($DB->get_records('local_prequran_support_event', ['ticketid' => (int)$ticket->id], 'timecreated ASC, id ASC') as $event) {
+                $events[] = self::support_format_event($event);
+            }
+        }
+        return [
+            'ok' => true,
+            'tables_ready' => true,
+            'ticket' => self::support_format_ticket($ticket),
+            'conversation' => $thread ? self::support_format_conversation($thread, (int)$USER->id) : self::support_empty_conversation(),
+            'messages' => $messages,
+            'events' => $events,
+        ];
+    }
+
+    public static function support_get_ticket_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'ticket' => self::support_ticket_structure(),
+            'conversation' => self::support_conversation_structure(),
+            'messages' => new \external_multiple_structure(self::support_message_structure()),
+            'events' => new \external_multiple_structure(self::support_event_structure()),
+        ]);
+    }
+
+    // -------------------------------------------------------------------------
+    // Support Phase 5: SLA, routing, canned replies, and supervisor operations
+    // -------------------------------------------------------------------------
+    public static function support_list_queues_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Category filter or all', VALUE_DEFAULT, 'all'),
+            'includeinactive' => new \external_value(PARAM_BOOL, 'Include inactive queues', VALUE_DEFAULT, false),
+        ]);
+    }
+
+    public static function support_list_queues($workspaceid = 0, $category = 'all', $includeinactive = false) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_list_queues_parameters(), compact('workspaceid', 'category', 'includeinactive'));
+        self::support_require_ticket_queue_access('local/prequran:supportviewqueue');
+        if (!self::support_ticket_tables_ready() || !$DB->get_manager()->table_exists('local_prequran_support_queue')) {
+            return ['ok' => false, 'tables_ready' => false, 'queues' => []];
+        }
+        $where = ['1 = 1'];
+        $sqlparams = [];
+        if ((int)$params['workspaceid'] > 0) {
+            $where[] = '(workspaceid = :workspaceid OR workspaceid = 0)';
+            $sqlparams['workspaceid'] = (int)$params['workspaceid'];
+        }
+        $category = clean_param((string)$params['category'], PARAM_ALPHANUMEXT);
+        if ($category !== '' && $category !== 'all') {
+            $where[] = 'category = :category';
+            $sqlparams['category'] = $category;
+        }
+        if (empty($params['includeinactive'])) {
+            $where[] = "status = 'active'";
+        }
+        $restrictedok = is_siteadmin((int)$USER->id) || has_capability('local/prequran:supportviewrestricted', \context_system::instance());
+        if (!$restrictedok) {
+            $where[] = 'restricted = 0';
+        }
+        $records = $DB->get_records_sql(
+            "SELECT *
+               FROM {local_prequran_support_queue}
+              WHERE " . implode(' AND ', $where) . "
+           ORDER BY workspaceid DESC, restricted ASC, name ASC",
+            $sqlparams
+        );
+        $queues = [];
+        foreach ($records as $queue) {
+            $queues[] = self::support_format_queue($queue);
+        }
+        return ['ok' => true, 'tables_ready' => true, 'queues' => $queues];
+    }
+
+    public static function support_list_queues_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'queues' => new \external_multiple_structure(self::support_queue_structure()),
+        ]);
+    }
+
+    public static function support_refresh_sla_parameters() {
+        return new \external_function_parameters([
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id, or 0 for matching tickets', VALUE_DEFAULT, 0),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter when ticketid is 0', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_refresh_sla($ticketid = 0, $workspaceid = 0) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_refresh_sla_parameters(), compact('ticketid', 'workspaceid'));
+        self::support_require_ticket_queue_access('local/prequran:supportmanagesla');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'updated' => 0, 'message' => 'Support ticket tables are not installed.'];
+        }
+        $where = ["status NOT IN ('resolved', 'closed')"];
+        $sqlparams = [];
+        if ((int)$params['ticketid'] > 0) {
+            $where[] = 'id = :ticketid';
+            $sqlparams['ticketid'] = (int)$params['ticketid'];
+        } else if ((int)$params['workspaceid'] > 0) {
+            $where[] = 'workspaceid = :workspaceid';
+            $sqlparams['workspaceid'] = (int)$params['workspaceid'];
+        }
+        $updated = 0;
+        $now = time();
+        foreach ($DB->get_records_select('local_prequran_support_ticket', implode(' AND ', $where), $sqlparams, 'id ASC', '*', 0, 500) as $ticket) {
+            $old = (int)$ticket->sla_resolution_due;
+            $ticket = self::support_recalculate_ticket_sla($ticket, $now);
+            $ticket->timemodified = $now;
+            $DB->update_record('local_prequran_support_ticket', $ticket);
+            self::support_write_ticket_event((int)$ticket->id, (int)$ticket->sourceconversationid, 0, (int)$USER->id, 'sla_refreshed', 'staff_only', (string)$old, (string)(int)$ticket->sla_resolution_due);
+            $updated++;
+        }
+        return ['ok' => true, 'tables_ready' => true, 'updated' => $updated, 'message' => 'sla_refreshed'];
+    }
+
+    public static function support_refresh_sla_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'updated' => new \external_value(PARAM_INT, 'Updated ticket count'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_route_ticket_parameters() {
+        return new \external_function_parameters([
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED),
+            'queueid' => new \external_value(PARAM_INT, 'Queue id, 0 to auto-route by category', VALUE_DEFAULT, 0),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'New category, or empty to keep current', VALUE_DEFAULT, ''),
+            'priority' => new \external_value(PARAM_ALPHANUMEXT, 'New priority, or empty to keep current', VALUE_DEFAULT, ''),
+            'assigneeid' => new \external_value(PARAM_INT, 'Assignee id, -2 keep current, -1 current user, 0 unassigned', VALUE_DEFAULT, -2),
+            'reason' => new \external_value(PARAM_RAW, 'Staff-only transfer reason', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function support_route_ticket($ticketid, $queueid = 0, $category = '', $priority = '', $assigneeid = -2, $reason = '') {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_route_ticket_parameters(), compact('ticketid', 'queueid', 'category', 'priority', 'assigneeid', 'reason'));
+        self::support_require_ticket_queue_access('local/prequran:supportassignticket');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'ticket' => self::support_ticket_empty(), 'message' => 'Support ticket tables are not installed.'];
+        }
+        $ticket = $DB->get_record('local_prequran_support_ticket', ['id' => (int)$params['ticketid']], '*', MUST_EXIST);
+        $oldqueue = (int)$ticket->assignmentgroupid;
+        $oldassignee = (int)$ticket->assigneeid;
+        $oldcategory = (string)$ticket->category;
+        if ((string)$params['category'] !== '') {
+            $ticket->category = clean_param((string)$params['category'], PARAM_ALPHANUMEXT) ?: (string)$ticket->category;
+        }
+        if ((string)$params['priority'] !== '') {
+            $ticket->priority = self::support_clean_priority((string)$params['priority']);
+        }
+        $queueid = (int)$params['queueid'];
+        $queue = null;
+        if ($queueid > 0) {
+            $queue = $DB->get_record('local_prequran_support_queue', ['id' => $queueid, 'status' => 'active'], '*', MUST_EXIST);
+        } else {
+            $queue = self::support_route_queue((int)$ticket->workspaceid, (string)$ticket->category);
+        }
+        if ($queue) {
+            if (!empty($queue->restricted) && !has_capability('local/prequran:supportviewrestricted', \context_system::instance()) && !is_siteadmin((int)$USER->id)) {
+                throw new \moodle_exception('nopermissions', '', '', 'Restricted queue access required.');
+            }
+            $ticket->assignmentgroupid = (int)$queue->id;
+            if ((int)$params['assigneeid'] === -2 && !empty($queue->default_assigneeid)) {
+                $ticket->assigneeid = (int)$queue->default_assigneeid;
+            }
+        }
+        $newassignee = (int)$params['assigneeid'];
+        if ($newassignee === -1) {
+            $newassignee = (int)$USER->id;
+        }
+        if ($newassignee >= 0) {
+            $ticket->assigneeid = $newassignee;
+        }
+        $ticket = self::support_recalculate_ticket_sla($ticket);
+        $ticket->timemodified = time();
+        $DB->update_record('local_prequran_support_ticket', $ticket);
+        $DB->set_field('local_prequran_comm_thread', 'assignmentgroupid', (int)$ticket->assignmentgroupid, ['id' => (int)$ticket->sourceconversationid]);
+        $DB->set_field('local_prequran_comm_thread', 'assignedto', (int)$ticket->assigneeid, ['id' => (int)$ticket->sourceconversationid]);
+        $DB->set_field('local_prequran_comm_thread', 'support_category', (string)$ticket->category, ['id' => (int)$ticket->sourceconversationid]);
+        $body = self::comm_clean_message_body((string)$params['reason'], 1000);
+        self::support_write_ticket_event((int)$ticket->id, (int)$ticket->sourceconversationid, 0, (int)$USER->id, 'routed', 'staff_only', $oldcategory . ':' . $oldqueue . ':' . $oldassignee, (string)$ticket->category . ':' . (int)$ticket->assignmentgroupid . ':' . (int)$ticket->assigneeid, $body);
+        return ['ok' => true, 'tables_ready' => true, 'ticket' => self::support_format_ticket($ticket), 'message' => 'routed'];
+    }
+
+    public static function support_route_ticket_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if routed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'ticket' => self::support_ticket_structure(),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_list_canned_responses_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Category filter or all', VALUE_DEFAULT, 'all'),
+            'includeinactive' => new \external_value(PARAM_BOOL, 'Include inactive responses', VALUE_DEFAULT, false),
+        ]);
+    }
+
+    public static function support_list_canned_responses($workspaceid = 0, $category = 'all', $includeinactive = false) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_list_canned_responses_parameters(), compact('workspaceid', 'category', 'includeinactive'));
+        self::support_require_ticket_queue_access('local/prequran:supportreply');
+        if (!self::support_ticket_tables_ready() || !$DB->get_manager()->table_exists('local_prequran_support_canned')) {
+            return ['ok' => false, 'tables_ready' => false, 'responses' => []];
+        }
+        $where = ['1 = 1'];
+        $sqlparams = [];
+        if ((int)$params['workspaceid'] > 0) {
+            $where[] = '(workspaceid = :workspaceid OR workspaceid = 0)';
+            $sqlparams['workspaceid'] = (int)$params['workspaceid'];
+        }
+        $category = clean_param((string)$params['category'], PARAM_ALPHANUMEXT);
+        if ($category !== '' && $category !== 'all') {
+            $where[] = '(category = :category OR category = :othercat)';
+            $sqlparams['category'] = $category;
+            $sqlparams['othercat'] = 'other';
+        }
+        if (empty($params['includeinactive'])) {
+            $where[] = "status = 'active'";
+        }
+        if (!is_siteadmin((int)$USER->id) && !has_capability('local/prequran:supportviewrestricted', \context_system::instance())) {
+            $where[] = 'restricted = 0';
+        }
+        $responses = [];
+        foreach ($DB->get_records_sql("SELECT * FROM {local_prequran_support_canned} WHERE " . implode(' AND ', $where) . " ORDER BY category ASC, title ASC", $sqlparams) as $row) {
+            $responses[] = self::support_format_canned($row);
+        }
+        return ['ok' => true, 'tables_ready' => true, 'responses' => $responses];
+    }
+
+    public static function support_list_canned_responses_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'responses' => new \external_multiple_structure(self::support_canned_structure()),
+        ]);
+    }
+
+    public static function support_save_canned_response_parameters() {
+        return new \external_function_parameters([
+            'id' => new \external_value(PARAM_INT, 'Existing response id, or 0 to create/update by key', VALUE_DEFAULT, 0),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id', VALUE_DEFAULT, 0),
+            'responsekey' => new \external_value(PARAM_ALPHANUMEXT, 'Stable response key', VALUE_DEFAULT, ''),
+            'title' => new \external_value(PARAM_TEXT, 'Title', VALUE_DEFAULT, ''),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Category', VALUE_DEFAULT, 'other'),
+            'body' => new \external_value(PARAM_RAW, 'Response body', VALUE_DEFAULT, ''),
+            'restricted' => new \external_value(PARAM_BOOL, 'Restricted response', VALUE_DEFAULT, false),
+            'status' => new \external_value(PARAM_ALPHANUMEXT, 'active|inactive|archived', VALUE_DEFAULT, 'active'),
+        ]);
+    }
+
+    public static function support_save_canned_response($id = 0, $workspaceid = 0, $responsekey = '', $title = '', $category = 'other', $body = '', $restricted = false, $status = 'active') {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_save_canned_response_parameters(), compact('id', 'workspaceid', 'responsekey', 'title', 'category', 'body', 'restricted', 'status'));
+        self::support_require_ticket_queue_access('local/prequran:supportmanagesla');
+        if (!$DB->get_manager()->table_exists('local_prequran_support_canned')) {
+            return ['ok' => false, 'tables_ready' => false, 'response' => self::support_format_canned((object)['id' => 0, 'workspaceid' => 0, 'responsekey' => '', 'title' => '', 'category' => '', 'body' => '', 'restricted' => 0, 'status' => '', 'timecreated' => 0, 'timemodified' => 0]), 'message' => 'Support canned response table is not installed.'];
+        }
+        $now = time();
+        $record = (int)$params['id'] > 0 ? $DB->get_record('local_prequran_support_canned', ['id' => (int)$params['id']], '*', MUST_EXIST) : null;
+        if (!$record) {
+            $record = $DB->get_record('local_prequran_support_canned', ['workspaceid' => (int)$params['workspaceid'], 'responsekey' => clean_param((string)$params['responsekey'], PARAM_ALPHANUMEXT)], '*', IGNORE_MISSING);
+        }
+        $data = (object)[
+            'workspaceid' => max(0, (int)$params['workspaceid']),
+            'responsekey' => clean_param((string)$params['responsekey'], PARAM_ALPHANUMEXT),
+            'title' => trim(clean_param((string)$params['title'], PARAM_TEXT)),
+            'category' => clean_param((string)$params['category'], PARAM_ALPHANUMEXT) ?: 'other',
+            'body' => self::comm_clean_message_body((string)$params['body'], 4000),
+            'restricted' => !empty($params['restricted']) ? 1 : 0,
+            'status' => in_array((string)$params['status'], ['active', 'inactive', 'archived'], true) ? (string)$params['status'] : 'active',
+            'createdby' => (int)$USER->id,
+            'timecreated' => $now,
+            'timemodified' => $now,
+        ];
+        if ($data->responsekey === '' || $data->title === '' || $data->body === '') {
+            throw new \invalid_parameter_exception('responsekey, title, and body are required.');
+        }
+        if ($record) {
+            $data->id = (int)$record->id;
+            $data->createdby = (int)($record->createdby ?? $USER->id);
+            $data->timecreated = (int)($record->timecreated ?? $now);
+            $DB->update_record('local_prequran_support_canned', $data);
+            $id = (int)$record->id;
+        } else {
+            $id = (int)$DB->insert_record('local_prequran_support_canned', $data);
+        }
+        $saved = $DB->get_record('local_prequran_support_canned', ['id' => $id], '*', MUST_EXIST);
+        return ['ok' => true, 'tables_ready' => true, 'response' => self::support_format_canned($saved), 'message' => 'saved'];
+    }
+
+    public static function support_save_canned_response_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if saved'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'response' => self::support_canned_structure(),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_send_canned_reply_parameters() {
+        return new \external_function_parameters([
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED),
+            'responseid' => new \external_value(PARAM_INT, 'Canned response id', VALUE_REQUIRED),
+            'extra' => new \external_value(PARAM_RAW, 'Optional extra text appended to response', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function support_send_canned_reply($ticketid, $responseid, $extra = '') {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_send_canned_reply_parameters(), compact('ticketid', 'responseid', 'extra'));
+        self::support_require_ticket_queue_access('local/prequran:supportreply');
+        if (!self::support_ticket_tables_ready() || !$DB->get_manager()->table_exists('local_prequran_support_canned')) {
+            return ['ok' => false, 'tables_ready' => false, 'messageid' => 0, 'message' => 'Support ticket tables are not installed.'];
+        }
+        $ticket = $DB->get_record('local_prequran_support_ticket', ['id' => (int)$params['ticketid']], '*', MUST_EXIST);
+        $canned = $DB->get_record('local_prequran_support_canned', ['id' => (int)$params['responseid'], 'status' => 'active'], '*', MUST_EXIST);
+        if (!empty($canned->restricted) && !has_capability('local/prequran:supportviewrestricted', \context_system::instance()) && !is_siteadmin((int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'Restricted response access required.');
+        }
+        $body = self::support_canned_body_for_ticket((string)$canned->body, $ticket);
+        $extra = self::comm_clean_message_body((string)$params['extra'], 1000);
+        if ($extra !== '') {
+            $body .= "\n\n" . $extra;
+        }
+        $sent = self::support_send_message((int)$ticket->sourceconversationid, $body);
+        self::support_write_ticket_event((int)$ticket->id, (int)$ticket->sourceconversationid, (int)$sent['messageid'], (int)$USER->id, 'canned_response_used', 'staff_only', '', (string)$canned->id, '', ['responsekey' => (string)$canned->responsekey]);
+        return $sent;
+    }
+
+    public static function support_send_canned_reply_returns() {
+        return self::support_send_message_returns();
+    }
+
+    public static function support_supervisor_summary_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_supervisor_summary($workspaceid = 0) {
+        global $DB;
+        $params = self::validate_parameters(self::support_supervisor_summary_parameters(), compact('workspaceid'));
+        self::support_require_ticket_queue_access('local/prequran:supportreports');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'open_count' => 0, 'unassigned_count' => 0, 'at_risk_count' => 0, 'breached_count' => 0, 'restricted_count' => 0, 'by_status_json' => '{}', 'by_queue_json' => '{}'];
+        }
+        $where = ["status NOT IN ('resolved', 'closed')"];
+        $sqlparams = [];
+        if ((int)$params['workspaceid'] > 0) {
+            $where[] = 'workspaceid = :workspaceid';
+            $sqlparams['workspaceid'] = (int)$params['workspaceid'];
+        }
+        $basewhere = implode(' AND ', $where);
+        $now = time();
+        $open = (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere, $sqlparams);
+        $unassigned = (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere . ' AND assigneeid = 0', $sqlparams);
+        $breachparams = $sqlparams + ['nowtime' => $now];
+        $breached = (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere . ' AND sla_resolution_due > 0 AND sla_resolution_due < :nowtime', $breachparams);
+        $riskparams = $sqlparams + ['nowtime' => $now, 'soon' => $now + 7200];
+        $atrisk = (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere . ' AND sla_resolution_due >= :nowtime AND sla_resolution_due <= :soon', $riskparams);
+        $restricted = (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere . " AND visibility = 'restricted'", $sqlparams);
+        $bystatus = [];
+        foreach ($DB->get_records_sql("SELECT status, COUNT(1) AS c FROM {local_prequran_support_ticket} WHERE {$basewhere} GROUP BY status", $sqlparams) as $row) {
+            $bystatus[(string)$row->status] = (int)$row->c;
+        }
+        $byqueue = [];
+        foreach ($DB->get_records_sql("SELECT assignmentgroupid, COUNT(1) AS c FROM {local_prequran_support_ticket} WHERE {$basewhere} GROUP BY assignmentgroupid", $sqlparams) as $row) {
+            $byqueue[(string)(int)$row->assignmentgroupid] = (int)$row->c;
+        }
+        return [
+            'ok' => true,
+            'tables_ready' => true,
+            'open_count' => $open,
+            'unassigned_count' => $unassigned,
+            'at_risk_count' => $atrisk,
+            'breached_count' => $breached,
+            'restricted_count' => $restricted,
+            'by_status_json' => json_encode($bystatus),
+            'by_queue_json' => json_encode($byqueue),
+        ];
+    }
+
+    public static function support_supervisor_summary_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'open_count' => new \external_value(PARAM_INT, 'Open ticket count'),
+            'unassigned_count' => new \external_value(PARAM_INT, 'Unassigned open ticket count'),
+            'at_risk_count' => new \external_value(PARAM_INT, 'Tickets due within two hours'),
+            'breached_count' => new \external_value(PARAM_INT, 'Breached open tickets'),
+            'restricted_count' => new \external_value(PARAM_INT, 'Restricted open tickets'),
+            'by_status_json' => new \external_value(PARAM_RAW, 'Status counts JSON'),
+            'by_queue_json' => new \external_value(PARAM_RAW, 'Queue counts JSON'),
+        ]);
+    }
+
+    // -------------------------------------------------------------------------
+    // Support Phase 6: reports, search, export, satisfaction, and quality review
+    // -------------------------------------------------------------------------
+    protected static function support_can_view_restricted_tickets(): bool {
+        global $USER;
+        return is_siteadmin((int)$USER->id) || has_capability('local/prequran:supportviewrestricted', \context_system::instance());
+    }
+
+    protected static function support_report_filter_sql(array $params, array &$sqlparams, string $alias = 't'): array {
+        $where = ['1 = 1'];
+        if ((int)($params['workspaceid'] ?? 0) > 0) {
+            $where[] = "{$alias}.workspaceid = :workspaceid";
+            $sqlparams['workspaceid'] = (int)$params['workspaceid'];
+        }
+        if ((int)($params['start'] ?? 0) > 0) {
+            $where[] = "{$alias}.timecreated >= :starttime";
+            $sqlparams['starttime'] = (int)$params['start'];
+        }
+        if ((int)($params['end'] ?? 0) > 0) {
+            $where[] = "{$alias}.timecreated <= :endtime";
+            $sqlparams['endtime'] = (int)$params['end'];
+        }
+        if (!self::support_can_view_restricted_tickets()) {
+            $where[] = "{$alias}.visibility <> :restrictedvisibility";
+            $sqlparams['restrictedvisibility'] = 'restricted';
+        }
+        return $where;
+    }
+
+    protected static function support_csv_escape(string $value): string {
+        return '"' . str_replace('"', '""', $value) . '"';
+    }
+
+    protected static function support_csv_rows(array $headers, array $rows): string {
+        $escapedheaders = [];
+        foreach ($headers as $header) {
+            $escapedheaders[] = self::support_csv_escape((string)$header);
+        }
+        $lines = [implode(',', $escapedheaders)];
+        foreach ($rows as $row) {
+            $lines[] = implode(',', array_map(static function($value): string {
+                return self::support_csv_escape((string)$value);
+            }, $row));
+        }
+        return implode("\n", $lines) . "\n";
+    }
+
+    public static function support_search_parameters() {
+        return new \external_function_parameters([
+            'query' => new \external_value(PARAM_RAW, 'Search text', VALUE_DEFAULT, ''),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'status' => new \external_value(PARAM_ALPHANUMEXT, 'Status filter or all', VALUE_DEFAULT, 'all'),
+            'priority' => new \external_value(PARAM_ALPHANUMEXT, 'Priority filter or all', VALUE_DEFAULT, 'all'),
+            'category' => new \external_value(PARAM_ALPHANUMEXT, 'Category filter or all', VALUE_DEFAULT, 'all'),
+            'assigneeid' => new \external_value(PARAM_INT, 'Assignee filter, 0 all, -1 current user, -2 unassigned', VALUE_DEFAULT, 0),
+            'studentid' => new \external_value(PARAM_INT, 'Student id filter', VALUE_DEFAULT, 0),
+            'limit' => new \external_value(PARAM_INT, 'Maximum rows', VALUE_DEFAULT, 30),
+        ]);
+    }
+
+    public static function support_search($query = '', $workspaceid = 0, $status = 'all', $priority = 'all', $category = 'all', $assigneeid = 0, $studentid = 0, $limit = 30) {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_search_parameters(), compact('query', 'workspaceid', 'status', 'priority', 'category', 'assigneeid', 'studentid', 'limit'));
+        self::support_require_ticket_queue_access('local/prequran:supportviewqueue');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'tickets' => []];
+        }
+        $where = ['1 = 1'];
+        $sqlparams = [];
+        if ((int)$params['workspaceid'] > 0) {
+            $where[] = 't.workspaceid = :workspaceid';
+            $sqlparams['workspaceid'] = (int)$params['workspaceid'];
+        }
+        if ((int)$params['studentid'] > 0) {
+            $where[] = 't.studentid = :studentid';
+            $sqlparams['studentid'] = (int)$params['studentid'];
+        }
+        foreach (['status', 'priority', 'category'] as $field) {
+            $value = clean_param((string)$params[$field], PARAM_ALPHANUMEXT);
+            if ($value !== '' && $value !== 'all') {
+                $where[] = "t.{$field} = :{$field}";
+                $sqlparams[$field] = $value;
+            }
+        }
+        $assigneeid = (int)$params['assigneeid'];
+        if ($assigneeid === -1) {
+            $assigneeid = (int)$USER->id;
+        }
+        if ($assigneeid === -2) {
+            $where[] = 't.assigneeid = 0';
+        } else if ($assigneeid > 0) {
+            $where[] = 't.assigneeid = :assigneeid';
+            $sqlparams['assigneeid'] = $assigneeid;
+        }
+        if (!self::support_can_view_restricted_tickets()) {
+            $where[] = 't.visibility <> :restrictedvisibility';
+            $sqlparams['restrictedvisibility'] = 'restricted';
+        }
+        $query = trim((string)$params['query']);
+        if ($query !== '') {
+            $searchlike = '%' . strtolower($query) . '%';
+            $sqlparams['q_ticket'] = $searchlike;
+            $sqlparams['q_subject'] = $searchlike;
+            $sqlparams['q_description'] = $searchlike;
+            $sqlparams['q_message'] = $searchlike;
+            $sqlparams['q_user_first'] = $searchlike;
+            $sqlparams['q_user_last'] = $searchlike;
+            $sqlparams['q_user_email'] = $searchlike;
+            $sqlparams['q_user_idnumber'] = $searchlike;
+            $where[] = "(LOWER(t.ticketnumber) LIKE :q_ticket
+                OR LOWER(t.subject) LIKE :q_subject
+                OR LOWER(t.description) LIKE :q_description
+                OR EXISTS (
+                    SELECT 1
+                      FROM {local_prequran_comm_message} m
+                     WHERE m.threadid = t.sourceconversationid
+                       AND LOWER(m.body) LIKE :q_message
+                )
+                OR EXISTS (
+                    SELECT 1
+                      FROM {user} u
+                     WHERE u.id IN (t.studentid, t.requesterid, t.assigneeid)
+                       AND (LOWER(u.firstname) LIKE :q_user_first OR LOWER(u.lastname) LIKE :q_user_last OR LOWER(u.email) LIKE :q_user_email OR LOWER(u.idnumber) LIKE :q_user_idnumber)
+                ))";
+        }
+        $tickets = [];
+        $records = $DB->get_records_sql(
+            "SELECT t.*
+               FROM {local_prequran_support_ticket} t
+              WHERE " . implode(' AND ', $where) . "
+           ORDER BY t.timemodified DESC, t.id DESC",
+            $sqlparams,
+            0,
+            max(1, min(100, (int)$params['limit']))
+        );
+        foreach ($records as $ticket) {
+            $tickets[] = self::support_format_ticket($ticket);
+        }
+        return ['ok' => true, 'tables_ready' => true, 'tickets' => $tickets];
+    }
+
+    public static function support_search_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'tickets' => new \external_multiple_structure(self::support_ticket_structure()),
+        ]);
+    }
+
+    public static function support_reports_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'start' => new \external_value(PARAM_INT, 'Start timestamp', VALUE_DEFAULT, 0),
+            'end' => new \external_value(PARAM_INT, 'End timestamp', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    public static function support_reports($workspaceid = 0, $start = 0, $end = 0) {
+        global $DB;
+        $params = self::validate_parameters(self::support_reports_parameters(), compact('workspaceid', 'start', 'end'));
+        self::support_require_ticket_queue_access('local/prequran:supportreports');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'summary_json' => '{}', 'by_status_json' => '{}', 'by_priority_json' => '{}', 'by_category_json' => '{}', 'by_assignee_json' => '{}', 'sla_json' => '{}', 'quality_json' => '{}'];
+        }
+        $sqlparams = [];
+        $where = self::support_report_filter_sql($params, $sqlparams, 't');
+        $basewhere = implode(' AND ', $where);
+        $summary = [
+            'ticket_count' => (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere, $sqlparams),
+            'converted_conversation_count' => (int)$DB->count_records_select('local_prequran_comm_thread', 'linkedticketid > 0', []),
+            'open_count' => (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere . " AND status NOT IN ('resolved', 'closed')", $sqlparams),
+            'resolved_count' => (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere . " AND status IN ('resolved', 'closed')", $sqlparams),
+        ];
+        $grouped = static function(string $field) use ($DB, $basewhere, $sqlparams): array {
+            $out = [];
+            foreach ($DB->get_records_sql("SELECT {$field} AS k, COUNT(1) AS c FROM {local_prequran_support_ticket} t WHERE {$basewhere} GROUP BY {$field}", $sqlparams) as $row) {
+                $out[(string)$row->k] = (int)$row->c;
+            }
+            return $out;
+        };
+        $now = time();
+        $sla = [
+            'breached' => (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere . " AND status NOT IN ('resolved', 'closed') AND sla_resolution_due > 0 AND sla_resolution_due < :nowtime", $sqlparams + ['nowtime' => $now]),
+            'at_risk_2h' => (int)$DB->count_records_select('local_prequran_support_ticket', $basewhere . " AND status NOT IN ('resolved', 'closed') AND sla_resolution_due BETWEEN :nowtime AND :soon", $sqlparams + ['nowtime' => $now, 'soon' => $now + 7200]),
+        ];
+        $quality = [
+            'ratings' => [],
+            'quality_reviews' => 0,
+            'reported_messages' => 0,
+        ];
+        foreach ($DB->get_records_sql("SELECT newvalue AS rating, COUNT(1) AS c FROM {local_prequran_support_event} WHERE eventtype = 'satisfaction_rating' GROUP BY newvalue") as $row) {
+            $quality['ratings'][(string)$row->rating] = (int)$row->c;
+        }
+        $quality['quality_reviews'] = (int)$DB->count_records('local_prequran_support_event', ['eventtype' => 'quality_review']);
+        $quality['reported_messages'] = (int)$DB->count_records('local_prequran_support_event', ['eventtype' => 'message_reported']);
+        return [
+            'ok' => true,
+            'tables_ready' => true,
+            'summary_json' => json_encode($summary),
+            'by_status_json' => json_encode($grouped('status')),
+            'by_priority_json' => json_encode($grouped('priority')),
+            'by_category_json' => json_encode($grouped('category')),
+            'by_assignee_json' => json_encode($grouped('assigneeid')),
+            'sla_json' => json_encode($sla),
+            'quality_json' => json_encode($quality),
+        ];
+    }
+
+    public static function support_reports_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'summary_json' => new \external_value(PARAM_RAW, 'Summary JSON'),
+            'by_status_json' => new \external_value(PARAM_RAW, 'Status counts JSON'),
+            'by_priority_json' => new \external_value(PARAM_RAW, 'Priority counts JSON'),
+            'by_category_json' => new \external_value(PARAM_RAW, 'Category counts JSON'),
+            'by_assignee_json' => new \external_value(PARAM_RAW, 'Assignee counts JSON'),
+            'sla_json' => new \external_value(PARAM_RAW, 'SLA metrics JSON'),
+            'quality_json' => new \external_value(PARAM_RAW, 'Quality metrics JSON'),
+        ]);
+    }
+
+    public static function support_export_csv_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'start' => new \external_value(PARAM_INT, 'Start timestamp', VALUE_DEFAULT, 0),
+            'end' => new \external_value(PARAM_INT, 'End timestamp', VALUE_DEFAULT, 0),
+            'limit' => new \external_value(PARAM_INT, 'Maximum rows', VALUE_DEFAULT, 1000),
+        ]);
+    }
+
+    public static function support_export_csv($workspaceid = 0, $start = 0, $end = 0, $limit = 1000) {
+        global $DB;
+        $params = self::validate_parameters(self::support_export_csv_parameters(), compact('workspaceid', 'start', 'end', 'limit'));
+        self::support_require_ticket_queue_access('local/prequran:supportreports');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'filename' => '', 'csv' => ''];
+        }
+        $sqlparams = [];
+        $where = self::support_report_filter_sql($params, $sqlparams, 't');
+        $rows = [];
+        $records = $DB->get_records_sql(
+            "SELECT t.*
+               FROM {local_prequran_support_ticket} t
+              WHERE " . implode(' AND ', $where) . "
+           ORDER BY t.timecreated DESC, t.id DESC",
+            $sqlparams,
+            0,
+            max(1, min(5000, (int)$params['limit']))
+        );
+        foreach ($records as $ticket) {
+            $rows[] = [
+                (int)$ticket->id,
+                (string)$ticket->ticketnumber,
+                (int)$ticket->workspaceid,
+                (int)$ticket->studentid,
+                (string)$ticket->subject,
+                (string)$ticket->category,
+                (string)$ticket->priority,
+                (string)$ticket->status,
+                (int)$ticket->assigneeid,
+                (int)$ticket->assignmentgroupid,
+                (int)$ticket->sla_resolution_due,
+                (int)$ticket->resolvedat,
+                (int)$ticket->timecreated,
+            ];
+        }
+        if (function_exists('local_prequran_support_audit')) {
+            local_prequran_support_audit((int)$params['workspaceid'], 'report_exported', 'report', 0, ['format' => 'csv', 'rows' => count($rows), 'limit' => (int)$params['limit']]);
+        }
+        return [
+            'ok' => true,
+            'tables_ready' => true,
+            'filename' => 'support-tickets-' . gmdate('Ymd-His') . '.csv',
+            'csv' => self::support_csv_rows(['id', 'ticketnumber', 'workspaceid', 'studentid', 'subject', 'category', 'priority', 'status', 'assigneeid', 'assignmentgroupid', 'sla_resolution_due', 'resolvedat', 'timecreated'], $rows),
+        ];
+    }
+
+    public static function support_export_csv_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'filename' => new \external_value(PARAM_TEXT, 'Suggested CSV filename'),
+            'csv' => new \external_value(PARAM_RAW, 'CSV content'),
+        ]);
+    }
+
+    public static function support_rate_ticket_parameters() {
+        return new \external_function_parameters([
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED),
+            'rating' => new \external_value(PARAM_INT, 'Satisfaction rating 1-5', VALUE_REQUIRED),
+            'comment' => new \external_value(PARAM_RAW, 'Optional comment', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function support_rate_ticket($ticketid, $rating, $comment = '') {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_rate_ticket_parameters(), compact('ticketid', 'rating', 'comment'));
+        self::support_context();
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'message' => 'Support ticket tables are not installed.'];
+        }
+        $ticket = $DB->get_record('local_prequran_support_ticket', ['id' => (int)$params['ticketid']], '*', MUST_EXIST);
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)$ticket->sourceconversationid], '*', MUST_EXIST);
+        if (!self::support_can_read_thread_as($thread, (int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'You cannot rate this ticket.');
+        }
+        if (!in_array((string)$ticket->status, ['resolved', 'closed'], true)) {
+            throw new \invalid_parameter_exception('Only resolved or closed tickets can be rated.');
+        }
+        $rating = max(1, min(5, (int)$params['rating']));
+        $comment = self::comm_clean_message_body((string)$params['comment'], 1000);
+        self::support_write_ticket_event((int)$ticket->id, (int)$ticket->sourceconversationid, 0, (int)$USER->id, 'satisfaction_rating', 'staff_only', '', (string)$rating, $comment);
+        return ['ok' => true, 'tables_ready' => true, 'message' => 'rated'];
+    }
+
+    public static function support_rate_ticket_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if rated'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function support_quality_queue_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id filter', VALUE_DEFAULT, 0),
+            'limit' => new \external_value(PARAM_INT, 'Maximum rows', VALUE_DEFAULT, 30),
+        ]);
+    }
+
+    public static function support_quality_queue($workspaceid = 0, $limit = 30) {
+        global $DB;
+        $params = self::validate_parameters(self::support_quality_queue_parameters(), compact('workspaceid', 'limit'));
+        self::support_require_ticket_queue_access('local/prequran:supportaudit');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'tickets' => []];
+        }
+        $sqlparams = ['lowrating' => '2'];
+        $where = ["(t.status IN ('resolved', 'closed')
+            OR EXISTS (SELECT 1 FROM {local_prequran_support_event} e WHERE e.ticketid = t.id AND e.eventtype IN ('sla_breached', 'message_reported'))
+            OR EXISTS (SELECT 1 FROM {local_prequran_support_event} e2 WHERE e2.ticketid = t.id AND e2.eventtype = 'satisfaction_rating' AND e2.newvalue <= :lowrating))"];
+        if ((int)$params['workspaceid'] > 0) {
+            $where[] = 't.workspaceid = :workspaceid';
+            $sqlparams['workspaceid'] = (int)$params['workspaceid'];
+        }
+        if (!self::support_can_view_restricted_tickets()) {
+            $where[] = 't.visibility <> :restrictedvisibility';
+            $sqlparams['restrictedvisibility'] = 'restricted';
+        }
+        $tickets = [];
+        foreach ($DB->get_records_sql("SELECT t.* FROM {local_prequran_support_ticket} t WHERE " . implode(' AND ', $where) . " ORDER BY t.timemodified DESC, t.id DESC", $sqlparams, 0, max(1, min(100, (int)$params['limit']))) as $ticket) {
+            $tickets[] = self::support_format_ticket($ticket);
+        }
+        return ['ok' => true, 'tables_ready' => true, 'tickets' => $tickets];
+    }
+
+    public static function support_quality_queue_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if completed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'tickets' => new \external_multiple_structure(self::support_ticket_structure()),
+        ]);
+    }
+
+    public static function support_quality_review_parameters() {
+        return new \external_function_parameters([
+            'ticketid' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED),
+            'outcome' => new \external_value(PARAM_ALPHANUMEXT, 'pass|coaching|policy|followup', VALUE_DEFAULT, 'pass'),
+            'score' => new \external_value(PARAM_INT, 'Quality score 0-100', VALUE_DEFAULT, 0),
+            'notes' => new \external_value(PARAM_RAW, 'Staff-only notes', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function support_quality_review($ticketid, $outcome = 'pass', $score = 0, $notes = '') {
+        global $DB, $USER;
+        $params = self::validate_parameters(self::support_quality_review_parameters(), compact('ticketid', 'outcome', 'score', 'notes'));
+        self::support_require_ticket_queue_access('local/prequran:supportaudit');
+        if (!self::support_ticket_tables_ready()) {
+            return ['ok' => false, 'tables_ready' => false, 'message' => 'Support ticket tables are not installed.'];
+        }
+        $ticket = $DB->get_record('local_prequran_support_ticket', ['id' => (int)$params['ticketid']], '*', MUST_EXIST);
+        $outcome = clean_param((string)$params['outcome'], PARAM_ALPHANUMEXT);
+        if (!in_array($outcome, ['pass', 'coaching', 'policy', 'followup'], true)) {
+            $outcome = 'pass';
+        }
+        $score = max(0, min(100, (int)$params['score']));
+        $notes = self::comm_clean_message_body((string)$params['notes'], 2000);
+        self::support_write_ticket_event((int)$ticket->id, (int)$ticket->sourceconversationid, 0, (int)$USER->id, 'quality_review', 'staff_only', '', $outcome, $notes, ['score' => $score]);
+        return ['ok' => true, 'tables_ready' => true, 'message' => 'reviewed'];
+    }
+
+    public static function support_quality_review_returns() {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if reviewed'),
+            'tables_ready' => new \external_value(PARAM_BOOL, 'False if tables are missing'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+        ]);
+    }
+
+    public static function transcript_preview_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id', VALUE_REQUIRED),
+            'studentid' => new \external_value(PARAM_INT, 'Student user id', VALUE_REQUIRED),
+            'consumer' => new \external_value(PARAM_ALPHANUMEXT, 'Optional consumer slug', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function transcript_preview($workspaceid, $studentid, $consumer = '') {
+        global $USER;
+
+        $params = self::validate_parameters(self::transcript_preview_parameters(), [
+            'workspaceid' => $workspaceid,
+            'studentid' => $studentid,
+            'consumer' => $consumer,
+        ]);
+        self::validate_context(\context_system::instance());
+        $context = $params['consumer'] !== '' ? pqh_consumer_context_by_slug((string)$params['consumer']) : pqh_requested_consumer_context();
+        if (!pqct_user_can_view_student_transcript((int)$USER->id, (int)$params['studentid'], (int)$params['workspaceid'])) {
+            throw new \moodle_exception('nopermissions', '', '', 'Transcript access required.');
+        }
+        $payload = pqct_resolve_student_transcript((int)$params['studentid'], (int)$params['workspaceid'], $context, [
+            'viewerid' => (int)$USER->id,
+            'include_internal' => false,
+        ]);
+        return [
+            'ok' => true,
+            'message' => 'resolved',
+            'payload_json' => json_encode($payload, JSON_UNESCAPED_SLASHES),
+            'warnings_json' => json_encode($payload['warnings'] ?? [], JSON_UNESCAPED_SLASHES),
+        ];
+    }
+
+    public static function transcript_preview_returns() {
+        return self::transcript_json_result_structure();
+    }
+
+    public static function transcript_issue_official_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id', VALUE_REQUIRED),
+            'studentid' => new \external_value(PARAM_INT, 'Student user id', VALUE_REQUIRED),
+            'reason' => new \external_value(PARAM_TEXT, 'Issue reason', VALUE_REQUIRED),
+            'consumer' => new \external_value(PARAM_ALPHANUMEXT, 'Optional consumer slug', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function transcript_issue_official($workspaceid, $studentid, $reason, $consumer = '') {
+        global $USER;
+
+        $params = self::validate_parameters(self::transcript_issue_official_parameters(), [
+            'workspaceid' => $workspaceid,
+            'studentid' => $studentid,
+            'reason' => $reason,
+            'consumer' => $consumer,
+        ]);
+        self::validate_context(\context_system::instance());
+        $context = $params['consumer'] !== '' ? pqh_consumer_context_by_slug((string)$params['consumer']) : pqh_requested_consumer_context();
+        $issued = pqct_issue_official_transcript((int)$params['studentid'], (int)$params['workspaceid'], $context, (int)$USER->id, (string)$params['reason']);
+        $record = $issued['record'];
+        return [
+            'ok' => true,
+            'message' => 'issued',
+            'documentid' => (string)$record->documentid,
+            'status' => (string)$record->status,
+            'url' => pqct_verification_url($context, (string)$record->documentid, pqct_verification_code($record)),
+            'payload_json' => json_encode($issued['snapshot'], JSON_UNESCAPED_SLASHES),
+        ];
+    }
+
+    public static function transcript_issue_official_returns() {
+        return self::transcript_action_result_structure();
+    }
+
+    public static function transcript_document_parameters() {
+        return new \external_function_parameters([
+            'documentid' => new \external_value(PARAM_TEXT, 'Official transcript document id', VALUE_REQUIRED),
+            'format' => new \external_value(PARAM_ALPHA, 'pdf or csv', VALUE_DEFAULT, 'pdf'),
+            'consumer' => new \external_value(PARAM_ALPHANUMEXT, 'Optional consumer slug', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function transcript_document($documentid, $format = 'pdf', $consumer = '') {
+        global $USER;
+
+        $params = self::validate_parameters(self::transcript_document_parameters(), [
+            'documentid' => $documentid,
+            'format' => $format,
+            'consumer' => $consumer,
+        ]);
+        self::validate_context(\context_system::instance());
+        $doc = pqct_load_public_transcript_doc((string)$params['documentid']);
+        if (!$doc || !pqct_user_can_download_official_doc($doc, (int)$USER->id)) {
+            throw new \moodle_exception('nopermissions', '', '', 'Official transcript download access required.');
+        }
+        $format = strtolower((string)$params['format']) === 'csv' ? 'csv' : 'pdf';
+        $urlparams = [
+            'workspaceid' => (int)$doc->workspaceid,
+            'type' => 'official',
+            'format' => $format,
+            'documentid' => (string)$doc->documentid,
+        ];
+        if ($params['consumer'] !== '') {
+            $urlparams['consumer'] = (string)$params['consumer'];
+        }
+        return [
+            'ok' => true,
+            'message' => 'ready',
+            'documentid' => (string)$doc->documentid,
+            'status' => (string)$doc->status,
+            'url' => (new \moodle_url('/local/hubredirect/course_transcript_export.php', $urlparams))->out(false),
+            'payload_json' => '',
+        ];
+    }
+
+    public static function transcript_document_returns() {
+        return self::transcript_action_result_structure();
+    }
+
+    public static function transcript_verify_parameters() {
+        return new \external_function_parameters([
+            'documentid' => new \external_value(PARAM_TEXT, 'Official transcript document id', VALUE_REQUIRED),
+            'code' => new \external_value(PARAM_ALPHANUMEXT, 'Signed verification code', VALUE_DEFAULT, ''),
+            'token' => new \external_value(PARAM_ALPHANUMEXT, 'Original verification token if available', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function transcript_verify($documentid, $code = '', $token = '') {
+        $params = self::validate_parameters(self::transcript_verify_parameters(), [
+            'documentid' => $documentid,
+            'code' => $code,
+            'token' => $token,
+        ]);
+        self::validate_context(\context_system::instance());
+        $doc = pqct_load_public_transcript_doc((string)$params['documentid']);
+        $verified = $doc && pqct_verify_official_transcript_code($doc, (string)$params['code'], (string)$params['token']);
+        return [
+            'ok' => (bool)$verified,
+            'message' => $verified ? 'verified' : 'not_found',
+            'documentid' => $verified ? (string)$doc->documentid : '',
+            'status' => $verified ? (string)$doc->status : 'not_found',
+            'url' => '',
+            'payload_json' => $verified ? json_encode([
+                'documentid' => (string)$doc->documentid,
+                'status' => (string)$doc->status,
+                'issuedat' => (int)$doc->issuedat,
+                'workspaceid' => (int)$doc->workspaceid,
+            ], JSON_UNESCAPED_SLASHES) : '',
+        ];
+    }
+
+    public static function transcript_verify_returns() {
+        return self::transcript_action_result_structure();
+    }
+
+    public static function transcript_manage_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id', VALUE_REQUIRED),
+            'studentid' => new \external_value(PARAM_INT, 'Student user id', VALUE_DEFAULT, 0),
+            'documentid' => new \external_value(PARAM_TEXT, 'Official transcript document id', VALUE_DEFAULT, ''),
+            'action' => new \external_value(PARAM_ALPHANUMEXT, 'create_hold|resolve_hold|revoke|reissue', VALUE_REQUIRED),
+            'reason' => new \external_value(PARAM_TEXT, 'Reason or resolution', VALUE_REQUIRED),
+            'holdid' => new \external_value(PARAM_INT, 'Hold id for resolve_hold', VALUE_DEFAULT, 0),
+            'holdtype' => new \external_value(PARAM_TEXT, 'Hold type for create_hold', VALUE_DEFAULT, 'registrar'),
+            'consumer' => new \external_value(PARAM_ALPHANUMEXT, 'Optional consumer slug', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function transcript_manage($workspaceid, $studentid = 0, $documentid = '', $action = '', $reason = '', $holdid = 0, $holdtype = 'registrar', $consumer = '') {
+        global $USER;
+
+        $params = self::validate_parameters(self::transcript_manage_parameters(), [
+            'workspaceid' => $workspaceid,
+            'studentid' => $studentid,
+            'documentid' => $documentid,
+            'action' => $action,
+            'reason' => $reason,
+            'holdid' => $holdid,
+            'holdtype' => $holdtype,
+            'consumer' => $consumer,
+        ]);
+        self::validate_context(\context_system::instance());
+        if (!pqh_user_can_manage_workspace((int)$USER->id, (int)$params['workspaceid'])) {
+            throw new \moodle_exception('nopermissions', '', '', 'Transcript management access required.');
+        }
+        $context = $params['consumer'] !== '' ? pqh_consumer_context_by_slug((string)$params['consumer']) : pqh_requested_consumer_context();
+        $action = (string)$params['action'];
+        $documentid = trim((string)$params['documentid']);
+        $resultdocid = $documentid;
+        if ($action === 'create_hold') {
+            $id = pqct_create_transcript_hold((int)$params['studentid'], (int)$params['workspaceid'], (int)$USER->id, (string)$params['holdtype'], (string)$params['reason']);
+            return ['ok' => true, 'message' => 'hold_created', 'documentid' => '', 'status' => 'active', 'url' => '', 'payload_json' => json_encode(['holdid' => $id])];
+        }
+        if ($action === 'resolve_hold') {
+            pqct_resolve_transcript_hold((int)$params['holdid'], (int)$params['workspaceid'], (int)$USER->id, (string)$params['reason']);
+            return ['ok' => true, 'message' => 'hold_resolved', 'documentid' => '', 'status' => 'resolved', 'url' => '', 'payload_json' => json_encode(['holdid' => (int)$params['holdid']])];
+        }
+        if ($action === 'revoke') {
+            pqct_revoke_official_transcript($documentid, (int)$USER->id, (string)$params['reason']);
+            $doc = pqct_load_public_transcript_doc($documentid);
+            return ['ok' => true, 'message' => 'revoked', 'documentid' => $documentid, 'status' => (string)($doc->status ?? 'revoked'), 'url' => '', 'payload_json' => ''];
+        }
+        if ($action === 'reissue') {
+            $issued = pqct_reissue_official_transcript($documentid, (int)$USER->id, $context, (string)$params['reason']);
+            $resultdocid = (string)$issued['record']->documentid;
+            return ['ok' => true, 'message' => 'reissued', 'documentid' => $resultdocid, 'status' => 'issued', 'url' => pqct_verification_url($context, $resultdocid, pqct_verification_code($issued['record'])), 'payload_json' => json_encode($issued['snapshot'], JSON_UNESCAPED_SLASHES)];
+        }
+        throw new \invalid_parameter_exception('Unsupported transcript action.');
+    }
+
+    public static function transcript_manage_returns() {
+        return self::transcript_action_result_structure();
+    }
+
+    public static function finance_summary_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id', VALUE_REQUIRED),
+            'consumer' => new \external_value(PARAM_ALPHANUMEXT, 'Optional consumer slug', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function finance_summary($workspaceid, $consumer = '') {
+        global $USER;
+
+        $params = self::validate_parameters(self::finance_summary_parameters(), [
+            'workspaceid' => $workspaceid,
+            'consumer' => $consumer,
+        ]);
+        self::validate_context(\context_system::instance());
+        if (!function_exists('pqfin_user_can_manage_workspace_finance') || !pqfin_user_can_manage_workspace_finance((int)$USER->id, (int)$params['workspaceid'])) {
+            throw new \moodle_exception('nopermissions', '', '', 'Finance API access required.');
+        }
+        $context = $params['consumer'] !== '' ? pqh_consumer_context_by_slug((string)$params['consumer']) : pqh_consumer_context_by_workspace((int)$params['workspaceid']);
+        $metrics = pqfin_operations_dashboard_metrics((int)$params['workspaceid'], $context);
+        $labels = pqfin_report_workspace_context((int)$params['workspaceid'], $context);
+        return [
+            'ok' => true,
+            'message' => 'ready',
+            'workspaceid' => (int)$params['workspaceid'],
+            'payload_json' => json_encode(['context' => $labels, 'metrics' => $metrics], JSON_UNESCAPED_SLASHES),
+        ];
+    }
+
+    public static function finance_summary_returns() {
+        return self::finance_api_result_structure();
+    }
+
+    public static function finance_invoice_action_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id', VALUE_REQUIRED),
+            'invoiceid' => new \external_value(PARAM_INT, 'Invoice id', VALUE_REQUIRED),
+            'action' => new \external_value(PARAM_ALPHANUMEXT, 'record_payment|create_payment_session|revoke_invoice_links', VALUE_REQUIRED),
+            'amount' => new \external_value(PARAM_RAW_TRIMMED, 'Amount for payment actions', VALUE_DEFAULT, ''),
+            'method' => new \external_value(PARAM_ALPHANUMEXT, 'Payment method', VALUE_DEFAULT, 'cash'),
+            'reference' => new \external_value(PARAM_TEXT, 'Reference', VALUE_DEFAULT, ''),
+            'notes' => new \external_value(PARAM_TEXT, 'Notes', VALUE_DEFAULT, ''),
+            'idempotencykey' => new \external_value(PARAM_TEXT, 'Client idempotency key', VALUE_DEFAULT, ''),
+            'consumer' => new \external_value(PARAM_ALPHANUMEXT, 'Optional consumer slug', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function finance_invoice_action($workspaceid, $invoiceid, $action, $amount = '', $method = 'cash', $reference = '', $notes = '', $idempotencykey = '', $consumer = '') {
+        global $USER;
+
+        $params = self::validate_parameters(self::finance_invoice_action_parameters(), [
+            'workspaceid' => $workspaceid,
+            'invoiceid' => $invoiceid,
+            'action' => $action,
+            'amount' => $amount,
+            'method' => $method,
+            'reference' => $reference,
+            'notes' => $notes,
+            'idempotencykey' => $idempotencykey,
+            'consumer' => $consumer,
+        ]);
+        self::validate_context(\context_system::instance());
+        $workspaceid = (int)$params['workspaceid'];
+        if (!function_exists('pqfin_user_can_manage_workspace_finance') || !pqfin_user_can_manage_workspace_finance((int)$USER->id, $workspaceid)) {
+            throw new \moodle_exception('nopermissions', '', '', 'Finance API access required.');
+        }
+        $context = $params['consumer'] !== '' ? pqh_consumer_context_by_slug((string)$params['consumer']) : pqh_consumer_context_by_workspace($workspaceid);
+        $invoice = pqfin_invoice_belongs_to_workspace((int)$params['invoiceid'], $workspaceid, $context);
+        if (!$invoice) {
+            throw new \invalid_parameter_exception('Invoice is outside this workspace or unavailable.');
+        }
+        $guard = pqfin_begin_api_guard($workspaceid, $context, (int)$USER->id, 'finance_invoice_action:' . (string)$params['action'], (string)$params['idempotencykey'], $params, 30, 60);
+        if (!empty($guard['cached']) && is_array($guard['response'])) {
+            return $guard['response'];
+        }
+        try {
+            $action = (string)$params['action'];
+            $responseid = 0;
+            $payload = ['invoiceid' => (int)$params['invoiceid'], 'action' => $action];
+            if ($action === 'record_payment') {
+                $paymentid = pqfin_record_manual_payment_for_invoice(
+                    (int)$params['invoiceid'],
+                    $context,
+                    (int)$USER->id,
+                    (string)$params['amount'],
+                    (string)$params['method'],
+                    (string)$params['reference'],
+                    (string)$params['notes'],
+                    time()
+                );
+                $responseid = $paymentid;
+                $payload['paymentid'] = $paymentid;
+            } else if ($action === 'create_payment_session') {
+                $session = pqfin_create_hosted_payment_session((int)$params['invoiceid'], $context, (int)$USER->id);
+                $responseid = (int)$session['session']->id;
+                $payload['sessionid'] = $responseid;
+                $payload['checkouturl'] = $session['checkouturl']->out(false);
+            } else if ($action === 'revoke_invoice_links') {
+                $revoked = pqfin_revoke_secure_links('invoice_view', (int)$params['invoiceid'], $workspaceid, (int)$USER->id);
+                $responseid = $revoked;
+                $payload['revoked'] = $revoked;
+            } else {
+                throw new \invalid_parameter_exception('Unsupported finance invoice action.');
+            }
+            $response = [
+                'ok' => true,
+                'message' => 'completed',
+                'workspaceid' => $workspaceid,
+                'payload_json' => json_encode($payload, JSON_UNESCAPED_SLASHES),
+            ];
+            pqfin_complete_api_guard((int)$guard['recordid'], $response, $responseid);
+            return $response;
+        } catch (\Throwable $e) {
+            pqfin_fail_api_guard((int)$guard['recordid'], $e);
+            throw $e;
+        }
+    }
+
+    public static function finance_invoice_action_returns() {
+        return self::finance_api_result_structure();
+    }
+
+    public static function finance_hardening_status_parameters() {
+        return new \external_function_parameters([
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id', VALUE_REQUIRED),
+            'refresh' => new \external_value(PARAM_BOOL, 'Refresh snapshot now', VALUE_DEFAULT, false),
+            'consumer' => new \external_value(PARAM_ALPHANUMEXT, 'Optional consumer slug', VALUE_DEFAULT, ''),
+        ]);
+    }
+
+    public static function finance_hardening_status($workspaceid, $refresh = false, $consumer = '') {
+        global $USER;
+
+        $params = self::validate_parameters(self::finance_hardening_status_parameters(), [
+            'workspaceid' => $workspaceid,
+            'refresh' => $refresh,
+            'consumer' => $consumer,
+        ]);
+        self::validate_context(\context_system::instance());
+        $workspaceid = (int)$params['workspaceid'];
+        if (!function_exists('pqfin_user_can_manage_workspace_finance') || !pqfin_user_can_manage_workspace_finance((int)$USER->id, $workspaceid)) {
+            throw new \moodle_exception('nopermissions', '', '', 'Finance hardening access required.');
+        }
+        $context = $params['consumer'] !== '' ? pqh_consumer_context_by_slug((string)$params['consumer']) : pqh_consumer_context_by_workspace($workspaceid);
+        $report = !empty($params['refresh'])
+            ? pqfin_refresh_finance_hardening_snapshot($workspaceid, $context, (int)$USER->id)
+            : pqfin_finance_hardening_report($workspaceid, $context);
+        return [
+            'ok' => true,
+            'message' => (string)$report['status'],
+            'workspaceid' => $workspaceid,
+            'payload_json' => json_encode($report, JSON_UNESCAPED_SLASHES),
+        ];
+    }
+
+    public static function finance_hardening_status_returns() {
+        return self::finance_api_result_structure();
+    }
+
+    protected static function finance_api_result_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if successful'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+            'workspaceid' => new \external_value(PARAM_INT, 'Workspace id'),
+            'payload_json' => new \external_value(PARAM_RAW, 'JSON payload'),
+        ]);
+    }
+
+    protected static function transcript_json_result_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if successful'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+            'payload_json' => new \external_value(PARAM_RAW, 'Transcript payload JSON'),
+            'warnings_json' => new \external_value(PARAM_RAW, 'Transcript warnings JSON'),
+        ]);
+    }
+
+    protected static function transcript_action_result_structure(): \external_single_structure {
+        return new \external_single_structure([
+            'ok' => new \external_value(PARAM_BOOL, 'True if successful'),
+            'message' => new \external_value(PARAM_TEXT, 'Status message'),
+            'documentid' => new \external_value(PARAM_TEXT, 'Official transcript document id'),
+            'status' => new \external_value(PARAM_TEXT, 'Document or action status'),
+            'url' => new \external_value(PARAM_RAW, 'Related authenticated or verification URL'),
+            'payload_json' => new \external_value(PARAM_RAW, 'Optional JSON payload'),
         ]);
     }
 

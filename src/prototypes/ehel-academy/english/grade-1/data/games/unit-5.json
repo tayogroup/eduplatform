@@ -1,0 +1,494 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 1,
+  "unit": 5,
+  "unitId": "eng-g01-t02-u05",
+  "title": "On the Farm Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A naming word used when we talk about farm animals, sounds, growing and work.",
+          "choices": [
+            "cow",
+            "chick",
+            "pig"
+          ],
+          "answer": "cow",
+          "explanation": "cow: A naming word used when we talk about farm animals, sounds, growing and work."
+        },
+        {
+          "prompt": "Which word means: A naming word used when we talk about farm animals, sounds, growing and work.",
+          "choices": [
+            "cow",
+            "chick",
+            "quack"
+          ],
+          "answer": "quack",
+          "explanation": "quack: A naming word used when we talk about farm animals, sounds, growing and work."
+        },
+        {
+          "prompt": "Which word means: A naming word used when we talk about farm animals, sounds, growing and work.",
+          "choices": [
+            "chick",
+            "egg",
+            "cow"
+          ],
+          "answer": "egg",
+          "explanation": "egg: A naming word used when we talk about farm animals, sounds, growing and work."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A naming word used when we talk about farm animals, sounds, growing and work.",
+          "answer": "hen"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A naming word used when we talk about farm animals, sounds, growing and work.",
+          "answer": "baa"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "An action word used when we talk about farm animals, sounds, growing and work.",
+          "answer": "feeding"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "cow.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a cow."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "horse.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a horse."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "honk.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a honk."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which is a useful complete pattern for On the Farm?",
+          "choices": [
+            "The ___ says ___.",
+            "This is a ___.",
+            "The ___ is ___ing.",
+            "It has ___."
+          ],
+          "answer": "The ___ says ___.",
+          "explanation": "The approved Unit pattern is: The ___ says ___."
+        },
+        {
+          "prompt": "Which is a useful complete pattern for On the Farm?",
+          "choices": [
+            "The ___ is ___ing.",
+            "This is a ___.",
+            "The ___ says ___.",
+            "It has ___."
+          ],
+          "answer": "The ___ is ___ing.",
+          "explanation": "The approved Unit pattern is: The ___ is ___ing."
+        },
+        {
+          "prompt": "Which is a useful complete pattern for On the Farm?",
+          "choices": [
+            "It has ___.",
+            "This is a ___.",
+            "The ___ says ___.",
+            "The ___ is ___ing."
+          ],
+          "answer": "It has ___.",
+          "explanation": "The approved Unit pattern is: It has ___."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "Who is in the Amal and the Little Hen story?",
+          "choices": [
+            "Accept an accurate detail from the source story.",
+            "Accept a relevant word, action or complete supported pattern.",
+            "cow"
+          ],
+          "answer": "Accept an accurate detail from the source story.",
+          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+        },
+        {
+          "prompt": "What happens first?",
+          "choices": [
+            "Accept a relevant word, action or complete supported pattern.",
+            "cow",
+            "Accept an accurate detail from the source story."
+          ],
+          "answer": "Accept an accurate detail from the source story.",
+          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+        },
+        {
+          "prompt": "How does the main character feel?",
+          "choices": [
+            "cow",
+            "Accept an accurate detail from the source story.",
+            "Accept a relevant word, action or complete supported pattern."
+          ],
+          "answer": "Accept an accurate detail from the source story.",
+          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "This is a ___."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "The ___ is ___ing."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "First ___, then ___."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "seed.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a seed."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "tomatoes.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a tomatoes."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "animals.",
+            "farm",
+            "for",
+            "words",
+            "Unit",
+            "the",
+            "of",
+            "one",
+            "is",
+            "chick"
+          ],
+          "answer": "chick is one of the Unit words for farm animals."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'oink' mean in this unit?",
+          "choices": [
+            "A naming word used when we talk about farm animals, sounds, growing and work.",
+            "An action word used when we talk about farm animals, sounds, growing and work.",
+            "Accept an accurate detail from the source story."
+          ],
+          "answer": "A naming word used when we talk about farm animals, sounds, growing and work.",
+          "explanation": "oink: A naming word used when we talk about farm animals, sounds, growing and work."
+        },
+        {
+          "prompt": "What does 'picking' mean in this unit?",
+          "choices": [
+            "A naming word used when we talk about farm animals, sounds, growing and work.",
+            "Accept an accurate detail from the source story.",
+            "An action word used when we talk about farm animals, sounds, growing and work."
+          ],
+          "answer": "An action word used when we talk about farm animals, sounds, growing and work.",
+          "explanation": "picking: An action word used when we talk about farm animals, sounds, growing and work."
+        },
+        {
+          "prompt": "What does 'chick' mean in this unit?",
+          "choices": [
+            "Accept an accurate detail from the source story.",
+            "A naming word used when we talk about farm animals, sounds, growing and work.",
+            "An action word used when we talk about farm animals, sounds, growing and work."
+          ],
+          "answer": "A naming word used when we talk about farm animals, sounds, growing and work.",
+          "explanation": "chick: A naming word used when we talk about farm animals, sounds, growing and work."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'tractor'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "tractor is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'potatoes'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "potatoes is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'goat'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "goat is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "chick",
+              "A naming word used when we talk about farm animals, sounds, growing and work."
+            ],
+            [
+              "pig",
+              "A naming word used when we talk about farm animals, sounds, growing and work."
+            ],
+            [
+              "moo",
+              "A naming word used when we talk about farm animals, sounds, growing and work."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "neigh",
+              "A naming word used when we talk about farm animals, sounds, growing and work."
+            ],
+            [
+              "barn",
+              "A naming word used when we talk about farm animals, sounds, growing and work."
+            ],
+            [
+              "wheat",
+              "A naming word used when we talk about farm animals, sounds, growing and work."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "planting",
+              "An action word used when we talk about farm animals, sounds, growing and work."
+            ],
+            [
+              "growing",
+              "An action word used when we talk about farm animals, sounds, growing and work."
+            ],
+            [
+              "carrots",
+              "A naming word used when we talk about farm animals, sounds, growing and work."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which word belongs to farm animals?",
+          "choices": [
+            "duck",
+            "pig",
+            "sheep",
+            "horse"
+          ],
+          "answer": "duck",
+          "explanation": "duck is one of the Unit words for farm animals."
+        },
+        {
+          "prompt": "Which word belongs to farm animals?",
+          "choices": [
+            "goose",
+            "sheep",
+            "horse",
+            "goat"
+          ],
+          "answer": "goose",
+          "explanation": "goose is one of the Unit words for farm animals."
+        },
+        {
+          "prompt": "Which is a useful complete pattern for On the Farm?",
+          "choices": [
+            "This is a ___.",
+            "The ___ says ___.",
+            "The ___ is ___ing.",
+            "It has ___."
+          ],
+          "answer": "This is a ___.",
+          "explanation": "The approved Unit pattern is: This is a ___."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which word belongs to farm animals?",
+          "choices": [
+            "cow",
+            "chick",
+            "duck",
+            "goose"
+          ],
+          "answer": "cow",
+          "explanation": "cow is one of the Unit words for farm animals."
+        },
+        {
+          "prompt": "Which word belongs to farm animals?",
+          "choices": [
+            "hen",
+            "duck",
+            "goose",
+            "pig"
+          ],
+          "answer": "hen",
+          "explanation": "hen is one of the Unit words for farm animals."
+        },
+        {
+          "prompt": "Which word belongs to farm animals?",
+          "choices": [
+            "chick",
+            "goose",
+            "pig",
+            "sheep"
+          ],
+          "answer": "chick",
+          "explanation": "chick is one of the Unit words for farm animals."
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,8 @@
 node_modules/
+.pnpm-store/
+_inspection/
+rollback_backups/
+OpenMAIC/
 dist/
 deploy/
 outputs/
@@ -8,6 +12,9 @@ tools/bin/
 .env
 .env.*
 !.env.example
+!.env.e2e.example
+test-results/
+playwright-report/
 *.log
 __pycache__/
 *.py[cod]

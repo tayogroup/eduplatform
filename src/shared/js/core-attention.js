@@ -332,6 +332,17 @@ window.FocusGuard = window.FocusGuard || (() => {
 
       const res = await core.wsSet(payload);
 
+      try {
+        window.dispatchEvent(new CustomEvent('pq-focus-event-saved', {
+          detail: {
+            payload: { ...payload },
+            result: res || null,
+            stats: { leaveCount, idleCount, activeMs: Math.floor(activeMs || 0) },
+            ctx: { ...ctx }
+          }
+        }));
+      } catch (_e) {}
+
       if (cfg?.debug) console.info('[FocusGuard] wsSend OK', {event_type: payload.event_type, reason: payload.reason || '', res});
       return { ok:true, res };
     }catch(e){
@@ -372,6 +383,11 @@ window.FocusGuard = window.FocusGuard || (() => {
 
   function setContext(newCtx){
     ctx = { ...ctx, ...(newCtx || {}) };
+    try {
+      window.dispatchEvent(new CustomEvent('pq-focus-context-changed', {
+        detail: { ctx: { ...ctx } }
+      }));
+    } catch (_e) {}
     if (cfg?.debug) console.info('[FocusGuard] setContext', ctx);
   }
 

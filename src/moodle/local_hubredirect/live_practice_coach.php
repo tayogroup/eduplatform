@@ -39,6 +39,9 @@ function pqlpc_has_teacher_role(int $userid): bool {
     if ($userid <= 0) {
         return false;
     }
+    if (pqh_has_independent_teacher_profile($userid)) {
+        return true;
+    }
     if (pqlpc_table_exists('local_prequran_teacher_student')
         && $DB->record_exists('local_prequran_teacher_student', ['teacherid' => $userid, 'status' => 'active'])) {
         return true;

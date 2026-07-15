@@ -14,8 +14,13 @@ WHERE table_schema = DATABASE()
   AND COLUMN_NAME IN (
       'parent_name',
       'parent_email',
+      'parent_email_enabled',
+      'student_middle_name',
       'student_display_name',
+      'student_access_type',
       'timezone',
+      'preferred_teaching_language',
+      'tajweed_sub_level',
       'availability_json',
       'availability_summary',
       'status',

@@ -163,7 +163,7 @@ body.pqh-teacher-marketplace-page #page,body.pqh-teacher-marketplace-page #page-
               <?php if ((string)$teacher->marketplace_skills !== ''): ?><p class="pqtm-text"><strong>Skills:</strong> <?php echo s(pqtm_short((string)$teacher->marketplace_skills, 150)); ?></p><?php endif; ?>
               <?php if ((string)$teacher->marketplace_bio !== ''): ?><p class="pqtm-text"><?php echo s(pqtm_short((string)$teacher->marketplace_bio)); ?></p><?php endif; ?>
               <?php
-              $profileurl = (new moodle_url('/local/hubredirect/teacher_marketplace_profile.php', ['teacherid' => (int)$teacher->userid] + $consumerparams))->out(false);
+              $profileurl = pqh_teacher_public_profile_url($teacher, $consumercontext)->out(false);
               $requesturl = (new moodle_url('/local/hubredirect/teacher_marketplace_request.php', ['teacherid' => (int)$teacher->userid] + $consumerparams))->out(false);
               ?>
               <div class="pqtm-card-actions">

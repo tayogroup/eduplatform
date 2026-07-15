@@ -778,7 +778,7 @@ body.pqh-comm-standalone-page .pq-comm-panel__close {
       <section class="pqh-comm-direct" aria-labelledby="pqhCommThreadListTitle">
         <div class="pqh-comm-direct__head">
           <h2 id="pqhCommThreadListTitle" class="pqh-comm-direct__title">Messages</h2>
-          <div class="pqh-comm-direct__meta">Parent-teacher and private tutor conversations</div>
+          <div class="pqh-comm-direct__meta">Parent-teacher and independent teacher conversations</div>
         </div>
         <?php if ($directerror !== ''): ?>
           <div class="pqh-comm-direct__error"><?php echo s($directerror); ?></div>

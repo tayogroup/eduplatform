@@ -438,7 +438,7 @@ body{
 "use strict";
 
 /* ===== Audio mapping from harakat_listen (lesson 2) ===== */
-const L2_BASE  = "https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson2/audios/";
+const L2_BASE  = "/pre_quraan/lessons/lesson2/audios/";
 const L2_START = 2;   // l02_02.mp3 first file
 const CACHE_BUST = "?v=l2";
 
@@ -446,7 +446,7 @@ const audioEl = new Audio();
 audioEl.preload = "auto";
 
 /* Welcome message audio */
-const WELCOME_AUDIO_URL = "https://ehelacademy.b-cdn.net/pre_quraan/audios/Welcome%20to%20Harakat%20Sound%20Sniper.mp3";
+const WELCOME_AUDIO_URL = "/pre_quraan/audios/Welcome%20to%20Harakat%20Sound%20Sniper.mp3";
 const welcomeAudio = new Audio(WELCOME_AUDIO_URL);
 welcomeAudio.preload = "auto";
 

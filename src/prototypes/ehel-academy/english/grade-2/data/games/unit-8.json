@@ -1,0 +1,509 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 2,
+  "unit": 8,
+  "unitId": "eng-g02-t03-u08",
+  "title": "Home, Sweet Home Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A building where people live, with walls and a roof.",
+          "choices": [
+            "house",
+            "hut",
+            "nest"
+          ],
+          "answer": "house",
+          "explanation": "house: A building where people live, with walls and a roof."
+        },
+        {
+          "prompt": "Which word means: A room with a sink and a toilet for washing.",
+          "choices": [
+            "house",
+            "hut",
+            "bathroom"
+          ],
+          "answer": "bathroom",
+          "explanation": "bathroom: A room with a sink and a toilet for washing."
+        },
+        {
+          "prompt": "Which word means: An opening in a wall with glass to let in light.",
+          "choices": [
+            "hut",
+            "window",
+            "house"
+          ],
+          "answer": "window",
+          "explanation": "window: An opening in a wall with glass to let in light."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A set of rooms to live in inside a bigger building.",
+          "answer": "apartment"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A room where people sleep.",
+          "answer": "bedroom"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A long, soft seat for two or three people.",
+          "answer": "sofa"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "garden.",
+            "a",
+            "with",
+            "house",
+            "a",
+            "in",
+            "lives",
+            "family",
+            "My"
+          ],
+          "answer": "My family lives in a house with a garden."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hive.",
+            "their",
+            "in",
+            "honey",
+            "make",
+            "bees",
+            "The"
+          ],
+          "answer": "The bees make honey in their hive."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "room.",
+            "living",
+            "the",
+            "in",
+            "together",
+            "tea",
+            "drink",
+            "We"
+          ],
+          "answer": "We drink tea together in the living room."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which word means: An opening in the ground where some animals live.",
+          "choices": [
+            "hole",
+            "apartment",
+            "hut",
+            "tree house"
+          ],
+          "answer": "hole",
+          "explanation": "hole: An opening in the ground where some animals live. The rabbit ran into its hole."
+        },
+        {
+          "prompt": "What type of word is 'bedroom'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "bedroom: A room where people sleep. I keep my bed and toys in my bedroom."
+        },
+        {
+          "prompt": "My mother is cooking rice in the ____.",
+          "choices": [
+            "kitchen",
+            "tree house",
+            "nest",
+            "hive"
+          ],
+          "answer": "kitchen",
+          "explanation": "kitchen: A room where food is cooked. My mother is cooking rice in the kitchen."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'hut'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "In the village, some people live in a hut made of mud and straw."
+        },
+        {
+          "prompt": "The children climb a ladder to their ____.",
+          "choices": [
+            "tree house",
+            "house",
+            "apartment",
+            "hut"
+          ],
+          "answer": "tree house",
+          "explanation": "The children climb a ladder to their tree house."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "nest",
+            "nset",
+            "nes",
+            "nestt"
+          ],
+          "answer": "nest",
+          "explanation": "The bird made a nest in the tall tree."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Describe a Kind of Home",
+          "target": "This is a ______."
+        },
+        {
+          "prompt": "Speaking Game — My Home Tour",
+          "target": "This is my ______."
+        },
+        {
+          "prompt": "Speaking 5 - Where Does It Belong?",
+          "target": "Describe the position of six household objects for a partner to identify."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "chair.",
+            "the",
+            "on",
+            "sit",
+            "Please"
+          ],
+          "answer": "Please sit on the chair."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bed.",
+            "my",
+            "make",
+            "I",
+            "morning",
+            "Every"
+          ],
+          "answer": "Every morning I make my bed."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "dishes.",
+            "the",
+            "wash",
+            "I",
+            "eat,",
+            "we",
+            "After"
+          ],
+          "answer": "After we eat, I wash the dishes."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'dining room' mean in this unit?",
+          "choices": [
+            "A room where people eat their meals.",
+            "A building where people live, with walls and a roof.",
+            "A small, simple house with only one or two rooms."
+          ],
+          "answer": "A room where people eat their meals.",
+          "explanation": "dining room: A room where people eat their meals."
+        },
+        {
+          "prompt": "What does 'sweep the floor' mean in this unit?",
+          "choices": [
+            "A building where people live, with walls and a roof.",
+            "A small, simple house with only one or two rooms.",
+            "To clean the floor with a broom."
+          ],
+          "answer": "To clean the floor with a broom.",
+          "explanation": "sweep the floor: To clean the floor with a broom."
+        },
+        {
+          "prompt": "What does 'hut' mean in this unit?",
+          "choices": [
+            "A home a bird builds to lay its eggs.",
+            "A small, simple house with only one or two rooms.",
+            "A building where people live, with walls and a roof."
+          ],
+          "answer": "A small, simple house with only one or two rooms.",
+          "explanation": "hut: A small, simple house with only one or two rooms."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'sink'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "sink is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stilt house'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "stilt house is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'bedroom'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "bedroom is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "hut",
+              "A small, simple house with only one or two rooms."
+            ],
+            [
+              "hive",
+              "A home for bees."
+            ],
+            [
+              "kitchen",
+              "A room where food is cooked."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "dining room",
+              "A room where people eat their meals."
+            ],
+            [
+              "chair",
+              "A seat for one person."
+            ],
+            [
+              "rug",
+              "A soft mat that covers part of the floor."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "tidy my room",
+              "To put things back in their place."
+            ],
+            [
+              "wash the dishes",
+              "To clean the plates and cups in the sink."
+            ],
+            [
+              "cave house",
+              "A home dug into rock in a cliff."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "The children climb a ladder to their ____.",
+          "choices": [
+            "tree house",
+            "house",
+            "apartment",
+            "hut"
+          ],
+          "answer": "tree house",
+          "explanation": "The children climb a ladder to their tree house."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "nest",
+            "nset",
+            "nes",
+            "nestt"
+          ],
+          "answer": "nest",
+          "explanation": "The bird made a nest in the tall tree."
+        },
+        {
+          "prompt": "Which word means: A home for bees.",
+          "choices": [
+            "hive",
+            "house",
+            "apartment",
+            "hut"
+          ],
+          "answer": "hive",
+          "explanation": "hive: A home for bees. The bees make honey in their hive."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'house' mean?",
+          "choices": [
+            "A building where people live, with walls and a roof.",
+            "A set of rooms to live in inside a bigger building.",
+            "A small, simple house with only one or two rooms.",
+            "A small house built up in the branches of a tree."
+          ],
+          "answer": "A building where people live, with walls and a roof.",
+          "explanation": "My family lives in a house with a garden."
+        },
+        {
+          "prompt": "Which word means: A set of rooms to live in inside a bigger building.",
+          "choices": [
+            "apartment",
+            "house",
+            "hut",
+            "tree house"
+          ],
+          "answer": "apartment",
+          "explanation": "In the city, many people live in an apartment."
+        },
+        {
+          "prompt": "What type of word is 'hut'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "In the village, some people live in a hut made of mud and straw."
+        }
+      ]
+    }
+  ]
+}

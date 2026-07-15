@@ -1,0 +1,511 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 2,
+  "unit": 5,
+  "unitId": "eng-g02-t02-u05",
+  "title": "Let's Measure Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: The number 10.",
+          "choices": [
+            "ten",
+            "forty",
+            "seventy"
+          ],
+          "answer": "ten",
+          "explanation": "ten: The number 10."
+        },
+        {
+          "prompt": "Which word means: A shape with three sides and three corners.",
+          "choices": [
+            "ten",
+            "forty",
+            "triangle"
+          ],
+          "answer": "triangle",
+          "explanation": "triangle: A shape with three sides and three corners."
+        },
+        {
+          "prompt": "Which word means: large in size.",
+          "choices": [
+            "forty",
+            "big",
+            "ten"
+          ],
+          "answer": "big",
+          "explanation": "big: large in size."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The number 20.",
+          "answer": "twenty"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A shape with four sides; the opposite sides are equal.",
+          "answer": "rectangle"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "little in size.",
+          "answer": "small"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hands.",
+            "two",
+            "my",
+            "on",
+            "fingers",
+            "ten",
+            "are",
+            "There"
+          ],
+          "answer": "There are ten fingers on my two hands."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hour.",
+            "one",
+            "in",
+            "minutes",
+            "sixty",
+            "are",
+            "There"
+          ],
+          "answer": "There are sixty minutes in one hour."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "shape.",
+            "square",
+            "a",
+            "has",
+            "window",
+            "The"
+          ],
+          "answer": "The window has a square shape."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which word means: The number 70.",
+          "choices": [
+            "seventy",
+            "twenty",
+            "thirty",
+            "forty"
+          ],
+          "answer": "seventy",
+          "explanation": "seventy: The number 70. My grandfather is seventy years old."
+        },
+        {
+          "prompt": "What type of word is 'eighty'?",
+          "choices": [
+            "Number",
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Number",
+          "explanation": "eighty: The number 80. The tall tree is eighty feet high."
+        },
+        {
+          "prompt": "She scored ____ points in the game.",
+          "choices": [
+            "ninety",
+            "forty",
+            "fifty",
+            "sixty"
+          ],
+          "answer": "ninety",
+          "explanation": "ninety: The number 90. She scored ninety points in the game."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'thirty'?",
+          "choices": [
+            "Number word",
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Number word",
+          "explanation": "There are thirty days in the month of September."
+        },
+        {
+          "prompt": "The farmer has ____ goats.",
+          "choices": [
+            "forty",
+            "ten",
+            "twenty",
+            "thirty"
+          ],
+          "answer": "forty",
+          "explanation": "The farmer has forty goats."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "fifty",
+            "ffity",
+            "fift",
+            "fiftyy"
+          ],
+          "answer": "fifty",
+          "explanation": "Fifty people came to the celebration."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Count in Tens",
+          "target": "Ten … twenty … thirty … forty … fifty … sixty … seventy … eighty … ninety … one hundred!"
+        },
+        {
+          "prompt": "Speaking Game — Bigger, Longer, Taller",
+          "target": "This pencil is longer than that pencil."
+        },
+        {
+          "prompt": "Speaking 5 - Shape and Pattern Talk",
+          "target": "Describe five shapes and explain a repeating pattern for a partner to continue."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "stick.",
+            "metre",
+            "a",
+            "with",
+            "mat",
+            "the",
+            "measure",
+            "We"
+          ],
+          "answer": "We measure the mat with a metre stick."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "size.",
+            "different",
+            "a",
+            "are",
+            "shoes",
+            "two",
+            "These"
+          ],
+          "answer": "These two shoes are a different size."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "narrow.",
+            "is",
+            "path",
+            "The",
+            "wide.",
+            "is",
+            "river",
+            "The"
+          ],
+          "answer": "The river is wide. The path is narrow."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'pattern' mean in this unit?",
+          "choices": [
+            "A design that repeats again and again.",
+            "The number 10.",
+            "The number 40."
+          ],
+          "answer": "A design that repeats again and again.",
+          "explanation": "pattern: A design that repeats again and again."
+        },
+        {
+          "prompt": "What does 'short' mean in this unit?",
+          "choices": [
+            "The number 10.",
+            "The number 40.",
+            "a little length."
+          ],
+          "answer": "a little length.",
+          "explanation": "short: a little length."
+        },
+        {
+          "prompt": "What does 'forty' mean in this unit?",
+          "choices": [
+            "The number 70.",
+            "The number 40.",
+            "The number 10."
+          ],
+          "answer": "The number 40.",
+          "explanation": "forty: The number 40."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'height'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "height is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'narrow'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "narrow is used as a adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'one hundred'?",
+          "choices": [
+            "Verb",
+            "Number",
+            "Noun"
+          ],
+          "answer": "Number",
+          "explanation": "one hundred is used as a number in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "thirty",
+              "The number 30."
+            ],
+            [
+              "seventy",
+              "The number 70."
+            ],
+            [
+              "circle",
+              "A round shape with no corners and no sides."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "heart",
+              "A shape that looks like ♥."
+            ],
+            [
+              "centimetre",
+              "A small unit for measuring length. We use it for small things."
+            ],
+            [
+              "weight",
+              "How heavy or light something is."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "long",
+              "a lot of length."
+            ],
+            [
+              "heavy",
+              "hard to lift."
+            ],
+            [
+              "high",
+              "far up."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "The farmer has ____ goats.",
+          "choices": [
+            "forty",
+            "ten",
+            "twenty",
+            "thirty"
+          ],
+          "answer": "forty",
+          "explanation": "The farmer has forty goats."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "fifty",
+            "ffity",
+            "fift",
+            "fiftyy"
+          ],
+          "answer": "fifty",
+          "explanation": "Fifty people came to the celebration."
+        },
+        {
+          "prompt": "Which word means: The number 60.",
+          "choices": [
+            "sixty",
+            "ten",
+            "twenty",
+            "thirty"
+          ],
+          "answer": "sixty",
+          "explanation": "sixty: The number 60. There are sixty minutes in one hour."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'ten' mean?",
+          "choices": [
+            "The number 10.",
+            "The number 20.",
+            "The number 30.",
+            "The number 40."
+          ],
+          "answer": "The number 10.",
+          "explanation": "There are ten fingers on my two hands."
+        },
+        {
+          "prompt": "Which word means: The number 20.",
+          "choices": [
+            "twenty",
+            "ten",
+            "thirty",
+            "forty"
+          ],
+          "answer": "twenty",
+          "explanation": "Twenty children are playing in the field."
+        },
+        {
+          "prompt": "What type of word is 'thirty'?",
+          "choices": [
+            "Number word",
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Number word",
+          "explanation": "There are thirty days in the month of September."
+        }
+      ]
+    }
+  ]
+}

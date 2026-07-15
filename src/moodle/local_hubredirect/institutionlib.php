@@ -49,6 +49,119 @@ function pqhi_clean_url(string $value): string {
     return $value !== '' ? clean_param($value, PARAM_URL) : '';
 }
 
+function pqhi_website_mode_options(): array {
+    return [
+        'hosted' => 'EduPlatform hosted website',
+        'external' => 'External website with EduPlatform portal',
+        'external_with_embeds' => 'External website with embedded EduPlatform services',
+    ];
+}
+
+function pqhi_domain_management_options(): array {
+    return [
+        'consumer_managed' => 'Consumer-managed DNS',
+        'eduplatform_managed' => 'EduPlatform-managed DNS',
+    ];
+}
+
+function pqhi_branding_source_options(): array {
+    return [
+        'eduplatform_settings' => 'Use EduPlatform branding settings',
+        'match_external_website' => 'Match the external website',
+    ];
+}
+
+function pqhi_intake_location_options(): array {
+    return [
+        'eduplatform' => 'EduPlatform-hosted intake',
+        'external_website' => 'Institution website',
+        'embedded' => 'Embedded EduPlatform intake',
+    ];
+}
+
+function pqhi_integration_method_options(): array {
+    return [
+        'links' => 'Links',
+        'embedded' => 'Embedded forms and widgets',
+        'api' => 'API integration',
+    ];
+}
+
+function pqhi_clean_option(string $value, array $options, string $fallback): string {
+    $value = clean_param(trim($value), PARAM_ALPHANUMEXT);
+    return array_key_exists($value, $options) ? $value : $fallback;
+}
+
+function pqhi_clean_external_website_url(string $value): string {
+    $value = trim($value);
+    if ($value === '') {
+        return '';
+    }
+    if (!preg_match('#^https?://#i', $value)) {
+        $value = 'https://' . ltrim($value, '/');
+    }
+    return pqhi_clean_url($value);
+}
+
+function pqhi_consumer_website_profile(array $data, ?stdClass $existing = null): array {
+    $websitemode = pqhi_clean_option(
+        (string)($data['website_mode'] ?? ($existing->website_mode ?? 'hosted')),
+        pqhi_website_mode_options(),
+        'hosted'
+    );
+    $externalwebsiteurl = pqhi_clean_external_website_url(
+        (string)($data['external_website_url'] ?? ($existing->externalwebsiteurl ?? ''))
+    );
+    if ($websitemode !== 'hosted' && $externalwebsiteurl === '') {
+        throw new invalid_parameter_exception('Existing website URL is required for an external website consumer.');
+    }
+    if ($websitemode === 'hosted') {
+        $externalwebsiteurl = '';
+    }
+    $brandingsource = pqhi_clean_option(
+        (string)($data['branding_source'] ?? ($existing->brandingsource ?? 'eduplatform_settings')),
+        pqhi_branding_source_options(),
+        'eduplatform_settings'
+    );
+    $intakelocation = pqhi_clean_option(
+        (string)($data['intake_location'] ?? ($existing->intakelocation ?? 'eduplatform')),
+        pqhi_intake_location_options(),
+        'eduplatform'
+    );
+    $integrationmethod = pqhi_clean_option(
+        (string)($data['integration_method'] ?? ($existing->integrationmethod ?? 'links')),
+        pqhi_integration_method_options(),
+        'links'
+    );
+    if ($websitemode === 'hosted') {
+        $brandingsource = 'eduplatform_settings';
+        $intakelocation = 'eduplatform';
+        $integrationmethod = 'links';
+    } else if ($websitemode === 'external_with_embeds') {
+        $intakelocation = 'embedded';
+        $integrationmethod = 'embedded';
+    }
+    return [
+        'website_mode' => $websitemode,
+        'external_website_url' => $externalwebsiteurl,
+        'domain_management' => pqhi_clean_option(
+            (string)($data['domain_management'] ?? ($existing->domainmanagement ?? 'consumer_managed')),
+            pqhi_domain_management_options(),
+            'consumer_managed'
+        ),
+        'portal_label' => trim(clean_param(
+            (string)($data['portal_label'] ?? ($existing->portallabel ?? 'Learning portal')),
+            PARAM_TEXT
+        )) ?: 'Learning portal',
+        'branding_source' => $brandingsource,
+        'intake_location' => $intakelocation,
+        'integration_method' => $integrationmethod,
+        'return_url' => pqhi_clean_external_website_url(
+            (string)($data['return_url'] ?? ($existing->returnurl ?? ''))
+        ),
+    ];
+}
+
 function pqhi_json_array(string $json): array {
     $decoded = json_decode($json, true);
     return is_array($decoded) ? $decoded : [];
@@ -95,10 +208,22 @@ function pqhi_default_theme(array $theme = []): array {
     $primary = pqhi_clean_hex_color((string)($theme['primary_color'] ?? ''), '#2f6f4e');
     $accent = pqhi_clean_hex_color((string)($theme['accent_color'] ?? ''), '#d99a26');
     $surface = pqhi_clean_hex_color((string)($theme['surface_color'] ?? ''), '#f4f8fb');
+    $dashboardheader = pqhi_clean_hex_color((string)($theme['dashboard_header_bg'] ?? ''), $primary);
+    $dashboardtext = pqhi_clean_hex_color((string)($theme['dashboard_header_text'] ?? ''), '#ffffff');
+    $pagebody = pqhi_clean_hex_color((string)($theme['page_body_bg'] ?? ''), $surface);
+    $reportheader = pqhi_clean_hex_color((string)($theme['report_header_bg'] ?? ''), $primary);
+    $reportheadertext = pqhi_clean_hex_color((string)($theme['report_header_text'] ?? ''), '#ffffff');
+    $reportbody = pqhi_clean_hex_color((string)($theme['report_body_bg'] ?? ''), '#ffffff');
     return [
         'primary_color' => $primary,
         'accent_color' => $accent,
         'surface_color' => $surface,
+        'dashboard_header_bg' => $dashboardheader,
+        'dashboard_header_text' => $dashboardtext,
+        'page_body_bg' => $pagebody,
+        'report_header_bg' => $reportheader,
+        'report_header_text' => $reportheadertext,
+        'report_body_bg' => $reportbody,
     ];
 }
 
@@ -113,7 +238,7 @@ function pqhi_default_copy(string $name, array $copy = []): array {
             : 'A branded teaching workspace for students, teachers, live sessions, reporting, and custom-domain access.',
         'landing_body' => trim((string)($copy['landing_body'] ?? '')),
         'hero_image_url' => pqhi_clean_url((string)($copy['hero_image_url'] ?? '')),
-        'initial_courses' => trim((string)($copy['initial_courses'] ?? 'Pre-Quraan')),
+        'initial_courses' => trim((string)($copy['initial_courses'] ?? '')),
     ];
 }
 
@@ -124,6 +249,110 @@ function pqhi_consumer_type_options(): array {
         'marketplace' => 'Marketplace consumer',
         'teacher_workspace' => 'Teacher workspace consumer',
     ];
+}
+
+function pqhi_institution_type_options(): array {
+    return [
+        'primary_education' => 'Primary education',
+        'higher_education' => 'Higher education',
+        'technical_training' => 'Technical training',
+        'adult_learning' => 'Adult learning',
+        'professional_development' => 'Professional development',
+        'faith_based_education' => 'Religious / faith-based',
+    ];
+}
+
+function pqhi_clean_institution_type(string $value, string $fallback = 'primary_education'): string {
+    $raw = trim($value);
+    $options = pqhi_institution_type_options();
+    if (array_key_exists($raw, $options)) {
+        return $raw;
+    }
+
+    $normalized = strtolower($raw);
+    $normalized = str_replace(['/', '&'], ' ', $normalized);
+    $normalized = preg_replace('/[^a-z0-9]+/', '_', $normalized) ?? '';
+    $normalized = trim($normalized, '_');
+    if (array_key_exists($normalized, $options)) {
+        return $normalized;
+    }
+
+    foreach ($options as $key => $label) {
+        $labelnormalized = strtolower((string)$label);
+        $labelnormalized = str_replace(['/', '&'], ' ', $labelnormalized);
+        $labelnormalized = preg_replace('/[^a-z0-9]+/', '_', $labelnormalized) ?? '';
+        $labelnormalized = trim($labelnormalized, '_');
+        if ($normalized !== '' && $normalized === $labelnormalized) {
+            return (string)$key;
+        }
+    }
+
+    if ($fallback === '') {
+        return '';
+    }
+    return array_key_exists($fallback, $options) ? $fallback : 'primary_education';
+}
+
+function pqhi_institution_type_label(string $value): string {
+    $options = pqhi_institution_type_options();
+    return $options[$value] ?? $options[pqhi_clean_institution_type($value)];
+}
+
+function pqhi_faith_subcategory_options(): array {
+    return [
+        'islamic_studies' => 'Islamic studies',
+        'christian_studies' => 'Christian studies',
+        'hindu_studies' => 'Hindu studies',
+    ];
+}
+
+function pqhi_clean_faith_subcategory(string $value, string $fallback = ''): string {
+    $value = clean_param(trim($value), PARAM_ALPHANUMEXT);
+    return array_key_exists($value, pqhi_faith_subcategory_options()) ? $value : $fallback;
+}
+
+function pqhi_faith_subcategory_label(string $value): string {
+    $options = pqhi_faith_subcategory_options();
+    $clean = pqhi_clean_faith_subcategory($value);
+    return $clean !== '' ? (string)$options[$clean] : '';
+}
+
+function pqhi_teaching_method_options(): array {
+    return [
+        'regular' => 'Regular',
+        'homeschooling' => 'Homeschooling',
+        'online' => 'Online',
+        'hybrid' => 'Hybrid',
+    ];
+}
+
+function pqhi_clean_teaching_method(string $value, string $fallback = 'regular'): string {
+    $value = clean_param(trim($value), PARAM_ALPHANUMEXT);
+    return array_key_exists($value, pqhi_teaching_method_options()) ? $value : $fallback;
+}
+
+function pqhi_teaching_method_label(string $value): string {
+    $options = pqhi_teaching_method_options();
+    return $options[$value] ?? $options[pqhi_clean_teaching_method($value)];
+}
+
+function pqhi_operator_type_options(): array {
+    return [
+        'government' => 'Government',
+        'nonprofit' => 'Nonprofit',
+        'private_entity' => 'Private entity',
+        'hybrid' => 'Hybrid',
+    ];
+}
+
+function pqhi_clean_operator_type(string $value, string $fallback = 'private_entity'): string {
+    $value = clean_param(trim($value), PARAM_ALPHANUMEXT);
+    return array_key_exists($value, pqhi_operator_type_options()) ? $value : $fallback;
+}
+
+function pqhi_operator_type_label(string $value): string {
+    $options = pqhi_operator_type_options();
+    return $options[$value] ?? $options[pqhi_clean_operator_type($value)];
 }
 
 function pqhi_workspace_type_for_consumer(string $consumertype): string {
@@ -237,6 +466,33 @@ function pqhi_upsert_consumer_domain(int $consumerid, int $workspaceid, string $
     $DB->insert_record('local_prequran_consumer_domain', pqhi_record_for_existing_columns('local_prequran_consumer_domain', $record));
 }
 
+function pqhi_sync_consumer_domain(int $consumerid, int $workspaceid, string $domain, string $domaintype, int $isprimary, int $createdby): void {
+    global $DB;
+    if ($consumerid <= 0 || $workspaceid <= 0 || !pqh_table_exists_safe('local_prequran_consumer_domain')) {
+        return;
+    }
+    $domaintype = in_array($domaintype, ['public', 'app'], true) ? $domaintype : 'public';
+    $domain = pqhi_normalize_domain($domain);
+    $current = $DB->get_records('local_prequran_consumer_domain', [
+        'consumerid' => $consumerid,
+        'workspaceid' => $workspaceid,
+        'domain_type' => $domaintype,
+        'status' => 'active',
+    ]);
+    foreach ($current as $record) {
+        if ((string)$record->domain === $domain) {
+            continue;
+        }
+        $record->status = 'archived';
+        $record->isprimary = 0;
+        $record->timemodified = time();
+        $DB->update_record('local_prequran_consumer_domain', pqhi_record_for_existing_columns('local_prequran_consumer_domain', $record));
+    }
+    if ($domain !== '') {
+        pqhi_upsert_consumer_domain($consumerid, $workspaceid, $domain, $domaintype, $isprimary, $createdby);
+    }
+}
+
 function pqhi_consumer_slug_available(string $slug, int $consumerid = 0): bool {
     global $DB;
     if ($slug === '' || !pqh_table_exists_safe('local_prequran_consumer')) {
@@ -265,6 +521,12 @@ function pqhi_upsert_consumer(int $workspaceid, string $name, string $slug, int 
         'primary_color' => $data['primary_color'] ?? ($oldtheme['primary_color'] ?? ''),
         'accent_color' => $data['accent_color'] ?? ($oldtheme['accent_color'] ?? ''),
         'surface_color' => $data['surface_color'] ?? ($oldtheme['surface_color'] ?? ''),
+        'dashboard_header_bg' => $data['dashboard_header_bg'] ?? ($oldtheme['dashboard_header_bg'] ?? ''),
+        'dashboard_header_text' => $data['dashboard_header_text'] ?? ($oldtheme['dashboard_header_text'] ?? ''),
+        'page_body_bg' => $data['page_body_bg'] ?? ($oldtheme['page_body_bg'] ?? ''),
+        'report_header_bg' => $data['report_header_bg'] ?? ($oldtheme['report_header_bg'] ?? ''),
+        'report_header_text' => $data['report_header_text'] ?? ($oldtheme['report_header_text'] ?? ''),
+        'report_body_bg' => $data['report_body_bg'] ?? ($oldtheme['report_body_bg'] ?? ''),
     ]);
     $copy = pqhi_default_copy($name, [
         'brand_initials' => $data['brand_initials'] ?? ($oldcopy['brand_initials'] ?? ''),
@@ -276,11 +538,30 @@ function pqhi_upsert_consumer(int $workspaceid, string $name, string $slug, int 
     ]);
     $supportemail = clean_param((string)($data['supportemail'] ?? ($existing->supportemail ?? '')), PARAM_EMAIL);
     $logourl = pqhi_clean_url((string)($data['logourl'] ?? ($existing->logourl ?? '')));
+    $institutiontype = pqhi_clean_institution_type((string)($data['institution_type'] ?? ($existing->institution_type ?? 'primary_education')));
+    $faithsubcategory = $institutiontype === 'faith_based_education'
+        ? pqhi_clean_faith_subcategory((string)($data['faith_subcategory'] ?? ($existing->faith_subcategory ?? '')))
+        : '';
+    $teachingmethod = pqhi_clean_teaching_method((string)($data['teaching_method'] ?? ($existing->teaching_method ?? 'regular')));
+    $operatortype = pqhi_clean_operator_type((string)($data['operator_type'] ?? ($existing->operator_type ?? 'private_entity')));
+    $websiteprofile = pqhi_consumer_website_profile($data, $existing ?: null);
     $now = time();
     $record = (object)[
         'slug' => $slug,
         'name' => $name,
         'consumer_type' => 'institution',
+        'institution_type' => $institutiontype,
+        'faith_subcategory' => $faithsubcategory,
+        'teaching_method' => $teachingmethod,
+        'operator_type' => $operatortype,
+        'website_mode' => $websiteprofile['website_mode'],
+        'externalwebsiteurl' => $websiteprofile['external_website_url'],
+        'domainmanagement' => $websiteprofile['domain_management'],
+        'portallabel' => $websiteprofile['portal_label'],
+        'brandingsource' => $websiteprofile['branding_source'],
+        'intakelocation' => $websiteprofile['intake_location'],
+        'integrationmethod' => $websiteprofile['integration_method'],
+        'returnurl' => $websiteprofile['return_url'],
         'status' => 'active',
         'primaryworkspaceid' => $workspaceid,
         'owneruserid' => $ownerid,
@@ -312,11 +593,23 @@ function pqhi_create_workspace_for_consumer(string $name, string $slug, string $
     }
     $slug = pqhi_unique_workspace_slug($slug !== '' ? $slug : $name);
     $now = time();
+    $websiteprofile = pqhi_consumer_website_profile($data);
+    $publicdomain = $websiteprofile['website_mode'] === 'hosted'
+        ? pqhi_normalize_domain((string)($data['publicdomain'] ?? ''))
+        : '';
     $settings = [
         'created_from' => (string)($data['created_from'] ?? 'consumer_wizard'),
         'consumer_type' => $consumertype,
+        'institution_type' => $consumertype === 'institution'
+            ? pqhi_clean_institution_type((string)($data['institution_type'] ?? 'primary_education'))
+            : '',
+        'operator_type' => $consumertype === 'institution'
+            ? pqhi_clean_operator_type((string)($data['operator_type'] ?? 'private_entity'))
+            : '',
         'initial_courses' => trim((string)($data['initial_courses'] ?? 'Pre-Quraan')),
-        'default_public_domain' => pqhi_normalize_domain((string)($data['publicdomain'] ?? '')),
+        'website_mode' => $websiteprofile['website_mode'],
+        'external_website_url' => $websiteprofile['external_website_url'],
+        'default_public_domain' => $publicdomain,
         'default_app_domain' => pqhi_normalize_domain((string)($data['appdomain'] ?? '')),
     ];
     return (int)$DB->insert_record('local_prequran_workspace', pqhi_record_for_existing_columns('local_prequran_workspace', (object)[
@@ -357,6 +650,12 @@ function pqhi_upsert_consumer_app(int $workspaceid, string $name, string $slug, 
         'primary_color' => $data['primary_color'] ?? ($oldtheme['primary_color'] ?? ''),
         'accent_color' => $data['accent_color'] ?? ($oldtheme['accent_color'] ?? ''),
         'surface_color' => $data['surface_color'] ?? ($oldtheme['surface_color'] ?? ''),
+        'dashboard_header_bg' => $data['dashboard_header_bg'] ?? ($oldtheme['dashboard_header_bg'] ?? ''),
+        'dashboard_header_text' => $data['dashboard_header_text'] ?? ($oldtheme['dashboard_header_text'] ?? ''),
+        'page_body_bg' => $data['page_body_bg'] ?? ($oldtheme['page_body_bg'] ?? ''),
+        'report_header_bg' => $data['report_header_bg'] ?? ($oldtheme['report_header_bg'] ?? ''),
+        'report_header_text' => $data['report_header_text'] ?? ($oldtheme['report_header_text'] ?? ''),
+        'report_body_bg' => $data['report_body_bg'] ?? ($oldtheme['report_body_bg'] ?? ''),
     ]);
     $copy = pqhi_default_copy($name, [
         'brand_initials' => $data['brand_initials'] ?? ($oldcopy['brand_initials'] ?? ''),
@@ -369,11 +668,36 @@ function pqhi_upsert_consumer_app(int $workspaceid, string $name, string $slug, 
     $copy['default_login_path'] = (string)($data['defaultloginpath'] ?? $routes['login']);
     $supportemail = clean_param((string)($data['supportemail'] ?? ($existing->supportemail ?? '')), PARAM_EMAIL);
     $logourl = pqhi_clean_url((string)($data['logourl'] ?? ($existing->logourl ?? '')));
+    $institutiontype = $consumertype === 'institution'
+        ? pqhi_clean_institution_type((string)($data['institution_type'] ?? ($existing->institution_type ?? 'primary_education')))
+        : '';
+    $faithsubcategory = $institutiontype === 'faith_based_education'
+        ? pqhi_clean_faith_subcategory((string)($data['faith_subcategory'] ?? ($existing->faith_subcategory ?? '')))
+        : '';
+    $teachingmethod = $consumertype === 'institution'
+        ? pqhi_clean_teaching_method((string)($data['teaching_method'] ?? ($existing->teaching_method ?? 'regular')))
+        : '';
+    $operatortype = $consumertype === 'institution'
+        ? pqhi_clean_operator_type((string)($data['operator_type'] ?? ($existing->operator_type ?? 'private_entity')))
+        : '';
+    $websiteprofile = pqhi_consumer_website_profile($data, $existing ?: null);
     $now = time();
     $record = (object)[
         'slug' => $slug,
         'name' => $name,
         'consumer_type' => $consumertype,
+        'institution_type' => $institutiontype,
+        'faith_subcategory' => $faithsubcategory,
+        'teaching_method' => $teachingmethod,
+        'operator_type' => $operatortype,
+        'website_mode' => $websiteprofile['website_mode'],
+        'externalwebsiteurl' => $websiteprofile['external_website_url'],
+        'domainmanagement' => $websiteprofile['domain_management'],
+        'portallabel' => $websiteprofile['portal_label'],
+        'brandingsource' => $websiteprofile['branding_source'],
+        'intakelocation' => $websiteprofile['intake_location'],
+        'integrationmethod' => $websiteprofile['integration_method'],
+        'returnurl' => $websiteprofile['return_url'],
         'status' => (string)($data['status'] ?? 'active'),
         'primaryworkspaceid' => $workspaceid,
         'owneruserid' => $ownerid,

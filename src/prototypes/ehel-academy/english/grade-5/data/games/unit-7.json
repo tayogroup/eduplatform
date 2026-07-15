@@ -1,0 +1,521 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 5,
+  "unit": 7,
+  "unitId": "eng-g05-t03-u07",
+  "title": "Tell It Another Way Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: Related to a specific place or area near you.",
+          "choices": [
+            "local",
+            "rural",
+            "colonial"
+          ],
+          "answer": "local",
+          "explanation": "local: Related to a specific place or area near you."
+        },
+        {
+          "prompt": "Which word means: When a group enters a place and takes control, often by force.",
+          "choices": [
+            "local",
+            "rural",
+            "invasion"
+          ],
+          "answer": "invasion",
+          "explanation": "invasion: When a group enters a place and takes control, often by force."
+        },
+        {
+          "prompt": "Which word means: An amount that is more than what is needed.",
+          "choices": [
+            "rural",
+            "surplus",
+            "local"
+          ],
+          "answer": "surplus",
+          "explanation": "surplus: An amount that is more than what is needed."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Related to a city or town.",
+          "answer": "urban"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To win against something or take control of a place.",
+          "answer": "conquer"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Not useful or realistic in a situation.",
+          "answer": "impractical"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "afternoon.",
+            "every",
+            "play",
+            "we",
+            "where",
+            "is",
+            "park",
+            "local",
+            "The"
+          ],
+          "answer": "The local park is where we play every afternoon."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "cultures.",
+            "and",
+            "countries",
+            "different",
+            "many",
+            "with",
+            "continent",
+            "a",
+            "is",
+            "Africa"
+          ],
+          "answer": "Africa is a continent with many different countries and cultures."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "town.",
+            "the",
+            "for",
+            "decisions",
+            "important",
+            "make",
+            "helped",
+            "leaders",
+            "political",
+            "The"
+          ],
+          "answer": "The political leaders helped make important decisions for the town."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "What does 'historical' mean?",
+          "choices": [
+            "Causing big changes or new ideas.",
+            "Related to events that happened in the past.",
+            "Related to government or how people make decisions about rules and laws.",
+            "Related to the national government of a country."
+          ],
+          "answer": "Related to events that happened in the past.",
+          "explanation": "We learned about historical events in our history class."
+        },
+        {
+          "prompt": "What does 'royal' mean?",
+          "choices": [
+            "Causing big changes or new ideas.",
+            "Related to a king or queen.",
+            "Related to government or how people make decisions about rules and laws.",
+            "When a group enters a place and takes control, often by force."
+          ],
+          "answer": "Related to a king or queen.",
+          "explanation": "The royal palace was decorated with gold and jewels."
+        },
+        {
+          "prompt": "What does 'federal' mean?",
+          "choices": [
+            "Causing big changes or new ideas.",
+            "Related to the national government of a country.",
+            "To win against something or take control of a place.",
+            "When a group enters a place and takes control, often by force."
+          ],
+          "answer": "Related to the national government of a country.",
+          "explanation": "The federal government makes important laws for everyone."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "Uncle Ishmael mentions that the fishing boats returned empty for nine days. Does Amal mention this detail? Why do you think she does or does not include it?",
+          "choices": [
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "Related to a specific place or area near you.",
+            "Related to a city or town."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "Amal notices the orange cat trying to steal a fish. Why do you think Uncle Ishmael does not mention the cat in his version?",
+          "choices": [
+            "Related to a specific place or area near you.",
+            "Related to a city or town.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "Read Amal's final sentences again. What do they tell us about how children experience the world differently from adults?",
+          "choices": [
+            "Related to a city or town.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "Related to a specific place or area near you."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Hot-Seating (Character Interview)",
+          "target": "In this activity, one person sits in the \"hot seat\" and pretends to be a character from the reading passage or from any story you have studied."
+        },
+        {
+          "prompt": "Speaking 3: Retelling Race",
+          "target": "This is a fast, fun activity that practises your retelling skills under time pressure."
+        },
+        {
+          "prompt": "Speaking 5: Vocabulary Expert Interview",
+          "target": "The political leaders helped make important decisions for the town."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cultures.",
+            "different",
+            "many",
+            "celebrate",
+            "we",
+            "means",
+            "pluralism",
+            "school,",
+            "our",
+            "In"
+          ],
+          "answer": "In our school, pluralism means we celebrate many different cultures."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "impractical.",
+            "is",
+            "summer",
+            "the",
+            "in",
+            "coat",
+            "heavy",
+            "a",
+            "Wearing"
+          ],
+          "answer": "Wearing a heavy coat in the summer is impractical."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "family.",
+            "kind",
+            "a",
+            "by",
+            "in",
+            "taken",
+            "was",
+            "foundling",
+            "The"
+          ],
+          "answer": "The foundling was taken in by a kind family."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'cultural' mean in this unit?",
+          "choices": [
+            "Related to the ideas, customs, and behaviour of a group of people.",
+            "Related to a specific place or area near you.",
+            "Related to the countryside, not the city."
+          ],
+          "answer": "Related to the ideas, customs, and behaviour of a group of people.",
+          "explanation": "cultural: Related to the ideas, customs, and behaviour of a group of people."
+        },
+        {
+          "prompt": "What does 'industrial' mean in this unit?",
+          "choices": [
+            "Related to a specific place or area near you.",
+            "Related to the countryside, not the city.",
+            "Related to factories and making things."
+          ],
+          "answer": "Related to factories and making things.",
+          "explanation": "industrial: Related to factories and making things."
+        },
+        {
+          "prompt": "What does 'rural' mean in this unit?",
+          "choices": [
+            "Related to a time when one country controlled another.",
+            "Related to the countryside, not the city.",
+            "Related to a specific place or area near you."
+          ],
+          "answer": "Related to the countryside, not the city.",
+          "explanation": "rural: Related to the countryside, not the city."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'contact'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "contact is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'plaintive'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "plaintive is used as a adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'federal'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "federal is used as a adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "rural",
+              "Related to the countryside, not the city."
+            ],
+            [
+              "colonial",
+              "Related to a time when one country controlled another."
+            ],
+            [
+              "political",
+              "Related to government or how people make decisions about rules and laws."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "cultural",
+              "Related to the ideas, customs, and behaviour of a group of people."
+            ],
+            [
+              "symbol",
+              "A picture or sign that represents something else."
+            ],
+            [
+              "journal",
+              "A book where you write your thoughts, feelings, and daily activities."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "industrial",
+              "Related to factories and making things."
+            ],
+            [
+              "flee",
+              "To escape by running away."
+            ],
+            [
+              "thriving",
+              "Growing or developing successfully."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does 'spacious' mean?",
+          "choices": [
+            "Having a lot of space; not crowded or small.",
+            "Related to a king or queen.",
+            "Related to a time when one country controlled another.",
+            "Related to events that happened in the past."
+          ],
+          "answer": "Having a lot of space; not crowded or small.",
+          "explanation": "The hall was spacious enough for the whole class."
+        },
+        {
+          "prompt": "What does 'continent' mean?",
+          "choices": [
+            "A large area of land on Earth surrounded by water.",
+            "Related to a king or queen.",
+            "Related to events that happened in the past.",
+            "Related to the national government of a country."
+          ],
+          "answer": "A large area of land on Earth surrounded by water.",
+          "explanation": "Africa is a continent with many different countries and cultures."
+        },
+        {
+          "prompt": "What does 'colonial' mean?",
+          "choices": [
+            "Related to a king or queen.",
+            "Related to a time when one country controlled another.",
+            "Related to government or how people make decisions about rules and laws.",
+            "Related to the national government of a country."
+          ],
+          "answer": "Related to a time when one country controlled another.",
+          "explanation": "The colonial buildings in the city are very old."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'local' mean?",
+          "choices": [
+            "A large area of land on Earth surrounded by water.",
+            "Having a lot of space; not crowded or small.",
+            "Related to a specific place or area near you.",
+            "Related to the countryside, not the city."
+          ],
+          "answer": "Related to a specific place or area near you.",
+          "explanation": "The local park is where we play every afternoon."
+        },
+        {
+          "prompt": "What does 'urban' mean?",
+          "choices": [
+            "A large area of land on Earth surrounded by water.",
+            "Having a lot of space; not crowded or small.",
+            "Related to a city or town.",
+            "Related to a time when one country controlled another."
+          ],
+          "answer": "Related to a city or town.",
+          "explanation": "The urban centre had tall buildings and busy streets."
+        },
+        {
+          "prompt": "What does 'rural' mean?",
+          "choices": [
+            "A large area of land on Earth surrounded by water.",
+            "Related to a time when one country controlled another.",
+            "Related to events that happened in the past.",
+            "Related to the countryside, not the city."
+          ],
+          "answer": "Related to the countryside, not the city.",
+          "explanation": "The rural village was peaceful and surrounded by farms."
+        }
+      ]
+    }
+  ]
+}

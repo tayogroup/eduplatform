@@ -50,6 +50,12 @@ Expected result:
 
 Use the scheduled runner when the same command needs to run from CI, a build agent, or Windows Task Scheduler.
 
+Validate schedule wiring without running Playwright phases:
+
+```powershell
+npm.cmd run test:e2e:schedule:validate
+```
+
 Daily non-live guard checks:
 
 ```powershell
@@ -73,6 +79,14 @@ npm.cmd run test:e2e:schedule:weekly
 ```
 
 The runner writes a JSON summary under `test-results\sqa-schedule`. Weekly mode is blocked unless `EDUPLATFORM_SQA_ALLOW_LIVE_WEEKLY=true` is set in the approved SQA workspace.
+
+The validation command confirms:
+
+- every daily and weekly scheduled script exists in `package.json`,
+- daily safe-control steps do not force live `EDUPLATFORM_ENABLE_*` flags,
+- every weekly live phase carries an explicit opt-in flag,
+- selected weekly phase subsets are known package scripts,
+- the weekly default includes the BBB pilot-readiness rollup `test:e2e:bbb-phase13`.
 
 ## Evidence Bundle Finalizer
 
@@ -113,7 +127,26 @@ Target Moodle path:
 local/hubredirect/deployment_drift_probe.php
 ```
 
-If `EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN` is configured on the live server, set the same value locally before running the verifier. Without the probe, the command falls back to direct URL presence checks and reports remote response checksums, but it cannot prove source parity.
+If `EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN` is configured on the live server, set the same value locally before running the verifier. The package script is intentionally probe-only so release proof fails instead of silently falling back to response-body presence checks.
+
+For final release proof, the package script requires probe mode and must not fall back:
+
+```powershell
+$env:EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN="same-token-as-live"
+$env:EDUPLATFORM_HUBREDIRECT_DRIFT_REQUIRE_PROBE="true"
+npm.cmd run test:e2e:deployment-drift
+```
+
+The live probe accepts the token from any one of these cPanel/Moodle-safe locations:
+
+- server environment variable `EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN`,
+- PHP constant `EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN`,
+- Moodle `$CFG->eduplatform_deployment_drift_token`,
+- Moodle config value `local_hubredirect/deployment_drift_token`,
+- private file `local/hubredirect/.deployment_drift_token`,
+- private file `local/hubredirect/deployment_drift_token.txt`.
+
+The token file is not included in checksum comparison because the verifier compares only `*.php` endpoint files. Keep token files out of git and cPanel public file listings wherever possible.
 
 ## Full Golden Path
 
@@ -571,6 +604,136 @@ Expected failure/negative workflow controls result:
 - Enrollment blocked when capacity full evidence shows a capacity-blocked/rejected enrollment request with course audit evidence,
 - Missing required fields validation evidence confirms required intake fields are blocked before persistence,
 - evidence summary is attached as `failure-workflow-controls-summary` and `failure-workflow-controls-manifest`.
+
+Run Institution School Models only in the approved EduPlatform SQA workspace. Keep the live server copy of `src/moodle/local_hubredirect/institution_school_functional_test.php` synchronized before this phase because it creates Huda owned-branch and franchise fixtures.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_INSTITUTION_SCHOOL_MODELS="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:institution-phase1
+```
+
+Expected institution school model result:
+
+- Wholly Owned Schools access is represented by `owned_branch` links with operations scope and inherited sensitive access,
+- the central institution admin can manage both owned school branches,
+- branch school admins, teachers, parents, and students remain isolated to their direct workspace,
+- Franchise Schools access is represented by `franchise_member` links with governance scope only,
+- franchise admins do not receive operations management or inherited sensitive access by default,
+- evidence summary is attached as `institution-governance-summary` and `institution-governance-manifest`,
+- cleanup is reviewed through `src/moodle/local_prequran/sql/cleanup_institution_school_sqa_fixtures.sql`.
+
+Run Institution Admissions / Enrollment and Finance Isolation only in the approved EduPlatform SQA workspace. Keep the live server copy of `src/moodle/local_hubredirect/institution_operations_isolation.php` synchronized before this phase because it creates scoped admissions, invoices, payments, and parent billing links across owned branches and the franchise workspace.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_INSTITUTION_OPERATIONS_ISOLATION="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_INVOICE_LINE_AMOUNT="25.00"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:institution-phase2
+```
+
+Expected institution operations isolation result:
+
+- Branch A admissions remain scoped to Branch A and do not appear in Branch B,
+- Branch B admissions remain scoped to Branch B and do not appear in Branch A,
+- franchise admissions remain franchise-owned and are excluded from the owned-branch pipeline rollup,
+- owned-branch invoices and payments roll up across owned branches,
+- franchise invoice/payment revenue remains separated,
+- parent billing visibility follows the linked child school only,
+- evidence summary is attached as `institution-governance-summary` and `institution-governance-manifest`.
+
+Run Institution Reporting Rollups and School Branding / Domain / Portal Isolation only in the approved EduPlatform SQA workspace. Keep the live server copy of `src/moodle/local_hubredirect/institution_reporting_branding.php` synchronized before this phase because it creates owned-school and franchise reporting evidence, branded portal links, and CSV/PDF exports.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_INSTITUTION_REPORTING_BRANDING="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_INVOICE_LINE_AMOUNT="25.00"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:institution-phase3
+```
+
+Expected institution reporting and branding result:
+
+- Institution Reporting Rollups aggregate owned schools into operational totals,
+- franchise appears in governance/network reporting and is excluded from operational totals,
+- CSV/PDF exports preserve school identifiers, workspace IDs, relationship type, reporting bucket, and portal domains,
+- School Branding / Domain / Portal Isolation verifies branch and franchise names, logos, workspaces, domains, and portal links remain distinct,
+- direct URL probes cannot cross into another school branded portal,
+- branded portal isolation evidence is attached as `institution-governance-summary` and `institution-governance-manifest`.
+
+Run Staff Mobility / Transfer Controls and Institution Data Lifecycle only in the approved EduPlatform SQA workspace. Keep the live server copy of `src/moodle/local_hubredirect/institution_mobility_lifecycle.php` synchronized before this phase because it changes workspace memberships, teacher/student assignment links, audit rows, and one franchise fixture archive state.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_INSTITUTION_MOBILITY_LIFECYCLE="true"
+$env:EDUPLATFORM_TEST_COURSE_KEY="pre_quraan"
+$env:EDUPLATFORM_CLEANUP_MODE="archive"
+npm.cmd run test:e2e:institution-phase4
+```
+
+Expected institution mobility and lifecycle result:
+
+- Staff Mobility / Transfer Controls confirm a Branch A teacher cannot access Branch B without explicit assignment,
+- explicit Branch B assignment grants access, and transfer removes the old Branch A teacher assignment,
+- moving a student between schools updates workspace membership and teacher/student assignment links,
+- teacher and student transfer audit rows are retained,
+- Institution Data Lifecycle archives one franchise fixture without affecting owned branches,
+- archived school disappears from active queues but remains in institution audit,
+- evidence summary is attached as `institution-governance-summary` and `institution-governance-manifest`.
+
+Run Institution Security / Cross-School Access Matrix only in the approved EduPlatform SQA workspace. Keep `src/moodle/local_hubredirect/institution_security_matrix.php` synchronized before this phase because it creates cross-school role fixtures and direct URL boundary evidence.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_INSTITUTION_SECURITY_MATRIX="true"
+npm.cmd run test:e2e:institution-phase5
+```
+
+Expected institution security result:
+
+- students, parents, teachers, school admins, and franchise admins cannot cross into another school by role or direct URL,
+- institution admin owned-school access includes owned branches but excludes franchise operations,
+- session workspace scope and security audit evidence are attached as `institution-governance-summary`.
+
+Run Institution Communications / Notifications Isolation only in the approved EduPlatform SQA workspace. Keep `src/moodle/local_hubredirect/institution_communications_isolation.php` synchronized before this phase because it records scoped announcements, parent-teacher message evidence, support cases, notification audit rows, and follow-up boundaries.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_INSTITUTION_COMMUNICATIONS_ISOLATION="true"
+npm.cmd run test:e2e:institution-phase6
+```
+
+Expected institution communications result:
+
+- branch announcements and support cases remain branch-scoped,
+- franchise communications remain franchise-owned/governance-only,
+- notification audit rows preserve workspace identifiers,
+- cross-school follow-up evidence is blocked and attached.
+
+Run Institution Academic / Course Isolation only in the approved EduPlatform SQA workspace. Keep `src/moodle/local_hubredirect/institution_academic_isolation.php` synchronized before this phase because it records course offering, lesson/resource, gradebook, attendance, and transcript isolation evidence.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_INSTITUTION_ACADEMIC_ISOLATION="true"
+npm.cmd run test:e2e:institution-phase7
+```
+
+Expected institution academic result:
+
+- owned school course and learner records remain scoped to their branch,
+- franchise academic records appear only in governance/network reporting evidence,
+- institution academic rollups exclude franchise operational totals.
+
+Run Institution Final Rollup / Readiness after phases 1-7 and after cPanel uploads are synchronized. Keep `src/moodle/local_hubredirect/institution_readiness_rollup.php` synchronized before this phase because it checks deployed phase endpoints, stale fixture hygiene, readiness audit, and CSV export evidence.
+
+```powershell
+$env:EDUPLATFORM_ENABLE_INSTITUTION_READINESS_ROLLUP="true"
+npm.cmd run test:e2e:institution-phase8
+```
+
+Expected institution readiness result:
+
+- phase 1-7 endpoint evidence appears ready,
+- no stale active archived institution fixtures are reported,
+- final institution readiness CSV export is downloaded and attached.
 
 Run Full Cross-Role Golden Path only in the approved EduPlatform SQA workspace. Keep the live server copy of `src/moodle/local_hubredirect/cross_role_golden_path.php` synchronized before this phase because it creates one scoped student/parent/teacher/admin evidence set and verifies the integrated role surfaces.
 

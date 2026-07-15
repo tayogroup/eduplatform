@@ -4,6 +4,15 @@ export type RouteParams = Record<string, string | number | boolean | undefined |
 
 export const HUB_ROUTES = {
   dashboard: '/local/hubredirect/dashboard.php',
+  workspaces: '/local/hubredirect/workspaces.php',
+  institutionSchoolFunctionalTest: '/local/hubredirect/institution_school_functional_test.php',
+  institutionOperationsIsolation: '/local/hubredirect/institution_operations_isolation.php',
+  institutionReportingBranding: '/local/hubredirect/institution_reporting_branding.php',
+  institutionMobilityLifecycle: '/local/hubredirect/institution_mobility_lifecycle.php',
+  institutionSecurityMatrix: '/local/hubredirect/institution_security_matrix.php',
+  institutionCommunicationsIsolation: '/local/hubredirect/institution_communications_isolation.php',
+  institutionAcademicIsolation: '/local/hubredirect/institution_academic_isolation.php',
+  institutionReadinessRollup: '/local/hubredirect/institution_readiness_rollup.php',
   workspaceDashboard: '/local/hubredirect/workspace_dashboard.php',
   workspacePeople: '/local/hubredirect/workspace_people.php',
   workspaceMaterials: '/local/hubredirect/workspace_materials.php',

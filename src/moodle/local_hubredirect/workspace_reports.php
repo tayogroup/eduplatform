@@ -84,27 +84,52 @@ function pqwr_date_label(int $time): string {
 
 function pqwr_user_options(int $workspaceid, array $roles): array {
     global $DB;
-    if (!pqh_table_exists_safe('local_prequran_workspace_member')) {
-        return [];
-    }
-    [$insql, $params] = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'role');
-    $params['workspaceid'] = $workspaceid;
-    $params['status'] = 'active';
-    $rows = $DB->get_records_sql(
-        "SELECT u.id, u.firstname, u.lastname, u.email, u.username, u.idnumber, MIN(wm.workspace_role) AS workspace_role
-           FROM {local_prequran_workspace_member} wm
-           JOIN {user} u ON u.id = wm.userid
-          WHERE wm.workspaceid = :workspaceid
-            AND wm.status = :status
-            AND wm.workspace_role {$insql}
-       GROUP BY u.id, u.firstname, u.lastname, u.email, u.username, u.idnumber
-       ORDER BY u.lastname ASC, u.firstname ASC, u.id ASC",
-        $params
-    );
     $options = [];
-    foreach ($rows as $row) {
-        $options[(int)$row->id] = $row;
+    if (pqh_table_exists_safe('local_prequran_workspace_member')) {
+        [$insql, $params] = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'role');
+        $params['workspaceid'] = $workspaceid;
+        $params['status'] = 'active';
+        $rows = $DB->get_records_sql(
+            "SELECT u.id, u.firstname, u.lastname, u.email, u.username, u.idnumber, MIN(wm.workspace_role) AS workspace_role
+               FROM {local_prequran_workspace_member} wm
+               JOIN {user} u ON u.id = wm.userid
+              WHERE wm.workspaceid = :workspaceid
+                AND wm.status = :status
+                AND wm.workspace_role {$insql}
+           GROUP BY u.id, u.firstname, u.lastname, u.email, u.username, u.idnumber
+           ORDER BY u.lastname ASC, u.firstname ASC, u.id ASC",
+            $params
+        );
+        foreach ($rows as $row) {
+            $options[(int)$row->id] = $row;
+        }
     }
+    if (array_intersect($roles, ['owner', 'admin', 'teacher', 'assistant_teacher'])
+            && pqh_table_exists_safe('local_prequran_teacher_profile')
+            && pqh_table_has_field_safe('local_prequran_teacher_profile', 'workspaceid')
+            && pqh_table_has_field_safe('local_prequran_teacher_profile', 'teacher_work_models')) {
+        $profileparams = ['workspaceid' => $workspaceid];
+        $statussql = '';
+        if (pqh_table_has_field_safe('local_prequran_teacher_profile', 'status')) {
+            $statussql = ' AND LOWER(tp.status) NOT IN (:archived, :inactive, :rejected)';
+            $profileparams += ['archived' => 'archived', 'inactive' => 'inactive', 'rejected' => 'rejected'];
+        }
+        foreach ($DB->get_records_sql(
+            "SELECT u.id, u.firstname, u.lastname, u.email, u.username, u.idnumber, 'teacher' AS workspace_role
+               FROM {local_prequran_teacher_profile} tp
+               JOIN {user} u ON u.id = tp.userid
+              WHERE tp.workspaceid = :workspaceid
+                AND LOWER(tp.teacher_work_models) LIKE '%independent%'
+                {$statussql}
+           ORDER BY u.lastname ASC, u.firstname ASC, u.id ASC",
+            $profileparams
+        ) as $row) {
+            $options[(int)$row->id] = $options[(int)$row->id] ?? $row;
+        }
+    }
+    uasort($options, static function($a, $b): int {
+        return strcasecmp(trim((string)$a->lastname . ' ' . (string)$a->firstname), trim((string)$b->lastname . ' ' . (string)$b->firstname));
+    });
     return $options;
 }
 
@@ -124,19 +149,51 @@ function pqwr_workspace_student_ids(int $workspaceid): array {
 
 function pqwr_role_counts(int $workspaceid): array {
     global $DB;
-    if (!pqh_table_exists_safe('local_prequran_workspace_member')) {
-        return [];
-    }
-    $rows = $DB->get_records_sql(
-        "SELECT workspace_role, COUNT(1) AS rolecount
-           FROM {local_prequran_workspace_member}
-          WHERE workspaceid = :workspaceid AND status = :status
-       GROUP BY workspace_role",
-        ['workspaceid' => $workspaceid, 'status' => 'active']
-    );
     $counts = [];
-    foreach ($rows as $row) {
-        $counts[(string)$row->workspace_role] = (int)$row->rolecount;
+    if (pqh_table_exists_safe('local_prequran_workspace_member')) {
+        $rows = $DB->get_records_sql(
+            "SELECT workspace_role, COUNT(1) AS rolecount
+               FROM {local_prequran_workspace_member}
+              WHERE workspaceid = :workspaceid AND status = :status
+           GROUP BY workspace_role",
+            ['workspaceid' => $workspaceid, 'status' => 'active']
+        );
+        foreach ($rows as $row) {
+            $counts[(string)$row->workspace_role] = (int)$row->rolecount;
+        }
+    }
+    if (pqh_table_exists_safe('local_prequran_teacher_profile')
+            && pqh_table_has_field_safe('local_prequran_teacher_profile', 'workspaceid')
+            && pqh_table_has_field_safe('local_prequran_teacher_profile', 'teacher_work_models')) {
+        $params = ['workspaceid' => $workspaceid];
+        $statussql = '';
+        if (pqh_table_has_field_safe('local_prequran_teacher_profile', 'status')) {
+            $statussql = ' AND LOWER(status) NOT IN (:archived, :inactive, :rejected)';
+            $params += ['archived' => 'archived', 'inactive' => 'inactive', 'rejected' => 'rejected'];
+        }
+        $profileteacherids = $DB->get_fieldset_sql(
+            "SELECT userid
+               FROM {local_prequran_teacher_profile}
+              WHERE workspaceid = :workspaceid
+                AND LOWER(teacher_work_models) LIKE '%independent%'
+                {$statussql}",
+            $params
+        );
+        $memberteacherids = [];
+        if (pqh_table_exists_safe('local_prequran_workspace_member')) {
+            $memberteacherids = $DB->get_fieldset_sql(
+                "SELECT userid
+                   FROM {local_prequran_workspace_member}
+                  WHERE workspaceid = :workspaceid
+                    AND status = :status
+                    AND workspace_role IN ('owner', 'admin', 'teacher', 'assistant_teacher')",
+                ['workspaceid' => $workspaceid, 'status' => 'active']
+            );
+        }
+        $extra = count(array_diff(array_map('intval', $profileteacherids), array_map('intval', $memberteacherids)));
+        if ($extra > 0) {
+            $counts['teacher'] = (int)($counts['teacher'] ?? 0) + $extra;
+        }
     }
     return $counts;
 }
@@ -327,24 +384,54 @@ function pqwr_material_workflow_counts(): array {
 
 function pqwr_teacher_drilldown(int $workspaceid): array {
     global $DB, $teacherid, $studentid, $statusfilter;
-    if (!pqh_table_exists_safe('local_prequran_workspace_member')) {
-        return [];
+    $teachermap = [];
+    if (pqh_table_exists_safe('local_prequran_workspace_member')) {
+        $where = "wm.workspaceid = :workspaceid AND wm.status = :status AND wm.workspace_role IN ('teacher','assistant_teacher','owner','admin')";
+        $params = ['workspaceid' => $workspaceid, 'status' => 'active'];
+        if ($teacherid > 0) {
+            $where .= ' AND wm.userid = :teacherid';
+            $params['teacherid'] = $teacherid;
+        }
+        foreach ($DB->get_records_sql(
+            "SELECT u.id, u.firstname, u.lastname, u.email, u.idnumber, MIN(wm.workspace_role) AS workspace_role
+               FROM {local_prequran_workspace_member} wm
+               JOIN {user} u ON u.id = wm.userid
+              WHERE {$where}
+           GROUP BY u.id, u.firstname, u.lastname, u.email, u.idnumber
+           ORDER BY u.lastname ASC, u.firstname ASC",
+            $params
+        ) as $row) {
+            $teachermap[(int)$row->id] = $row;
+        }
     }
-    $where = "wm.workspaceid = :workspaceid AND wm.status = :status AND wm.workspace_role IN ('teacher','assistant_teacher','owner','admin')";
-    $params = ['workspaceid' => $workspaceid, 'status' => 'active'];
-    if ($teacherid > 0) {
-        $where .= ' AND wm.userid = :teacherid';
-        $params['teacherid'] = $teacherid;
+    if (pqh_table_exists_safe('local_prequran_teacher_profile')
+            && pqh_table_has_field_safe('local_prequran_teacher_profile', 'workspaceid')
+            && pqh_table_has_field_safe('local_prequran_teacher_profile', 'teacher_work_models')) {
+        $where = "tp.workspaceid = :workspaceid AND LOWER(tp.teacher_work_models) LIKE '%independent%'";
+        $params = ['workspaceid' => $workspaceid];
+        if (pqh_table_has_field_safe('local_prequran_teacher_profile', 'status')) {
+            $where .= ' AND LOWER(tp.status) NOT IN (:archived, :inactive, :rejected)';
+            $params += ['archived' => 'archived', 'inactive' => 'inactive', 'rejected' => 'rejected'];
+        }
+        if ($teacherid > 0) {
+            $where .= ' AND tp.userid = :teacherid';
+            $params['teacherid'] = $teacherid;
+        }
+        foreach ($DB->get_records_sql(
+            "SELECT u.id, u.firstname, u.lastname, u.email, u.idnumber, 'teacher' AS workspace_role
+               FROM {local_prequran_teacher_profile} tp
+               JOIN {user} u ON u.id = tp.userid
+              WHERE {$where}
+           ORDER BY u.lastname ASC, u.firstname ASC, u.id ASC",
+            $params
+        ) as $row) {
+            $teachermap[(int)$row->id] = $teachermap[(int)$row->id] ?? $row;
+        }
     }
-    $teachers = array_values($DB->get_records_sql(
-        "SELECT u.id, u.firstname, u.lastname, u.email, u.idnumber, MIN(wm.workspace_role) AS workspace_role
-           FROM {local_prequran_workspace_member} wm
-           JOIN {user} u ON u.id = wm.userid
-          WHERE {$where}
-       GROUP BY u.id, u.firstname, u.lastname, u.email, u.idnumber
-       ORDER BY u.lastname ASC, u.firstname ASC",
-        $params
-    ));
+    $teachers = array_values($teachermap);
+    usort($teachers, static function($a, $b): int {
+        return strcasecmp(trim((string)$a->lastname . ' ' . (string)$a->firstname), trim((string)$b->lastname . ' ' . (string)$b->firstname));
+    });
     foreach ($teachers as $row) {
         $row->studentcount = 0;
         $row->sessioncount = 0;

@@ -44,24 +44,17 @@ if (!$workspace) {
 }
 
 if ((int)($consumercontext->workspaceid ?? 0) !== $workspaceid && pqh_consumer_schema_ready()) {
-    $workspaceconsumer = $DB->get_record('local_prequran_consumer', [
-        'primaryworkspaceid' => $workspaceid,
-        'status' => 'active',
-    ], '*', IGNORE_MISSING);
+    $workspaceconsumer = pqh_consumer_context_by_workspace($workspaceid);
     if ($workspaceconsumer) {
-        $consumercontext = pqh_consumer_context_from_records($workspaceconsumer, null);
+        $consumercontext = $workspaceconsumer;
     }
 }
 $brandname = trim((string)($consumercontext->consumername ?? '')) !== '' ? (string)$consumercontext->consumername : (string)$workspace->name;
 $brandlogo = trim((string)($consumercontext->logourl ?? ''));
-$brandtheme = json_decode((string)($consumercontext->themejson ?? ''), true);
-$brandtheme = is_array($brandtheme) ? $brandtheme : [];
+$brandtheme = pqh_consumer_theme($consumercontext);
 $brandcopy = json_decode((string)($consumercontext->copyjson ?? ''), true);
 $brandcopy = is_array($brandcopy) ? $brandcopy : [];
-$brandcolor = (string)($brandtheme['primary_color'] ?? '#2f6f4e');
-if (!preg_match('/^#[0-9a-fA-F]{6}$/', $brandcolor)) {
-    $brandcolor = '#2f6f4e';
-}
+$brandcolor = (string)$brandtheme['primary_color'];
 $brandinitialsource = preg_replace('/[^a-z0-9]/i', '', $brandname);
 $copyinitial = trim((string)($brandcopy['brand_initials'] ?? ''));
 $brandinitial = $copyinitial !== '' ? strtoupper(substr($copyinitial, 0, 6)) : strtoupper(substr((string)$brandinitialsource, 0, 1));
@@ -125,7 +118,7 @@ function pqwd_count_records(string $table, array $conditions): int {
     return (int)$DB->count_records($table, $conditions);
 }
 
-function pqwd_workspace_students(int $workspaceid): array {
+function pqwd_workspace_students(int $workspaceid, int $soloteacherid = 0): array {
     global $DB;
     $students = [];
 
@@ -160,6 +153,35 @@ function pqwd_workspace_students(int $workspaceid): array {
                 'level' => (string)($row->current_level ?? ''),
                 'status' => (string)($row->status ?? ''),
                 'accountno' => pqh_account_no_value($studentid),
+            ];
+        }
+    }
+
+    if (pqh_table_exists_safe('local_prequran_teacher_student')) {
+        if ($soloteacherid > 0) {
+            $rows = $DB->get_records('local_prequran_teacher_student', [
+                'teacherid' => $soloteacherid,
+                'status' => 'active',
+            ], 'timemodified DESC', 'id,studentid');
+        } else if (pqh_table_has_field_safe('local_prequran_teacher_student', 'workspaceid')) {
+            $rows = $DB->get_records('local_prequran_teacher_student', [
+                'workspaceid' => $workspaceid,
+                'status' => 'active',
+            ], 'timemodified DESC', 'id,studentid');
+        } else {
+            $rows = [];
+        }
+        foreach ($rows as $row) {
+            $studentid = (int)$row->studentid;
+            if ($studentid <= 0 || isset($students[$studentid])) {
+                continue;
+            }
+            $user = core_user::get_user($studentid, 'id,idnumber', IGNORE_MISSING);
+            $students[$studentid] = [
+                'studentid' => $studentid,
+                'source' => 'assignment',
+                'name' => pqwd_user_name($studentid),
+                'accountno' => $user ? pqh_account_no_value($user) : '',
             ];
         }
     }
@@ -279,13 +301,23 @@ function pqwd_domain_url(string $domain, string $path, array $params = []): mood
 
 $workspaces = pqh_user_workspaces((int)$USER->id);
 $rolecounts = pqwd_role_counts($workspaceid);
-$students = pqwd_workspace_students($workspaceid);
+$issoloteacherworkspace = (string)($workspace->workspace_type ?? '') === 'solo_teacher';
+$soloteacherid = $issoloteacherworkspace ? (int)($workspace->ownerid ?? 0) : 0;
+if ($soloteacherid <= 0 && $issoloteacherworkspace && $role === 'teacher') {
+    $soloteacherid = (int)$USER->id;
+}
+$students = pqwd_workspace_students($workspaceid, $soloteacherid);
 $studentteachers = pqwd_student_teacher_labels($workspaceid);
 $members = pqwd_recent_members($workspaceid);
 $sessions = pqwd_upcoming_sessions($workspaceid);
 $domains = pqwd_workspace_domains($workspaceid);
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $canteach = pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid);
+$canmanageofferings = $canmanage || (
+    (string)($workspace->workspace_type ?? '') === 'solo_teacher'
+    && pqh_has_independent_teacher_profile((int)$USER->id)
+    && $role === 'teacher'
+);
 $canacademyops = pqh_can_manage_academy_operations((int)$USER->id);
 $consumerparams = [];
 if (trim((string)($consumercontext->consumerslug ?? '')) !== '') {
@@ -429,10 +461,13 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
         <?php if ($canmanage): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $brandediturl->out(false); ?>">Settings</a><?php endif; ?>
         <?php if ($canacademyops): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $workspacesadminurl->out(false); ?>">Manage workspaces</a><?php endif; ?>
         <?php if ($canacademyops): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $platformconsumersurl->out(false); ?>">Platform consumers</a><?php endif; ?>
+        <?php if ($canteach): ?><button class="pqwd-btn pqwd-btn--light" type="button" data-pq-support-action="open">Open Support</button><?php endif; ?>
+        <?php if ($canteach): ?><button class="pqwd-btn" type="button" data-pq-support-action="new">New Request</button><?php endif; ?>
         <a class="pqwd-btn pqh-workspace-logout" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">Logout</a>
       </form>
     </section>
 
+    <?php if (!$issoloteacherworkspace || $canacademyops): ?>
     <section class="pqwd-panel pqwd-public" aria-label="Public and custom-domain links">
       <div>
         <h2>Public Workspace Links</h2>
@@ -462,6 +497,7 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
         <?php endif; ?>
       </div>
     </section>
+    <?php endif; ?>
 
     <section class="pqwd-metrics" aria-label="Workspace metrics">
       <div class="pqwd-metric"><strong><?php echo (int)$metrics['students']; ?></strong><span>students</span></div>
@@ -475,11 +511,16 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 
     <section class="pqwd-cardlinks" aria-label="Workspace actions">
       <?php if ($canteach): ?>
+        <?php if ($canmanageofferings): ?>
+          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketing.php', $workspaceparams))->out(false); ?>"><strong>Market My Services</strong><span>Manage your public profile, service offers, pricing, and online presence.</span></a>
+          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_student_connect.php', $workspaceparams))->out(false); ?>"><strong>Find or Invite Student</strong><span>Search for an existing learner first, or invite a new student into this independent teaching workspace.</span></a>
+          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $workspaceparams))->out(false); ?>"><strong>Course Offerings</strong><span>Create courses or tutoring services, set dates, seats, syllabus, pricing, and review enrollment requests.</span></a>
+        <?php endif; ?>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', $workspaceparams))->out(false); ?>"><strong>Teacher Workspace</strong><span>Today's classes, attendance, notes, and post-class review.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_portal.php', $workspaceparams))->out(false); ?>"><strong>Teacher Portal</strong><span>Today's classes, roster, attendance, grades, notes, homework, and progress updates.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_reports.php', $workspaceparams))->out(false); ?>"><strong>Workspace Reports</strong><span>Institution-level teacher load, session, attendance, material, and quiz summaries.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_materials.php', $workspaceparams))->out(false); ?>"><strong>Material Library</strong><span>Review resources, assignment progress, and completed student materials.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/classroom_operations.php', $workspaceparams))->out(false); ?>"><strong>Classroom Operations</strong><span>Schedule, reschedule, cancel, link rooms, post notes, assign homework, publish recordings, and queue reminders.</span></a>
+        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $workspaceparams))->out(false); ?>"><strong>Live Sessions</strong><span>Open upcoming classes, join/start rooms, review notes, recordings, homework, and reminders.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/communications_center.php', $workspaceparams))->out(false); ?>"><strong>Communications Center</strong><span>Message parents, students, and teachers, manage cases, and review student thread history.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/gradebook_assessment.php', $workspaceparams))->out(false); ?>"><strong>Gradebook</strong><span>Enter and review assessment grades, oral recitation marks, publishing, disputes, corrections, and audit history.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/learning_path.php', $workspaceparams))->out(false); ?>"><strong>Learning Path</strong><span>Track placement, mastery, skill maps, recommended next courses, comments, and interventions.</span></a>
@@ -498,7 +539,7 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/gradebook_assessment.php', $workspaceparams))->out(false); ?>"><strong>Gradebook & Assessment</strong><span>Configure weighted categories, assessments, grade review, publishing, disputes, corrections, and transcript grades.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/learning_path.php', $workspaceparams))->out(false); ?>"><strong>Student Learning Paths</strong><span>Manage placement, advancement rules, mastery tracking, skill maps, next-course recommendations, and interventions.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_administration.php', $workspaceparams))->out(false); ?>"><strong>Teacher Administration</strong><span>Manage availability, load, contracts, rates, assignments, substitutes, and marketplace payout readiness.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/classroom_operations.php', $workspaceparams))->out(false); ?>"><strong>Classroom & Live Sessions</strong><span>Schedule, reschedule, cancel, manage room links, notes, homework, recordings, parent visibility, and reminders.</span></a>
+        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $workspaceparams))->out(false); ?>"><strong>Live Operations</strong><span>Monitor scheduling, capacity, room readiness, recordings, parent visibility, reminders, and diagnostics.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/communications_center.php', $workspaceparams))->out(false); ?>"><strong>Communications Center</strong><span>Manage messaging, announcements, templates, consent, delivery logs, and student case histories.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/admin_workflow.php', $workspaceparams))->out(false); ?>"><strong>Admin Workflow</strong><span>Run admissions, finance, registrar, teacher, and support queues with approvals, escalations, notes, and audit history.</span></a>
         <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/document_management.php', $workspaceparams))->out(false); ?>"><strong>Document Management</strong><span>Upload, verify, expire, download, and audit student documents, IDs, certificates, consent forms, and generated PDFs.</span></a>
@@ -646,4 +687,7 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
   </div>
 </main>
 <?php
+if ($canteach) {
+    echo pqh_embedded_support_html($workspaceid, (int)$USER->id, (int)$USER->id, 'student_helpdesk', $consumercontext);
+}
 echo $OUTPUT->footer();

@@ -5,13 +5,42 @@ require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
 
-pqh_require_academy_operations('Only academy operations users can manage student grouping.');
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$consumercontext = pqh_requested_consumer_context();
+if ($requestedworkspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
+    $requestedworkspaceid = (int)$consumercontext->workspaceid;
+}
+$workspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
+if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
+    pqh_access_denied(
+        'Choose a school workspace you manage before using student grouping.',
+        new moodle_url('/local/hubredirect/workspaces.php'),
+        'Student grouping access required'
+    );
+}
+$urlparams = ['workspaceid' => $workspaceid];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
 
 $pqlgrpoptions = require(__DIR__ . '/student_intake_config.php');
 
 function pqlgrp_table_exists(string $table): bool {
     global $DB;
     return $DB->get_manager()->table_exists($table);
+}
+
+function pqlgrp_table_has_field(string $table, string $field): bool {
+    global $DB;
+    if (!pqlgrp_table_exists($table)) {
+        return false;
+    }
+    try {
+        $columns = $DB->get_columns($table);
+    } catch (Throwable $e) {
+        return false;
+    }
+    return array_key_exists($field, $columns);
 }
 
 function pqlgrp_required_ready(): bool {
@@ -26,11 +55,38 @@ function pqlgrp_user_name(int $userid, string $fallback): string {
     return $user ? fullname($user) : $fallback;
 }
 
-function pqlgrp_teacher_profiles(): array {
+function pqlgrp_teacher_profiles(int $workspaceid): array {
     global $DB;
 
     if (!pqlgrp_table_exists('local_prequran_teacher_profile')) {
         return [];
+    }
+
+    $where = "u.deleted = 0
+            AND u.suspended = 0
+            AND tp.status IN ('active', 'pending')";
+    $params = [];
+    if ($workspaceid > 0) {
+        $workspacechecks = [];
+        if (pqlgrp_table_has_field('local_prequran_teacher_profile', 'workspaceid')) {
+            $workspacechecks[] = 'tp.workspaceid = :profileworkspaceid';
+            $params['profileworkspaceid'] = $workspaceid;
+        }
+        if (pqlgrp_table_exists('local_prequran_workspace_member')) {
+            $workspacechecks[] = "EXISTS (
+                SELECT 1
+                  FROM {local_prequran_workspace_member} wm
+                 WHERE wm.userid = tp.userid
+                   AND wm.workspaceid = :memberworkspaceid
+                   AND wm.status = :memberstatus
+                   AND wm.workspace_role IN ('owner', 'admin', 'teacher', 'assistant_teacher')
+            )";
+            $params['memberworkspaceid'] = $workspaceid;
+            $params['memberstatus'] = 'active';
+        }
+        if ($workspacechecks) {
+            $where .= ' AND (' . implode(' OR ', $workspacechecks) . ')';
+        }
     }
 
     return $DB->get_records_sql(
@@ -41,10 +97,9 @@ function pqlgrp_teacher_profiles(): array {
                 u.username
            FROM {local_prequran_teacher_profile} tp
            JOIN {user} u ON u.id = tp.userid
-          WHERE u.deleted = 0
-            AND u.suspended = 0
-            AND tp.status IN ('active', 'pending')
-       ORDER BY tp.status ASC, tp.teacher_display_name ASC, u.firstname ASC, u.lastname ASC"
+          WHERE {$where}
+       ORDER BY tp.status ASC, tp.teacher_display_name ASC, u.firstname ASC, u.lastname ASC",
+        $params
     );
 }
 
@@ -74,19 +129,26 @@ function pqlgrp_teacher_label($teacher): string {
     return $name . ($meta ? ' - ' . implode(' / ', $meta) : '');
 }
 
-function pqlgrp_teacher_capacity_counts(): array {
+function pqlgrp_teacher_capacity_counts(int $workspaceid): array {
     global $DB;
 
     if (!pqlgrp_table_exists('local_prequran_class_group')) {
         return [];
     }
 
+    $where = "teacherid > 0
+            AND status IN ('open', 'active')";
+    $params = [];
+    if ($workspaceid > 0 && pqlgrp_table_has_field('local_prequran_class_group', 'workspaceid')) {
+        $where .= ' AND workspaceid = :workspaceid';
+        $params['workspaceid'] = $workspaceid;
+    }
     $records = $DB->get_records_sql(
         "SELECT teacherid, COUNT(1) AS group_count
            FROM {local_prequran_class_group}
-          WHERE teacherid > 0
-            AND status IN ('open', 'active')
-       GROUP BY teacherid"
+          WHERE {$where}
+       GROUP BY teacherid",
+        $params
     );
 
     $counts = [];
@@ -243,9 +305,9 @@ function pqlgrp_teacher_match_score($teacher, ?object $criteria, array $capacity
     return [$score, array_slice(array_values(array_unique($reasons)), 0, 5)];
 }
 
-function pqlgrp_ranked_teacher_options(?object $criteria = null, ?array $teachers = null): array {
-    $teachers = $teachers ?? pqlgrp_teacher_profiles();
-    $capacitycounts = pqlgrp_teacher_capacity_counts();
+function pqlgrp_ranked_teacher_options(?object $criteria = null, ?array $teachers = null, int $workspaceid = 0): array {
+    $teachers = $teachers ?? pqlgrp_teacher_profiles($workspaceid);
+    $capacitycounts = pqlgrp_teacher_capacity_counts($workspaceid);
     $availabilitycounts = pqlgrp_teacher_availability_counts();
     $ranked = [];
 
@@ -277,7 +339,8 @@ function pqlgrp_ranked_teacher_options(?object $criteria = null, ?array $teacher
 }
 
 function pqlgrp_teacher_options(): array {
-    [$options] = pqlgrp_ranked_teacher_options(null);
+    global $workspaceid;
+    [$options] = pqlgrp_ranked_teacher_options(null, null, (int)$workspaceid);
     return $options;
 }
 
@@ -425,7 +488,7 @@ function pqlgrp_audit(string $action, string $targettype, int $targetid, array $
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_grouping.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_grouping.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Student Grouping');
 $PAGE->set_heading('Student Grouping');
@@ -481,7 +544,12 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             pqlgrp_set_profile_field($record, 'live_class_consent', optional_param('live_class_consent', 0, PARAM_BOOL) ? 1 : 0);
             pqlgrp_set_profile_field($record, 'recording_consent', optional_param('recording_consent', 0, PARAM_BOOL) ? 1 : 0);
             pqlgrp_set_profile_field($record, 'consent_notes', pqlgrp_trim_param('consent_notes'));
-            $existing = $DB->get_record('local_prequran_student_profile', ['userid' => $userid]);
+            pqlgrp_set_profile_field($record, 'workspaceid', $workspaceid);
+            $existingselect = ['userid' => $userid];
+            if (pqlgrp_table_has_field('local_prequran_student_profile', 'workspaceid')) {
+                $existingselect['workspaceid'] = $workspaceid;
+            }
+            $existing = $DB->get_record('local_prequran_student_profile', $existingselect);
             if ($existing) {
                 $record->id = (int)$existing->id;
                 $DB->update_record('local_prequran_student_profile', $record);
@@ -519,12 +587,20 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'timecreated' => $now,
                 'timemodified' => $now,
             ];
+            if (pqlgrp_table_has_field('local_prequran_group_pool', 'workspaceid')) {
+                $record->workspaceid = $workspaceid;
+            }
             $id = (int)$DB->insert_record('local_prequran_group_pool', $record);
             pqlgrp_audit('grouping_pool_created', 'pool', $id, ['title' => $record->title]);
             $message = 'Matching pool created.';
         } elseif ($action === 'create_group') {
             $poolid = optional_param('poolid', 0, PARAM_INT);
             $pool = $poolid > 0 ? $DB->get_record('local_prequran_group_pool', ['id' => $poolid]) : null;
+            if ($pool && pqlgrp_table_has_field('local_prequran_group_pool', 'workspaceid')
+                    && (int)($pool->workspaceid ?? 0) > 0
+                    && (int)$pool->workspaceid !== $workspaceid) {
+                throw new invalid_parameter_exception('Choose a matching pool from the selected school workspace.');
+            }
             $record = (object)[
                 'poolid' => $poolid,
                 'teacherid' => optional_param('teacherid', 0, PARAM_INT),
@@ -546,8 +622,14 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'timecreated' => $now,
                 'timemodified' => $now,
             ];
+            if (pqlgrp_table_has_field('local_prequran_class_group', 'workspaceid')) {
+                $record->workspaceid = $workspaceid;
+            }
+            if ((int)$record->teacherid > 0 && !pqh_user_can_teach_in_workspace((int)$record->teacherid, $workspaceid)) {
+                throw new invalid_parameter_exception('Choose a teacher assigned to this school workspace.');
+            }
             if ((int)$record->teacherid <= 0) {
-                [, $automatches] = pqlgrp_ranked_teacher_options($record);
+                [, $automatches] = pqlgrp_ranked_teacher_options($record, null, $workspaceid);
                 if ($automatches) {
                     $record->teacherid = (int)$automatches[0]['userid'];
                 }
@@ -563,8 +645,18 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$group) {
                 throw new invalid_parameter_exception('Choose a valid class group before assigning a student.');
             }
+            if (pqlgrp_table_has_field('local_prequran_class_group', 'workspaceid')
+                    && (int)($group->workspaceid ?? 0) > 0
+                    && (int)$group->workspaceid !== $workspaceid) {
+                throw new invalid_parameter_exception('Choose a class group from the selected school workspace.');
+            }
             if (!$profile) {
                 throw new invalid_parameter_exception('Choose a valid student profile before assigning a group.');
+            }
+            if (pqlgrp_table_has_field('local_prequran_student_profile', 'workspaceid')
+                    && (int)($profile->workspaceid ?? 0) > 0
+                    && (int)$profile->workspaceid !== $workspaceid) {
+                throw new invalid_parameter_exception('Choose a student from the selected school workspace.');
             }
             [$score, $matchstatus, $details] = pqlgrp_match_score($profile, $group);
             $record = (object)[
@@ -578,6 +670,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'assignedby' => (int)$USER->id,
                 'timemodified' => $now,
             ];
+            if (pqlgrp_table_has_field('local_prequran_group_member', 'workspaceid')) {
+                $record->workspaceid = $workspaceid;
+            }
             $existing = $DB->get_record('local_prequran_group_member', ['groupid' => $groupid, 'studentid' => $studentid]);
             if ($existing) {
                 $record->id = (int)$existing->id;
@@ -594,16 +689,44 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$profiles = $ready ? $DB->get_records('local_prequran_student_profile', null, 'timemodified DESC', '*', 0, 50) : [];
-$pools = $ready ? $DB->get_records('local_prequran_group_pool', null, 'timemodified DESC', '*', 0, 50) : [];
-$teacherprofiles = pqlgrp_teacher_profiles();
+$profilewhere = [];
+$profileparams = [];
+if ($ready && pqlgrp_table_has_field('local_prequran_student_profile', 'workspaceid')) {
+    $profilewhere[] = 'workspaceid = :workspaceid';
+    $profileparams['workspaceid'] = $workspaceid;
+}
+$poolwhere = [];
+$poolparams = [];
+if ($ready && pqlgrp_table_has_field('local_prequran_group_pool', 'workspaceid')) {
+    $poolwhere[] = 'workspaceid = :workspaceid';
+    $poolparams['workspaceid'] = $workspaceid;
+}
+$profiles = $ready ? $DB->get_records_select(
+    'local_prequran_student_profile',
+    $profilewhere ? implode(' AND ', $profilewhere) : '',
+    $profileparams,
+    'timemodified DESC',
+    '*',
+    0,
+    50
+) : [];
+$pools = $ready ? $DB->get_records_select(
+    'local_prequran_group_pool',
+    $poolwhere ? implode(' AND ', $poolwhere) : '',
+    $poolparams,
+    'timemodified DESC',
+    '*',
+    0,
+    50
+) : [];
+$teacherprofiles = pqlgrp_teacher_profiles($workspaceid);
 $teacherlinks = pqlgrp_teacher_link_data($teacherprofiles);
-[$teachers, $teachermatches] = pqlgrp_ranked_teacher_options(null, $teacherprofiles);
+[$teachers, $teachermatches] = pqlgrp_ranked_teacher_options(null, $teacherprofiles, $workspaceid);
 $teacheroptionsbypool = [];
 $teachermatchesbypool = [];
 $pooldefaults = [];
 foreach ($pools as $pool) {
-    [$poolteacheroptions, $poolteachermatches] = pqlgrp_ranked_teacher_options($pool, $teacherprofiles);
+    [$poolteacheroptions, $poolteachermatches] = pqlgrp_ranked_teacher_options($pool, $teacherprofiles, $workspaceid);
     $poolid = (string)$pool->id;
     $teacheroptionsbypool[$poolid] = $poolteacheroptions;
     $teachermatchesbypool[$poolid] = array_slice($poolteachermatches, 0, 5);
@@ -628,32 +751,66 @@ $recommendations = [];
 $metrics = ['profiles' => 0, 'pools' => 0, 'groups' => 0, 'ungrouped' => 0];
 
 if ($ready) {
+    $groupwhere = '';
+    $groupparams = [];
+    if (pqlgrp_table_has_field('local_prequran_class_group', 'workspaceid')) {
+        $groupwhere = 'WHERE g.workspaceid = :workspaceid';
+        $groupparams['workspaceid'] = $workspaceid;
+    }
     $groups = $DB->get_records_sql(
         "SELECT g.*,
-                COUNT(gm.id) AS active_students
+                COALESCE(gmc.active_students, 0) AS active_students
            FROM {local_prequran_class_group} g
-      LEFT JOIN {local_prequran_group_member} gm ON gm.groupid = g.id AND gm.assignment_status = 'active'
-       GROUP BY g.id, g.poolid, g.teacherid, g.title, g.course_type, g.timezone, g.language, g.current_level, g.learning_base,
-                g.country, g.city, g.age_min, g.age_max, g.gender_policy, g.schedule_summary, g.max_students, g.status,
-                g.createdby, g.timecreated, g.timemodified
+      LEFT JOIN (
+                SELECT groupid, COUNT(1) AS active_students
+                  FROM {local_prequran_group_member}
+                 WHERE assignment_status = 'active'
+              GROUP BY groupid
+                ) gmc ON gmc.groupid = g.id
+          {$groupwhere}
        ORDER BY g.timemodified DESC",
-        [],
+        $groupparams,
         0,
         50
     );
-    $metrics['profiles'] = $DB->count_records('local_prequran_student_profile', ['status' => 'active']);
-    $metrics['pools'] = $DB->count_records('local_prequran_group_pool', ['status' => 'active']);
-    $metrics['groups'] = $DB->count_records_select('local_prequran_class_group', "status IN ('open', 'active')");
+    $profilecountwhere = 'status = :status';
+    $profilecountparams = ['status' => 'active'];
+    if (pqlgrp_table_has_field('local_prequran_student_profile', 'workspaceid')) {
+        $profilecountwhere .= ' AND workspaceid = :workspaceid';
+        $profilecountparams['workspaceid'] = $workspaceid;
+    }
+    $poolcountwhere = 'status = :status';
+    $poolcountparams = ['status' => 'active'];
+    if (pqlgrp_table_has_field('local_prequran_group_pool', 'workspaceid')) {
+        $poolcountwhere .= ' AND workspaceid = :workspaceid';
+        $poolcountparams['workspaceid'] = $workspaceid;
+    }
+    $groupcountwhere = "status IN ('open', 'active')";
+    $groupcountparams = [];
+    if (pqlgrp_table_has_field('local_prequran_class_group', 'workspaceid')) {
+        $groupcountwhere .= ' AND workspaceid = :workspaceid';
+        $groupcountparams['workspaceid'] = $workspaceid;
+    }
+    $metrics['profiles'] = $DB->count_records_select('local_prequran_student_profile', $profilecountwhere, $profilecountparams);
+    $metrics['pools'] = $DB->count_records_select('local_prequran_group_pool', $poolcountwhere, $poolcountparams);
+    $metrics['groups'] = $DB->count_records_select('local_prequran_class_group', $groupcountwhere, $groupcountparams);
+    $ungroupedworkspace = '';
+    $ungroupedparams = ['workspaceid' => $workspaceid];
+    if (pqlgrp_table_has_field('local_prequran_student_profile', 'workspaceid')) {
+        $ungroupedworkspace = 'AND sp.workspaceid = :workspaceid';
+    }
     $metrics['ungrouped'] = (int)$DB->count_records_sql(
         "SELECT COUNT(1)
            FROM {local_prequran_student_profile} sp
           WHERE sp.status = 'active'
+            {$ungroupedworkspace}
             AND NOT EXISTS (
                 SELECT 1
                   FROM {local_prequran_group_member} gm
                  WHERE gm.studentid = sp.userid
                    AND gm.assignment_status = 'active'
-            )"
+            )",
+        $ungroupedworkspace !== '' ? $ungroupedparams : []
     );
 
     foreach ($profiles as $profile) {
@@ -701,10 +858,10 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
       </div>
       <div class="pqlgrp-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>
-        <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/student_intake.php'))->out(false); ?>">New student intake</a>
-        <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php'))->out(false); ?>">Create session</a>
-        <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php'))->out(false); ?>">Create series</a>
-        <a class="pqlgrp-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php'))->out(false); ?>">Admin menu</a>
+        <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/student_intake.php', $urlparams))->out(false); ?>">New student intake</a>
+        <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $urlparams))->out(false); ?>">Create session</a>
+        <a class="pqlgrp-btn pqlgrp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $urlparams))->out(false); ?>">Create series</a>
+        <a class="pqlgrp-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php', $urlparams))->out(false); ?>">Admin menu</a>
       </div>
     </section>
 

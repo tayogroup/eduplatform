@@ -1,0 +1,511 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 4,
+  "unit": 3,
+  "unitId": "eng-g04-t01-u03",
+  "title": "Food and Health Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: Food made of two pieces of bread with meat, cheese, or vegetables inside.",
+          "choices": [
+            "sandwich",
+            "lamb",
+            "spice"
+          ],
+          "answer": "sandwich",
+          "explanation": "sandwich: Food made of two pieces of bread with meat, cheese, or vegetables inside."
+        },
+        {
+          "prompt": "Which word means: Hard to bite, so you need to chew it a lot.",
+          "choices": [
+            "sandwich",
+            "lamb",
+            "chewy"
+          ],
+          "answer": "chewy",
+          "explanation": "chewy: Hard to bite, so you need to chew it a lot."
+        },
+        {
+          "prompt": "Which word means: Large farm animals such as cows and bulls, kept for milk and meat.",
+          "choices": [
+            "lamb",
+            "cattle",
+            "sandwich"
+          ],
+          "answer": "cattle",
+          "explanation": "cattle: Large farm animals such as cows and bulls, kept for milk and meat."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A young sheep, or the meat from it.",
+          "answer": "lamb"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Very dangerous; able to cause death.",
+          "answer": "deadly"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Hard work, or the people who do it.",
+          "answer": "labor"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "lunch.",
+            "for",
+            "sandwich",
+            "chicken",
+            "a",
+            "ate",
+            "I"
+          ],
+          "answer": "I ate a chicken sandwich for lunch."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "tastier.",
+            "soup",
+            "the",
+            "make",
+            "to",
+            "spice",
+            "some",
+            "added",
+            "We"
+          ],
+          "answer": "We added some spice to make the soup tastier."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "chewy.",
+            "very",
+            "was",
+            "meat",
+            "dried",
+            "The"
+          ],
+          "answer": "The dried meat was very chewy."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "What does 'chewy' mean?",
+          "choices": [
+            "Hard to bite, so you need to chew it a lot.",
+            "The part of your body inside your head that helps you think and learn.",
+            "The part of your body where food goes after you eat it.",
+            "To collect things or bring people together."
+          ],
+          "answer": "Hard to bite, so you need to chew it a lot.",
+          "explanation": "The dried meat was very chewy."
+        },
+        {
+          "prompt": "What does 'deadly' mean?",
+          "choices": [
+            "A serious sickness where some of the body's cells grow the wrong way.",
+            "The part of your body inside your head that helps you think and learn.",
+            "The part of your body where food goes after you eat it.",
+            "Very dangerous; able to cause death."
+          ],
+          "answer": "Very dangerous; able to cause death.",
+          "explanation": "Some wild mushrooms are deadly, so we never eat them."
+        },
+        {
+          "prompt": "What does 'gather' mean?",
+          "choices": [
+            "A drink that changes how adults act; it is not safe for children.",
+            "A serious sickness where some of the body's cells grow the wrong way.",
+            "The part of your body where food goes after you eat it.",
+            "To collect things or bring people together."
+          ],
+          "answer": "To collect things or bring people together.",
+          "explanation": "We gather ripe dates from the palm trees."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "Where does food travel before it reaches your home?",
+          "choices": [
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
+            "A young sheep, or the meat from it."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "Which foods are named in the song?",
+          "choices": [
+            "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
+            "A young sheep, or the meat from it.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "Why did the sandwich make Musa sick? What did the nurse say caused it?",
+          "choices": [
+            "A young sheep, or the meat from it.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "Food made of two pieces of bread with meat, cheese, or vegetables inside."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: My Favourite Meal",
+          "target": "My favourite meal is ______."
+        },
+        {
+          "prompt": "Speaking 3: Healthy or Not?",
+          "target": "Fresh mangoes are better than candy because ______."
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "candy.",
+            "much",
+            "too",
+            "ate",
+            "I",
+            "after",
+            "hurt",
+            "stomach",
+            "My"
+          ],
+          "answer": "My stomach hurt after I ate too much candy."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "field.",
+            "the",
+            "to",
+            "cattle",
+            "his",
+            "led",
+            "farmer",
+            "The"
+          ],
+          "answer": "The farmer led his cattle to the field."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "dangerous.",
+            "be",
+            "can",
+            "food",
+            "on",
+            "chemicals",
+            "many",
+            "Too"
+          ],
+          "answer": "Too many chemicals on food can be dangerous."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'gather' mean in this unit?",
+          "choices": [
+            "To collect things or bring people together.",
+            "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
+            "A young sheep, or the meat from it."
+          ],
+          "answer": "To collect things or bring people together.",
+          "explanation": "gather: To collect things or bring people together."
+        },
+        {
+          "prompt": "What does 'pesticide' mean in this unit?",
+          "choices": [
+            "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
+            "A young sheep, or the meat from it.",
+            "A chemical used to kill insects that harm plants."
+          ],
+          "answer": "A chemical used to kill insects that harm plants.",
+          "explanation": "pesticide: A chemical used to kill insects that harm plants."
+        },
+        {
+          "prompt": "What does 'lamb' mean in this unit?",
+          "choices": [
+            "A part of a plant, like pepper, that adds flavour to food.",
+            "A young sheep, or the meat from it.",
+            "Food made of two pieces of bread with meat, cheese, or vegetables inside."
+          ],
+          "answer": "A young sheep, or the meat from it.",
+          "explanation": "lamb: A young sheep, or the meat from it."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'cancer'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "cancer is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'debt'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "debt is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fresh'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "fresh is used as a adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "rice",
+              "Small white or brown grains that people cook and eat."
+            ],
+            [
+              "bakery",
+              "A place where bread and cakes are made and sold."
+            ],
+            [
+              "chewy",
+              "Hard to bite, so you need to chew it a lot."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "gather",
+              "To collect things or bring people together."
+            ],
+            [
+              "stomach",
+              "The part of your body where food goes after you eat it."
+            ],
+            [
+              "cattle",
+              "Large farm animals such as cows and bulls, kept for milk and meat."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "pesticide",
+              "A chemical used to kill insects that harm plants."
+            ],
+            [
+              "famine",
+              "A time when many people do not have enough food to eat."
+            ],
+            [
+              "comma",
+              "A small mark ( , ) used to show a pause or to separate items in a list."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does 'spice' mean?",
+          "choices": [
+            "A part of a plant, like pepper, that adds flavour to food.",
+            "Hard to bite, so you need to chew it a lot.",
+            "New and clean; not old or spoiled.",
+            "Very dangerous; able to cause death."
+          ],
+          "answer": "A part of a plant, like pepper, that adds flavour to food.",
+          "explanation": "We added some spice to make the soup tastier."
+        },
+        {
+          "prompt": "What does 'bakery' mean?",
+          "choices": [
+            "A place where bread and cakes are made and sold.",
+            "Hard to bite, so you need to chew it a lot.",
+            "To collect things or bring people together.",
+            "Very dangerous; able to cause death."
+          ],
+          "answer": "A place where bread and cakes are made and sold.",
+          "explanation": "We bought fresh bread from the bakery."
+        },
+        {
+          "prompt": "What does 'fresh' mean?",
+          "choices": [
+            "New and clean; not old or spoiled.",
+            "The part of your body inside your head that helps you think and learn.",
+            "To collect things or bring people together.",
+            "Very dangerous; able to cause death."
+          ],
+          "answer": "New and clean; not old or spoiled.",
+          "explanation": "I love to eat fresh fruit from the market."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'sandwich' mean?",
+          "choices": [
+            "A part of a plant, like pepper, that adds flavour to food.",
+            "A place where bread and cakes are made and sold.",
+            "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
+            "Small white or brown grains that people cook and eat."
+          ],
+          "answer": "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
+          "explanation": "I ate a chicken sandwich for lunch."
+        },
+        {
+          "prompt": "What does 'lamb' mean?",
+          "choices": [
+            "A part of a plant, like pepper, that adds flavour to food.",
+            "A place where bread and cakes are made and sold.",
+            "A young sheep, or the meat from it.",
+            "New and clean; not old or spoiled."
+          ],
+          "answer": "A young sheep, or the meat from it.",
+          "explanation": "We cooked lamb and rice for the guests."
+        },
+        {
+          "prompt": "What does 'rice' mean?",
+          "choices": [
+            "A place where bread and cakes are made and sold.",
+            "Hard to bite, so you need to chew it a lot.",
+            "New and clean; not old or spoiled.",
+            "Small white or brown grains that people cook and eat."
+          ],
+          "answer": "Small white or brown grains that people cook and eat.",
+          "explanation": "She ate rice with her chicken."
+        }
+      ]
+    }
+  ]
+}

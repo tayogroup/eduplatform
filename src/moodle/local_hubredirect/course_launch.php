@@ -6,7 +6,6 @@ require_once(__DIR__ . '/accesslib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once(__DIR__ . '/course_catalog.php');
-require_once(__DIR__ . '/course_offeringlib.php');
 
 $pqcl_consumercontext = pqh_requested_consumer_context();
 $pqcl_brand = trim((string)($pqcl_consumercontext->consumername ?? 'EduPlatform'));
@@ -145,17 +144,60 @@ if (!$canviewtarget) {
             ])) {
             $canviewtarget = true;
         }
+        if (!$canviewtarget
+            && $DB->get_manager()->table_exists('local_prequran_group_member')
+            && $DB->get_manager()->table_exists('local_prequran_class_group')
+            && $DB->record_exists_sql(
+                "SELECT 1
+                   FROM {local_prequran_group_member} gm
+                   JOIN {local_prequran_class_group} cg ON cg.id = gm.groupid
+                  WHERE gm.studentid = :studentid
+                    AND gm.assignment_status = :assignmentstatus
+                    AND cg.teacherid = :teacherid
+                    AND cg.status <> :archived",
+                [
+                    'studentid' => $targetuserid,
+                    'assignmentstatus' => 'active',
+                    'teacherid' => (int)$USER->id,
+                    'archived' => 'archived',
+                ]
+            )) {
+            $canviewtarget = true;
+        }
+        if (!$canviewtarget
+            && $DB->get_manager()->table_exists('local_prequran_workspace_member')
+            && $DB->record_exists_sql(
+                "SELECT 1
+                   FROM {local_prequran_workspace_member} teacherwm
+                   JOIN {local_prequran_workspace_member} studentwm
+                     ON studentwm.workspaceid = teacherwm.workspaceid
+                    AND studentwm.userid = :studentid
+                    AND studentwm.workspace_role = :studentrole
+                    AND studentwm.status = :studentstatus
+                  WHERE teacherwm.userid = :teacherid
+                    AND teacherwm.status = :teacherstatus
+                    AND teacherwm.workspace_role IN (:teacherrole, :assistantrole)",
+                [
+                    'studentid' => $targetuserid,
+                    'studentrole' => 'student',
+                    'studentstatus' => 'active',
+                    'teacherid' => (int)$USER->id,
+                    'teacherstatus' => 'active',
+                    'teacherrole' => 'teacher',
+                    'assistantrole' => 'assistant_teacher',
+                ]
+            )) {
+            $canviewtarget = true;
+        }
     } catch (Throwable $e) {
         $canviewtarget = false;
     }
 }
 
 $haslegacycourseaccess = pqh_user_can_access_course($targetuserid, $coursekey);
-$hasofferingrequest = pqco_user_has_course_offering_request($targetuserid, $coursekey);
-$hasmoodleofferingaccess = pqco_user_has_moodle_offering_access($targetuserid, $coursekey);
 if (!$canviewtarget
     || (!is_siteadmin((int)$USER->id)
-        && (!$haslegacycourseaccess || ($hasofferingrequest && !$hasmoodleofferingaccess)))) {
+        && !$haslegacycourseaccess)) {
     redirect(new moodle_url('/local/hubredirect/access_denied.php', ['course' => $coursekey]));
 }
 

@@ -1,0 +1,510 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 2,
+  "unit": 3,
+  "unitId": "eng-g02-t01-u03",
+  "title": "Ready, Steady, Go! Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: The top part of your body, with your eyes, ears, nose and mouth.",
+          "choices": [
+            "head",
+            "arm",
+            "finger"
+          ],
+          "answer": "head",
+          "explanation": "head: The top part of your body, with your eyes, ears, nose and mouth."
+        },
+        {
+          "prompt": "Which word means: To jump on one foot.",
+          "choices": [
+            "head",
+            "arm",
+            "hop"
+          ],
+          "answer": "hop",
+          "explanation": "hop: To jump on one foot."
+        },
+        {
+          "prompt": "Which word means: The clear drink your body needs every day.",
+          "choices": [
+            "arm",
+            "water",
+            "head"
+          ],
+          "answer": "water",
+          "explanation": "water: The clear drink your body needs every day."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The part from your shoulder to your hand.",
+          "answer": "arm"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To push yourself off the ground with both feet.",
+          "answer": "jump"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To rest with your eyes closed at night.",
+          "answer": "sleep"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "sunny.",
+            "is",
+            "it",
+            "when",
+            "head",
+            "my",
+            "on",
+            "hat",
+            "a",
+            "wear",
+            "I"
+          ],
+          "answer": "I wear a hat on my head when it is sunny."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "fingers.",
+            "my",
+            "with",
+            "pencil",
+            "my",
+            "hold",
+            "I"
+          ],
+          "answer": "I hold my pencil with my fingers."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "rabbits.",
+            "little",
+            "like",
+            "hop",
+            "children",
+            "The"
+          ],
+          "answer": "The children hop like little rabbits."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which word means: To move your hand from side to side to say hello or goodbye.",
+          "choices": [
+            "wave",
+            "arm",
+            "hand",
+            "finger"
+          ],
+          "answer": "wave",
+          "explanation": "wave: To move your hand from side to side to say hello or goodbye. I wave goodbye to my friend."
+        },
+        {
+          "prompt": "What type of word is 'hop'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Verb",
+          "explanation": "hop: To jump on one foot. The children hop like little rabbits."
+        },
+        {
+          "prompt": "We ____ over the puddles when it rains.",
+          "choices": [
+            "jump",
+            "finger",
+            "tummy",
+            "toe"
+          ],
+          "answer": "jump",
+          "explanation": "jump: To push yourself off the ground with both feet. We jump over the puddles when it rains."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'hand'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "I wash my hands before I eat."
+        },
+        {
+          "prompt": "I hold my pencil with my ____s.",
+          "choices": [
+            "finger",
+            "head",
+            "arm",
+            "hand"
+          ],
+          "answer": "finger",
+          "explanation": "I hold my pencil with my fingers."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "tummy",
+            "tmumy",
+            "tumm",
+            "tummyy"
+          ],
+          "answer": "tummy",
+          "explanation": "My tummy feels full after lunch."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Naming Body Parts",
+          "target": "This is my ______."
+        },
+        {
+          "prompt": "Speaking Game — Simon Says",
+          "target": "Simon says, touch your toes!"
+        },
+        {
+          "prompt": "Speaking 5 - Healthy Habit Interview",
+          "target": "and answer six questions about moving, food, water and sleep."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "understand.",
+            "I",
+            "when",
+            "head",
+            "my",
+            "nod",
+            "I"
+          ],
+          "answer": "I nod my head when I understand."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "thirsty.",
+            "feel",
+            "I",
+            "when",
+            "water",
+            "drink",
+            "I"
+          ],
+          "answer": "I drink water when I feel thirsty."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "still.",
+            "stand",
+            "then",
+            "around,",
+            "Turn"
+          ],
+          "answer": "Turn around, then stand still."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'clap' mean in this unit?",
+          "choices": [
+            "To hit your hands together to make a sound.",
+            "The top part of your body, with your eyes, ears, nose and mouth.",
+            "The part from your shoulder to your hand."
+          ],
+          "answer": "To hit your hands together to make a sound.",
+          "explanation": "clap: To hit your hands together to make a sound."
+        },
+        {
+          "prompt": "What does 'energy' mean in this unit?",
+          "choices": [
+            "The top part of your body, with your eyes, ears, nose and mouth.",
+            "The part from your shoulder to your hand.",
+            "The power you get from food and rest to play and learn."
+          ],
+          "answer": "The power you get from food and rest to play and learn.",
+          "explanation": "energy: The power you get from food and rest to play and learn."
+        },
+        {
+          "prompt": "What does 'arm' mean in this unit?",
+          "choices": [
+            "One of the five long parts at the end of your hand.",
+            "The part from your shoulder to your hand.",
+            "The top part of your body, with your eyes, ears, nose and mouth."
+          ],
+          "answer": "The part from your shoulder to your hand.",
+          "explanation": "arm: The part from your shoulder to your hand."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'healthy'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "healthy is used as a adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'reach'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "reach is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'toe'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "toe is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "hand",
+              "The part at the end of your arm, with fingers."
+            ],
+            [
+              "tummy",
+              "The front of your body below your chest (also called the stomach)."
+            ],
+            [
+              "hop",
+              "To jump on one foot."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "clap",
+              "To hit your hands together to make a sound."
+            ],
+            [
+              "exercise",
+              "Moving your body to keep it strong and fit."
+            ],
+            [
+              "strong",
+              "Having lots of power in your body."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "energy",
+              "The power you get from food and rest to play and learn."
+            ],
+            [
+              "turn",
+              "To move your body around to face another way."
+            ],
+            [
+              "flap",
+              "To move your arms up and down like wings."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "I hold my pencil with my ____s.",
+          "choices": [
+            "finger",
+            "head",
+            "arm",
+            "hand"
+          ],
+          "answer": "finger",
+          "explanation": "I hold my pencil with my fingers."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "tummy",
+            "tmumy",
+            "tumm",
+            "tummyy"
+          ],
+          "answer": "tummy",
+          "explanation": "My tummy feels full after lunch."
+        },
+        {
+          "prompt": "Which word means: One of the five small parts at the end of your foot.",
+          "choices": [
+            "toe",
+            "head",
+            "arm",
+            "hand"
+          ],
+          "answer": "toe",
+          "explanation": "toe: One of the five small parts at the end of your foot. I can wiggle my toes inside my shoes."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'head' mean?",
+          "choices": [
+            "The top part of your body, with your eyes, ears, nose and mouth.",
+            "The part from your shoulder to your hand.",
+            "The part at the end of your arm, with fingers.",
+            "One of the five long parts at the end of your hand."
+          ],
+          "answer": "The top part of your body, with your eyes, ears, nose and mouth.",
+          "explanation": "I wear a hat on my head when it is sunny."
+        },
+        {
+          "prompt": "Which word means: The part from your shoulder to your hand.",
+          "choices": [
+            "arm",
+            "head",
+            "hand",
+            "finger"
+          ],
+          "answer": "arm",
+          "explanation": "I use my arms to carry my school bag."
+        },
+        {
+          "prompt": "What type of word is 'hand'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "I wash my hands before I eat."
+        }
+      ]
+    }
+  ]
+}

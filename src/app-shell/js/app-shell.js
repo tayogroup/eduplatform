@@ -23,7 +23,7 @@ import {
   VIEW_MADD,
   VIEW_SAKOON,
   VIEW_ENDING
-} from './app-config.js?v=quraantest-origin-20260609a';
+} from './app-config.js?v=eduplatform-origin-20260703a';
 
 import {
   MUQATTAAT_ITEMS,
@@ -60,7 +60,7 @@ const mobileInfoModal    = document.getElementById('mobileInfoModal');
 const btnMoodleLogin     = document.getElementById('btnMoodleLogin');
 const btnMoodleLogout    = document.getElementById('btnMoodleLogout');
 
-function currentPreQuranEnvironment() {
+function currentEduPlatformEnvironment() {
   const path = String(window.location.pathname || '');
   if (path.indexOf('/pre_quraan_integration/') === 0) return 'integration';
   if (path.indexOf('/pre_quraan_staging/') === 0) return 'staging';
@@ -68,7 +68,7 @@ function currentPreQuranEnvironment() {
 }
 
 function wireMoodleAuthLinks() {
-  const env = currentPreQuranEnvironment();
+  const env = currentEduPlatformEnvironment();
   if (btnMoodleLogin) {
     const url = new URL(`${MOODLE_ORIGIN}/local/hubredirect/issue.php`);
     if (env !== 'production') {
@@ -77,8 +77,13 @@ function wireMoodleAuthLinks() {
     btnMoodleLogin.href = url.toString();
   }
   if (btnMoodleLogout) {
-    btnMoodleLogout.href = `${MOODLE_ORIGIN}/login/logout.php`;
+    btnMoodleLogout.href = `${MOODLE_ORIGIN}/local/hubredirect/logout.php`;
   }
+  const intro = document.getElementById('ctaIntro');
+  if (intro) intro.href = `${MOODLE_ORIGIN}/`;
+  document.querySelectorAll('[data-moodle-path]').forEach((link) => {
+    link.href = new URL(link.dataset.moodlePath || '/', `${MOODLE_ORIGIN}/`).toString();
+  });
 }
 
 wireMoodleAuthLinks();
@@ -169,27 +174,27 @@ const GAMES_CONFIG = {
     title: "Joint Practice",
     links: [
       {
-        href: "https://ehelacademy.b-cdn.net/pre_quraan/scripts/joint_2-letters_sound_sniper2.html",
+        href: "/pre_quraan/scripts/joint_2-letters_sound_sniper2.html",
         label: "Joint 2-Letters Sound Sniper"
       },
       {
-        href: "https://ehelacademy.b-cdn.net/pre_quraan/scripts/joint_3-letters_sound_sniper.html",
+        href: "/pre_quraan/scripts/joint_3-letters_sound_sniper.html",
         label: "Joint 3-Letters Sound Sniper"
       },
       {
-        href: "https://ehelacademy.b-cdn.net/pre_quraan/scripts/joint_4-letters_sound_sniper2.html",
+        href: "/pre_quraan/scripts/joint_4-letters_sound_sniper2.html",
         label: "Joint 4-Letters Sound Sniper"
       },
       {
-        href: "https://ehelacademy.b-cdn.net/pre_quraan/scripts/joint_2-letters_construction2.html",
+        href: "/pre_quraan/scripts/joint_2-letters_construction2.html",
         label: "Joint 2-Letters Construction"
       },
       {
-        href: "https://ehelacademy.b-cdn.net/pre_quraan/scripts/joint_3-letters_construction2.html",
+        href: "/pre_quraan/scripts/joint_3-letters_construction2.html",
         label: "Joint 3-Letters Construction"
       },
       {
-        href: "https://ehelacademy.b-cdn.net/pre_quraan/scripts/joint_4-letters_construction.html",
+        href: "/pre_quraan/scripts/joint_4-letters_construction.html",
         label: "Joint 4-Letters Construction"
       }
     ]

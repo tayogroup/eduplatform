@@ -68,8 +68,17 @@ try {
     }
     $mimetype = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
     $config = pqh_bunny_storage_config('bunny_live_session_slides_prefix', 'pre_quraan/live-session-slides');
-    pqh_upload_bytes_to_bunny_storage((string)$session->agenda_slides_path, $bytes, $mimetype, $config);
+    $path = trim((string)$session->agenda_slides_path);
+    if (pqh_live_session_agenda_template_from_marker($path) !== null) {
+        $filename = clean_filename((string)($session->agenda_slides_filename ?? 'live-session-agenda.pptx'));
+        if ($filename === '') {
+            $filename = 'live-session-agenda.pptx';
+        }
+        $path = pqh_live_session_agenda_storage_path($sessionid, $filename);
+    }
+    pqh_upload_bytes_to_bunny_storage($path, $bytes, $mimetype, $config);
 
+    $session->agenda_slides_path = $path;
     $session->agenda_slides_mimetype = $mimetype;
     $session->agenda_slides_size = strlen($bytes);
     $session->agenda_slides_uploadedat = time();

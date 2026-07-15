@@ -23,6 +23,78 @@ defined('MOODLE_INTERNAL') || die();
 $functions = [
 
     // -------------------------------------------------------------------------
+    // Course transcript services.
+    // -------------------------------------------------------------------------
+    'local_prequran_transcript_preview' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'transcript_preview',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Course transcripts: resolve an unofficial transcript preview with warnings.',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
+    'local_prequran_transcript_issue_official' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'transcript_issue_official',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Course transcripts: issue an official transcript snapshot.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+    'local_prequran_transcript_document' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'transcript_document',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Course transcripts: return an authenticated export URL for an official transcript.',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
+    'local_prequran_transcript_verify' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'transcript_verify',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Course transcripts: verify an official transcript document ID and signed code.',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
+    'local_prequran_transcript_manage' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'transcript_manage',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Course transcripts: manage holds, revocation, and reissue.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+
+    // -------------------------------------------------------------------------
+    // Finance APIs, hardening, and scale controls.
+    // -------------------------------------------------------------------------
+    'local_prequran_finance_summary' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'finance_summary',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Finance: return workspace billing metrics for authorized finance admins.',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
+    'local_prequran_finance_invoice_action' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'finance_invoice_action',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Finance: perform idempotent invoice actions such as payment recording, hosted checkout creation, and secure-link revocation.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+    'local_prequran_finance_hardening_status' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'finance_hardening_status',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Finance: return API hardening and scale-control status for a workspace.',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
+
+    // -------------------------------------------------------------------------
     // Live sessions (BigBlueButton production MVP)
     // -------------------------------------------------------------------------
     'local_prequran_live_create_session' => [
@@ -281,6 +353,248 @@ $functions = [
         'classpath'   => 'local/prequran/externallib_v4.php',
         'description' => 'Communications: send a message to a thread where the caller is an allowed participant.',
         'type'        => 'write',
+        'ajax'        => true,
+    ],
+
+    // -------------------------------------------------------------------------
+    // Support Phase 2 (asynchronous conversations)
+    // -------------------------------------------------------------------------
+    'local_prequran_support_start_conversation' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_start_conversation',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: start an allowed asynchronous support conversation.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_send_message' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_send_message',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: send a visible message to an allowed support conversation.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_mark_read' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_mark_read',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: mark a support conversation read for the current user.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_list_conversations' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_list_conversations',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: list allowed asynchronous support conversations.',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_get_conversation' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_get_conversation',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: get one support conversation and visible messages.',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
+
+    // -------------------------------------------------------------------------
+    // Support Phase 7 (near-real-time live chat polish)
+    // -------------------------------------------------------------------------
+    'local_prequran_support_live_poll' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_live_poll',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: poll conversations, active messages, availability, and live indicators.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+
+    // -------------------------------------------------------------------------
+    // Support Phase 4 (ticket conversion and lifecycle)
+    // -------------------------------------------------------------------------
+    'local_prequran_support_convert_to_ticket' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_convert_to_ticket',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: convert a support conversation into a tracked ticket with attached history.',
+        'type'        => 'write',
+        'capabilities'=> 'local/prequran:supportconvert',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_update_ticket' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_update_ticket',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: update ticket lifecycle, priority, category, assignment, and staff notes.',
+        'type'        => 'write',
+        'capabilities'=> 'local/prequran:supportupdateticket',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_list_tickets' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_list_tickets',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: list tracked tickets for authorized support staff.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportviewqueue',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_get_ticket' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_get_ticket',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: get one ticket with linked conversation messages and event timeline.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportviewqueue',
+        'ajax'        => true,
+    ],
+
+    // -------------------------------------------------------------------------
+    // Support Phase 5 (SLA, routing, canned replies, supervisor operations)
+    // -------------------------------------------------------------------------
+    'local_prequran_support_list_queues' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_list_queues',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: list operational queues for authorized support staff.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportviewqueue',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_refresh_sla' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_refresh_sla',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: recalculate SLA due dates for one ticket or an active ticket set.',
+        'type'        => 'write',
+        'capabilities'=> 'local/prequran:supportmanagesla',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_route_ticket' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_route_ticket',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: route or transfer a ticket to a queue and assignee.',
+        'type'        => 'write',
+        'capabilities'=> 'local/prequran:supportassignticket',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_list_canned_responses' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_list_canned_responses',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: list active canned responses visible to the current staff user.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportreply',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_save_canned_response' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_save_canned_response',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: create or update a canned response.',
+        'type'        => 'write',
+        'capabilities'=> 'local/prequran:supportmanagesla',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_send_canned_reply' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_send_canned_reply',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: send a canned public reply to a linked ticket conversation.',
+        'type'        => 'write',
+        'capabilities'=> 'local/prequran:supportreply',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_supervisor_summary' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_supervisor_summary',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: return supervisor queue, SLA risk, and workload summary counts.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportreports',
+        'ajax'        => true,
+    ],
+
+    // -------------------------------------------------------------------------
+    // Support Phase 6 (reports, search, export, satisfaction, quality review)
+    // -------------------------------------------------------------------------
+    'local_prequran_support_search' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_search',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: search tickets by text, filters, users, and message content.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportviewqueue',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_reports' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_reports',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: return supervisor and admin report aggregates.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportreports',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_export_csv' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_export_csv',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: export ticket report rows as CSV content.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportreports',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_rate_ticket' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_rate_ticket',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: submit a requester satisfaction rating for a resolved or closed ticket.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_quality_queue' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_quality_queue',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: list tickets needing quality review.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportaudit',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_quality_review' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_quality_review',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: record a staff-only quality review for a ticket.',
+        'type'        => 'write',
+        'capabilities'=> 'local/prequran:supportaudit',
+        'ajax'        => true,
+    ],
+
+    // -------------------------------------------------------------------------
+    // Support Phase 8 (safety hardening, audit review, pilot launch)
+    // -------------------------------------------------------------------------
+    'local_prequran_support_audit_log' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_audit_log',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: review support audit rows and ticket timeline events for pilot safety review.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportaudit',
+        'ajax'        => true,
+    ],
+    'local_prequran_support_pilot_readiness' => [
+        'classname'   => 'local_prequran_external',
+        'methodname'  => 'support_pilot_readiness',
+        'classpath'   => 'local/prequran/externallib_v4.php',
+        'description' => 'Support: return pilot readiness gates, metrics, and rollback summary.',
+        'type'        => 'read',
+        'capabilities'=> 'local/prequran:supportaudit',
         'ajax'        => true,
     ],
 

@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alphabet Lesson Test Tracker</title>
+  <style>
+    :root {
+      --bg: #f6f8f7;
+      --panel: #ffffff;
+      --ink: #173d36;
+      --muted: #60736d;
+      --line: #d9e5df;
+      --accent: #1f7a68;
+      --warn: #b7791f;
+      --fail: #b42318;
+      --pass: #157347;
+      --blocked: #6f42c1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    header {
+      padding: 22px 28px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    h1 { margin: 0 0 6px; font-size: 26px; }
+    h2 { margin: 0 0 14px; font-size: 19px; }
+    p { margin: 0; color: var(--muted); line-height: 1.45; }
+    main { padding: 22px 28px 40px; max-width: 1500px; margin: 0 auto; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(15, 35, 31, 0.04);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    label {
+      display: grid;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    input, select, textarea, button {
+      font: inherit;
+    }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 9px 10px;
+      background: #fff;
+      color: var(--ink);
+    }
+    textarea { min-height: 38px; resize: vertical; }
+    button {
+      border: 1px solid var(--accent);
+      color: #fff;
+      background: var(--accent);
+      border-radius: 6px;
+      padding: 9px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #fff;
+      color: var(--accent);
+    }
+    button.danger {
+      background: #fff;
+      color: var(--fail);
+      border-color: var(--fail);
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(110px, 1fr));
+      gap: 10px;
+    }
+    .metric {
+      background: #f8fbfa;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .metric strong { display: block; font-size: 22px; }
+    .metric span { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .filters {
+      display: grid;
+      grid-template-columns: 1.2fr 170px 180px 160px 160px;
+      gap: 12px;
+      align-items: end;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      font-size: 12px;
+      color: var(--muted);
+      background: #fbfdfc;
+      position: sticky;
+      top: 86px;
+      z-index: 5;
+    }
+    td { font-size: 13px; }
+    .idcol { width: 122px; }
+    .prioritycol { width: 70px; }
+    .statuscol { width: 135px; }
+    .notescol { width: 250px; }
+    .evidencecol { width: 190px; }
+    .defectcol { width: 145px; }
+    .category-row td {
+      background: #eef7f4;
+      color: var(--ink);
+      font-weight: 800;
+      border-top: 2px solid var(--line);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    .p0 { color: #fff; background: var(--fail); border-color: var(--fail); }
+    .p1 { color: #fff; background: var(--warn); border-color: var(--warn); }
+    .p2 { color: #173d36; background: #e9f3ff; border-color: #bfd8ff; }
+    .p3 { color: #173d36; background: #f1f5f3; border-color: #d4ded9; }
+    tr.pass { background: #f2fbf5; }
+    tr.fail { background: #fff5f4; }
+    tr.blocked { background: #f7f2ff; }
+    tr.na { background: #f5f6f6; }
+    .small { font-size: 12px; color: var(--muted); }
+    .save-status { font-size: 12px; font-weight: 700; color: var(--muted); }
+    .save-status.ok { color: var(--pass); }
+    .save-status.warn { color: var(--warn); }
+    .save-status.fail { color: var(--fail); }
+    .hidden { display: none !important; }
+    @media (max-width: 920px) {
+      header { position: static; }
+      main { padding: 14px; }
+      .grid, .summary, .filters { grid-template-columns: 1fr; }
+      table, thead, tbody, tr, th, td { display: block; }
+      thead { display: none; }
+      tr {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        background: #fff;
+      }
+      td {
+        border-bottom: 0;
+        padding: 8px 10px;
+      }
+      td::before {
+        content: attr(data-label);
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 800;
+        margin-bottom: 4px;
+      }
+      .category-row td::before { display: none; }
+    }
+    @media print {
+      header, .actions, .filters, button { position: static; display: none !important; }
+      main { max-width: none; padding: 0; }
+      .panel { box-shadow: none; break-inside: avoid; }
+      th { position: static; }
+      textarea, input, select { border: 0; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Alphabet Lesson Test Tracker</h1>
+    <p>Record pass/fail evidence for the Pre-Quran Alphabet lesson. Results are saved to Moodle when available and kept in this browser as a fallback.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Run Details</h2>
+      <div class="grid">
+        <label>Run ID
+          <input id="runId" data-meta="runId">
+        </label>
+        <label>Tester
+          <input id="tester" data-meta="tester" placeholder="Intern tester name">
+        </label>
+        <label>Environment
+          <select id="environment" data-meta="environment">
+            <option>Integration</option>
+            <option>Staging</option>
+            <option>Production</option>
+            <option>Local Preview</option>
+          </select>
+        </label>
+        <label>Session Type
+          <select id="sessionType" data-meta="sessionType">
+            <option>Managed</option>
+            <option>Unmanaged</option>
+            <option>Both / Mixed</option>
+          </select>
+        </label>
+        <label>Browser / Device
+          <input id="browserDevice" data-meta="browserDevice" placeholder="Chrome desktop, Android, iPhone">
+        </label>
+        <label>Student ID / Account
+          <input id="studentId" data-meta="studentId">
+        </label>
+        <label>Teacher / Parent Account
+          <input id="linkedAccounts" data-meta="linkedAccounts">
+        </label>
+        <label>Alphabet URL
+          <input id="alphabetUrl" data-meta="alphabetUrl">
+        </label>
+        <label>Build / Asset Marker
+          <input id="assetMarker" data-meta="assetMarker" value="alphabet-phonetics-completefix-20260620a">
+        </label>
+      </div>
+      <div style="margin-top:12px">
+        <label>Run Notes
+          <textarea id="runNotes" data-meta="runNotes" placeholder="Preconditions, reset notes, known limitations, or account context"></textarea>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Summary</h2>
+      <div class="summary" id="summary"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Controls</h2>
+      <div class="filters">
+        <label>Search
+          <input id="search" placeholder="Search id, category, test, expected result">
+        </label>
+        <label>Category
+          <select id="categoryFilter">
+            <option value="">All categories</option>
+          </select>
+        </label>
+        <label>Test Mode
+          <select id="modeFilter">
+            <option value="">Managed + unmanaged</option>
+            <option value="managed">Managed only</option>
+            <option value="unmanaged">Unmanaged only</option>
+          </select>
+        </label>
+        <label>Priority
+          <select id="priorityFilter">
+            <option value="">All priorities</option>
+            <option>P0</option>
+            <option>P1</option>
+            <option>P2</option>
+            <option>P3</option>
+          </select>
+        </label>
+        <label>Status
+          <select id="statusFilter">
+            <option value="">All statuses</option>
+            <option>Not Run</option>
+            <option>Pass</option>
+            <option>Fail</option>
+            <option>Blocked</option>
+            <option>Retest</option>
+            <option>N/A</option>
+          </select>
+        </label>
+      </div>
+      <div class="actions" style="margin-top:14px">
+        <button id="saveBtn" type="button">Save</button>
+        <button id="exportJsonBtn" type="button" class="secondary">Export JSON</button>
+        <button id="exportCsvBtn" type="button" class="secondary">Export CSV</button>
+        <button id="importBtn" type="button" class="secondary">Import JSON</button>
+        <button id="printBtn" type="button" class="secondary">Print</button>
+        <button id="resetBtn" type="button" class="danger">Reset Results</button>
+        <span id="saveStatus" class="save-status" aria-live="polite">Not saved yet</span>
+        <input id="importFile" type="file" accept="application/json,.json" class="hidden">
+      </div>
+      <p class="small" style="margin-top:10px">Tip: paste screenshot paths or defect links into Evidence / Link. Use JSON export at the end of each session.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Test Cases</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="idcol">ID</th>
+            <th class="prioritycol">Priority</th>
+            <th>Test</th>
+            <th>Expected Result</th>
+            <th class="statuscol">Status</th>
+            <th class="notescol">Notes</th>
+            <th class="evidencecol">Evidence / Link</th>
+            <th class="defectcol">Defect ID</th>
+          </tr>
+        </thead>
+        <tbody id="caseBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'alphabet_lesson_test_tracker_v1';
+    const SERVER_CONFIG = window.__PQSQA_TRACKER_CONFIG__ || {};
+    const STATUS_OPTIONS = ['Not Run', 'Pass', 'Fail', 'Blocked', 'Retest', 'N/A'];
+    const CASES = [
+      {category:'Launch And Access', id:'ALPHA-LA-001', priority:'P0', mode:'managed', test:'Launch Alphabet from managed student dashboard.', expected:'Alphabet page opens with no Moodle error and correct student context.'},
+      {category:'Launch And Access', id:'ALPHA-LA-002', priority:'P0', mode:'managed', test:'Open direct managed Alphabet URL as unauthorized user.', expected:'Access is denied or no private student data is exposed.'},
+      {category:'Launch And Access', id:'ALPHA-LA-003', priority:'P1', mode:'unmanaged', test:'Open local/static preview URL.', expected:'Unit renders without managed-only fatal errors.'},
+      {category:'Launch And Access', id:'ALPHA-LA-004', priority:'P1', test:'Verify environment path and asset marker.', expected:'URL/base path and asset version match target environment.'},
+
+      {category:'Stepper And Progress', id:'ALPHA-SP-001', priority:'P0', test:'Confirm 13 steps render in order.', expected:'Lecture, Rules, Listen, Watch, Phonetics, Repeat, LetterClue, Speak, Match, SoundClue, Animate, Write, Submit appear in order.'},
+      {category:'Stepper And Progress', id:'ALPHA-SP-002', priority:'P0', mode:'managed', test:'Complete a step and refresh.', expected:'Completed state persists for managed user.'},
+      {category:'Stepper And Progress', id:'ALPHA-SP-003', priority:'P1', test:'Use Step Back from a later step.', expected:'Confirmation appears and affected progress resets as described.'},
+      {category:'Stepper And Progress', id:'ALPHA-SP-004', priority:'P1', test:'Attempt future locked step.', expected:'Future step remains locked unless QA/free mode is intentionally enabled.'},
+      {category:'Stepper And Progress', id:'ALPHA-SP-005', priority:'P1', test:'Verify mobile step picker.', expected:'Step picker opens, lists steps, and closes cleanly.'},
+
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-001', priority:'P0', test:'Dynamic current-step action button updates when moving between steps.', expected:'Button label/action matches the active step and never points to the previous step.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-002', priority:'P1', test:'Pause and resume during Listen, Repeat, or Watch playback.', expected:'Playback pauses, button changes to Resume, and resume continues without restarting unexpectedly.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-003', priority:'P1', test:'Stop or close modal during Watch, Phonetics, Animate, Write, and Speak/Submit flows.', expected:'Modal closes cleanly, media stops when expected, and the stepper remains usable.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-004', priority:'P1', test:'Header or mobile Back button from a lesson step.', expected:'User returns to the expected previous page or app surface without losing saved progress.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-005', priority:'P0', test:'Step Back button from a completed or current step.', expected:'Confirmation appears, described progress reset happens, and current step moves back correctly.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-006', priority:'P1', test:'Cancel Step Back confirmation.', expected:'User remains on the same step and progress is unchanged.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-007', priority:'P1', test:'QA Skip Step button, if visible in test environment.', expected:'Step is marked skipped/completed according to QA rules and handoff moves to the next step without corrupting progress.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-008', priority:'P1', test:'QA Skip Step is hidden or unavailable for normal student/parent users.', expected:'Non-QA learners cannot skip required learning steps.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-009', priority:'P1', test:'Mobile bottom action dock mirrors the active step action.', expected:'Mobile action button, pause slot, and back button are visible/usable without overlap.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-010', priority:'P2', test:'Repeated rapid clicks on action, pause, and resume.', expected:'UI does not duplicate playback, double-count progress, or freeze.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-011', priority:'P1', test:'Step action button after refresh on an in-progress step.', expected:'Correct active step and action button are restored from managed progress.'},
+      {category:'Lesson Controls And Action Buttons', id:'ALPHA-CTRL-012', priority:'P2', test:'Disabled or locked action states.', expected:'Buttons show disabled/locked state clearly and do not perform blocked actions.'},
+
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-001', priority:'P0', test:'Step entry message appears for each of the 13 steps.', expected:'Message popup/text appears before or at the start of the correct step and matches the active step.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-002', priority:'P1', test:'Continue button on message popup.', expected:'Continue closes the message and starts/enables the correct step action.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-003', priority:'P1', test:'Message audio plays when configured.', expected:'Audio prompts load and play for Lecture, Listen, Watch, Phonetics/Sound, Speak, and pass-level prompts.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-004', priority:'P1', test:'Steps with text-only messages.', expected:'Rules, Repeat, LetterClue, Match, SoundClue, Animate, Write, and Submit still show readable messages even when no audio is configured.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-005', priority:'P1', test:'Message audio failure or autoplay block.', expected:'Text still appears, Continue remains usable, and the lesson is not blocked.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-006', priority:'P1', test:'Pass-level messages for Listen.', expected:'Heavy, light, long-letter, and vowel pass messages appear/play at the correct pass.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-007', priority:'P1', test:'Pass-level messages for Watch and Repeat.', expected:'Heavy, light, long-letter, and vowel pass messages appear/play for those step passes when applicable.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-008', priority:'P2', test:'Write pass message.', expected:'"Keep writing carefully..." pass message appears without interrupting writing progress incorrectly.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-009', priority:'P0', test:'Final unit completion message.', expected:'Final completion message appears once after Submit/unit completion and does not repeat after refresh.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-010', priority:'P1', test:'Speak Done confirmation message.', expected:'Confirmation text appears with Continue/Cancel, Continue marks done, Cancel returns to recording/practice.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-011', priority:'P1', test:'Message handoff after Step Back or QA Skip.', expected:'Message state follows the new active step and does not show stale previous-step copy.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-012', priority:'P2', test:'Clap/visual celebration on configured message.', expected:'Watch entry message with clap flag shows the expected celebration effect without layout overlap.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-013', priority:'P2', test:'Localized message UI labels.', expected:'Message title and Continue label follow selected UI language where localization exists.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-014', priority:'P2', test:'Message popup responsive layout.', expected:'Message modal fits mobile and desktop screens, text is readable, and controls are tappable.'},
+      {category:'Step Messages And Audio Prompts', id:'ALPHA-MSG-015', priority:'P1', test:'Duplicate prevention.', expected:'Same entry/completion message is not shown repeatedly during rapid refresh, pause/resume, or step rerender.'},
+
+      {category:'Media And Settings', id:'ALPHA-MS-001', priority:'P0', test:'Play lecture video.', expected:'Video loads, controls work, and no console errors appear.'},
+      {category:'Media And Settings', id:'ALPHA-MS-002', priority:'P1', test:'Play rules audio.', expected:'Rules audio loads and completion is counted once.'},
+      {category:'Media And Settings', id:'ALPHA-MS-003', priority:'P1', test:'Play Listen sequence.', expected:'Letter audio plays and active tile changes.'},
+      {category:'Media And Settings', id:'ALPHA-MS-004', priority:'P1', test:'Change voice, speed, and repeat settings.', expected:'Playback reflects settings or remains stable without error.'},
+      {category:'Media And Settings', id:'ALPHA-MS-005', priority:'P2', test:'Test filter dropdown.', expected:'Filter choices are usable and do not break the grid.'},
+
+      {category:'Step Coverage', id:'ALPHA-ST-001', priority:'P1', test:'Rules content and scroll/highlight.', expected:'Text is readable and highlight/scroll does not hide controls.'},
+      {category:'Step Coverage', id:'ALPHA-ST-002', priority:'P1', test:'Watch video modal.', expected:'Modal opens, plays, and closes.'},
+      {category:'Step Coverage', id:'ALPHA-ST-003', priority:'P1', test:'Phonetics explainer and playback.', expected:'Explainer appears and phonetics playback completes.'},
+      {category:'Step Coverage', id:'ALPHA-ST-004', priority:'P1', test:'Repeat prompts and microphone fallback.', expected:'Repeat runs and denied microphone path is handled.'},
+      {category:'Step Coverage', id:'ALPHA-ST-005', priority:'P1', test:'LetterClue playback.', expected:'Clue content corresponds to active letter.'},
+      {category:'Step Coverage', id:'ALPHA-ST-006', priority:'P0', mode:'managed', test:'Speak recording.', expected:'Recording can be captured and uploaded in managed mode.'},
+      {category:'Step Coverage', id:'ALPHA-ST-007', priority:'P1', test:'Match correct, wrong, lives, and restart.', expected:'Correct/wrong states display, lives behave correctly, and restart works after lives are used.'},
+      {category:'Step Coverage', id:'ALPHA-ST-008', priority:'P1', test:'SoundClue playback.', expected:'Sound clue and word repeats play, and progress updates.'},
+      {category:'Step Coverage', id:'ALPHA-ST-009', priority:'P1', test:'Animate modal.', expected:'Writing animation loads and can close.'},
+      {category:'Step Coverage', id:'ALPHA-ST-010', priority:'P0', test:'Write canvas.', expected:'Drawing, reset, row/column controls, and completion work.'},
+      {category:'Step Coverage', id:'ALPHA-ST-011', priority:'P0', mode:'managed', test:'Submit recording required.', expected:'Cannot finish without required final recording; upload succeeds when microphone is granted.'},
+
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-001', priority:'P0', test:'Verify focus/progress area renders on lesson load.', expected:'Focus/progress area is visible, readable, and does not overlap the stepper, action buttons, or lesson content.'},
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-002', priority:'P1', mode:'managed', test:'Complete a step and verify This Unit stars/progress.', expected:'This Unit stars or progress indicators update once for the completed step and remain correct after refresh.'},
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-003', priority:'P1', mode:'managed', test:'Verify Total Stars and Units Done values for a managed student.', expected:'Summary values match the managed student report and do not show another learner or stale account.'},
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-004', priority:'P1', test:'Check focus badge/state before, during, and after a step.', expected:'Focus state changes are understandable and do not hide primary controls.'},
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-005', priority:'P1', test:'Pause/resume or leave/return while focus tracking is active.', expected:'Focus/progress display recovers without double-counting, resetting, or freezing progress.'},
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-006', priority:'P1', mode:'managed', test:'Refresh after progress summary changes.', expected:'Managed summary reloads from the correct student state and does not flash incorrect values for another user.'},
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-007', priority:'P2', test:'Hard refresh/cache check for progress area labels and values.', expected:'Latest labels and values appear; stale cached text or old misspellings are not visible.'},
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-008', priority:'P1', test:'Mobile focus/progress layout.', expected:'Progress chips, stars, and focus text wrap cleanly on mobile with no clipped numbers or labels.'},
+      {category:'Focus Progress Rewards And Summary Area', id:'ALPHA-FP-009', priority:'P1', mode:'unmanaged', test:'Unmanaged progress summary behavior.', expected:'Static/local session shows local-only progress or a clear unmanaged state and does not attempt to display Moodle-only totals as saved data.'},
+
+      {category:'Labels Copy And Spelling', id:'ALPHA-LBL-001', priority:'P0', test:'Verify the 13 step labels and spelling.', expected:'Labels read exactly: Lecture, Rules, Listen, Watch, Phonetics, Repeat, LetterClue, Speak, Match, SoundClue, Animate, Write, Submit.'},
+      {category:'Labels Copy And Spelling', id:'ALPHA-LBL-002', priority:'P1', test:'Scan lesson UI for misspelled English labels.', expected:'No visible misspellings, broken capitalization, or old placeholder labels remain.'},
+      {category:'Labels Copy And Spelling', id:'ALPHA-LBL-003', priority:'P1', test:'Verify Arabic and bilingual text rendering.', expected:'Arabic labels render right-to-left where intended and do not show mojibake, missing glyphs, or replacement boxes.'},
+      {category:'Labels Copy And Spelling', id:'ALPHA-LBL-004', priority:'P1', test:'Verify dynamic button labels across all steps.', expected:'Play, Pause, Resume, Continue, Back, Step Back, Skip Step, Done, Record, Stop, Reset, Print, and Submit labels match the action being performed.'},
+      {category:'Labels Copy And Spelling', id:'ALPHA-LBL-005', priority:'P2', test:'Verify Settings labels.', expected:'Voice, Speed, Repeat, Filter, and related option labels are spelled correctly and remain readable after changes.'},
+      {category:'Labels Copy And Spelling', id:'ALPHA-LBL-006', priority:'P2', test:'Verify labels on mobile.', expected:'Buttons, chips, progress labels, and modal titles do not clip, overlap, or wrap awkwardly.'},
+      {category:'Labels Copy And Spelling', id:'ALPHA-LBL-007', priority:'P1', test:'Verify message text grammar/spelling.', expected:'Entry, pass, warning, confirmation, and completion messages are child-friendly, spelled correctly, and match the current step.'},
+      {category:'Labels Copy And Spelling', id:'ALPHA-LBL-008', priority:'P2', test:'Verify tracker/report labels.', expected:'Teacher/admin report labels and exported tracker labels use consistent spelling and terminology.'},
+
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-001', priority:'P0', mode:'unmanaged', test:'Launch the static Alphabet unit without managed Moodle context.', expected:'The unit opens without requiring a Moodle token, managed student id, or dashboard launch.'},
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-002', priority:'P1', mode:'unmanaged', test:'Use an unmanaged/local preview URL while logged out.', expected:'Static preview works for allowed content and does not reveal private learner data.'},
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-003', priority:'P1', mode:'unmanaged', test:'Verify unmanaged step navigation and free/practice behavior.', expected:'Available steps can be exercised according to unmanaged rules, and any locked managed-only behavior is clearly communicated.'},
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-004', priority:'P0', mode:'unmanaged', test:'Watch network activity during unmanaged progress.', expected:'No Moodle progress-save, speak-upload, or submit-upload calls are made unless the session is explicitly converted to managed.'},
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-005', priority:'P1', mode:'unmanaged', test:'Refresh an unmanaged session after completing a step.', expected:'Expected local-only state is retained or reset according to design; no false managed completion is created.'},
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-006', priority:'P1', mode:'unmanaged', test:'Try Speak and Submit recording in unmanaged mode.', expected:'Recording is disabled, local-only, or clearly explains that managed upload is required; the lesson does not crash.'},
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-007', priority:'P1', mode:'unmanaged', test:'Use media, settings, match, animate, and write in unmanaged mode.', expected:'Core static lesson interactions still work without Moodle services.'},
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-008', priority:'P0', mode:'unmanaged', test:'Verify privacy in unmanaged mode.', expected:'No student name, parent account, teacher-only report link, or prior managed progress is visible.'},
+      {category:'Unmanaged Mode Use Cases', id:'ALPHA-UM-009', priority:'P2', mode:'unmanaged', test:'Export tester evidence for unmanaged run.', expected:'Tester can record notes/evidence in the SQA tracker even though no Moodle learner report is expected.'},
+
+      {category:'Reports And Data', id:'ALPHA-RD-001', priority:'P0', mode:'managed', test:'Moodle progress save.', expected:'Network call succeeds and report reflects progress.'},
+      {category:'Reports And Data', id:'ALPHA-RD-002', priority:'P1', mode:'managed', test:'Speak recording report.', expected:'Teacher/admin can see uploaded Speak evidence.'},
+      {category:'Reports And Data', id:'ALPHA-RD-003', priority:'P0', mode:'managed', test:'Submit recording report.', expected:'Teacher/admin can see final submission evidence.'},
+      {category:'Reports And Data', id:'ALPHA-RD-004', priority:'P1', mode:'managed', test:'Parent-safe visibility.', expected:'Parent sees permitted feedback only, not internal teacher/admin data.'},
+
+      {category:'Responsive Accessibility Resilience', id:'ALPHA-UX-001', priority:'P1', test:'Desktop layout at 1366 x 768 or larger.', expected:'No text overlap or clipped buttons.'},
+      {category:'Responsive Accessibility Resilience', id:'ALPHA-UX-002', priority:'P1', test:'Mobile layout around 390 x 844.', expected:'Bottom dock, step picker, grid, and modals are usable.'},
+      {category:'Responsive Accessibility Resilience', id:'ALPHA-UX-003', priority:'P2', test:'Keyboard navigation.', expected:'Main controls and dialogs are keyboard reachable.'},
+      {category:'Responsive Accessibility Resilience', id:'ALPHA-UX-004', priority:'P1', test:'Microphone denied.', expected:'Speak and Submit show recoverable messages.'},
+      {category:'Responsive Accessibility Resilience', id:'ALPHA-UX-005', priority:'P1', mode:'managed', test:'Network/API failure.', expected:'User gets clear failure and progress is not corrupted.'},
+      {category:'Responsive Accessibility Resilience', id:'ALPHA-UX-006', priority:'P2', test:'Hard refresh/cache check.', expected:'Latest deployed assets load and no stale UI remains.'}
+    ];
+
+    let state = {
+      meta: {},
+      results: {}
+    };
+    let serverSaveTimer = 0;
+    let serverSaveInFlight = false;
+    let serverSavePending = false;
+
+    function todayRunId() {
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      return 'ALPHA-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '-' + pad(d.getHours()) + pad(d.getMinutes());
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) state = JSON.parse(raw);
+      } catch (_) {}
+      if (!state || typeof state !== 'object') state = { meta: {}, results: {} };
+      state.meta = state.meta || {};
+      state.results = state.results || {};
+      if (!state.meta.runId) state.meta.runId = todayRunId();
+    }
+
+    function saveState(options = {}) {
+      document.querySelectorAll('[data-meta]').forEach((el) => {
+        state.meta[el.dataset.meta] = el.value || '';
+      });
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (_) {}
+      renderSummary();
+      if (options.server !== false) scheduleServerSave(options.immediate === true);
+    }
+
+    function trackerPayload() {
+      return {
+        exportedAt: new Date().toISOString(),
+        tracker: 'Alphabet Lesson Test Tracker',
+        state,
+        meta: state.meta,
+        results: state.results,
+        cases: CASES.map((tc) => ({ ...tc, result: resultFor(tc.id) }))
+      };
+    }
+
+    function setSaveStatus(message, statusClass = '') {
+      const el = document.getElementById('saveStatus');
+      if (!el) return;
+      el.className = 'save-status' + (statusClass ? ' ' + statusClass : '');
+      el.textContent = message;
+    }
+
+    function serverEnabled() {
+      return Boolean(SERVER_CONFIG.endpoint && SERVER_CONFIG.sesskey);
+    }
+
+    function serverUrl(action) {
+      const url = new URL(SERVER_CONFIG.endpoint, window.location.href);
+      url.searchParams.set('action', action);
+      url.searchParams.set('artifact', SERVER_CONFIG.artifact || 'alphabet-tracker');
+      return url.toString();
+    }
+
+    function normalizeImportedState(payload) {
+      if (!payload || typeof payload !== 'object') return null;
+      if (payload.state && typeof payload.state === 'object') {
+        return {
+          meta: payload.state.meta || {},
+          results: payload.state.results || {}
+        };
+      }
+      const next = { meta: payload.meta || {}, results: payload.results || {} };
+      if (Array.isArray(payload.cases)) {
+        payload.cases.forEach((item) => {
+          if (item && item.id && item.result) next.results[item.id] = item.result;
+        });
+      }
+      return next;
+    }
+
+    async function loadServerState() {
+      if (!serverEnabled()) {
+        setSaveStatus('Browser-only save mode', 'warn');
+        return;
+      }
+      try {
+        const url = new URL(serverUrl('load'));
+        if (state.meta.runId && Object.keys(state.results || {}).length > 0) {
+          url.searchParams.set('runid', state.meta.runId);
+        }
+        const response = await fetch(url.toString(), {
+          credentials: 'same-origin',
+          headers: { 'Accept': 'application/json' }
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) throw new Error(data.error || 'Could not load Moodle save');
+        if (data.payload) {
+          const next = normalizeImportedState(data.payload);
+          if (next) {
+            state = next;
+            if (!state.meta.runId) state.meta.runId = data.runid || todayRunId();
+            try {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (_) {}
+            renderMeta();
+            renderCases();
+            renderSummary();
+            applyFilters();
+          }
+        }
+        setSaveStatus(data.payload ? 'Loaded Moodle save' : 'Ready to save to Moodle', 'ok');
+      } catch (err) {
+        setSaveStatus('Moodle save unavailable; browser copy kept', 'warn');
+      }
+    }
+
+    function scheduleServerSave(immediate = false) {
+      if (!serverEnabled()) {
+        setSaveStatus('Saved in this browser only', 'warn');
+        return;
+      }
+      window.clearTimeout(serverSaveTimer);
+      if (serverSaveInFlight) {
+        serverSavePending = true;
+        return;
+      }
+      serverSaveTimer = window.setTimeout(saveServerState, immediate ? 0 : 900);
+    }
+
+    async function saveServerState() {
+      if (!serverEnabled()) return;
+      if (serverSaveInFlight) {
+        serverSavePending = true;
+        return;
+      }
+      serverSaveInFlight = true;
+      setSaveStatus('Saving to Moodle...');
+      try {
+        const response = await fetch(serverUrl('save'), {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            sesskey: SERVER_CONFIG.sesskey,
+            artifact: SERVER_CONFIG.artifact || 'alphabet-tracker',
+            runid: state.meta.runId || todayRunId(),
+            payload: trackerPayload()
+          })
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) throw new Error(data.error || 'Could not save to Moodle');
+        setSaveStatus('Saved to Moodle ' + new Date().toLocaleTimeString(), 'ok');
+      } catch (err) {
+        setSaveStatus('Moodle save failed; browser copy kept', 'fail');
+      } finally {
+        serverSaveInFlight = false;
+        if (serverSavePending) {
+          serverSavePending = false;
+          scheduleServerSave(true);
+        }
+      }
+    }
+
+    function resultFor(id) {
+      if (!state.results[id]) {
+        state.results[id] = { status: 'Not Run', notes: '', evidence: '', defect: '', updatedAt: '' };
+      }
+      return state.results[id];
+    }
+
+    function updateCase(id, field, value) {
+      const result = resultFor(id);
+      result[field] = value;
+      result.updatedAt = new Date().toISOString();
+      saveState();
+      applyRowState(id);
+    }
+
+    function cssStatus(status) {
+      const s = String(status || '').toLowerCase();
+      if (s === 'pass') return 'pass';
+      if (s === 'fail') return 'fail';
+      if (s === 'blocked') return 'blocked';
+      if (s === 'n/a') return 'na';
+      return '';
+    }
+
+    function applyRowState(id) {
+      const row = document.querySelector('tr[data-case-id="' + id + '"]');
+      if (!row) return;
+      row.classList.remove('pass', 'fail', 'blocked', 'na');
+      const cls = cssStatus(resultFor(id).status);
+      if (cls) row.classList.add(cls);
+    }
+
+    function renderMeta() {
+      document.querySelectorAll('[data-meta]').forEach((el) => {
+        el.value = state.meta[el.dataset.meta] || '';
+      });
+      syncModeFromSessionType();
+    }
+
+    function renderFilters() {
+      const select = document.getElementById('categoryFilter');
+      const categories = Array.from(new Set(CASES.map((c) => c.category)));
+      categories.forEach((cat) => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat;
+        select.appendChild(option);
+      });
+    }
+
+    function caseMode(tc) {
+      return tc.mode || 'both';
+    }
+
+    function modeLabel(mode) {
+      if (mode === 'managed') return 'Managed';
+      if (mode === 'unmanaged') return 'Unmanaged';
+      return 'Managed + unmanaged';
+    }
+
+    function matchesMode(tc, selectedMode) {
+      const mode = caseMode(tc);
+      return !selectedMode || mode === 'both' || mode === selectedMode;
+    }
+
+    function sessionTypeToMode(value) {
+      const text = String(value || '').toLowerCase();
+      if (text === 'managed') return 'managed';
+      if (text === 'unmanaged') return 'unmanaged';
+      return '';
+    }
+
+    function modeToSessionType(value) {
+      if (value === 'managed') return 'Managed';
+      if (value === 'unmanaged') return 'Unmanaged';
+      return 'Both / Mixed';
+    }
+
+    function syncModeFromSessionType() {
+      const sessionType = document.getElementById('sessionType');
+      const modeFilter = document.getElementById('modeFilter');
+      if (!sessionType || !modeFilter) return;
+      modeFilter.value = sessionTypeToMode(sessionType.value);
+    }
+
+    function syncSessionTypeFromMode() {
+      const sessionType = document.getElementById('sessionType');
+      const modeFilter = document.getElementById('modeFilter');
+      if (!sessionType || !modeFilter) return;
+      sessionType.value = modeToSessionType(modeFilter.value);
+    }
+
+    function caseById(id) {
+      return CASES.find((tc) => tc.id === id);
+    }
+
+    function renderCases() {
+      const body = document.getElementById('caseBody');
+      body.innerHTML = '';
+      let lastCategory = '';
+      CASES.forEach((tc) => {
+        if (tc.category !== lastCategory) {
+          const catRow = document.createElement('tr');
+          catRow.className = 'category-row';
+          catRow.dataset.category = tc.category;
+          catRow.innerHTML = '<td colspan="8">' + tc.category + '</td>';
+          body.appendChild(catRow);
+          lastCategory = tc.category;
+        }
+        const r = resultFor(tc.id);
+        const row = document.createElement('tr');
+        row.dataset.caseId = tc.id;
+        row.dataset.category = tc.category;
+        row.dataset.priority = tc.priority;
+        row.dataset.mode = caseMode(tc);
+        row.dataset.search = [tc.id, tc.category, tc.priority, caseMode(tc), tc.test, tc.expected].join(' ').toLowerCase();
+        row.innerHTML = [
+          '<td data-label="ID" class="idcol"><strong>' + tc.id + '</strong><div class="small">' + modeLabel(caseMode(tc)) + '</div></td>',
+          '<td data-label="Priority" class="prioritycol"><span class="pill ' + tc.priority.toLowerCase() + '">' + tc.priority + '</span></td>',
+          '<td data-label="Test">' + tc.test + '</td>',
+          '<td data-label="Expected Result">' + tc.expected + '</td>',
+          '<td data-label="Status" class="statuscol"><select data-field="status">' + STATUS_OPTIONS.map((s) => '<option' + (s === r.status ? ' selected' : '') + '>' + s + '</option>').join('') + '</select></td>',
+          '<td data-label="Notes" class="notescol"><textarea data-field="notes">' + escapeHtml(r.notes || '') + '</textarea></td>',
+          '<td data-label="Evidence / Link" class="evidencecol"><textarea data-field="evidence">' + escapeHtml(r.evidence || '') + '</textarea></td>',
+          '<td data-label="Defect ID" class="defectcol"><input data-field="defect" value="' + escapeHtml(r.defect || '') + '"></td>'
+        ].join('');
+        row.querySelectorAll('[data-field]').forEach((el) => {
+          el.addEventListener('change', () => updateCase(tc.id, el.dataset.field, el.value));
+          el.addEventListener('blur', () => updateCase(tc.id, el.dataset.field, el.value));
+        });
+        body.appendChild(row);
+        applyRowState(tc.id);
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value || '').replace(/[&<>"']/g, (ch) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[ch]));
+    }
+
+    function renderSummary() {
+      const mode = document.getElementById('modeFilter') ? document.getElementById('modeFilter').value : '';
+      const cases = CASES.filter((tc) => matchesMode(tc, mode));
+      const counts = { total: cases.length, pass: 0, fail: 0, blocked: 0, retest: 0, notrun: 0, na: 0 };
+      cases.forEach((tc) => {
+        const status = resultFor(tc.id).status || 'Not Run';
+        if (status === 'Pass') counts.pass++;
+        else if (status === 'Fail') counts.fail++;
+        else if (status === 'Blocked') counts.blocked++;
+        else if (status === 'Retest') counts.retest++;
+        else if (status === 'N/A') counts.na++;
+        else counts.notrun++;
+      });
+      const done = counts.pass + counts.fail + counts.blocked + counts.retest + counts.na;
+      const pct = counts.total ? Math.round((done / counts.total) * 100) : 0;
+      document.getElementById('summary').innerHTML = [
+        metric('Total', counts.total),
+        metric('Complete', pct + '%'),
+        metric('Pass', counts.pass),
+        metric('Fail', counts.fail),
+        metric('Blocked', counts.blocked),
+        metric('Not Run', counts.notrun)
+      ].join('');
+    }
+
+    function metric(label, value) {
+      return '<div class="metric"><strong>' + value + '</strong><span>' + label + '</span></div>';
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('search').value.trim().toLowerCase();
+      const cat = document.getElementById('categoryFilter').value;
+      const mode = document.getElementById('modeFilter').value;
+      const pri = document.getElementById('priorityFilter').value;
+      const stat = document.getElementById('statusFilter').value;
+      const visibleCategories = new Set();
+
+      document.querySelectorAll('tr[data-case-id]').forEach((row) => {
+        const id = row.dataset.caseId;
+        const result = resultFor(id);
+        const tc = caseById(id);
+        const visible = (!q || row.dataset.search.includes(q))
+          && (!cat || row.dataset.category === cat)
+          && (!mode || (tc && matchesMode(tc, mode)))
+          && (!pri || row.dataset.priority === pri)
+          && (!stat || result.status === stat);
+        row.classList.toggle('hidden', !visible);
+        if (visible) visibleCategories.add(row.dataset.category);
+      });
+      document.querySelectorAll('.category-row').forEach((row) => {
+        row.classList.toggle('hidden', !visibleCategories.has(row.dataset.category));
+      });
+      renderSummary();
+    }
+
+    function download(name, type, content) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportJson() {
+      saveState({ immediate: true });
+      const payload = trackerPayload();
+      download((state.meta.runId || 'alphabet-test-run') + '.json', 'application/json', JSON.stringify(payload, null, 2));
+    }
+
+    function csvCell(value) {
+      return '"' + String(value == null ? '' : value).replace(/"/g, '""') + '"';
+    }
+
+    function exportCsv() {
+      saveState();
+      const rows = [
+        ['Run ID', 'Tester', 'Environment', 'Session Type', 'Browser Device', 'Student ID', 'Category', 'Mode', 'ID', 'Priority', 'Test', 'Expected', 'Status', 'Notes', 'Evidence', 'Defect', 'Updated At']
+      ];
+      CASES.forEach((tc) => {
+        const r = resultFor(tc.id);
+        rows.push([
+          state.meta.runId || '',
+          state.meta.tester || '',
+          state.meta.environment || '',
+          state.meta.sessionType || '',
+          state.meta.browserDevice || '',
+          state.meta.studentId || '',
+          tc.category,
+          modeLabel(caseMode(tc)),
+          tc.id,
+          tc.priority,
+          tc.test,
+          tc.expected,
+          r.status || 'Not Run',
+          r.notes || '',
+          r.evidence || '',
+          r.defect || '',
+          r.updatedAt || ''
+        ]);
+      });
+      download((state.meta.runId || 'alphabet-test-run') + '.csv', 'text/csv', rows.map((r) => r.map(csvCell).join(',')).join('\n'));
+    }
+
+    function importJson(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const payload = JSON.parse(String(reader.result || '{}'));
+          const next = normalizeImportedState(payload);
+          if (!next) throw new Error('Invalid tracker JSON');
+          state = next;
+          saveState({ immediate: true });
+          renderMeta();
+          renderCases();
+          renderSummary();
+          applyFilters();
+        } catch (err) {
+          alert('Could not import JSON: ' + (err && err.message ? err.message : err));
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetResults() {
+      if (!confirm('Reset all recorded statuses, notes, evidence, and defects for this browser?')) return;
+      state.results = {};
+      saveState({ immediate: true });
+      renderCases();
+      renderSummary();
+      applyFilters();
+    }
+
+    function init() {
+      loadState();
+      renderMeta();
+      renderFilters();
+      renderCases();
+      renderSummary();
+      loadServerState();
+      document.querySelectorAll('[data-meta]').forEach((el) => {
+        el.addEventListener('change', saveState);
+        el.addEventListener('blur', saveState);
+      });
+      document.getElementById('sessionType').addEventListener('change', () => {
+        syncModeFromSessionType();
+        saveState();
+        applyFilters();
+      });
+      document.getElementById('modeFilter').addEventListener('change', () => {
+        syncSessionTypeFromMode();
+        saveState();
+      });
+      ['search', 'categoryFilter', 'modeFilter', 'priorityFilter', 'statusFilter'].forEach((id) => {
+        document.getElementById(id).addEventListener('input', applyFilters);
+        document.getElementById(id).addEventListener('change', applyFilters);
+      });
+      document.getElementById('saveBtn').addEventListener('click', () => saveState({ immediate: true }));
+      document.getElementById('exportJsonBtn').addEventListener('click', exportJson);
+      document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+      document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importFile').click());
+      document.getElementById('importFile').addEventListener('change', (e) => importJson(e.target.files[0]));
+      document.getElementById('printBtn').addEventListener('click', () => window.print());
+      document.getElementById('resetBtn').addEventListener('click', resetResults);
+    }
+
+    init();
+  </script>
+</body>
+</html>

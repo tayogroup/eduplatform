@@ -1,0 +1,39 @@
+html,
+body,
+#root {
+  background: #dff5df !important;
+}
+
+/* Left sidebar and its visible panels */
+[aria-label*="chat" i],
+[aria-label*="messages" i],
+[aria-label*="users" i],
+[class*="sidebar" i],
+[class*="side-bar" i],
+[class*="left" i],
+[class*="panel" i] {
+  background: #d8c3a5 !important;
+}
+
+/* Common BBB left column structure */
+#root > div > div:first-child,
+#root > div > div:first-child * {
+  background-color: #d8c3a5 !important;
+}
+
+/* Session Details content only. Keep this narrow so the whole live room does not turn green. */
+[role="dialog"]:has(a[href*="issue_child.php"]),
+[aria-modal="true"]:has(a[href*="issue_child.php"]),
+[class*="modal" i]:has(a[href*="issue_child.php"]),
+[class*="dialog" i]:has(a[href*="issue_child.php"]) {
+  background: #dff5df !important;
+  background-color: #dff5df !important;
+}
+
+[role="dialog"]:has(a[href*="issue_child.php"]) > *,
+[aria-modal="true"]:has(a[href*="issue_child.php"]) > *,
+[class*="modal" i]:has(a[href*="issue_child.php"]) > *,
+[class*="dialog" i]:has(a[href*="issue_child.php"]) > * {
+  background: #dff5df !important;
+  background-color: #dff5df !important;
+}

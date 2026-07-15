@@ -66,9 +66,8 @@ if (empty($session->agenda_slides_path)) {
     pqh_access_denied('No agenda slides are attached to this live session yet.', $returnurl, 'Agenda slides unavailable');
 }
 
-$config = pqh_bunny_storage_config('bunny_live_session_slides_prefix', 'pre_quraan/live-session-slides');
 try {
-    $bytes = pqh_fetch_from_bunny_storage((string)$session->agenda_slides_path, $config);
+    $bytes = pqh_live_session_agenda_bytes($session);
 } catch (Throwable $e) {
     pqh_access_denied('The agenda slides could not be loaded. Please ask support to review the live-session storage setup.', $returnurl, 'Agenda slides unavailable');
 }

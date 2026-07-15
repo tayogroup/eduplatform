@@ -58,6 +58,14 @@ export interface EduPlatformEnv {
   enableDataExportCompliance: boolean;
   enableDataLifecycleCleanup: boolean;
   enableFailureWorkflowControls: boolean;
+  enableInstitutionSchoolModels: boolean;
+  enableInstitutionOperationsIsolation: boolean;
+  enableInstitutionReportingBranding: boolean;
+  enableInstitutionMobilityLifecycle: boolean;
+  enableInstitutionSecurityMatrix: boolean;
+  enableInstitutionCommunicationsIsolation: boolean;
+  enableInstitutionAcademicIsolation: boolean;
+  enableInstitutionReadinessRollup: boolean;
   enableCrossRoleGoldenPath: boolean;
   enablePerformanceReliabilitySmoke: boolean;
   enableAccessibilityResponsiveSmoke: boolean;
@@ -189,6 +197,14 @@ export function getEduPlatformEnv(options: EnvOptions = {}): EduPlatformEnv {
     enableDataExportCompliance: isTruthy(readEnv('EDUPLATFORM_ENABLE_DATA_EXPORT_COMPLIANCE')),
     enableDataLifecycleCleanup: isTruthy(readEnv('EDUPLATFORM_ENABLE_DATA_LIFECYCLE_CLEANUP')),
     enableFailureWorkflowControls: isTruthy(readEnv('EDUPLATFORM_ENABLE_FAILURE_WORKFLOW_CONTROLS')),
+    enableInstitutionSchoolModels: isTruthy(readEnv('EDUPLATFORM_ENABLE_INSTITUTION_SCHOOL_MODELS')),
+    enableInstitutionOperationsIsolation: isTruthy(readEnv('EDUPLATFORM_ENABLE_INSTITUTION_OPERATIONS_ISOLATION')),
+    enableInstitutionReportingBranding: isTruthy(readEnv('EDUPLATFORM_ENABLE_INSTITUTION_REPORTING_BRANDING')),
+    enableInstitutionMobilityLifecycle: isTruthy(readEnv('EDUPLATFORM_ENABLE_INSTITUTION_MOBILITY_LIFECYCLE')),
+    enableInstitutionSecurityMatrix: isTruthy(readEnv('EDUPLATFORM_ENABLE_INSTITUTION_SECURITY_MATRIX')),
+    enableInstitutionCommunicationsIsolation: isTruthy(readEnv('EDUPLATFORM_ENABLE_INSTITUTION_COMMUNICATIONS_ISOLATION')),
+    enableInstitutionAcademicIsolation: isTruthy(readEnv('EDUPLATFORM_ENABLE_INSTITUTION_ACADEMIC_ISOLATION')),
+    enableInstitutionReadinessRollup: isTruthy(readEnv('EDUPLATFORM_ENABLE_INSTITUTION_READINESS_ROLLUP')),
     enableCrossRoleGoldenPath: isTruthy(readEnv('EDUPLATFORM_ENABLE_CROSS_ROLE_GOLDEN_PATH')),
     enablePerformanceReliabilitySmoke: isTruthy(readEnv('EDUPLATFORM_ENABLE_PERFORMANCE_RELIABILITY_SMOKE')),
     enableAccessibilityResponsiveSmoke: isTruthy(readEnv('EDUPLATFORM_ENABLE_ACCESSIBILITY_RESPONSIVE_SMOKE')),
@@ -304,6 +320,14 @@ export function redactedEduPlatformEnv(env = getEduPlatformEnv({ allowPartial: t
     enableDataExportCompliance: env.enableDataExportCompliance,
     enableDataLifecycleCleanup: env.enableDataLifecycleCleanup,
     enableFailureWorkflowControls: env.enableFailureWorkflowControls,
+    enableInstitutionSchoolModels: env.enableInstitutionSchoolModels,
+    enableInstitutionOperationsIsolation: env.enableInstitutionOperationsIsolation,
+    enableInstitutionReportingBranding: env.enableInstitutionReportingBranding,
+    enableInstitutionMobilityLifecycle: env.enableInstitutionMobilityLifecycle,
+    enableInstitutionSecurityMatrix: env.enableInstitutionSecurityMatrix,
+    enableInstitutionCommunicationsIsolation: env.enableInstitutionCommunicationsIsolation,
+    enableInstitutionAcademicIsolation: env.enableInstitutionAcademicIsolation,
+    enableInstitutionReadinessRollup: env.enableInstitutionReadinessRollup,
     enableCrossRoleGoldenPath: env.enableCrossRoleGoldenPath,
     enablePerformanceReliabilitySmoke: env.enablePerformanceReliabilitySmoke,
     enableAccessibilityResponsiveSmoke: env.enableAccessibilityResponsiveSmoke,

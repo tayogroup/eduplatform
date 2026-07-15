@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.0",
+  "generatedAt": "2026-07-15T00:00:00.000Z",
+  "stage": { "id": "s02", "label": "Stage 2" },
+  "subject": "Mathematics",
+  "term": { "id": "t01", "label": "Term 1" },
+  "unit": {
+    "unitId": "math-g02-u01",
+    "unitNo": 1,
+    "unitTitle": "Numbers to 100",
+    "unitOverview": "Become confident with every number from 0 to 100. Learn how tens and ones give a number its value, then use that understanding to count, compare, order and continue number sequences.",
+    "learningPath": ["Preview the goals and key idea", "Learn the six core concepts", "Study the worked examples", "Complete practice and hands-on activities", "Finish the checkpoint and reflect"],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Stage-2-Content-Package.xlsx",
+    "sourceArchive": "Year 2 (1)-20260714T220953Z-1-001.zip",
+    "sourceDocuments": ["Unit 1 - Lesson.docx", "Unit 1 - Activities.docx", "Unit 1 - Practice.docx", "Unit 1 - Reference.docx"],
+    "sourceBlockCount": 355,
+    "transformation": "Selected and structured from standardized workbook rows; wording retained or shortened for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": { "lectureStatus": "Video pending", "lectureVideo": null, "poster": null },
+  "outcomes": [
+    "Read, write and represent numbers from 0 to 100.",
+    "Identify the tens and ones in a two-digit number.",
+    "Count forwards and backwards in ones, twos and tens.",
+    "Estimate a collection and count to check.",
+    "Compare numbers using >, < and =.",
+    "Order numbers from smallest to greatest.",
+    "Continue and describe number sequences.",
+    "Use ordinal numbers such as 1st, 2nd and 3rd."
+  ],
+  "concepts": [
+    { "id": "hundred-square", "title": "The 100 square", "explanation": "A 100 square is a number map. Across a row the number increases by 1; down a column it increases by 10.", "example": "21, 22, 23, 24, 25, 26" },
+    { "id": "place-value", "title": "Tens and ones", "explanation": "In a two-digit number, the left digit tells the tens and the right digit tells the ones.", "example": "47 = 4 tens + 7 ones = 40 + 7" },
+    { "id": "represent", "title": "Represent a number", "explanation": "Show the same number with a numeral, words, tens and ones, or bundles and single objects.", "example": "46 = forty-six = 4 tens and 6 ones" },
+    { "id": "count", "title": "Count collections", "explanation": "Estimate first. Make groups of ten, count the tens, then add any leftover ones.", "example": "4 groups of ten + 6 ones = 46" },
+    { "id": "compare", "title": "Compare and order", "explanation": "Compare the tens first. If the tens match, compare the ones. The open side of > or < faces the greater number.", "example": "75 > 57 because 7 tens is greater than 5 tens" },
+    { "id": "sequences", "title": "Sequences and position", "explanation": "Find how each number changes, check the rule, and repeat it. Ordinal numbers describe position in a line.", "example": "37, 47, 57, 67, 77 adds 10 each time" }
+  ],
+  "explorations": [
+    { "id": "explore-place-value", "outcomeId": "lo02", "difficulty": "Discover", "title": "Dates at the market", "context": "Halima groups 47 dates into bundles of ten so she can count quickly.", "prompt": "If she has 6 bundles and 3 loose dates, how many dates does she have?", "answer": "63", "modelType": "bundles", "hint": "Six bundles are 6 tens. Write the tens digit before the 3 ones.", "explanation": "6 tens are 60 and 3 ones make 63." },
+    { "id": "explore-hundred-square", "outcomeId": "lo01", "difficulty": "Discover", "title": "Find the hidden house", "context": "A house number is one step after 42 and one step before 44 on a street map.", "prompt": "What is the hidden house number?", "answer": "43", "modelType": "hundred-square", "hint": "Count one step forward from 42.", "explanation": "The number between 42 and 44 is 43." },
+    { "id": "explore-represent", "outcomeId": "lo01", "difficulty": "Discover", "title": "Pack reading cards", "context": "Yusuf packs 35 reading cards as complete packs of ten and loose cards.", "prompt": "How many complete packs and loose cards make 35?", "answer": "3 tens and 5 ones", "modelType": "counters", "hint": "The left digit gives the packs of ten.", "explanation": "35 contains 3 tens and 5 ones." },
+    { "id": "explore-estimate", "outcomeId": "lo04", "difficulty": "Discover", "title": "Estimate the bottle collection", "context": "Noor sees about five groups of ten bottles and two loose bottles.", "prompt": "What exact count should she expect after grouping?", "answer": "52", "modelType": "groups-of-ten", "hint": "Five groups of ten make 50.", "explanation": "50 and 2 more make 52 bottles." },
+    { "id": "explore-compare", "outcomeId": "lo05", "difficulty": "Discover", "title": "Choose the bus", "context": "One bus can carry 64 passengers and another can carry 46.", "prompt": "Which capacity is greater?", "answer": "64", "modelType": "number-line", "hint": "Compare the tens digits first.", "explanation": "64 is greater because 6 tens is more than 4 tens." },
+    { "id": "explore-sequence", "outcomeId": "lo07", "difficulty": "Discover", "title": "Water-container pattern", "context": "A family records 12, 22, 32 and 42 litres on four days.", "prompt": "If the pattern continues, what comes next?", "answer": "52", "modelType": "sequence", "hint": "Find how much is added each day.", "explanation": "The pattern adds 10, so 42 + 10 = 52." }
+  ],
+  "visualModels": [
+    { "id": "model-base-ten", "outcomeId": "lo02", "title": "Base-ten blocks", "modelType": "blocks", "purpose": "Build a number with tens rods and ones cubes.", "defaultNumber": 47 },
+    { "id": "model-number-line", "outcomeId": "lo03", "title": "Number line", "modelType": "line", "purpose": "Locate, count and compare numbers between 0 and 100.", "defaultNumber": 47 },
+    { "id": "model-ten-frames", "outcomeId": "lo02", "title": "Ten frames", "modelType": "frames", "purpose": "See complete groups of ten and leftover ones.", "defaultNumber": 47 },
+    { "id": "model-hundred-square", "outcomeId": "lo01", "title": "100 square", "modelType": "hundred-square", "purpose": "See one-more and ten-more patterns across rows and columns.", "defaultNumber": 47 },
+    { "id": "model-counters", "outcomeId": "lo04", "title": "Counters and groups", "modelType": "counters", "purpose": "Estimate and regroup loose objects into tens.", "defaultNumber": 47 },
+    { "id": "model-ordinal-line", "outcomeId": "lo08", "title": "Ordinal line", "modelType": "ordinal", "purpose": "Show how positions change when people join or leave a line.", "defaultNumber": 4 }
+  ],
+  "methods": [
+    { "id": "method-read", "outcomeId": "lo01", "difficulty": "Core", "title": "Read a two-digit number", "example": "47", "steps": ["Name the tens digit: 4.", "Name the ones digit: 7.", "Say four tens and seven ones.", "Read the number as forty-seven."] },
+    { "id": "method-place-value", "outcomeId": "lo02", "difficulty": "Core", "title": "Find a digit's value", "example": "85", "steps": ["Locate the digit.", "Name its place.", "Multiply tens by 10.", "State: 8 tens = 80."] },
+    { "id": "method-count", "outcomeId": "lo04", "difficulty": "Core", "title": "Count a large collection", "example": "4 groups and 6 loose", "steps": ["Estimate first.", "Make groups of ten.", "Count the tens.", "Add the leftover ones."] },
+    { "id": "method-compare", "outcomeId": "lo05", "difficulty": "Core", "title": "Compare two numbers", "example": "75 and 57", "steps": ["Compare the tens.", "Stop if the tens differ.", "If equal, compare ones.", "Write >, < or =."] },
+    { "id": "method-order", "outcomeId": "lo06", "difficulty": "Core", "title": "Order several numbers", "example": "67, 42, 86, 34, 21", "steps": ["Find the smallest tens digit.", "Order numbers by tens.", "Compare ones when tens match.", "Read the list to check."] },
+    { "id": "method-sequence", "outcomeId": "lo07", "difficulty": "Core", "title": "Continue a sequence", "example": "37, 47, 57, …", "steps": ["Find the change.", "Check the rule twice.", "Repeat the same change.", "Describe the rule in words."] }
+  ],
+  "workedExamples": [
+    { "id": "we01", "outcomeId": "lo01", "difficulty": "Basic", "title": "Fill gaps in a row", "prompt": "21, 22, __, 24, __, 26", "solution": "The rule is add 1. The missing numbers are 23 and 25." },
+    { "id": "we02", "outcomeId": "lo02", "difficulty": "Basic", "title": "Find a digit's value", "prompt": "In 85, what is the value of 8?", "solution": "The 8 is in the tens place, so it is worth 80. Therefore 85 = 80 + 5." },
+    { "id": "we03", "outcomeId": "lo04", "difficulty": "Basic", "title": "Count a collection", "prompt": "Sagal makes 4 rings of ten mangoes and has 6 left. How many mangoes?", "solution": "4 tens = 40. Add 6 ones: 40 + 6 = 46 mangoes." },
+    { "id": "we04", "outcomeId": "lo05", "difficulty": "Basic", "title": "Compare two numbers", "prompt": "Which is greater: 75 or 57?", "solution": "Compare tens: 7 tens is greater than 5 tens, so 75 > 57." },
+    { "id": "we05", "outcomeId": "lo07", "difficulty": "Intermediate", "title": "Continue a sequence", "prompt": "Start at 37 and add ten until 77.", "solution": "37, 47, 57, 67, 77. The ones digit stays 7." },
+    { "id": "we06", "outcomeId": "lo06", "difficulty": "Intermediate", "title": "Order numbers", "prompt": "Order 67, 42, 86, 34, 21 from smallest to greatest.", "solution": "21, 34, 42, 67, 86. Compare the tens first." },
+    { "id": "we07", "outcomeId": "lo08", "difficulty": "Intermediate", "title": "Change an ordinal position", "prompt": "Abdi is 4th. Two people at the front leave. What position is Abdi now?", "solution": "Abdi moves forward two places, so he is now 2nd." },
+    { "id": "we08", "outcomeId": "lo05", "difficulty": "Intermediate", "title": "Make the smallest odd number", "prompt": "Use 3, 5, 7 and 9 to make the smallest odd two-digit number.", "solution": "35: put the smallest digit in the tens place, then the smallest remaining odd digit in the ones place." },
+    { "id": "we09", "outcomeId": "lo01", "difficulty": "Challenge", "title": "Represent one number four ways", "prompt": "Show 62 as a numeral, words, tens and ones, and expanded form.", "solution": "62; sixty-two; 6 tens and 2 ones; 60 + 2." },
+    { "id": "we10", "outcomeId": "lo05", "difficulty": "Challenge", "title": "Compare equal tens", "prompt": "Compare 63 and 68.", "solution": "The tens are equal, so compare ones. 3 < 8, therefore 63 < 68." },
+    { "id": "we11", "outcomeId": "lo07", "difficulty": "Challenge", "title": "Find a backward rule", "prompt": "93, 83, 73, __, __", "solution": "Subtract 10 each time: 63, 53." },
+    { "id": "we12", "outcomeId": "lo04", "difficulty": "Challenge", "title": "Estimate and check", "prompt": "A pile looks close to 50. Five groups of ten and 4 loose objects are counted. What is the exact total?", "solution": "5 tens are 50; 50 + 4 = 54. The estimate of about 50 was sensible." }
+  ],
+  "practice": [
+    { "id": "p01", "level": "Warm-up", "prompt": "Write the missing numbers: 41, 42, __, 44, __, 46, __, 48.", "answer": "43, 45, 47", "hint": "Count on by one." },
+    { "id": "p02", "level": "Warm-up", "prompt": "How many tens and ones are in 53?", "answer": "5 tens and 3 ones", "hint": "Read the left digit, then the right digit." },
+    { "id": "p03", "level": "Warm-up", "prompt": "Count on in tens: 10, 20, __, __, __, 60.", "answer": "30, 40, 50", "hint": "Add ten each time." },
+    { "id": "p04", "level": "Warm-up", "prompt": "Which numbers are even: 12, 17, 24, 35, 40, 61?", "answer": "12, 24, 40", "hint": "Even numbers end in 0, 2, 4, 6 or 8." },
+    { "id": "p05", "level": "Core", "prompt": "Fill the gaps: 8, 18, __, 38, __, 58, __, 78.", "answer": "28, 48, 68", "hint": "The sequence adds ten." },
+    { "id": "p06", "level": "Core", "prompt": "Compare 63 and 36 using >, < or =.", "answer": "63 > 36", "hint": "Compare the tens digits first." },
+    { "id": "p07", "level": "Core", "prompt": "Order 70, 17, 71, 7, 77 from smallest to greatest.", "answer": "7, 17, 70, 71, 77", "hint": "Start with the number with no tens, then compare tens and ones." },
+    { "id": "p08", "level": "Core", "prompt": "Continue: 93, 83, 73, __, __.", "answer": "63, 53", "hint": "Subtract ten each time." },
+    { "id": "p09", "level": "Challenge", "prompt": "Using 2, 4, 6 and 8, make the largest possible even two-digit number.", "answer": "86", "hint": "Use the largest digit in the tens place." },
+    { "id": "p10", "level": "Challenge", "prompt": "Waris is 2nd in line. Three people join behind her. What position is she in now?", "answer": "2nd", "hint": "People behind Waris do not change her place." },
+    { "id": "p11", "level": "Extension", "prompt": "Noor has 7 rings of ten bottles and 2 extra. How many bottles?", "answer": "72", "hint": "Write 7 tens, then add 2 ones." },
+    { "id": "p12", "level": "Extension", "prompt": "Ibrahim is the 9th child. How many children came before him?", "answer": "8", "hint": "Count the positions before ninth." }
+  ],
+  "activities": [
+    { "title": "Make Your Own 100 Square", "materials": "Paper, ruler and pencil", "steps": ["Draw a 10 by 10 grid.", "Write 1 to 100, ten numbers per row.", "Colour multiples of ten and then even numbers.", "Describe the patterns you see."] },
+    { "title": "Bundles of Ten", "materials": "47 sticks, stones or beans; string or bands", "steps": ["Make bundles of ten.", "Count full bundles and leftover ones.", "Say: __ tens and __ ones make __.", "Build other numbers called by a partner."] },
+    { "title": "The Crocodile Compare Game", "materials": "Paper number cards from 0 to 99", "steps": ["Turn over two cards.", "Draw > or < with the open side facing the greater number.", "Compare tens before ones."] },
+    { "title": "Market Counting Investigation", "materials": "Dates, stones or other countable objects", "steps": ["Estimate the collection.", "Group objects into tens.", "Count tens and ones.", "Compare the estimate with the exact count."] },
+    { "title": "Ordinal Line-Up", "materials": "Family or friends", "steps": ["Line up five or more people.", "Call an ordinal and an action.", "Let someone leave the front.", "Explain how positions change."] },
+    { "title": "Number Sequence Snake", "materials": "Paper and pencil", "steps": ["Draw a long snake divided into boxes.", "Choose a start and a counting rule.", "Fill the sequence.", "Leave gaps for a partner to solve."] }
+  ],
+  "reference": {
+    "rules": [
+      { "title": "Place Value Rule", "text": "Left digit = tens. Right digit = ones. 47 = 4 tens + 7 ones = 40 + 7." },
+      { "title": "Comparing Rule", "text": "Compare tens first. If the tens are equal, compare ones. The open side of > or < faces the bigger number." },
+      { "title": "Odd and Even Rule", "text": "Even numbers end in 0, 2, 4, 6 or 8. Odd numbers end in 1, 3, 5, 7 or 9." }
+    ],
+    "terms": [
+      ["Digit", "A single symbol from 0 to 9"], ["Place value", "What a digit is worth because of its position"], ["Tens / Ones", "The two places in a two-digit number"], ["Estimate", "A sensible guess before counting"], ["Sequence", "Numbers following a pattern"], ["Ordinal number", "A number showing position: 1st, 2nd, 3rd"], ["Even / Odd", "Even ends in 0,2,4,6,8; odd ends in 1,3,5,7,9"]
+    ],
+    "commonMistakes": [
+      ["Writing 15 for 51", "Say the tens first: five tens and one one makes 51."], ["Treating 4 in 40 as four", "The 4 is in the tens place, so it means 40."], ["Pointing > the wrong way", "The open side faces the bigger number."], ["Comparing ones first", "Always compare the tens first."]
+    ]
+  },
+  "fluency": [
+    { "id": "fl01", "outcomeId": "lo02", "difficulty": "Round 1", "prompt": "4 tens + 3 ones", "answer": "43", "hint": "Write the tens digit before the ones digit.", "errorFeedback": "Four tens are 40, then add 3 ones." },
+    { "id": "fl02", "outcomeId": "lo02", "difficulty": "Round 1", "prompt": "70 + 6", "answer": "76", "hint": "Keep 7 in the tens place.", "errorFeedback": "Seven tens and six ones make 76." },
+    { "id": "fl03", "outcomeId": "lo03", "difficulty": "Round 1", "prompt": "10 more than 35", "answer": "45", "hint": "Increase the tens by one.", "errorFeedback": "Adding ten changes 3 tens to 4 tens." },
+    { "id": "fl04", "outcomeId": "lo03", "difficulty": "Round 1", "prompt": "10 less than 82", "answer": "72", "hint": "Decrease the tens by one.", "errorFeedback": "Subtracting ten changes 8 tens to 7 tens." },
+    { "id": "fl05", "outcomeId": "lo07", "difficulty": "Round 2", "prompt": "Next: 24, 26, 28, …", "answer": "30", "hint": "Add two.", "errorFeedback": "The sequence counts in twos." },
+    { "id": "fl06", "outcomeId": "lo05", "difficulty": "Round 2", "prompt": "Greater number: 67 or 76", "answer": "76", "hint": "Compare the tens.", "errorFeedback": "Seven tens is greater than six tens." },
+    { "id": "fl07", "outcomeId": "lo02", "difficulty": "Round 2", "prompt": "8 tens", "answer": "80", "hint": "Eight groups of ten.", "errorFeedback": "8 × 10 = 80." },
+    { "id": "fl08", "outcomeId": "lo03", "difficulty": "Round 2", "prompt": "Number before 50", "answer": "49", "hint": "Count back one.", "errorFeedback": "One less than 50 is 49." },
+    { "id": "fl09", "outcomeId": "lo07", "difficulty": "Round 3", "prompt": "Next: 42, 52, 62, …", "answer": "72", "hint": "Add ten.", "errorFeedback": "The ones stay 2 while the tens increase." },
+    { "id": "fl10", "outcomeId": "lo05", "difficulty": "Round 3", "prompt": "Smaller number: 59 or 95", "answer": "59", "hint": "Compare 5 tens and 9 tens.", "errorFeedback": "Five tens is less than nine tens." },
+    { "id": "fl11", "outcomeId": "lo01", "difficulty": "Round 3", "prompt": "Number after 99", "answer": "100", "hint": "Count forward one.", "errorFeedback": "One more than 99 is 100." },
+    { "id": "fl12", "outcomeId": "lo02", "difficulty": "Round 3", "prompt": "9 tens + 4 ones", "answer": "94", "hint": "Combine 90 and 4.", "errorFeedback": "Nine tens and four ones make 94." }
+  ],
+  "realProblems": [
+    { "id": "rp01", "outcomeId": "lo02", "difficulty": "Core", "context": "Food", "prompt": "Sumaya prepares 3 trays of 10 sambusas and 5 loose sambusas. How many are there?", "answer": "35", "hint": "Three tens and five ones.", "errorFeedback": "30 + 5 = 35." },
+    { "id": "rp02", "outcomeId": "lo02", "difficulty": "Core", "context": "Water", "prompt": "Noor has 7 rings of ten bottles and 2 extra bottles. How many bottles?", "answer": "72", "hint": "Write 7 tens, then add 2 ones.", "errorFeedback": "70 + 2 = 72." },
+    { "id": "rp03", "outcomeId": "lo05", "difficulty": "Core", "context": "Transport", "prompt": "One minibus has 64 seats and another has 46. Which capacity is greater?", "answer": "64", "hint": "Compare the tens first.", "errorFeedback": "Six tens is greater than four tens." },
+    { "id": "rp04", "outcomeId": "lo06", "difficulty": "Intermediate", "context": "Shopping", "prompt": "Order these prices from cheapest to most expensive: 25, 52, 35, 53, 33.", "answer": "25, 33, 35, 52, 53", "hint": "Order by tens, then ones.", "errorFeedback": "Start with the two-tens number, then the three-tens numbers." },
+    { "id": "rp05", "outcomeId": "lo03", "difficulty": "Intermediate", "context": "Travel", "prompt": "A bus is at kilometre 75 and travels back 10 kilometres. At which kilometre is it now?", "answer": "65", "hint": "Count back one group of ten.", "errorFeedback": "75 − 10 = 65." },
+    { "id": "rp06", "outcomeId": "lo08", "difficulty": "Challenge", "context": "Queue", "prompt": "Ibrahim is the 9th child in line. How many children are before him?", "answer": "8", "hint": "Count the positions before ninth.", "errorFeedback": "Eight positions come before 9th." }
+  ],
+  "reasoningPrompts": [
+    { "id": "reason01", "outcomeId": "lo05", "difficulty": "Core", "responseMode": "order", "prompt": "Explain why 75 > 57.", "keyIdeas": ["compare tens", "7 tens", "5 tens", "greater", "75"], "modelAnswer": "Compare tens first. Seven tens is greater than five tens, so 75 is greater than 57." },
+    { "id": "reason02", "outcomeId": "lo02", "difficulty": "Core", "responseMode": "text", "prompt": "Explain why the 8 in 85 is worth 80, not 8.", "keyIdeas": ["tens place", "8 tens", "80"], "modelAnswer": "The 8 is in the tens place, so it represents 8 tens, which equals 80." },
+    { "id": "reason03", "outcomeId": "lo07", "difficulty": "Core", "responseMode": "text", "prompt": "Explain the rule in 37, 47, 57, 67, 77.", "keyIdeas": ["add 10", "ones stay 7", "tens increase"], "modelAnswer": "Add 10 each time. The ones digit stays 7 and the tens digit increases by one." },
+    { "id": "reason04", "outcomeId": "lo04", "difficulty": "Intermediate", "responseMode": "model", "prompt": "Why is grouping 46 objects into tens safer than counting every object one by one?", "keyIdeas": ["groups of ten", "4 tens", "6 ones", "check"], "modelAnswer": "Groups of ten are easier to count and check: four groups and six ones make 46." },
+    { "id": "reason05", "outcomeId": "lo06", "difficulty": "Intermediate", "responseMode": "text", "prompt": "Explain how you know 63 comes before 68 when ordering numbers.", "keyIdeas": ["same tens", "compare ones", "3 less than 8"], "modelAnswer": "Both numbers have 6 tens, so compare the ones. Three ones is less than eight ones." },
+    { "id": "reason06", "outcomeId": "lo08", "difficulty": "Challenge", "responseMode": "text", "prompt": "Waris is 2nd and three people join behind her. Explain why her position does not change.", "keyIdeas": ["behind", "still 2nd", "no one joined before"], "modelAnswer": "The new people joined behind Waris, so nobody moved in front of her. She remains 2nd." }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      { "id": "q01", "type": "Concept", "outcomeId": "lo02", "difficulty": "Basic", "question": "What number has 4 tens and 7 ones?", "options": ["47", "74", "40", "11"], "answer": "47", "hint": "Build four tens first.", "explanation": "4 tens are 40; add 7 ones to make 47." },
+      { "id": "q02", "type": "Concept", "outcomeId": "lo02", "difficulty": "Basic", "question": "What is the value of 8 in 85?", "options": ["8", "5", "80", "85"], "answer": "80", "hint": "Name the place of the 8.", "explanation": "The 8 is in the tens place." },
+      { "id": "q03", "type": "Concept", "outcomeId": "lo05", "difficulty": "Core", "question": "Which comparison is correct?", "options": ["63 < 36", "63 > 36", "63 = 36", "36 > 63"], "answer": "63 > 36", "hint": "Compare tens first.", "explanation": "Six tens is greater than three tens." },
+      { "id": "q04", "type": "Visual Model", "outcomeId": "lo07", "difficulty": "Core", "question": "A number line jumps +10 from 37 three times. Where does it land?", "options": ["40", "57", "67", "77"], "answer": "67", "hint": "Count 47, 57, then one more jump.", "explanation": "37 + 10 + 10 + 10 = 67." },
+      { "id": "q05", "type": "Visual Model", "outcomeId": "lo02", "difficulty": "Core", "question": "Five complete ten frames and two filled spaces represent…", "options": ["25", "50", "52", "7"], "answer": "52", "hint": "Each complete frame is ten.", "explanation": "Five tens and two ones make 52." },
+      { "id": "q06", "type": "Visual Model", "outcomeId": "lo01", "difficulty": "Core", "question": "On a 100 square, what number is directly below 46?", "options": ["45", "47", "56", "36"], "answer": "56", "hint": "Moving down adds ten.", "explanation": "46 + 10 = 56." },
+      { "id": "q07", "type": "Fluency", "outcomeId": "lo03", "difficulty": "Core", "question": "What is 10 less than 82?", "options": ["81", "72", "92", "62"], "answer": "72", "hint": "Decrease the tens digit by one.", "explanation": "82 − 10 = 72." },
+      { "id": "q08", "type": "Fluency", "outcomeId": "lo07", "difficulty": "Core", "question": "What comes next: 24, 26, 28, __?", "options": ["29", "30", "32", "38"], "answer": "30", "hint": "Count in twos.", "explanation": "The sequence adds 2 each time." },
+      { "id": "q09", "type": "Application", "outcomeId": "lo02", "difficulty": "Core", "question": "Noor has 7 rings of ten bottles and 2 extra. How many bottles?", "options": ["27", "70", "72", "9"], "answer": "72", "hint": "Combine seven tens and two ones.", "explanation": "70 + 2 = 72." },
+      { "id": "q10", "type": "Application", "outcomeId": "lo08", "difficulty": "Challenge", "question": "Ibrahim is 9th in line. How many children are before him?", "options": ["7", "8", "9", "10"], "answer": "8", "hint": "Count positions before ninth.", "explanation": "Eight children occupy positions 1st through 8th." },
+      { "id": "q11", "type": "Reasoning", "outcomeId": "lo05", "difficulty": "Challenge", "question": "Why is 75 greater than 57?", "options": ["5 ones is more than 7 ones", "7 tens is more than 5 tens", "75 comes first", "The numbers are equal"], "answer": "7 tens is more than 5 tens", "hint": "State the place-value evidence.", "explanation": "Compare tens before ones: seven tens is greater than five tens." },
+      { "id": "q12", "type": "Reasoning", "outcomeId": "lo07", "difficulty": "Challenge", "question": "Which statement best explains 42, 52, 62, 72?", "options": ["The ones increase", "Add 2 each time", "Add 10 and keep 2 ones", "Subtract 10"], "answer": "Add 10 and keep 2 ones", "hint": "Notice which digit stays the same.", "explanation": "The sequence adds ten; the ones digit remains 2." }
+    ]
+  },
+  "selfAssessment": [
+    "I can read, write and picture any number from 0 to 100.", "I can say how many tens and ones are in a two-digit number.", "I can count on and back in ones, twos and tens.", "I can estimate and count to check.", "I can compare and order numbers.", "I can continue a number sequence.", "I can use ordinal numbers."
+  ]
+}

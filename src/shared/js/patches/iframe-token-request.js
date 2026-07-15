@@ -19,18 +19,18 @@
   const REFERRER_ORIGIN = (function(){
     try{ return (document.referrer && new URL(document.referrer).origin) || ''; }catch(e){ return ''; }
   })();
-  const ALLOWED_PARENT_ORIGINS = new Set([
-    CHILD_ORIGIN,
-    'https://quraan.academy',
-    'https://quraantest.academy'
-  ]);
+  const ALLOWED_PARENT_ORIGINS = new Set([CHILD_ORIGIN]);
   try {
-    const host = REFERRER_ORIGIN ? new URL(REFERRER_ORIGIN).hostname : '';
-    if (/^(quraan|quraantest)\.academy$/i.test(host)) {
+    if (window.__prequran_moodle_origin) {
+      ALLOWED_PARENT_ORIGINS.add(new URL(window.__prequran_moodle_origin).origin);
+    }
+    if (REFERRER_ORIGIN) {
       ALLOWED_PARENT_ORIGINS.add(REFERRER_ORIGIN);
     }
   } catch(e) {}
-  const TARGET_PARENT_ORIGIN = REFERRER_ORIGIN || 'https://quraan.academy';
+  const TARGET_PARENT_ORIGIN = REFERRER_ORIGIN || (function(){
+    try { return window.__prequran_moodle_origin ? new URL(window.__prequran_moodle_origin).origin : CHILD_ORIGIN; } catch(e) { return CHILD_ORIGIN; }
+  })();
   function applyTokens(p){
     if(!p || !p.uid || !p.wstoken) return false;
     window.__prequran_uid = p.uid;
@@ -65,6 +65,7 @@
       const canSkip = p.pq_can_skip_step === true || p.pq_can_skip_step === 1 || String(p.pq_can_skip_step).toLowerCase() === 'true' || String(p.pq_can_skip_step) === '1';
       window.__prequran_can_skip_step = canSkip;
       try { sessionStorage.setItem('pq_can_skip_step', canSkip ? '1' : '0'); } catch(e) {}
+      try { window.dispatchEvent(new CustomEvent('pq:qa-skip-permission-ready', { detail: { canSkip } })); } catch(e) {}
     }
     window.__PQ_TOKENS_READY__ = true;
     return true;

@@ -7,7 +7,7 @@
   'use strict';
 
   var NS = 'PQStepperUI';
-  var V  = '1.0.3-arabic-labels';
+  var V  = '1.0.5-repeat-labels';
 
   try{
     if (window[NS] && window[NS].__version && window[NS].__version >= V) return;
@@ -19,6 +19,7 @@
     var progress = (opts && opts.progress) || null;
     var currentStepId = (opts && opts.currentStepId) || null;
     var finished = !!(opts && opts.finished);
+    var freeNavigation = !!(opts && opts.freeNavigation);
     var core = (opts && opts.core) || null;
 
     if (!containerEl) return;
@@ -31,7 +32,7 @@
       return false;
     };
 
-    if (!isValid(curId) || (progress[curId] && progress[curId].completed)){
+    if (!freeNavigation && (!isValid(curId) || (progress[curId] && progress[curId].completed))){
       for (var j=0;j<steps.length;j++){
         var s = steps[j];
         var p = progress[s.id];
@@ -56,25 +57,32 @@
       item.setAttribute('data-stepid', String(step.id || ''));
 
       if (pr.completed) item.classList.add('completed');
-      if (!pr.completed && !finished && idx === curIdx) item.classList.add('active');
-      if (!pr.completed && !finished && idx > curIdx) item.classList.add('locked');
+      if (!finished && idx === curIdx) item.classList.add('active');
+      if (!freeNavigation && !pr.completed && !finished && idx > curIdx) item.classList.add('locked');
+      if (freeNavigation) {
+        item.classList.add('review-clickable');
+        item.tabIndex = 0;
+        item.setAttribute('role', 'button');
+        item.style.cursor = 'pointer';
+        item.style.pointerEvents = 'auto';
+      }
 
 
 // Apply inline colors with !important so shared CSS cannot override state colors.
 // Matches the palette used across lessons (orange active, green completed, light orange incomplete, dim locked).
 function _st(prop, val){ try{ item.style.setProperty(prop, val, 'important'); }catch(_e){} }
-if (pr.completed){
-  _st('background', '#f3fff4');
-  _st('border', '1px solid #7ad47a');
-  _st('opacity', '1');
-  _st('filter', 'none');
-} else if (!finished && idx === curIdx){
+if (!finished && idx === curIdx){
   _st('background', '#ffe6c7');
   _st('border', '3px solid #ffb86b');
   _st('box-shadow', '0 10px 26px rgba(241,154,42,.25)');
   _st('opacity', '1');
   _st('filter', 'none');
-} else if (!finished && idx > curIdx){
+} else if (pr.completed){
+  _st('background', '#f3fff4');
+  _st('border', '1px solid #7ad47a');
+  _st('opacity', '1');
+  _st('filter', 'none');
+} else if (!freeNavigation && !finished && idx > curIdx){
   _st('background', '#fff7ec');
   _st('border', '1px solid #ffe2c2');
   _st('opacity', '.45');
@@ -88,7 +96,9 @@ if (pr.completed){
 
       var badge = document.createElement('div');
       badge.className = 'managed-step-badge';
-      badge.textContent = pr.completed ? '✓' : (idx === curIdx ? '▶' : (idx > curIdx ? '🔒' : '•'));
+      badge.textContent = pr.completed
+        ? '✓'
+        : (idx === curIdx ? '▶' : ((!freeNavigation && idx > curIdx) ? '🔒' : '•'));
 
       var idxEl = document.createElement('div');
       idxEl.className = 'managed-step-index';
@@ -103,6 +113,28 @@ if (pr.completed){
       } else {
         lbl.textContent = (step.label || step.title || step.id);
       }
+
+      var passReqForLabel = Number(
+        pr.passesRequired ||
+        pr.passes_required ||
+        step.passesRequired ||
+        step.passes_required ||
+        step.default_passes_required ||
+        1
+      ) || 1;
+      var repReqForLabel = Number(
+        pr.repeatPerLetter ||
+        pr.repeats_per_letter ||
+        pr.repeat_per_letter ||
+        pr.default_repeats_per_letter ||
+        step.repeatPerLetter ||
+        step.repeats_per_letter ||
+        step.repeat_per_letter ||
+        step.default_repeats_per_letter ||
+        1
+      ) || 1;
+      var baseLabelForDisplay = step.label || step.title || step.step_title || step.id;
+      lbl.textContent = baseLabelForDisplay + ((passReqForLabel > 1 || repReqForLabel > 1) ? ' - ' + passReqForLabel + 'x' + repReqForLabel : '');
 
       var labelText = lbl.textContent;
       lbl.textContent = '';
@@ -137,8 +169,15 @@ if (pr.completed){
     }
   }
 
-  var api = window[NS] || {};
-  if (typeof api.render !== 'function') api.render = render;
+      var api = {};
+      try {
+        var existing = window[NS] || {};
+        for (var key in existing) {
+          if (Object.prototype.hasOwnProperty.call(existing, key)) api[key] = existing[key];
+        }
+      } catch (_e) {}
+
+      api.render = render;
 
   api.__version = V;
 

@@ -2,4 +2,4 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Ehel Quraan Academy login';
+$string['pluginname'] = 'Ehel Quraan Academy home';

@@ -82,6 +82,9 @@ function pqmr_has_teacher_role(int $userid): bool {
     if ($userid <= 0) {
         return false;
     }
+    if (pqh_has_independent_teacher_profile($userid)) {
+        return true;
+    }
     if (pqmr_table_exists('local_prequran_teacher_student')
             && $DB->record_exists('local_prequran_teacher_student', ['teacherid' => $userid, 'status' => 'active'])) {
         return true;
@@ -106,6 +109,9 @@ function pqmr_role(int $userid): string {
     if (pqh_can_manage_academy_operations($userid)) {
         return 'admin';
     }
+    if (pqh_user_allowed_workspace_ids($userid, 'operations.manage')) {
+        return 'admin';
+    }
     if (pqmr_has_teacher_role($userid)) {
         return 'teacher';
     }
@@ -117,6 +123,47 @@ function pqmr_role(int $userid): string {
         }
     }
     return 'student';
+}
+
+function pqmr_student_in_allowed_workspace(int $studentid): bool {
+    global $DB, $USER;
+    if ($studentid <= 0) {
+        return false;
+    }
+    if (pqh_can_manage_academy_operations((int)$USER->id)) {
+        return true;
+    }
+    $workspaceids = pqh_user_allowed_workspace_ids((int)$USER->id, 'operations.manage');
+    foreach (pqh_independent_teacher_workspace_ids((int)$USER->id) as $workspaceid) {
+        if ($workspaceid > 0 && !in_array($workspaceid, $workspaceids, true)) {
+            $workspaceids[] = $workspaceid;
+        }
+    }
+    if (!$workspaceids) {
+        return false;
+    }
+    [$insql, $inparams] = $DB->get_in_or_equal($workspaceids, SQL_PARAMS_NAMED, 'mrwork');
+    $memberparams = $inparams + ['studentid' => $studentid, 'status' => 'active'];
+    if (pqmr_table_exists('local_prequran_workspace_member')
+            && $DB->record_exists_select(
+                'local_prequran_workspace_member',
+                "userid = :studentid AND status = :status AND workspaceid {$insql}",
+                $memberparams
+            )) {
+        return true;
+    }
+    $profileparams = $inparams + ['studentid' => $studentid];
+    if (pqmr_table_exists('local_prequran_student_profile')
+            && pqmr_table_has_field('local_prequran_student_profile', 'workspaceid')
+            && pqmr_table_has_field('local_prequran_student_profile', 'userid')
+            && $DB->record_exists_select(
+                'local_prequran_student_profile',
+                "userid = :studentid AND workspaceid {$insql}",
+                $profileparams
+            )) {
+        return true;
+    }
+    return false;
 }
 
 function pqmr_parent_children(int $parentid): array {
@@ -174,6 +221,28 @@ function pqmr_teacher_students(int $teacherid): array {
         }
     }
 
+    foreach (pqh_independent_teacher_workspace_ids($teacherid) as $workspaceid) {
+        if (!pqmr_table_exists('local_prequran_workspace_member')) {
+            continue;
+        }
+        $rows = $DB->get_records('local_prequran_workspace_member', [
+            'workspaceid' => $workspaceid,
+            'workspace_role' => 'student',
+            'status' => 'active',
+        ], 'timemodified DESC', 'id, userid, workspaceid');
+        foreach ($rows as $row) {
+            $studentid = (int)$row->userid;
+            if ($studentid > 0 && $studentid !== $teacherid) {
+                $students[$studentid] = [
+                    'studentid' => $studentid,
+                    'name' => pqmr_user_label($studentid),
+                    'groupname' => 'Independent workspace',
+                    'groupid' => 0,
+                ];
+            }
+        }
+    }
+
     if (!$students) {
         $cohorts = $DB->get_records('cohort_members', ['userid' => $teacherid], '', 'id, cohortid');
         foreach ($cohorts as $membership) {
@@ -205,7 +274,7 @@ function pqmr_admin_students(): array {
         );
         foreach ($rows as $row) {
             $studentid = (int)$row->userid;
-            if ($studentid > 0) {
+            if ($studentid > 0 && pqmr_student_in_allowed_workspace($studentid)) {
                 $students[$studentid] = ['studentid' => $studentid, 'name' => pqmr_user_label($studentid)];
             }
         }
@@ -216,7 +285,9 @@ function pqmr_admin_students(): array {
             $rows = $DB->get_records_sql("SELECT DISTINCT {$field} AS studentid FROM {local_prequran_student_profile} WHERE {$field} > 0", [], 0, 1000);
             foreach ($rows as $row) {
                 $studentid = (int)$row->studentid;
-                $students[$studentid] = ['studentid' => $studentid, 'name' => pqmr_user_label($studentid)];
+                if (pqmr_student_in_allowed_workspace($studentid)) {
+                    $students[$studentid] = ['studentid' => $studentid, 'name' => pqmr_user_label($studentid)];
+                }
             }
         }
     }
@@ -240,8 +311,12 @@ function pqmr_allowed_students(string $role, int $userid): array {
     } else {
         $students = [['studentid' => $userid, 'name' => pqmr_user_label($userid)]];
     }
-    return array_values(array_filter($students, static function(array $student): bool {
-        return pqh_user_belongs_to_consumer_context((int)($student['studentid'] ?? 0));
+    return array_values(array_filter($students, static function(array $student) use ($role, $userid): bool {
+        $studentid = (int)($student['studentid'] ?? 0);
+        if ($role === 'teacher' && pqh_has_independent_teacher_profile($userid) && pqmr_student_in_allowed_workspace($studentid)) {
+            return true;
+        }
+        return pqh_user_belongs_to_consumer_context($studentid);
     }));
 }
 

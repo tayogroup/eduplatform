@@ -121,11 +121,14 @@ function getWsEndpoint() {
   if (fromUrl) return fromUrl;
 
   // If the page is served from Bunny CDN, a relative endpoint will hit the CDN origin and fail.
-  // Use the same Moodle origin used by your teacher dashboards.
+  // Use the launch/referrer Moodle origin when it is available.
   try{
     const host = String(window.location.hostname || '');
     if (/b-cdn\.net$/i.test(host)) {
-      return "https://quraan.academy/webservice/rest/server.php";
+      const moodleOrigin = window.__prequran_moodle_origin
+        ? new URL(window.__prequran_moodle_origin).origin
+        : (document.referrer ? new URL(document.referrer).origin : window.location.origin);
+      return moodleOrigin + "/webservice/rest/server.php";
     }
   }catch(_){}
 

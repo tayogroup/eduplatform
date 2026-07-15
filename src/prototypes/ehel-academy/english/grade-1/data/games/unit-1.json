@@ -1,0 +1,493 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 1,
+  "unit": 1,
+  "unitId": "eng-g01-t01-u01",
+  "title": "Welcome to School Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A naming word used when we talk about school, colours and confident introductions.",
+          "choices": [
+            "table",
+            "whiteboard",
+            "book"
+          ],
+          "answer": "table",
+          "explanation": "table: A naming word used when we talk about school, colours and confident introductions."
+        },
+        {
+          "prompt": "Which word means: A describing word used when we talk about school, colours and confident introductions.",
+          "choices": [
+            "table",
+            "whiteboard",
+            "red"
+          ],
+          "answer": "red",
+          "explanation": "red: A describing word used when we talk about school, colours and confident introductions."
+        },
+        {
+          "prompt": "Which word means: A naming word used when we talk about school, colours and confident introductions.",
+          "choices": [
+            "whiteboard",
+            "teacher",
+            "table"
+          ],
+          "answer": "teacher",
+          "explanation": "teacher: A naming word used when we talk about school, colours and confident introductions."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A naming word used when we talk about school, colours and confident introductions.",
+          "answer": "chair"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A describing word used when we talk about school, colours and confident introductions.",
+          "answer": "blue"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A naming word used when we talk about school, colours and confident introductions.",
+          "answer": "friend"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "table.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a table."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "pencil.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a pencil."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "yellow.",
+            "is",
+            "It"
+          ],
+          "answer": "It is yellow."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which is a useful complete pattern for Welcome to School?",
+          "choices": [
+            "It is ___.",
+            "This is a ___.",
+            "My name is ___.",
+            "I am ___ years old."
+          ],
+          "answer": "It is ___.",
+          "explanation": "The approved Unit pattern is: It is ___."
+        },
+        {
+          "prompt": "Which is a useful complete pattern for Welcome to School?",
+          "choices": [
+            "My name is ___.",
+            "This is a ___.",
+            "It is ___.",
+            "I am ___ years old."
+          ],
+          "answer": "My name is ___.",
+          "explanation": "The approved Unit pattern is: My name is ___."
+        },
+        {
+          "prompt": "Which is a useful complete pattern for Welcome to School?",
+          "choices": [
+            "I am ___ years old.",
+            "This is a ___.",
+            "It is ___.",
+            "My name is ___."
+          ],
+          "answer": "I am ___ years old.",
+          "explanation": "The approved Unit pattern is: I am ___ years old."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "Who is in the Amal's First Day story?",
+          "choices": [
+            "Accept an accurate detail from the source story.",
+            "Accept a relevant word, action or complete supported pattern.",
+            "table"
+          ],
+          "answer": "Accept an accurate detail from the source story.",
+          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+        },
+        {
+          "prompt": "What happens first?",
+          "choices": [
+            "Accept a relevant word, action or complete supported pattern.",
+            "table",
+            "Accept an accurate detail from the source story."
+          ],
+          "answer": "Accept an accurate detail from the source story.",
+          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+        },
+        {
+          "prompt": "How does the main character feel?",
+          "choices": [
+            "table",
+            "Accept an accurate detail from the source story.",
+            "Accept a relevant word, action or complete supported pattern."
+          ],
+          "answer": "Accept an accurate detail from the source story.",
+          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "This is a ___."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "My name is ___."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "I can ___."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "teacher.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a teacher."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "draw.",
+            "can",
+            "I"
+          ],
+          "answer": "I can draw."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "objects.",
+            "classroom",
+            "for",
+            "words",
+            "Unit",
+            "the",
+            "of",
+            "one",
+            "is",
+            "chart",
+            "ABC"
+          ],
+          "answer": "ABC chart is one of the Unit words for classroom objects."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'green' mean in this unit?",
+          "choices": [
+            "A describing word used when we talk about school, colours and confident introductions.",
+            "A naming word used when we talk about school, colours and confident introductions.",
+            "An action word used when we talk about school, colours and confident introductions."
+          ],
+          "answer": "A describing word used when we talk about school, colours and confident introductions.",
+          "explanation": "green: A describing word used when we talk about school, colours and confident introductions."
+        },
+        {
+          "prompt": "What does 'boy' mean in this unit?",
+          "choices": [
+            "A describing word used when we talk about school, colours and confident introductions.",
+            "An action word used when we talk about school, colours and confident introductions.",
+            "A naming word used when we talk about school, colours and confident introductions."
+          ],
+          "answer": "A naming word used when we talk about school, colours and confident introductions.",
+          "explanation": "boy: A naming word used when we talk about school, colours and confident introductions."
+        },
+        {
+          "prompt": "What does 'whiteboard' mean in this unit?",
+          "choices": [
+            "An action word used when we talk about school, colours and confident introductions.",
+            "A naming word used when we talk about school, colours and confident introductions.",
+            "A describing word used when we talk about school, colours and confident introductions."
+          ],
+          "answer": "A naming word used when we talk about school, colours and confident introductions.",
+          "explanation": "whiteboard: A naming word used when we talk about school, colours and confident introductions."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'white'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "white is used as a adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sing'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "sing is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'ruler'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "ruler is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "whiteboard",
+              "A naming word used when we talk about school, colours and confident introductions."
+            ],
+            [
+              "book",
+              "A naming word used when we talk about school, colours and confident introductions."
+            ],
+            [
+              "crayon",
+              "A naming word used when we talk about school, colours and confident introductions."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "green",
+              "A describing word used when we talk about school, colours and confident introductions."
+            ],
+            [
+              "purple",
+              "A describing word used when we talk about school, colours and confident introductions."
+            ],
+            [
+              "pink",
+              "A describing word used when we talk about school, colours and confident introductions."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "boy",
+              "A naming word used when we talk about school, colours and confident introductions."
+            ],
+            [
+              "write",
+              "An action word used when we talk about school, colours and confident introductions."
+            ],
+            [
+              "listen",
+              "An action word used when we talk about school, colours and confident introductions."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which word belongs to classroom objects?",
+          "choices": [
+            "ABC chart",
+            "book",
+            "pencil",
+            "ruler"
+          ],
+          "answer": "ABC chart",
+          "explanation": "ABC chart is one of the Unit words for classroom objects."
+        },
+        {
+          "prompt": "Which word belongs to classroom objects?",
+          "choices": [
+            "clock",
+            "pencil",
+            "ruler",
+            "crayon"
+          ],
+          "answer": "clock",
+          "explanation": "clock is one of the Unit words for classroom objects."
+        },
+        {
+          "prompt": "Which is a useful complete pattern for Welcome to School?",
+          "choices": [
+            "This is a ___.",
+            "It is ___.",
+            "My name is ___.",
+            "I am ___ years old."
+          ],
+          "answer": "This is a ___.",
+          "explanation": "The approved Unit pattern is: This is a ___."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which word belongs to classroom objects?",
+          "choices": [
+            "table",
+            "whiteboard",
+            "ABC chart",
+            "clock"
+          ],
+          "answer": "table",
+          "explanation": "table is one of the Unit words for classroom objects."
+        },
+        {
+          "prompt": "Which word belongs to classroom objects?",
+          "choices": [
+            "chair",
+            "ABC chart",
+            "clock",
+            "book"
+          ],
+          "answer": "chair",
+          "explanation": "chair is one of the Unit words for classroom objects."
+        },
+        {
+          "prompt": "Which word belongs to classroom objects?",
+          "choices": [
+            "whiteboard",
+            "clock",
+            "book",
+            "pencil"
+          ],
+          "answer": "whiteboard",
+          "explanation": "whiteboard is one of the Unit words for classroom objects."
+        }
+      ]
+    }
+  ]
+}

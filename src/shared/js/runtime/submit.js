@@ -1,5 +1,5 @@
 /*
-  Pre-Quraan shared Submit step.
+  EduPlatform shared Submit step.
   Audio-only, full-unit teacher submission with practice media.
 */
 

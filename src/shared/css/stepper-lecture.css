@@ -553,40 +553,12 @@ html.pq-browser-ui #managedStepsList .managed-step.active{
 
 /* ===== PQ OPTION A FINAL CLEAN DUOLINGO STEPPER END ===== */
 
-/* ===== PQ MOBILE SAFETY GUARD HIDE BROWSER STEPPER START =====
-   Absolute mobile protection:
-   If the lesson viewport is mobile-sized, never show the browser managed stepper.
-   This protects real mobile even if pq-browser-ui is accidentally present/cached.
+/* ===== PQ MOBILE SAFETY GUARD START =====
+   Keep the step map visible on mobile/unmanaged lessons; only preserve the
+   mobile summary controls below.
    ========================================================= */
 
 @media (max-width: 768px){
-  #managedStepper,
-  #managedStepper.managed-stepper,
-  html.pq-browser-ui #managedStepper,
-  html.pq-browser-ui #managedStepper.managed-stepper{
-    display:none !important;
-    visibility:hidden !important;
-    opacity:0 !important;
-    max-height:0 !important;
-    min-height:0 !important;
-    height:0 !important;
-    overflow:hidden !important;
-    margin:0 !important;
-    padding:0 !important;
-    border:0 !important;
-    box-shadow:none !important;
-    pointer-events:none !important;
-  }
-
-  #managedStepsList,
-  html.pq-browser-ui #managedStepsList{
-    display:none !important;
-    visibility:hidden !important;
-    max-height:0 !important;
-    height:0 !important;
-    overflow:hidden !important;
-  }
-
   .pq-mobile-step-status,
   #pqMobileStepStatus,
   .pq-mobile-summary-row,

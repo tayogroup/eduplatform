@@ -40,6 +40,70 @@ function pqtirq_short(string $value, int $max = 180): string {
     return core_text::substr($value, 0, $max) . '...';
 }
 
+function pqtirq_application_json(stdClass $request): array {
+    $decoded = json_decode((string)($request->application_json ?? ''), true);
+    if (is_array($decoded) && $decoded) {
+        return $decoded;
+    }
+    $map = [
+        'Teaching work model' => 'teacher_work_model_labels',
+        'Service modes' => 'service_mode_labels',
+        'Language subject' => 'subject_language_label',
+        'Subjects' => 'subject_area_labels',
+        'Other subjects' => 'subject_other',
+        'Learner levels' => 'age_group_labels',
+        'Teaching levels' => 'general_level_labels',
+        'School/workspace preferences' => 'workspace_preferences',
+        'Years of experience' => 'years_experience',
+        'Schools, institutions, and freelance teaching' => 'institution_experience',
+        'Online profile' => 'online_profile_name',
+        'Social media handle' => 'instagram_handle',
+        'Social profile URL' => 'social_profile_url',
+        'Website/booking URL' => 'website_or_booking_url',
+        'Demo/sample URL' => 'demo_video_url',
+    ];
+    $backup = [];
+    foreach (preg_split('/\R/', (string)($request->notes ?? '')) ?: [] as $line) {
+        if (strpos($line, ':') === false) {
+            continue;
+        }
+        [$label, $value] = array_map('trim', explode(':', $line, 2));
+        if ($value !== '' && isset($map[$label])) {
+            $backup[$map[$label]] = $value;
+        }
+    }
+    return $backup;
+}
+
+function pqtirq_app_value(array $application, string $key): string {
+    $value = $application[$key] ?? '';
+    return is_array($value) ? trim(implode(', ', array_map('strval', $value))) : trim((string)$value);
+}
+
+function pqtirq_request_or_app(stdClass $request, array $application, string $field, string $jsonkey = '', string $labelkey = ''): string {
+    $stored = trim((string)($request->{$field} ?? ''));
+    if ($stored !== '') {
+        return $stored;
+    }
+    if ($labelkey !== '') {
+        $value = pqtirq_app_value($application, $labelkey);
+        if ($value !== '') {
+            return $value;
+        }
+    }
+    $value = pqtirq_app_value($application, $jsonkey !== '' ? $jsonkey : $field);
+    return $value;
+}
+
+function pqtirq_request_or_app_int(stdClass $request, array $application, string $field): int {
+    $stored = trim((string)($request->{$field} ?? ''));
+    if ($stored !== '') {
+        return (int)$stored;
+    }
+    $value = pqtirq_app_value($application, $field);
+    return $value !== '' ? (int)$value : 0;
+}
+
 function pqtirq_status_class(string $status): string {
     if (in_array($status, ['approved', 'converted'], true)) {
         return ' pqtirq-pill--ok';
@@ -84,6 +148,70 @@ function pqtirq_audit(string $action, int $targetid, array $details = []): void 
         'details' => $details ? json_encode($details, JSON_UNESCAPED_SLASHES) : '',
         'timecreated' => time(),
     ]);
+}
+
+function pqtirq_request_with_profile_values(stdClass $request): stdClass {
+    global $DB;
+
+    $display = clone $request;
+    if (!pqtirq_table_exists('local_prequran_teacher_profile')) {
+        return $display;
+    }
+
+    $profile = null;
+    $profileid = (int)($request->converted_profileid ?? 0);
+    if ($profileid > 0) {
+        $profile = $DB->get_record('local_prequran_teacher_profile', ['id' => $profileid], '*', IGNORE_MISSING);
+    }
+    if (!$profile && (int)($request->converted_userid ?? 0) > 0) {
+        $profile = $DB->get_record('local_prequran_teacher_profile', ['userid' => (int)$request->converted_userid], '*', IGNORE_MISSING);
+    }
+    if (!$profile) {
+        return $display;
+    }
+
+    $fields = [
+        'teacher_work_models',
+        'service_modes',
+        'subject_language',
+        'subject_areas',
+        'subject_other',
+        'age_groups',
+        'general_levels',
+        'workspace_preferences',
+        'institution_experience',
+        'application_json',
+        'availability_summary',
+        'primary_language',
+        'other_languages',
+        'country',
+        'city',
+        'timezone',
+    ];
+    foreach ($fields as $field) {
+        $value = trim((string)($profile->{$field} ?? ''));
+        if ($value !== '') {
+            $display->{$field} = $value;
+        }
+    }
+
+    if (isset($profile->years_experience)) {
+        $display->years_experience = (int)$profile->years_experience;
+    }
+    foreach ([
+        'marketplace_bio' => 'bio',
+        'marketplace_experience' => 'experience',
+        'marketplace_education' => 'education',
+        'marketplace_teaching_style' => 'teaching_style',
+        'marketplace_courses' => 'courses',
+    ] as $profilefield => $requestfield) {
+        $value = trim((string)($profile->{$profilefield} ?? ''));
+        if ($value !== '') {
+            $display->{$requestfield} = $value;
+        }
+    }
+
+    return $display;
 }
 
 $context = context_system::instance();
@@ -135,10 +263,29 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $requests = [];
 if ($ready) {
+    $consumercontext = pqh_requested_consumer_context();
+    $where = '';
+    $params = [];
+    $consumerid = (int)($consumercontext->consumerid ?? 0);
+    $consumerslug = (string)($consumercontext->consumerslug ?? '');
+    $isplatformfoundation = $consumerslug === 'eduplatform'
+        && (string)($consumercontext->consumer_type ?? '') === 'platform_foundation';
+    if ($consumerid > 0 && !$isplatformfoundation) {
+        $whereparts = ['r.consumerid = :consumerid'];
+        $params['consumerid'] = $consumerid;
+        $workspaceids = pqh_consumer_context_workspace_ids($consumercontext);
+        if ($workspaceids) {
+            [$insql, $inparams] = $DB->get_in_or_equal($workspaceids, SQL_PARAMS_NAMED, 'requestworkspace');
+            $whereparts[] = "(COALESCE(r.consumerid, 0) = 0 AND r.workspaceid {$insql})";
+            $params += $inparams;
+        }
+        $where = 'WHERE (' . implode(' OR ', $whereparts) . ')';
+    }
     $requests = array_values($DB->get_records_sql(
         "SELECT r.*, c.slug AS consumer_slug, c.name AS consumer_name, c.consumer_type
            FROM {local_prequran_teacher_intake_request} r
       LEFT JOIN {local_prequran_consumer} c ON c.id = r.consumerid
+          {$where}
        ORDER BY CASE r.status
                     WHEN 'new' THEN 1
                     WHEN 'reviewing' THEN 2
@@ -149,7 +296,7 @@ if ($ready) {
                     ELSE 7
                 END,
                 r.timecreated DESC",
-        [],
+        $params,
         0,
         100
     ));
@@ -172,7 +319,7 @@ body.pqh-teacher-intake-requests-page #page,body.pqh-teacher-intake-requests-pag
         <p class="pqtirq-sub pqh-workspace-sub">Review independent teacher and tutor applications before creating Moodle teacher accounts, marketplace profiles, or workspace access.</p>
       </div>
       <div class="pqtirq-actions pqh-workspace-actions">
-        <a class="pqtirq-btn pqtirq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/public_teacher_intake.php', ['consumer' => 'edu-for-tomorrow']))->out(false); ?>">Public form</a>
+        <a class="pqtirq-btn pqtirq-btn--light" href="<?php echo pqh_consumer_url('/local/hubredirect/public_teacher_intake.php', $consumercontext)->out(false); ?>">Public form</a>
         <a class="pqtirq-btn pqtirq-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake.php'))->out(false); ?>">Teacher intake</a>
         <a class="pqtirq-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php'))->out(false); ?>">Admin menu</a>
       </div>
@@ -187,7 +334,11 @@ body.pqh-teacher-intake-requests-page #page,body.pqh-teacher-intake-requests-pag
       <section class="pqtirq-card"><div class="pqtirq-empty">No teacher applications yet.</div></section>
     <?php else: ?>
       <?php foreach ($requests as $request): ?>
-        <?php $consumername = trim((string)($request->consumer_name ?? '')) ?: 'Unknown consumer'; ?>
+        <?php
+          $consumername = trim((string)($request->consumer_name ?? '')) ?: 'Unknown consumer';
+          $request = pqtirq_request_with_profile_values($request);
+          $application = pqtirq_application_json($request);
+        ?>
         <article class="pqtirq-card">
           <div class="pqtirq-cardhead">
             <div>
@@ -201,13 +352,24 @@ body.pqh-teacher-intake-requests-page #page,body.pqh-teacher-intake-requests-pag
             <div class="pqtirq-box"><strong>Contact</strong><?php echo s((string)$request->email ?: 'Email not provided'); ?><br><?php echo s((string)$request->phone ?: 'Phone not provided'); ?></div>
             <div class="pqtirq-box"><strong>Location</strong><?php echo s((string)$request->country ?: 'Country not set'); ?><?php if ((string)$request->city !== ''): ?>, <?php echo s((string)$request->city); ?><?php endif; ?><br><?php echo s((string)$request->timezone ?: 'Time zone not set'); ?></div>
             <div class="pqtirq-box"><strong>Languages</strong><?php echo s((string)$request->primary_language ?: 'Primary language not set'); ?><?php if ((string)$request->other_languages !== ''): ?><br>Also: <?php echo s((string)$request->other_languages); ?><?php endif; ?></div>
-            <div class="pqtirq-box"><strong>Courses</strong><?php echo s(pqtirq_short((string)$request->courses)); ?><br><strong style="margin-top:8px">Levels</strong><?php echo s(pqtirq_short((string)$request->levels)); ?></div>
+            <div class="pqtirq-box"><strong>Work model</strong><?php echo s(pqtirq_short(pqtirq_request_or_app($request, $application, 'teacher_work_models', 'teacher_work_models', 'teacher_work_model_labels'))); ?><br><strong style="margin-top:8px">Service modes</strong><?php echo s(pqtirq_short(pqtirq_request_or_app($request, $application, 'service_modes', 'service_modes', 'service_mode_labels'))); ?></div>
+            <div class="pqtirq-box"><strong>Language subject</strong><?php echo s(pqtirq_short(pqtirq_request_or_app($request, $application, 'subject_language', 'subject_language', 'subject_language_label'))); ?><br><strong style="margin-top:8px">Other subjects</strong><?php echo s(pqtirq_short(trim(pqtirq_request_or_app($request, $application, 'subject_areas', 'subject_areas', 'subject_area_labels') . ' ' . pqtirq_request_or_app($request, $application, 'subject_other')), 260)); ?></div>
+            <div class="pqtirq-box"><strong>Learner levels</strong><?php echo s(pqtirq_short(pqtirq_request_or_app($request, $application, 'age_groups', 'age_groups', 'age_group_labels'))); ?></div>
+            <div class="pqtirq-box"><strong>Levels</strong><?php echo s(pqtirq_short(pqtirq_request_or_app($request, $application, 'general_levels', 'general_levels', 'general_level_labels') ?: (string)($request->levels ?? ''))); ?></div>
             <div class="pqtirq-box"><strong>Availability</strong><?php echo s(pqtirq_short((string)$request->availability_summary, 260)); ?></div>
             <div class="pqtirq-box"><strong>Conversion</strong><?php echo (int)$request->converted_userid > 0 ? 'Moodle teacher ID ' . (int)$request->converted_userid . '<br>' . s(pqh_account_no_label((int)$request->converted_userid)) : 'Not converted yet'; ?><?php if ((int)$request->converted_profileid > 0): ?><br>Profile #<?php echo (int)$request->converted_profileid; ?><?php endif; ?></div>
+            <div class="pqtirq-box pqtirq-wide"><strong>School / workspace preferences</strong><?php echo s(pqtirq_short(pqtirq_request_or_app($request, $application, 'workspace_preferences'), 420)); ?></div>
+            <div class="pqtirq-box"><strong>Years of experience</strong><?php echo s((string)pqtirq_request_or_app_int($request, $application, 'years_experience')); ?></div>
+            <div class="pqtirq-box pqtirq-wide"><strong>Schools, institutions, and freelance teaching</strong><?php echo s(pqtirq_short(pqtirq_request_or_app($request, $application, 'institution_experience'), 420)); ?></div>
             <div class="pqtirq-box pqtirq-wide"><strong>Experience</strong><?php echo s(pqtirq_short((string)$request->experience, 420)); ?></div>
             <div class="pqtirq-box"><strong>Education</strong><?php echo s(pqtirq_short((string)$request->education, 260)); ?></div>
             <div class="pqtirq-box pqtirq-wide"><strong>Public profile summary</strong><?php echo s(pqtirq_short((string)$request->bio, 420)); ?></div>
             <div class="pqtirq-box"><strong>Desired services</strong><?php echo s(pqtirq_short((string)$request->desired_services, 260)); ?></div>
+            <div class="pqtirq-box"><strong>Online profile</strong><?php echo s(pqtirq_short(pqtirq_app_value($application, 'online_profile_name') ?: pqtirq_app_value($application, 'instagram_handle'), 220)); ?><br><?php echo s(pqtirq_short(pqtirq_app_value($application, 'social_profile_url'), 220)); ?></div>
+            <div class="pqtirq-box"><strong>Website / demo</strong><?php echo s(pqtirq_short(pqtirq_app_value($application, 'website_or_booking_url'), 220)); ?><br><?php echo s(pqtirq_short(pqtirq_app_value($application, 'demo_video_url'), 220)); ?></div>
+            <div class="pqtirq-box pqtirq-wide"><strong>Teaching offer</strong><?php echo s(pqtirq_short(pqtirq_app_value($application, 'teaching_offer_summary'), 420)); ?></div>
+            <div class="pqtirq-box pqtirq-wide"><strong>Learner outcomes</strong><?php echo s(pqtirq_short(pqtirq_app_value($application, 'learner_outcomes'), 420)); ?></div>
+            <div class="pqtirq-box pqtirq-wide"><strong>Curriculum / social proof</strong><?php echo s(pqtirq_short(trim(pqtirq_app_value($application, 'curriculum_materials') . "\n" . pqtirq_app_value($application, 'social_proof')), 420)); ?></div>
             <div class="pqtirq-box pqtirq-wide"><strong>Applicant notes</strong><?php echo s(pqtirq_short((string)$request->notes, 360)); ?></div>
             <div class="pqtirq-box"><strong>Admin notes</strong><?php echo s(pqtirq_short((string)$request->admin_notes, 260)); ?></div>
           </div>

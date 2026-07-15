@@ -7,11 +7,30 @@ require_once(__DIR__ . '/account_ids.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/institutionlib.php');
-
-pqh_require_academy_operations('Only academy operations users can create student intake records.');
+require_once(__DIR__ . '/course_offeringlib.php');
 
 $pqsiconsumercontext = pqh_requested_consumer_context();
 $pqsioptions = require(__DIR__ . '/student_intake_config.php');
+$pqsioptions['course_types'] = pqco_workspace_course_options($pqsiconsumercontext, [], false);
+$pqsiinstitutiontype = pqhi_clean_institution_type((string)($pqsiconsumercontext->institution_type ?? ''), '');
+$pqsifaithsubcategory = pqhi_clean_faith_subcategory((string)($pqsiconsumercontext->faith_subcategory ?? ''));
+$pqsiisprimaryeducation = $pqsiinstitutiontype === 'primary_education';
+$pqsiishighereducation = $pqsiinstitutiontype === 'higher_education';
+$pqsiistechnicaltraining = $pqsiinstitutiontype === 'technical_training';
+$pqsiisprofessionaldevelopment = $pqsiinstitutiontype === 'professional_development';
+$pqsiisadultlearning = $pqsiinstitutiontype === 'adult_learning';
+$pqsiisislamicstudies = $pqsiinstitutiontype === 'faith_based_education' && $pqsifaithsubcategory === 'islamic_studies';
+$pqsiischristianstudies = $pqsiinstitutiontype === 'faith_based_education' && $pqsifaithsubcategory === 'christian_studies';
+
+$pqsiisoperationsuser = pqh_can_manage_academy_operations((int)$USER->id);
+$pqsiisindependentteacher = pqh_has_independent_teacher_profile((int)$USER->id);
+if (!$pqsiisoperationsuser && !$pqsiisindependentteacher) {
+    pqh_access_denied(
+        'Only platform operations users and approved independent teachers can create student intake records.',
+        new moodle_url('/local/hubredirect/dashboard.php'),
+        'Student intake access required'
+    );
+}
 
 function pqsi_table_exists(string $table): bool {
     global $DB;
@@ -26,6 +45,22 @@ function pqsi_table_has_field(string $table, string $field): bool {
         return false;
     }
     return array_key_exists($field, $columns);
+}
+
+function pqsi_record_for_existing_columns(string $table, stdClass $record): stdClass {
+    global $DB;
+    try {
+        $columns = $DB->get_columns($table);
+    } catch (Throwable $e) {
+        return $record;
+    }
+    $filtered = new stdClass();
+    foreach ($record as $key => $value) {
+        if (isset($columns[$key])) {
+            $filtered->{$key} = $value;
+        }
+    }
+    return $filtered;
 }
 
 function pqsi_profile_ready(): bool {
@@ -265,15 +300,130 @@ function pqsi_save_profile(int $studentid, array $data): int {
     pqsi_set_profile_field($record, 'student_display_name', (string)$data['student_display_name']);
     pqsi_set_profile_field($record, 'student_middle_name', (string)$data['student_middle_name']);
     pqsi_set_profile_field($record, 'student_access_type', (string)$data['student_access_type']);
+    pqsi_set_profile_field($record, 'date_of_birth', (string)($data['date_of_birth'] ?? ''));
     pqsi_set_profile_field($record, 'primary_language', $primarylanguage);
     pqsi_set_profile_field($record, 'preferred_teaching_language', (string)$data['preferred_teaching_language']);
     pqsi_set_profile_field($record, 'tajweed_sub_level', (string)$data['tajweed_sub_level']);
     pqsi_set_profile_field($record, 'special_needs', (string)$data['special_needs']);
     pqsi_set_profile_field($record, 'course_type', (string)$data['course_type']);
     pqsi_set_profile_field($record, 'parent_name', (string)$data['parent_name']);
+    pqsi_set_profile_field($record, 'parent_relationship', (string)($data['parent_relationship'] ?? ''));
+    pqsi_set_profile_field($record, 'parent_relationship_other', (string)($data['parent_relationship_other'] ?? ''));
     pqsi_set_profile_field($record, 'parent_email', (string)$data['parent_email']);
     pqsi_set_profile_field($record, 'parent_email_enabled', (int)$data['parent_email_enabled']);
     pqsi_set_profile_field($record, 'parent_phone', (string)$data['parent_phone']);
+    pqsi_set_profile_field($record, 'emergency_contact_name', (string)($data['emergency_contact_name'] ?? ''));
+    pqsi_set_profile_field($record, 'emergency_contact_phone', (string)($data['emergency_contact_phone'] ?? ''));
+    foreach ([
+        'current_grade',
+        'school_curriculum',
+        'current_school_name',
+        'student_lives_with',
+        'primary_learning_goal',
+        'medical_safety_notes',
+        'preferred_class_format',
+        'preferred_group_size',
+        'preferred_teacher_gender',
+        'school_term',
+        'islamic_program_interest',
+        'quran_reading_level',
+        'tajweed_level',
+        'memorization_status',
+        'memorized_portion',
+        'arabic_reading_ability',
+        'prior_islamic_studies',
+        'islamic_learning_goal',
+        'previous_learning_method',
+        'tafsir_level',
+        'islamic_notes',
+        'christian_program_interest',
+        'bible_reading_level',
+        'bible_knowledge_level',
+        'christian_studies_level',
+        'prior_christian_studies',
+        'christian_previous_learning_method',
+        'christian_learning_goal',
+        'christian_notes',
+        'higher_application_level',
+        'higher_program_field',
+        'higher_specialization',
+        'higher_highest_qualification',
+        'higher_previous_institution',
+        'higher_qualification_title',
+        'higher_completion_year',
+        'higher_academic_result',
+        'higher_academic_status',
+        'higher_admission_route',
+        'higher_transfer_credits',
+        'higher_study_mode',
+        'higher_study_load',
+        'higher_preferred_intake',
+        'higher_research_interest',
+        'higher_funding_method',
+        'higher_financial_aid_interest',
+        'higher_support_needs',
+        'technical_program',
+        'technical_specialization',
+        'technical_training_level',
+        'technical_previous_experience',
+        'technical_previous_learning_method',
+        'technical_experience_duration',
+        'technical_employment_status',
+        'technical_employer_workshop',
+        'technical_training_goal',
+        'technical_certification_sought',
+        'technical_training_format',
+        'technical_training_schedule',
+        'technical_tools_experience',
+        'technical_tool_access',
+        'technical_digital_skill_level',
+        'technical_safety_training',
+        'technical_protective_equipment',
+        'technical_support_needs',
+        'technical_notes',
+        'professional_area',
+        'professional_topic_skill',
+        'professional_current_role',
+        'professional_industry',
+        'professional_employment_status',
+        'professional_employer',
+        'professional_experience_years',
+        'professional_responsibility_level',
+        'professional_development_goal',
+        'professional_skill_level',
+        'professional_credential_sought',
+        'professional_certification_deadline',
+        'professional_learning_format',
+        'professional_learning_schedule',
+        'professional_course_intensity',
+        'professional_employer_sponsored',
+        'professional_cpd_required',
+        'professional_cpd_credits',
+        'professional_workplace_outcome',
+        'professional_support_needs',
+        'professional_notes',
+        'adult_learning_area',
+        'adult_subject_skill',
+        'adult_education_level',
+        'adult_literacy_level',
+        'adult_numeracy_level',
+        'adult_digital_skill_level',
+        'adult_previous_experience',
+        'adult_previous_learning_method',
+        'adult_learning_goal',
+        'adult_employment_status',
+        'adult_learning_format',
+        'adult_learning_pace',
+        'adult_class_arrangement',
+        'adult_childcare_impact',
+        'adult_work_impact',
+        'adult_access_limitations',
+        'adult_learning_confidence',
+        'adult_support_needs',
+        'adult_notes',
+    ] as $field) {
+        pqsi_set_profile_field($record, $field, (string)($data[$field] ?? ''));
+    }
     pqsi_set_profile_field($record, 'live_class_consent', (int)$data['live_class_consent']);
     pqsi_set_profile_field($record, 'recording_consent', (int)$data['recording_consent']);
     pqsi_set_profile_field($record, 'consent_notes', (string)$data['consent_notes']);
@@ -404,10 +554,33 @@ function pqsi_upsert_referral(int $studentid, ?stdClass $referrer, array $data):
         return 0;
     }
     $now = time();
+
+    if (pqsi_table_exists('local_prequran_referrer')) {
+        $referrerrecord = (object)[
+            'id' => (int)$referrer->id,
+            'name' => trim((string)($data['referrer_name'] ?? '')) !== '' ? (string)$data['referrer_name'] : (string)($referrer->name ?? ''),
+            'contact' => trim((string)($data['referrer_contact_number'] ?? '')) !== '' ? (string)$data['referrer_contact_number'] : (string)($referrer->contact ?? ''),
+            'phone' => trim((string)($data['referrer_contact_number'] ?? '')) !== '' ? (string)$data['referrer_contact_number'] : (string)($referrer->phone ?? ''),
+            'email' => (string)($data['referrer_email'] ?? ($referrer->email ?? '')),
+            'city' => (string)($data['referrer_city'] ?? ($referrer->city ?? '')),
+            'state' => (string)($data['referrer_state'] ?? ($referrer->state ?? '')),
+            'country' => (string)($data['referrer_country'] ?? ($referrer->country ?? '')),
+            'timemodified' => $now,
+        ];
+        $DB->update_record('local_prequran_referrer', pqsi_record_for_existing_columns('local_prequran_referrer', $referrerrecord));
+    }
+
     $record = (object)[
         'referrerid' => (int)$referrer->id,
         'studentid' => $studentid,
         'datereferred' => pqsi_date_to_time((string)($data['referral_datereferred'] ?? ''), $now),
+        'effectiveat' => pqsi_date_to_time((string)($data['referral_effective_date'] ?? ''), pqsi_date_to_time((string)($data['referral_datereferred'] ?? ''), $now)),
+        'referrer_name' => trim((string)($data['referrer_name'] ?? '')) !== '' ? (string)$data['referrer_name'] : (string)($referrer->name ?? ''),
+        'referrer_contact_number' => trim((string)($data['referrer_contact_number'] ?? '')) !== '' ? (string)$data['referrer_contact_number'] : (string)($referrer->phone ?? ($referrer->contact ?? '')),
+        'referrer_email' => (string)($data['referrer_email'] ?? ($referrer->email ?? '')),
+        'referrer_city' => (string)($data['referrer_city'] ?? ($referrer->city ?? '')),
+        'referrer_state' => (string)($data['referrer_state'] ?? ($referrer->state ?? '')),
+        'referrer_country' => (string)($data['referrer_country'] ?? ($referrer->country ?? '')),
         'referral_status' => (string)($data['referral_status'] ?? 'pending'),
         'dateexpires' => pqsi_date_to_time((string)($data['referral_dateexpires'] ?? ''), $now + 90 * DAYSECS),
         'commission_amount' => (string)($data['commission_amount'] ?? ''),
@@ -430,12 +603,12 @@ function pqsi_upsert_referral(int $studentid, ?stdClass $referrer, array $data):
             $record->approvedat = (int)$existing->approvedat;
             $record->approvedby = (int)($existing->approvedby ?? 0);
         }
-        $DB->update_record('local_prequran_referral', $record);
+        $DB->update_record('local_prequran_referral', pqsi_record_for_existing_columns('local_prequran_referral', $record));
         return (int)$existing->id;
     }
     $record->createdby = (int)$USER->id;
     $record->timecreated = $now;
-    return (int)$DB->insert_record('local_prequran_referral', $record);
+    return (int)$DB->insert_record('local_prequran_referral', pqsi_record_for_existing_columns('local_prequran_referral', $record));
 }
 
 function pqsi_audit(string $action, string $targettype, int $targetid, array $details = []): void {
@@ -596,9 +769,116 @@ function pqsi_field_label(string $name): string {
         'student_username' => 'Username',
         'student_email' => 'Student email or phone',
         'student_access_type' => 'Student access type',
+        'date_of_birth' => 'Date of birth',
         'age_years' => 'Age',
         'gender' => 'Gender',
         'special_needs' => 'Special Needs',
+        'current_grade' => 'Current grade/year',
+        'school_curriculum' => 'School curriculum',
+        'current_school_name' => 'Current school name',
+        'student_lives_with' => 'Student lives with',
+        'primary_learning_goal' => 'Primary learning goal',
+        'medical_safety_notes' => 'Medical/allergy/safety notes',
+        'preferred_class_format' => 'Preferred class format',
+        'preferred_group_size' => 'Preferred group size',
+        'preferred_teacher_gender' => 'Preferred teacher gender',
+        'school_term' => 'School term/admission year',
+        'islamic_program_interest' => 'Islamic program interest',
+        'quran_reading_level' => 'Quran reading level',
+        'tajweed_level' => 'Tajweed level',
+        'memorization_status' => 'Memorization status',
+        'memorized_portion' => 'Memorized portion',
+        'arabic_reading_ability' => 'Arabic reading ability',
+        'prior_islamic_studies' => 'Prior Islamic studies',
+        'islamic_learning_goal' => 'Islamic learning goal',
+        'previous_learning_method' => 'Previous learning method',
+        'tafsir_level' => 'Tafsir level',
+        'islamic_notes' => 'Islamic studies notes',
+        'christian_program_interest' => 'Christian program interest',
+        'bible_reading_level' => 'Bible reading level',
+        'bible_knowledge_level' => 'Bible knowledge level',
+        'christian_studies_level' => 'Christian studies level',
+        'prior_christian_studies' => 'Previous Christian studies',
+        'christian_previous_learning_method' => 'Previous learning method',
+        'christian_learning_goal' => 'Primary learning goal',
+        'christian_notes' => 'Additional Christian studies notes',
+        'higher_application_level' => 'Application level',
+        'higher_program_field' => 'Program or field of study',
+        'higher_specialization' => 'Intended specialization',
+        'higher_highest_qualification' => 'Highest qualification completed',
+        'higher_previous_institution' => 'Previous institution',
+        'higher_qualification_title' => 'Qualification title',
+        'higher_completion_year' => 'Graduation or expected completion year',
+        'higher_academic_result' => 'Academic result',
+        'higher_academic_status' => 'Current academic status',
+        'higher_admission_route' => 'Admission route',
+        'higher_transfer_credits' => 'Transfer credits requested',
+        'higher_study_mode' => 'Preferred study mode',
+        'higher_study_load' => 'Preferred study load',
+        'higher_preferred_intake' => 'Preferred intake or academic term',
+        'higher_research_interest' => 'Research interest or proposed topic',
+        'higher_funding_method' => 'Funding method',
+        'higher_financial_aid_interest' => 'Scholarship or financial-aid interest',
+        'higher_support_needs' => 'Academic support or accessibility needs',
+        'technical_program' => 'Training program or trade',
+        'technical_specialization' => 'Specific specialization',
+        'technical_training_level' => 'Training level',
+        'technical_previous_experience' => 'Previous technical experience',
+        'technical_previous_learning_method' => 'Previous learning method',
+        'technical_experience_duration' => 'Experience duration',
+        'technical_employment_status' => 'Current employment status',
+        'technical_employer_workshop' => 'Current employer or workshop',
+        'technical_training_goal' => 'Primary training goal',
+        'technical_certification_sought' => 'Certification sought',
+        'technical_training_format' => 'Preferred training format',
+        'technical_training_schedule' => 'Preferred training schedule',
+        'technical_tools_experience' => 'Tools or equipment experience',
+        'technical_tool_access' => 'Access to required tools or equipment',
+        'technical_digital_skill_level' => 'Computer or digital skill level',
+        'technical_safety_training' => 'Safety training completed',
+        'technical_protective_equipment' => 'Protective equipment available',
+        'technical_support_needs' => 'Practical support or accessibility needs',
+        'technical_notes' => 'Additional technical training notes',
+        'professional_area' => 'Professional development area',
+        'professional_topic_skill' => 'Specific topic or skill',
+        'professional_current_role' => 'Current professional role',
+        'professional_industry' => 'Industry or sector',
+        'professional_employment_status' => 'Employment status',
+        'professional_employer' => 'Employer or organisation',
+        'professional_experience_years' => 'Years of professional experience',
+        'professional_responsibility_level' => 'Current responsibility level',
+        'professional_development_goal' => 'Primary development goal',
+        'professional_skill_level' => 'Current skill level',
+        'professional_credential_sought' => 'Certification or credential sought',
+        'professional_certification_deadline' => 'Certification deadline',
+        'professional_learning_format' => 'Preferred learning format',
+        'professional_learning_schedule' => 'Preferred learning schedule',
+        'professional_course_intensity' => 'Preferred course intensity',
+        'professional_employer_sponsored' => 'Employer-sponsored training',
+        'professional_cpd_required' => 'Continuing professional development credits required',
+        'professional_cpd_credits' => 'Required number of CPD credits or hours',
+        'professional_workplace_outcome' => 'Expected workplace outcome',
+        'professional_support_needs' => 'Professional support or accessibility needs',
+        'professional_notes' => 'Additional professional development notes',
+        'adult_learning_area' => 'Learning area of interest',
+        'adult_subject_skill' => 'Specific subject or skill',
+        'adult_education_level' => 'Highest education level completed',
+        'adult_literacy_level' => 'Current literacy level',
+        'adult_numeracy_level' => 'Current numeracy level',
+        'adult_digital_skill_level' => 'Digital skill level',
+        'adult_previous_experience' => 'Previous adult-learning experience',
+        'adult_previous_learning_method' => 'Previous learning method',
+        'adult_learning_goal' => 'Primary learning goal',
+        'adult_employment_status' => 'Current employment status',
+        'adult_learning_format' => 'Preferred learning format',
+        'adult_learning_pace' => 'Preferred learning pace',
+        'adult_class_arrangement' => 'Preferred class arrangement',
+        'adult_childcare_impact' => 'Childcare responsibilities affecting attendance',
+        'adult_work_impact' => 'Work responsibilities affecting attendance',
+        'adult_access_limitations' => 'Transport or connectivity limitations',
+        'adult_learning_confidence' => 'Confidence returning to learning',
+        'adult_support_needs' => 'Learning support or accessibility needs',
+        'adult_notes' => 'Additional adult-learning notes',
         'course_type' => 'Course',
         'country' => 'Country',
         'city' => 'City',
@@ -616,13 +896,24 @@ function pqsi_field_label(string $name): string {
         'session_count' => 'Number of sessions',
         'slots' => 'Preferred weekly live-session number of sessions and hours',
         'parent_name' => 'Parent/guardian name',
+        'parent_relationship' => 'Relationship to student',
+        'parent_relationship_other' => 'Relationship description',
         'parent_email' => 'Parent/guardian email or phone',
         'parent_email_enabled' => 'Parent email notifications',
         'parent_phone' => 'Parent/guardian phone / WhatsApp',
+        'emergency_contact_name' => 'Emergency contact name',
+        'emergency_contact_phone' => 'Emergency contact phone',
         'parent_username' => 'Parent username',
         'parent_preferences' => 'Parent preferences',
         'referrer_code' => 'Referrer Code',
+        'referrer_name' => 'Referrer name',
+        'referrer_contact_number' => 'Referrer contact number',
+        'referrer_email' => 'Referrer email',
+        'referrer_city' => 'Referrer city',
+        'referrer_state' => 'Referrer state',
+        'referrer_country' => 'Referrer country',
         'referral_datereferred' => 'Date referred',
+        'referral_effective_date' => 'Referral effective date',
         'referral_status' => 'Referral status',
         'referral_dateexpires' => 'Referral expiry date',
         'commission_amount' => 'Commission amount',
@@ -705,14 +996,7 @@ function pqsi_labels(array $values, array $options): array {
 }
 
 function pqsi_placement_level_options(array $options): array {
-    $levels = $options['current_levels'] ?? [];
-    $definitions = $options['level_definitions']['pre_quraan'] ?? [];
-    $withdescriptions = [];
-    foreach ($levels as $value => $label) {
-        $description = trim((string)($definitions[$value] ?? ''));
-        $withdescriptions[$value] = $description !== '' ? (string)$label . ' - ' . $description : (string)$label;
-    }
-    return $withdescriptions;
+    return $options['current_levels'] ?? [];
 }
 
 function pqsi_valid_slots(array $slots, array $days, array $hours): array {
@@ -773,9 +1057,116 @@ $form = [
     'student_username' => '',
     'student_email' => '',
     'student_access_type' => 'managed',
+    'date_of_birth' => '',
     'age_years' => '',
     'gender' => '',
     'special_needs' => '',
+    'current_grade' => '',
+    'school_curriculum' => '',
+    'current_school_name' => '',
+    'student_lives_with' => '',
+    'primary_learning_goal' => '',
+    'medical_safety_notes' => '',
+    'preferred_class_format' => '',
+    'preferred_group_size' => '',
+    'preferred_teacher_gender' => '',
+    'school_term' => '',
+    'islamic_program_interest' => '',
+    'quran_reading_level' => '',
+    'tajweed_level' => '',
+    'memorization_status' => '',
+    'memorized_portion' => '',
+    'arabic_reading_ability' => '',
+    'prior_islamic_studies' => '',
+    'islamic_learning_goal' => '',
+    'previous_learning_method' => '',
+    'tafsir_level' => '',
+    'islamic_notes' => '',
+    'christian_program_interest' => '',
+    'bible_reading_level' => '',
+    'bible_knowledge_level' => '',
+    'christian_studies_level' => '',
+    'prior_christian_studies' => '',
+    'christian_previous_learning_method' => '',
+    'christian_learning_goal' => '',
+    'christian_notes' => '',
+    'higher_application_level' => '',
+    'higher_program_field' => '',
+    'higher_specialization' => '',
+    'higher_highest_qualification' => '',
+    'higher_previous_institution' => '',
+    'higher_qualification_title' => '',
+    'higher_completion_year' => '',
+    'higher_academic_result' => '',
+    'higher_academic_status' => '',
+    'higher_admission_route' => '',
+    'higher_transfer_credits' => '',
+    'higher_study_mode' => '',
+    'higher_study_load' => '',
+    'higher_preferred_intake' => '',
+    'higher_research_interest' => '',
+    'higher_funding_method' => '',
+    'higher_financial_aid_interest' => '',
+    'higher_support_needs' => '',
+    'technical_program' => '',
+    'technical_specialization' => '',
+    'technical_training_level' => '',
+    'technical_previous_experience' => '',
+    'technical_previous_learning_method' => '',
+    'technical_experience_duration' => '',
+    'technical_employment_status' => '',
+    'technical_employer_workshop' => '',
+    'technical_training_goal' => '',
+    'technical_certification_sought' => '',
+    'technical_training_format' => '',
+    'technical_training_schedule' => '',
+    'technical_tools_experience' => '',
+    'technical_tool_access' => '',
+    'technical_digital_skill_level' => '',
+    'technical_safety_training' => '',
+    'technical_protective_equipment' => '',
+    'technical_support_needs' => '',
+    'technical_notes' => '',
+    'professional_area' => '',
+    'professional_topic_skill' => '',
+    'professional_current_role' => '',
+    'professional_industry' => '',
+    'professional_employment_status' => '',
+    'professional_employer' => '',
+    'professional_experience_years' => '',
+    'professional_responsibility_level' => '',
+    'professional_development_goal' => '',
+    'professional_skill_level' => '',
+    'professional_credential_sought' => '',
+    'professional_certification_deadline' => '',
+    'professional_learning_format' => '',
+    'professional_learning_schedule' => '',
+    'professional_course_intensity' => '',
+    'professional_employer_sponsored' => '',
+    'professional_cpd_required' => '',
+    'professional_cpd_credits' => '',
+    'professional_workplace_outcome' => '',
+    'professional_support_needs' => '',
+    'professional_notes' => '',
+    'adult_learning_area' => '',
+    'adult_subject_skill' => '',
+    'adult_education_level' => '',
+    'adult_literacy_level' => '',
+    'adult_numeracy_level' => '',
+    'adult_digital_skill_level' => '',
+    'adult_previous_experience' => '',
+    'adult_previous_learning_method' => '',
+    'adult_learning_goal' => '',
+    'adult_employment_status' => '',
+    'adult_learning_format' => '',
+    'adult_learning_pace' => '',
+    'adult_class_arrangement' => '',
+    'adult_childcare_impact' => '',
+    'adult_work_impact' => '',
+    'adult_access_limitations' => '',
+    'adult_learning_confidence' => '',
+    'adult_support_needs' => '',
+    'adult_notes' => '',
     'course_type' => '',
     'country' => '',
     'city' => '',
@@ -793,13 +1184,24 @@ $form = [
     'availability_days' => [],
     'availability_time_windows' => [],
     'parent_name' => '',
+    'parent_relationship' => '',
+    'parent_relationship_other' => '',
     'parent_email' => '',
     'parent_email_enabled' => 1,
     'parent_phone' => '',
+    'emergency_contact_name' => '',
+    'emergency_contact_phone' => '',
     'parent_username' => '',
     'parent_preferences' => '',
     'referrer_code' => '',
+    'referrer_name' => '',
+    'referrer_contact_number' => '',
+    'referrer_email' => '',
+    'referrer_city' => '',
+    'referrer_state' => '',
+    'referrer_country' => '',
     'referral_datereferred' => date('Y-m-d'),
+    'referral_effective_date' => date('Y-m-d'),
     'referral_status' => 'pending',
     'referral_dateexpires' => date('Y-m-d', time() + 90 * DAYSECS),
     'commission_amount' => '',
@@ -810,6 +1212,28 @@ $form = [
     'recording_consent' => 0,
     'consent_notes' => '',
 ];
+
+$getrequestid = optional_param('requestid', 0, PARAM_INT);
+$getworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($getrequestid > 0) {
+    $form['requestid'] = (string)$getrequestid;
+}
+if ($getworkspaceid <= 0 && $getrequestid > 0) {
+    $getworkspaceid = pqsi_workspaceid_for_requestid($getrequestid);
+}
+if ($getworkspaceid <= 0 && $pqsiisindependentteacher) {
+    $getworkspaceid = pqh_current_workspace_id((int)$USER->id, 0);
+}
+if ($getworkspaceid > 0) {
+    if (!$pqsiisoperationsuser && !pqh_user_can_teach_in_workspace((int)$USER->id, $getworkspaceid)) {
+        pqh_access_denied(
+            'This student intake form is not available for that workspace.',
+            new moodle_url('/local/hubredirect/dashboard.php'),
+            'Student intake workspace access required'
+        );
+    }
+    $form['workspaceid'] = (string)$getworkspaceid;
+}
 
 $prefillrequestid = 0;
 if ($ready && $_SERVER['REQUEST_METHOD'] !== 'POST' && !empty($SESSION->pqsi_prefill) && is_array($SESSION->pqsi_prefill)) {
@@ -845,18 +1269,32 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($workspaceid <= 0 && $requestid > 0) {
             $workspaceid = pqsi_workspaceid_for_requestid($requestid);
         }
-        if ($workspaceid > 0 && !pqh_consumer_context_allows_workspace($pqsiconsumercontext, $workspaceid)) {
+        if ($workspaceid <= 0 && $pqsiisindependentteacher && !$pqsiisoperationsuser) {
+            throw new invalid_parameter_exception('Independent teacher student intake requires a teacher workspace.');
+        }
+        $workspaceallowed = $workspaceid > 0 && pqh_consumer_context_allows_workspace($pqsiconsumercontext, $workspaceid);
+        if ($workspaceid > 0 && $pqsiisindependentteacher && pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)) {
+            $workspaceallowed = true;
+        }
+        if ($workspaceid > 0 && !$workspaceallowed) {
             throw new invalid_parameter_exception('This workspace does not belong to the active consumer.');
         }
         $existingstudentid = optional_param('existing_studentid', 0, PARAM_INT);
+        if ($existingstudentid > 0 && $pqsiisindependentteacher && !$pqsiisoperationsuser) {
+            throw new invalid_parameter_exception('Use Find existing student to request access to an existing learner. Existing profiles cannot be transferred through intake.');
+        }
         $firstname = pqsi_trim_param('student_firstname');
         $middlename = pqsi_trim_param('student_middle_name');
         $lastname = pqsi_trim_param('student_lastname');
         $displayname = pqsi_trim_param('student_display_name', trim($firstname . ' ' . $middlename . ' ' . $lastname));
         $studentemail = pqsi_email_param('student_email');
         $parentname = pqsi_trim_param('parent_name');
+        $parentrelationship = pqsi_trim_param('parent_relationship');
+        $parentrelationshipother = pqsi_trim_param('parent_relationship_other');
         $parentemail = pqsi_email_param('parent_email');
         $parentphone = pqsi_trim_param('parent_phone');
+        $emergencycontactname = pqsi_trim_param('emergency_contact_name');
+        $emergencycontactphone = pqsi_trim_param('emergency_contact_phone');
         $parentcontact = $parentemail !== '' ? $parentemail : $parentphone;
         $referrercode = pqsi_clean_referrer_code(pqsi_trim_param('referrer_code'));
         $timezone = pqsi_trim_param('timezone', 'Africa/Nairobi');
@@ -876,9 +1314,116 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'student_username' => optional_param('student_username', '', PARAM_USERNAME),
             'student_email' => $studentemail,
             'student_access_type' => pqsi_trim_param('student_access_type', 'managed'),
+            'date_of_birth' => pqsi_trim_param('date_of_birth'),
             'age_years' => (string)optional_param('age_years', 0, PARAM_INT),
             'gender' => pqsi_trim_param('gender'),
             'special_needs' => pqsi_trim_param('special_needs'),
+            'current_grade' => pqsi_trim_param('current_grade'),
+            'school_curriculum' => pqsi_trim_param('school_curriculum'),
+            'current_school_name' => pqsi_trim_param('current_school_name'),
+            'student_lives_with' => pqsi_trim_param('student_lives_with'),
+            'primary_learning_goal' => pqsi_trim_param('primary_learning_goal'),
+            'medical_safety_notes' => pqsi_trim_param('medical_safety_notes'),
+            'preferred_class_format' => pqsi_trim_param('preferred_class_format'),
+            'preferred_group_size' => pqsi_trim_param('preferred_group_size'),
+            'preferred_teacher_gender' => pqsi_trim_param('preferred_teacher_gender'),
+            'school_term' => pqsi_trim_param('school_term'),
+            'islamic_program_interest' => pqsi_trim_param('islamic_program_interest'),
+            'quran_reading_level' => pqsi_trim_param('quran_reading_level'),
+            'tajweed_level' => pqsi_trim_param('tajweed_level'),
+            'memorization_status' => pqsi_trim_param('memorization_status'),
+            'memorized_portion' => pqsi_trim_param('memorized_portion'),
+            'arabic_reading_ability' => pqsi_trim_param('arabic_reading_ability'),
+            'prior_islamic_studies' => pqsi_trim_param('prior_islamic_studies'),
+            'islamic_learning_goal' => pqsi_trim_param('islamic_learning_goal'),
+            'previous_learning_method' => pqsi_trim_param('previous_learning_method'),
+            'tafsir_level' => pqsi_trim_param('tafsir_level'),
+            'islamic_notes' => pqsi_trim_param('islamic_notes'),
+            'christian_program_interest' => pqsi_trim_param('christian_program_interest'),
+            'bible_reading_level' => pqsi_trim_param('bible_reading_level'),
+            'bible_knowledge_level' => pqsi_trim_param('bible_knowledge_level'),
+            'christian_studies_level' => pqsi_trim_param('christian_studies_level'),
+            'prior_christian_studies' => pqsi_trim_param('prior_christian_studies'),
+            'christian_previous_learning_method' => pqsi_trim_param('christian_previous_learning_method'),
+            'christian_learning_goal' => pqsi_trim_param('christian_learning_goal'),
+            'christian_notes' => pqsi_trim_param('christian_notes'),
+            'higher_application_level' => pqsi_trim_param('higher_application_level'),
+            'higher_program_field' => pqsi_trim_param('higher_program_field'),
+            'higher_specialization' => pqsi_trim_param('higher_specialization'),
+            'higher_highest_qualification' => pqsi_trim_param('higher_highest_qualification'),
+            'higher_previous_institution' => pqsi_trim_param('higher_previous_institution'),
+            'higher_qualification_title' => pqsi_trim_param('higher_qualification_title'),
+            'higher_completion_year' => pqsi_trim_param('higher_completion_year'),
+            'higher_academic_result' => pqsi_trim_param('higher_academic_result'),
+            'higher_academic_status' => pqsi_trim_param('higher_academic_status'),
+            'higher_admission_route' => pqsi_trim_param('higher_admission_route'),
+            'higher_transfer_credits' => pqsi_trim_param('higher_transfer_credits'),
+            'higher_study_mode' => pqsi_trim_param('higher_study_mode'),
+            'higher_study_load' => pqsi_trim_param('higher_study_load'),
+            'higher_preferred_intake' => pqsi_trim_param('higher_preferred_intake'),
+            'higher_research_interest' => pqsi_trim_param('higher_research_interest'),
+            'higher_funding_method' => pqsi_trim_param('higher_funding_method'),
+            'higher_financial_aid_interest' => pqsi_trim_param('higher_financial_aid_interest'),
+            'higher_support_needs' => pqsi_trim_param('higher_support_needs'),
+            'technical_program' => pqsi_trim_param('technical_program'),
+            'technical_specialization' => pqsi_trim_param('technical_specialization'),
+            'technical_training_level' => pqsi_trim_param('technical_training_level'),
+            'technical_previous_experience' => pqsi_trim_param('technical_previous_experience'),
+            'technical_previous_learning_method' => pqsi_trim_param('technical_previous_learning_method'),
+            'technical_experience_duration' => pqsi_trim_param('technical_experience_duration'),
+            'technical_employment_status' => pqsi_trim_param('technical_employment_status'),
+            'technical_employer_workshop' => pqsi_trim_param('technical_employer_workshop'),
+            'technical_training_goal' => pqsi_trim_param('technical_training_goal'),
+            'technical_certification_sought' => pqsi_trim_param('technical_certification_sought'),
+            'technical_training_format' => pqsi_trim_param('technical_training_format'),
+            'technical_training_schedule' => pqsi_trim_param('technical_training_schedule'),
+            'technical_tools_experience' => pqsi_trim_param('technical_tools_experience'),
+            'technical_tool_access' => pqsi_trim_param('technical_tool_access'),
+            'technical_digital_skill_level' => pqsi_trim_param('technical_digital_skill_level'),
+            'technical_safety_training' => pqsi_trim_param('technical_safety_training'),
+            'technical_protective_equipment' => pqsi_trim_param('technical_protective_equipment'),
+            'technical_support_needs' => pqsi_trim_param('technical_support_needs'),
+            'technical_notes' => pqsi_trim_param('technical_notes'),
+            'professional_area' => pqsi_trim_param('professional_area'),
+            'professional_topic_skill' => pqsi_trim_param('professional_topic_skill'),
+            'professional_current_role' => pqsi_trim_param('professional_current_role'),
+            'professional_industry' => pqsi_trim_param('professional_industry'),
+            'professional_employment_status' => pqsi_trim_param('professional_employment_status'),
+            'professional_employer' => pqsi_trim_param('professional_employer'),
+            'professional_experience_years' => pqsi_trim_param('professional_experience_years'),
+            'professional_responsibility_level' => pqsi_trim_param('professional_responsibility_level'),
+            'professional_development_goal' => pqsi_trim_param('professional_development_goal'),
+            'professional_skill_level' => pqsi_trim_param('professional_skill_level'),
+            'professional_credential_sought' => pqsi_trim_param('professional_credential_sought'),
+            'professional_certification_deadline' => pqsi_trim_param('professional_certification_deadline'),
+            'professional_learning_format' => pqsi_trim_param('professional_learning_format'),
+            'professional_learning_schedule' => pqsi_trim_param('professional_learning_schedule'),
+            'professional_course_intensity' => pqsi_trim_param('professional_course_intensity'),
+            'professional_employer_sponsored' => pqsi_trim_param('professional_employer_sponsored'),
+            'professional_cpd_required' => pqsi_trim_param('professional_cpd_required'),
+            'professional_cpd_credits' => pqsi_trim_param('professional_cpd_credits'),
+            'professional_workplace_outcome' => pqsi_trim_param('professional_workplace_outcome'),
+            'professional_support_needs' => pqsi_trim_param('professional_support_needs'),
+            'professional_notes' => pqsi_trim_param('professional_notes'),
+            'adult_learning_area' => pqsi_trim_param('adult_learning_area'),
+            'adult_subject_skill' => pqsi_trim_param('adult_subject_skill'),
+            'adult_education_level' => pqsi_trim_param('adult_education_level'),
+            'adult_literacy_level' => pqsi_trim_param('adult_literacy_level'),
+            'adult_numeracy_level' => pqsi_trim_param('adult_numeracy_level'),
+            'adult_digital_skill_level' => pqsi_trim_param('adult_digital_skill_level'),
+            'adult_previous_experience' => pqsi_trim_param('adult_previous_experience'),
+            'adult_previous_learning_method' => pqsi_trim_param('adult_previous_learning_method'),
+            'adult_learning_goal' => pqsi_trim_param('adult_learning_goal'),
+            'adult_employment_status' => pqsi_trim_param('adult_employment_status'),
+            'adult_learning_format' => pqsi_trim_param('adult_learning_format'),
+            'adult_learning_pace' => pqsi_trim_param('adult_learning_pace'),
+            'adult_class_arrangement' => pqsi_trim_param('adult_class_arrangement'),
+            'adult_childcare_impact' => pqsi_trim_param('adult_childcare_impact'),
+            'adult_work_impact' => pqsi_trim_param('adult_work_impact'),
+            'adult_access_limitations' => pqsi_trim_param('adult_access_limitations'),
+            'adult_learning_confidence' => pqsi_trim_param('adult_learning_confidence'),
+            'adult_support_needs' => pqsi_trim_param('adult_support_needs'),
+            'adult_notes' => pqsi_trim_param('adult_notes'),
             'course_type' => pqsi_trim_param('course_type'),
             'country' => $country,
             'city' => $city,
@@ -896,13 +1441,24 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'availability_time_windows' => [],
             'availability' => pqsi_trim_param('availability_summary'),
             'parent_name' => $parentname,
+            'parent_relationship' => $parentrelationship,
+            'parent_relationship_other' => $parentrelationshipother,
             'parent_email' => $parentemail,
             'parent_email_enabled' => optional_param('parent_email_enabled', 0, PARAM_BOOL) ? 1 : 0,
             'parent_phone' => $parentphone,
+            'emergency_contact_name' => $emergencycontactname,
+            'emergency_contact_phone' => $emergencycontactphone,
             'parent_username' => optional_param('parent_username', '', PARAM_USERNAME),
             'parent_preferences' => pqsi_trim_param('parent_preferences'),
             'referrer_code' => $referrercode,
+            'referrer_name' => pqsi_trim_param('referrer_name'),
+            'referrer_contact_number' => pqsi_trim_param('referrer_contact_number'),
+            'referrer_email' => pqsi_email_param('referrer_email'),
+            'referrer_city' => pqsi_trim_param('referrer_city'),
+            'referrer_state' => pqsi_trim_param('referrer_state'),
+            'referrer_country' => pqsi_trim_param('referrer_country'),
             'referral_datereferred' => pqsi_trim_param('referral_datereferred', date('Y-m-d')),
+            'referral_effective_date' => pqsi_trim_param('referral_effective_date', date('Y-m-d')),
             'referral_status' => pqsi_trim_param('referral_status', 'pending'),
             'referral_dateexpires' => pqsi_trim_param('referral_dateexpires', date('Y-m-d', time() + 90 * DAYSECS)),
             'commission_amount' => pqsi_trim_param('commission_amount'),
@@ -949,9 +1505,86 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $ageyears = optional_param('age_years', 0, PARAM_INT);
         $isadultstudent = $ageyears >= 18;
+        if ($pqsiisprimaryeducation) {
+            foreach ([
+                'date_of_birth' => 'Date of birth is required for primary education students.',
+                'age_years' => 'Age is required for primary education students.',
+                'gender' => 'Gender is required for primary education students.',
+                'special_needs' => 'Special Needs must be Yes or No for primary education students.',
+                'current_grade' => 'Current grade/year is required for primary education students.',
+                'parent_name' => 'Parent/guardian name is required for primary education students.',
+                'parent_relationship' => 'Relationship to student is required for primary education students.',
+                'emergency_contact_phone' => 'Emergency contact phone is required for primary education students.',
+            ] as $field => $fieldmessage) {
+                if (trim((string)($form[$field] ?? '')) === '') {
+                    $fielderrors[$field] = $fieldmessage;
+                }
+            }
+            if ($parentcontact === '') {
+                $fielderrors['parent_email'] = 'Parent/guardian email, phone, or WhatsApp is required for primary education students.';
+            }
+        }
+        if ($pqsiishighereducation) {
+            foreach ([
+                'higher_application_level' => 'Application level is required for higher education students.',
+                'higher_program_field' => 'Program or field of study is required for higher education students.',
+                'higher_highest_qualification' => 'Highest qualification completed is required for higher education students.',
+                'higher_academic_status' => 'Current academic status is required for higher education students.',
+                'higher_study_mode' => 'Preferred study mode is required for higher education students.',
+                'higher_study_load' => 'Preferred study load is required for higher education students.',
+            ] as $field => $fieldmessage) {
+                if (trim((string)($form[$field] ?? '')) === '') {
+                    $fielderrors[$field] = $fieldmessage;
+                }
+            }
+        }
+        if ($pqsiistechnicaltraining) {
+            foreach ([
+                'technical_program' => 'Training program or trade is required for technical training students.',
+                'technical_training_level' => 'Training level is required for technical training students.',
+                'technical_previous_experience' => 'Previous technical experience is required for technical training students.',
+                'technical_training_goal' => 'Primary training goal is required for technical training students.',
+                'technical_training_format' => 'Preferred training format is required for technical training students.',
+                'technical_tool_access' => 'Access to required tools or equipment is required for technical training students.',
+            ] as $field => $fieldmessage) {
+                if (trim((string)($form[$field] ?? '')) === '') {
+                    $fielderrors[$field] = $fieldmessage;
+                }
+            }
+        }
+        if ($pqsiisprofessionaldevelopment) {
+            foreach ([
+                'professional_area' => 'Professional development area is required.',
+                'professional_current_role' => 'Current professional role is required.',
+                'professional_employment_status' => 'Employment status is required.',
+                'professional_development_goal' => 'Primary development goal is required.',
+                'professional_skill_level' => 'Current skill level is required.',
+                'professional_learning_format' => 'Preferred learning format is required.',
+            ] as $field => $fieldmessage) {
+                if (trim((string)($form[$field] ?? '')) === '') {
+                    $fielderrors[$field] = $fieldmessage;
+                }
+            }
+        }
+        if ($pqsiisadultlearning) {
+            foreach ([
+                'adult_learning_area' => 'Learning area of interest is required.',
+                'adult_education_level' => 'Highest education level completed is required.',
+                'adult_learning_goal' => 'Primary learning goal is required.',
+                'adult_learning_format' => 'Preferred learning format is required.',
+                'adult_learning_pace' => 'Preferred learning pace is required.',
+            ] as $field => $fieldmessage) {
+                if (trim((string)($form[$field] ?? '')) === '') {
+                    $fielderrors[$field] = $fieldmessage;
+                }
+            }
+        }
         if (!$isadultstudent) {
             if ($parentname === '') {
                 $fielderrors['parent_name'] = 'Parent/guardian name is required for students under 18.';
+            }
+            if ($parentrelationship === '') {
+                $fielderrors['parent_relationship'] = 'Relationship to student is required for students under 18.';
             }
             if ($parentcontact === '') {
                 $fielderrors['parent_email'] = 'Parent/guardian email, phone, or WhatsApp is required for students under 18.';
@@ -959,14 +1592,127 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         } else if ($studentemail === '') {
             $fielderrors['student_email'] = 'Adult students must have their own email address or phone number when no parent/guardian is linked.';
         }
+        if ($parentrelationship !== '' && !array_key_exists($parentrelationship, $pqsioptions['parent_relationships'] ?? [])) {
+            $fielderrors['parent_relationship'] = 'Select a valid relationship to the student.';
+        }
+        if ($parentrelationship === 'other' && $parentrelationshipother === '') {
+            $fielderrors['parent_relationship_other'] = 'Describe the relationship to the student.';
+        }
 
         $data = [
             'student_display_name' => $displayname,
             'student_middle_name' => $middlename,
             'student_access_type' => $form['student_access_type'],
+            'date_of_birth' => $form['date_of_birth'],
             'age_years' => max(0, min(99, $ageyears)),
             'gender' => $form['gender'],
             'special_needs' => $form['special_needs'],
+            'current_grade' => $form['current_grade'],
+            'school_curriculum' => $form['school_curriculum'],
+            'current_school_name' => $form['current_school_name'],
+            'student_lives_with' => $form['student_lives_with'],
+            'primary_learning_goal' => $form['primary_learning_goal'],
+            'medical_safety_notes' => $form['medical_safety_notes'],
+            'preferred_class_format' => $form['preferred_class_format'],
+            'preferred_group_size' => $form['preferred_group_size'],
+            'preferred_teacher_gender' => $form['preferred_teacher_gender'],
+            'school_term' => $form['school_term'],
+            'islamic_program_interest' => $form['islamic_program_interest'],
+            'quran_reading_level' => $form['quran_reading_level'],
+            'tajweed_level' => $form['tajweed_level'],
+            'memorization_status' => $form['memorization_status'],
+            'memorized_portion' => $form['memorized_portion'],
+            'arabic_reading_ability' => $form['arabic_reading_ability'],
+            'prior_islamic_studies' => $form['prior_islamic_studies'],
+            'islamic_learning_goal' => $form['islamic_learning_goal'],
+            'previous_learning_method' => $form['previous_learning_method'],
+            'tafsir_level' => $form['tafsir_level'],
+            'islamic_notes' => $form['islamic_notes'],
+            'christian_program_interest' => $form['christian_program_interest'],
+            'bible_reading_level' => $form['bible_reading_level'],
+            'bible_knowledge_level' => $form['bible_knowledge_level'],
+            'christian_studies_level' => $form['christian_studies_level'],
+            'prior_christian_studies' => $form['prior_christian_studies'],
+            'christian_previous_learning_method' => $form['christian_previous_learning_method'],
+            'christian_learning_goal' => $form['christian_learning_goal'],
+            'christian_notes' => $form['christian_notes'],
+            'higher_application_level' => $form['higher_application_level'],
+            'higher_program_field' => $form['higher_program_field'],
+            'higher_specialization' => $form['higher_specialization'],
+            'higher_highest_qualification' => $form['higher_highest_qualification'],
+            'higher_previous_institution' => $form['higher_previous_institution'],
+            'higher_qualification_title' => $form['higher_qualification_title'],
+            'higher_completion_year' => $form['higher_completion_year'],
+            'higher_academic_result' => $form['higher_academic_result'],
+            'higher_academic_status' => $form['higher_academic_status'],
+            'higher_admission_route' => $form['higher_admission_route'],
+            'higher_transfer_credits' => $form['higher_transfer_credits'],
+            'higher_study_mode' => $form['higher_study_mode'],
+            'higher_study_load' => $form['higher_study_load'],
+            'higher_preferred_intake' => $form['higher_preferred_intake'],
+            'higher_research_interest' => $form['higher_research_interest'],
+            'higher_funding_method' => $form['higher_funding_method'],
+            'higher_financial_aid_interest' => $form['higher_financial_aid_interest'],
+            'higher_support_needs' => $form['higher_support_needs'],
+            'technical_program' => $form['technical_program'],
+            'technical_specialization' => $form['technical_specialization'],
+            'technical_training_level' => $form['technical_training_level'],
+            'technical_previous_experience' => $form['technical_previous_experience'],
+            'technical_previous_learning_method' => $form['technical_previous_learning_method'],
+            'technical_experience_duration' => $form['technical_experience_duration'],
+            'technical_employment_status' => $form['technical_employment_status'],
+            'technical_employer_workshop' => $form['technical_employer_workshop'],
+            'technical_training_goal' => $form['technical_training_goal'],
+            'technical_certification_sought' => $form['technical_certification_sought'],
+            'technical_training_format' => $form['technical_training_format'],
+            'technical_training_schedule' => $form['technical_training_schedule'],
+            'technical_tools_experience' => $form['technical_tools_experience'],
+            'technical_tool_access' => $form['technical_tool_access'],
+            'technical_digital_skill_level' => $form['technical_digital_skill_level'],
+            'technical_safety_training' => $form['technical_safety_training'],
+            'technical_protective_equipment' => $form['technical_protective_equipment'],
+            'technical_support_needs' => $form['technical_support_needs'],
+            'technical_notes' => $form['technical_notes'],
+            'professional_area' => $form['professional_area'],
+            'professional_topic_skill' => $form['professional_topic_skill'],
+            'professional_current_role' => $form['professional_current_role'],
+            'professional_industry' => $form['professional_industry'],
+            'professional_employment_status' => $form['professional_employment_status'],
+            'professional_employer' => $form['professional_employer'],
+            'professional_experience_years' => $form['professional_experience_years'],
+            'professional_responsibility_level' => $form['professional_responsibility_level'],
+            'professional_development_goal' => $form['professional_development_goal'],
+            'professional_skill_level' => $form['professional_skill_level'],
+            'professional_credential_sought' => $form['professional_credential_sought'],
+            'professional_certification_deadline' => $form['professional_certification_deadline'],
+            'professional_learning_format' => $form['professional_learning_format'],
+            'professional_learning_schedule' => $form['professional_learning_schedule'],
+            'professional_course_intensity' => $form['professional_course_intensity'],
+            'professional_employer_sponsored' => $form['professional_employer_sponsored'],
+            'professional_cpd_required' => $form['professional_cpd_required'],
+            'professional_cpd_credits' => $form['professional_cpd_credits'],
+            'professional_workplace_outcome' => $form['professional_workplace_outcome'],
+            'professional_support_needs' => $form['professional_support_needs'],
+            'professional_notes' => $form['professional_notes'],
+            'adult_learning_area' => $form['adult_learning_area'],
+            'adult_subject_skill' => $form['adult_subject_skill'],
+            'adult_education_level' => $form['adult_education_level'],
+            'adult_literacy_level' => $form['adult_literacy_level'],
+            'adult_numeracy_level' => $form['adult_numeracy_level'],
+            'adult_digital_skill_level' => $form['adult_digital_skill_level'],
+            'adult_previous_experience' => $form['adult_previous_experience'],
+            'adult_previous_learning_method' => $form['adult_previous_learning_method'],
+            'adult_learning_goal' => $form['adult_learning_goal'],
+            'adult_employment_status' => $form['adult_employment_status'],
+            'adult_learning_format' => $form['adult_learning_format'],
+            'adult_learning_pace' => $form['adult_learning_pace'],
+            'adult_class_arrangement' => $form['adult_class_arrangement'],
+            'adult_childcare_impact' => $form['adult_childcare_impact'],
+            'adult_work_impact' => $form['adult_work_impact'],
+            'adult_access_limitations' => $form['adult_access_limitations'],
+            'adult_learning_confidence' => $form['adult_learning_confidence'],
+            'adult_support_needs' => $form['adult_support_needs'],
+            'adult_notes' => $form['adult_notes'],
             'course_type' => $form['course_type'],
             'country' => $country,
             'city' => $savedcity,
@@ -979,9 +1725,13 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'learning_base' => $form['learning_base'],
             'availability' => $availabilityforsave,
             'parent_name' => $parentname,
+            'parent_relationship' => $parentrelationship,
+            'parent_relationship_other' => $parentrelationshipother,
             'parent_email' => $parentcontact,
             'parent_email_enabled' => (int)$form['parent_email_enabled'],
             'parent_phone' => $parentphone !== '' ? $parentphone : (!pqsi_contact_is_email($parentcontact) ? $parentcontact : ''),
+            'emergency_contact_name' => $emergencycontactname,
+            'emergency_contact_phone' => $emergencycontactphone,
             'parent_preferences' => $form['parent_preferences'],
             'live_class_consent' => (int)$form['live_class_consent'],
             'recording_consent' => (int)$form['recording_consent'],
@@ -992,9 +1742,6 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $fielderrors['live_class_consent'] = 'Live class consent is required before creating the student intake record.';
         }
         foreach ([
-            'age_years' => 'Age is required.',
-            'gender' => 'Gender is required.',
-            'special_needs' => 'Special Needs must be Yes or No.',
             'course_type' => 'Course is required.',
             'country' => 'Country is required.',
             'city' => 'City is required.',
@@ -1008,7 +1755,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $fielderrors[$field] = $fieldmessage;
             }
         }
-        if (!in_array((string)$data['special_needs'], ['yes', 'no'], true)) {
+        if (($pqsiisprimaryeducation || (string)$data['special_needs'] !== '') && !in_array((string)$data['special_needs'], ['yes', 'no'], true)) {
             $fielderrors['special_needs'] = 'Special Needs must be Yes or No.';
         }
         if (!array_key_exists((string)$data['student_access_type'], $pqsioptions['student_access_types'] ?? [])) {
@@ -1025,6 +1772,128 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         if (!array_key_exists((string)$data['preferred_teaching_language'], $pqsioptions['primary_languages'] ?? [])) {
             $fielderrors['preferred_teaching_language'] = 'Select a valid preferred teaching language.';
+        }
+        foreach ([
+            'current_grade' => 'primary_grade_levels',
+            'school_curriculum' => 'primary_curricula',
+            'student_lives_with' => 'student_lives_with_options',
+            'preferred_class_format' => 'primary_class_formats',
+            'preferred_group_size' => 'primary_group_sizes',
+            'preferred_teacher_gender' => 'teacher_gender_preferences',
+        ] as $field => $optionkey) {
+            if ((string)$data[$field] !== '' && !array_key_exists((string)$data[$field], $pqsioptions[$optionkey] ?? [])) {
+                $fielderrors[$field] = 'Select a valid option.';
+            }
+        }
+        if ($pqsiisislamicstudies) {
+            foreach ([
+                'islamic_program_interest' => 'islamic_program_interests',
+                'quran_reading_level' => 'quran_reading_levels',
+                'tajweed_level' => 'tajweed_levels',
+                'memorization_status' => 'memorization_statuses',
+                'arabic_reading_ability' => 'arabic_reading_abilities',
+                'previous_learning_method' => 'previous_learning_methods',
+                'tafsir_level' => 'tafsir_levels',
+            ] as $field => $optionkey) {
+                if ((string)$data[$field] !== '' && !array_key_exists((string)$data[$field], $pqsioptions[$optionkey] ?? [])) {
+                    $fielderrors[$field] = 'Select a valid option.';
+                }
+            }
+        }
+        if ($pqsiischristianstudies) {
+            foreach ([
+                'christian_program_interest' => 'christian_program_interests',
+                'bible_reading_level' => 'bible_reading_levels',
+                'bible_knowledge_level' => 'bible_knowledge_levels',
+                'christian_studies_level' => 'christian_studies_levels',
+                'christian_previous_learning_method' => 'christian_previous_learning_methods',
+            ] as $field => $optionkey) {
+                if ((string)$data[$field] !== '' && !array_key_exists((string)$data[$field], $pqsioptions[$optionkey] ?? [])) {
+                    $fielderrors[$field] = 'Select a valid option.';
+                }
+            }
+        }
+        if ($pqsiishighereducation) {
+            foreach ([
+                'higher_application_level' => 'higher_application_levels',
+                'higher_highest_qualification' => 'higher_qualification_levels',
+                'higher_academic_status' => 'higher_academic_statuses',
+                'higher_admission_route' => 'higher_admission_routes',
+                'higher_transfer_credits' => 'higher_transfer_credit_options',
+                'higher_study_mode' => 'higher_study_modes',
+                'higher_study_load' => 'higher_study_loads',
+                'higher_funding_method' => 'higher_funding_methods',
+                'higher_financial_aid_interest' => 'higher_financial_aid_options',
+            ] as $field => $optionkey) {
+                if ((string)$data[$field] !== '' && !array_key_exists((string)$data[$field], $pqsioptions[$optionkey] ?? [])) {
+                    $fielderrors[$field] = 'Select a valid option.';
+                }
+            }
+        }
+        if ($pqsiistechnicaltraining) {
+            foreach ([
+                'technical_program' => 'technical_programs',
+                'technical_training_level' => 'technical_training_levels',
+                'technical_previous_experience' => 'technical_experience_types',
+                'technical_previous_learning_method' => 'technical_learning_methods',
+                'technical_experience_duration' => 'technical_experience_durations',
+                'technical_employment_status' => 'technical_employment_statuses',
+                'technical_training_goal' => 'technical_training_goals',
+                'technical_training_format' => 'technical_training_formats',
+                'technical_training_schedule' => 'technical_training_schedules',
+                'technical_tool_access' => 'technical_tool_access_options',
+                'technical_digital_skill_level' => 'technical_digital_skill_levels',
+                'technical_safety_training' => 'technical_yes_no_unsure',
+                'technical_protective_equipment' => 'technical_protective_equipment_options',
+            ] as $field => $optionkey) {
+                if ((string)$data[$field] !== '' && !array_key_exists((string)$data[$field], $pqsioptions[$optionkey] ?? [])) {
+                    $fielderrors[$field] = 'Select a valid option.';
+                }
+            }
+        }
+        if ($pqsiisprofessionaldevelopment) {
+            foreach ([
+                'professional_area' => 'professional_development_areas',
+                'professional_industry' => 'professional_industries',
+                'professional_employment_status' => 'professional_employment_statuses',
+                'professional_experience_years' => 'professional_experience_ranges',
+                'professional_responsibility_level' => 'professional_responsibility_levels',
+                'professional_development_goal' => 'professional_development_goals',
+                'professional_skill_level' => 'professional_skill_levels',
+                'professional_learning_format' => 'professional_learning_formats',
+                'professional_learning_schedule' => 'professional_learning_schedules',
+                'professional_course_intensity' => 'professional_course_intensities',
+                'professional_employer_sponsored' => 'professional_sponsorship_options',
+                'professional_cpd_required' => 'professional_cpd_options',
+            ] as $field => $optionkey) {
+                if ((string)$data[$field] !== '' && !array_key_exists((string)$data[$field], $pqsioptions[$optionkey] ?? [])) {
+                    $fielderrors[$field] = 'Select a valid option.';
+                }
+            }
+        }
+        if ($pqsiisadultlearning) {
+            foreach ([
+                'adult_learning_area' => 'adult_learning_areas',
+                'adult_education_level' => 'adult_education_levels',
+                'adult_literacy_level' => 'adult_literacy_levels',
+                'adult_numeracy_level' => 'adult_numeracy_levels',
+                'adult_digital_skill_level' => 'adult_digital_skill_levels',
+                'adult_previous_experience' => 'adult_previous_experiences',
+                'adult_previous_learning_method' => 'adult_learning_methods',
+                'adult_learning_goal' => 'adult_learning_goals',
+                'adult_employment_status' => 'adult_employment_statuses',
+                'adult_learning_format' => 'adult_learning_formats',
+                'adult_learning_pace' => 'adult_learning_paces',
+                'adult_class_arrangement' => 'adult_class_arrangements',
+                'adult_childcare_impact' => 'adult_childcare_options',
+                'adult_work_impact' => 'adult_attendance_impact_options',
+                'adult_access_limitations' => 'adult_access_limitations',
+                'adult_learning_confidence' => 'adult_learning_confidence_levels',
+            ] as $field => $optionkey) {
+                if ((string)$data[$field] !== '' && !array_key_exists((string)$data[$field], $pqsioptions[$optionkey] ?? [])) {
+                    $fielderrors[$field] = 'Select a valid option.';
+                }
+            }
         }
         if (!array_key_exists((string)$form['session_count'], $pqsioptions['session_counts'] ?? [])) {
             $fielderrors['session_count'] = 'Select a valid number of sessions.';
@@ -1049,6 +1918,19 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $referrer = pqsi_find_referrer_by_code($referrercode);
                 if (!$referrer) {
                     $fielderrors['referrer_code'] = 'No active referrer was found for this code.';
+                } else {
+                    foreach ([
+                        'referrer_name' => (string)($referrer->name ?? ''),
+                        'referrer_contact_number' => (string)($referrer->phone ?? ($referrer->contact ?? '')),
+                        'referrer_email' => (string)($referrer->email ?? ''),
+                        'referrer_city' => (string)($referrer->city ?? ''),
+                        'referrer_state' => (string)($referrer->state ?? ''),
+                        'referrer_country' => (string)($referrer->country ?? ''),
+                    ] as $referrerfield => $referrervalue) {
+                        if (trim((string)$form[$referrerfield]) === '' && trim($referrervalue) !== '') {
+                            $form[$referrerfield] = $referrervalue;
+                        }
+                    }
                 }
             }
         }
@@ -1137,7 +2019,8 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             : 'Parent or guardian approval is required before the student can start lessons.';
 
         $profileid = pqsi_save_profile($studentid, $data);
-        if ($workspaceid > 0) {
+        $deferindependentmembership = $pqsiisindependentteacher && !$pqsiisoperationsuser;
+        if ($workspaceid > 0 && !$deferindependentmembership) {
             pqsi_upsert_workspace_member($workspaceid, $studentid, 'student', 'Added from student intake.');
             if ($parentid > 0) {
                 pqsi_upsert_workspace_member($workspaceid, $parentid, 'parent', 'Linked as parent/guardian from student intake.');
@@ -1221,6 +2104,22 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        if ($pqsiisindependentteacher && !$pqsiisoperationsuser && empty($createdteacherrequestid)) {
+            $createdteacherrequestid = pqsi_upsert_teacher_marketplace_request(
+                (int)$USER->id,
+                $parentid,
+                $studentid,
+                (int)($pqsiconsumercontext->consumerid ?? 0),
+                'New learner invited from independent teacher workspace #' . $workspaceid . '.'
+            );
+            pqsi_audit('independent_teacher_student_connection_requested', 'teacher_request', $createdteacherrequestid, [
+                'teacherid' => (int)$USER->id,
+                'studentid' => $studentid,
+                'parentid' => $parentid,
+                'workspaceid' => $workspaceid,
+            ]);
+        }
+
         $transaction->allow_commit();
         $transaction = null;
 
@@ -1250,14 +2149,18 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'approvalurl' => $approvalurl,
             'parentemailattempted' => $parentemailattempted,
             'parentemailsent' => $parentemailsent,
-            'referrername' => $referrer ? (string)$referrer->name : '',
+            'referrername' => $referrer ? (trim((string)($form['referrer_name'] ?? '')) !== '' ? (string)$form['referrer_name'] : (string)$referrer->name) : '',
             'referrercode' => $referrercode,
             'referralid' => $referralid,
             'teacherrequestid' => $createdteacherrequestid ?? 0,
             'workspaceid' => $workspaceid,
         ];
         $SESSION->pqsi_created = $created;
-        redirect(new moodle_url('/local/hubredirect/student_intake.php', ['created' => 1]));
+        $redirectparams = ['created' => 1];
+        if ($workspaceid > 0) {
+            $redirectparams['workspaceid'] = $workspaceid;
+        }
+        redirect(new moodle_url('/local/hubredirect/student_intake.php', $redirectparams));
     } catch (Throwable $e) {
         if ($transaction) {
             try {
@@ -1345,7 +2248,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php if (!empty($created['teacherrequestid'])): ?>
             <div class="pqsi-empty" style="margin-top:12px">
               Marketplace teacher request created: <strong>#<?php echo (int)$created['teacherrequestid']; ?></strong><br>
-              <a href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_admin.php', ['consumer' => 'edu-for-tomorrow']))->out(false); ?>">Open marketplace request queue</a>
+              <a href="<?php echo pqh_consumer_url('/local/hubredirect/teacher_marketplace_admin.php', $pqsiconsumercontext)->out(false); ?>">Open marketplace request queue</a>
             </div>
           <?php endif; ?>
         </section>
@@ -1358,20 +2261,170 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <input type="hidden" name="requestid" value="<?php echo s(pqsi_form_value($form, 'requestid')); ?>">
           <input type="hidden" name="workspaceid" value="<?php echo s(pqsi_form_value($form, 'workspaceid')); ?>">
 
+          <h3>Core student information</h3>
           <h3>Student account</h3>
           <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'existing_studentid'); ?>" id="pqsi-existing_studentid"><label>Existing Moodle student ID</label><input class="pqsi-input" name="existing_studentid" type="number" min="0" value="<?php echo s(pqsi_form_value($form, 'existing_studentid')); ?>" placeholder="Optional: use only to add an intake profile to an already-created student"><?php echo pqsi_form_error($fielderrors, 'existing_studentid'); ?></div>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_firstname'); ?>" id="pqsi-student_firstname"><label>First name</label><input class="pqsi-input" name="student_firstname" value="<?php echo s(pqsi_form_value($form, 'student_firstname')); ?>"><?php echo pqsi_form_error($fielderrors, 'student_firstname'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_middle_name'); ?>" id="pqsi-student_middle_name"><label>Middle name</label><input class="pqsi-input" name="student_middle_name" value="<?php echo s(pqsi_form_value($form, 'student_middle_name')); ?>" required><?php echo pqsi_form_error($fielderrors, 'student_middle_name'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_lastname'); ?>" id="pqsi-student_lastname"><label>Last name</label><input class="pqsi-input" name="student_lastname" value="<?php echo s(pqsi_form_value($form, 'student_lastname')); ?>"><?php echo pqsi_form_error($fielderrors, 'student_lastname'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_display_name'); ?>" id="pqsi-student_display_name"><label>Display name</label><input class="pqsi-input" name="student_display_name" value="<?php echo s(pqsi_form_value($form, 'student_display_name')); ?>" placeholder="Optional"><?php echo pqsi_form_error($fielderrors, 'student_display_name'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_display_name'); ?>" id="pqsi-student_display_name"><label>Preferred name</label><input class="pqsi-input" name="student_display_name" value="<?php echo s(pqsi_form_value($form, 'student_display_name')); ?>" placeholder="Optional"><?php echo pqsi_form_error($fielderrors, 'student_display_name'); ?></div>
             <div class="pqsi-field" id="pqsi-student_username"><label>Username</label><input class="pqsi-input" name="student_username" value="<?php echo s(pqsi_form_value($form, 'student_username')); ?>" placeholder="Auto-generated if blank"></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_email'); ?>" id="pqsi-student_email"><label>Student email or phone</label><input class="pqsi-input" name="student_email" value="<?php echo s(pqsi_form_value($form, 'student_email')); ?>" placeholder="Optional for children; email or phone required for adults"><?php echo pqsi_form_error($fielderrors, 'student_email'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_access_type'); ?>" id="pqsi-student_access_type"><label>Student access type</label><?php echo pqsi_select('student_access_type', $pqsioptions['student_access_types'] ?? [], $form, $fielderrors); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'age_years'); ?>"><label>Age</label><input class="pqsi-input" name="age_years" type="number" min="0" max="99" value="<?php echo s(pqsi_form_value($form, 'age_years')); ?>"><?php echo pqsi_form_error($fielderrors, 'age_years'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'gender'); ?>"><label>Gender</label><select class="pqsi-select" name="gender"><option value="">Select</option><option value="female"<?php echo pqsi_selected($form, 'gender', 'female'); ?>>Female</option><option value="male"<?php echo pqsi_selected($form, 'gender', 'male'); ?>>Male</option></select><?php echo pqsi_form_error($fielderrors, 'gender'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'special_needs'); ?>"><label>Special Needs</label><select class="pqsi-select" name="special_needs"><option value="">Select</option><option value="no"<?php echo pqsi_selected($form, 'special_needs', 'no'); ?>>No</option><option value="yes"<?php echo pqsi_selected($form, 'special_needs', 'yes'); ?>>Yes</option></select><?php echo pqsi_form_error($fielderrors, 'special_needs'); ?></div>
           </div>
+
+          <?php if ($pqsiisprimaryeducation): ?>
+            <h3>Primary education details</h3>
+            <div class="pqsi-grid">
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'date_of_birth'); ?>" id="pqsi-date_of_birth"><label>Date of birth</label><input class="pqsi-input" name="date_of_birth" type="date" value="<?php echo s(pqsi_form_value($form, 'date_of_birth')); ?>"><?php echo pqsi_form_error($fielderrors, 'date_of_birth'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'age_years'); ?>"><label>Age</label><input class="pqsi-input" name="age_years" type="number" min="0" max="99" value="<?php echo s(pqsi_form_value($form, 'age_years')); ?>"><?php echo pqsi_form_error($fielderrors, 'age_years'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'gender'); ?>"><label>Gender</label><select class="pqsi-select" name="gender"><option value="">Select</option><option value="female"<?php echo pqsi_selected($form, 'gender', 'female'); ?>>Female</option><option value="male"<?php echo pqsi_selected($form, 'gender', 'male'); ?>>Male</option></select><?php echo pqsi_form_error($fielderrors, 'gender'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'current_grade'); ?>" id="pqsi-current_grade"><label>Current grade/year</label><?php echo pqsi_select('current_grade', $pqsioptions['primary_grade_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'school_curriculum'); ?>" id="pqsi-school_curriculum"><label>School curriculum</label><?php echo pqsi_select('school_curriculum', $pqsioptions['primary_curricula'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'current_school_name'); ?>" id="pqsi-current_school_name"><label>Current school name</label><input class="pqsi-input" name="current_school_name" value="<?php echo s(pqsi_form_value($form, 'current_school_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'current_school_name'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_lives_with'); ?>" id="pqsi-student_lives_with"><label>Student lives with</label><?php echo pqsi_select('student_lives_with', $pqsioptions['student_lives_with_options'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_learning_goal'); ?>" id="pqsi-primary_learning_goal"><label>Primary learning goal</label><input class="pqsi-input" name="primary_learning_goal" value="<?php echo s(pqsi_form_value($form, 'primary_learning_goal')); ?>"><?php echo pqsi_form_error($fielderrors, 'primary_learning_goal'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_class_format'); ?>" id="pqsi-preferred_class_format"><label>Preferred class format</label><?php echo pqsi_select('preferred_class_format', $pqsioptions['primary_class_formats'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_group_size'); ?>" id="pqsi-preferred_group_size"><label>Preferred group size</label><?php echo pqsi_select('preferred_group_size', $pqsioptions['primary_group_sizes'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teacher_gender'); ?>" id="pqsi-preferred_teacher_gender"><label>Preferred teacher gender</label><?php echo pqsi_select('preferred_teacher_gender', $pqsioptions['teacher_gender_preferences'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'school_term'); ?>" id="pqsi-school_term"><label>School term/admission year</label><input class="pqsi-input" name="school_term" value="<?php echo s(pqsi_form_value($form, 'school_term')); ?>"><?php echo pqsi_form_error($fielderrors, 'school_term'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'special_needs'); ?>"><label>Special learning needs / accommodations</label><select class="pqsi-select" name="special_needs"><option value="">Select</option><option value="no"<?php echo pqsi_selected($form, 'special_needs', 'no'); ?>>No</option><option value="yes"<?php echo pqsi_selected($form, 'special_needs', 'yes'); ?>>Yes</option></select><?php echo pqsi_form_error($fielderrors, 'special_needs'); ?></div>
+            </div>
+            <div class="pqsi-field pqsi-field--full<?php echo pqsi_field_class($fielderrors, 'medical_safety_notes'); ?>" id="pqsi-medical_safety_notes"><label>Medical/allergy/safety notes</label><textarea class="pqsi-textarea" name="medical_safety_notes"><?php echo s(pqsi_form_value($form, 'medical_safety_notes')); ?></textarea><?php echo pqsi_form_error($fielderrors, 'medical_safety_notes'); ?></div>
+          <?php endif; ?>
+
+          <?php if ($pqsiisadultlearning): ?>
+            <h3>Adult learning details</h3>
+            <div class="pqsi-grid">
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'adult_learning_area'); ?>"><label>Learning area of interest</label><?php echo pqsi_select('adult_learning_area', $pqsioptions['adult_learning_areas'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Specific subject or skill</label><input class="pqsi-input" name="adult_subject_skill" value="<?php echo s(pqsi_form_value($form, 'adult_subject_skill')); ?>"></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'adult_education_level'); ?>"><label>Highest education level completed</label><?php echo pqsi_select('adult_education_level', $pqsioptions['adult_education_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Current literacy level</label><?php echo pqsi_select('adult_literacy_level', $pqsioptions['adult_literacy_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Current numeracy level</label><?php echo pqsi_select('adult_numeracy_level', $pqsioptions['adult_numeracy_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Digital skill level</label><?php echo pqsi_select('adult_digital_skill_level', $pqsioptions['adult_digital_skill_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Previous adult-learning experience</label><?php echo pqsi_select('adult_previous_experience', $pqsioptions['adult_previous_experiences'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Previous learning method</label><?php echo pqsi_select('adult_previous_learning_method', $pqsioptions['adult_learning_methods'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'adult_learning_goal'); ?>"><label>Primary learning goal</label><?php echo pqsi_select('adult_learning_goal', $pqsioptions['adult_learning_goals'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Current employment status</label><?php echo pqsi_select('adult_employment_status', $pqsioptions['adult_employment_statuses'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'adult_learning_format'); ?>"><label>Preferred learning format</label><?php echo pqsi_select('adult_learning_format', $pqsioptions['adult_learning_formats'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'adult_learning_pace'); ?>"><label>Preferred learning pace</label><?php echo pqsi_select('adult_learning_pace', $pqsioptions['adult_learning_paces'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Preferred class arrangement</label><?php echo pqsi_select('adult_class_arrangement', $pqsioptions['adult_class_arrangements'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Childcare responsibilities affecting attendance</label><?php echo pqsi_select('adult_childcare_impact', $pqsioptions['adult_childcare_options'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Work responsibilities affecting attendance</label><?php echo pqsi_select('adult_work_impact', $pqsioptions['adult_attendance_impact_options'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Transport or connectivity limitations</label><?php echo pqsi_select('adult_access_limitations', $pqsioptions['adult_access_limitations'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Confidence returning to learning</label><?php echo pqsi_select('adult_learning_confidence', $pqsioptions['adult_learning_confidence_levels'] ?? [], $form, $fielderrors); ?></div>
+            </div>
+            <div class="pqsi-field pqsi-field--full"><label>Learning support or accessibility needs</label><textarea class="pqsi-textarea" name="adult_support_needs"><?php echo s(pqsi_form_value($form, 'adult_support_needs')); ?></textarea></div>
+            <div class="pqsi-field pqsi-field--full"><label>Additional adult-learning notes</label><textarea class="pqsi-textarea" name="adult_notes"><?php echo s(pqsi_form_value($form, 'adult_notes')); ?></textarea></div>
+          <?php endif; ?>
+
+          <?php if ($pqsiisprofessionaldevelopment): ?>
+            <h3>Professional development details</h3>
+            <div class="pqsi-grid">
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'professional_area'); ?>"><label>Professional development area</label><?php echo pqsi_select('professional_area', $pqsioptions['professional_development_areas'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Specific topic or skill</label><input class="pqsi-input" name="professional_topic_skill" value="<?php echo s(pqsi_form_value($form, 'professional_topic_skill')); ?>"></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'professional_current_role'); ?>"><label>Current professional role</label><input class="pqsi-input" name="professional_current_role" value="<?php echo s(pqsi_form_value($form, 'professional_current_role')); ?>"><?php echo pqsi_form_error($fielderrors, 'professional_current_role'); ?></div>
+              <div class="pqsi-field"><label>Industry or sector</label><?php echo pqsi_select('professional_industry', $pqsioptions['professional_industries'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'professional_employment_status'); ?>"><label>Employment status</label><?php echo pqsi_select('professional_employment_status', $pqsioptions['professional_employment_statuses'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Employer or organisation</label><input class="pqsi-input" name="professional_employer" value="<?php echo s(pqsi_form_value($form, 'professional_employer')); ?>"></div>
+              <div class="pqsi-field"><label>Years of professional experience</label><?php echo pqsi_select('professional_experience_years', $pqsioptions['professional_experience_ranges'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Current responsibility level</label><?php echo pqsi_select('professional_responsibility_level', $pqsioptions['professional_responsibility_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'professional_development_goal'); ?>"><label>Primary development goal</label><?php echo pqsi_select('professional_development_goal', $pqsioptions['professional_development_goals'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'professional_skill_level'); ?>"><label>Current skill level</label><?php echo pqsi_select('professional_skill_level', $pqsioptions['professional_skill_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Certification or credential sought</label><input class="pqsi-input" name="professional_credential_sought" value="<?php echo s(pqsi_form_value($form, 'professional_credential_sought')); ?>"></div>
+              <div class="pqsi-field"><label>Certification deadline</label><input class="pqsi-input" name="professional_certification_deadline" type="date" value="<?php echo s(pqsi_form_value($form, 'professional_certification_deadline')); ?>"></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'professional_learning_format'); ?>"><label>Preferred learning format</label><?php echo pqsi_select('professional_learning_format', $pqsioptions['professional_learning_formats'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Preferred learning schedule</label><?php echo pqsi_select('professional_learning_schedule', $pqsioptions['professional_learning_schedules'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Preferred course intensity</label><?php echo pqsi_select('professional_course_intensity', $pqsioptions['professional_course_intensities'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Employer-sponsored training</label><?php echo pqsi_select('professional_employer_sponsored', $pqsioptions['professional_sponsorship_options'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>CPD credits required</label><?php echo pqsi_select('professional_cpd_required', $pqsioptions['professional_cpd_options'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Required CPD credits or hours</label><input class="pqsi-input" name="professional_cpd_credits" type="number" min="0" value="<?php echo s(pqsi_form_value($form, 'professional_cpd_credits')); ?>"></div>
+            </div>
+            <div class="pqsi-field pqsi-field--full"><label>Expected workplace outcome</label><textarea class="pqsi-textarea" name="professional_workplace_outcome"><?php echo s(pqsi_form_value($form, 'professional_workplace_outcome')); ?></textarea></div>
+            <div class="pqsi-field pqsi-field--full"><label>Professional support or accessibility needs</label><textarea class="pqsi-textarea" name="professional_support_needs"><?php echo s(pqsi_form_value($form, 'professional_support_needs')); ?></textarea></div>
+            <div class="pqsi-field pqsi-field--full"><label>Additional professional development notes</label><textarea class="pqsi-textarea" name="professional_notes"><?php echo s(pqsi_form_value($form, 'professional_notes')); ?></textarea></div>
+          <?php endif; ?>
+
+          <?php if ($pqsiistechnicaltraining): ?>
+            <h3>Technical training details</h3>
+            <div class="pqsi-grid">
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'technical_program'); ?>"><label>Training program or trade</label><?php echo pqsi_select('technical_program', $pqsioptions['technical_programs'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Specific specialization</label><input class="pqsi-input" name="technical_specialization" value="<?php echo s(pqsi_form_value($form, 'technical_specialization')); ?>"></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'technical_training_level'); ?>"><label>Training level</label><?php echo pqsi_select('technical_training_level', $pqsioptions['technical_training_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'technical_previous_experience'); ?>"><label>Previous technical experience</label><?php echo pqsi_select('technical_previous_experience', $pqsioptions['technical_experience_types'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Previous learning method</label><?php echo pqsi_select('technical_previous_learning_method', $pqsioptions['technical_learning_methods'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Experience duration</label><?php echo pqsi_select('technical_experience_duration', $pqsioptions['technical_experience_durations'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Current employment status</label><?php echo pqsi_select('technical_employment_status', $pqsioptions['technical_employment_statuses'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Current employer or workshop</label><input class="pqsi-input" name="technical_employer_workshop" value="<?php echo s(pqsi_form_value($form, 'technical_employer_workshop')); ?>"></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'technical_training_goal'); ?>"><label>Primary training goal</label><?php echo pqsi_select('technical_training_goal', $pqsioptions['technical_training_goals'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Certification sought</label><input class="pqsi-input" name="technical_certification_sought" value="<?php echo s(pqsi_form_value($form, 'technical_certification_sought')); ?>"></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'technical_training_format'); ?>"><label>Preferred training format</label><?php echo pqsi_select('technical_training_format', $pqsioptions['technical_training_formats'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Preferred training schedule</label><?php echo pqsi_select('technical_training_schedule', $pqsioptions['technical_training_schedules'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'technical_tool_access'); ?>"><label>Access to required tools or equipment</label><?php echo pqsi_select('technical_tool_access', $pqsioptions['technical_tool_access_options'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Computer or digital skill level</label><?php echo pqsi_select('technical_digital_skill_level', $pqsioptions['technical_digital_skill_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Safety training completed</label><?php echo pqsi_select('technical_safety_training', $pqsioptions['technical_yes_no_unsure'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Protective equipment available</label><?php echo pqsi_select('technical_protective_equipment', $pqsioptions['technical_protective_equipment_options'] ?? [], $form, $fielderrors); ?></div>
+            </div>
+            <div class="pqsi-field pqsi-field--full"><label>Tools or equipment experience</label><textarea class="pqsi-textarea" name="technical_tools_experience"><?php echo s(pqsi_form_value($form, 'technical_tools_experience')); ?></textarea></div>
+            <div class="pqsi-field pqsi-field--full"><label>Practical support or accessibility needs</label><textarea class="pqsi-textarea" name="technical_support_needs"><?php echo s(pqsi_form_value($form, 'technical_support_needs')); ?></textarea></div>
+            <div class="pqsi-field pqsi-field--full"><label>Additional technical training notes</label><textarea class="pqsi-textarea" name="technical_notes"><?php echo s(pqsi_form_value($form, 'technical_notes')); ?></textarea></div>
+          <?php endif; ?>
+
+          <?php if ($pqsiishighereducation): ?>
+            <h3>Higher education details</h3>
+            <div class="pqsi-grid">
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'higher_application_level'); ?>"><label>Application level</label><?php echo pqsi_select('higher_application_level', $pqsioptions['higher_application_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'higher_program_field'); ?>"><label>Program or field of study</label><input class="pqsi-input" name="higher_program_field" value="<?php echo s(pqsi_form_value($form, 'higher_program_field')); ?>"><?php echo pqsi_form_error($fielderrors, 'higher_program_field'); ?></div>
+              <div class="pqsi-field"><label>Intended specialization</label><input class="pqsi-input" name="higher_specialization" value="<?php echo s(pqsi_form_value($form, 'higher_specialization')); ?>"></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'higher_highest_qualification'); ?>"><label>Highest qualification completed</label><?php echo pqsi_select('higher_highest_qualification', $pqsioptions['higher_qualification_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Previous institution</label><input class="pqsi-input" name="higher_previous_institution" value="<?php echo s(pqsi_form_value($form, 'higher_previous_institution')); ?>"></div>
+              <div class="pqsi-field"><label>Qualification title</label><input class="pqsi-input" name="higher_qualification_title" value="<?php echo s(pqsi_form_value($form, 'higher_qualification_title')); ?>"></div>
+              <div class="pqsi-field"><label>Graduation or expected completion year</label><input class="pqsi-input" name="higher_completion_year" type="number" min="1900" max="2100" value="<?php echo s(pqsi_form_value($form, 'higher_completion_year')); ?>"></div>
+              <div class="pqsi-field"><label>Academic result</label><input class="pqsi-input" name="higher_academic_result" value="<?php echo s(pqsi_form_value($form, 'higher_academic_result')); ?>"></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'higher_academic_status'); ?>"><label>Current academic status</label><?php echo pqsi_select('higher_academic_status', $pqsioptions['higher_academic_statuses'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Admission route</label><?php echo pqsi_select('higher_admission_route', $pqsioptions['higher_admission_routes'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Transfer credits requested</label><?php echo pqsi_select('higher_transfer_credits', $pqsioptions['higher_transfer_credit_options'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'higher_study_mode'); ?>"><label>Preferred study mode</label><?php echo pqsi_select('higher_study_mode', $pqsioptions['higher_study_modes'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'higher_study_load'); ?>"><label>Preferred study load</label><?php echo pqsi_select('higher_study_load', $pqsioptions['higher_study_loads'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Preferred intake or academic term</label><input class="pqsi-input" name="higher_preferred_intake" value="<?php echo s(pqsi_form_value($form, 'higher_preferred_intake')); ?>"></div>
+              <div class="pqsi-field"><label>Funding method</label><?php echo pqsi_select('higher_funding_method', $pqsioptions['higher_funding_methods'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field"><label>Scholarship or financial-aid interest</label><?php echo pqsi_select('higher_financial_aid_interest', $pqsioptions['higher_financial_aid_options'] ?? [], $form, $fielderrors); ?></div>
+            </div>
+            <div class="pqsi-field pqsi-field--full"><label>Research interest or proposed topic</label><textarea class="pqsi-textarea" name="higher_research_interest"><?php echo s(pqsi_form_value($form, 'higher_research_interest')); ?></textarea></div>
+            <div class="pqsi-field pqsi-field--full"><label>Academic support or accessibility needs</label><textarea class="pqsi-textarea" name="higher_support_needs"><?php echo s(pqsi_form_value($form, 'higher_support_needs')); ?></textarea></div>
+          <?php endif; ?>
+
+          <?php if ($pqsiisislamicstudies): ?>
+            <h3>Islamic studies details</h3>
+            <div class="pqsi-grid">
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'islamic_program_interest'); ?>" id="pqsi-islamic_program_interest"><label>Islamic program interest</label><?php echo pqsi_select('islamic_program_interest', $pqsioptions['islamic_program_interests'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'quran_reading_level'); ?>" id="pqsi-quran_reading_level"><label>Quran reading level</label><?php echo pqsi_select('quran_reading_level', $pqsioptions['quran_reading_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'tajweed_level'); ?>" id="pqsi-tajweed_level"><label>Tajweed level</label><?php echo pqsi_select('tajweed_level', $pqsioptions['tajweed_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'memorization_status'); ?>" id="pqsi-memorization_status"><label>Memorization status</label><?php echo pqsi_select('memorization_status', $pqsioptions['memorization_statuses'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'memorized_portion'); ?>" id="pqsi-memorized_portion"><label>Memorized portion</label><input class="pqsi-input" name="memorized_portion" value="<?php echo s(pqsi_form_value($form, 'memorized_portion')); ?>"><?php echo pqsi_form_error($fielderrors, 'memorized_portion'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'arabic_reading_ability'); ?>" id="pqsi-arabic_reading_ability"><label>Arabic reading ability</label><?php echo pqsi_select('arabic_reading_ability', $pqsioptions['arabic_reading_abilities'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'islamic_learning_goal'); ?>" id="pqsi-islamic_learning_goal"><label>Islamic learning goal</label><input class="pqsi-input" name="islamic_learning_goal" value="<?php echo s(pqsi_form_value($form, 'islamic_learning_goal')); ?>"><?php echo pqsi_form_error($fielderrors, 'islamic_learning_goal'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'previous_learning_method'); ?>" id="pqsi-previous_learning_method"><label>Previous learning method</label><?php echo pqsi_select('previous_learning_method', $pqsioptions['previous_learning_methods'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'tafsir_level'); ?>" id="pqsi-tafsir_level"><label>Tafsir level</label><?php echo pqsi_select('tafsir_level', $pqsioptions['tafsir_levels'] ?? [], $form, $fielderrors); ?></div>
+            </div>
+            <div class="pqsi-field pqsi-field--full<?php echo pqsi_field_class($fielderrors, 'prior_islamic_studies'); ?>" id="pqsi-prior_islamic_studies"><label>Prior Islamic studies</label><textarea class="pqsi-textarea" name="prior_islamic_studies"><?php echo s(pqsi_form_value($form, 'prior_islamic_studies')); ?></textarea><?php echo pqsi_form_error($fielderrors, 'prior_islamic_studies'); ?></div>
+            <div class="pqsi-field pqsi-field--full<?php echo pqsi_field_class($fielderrors, 'islamic_notes'); ?>" id="pqsi-islamic_notes"><label>Islamic studies notes</label><textarea class="pqsi-textarea" name="islamic_notes"><?php echo s(pqsi_form_value($form, 'islamic_notes')); ?></textarea><?php echo pqsi_form_error($fielderrors, 'islamic_notes'); ?></div>
+          <?php endif; ?>
+
+          <?php if ($pqsiischristianstudies): ?>
+            <h3>Christian studies details</h3>
+            <div class="pqsi-grid">
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'christian_program_interest'); ?>" id="pqsi-christian_program_interest"><label>Christian program interest</label><?php echo pqsi_select('christian_program_interest', $pqsioptions['christian_program_interests'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'bible_reading_level'); ?>" id="pqsi-bible_reading_level"><label>Bible reading level</label><?php echo pqsi_select('bible_reading_level', $pqsioptions['bible_reading_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'bible_knowledge_level'); ?>" id="pqsi-bible_knowledge_level"><label>Bible knowledge level</label><?php echo pqsi_select('bible_knowledge_level', $pqsioptions['bible_knowledge_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'christian_studies_level'); ?>" id="pqsi-christian_studies_level"><label>Christian studies level</label><?php echo pqsi_select('christian_studies_level', $pqsioptions['christian_studies_levels'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'christian_previous_learning_method'); ?>" id="pqsi-christian_previous_learning_method"><label>Previous learning method</label><?php echo pqsi_select('christian_previous_learning_method', $pqsioptions['christian_previous_learning_methods'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'christian_learning_goal'); ?>" id="pqsi-christian_learning_goal"><label>Primary learning goal</label><input class="pqsi-input" name="christian_learning_goal" value="<?php echo s(pqsi_form_value($form, 'christian_learning_goal')); ?>"><?php echo pqsi_form_error($fielderrors, 'christian_learning_goal'); ?></div>
+            </div>
+            <div class="pqsi-field pqsi-field--full<?php echo pqsi_field_class($fielderrors, 'prior_christian_studies'); ?>" id="pqsi-prior_christian_studies"><label>Previous Christian studies</label><textarea class="pqsi-textarea" name="prior_christian_studies"><?php echo s(pqsi_form_value($form, 'prior_christian_studies')); ?></textarea><?php echo pqsi_form_error($fielderrors, 'prior_christian_studies'); ?></div>
+            <div class="pqsi-field pqsi-field--full<?php echo pqsi_field_class($fielderrors, 'christian_notes'); ?>" id="pqsi-christian_notes"><label>Additional Christian studies notes</label><textarea class="pqsi-textarea" name="christian_notes"><?php echo s(pqsi_form_value($form, 'christian_notes')); ?></textarea><?php echo pqsi_form_error($fielderrors, 'christian_notes'); ?></div>
+          <?php endif; ?>
 
           <h3>Location and language</h3>
           <div class="pqsi-grid">
@@ -1429,11 +2482,15 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           </div>
           <div class="pqsi-field" id="pqsi-availability"><label>Availability notes</label><textarea class="pqsi-textarea" name="availability_summary" placeholder="Exact availability, restrictions, preferred days, breaks, or admin notes"><?php echo s(pqsi_form_value($form, 'availability')); ?></textarea></div>
 
-          <h3>Parent / guardian <span class="pqsi-muted">(required only when the student is under 18)</span></h3>
+          <h3>Parent / guardian <span class="pqsi-muted"><?php echo $pqsiisprimaryeducation ? '(required for primary education)' : '(required only when the student is under 18)'; ?></span></h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_name'); ?>" id="pqsi-parent_name"><label>Parent/guardian name</label><input class="pqsi-input" name="parent_name" value="<?php echo s(pqsi_form_value($form, 'parent_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'parent_name'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_relationship'); ?>" id="pqsi-parent_relationship"><label>Relationship to student</label><?php echo pqsi_select('parent_relationship', $pqsioptions['parent_relationships'] ?? [], $form, $fielderrors); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_relationship_other'); ?>" id="pqsi-parent_relationship_other"><label>Describe relationship</label><input class="pqsi-input" name="parent_relationship_other" value="<?php echo s(pqsi_form_value($form, 'parent_relationship_other')); ?>"><?php echo pqsi_form_error($fielderrors, 'parent_relationship_other'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_email'); ?>" id="pqsi-parent_email"><label>Parent/guardian email or phone</label><input class="pqsi-input" name="parent_email" value="<?php echo s(pqsi_form_value($form, 'parent_email')); ?>" placeholder="Email or phone number"><?php echo pqsi_form_error($fielderrors, 'parent_email'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_phone'); ?>" id="pqsi-parent_phone"><label>Parent/guardian phone / WhatsApp</label><input class="pqsi-input" name="parent_phone" value="<?php echo s(pqsi_form_value($form, 'parent_phone')); ?>"><?php echo pqsi_form_error($fielderrors, 'parent_phone'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'emergency_contact_name'); ?>" id="pqsi-emergency_contact_name"><label>Emergency contact name</label><input class="pqsi-input" name="emergency_contact_name" value="<?php echo s(pqsi_form_value($form, 'emergency_contact_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'emergency_contact_name'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'emergency_contact_phone'); ?>" id="pqsi-emergency_contact_phone"><label>Emergency contact phone</label><input class="pqsi-input" name="emergency_contact_phone" value="<?php echo s(pqsi_form_value($form, 'emergency_contact_phone')); ?>"><?php echo pqsi_form_error($fielderrors, 'emergency_contact_phone'); ?></div>
             <div class="pqsi-field"><label>Parent username</label><input class="pqsi-input" name="parent_username" value="<?php echo s(pqsi_form_value($form, 'parent_username')); ?>" placeholder="Auto-generated if blank"></div>
           </div>
           <label class="pqsi-checkrow"><input type="checkbox" name="parent_email_enabled" value="1"<?php echo pqsi_checked($form, 'parent_email_enabled'); ?>><span>Send parent email notifications when the parent contact is a valid email address.</span></label>
@@ -1442,7 +2499,14 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <h3>Referrer <span class="pqsi-muted">(optional, separate from parent/guardian access)</span></h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referrer_code'); ?>" id="pqsi-referrer_code"><label>Referrer Code</label><input class="pqsi-input" name="referrer_code" inputmode="numeric" maxlength="5" value="<?php echo s(pqsi_form_value($form, 'referrer_code')); ?>" placeholder="Five-digit code"><?php echo pqsi_form_error($fielderrors, 'referrer_code'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referrer_name'); ?>" id="pqsi-referrer_name"><label>Referrer name</label><input class="pqsi-input" name="referrer_name" value="<?php echo s(pqsi_form_value($form, 'referrer_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'referrer_name'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referrer_contact_number'); ?>" id="pqsi-referrer_contact_number"><label>Contact number</label><input class="pqsi-input" name="referrer_contact_number" value="<?php echo s(pqsi_form_value($form, 'referrer_contact_number')); ?>"><?php echo pqsi_form_error($fielderrors, 'referrer_contact_number'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referrer_email'); ?>" id="pqsi-referrer_email"><label>Email</label><input class="pqsi-input" name="referrer_email" type="email" value="<?php echo s(pqsi_form_value($form, 'referrer_email')); ?>"><?php echo pqsi_form_error($fielderrors, 'referrer_email'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referrer_city'); ?>" id="pqsi-referrer_city"><label>City</label><input class="pqsi-input" name="referrer_city" value="<?php echo s(pqsi_form_value($form, 'referrer_city')); ?>"><?php echo pqsi_form_error($fielderrors, 'referrer_city'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referrer_state'); ?>" id="pqsi-referrer_state"><label>State</label><input class="pqsi-input" name="referrer_state" value="<?php echo s(pqsi_form_value($form, 'referrer_state')); ?>"><?php echo pqsi_form_error($fielderrors, 'referrer_state'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referrer_country'); ?>" id="pqsi-referrer_country"><label>Country</label><input class="pqsi-input" name="referrer_country" value="<?php echo s(pqsi_form_value($form, 'referrer_country')); ?>"><?php echo pqsi_form_error($fielderrors, 'referrer_country'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referral_datereferred'); ?>" id="pqsi-referral_datereferred"><label>Date referred</label><input class="pqsi-input" name="referral_datereferred" type="date" value="<?php echo s(pqsi_form_value($form, 'referral_datereferred')); ?>"><?php echo pqsi_form_error($fielderrors, 'referral_datereferred'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referral_effective_date'); ?>" id="pqsi-referral_effective_date"><label>Referral effective date</label><input class="pqsi-input" name="referral_effective_date" type="date" value="<?php echo s(pqsi_form_value($form, 'referral_effective_date')); ?>"><?php echo pqsi_form_error($fielderrors, 'referral_effective_date'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referral_status'); ?>" id="pqsi-referral_status"><label>Referral status</label><select class="pqsi-select" name="referral_status"><option value="pending"<?php echo pqsi_selected($form, 'referral_status', 'pending'); ?>>Pending</option><option value="contacted"<?php echo pqsi_selected($form, 'referral_status', 'contacted'); ?>>Contacted</option><option value="enrolled"<?php echo pqsi_selected($form, 'referral_status', 'enrolled'); ?>>Enrolled</option><option value="approved"<?php echo pqsi_selected($form, 'referral_status', 'approved'); ?>>Approved</option></select><?php echo pqsi_form_error($fielderrors, 'referral_status'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referral_dateexpires'); ?>" id="pqsi-referral_dateexpires"><label>Referral expiry date</label><input class="pqsi-input" name="referral_dateexpires" type="date" value="<?php echo s(pqsi_form_value($form, 'referral_dateexpires')); ?>"><?php echo pqsi_form_error($fielderrors, 'referral_dateexpires'); ?></div>
             <div class="pqsi-field"><label>Commission amount</label><input class="pqsi-input" name="commission_amount" value="<?php echo s(pqsi_form_value($form, 'commission_amount')); ?>" placeholder="Example: 25.00"></div>

@@ -1,0 +1,511 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 3,
+  "unit": 2,
+  "unitId": "eng-g03-t01-u02",
+  "title": "School and Learning Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A person who helps us learn new things.",
+          "choices": [
+            "teacher",
+            "author",
+            "library"
+          ],
+          "answer": "teacher",
+          "explanation": "teacher: A person who helps us learn new things."
+        },
+        {
+          "prompt": "Which word means: The rules for how we put words together to speak and write.",
+          "choices": [
+            "teacher",
+            "author",
+            "grammar"
+          ],
+          "answer": "grammar",
+          "explanation": "grammar: The rules for how we put words together to speak and write."
+        },
+        {
+          "prompt": "Which word means: A game or test to see who is best.",
+          "choices": [
+            "author",
+            "contest",
+            "teacher"
+          ],
+          "answer": "contest",
+          "explanation": "contest: A game or test to see who is best."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person who writes books or stories.",
+          "answer": "author"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A time when we learn something new in school.",
+          "answer": "lesson"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A short paper or talk that tells about something.",
+          "answer": "report"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "homework.",
+            "mathematics",
+            "my",
+            "with",
+            "me",
+            "helps",
+            "teacher",
+            "My"
+          ],
+          "answer": "My teacher helps me with my mathematics homework."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "books.",
+            "borrow",
+            "and",
+            "read",
+            "to",
+            "library",
+            "the",
+            "to",
+            "go",
+            "I"
+          ],
+          "answer": "I go to the library to read and borrow books."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "correctly.",
+            "write",
+            "can",
+            "we",
+            "so",
+            "grammar",
+            "learn",
+            "We"
+          ],
+          "answer": "We learn grammar so we can write correctly."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "What does 'lesson' mean?",
+          "choices": [
+            "A game or test to see who is best.",
+            "A time when we learn something new in school.",
+            "To get ready for something.",
+            "To look at something carefully to learn about it."
+          ],
+          "answer": "A time when we learn something new in school.",
+          "explanation": "Today's lesson is about authors."
+        },
+        {
+          "prompt": "What does 'education' mean?",
+          "choices": [
+            "A game or test to see who is best.",
+            "A short paper or talk that tells about something.",
+            "Learning about things at school or at home.",
+            "To get ready for something."
+          ],
+          "answer": "Learning about things at school or at home.",
+          "explanation": "Education helps us learn something new every day."
+        },
+        {
+          "prompt": "What does 'study' mean?",
+          "choices": [
+            "A game or test to see who is best.",
+            "A short paper or talk that tells about something.",
+            "The subject or idea we talk or write about.",
+            "To look at something carefully to learn about it."
+          ],
+          "answer": "To look at something carefully to learn about it.",
+          "explanation": "I study my spelling words every night."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What is Ishmael's favourite subject? Why does he like it?",
+          "choices": [
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "A person who helps us learn new things.",
+            "A person who writes books or stories."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "How did the group feel on the day of the contest?",
+          "choices": [
+            "A person who helps us learn new things.",
+            "A person who writes books or stories.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "What did the singer do today?",
+          "choices": [
+            "A person who writes books or stories.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "A person who helps us learn new things."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Talk About Your School Day",
+          "target": "Today I studied ______."
+        },
+        {
+          "prompt": "Speaking 3 — Guess My Subject",
+          "target": "In this subject, we work with numbers."
+        },
+        {
+          "prompt": "Speaking 5 — Explain and Respond",
+          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "night.",
+            "every",
+            "words",
+            "spelling",
+            "my",
+            "study",
+            "I"
+          ],
+          "answer": "I study my spelling words every night."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school.",
+            "at",
+            "contest",
+            "spelling",
+            "a",
+            "had",
+            "We"
+          ],
+          "answer": "We had a spelling contest at school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "report.",
+            "my",
+            "to",
+            "details",
+            "more",
+            "added",
+            "I"
+          ],
+          "answer": "I added more details to my report."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'lesson' mean in this unit?",
+          "choices": [
+            "A time when we learn something new in school.",
+            "A person who helps us learn new things.",
+            "A person who writes books or stories."
+          ],
+          "answer": "A time when we learn something new in school.",
+          "explanation": "lesson: A time when we learn something new in school."
+        },
+        {
+          "prompt": "What does 'topic' mean in this unit?",
+          "choices": [
+            "A person who helps us learn new things.",
+            "A person who writes books or stories.",
+            "The subject or idea we talk or write about."
+          ],
+          "answer": "The subject or idea we talk or write about.",
+          "explanation": "topic: The subject or idea we talk or write about."
+        },
+        {
+          "prompt": "What does 'author' mean in this unit?",
+          "choices": [
+            "A place where you can find and borrow books.",
+            "A person who writes books or stories.",
+            "A person who helps us learn new things."
+          ],
+          "answer": "A person who writes books or stories.",
+          "explanation": "author: A person who writes books or stories."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'prepare'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "prepare is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'supply'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "supply is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'mathematics'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "mathematics is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "library",
+              "A place where you can find and borrow books."
+            ],
+            [
+              "graduate",
+              "To finish school or a class."
+            ],
+            [
+              "grammar",
+              "The rules for how we put words together to speak and write."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "education",
+              "Learning about things at school or at home."
+            ],
+            [
+              "prepare",
+              "To get ready for something."
+            ],
+            [
+              "contest",
+              "A game or test to see who is best."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "topic",
+              "The subject or idea we talk or write about."
+            ],
+            [
+              "supply",
+              "Things we use at school or home, like pencils and paper."
+            ],
+            [
+              "teacher",
+              "A person who helps us learn new things."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does 'graduate' mean?",
+          "choices": [
+            "A time when we learn something new in school.",
+            "Learning about things at school or at home.",
+            "The rules for how we put words together to speak and write.",
+            "To finish school or a class."
+          ],
+          "answer": "To finish school or a class.",
+          "explanation": "My sister will graduate from primary school next year."
+        },
+        {
+          "prompt": "What does 'mathematics' mean?",
+          "choices": [
+            "A time when we learn something new in school.",
+            "Learning about things at school or at home.",
+            "The subject where we work with numbers, shapes, and measuring.",
+            "To look at something carefully to learn about it."
+          ],
+          "answer": "The subject where we work with numbers, shapes, and measuring.",
+          "explanation": "In mathematics, we learn to add and subtract."
+        },
+        {
+          "prompt": "What does 'grammar' mean?",
+          "choices": [
+            "Learning about things at school or at home.",
+            "The rules for how we put words together to speak and write.",
+            "To get ready for something.",
+            "To look at something carefully to learn about it."
+          ],
+          "answer": "The rules for how we put words together to speak and write.",
+          "explanation": "We learn grammar so we can write correctly."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'teacher' mean?",
+          "choices": [
+            "A person who helps us learn new things.",
+            "A place where you can find and borrow books.",
+            "The subject where we work with numbers, shapes, and measuring.",
+            "To finish school or a class."
+          ],
+          "answer": "A person who helps us learn new things.",
+          "explanation": "My teacher helps me with my mathematics homework."
+        },
+        {
+          "prompt": "What does 'author' mean?",
+          "choices": [
+            "A person who writes books or stories.",
+            "The rules for how we put words together to speak and write.",
+            "The subject where we work with numbers, shapes, and measuring.",
+            "To finish school or a class."
+          ],
+          "answer": "A person who writes books or stories.",
+          "explanation": "The author wrote a funny book about a talking camel."
+        },
+        {
+          "prompt": "What does 'library' mean?",
+          "choices": [
+            "A place where you can find and borrow books.",
+            "A time when we learn something new in school.",
+            "The rules for how we put words together to speak and write.",
+            "The subject where we work with numbers, shapes, and measuring."
+          ],
+          "answer": "A place where you can find and borrow books.",
+          "explanation": "I go to the library to read and borrow books."
+        }
+      ]
+    }
+  ]
+}

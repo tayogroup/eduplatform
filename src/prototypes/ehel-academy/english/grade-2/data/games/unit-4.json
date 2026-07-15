@@ -1,0 +1,513 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 2,
+  "unit": 4,
+  "unitId": "eng-g02-t02-u04",
+  "title": "The Big Sky Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A dark shape made when something blocks the light.",
+          "choices": [
+            "shadow",
+            "sun",
+            "sky"
+          ],
+          "answer": "shadow",
+          "explanation": "shadow: A dark shape made when something blocks the light."
+        },
+        {
+          "prompt": "Which word means: The time when the sun goes down in the evening.",
+          "choices": [
+            "shadow",
+            "sun",
+            "sunset"
+          ],
+          "answer": "sunset",
+          "explanation": "sunset: The time when the sun goes down in the evening."
+        },
+        {
+          "prompt": "Which word means: Near the ground or below another level.",
+          "choices": [
+            "sun",
+            "low",
+            "shadow"
+          ],
+          "answer": "low",
+          "explanation": "low: Near the ground or below another level."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The brightness that lets us see things.",
+          "answer": "light"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The bright round object we see in the night sky.",
+          "answer": "moon"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Giving or reflecting a lot of light.",
+          "answer": "bright"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "shines.",
+            "sun",
+            "the",
+            "when",
+            "me",
+            "follows",
+            "shadow",
+            "My"
+          ],
+          "answer": "My shadow follows me when the sun shines."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "shadow.",
+            "a",
+            "make",
+            "you",
+            "light,",
+            "the",
+            "block",
+            "you",
+            "When"
+          ],
+          "answer": "When you block the light, you make a shadow."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "orange.",
+            "turns",
+            "sky",
+            "the",
+            "evening",
+            "the",
+            "In"
+          ],
+          "answer": "In the evening the sky turns orange."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which word means: The early part of the day, after the sun comes up.",
+          "choices": [
+            "morning",
+            "light",
+            "sun",
+            "source"
+          ],
+          "answer": "morning",
+          "explanation": "morning: The early part of the day, after the sun comes up. In the morning we eat breakfast."
+        },
+        {
+          "prompt": "What type of word is 'midday'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "midday: The middle of the day, when the sun is highest. At midday my shadow is very short."
+        },
+        {
+          "prompt": "In the ____ the sky turns orange.",
+          "choices": [
+            "evening",
+            "source",
+            "block",
+            "sky"
+          ],
+          "answer": "evening",
+          "explanation": "evening: The part of the day before night, when the sun sets. In the evening the sky turns orange."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'sun'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "The sun rises in the east and sets in the west."
+        },
+        {
+          "prompt": "The sun is a ____ of light and heat.",
+          "choices": [
+            "source",
+            "shadow",
+            "light",
+            "sun"
+          ],
+          "answer": "source",
+          "explanation": "The sun is a source of light and heat."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "block",
+            "bolck",
+            "bloc",
+            "blockk"
+          ],
+          "answer": "block",
+          "explanation": "When you block the light, you make a shadow."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Describe the Sky",
+          "target": "It is the ______ (morning / midday / evening)."
+        },
+        {
+          "prompt": "Speaking Game — Shadow Play",
+          "target": "I am making a ______ shadow."
+        },
+        {
+          "prompt": "Speaking 5 - Shadow Scientist",
+          "target": "Explain how a shadow forms and compare a morning shadow with a midday shadow."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sun.",
+            "the",
+            "covered",
+            "cloud",
+            "big",
+            "A"
+          ],
+          "answer": "A big cloud covered the sun."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "midday.",
+            "at",
+            "short",
+            "and",
+            "morning",
+            "the",
+            "in",
+            "long",
+            "is",
+            "shadow",
+            "My"
+          ],
+          "answer": "My shadow is long in the morning and short at midday."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cloudy.",
+            "is",
+            "weather",
+            "the",
+            "Today"
+          ],
+          "answer": "Today the weather is cloudy."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'star' mean in this unit?",
+          "choices": [
+            "A tiny point of light in the night sky. The sun is a star.",
+            "A dark shape made when something blocks the light.",
+            "The star that gives Earth light and heat in the day."
+          ],
+          "answer": "A tiny point of light in the night sky. The sun is a star.",
+          "explanation": "star: A tiny point of light in the night sky. The sun is a star."
+        },
+        {
+          "prompt": "What does 'blue' mean in this unit?",
+          "choices": [
+            "A dark shape made when something blocks the light.",
+            "The star that gives Earth light and heat in the day.",
+            "Having the colour of a clear daytime sky."
+          ],
+          "answer": "Having the colour of a clear daytime sky.",
+          "explanation": "blue: Having the colour of a clear daytime sky."
+        },
+        {
+          "prompt": "What does 'sun' mean in this unit?",
+          "choices": [
+            "The space above the Earth that you see when you look up.",
+            "The star that gives Earth light and heat in the day.",
+            "A dark shape made when something blocks the light."
+          ],
+          "answer": "The star that gives Earth light and heat in the day.",
+          "explanation": "sun: The star that gives Earth light and heat in the day."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'short'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "short is used as a adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'windy'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "windy is used as a adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'midday'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "midday is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "sun",
+              "The star that gives Earth light and heat in the day."
+            ],
+            [
+              "sky",
+              "The space above the Earth that you see when you look up."
+            ],
+            [
+              "evening",
+              "The part of the day before night, when the sun sets."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "star",
+              "A tiny point of light in the night sky. The sun is a star."
+            ],
+            [
+              "night",
+              "The time when your part of Earth faces away from the sun and it is dark."
+            ],
+            [
+              "high",
+              "Far above the ground or another level."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "dark",
+              "Having very little light."
+            ],
+            [
+              "sunny",
+              "Bright with plenty of sunshine."
+            ],
+            [
+              "rainy",
+              "With rain falling or likely to fall."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "The sun is a ____ of light and heat.",
+          "choices": [
+            "source",
+            "shadow",
+            "light",
+            "sun"
+          ],
+          "answer": "source",
+          "explanation": "The sun is a source of light and heat."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "block",
+            "bolck",
+            "bloc",
+            "blockk"
+          ],
+          "answer": "block",
+          "explanation": "When you block the light, you make a shadow."
+        },
+        {
+          "prompt": "Which word means: The space above the Earth that you see when you look up.",
+          "choices": [
+            "sky",
+            "shadow",
+            "light",
+            "sun"
+          ],
+          "answer": "sky",
+          "explanation": "sky: The space above the Earth that you see when you look up. The sky is blue in the day and dark at night."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'shadow' mean?",
+          "choices": [
+            "A dark shape made when something blocks the light.",
+            "The brightness that lets us see things.",
+            "The star that gives Earth light and heat in the day.",
+            "The place where something comes from."
+          ],
+          "answer": "A dark shape made when something blocks the light.",
+          "explanation": "My shadow follows me when the sun shines."
+        },
+        {
+          "prompt": "Which word means: The brightness that lets us see things.",
+          "choices": [
+            "light",
+            "shadow",
+            "sun",
+            "source"
+          ],
+          "answer": "light",
+          "explanation": "We need light to see things clearly."
+        },
+        {
+          "prompt": "What type of word is 'sun'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "The sun rises in the east and sets in the west."
+        }
+      ]
+    }
+  ]
+}

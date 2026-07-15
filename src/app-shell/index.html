@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Pre-Quran Arabic — Kids Hub</title>
+  <title>EduPlatform Arabic - Kids Hub</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/app-shell.css?v=auth-buttons-20260608a">
+  <link rel="stylesheet" href="/pre_quraan/shared/css/support.css?v=support-phase3-20260703a">
 
   
   <!-- Shared Design System (override layer) -->
@@ -24,13 +25,13 @@
     <div class="screen">
       <div class="top">
         <div class="brand">
-          <div class="logo" aria-hidden="true">Q</div>
-          <div class="title" id="appTitle">Pre-Quran Arabic</div>
+          <div class="logo" aria-hidden="true">E</div>
+          <div class="title" id="appTitle">EduPlatform Arabic</div>
         </div>
 
         <div class="top-actions">
           <a class="btn-square btn-login" id="btnMoodleLogin"
-             href="https://quraan.academy/local/hubredirect/issue.php"
+             href="#"
              target="_blank" rel="noopener"
              aria-label="Moodle login">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -41,7 +42,7 @@
           </a>
 
           <a class="btn-square btn-logout" id="btnMoodleLogout"
-             href="https://quraan.academy/login/logout.php"
+             href="#"
              target="_blank" rel="noopener"
              aria-label="Moodle logout">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -52,7 +53,7 @@
           </a>
 
           <a class="btn-square btn-intro" id="ctaIntro"
-             href="https://quraan.academy" target="_blank" rel="noopener"
+             href="#" target="_blank" rel="noopener"
              aria-label="Course Introduction">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M4 6.5A2.5 2.5 0 016.5 4H20v14.5c0 .83-.67 1.5-1.5 1.5H6.5A2.5 2.5 0 014 17.5V6.5z" fill="#fff" opacity=".3"/>
@@ -85,7 +86,7 @@
       <div class="hero" id="hero">
         <div class="hero-inner">
           <div class="hero-copy">
-            <h2 id="heroTitle">Welcome to Pre‑Quraan! 🌙</h2>
+            <h2 id="heroTitle">Welcome to EduPlatform!</h2>
             <p id="heroSub">Let's begin your Quran journey with fun lessons, games, and practice.</p>
             <div class="hero-cta">
               <button class="btn-cta" type="button" id="btnStartLearning">Start Learning</button>
@@ -185,8 +186,8 @@
     <div class="modal" role="dialog" aria-modal="true">
       <h3 id="recordTitle">Alphabet Record</h3>
       <div class="games-links">
-        <a class="btn-link" href="https://quraan.academy/local/hubredirect/issue_child.php?goto=video">Alphabet Video</a>
-        <a class="btn-link" href="https://quraan.academy/local/hubredirect/issue_child.php?goto=voice">Alphabet Voice</a>
+        <a class="btn-link" data-moodle-path="/local/hubredirect/issue_child.php?goto=video" href="#">Alphabet Video</a>
+        <a class="btn-link" data-moodle-path="/local/hubredirect/issue_child.php?goto=voice" href="#">Alphabet Voice</a>
       </div>
       <div class="modal-actions">
         <button class="btn btn-close" id="btnCloseRecord" type="button">Close</button>
@@ -199,8 +200,8 @@
     <div class="modal" role="dialog" aria-modal="true">
       <h3 id="harakatRecordTitle">Harakat Record</h3>
       <div class="games-links">
-        <a class="btn-link" href="https://quraan.academy/local/hubredirect/issue_child.php?goto=harakat_video">Harakat Video</a>
-        <a class="btn-link" href="https://quraan.academy/local/hubredirect/issue_child.php?goto=harakat_voice">Harakat Voice</a>
+        <a class="btn-link" data-moodle-path="/local/hubredirect/issue_child.php?goto=harakat_video" href="#">Harakat Video</a>
+        <a class="btn-link" data-moodle-path="/local/hubredirect/issue_child.php?goto=harakat_voice" href="#">Harakat Voice</a>
       </div>
       <div class="modal-actions">
         <button class="btn btn-close" id="btnCloseHarakatRecord" type="button">Close</button>
@@ -247,7 +248,7 @@
       </p>
 
       <div class="games-links" style="margin-top:12px;">
-        <a class="btn-link" href="https://quraan.academy" target="_blank" rel="noopener">Course Introduction</a>
+        <a class="btn-link" data-moodle-path="/" href="#" target="_blank" rel="noopener">Course Introduction</a>
       </div>
 
       <div class="modal-actions">
@@ -258,9 +259,10 @@
 
 
   <!-- Main app (after DOM so elements exist) -->
-  <script type="module" src="js/app-shell.js?v=alphabet-games-20260615c"></script>
+  <script type="module" src="js/app-shell.js?v=logoutfix-20260616a"></script>
 
   <!-- Token exchange + parent name -->
   <script src="js/parent-badge.js?v=account-id-only-20260525b"></script>
+  <script src="/pre_quraan/shared/js/shared-support-panel.js?v=support-phase3-20260703a"></script>
 </body>
 </html>

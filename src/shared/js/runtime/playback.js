@@ -1,5 +1,5 @@
-﻿/*
-  Pre-Quraan Alphabet runtime fragment: playback.js
+/*
+  EduPlatform Alphabet runtime fragment: playback.js
   Playlist playback, Watch/Sound/Listen+/Words/Repeat/Match flows, and playing-tile effects.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -3018,4 +3018,3 @@ async function playAll() {
   // ============================================================
   // PART 2 END
   // ============================================================
-

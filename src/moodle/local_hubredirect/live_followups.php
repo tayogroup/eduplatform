@@ -51,6 +51,9 @@ function pqlf_is_teacher(int $userid): bool {
     if (is_siteadmin($userid)) {
         return true;
     }
+    if (pqh_has_independent_teacher_profile($userid)) {
+        return true;
+    }
     if (pqlf_table_exists('local_prequran_teacher_student')
         && $DB->record_exists('local_prequran_teacher_student', ['teacherid' => $userid, 'status' => 'active'])) {
         return true;

@@ -100,7 +100,7 @@
     if (!progress) return null;
 
     var required = Math.max(
-      2,
+      1,
       Number(progress.passesRequired || progress.passes_required || 0) || 0
     );
     progress.passesRequired = required;
@@ -122,7 +122,7 @@
     if (!progress) return 'Rules';
 
     var done = Math.max(0, Number(progress.passesDone || 0) || 0);
-    var required = Math.max(2, Number(progress.passesRequired || 2) || 2);
+    var required = Math.max(1, Number(progress.passesRequired || progress.passes_required || 1) || 1);
     if (done > 0 && done < required) {
       return 'Rules';
     }
@@ -189,14 +189,18 @@
   async function completeRulesAudioPass() {
     try {
       ensureRulesPassesRequired();
-      if (typeof markPlaylistStepCompleted === 'function') {
-        await markPlaylistStepCompleted('rules');
-      } else if (typeof __LessonRuntime !== 'undefined' && __LessonRuntime && typeof __LessonRuntime.completeStep === 'function') {
-        var runtimeResult = await __LessonRuntime.completeStep('rules');
-        if (typeof __pqApplyRuntimeCompletion === 'function') {
-          __pqApplyRuntimeCompletion('rules', runtimeResult);
-        }
-        if (typeof __pqNormalizeCurrentStepId === 'function') __pqNormalizeCurrentStepId();
+      var completed = false;
+      if (root.PQUnitRuntime && typeof root.PQUnitRuntime.markStepCompleted === 'function') {
+        await root.PQUnitRuntime.markStepCompleted('rules');
+        completed = true;
+      } else if (root.PQUnitRuntime && typeof root.PQUnitRuntime.completeStep === 'function') {
+        await root.PQUnitRuntime.completeStep('rules');
+        completed = true;
+      }
+      if (!completed && typeof root.dispatchEvent === 'function' && typeof root.CustomEvent === 'function') {
+        root.dispatchEvent(new root.CustomEvent('pq:lecture:ended', {
+          detail: { stepId: 'rules' }
+        }));
       }
       ensureRulesPassesRequired();
       try { if (typeof updateControlsForCurrentStep === 'function') updateControlsForCurrentStep(); } catch (_e) {}

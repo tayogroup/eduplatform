@@ -52,6 +52,34 @@ function pqh_master_url(string $path, array $params = [], bool $external = false
     return (new moodle_url($path, $params))->out(false);
 }
 
+function pqh_master_consumer_path(string $path, string $fallback): string {
+    $path = trim($path);
+    if ($path === '' || $path[0] !== '/' || strpos($path, '//') === 0 || preg_match('/^\/https?:/i', $path)) {
+        return $fallback;
+    }
+    return clean_param($path, PARAM_LOCALURL);
+}
+
+$consumerlinks = [];
+if (pqh_consumer_schema_ready()) {
+    $consumers = $DB->get_records('local_prequran_consumer', ['status' => 'active'], 'name ASC');
+    foreach ($consumers as $consumer) {
+        if ((string)($consumer->consumer_type ?? '') === 'platform_foundation') {
+            continue;
+        }
+        $params = ['consumer' => (string)$consumer->slug];
+        $workspaceid = (int)($consumer->primaryworkspaceid ?? 0);
+        if ($workspaceid > 0) {
+            $params['workspaceid'] = $workspaceid;
+        }
+        $name = trim((string)$consumer->name) ?: (string)$consumer->slug;
+        $publicpath = pqh_master_consumer_path((string)($consumer->defaultpublicpath ?? ''), '/local/hubredirect/consumer_landing.php');
+        $dashboardpath = pqh_master_consumer_path((string)($consumer->defaultdashboardpath ?? ''), '/local/hubredirect/workspace_dashboard.php');
+        $consumerlinks[] = [$name . ' public page', $publicpath, $params, 'Configured consumer landing page.'];
+        $consumerlinks[] = [$name . ' dashboard', $dashboardpath, $params, 'Configured consumer dashboard.'];
+    }
+}
+
 $links = [
     'EduPlatform Foundation' => [
         ['EduPlatform landing', '/local/hubredirect/platform_landing.php', [], 'Foundation public landing page.'],
@@ -61,14 +89,7 @@ $links = [
         ['Platform settings', '/local/hubredirect/platform_settings.php', [], 'Foundation branding and route defaults.'],
         ['Foundation diagnostics', '/local/hubredirect/eduplatform_diagnostics.php', [], 'Host, consumer, domain, workspace, and route checks.'],
     ],
-    'Consumers' => [
-        ['Quraan Academy public page', '/local/ehelhome/index.php', ['consumer' => 'quraan-academy'], 'Quraan Academy consumer landing page.'],
-        ['Quraan Academy dashboard', '/local/hubredirect/dashboard.php', ['consumer' => 'quraan-academy'], 'Quraan Academy consumer dashboard.'],
-        ['Huda-school landing', '/local/hubredirect/consumer_landing.php', ['consumer' => 'huda-school', 'workspaceid' => 3], 'Institution landing page.'],
-        ['Huda-school workspace', '/local/hubredirect/workspace_dashboard.php', ['consumer' => 'huda-school', 'workspaceid' => 3], 'Institution workspace dashboard.'],
-        ['EduForTomorrow marketplace', '/local/hubredirect/teacher_marketplace.php', ['consumer' => 'edu-for-tomorrow'], 'Public teacher marketplace.'],
-        ['EduForTomorrow admin', '/local/hubredirect/teacher_marketplace_admin.php', ['consumer' => 'edu-for-tomorrow'], 'Marketplace operations queue.'],
-    ],
+    'Consumers' => $consumerlinks,
     'Workspace Operations' => [
         ['Workspace dashboard', '/local/hubredirect/workspace_dashboard.php', $consumerparams, 'Workspace scoped dashboard.'],
         ['People and assignments', '/local/hubredirect/workspace_people.php', $consumerparams, 'Invite, link, and assign students, parents, teachers, and admins.'],

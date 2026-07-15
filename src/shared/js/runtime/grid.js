@@ -1,5 +1,5 @@
 /*
-  Pre-Quraan Alphabet runtime fragment: grid.js
+  EduPlatform Alphabet runtime fragment: grid.js
   Grid/media state, tile rendering, Write adapter setup, and grid interaction helpers.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.

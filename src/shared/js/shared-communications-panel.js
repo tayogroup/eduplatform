@@ -1,9 +1,17 @@
-﻿/* PreQuraan communications panel: announcements and private parent-teacher messages. */
+/* EduPlatform communications panel: announcements and private parent-teacher messages. */
 (function () {
   'use strict';
 
+  function moodleOrigin() {
+    try {
+      if (window.__prequran_moodle_origin) return new URL(window.__prequran_moodle_origin).origin;
+      if (document.referrer) return new URL(document.referrer).origin;
+    } catch (_) {}
+    return window.location.origin;
+  }
+
   const CFG = {
-    endpointDefault: 'https://quraan.academy/webservice/rest/server.php',
+    endpointDefault: `${moodleOrigin()}/webservice/rest/server.php`,
     pollMs: 60000,
     waitMs: 5000
   };

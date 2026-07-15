@@ -1,0 +1,515 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 2,
+  "unit": 6,
+  "unitId": "eng-g02-t02-u06",
+  "title": "All About Bugs Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: An insect with large, colourful wings that flies from flower to flower.",
+          "choices": [
+            "butterfly",
+            "ant",
+            "spider"
+          ],
+          "answer": "butterfly",
+          "explanation": "butterfly: An insect with large, colourful wings that flies from flower to flower."
+        },
+        {
+          "prompt": "Which word means: The body parts that some insects and birds use for flying.",
+          "choices": [
+            "butterfly",
+            "ant",
+            "wings"
+          ],
+          "answer": "wings",
+          "explanation": "wings: The body parts that some insects and birds use for flying."
+        },
+        {
+          "prompt": "Which word means: Higher than something else.",
+          "choices": [
+            "ant",
+            "above",
+            "butterfly"
+          ],
+          "answer": "above",
+          "explanation": "above: Higher than something else."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A small jumping insect that makes a chirping sound.",
+          "answer": "cricket"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The body parts that some insects and birds use for flying.",
+          "answer": "wings"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To move through the air with wings.",
+          "answer": "fly"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "nectar.",
+            "drink",
+            "to",
+            "flower",
+            "red",
+            "the",
+            "on",
+            "landed",
+            "butterfly",
+            "The"
+          ],
+          "answer": "The butterfly landed on the red flower to drink nectar."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "branches.",
+            "two",
+            "between",
+            "web",
+            "a",
+            "built",
+            "spider",
+            "The"
+          ],
+          "answer": "The spider built a web between two branches."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "wings.",
+            "have",
+            "always",
+            "not",
+            "do",
+            "ants",
+            "but",
+            "wings,",
+            "colourful",
+            "have",
+            "Butterflies"
+          ],
+          "answer": "Butterflies have colourful wings, but ants do not always have wings."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A small animal with six legs, a body in three parts, and usually wings.",
+          "choices": [
+            "insect",
+            "cricket",
+            "ant",
+            "bee"
+          ],
+          "answer": "insect",
+          "explanation": "insect: A small animal with six legs, a body in three parts, and usually wings. A butterfly is an insect with beautiful wings."
+        },
+        {
+          "prompt": "What type of word is 'legs'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "legs: The body parts that animals use for walking or standing. Insects have six legs, but spiders have eight legs."
+        },
+        {
+          "prompt": "Butterflies have colourful ____, but ants do not always have wings.",
+          "choices": [
+            "wings",
+            "bee",
+            "spider",
+            "worm"
+          ],
+          "answer": "wings",
+          "explanation": "wings: The body parts that some insects and birds use for flying. Butterflies have colourful wings, but ants do not always have wings."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'ant'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "The ants carried food back to their anthill."
+        },
+        {
+          "prompt": "The ____ buzzed around the flowers collecting nectar.",
+          "choices": [
+            "bee",
+            "butterfly",
+            "cricket",
+            "ant"
+          ],
+          "answer": "bee",
+          "explanation": "The bee buzzed around the flowers collecting nectar."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "spider",
+            "sipder",
+            "spide",
+            "spiderr"
+          ],
+          "answer": "spider",
+          "explanation": "The spider built a web between two branches."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Name and Describe a Bug",
+          "target": "This is a ______."
+        },
+        {
+          "prompt": "Speaking Game — Bug Riddles",
+          "target": "It has six legs. It can fly. It makes honey."
+        },
+        {
+          "prompt": "Speaking 5 - Where Is the Bug?",
+          "target": "Place or imagine six bugs and describe each position for a partner to find."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "flower.",
+            "the",
+            "on",
+            "is",
+            "butterfly",
+            "The"
+          ],
+          "answer": "The butterfly is on the flower."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "flower.",
+            "the",
+            "above",
+            "is",
+            "bee",
+            "The"
+          ],
+          "answer": "The bee is above the flower."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "soil.",
+            "the",
+            "through",
+            "crawl",
+            "can",
+            "worm",
+            "The"
+          ],
+          "answer": "The worm can crawl through the soil."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'anthill' mean in this unit?",
+          "choices": [
+            "The home that ants build, often with many rooms under the ground.",
+            "An insect with large, colourful wings that flies from flower to flower.",
+            "A small insect that lives in large groups and works together."
+          ],
+          "answer": "The home that ants build, often with many rooms under the ground.",
+          "explanation": "anthill: The home that ants build, often with many rooms under the ground."
+        },
+        {
+          "prompt": "What does 'fly' mean in this unit?",
+          "choices": [
+            "An insect with large, colourful wings that flies from flower to flower.",
+            "A small insect that lives in large groups and works together.",
+            "To move through the air with wings."
+          ],
+          "answer": "To move through the air with wings.",
+          "explanation": "fly: To move through the air with wings."
+        },
+        {
+          "prompt": "What does 'ant' mean in this unit?",
+          "choices": [
+            "A small eight-legged animal that spins webs to catch insects.",
+            "A small insect that lives in large groups and works together.",
+            "An insect with large, colourful wings that flies from flower to flower."
+          ],
+          "answer": "A small insect that lives in large groups and works together.",
+          "explanation": "ant: A small insect that lives in large groups and works together."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'in'?",
+          "choices": [
+            "Position",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Position",
+          "explanation": "in is used as a position in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'chirp'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "chirp is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'insect'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "insect is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "ant",
+              "A small insect that lives in large groups and works together."
+            ],
+            [
+              "spider",
+              "A small eight-legged animal that spins webs to catch insects."
+            ],
+            [
+              "legs",
+              "The body parts that animals use for walking or standing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "anthill",
+              "The home that ants build, often with many rooms under the ground."
+            ],
+            [
+              "on",
+              "Touching the top of something else."
+            ],
+            [
+              "between",
+              "In the middle of two other things."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "fly",
+              "To move through the air with wings."
+            ],
+            [
+              "crawl",
+              "To move slowly along a surface."
+            ],
+            [
+              "collect",
+              "To gather things together."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "The ____ buzzed around the flowers collecting nectar.",
+          "choices": [
+            "bee",
+            "butterfly",
+            "cricket",
+            "ant"
+          ],
+          "answer": "bee",
+          "explanation": "The bee buzzed around the flowers collecting nectar."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "spider",
+            "sipder",
+            "spide",
+            "spiderr"
+          ],
+          "answer": "spider",
+          "explanation": "The spider built a web between two branches."
+        },
+        {
+          "prompt": "Which word means: A small, long animal with no legs that lives in the soil.",
+          "choices": [
+            "worm",
+            "butterfly",
+            "cricket",
+            "ant"
+          ],
+          "answer": "worm",
+          "explanation": "worm: A small, long animal with no legs that lives in the soil. After the rain, we saw worms on the ground."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'butterfly' mean?",
+          "choices": [
+            "An insect with large, colourful wings that flies from flower to flower.",
+            "A small jumping insect that makes a chirping sound.",
+            "A small insect that lives in large groups and works together.",
+            "A flying insect that collects nectar and makes honey."
+          ],
+          "answer": "An insect with large, colourful wings that flies from flower to flower.",
+          "explanation": "The butterfly landed on the red flower to drink nectar."
+        },
+        {
+          "prompt": "Which word means: A small jumping insect that makes a chirping sound.",
+          "choices": [
+            "cricket",
+            "butterfly",
+            "ant",
+            "bee"
+          ],
+          "answer": "cricket",
+          "explanation": "We heard a cricket chirping in the garden at night."
+        },
+        {
+          "prompt": "What type of word is 'ant'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "The ants carried food back to their anthill."
+        }
+      ]
+    }
+  ]
+}

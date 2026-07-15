@@ -1,5 +1,5 @@
 /*
-  Pre-Quraan Alphabet runtime fragment: step-state.js
+  EduPlatform Alphabet runtime fragment: step-state.js
   Current step normalization, current-step lookup, and Write button refresh helpers.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.

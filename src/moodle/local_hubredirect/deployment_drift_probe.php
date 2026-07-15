@@ -4,26 +4,66 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/accesslib.php');
 
-$configuredtoken = (string)getenv('EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN');
+function pqh_drift_json_response(int $status, array $payload): void {
+    http_response_code($status);
+    header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    echo json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+function pqh_drift_read_token_file(string $filepath): string {
+    $realpath = realpath($filepath);
+    if ($realpath === false || dirname($realpath) !== __DIR__ || !is_readable($realpath)) {
+        return '';
+    }
+    $token = trim((string)file_get_contents($realpath));
+    return $token !== '' && strpos($token, "\n") === false ? $token : '';
+}
+
+function pqh_drift_configured_token(): string {
+    global $CFG;
+
+    $candidates = [
+        (string)getenv('EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN'),
+        defined('EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN') ? (string)constant('EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN') : '',
+        isset($CFG->eduplatform_deployment_drift_token) ? (string)$CFG->eduplatform_deployment_drift_token : '',
+        function_exists('get_config') ? (string)get_config('local_hubredirect', 'deployment_drift_token') : '',
+        pqh_drift_read_token_file(__DIR__ . '/.deployment_drift_token'),
+        pqh_drift_read_token_file(__DIR__ . '/deployment_drift_token.txt'),
+    ];
+
+    foreach ($candidates as $candidate) {
+        $candidate = trim($candidate);
+        if ($candidate !== '') {
+            return $candidate;
+        }
+    }
+    return '';
+}
+
+$configuredtoken = pqh_drift_configured_token();
 if ($configuredtoken !== '') {
-    $providedtoken = required_param('token', PARAM_RAW);
+    $providedtoken = optional_param('token', '', PARAM_RAW);
     if (!hash_equals($configuredtoken, $providedtoken)) {
-        http_response_code(403);
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode([
+        pqh_drift_json_response(403, [
             'ok' => false,
             'error' => 'invalid_token',
-        ], JSON_PRETTY_PRINT);
-        exit;
+        ]);
     }
 } else {
-    require_login();
+    if (!isloggedin() || isguestuser()) {
+        pqh_drift_json_response(401, [
+            'ok' => false,
+            'error' => 'authentication_required',
+            'message' => 'Configure EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN, CFG eduplatform_deployment_drift_token, or local/hubredirect/.deployment_drift_token for CLI checksum checks.',
+        ]);
+    }
     if (!is_siteadmin()) {
-        pqh_access_denied(
-            'Deployment drift checks require a site administrator or EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN.',
-            new moodle_url('/local/hubredirect/dashboard.php'),
-            'Deployment drift access denied'
-        );
+        pqh_drift_json_response(403, [
+            'ok' => false,
+            'error' => 'site_admin_required',
+        ]);
     }
 }
 

@@ -5,7 +5,28 @@ require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
 
-pqh_require_academy_operations('Only academy operations users can use the recurring class wizard.');
+$consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+$urlparams = [];
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+if ($requestedworkspaceid > 0) {
+    $urlparams['workspaceid'] = $requestedworkspaceid;
+} else if ((int)($consumercontext->workspaceid ?? 0) > 0) {
+    $urlparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
+$pqlswisadmin = is_siteadmin($USER) || pqh_can_manage_academy_operations((int)$USER->id);
+$pqlswworkspaceid = (int)($urlparams['workspaceid'] ?? 0);
+$dashboardpath = $pqlswworkspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php';
+$dashboardurl = new moodle_url($dashboardpath, $urlparams);
+if (!$pqlswisadmin && !pqh_user_can_create_live_sessions((int)$USER->id, $pqlswworkspaceid)) {
+    pqh_access_denied(
+        'Only approved teachers and administrators can use the recurring class wizard.',
+        $dashboardurl,
+        'Recurring class wizard access required'
+    );
+}
 
 function pqlsw_table_exists(string $table): bool {
     global $DB;
@@ -59,17 +80,29 @@ function pqlsw_parse_students(string $raw): array {
     return array_values(array_unique(array_filter(array_map('intval', $parts ?: []))));
 }
 
-function pqlsw_class_groups(): array {
+function pqlsw_class_groups(int $workspaceid = 0): array {
     global $DB;
     if (!pqlsw_table_exists('local_prequran_class_group')) {
         return [];
     }
-    return $DB->get_records_select('local_prequran_class_group', "status IN ('open', 'active')", [], 'title ASC', '*', 0, 100);
+    $where = "status IN ('open', 'active')";
+    $params = [];
+    if ($workspaceid > 0 && pqlsw_column_exists('local_prequran_class_group', 'workspaceid')) {
+        $where .= ' AND workspaceid = :workspaceid';
+        $params['workspaceid'] = $workspaceid;
+    }
+    return $DB->get_records_select('local_prequran_class_group', $where, $params, 'title ASC', '*', 0, 100);
 }
 
-function pqlsw_group_student_ids(int $groupid): array {
+function pqlsw_group_student_ids(int $groupid, int $workspaceid = 0): array {
     global $DB;
     if ($groupid <= 0 || !pqlsw_table_exists('local_prequran_group_member')) {
+        return [];
+    }
+    if ($workspaceid > 0
+            && pqlsw_table_exists('local_prequran_class_group')
+            && pqlsw_column_exists('local_prequran_class_group', 'workspaceid')
+            && !$DB->record_exists('local_prequran_class_group', ['id' => $groupid, 'workspaceid' => $workspaceid])) {
         return [];
     }
     $ids = [];
@@ -79,7 +112,7 @@ function pqlsw_group_student_ids(int $groupid): array {
     return array_values(array_unique(array_filter($ids)));
 }
 
-function pqlsw_teacher_candidates(): array {
+function pqlsw_teacher_candidates(int $workspaceid = 0): array {
     global $DB;
     $ids = [];
     foreach (['local_prequran_live_session', 'local_prequran_live_availability', 'local_prequran_teacher_student'] as $table) {
@@ -87,7 +120,12 @@ function pqlsw_teacher_candidates(): array {
             continue;
         }
         $where = $table === 'local_prequran_live_session' ? 'teacherid > 0' : "teacherid > 0 AND status = 'active'";
-        foreach ($DB->get_records_sql("SELECT DISTINCT teacherid FROM {{$table}} WHERE {$where}") as $row) {
+        $params = [];
+        if ($workspaceid > 0 && pqlsw_column_exists($table, 'workspaceid')) {
+            $where .= ' AND workspaceid = :workspaceid';
+            $params['workspaceid'] = $workspaceid;
+        }
+        foreach ($DB->get_records_sql("SELECT DISTINCT teacherid FROM {{$table}} WHERE {$where}", $params) as $row) {
             $ids[(int)$row->teacherid] = true;
         }
     }
@@ -201,17 +239,17 @@ function pqlsw_conflicts(int $teacherid, array $studentids, array $starts, int $
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_series_wizard.php'));
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_series_wizard.php', $urlparams));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Recurring Class Series Wizard');
 $PAGE->set_heading('Recurring Class Series Wizard');
 $PAGE->add_body_class('pqh-live-series-wizard-page');
 
 $step = max(1, min(6, optional_param('step', 1, PARAM_INT)));
-$teacherid = optional_param('teacherid', 0, PARAM_INT);
+$teacherid = $pqlswisadmin ? optional_param('teacherid', 0, PARAM_INT) : (int)$USER->id;
 $groupid = optional_param('groupid', 0, PARAM_INT);
 $studentraw = trim(optional_param('studentids_raw', '', PARAM_TEXT));
-$studentids = array_values(array_unique(array_merge(pqlsw_group_student_ids($groupid), pqlsw_parse_students($studentraw))));
+$studentids = array_values(array_unique(array_merge(pqlsw_group_student_ids($groupid, $pqlswworkspaceid), pqlsw_parse_students($studentraw))));
 $title = trim(optional_param('title', 'Pre-Quran review class series', PARAM_TEXT));
 $lessonid = trim(optional_param('lessonid', 'alphabet', PARAM_TEXT));
 $unitid = trim(optional_param('unitid', 'alphabet_listen', PARAM_TEXT));
@@ -232,9 +270,11 @@ $conflictcount = 0;
 foreach ($conflictrows as $row) {
     $conflictcount += count($row['messages']);
 }
-$teachers = pqlsw_teacher_candidates();
-$classgroups = pqlsw_class_groups();
-$params = [
+$teachers = $pqlswisadmin
+    ? pqlsw_teacher_candidates($pqlswworkspaceid)
+    : [['id' => (int)$USER->id, 'name' => pqlsw_user_name((int)$USER->id, 'Teacher ' . (int)$USER->id)]];
+$classgroups = pqlsw_class_groups($pqlswworkspaceid);
+$params = array_merge($urlparams, [
     'teacherid' => $teacherid,
     'groupid' => $groupid,
     'studentids_raw' => implode(', ', $studentids),
@@ -248,7 +288,7 @@ $params = [
     'recurrence_count' => $count,
     'recurrence_until' => $untilraw,
     'recording_enabled' => $recording ? 1 : 0,
-];
+]);
 
 echo $OUTPUT->header();
 ?>
@@ -260,12 +300,12 @@ body.pqh-live-series-wizard-page #page,body.pqh-live-series-wizard-page #page-co
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlsw-shell"><div class="pqlsw-wrap">
-  <section class="pqlsw-top pqh-workspace-top"><div><h1 class="pqlsw-title pqh-workspace-title">Guided Recurring Class Series Wizard</h1><p class="pqlsw-sub pqh-workspace-sub">Preview every generated class date before creating a recurring BBB live-session series.</p></div><div class="pqlsw-actions pqh-workspace-actions"><?php echo pqh_live_session_explainer_link(); ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php'))->out(false); ?>">Single session wizard</a><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php'))->out(false); ?>">Capacity</a><a class="pqlsw-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a></div></section>
+  <section class="pqlsw-top pqh-workspace-top"><div><h1 class="pqlsw-title pqh-workspace-title">Guided Recurring Class Series Wizard</h1><p class="pqlsw-sub pqh-workspace-sub">Preview every generated class date before creating a recurring BBB live-session series.</p></div><div class="pqlsw-actions pqh-workspace-actions"><?php echo pqh_live_session_explainer_link(); ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $urlparams))->out(false); ?>">Single session wizard</a><?php if ($pqlswisadmin): ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Capacity</a><?php endif; ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a><a class="pqlsw-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a></div></section>
   <section class="pqlsw-steps"><?php foreach ([1 => 'Teacher', 2 => 'Students', 3 => 'Lesson', 4 => 'Recurrence', 5 => 'Safety', 6 => 'Review'] as $num => $label): ?><div class="pqlsw-step <?php echo $step === $num ? 'pqlsw-step--active' : ''; ?>"><?php echo (int)$num; ?>. <?php echo s($label); ?></div><?php endforeach; ?></section>
   <section class="pqlsw-panel">
     <?php if (!pqlsw_ready()): ?><div class="pqlsw-empty">Recurring wizard requires the Phase 16 series table/columns.</div>
     <?php elseif ($step === 1): ?>
-      <form method="get"><input type="hidden" name="step" value="2"><div class="pqlsw-field"><label for="teacherid">Teacher</label><select class="pqlsw-select" id="teacherid" name="teacherid" required><option value="">Choose teacher</option><?php foreach ($teachers as $teacher): ?><option value="<?php echo (int)$teacher['id']; ?>" <?php echo $teacherid === (int)$teacher['id'] ? 'selected' : ''; ?>><?php echo s($teacher['name'] . ' #' . $teacher['id']); ?></option><?php endforeach; ?></select></div><button class="pqlsw-btn" type="submit">Next: students</button></form>
+      <form method="get"><?php foreach ($urlparams as $key => $value): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endforeach; ?><input type="hidden" name="step" value="2"><?php if ($pqlswisadmin): ?><div class="pqlsw-field"><label for="teacherid">Teacher</label><select class="pqlsw-select" id="teacherid" name="teacherid" required><option value="">Choose teacher</option><?php foreach ($teachers as $teacher): ?><option value="<?php echo (int)$teacher['id']; ?>" <?php echo $teacherid === (int)$teacher['id'] ? 'selected' : ''; ?>><?php echo s($teacher['name'] . ' #' . $teacher['id']); ?></option><?php endforeach; ?></select></div><?php else: ?><input type="hidden" name="teacherid" value="<?php echo (int)$USER->id; ?>"><div class="pqlsw-card"><strong>Teacher</strong><p class="pqlsw-meta"><?php echo s(fullname($USER)); ?> #<?php echo (int)$USER->id; ?></p></div><?php endif; ?><button class="pqlsw-btn" type="submit">Next: students</button></form>
     <?php elseif ($step === 2): ?>
       <form method="get"><?php foreach ($params as $key => $value): if (!in_array($key, ['studentids_raw', 'groupid'], true)): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endif; endforeach; ?><input type="hidden" name="step" value="3"><?php if ($classgroups): ?><div class="pqlsw-field"><label for="groupid">Class group</label><select class="pqlsw-select" id="groupid" name="groupid"><option value="0">No class group</option><?php foreach ($classgroups as $group): ?><option value="<?php echo (int)$group->id; ?>" <?php echo $groupid === (int)$group->id ? 'selected' : ''; ?>><?php echo s((string)$group->title . ' #' . (int)$group->id); ?></option><?php endforeach; ?></select><p class="pqlsw-meta">A class group automatically adds active assigned students. Extra IDs below are optional.</p></div><?php endif; ?><div class="pqlsw-field"><label for="studentids_raw">Student user IDs</label><textarea class="pqlsw-textarea" id="studentids_raw" name="studentids_raw"><?php echo s(implode(', ', $studentids)); ?></textarea></div><div class="pqlsw-actions pqh-workspace-actions"><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $params + ['step' => 1]))->out(false); ?>">Back</a><button class="pqlsw-btn" type="submit">Next: lesson</button></div></form>
     <?php elseif ($step === 3): ?>
@@ -278,7 +318,7 @@ body.pqh-live-series-wizard-page #page,body.pqh-live-series-wizard-page #page-co
       <?php if ($conflictcount > 0): ?><div class="pqlsw-alert pqlsw-alert--bad"><?php echo (int)$conflictcount; ?> conflict warning(s) found across the generated series.</div><?php else: ?><div class="pqlsw-alert pqlsw-alert--ok">No conflicts detected across the generated series.</div><?php endif; ?>
       <div class="pqlsw-card"><h3><?php echo s($title); ?></h3><p class="pqlsw-meta">Teacher: <?php echo s(pqlsw_user_name($teacherid, 'Teacher ' . $teacherid)); ?> #<?php echo (int)$teacherid; ?></p><p class="pqlsw-meta">Students: <?php echo s(implode(', ', array_map(static function(int $id): string { return pqlsw_user_name($id, 'Student ' . $id); }, $studentids))); ?></p><p class="pqlsw-meta">Lesson: <?php echo s($lessonid); ?> / <?php echo s($unitid); ?></p><p class="pqlsw-meta">Generated sessions: <?php echo count($starts); ?>, <?php echo s($pattern); ?>, audio recording always enabled; video opt-in and consent-controlled.</p></div>
       <table class="pqlsw-table"><tr><th>#</th><th>Date</th><th>Status</th></tr><?php $i = 1; foreach ($conflictrows as $row): ?><tr><td><?php echo $i++; ?></td><td><?php echo s(userdate((int)$row['start'], get_string('strftimedatetimeshort'))); ?></td><td><?php if ($row['messages']): ?><span class="pqlsw-pill pqlsw-pill--bad"><?php echo s(implode('; ', $row['messages'])); ?></span><?php else: ?><span class="pqlsw-pill pqlsw-pill--ok">clear</span><?php endif; ?></td></tr><?php endforeach; ?></table>
-      <form method="post" action="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>"><input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>"><input type="hidden" name="action" value="create"><input type="hidden" name="created_from_wizard" value="1"><input type="hidden" name="recurring_enabled" value="1"><input type="hidden" name="teacherid" value="<?php echo (int)$teacherid; ?>"><input type="hidden" name="groupid" value="<?php echo (int)$groupid; ?>"><input type="hidden" name="studentids_raw" value="<?php echo s(implode(', ', $studentids)); ?>"><input type="hidden" name="title" value="<?php echo s($title); ?>"><input type="hidden" name="lessonid" value="<?php echo s($lessonid); ?>"><input type="hidden" name="unitid" value="<?php echo s($unitid); ?>"><input type="hidden" name="sessiondate" value="<?php echo s($sessiondate); ?>"><input type="hidden" name="sessiontime" value="<?php echo s($sessiontime); ?>"><input type="hidden" name="duration" value="<?php echo (int)$duration; ?>"><input type="hidden" name="recurrence_pattern" value="<?php echo s($pattern); ?>"><input type="hidden" name="recurrence_count" value="<?php echo (int)$count; ?>"><input type="hidden" name="recurrence_until" value="<?php echo s($untilraw); ?>"><input type="hidden" name="recording_enabled" value="1"><?php foreach ($weekdays as $day): ?><input type="hidden" name="recurrence_weekdays[]" value="<?php echo (int)$day; ?>"><?php endforeach; ?><?php if ($conflictcount > 0): ?><div class="pqlsw-card"><h3>Admin Conflict Override</h3><label class="pqlsw-check"><input type="checkbox" name="override_conflicts" value="1"> <span>Override conflicts with audit reason</span></label><div class="pqlsw-field"><label for="override_reason">Override Reason</label><input class="pqlsw-input" id="override_reason" name="override_reason" type="text" placeholder="Required if overriding conflicts"></div></div><?php endif; ?><div class="pqlsw-actions pqh-workspace-actions"><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $params + ['step' => 5]))->out(false); ?>">Back</a><button class="pqlsw-btn" type="submit">Create recurring series</button></div></form>
+      <form method="post" action="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>"><input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>"><input type="hidden" name="action" value="create"><input type="hidden" name="created_from_wizard" value="1"><input type="hidden" name="recurring_enabled" value="1"><input type="hidden" name="teacherid" value="<?php echo (int)$teacherid; ?>"><input type="hidden" name="groupid" value="<?php echo (int)$groupid; ?>"><input type="hidden" name="studentids_raw" value="<?php echo s(implode(', ', $studentids)); ?>"><input type="hidden" name="title" value="<?php echo s($title); ?>"><input type="hidden" name="lessonid" value="<?php echo s($lessonid); ?>"><input type="hidden" name="unitid" value="<?php echo s($unitid); ?>"><input type="hidden" name="sessiondate" value="<?php echo s($sessiondate); ?>"><input type="hidden" name="sessiontime" value="<?php echo s($sessiontime); ?>"><input type="hidden" name="duration" value="<?php echo (int)$duration; ?>"><input type="hidden" name="recurrence_pattern" value="<?php echo s($pattern); ?>"><input type="hidden" name="recurrence_count" value="<?php echo (int)$count; ?>"><input type="hidden" name="recurrence_until" value="<?php echo s($untilraw); ?>"><input type="hidden" name="recording_enabled" value="1"><?php foreach ($weekdays as $day): ?><input type="hidden" name="recurrence_weekdays[]" value="<?php echo (int)$day; ?>"><?php endforeach; ?><?php if ($conflictcount > 0 && $pqlswisadmin): ?><div class="pqlsw-card"><h3>Admin Conflict Override</h3><label class="pqlsw-check"><input type="checkbox" name="override_conflicts" value="1"> <span>Override conflicts with audit reason</span></label><div class="pqlsw-field"><label for="override_reason">Override Reason</label><input class="pqlsw-input" id="override_reason" name="override_reason" type="text" placeholder="Required if overriding conflicts"></div></div><?php elseif ($conflictcount > 0): ?><div class="pqlsw-alert pqlsw-alert--bad">Resolve the scheduling conflicts before submitting this series.</div><?php endif; ?><div class="pqlsw-actions pqh-workspace-actions"><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $params + ['step' => 5]))->out(false); ?>">Back</a><button class="pqlsw-btn" type="submit" <?php echo $conflictcount > 0 && !$pqlswisadmin ? 'disabled' : ''; ?>>Create recurring series</button></div></form>
     <?php endif; ?>
   </section>
 </div></main>

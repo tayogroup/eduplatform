@@ -39,6 +39,20 @@ function pqlt_table_exists(string $table): bool {
     return $DB->get_manager()->table_exists($table);
 }
 
+function pqlt_table_has_field(string $table, string $field): bool {
+    global $DB;
+    return pqlt_table_exists($table) && $DB->get_manager()->field_exists($table, $field);
+}
+
+function pqlt_apply_record_fields(string $table, stdClass $record, array $values): stdClass {
+    foreach ($values as $field => $value) {
+        if (pqlt_table_has_field($table, $field)) {
+            $record->{$field} = $value;
+        }
+    }
+    return $record;
+}
+
 function pqlt_parent_can_access_child(int $parentid, int $studentid): bool {
     global $DB;
 
@@ -271,29 +285,71 @@ function pqlt_sessions(int $studentid): array {
     ));
 }
 
-function pqlt_consent_status(int $studentid, int $guardianid, array $types): string {
+function pqlt_consent_record(int $studentid, int $guardianid, array $types): ?stdClass {
     global $DB;
     if (!pqlt_table_exists('local_prequran_live_consent')) {
-        return 'Not recorded in system yet';
+        return null;
     }
 
     [$insql, $params] = $DB->get_in_or_equal($types, SQL_PARAMS_NAMED);
     $params['studentid'] = $studentid;
-    $params['guardianid'] = $guardianid;
+    $guardiansql = '';
+    if ($guardianid > 0) {
+        $params['guardianid'] = $guardianid;
+        $guardiansql = ' AND guardianid = :guardianid';
+    }
+    $ordersql = $guardianid > 0 ? 'timemodified DESC' : 'granted DESC, timemodified DESC';
     $record = $DB->get_record_sql(
         "SELECT *
            FROM {local_prequran_live_consent}
           WHERE studentid = :studentid
-            AND guardianid = :guardianid
+            {$guardiansql}
             AND consent_type {$insql}
-       ORDER BY timemodified DESC",
+       ORDER BY {$ordersql}",
         $params,
         IGNORE_MULTIPLE
     );
+    return $record ?: null;
+}
+
+function pqlt_consent_status(int $studentid, int $guardianid, array $types): string {
+    $record = pqlt_consent_record($studentid, $guardianid, $types);
     if (!$record) {
         return 'Not recorded in system yet';
     }
     return !empty($record->granted) ? 'Granted' : 'Not granted';
+}
+
+function pqlt_save_parent_consent(int $studentid, int $guardianid, int $workspaceid, string $type, int $granted): void {
+    global $DB;
+    if (!pqlt_table_exists('local_prequran_live_consent')) {
+        throw new invalid_parameter_exception('Live consent storage is not ready. Please ask support to run the Moodle upgrade.');
+    }
+
+    $now = time();
+    $existing = $DB->get_record('local_prequran_live_consent', [
+        'studentid' => $studentid,
+        'guardianid' => $guardianid,
+        'consent_type' => $type,
+    ], '*', IGNORE_MISSING);
+    $record = $existing ? (object)['id' => (int)$existing->id] : new stdClass();
+    $record = pqlt_apply_record_fields('local_prequran_live_consent', $record, [
+        'workspaceid' => $workspaceid,
+        'studentid' => $studentid,
+        'guardianid' => $guardianid,
+        'consent_type' => $type,
+        'granted' => $granted,
+        'version' => '1',
+        'consent_source' => 'parent_trust_center',
+        'details' => json_encode(['actorid' => $guardianid, 'source' => 'parent_trust_center']),
+        'timemodified' => $now,
+    ]);
+    if ($existing) {
+        $DB->update_record('local_prequran_live_consent', $record);
+        return;
+    }
+    $record = pqlt_apply_record_fields('local_prequran_live_consent', $record, ['timecreated' => $now]);
+    $DB->insert_record('local_prequran_live_consent', $record);
 }
 
 $modechildren = [];
@@ -324,11 +380,52 @@ if ($childid > 0 && !pqlt_user_can_access_child((int)$USER->id, $childid)) {
     );
 }
 
+$islinkedparent = $childid > 0
+    && (int)$USER->id !== $childid
+    && !is_siteadmin((int)$USER->id)
+    && pqlt_parent_can_access_child((int)$USER->id, $childid);
+$notice = '';
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This consent form expired. Please reload the page and try again.');
+        }
+        if (optional_param('action', '', PARAM_ALPHANUMEXT) !== 'save_parent_consent' || !$islinkedparent) {
+            throw new invalid_parameter_exception('Only a linked parent or legal guardian can update consent for this student.');
+        }
+        if (!optional_param('guardian_confirmation', 0, PARAM_BOOL)) {
+            throw new invalid_parameter_exception('Confirm that you are the student\'s parent or legal guardian.');
+        }
+        $livechoice = required_param('live_consent', PARAM_ALPHA);
+        $recordingchoice = required_param('recording_consent', PARAM_ALPHA);
+        if (!in_array($livechoice, ['grant', 'decline'], true)
+            || !in_array($recordingchoice, ['grant', 'decline'], true)) {
+            throw new invalid_parameter_exception('Choose Grant or Decline for both consent decisions.');
+        }
+
+        $transaction = $DB->start_delegated_transaction();
+        pqlt_save_parent_consent($childid, (int)$USER->id, $workspaceid, 'live_session', $livechoice === 'grant' ? 1 : 0);
+        pqlt_save_parent_consent($childid, (int)$USER->id, $workspaceid, 'recording', $recordingchoice === 'grant' ? 1 : 0);
+        pqh_live_security_audit('parent_live_consent_updated', 'student', $childid, [
+            'live_session' => $livechoice,
+            'recording' => $recordingchoice,
+        ]);
+        $transaction->allow_commit();
+        $notice = 'Your consent choices were saved.';
+    } catch (Throwable $e) {
+        $error = $e->getMessage();
+    }
+}
+
 $child = $childid > 0 ? core_user::get_user($childid) : null;
 $childname = $child ? fullname($child) : ($childid > 0 ? 'Student ' . $childid : 'your student');
 $sessions = $childid > 0 ? pqlt_sessions($childid) : [];
-$liveconsent = $childid > 0 ? pqlt_consent_status($childid, (int)$USER->id, ['live_session']) : '';
-$recordingconsent = $childid > 0 ? pqlt_consent_status($childid, (int)$USER->id, ['recording', 'live_recording', 'live_session_recording']) : '';
+$consentguardianid = $islinkedparent ? (int)$USER->id : 0;
+$liveconsentrecord = $childid > 0 ? pqlt_consent_record($childid, $consentguardianid, ['live_session']) : null;
+$recordingconsentrecord = $childid > 0 ? pqlt_consent_record($childid, $consentguardianid, ['recording', 'live_recording', 'live_session_recording']) : null;
+$liveconsent = $liveconsentrecord ? (!empty($liveconsentrecord->granted) ? 'Granted' : 'Not granted') : 'Not recorded in system yet';
+$recordingconsent = $recordingconsentrecord ? (!empty($recordingconsentrecord->granted) ? 'Granted' : 'Not granted') : 'Not recorded in system yet';
 $completed = 0;
 $published = 0;
 $recordingenabled = 0;
@@ -377,10 +474,21 @@ body.pqh-live-trust-page{background:#f4f7fb!important}
 .pqlt-stat span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:850}
 .pqlt-panel{margin-bottom:16px;padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
 .pqlt-panel h2{margin:0 0 10px;color:#4d3522;font-size:20px;font-weight:950}
+.pqlt-alert{margin-bottom:16px;padding:13px 15px;border-radius:10px;font-size:14px;font-weight:850}
+.pqlt-alert--ok{background:#eaffea;color:#2f6f4e;border:1px solid rgba(47,111,78,.18)}
+.pqlt-alert--bad{background:#fff0ed;color:#8a342b;border:1px solid rgba(138,52,43,.18)}
 .pqlt-policy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .pqlt-policy div{padding:14px;border-radius:12px;background:#f8fbf6;border:1px solid rgba(111,78,50,.10)}
 .pqlt-policy strong{display:block;margin-bottom:5px;color:#4d3522;font-size:13px;font-weight:950;text-transform:uppercase}
 .pqlt-policy p{margin:0;color:#40586a;font-size:14px;font-weight:700;line-height:1.45}
+.pqlt-consent-form{margin-top:16px;padding-top:16px;border-top:1px solid rgba(111,78,50,.13)}
+.pqlt-consent-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pqlt-consent-choice{margin:0;padding:14px;border:1px solid rgba(111,78,50,.13);border-radius:10px;background:#fbfdf9}
+.pqlt-consent-choice legend{padding:0 5px;color:#4d3522;font-size:14px;font-weight:950}
+.pqlt-consent-choice label,.pqlt-confirm{display:flex;align-items:flex-start;gap:8px;color:#40586a;font-size:14px;font-weight:750;line-height:1.4}
+.pqlt-consent-choice label+label{margin-top:9px}
+.pqlt-confirm{margin:14px 0}
+.pqlt-consent-note{margin:0 0 12px;color:#64745a;font-size:13px;font-weight:700;line-height:1.45}
 .pqlt-list{display:grid;gap:12px}
 .pqlt-card{padding:16px;border-radius:12px;background:#fff;border:1px solid rgba(23,48,68,.12)}
 .pqlt-card__head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px}
@@ -395,7 +503,7 @@ body.pqh-live-trust-page{background:#f4f7fb!important}
 .pqlt-student{padding:16px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07);text-decoration:none;color:#4d3522!important;font-weight:950}
 .pqlt-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
 @media(max-width:860px){.pqlt-top{display:block}.pqlt-actions{margin-top:14px}.pqlt-grid,.pqlt-policy{grid-template-columns:1fr 1fr}.pqlt-title{font-size:25px}}
-@media(max-width:560px){.pqlt-grid,.pqlt-policy{grid-template-columns:1fr}.pqlt-card__head{display:block}}
+@media(max-width:560px){.pqlt-grid,.pqlt-policy,.pqlt-consent-grid{grid-template-columns:1fr}.pqlt-card__head{display:block}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqlt-shell">
@@ -414,6 +522,9 @@ body.pqh-live-trust-page{background:#f4f7fb!important}
         <a class="pqlt-btn" href="<?php echo pqlt_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Dashboard</a>
       </div>
     </section>
+
+    <?php if ($notice !== ''): ?><div class="pqlt-alert pqlt-alert--ok" role="status"><?php echo s($notice); ?></div><?php endif; ?>
+    <?php if ($error !== ''): ?><div class="pqlt-alert pqlt-alert--bad" role="alert"><?php echo s($error); ?></div><?php endif; ?>
 
     <?php if ($childid <= 0): ?>
       <?php if ($modechildren): ?>
@@ -452,6 +563,31 @@ body.pqh-live-trust-page{background:#f4f7fb!important}
             <p>Parents see attendance and approved summaries only. Private teacher notes stay hidden.</p>
           </div>
         </div>
+        <?php if ($islinkedparent): ?>
+          <form class="pqlt-consent-form" method="post">
+            <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+            <input type="hidden" name="action" value="save_parent_consent">
+            <p class="pqlt-consent-note">Your choices apply to future live sessions. Recording consent permits session recording when the institution enables it; recordings remain unavailable to families until they are reviewed and published.</p>
+            <div class="pqlt-consent-grid">
+              <fieldset class="pqlt-consent-choice">
+                <legend>Live class participation</legend>
+                <label><input type="radio" name="live_consent" value="grant" required <?php echo $liveconsentrecord && !empty($liveconsentrecord->granted) ? 'checked' : ''; ?>> <span>Grant consent</span></label>
+                <label><input type="radio" name="live_consent" value="decline" required <?php echo $liveconsentrecord && empty($liveconsentrecord->granted) ? 'checked' : ''; ?>> <span>Decline consent</span></label>
+              </fieldset>
+              <fieldset class="pqlt-consent-choice">
+                <legend>Live-session recording</legend>
+                <label><input type="radio" name="recording_consent" value="grant" required <?php echo $recordingconsentrecord && !empty($recordingconsentrecord->granted) ? 'checked' : ''; ?>> <span>Grant consent</span></label>
+                <label><input type="radio" name="recording_consent" value="decline" required <?php echo $recordingconsentrecord && empty($recordingconsentrecord->granted) ? 'checked' : ''; ?>> <span>Decline consent</span></label>
+              </fieldset>
+            </div>
+            <label class="pqlt-confirm"><input type="checkbox" name="guardian_confirmation" value="1" required> <span>I confirm that I am <?php echo s($childname); ?>'s parent or legal guardian and that these are my consent decisions.</span></label>
+            <button class="pqlt-btn" type="submit">Save consent choices</button>
+          </form>
+        <?php else: ?>
+          <div class="pqlt-alert pqlt-alert--bad" style="margin:16px 0 0">
+            This is a read-only view. Consent can be completed only after <?php echo s($childname); ?>'s linked parent or legal guardian signs in to their own account and opens Dashboard &gt; Trust Center.
+          </div>
+        <?php endif; ?>
       </section>
 
       <section class="pqlt-panel">

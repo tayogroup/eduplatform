@@ -34,12 +34,22 @@ $dashboardurl = new moodle_url($dashboardpath, $params);
 $roleurl = new moodle_url('/local/hubredirect/role_redirect.php', $params);
 $landingpath = $consumertype === 'platform_foundation' ? '/local/hubredirect/platform_landing.php' : '/local/hubredirect/consumer_landing.php';
 $landingurl = new moodle_url($landingpath, $params);
+$wantsurl = optional_param('wantsurl', '', PARAM_LOCALURL);
+if ($wantsurl === '' && !empty($SESSION->wantsurl)) {
+    $wantsurl = clean_param((string)$SESSION->wantsurl, PARAM_LOCALURL);
+}
+$destinationurl = $wantsurl !== '' ? new moodle_url($wantsurl) : $roleurl;
 $loginurl = new moodle_url('/login/index.php', [
     'consumer' => $slug,
-    'wantsurl' => $roleurl->out(false),
+    'wantsurl' => $destinationurl->out(false),
 ]);
 $forgoturl = new moodle_url('/login/forgot_password.php');
 $sessionexpired = optional_param('sessionexpired', 0, PARAM_BOOL);
+$intent = optional_param('intent', '', PARAM_ALPHANUMEXT);
+
+if ($consumertype === 'platform_foundation' && $intent !== 'login' && $wantsurl === '') {
+    redirect($landingurl);
+}
 
 if ($consumertype === 'platform_foundation') {
     $kicker = 'Platform foundation';
@@ -71,7 +81,7 @@ if ($consumertype === 'platform_foundation') {
 }
 
 if (isloggedin() && !isguestuser()) {
-    redirect($roleurl);
+    redirect($destinationurl);
 }
 
 $PAGE->set_context(context_system::instance());
@@ -155,7 +165,7 @@ body.pqh-consumer-login-page .main-inner{margin:0!important;padding:0!important;
       <?php endif; ?>
       <form class="pqhlogin-form" action="<?php echo $loginurl->out(false); ?>" method="post">
         <input type="hidden" name="logintoken" value="<?php echo s(\core\session\manager::get_login_token()); ?>">
-        <input type="hidden" name="wantsurl" value="<?php echo s($roleurl->out(false)); ?>">
+        <input type="hidden" name="wantsurl" value="<?php echo s($destinationurl->out(false)); ?>">
         <input type="hidden" name="consumer" value="<?php echo s($slug); ?>">
         <div class="pqhlogin-field">
           <label for="pqhlogin-username">Username</label>

@@ -12,17 +12,25 @@
 
   'use strict';
 
+  function pqDefaultMoodleOrigin() {
+    try {
+      if (window.__prequran_moodle_origin) return new URL(window.__prequran_moodle_origin).origin;
+      if (document.referrer) return new URL(document.referrer).origin;
+    } catch (_e) {}
+    return window.location.origin;
+  }
+
   const CFG = {
     id: 'pqHeaderUtilitiesBar',
     styleId: 'pqHeaderUtilitiesStyle',
     toastId: 'pqInboxToast',
 
-    inboxHref: 'https://quraan.academy/local/hubredirect/communications.php',
+    inboxHref: pqDefaultMoodleOrigin() + '/local/hubredirect/communications.php',
     label: 'Messages',
     labelAr: 'الرسائل',
     icon: '📩',
 
-    wsEndpointDefault: 'https://quraan.academy/webservice/rest/server.php',
+    wsEndpointDefault: pqDefaultMoodleOrigin() + '/webservice/rest/server.php',
     wsListThreads: 'local_prequran_comm_list_threads',
 
     pollMsVisible: 30000,

@@ -21,6 +21,11 @@ $returnurl = new moodle_url(
     $workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php',
     $urlparams
 );
+$templatevariant = strtolower(trim(optional_param('lang', optional_param('templatevariant', 'en', PARAM_ALPHA), PARAM_ALPHA)));
+if (!in_array($templatevariant, ['ar', 'en'], true)) {
+    $templatevariant = 'en';
+}
+$template = pqh_live_session_agenda_template_variant($templatevariant);
 
 function pqlsat_can_download(int $userid): bool {
     if (pqh_can_manage_academy_operations($userid)) {
@@ -68,7 +73,7 @@ function pqlsat_fetch_with_curl(string $url, array $headers = []): ?string {
     return (string)$bytes;
 }
 
-function pqlsat_fetch_from_bunny_storage(): ?string {
+function pqlsat_fetch_from_bunny_storage(array $template): ?string {
     $zone = trim((string)get_config('local_prequran', 'bunny_storage_zone'));
     $host = trim((string)get_config('local_prequran', 'bunny_storage_host'));
     $accesskey = trim((string)get_config('local_prequran', 'bunny_storage_access_key'));
@@ -78,7 +83,10 @@ function pqlsat_fetch_from_bunny_storage(): ?string {
     if ($host === '') {
         $host = 'storage.bunnycdn.com';
     }
-    $path = 'pre_quraan/live-session-templates/live-session-agenda-template.pptx';
+    $path = trim((string)get_config('local_prequran', (string)$template['configkey']));
+    if ($path === '') {
+        $path = (string)$template['path'];
+    }
     $url = 'https://' . $host . '/' . rawurlencode($zone) . '/' . pqlsat_encode_storage_path($path);
     return pqlsat_fetch_with_curl($url, ['AccessKey: ' . $accesskey]);
 }
@@ -91,9 +99,12 @@ if (!pqlsat_can_download((int)$USER->id)) {
     );
 }
 
-$bytes = pqlsat_fetch_from_bunny_storage();
+$bytes = pqlsat_fetch_from_bunny_storage($template);
 if ($bytes === null) {
-    $bytes = pqlsat_fetch_with_curl(pqh_live_session_agenda_template_source_url()->out(false));
+    $bytes = pqlsat_fetch_with_curl(pqh_live_session_agenda_template_source_url($templatevariant)->out(false));
+}
+if ($bytes === null) {
+    $bytes = pqh_live_session_agenda_local_template_bytes((string)$template['localfile']);
 }
 if ($bytes === null) {
     pqh_access_denied(
@@ -107,7 +118,7 @@ while (ob_get_level() > 0) {
     ob_end_clean();
 }
 
-$filename = 'Live Session Agenda template.pptx';
+$filename = (string)$template['filename'];
 header('Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation');
 header('Content-Length: ' . strlen($bytes));
 header('Content-Disposition: attachment; filename="' . $filename . '"');

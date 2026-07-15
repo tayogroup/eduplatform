@@ -38,12 +38,153 @@ function pqtma_user_name(int $userid): string {
     return $user ? fullname($user) : ($userid > 0 ? 'User ' . $userid : 'Not selected');
 }
 
+function pqtma_live_session_student_names(int $sessionid): array {
+    global $DB;
+    if ($sessionid <= 0 || !pqtma_table_exists('local_prequran_live_participant')) {
+        return [];
+    }
+    $rows = $DB->get_records('local_prequran_live_participant', [
+        'sessionid' => $sessionid,
+        'role' => 'student',
+        'status' => 'active',
+    ], 'id ASC', 'id,userid');
+    $names = [];
+    foreach ($rows as $row) {
+        $studentid = (int)$row->userid;
+        if ($studentid > 0) {
+            $names[$studentid] = pqtma_user_name($studentid);
+        }
+    }
+    return array_values($names);
+}
+
 function pqtma_short(string $value, int $max = 120): string {
     $value = trim($value);
     if (core_text::strlen($value) <= $max) {
         return $value;
     }
     return core_text::substr($value, 0, $max) . '...';
+}
+
+function pqtma_application(stdClass $profile): array {
+    $decoded = json_decode((string)($profile->application_json ?? ''), true);
+    return is_array($decoded) ? $decoded : [];
+}
+
+function pqtma_marketing_draft(stdClass $profile): array {
+    $application = pqtma_application($profile);
+    $draft = $application['marketplace_marketing_draft'] ?? [];
+    if (!is_array($draft)) {
+        return [];
+    }
+    $lastreview = $application['marketplace_marketing_last_review'] ?? [];
+    if ($draft && is_array($lastreview)
+            && in_array((string)($lastreview['status'] ?? ''), ['approved', 'published'], true)) {
+        $approved = [
+            'display_name' => (string)($profile->teacher_display_name ?? ''),
+            'bio' => (string)($profile->marketplace_bio ?? ''),
+            'skills' => (string)($profile->marketplace_skills ?? ''),
+            'experience' => (string)($profile->marketplace_experience ?? ''),
+            'education' => (string)($profile->marketplace_education ?? ''),
+            'teaching_style' => (string)($profile->marketplace_teaching_style ?? ''),
+            'services' => (string)($profile->marketplace_courses ?? ''),
+            'social_media_handle' => (string)($application['social_media_handle'] ?? ''),
+            'social_profile_url' => (string)($application['social_profile_url'] ?? ''),
+            'website_or_booking_url' => (string)($application['website_or_booking_url'] ?? ''),
+            'demo_video_url' => (string)($application['demo_video_url'] ?? ''),
+            'learner_outcomes' => (string)($application['learner_outcomes'] ?? ''),
+            'curriculum_materials' => (string)($application['curriculum_materials'] ?? ''),
+            'pricing_summary' => (string)($application['pricing_summary'] ?? ''),
+        ];
+        $matches = true;
+        foreach ($approved as $field => $value) {
+            if (trim((string)($draft[$field] ?? '')) !== trim($value)) {
+                $matches = false;
+                break;
+            }
+        }
+        if ($matches) {
+            return [];
+        }
+    }
+    return $draft;
+}
+
+function pqtma_public_url(string $value): string {
+    $value = trim($value);
+    if (!filter_var($value, FILTER_VALIDATE_URL)) {
+        return '';
+    }
+    return in_array(strtolower((string)parse_url($value, PHP_URL_SCHEME)), ['http', 'https'], true) ? $value : '';
+}
+
+function pqtma_marketing_preference_key(int $consumerid): string {
+    return 'local_hubredirect_mktstatus_' . max(0, $consumerid);
+}
+
+function pqtma_apply_approved_marketing(stdClass $profile, array $draft, string $reviewnote, int $reviewerid, int $now): stdClass {
+    $application = pqtma_application($profile);
+    $profile->teacher_display_name = (string)($draft['display_name'] ?? $profile->teacher_display_name);
+    $profile->marketplace_bio = (string)($draft['bio'] ?? '');
+    $profile->marketplace_skills = (string)($draft['skills'] ?? '');
+    $profile->marketplace_experience = (string)($draft['experience'] ?? '');
+    $profile->marketplace_education = (string)($draft['education'] ?? '');
+    $profile->marketplace_teaching_style = (string)($draft['teaching_style'] ?? '');
+    $profile->marketplace_courses = (string)($draft['services'] ?? '');
+    $profile->marketplace_status = 'published';
+    $profile->marketplace_visible = 1;
+    foreach ([
+        'social_media_handle',
+        'social_profile_url',
+        'website_or_booking_url',
+        'demo_video_url',
+        'learner_outcomes',
+        'curriculum_materials',
+        'pricing_summary',
+    ] as $field) {
+        $application[$field] = (string)($draft[$field] ?? '');
+    }
+    $application['marketplace_marketing_last_review'] = [
+        'status' => 'approved',
+        'reviewed_by' => $reviewerid,
+        'reviewed_at' => $now,
+        'review_note' => $reviewnote,
+    ];
+    unset($application['marketplace_marketing_draft']);
+    $profile->application_json = json_encode($application, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $profile->timemodified = $now;
+    return $profile;
+}
+
+function pqtma_sync_approved_marketing(stdClass $approvedprofile, array $draft, string $reviewnote, int $now): void {
+    global $DB, $USER;
+    $conditions = ['userid' => (int)$approvedprofile->userid];
+    if (pqtma_column_exists('local_prequran_teacher_profile', 'consumerid')) {
+        $conditions['consumerid'] = (int)($approvedprofile->consumerid ?? 0);
+    }
+    foreach ($DB->get_records('local_prequran_teacher_profile', $conditions) as $profile) {
+        if ((int)$profile->id === (int)$approvedprofile->id || (string)($profile->status ?? '') !== 'active') {
+            continue;
+        }
+        $profile = pqtma_apply_approved_marketing($profile, $draft, $reviewnote, (int)$USER->id, $now);
+        $DB->update_record('local_prequran_teacher_profile', $profile);
+    }
+}
+
+function pqtma_audit(string $action, int $profileid, array $details = []): void {
+    global $DB, $USER;
+    if (!pqtma_table_exists('local_prequran_live_audit')) {
+        return;
+    }
+    $DB->insert_record('local_prequran_live_audit', (object)[
+        'sessionid' => 0,
+        'actorid' => (int)$USER->id,
+        'action' => $action,
+        'targettype' => 'teacher_profile',
+        'targetid' => $profileid,
+        'details' => json_encode($details, JSON_UNESCAPED_SLASHES),
+        'timecreated' => time(),
+    ]);
 }
 
 function pqtma_schedule_title(stdClass $request): string {
@@ -105,9 +246,10 @@ function pqtma_student_workspace_url(stdClass $request, array $contextparams = [
 
 function pqtma_request_statuses(): array {
     return [
+        'enrollment_submitted' => 'Enrollment submitted',
         'new' => 'New message',
         'selection_requested' => 'Selection requested',
-        'academy_review' => 'Academy review',
+        'academy_review' => 'Platform review',
         'teacher_contacted' => 'Teacher contacted',
         'parent_confirmed' => 'Parent confirmed',
         'matched' => 'Matched',
@@ -136,8 +278,37 @@ function pqtma_quick_request_statuses(): array {
     ];
 }
 
+function pqtma_request_transition_allowed(string $from, string $to): bool {
+    if ($from === $to) {
+        return true;
+    }
+    if ($from === 'assigned') {
+        return $to === 'closed';
+    }
+    if (in_array($from, ['closed', 'declined'], true)) {
+        return $to === 'academy_review';
+    }
+    return true;
+}
+
+function pqtma_quick_request_statuses_for(string $status): array {
+    if ($status === 'assigned') {
+        return ['closed' => 'Close'];
+    }
+    if (in_array($status, ['closed', 'declined'], true)) {
+        return ['academy_review' => 'Reopen review'];
+    }
+    return pqtma_quick_request_statuses();
+}
+
 function pqtma_assignment_workspaceid(stdClass $request): int {
     global $DB;
+
+    foreach (pqh_independent_teacher_workspace_ids((int)$request->teacherid) as $workspaceid) {
+        if ($workspaceid > 0) {
+            return (int)$workspaceid;
+        }
+    }
 
     if (pqtma_column_exists('local_prequran_teacher_request', 'consumerid') && !empty($request->consumerid)
         && pqtma_table_exists('local_prequran_consumer')) {
@@ -155,14 +326,40 @@ function pqtma_assignment_workspaceid(stdClass $request): int {
         }
     }
 
-    if (pqtma_table_exists('local_prequran_workspace')) {
-        $workspaceid = (int)$DB->get_field('local_prequran_workspace', 'id', ['slug' => 'quraan-academy'], IGNORE_MISSING);
-        if ($workspaceid > 0) {
-            return $workspaceid;
-        }
+    return 0;
+}
+
+function pqtma_upsert_workspace_member(int $workspaceid, int $userid, string $role, string $note): void {
+    global $DB, $USER;
+    if ($workspaceid <= 0 || $userid <= 0 || !pqtma_table_exists('local_prequran_workspace_member')) {
+        return;
     }
 
-    return 0;
+    $now = time();
+    $conditions = [
+        'workspaceid' => $workspaceid,
+        'userid' => $userid,
+        'workspace_role' => $role,
+    ];
+    $existing = $DB->get_record('local_prequran_workspace_member', $conditions, '*', IGNORE_MISSING);
+    if ($existing) {
+        $existing->status = 'active';
+        $existing->notes = trim((string)($existing->notes ?? '')) !== '' ? $existing->notes : $note;
+        $existing->timemodified = $now;
+        $DB->update_record('local_prequran_workspace_member', $existing);
+        return;
+    }
+
+    $DB->insert_record('local_prequran_workspace_member', (object)[
+        'workspaceid' => $workspaceid,
+        'userid' => $userid,
+        'workspace_role' => $role,
+        'status' => 'active',
+        'notes' => $note,
+        'createdby' => (int)$USER->id,
+        'timecreated' => $now,
+        'timemodified' => $now,
+    ]);
 }
 
 function pqtma_assign_teacher_request(stdClass $request): int {
@@ -177,12 +374,17 @@ function pqtma_assign_teacher_request(stdClass $request): int {
     if ((int)$request->studentid <= 0) {
         throw new invalid_parameter_exception('Assignment requires a linked student. Create/link a student intake first, then assign again.');
     }
+    if ((int)$request->parentid > 0
+            && !in_array((string)$request->request_status, ['parent_confirmed', 'matched', 'assigned'], true)) {
+        throw new invalid_parameter_exception('The linked parent or guardian must confirm this connection before assignment.');
+    }
 
     $workspaceid = pqtma_assignment_workspaceid($request);
     if ($workspaceid <= 0) {
         throw new invalid_parameter_exception('Could not resolve a workspace for this assignment.');
     }
 
+    $transaction = $DB->start_delegated_transaction();
     $now = time();
     $conditions = [
         'workspaceid' => $workspaceid,
@@ -190,13 +392,6 @@ function pqtma_assign_teacher_request(stdClass $request): int {
         'studentid' => (int)$request->studentid,
     ];
     $existing = $DB->get_record('local_prequran_teacher_student', $conditions, '*', IGNORE_MISSING);
-    if (!$existing) {
-        $existing = $DB->get_record('local_prequran_teacher_student', [
-            'teacherid' => (int)$request->teacherid,
-            'studentid' => (int)$request->studentid,
-        ], '*', IGNORE_MISSING);
-    }
-
     $record = (object)[
         'workspaceid' => $workspaceid,
         'teacherid' => (int)$request->teacherid,
@@ -210,11 +405,20 @@ function pqtma_assign_teacher_request(stdClass $request): int {
         $record->id = (int)$existing->id;
         $record->timecreated = (int)$existing->timecreated;
         $DB->update_record('local_prequran_teacher_student', $record);
-        return (int)$existing->id;
+        $assignmentid = (int)$existing->id;
+    } else {
+        $record->timecreated = $now;
+        $assignmentid = (int)$DB->insert_record('local_prequran_teacher_student', $record);
     }
 
-    $record->timecreated = $now;
-    return (int)$DB->insert_record('local_prequran_teacher_student', $record);
+    pqtma_upsert_workspace_member($workspaceid, (int)$request->teacherid, 'teacher', 'Independent teacher assignment approved by marketplace operations.');
+    pqtma_upsert_workspace_member($workspaceid, (int)$request->studentid, 'student', 'Student connection approved by marketplace operations.');
+    if ((int)$request->parentid > 0) {
+        pqtma_upsert_workspace_member($workspaceid, (int)$request->parentid, 'parent', 'Guardian linked through approved teacher-student connection.');
+    }
+
+    $transaction->allow_commit();
+    return $assignmentid;
 }
 
 $context = context_system::instance();
@@ -246,6 +450,94 @@ $ready = pqtma_ready();
 $message = '';
 $error = '';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('marketing_action', '', PARAM_ALPHANUMEXT) !== '') {
+    try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This marketing review form expired. Please refresh and try again.');
+        }
+        $action = optional_param('marketing_action', '', PARAM_ALPHANUMEXT);
+        if (!in_array($action, ['approve', 'reject'], true)) {
+            throw new invalid_parameter_exception('Choose a valid marketing review action.');
+        }
+        $profileid = optional_param('profileid', 0, PARAM_INT);
+        $profile = $profileid > 0 ? $DB->get_record('local_prequran_teacher_profile', ['id' => $profileid], '*', IGNORE_MISSING) : false;
+        if (!$profile) {
+            throw new invalid_parameter_exception('Choose a valid teacher marketing profile.');
+        }
+        if ($consumerfilterid > 0 && pqtma_column_exists('local_prequran_teacher_profile', 'consumerid')
+                && (int)$profile->consumerid !== $consumerfilterid) {
+            throw new invalid_parameter_exception('This marketing profile does not belong to the selected consumer.');
+        }
+        $application = pqtma_application($profile);
+        $draft = pqtma_marketing_draft($profile);
+        if (!$draft || (string)($draft['review_status'] ?? '') !== 'pending_review') {
+            throw new invalid_parameter_exception('This teacher has no pending marketing update.');
+        }
+        $reviewnote = trim(optional_param('marketing_review_note', '', PARAM_TEXT));
+        $now = time();
+        $auditaction = '';
+        if ($action === 'approve') {
+            if ((string)$profile->status !== 'active' || (string)$profile->vetting_status !== 'approved') {
+                throw new invalid_parameter_exception('Only active, vetted teachers can publish marketing profiles.');
+            }
+            $profile->teacher_display_name = (string)($draft['display_name'] ?? $profile->teacher_display_name);
+            $profile->marketplace_bio = (string)($draft['bio'] ?? '');
+            $profile->marketplace_skills = (string)($draft['skills'] ?? '');
+            $profile->marketplace_experience = (string)($draft['experience'] ?? '');
+            $profile->marketplace_education = (string)($draft['education'] ?? '');
+            $profile->marketplace_teaching_style = (string)($draft['teaching_style'] ?? '');
+            $profile->marketplace_courses = (string)($draft['services'] ?? '');
+            $profile->marketplace_status = 'published';
+            $profile->marketplace_visible = 1;
+            foreach ([
+                'social_media_handle',
+                'social_profile_url',
+                'website_or_booking_url',
+                'demo_video_url',
+                'learner_outcomes',
+                'curriculum_materials',
+                'pricing_summary',
+            ] as $field) {
+                $application[$field] = (string)($draft[$field] ?? '');
+            }
+            $application['marketplace_marketing_last_review'] = [
+                'status' => 'approved',
+                'reviewed_by' => (int)$USER->id,
+                'reviewed_at' => $now,
+                'review_note' => $reviewnote,
+            ];
+            unset($application['marketplace_marketing_draft']);
+            $message = 'Teacher marketing profile approved and published.';
+            $auditaction = 'teacher_marketing_approved';
+        } else {
+            $draft['review_status'] = 'rejected';
+            $draft['reviewed_by'] = (int)$USER->id;
+            $draft['reviewed_at'] = $now;
+            $draft['review_note'] = $reviewnote;
+            $application['marketplace_marketing_draft'] = $draft;
+            $message = 'Teacher marketing update returned for revision.';
+            $auditaction = 'teacher_marketing_rejected';
+        }
+        $profile->application_json = json_encode($application, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $profile->timemodified = $now;
+        $DB->update_record('local_prequran_teacher_profile', $profile);
+        if ($action === 'approve') {
+            pqtma_sync_approved_marketing($profile, $draft, $reviewnote, $now);
+        }
+        pqtma_audit($auditaction, (int)$profile->id, ['teacherid' => (int)$profile->userid, 'review_note' => $reviewnote]);
+        $preferenceconsumerid = pqtma_column_exists('local_prequran_teacher_profile', 'consumerid')
+            ? (int)($profile->consumerid ?? 0)
+            : $consumerfilterid;
+        set_user_preference(
+            pqtma_marketing_preference_key($preferenceconsumerid),
+            $action === 'approve' ? 'published' : 'rejected',
+            (int)$profile->userid
+        );
+    } catch (Throwable $e) {
+        $error = 'Marketing review failed: ' . $e->getMessage();
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('quick_update_request', '', PARAM_TEXT) === '1') {
     try {
         if (!confirm_sesskey()) {
@@ -263,6 +555,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('quick_update_reques
         $request = $requestid > 0 ? $DB->get_record('local_prequran_teacher_request', ['id' => $requestid], '*', IGNORE_MISSING) : false;
         if (!$request) {
             throw new invalid_parameter_exception('Choose a valid teacher marketplace request.');
+        }
+        if (!pqtma_request_transition_allowed((string)$request->request_status, $status)) {
+            throw new invalid_parameter_exception('That status change is not allowed from the current request state.');
         }
         if ($consumerfilterid > 0 && pqtma_column_exists('local_prequran_teacher_request', 'consumerid') && (int)$request->consumerid !== $consumerfilterid) {
             throw new invalid_parameter_exception('This request does not belong to the selected consumer.');
@@ -305,6 +600,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('update_request', ''
         if (!$request) {
             throw new invalid_parameter_exception('Choose a valid teacher marketplace request.');
         }
+        if (!pqtma_request_transition_allowed((string)$request->request_status, $status)) {
+            throw new invalid_parameter_exception('That status change is not allowed from the current request state.');
+        }
         if ($consumerfilterid > 0 && pqtma_column_exists('local_prequran_teacher_request', 'consumerid') && (int)$request->consumerid !== $consumerfilterid) {
             throw new invalid_parameter_exception('This request does not belong to the selected consumer.');
         }
@@ -332,6 +630,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('update_request', ''
 $profiles = [];
 $academyprofiles = [];
 $requests = [];
+$livesessionrequests = [];
+$marketingdrafts = [];
 if ($ready) {
     $profilewhere = '';
     $profileparams = [];
@@ -359,6 +659,7 @@ if ($ready) {
               OR tp.marketplace_education <> ''
               OR tp.marketplace_teaching_style <> ''
               OR tp.marketplace_courses <> ''
+              OR tp.application_json LIKE :marketingdraft
               OR EXISTS (
                     SELECT 1
                       FROM {local_prequran_teacher_request} tr
@@ -368,10 +669,16 @@ if ($ready) {
             )
             {$profilewhere}
        ORDER BY tp.marketplace_status DESC, tp.vetting_status ASC, tp.timemodified DESC",
-        ['draftstatus' => 'draft'] + $profileparams + $requestexistsconsumerparams,
+        ['draftstatus' => 'draft', 'marketingdraft' => '%marketplace_marketing_draft%'] + $profileparams + $requestexistsconsumerparams,
         0,
         300
     ));
+    foreach ($profiles as $profile) {
+        $draft = pqtma_marketing_draft($profile);
+        if ($draft && (string)($draft['review_status'] ?? '') === 'pending_review') {
+            $marketingdrafts[] = ['profile' => $profile, 'draft' => $draft];
+        }
+    }
     $academyprofiles = array_values($DB->get_records_sql(
         "SELECT tp.*, u.firstname, u.lastname, u.email, u.idnumber
            FROM {local_prequran_teacher_profile} tp
@@ -386,6 +693,7 @@ if ($ready) {
               OR tp.marketplace_education <> ''
               OR tp.marketplace_teaching_style <> ''
               OR tp.marketplace_courses <> ''
+              OR tp.application_json LIKE :marketingdraft
               OR EXISTS (
                     SELECT 1
                       FROM {local_prequran_teacher_request} tr
@@ -395,7 +703,7 @@ if ($ready) {
             )
             {$profilewhere}
        ORDER BY tp.vetting_status ASC, tp.timemodified DESC",
-        ['draftstatus' => 'draft'] + $profileparams + $requestexistsconsumerparams,
+        ['draftstatus' => 'draft', 'marketingdraft' => '%marketplace_marketing_draft%'] + $profileparams + $requestexistsconsumerparams,
         0,
         300
     ));
@@ -431,6 +739,30 @@ if ($ready) {
         0,
         200
     ));
+
+    if (pqtma_table_exists('local_prequran_live_session')) {
+        $livewhere = ['ls.status = :livestatus'];
+        $liveparams = ['livestatus' => 'pending_marketplace_approval'];
+        if ($consumerfilterid > 0 && pqtma_column_exists('local_prequran_teacher_profile', 'consumerid')) {
+            $livewhere[] = 'EXISTS (
+                SELECT 1
+                  FROM {local_prequran_teacher_profile} ltp
+                 WHERE ltp.userid = ls.teacherid
+                   AND ltp.consumerid = :liveconsumerid
+            )';
+            $liveparams['liveconsumerid'] = $consumerfilterid;
+        }
+        $livesessionrequests = array_values($DB->get_records_sql(
+            "SELECT ls.*, u.firstname, u.lastname, u.email, u.idnumber
+               FROM {local_prequran_live_session} ls
+               JOIN {user} u ON u.id = ls.teacherid
+              WHERE " . implode(' AND ', $livewhere) . "
+           ORDER BY ls.timecreated ASC, ls.scheduled_start ASC",
+            $liveparams,
+            0,
+            200
+        ));
+    }
 }
 
 echo $OUTPUT->header();
@@ -452,7 +784,7 @@ body.pqh-teacher-marketplace-admin-page #page,body.pqh-teacher-marketplace-admin
         <p class="pqtma-sub pqh-workspace-sub">Review publish state, vetting state, parent messages, and formal teacher selection requests.</p>
       </div>
       <div class="pqtma-actions pqh-workspace-actions">
-        <a class="pqtma-btn pqtma-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_admin.php', ['consumer' => 'edu-for-tomorrow']))->out(false); ?>">EduForTomorrow</a>
+        <?php if (!empty($consumerparams)): ?><a class="pqtma-btn pqtma-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_admin.php', $consumerparams))->out(false); ?>"><?php echo s((string)($consumercontext->consumername ?? 'Current marketplace')); ?></a><?php endif; ?>
         <a class="pqtma-btn pqtma-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_admin.php'))->out(false); ?>">All consumers</a>
         <a class="pqtma-btn pqtma-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake.php', $consumerparams))->out(false); ?>">Teacher intake</a>
         <a class="pqtma-btn pqtma-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace.php', $consumerparams))->out(false); ?>">Parent marketplace</a>
@@ -460,7 +792,7 @@ body.pqh-teacher-marketplace-admin-page #page,body.pqh-teacher-marketplace-admin
       </div>
     </section>
     <?php if ($consumercontext): ?>
-      <section class="pqtma-panel"><h2><?php echo s((string)$consumercontext->consumername); ?> Request Queue</h2><div class="pqtma-muted">Showing marketplace profiles and parent requests for <?php echo s((string)$consumercontext->consumerslug); ?>.</div></section>
+      <section class="pqtma-panel"><h2><?php echo s((string)$consumercontext->consumername); ?> Request Queue</h2><div class="pqtma-muted">Showing marketplace profiles, live session requests, and parent requests for <?php echo s((string)$consumercontext->consumerslug); ?>.</div></section>
     <?php endif; ?>
     <?php if ($message !== ''): ?><div class="pqtma-alert pqtma-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="pqtma-alert pqtma-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
@@ -468,12 +800,45 @@ body.pqh-teacher-marketplace-admin-page #page,body.pqh-teacher-marketplace-admin
       <div class="pqtma-empty">Teacher marketplace schema is not ready yet. Please run the local_prequran Moodle upgrade.</div>
     <?php else: ?>
       <section class="pqtma-panel">
+        <h2>Marketing Profile Reviews</h2>
+        <?php if (!$marketingdrafts): ?>
+          <div class="pqtma-empty">No teacher marketing profiles are waiting for review.</div>
+        <?php else: ?>
+          <table class="pqtma-table">
+            <thead><tr><th>Teacher</th><th>Profile summary</th><th>Services / pricing</th><th>Online presence</th><th>Review</th></tr></thead>
+            <tbody>
+              <?php foreach ($marketingdrafts as $item): $profile = $item['profile']; $draft = $item['draft']; ?>
+                <tr>
+                  <td><strong><?php echo s((string)($draft['display_name'] ?? pqtma_user_name((int)$profile->userid))); ?></strong><br><span class="pqtma-muted">Submitted <?php echo userdate((int)($draft['submitted_at'] ?? 0)); ?></span></td>
+                  <td><?php echo s(pqtma_short((string)($draft['bio'] ?? ''), 300)); ?></td>
+                  <td><?php echo s(pqtma_short((string)($draft['services'] ?? ''), 220)); ?><?php if (trim((string)($draft['pricing_summary'] ?? '')) !== ''): ?><br><span class="pqtma-muted"><?php echo s(pqtma_short((string)$draft['pricing_summary'], 160)); ?></span><?php endif; ?></td>
+                  <?php $draftsocialurl = pqtma_public_url((string)($draft['social_profile_url'] ?? '')); ?>
+                  <td><?php if ($draftsocialurl !== ''): ?><a href="<?php echo s($draftsocialurl); ?>" target="_blank" rel="noopener noreferrer">@<?php echo s((string)($draft['social_media_handle'] ?? 'social profile')); ?></a><?php else: ?><span class="pqtma-muted">Not provided</span><?php endif; ?></td>
+                  <td>
+                    <form method="post">
+                      <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                      <input type="hidden" name="profileid" value="<?php echo (int)$profile->id; ?>">
+                      <?php foreach ($consumerparams as $key => $value): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endforeach; ?>
+                      <textarea class="pqtma-textarea" name="marketing_review_note" placeholder="Review note"></textarea>
+                      <div class="pqtma-quick">
+                        <button class="pqtma-btn pqtma-btn--tiny" type="submit" name="marketing_action" value="approve">Approve &amp; publish</button>
+                        <button class="pqtma-btn pqtma-btn--light pqtma-btn--tiny" type="submit" name="marketing_action" value="reject">Return for revision</button>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        <?php endif; ?>
+      </section>
+      <section class="pqtma-panel">
         <h2>Marketplace Profiles</h2>
         <?php if (!$profiles): ?>
           <div class="pqtma-empty">No teacher profiles found.</div>
         <?php else: ?>
           <table class="pqtma-table">
-            <thead><tr><th>Teacher</th><th>Marketplace</th><th>Vetting</th><th>Courses / skills</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Teacher</th><th>Marketplace</th><th>Vetting</th><th>Subjects / skills</th><th>Actions</th></tr></thead>
             <tbody>
               <?php foreach ($profiles as $profile): ?>
                 <?php $published = (int)$profile->marketplace_visible === 1 && (string)$profile->marketplace_status === 'published' && (string)$profile->vetting_status === 'approved' && (string)$profile->status === 'active'; ?>
@@ -484,7 +849,7 @@ body.pqh-teacher-marketplace-admin-page #page,body.pqh-teacher-marketplace-admin
                   <td><?php echo s(pqtma_short((string)$profile->courses_taught . ' ' . (string)$profile->marketplace_skills)); ?></td>
                   <td>
                     <a class="pqtma-btn pqtma-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake.php', ['existing_teacherid' => (int)$profile->userid] + $consumerparams))->out(false); ?>">Update intake</a>
-                    <?php if ($published): ?><a class="pqtma-btn" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_profile.php', ['teacherid' => (int)$profile->userid] + $consumerparams))->out(false); ?>">View public</a><?php endif; ?>
+                    <?php if ($published): ?><a class="pqtma-btn" href="<?php echo pqh_teacher_public_profile_url($profile, $consumercontext)->out(false); ?>">View public</a><?php endif; ?>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -495,18 +860,63 @@ body.pqh-teacher-marketplace-admin-page #page,body.pqh-teacher-marketplace-admin
       <section class="pqtma-panel">
         <h2><?php echo s($pqtma_brand); ?> Teacher Vetting</h2>
         <?php if (!$academyprofiles): ?>
-          <div class="pqtma-empty">No academy teacher profiles are outside the marketplace pipeline.</div>
+          <div class="pqtma-empty">No teacher profiles are outside the marketplace pipeline.</div>
         <?php else: ?>
           <table class="pqtma-table">
-            <thead><tr><th>Teacher</th><th>Teacher status</th><th>Vetting</th><th>Courses / skills</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Teacher</th><th>Teacher status</th><th>Vetting</th><th>Subjects / levels</th><th>Actions</th></tr></thead>
             <tbody>
               <?php foreach ($academyprofiles as $profile): ?>
                 <tr>
                   <td><strong><?php echo s(trim((string)$profile->teacher_display_name) !== '' ? (string)$profile->teacher_display_name : fullname($profile)); ?></strong><br><span class="pqtma-muted"><?php echo s(pqh_account_no_label($profile)); ?> / Moodle ID <?php echo (int)$profile->userid; ?></span></td>
-                  <td><span class="pqtma-pill<?php echo (string)$profile->status === 'active' ? '' : ' pqtma-pill--warn'; ?>"><?php echo s((string)$profile->status); ?></span><br><span class="pqtma-muted">Academy teacher profile</span></td>
+                  <td><span class="pqtma-pill<?php echo (string)$profile->status === 'active' ? '' : ' pqtma-pill--warn'; ?>"><?php echo s((string)$profile->status); ?></span><br><span class="pqtma-muted">Teacher profile</span></td>
                   <td><span class="pqtma-pill<?php echo (string)$profile->vetting_status === 'approved' ? '' : ' pqtma-pill--bad'; ?>"><?php echo s((string)$profile->vetting_status); ?></span><br><?php echo s(pqtma_short((string)$profile->vetting_summary)); ?></td>
                   <td><?php echo s(pqtma_short((string)$profile->courses_taught . ' ' . (string)$profile->levels_taught)); ?></td>
                   <td><a class="pqtma-btn pqtma-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake.php', ['existing_teacherid' => (int)$profile->userid] + $consumerparams))->out(false); ?>">Update intake</a></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        <?php endif; ?>
+      </section>
+      <section class="pqtma-panel">
+        <h2>Live Session Requests</h2>
+        <?php if (!$livesessionrequests): ?>
+          <div class="pqtma-empty">No live sessions are waiting for marketplace approval.</div>
+        <?php else: ?>
+          <table class="pqtma-table">
+            <thead><tr><th>Teacher / students</th><th>Session</th><th>Schedule</th><th>Exception / status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <?php foreach ($livesessionrequests as $session): ?>
+                <?php
+                  $sessionparams = $consumerparams;
+                  if ((int)($session->workspaceid ?? 0) > 0) {
+                      $sessionparams['workspaceid'] = (int)$session->workspaceid;
+                  }
+                  $sessionurl = new moodle_url('/local/hubredirect/live_sessions.php', $sessionparams);
+                  $studentnames = pqtma_live_session_student_names((int)$session->id);
+                ?>
+                <tr>
+                  <td><strong><?php echo s(pqtma_user_name((int)$session->teacherid)); ?></strong><br><span class="pqtma-muted">Moodle ID <?php echo (int)$session->teacherid; ?></span><br>Students: <?php echo s($studentnames ? implode(', ', $studentnames) : 'Not listed'); ?></td>
+                  <td><strong><?php echo s((string)$session->title); ?></strong><br><span class="pqtma-muted"><?php echo s((string)$session->lessonid); ?> / <?php echo s((string)$session->unitid); ?></span><br>Request #<?php echo (int)$session->id; ?></td>
+                  <td><?php echo userdate((int)$session->scheduled_start); ?><br><span class="pqtma-muted"><?php echo s((string)$session->timezone); ?></span></td>
+                  <td><span class="pqtma-pill pqtma-pill--warn">Pending marketplace approval</span><?php if (trim((string)$session->description) !== ''): ?><br><?php echo s(pqtma_short((string)$session->description, 260)); ?><?php endif; ?></td>
+                  <td>
+                    <div class="pqtma-quick">
+                      <a class="pqtma-btn pqtma-btn--light pqtma-btn--tiny" href="<?php echo $sessionurl->out(false); ?>">Review</a>
+                      <form method="post" action="<?php echo $sessionurl->out(false); ?>">
+                        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                        <input type="hidden" name="action" value="approve_session">
+                        <input type="hidden" name="sessionid" value="<?php echo (int)$session->id; ?>">
+                        <button class="pqtma-btn pqtma-btn--tiny" type="submit">Approve</button>
+                      </form>
+                      <form method="post" action="<?php echo $sessionurl->out(false); ?>">
+                        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                        <input type="hidden" name="action" value="reject_session">
+                        <input type="hidden" name="sessionid" value="<?php echo (int)$session->id; ?>">
+                        <button class="pqtma-btn pqtma-btn--light pqtma-btn--tiny" type="submit">Reject</button>
+                      </form>
+                    </div>
+                  </td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
@@ -555,7 +965,7 @@ body.pqh-teacher-marketplace-admin-page #page,body.pqh-teacher-marketplace-admin
                   </td>
                   <td>
                     <div class="pqtma-quick">
-                      <?php foreach (pqtma_quick_request_statuses() as $value => $label): ?>
+                      <?php foreach (pqtma_quick_request_statuses_for((string)$request->request_status) as $value => $label): ?>
                         <?php if ((string)$request->request_status === $value): ?>
                           <?php continue; ?>
                         <?php endif; ?>
@@ -574,6 +984,9 @@ body.pqh-teacher-marketplace-admin-page #page,body.pqh-teacher-marketplace-admin
                       <?php if ($consumercontext): ?><input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>"><?php endif; ?>
                       <select class="pqtma-select" name="request_status">
                         <?php foreach (pqtma_request_statuses() as $value => $label): ?>
+                          <?php if (!pqtma_request_transition_allowed((string)$request->request_status, $value)): ?>
+                            <?php continue; ?>
+                          <?php endif; ?>
                           <option value="<?php echo s($value); ?>"<?php echo (string)$request->request_status === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option>
                         <?php endforeach; ?>
                       </select>

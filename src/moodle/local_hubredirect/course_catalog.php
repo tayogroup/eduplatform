@@ -22,7 +22,7 @@ function pqh_course_catalog(): array {
         'essential_arabic' => [
             'key' => 'essential_arabic',
             'title' => 'Essential Arabic',
-            'summary' => 'Basic Arabic reading, writing, vocabulary, and comprehension.',
+            'summary' => '',
             'status' => 'placeholder',
             'aliases' => ['essential_arabic', 'essential arabic', 'arabic essentials', 'arabic foundations', 'foundational arabic'],
         ],
@@ -166,6 +166,51 @@ function pqh_user_course_keys_from_moodle_enrolments(int $userid): array {
     return array_keys($keys);
 }
 
+function pqh_user_moodle_enrolment_courses(int $userid): array {
+    global $DB;
+
+    if ($userid <= 0) {
+        return [];
+    }
+
+    try {
+        $courses = $DB->get_records_sql(
+            "SELECT DISTINCT c.id, c.fullname, c.shortname, c.idnumber, c.summary
+               FROM {course} c
+               JOIN {enrol} e ON e.courseid = c.id
+               JOIN {user_enrolments} ue ON ue.enrolid = e.id
+              WHERE ue.userid = :userid
+                AND c.id <> :siteid
+                AND c.visible = 1
+                AND e.status = 0
+                AND ue.status = 0
+           ORDER BY c.sortorder ASC, c.fullname ASC",
+            ['userid' => $userid, 'siteid' => SITEID]
+        );
+    } catch (Throwable $e) {
+        return [];
+    }
+
+    $out = [];
+    foreach ($courses as $course) {
+        $courseid = (int)$course->id;
+        if ($courseid <= 0) {
+            continue;
+        }
+        $catalogkeys = pqh_course_catalog_moodle_matches($course);
+        $out[$courseid] = [
+            'key' => 'moodle_' . $courseid,
+            'title' => (string)($course->fullname ?: $course->shortname ?: 'Course ' . $courseid),
+            'summary' => '',
+            'course_number' => trim((string)($course->idnumber ?? '')),
+            'status' => 'live',
+            'moodlecourseid' => $courseid,
+            'catalogkeys' => $catalogkeys,
+        ];
+    }
+    return $out;
+}
+
 function pqh_user_course_keys_from_profile(int $userid): array {
     global $DB;
 
@@ -249,6 +294,18 @@ function pqh_user_courses(int $userid): array {
         if (isset($catalog[$key])) {
             $courses[$key] = $catalog[$key];
         }
+    }
+    return $courses;
+}
+
+function pqh_user_moodle_course_cards(int $userid, array $excludedcourseids = [], array $excludedcatalogkeys = []): array {
+    $excludedcourseids = array_fill_keys(array_map('intval', $excludedcourseids), true);
+    $courses = [];
+    foreach (pqh_user_moodle_enrolment_courses($userid) as $courseid => $course) {
+        if (isset($excludedcourseids[(int)$courseid])) {
+            continue;
+        }
+        $courses[(string)$course['key']] = $course;
     }
     return $courses;
 }

@@ -13,6 +13,21 @@ if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace((int)$USER->id, $works
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];
+$consumercontext = pqh_requested_consumer_context();
+$recordingdefault = in_array(strtolower(trim((string)($consumercontext->consumer_type ?? ''))), ['marketplace', 'teacher_workspace'], true)
+    || strtolower(trim((string)($workspace->workspace_type ?? ''))) === 'solo_teacher'
+    || strpos(strtolower(trim((string)($workspace->plan_code ?? ''))), 'teacher') !== false
+    || strpos(strtolower(trim((string)($workspace->plan_code ?? ''))), 'marketplace') !== false;
+if (!empty($consumercontext->consumerslug)) {
+    $urlparams['consumer'] = (string)$consumercontext->consumerslug;
+}
+
+// Keep old bookmarks working while routing users to the current live-session surfaces.
+if (!optional_param('legacy', 0, PARAM_INT)) {
+    $targetpath = $canmanage ? '/local/hubredirect/live_ops.php' : '/local/hubredirect/live_sessions.php';
+    redirect(new moodle_url($targetpath, $urlparams));
+}
+
 $notice = '';
 $error = '';
 
@@ -44,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'scheduled_end' => $start + ($duration * 60),
                 'timezone' => optional_param('timezone', 'Africa/Nairobi', PARAM_TEXT),
                 'status' => optional_param('status', 'scheduled', PARAM_ALPHANUMEXT),
-                'recording_enabled' => optional_param('recording_enabled', 0, PARAM_INT) ? 1 : 0,
+                'recording_enabled' => optional_param('recording_enabled', $recordingdefault ? 1 : 0, PARAM_INT) ? 1 : 0,
                 'recording_consent_required' => optional_param('recording_consent_required', 1, PARAM_INT) ? 1 : 0,
                 'parent_observer_allowed' => optional_param('parent_observer_allowed', 0, PARAM_INT) ? 1 : 0,
                 'max_participants' => optional_param('max_participants', 12, PARAM_INT),
@@ -149,7 +164,7 @@ echo '<div class="pqcls-grid"><section class="pqcls-panel"><h3>Schedule / Resche
 foreach ($teachers as $teacher) { echo '<option value="' . (int)$teacher->id . '">' . s(fullname($teacher)) . '</option>'; }
 echo '</select></div>';
 foreach ([['title','Title'],['session_date','Date'],['start_time','Start time HH:MM'],['duration_minutes','Duration minutes'],['timezone','Timezone'],['lessonid','Lesson ID'],['unitid','Unit ID'],['room_url','Zoom/BBB/Meet/internal room link'],['reminder_offset_minutes','Reminder minutes before']] as $field) { echo '<div class="pqcls-field"><label>' . s($field[1]) . '</label><input class="pqcls-input" name="' . s($field[0]) . '"></div>'; }
-echo '<div class="pqcls-field"><label>Room provider</label><select class="pqcls-select" name="room_provider"><option value="bbb">BBB</option><option value="zoom">Zoom</option><option value="meet">Google Meet</option><option value="internal">Internal room</option></select></div><div class="pqcls-field"><label>Status</label><input class="pqcls-input" name="status" value="scheduled"></div><div class="pqcls-field"><label>Description</label><textarea class="pqcls-textarea" name="description"></textarea></div><div class="pqcls-field"><label><input type="checkbox" name="recording_enabled" value="1"> Recording enabled</label></div><div class="pqcls-field"><label><input type="checkbox" name="parent_observer_allowed" value="1"> Parent observer allowed</label></div><button class="pqcls-btn" type="submit">Save Session</button></form><hr><h3>Session Notes / Homework</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_note"><div class="pqcls-field"><label>Session</label><select class="pqcls-select" name="sessionid">';
+echo '<div class="pqcls-field"><label>Room provider</label><select class="pqcls-select" name="room_provider"><option value="bbb">BBB</option><option value="zoom">Zoom</option><option value="meet">Google Meet</option><option value="internal">Internal room</option></select></div><div class="pqcls-field"><label>Status</label><input class="pqcls-input" name="status" value="scheduled"></div><div class="pqcls-field"><label>Description</label><textarea class="pqcls-textarea" name="description"></textarea></div><div class="pqcls-field"><input type="hidden" name="recording_enabled" value="0"><label><input type="checkbox" name="recording_enabled" value="1" ' . ($recordingdefault ? 'checked' : '') . '> Recording enabled for missed-class playback when consent allows</label></div><div class="pqcls-field"><label><input type="checkbox" name="parent_observer_allowed" value="1"> Parent observer allowed</label></div><button class="pqcls-btn" type="submit">Save Session</button></form><hr><h3>Session Notes / Homework</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_note"><div class="pqcls-field"><label>Session</label><select class="pqcls-select" name="sessionid">';
 foreach ($sessions as $session) { echo '<option value="' . (int)$session->id . '">' . s($session->title . ' / ' . userdate((int)$session->scheduled_start)) . '</option>'; }
 echo '</select></div><div class="pqcls-field"><label>Student</label><select class="pqcls-select" name="studentid">';
 foreach ($students as $student) { echo '<option value="' . (int)$student->id . '">' . s(fullname($student)) . '</option>'; }

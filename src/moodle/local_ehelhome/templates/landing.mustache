@@ -1,12 +1,14 @@
-<div id="landing-root" class="pq-login-page">
+<div id="landing-root" class="eh-home">
   <style>
     :root {
-      --pq-green: #15803d;
-      --pq-ink: #173044;
-      --pq-muted: #3f335f;
-      --pq-purple: #c8b8ef;
-      --pq-mint: #a7e0ba;
-      --pq-peach: #ffcaad;
+      --eh-green: #176f43;
+      --eh-green-dark: #0f3d2e;
+      --eh-gold: #d99a26;
+      --eh-ink: #162b35;
+      --eh-muted: #5f6f75;
+      --eh-line: rgba(22, 43, 53, 0.12);
+      --eh-paper: #fffaf0;
+      --eh-white: #ffffff;
     }
 
     #landing-root,
@@ -16,128 +18,273 @@
 
     html,
     body {
+      margin: 0 !important;
       width: 100% !important;
       min-width: 100% !important;
       min-height: 100% !important;
-      overflow: hidden !important;
+      overflow: auto !important;
+      background: var(--eh-paper) !important;
     }
 
-    #landing-root.pq-login-page {
-      position: fixed !important;
-      inset: 0 !important;
-      z-index: 2147483000 !important;
-      width: 100vw !important;
-      min-width: 100vw !important;
-      height: 100vh !important;
-      min-height: 100vh !important;
-      overflow: auto;
+    #landing-root.eh-home {
+      position: relative;
+      z-index: 2147483000;
+      min-height: 100vh;
+      overflow-x: hidden;
       font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      color: var(--pq-ink);
-      background:
-        radial-gradient(circle at top left, rgba(255, 202, 173, 0.48), transparent 32rem),
-        radial-gradient(circle at bottom right, rgba(167, 224, 186, 0.42), transparent 34rem),
-        linear-gradient(135deg, rgba(200, 184, 239, 0.88) 0%, rgba(167, 224, 186, 0.72) 100%);
+      color: var(--eh-ink);
+      background: var(--eh-paper);
     }
 
-    #landing-root.pq-login-page::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23917aca' fill-opacity='0.14'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='70' cy='50' r='4'/%3E%3Ccircle cx='120' cy='20' r='5'/%3E%3Ccircle cx='40' cy='90' r='5'/%3E%3Ccircle cx='100' cy='110' r='6'/%3E%3Ccircle cx='20' cy='130' r='4'/%3E%3Ccircle cx='130' cy='80' r='5'/%3E%3Ccircle cx='80' cy='20' r='4'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: 140px 140px;
+    .eh-home a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .pq-login-card {
-      position: fixed !important;
-      left: 50vw !important;
-      top: 50vh !important;
-      transform: translate(-50%, -50%) !important;
-      width: min(34rem, calc(100vw - 48px));
-      min-height: min(760px, calc(100vh - 48px));
+    .eh-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .eh-topbar {
+      background: var(--eh-green-dark);
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .eh-topbar .eh-shell {
+      min-height: 38px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: clamp(2rem, 5vw, 3rem);
-      border-radius: 22px;
-      overflow: hidden;
-      background: linear-gradient(135deg, var(--pq-purple) 0%, var(--pq-mint) 100%);
-      box-shadow: 0 24px 62px rgba(23, 48, 68, 0.2);
-    }
-
-    .pq-login-card::before,
-    .pq-login-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(55px);
-      opacity: 0.32;
-      animation: pq-float 6s ease-in-out infinite;
-    }
-
-    .pq-login-card::before {
-      width: 380px;
-      height: 380px;
-      top: -144px;
-      left: -128px;
-      background: var(--pq-peach);
-    }
-
-    .pq-login-card::after {
-      width: 320px;
-      height: 320px;
-      right: -112px;
-      bottom: -128px;
-      background: #fff;
-    }
-
-    .pq-login-inner {
-      position: relative;
-      z-index: 1;
-      width: min(100%, 25rem);
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .pq-login-logo {
-      display: block;
-      width: clamp(9rem, 24vw, 12rem);
-      height: auto;
-      margin: 0 auto;
-      filter: drop-shadow(0 8px 14px rgba(23, 48, 68, 0.14));
-    }
-
-    .pq-login-copy {
-      text-align: center;
-    }
-
-    .pq-login-title {
-      margin: 0;
-      color: var(--pq-green);
-      font-size: clamp(1.65rem, 4vw, 2.05rem);
-      line-height: 1.12;
-      font-weight: 900;
-    }
-
-    .pq-login-subtitle,
-    .pq-login-row,
-    .pq-login-footer {
-      color: var(--pq-muted);
-      font-weight: 750;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.32);
-    }
-
-    .pq-login-subtitle {
-      margin: 0.85rem 0 0;
-      font-size: 1rem;
-    }
-
-    .pq-login-form {
-      display: grid;
+      justify-content: space-between;
       gap: 1rem;
     }
 
-    .pq-login-label {
+    .eh-topbar span {
+      white-space: nowrap;
+    }
+
+    .eh-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 250, 240, 0.94);
+      border-bottom: 1px solid var(--eh-line);
+      backdrop-filter: blur(12px);
+    }
+
+    .eh-nav .eh-shell {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .eh-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .eh-brand img {
+      width: 68px;
+      height: auto;
+      flex: 0 0 auto;
+    }
+
+    .eh-brand-name {
+      display: block;
+      color: var(--eh-green-dark);
+      font-size: 1.08rem;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .eh-brand-sub {
+      display: block;
+      margin-top: 0.18rem;
+      color: var(--eh-muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .eh-navlinks {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+      color: var(--eh-ink);
+      font-size: 0.84rem;
+      font-weight: 850;
+    }
+
+    .eh-navlinks a:hover {
+      color: var(--eh-green);
+    }
+
+    .eh-btn,
+    .eh-login-submit {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 0;
+      border-radius: 8px;
+      padding: 0.78rem 1rem;
+      font: 900 0.92rem/1 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      cursor: pointer;
+      transition: transform 0.16s ease, filter 0.16s ease, background 0.16s ease;
+    }
+
+    .eh-btn:hover,
+    .eh-login-submit:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.98);
+    }
+
+    .eh-btn-primary,
+    .eh-login-submit {
+      background: var(--eh-gold);
+      color: #16110a;
+      box-shadow: 0 12px 24px rgba(217, 154, 38, 0.24);
+    }
+
+    .eh-btn-dark {
+      background: var(--eh-green);
+      color: var(--eh-white);
+      box-shadow: 0 12px 24px rgba(23, 111, 67, 0.2);
+    }
+
+    .eh-btn-light {
+      background: var(--eh-gold);
+      color: #16110a !important;
+      border: 1px solid rgba(217, 154, 38, 0.34);
+      box-shadow: 0 12px 24px rgba(217, 154, 38, 0.24);
+      text-shadow: none;
+    }
+
+    .eh-hero {
+      position: relative;
+      min-height: min(760px, calc(100vh - 120px));
+      display: grid;
+      align-items: stretch;
+      color: var(--eh-white);
+      background: #0c231c url("{{{ config.wwwroot }}}/local/ehelhome/pix/landing-hero-quran.jpg") center / cover no-repeat;
+    }
+
+    .eh-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(9, 29, 23, 0.9) 0%, rgba(9, 29, 23, 0.72) 48%, rgba(9, 29, 23, 0.3) 100%);
+    }
+
+    .eh-hero .eh-shell {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.58fr);
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+      align-items: center;
+      padding: clamp(3rem, 8vw, 5.5rem) 0;
+    }
+
+    .eh-kicker {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 0.55rem;
+      margin: 0 0 1.1rem;
+      padding: 0.48rem 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.76rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .eh-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--eh-gold);
+    }
+
+    .eh-hero h1 {
+      max-width: 760px;
+      margin: 0;
+      color: var(--eh-white);
+      font-size: clamp(2.8rem, 7vw, 5.6rem);
+      line-height: 1.02;
+      font-weight: 950;
+      letter-spacing: 0;
+      text-shadow: 0 6px 28px rgba(0, 0, 0, 0.34);
+    }
+
+    .eh-hero-copy {
+      max-width: 630px;
+      margin: 1.2rem 0 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.65;
+      font-weight: 700;
+    }
+
+    .eh-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 2rem;
+    }
+
+    .eh-login-panel {
+      width: 100%;
+      padding: 1.15rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 250, 240, 0.96);
+      color: var(--eh-ink);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+    }
+
+    .eh-login-panel h2 {
+      margin: 0;
+      color: var(--eh-green-dark);
+      font-size: 1.25rem;
+      line-height: 1.15;
+      font-weight: 950;
+    }
+
+    .eh-login-panel p {
+      margin: 0.42rem 0 1rem;
+      color: var(--eh-muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .eh-alert {
+      margin: 0 0 0.9rem;
+      padding: 0.75rem;
+      border-radius: 8px;
+      background: #fff0d8;
+      color: #6b3d00;
+      font-size: 0.86rem;
+      font-weight: 850;
+    }
+
+    .eh-login-form {
+      display: grid;
+      gap: 0.76rem;
+    }
+
+    .eh-login-label {
       position: absolute;
       width: 1px;
       height: 1px;
@@ -149,146 +296,765 @@
       border: 0;
     }
 
-    .pq-login-input {
+    .eh-login-input {
       width: 100%;
-      min-height: 4rem;
-      border: 1px solid rgba(23, 48, 68, 0.12);
-      border-radius: 9px;
-      padding: 0 1.55rem;
-      background: #fffec9;
-      color: #05080f;
-      font: 700 1.05rem/1.2 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      box-shadow: 0 3px 9px rgba(23, 48, 68, 0.12);
+      min-height: 48px;
+      border: 1px solid rgba(22, 43, 53, 0.16);
+      border-radius: 8px;
+      padding: 0 0.95rem;
+      background: #fff;
+      color: #0d1d24;
+      font: 800 0.95rem/1.2 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
     }
 
-    .pq-login-input:focus {
+    .eh-login-input:focus {
       outline: 0;
-      border-color: rgba(255, 147, 107, 0.86);
-      box-shadow: 0 0 0 4px rgba(255, 147, 107, 0.24), 0 3px 9px rgba(23, 48, 68, 0.12);
+      border-color: var(--eh-gold);
+      box-shadow: 0 0 0 4px rgba(217, 154, 38, 0.18);
     }
 
-    .pq-login-submit {
+    .eh-login-submit {
       width: 100%;
-      min-height: 3.6rem;
-      border: 0;
-      border-radius: 9px;
-      background: var(--pq-peach);
-      color: #05080f;
-      font: 850 1rem/1.2 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      box-shadow: 0 10px 18px rgba(23, 48, 68, 0.12);
-      cursor: pointer;
-      transition: transform 0.16s ease, filter 0.16s ease;
+      margin-top: 0.2rem;
     }
 
-    .pq-login-submit:hover {
-      filter: saturate(1.06) brightness(0.98);
-      transform: translateY(-2px);
-    }
-
-    .pq-login-row {
+    .eh-login-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      font-size: 0.82rem;
+      gap: 0.8rem;
+      color: var(--eh-muted);
+      font-size: 0.8rem;
+      font-weight: 800;
     }
 
-    .pq-login-check {
+    .eh-login-check {
       display: inline-flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.45rem;
     }
 
-    .pq-login-check input {
-      width: 1.1rem;
-      height: 1.1rem;
-      accent-color: #ff936b;
+    .eh-login-check input {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--eh-green);
     }
 
-    .pq-login-forgot {
-      color: var(--pq-muted);
-      text-decoration: none;
-    }
-
-    .pq-login-forgot:hover {
+    .eh-login-row a:hover {
+      color: var(--eh-green);
       text-decoration: underline;
     }
 
-    .pq-login-footer {
+    .eh-section {
+      padding: clamp(3.2rem, 7vw, 5rem) 0;
+    }
+
+    .eh-section-white {
+      background: #fff;
+    }
+
+    .eh-section-head {
+      max-width: 700px;
+      margin-bottom: 2rem;
+    }
+
+    .eh-eyebrow {
+      margin: 0 0 0.6rem;
+      color: var(--eh-gold);
+      font-size: 0.78rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .eh-section h2 {
       margin: 0;
-      padding-top: 0.3rem;
-      text-align: center;
-      font-size: 0.82rem;
+      color: var(--eh-green-dark);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.08;
+      font-weight: 950;
     }
 
-    @keyframes pq-float {
-      0%, 100% {
-        transform: translateY(0);
+    .eh-section-intro {
+      margin: 0.9rem 0 0;
+      color: var(--eh-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .eh-feature-grid,
+    .eh-course-grid,
+    .eh-path-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .eh-feature-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .eh-course-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .eh-path-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .eh-card,
+    .eh-course,
+    .eh-path {
+      border: 1px solid var(--eh-line);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .eh-card,
+    .eh-path {
+      padding: 1.15rem;
+    }
+
+    .eh-card-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 0.9rem;
+      border-radius: 8px;
+      background: rgba(23, 111, 67, 0.1);
+      color: var(--eh-green);
+      font-size: 1.25rem;
+      font-weight: 950;
+    }
+
+    .eh-card h3,
+    .eh-course h3,
+    .eh-path h3 {
+      margin: 0;
+      color: var(--eh-green-dark);
+      font-size: 1.02rem;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .eh-card p,
+    .eh-course p,
+    .eh-path p {
+      margin: 0.58rem 0 0;
+      color: var(--eh-muted);
+      font-size: 0.92rem;
+      line-height: 1.58;
+      font-weight: 650;
+    }
+
+    .eh-course img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: #e6e1d6;
+    }
+
+    .eh-course-body {
+      padding: 1rem;
+    }
+
+    .eh-split {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1fr);
+      gap: clamp(1.4rem, 4vw, 3rem);
+      align-items: center;
+    }
+
+    .eh-photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 18px 50px rgba(22, 43, 53, 0.14);
+    }
+
+    .eh-list {
+      display: grid;
+      gap: 0.75rem;
+      margin: 1.35rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .eh-list li {
+      display: flex;
+      gap: 0.65rem;
+      color: var(--eh-ink);
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .eh-list li::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      flex: 0 0 auto;
+      margin-top: 0.38rem;
+      border-radius: 999px;
+      background: var(--eh-gold);
+    }
+
+    .eh-cta {
+      color: var(--eh-white);
+      background: var(--eh-green-dark);
+    }
+
+    .eh-cta .eh-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .eh-cta h2 {
+      color: var(--eh-white);
+    }
+
+    .eh-cta p {
+      max-width: 680px;
+      margin: 0.7rem 0 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-weight: 700;
+      line-height: 1.65;
+    }
+
+    .eh-footer {
+      padding: 1.4rem 0;
+      color: rgba(255, 255, 255, 0.74);
+      background: #081f18;
+      font-size: 0.86rem;
+      font-weight: 750;
+    }
+
+    .eh-footer .eh-shell {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .eh-navlinks {
+        display: none;
       }
-      50% {
-        transform: translateY(-12px);
+
+      .eh-hero .eh-shell,
+      .eh-split,
+      .eh-cta .eh-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .eh-login-panel {
+        max-width: 520px;
+      }
+
+      .eh-feature-grid,
+      .eh-course-grid,
+      .eh-path-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 520px) {
-      .pq-login-card {
-        width: 100vw;
-        min-height: 100vh;
-        border-radius: 0;
+    @media (max-width: 640px) {
+      .eh-shell {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .eh-topbar .eh-shell {
+        justify-content: center;
+      }
+
+      .eh-topbar span:nth-child(2) {
+        display: none;
+      }
+
+      .eh-nav .eh-shell {
+        min-height: 72px;
+      }
+
+      .eh-brand img {
+        width: 56px;
+      }
+
+      .eh-brand-name {
+        font-size: 0.98rem;
+      }
+
+      .eh-hero {
+        min-height: auto;
+      }
+
+      .eh-hero::before {
+        background: rgba(9, 29, 23, 0.78);
+      }
+
+      .eh-hero-actions,
+      .eh-login-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .eh-btn {
+        width: 100%;
+      }
+
+      .eh-feature-grid,
+      .eh-course-grid,
+      .eh-path-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 
-  <main class="pq-login-card" aria-label="Ehel Quraan Academy login">
-    <div class="pq-login-inner">
-      <img
-        src="{{{ config.wwwroot }}}/local/ehelhome/pix/ehelquraanacademy_logo.svg"
-        alt="Ehel Quraan Academy logo"
-        class="pq-login-logo"
-      >
-
-      <div class="pq-login-copy">
-        <h1 class="pq-login-title">Welcome to Ehel Quraan Academy</h1>
-        <p class="pq-login-subtitle">Sign in to continue your adventure!</p>
-      </div>
-
-      <form action="{{{ config.wwwroot }}}/login/index.php" method="post" class="pq-login-form">
-        <input type="hidden" name="logintoken" value="{{logintoken}}">
-
-        <label for="pq-login-username" class="pq-login-label">Username</label>
-        <input
-          id="pq-login-username"
-          type="text"
-          name="username"
-          placeholder="Username"
-          autocomplete="username"
-          required
-          class="pq-login-input"
-        >
-
-        <label for="pq-login-password" class="pq-login-label">Password</label>
-        <input
-          id="pq-login-password"
-          type="password"
-          name="password"
-          placeholder="Password"
-          autocomplete="current-password"
-          required
-          class="pq-login-input"
-        >
-
-        <button type="submit" class="pq-login-submit">Enter Classroom</button>
-
-        <div class="pq-login-row">
-          <label class="pq-login-check">
-            <input type="checkbox" name="rememberusername">
-            <span>Remember me</span>
-          </label>
-          <a href="{{{ config.wwwroot }}}/login/forgot_password.php" class="pq-login-forgot">Forgot?</a>
-        </div>
-      </form>
-
-      <p class="pq-login-footer">&copy; 2026 Ehel Academy</p>
+  <div class="eh-topbar" aria-label="Academy contact bar">
+    <div class="eh-shell">
+      <span>Online Quran and Arabic learning for children, families, and institutions</span>
+      <span>Live classes, student rooms, gamified practice, and parent visibility</span>
     </div>
+  </div>
+
+  <header class="eh-nav">
+    <div class="eh-shell">
+      <a class="eh-brand" href="#home" aria-label="{{ config.brandname }} home">
+        <img src="{{{ config.brandlogo }}}" alt="{{ config.brandname }} logo">
+      <span>
+        <span class="eh-brand-name">{{ config.brandname }}</span>
+        <span class="eh-brand-sub">{{ config.brandsubtitle }}</span>
+      </span>
+      </a>
+
+      <nav class="eh-navlinks" aria-label="Landing page navigation">
+        <a href="{{{ config.abouturl }}}">About</a>
+        <a href="{{{ config.coursesurl }}}">Courses</a>
+        <a href="{{{ config.liveurl }}}">Live Sessions</a>
+        <a href="{{{ config.dashboardsurl }}}">Dashboards</a>
+        <a href="{{{ config.reportsurl }}}">Reports</a>
+        <a href="{{{ config.featuresurl }}}">Features</a>
+        <a href="{{{ config.pricingurl }}}">Pricing</a>
+        <a href="{{{ config.enrollurl }}}">Enroll</a>
+        <a href="{{{ config.inquiryurl }}}">Inquiry</a>
+        <a href="{{{ config.contacturl }}}">Contact</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="eh-hero" aria-label="{{ config.brandname }} introduction">
+      <div class="eh-shell">
+        <div>
+          <p class="eh-kicker">{{ config.herokicker }}</p>
+          <h1>{{ config.herotitle }}</h1>
+          <p class="eh-hero-copy">
+            {{ config.herocopy }}
+          </p>
+          <div class="eh-hero-actions">
+            <a class="eh-btn eh-btn-primary" href="{{{ config.enrollurl }}}">Request Enrollment</a>
+            <a class="eh-btn eh-btn-light" href="{{{ config.inquiryurl }}}">General Inquiry</a>
+            <a class="eh-btn eh-btn-light" href="{{{ config.studentappurl }}}">Student Login</a>
+            <a class="eh-btn eh-btn-light" href="{{{ config.dashboardurl }}}">Family Dashboard</a>
+          </div>
+        </div>
+
+        <aside class="eh-login-panel" aria-label="Academy login">
+          <h2>Continue Learning</h2>
+          <p>Sign in with your {{ config.brandname }} account to continue lessons, live sessions, homework, and progress review.</p>
+
+          {{#sessionexpired}}
+            <div class="eh-alert">Your session expired. Please sign in again to continue.</div>
+          {{/sessionexpired}}
+
+          <form action="{{{ config.loginurl }}}" method="post" class="eh-login-form">
+            <input type="hidden" name="logintoken" value="{{logintoken}}">
+
+            <label for="eh-login-username" class="eh-login-label">Username</label>
+            <input
+              id="eh-login-username"
+              type="text"
+              name="username"
+              placeholder="Username"
+              autocomplete="username"
+              required
+              class="eh-login-input"
+            >
+
+            <label for="eh-login-password" class="eh-login-label">Password</label>
+            <input
+              id="eh-login-password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              autocomplete="current-password"
+              required
+              class="eh-login-input"
+            >
+
+            <button type="submit" class="eh-login-submit">Enter Classroom</button>
+
+            <div class="eh-login-row">
+              <label class="eh-login-check">
+                <input type="checkbox" name="rememberusername">
+                <span>Remember me</span>
+              </label>
+              <a href="{{{ config.forgoturl }}}">Forgot password?</a>
+            </div>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <section class="eh-section eh-section-white" id="about">
+      <div class="eh-shell">
+        <div class="eh-section-head">
+          <p class="eh-eyebrow">About the academy</p>
+          <h2>A Quran learning environment built for children, families, institutions, and teachers</h2>
+          <p class="eh-section-intro">
+            {{ config.brandname }} helps children, families, and institutions learn Quran through a balanced model of live teaching, guided practice, supervised self-learning, and progress reporting. Our mission is to make Quran learning accessible, structured, safe, and motivating from home, school, masjid, or community setting. Our vision is to build a trusted online academy where every learner can grow in recitation, understanding, memorization, manners, and confidence.
+          </p>
+        </div>
+
+        <div class="eh-feature-grid">
+          <article class="eh-card">
+            <div class="eh-card-icon">1</div>
+            <h3>Advanced Teaching</h3>
+            <p>Lessons combine teacher explanation, listening, repetition, guided practice, review, and age-appropriate feedback.</p>
+            <p><a href="{{{ config.abouturl }}}">Read about the academy</a></p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">2</div>
+            <h3>Flexible Learning</h3>
+            <p>Students can learn through live classes, offline assignments, student rooms, supervised self-learning, and practice coach support.</p>
+            <p><a href="{{{ config.liveurl }}}">Explore live sessions</a></p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">3</div>
+            <h3>Privacy And Protection</h3>
+            <p>Student access, family visibility, live-session controls, recordings, and communication are managed with care and safeguarding in mind.</p>
+            <p><a href="{{{ config.featuresurl }}}">See academy features</a></p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">4</div>
+            <h3>Anywhere, Anytime</h3>
+            <p>Families and institutions can continue learning with structured activities, gamified practice, media-rich lessons, teacher follow-up, and clear next steps.</p>
+            <p><a href="{{{ config.dashboardsurl }}}">View dashboard capabilities</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="eh-section" id="courses">
+      <div class="eh-shell">
+        <div class="eh-section-head">
+          <p class="eh-eyebrow">Learning paths</p>
+          <h2>Courses for every stage of a child&apos;s Arabic and Quran journey</h2>
+          <p class="eh-section-intro">
+            Families and institutions can choose one course or combine courses as the learner grows. Each course is designed with clear goals, teacher guidance, practice activities, and progress visibility.
+          </p>
+        </div>
+
+        <div class="eh-course-grid">
+          <article class="eh-course">
+            <img src="{{{ config.wwwroot }}}/local/ehelhome/pix/landing-course-qaida.jpg" alt="Child learning Quran foundations">
+            <div class="eh-course-body">
+              <h3>Pre-Quraan</h3>
+              <p>Foundational Arabic letters, sounds, harakat, joining, listening, speaking, writing, and child-friendly practice for new learners.</p>
+            </div>
+          </article>
+          <article class="eh-course">
+            <img src="{{{ config.wwwroot }}}/local/ehelhome/pix/landing-welcome.jpg" alt="Children learning Islamic manners">
+            <div class="eh-course-body">
+              <h3>Tarbiyah Kids</h3>
+              <p>Character, manners, daily Islamic values, family activities, stories, reflection, and supervised habits for young learners.</p>
+            </div>
+          </article>
+          <article class="eh-course">
+            <img src="{{{ config.wwwroot }}}/local/ehelhome/pix/landing-course-qaida.jpg" alt="Essential Arabic reading and writing course materials">
+            <div class="eh-course-body">
+              <h3>Essential Arabic</h3>
+              <p>Basic Arabic reading, writing, vocabulary, sentence understanding, and comprehension for students building language confidence.</p>
+            </div>
+          </article>
+          <article class="eh-course">
+            <img src="{{{ config.wwwroot }}}/local/ehelhome/pix/landing-course-tajweed.jpg" alt="Quran reading course materials">
+            <div class="eh-course-body">
+              <h3>Quran Reading</h3>
+              <p>Guided reading fluency, pronunciation, rhythm, tajweed readiness, passage practice, correction, and confidence building.</p>
+            </div>
+          </article>
+          <article class="eh-course">
+            <img src="{{{ config.wwwroot }}}/local/ehelhome/pix/landing-course-qaida.jpg" alt="Quran tafsir learning">
+            <div class="eh-course-body">
+              <h3>Quran Tafsir</h3>
+              <p>Age-appropriate Quran meanings, vocabulary, stories, discussion, reflection, and practical lessons for daily life.</p>
+            </div>
+          </article>
+          <article class="eh-course">
+            <img src="{{{ config.wwwroot }}}/local/ehelhome/pix/landing-course-tajweed.jpg" alt="Quran memorization support">
+            <div class="eh-course-body">
+              <h3>Quran Memorization</h3>
+              <p>Surah targets, memorization plans, revision schedules, teacher listening, mistake tracking, and family-supported review.</p>
+            </div>
+          </article>
+        </div>
+        <div class="eh-hero-actions">
+          <a class="eh-btn eh-btn-primary" href="{{{ config.coursesurl }}}">View All Courses</a>
+          <a class="eh-btn eh-btn-light" href="{{{ config.enrollurl }}}">Request Enrollment</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eh-section eh-section-white" id="live">
+      <div class="eh-shell eh-split">
+        <img class="eh-photo" src="{{{ config.wwwroot }}}/local/ehelhome/pix/landing-welcome.jpg" alt="Welcoming Quran learning environment">
+        <div>
+          <p class="eh-eyebrow">Live sessions</p>
+          <h2>Teacher-led learning with supervision between classes</h2>
+          <p class="eh-section-intro">
+            Live sessions give students real teacher attention, correction, encouragement, and accountability. Between sessions, students can continue with structured self-learning, homework, practice coach prompts, and supervised activities.
+          </p>
+          <ul class="eh-list">
+            <li>Live teacher-led classes with attendance, scheduling, and session follow-up.</li>
+            <li>Parent rooms for orientation, family support, progress conversations, and community sessions.</li>
+            <li>Teacher-parent rooms for focused review, learner planning, placement support, and follow-up meetings.</li>
+            <li>Student rooms for supervised practice, homework blocks, listening, correction, and monitored self-learning.</li>
+            <li>Supervised self-learning and homework time with activity monitoring.</li>
+            <li>Practice coach support to help students stay focused and know what to do next.</li>
+            <li>Self-evaluation prompts and practice summaries so students can recognize what needs review.</li>
+            <li>Gamified practice signals, quizzes, and progress feedback to keep children motivated between live classes.</li>
+            <li>Live chat support for families who need enrollment, schedule, account, or class-access help.</li>
+            <li>Audio, video, and interactive media used strategically to support different learning styles.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="eh-section" id="reports">
+      <div class="eh-shell">
+        <div class="eh-path-grid">
+          <article class="eh-path">
+            <h3>Student Dashboard</h3>
+            <p>Students see their enrolled courses, live sessions, assignments, practice activities, feedback, and next learning steps.</p>
+          </article>
+          <article class="eh-path">
+            <h3>Parent Reports</h3>
+            <p>Parents can review progress, attendance, teacher feedback, homework, recordings, focus signals, and follow-up notes.</p>
+          </article>
+          <article class="eh-path">
+            <h3>Institution Reports</h3>
+            <p>Schools, masjids, and community programs can review group enrollment, attendance, course progress, teacher feedback, and support needs.</p>
+          </article>
+          <article class="eh-path">
+            <h3>Teacher Tools</h3>
+            <p>Teachers can monitor classes, review student work, prepare live sessions, track progress, and communicate with families.</p>
+          </article>
+          <article class="eh-path">
+            <h3>Live Monitoring</h3>
+            <p>Academy staff can follow attendance, session status, practice activity, recordings, follow-ups, and support needs.</p>
+          </article>
+          <article class="eh-path">
+            <h3>Self-Evaluation</h3>
+            <p>Students can reflect on confidence, quiz results, homework completion, and practice effort so the next step is easier to understand.</p>
+          </article>
+          <article class="eh-path">
+            <h3>Gamified Progress</h3>
+            <p>Stars, completion signals, quiz results, and practice streaks help students feel progress while teachers keep the work meaningful.</p>
+          </article>
+          <article class="eh-path">
+            <h3>Family Follow-Up</h3>
+            <p>Parents can receive important updates, teacher notes, urgent alerts, and guided next steps through organized channels.</p>
+          </article>
+          <article class="eh-path">
+            <h3>Course Visibility</h3>
+            <p>Each student sees only the courses they are enrolled in, while parents and teachers see the students connected to them.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="eh-section eh-section-white" id="features">
+      <div class="eh-shell">
+        <div class="eh-section-head">
+          <p class="eh-eyebrow">What makes us unique</p>
+          <h2>Human teaching supported by thoughtful technology</h2>
+          <p class="eh-section-intro">
+            Our approach blends care, structure, and useful learning tools without replacing the teacher. The goal is a protected, measurable, and motivating Quran learning journey.
+          </p>
+        </div>
+        <div class="eh-feature-grid">
+          <article class="eh-card">
+            <div class="eh-card-icon">A</div>
+            <h3>Multi-Lingual Support</h3>
+            <p>Families and institutions can be supported across languages so instructions, feedback, and communication are easier to understand.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">B</div>
+            <h3>Media-Rich Lessons</h3>
+            <p>Audio, video, visuals, repetition, and interactive activities help students hear, see, practice, and remember.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">C</div>
+            <h3>Learning Monitoring</h3>
+            <p>Student activity, focus, homework, and lesson progress can be reviewed so teachers and parents know when support is needed.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">D</div>
+            <h3>Safe Communication</h3>
+            <p>Family messaging, teacher feedback, consent, access, and reporting are organized around student privacy and protection.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">E</div>
+            <h3>WhatsApp Alerts</h3>
+            <p>Urgent parent alerts and important follow-up can be delivered through WhatsApp where family contact settings allow it.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">F</div>
+            <h3>Student Rooms</h3>
+            <p>Student rooms support supervised practice, homework blocks, listening, correction, and monitored self-learning outside regular class time.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">G</div>
+            <h3>Teacher-Parent Rooms</h3>
+            <p>Teachers and families can meet in shared rooms for placement, learner goals, progress review, support plans, and follow-up.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">H</div>
+            <h3>Gamified Practice</h3>
+            <p>Stars, quizzes, focused practice, and progress signals help students stay motivated while teachers still guide the learning.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">I</div>
+            <h3>Self-Evaluation</h3>
+            <p>Students can reflect on practice, confidence, quiz outcomes, homework, and next steps so they learn what needs review.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">J</div>
+            <h3>Live Chat Support</h3>
+            <p>Families can reach the academy team from the public site for enrollment, placement, account help, scheduling, and general questions.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">K</div>
+            <h3>Access Management</h3>
+            <p>Student, parent, teacher, and admin access can be separated so each person sees the right courses, reports, and communication tools.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">L</div>
+            <h3>Institution Programs</h3>
+            <p>Schools, masjids, and community organizations can coordinate learners, courses, live sessions, reports, and teacher follow-up.</p>
+          </article>
+          <article class="eh-card">
+            <div class="eh-card-icon">M</div>
+            <h3>Quality Review</h3>
+            <p>Live classes, feedback, teacher follow-up, recordings, and improvement actions can be reviewed for quality and consistency.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="eh-section eh-cta">
+      <div class="eh-shell">
+        <div>
+          <h2>Ready to begin?</h2>
+          <p>Start with an enrollment request, contact us with a general question, or sign in if your family or institution already has a {{ config.brandname }} account.</p>
+        </div>
+        <div class="eh-hero-actions">
+          <a class="eh-btn eh-btn-primary" href="{{{ config.enrollurl }}}">Request Enrollment</a>
+          <a class="eh-btn eh-btn-light" href="{{{ config.inquiryurl }}}">General Inquiry</a>
+          <a class="eh-btn eh-btn-light" href="{{{ config.contacturl }}}">Contact Us</a>
+          <a class="eh-btn eh-btn-light" href="{{{ config.loginurl }}}">Login</a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="eh-footer">
+    <div class="eh-shell">
+      <span>&copy; 2026 {{ config.brandname }}</span>
+      <span>Live teaching. Guided practice. Protected Quran learning.</span>
+    </div>
+  </footer>
+
+  <!-- Start of LiveChat (www.livechat.com) code -->
+  <script>
+      window.__lc = window.__lc || {};
+      window.__lc.license = 19790025;
+      window.__lc.integration_name = "manual_onboarding";
+      window.__lc.product_name = "livechat";
+      ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
+  </script>
+  <noscript><a href="https://www.livechat.com/chat-with/19790025/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
+  <!-- End of LiveChat code -->
+
+  <div class="ehfaq" data-ehfaq>
+    <button class="ehfaq-toggle" type="button" data-ehfaq-toggle>Questions?</button>
+    <section class="ehfaq-panel" aria-label="{{ config.brandname }} FAQ bot" hidden>
+      <div class="ehfaq-head">
+        <strong>Academy FAQ</strong>
+        <button type="button" data-ehfaq-close aria-label="Close FAQ bot">Close</button>
+      </div>
+      <div class="ehfaq-body">
+      <p class="ehfaq-msg">Assalamu alaikum. I can answer basic questions about {{ config.brandname }}.</p>
+        <div class="ehfaq-answer" data-ehfaq-answer>Select a question below.</div>
+        <div class="ehfaq-options" data-ehfaq-options></div>
+      </div>
+      <div class="ehfaq-foot">
+        <button type="button" data-ehfaq-chat>Talk to a person</button>
+      </div>
+    </section>
+  </div>
+  <style>
+    .ehfaq{position:fixed;right:18px;bottom:18px;z-index:2147483001;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.ehfaq-toggle{min-height:46px;border:0;border-radius:999px;padding:0 18px;background:#0f3d2e;color:#fff;font-weight:950;box-shadow:0 14px 34px rgba(15,61,46,.28);cursor:pointer}.ehfaq-panel{width:min(360px,calc(100vw - 28px));overflow:hidden;border-radius:12px;background:#fffaf0;border:1px solid rgba(22,43,53,.16);box-shadow:0 22px 60px rgba(22,43,53,.24)}.ehfaq-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;background:#0f3d2e;color:#fff}.ehfaq-head strong{font-size:15px}.ehfaq-head button{border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:8px;padding:7px 9px;font-weight:850;cursor:pointer}.ehfaq-body{padding:14px}.ehfaq-msg,.ehfaq-answer{margin:0 0 10px;color:#40565f;font-size:14px;font-weight:700;line-height:1.45}.ehfaq-answer{padding:12px;border-radius:8px;background:#fff;border:1px solid rgba(22,43,53,.12)}.ehfaq-options{display:grid;gap:8px}.ehfaq-options button,.ehfaq-foot button{width:100%;min-height:38px;border:1px solid rgba(15,61,46,.18);border-radius:8px;background:#fff;color:#0f3d2e;font-weight:900;text-align:left;padding:8px 10px;cursor:pointer}.ehfaq-options button:hover,.ehfaq-foot button:hover{background:#f1f8f4}.ehfaq-foot{padding:12px 14px;border-top:1px solid rgba(22,43,53,.1);background:#fff}.ehfaq-foot button{background:#d99a26;color:#16110a;text-align:center;border:0}
+  </style>
+  <script>
+  (function(){
+    var root = document.querySelector('[data-ehfaq]');
+    if (!root) { return; }
+    var panel = root.querySelector('.ehfaq-panel');
+    var toggle = root.querySelector('[data-ehfaq-toggle]');
+    var close = root.querySelector('[data-ehfaq-close]');
+    var answer = root.querySelector('[data-ehfaq-answer]');
+    var options = root.querySelector('[data-ehfaq-options]');
+    var chat = root.querySelector('[data-ehfaq-chat]');
+    var faqs = [
+    ['What is {{ config.brandname }}?', '{{ config.brandname }} is an online Quran learning academy for children, families, and institutions. It combines live teacher-led sessions, guided practice, supervised self-learning, parent visibility, and safe communication.'],
+      ['What courses are available?', 'The academy offers Pre-Quraan, Tarbiyah Kids, Essential Arabic, Quran Reading, Quran Tafsir, and Quran Memorization. Students may be enrolled in one or more courses based on placement and family goals.'],
+      ['How does enrollment work?', 'Families or institutions submit an enrollment request, the academy reviews placement and schedule needs, then the student is enrolled into the right course or courses. After login, students only see courses they are enrolled in.'],
+      ['How do live sessions work?', 'Live sessions are teacher-led classes with attendance, scheduling, correction, encouragement, and follow-up. The academy also supports parent rooms, student rooms, teacher-parent rooms, supervised practice, and family support meetings.'],
+      ['What can parents see?', 'Parents can use dashboards and reports to review linked children, attendance, course access, teacher feedback, homework, progress, recordings, room activity, and follow-up notes.'],
+      ['How are students motivated?', 'Students can use gamified practice, quizzes, stars, completion signals, practice coach prompts, and self-evaluation so progress feels visible without replacing teacher guidance.'],
+      ['Is there support for Arabic?', 'Yes. Essential Arabic helps students build basic Arabic reading, writing, vocabulary, sentence understanding, and comprehension.'],
+      ['How is privacy handled?', 'Student access, parent visibility, teacher tools, live-session controls, recordings, communication, and reporting are organized with privacy, consent, and child protection in mind.'],
+      ['Can I speak to someone?', 'Yes. Use the live chat button to reach the academy team for enrollment, placement, schedules, account help, live-session questions, family questions, or institutional program questions.']
+    ];
+    function render() {
+      options.innerHTML = '';
+      faqs.forEach(function(item) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = item[0];
+        button.addEventListener('click', function() { answer.textContent = item[1]; });
+        options.appendChild(button);
+      });
+    }
+    function openPanel() { panel.hidden = false; toggle.hidden = true; }
+    function closePanel() { panel.hidden = true; toggle.hidden = false; }
+    function openLiveChat() {
+      if (window.LiveChatWidget && window.LiveChatWidget.call) {
+        window.LiveChatWidget.call('maximize');
+      } else {
+        window.location.href = 'https://www.livechat.com/chat-with/19790025/';
+      }
+    }
+    render();
+    toggle.addEventListener('click', openPanel);
+    close.addEventListener('click', closePanel);
+    chat.addEventListener('click', openLiveChat);
+  })();
+  </script>
 </div>

@@ -1,0 +1,520 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 4,
+  "unit": 2,
+  "unitId": "eng-g04-t01-u02",
+  "title": "Nature & Weather Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: The air you take in and let out of your lungs.",
+          "choices": [
+            "breath",
+            "sweat",
+            "surface"
+          ],
+          "answer": "breath",
+          "explanation": "breath: The air you take in and let out of your lungs."
+        },
+        {
+          "prompt": "Which word means: A large field of grass and flowers where animals graze.",
+          "choices": [
+            "breath",
+            "sweat",
+            "meadow"
+          ],
+          "answer": "meadow",
+          "explanation": "meadow: A large field of grass and flowers where animals graze."
+        },
+        {
+          "prompt": "Which word means: Covered with, or full of, snow.",
+          "choices": [
+            "sweat",
+            "snowy",
+            "breath"
+          ],
+          "answer": "snowy",
+          "explanation": "snowy: Covered with, or full of, snow."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The clear water that comes from your skin when you are hot.",
+          "answer": "sweat"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A part of the sea or a lake that is partly surrounded by land.",
+          "answer": "bay"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A mountain that can erupt with hot lava, ash, and gas.",
+          "answer": "volcano"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "speak.",
+            "to",
+            "started",
+            "I",
+            "before",
+            "breath",
+            "deep",
+            "a",
+            "took",
+            "I"
+          ],
+          "answer": "I took a deep breath before I started to speak."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "shiny.",
+            "and",
+            "calm",
+            "was",
+            "lake",
+            "the",
+            "of",
+            "surface",
+            "The"
+          ],
+          "answer": "The surface of the lake was calm and shiny."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "meadow.",
+            "sunny",
+            "the",
+            "in",
+            "grass",
+            "ate",
+            "sheep",
+            "The"
+          ],
+          "answer": "The sheep ate grass in the sunny meadow."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "What does 'meadow' mean?",
+          "choices": [
+            "A large field of grass and flowers where animals graze.",
+            "A time of heavy rain, wind, or snow, sometimes with thunder.",
+            "A very strong storm with heavy wind and rain.",
+            "Small balls of ice that fall from the sky during a storm."
+          ],
+          "answer": "A large field of grass and flowers where animals graze.",
+          "explanation": "The sheep ate grass in the sunny meadow."
+        },
+        {
+          "prompt": "What does 'bay' mean?",
+          "choices": [
+            "A part of the sea or a lake that is partly surrounded by land.",
+            "A spinning column of wind that touches the ground and can cause damage.",
+            "A very strong storm with heavy wind and rain.",
+            "Small balls of ice that fall from the sky during a storm."
+          ],
+          "answer": "A part of the sea or a lake that is partly surrounded by land.",
+          "explanation": "The small boats sailed safely into the bay."
+        },
+        {
+          "prompt": "What does 'storm' mean?",
+          "choices": [
+            "A spinning column of wind that touches the ground and can cause damage.",
+            "A time of heavy rain, wind, or snow, sometimes with thunder.",
+            "A very strong storm with heavy wind and rain.",
+            "When the air is full of tiny water drops and you cannot see far."
+          ],
+          "answer": "A time of heavy rain, wind, or snow, sometimes with thunder.",
+          "explanation": "The storm made loud thunder all night."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "Why do plants need moisture?",
+          "choices": [
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "The air you take in and let out of your lungs.",
+            "The clear water that comes from your skin when you are hot."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "What is the weather like near the lake in the morning?",
+          "choices": [
+            "The air you take in and let out of your lungs.",
+            "The clear water that comes from your skin when you are hot.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "What were Noah and Sophia planning to teach people at the science fair?",
+          "choices": [
+            "The clear water that comes from your skin when you are hot.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "The air you take in and let out of your lungs."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe Today's Weather",
+          "target": "Today the weather is ______."
+        },
+        {
+          "prompt": "Speaking 3: Guess the Weather",
+          "target": "Can you see far?"
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "roof.",
+            "the",
+            "hit",
+            "it",
+            "when",
+            "noise",
+            "loud",
+            "a",
+            "made",
+            "hail",
+            "The"
+          ],
+          "answer": "The hail made a loud noise when it hit the roof."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "day.",
+            "snowy",
+            "the",
+            "on",
+            "snowman",
+            "a",
+            "built",
+            "We"
+          ],
+          "answer": "We built a snowman on the snowy day."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "kitchen.",
+            "the",
+            "in",
+            "bread",
+            "the",
+            "on",
+            "mold",
+            "some",
+            "found",
+            "I"
+          ],
+          "answer": "I found some mold on the bread in the kitchen."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'storm' mean in this unit?",
+          "choices": [
+            "A time of heavy rain, wind, or snow, sometimes with thunder.",
+            "The air you take in and let out of your lungs.",
+            "The clear water that comes from your skin when you are hot."
+          ],
+          "answer": "A time of heavy rain, wind, or snow, sometimes with thunder.",
+          "explanation": "storm: A time of heavy rain, wind, or snow, sometimes with thunder."
+        },
+        {
+          "prompt": "What does 'solar' mean in this unit?",
+          "choices": [
+            "The air you take in and let out of your lungs.",
+            "The clear water that comes from your skin when you are hot.",
+            "To do with the sun."
+          ],
+          "answer": "To do with the sun.",
+          "explanation": "solar: To do with the sun."
+        },
+        {
+          "prompt": "What does 'sweat' mean in this unit?",
+          "choices": [
+            "The top or outside part of something.",
+            "The clear water that comes from your skin when you are hot.",
+            "The air you take in and let out of your lungs."
+          ],
+          "answer": "The clear water that comes from your skin when you are hot.",
+          "explanation": "sweat: The clear water that comes from your skin when you are hot."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'tornado'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "tornado is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'roam'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "roam is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'canyon'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "canyon is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "moisture",
+              "A small amount of water in the air or on a surface."
+            ],
+            [
+              "fur",
+              "The soft hair that covers some animals' bodies."
+            ],
+            [
+              "meadow",
+              "A large field of grass and flowers where animals graze."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "storm",
+              "A time of heavy rain, wind, or snow, sometimes with thunder."
+            ],
+            [
+              "hurricane",
+              "A very strong storm with heavy wind and rain."
+            ],
+            [
+              "snowy",
+              "Covered with, or full of, snow."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "solar",
+              "To do with the sun."
+            ],
+            [
+              "mold",
+              "A soft, fuzzy growth that forms on old food or wet things."
+            ],
+            [
+              "royal",
+              "Grand or special, or to do with kings and queens."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does 'surface' mean?",
+          "choices": [
+            "A deep valley with steep sides, often with a river at the bottom.",
+            "A large field of grass and flowers where animals graze.",
+            "A part of the sea or a lake that is partly surrounded by land.",
+            "The top or outside part of something."
+          ],
+          "answer": "The top or outside part of something.",
+          "explanation": "The surface of the lake was calm and shiny."
+        },
+        {
+          "prompt": "What does 'fur' mean?",
+          "choices": [
+            "A large field of grass and flowers where animals graze.",
+            "A part of the sea or a lake that is partly surrounded by land.",
+            "A time of heavy rain, wind, or snow, sometimes with thunder.",
+            "The soft hair that covers some animals' bodies."
+          ],
+          "answer": "The soft hair that covers some animals' bodies.",
+          "explanation": "Animals use their thick fur to stay warm in snowy weather."
+        },
+        {
+          "prompt": "What does 'canyon' mean?",
+          "choices": [
+            "A deep valley with steep sides, often with a river at the bottom.",
+            "A part of the sea or a lake that is partly surrounded by land.",
+            "A time of heavy rain, wind, or snow, sometimes with thunder.",
+            "Small balls of ice that fall from the sky during a storm."
+          ],
+          "answer": "A deep valley with steep sides, often with a river at the bottom.",
+          "explanation": "The canyon was much deeper than the meadow."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'breath' mean?",
+          "choices": [
+            "A small amount of water in the air or on a surface.",
+            "The air you take in and let out of your lungs.",
+            "The soft hair that covers some animals' bodies.",
+            "The top or outside part of something."
+          ],
+          "answer": "The air you take in and let out of your lungs.",
+          "explanation": "I took a deep breath before I started to speak."
+        },
+        {
+          "prompt": "What does 'sweat' mean?",
+          "choices": [
+            "A deep valley with steep sides, often with a river at the bottom.",
+            "The clear water that comes from your skin when you are hot.",
+            "The soft hair that covers some animals' bodies.",
+            "The top or outside part of something."
+          ],
+          "answer": "The clear water that comes from your skin when you are hot.",
+          "explanation": "After running in the sun, I wiped the sweat from my face."
+        },
+        {
+          "prompt": "What does 'moisture' mean?",
+          "choices": [
+            "A deep valley with steep sides, often with a river at the bottom.",
+            "A large field of grass and flowers where animals graze.",
+            "A small amount of water in the air or on a surface.",
+            "The soft hair that covers some animals' bodies."
+          ],
+          "answer": "A small amount of water in the air or on a surface.",
+          "explanation": "The grass was wet with moisture after the rain."
+        }
+      ]
+    }
+  ]
+}

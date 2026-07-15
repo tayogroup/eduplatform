@@ -32,9 +32,8 @@ if (empty($session->agenda_slides_path)) {
     pqlags_fail('No agenda slides are attached to this live session yet.');
 }
 
-$config = pqh_bunny_storage_config('bunny_live_session_slides_prefix', 'pre_quraan/live-session-slides');
 try {
-    $bytes = pqh_fetch_from_bunny_storage((string)$session->agenda_slides_path, $config);
+    $bytes = pqh_live_session_agenda_bytes($session);
 } catch (Throwable $e) {
     pqlags_fail('Agenda slides could not be loaded.', 502);
 }
@@ -47,7 +46,9 @@ $mimetype = trim((string)($session->agenda_slides_mimetype ?? 'application/vnd.o
 @header('Content-Type: ' . ($mimetype !== '' ? $mimetype : 'application/octet-stream'));
 @header('Content-Length: ' . strlen($bytes));
 @header('Content-Disposition: inline; filename="' . str_replace('"', '', $filename) . '"');
-@header('Cache-Control: private, max-age=300');
+@header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+@header('Pragma: no-cache');
+@header('Expires: 0');
 @header('X-Content-Type-Options: nosniff');
 echo $bytes;
 exit;

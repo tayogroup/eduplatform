@@ -215,18 +215,32 @@ if ($ready) {
         $profilewheresql = 'WHERE u.deleted = 0';
         $profileparams = [];
         if ($workspaceid > 0) {
+            $workspacefilters = [];
             if (pqltd_table_exists('local_prequran_workspace_member')) {
-                $profilejoinsql = " JOIN {local_prequran_workspace_member} wm ON wm.userid = tp.userid";
-                $profilewheresql .= " AND wm.workspaceid = :profileworkspaceid
+                $profilejoinsql = " LEFT JOIN {local_prequran_workspace_member} wm ON wm.userid = tp.userid
+                                      AND wm.workspaceid = :profileworkspaceid
                                       AND wm.status = :profilememberstatus
                                       AND wm.workspace_role IN ('owner', 'admin', 'teacher', 'assistant_teacher')";
-                $profileparams = [
+                $workspacefilters[] = 'wm.id IS NOT NULL';
+                $profileparams += [
                     'profileworkspaceid' => $workspaceid,
                     'profilememberstatus' => 'active',
                 ];
+            }
+            if (pqltd_column_exists('local_prequran_teacher_profile', 'workspaceid')
+                    && pqltd_column_exists('local_prequran_teacher_profile', 'teacher_work_models')) {
+                $workspacefilters[] = "(tp.workspaceid = :profileworkspaceid2 AND LOWER(tp.teacher_work_models) LIKE '%independent%')";
+                $profileparams['profileworkspaceid2'] = $workspaceid;
+            }
+            if ($workspacefilters) {
+                $profilewheresql .= ' AND (' . implode(' OR ', $workspacefilters) . ')';
             } else {
                 $profilewheresql .= ' AND 1 = 0';
             }
+        }
+        if (pqltd_column_exists('local_prequran_teacher_profile', 'status')) {
+            $profilewheresql .= ' AND LOWER(tp.status) NOT IN (:profilearchived, :profileinactive, :profilerejected)';
+            $profileparams += ['profilearchived' => 'archived', 'profileinactive' => 'inactive', 'profilerejected' => 'rejected'];
         }
         $profileteachers = $DB->get_records_sql(
             "SELECT tp.userid AS teacherid,

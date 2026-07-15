@@ -22,6 +22,10 @@ function hasArg(name) {
   return process.argv.includes(name);
 }
 
+function isTruthy(value) {
+  return ['1', 'true', 'yes', 'on'].includes(String(value || '').trim().toLowerCase());
+}
+
 function sha256(buffer) {
   return crypto.createHash('sha256').update(buffer).digest('hex');
 }
@@ -92,9 +96,18 @@ async function readProbe(base) {
     probeUrl.searchParams.set('token', token);
   }
   const response = await fetchText(probeUrl.toString());
-  const json = JSON.parse(response.text);
+  let json;
+  try {
+    json = JSON.parse(response.text);
+  } catch (error) {
+    const contentType = response.headers['content-type'] || '';
+    const bodyPreview = response.text.replace(/\s+/g, ' ').slice(0, 180);
+    throw new Error(`Probe did not return JSON. HTTP ${response.status}; content-type ${contentType || '(missing)'}; body ${bodyPreview}`);
+  }
   if (!response.ok || !json.ok || !Array.isArray(json.files)) {
-    throw new Error(`Probe did not return a valid checksum manifest. HTTP ${response.status}.`);
+    const details = json.error ? ` error=${json.error}` : '';
+    const message = json.message ? ` message=${json.message}` : '';
+    throw new Error(`Probe did not return a valid checksum manifest. HTTP ${response.status}.${details}${message}`);
   }
   return {
     mode: 'probe',
@@ -130,13 +143,15 @@ async function directPresenceCheck(base, files) {
       try {
         const response = await fetchText(url);
         const text = response.text.slice(0, 2000);
-        const missing = response.status === 404 || /404|not found/i.test(text);
+        const bodyHasMissingHint = /404|not found/i.test(text);
+        const missing = response.status === 404;
         results.push({
           name: local.name,
           status: missing ? 'missing' : 'served',
           httpStatus: response.status,
           localSha256: local.sha256,
           remoteBodySha256: sha256(Buffer.from(response.text)),
+          bodyHasMissingHint,
           finalUrl: response.url,
         });
       } catch (error) {
@@ -221,16 +236,19 @@ async function main() {
   let mode = 'probe';
   let probe = null;
   let results = [];
+  const requireProbe = hasArg('--probe-only')
+    || isTruthy(process.env.EDUPLATFORM_HUBREDIRECT_DRIFT_REQUIRE_PROBE)
+    || Boolean(process.env.EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN || argValue('--token'));
   if (!hasArg('--direct')) {
     try {
       probe = await readProbe(base);
       results = compareProbe(local, probe.files);
     } catch (error) {
-      if (hasArg('--probe-only')) {
+      if (requireProbe) {
         throw error;
       }
       console.warn(`WARN probe checksum mode unavailable: ${error instanceof Error ? error.message : String(error)}`);
-      console.warn('WARN falling back to direct URL presence checks; exact source checksum comparison requires deployment_drift_probe.php on the live server.');
+      console.warn('WARN falling back to direct URL presence checks; exact source checksum comparison requires a JSON checksum probe response.');
       mode = 'direct';
       results = await directPresenceCheck(base, local);
     }

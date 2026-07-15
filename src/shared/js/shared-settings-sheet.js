@@ -1,5 +1,5 @@
 /* pq_ui_settings_sheet_v1.0_CLEAN.js
-   Shared Settings Sheet (dialog) injector for PreQuraan units.
+   Shared Settings Sheet (dialog) injector for EduPlatform units.
 
    Goal:
    - Remove duplicated <dialog id="sheet"> markup from every unit HTML.

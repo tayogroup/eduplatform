@@ -6,7 +6,7 @@ if ($hassiteconfig) {
 
     $settings->add(new admin_setting_heading(
         'local_prequran/environment_heading',
-        'Pre-Quraan environments',
+        'EduPlatform environments',
         'Controls which Bunny path Moodle launches by default. Production remains the default and existing data is treated as production data.'
     ));
 
@@ -25,9 +25,91 @@ if ($hassiteconfig) {
     $settings->add(new admin_setting_configtext(
         'local_prequran/bunny_app_base_url',
         'App base URL',
-        'Base URL used by Moodle launch routes. Leave blank to use app.quraan.academy in production and the Moodle wwwroot on test, staging, integration, or QA hosts.',
+        'Legacy app base URL used by older launch routes. Leave blank so Moodle uses the EduPlatform shared resource CDN.',
         '',
         PARAM_URL
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bunny_shared_cdn_base_url',
+        'EduPlatform shared resource CDN base URL',
+        'Shared public CDN origin used by EduPlatform and all institution consumers. Do not set this to a consumer-specific host.',
+        '',
+        PARAM_URL
+    ));
+
+    $settings->add(new admin_setting_heading(
+        'local_prequran/bunny_storage_heading',
+        'Bunny storage',
+        'Server-side Bunny Storage settings used for private uploads such as workspace materials and learner recordings.'
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bunny_storage_zone',
+        'Bunny storage zone',
+        'Storage zone name used by Bunny Storage API uploads.',
+        '',
+        PARAM_ALPHANUMEXT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bunny_storage_host',
+        'Bunny storage host',
+        'Bunny Storage API host. Use storage.bunnycdn.com unless your storage zone requires a regional host.',
+        'storage.bunnycdn.com',
+        PARAM_HOST
+    ));
+
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/bunny_storage_access_key',
+        'Bunny storage access key',
+        'Server-side Bunny Storage API access key. Never place this key in static Bunny JavaScript.',
+        ''
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bunny_workspace_material_prefix',
+        'Workspace material storage prefix',
+        'Folder prefix inside the Bunny storage zone for uploaded workspace materials.',
+        'pre_quraan/workspace_materials',
+        PARAM_TEXT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bunny_live_session_slides_prefix',
+        'Live-session slide storage prefix',
+        'Folder prefix inside the Bunny storage zone for session-specific agenda slide decks.',
+        'pre_quraan/live-session-slides',
+        PARAM_TEXT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bunny_live_session_agenda_template_path',
+        'Live-session agenda template storage path',
+        'Bunny storage path for the default agenda template copied into each new live session.',
+        'pre_quraan/live-session-templates/live-session-agenda-template.pptx',
+        PARAM_TEXT
+    ));
+
+    $settings->add(new admin_setting_heading(
+        'local_prequran/onlyoffice_heading',
+        'Online agenda editor',
+        'Optional ONLYOFFICE Docs integration for browser-based editing of live-session PowerPoint agenda decks.'
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/onlyoffice_document_server_url',
+        'ONLYOFFICE document server URL',
+        'Base URL of the ONLYOFFICE Docs document server, for example https://office.example.com. Leave blank to hide the online editor.',
+        '',
+        PARAM_URL
+    ));
+
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/onlyoffice_jwt_secret',
+        'ONLYOFFICE JWT secret',
+        'Optional JWT secret shared with ONLYOFFICE Docs when token validation is enabled on the document server.',
+        ''
     ));
 
     $settings->add(new admin_setting_configtext(
@@ -63,8 +145,8 @@ if ($hassiteconfig) {
 
     $settings->add(new admin_setting_configcheckbox(
         'local_prequran/redirect_moodle_dashboard',
-        'Redirect Pre-Quraan users from Moodle dashboard',
-        'When enabled, students who reach /my/ are sent to the Pre-Quraan app launcher, while parents and teachers are sent to the Pre-Quraan dashboard. Site administrators and unknown accounts remain on Moodle.',
+        'Redirect EduPlatform users from Moodle dashboard',
+        'When enabled, students who reach /my/ are sent to the EduPlatform app launcher, while parents and teachers are sent to the EduPlatform dashboard. Site administrators and unknown accounts remain on Moodle.',
         1
     ));
 
@@ -155,16 +237,191 @@ if ($hassiteconfig) {
     ));
 
     $settings->add(new admin_setting_heading(
+        'local_prequran/support_heading',
+        'Live chat and help desk',
+        'EduPlatform-level support settings inherited by institutional consumers unless an explicit consumer or workspace support policy overrides them.'
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/support_livechat_enabled',
+        'Enable live chat globally',
+        'Master switch for near-real-time support chat entry points across EduPlatform and institutional consumers.',
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/support_async_enabled',
+        'Enable asynchronous support globally',
+        'Allows support conversations across EduPlatform and institutional consumers unless an explicit scoped policy disables them.',
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/support_student_helpdesk_enabled',
+        'Enable student to help desk support globally',
+        'Allows student-help-desk conversations for institutional consumers, subject to relationship and permission checks.',
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/support_student_teacher_enabled',
+        'Enable student to teacher support globally',
+        'Allows student-teacher conversations for institutional consumers, subject to assigned-teacher checks.',
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/support_parent_teacher_enabled',
+        'Enable parent to teacher support globally',
+        'Keeps the existing parent-teacher communication path available for support policy resolution.',
+        1
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/support_student_free_text_policy',
+        'Default student free-text policy',
+        'Default support message policy used when a workspace has no explicit support policy.',
+        'topic_only',
+        [
+            'disabled' => 'Disabled',
+            'topic_only' => 'Topic choices only',
+            'moderated' => 'Moderated free text',
+            'enabled' => 'Enabled',
+        ]
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/support_parent_visible_default',
+        'Parent visible by default',
+        'When enabled, student-created support conversations default to parent-visible.',
+        1
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/support_business_timezone',
+        'Default support business timezone',
+        'Timezone used for default SLA calculations until workspace support hours are configured.',
+        'UTC',
+        PARAM_TEXT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/support_retention_days',
+        'Default support retention days',
+        'Retention target for support records. Destructive purge remains disabled until a later reviewed phase.',
+        365,
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_heading(
+        'local_prequran/finance_payment_heading',
+        'Finance hosted payments',
+        'Platform-level hosted payment defaults. Workspace or consumer provider configuration can override these values when enabled.'
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/finance_payment_enabled',
+        'Enable hosted payments',
+        'When enabled and a checkout base URL plus webhook secret are configured, hosted invoice pages can create payment sessions.',
+        0
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/finance_payment_mode',
+        'Payment mode',
+        'Use test mode until provider sandbox webhooks have been verified.',
+        'test',
+        [
+            'test' => 'Test',
+            'live' => 'Live',
+        ]
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/finance_payment_provider',
+        'Payment provider',
+        'Provider key for hosted payment sessions. The Phase 11 implementation supports generic_hosted webhooks.',
+        'generic_hosted',
+        PARAM_ALPHANUMEXT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/finance_payment_account_id',
+        'Provider account ID',
+        'Platform-level payment provider account identifier.',
+        '',
+        PARAM_TEXT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/finance_payment_checkout_base_url',
+        'Checkout base URL',
+        'Provider hosted checkout URL. Moodle appends session, invoice, amount, currency, return, and cancel parameters.',
+        '',
+        PARAM_URL
+    ));
+
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/finance_payment_api_key',
+        'Payment API key',
+        'Reserved server-side provider API key for later direct session creation. It is not exposed to hosted invoice pages.',
+        ''
+    ));
+
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/finance_payment_webhook_secret',
+        'Webhook signing secret',
+        'Shared HMAC secret used to verify payment webhook signatures.',
+        ''
+    ));
+
+    $settings->add(new admin_setting_heading(
         'local_prequran/quiz_tts_heading',
-        'Quiz chatbot voice',
-        'Server-side ElevenLabs text-to-speech settings for child quiz chatbots. Keep the API key server-side only.'
+        'Chatbot and coach voice',
+        'Server-side ElevenLabs text-to-speech settings for child quiz chatbots and the Chatbot Practice Coach. Keep the API key server-side only.'
     ));
 
     $settings->add(new admin_setting_configpasswordunmask(
         'local_prequran/elevenlabs_api_key',
         'ElevenLabs API key',
-        'API key used by the Moodle server-side quiz voice proxy. Never place this key in Bunny/static JavaScript.',
+        'API key used by the Moodle server-side voice proxy. Never place this key in Bunny/static JavaScript.',
         ''
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/practice_coach_enabled',
+        'Enable Chatbot Practice Coach',
+        'When enabled, teacherless supervised-practice sessions can receive real-time coaching prompts based on lesson focus events.',
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/practice_coach_autospeak',
+        'Practice Coach speaks automatically',
+        'When enabled, Practice Coach prompts request ElevenLabs audio immediately. Browsers may still require the learner to tap Listen first.',
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/practice_coach_ai_rewrite_enabled',
+        'Practice Coach AI message rewrite',
+        'Optional. When enabled, the server asks AI to rewrite approved Practice Coach templates into short, child-safe wording. The template intent remains fixed.',
+        0
+    ));
+
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/practice_coach_openai_api_key',
+        'Practice Coach OpenAI API key',
+        'Optional server-side key for safe template rewrites and summary wording. Leave blank to keep the coach fully rule-based.',
+        ''
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/practice_coach_openai_model',
+        'Practice Coach OpenAI model',
+        'Model used only when AI rewrite is enabled. Output is constrained to a short coaching sentence.',
+        'gpt-4.1-mini',
+        PARAM_TEXT
     ));
 
     $settings->add(new admin_setting_configtext(
@@ -176,9 +433,25 @@ if ($hassiteconfig) {
     ));
 
     $settings->add(new admin_setting_configtext(
+        'local_prequran/practice_coach_voice_id',
+        'Practice Coach ElevenLabs voice ID',
+        'Voice ID used by the Chatbot Practice Coach. Leave blank to reuse the quiz chatbot voice.',
+        'B5xxC4eQoOFJnY4R5XkI',
+        PARAM_ALPHANUMEXT
+    ));
+
+    $settings->add(new admin_setting_configtext(
         'local_prequran/quiz_tts_model_id',
         'Quiz chatbot ElevenLabs model ID',
         'Model ID used for quiz chatbot text-to-speech.',
+        'eleven_multilingual_v2',
+        PARAM_ALPHANUMEXT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/practice_coach_model_id',
+        'Practice Coach ElevenLabs model ID',
+        'Model ID used for Practice Coach text-to-speech. Leave blank to reuse the quiz chatbot model.',
         'eleven_multilingual_v2',
         PARAM_ALPHANUMEXT
     ));
@@ -245,6 +518,30 @@ if ($hassiteconfig) {
         get_string('bbb_recording_retention_days', 'local_prequran'),
         get_string('bbb_recording_retention_days_desc', 'local_prequran'),
         90,
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bbb_recording_sync_lookback_days',
+        get_string('bbb_recording_sync_lookback_days', 'local_prequran'),
+        get_string('bbb_recording_sync_lookback_days_desc', 'local_prequran'),
+        14,
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bbb_recording_sync_limit',
+        get_string('bbb_recording_sync_limit', 'local_prequran'),
+        get_string('bbb_recording_sync_limit_desc', 'local_prequran'),
+        30,
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/bbb_recording_expiry_reminder_days',
+        get_string('bbb_recording_expiry_reminder_days', 'local_prequran'),
+        get_string('bbb_recording_expiry_reminder_days_desc', 'local_prequran'),
+        7,
         PARAM_INT
     ));
 

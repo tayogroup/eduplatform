@@ -1,6 +1,6 @@
-# Pre-Quraan App
+# EduPlatform
 
-Development repository for Pre-Quraan learning units.
+Development repository for EduPlatform learning units.
 
 ## Golden Unit
 

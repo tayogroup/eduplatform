@@ -1,5 +1,5 @@
 /*
-  Pre-Quraan Alphabet runtime fragment: ui-bindings.js
+  EduPlatform Alphabet runtime fragment: ui-bindings.js
   Final UI bindings, shell/runtime orchestration, and startup.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -679,7 +679,7 @@ try {
     const identity = cfg && cfg.identity && typeof cfg.identity === 'object' ? cfg.identity : {};
     const unitId = String(identity.unitId || cfg.unitid || '').trim();
     const lessonId = String(identity.lessonId || cfg.lessonid || unitId || '').trim();
-    const fallbackTitle = String(unitId || lessonId || 'Pre-Quraan Unit');
+    const fallbackTitle = String(unitId || lessonId || 'EduPlatform Unit');
     const readUi = (typeof __pqLocalizedCfg === 'function') ? __pqLocalizedCfg : __cfg;
     const pageTitle = String(readUi('ui.pageTitle', readUi('ui.lessonTitle', fallbackTitle, 'ui'), 'ui')).trim() || fallbackTitle;
     const headerTitle = String(readUi('ui.headerTitle', pageTitle, 'ui')).trim() || pageTitle;

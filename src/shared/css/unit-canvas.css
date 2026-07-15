@@ -369,14 +369,43 @@ h4.pq-rules-current-phrase{
   inset:0;
   background:rgba(0,0,0,0.65);
   display:none;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
+  gap:14px;
+  padding:18px;
   z-index:99;
 }
 #videoModal video{
   max-width:90%;
-  max-height:90%;
+  max-height:78vh;
   border-radius:20px;
+}
+
+#videoModal:not(.pq-animate-video-modal) video{
+  width:min(90vw,720px);
+  max-height:62vh;
+}
+
+.pq-watch-articulation-caption{
+  display:block;
+  width:min(90vw,720px);
+  padding:14px 18px;
+  border-radius:8px;
+  background:#fff8d9;
+  border:3px solid rgba(82,171,101,.5);
+  color:#173b2e;
+  font-family:"Arial Rounded MT Bold","Nunito","Trebuchet MS",Arial,sans-serif;
+  font-size:24px;
+  font-weight:900;
+  line-height:1.35;
+  text-align:center;
+  text-wrap:balance;
+  box-shadow:0 12px 28px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.pq-watch-articulation-caption[hidden]{
+  display:none!important;
 }
 
 #videoModal.pq-animate-video-modal{
@@ -1029,6 +1058,8 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
   .sheet .panel{padding:16px}
   #videoModal{padding:14px}
   #videoModal video{max-width:100%;max-height:70vh}
+  #videoModal:not(.pq-animate-video-modal) video{width:100%;max-height:58vh}
+  .pq-watch-articulation-caption{width:100%;font-size:20px;padding:12px 14px}
   #videoModal.pq-animate-video-modal video{
     max-width:min(var(--pq-animate-video-max-width, 92vw), 92vw);
     max-height:var(--pq-animate-video-max-height, 62vh);
@@ -1517,7 +1548,6 @@ body.pq-speak-step-active #speakMount > #pqSpeakPanel{
 
 /* ===== Step 10 mobile stabilization ===== */
 @media (max-width:768px){
-  #managedStepper,
   .pq-lecture-btn-row,
   #pqLectureCta,
   #pqLectureCta *{

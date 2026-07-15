@@ -6,6 +6,22 @@ require_once(__DIR__ . '/accesslib.php');
 
 require_login();
 
+$requestedconsumerslug = trim(optional_param('consumer', '', PARAM_ALPHANUMEXT));
+$currenthostcontext = pqh_current_consumer_context();
+if ($requestedconsumerslug !== ''
+        && !empty($currenthostcontext->trusted_domain)
+        && $requestedconsumerslug !== (string)$currenthostcontext->consumerslug) {
+    $requestedhostcontext = pqh_consumer_context_by_slug($requestedconsumerslug);
+    if ((string)$requestedhostcontext->consumerslug === $requestedconsumerslug
+            && trim((string)$requestedhostcontext->domain) !== '') {
+        redirect(pqh_consumer_url(
+            '/local/hubredirect/teacher_marketplace_requests.php',
+            $requestedhostcontext,
+            ['consumer' => $requestedconsumerslug]
+        ));
+    }
+}
+
 function pqtmr_table_exists(string $table): bool {
     global $DB;
     return $DB->get_manager()->table_exists($table);
@@ -39,6 +55,7 @@ function pqtmr_short(string $value, int $max = 180): string {
 
 function pqtmr_status_label(string $status): string {
     $labels = [
+        'enrollment_submitted' => 'Enrollment submitted',
         'new' => 'Submitted',
         'selection_requested' => 'Selection requested',
         'academy_review' => 'Academy review',
@@ -76,12 +93,58 @@ $PAGE->add_body_class('pqh-teacher-marketplace-requests-page');
 
 $ready = pqtmr_ready();
 $requests = [];
+$message = '';
+$error = '';
+
+if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        if (!confirm_sesskey()) {
+            throw new invalid_parameter_exception('This confirmation form expired. Refresh and try again.');
+        }
+        $requestid = optional_param('requestid', 0, PARAM_INT);
+        $decision = optional_param('connection_decision', '', PARAM_ALPHANUMEXT);
+        if (!in_array($decision, ['approve', 'decline'], true)) {
+            throw new invalid_parameter_exception('Choose approve or decline.');
+        }
+        $request = $DB->get_record('local_prequran_teacher_request', [
+            'id' => $requestid,
+            'parentid' => (int)$USER->id,
+        ], '*', IGNORE_MISSING);
+        if (!$request) {
+            throw new invalid_parameter_exception('This teacher connection request is not linked to your account.');
+        }
+        if (pqtmr_column_exists('local_prequran_teacher_request', 'consumerid')
+                && (int)$consumercontext->consumerid > 0
+                && (int)$request->consumerid !== (int)$consumercontext->consumerid) {
+            throw new invalid_parameter_exception('This request does not belong to the active marketplace.');
+        }
+        if (!in_array((string)$request->request_status, ['selection_requested', 'academy_review', 'teacher_contacted', 'parent_confirmed'], true)) {
+            throw new invalid_parameter_exception('This request can no longer be changed from the parent dashboard.');
+        }
+
+        $request->request_status = $decision === 'approve' ? 'parent_confirmed' : 'declined';
+        $decisionnote = userdate(time()) . ' - ' . fullname($USER) . ': Guardian ' . ($decision === 'approve' ? 'approved' : 'declined') . ' the teacher-student connection.';
+        $request->admin_notes = trim((string)($request->admin_notes ?? '')) !== ''
+            ? (string)$request->admin_notes . "\n" . $decisionnote
+            : $decisionnote;
+        $request->timemodified = time();
+        $DB->update_record('local_prequran_teacher_request', $request);
+        $message = $decision === 'approve'
+            ? 'Connection approved. Marketplace operations will complete the workspace assignment.'
+            : 'Connection declined. No student records or workspace access were changed.';
+    } catch (Throwable $e) {
+        $error = 'The connection decision was not saved: ' . $e->getMessage();
+    }
+}
 
 if ($ready) {
     $consumerselect = ", '' AS consumer_slug, '' AS consumer_name";
     $consumerjoin = '';
     $consumerwhere = '';
-    $params = ['parentid' => (int)$USER->id];
+    $params = [
+        'parentuserid' => (int)$USER->id,
+        'teacheruserid' => (int)$USER->id,
+    ];
     if (pqtmr_column_exists('local_prequran_teacher_request', 'consumerid')) {
         $consumerselect = ', c.slug AS consumer_slug, c.name AS consumer_name';
         $consumerjoin = 'LEFT JOIN {local_prequran_consumer} c ON c.id = tr.consumerid';
@@ -108,24 +171,13 @@ if ($ready) {
            FROM {local_prequran_teacher_request} tr
       LEFT JOIN {local_prequran_teacher_profile} tp ON tp.userid = tr.teacherid
            {$consumerjoin}
-          WHERE tr.parentid = :parentid
+          WHERE (tr.parentid = :parentuserid OR (tr.teacherid = :teacheruserid AND tr.parentid > 0))
             {$consumerwhere}
        ORDER BY tr.timemodified DESC, tr.timecreated DESC",
         $params,
         0,
         100
     ));
-    $requests = array_values(array_filter($requests, static function($request) use ($consumercontext): bool {
-        $studentid = (int)($request->studentid ?? 0);
-        if ($studentid > 0 && !pqh_user_belongs_to_consumer_context($studentid, $consumercontext)) {
-            return false;
-        }
-        $assignmentworkspaceid = (int)($request->assignmentworkspaceid ?? 0);
-        if ($assignmentworkspaceid > 0 && !pqh_consumer_context_allows_workspace($consumercontext, $assignmentworkspaceid)) {
-            return false;
-        }
-        return true;
-    }));
 }
 
 echo $OUTPUT->header();
@@ -135,7 +187,7 @@ body.pqh-teacher-marketplace-requests-page header,body.pqh-teacher-marketplace-r
 body.pqh-teacher-marketplace-requests-page #page,body.pqh-teacher-marketplace-requests-page #page-content,body.pqh-teacher-marketplace-requests-page #region-main,body.pqh-teacher-marketplace-requests-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
 .pqtmr-shell{min-height:100vh;padding:28px 18px 54px;background:#f4f8fb;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}.pqtmr-wrap{max-width:1080px;margin:0 auto}.pqtmr-top,.pqtmr-panel,.pqtmr-card{background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:10px;box-shadow:0 10px 24px rgba(23,48,68,.06)}
 .pqtmr-top{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:22px;margin-bottom:14px}.pqtmr-title{margin:0;font-size:30px;line-height:1.12;font-weight:950;color:#241b24}.pqtmr-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqtmr-actions,.pqtmr-card-actions{display:flex;gap:8px;flex-wrap:wrap}.pqtmr-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950;cursor:pointer}.pqtmr-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqtmr-btn--tiny{min-height:30px;padding:0 9px;font-size:12px}
-.pqtmr-panel{padding:18px;margin-bottom:14px}.pqtmr-panel h2{margin:0 0 10px;font-size:20px;font-weight:950;color:#241b24}.pqtmr-grid{display:grid;gap:12px}.pqtmr-card{padding:16px}.pqtmr-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}.pqtmr-name{margin:0;color:#241b24;font-size:20px;font-weight:950;line-height:1.15}.pqtmr-muted{color:#5e7280;font-weight:800}.pqtmr-text{margin:8px 0 0;color:#4f6472;font-size:14px;font-weight:780;line-height:1.45}.pqtmr-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:999px;background:#eef7ee;color:#2f5d42;font-size:12px;font-weight:950}.pqtmr-pill--warn{background:#fff6de;color:#745323}.pqtmr-pill--bad{background:#fff0ed;color:#883526}.pqtmr-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;background:#fff;color:#5e7280;font-weight:850}
+.pqtmr-panel{padding:18px;margin-bottom:14px}.pqtmr-panel h2{margin:0 0 10px;font-size:20px;font-weight:950;color:#241b24}.pqtmr-grid{display:grid;gap:12px}.pqtmr-card{padding:16px}.pqtmr-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}.pqtmr-name{margin:0;color:#241b24;font-size:20px;font-weight:950;line-height:1.15}.pqtmr-muted{color:#5e7280;font-weight:800}.pqtmr-text{margin:8px 0 0;color:#4f6472;font-size:14px;font-weight:780;line-height:1.45}.pqtmr-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:999px;background:#eef7ee;color:#2f5d42;font-size:12px;font-weight:950}.pqtmr-pill--warn{background:#fff6de;color:#745323}.pqtmr-pill--bad{background:#fff0ed;color:#883526}.pqtmr-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;background:#fff;color:#5e7280;font-weight:850}.pqtmr-alert{margin-bottom:14px;padding:13px 15px;border-radius:8px;font-weight:850}.pqtmr-alert--ok{background:#edf9ef;color:#245c35}.pqtmr-alert--bad{background:#fff0ed;color:#883526}.pqtmr-inline-form{display:inline-flex;gap:8px}
 @media(max-width:760px){.pqtmr-top,.pqtmr-card-head{display:block}.pqtmr-actions,.pqtmr-card-actions{margin-top:12px}.pqtmr-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
@@ -151,12 +203,14 @@ body.pqh-teacher-marketplace-requests-page #page,body.pqh-teacher-marketplace-re
         <a class="pqtmr-btn pqtmr-btn--light" href="<?php echo (new moodle_url((int)($consumercontext->workspaceid ?? 0) > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $consumerparams))->out(false); ?>">Dashboard</a>
       </div>
     </section>
+    <?php if ($message !== ''): ?><div class="pqtmr-alert pqtmr-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
+    <?php if ($error !== ''): ?><div class="pqtmr-alert pqtmr-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
     <?php if (!$ready): ?>
       <div class="pqtmr-empty">Teacher request schema is not ready yet. Please run the local_prequran Moodle upgrade.</div>
     <?php elseif (!$requests): ?>
       <section class="pqtmr-panel">
         <h2>No Requests Yet</h2>
-        <div class="pqtmr-empty">You have not requested a marketplace teacher for <?php echo s($brandname); ?> yet.</div>
+        <div class="pqtmr-empty">No teacher connection requests are linked to the current account, <?php echo s(fullname($USER)); ?>. Guardians see requests linked to them for approval; teachers see requests they submitted for tracking.</div>
       </section>
     <?php else: ?>
       <section class="pqtmr-panel">
@@ -165,6 +219,8 @@ body.pqh-teacher-marketplace-requests-page #page,body.pqh-teacher-marketplace-re
           <?php foreach ($requests as $request): ?>
             <?php
             $status = (string)$request->request_status;
+            $isrequestguardian = (int)$request->parentid === (int)$USER->id;
+            $isrequestteacher = (int)$request->teacherid === (int)$USER->id;
             $teachername = trim((string)($request->teacher_display_name ?? '')) !== '' ? (string)$request->teacher_display_name : pqtmr_user_name((int)$request->teacherid);
             $studentname = pqtmr_user_name((int)$request->studentid);
             $requestcontextparams = $consumerparams;
@@ -185,6 +241,7 @@ body.pqh-teacher-marketplace-requests-page #page,body.pqh-teacher-marketplace-re
                 <div>
                   <h3 class="pqtmr-name"><?php echo s($teachername); ?></h3>
                   <div class="pqtmr-muted">Student: <?php echo s($studentname); ?> · Submitted <?php echo userdate((int)$request->timecreated); ?></div>
+                  <div class="pqtmr-muted">Your role: <?php echo $isrequestguardian ? 'Parent / guardian' : ($isrequestteacher ? 'Requesting teacher' : 'Viewer'); ?></div>
                   <?php if ((string)($request->consumer_name ?? '') !== ''): ?><div class="pqtmr-muted"><?php echo s((string)$request->consumer_name); ?></div><?php endif; ?>
                 </div>
                 <span class="pqtmr-pill<?php echo $pillclass; ?>"><?php echo s(pqtmr_status_label($status)); ?></span>
@@ -197,6 +254,14 @@ body.pqh-teacher-marketplace-requests-page #page,body.pqh-teacher-marketplace-re
                 <?php if ((int)($request->assignmentid ?? 0) > 0 && (int)$request->studentid > 0): ?>
                   <a class="pqtmr-btn pqtmr-btn--tiny" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $requestcontextparams + ['childid' => (int)$request->studentid]))->out(false); ?>">Calendar</a>
                   <?php if ($studentworkspaceurl): ?><a class="pqtmr-btn pqtmr-btn--light pqtmr-btn--tiny" href="<?php echo $studentworkspaceurl->out(false); ?>">Student workspace</a><?php endif; ?>
+                <?php endif; ?>
+                <?php if ($isrequestguardian && in_array($status, ['selection_requested', 'academy_review', 'teacher_contacted'], true)): ?>
+                  <form class="pqtmr-inline-form" method="post">
+                    <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                    <input type="hidden" name="requestid" value="<?php echo (int)$request->id; ?>">
+                    <button class="pqtmr-btn pqtmr-btn--tiny" type="submit" name="connection_decision" value="approve">Approve connection</button>
+                    <button class="pqtmr-btn pqtmr-btn--light pqtmr-btn--tiny" type="submit" name="connection_decision" value="decline">Decline</button>
+                  </form>
                 <?php endif; ?>
               </div>
             </article>

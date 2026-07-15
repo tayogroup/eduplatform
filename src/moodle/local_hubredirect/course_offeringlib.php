@@ -79,6 +79,44 @@ function pqco_visibility_options(): array {
     ];
 }
 
+function pqco_workspace_course_options(stdClass $consumercontext, array $fallback = [], bool $publiconly = false): array {
+    global $DB;
+
+    $workspaceid = (int)($consumercontext->workspaceid ?? 0);
+    if ($workspaceid <= 0 || !pqco_table_ready()) {
+        return $workspaceid > 0 ? [] : $fallback;
+    }
+    $params = [$workspaceid, 'published'];
+    $where = 'workspaceid = ? AND status = ?';
+    if ($publiconly) {
+        $where .= ' AND visibility = ?';
+        $params[] = 'institution_public';
+    }
+    try {
+        $offerings = $DB->get_records_select(
+            'local_prequran_course_offering',
+            $where,
+            $params,
+            'startdate ASC, title ASC'
+        );
+    } catch (Throwable $e) {
+        return [];
+    }
+    $options = [];
+    foreach ($offerings as $offering) {
+        if (pqco_offering_has_ended($offering)) {
+            continue;
+        }
+        $key = pqh_normalize_course_key((string)$offering->course_key);
+        if ($key === '') {
+            continue;
+        }
+        $label = trim((string)$offering->title);
+        $options[$key] = $label !== '' ? $label : (string)($fallback[$key] ?? $key);
+    }
+    return $options;
+}
+
 function pqco_moodle_courses(): array {
     global $DB;
 
@@ -666,14 +704,14 @@ function pqco_append_profile_course(int $studentid, string $coursekey): void {
     $DB->update_record('local_prequran_student_profile', $profile);
 }
 
-function pqco_enrol_student_in_moodle_course(int $studentid, int $courseid): bool {
+function pqco_enrol_user_in_moodle_course(int $userid, int $courseid, string $roleshortname): bool {
     global $CFG, $DB;
 
-    if ($studentid <= 0 || $courseid <= 0) {
+    if ($userid <= 0 || $courseid <= 0) {
         return false;
     }
     require_once($CFG->libdir . '/enrollib.php');
-    if (is_enrolled(context_course::instance($courseid), $studentid, '', true)) {
+    if (is_enrolled(context_course::instance($courseid), $userid, '', true)) {
         return true;
     }
     $manual = enrol_get_plugin('manual');
@@ -691,9 +729,111 @@ function pqco_enrol_student_in_moodle_course(int $studentid, int $courseid): boo
     if (!$manualinstance) {
         return false;
     }
-    $studentroleid = (int)$DB->get_field('role', 'id', ['shortname' => 'student'], IGNORE_MISSING);
-    $manual->enrol_user($manualinstance, $studentid, $studentroleid ?: null, time(), 0, ENROL_USER_ACTIVE);
+    $roleid = (int)$DB->get_field('role', 'id', ['shortname' => $roleshortname], IGNORE_MISSING);
+    $manual->enrol_user($manualinstance, $userid, $roleid ?: null, time(), 0, ENROL_USER_ACTIVE);
     return true;
+}
+
+function pqco_enrol_student_in_moodle_course(int $studentid, int $courseid): bool {
+    return pqco_enrol_user_in_moodle_course($studentid, $courseid, 'student');
+}
+
+function pqco_teacher_ids_for_student(int $studentid, int $workspaceid = 0): array {
+    global $DB;
+
+    if ($studentid <= 0) {
+        return [];
+    }
+
+    $teacherids = [];
+    if (pqh_table_exists_safe('local_prequran_teacher_student')) {
+        $rows = $DB->get_records('local_prequran_teacher_student', [
+            'studentid' => $studentid,
+            'status' => 'active',
+        ], '', 'id,teacherid');
+        foreach ($rows as $row) {
+            $teacherid = (int)$row->teacherid;
+            if ($teacherid > 0 && $teacherid !== $studentid) {
+                $teacherids[$teacherid] = $teacherid;
+            }
+        }
+    }
+
+    if (pqh_table_exists_safe('local_prequran_group_member') && pqh_table_exists_safe('local_prequran_class_group')) {
+        $rows = $DB->get_records_sql(
+            "SELECT DISTINCT cg.teacherid
+               FROM {local_prequran_group_member} gm
+               JOIN {local_prequran_class_group} cg ON cg.id = gm.groupid
+              WHERE gm.studentid = :studentid
+                AND gm.assignment_status = :assignmentstatus
+                AND cg.status <> :archived",
+            [
+                'studentid' => $studentid,
+                'assignmentstatus' => 'active',
+                'archived' => 'archived',
+            ]
+        );
+        foreach ($rows as $row) {
+            $teacherid = (int)$row->teacherid;
+            if ($teacherid > 0 && $teacherid !== $studentid) {
+                $teacherids[$teacherid] = $teacherid;
+            }
+        }
+    }
+
+    if ($workspaceid > 0
+        && pqh_table_exists_safe('local_prequran_workspace')
+        && pqh_table_exists_safe('local_prequran_workspace_member')) {
+        $rows = $DB->get_records_sql(
+            "SELECT userid
+               FROM {local_prequran_workspace_member}
+              WHERE workspaceid = :workspaceid
+                AND status = :status
+                AND workspace_role IN (:ownerrole, :teacherrole, :assistantrole)
+                AND EXISTS (
+                    SELECT 1
+                      FROM {local_prequran_workspace} w
+                     WHERE w.id = :workspaceidcheck
+                       AND w.workspace_type = :workspacetype
+                       AND w.status <> :archived
+                )",
+            [
+                'workspaceid' => $workspaceid,
+                'workspaceidcheck' => $workspaceid,
+                'status' => 'active',
+                'ownerrole' => 'owner',
+                'teacherrole' => 'teacher',
+                'assistantrole' => 'assistant_teacher',
+                'workspacetype' => 'solo_teacher',
+                'archived' => 'archived',
+            ]
+        );
+        foreach ($rows as $row) {
+            $teacherid = (int)$row->userid;
+            if ($teacherid > 0 && $teacherid !== $studentid) {
+                $teacherids[$teacherid] = $teacherid;
+            }
+        }
+    }
+
+    return array_values($teacherids);
+}
+
+function pqco_enrol_assigned_teachers_in_moodle_course(int $studentid, int $courseid, int $workspaceid = 0, array $auditdetails = []): int {
+    $count = 0;
+    foreach (pqco_teacher_ids_for_student($studentid, $workspaceid) as $teacherid) {
+        if (!pqco_enrol_user_in_moodle_course((int)$teacherid, $courseid, 'teacher')) {
+            continue;
+        }
+        $count++;
+        pqco_course_audit('teacher_moodle_enrollment_completed', 'user', (int)$teacherid, $auditdetails + [
+            'workspaceid' => $workspaceid,
+            'studentid' => $studentid,
+            'teacherid' => (int)$teacherid,
+            'moodlecourseid' => $courseid,
+        ]);
+    }
+    return $count;
 }
 
 function pqco_unenrol_student_from_moodle_course(int $studentid, int $courseid): bool {

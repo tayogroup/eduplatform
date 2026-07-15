@@ -6,22 +6,22 @@ require_once(__DIR__ . '/accesslib.php');
 
 $consumer = pqh_requested_consumer_context();
 $slug = (string)$consumer->consumerslug;
-$isedu = $slug === 'edu-for-tomorrow';
+$ismarketplace = pqh_consumer_feature_enabled($consumer, 'teacher_marketplace');
 $isinstitution = (string)($consumer->consumer_type ?? '') === 'institution';
 $isacademy = (string)($consumer->consumer_type ?? '') === 'academy_consumer';
 $isprofileconsumer = $isinstitution || $isacademy;
 $workspaceid = (int)($consumer->workspaceid ?? 0);
-$brand = $isedu ? 'EduForTomorrow' : (string)$consumer->consumername;
+$brand = (string)$consumer->consumername;
 $brandlogo = trim((string)($consumer->logourl ?? ''));
 $theme = pqh_consumer_theme($consumer);
 $copy = pqh_consumer_copy($consumer);
-$brandinitial = pqh_consumer_brand_initials($consumer, $isedu ? 'E' : 'W');
+$brandinitial = pqh_consumer_brand_initials($consumer, 'W');
 $heroimage = pqh_consumer_hero_image_url($consumer);
 $primarycolor = (string)$theme['primary_color'];
 $accentcolor = (string)$theme['accent_color'];
 $tagline = $isinstitution
     ? 'A branded teaching workspace for students, teachers, live sessions, reporting, and custom-domain access.'
-    : ($isedu
+    : ($ismarketplace
         ? 'A marketplace and operating workspace for independent teachers, tutors, parents, and learning institutions.'
         : 'Online learning operations, live sessions, student intake, and teacher services in one managed workspace.');
 $headline = trim((string)($copy['landing_headline'] ?? ''));
@@ -33,14 +33,18 @@ if ($customsubtitle !== '') {
     $tagline = $customsubtitle;
 }
 $support = trim((string)($consumer->supportemail ?? ''));
+$externalwebsiteurl = trim((string)($consumer->externalwebsiteurl ?? ''));
+$useexternalintake = (string)($consumer->intakelocation ?? '') === 'external_website' && $externalwebsiteurl !== '';
 $consumerparams = ['consumer' => $slug];
+$teachersubmitted = optional_param('teacher_submitted', 0, PARAM_BOOL);
 $workspaceparams = $consumerparams;
 if ($workspaceid > 0) {
     $workspaceparams['workspaceid'] = $workspaceid;
 }
 
 $studenturl = new moodle_url('/local/hubredirect/public_intake.php', $workspaceparams);
-$teacherurl = new moodle_url($isedu ? '/local/hubredirect/public_teacher_intake.php' : '/local/hubredirect/teacher_intake.php', $workspaceparams);
+$studenthref = $useexternalintake ? $externalwebsiteurl : $studenturl->out(false);
+$teacherurl = new moodle_url($ismarketplace ? '/local/hubredirect/public_teacher_intake.php' : '/local/hubredirect/teacher_intake.php', $workspaceparams);
 $marketurl = new moodle_url('/local/hubredirect/teacher_marketplace.php', $consumerparams);
 $dashboardpath = (string)($consumer->defaultdashboardpath ?: '/local/hubredirect/dashboard.php');
 $dashboardurl = new moodle_url($dashboardpath, $workspaceparams);
@@ -62,7 +66,7 @@ if (method_exists($PAGE, 'set_cacheable')) {
     $PAGE->set_cacheable(false);
 }
 
-function pqhcl_service_cards(bool $isedu, bool $isinstitution): array {
+function pqhcl_service_cards(bool $ismarketplace, bool $isinstitution, string $brand): array {
     if ($isinstitution) {
         return [
             ['Branded workspace', 'Use your own institution identity and custom domain while keeping operations in the shared learning platform.'],
@@ -71,11 +75,11 @@ function pqhcl_service_cards(bool $isedu, bool $isinstitution): array {
             ['Reports and operations', 'Review workspace reports, teaching load, student progress, materials, and operational follow-up.'],
         ];
     }
-    if ($isedu) {
+    if ($ismarketplace) {
         return [
             ['For independent teachers', 'Create a public profile, receive parent inquiries, manage students and courses, and run live sessions from one workspace.'],
             ['For parents', 'Browse teacher profiles, request services, and submit student learning needs through a guided intake form.'],
-            ['For institutions', 'Operate a branded workspace for teachers, students, live sessions, reports, and custom-domain access.'],
+            ['For institutions', 'Find qualified teachers to hire, refer students for tutoring, and request extra learning support through the ' . $brand . ' marketplace.'],
             ['For live learning', 'Use scheduling, session materials, recordings, consent controls, and follow-up tools built for recurring instruction.'],
         ];
     }
@@ -113,6 +117,7 @@ body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!importan
 .pqhcl-links{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
 .pqhcl-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border-radius:8px;border:1px solid rgba(23,48,68,.13);background:#eef4f6;color:#173044!important;text-decoration:none;font-size:14px;font-weight:950}
 .pqhcl-btn--primary{background:var(--pqh-accent,#d99a26);border-color:var(--pqh-accent,#d99a26);color:#1b1409!important;box-shadow:0 12px 22px rgba(217,154,38,.22)}
+.pqhcl-alert{max-width:1180px;margin:18px auto 0;padding:14px 18px;border-radius:8px;background:#edf9ef;color:#245c35;border:1px solid rgba(36,92,53,.12);font-weight:950}
 .pqhcl-hero{position:relative;overflow:hidden;min-height:560px;display:flex;align-items:center;background:linear-gradient(90deg,rgba(9,37,32,.92),rgba(16,74,60,.76) 54%,rgba(16,74,60,.28)),var(--pqh-hero-image) center/cover no-repeat;color:#fff}
 .pqhcl-hero-inner{max-width:1180px;width:100%;margin:0 auto;padding:72px 18px 92px}
 .pqhcl-kicker{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:999px;background:rgba(255,216,140,.16);border:1px solid rgba(255,216,140,.34);color:#ffd88c;font-size:13px;font-weight:950;text-transform:uppercase}
@@ -155,10 +160,12 @@ body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!importan
         <span><?php echo s($brand); ?></span>
       </a>
       <div class="pqhcl-links">
+        <?php if ($externalwebsiteurl !== ''): ?>
+          <a class="pqhcl-btn" href="<?php echo s($externalwebsiteurl); ?>">Institution Website</a>
+        <?php endif; ?>
         <?php if (!$isinstitution): ?>
           <a class="pqhcl-btn" href="<?php echo $marketurl->out(false); ?>">Browse Teachers</a>
         <?php endif; ?>
-        <a class="pqhcl-btn" href="<?php echo $studenturl->out(false); ?>">Student Intake</a>
         <?php if ($isprofileconsumer): ?>
           <a class="pqhcl-btn" href="<?php echo $profileurl->out(false); ?>">Profile</a>
           <a class="pqhcl-btn" href="<?php echo $profileurl->out(false); ?>#contact">Contact</a>
@@ -170,14 +177,17 @@ body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!importan
       </div>
     </div>
   </nav>
+  <?php if ($teachersubmitted): ?>
+    <div class="pqhcl-alert">Thank you. Your teacher application was received and <?php echo s($brand); ?> will review it.</div>
+  <?php endif; ?>
 
   <section class="pqhcl-hero">
     <div class="pqhcl-hero-inner">
-      <div class="pqhcl-kicker"><?php echo s($isinstitution ? 'Institution workspace' : ($isedu ? 'Independent teaching platform' : 'Academy learning platform')); ?></div>
+      <div class="pqhcl-kicker"><?php echo s($isinstitution ? 'Institution workspace' : ($ismarketplace ? 'Independent teaching platform' : 'Academy learning platform')); ?></div>
       <h1 class="pqhcl-title"><?php echo s($headline); ?></h1>
       <p class="pqhcl-sub"><?php echo s($tagline); ?></p>
       <div class="pqhcl-hero-actions">
-        <a class="pqhcl-btn pqhcl-btn--primary" href="<?php echo $studenturl->out(false); ?>"><?php echo s($isinstitution ? 'Submit Student Intake' : 'Request Teacher Services'); ?></a>
+        <a class="pqhcl-btn pqhcl-btn--primary" href="<?php echo s($studenthref); ?>"><?php echo s($useexternalintake ? 'Apply on Institution Website' : ($isinstitution ? 'Submit Student Intake' : 'Request Teacher Services')); ?></a>
         <a class="pqhcl-btn" href="<?php echo $teacherurl->out(false); ?>"><?php echo s($isinstitution ? 'Teacher Onboarding' : 'Teacher Profile Intake'); ?></a>
         <?php if ($isprofileconsumer): ?>
           <a class="pqhcl-btn" href="<?php echo $profileurl->out(false); ?>"><?php echo s($isacademy ? 'Academy Profile' : 'Institution Profile'); ?></a>
@@ -193,7 +203,7 @@ body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!importan
 
   <section class="pqhcl-band">
     <div class="pqhcl-grid">
-      <?php foreach (pqhcl_service_cards($isedu, $isinstitution) as $card): ?>
+      <?php foreach (pqhcl_service_cards($ismarketplace, $isinstitution, $brand) as $card): ?>
         <article class="pqhcl-card">
           <h2><?php echo s($card[0]); ?></h2>
           <p><?php echo s($card[1]); ?></p>
@@ -205,11 +215,11 @@ body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!importan
   <section class="pqhcl-section">
     <div class="pqhcl-split">
       <div class="pqhcl-copy">
-        <h2><?php echo s($isinstitution ? 'Your workspace, under your institution identity.' : ($isedu ? 'One platform, many teaching businesses.' : 'Structured operations for live online learning.')); ?></h2>
+        <h2><?php echo s($isinstitution ? 'Your workspace, under your institution identity.' : ($ismarketplace ? 'One platform, many teaching businesses.' : 'Structured operations for live online learning.')); ?></h2>
         <p><?php echo s($isinstitution
             ? $brand . ' can use this public entry point for intake and login while staff continue into the dedicated workspace for students, teachers, live sessions, and reports.'
-            : ($isedu
-                ? 'EduForTomorrow is designed so independent teachers and institutions can present services publicly while using shared operational tools for students, courses, live sessions, communication, and reporting.'
+            : ($ismarketplace
+                ? $brand . ' is designed so independent teachers can offer services publicly while parents and institutions can find qualified teachers, request tutoring, and refer students for extra learning support.'
                 : $brand . ' uses the shared EduPlatform foundation to coordinate student intake, teacher onboarding, live sessions, marketplace profiles, and parent communication.')); ?></p>
         <div class="pqhcl-list">
           <div class="pqhcl-row"><span class="pqhcl-dot">1</span><span>Public pages route visitors into the correct brand or workspace context.</span></div>
@@ -220,7 +230,7 @@ body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!importan
       <aside class="pqhcl-panel">
         <h2>Get Started</h2>
         <div class="pqhcl-panel-actions">
-          <a class="pqhcl-btn pqhcl-btn--primary" href="<?php echo $studenturl->out(false); ?>">Parent / Student Intake</a>
+          <a class="pqhcl-btn pqhcl-btn--primary" href="<?php echo s($studenthref); ?>"><?php echo s($useexternalintake ? 'Apply on Institution Website' : ($ismarketplace ? 'Request Teacher Services' : 'Parent / Student Intake')); ?></a>
           <a class="pqhcl-btn" href="<?php echo $teacherurl->out(false); ?>"><?php echo s($isinstitution ? 'Teacher Onboarding' : 'Independent Teacher Intake'); ?></a>
           <?php if (!$isinstitution && !$isacademy): ?>
             <a class="pqhcl-btn" href="<?php echo $marketurl->out(false); ?>">Teacher Marketplace</a>

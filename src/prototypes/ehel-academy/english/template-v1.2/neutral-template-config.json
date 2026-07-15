@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "Ehel English Content Template v1.2",
+  "templateType": "grade-neutral-master",
+  "locale": "en-GB",
+  "courseDefaults": {
+    "gradeId": null,
+    "gradeLabel": null,
+    "subject": "English",
+    "regularUnitCount": 9,
+    "firstRegularUnitNo": 1,
+    "hasPreUnit": false,
+    "hasCapstone": true,
+    "hasFinalAssessment": true,
+    "termCount": 3
+  },
+  "contentDefaults": {
+    "vocabularySentencePractices": 5,
+    "grammarPracticesPerUnit": 6,
+    "speakingPracticesPerUnit": 6,
+    "writingPracticesPerUnit": 6,
+    "activitiesPerUnit": 6,
+    "quizQuestionsPerUnit": 10,
+    "liveSessionsPerUnit": 6,
+    "deliveryWeeksPerUnit": 2,
+    "sessionsPerWeek": 3,
+    "finalQuizQuestions": 30,
+    "masteryThreshold": 0.8
+  },
+  "audioPolicy": {
+    "provider": "ElevenLabs",
+    "voiceId": "XfNU2rGpBa01ckF309OY",
+    "model": "eleven_multilingual_v2",
+    "playbackRate": 0.9,
+    "playbackRateScope": "All ElevenLabs voice audio",
+    "alternativeSlowPlaybackEnabled": false,
+    "linePausePolicy": "Preserve every line break and add terminal punctuation when a line has none",
+    "pendingMediaMustBeExplicit": true
+  },
+  "runtimePolicy": {
+    "uiArchitecture": "one-shared-ui-per-grade",
+    "dataArchitecture": "course-manifest-plus-unit-json-plus-linked-dictionary",
+    "separateUnitInterfaces": false
+  },
+  "gradeProfiles": {
+    "g01": { "stage": "early-foundations", "readingWordsPerText": "30-100", "vocabularyPerUnit": "12-25", "writingExpectation": "labels, copying and 1-3 simple sentences", "speakingTarget": "30-60 seconds", "learnerIndependence": "emerging" },
+    "g02": { "stage": "foundations", "readingWordsPerText": "60-180", "vocabularyPerUnit": "15-30", "writingExpectation": "3-6 connected simple sentences", "speakingTarget": "about 1 minute", "learnerIndependence": "developing" },
+    "g03": { "stage": "transition", "readingWordsPerText": "120-350", "vocabularyPerUnit": "15-30", "writingExpectation": "6-10 sentences or one short paragraph", "speakingTarget": "about 2 minutes", "learnerIndependence": "developing" },
+    "g04": { "stage": "upper-primary-bridge", "readingWordsPerText": "200-500", "vocabularyPerUnit": "18-35", "writingExpectation": "1-2 organised paragraphs", "speakingTarget": "2-3 minutes", "learnerIndependence": "moderate" },
+    "g05": { "stage": "upper-primary", "readingWordsPerText": "300-700", "vocabularyPerUnit": "20-40", "writingExpectation": "2-3 organised paragraphs across genres", "speakingTarget": "about 3 minutes", "learnerIndependence": "moderate" },
+    "g06": { "stage": "upper-primary-mastery", "readingWordsPerText": "400-900", "vocabularyPerUnit": "20-45", "writingExpectation": "3-5 paragraphs with clear structure", "speakingTarget": "3-4 minutes", "learnerIndependence": "moderate-high" },
+    "g07": { "stage": "lower-secondary-entry", "readingWordsPerText": "500-1100", "vocabularyPerUnit": "20-50", "writingExpectation": "multi-paragraph analytical, informative and creative writing", "speakingTarget": "4-5 minutes", "learnerIndependence": "increasing" },
+    "g08": { "stage": "lower-secondary", "readingWordsPerText": "600-1300", "vocabularyPerUnit": "25-55", "writingExpectation": "sustained multi-paragraph responses", "speakingTarget": "5-6 minutes", "learnerIndependence": "increasing" },
+    "g09": { "stage": "lower-secondary-mastery", "readingWordsPerText": "700-1500", "vocabularyPerUnit": "25-60", "writingExpectation": "sustained argument, analysis and creative composition", "speakingTarget": "6-7 minutes", "learnerIndependence": "high" },
+    "g10": { "stage": "upper-secondary-entry", "readingWordsPerText": "800-1800", "vocabularyPerUnit": "25-65", "writingExpectation": "extended analytical, argumentative and transactional writing", "speakingTarget": "7-8 minutes", "learnerIndependence": "high" },
+    "g11": { "stage": "upper-secondary", "readingWordsPerText": "900-2000", "vocabularyPerUnit": "30-70", "writingExpectation": "extended controlled writing across academic and authentic genres", "speakingTarget": "8-10 minutes", "learnerIndependence": "very-high" },
+    "g12": { "stage": "upper-secondary-mastery", "readingWordsPerText": "1000-2200", "vocabularyPerUnit": "30-75", "writingExpectation": "sustained independent analytical and original composition", "speakingTarget": "10-12 minutes", "learnerIndependence": "independent" }
+  }
+}

@@ -5,22 +5,54 @@ defined('MOODLE_INTERNAL') || die();
 
 function pqwm_workspace_members(int $workspaceid, array $roles): array {
     global $DB;
-    if (!pqh_table_exists_safe('local_prequran_workspace_member') || !$roles) {
+    if (!$roles) {
         return [];
     }
-    [$insql, $params] = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'role');
-    $params['workspaceid'] = $workspaceid;
-    $params['status'] = 'active';
-    return array_values($DB->get_records_sql(
-        "SELECT wm.id, wm.userid, wm.workspace_role, u.firstname, u.lastname, u.email, u.idnumber
-           FROM {local_prequran_workspace_member} wm
-           JOIN {user} u ON u.id = wm.userid
-          WHERE wm.workspaceid = :workspaceid
-            AND wm.status = :status
-            AND wm.workspace_role {$insql}
-       ORDER BY u.lastname ASC, u.firstname ASC",
-        $params
-    ));
+    $members = [];
+    if (pqh_table_exists_safe('local_prequran_workspace_member')) {
+        [$insql, $params] = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'role');
+        $params['workspaceid'] = $workspaceid;
+        $params['status'] = 'active';
+        foreach ($DB->get_records_sql(
+            "SELECT wm.id, wm.userid, wm.workspace_role, u.firstname, u.lastname, u.email, u.idnumber
+               FROM {local_prequran_workspace_member} wm
+               JOIN {user} u ON u.id = wm.userid
+              WHERE wm.workspaceid = :workspaceid
+                AND wm.status = :status
+                AND wm.workspace_role {$insql}
+           ORDER BY u.lastname ASC, u.firstname ASC",
+            $params
+        ) as $row) {
+            $members[(int)$row->userid] = $row;
+        }
+    }
+    if (array_intersect($roles, ['owner', 'admin', 'teacher', 'assistant_teacher'])
+            && pqh_table_exists_safe('local_prequran_teacher_profile')
+            && pqh_table_has_field_safe('local_prequran_teacher_profile', 'workspaceid')
+            && pqh_table_has_field_safe('local_prequran_teacher_profile', 'teacher_work_models')) {
+        $params = ['workspaceid' => $workspaceid];
+        $statussql = '';
+        if (pqh_table_has_field_safe('local_prequran_teacher_profile', 'status')) {
+            $statussql = ' AND LOWER(tp.status) NOT IN (:archived, :inactive, :rejected)';
+            $params += ['archived' => 'archived', 'inactive' => 'inactive', 'rejected' => 'rejected'];
+        }
+        foreach ($DB->get_records_sql(
+            "SELECT tp.id, tp.userid, 'teacher' AS workspace_role, u.firstname, u.lastname, u.email, u.idnumber
+               FROM {local_prequran_teacher_profile} tp
+               JOIN {user} u ON u.id = tp.userid
+              WHERE tp.workspaceid = :workspaceid
+                AND LOWER(tp.teacher_work_models) LIKE '%independent%'
+                {$statussql}
+           ORDER BY u.lastname ASC, u.firstname ASC",
+            $params
+        ) as $row) {
+            $members[(int)$row->userid] = $members[(int)$row->userid] ?? $row;
+        }
+    }
+    uasort($members, static function($a, $b): int {
+        return strcasecmp(trim((string)$a->lastname . ' ' . (string)$a->firstname), trim((string)$b->lastname . ' ' . (string)$b->firstname));
+    });
+    return array_values($members);
 }
 function pqwm_notification_audit_exists(int $assignmentid, string $action): bool {
     global $DB;
@@ -257,7 +289,7 @@ function pqwm_materials(int $workspaceid): array {
         'local_prequran_workspace_material',
         ['workspaceid' => $workspaceid, 'status' => 'active'],
         'timemodified DESC',
-        pqwm_fields('local_prequran_workspace_material', ['id', 'title', 'material_type', 'course_key', 'description', 'source_url', 'metadatajson', 'visibility', 'createdby', 'timemodified']),
+        pqwm_fields('local_prequran_workspace_material', ['id', 'workspaceid', 'title', 'material_type', 'course_key', 'description', 'source_url', 'metadatajson', 'visibility', 'createdby', 'timemodified']),
         0,
         80
     ));

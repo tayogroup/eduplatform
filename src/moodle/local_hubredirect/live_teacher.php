@@ -29,6 +29,10 @@ $PAGE->set_title('Teacher Live Workspace');
 $PAGE->set_heading('Teacher Live Workspace');
 $PAGE->add_body_class('pqh-live-teacher-page');
 
+function pqltch_url(string $path, array $params = []): moodle_url {
+    return new moodle_url('/local/hubredirect/' . ltrim($path, '/'), $params);
+}
+
 function pqltch_table_exists(string $table): bool {
     global $DB;
     return $DB->get_manager()->table_exists($table);
@@ -66,6 +70,45 @@ function pqltch_is_teacher(int $userid): bool {
     global $DB;
     if (is_siteadmin($userid)) {
         return true;
+    }
+    if (pqltch_table_exists('local_prequran_teacher_profile')) {
+        if ($DB->record_exists_select(
+            'local_prequran_teacher_profile',
+            "userid = ? AND (status IS NULL OR status = '' OR LOWER(status) NOT IN (?, ?, ?))",
+            [$userid, 'archived', 'inactive', 'rejected']
+        )) {
+            return true;
+        }
+        $profilecolumns = [];
+        try {
+            $profilecolumns = $DB->get_columns('local_prequran_teacher_profile');
+        } catch (Throwable $e) {
+            $profilecolumns = [];
+        }
+        if (isset($profilecolumns['teacher_work_models']) && isset($profilecolumns['status'])
+            && $DB->record_exists_select(
+                'local_prequran_teacher_profile',
+                'userid = :userid
+                 AND LOWER(status) NOT IN (:archived, :inactive, :rejected)
+                 AND (
+                     LOWER(teacher_work_models) LIKE :independentkey
+                     OR LOWER(teacher_work_models) LIKE :independentlabel
+                     OR LOWER(teacher_work_models) LIKE :schoollabel
+                     OR LOWER(teacher_work_models) LIKE :multischoollabel
+                 )',
+                [
+                    'userid' => $userid,
+                    'archived' => 'archived',
+                    'inactive' => 'inactive',
+                    'rejected' => 'rejected',
+                    'independentkey' => '%independent_teacher%',
+                    'independentlabel' => '%independent teacher%',
+                    'schoollabel' => '%teach for one school%',
+                    'multischoollabel' => '%teach for multiple schools%',
+                ]
+            )) {
+            return true;
+        }
     }
     if (pqltch_table_exists('local_prequran_teacher_student')
         && $DB->record_exists('local_prequran_teacher_student', ['teacherid' => $userid, 'status' => 'active'])) {
@@ -349,8 +392,12 @@ if (!is_siteadmin($USER)) {
 $workspaceid = 0;
 $workspace = null;
 if ($requestedworkspaceid > 0) {
-    $workspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
-    if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)) {
+    $resolvedworkspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
+    $isownteacherworkspace = (int)$USER->id === $teacherid && pqltch_is_teacher((int)$USER->id);
+    $workspaceid = $resolvedworkspaceid > 0 ? $resolvedworkspaceid : ($isownteacherworkspace ? $requestedworkspaceid : 0);
+    $canviewworkspace = $workspaceid > 0
+        && (pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid) || $isownteacherworkspace);
+    if (!$canviewworkspace) {
         pqh_access_denied(
             'This workspace live-class view is not available for your account.',
             $dashboardurl,
@@ -375,6 +422,18 @@ $workspaceparams = $workspaceid > 0 && pqltch_column_exists('local_prequran_live
 $teacherbaseurlparams = $urlparams;
 if ($teacherid !== (int)$USER->id) {
     $teacherbaseurlparams['teacherid'] = $teacherid;
+}
+$selectedchildid = optional_param('childid', 0, PARAM_INT);
+$selectedchild = null;
+if ($selectedchildid > 0) {
+    $selectedchilduser = core_user::get_user($selectedchildid, 'id,firstname,lastname,deleted', IGNORE_MISSING);
+    if ($selectedchilduser && empty($selectedchilduser->deleted)) {
+        $selectedchild = [
+            'studentid' => $selectedchildid,
+            'name' => fullname($selectedchilduser),
+        ];
+        $teacherbaseurlparams['childid'] = $selectedchildid;
+    }
 }
 
 $ready = pqltch_ready();
@@ -664,36 +723,14 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
 .pqltch-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950;cursor:pointer}
 .pqltch-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}
 .pqltch-btn--start{background:#6f4e32}
+.pqltch-tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}
+.pqltch-tool-group{padding:16px;background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:10px;box-shadow:0 10px 24px rgba(23,48,68,.05)}
+.pqltch-tool-group h2{margin:0 0 6px;font-size:18px;font-weight:950;color:#173044}
+.pqltch-tool-group p{margin:0 0 12px;color:#5e7280;font-size:13px;font-weight:800}
 .pqltch-alert{margin-bottom:14px;padding:12px 14px;border-radius:10px;background:#edf9ef;color:#245c35;border:1px solid rgba(36,92,53,.16);font-weight:900}
-.pqltch-metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.pqltch-metric{padding:15px;background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:10px;box-shadow:0 10px 24px rgba(23,48,68,.05)}
-.pqltch-metric strong{display:block;font-size:26px;font-weight:950;color:#6f4e32}
-.pqltch-metric span{display:block;margin-top:3px;color:#5e7280;font-size:12px;font-weight:850}
-.pqltch-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.pqltch-panel{padding:18px;background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:10px;box-shadow:0 10px 24px rgba(23,48,68,.06)}
-.pqltch-panel--wide{grid-column:1/-1}
-.pqltch-panel h2{margin:0 0 13px;font-size:20px;font-weight:950}
-.pqltch-list{display:grid;gap:12px}
-.pqltch-card{padding:16px;border:1px solid rgba(23,48,68,.12);border-radius:10px;background:#fff}
-.pqltch-card__head{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px}
-.pqltch-card h3{margin:0;font-size:18px;font-weight:950;color:#173044}
-.pqltch-meta{margin:5px 0 0;color:#5e7280;font-size:13px;font-weight:800}
-.pqltch-pill{display:inline-flex;align-items:center;min-height:26px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:950;background:#eef4f6;color:#173044}
-.pqltch-pill--ok{background:#edf9ef;color:#245c35}
-.pqltch-pill--warn{background:#fff4dc;color:#7b5a3a}
-.pqltch-students{margin:10px 0 0;color:#5e7280;font-size:13px;font-weight:750}
 .pqltch-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}
-.pqltch-prep{margin-top:12px;padding:12px;border:1px solid rgba(111,78,50,.16);border-radius:10px;background:#fffaf1}
-.pqltch-prep h4{margin:0 0 8px;font-size:14px;font-weight:950;color:#6f4e32}
-.pqltch-prep__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.pqltch-prep__item{padding:9px;border-radius:8px;background:#fff;border:1px solid rgba(23,48,68,.1);font-size:12px;color:#415665;font-weight:800}
-.pqltch-prep__item strong{display:block;color:#173044;font-size:13px}
-.pqltch-agenda{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:12px;padding:10px;border:1px solid rgba(23,48,68,.1);border-radius:10px;background:#fbfdff}
-.pqltch-agenda__form{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0}
-.pqltch-agenda__file{max-width:260px;font-size:12px;font-weight:800;color:#415665}
-.pqltch-agenda__status{color:#5e7280;font-size:12px;font-weight:850}
-@media(max-width:920px){.pqltch-grid{grid-template-columns:1fr}.pqltch-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqltch-top{display:block}.pqltch-actions{margin-top:12px}.pqltch-card__head{display:block}}
-@media(max-width:560px){.pqltch-metrics,.pqltch-prep__grid{grid-template-columns:1fr}.pqltch-title{font-size:24px}.pqltch-agenda__file{max-width:100%}}
+@media(max-width:920px){.pqltch-tool-grid{grid-template-columns:1fr}.pqltch-top{display:block}.pqltch-actions{margin-top:12px}}
+@media(max-width:560px){.pqltch-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqltch-shell">
@@ -701,16 +738,19 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
     <section class="pqltch-top pqh-workspace-top">
       <div>
         <h1 class="pqltch-title pqh-workspace-title">Teacher Live-Class Workspace</h1>
-        <p class="pqltch-sub pqh-workspace-sub"><?php echo s($teachername); ?><?php echo $workspace ? ' - ' . s((string)$workspace->name) : ''; ?> - today's classes, upcoming sessions, and post-class review work.</p>
+        <p class="pqltch-sub pqh-workspace-sub"><?php echo s($teachername); ?><?php echo $workspace ? ' - ' . s((string)$workspace->name) : ''; ?> - student and teacher action tools.</p>
       </div>
       <div class="pqltch-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>
         <?php echo pqh_live_session_agenda_template_link(); ?>
         <?php if ($workspaceid > 0): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Workspace dashboard</a><?php endif; ?>
+        <?php if ($workspaceid > 0): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_office.php', ['workspaceid' => $workspaceid] + ($selectedchild ? ['childid' => (int)$selectedchild['studentid']] : []))->out(false); ?>">Document Studio</a><?php endif; ?>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $teacherbaseurlparams))->out(false); ?>">Live sessions</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $teacherbaseurlparams))->out(false); ?>">Class series</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $teacherbaseurlparams))->out(false); ?>">Availability</a>
+        <button class="pqltch-btn pqltch-btn--light" type="button" data-pq-support-action="open">Open Support</button>
+        <button class="pqltch-btn" type="button" data-pq-support-action="new">New Request</button>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
         <?php if (is_siteadmin($USER)): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php', $urlparams))->out(false); ?>">Admin menu</a><?php endif; ?>
         <?php if (is_siteadmin($USER)): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Admin ops</a><?php endif; ?>
@@ -723,260 +763,63 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
     <?php if (!$ready): ?>
       <div class="pqltch-empty">Live-session tables are not fully installed yet.</div>
     <?php else: ?>
-      <section class="pqltch-metrics" aria-label="Teacher live class metrics">
-        <div class="pqltch-metric"><strong><?php echo (int)$metrics['today']; ?></strong><span>today's classes</span></div>
-        <div class="pqltch-metric"><strong><?php echo (int)$metrics['upcoming']; ?></strong><span>next 7 days</span></div>
-        <div class="pqltch-metric"><strong><?php echo (int)$metrics['needsreview']; ?></strong><span>awaiting review</span></div>
-        <div class="pqltch-metric"><strong><?php echo (int)$metrics['followups']; ?></strong><span>open follow-ups</span></div>
-        <div class="pqltch-metric"><strong><?php echo (int)$metrics['coaching']; ?></strong><span>quality coaching</span></div>
-        <div class="pqltch-metric"><strong><?php echo (int)$metrics['improvementplans']; ?></strong><span>improvement plans</span></div>
-        <div class="pqltch-metric"><strong><?php echo (int)$metrics['studentsweek']; ?></strong><span>students this week</span></div>
-      </section>
-
-      <section class="pqltch-grid">
-        <article class="pqltch-panel pqltch-panel--wide">
-          <h2>Today</h2>
-          <?php if (!$today): ?>
-            <div class="pqltch-empty">No live classes scheduled today.</div>
-          <?php else: ?>
-            <div class="pqltch-list">
-              <?php foreach ($today as $session): ?>
-                <?php
-                  $joinurl = new moodle_url('/local/hubredirect/live_sessions.php', $teacherbaseurlparams + ['action' => 'join', 'sessionid' => (int)$session->id, 'sesskey' => sesskey()]);
-                  $reviewurl = new moodle_url('/local/hubredirect/live_review.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]);
-                  $monitorurl = new moodle_url('/local/hubredirect/live_monitor.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]);
-                  $students = pqltch_students_for_session((int)$session->id);
-                  $prep = pqltch_prep_for_session($session);
-                ?>
-                <article class="pqltch-card">
-                  <div class="pqltch-card__head">
-                    <div>
-                      <h3><?php echo s((string)$session->title); ?></h3>
-                      <p class="pqltch-meta"><?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo (int)$session->student_count; ?> students</p>
-                      <?php if (!empty($session->seriesid)): ?><p class="pqltch-meta">Series #<?php echo (int)$session->seriesid; ?><?php echo !empty($session->series_sequence) ? ' - Class ' . (int)$session->series_sequence : ''; ?></p><?php endif; ?>
-                      <p class="pqltch-meta">Target: <?php echo s(trim((string)$session->lessonid . ' / ' . (string)$session->unitid, ' /') ?: 'not set'); ?></p>
-                    </div>
-                    <span class="pqltch-pill"><?php echo s((string)$session->status); ?></span>
-                  </div>
-                  <p class="pqltch-meta">Attendance <?php echo (int)$session->attendance_count; ?>/<?php echo (int)$session->student_count; ?> - Notes <?php echo (int)$session->note_count; ?>/<?php echo (int)$session->student_count; ?> - Parent summaries <?php echo (int)$session->visible_summary_count; ?></p>
-                  <p class="pqltch-students"><?php echo s(implode(', ', array_map(function($student) { return $student['name']; }, $students))); ?></p>
-                  <?php echo pqltch_agenda_slides_controls($session, (new moodle_url('/local/hubredirect/live_teacher.php', $teacherbaseurlparams))->out(false), $teacherbaseurlparams); ?>
-                  <div class="pqltch-prep">
-                    <h4>Prep Pack: <?php echo (int)$prep['ready']; ?> ready, <?php echo (int)$prep['needspractice']; ?> need guided practice</h4>
-                    <div class="pqltch-prep__grid">
-                      <?php foreach (array_slice($prep['students'], 0, 6) as $studentprep): ?>
-                        <div class="pqltch-prep__item">
-                          <strong><?php echo s($studentprep['name']); ?> - <?php echo (int)$studentprep['percent']; ?>%</strong>
-                          <?php echo s($studentprep['unit']); ?> - <?php echo s(str_replace('_', ' ', $studentprep['status'])); ?> - steps <?php echo s($studentprep['steps']); ?><br>
-                          Focus: <?php echo s($studentprep['focus']); ?> - Speak: <?php echo (int)$studentprep['speakcount']; ?><br>
-                          <?php echo s($studentprep['suggestion']); ?>
-                        </div>
-                      <?php endforeach; ?>
-                    </div>
-                  </div>
-                  <div class="pqltch-actions pqh-workspace-actions">
-                    <a class="pqltch-btn pqltch-btn--start" href="<?php echo $joinurl->out(false); ?>">Start class</a>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo $monitorurl->out(false); ?>">Lesson monitor</a>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo $reviewurl->out(false); ?>">Attendance &amp; notes</a>
-                  </div>
-                </article>
-              <?php endforeach; ?>
+      <section class="pqltch-tool-grid" aria-label="Teacher workspace tools">
+        <?php if ($selectedchild): ?>
+          <article class="pqltch-tool-group">
+            <h2><?php echo s($selectedchild['name']); ?> Tools</h2>
+            <p>Student-specific work moved from the dashboard.</p>
+            <div class="pqltch-actions pqh-workspace-actions">
+              <?php if (pqltch_is_managed_student((int)$selectedchild['studentid'])): ?>
+                <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('virtual_tutor.php', ['studentid' => (int)$selectedchild['studentid']])->out(false); ?>">Virtual tutor</a>
+              <?php endif; ?>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_parent_trust.php', ['childid' => (int)$selectedchild['studentid']])->out(false); ?>">Parent live hub</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_schedule.php', ['childid' => (int)$selectedchild['studentid']])->out(false); ?>">Live schedule</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_series_schedule.php', ['childid' => (int)$selectedchild['studentid']])->out(false); ?>">Class series</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_calendar.php', ['childid' => (int)$selectedchild['studentid']])->out(false); ?>">Live calendar</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('course_transcript.php', ['studentid' => (int)$selectedchild['studentid']] + ($workspaceid > 0 ? ['workspaceid' => $workspaceid] : []))->out(false); ?>">Unofficial transcript</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_summaries.php', ['childid' => (int)$selectedchild['studentid']])->out(false); ?>">Live summaries</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_trust.php', ['childid' => (int)$selectedchild['studentid']])->out(false); ?>">Trust center</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_recordings.php', ['childid' => (int)$selectedchild['studentid']])->out(false); ?>">Live recordings</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('managed_reports.php', ['studentid' => (int)$selectedchild['studentid']] + ($workspaceid > 0 ? ['workspaceid' => $workspaceid] : []))->out(false); ?>">Managed report</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('recordings.php', ['childid' => (int)$selectedchild['studentid']])->out(false); ?>">Review Speak recordings</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('quiz_report.php', ['pq_env' => 'integration', 'lessonid' => 'alphabet', 'unitid' => 'alphabet_quiz', 'userid' => (int)$selectedchild['studentid']])->out(false); ?>">Quiz report</a>
             </div>
-          <?php endif; ?>
+          </article>
+        <?php endif; ?>
+        <article class="pqltch-tool-group">
+          <h2>Document Studio</h2>
+          <p>Create and edit teaching documents, spreadsheets, presentations, PDFs, course materials, and lesson resources with ONLYOFFICE.</p>
+          <div class="pqltch-actions pqh-workspace-actions">
+            <?php if ($workspaceid > 0): ?>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_office.php', ['workspaceid' => $workspaceid] + ($selectedchild ? ['childid' => (int)$selectedchild['studentid']] : []))->out(false); ?>">New Word document</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_office.php', ['workspaceid' => $workspaceid] + ($selectedchild ? ['childid' => (int)$selectedchild['studentid']] : []))->out(false); ?>">New spreadsheet</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_office.php', ['workspaceid' => $workspaceid] + ($selectedchild ? ['childid' => (int)$selectedchild['studentid']] : []))->out(false); ?>">New presentation</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_office.php', ['workspaceid' => $workspaceid] + ($selectedchild ? ['childid' => (int)$selectedchild['studentid']] : []))->out(false); ?>">PDF tools</a>
+              <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('workspace_materials.php', ['workspaceid' => $workspaceid])->out(false); ?>">Material library</a>
+            <?php else: ?>
+              <span class="pqltch-empty">Choose a workspace before creating office materials.</span>
+            <?php endif; ?>
+          </div>
         </article>
-
-        <article class="pqltch-panel">
-          <h2>Awaiting Review</h2>
-          <?php if (!$needsreview): ?>
-            <div class="pqltch-empty">No recent classes need attendance or notes.</div>
-          <?php else: ?>
-            <div class="pqltch-list">
-              <?php foreach ($needsreview as $session): ?>
-                <article class="pqltch-card">
-                  <div class="pqltch-card__head">
-                    <div>
-                      <h3><?php echo s((string)$session->title); ?></h3>
-                      <p class="pqltch-meta">Ended <?php echo userdate((int)$session->scheduled_end, get_string('strftimedatetimeshort')); ?></p>
-                      <?php if (!empty($session->seriesid)): ?><p class="pqltch-meta">Series #<?php echo (int)$session->seriesid; ?><?php echo !empty($session->series_sequence) ? ' - Class ' . (int)$session->series_sequence : ''; ?></p><?php endif; ?>
-                    </div>
-                    <span class="pqltch-pill pqltch-pill--warn"><?php echo s((string)$session->status === 'awaiting_review' ? 'awaiting review' : 'completion needed'); ?></span>
-                  </div>
-                  <p class="pqltch-meta">Attendance <?php echo (int)$session->attendance_count; ?>/<?php echo (int)$session->student_count; ?> - Parent summaries <?php echo (int)$session->visible_summary_count; ?>/<?php echo (int)$session->student_count; ?></p>
-                  <?php echo pqltch_agenda_slides_controls($session, (new moodle_url('/local/hubredirect/live_teacher.php', $teacherbaseurlparams))->out(false), $teacherbaseurlparams); ?>
-                  <div class="pqltch-actions pqh-workspace-actions">
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]))->out(false); ?>">Complete review</a>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_monitor.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]))->out(false); ?>">Lesson monitor</a>
-                  </div>
-                </article>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-        </article>
-
-        <article class="pqltch-panel">
-          <h2>Upcoming</h2>
-          <?php if (!$upcoming): ?>
-            <div class="pqltch-empty">No upcoming classes in the next 7 days.</div>
-          <?php else: ?>
-            <div class="pqltch-list">
-              <?php foreach ($upcoming as $session): ?>
-                <article class="pqltch-card">
-                  <div class="pqltch-card__head">
-                    <div>
-                      <h3><?php echo s((string)$session->title); ?></h3>
-                      <p class="pqltch-meta"><?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?> - <?php echo (int)$session->student_count; ?> students</p>
-                      <?php if (!empty($session->seriesid)): ?><p class="pqltch-meta">Series #<?php echo (int)$session->seriesid; ?><?php echo !empty($session->series_sequence) ? ' - Class ' . (int)$session->series_sequence : ''; ?></p><?php endif; ?>
-                    </div>
-                    <span class="pqltch-pill"><?php echo s((string)$session->status); ?></span>
-                  </div>
-                  <?php echo pqltch_agenda_slides_controls($session, (new moodle_url('/local/hubredirect/live_teacher.php', $teacherbaseurlparams))->out(false), $teacherbaseurlparams); ?>
-                  <div class="pqltch-actions pqh-workspace-actions">
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $teacherbaseurlparams))->out(false); ?>">Open live sessions</a>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_monitor.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]))->out(false); ?>">Lesson monitor</a>
-                  </div>
-                </article>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-        </article>
-
-        <article class="pqltch-panel pqltch-panel--wide">
-          <h2>Quality Coaching</h2>
-          <?php if (!$coaching): ?>
-            <div class="pqltch-empty">No assigned quality coaching.</div>
-          <?php else: ?>
-            <div class="pqltch-list">
-              <?php foreach ($coaching as $session): ?>
-                <?php $overdue = !empty($session->qa_coaching_due_date) && (int)$session->qa_coaching_due_date < time() && (string)$session->qa_coaching_status !== 'completed'; ?>
-                <article class="pqltch-card">
-                  <div class="pqltch-card__head">
-                    <div>
-                      <h3><?php echo s((string)$session->title); ?></h3>
-                      <p class="pqltch-meta">QA <?php echo s(str_replace('_', ' ', (string)$session->qa_status)); ?> - Score <?php echo (int)$session->qa_score; ?>%</p>
-                      <p class="pqltch-meta">Priority <?php echo s((string)$session->qa_coaching_priority); ?><?php echo !empty($session->qa_coaching_due_date) ? ' - Due ' . userdate((int)$session->qa_coaching_due_date, get_string('strftimedatetimeshort')) : ''; ?></p>
-                    </div>
-                    <span class="pqltch-pill <?php echo $overdue ? 'pqltch-pill--warn' : ''; ?>"><?php echo $overdue ? 'overdue' : s(str_replace('_', ' ', (string)$session->qa_coaching_status)); ?></span>
-                  </div>
-                  <?php if (trim((string)$session->qa_coaching_notes) !== ''): ?><p class="pqltch-meta"><?php echo s((string)$session->qa_coaching_notes); ?></p><?php endif; ?>
-                  <div class="pqltch-actions pqh-workspace-actions">
-                    <?php if ((string)$session->qa_coaching_status === 'assigned'): ?>
-                      <form method="post" style="display:inline">
-                        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
-                        <input type="hidden" name="action" value="ack_quality_coaching">
-                        <input type="hidden" name="sessionid" value="<?php echo (int)$session->id; ?>">
-                        <button class="pqltch-btn" type="submit">Acknowledge coaching</button>
-                      </form>
-                    <?php endif; ?>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]))->out(false); ?>">Open class review</a>
-                  </div>
-                </article>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-        </article>
-
-        <article class="pqltch-panel pqltch-panel--wide">
-          <h2>Improvement Plans</h2>
-          <?php if (!$improvementplans): ?>
-            <div class="pqltch-empty">No active improvement plans.</div>
-          <?php else: ?>
-            <div class="pqltch-list">
-              <?php foreach ($improvementplans as $session): ?>
-                <?php
-                  $overdue = !empty($session->improvement_plan_due_date) && (int)$session->improvement_plan_due_date < time() && (string)$session->improvement_plan_status !== 'completed';
-                  $mentor = !empty($session->improvement_plan_mentorid) ? pqltch_user_name((int)$session->improvement_plan_mentorid, 'Mentor ' . (int)$session->improvement_plan_mentorid) : '';
-                ?>
-                <article class="pqltch-card">
-                  <div class="pqltch-card__head">
-                    <div>
-                      <h3><?php echo s((string)$session->title); ?></h3>
-                      <p class="pqltch-meta">Priority <?php echo s((string)$session->improvement_plan_priority); ?><?php echo !empty($session->improvement_plan_due_date) ? ' - Due ' . userdate((int)$session->improvement_plan_due_date, get_string('strftimedatetimeshort')) : ''; ?></p>
-                      <?php if ($mentor !== ''): ?><p class="pqltch-meta">Mentor: <?php echo s($mentor); ?></p><?php endif; ?>
-                    </div>
-                    <span class="pqltch-pill <?php echo $overdue ? 'pqltch-pill--warn' : ''; ?>"><?php echo $overdue ? 'overdue' : s(str_replace('_', ' ', (string)$session->improvement_plan_status)); ?></span>
-                  </div>
-                  <?php if (trim((string)$session->improvement_plan_goals) !== ''): ?><p class="pqltch-meta"><strong>Goals:</strong> <?php echo s((string)$session->improvement_plan_goals); ?></p><?php endif; ?>
-                  <?php if (trim((string)$session->improvement_plan_actions) !== ''): ?><p class="pqltch-meta"><strong>Actions:</strong> <?php echo s((string)$session->improvement_plan_actions); ?></p><?php endif; ?>
-                  <div class="pqltch-actions pqh-workspace-actions">
-                    <?php if ((string)$session->improvement_plan_status === 'assigned'): ?>
-                      <form method="post" style="display:inline">
-                        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
-                        <input type="hidden" name="action" value="ack_improvement_plan">
-                        <input type="hidden" name="sessionid" value="<?php echo (int)$session->id; ?>">
-                        <button class="pqltch-btn" type="submit">Acknowledge plan</button>
-                      </form>
-                    <?php endif; ?>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]))->out(false); ?>">Open class review</a>
-                  </div>
-                </article>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-        </article>
-
-        <article class="pqltch-panel pqltch-panel--wide">
-          <h2>Parent Follow-Ups</h2>
-          <?php if (!$followups): ?>
-            <div class="pqltch-empty">No open parent follow-ups.</div>
-          <?php else: ?>
-            <div class="pqltch-list">
-              <?php foreach ($followups as $note): ?>
-                <?php $student = core_user::get_user((int)$note->studentid); ?>
-                <article class="pqltch-card">
-                  <div class="pqltch-card__head">
-                    <div>
-                      <h3><?php echo s($student ? fullname($student) : 'Student ' . (int)$note->studentid); ?></h3>
-                      <p class="pqltch-meta"><?php echo s((string)$note->session_title); ?> - <?php echo userdate((int)$note->scheduled_start, get_string('strftimedatetimeshort')); ?></p>
-                    </div>
-                    <span class="pqltch-pill <?php echo (string)$note->followup_status === 'admin_support_requested' ? 'pqltch-pill--warn' : ''; ?>"><?php echo s(str_replace('_', ' ', (string)$note->followup_status)); ?></span>
-                  </div>
-                  <p class="pqltch-meta"><?php echo s((string)$note->followup_message !== '' ? (string)$note->followup_message : 'Follow-up requested.'); ?></p>
-                  <?php if ((string)($note->parent_response_status ?? 'none') !== 'none'): ?>
-                    <p class="pqltch-meta">Parent response: <?php echo s(str_replace('_', ' ', (string)$note->parent_response_status)); ?><?php echo !empty($note->parent_responseat) ? ' - ' . userdate((int)$note->parent_responseat, get_string('strftimedatetimeshort')) : ''; ?></p>
-                    <?php if ((string)($note->parent_response_message ?? '') !== ''): ?><p class="pqltch-meta"><?php echo s((string)$note->parent_response_message); ?></p><?php endif; ?>
-                  <?php endif; ?>
-                  <div class="pqltch-actions pqh-workspace-actions">
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $teacherbaseurlparams + ['sessionid' => (int)$note->sessionid]))->out(false); ?>">Resolve follow-up</a>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followup_message.php', $teacherbaseurlparams + ['sessionid' => (int)$note->sessionid, 'studentid' => (int)$note->studentid, 'sesskey' => sesskey()]))->out(false); ?>">Message parent</a>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $teacherbaseurlparams + ['childid' => (int)$note->studentid]))->out(false); ?>">Parent hub</a>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', $teacherbaseurlparams + ['childid' => (int)$note->studentid]))->out(false); ?>">Parent view</a>
-                  </div>
-                </article>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-        </article>
-
-        <article class="pqltch-panel pqltch-panel--wide">
-          <h2>Recent Completed Classes</h2>
-          <?php if (!$recentcompleted): ?>
-            <div class="pqltch-empty">No recent completed classes.</div>
-          <?php else: ?>
-            <div class="pqltch-list">
-              <?php foreach ($recentcompleted as $session): ?>
-                <?php if ((int)$session->scheduled_end > $now) { continue; } ?>
-                <article class="pqltch-card">
-                  <div class="pqltch-card__head">
-                    <div>
-                      <h3><?php echo s((string)$session->title); ?></h3>
-                      <p class="pqltch-meta"><?php echo userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort')); ?></p>
-                      <?php if (!empty($session->seriesid)): ?><p class="pqltch-meta">Series #<?php echo (int)$session->seriesid; ?><?php echo !empty($session->series_sequence) ? ' - Class ' . (int)$session->series_sequence : ''; ?></p><?php endif; ?>
-                    </div>
-                    <span class="pqltch-pill <?php echo (int)$session->note_count >= (int)$session->student_count ? 'pqltch-pill--ok' : 'pqltch-pill--warn'; ?>"><?php echo (int)$session->note_count; ?>/<?php echo (int)$session->student_count; ?> notes</span>
-                  </div>
-                  <p class="pqltch-meta">Attendance <?php echo (int)$session->attendance_count; ?>/<?php echo (int)$session->student_count; ?> - Parent summaries <?php echo (int)$session->visible_summary_count; ?> - Parent recordings <?php echo (int)$session->visible_recording_count; ?></p>
-                  <div class="pqltch-actions pqh-workspace-actions">
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]))->out(false); ?>">Open review</a>
-                    <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_monitor.php', $teacherbaseurlparams + ['sessionid' => (int)$session->id]))->out(false); ?>">Lesson monitor</a>
-                  </div>
-                </article>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
+        <article class="pqltch-tool-group">
+          <h2>Teacher Operations</h2>
+          <p>Daily teacher work tools now live here.</p>
+          <div class="pqltch-actions pqh-workspace-actions">
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_homework.php', $workspaceid > 0 ? (['workspaceid' => $workspaceid] + $urlparams) : $urlparams)->out(false); ?>">Homework</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_teacher_schedule.php', ['teacherid' => (int)$teacherid])->out(false); ?>">Teacher schedule</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_sessions.php', ['session_type' => 'teacher_meeting', 'title' => 'Teacher Meeting Room'])->out(false); ?>">Teacher meetings</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_sessions.php', ['session_type' => 'teacher_parent_room', 'title' => 'Teacher-Parent Room'])->out(false); ?>">Teacher-parent rooms</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_availability.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Availability</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_practice_coach.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Practice coach</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_followups.php')->out(false); ?>">Parent follow-ups</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('managed_reports.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Managed reports</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('quiz_report.php', ['pq_env' => 'integration', 'lessonid' => 'alphabet', 'unitid' => 'alphabet_quiz'])->out(false); ?>">Quiz reports</a>
+          </div>
         </article>
       </section>
-    <?php endif; ?>
+<?php endif; ?>
   </div>
 </main>
 <?php
+echo pqh_embedded_support_html($workspaceid, (int)$USER->id, (int)$USER->id, 'student_helpdesk', $consumercontext);
 echo $OUTPUT->footer();

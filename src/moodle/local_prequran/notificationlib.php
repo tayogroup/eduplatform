@@ -10,6 +10,139 @@ function local_prequran_notify_table_exists(string $table): bool {
     return $DB->get_manager()->table_exists($table);
 }
 
+function local_prequran_notify_table_has_field(string $table, string $field): bool {
+    global $DB;
+    try {
+        if (!local_prequran_notify_table_exists($table)) {
+            return false;
+        }
+        return $DB->get_manager()->field_exists($table, $field);
+    } catch (Throwable $e) {
+        return false;
+    }
+}
+
+function local_prequran_notify_request_host(): string {
+    $host = strtolower((string)($_SERVER['HTTP_HOST'] ?? ($_SERVER['SERVER_NAME'] ?? '')));
+    $host = preg_replace('/:\d+$/', '', $host);
+    $host = trim((string)$host, " \t\n\r\0\x0B.");
+    return $host !== '' ? clean_param($host, PARAM_HOST) : '';
+}
+
+function local_prequran_notify_brand_context(int $sessionid = 0, int $workspaceid = 0, int $consumerid = 0): stdClass {
+    global $DB;
+
+    $fallback = (object)[
+        'id' => 0,
+        'slug' => 'eduplatform',
+        'name' => 'EduPlatform',
+        'supportemail' => '',
+        'emailfromname' => 'EduPlatform',
+        'emailreplyto' => '',
+        'workspaceid' => 0,
+    ];
+
+    if (!local_prequran_notify_table_exists('local_prequran_consumer')) {
+        return $fallback;
+    }
+
+    try {
+        if ($sessionid > 0 && local_prequran_notify_table_has_field('local_prequran_live_session', 'workspaceid')) {
+            $sessionworkspaceid = (int)$DB->get_field('local_prequran_live_session', 'workspaceid', ['id' => $sessionid], IGNORE_MISSING);
+            if ($sessionworkspaceid > 0) {
+                $workspaceid = $sessionworkspaceid;
+            }
+        }
+
+        $consumer = null;
+        if ($consumerid > 0) {
+            $consumer = $DB->get_record('local_prequran_consumer', ['id' => $consumerid, 'status' => 'active'], '*', IGNORE_MISSING);
+        }
+
+        if (!$consumer && $workspaceid > 0 && local_prequran_notify_table_has_field('local_prequran_consumer', 'primaryworkspaceid')) {
+            $consumer = $DB->get_record('local_prequran_consumer', ['primaryworkspaceid' => $workspaceid, 'status' => 'active'], '*', IGNORE_MISSING);
+        }
+
+        if (!$consumer && $workspaceid > 0 && local_prequran_notify_table_exists('local_prequran_consumer_domain')) {
+            $consumer = $DB->get_record_sql(
+                "SELECT c.*
+                   FROM {local_prequran_consumer_domain} d
+                   JOIN {local_prequran_consumer} c ON c.id = d.consumerid
+                  WHERE d.workspaceid = :workspaceid
+                    AND d.status = :domainstatus
+                    AND c.status = :consumerstatus
+               ORDER BY d.isprimary DESC, d.domain_type ASC, d.id ASC",
+                ['workspaceid' => $workspaceid, 'domainstatus' => 'active', 'consumerstatus' => 'active'],
+                IGNORE_MULTIPLE
+            );
+        }
+
+        $host = local_prequran_notify_request_host();
+        if (!$consumer && $host !== '' && local_prequran_notify_table_exists('local_prequran_consumer_domain')) {
+            $consumer = $DB->get_record_sql(
+                "SELECT c.*
+                   FROM {local_prequran_consumer_domain} d
+                   JOIN {local_prequran_consumer} c ON c.id = d.consumerid
+                  WHERE d.domain = :domain
+                    AND d.status = :domainstatus
+                    AND c.status = :consumerstatus",
+                ['domain' => $host, 'domainstatus' => 'active', 'consumerstatus' => 'active'],
+                IGNORE_MISSING
+            );
+        }
+
+        if (!$consumer) {
+            $consumer = $DB->get_record('local_prequran_consumer', ['slug' => 'eduplatform', 'status' => 'active'], '*', IGNORE_MISSING);
+        }
+
+        if (!$consumer) {
+            return $fallback;
+        }
+
+        return (object)[
+            'id' => (int)$consumer->id,
+            'slug' => (string)$consumer->slug,
+            'name' => (string)$consumer->name,
+            'supportemail' => (string)($consumer->supportemail ?? ''),
+            'emailfromname' => (string)($consumer->emailfromname ?? $consumer->name),
+            'emailreplyto' => (string)($consumer->emailreplyto ?? ($consumer->supportemail ?? '')),
+            'workspaceid' => $workspaceid > 0 ? $workspaceid : (int)($consumer->primaryworkspaceid ?? 0),
+        ];
+    } catch (Throwable $e) {
+        return $fallback;
+    }
+}
+
+function local_prequran_notify_brand_subject(string $subject, ?stdClass $brand = null): string {
+    $subject = trim($subject);
+    $brand = $brand ?: local_prequran_notify_brand_context();
+    $name = trim((string)($brand->emailfromname ?? $brand->name ?? ''));
+    if ($name === '') {
+        return $subject;
+    }
+    if (preg_match('/^\[[^\]]+\]\s*/', $subject) || stripos($subject, $name . ':') === 0) {
+        return $subject;
+    }
+    return '[' . $name . '] ' . $subject;
+}
+
+function local_prequran_notify_brand_message(string $message, ?stdClass $brand = null): string {
+    $brand = $brand ?: local_prequran_notify_brand_context();
+    $name = trim((string)($brand->name ?? ''));
+    if ($name === '') {
+        return $message;
+    }
+    $footer = "\n\n--\n" . $name;
+    $support = clean_param(trim((string)($brand->supportemail ?? '')), PARAM_EMAIL);
+    if ($support !== '' && validate_email($support)) {
+        $footer .= "\nSupport: " . $support;
+    }
+    if (strpos($message, $footer) !== false) {
+        return $message;
+    }
+    return rtrim($message) . $footer;
+}
+
 function local_prequran_notify_parent_ids_for_student(int $studentid): array {
     global $DB;
     $parentids = [];
@@ -109,6 +242,9 @@ function local_prequran_notify_user_live_update(
         return false;
     }
 
+    $brand = local_prequran_notify_brand_context($sessionid);
+    $subject = local_prequran_notify_brand_subject($subject, $brand);
+    $message = local_prequran_notify_brand_message($message, $brand);
     $body = $message . "\n\nOpen: " . $url->out(false);
     if ($studentid > 0) {
         $student = core_user::get_user($studentid);
@@ -118,13 +254,13 @@ function local_prequran_notify_user_live_update(
 
     $eventdata = new \core\message\message();
     $eventdata->component = 'local_prequran';
-    $eventdata->name = 'live_session_update';
+    $eventdata->name = strpos($eventtype, 'official_transcript_') === 0 ? 'transcript_update' : 'live_session_update';
     $eventdata->userfrom = local_prequran_notify_sender_user();
     $eventdata->userto = $recipient;
     $eventdata->subject = $subject;
     $eventdata->fullmessage = $body;
     $eventdata->fullmessageformat = FORMAT_PLAIN;
-    $eventdata->fullmessagehtml = '<p>' . s($message) . '</p>';
+    $eventdata->fullmessagehtml = nl2br(s($body));
     $eventdata->smallmessage = $subject;
     $eventdata->notification = 1;
     $eventdata->contexturl = $url->out(false);
@@ -494,6 +630,10 @@ function local_prequran_notify_send_whatsapp(
         ]);
         return false;
     }
+
+    $brand = local_prequran_notify_brand_context($sessionid);
+    $subject = local_prequran_notify_brand_subject($subject, $brand);
+    $message = local_prequran_notify_brand_message($message, $brand);
 
     $phone = local_prequran_notify_user_whatsapp_phone($recipient);
     if ($phone === '') {

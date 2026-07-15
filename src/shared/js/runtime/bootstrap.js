@@ -1,5 +1,5 @@
 /*
-  Pre-Quraan Alphabet runtime fragment: bootstrap.js
+  EduPlatform Alphabet runtime fragment: bootstrap.js
   Runtime bootstrap, config, shared state, and lesson data setup.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -99,7 +99,7 @@
     !window.UNIT_CFG ||
     typeof window.UNIT_CFG !== 'object'
   ) {
-    const message = 'Pre-Quraan unit config missing: unit.config.js must load before the shared runtime bundle.';
+    const message = 'EduPlatform unit config missing: unit.config.js must load before the shared runtime bundle.';
 
     try {
       document.documentElement.innerHTML = [
@@ -134,12 +134,12 @@
 
   ['unitid', 'wsGetFunction', 'wsSetFunction'].forEach(function (key) {
     if (!UNIT_CFG[key]) {
-      __pqFailConfig('Pre-Quraan unit config missing required field: ' + key);
+      __pqFailConfig('EduPlatform unit config missing required field: ' + key);
     }
   });
 
   if (!Array.isArray(UNIT_CFG.steps) || !UNIT_CFG.steps.length) {
-    __pqFailConfig('Pre-Quraan unit config missing required field: steps');
+    __pqFailConfig('EduPlatform unit config missing required field: steps');
   }
 
   /**
@@ -521,7 +521,7 @@ const LESSON_DEF = {
         }));
       }
 
-      __pqFailConfig('Pre-Quraan unit config missing required field: steps');
+      __pqFailConfig('EduPlatform unit config missing required field: steps');
     })()
   };
 
@@ -715,7 +715,11 @@ const LESSON_DEF = {
       getCompletedSteps: () => __pqCountCompletedSteps(),
       getTotalStars: () => __pqGetTotalStarsEarned(),
       getCompletedUnits: () => __pqGetCompletedUnitsCount(),
-      getFocusState: () => __pqGetFocusBadgeState()
+      getFocusState: () => __pqGetFocusBadgeState(),
+      getCurrentStepId: () => {
+        const current = getCurrentStep();
+        return String((current && current.step && current.step.id) || '');
+      }
     });
 
     return __pqRewardBar;

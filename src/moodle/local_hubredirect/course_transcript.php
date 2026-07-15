@@ -57,11 +57,30 @@ function pqctui_warning_class(string $severity): string {
     return $severity === 'blocker' ? 'pqct-warn--blocker' : 'pqct-warn--warning';
 }
 
+function pqctui_resolve_workspace_id(int $userid, int $requestedid, ?stdClass $consumercontext = null): int {
+    $workspaceid = pqh_current_workspace_id($userid, $requestedid);
+    if ($workspaceid > 0) {
+        return $workspaceid;
+    }
+    $contextworkspaceid = (int)($consumercontext->workspaceid ?? 0);
+    if ($contextworkspaceid > 0) {
+        $workspaceid = pqh_current_workspace_id($userid, $contextworkspaceid);
+        if ($workspaceid > 0) {
+            return $workspaceid;
+        }
+    }
+    $workspaces = pqh_user_workspaces($userid);
+    if (count($workspaces) === 1) {
+        return (int)$workspaces[0]->id;
+    }
+    return 0;
+}
+
 global $DB, $OUTPUT, $PAGE, $USER;
 
 $consumercontext = pqh_requested_consumer_context();
-$workspaceid = optional_param('workspaceid', (int)($consumercontext->workspaceid ?? 0), PARAM_INT);
-$workspaceid = pqh_current_workspace_id((int)$USER->id, $workspaceid);
+$requestedworkspaceid = optional_param('workspaceid', (int)($consumercontext->workspaceid ?? 0), PARAM_INT);
+$workspaceid = pqctui_resolve_workspace_id((int)$USER->id, $requestedworkspaceid, $consumercontext);
 $studentid = optional_param('studentid', 0, PARAM_INT);
 $statusfilter = trim(optional_param('status', '', PARAM_TEXT));
 $coursefilter = trim(optional_param('course', '', PARAM_TEXT));

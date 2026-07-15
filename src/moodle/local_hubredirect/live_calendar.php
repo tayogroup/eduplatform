@@ -326,7 +326,7 @@ if ($action === 'ics') {
     $summary = (string)$session->title . ' with ' . ($teacher ? fullname($teacher) : 'Teacher ' . (int)$session->teacherid);
     $brandname = trim((string)($consumercontext->consumername ?? '')) ?: 'EduPlatform';
     $brandslug = pqlcal_ics_token((string)($consumercontext->consumerslug ?? $brandname));
-    $domainhost = parse_url($CFG->wwwroot, PHP_URL_HOST) ?: 'eduplatform.ai';
+    $domainhost = parse_url($CFG->wwwroot, PHP_URL_HOST) ?: pqh_request_host();
     $description = $brandname . ' live review class. Join from Moodle: ' . $joinurl->out(false);
     $ics = "BEGIN:VCALENDAR\r\n";
     $ics .= "VERSION:2.0\r\n";

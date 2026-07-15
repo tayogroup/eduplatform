@@ -11,7 +11,7 @@ require_once(__DIR__ . '/course_catalog.php');
 $pqhconsumercontext = pqh_requested_consumer_context();
 $pqhrequestedslug = (string)($pqhconsumercontext->consumerslug ?? '');
 $pqhrequestedtype = (string)($pqhconsumercontext->consumer_type ?? '');
-if ($pqhrequestedslug !== 'quraan-academy'
+if ($pqhrequestedtype !== 'academy_consumer'
         && pqh_can_manage_academy_operations((int)$USER->id)) {
     $params = [];
     if ($pqhrequestedslug !== '') {
@@ -20,11 +20,11 @@ if ($pqhrequestedslug !== 'quraan-academy'
     $workspaceid = (int)($pqhconsumercontext->workspaceid ?? 0);
     if ($workspaceid > 0) {
         $params['workspaceid'] = $workspaceid;
+        redirect(new moodle_url('/local/hubredirect/role_redirect.php', $params));
     }
-    redirect(new moodle_url('/local/hubredirect/role_redirect.php', $params));
 }
 if ($pqhrequestedslug === '' || $pqhrequestedtype === 'platform_foundation') {
-    $pqhconsumercontext = pqh_consumer_context_by_slug('quraan-academy');
+    redirect(new moodle_url('/local/hubredirect/platform_dashboard.php'));
 }
 $pqhbrandname = trim((string)($pqhconsumercontext->consumername ?? ''));
 if ($pqhbrandname === '') {
@@ -166,6 +166,11 @@ function pqh_has_marketplace_teacher_profile(int $userid): bool {
         'userid = ? AND LOWER(status) NOT IN (?, ?, ?)',
         [$userid, 'archived', 'inactive', 'rejected']
     );
+}
+
+function pqh_has_marketplace_only_teacher_profile(int $userid): bool {
+    $models = pqh_active_teacher_profile_models($userid);
+    return in_array('marketplace_teacher', $models, true) && !in_array('independent_teacher', $models, true);
 }
 
 function pqh_has_teacher_role(int $userid): bool {
@@ -387,6 +392,32 @@ function pqh_teacher_students(int $teacherid): array {
         }
     }
 
+    foreach (pqh_independent_teacher_workspace_ids($teacherid) as $workspaceid) {
+        if (!pqh_table_exists('local_prequran_workspace_member')) {
+            continue;
+        }
+        $rows = $DB->get_records('local_prequran_workspace_member', [
+            'workspaceid' => $workspaceid,
+            'workspace_role' => 'student',
+            'status' => 'active',
+        ], 'timemodified DESC', 'id, userid, workspaceid');
+        foreach ($rows as $row) {
+            $studentid = (int)$row->userid;
+            if ($studentid <= 0 || $studentid === $teacherid) {
+                continue;
+            }
+            $explicitassignments = true;
+            if (!isset($students[$studentid])) {
+                $students[$studentid] = [
+                    'studentid' => $studentid,
+                    'cohortid' => 0,
+                    'groupid' => 0,
+                    'groupname' => 'Independent workspace',
+                ];
+            }
+        }
+    }
+
     if (!$explicitassignments) {
         $teachercohorts = $DB->get_records('cohort_members', ['userid' => $teacherid], '', 'id, cohortid');
         foreach ($teachercohorts as $membership) {
@@ -415,6 +446,8 @@ function pqh_teacher_students(int $teacherid): array {
         $students[$studentid]['name'] = $user ? fullname($user) : 'Student ' . $studentid;
         $students[$studentid]['username'] = $user ? (string)$user->username : '';
         $students[$studentid]['email'] = $user ? (string)$user->email : '';
+        $students[$studentid]['idnumber'] = $user ? (string)$user->idnumber : '';
+        $students[$studentid]['accountid'] = pqh_user_five_digit_id($studentid);
         $students[$studentid]['groupid'] = (int)($students[$studentid]['groupid'] ?? 0);
         $students[$studentid]['groupname'] = (string)($students[$studentid]['groupname'] ?? '');
         if (empty($students[$studentid]['cohortid'])) {
@@ -438,6 +471,109 @@ function pqh_teacher_students(int $teacherid): array {
     return array_values($students);
 }
 
+function pqh_teacher_student_course_scope(array $children): array {
+    $coursekeys = [];
+    $moodlecourseids = [];
+    foreach ($children as $child) {
+        $studentid = (int)($child['studentid'] ?? 0);
+        if ($studentid <= 0) {
+            continue;
+        }
+        foreach (pqh_user_course_keys($studentid) as $coursekey) {
+            $coursekeys[(string)$coursekey] = true;
+        }
+        foreach (pqh_user_moodle_enrolment_courses($studentid) as $courseid => $course) {
+            $moodlecourseids[(int)$courseid] = true;
+            foreach ((array)($course['catalogkeys'] ?? []) as $coursekey) {
+                $coursekeys[(string)$coursekey] = true;
+            }
+        }
+    }
+    return [
+        'coursekeys' => array_keys($coursekeys),
+        'moodlecourseids' => array_keys($moodlecourseids),
+    ];
+}
+
+function pqh_user_five_digit_id(int $userid): string {
+    if ($userid <= 0) {
+        return '';
+    }
+    $user = core_user::get_user($userid, 'id,idnumber', IGNORE_MISSING);
+    $idnumber = $user ? trim((string)($user->idnumber ?? '')) : '';
+    if ($idnumber !== '' && preg_match('/\d{5}/', $idnumber, $matches)) {
+        return $matches[0];
+    }
+    return str_pad((string)$userid, 5, '0', STR_PAD_LEFT);
+}
+
+function pqh_profile_value_is_active($value): bool {
+    $value = trim(core_text::strtolower((string)$value));
+    return $value !== '' && !in_array($value, ['0', 'no', 'none', 'false', 'n/a', 'na'], true);
+}
+
+function pqh_student_basic_info(int $studentid, array $student = []): array {
+    global $DB;
+
+    $info = [
+        'student_name' => (string)($student['name'] ?? ''),
+        'student_id' => pqh_user_five_digit_id($studentid),
+        'parent_name' => '',
+        'parent_id' => '',
+        'location' => '',
+        'special_care' => false,
+    ];
+    if ($studentid <= 0) {
+        return $info;
+    }
+
+    $user = core_user::get_user($studentid, 'id,firstname,lastname,country,city', IGNORE_MISSING);
+    if ($user) {
+        if ($info['student_name'] === '') {
+            $info['student_name'] = fullname($user);
+        }
+        $info['location'] = pqh_join_nonempty([(string)($user->city ?? ''), (string)($user->country ?? '')]);
+    }
+
+    if (pqh_table_exists('local_prequran_student_profile')) {
+        $profile = $DB->get_record('local_prequran_student_profile', ['userid' => $studentid], '*', IGNORE_MISSING);
+        if ($profile) {
+            if ($info['parent_name'] === '') {
+                $info['parent_name'] = trim((string)($profile->parent_name ?? ''));
+            }
+            $profilelocation = pqh_join_nonempty([(string)($profile->city ?? ''), (string)($profile->country ?? '')]);
+            if ($profilelocation !== '') {
+                $info['location'] = $profilelocation;
+            }
+            foreach (get_object_vars($profile) as $field => $value) {
+                $field = core_text::strtolower((string)$field);
+                if (strpos($field, 'special') !== false && pqh_profile_value_is_active($value)) {
+                    $info['special_care'] = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
+        if (!pqh_table_exists($table)) {
+            continue;
+        }
+        $row = $DB->get_record($table, ['studentid' => $studentid], 'id,guardianid', IGNORE_MULTIPLE);
+        if (!$row || (int)$row->guardianid <= 0) {
+            continue;
+        }
+        $info['parent_id'] = pqh_user_five_digit_id((int)$row->guardianid);
+        $parent = core_user::get_user((int)$row->guardianid, 'id,firstname,lastname', IGNORE_MISSING);
+        if ($parent) {
+            $info['parent_name'] = fullname($parent);
+        }
+        break;
+    }
+
+    return $info;
+}
+
 function pqh_filter_students(array $students, string $search, int $groupid): array {
     $search = trim(core_text::strtolower($search));
     $filtered = [];
@@ -453,6 +589,8 @@ function pqh_filter_students(array $students, string $search, int $groupid): arr
         if ($search !== '') {
             $haystack = implode(' ', [
                 (string)($student['studentid'] ?? ''),
+                (string)($student['accountid'] ?? ''),
+                (string)($student['idnumber'] ?? ''),
                 (string)($student['name'] ?? ''),
                 (string)($student['username'] ?? ''),
                 (string)($student['email'] ?? ''),
@@ -799,6 +937,327 @@ function pqh_speak_recording_summary(int $studentid): array {
     return $summary;
 }
 
+function pqh_upcoming_session_summary(int $studentid): array {
+    global $DB;
+
+    $summary = [
+        'tables_ready' => false,
+        'count' => 0,
+        'latest' => null,
+    ];
+
+    if ($studentid <= 0 || !pqh_table_exists('local_prequran_live_session') || !pqh_table_exists('local_prequran_live_participant')) {
+        return $summary;
+    }
+
+    $summary['tables_ready'] = true;
+    $now = time();
+    $rows = $DB->get_records_sql(
+        "SELECT s.id, s.title, s.scheduled_start, s.status
+           FROM {local_prequran_live_session} s
+           JOIN {local_prequran_live_participant} p ON p.sessionid = s.id
+          WHERE (p.studentid = :studentid OR p.userid = :userid)
+            AND p.role = :role
+            AND p.status = :participantstatus
+            AND s.status <> :cancelled
+            AND s.scheduled_start >= :nowtime
+       ORDER BY s.scheduled_start ASC, s.id ASC",
+        [
+            'studentid' => $studentid,
+            'userid' => $studentid,
+            'role' => 'student',
+            'participantstatus' => 'active',
+            'cancelled' => 'cancelled',
+            'nowtime' => $now,
+        ],
+        0,
+        5
+    );
+    $summary['count'] = count($rows);
+    $summary['latest'] = $rows ? reset($rows) : null;
+    return $summary;
+}
+
+function pqh_teacher_live_session_rows(int $teacherid, int $fromtime, int $totime, int $limit = 20, int $workspaceid = 0): array {
+    global $DB;
+
+    if ($teacherid <= 0 || !pqh_table_exists('local_prequran_live_session')) {
+        return [];
+    }
+
+    $workspacewhere = $workspaceid > 0 && pqh_table_has_field('local_prequran_live_session', 'workspaceid')
+        ? ' AND s.workspaceid = :workspaceid'
+        : '';
+    $workspaceparams = $workspacewhere !== '' ? ['workspaceid' => $workspaceid] : [];
+    $studentcountselect = pqh_table_exists('local_prequran_live_participant')
+        ? "(SELECT COUNT(1) FROM {local_prequran_live_participant} p WHERE p.sessionid = s.id AND p.role = 'student' AND p.status = 'active')"
+        : "0";
+
+    return array_values($DB->get_records_sql(
+        "SELECT s.*, {$studentcountselect} AS student_count
+           FROM {local_prequran_live_session} s
+          WHERE s.teacherid = :teacherid
+            AND s.scheduled_start >= :fromtime
+            AND s.scheduled_start < :totime
+            AND s.status <> :cancelled
+            {$workspacewhere}
+       ORDER BY s.scheduled_start ASC, s.id ASC",
+        $workspaceparams + ['teacherid' => $teacherid, 'fromtime' => $fromtime, 'totime' => $totime, 'cancelled' => 'cancelled'],
+        0,
+        $limit
+    ));
+}
+
+function pqh_teacher_live_review_rows(int $teacherid, int $fromtime, int $totime, int $workspaceid = 0): array {
+    global $DB;
+
+    if ($teacherid <= 0
+        || !pqh_table_exists('local_prequran_live_session')
+        || !pqh_table_exists('local_prequran_live_participant')
+        || !pqh_table_exists('local_prequran_live_attendance')
+        || !pqh_table_exists('local_prequran_live_note')) {
+        return [];
+    }
+
+    $workspacewhere = $workspaceid > 0 && pqh_table_has_field('local_prequran_live_session', 'workspaceid')
+        ? ' AND s.workspaceid = :workspaceid'
+        : '';
+    $workspaceparams = $workspacewhere !== '' ? ['workspaceid' => $workspaceid] : [];
+
+    return array_values($DB->get_records_sql(
+        "SELECT s.*,
+                (SELECT COUNT(1) FROM {local_prequran_live_participant} p WHERE p.sessionid = s.id AND p.role = 'student' AND p.status = 'active') AS student_count,
+                (SELECT COUNT(1) FROM {local_prequran_live_attendance} a WHERE a.sessionid = s.id) AS attendance_count,
+                (SELECT COUNT(1) FROM {local_prequran_live_note} n WHERE n.sessionid = s.id AND n.visible_to_parent = 1 AND TRIM(CONCAT(COALESCE(n.strengths, ''), COALESCE(n.needs_practice, ''), COALESCE(n.homework, ''), COALESCE(n.parent_summary, ''))) <> '') AS visible_summary_count
+           FROM {local_prequran_live_session} s
+          WHERE s.teacherid = :teacherid
+            AND s.scheduled_end >= :fromtime
+            AND s.scheduled_end < :totime
+            AND s.status <> :cancelled
+            {$workspacewhere}
+            AND (
+                s.status <> :completed
+                OR
+                (SELECT COUNT(1) FROM {local_prequran_live_attendance} a WHERE a.sessionid = s.id)
+                < (SELECT COUNT(1) FROM {local_prequran_live_participant} p WHERE p.sessionid = s.id AND p.role = 'student' AND p.status = 'active')
+                OR
+                (SELECT COUNT(1) FROM {local_prequran_live_note} n WHERE n.sessionid = s.id AND n.visible_to_parent = 1 AND TRIM(CONCAT(COALESCE(n.strengths, ''), COALESCE(n.needs_practice, ''), COALESCE(n.homework, ''), COALESCE(n.parent_summary, ''))) <> '')
+                < (SELECT COUNT(1) FROM {local_prequran_live_participant} p WHERE p.sessionid = s.id AND p.role = 'student' AND p.status = 'active')
+            )
+       ORDER BY s.scheduled_end DESC, s.id DESC",
+        $workspaceparams + ['teacherid' => $teacherid, 'fromtime' => $fromtime, 'totime' => $totime, 'cancelled' => 'cancelled', 'completed' => 'completed'],
+        0,
+        12
+    ));
+}
+
+function pqh_teacher_live_overview(int $teacherid, int $workspaceid = 0): array {
+    global $DB;
+
+    $overview = [
+        'ready' => false,
+        'metrics' => [
+            'today' => 0,
+            'upcoming' => 0,
+            'needsreview' => 0,
+            'followups' => 0,
+            'coaching' => 0,
+            'improvementplans' => 0,
+            'studentsweek' => 0,
+        ],
+        'today' => [],
+        'upcoming' => [],
+        'needsreview' => [],
+        'followups' => [],
+        'coaching' => [],
+        'improvementplans' => [],
+        'recentcompleted' => [],
+    ];
+
+    if ($teacherid <= 0 || !pqh_table_exists('local_prequran_live_session')) {
+        return $overview;
+    }
+
+    $overview['ready'] = true;
+    $now = time();
+    $todaystart = usergetmidnight($now);
+    $todayend = $todaystart + DAYSECS;
+    $workspacewhere = $workspaceid > 0 && pqh_table_has_field('local_prequran_live_session', 'workspaceid')
+        ? ' AND s.workspaceid = :workspaceid'
+        : '';
+    $workspaceplainwhere = $workspaceid > 0 && pqh_table_has_field('local_prequran_live_session', 'workspaceid')
+        ? ' AND workspaceid = :workspaceid'
+        : '';
+    $workspaceparams = $workspacewhere !== '' ? ['workspaceid' => $workspaceid] : [];
+    $workspaceplainparams = $workspaceplainwhere !== '' ? ['workspaceid' => $workspaceid] : [];
+
+    $overview['metrics']['today'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session}
+          WHERE teacherid = :teacherid
+            AND scheduled_start >= :starttime
+            AND scheduled_start < :endtime
+            AND status <> :cancelled
+            {$workspaceplainwhere}",
+        $workspaceplainparams + ['teacherid' => $teacherid, 'starttime' => $todaystart, 'endtime' => $todayend, 'cancelled' => 'cancelled']
+    );
+    $overview['metrics']['upcoming'] = (int)$DB->count_records_sql(
+        "SELECT COUNT(1) FROM {local_prequran_live_session}
+          WHERE teacherid = :teacherid
+            AND scheduled_start >= :nowtime
+            AND scheduled_start < :untiltime
+            AND status <> :cancelled
+            {$workspaceplainwhere}",
+        $workspaceplainparams + ['teacherid' => $teacherid, 'nowtime' => $now, 'untiltime' => $now + (7 * DAYSECS), 'cancelled' => 'cancelled']
+    );
+    if (pqh_table_exists('local_prequran_live_participant')) {
+        $overview['metrics']['studentsweek'] = (int)$DB->count_records_sql(
+            "SELECT COUNT(DISTINCT p.studentid)
+               FROM {local_prequran_live_session} s
+               JOIN {local_prequran_live_participant} p ON p.sessionid = s.id AND p.role = 'student' AND p.status = 'active'
+              WHERE s.teacherid = :teacherid
+                AND s.scheduled_start >= :nowtime
+                AND s.scheduled_start < :untiltime
+                AND s.status <> :cancelled
+                {$workspacewhere}",
+            $workspaceparams + ['teacherid' => $teacherid, 'nowtime' => $now, 'untiltime' => $now + (7 * DAYSECS), 'cancelled' => 'cancelled']
+        );
+    }
+
+    $overview['today'] = pqh_teacher_live_session_rows($teacherid, $todaystart, $todayend, 20, $workspaceid);
+    $overview['upcoming'] = pqh_teacher_live_session_rows($teacherid, $now, $now + (7 * DAYSECS), 20, $workspaceid);
+    $overview['needsreview'] = pqh_teacher_live_review_rows($teacherid, $now - (14 * DAYSECS), $now, $workspaceid);
+    $overview['metrics']['needsreview'] = count($overview['needsreview']);
+    $recentcompleted = pqh_teacher_live_session_rows($teacherid, $now - (14 * DAYSECS), $now, 12, $workspaceid);
+    usort($recentcompleted, function($a, $b) {
+        return (int)$b->scheduled_start <=> (int)$a->scheduled_start;
+    });
+    $overview['recentcompleted'] = array_values(array_filter($recentcompleted, function($session) {
+        return (string)$session->status === 'completed';
+    }));
+
+    if (pqh_table_exists('local_prequran_live_note')
+            && pqh_table_has_field('local_prequran_live_note', 'followup_status')
+            && pqh_table_has_field('local_prequran_live_note', 'followup_resolved')) {
+        $notestudentselect = pqh_table_has_field('local_prequran_live_note', 'studentid') ? 'n.studentid' : '0 AS studentid';
+        $overview['followups'] = array_values($DB->get_records_sql(
+            "SELECT n.id, {$notestudentselect}, n.followup_status, n.timemodified,
+                    s.title AS session_title, s.scheduled_start
+               FROM {local_prequran_live_note} n
+               JOIN {local_prequran_live_session} s ON s.id = n.sessionid
+              WHERE s.teacherid = :teacherid
+                {$workspacewhere}
+                AND n.followup_status <> :none
+                AND n.followup_resolved = 0
+           ORDER BY n.timemodified DESC",
+            $workspaceparams + ['teacherid' => $teacherid, 'none' => 'none'],
+            0,
+            8
+        ));
+        $overview['metrics']['followups'] = count($overview['followups']);
+    }
+
+    if (pqh_table_has_field('local_prequran_live_session', 'qa_coaching_status')) {
+        $overview['coaching'] = array_values($DB->get_records_sql(
+            "SELECT *
+               FROM {local_prequran_live_session}
+              WHERE teacherid = :teacherid
+                AND qa_coaching_status IN ('assigned', 'acknowledged')
+                {$workspaceplainwhere}
+           ORDER BY scheduled_start DESC, id DESC",
+            $workspaceplainparams + ['teacherid' => $teacherid],
+            0,
+            8
+        ));
+        $overview['metrics']['coaching'] = count($overview['coaching']);
+    }
+
+    if (pqh_table_has_field('local_prequran_live_session', 'improvement_plan_status')) {
+        $overview['improvementplans'] = array_values($DB->get_records_sql(
+            "SELECT *
+               FROM {local_prequran_live_session}
+              WHERE teacherid = :teacherid
+                AND improvement_plan_status IN ('assigned', 'in_progress')
+                {$workspaceplainwhere}
+           ORDER BY scheduled_start DESC, id DESC",
+            $workspaceplainparams + ['teacherid' => $teacherid],
+            0,
+            8
+        ));
+        $overview['metrics']['improvementplans'] = count($overview['improvementplans']);
+    }
+
+    return $overview;
+}
+
+function pqh_teacher_live_row_html($row, string $mode = 'session'): string {
+    $title = trim((string)($row->title ?? $row->session_title ?? 'Live class'));
+    if ($title === '') {
+        $title = 'Live class';
+    }
+    $parts = [];
+    if (!empty($row->scheduled_start)) {
+        $parts[] = userdate((int)$row->scheduled_start, get_string('strftimedatetimeshort'));
+    }
+    if ($mode === 'review') {
+        $studentcount = (int)($row->student_count ?? 0);
+        $parts[] = $studentcount . ' student' . ($studentcount === 1 ? '' : 's');
+        if (isset($row->attendance_count)) {
+            $parts[] = (int)$row->attendance_count . ' attendance';
+        }
+        if (isset($row->visible_summary_count)) {
+            $parts[] = (int)$row->visible_summary_count . ' notes';
+        }
+    } else if ($mode === 'followup') {
+        $studentname = pqh_short_user_name((int)($row->studentid ?? 0));
+        if ($studentname !== '') {
+            $parts[] = $studentname;
+        }
+        $parts[] = ucwords(str_replace('_', ' ', (string)($row->followup_status ?? 'follow-up')));
+    } else if ($mode === 'coaching' && !empty($row->qa_coaching_status)) {
+        $parts[] = ucwords(str_replace('_', ' ', (string)$row->qa_coaching_status));
+        if (!empty($row->qa_coaching_priority)) {
+            $parts[] = ucwords((string)$row->qa_coaching_priority) . ' priority';
+        }
+    } else if ($mode === 'plan' && !empty($row->improvement_plan_status)) {
+        $parts[] = ucwords(str_replace('_', ' ', (string)$row->improvement_plan_status));
+        if (!empty($row->improvement_plan_priority)) {
+            $parts[] = ucwords((string)$row->improvement_plan_priority) . ' priority';
+        }
+    } else {
+        if (!empty($row->student_count)) {
+            $studentcount = (int)$row->student_count;
+            $parts[] = $studentcount . ' student' . ($studentcount === 1 ? '' : 's');
+        }
+        if (!empty($row->status)) {
+            $parts[] = ucwords(str_replace('_', ' ', (string)$row->status));
+        }
+    }
+
+    $html = '<div class="pqh-teacher-row">';
+    $html .= '<strong>' . s($title) . '</strong>';
+    if ($parts) {
+        $html .= '<span>' . s(implode(' | ', array_filter($parts))) . '</span>';
+    }
+    $html .= '</div>';
+    return $html;
+}
+
+function pqh_teacher_live_panel_html(string $title, array $rows, string $empty, string $mode = 'session'): string {
+    $html = '<article class="pqh-teacher-panel">';
+    $html .= '<h3>' . s($title) . '</h3>';
+    if (!$rows) {
+        $html .= '<div class="pqh-teacher-empty">' . s($empty) . '</div>';
+    } else {
+        $html .= '<div class="pqh-teacher-list">';
+        foreach ($rows as $row) {
+            $html .= pqh_teacher_live_row_html($row, $mode);
+        }
+        $html .= '</div>';
+    }
+    $html .= '</article>';
+    return $html;
+}
+
 function pqh_format_duration(int $ms): string {
     $minutes = (int)round($ms / 60000);
     $hours = intdiv($minutes, 60);
@@ -1035,10 +1494,54 @@ function pqh_default_environment(): string {
     return 'production';
 }
 
+function pqh_bunny_environment_base_path(string $env): string {
+    $env = in_array($env, ['integration', 'staging', 'production'], true) ? $env : 'production';
+    $configured = '';
+    try {
+        $configured = trim((string)get_config('local_prequran', 'bunny_base_' . $env));
+    } catch (Throwable $e) {
+        $configured = '';
+    }
+    if ($configured !== '') {
+        $path = parse_url($configured, PHP_URL_PATH);
+        $configured = $path !== null && $path !== false && $path !== '' ? $path : $configured;
+    }
+    if ($configured === '') {
+        $configured = [
+            'integration' => '/pre_quraan_integration/',
+            'staging' => '/pre_quraan_staging/',
+            'production' => '/pre_quraan/',
+        ][$env];
+    }
+    return '/' . trim($configured, '/') . '/';
+}
+
+function pqh_pre_quraan_course_home_link(int $studentid = 0): moodle_url {
+    global $CFG;
+
+    $env = pqh_default_environment();
+    $base = rtrim(pqh_shared_resource_cdn_base_url($env), '/') . pqh_bunny_environment_base_path($env) . 'app/index.html';
+    $params = [
+        'course' => 'pre_quraan',
+        'managed_student' => $studentid > 0 && pqh_is_managed_student($studentid) ? 1 : 0,
+        'pq_env' => $env,
+        'moodle_origin' => rtrim((string)$CFG->wwwroot, '/'),
+        'pq_lang' => 'en',
+        'pq_lang_scope' => 'both',
+    ];
+    if ($studentid > 0) {
+        $params['studentid'] = $studentid;
+    }
+    return new moodle_url($base . '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986));
+}
+
 function pqh_course_launch_link(string $coursekey, int $studentid = 0): moodle_url {
     $coursekey = pqh_normalize_course_key($coursekey);
     if ($coursekey === '') {
         $coursekey = 'pre_quraan';
+    }
+    if ($coursekey === 'pre_quraan') {
+        return pqh_pre_quraan_course_home_link($studentid);
     }
     $params = ['course' => $coursekey];
     if ($studentid > 0) {
@@ -1053,6 +1556,14 @@ function pqh_course_catalog_browse_link(int $workspaceid = 0): moodle_url {
         $params['workspaceid'] = $workspaceid;
     }
     return new moodle_url('/local/hubredirect/course_catalog_browse.php', $params);
+}
+
+function pqh_course_offerings_link(int $workspaceid = 0): moodle_url {
+    $params = [];
+    if ($workspaceid > 0) {
+        $params['workspaceid'] = $workspaceid;
+    }
+    return new moodle_url('/local/hubredirect/course_offerings.php', $params);
 }
 
 function pqh_course_transcript_link(int $studentid = 0, int $workspaceid = 0): moodle_url {
@@ -1140,6 +1651,12 @@ function pqh_live_sessions_link(int $workspaceid = 0): moodle_url {
     return new moodle_url('/local/hubredirect/live_sessions.php', $params);
 }
 
+function pqh_live_session_create_link(int $workspaceid = 0): moodle_url {
+    $url = pqh_live_sessions_link($workspaceid);
+    $url->set_anchor('create-session');
+    return $url;
+}
+
 function pqh_meeting_rooms_link(string $sessiontype): moodle_url {
     $titles = [
         'parent_meeting' => 'Parent Meeting Room',
@@ -1170,8 +1687,15 @@ function pqh_live_series_schedule_link(int $childid): moodle_url {
     return new moodle_url('/local/hubredirect/live_series_schedule.php', ['childid' => $childid]);
 }
 
-function pqh_live_teacher_link(): moodle_url {
-    return new moodle_url('/local/hubredirect/live_teacher.php');
+function pqh_live_teacher_link(int $workspaceid = 0, int $childid = 0): moodle_url {
+    $params = [];
+    if ($workspaceid > 0) {
+        $params['workspaceid'] = $workspaceid;
+    }
+    if ($childid > 0) {
+        $params['childid'] = $childid;
+    }
+    return new moodle_url('/local/hubredirect/live_teacher.php', $params);
 }
 
 function pqh_live_admin_link(): moodle_url {
@@ -1217,10 +1741,13 @@ function pqh_live_reports_link(): moodle_url {
     return new moodle_url('/local/hubredirect/live_reports.php');
 }
 
-function pqh_managed_reports_link(int $childid = 0): moodle_url {
+function pqh_managed_reports_link(int $childid = 0, int $workspaceid = 0): moodle_url {
     $params = [];
     if ($childid > 0) {
         $params['studentid'] = $childid;
+    }
+    if ($workspaceid > 0) {
+        $params['workspaceid'] = $workspaceid;
     }
     return new moodle_url('/local/hubredirect/managed_reports.php', $params);
 }
@@ -1234,11 +1761,13 @@ function pqh_live_parent_links_link(): moodle_url {
 }
 
 function pqh_teacher_marketplace_link(): moodle_url {
-    return new moodle_url('/local/hubredirect/teacher_marketplace.php', ['consumer' => 'edu-for-tomorrow']);
+    $context = pqh_current_consumer_context();
+    return pqh_consumer_url('/local/hubredirect/teacher_marketplace.php', $context);
 }
 
 function pqh_teacher_marketplace_requests_link(): moodle_url {
-    return new moodle_url('/local/hubredirect/teacher_marketplace_requests.php', ['consumer' => 'edu-for-tomorrow']);
+    $context = pqh_current_consumer_context();
+    return pqh_consumer_url('/local/hubredirect/teacher_marketplace_requests.php', $context);
 }
 
 function pqh_referrers_link(): moodle_url {
@@ -1273,8 +1802,20 @@ function pqh_live_grouping_link(): moodle_url {
     return new moodle_url('/local/hubredirect/live_grouping.php');
 }
 
-function pqh_student_intake_link(): moodle_url {
-    return new moodle_url('/local/hubredirect/student_intake.php');
+function pqh_student_intake_link(int $workspaceid = 0): moodle_url {
+    $params = [];
+    if ($workspaceid > 0) {
+        $params['workspaceid'] = $workspaceid;
+    }
+    return new moodle_url('/local/hubredirect/student_intake.php', $params);
+}
+
+function pqh_teacher_student_connect_link(int $workspaceid = 0): moodle_url {
+    $params = [];
+    if ($workspaceid > 0) {
+        $params['workspaceid'] = $workspaceid;
+    }
+    return new moodle_url('/local/hubredirect/teacher_student_connect.php', $params);
 }
 
 function pqh_hub_link(string $path, array $params = []): moodle_url {
@@ -1527,15 +2068,17 @@ $sqlCleanupIntegration = pqh_step_progress_cleanup_sql('integration');
 $sqlCleanupStaging = pqh_step_progress_cleanup_sql('staging');
 $sqlCleanupProductionBlocked = pqh_step_progress_cleanup_sql('production');
 $isacademyteacher = $role === 'teacher' && pqh_has_academy_teacher_role((int)$USER->id);
-$ismarketplaceteacher = $role === 'teacher' && !$isacademyteacher && pqh_has_marketplace_teacher_profile((int)$USER->id);
-$studentsearch = $isacademyteacher ? optional_param('studentq', '', PARAM_TEXT) : '';
-$studentgroupid = $isacademyteacher ? optional_param('groupid', 0, PARAM_INT) : 0;
+$isindependentteacher = $role === 'teacher' && !$isacademyteacher && pqh_has_independent_teacher_profile((int)$USER->id);
+$isfullteacher = $isacademyteacher || $isindependentteacher;
+$ismarketplaceteacher = $role === 'teacher' && !$isfullteacher && pqh_has_marketplace_teacher_profile((int)$USER->id);
+$studentsearch = $isfullteacher ? optional_param('studentq', '', PARAM_TEXT) : '';
+$studentgroupid = $isfullteacher ? optional_param('groupid', 0, PARAM_INT) : 0;
 $studentgroups = [];
 $allchildren = [];
 $children = [];
 if ($role === 'parent') {
     $children = pqh_parent_children((int)$USER->id);
-} else if ($isacademyteacher) {
+} else if ($isfullteacher) {
     $allchildren = pqh_teacher_students((int)$USER->id);
     $studentgroups = pqh_student_groups($allchildren);
     $children = pqh_filter_students($allchildren, $studentsearch, $studentgroupid);
@@ -1551,17 +2094,23 @@ foreach ($children as $child) {
         break;
     }
 }
+$teacherstudentcoursescope = $role === 'teacher' ? pqh_teacher_student_course_scope($allchildren) : ['coursekeys' => [], 'moodlecourseids' => []];
 $currentstudentcourses = $role === 'student' ? pqh_user_courses((int)$USER->id) : [];
+$teacherenrolledcourses = $role === 'teacher'
+    ? pqh_user_moodle_course_cards((int)$USER->id, $teacherstudentcoursescope['moodlecourseids'], $teacherstudentcoursescope['coursekeys'])
+    : [];
 $selectedchildcourses = $selectedchild ? pqh_user_courses((int)$selectedchild['studentid']) : [];
 $progress = $selectedchild ? pqh_progress_summary((int)$selectedchild['studentid']) : pqh_progress_summary((int)$USER->id);
 $messages = pqh_message_summary((int)$USER->id);
 $focus = $selectedchild ? pqh_focus_summary((int)$selectedchild['studentid']) : pqh_focus_summary((int)$USER->id);
 $speakrecordings = $selectedchild ? pqh_speak_recording_summary((int)$selectedchild['studentid']) : pqh_speak_recording_summary((int)$USER->id);
+$upcomingsessions = $selectedchild ? pqh_upcoming_session_summary((int)$selectedchild['studentid']) : pqh_upcoming_session_summary((int)$USER->id);
 $livechildmonitoring = $role === 'parent' ? pqh_live_child_monitoring($children, 3) : ['ready' => false, 'focus_ready' => false, 'children' => []];
 $selectedenrollmentstatus = $selectedchild ? pqh_enrollment_approval_status((int)$selectedchild['studentid'], $role === 'parent' ? (int)$USER->id : 0) : '';
 $currentstudentenrollmentstatus = $role === 'student' ? pqh_enrollment_approval_status((int)$USER->id) : '';
 $currentworkspaceid = pqh_current_workspace_id((int)$USER->id);
 $hasworkspace = $currentworkspaceid > 0;
+$teacherliveoverview = $role === 'teacher' ? pqh_teacher_live_overview((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0) : [];
 $pqhlogoutparams = $pqhpageparams;
 if ($currentworkspaceid > 0 && empty($pqhlogoutparams['workspaceid'])) {
     $pqhlogoutparams['workspaceid'] = $currentworkspaceid;
@@ -1576,6 +2125,19 @@ if (!in_array($pqhfontsize, ['normal', 'large', 'xlarge'], true)) {
     $pqhfontsize = 'normal';
 }
 $pqhbackfallback = new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams);
+$pqhismarketplace = pqh_consumer_feature_enabled($pqhconsumercontext, 'teacher_marketplace');
+$pqhshowcoursepanel = !($pqhismarketplace && in_array($role, ['admin', 'school_principal'], true));
+$pqhherokicker = ($role === 'school_principal' ? 'School principal' : ($role === 'sqa_tester' ? 'SQA tester' : ucfirst($role))) . ' dashboard';
+$pqhherotitle = 'Assalamu alaikum, ' . fullname($USER);
+$pqhherosubtitle = 'A simple home for messages, progress, lessons, and next steps.';
+if ($pqhismarketplace && $role === 'admin') {
+    $pqhherokicker = $pqhbrandname . ' marketplace admin';
+    $pqhherotitle = 'Marketplace Administration';
+    $pqhherosubtitle = 'Review independent teacher applications, publish marketplace profiles, manage requests, and support teacher-led learning.';
+} else if ($pqhismarketplace) {
+    $pqhherokicker = $pqhbrandname . ' marketplace';
+    $pqhherosubtitle = 'Connect learners with independent teachers, tutoring support, and flexible learning services.';
+}
 
 echo $OUTPUT->header();
 ?>
@@ -1651,19 +2213,20 @@ body.pqh-dashboard-page #region-main {
 .pqh-font-control a{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:26px;border-radius:999px;color:#245c35!important;text-decoration:none;font:950 12px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 .pqh-font-control a:nth-child(3){font-size:14px}.pqh-font-control a:nth-child(4){font-size:16px}
 .pqh-font-control a.is-active{background:#3f8a55;color:#fff!important}
+.pqh-top-action{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:#f7fff4;color:#245c35!important;text-decoration:none;font:950 13px/34px system-ui,-apple-system,"Segoe UI",Arial,sans-serif;border:1px solid rgba(63,138,85,.24)}
+.pqh-top-action:hover{background:#e6f7ec;text-decoration:none}
+.pqh-top-action--icon{min-width:36px;padding:0;font-size:16px}
 .pqh-shell .pqh-wrap{font-size:var(--pqh-base)}
 .pqh-shell .pqh-brand{font-size:calc(18px * var(--pqh-scale))!important}
 .pqh-shell .pqh-title{font-size:var(--pqh-title-size)!important}
 .pqh-shell .pqh-course-panel__head h2,.pqh-shell .pqh-tools__head h2{font-size:var(--pqh-section-size)!important}
-.pqh-shell .pqh-student-panel h2,.pqh-shell .pqh-student-panel h3,.pqh-shell .pqh-progress-block h2{font-size:var(--pqh-panel-size)!important}
-.pqh-shell .pqh-course-card h3,.pqh-shell .pqh-student-report h3,.pqh-shell .pqh-card h3,.pqh-shell .pqh-live-child h3,.pqh-shell .pqh-sql-panel h3{font-size:var(--pqh-card-title-size)!important}
-.pqh-shell .pqh-subtitle,.pqh-shell .pqh-course-panel__head p,.pqh-shell .pqh-course-card p,.pqh-shell .pqh-student-panel p,.pqh-shell .pqh-student-report p,.pqh-shell .pqh-progress-copy,.pqh-shell .pqh-card p,.pqh-shell .pqh-sql-panel p{font-size:var(--pqh-base)!important}
-.pqh-shell .pqh-kicker,.pqh-shell .pqh-field label,.pqh-shell .pqh-filter-count,.pqh-shell .pqh-progress-latest span,.pqh-shell .pqh-live-session__top span,.pqh-shell .pqh-config-meta{font-size:var(--pqh-small)!important}
-.pqh-shell .pqh-course-card__detail b,.pqh-shell .pqh-student-profile__item b,.pqh-shell .pqh-progress-stat span,.pqh-shell .pqh-progress-latest b,.pqh-shell .pqh-mini-stat span{font-size:var(--pqh-tiny)!important}
+.pqh-shell .pqh-course-card h3,.pqh-shell .pqh-card h3,.pqh-shell .pqh-live-child h3,.pqh-shell .pqh-sql-panel h3{font-size:var(--pqh-card-title-size)!important}
+.pqh-shell .pqh-subtitle,.pqh-shell .pqh-course-panel__head p,.pqh-shell .pqh-course-card p,.pqh-shell .pqh-card p,.pqh-shell .pqh-sql-panel p{font-size:var(--pqh-base)!important}
+.pqh-shell .pqh-kicker,.pqh-shell .pqh-field label,.pqh-shell .pqh-filter-count,.pqh-shell .pqh-live-session__top span,.pqh-shell .pqh-config-meta{font-size:var(--pqh-small)!important}
+.pqh-shell .pqh-course-card__detail b,.pqh-shell .pqh-student-profile__item b,.pqh-shell .pqh-mini-stat span{font-size:var(--pqh-tiny)!important}
 .pqh-shell .pqh-course-card__detail span,.pqh-shell .pqh-student-profile__item span,.pqh-shell .pqh-course-card__status,.pqh-shell .pqh-course-card__lesson,.pqh-shell .pqh-focus-pill,.pqh-shell .pqh-live-status{font-size:var(--pqh-small)!important}
-.pqh-shell .pqh-student-action,.pqh-shell .pqh-btn,.pqh-shell .pqh-select,.pqh-shell .pqh-input,.pqh-shell .pqh-back,.pqh-shell .pqh-logout{font-size:var(--pqh-base)!important}
+.pqh-shell .pqh-student-action,.pqh-shell .pqh-btn,.pqh-shell .pqh-select,.pqh-shell .pqh-input,.pqh-shell .pqh-back,.pqh-shell .pqh-top-action,.pqh-shell .pqh-logout{font-size:var(--pqh-base)!important}
 .pqh-shell .pqh-metric{font-size:var(--pqh-metric-size)!important}
-.pqh-shell .pqh-progress-stat strong{font-size:calc(24px * var(--pqh-scale))!important}
 .pqh-logout{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 13px;border-radius:999px;background:#fff4dc;color:#6f4e32!important;text-decoration:none;font:950 13px/34px system-ui,-apple-system,"Segoe UI",Arial,sans-serif;border:1px solid rgba(111,78,50,.20)}
 .pqh-logout:hover{background:#ffe7b8;color:#4d3522!important;text-decoration:none}
 .pqh-wrap{max-width:1180px;margin:0 auto;padding:30px 18px 54px;color:#17324a;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
@@ -1676,18 +2239,19 @@ body.pqh-dashboard-page #region-main {
 .pqh-input{width:100%;min-height:42px;border-radius:9px;border:1px solid rgba(23,50,74,.18);padding:0 12px;background:#fff;color:#4d3522;font-weight:850}
 .pqh-filter-count{grid-column:1/-1;margin:0;color:#64745a;font-size:13px;font-weight:800}
 .pqh-quick{display:none!important}
-.pqh-quick-card{padding:15px 16px;border-radius:14px;background:#3f8a55;color:#fff;text-decoration:none;box-shadow:0 14px 30px rgba(63,138,85,.16)}
+.pqh-quick-card{padding:15px 16px;border:0;border-radius:14px;background:#3f8a55;color:#fff;text-decoration:none;text-align:left;cursor:pointer;font-family:inherit;box-shadow:0 14px 30px rgba(63,138,85,.16)}
 .pqh-quick-card:nth-child(even){background:#6f4e32;box-shadow:0 14px 30px rgba(111,78,50,.16)}
 .pqh-quick-card strong{display:block;font-size:15px;font-weight:950}.pqh-quick-card span{display:block;margin-top:4px;color:rgba(255,255,255,.78);font-size:12px;font-weight:800}
 .pqh-course-panel{margin:0 0 18px;padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
 .pqh-course-panel__head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
 .pqh-course-panel__head h2{margin:0;color:#4d3522;font-size:22px;font-weight:950}
 .pqh-course-panel__head p{margin:5px 0 0;color:#64745a;font-size:13px;font-weight:750}
-.pqh-course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,420px));gap:12px}
+.pqh-course-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .pqh-course-card{display:flex;min-height:132px;flex-direction:column;justify-content:space-between;padding:16px;border-radius:12px;background:#f7fff4;border:1px solid rgba(63,138,85,.18);color:#17324a!important;text-decoration:none}
 .pqh-course-card:hover{background:#edffe9;text-decoration:none}
 .pqh-course-card h3{margin:0;color:#4d3522;font-size:18px;font-weight:950}
 .pqh-course-card p{margin:8px 0 12px;color:#64745a;font-size:13px;font-weight:750;line-height:1.4}
+.pqh-course-card__number{display:block;margin:6px 0 12px;color:#64745a;font-size:12px;font-weight:900}
 .pqh-course-card__actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
 .pqh-course-card__status{display:inline-flex;align-items:center;align-self:flex-start;min-height:28px;padding:0 10px;border-radius:999px;background:#fff4dc;color:#7b5a3a;font-size:12px;font-weight:950}
 .pqh-course-card__status--live{background:#e6f7ec;color:#245c35}
@@ -1700,43 +2264,14 @@ body.pqh-dashboard-page #region-main {
 .pqh-course-card__detail span{display:block;color:#425c46;font-size:12px;font-weight:800;line-height:1.35;overflow-wrap:anywhere}
 .pqh-course-card__detail--wide{grid-column:1/-1}
 .pqh-course-empty{padding:16px;border-radius:12px;background:#fff8f0;border:1px dashed rgba(111,78,50,.24);color:#64745a;font-weight:800}
-.pqh-student-overview{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:14px;margin:0 0 14px}
-.pqh-student-panel{padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
-.pqh-student-panel--primary{background:linear-gradient(135deg,#fff 0%,#f8fff5 100%)}
-.pqh-student-panel h2,.pqh-student-panel h3{margin:0 0 8px;color:#4d3522;font-size:20px;font-weight:950}
-.pqh-student-panel p{margin:0;color:#64745a;font-size:14px;font-weight:700;line-height:1.45}
 .pqh-student-profile{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}
 .pqh-student-profile__item{min-height:70px;padding:10px;border-radius:10px;background:#fff;border:1px solid rgba(23,50,74,.10)}
 .pqh-student-profile__item b{display:block;margin-bottom:3px;color:#6f4e32;font-size:10px;font-weight:950;text-transform:uppercase}
 .pqh-student-profile__item span{display:block;color:#425c46;font-size:12px;font-weight:800;line-height:1.35;overflow-wrap:anywhere}
 .pqh-student-profile__item--wide{grid-column:span 2}
-.pqh-student-action-list{display:grid;gap:9px;margin-top:12px}
-.pqh-student-action{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:46px;padding:0 12px;border-radius:10px;background:#f4fff0;color:#17324a!important;border:1px solid rgba(111,78,50,.14);font-size:13px;font-weight:950;text-decoration:none}
-.pqh-student-action:hover{background:#eaffea;text-decoration:none}
-.pqh-student-action--primary{background:#6f4e32;color:#fff!important;border-color:#6f4e32}
-.pqh-student-action--primary:hover{background:#5f432b;color:#fff!important}
-.pqh-student-report-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.pqh-student-report{padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
-.pqh-student-report h3{margin:0 0 8px;color:#4d3522;font-size:18px;font-weight:950}
-.pqh-student-report p{margin:0;color:#64745a;font-size:14px;font-weight:700;line-height:1.45}
-.pqh-student-report .pqh-actions{margin-top:14px}
-.pqh-progress-block{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.72fr);align-items:start;gap:16px;margin:0 0 14px;padding:18px;border-radius:16px;background:linear-gradient(135deg,#dff8dc 0%,#fff 56%,#fff5df 100%);border:1px solid rgba(63,138,85,.20);box-shadow:0 14px 32px rgba(63,138,85,.10)}
-.pqh-progress-main{min-width:0}
-.pqh-progress-kicker{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:999px;background:#3f8a55;color:#fff;font-size:11px;font-weight:950;text-transform:uppercase}
-.pqh-progress-block h2{margin:10px 0 6px;color:#4d3522;font-size:22px;font-weight:950}
-.pqh-progress-copy{margin:0;color:#64745a;font-size:14px;font-weight:750;line-height:1.45}
+.pqh-special-care{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 10px;border-radius:999px;background:#fff4dc;color:#7b4f1d;font-size:12px;font-weight:950;border:1px solid rgba(123,79,29,.20);white-space:nowrap}
 .pqh-progress-meter{height:12px;margin-top:14px;border-radius:999px;background:#eef5e9;overflow:hidden;border:1px solid rgba(63,138,85,.16)}
 .pqh-progress-meter span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#3f8a55,#d8a33d)}
-.pqh-progress-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.pqh-progress-main .pqh-progress-stats{margin-top:16px;max-width:520px}
-.pqh-progress-stat{padding:12px;border-radius:12px;background:rgba(255,255,255,.82);border:1px solid rgba(23,50,74,.10)}
-.pqh-progress-stat strong{display:block;color:#245c35;font-size:24px;font-weight:950;line-height:1}
-.pqh-progress-stat span{display:block;margin-top:4px;color:#64745a;font-size:11px;font-weight:900;text-transform:uppercase}
-.pqh-progress-feed{display:grid;gap:9px;align-content:start;min-width:0}
-.pqh-progress-latest{padding:12px;border-radius:12px;background:#fff;border:1px solid rgba(111,78,50,.12)}
-.pqh-progress-latest b{display:block;margin-bottom:3px;color:#6f4e32;font-size:11px;font-weight:950;text-transform:uppercase}
-.pqh-progress-latest span{display:block;color:#425c46;font-size:13px;font-weight:850;line-height:1.35}
-.pqh-progress-latest .pqh-focus-pill{display:inline-flex;margin:0 0 0 8px;min-height:22px;padding:0 8px;font-size:10px;vertical-align:middle}
 .pqh-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .pqh-card{min-height:132px;padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
 .pqh-card--wide{grid-column:span 2}
@@ -1820,10 +2355,25 @@ body.pqh-dashboard-page .pq-comm-thread__subject{font-size:17px}
 body.pqh-dashboard-page .pq-comm-thread__preview{font-size:14px}
 body.pqh-dashboard-page .pq-comm-message{padding:16px;border-radius:12px;border-color:rgba(111,78,50,.13)}
 body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-color:rgba(111,78,50,.13)}
-@media(max-width:820px){.pqh-hero{display:block}.pqh-filter{grid-template-columns:1fr}.pqh-config__head,.pqh-live-monitor__head{display:block}.pqh-config-filter{grid-template-columns:1fr}.pqh-config-table,.pqh-config-table tbody,.pqh-config-table tr,.pqh-config-table td{display:block;width:100%}.pqh-config-table thead{display:none}.pqh-config-table tr{margin-bottom:10px}.pqh-config-table td{border-left:1px solid rgba(111,78,50,.10);border-right:1px solid rgba(111,78,50,.10);border-radius:0}.pqh-config-table td:first-child{border-radius:10px 10px 0 0}.pqh-config-table td:last-child{border-radius:0 0 10px 10px}.pqh-grid,.pqh-student-overview,.pqh-student-report-grid,.pqh-progress-block{grid-template-columns:1fr}.pqh-student-profile{grid-template-columns:1fr 1fr}.pqh-card--wide{grid-column:auto}.pqh-title{font-size:25px}.pqh-live-session__top{display:block}.pqh-live-status{margin-top:8px}.pqh-live-session__stats{grid-template-columns:1fr 1fr}}
-@media(max-width:820px){.pqh-progress-main .pqh-progress-stats{max-width:none}.pqh-progress-feed{margin-top:2px}}
+.pqh-teacher-overview-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.85fr);gap:18px;align-items:start}
+.pqh-teacher-status{display:grid;gap:14px}
+.pqh-teacher-metrics{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.pqh-teacher-metric{min-height:70px;padding:10px;border-radius:8px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 8px 18px rgba(105,76,45,.04)}
+.pqh-teacher-metric strong{display:block;color:#6f4e32;font-size:22px;font-weight:950}
+.pqh-teacher-metric span{display:block;margin-top:3px;color:#516879;font-size:10px;font-weight:900;line-height:1.25}
+.pqh-teacher-panel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pqh-teacher-panel{padding:14px;border-radius:8px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.05)}
+.pqh-teacher-panel h3{margin:0 0 10px;color:#4d3522;font-size:18px;font-weight:950}
+.pqh-teacher-empty{padding:14px;border-radius:8px;border:1px dashed rgba(23,50,74,.18);background:#fff;color:#64745a;font-size:13px;font-weight:850}
+.pqh-teacher-list{display:grid;gap:8px}
+.pqh-teacher-row{padding:10px;border-radius:8px;background:#fbfdff;border:1px solid rgba(23,50,74,.10)}
+.pqh-teacher-row strong{display:block;color:#17324a;font-size:14px;font-weight:950}
+.pqh-teacher-row span{display:block;margin-top:3px;color:#64745a;font-size:12px;font-weight:800;line-height:1.35}
+.pqh-dashboard-sidebar{display:grid;gap:14px}
+@media(max-width:1100px){.pqh-course-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pqh-teacher-overview-layout{grid-template-columns:1fr}.pqh-teacher-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:820px){.pqh-hero{display:block}.pqh-filter{grid-template-columns:1fr}.pqh-config__head,.pqh-live-monitor__head{display:block}.pqh-config-filter{grid-template-columns:1fr}.pqh-config-table,.pqh-config-table tbody,.pqh-config-table tr,.pqh-config-table td{display:block;width:100%}.pqh-config-table thead{display:none}.pqh-config-table tr{margin-bottom:10px}.pqh-config-table td{border-left:1px solid rgba(111,78,50,.10);border-right:1px solid rgba(111,78,50,.10);border-radius:0}.pqh-config-table td:first-child{border-radius:10px 10px 0 0}.pqh-config-table td:last-child{border-radius:0 0 10px 10px}.pqh-grid,.pqh-course-grid,.pqh-teacher-panel-grid{grid-template-columns:1fr}.pqh-teacher-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqh-student-profile{grid-template-columns:1fr 1fr}.pqh-card--wide{grid-column:auto}.pqh-title{font-size:25px}.pqh-live-session__top{display:block}.pqh-live-status{margin-top:8px}.pqh-live-session__stats{grid-template-columns:1fr 1fr}}
 @media(max-width:920px){.pqh-quick{grid-template-columns:repeat(2,minmax(0,1fr))}.pqh-role-chip{display:none}.pqh-role-nav{display:flex}}
-@media(max-width:560px){.pqh-topbar{height:auto;padding:14px 16px}.pqh-quick{grid-template-columns:1fr}.pqh-wrap{padding:20px 14px 42px}.pqh-mini-list,.pqh-live-session__stats,.pqh-course-grid,.pqh-student-profile,.pqh-progress-main .pqh-progress-stats{grid-template-columns:1fr}.pqh-student-profile__item--wide{grid-column:auto}.pqh-student-action{align-items:flex-start;flex-direction:column;justify-content:center;padding:10px 12px}body.pqh-dashboard-page .pq-comm-panel__sheet{top:auto;right:0;bottom:0;left:0;width:auto;height:min(86vh,720px);border-radius:16px 16px 0 0}body.pqh-dashboard-page .pq-comm-tabs{max-width:none}}
+@media(max-width:560px){.pqh-topbar{height:auto;padding:14px 16px}.pqh-quick{grid-template-columns:1fr}.pqh-wrap{padding:20px 14px 42px}.pqh-mini-list,.pqh-live-session__stats,.pqh-course-grid,.pqh-student-profile{grid-template-columns:1fr}.pqh-student-profile__item--wide{grid-column:auto}body.pqh-dashboard-page .pq-comm-panel__sheet{top:auto;right:0;bottom:0;left:0;width:auto;height:min(86vh,720px);border-radius:16px 16px 0 0}body.pqh-dashboard-page .pq-comm-tabs{max-width:none}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?>">
@@ -1831,29 +2381,43 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
   <div class="pqh-brand"><span class="pqh-brand__mark"><?php echo s($pqhbrandinitials); ?></span><span><?php echo s($pqhbrandname); ?></span></div>
   <div class="pqh-role-nav" aria-label="Dashboard roles">
     <button class="pqh-back" type="button" data-fallback="<?php echo s($pqhbackfallback->out(false)); ?>">Back</button>
+    <?php if ($role === 'teacher'): ?>
+      <a class="pqh-top-action" href="<?php echo pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0, $selectedchild ? (int)$selectedchild['studentid'] : 0)->out(false); ?>">Teacher workspace</a>
+    <?php endif; ?>
+    <?php if ($role === 'teacher' && $selectedchild): ?>
+      <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">Messages</a>
+      <a class="pqh-top-action" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Live sessions</a>
+      <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'announcements', (int)$selectedchild['studentid'])->out(false); ?>">Announcements</a>
+    <?php elseif ($role === 'teacher'): ?>
+      <a class="pqh-top-action" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Live sessions</a>
+    <?php endif; ?>
+    <?php if ($role === 'student'): ?>
+      <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/student_workplace.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Student Workplace</a>
+      <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">Messages</a>
+      <a class="pqh-top-action" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Live sessions</a>
+      <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'announcements'])->out(false); ?>">Announcements</a>
+      <button class="pqh-top-action" type="button" data-pq-support-action="open">Open Support</button>
+      <button class="pqh-top-action" type="button" data-pq-support-action="new">New Request</button>
+    <?php endif; ?>
+    <?php if ($role === 'teacher'): ?>
+      <button class="pqh-top-action" type="button" data-pq-support-action="open">Open Support</button>
+      <button class="pqh-top-action" type="button" data-pq-support-action="new">New Request</button>
+    <?php endif; ?>
     <span class="pqh-font-control" aria-label="Font size">
       <span>Text</span>
       <a class="<?php echo $pqhfontsize === 'normal' ? 'is-active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', array_merge($pqhpageparams, ['fontsize' => 'normal'])))->out(false); ?>">A</a>
       <a class="<?php echo $pqhfontsize === 'large' ? 'is-active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', array_merge($pqhpageparams, ['fontsize' => 'large'])))->out(false); ?>">A</a>
       <a class="<?php echo $pqhfontsize === 'xlarge' ? 'is-active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', array_merge($pqhpageparams, ['fontsize' => 'xlarge'])))->out(false); ?>">A</a>
     </span>
-    <?php if ($role !== 'student'): ?>
-      <span class="pqh-role-chip <?php echo $role === 'parent' ? 'is-active' : ''; ?>">Parents</span>
-      <span class="pqh-role-chip <?php echo $role === 'teacher' ? 'is-active' : ''; ?>">Teachers</span>
-      <span class="pqh-role-chip <?php echo $role === 'school_principal' ? 'is-active' : ''; ?>">Principals</span>
-      <span class="pqh-role-chip <?php echo $role === 'sqa_tester' ? 'is-active' : ''; ?>">SQA</span>
-      <span class="pqh-role-chip <?php echo $role === 'admin' ? 'is-active' : ''; ?>">Admins</span>
-      <span class="pqh-role-chip <?php echo $role === 'referrer' ? 'is-active' : ''; ?>">Referrers</span>
-    <?php endif; ?>
     <a class="pqh-logout pqh-workspace-logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
   </div>
 </div>
 <div class="pqh-wrap">
   <section class="pqh-hero pqh-workspace-top">
     <div>
-      <p class="pqh-kicker"><?php echo s($role === 'school_principal' ? 'School principal' : ($role === 'sqa_tester' ? 'SQA tester' : ucfirst($role))); ?> dashboard</p>
-      <h1 class="pqh-title pqh-workspace-title">Assalamu alaikum, <?php echo s(fullname($USER)); ?></h1>
-      <p class="pqh-subtitle pqh-workspace-sub">A simple home for messages, progress, lessons, and next steps.</p>
+      <p class="pqh-kicker"><?php echo s($pqhherokicker); ?></p>
+      <h1 class="pqh-title pqh-workspace-title"><?php echo s($pqhherotitle); ?></h1>
+      <p class="pqh-subtitle pqh-workspace-sub"><?php echo s($pqhherosubtitle); ?></p>
     </div>
     <?php if ($children): ?>
       <form method="get">
@@ -1865,7 +2429,7 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
         <select class="pqh-select" id="pqh-childid" name="childid" onchange="this.form.submit()">
           <?php foreach ($children as $child): ?>
             <option value="<?php echo (int)$child['studentid']; ?>" <?php echo (int)$child['studentid'] === $selectedchildid ? 'selected' : ''; ?>>
-              <?php echo s($child['name']); ?><?php echo $role === 'teacher' ? ' #' . (int)$child['studentid'] : ''; ?>
+              <?php echo s($child['name']); ?><?php echo $role === 'teacher' ? ' #' . s((string)($child['accountid'] ?? pqh_user_five_digit_id((int)$child['studentid']))) : ''; ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -1873,11 +2437,11 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
     <?php endif; ?>
   </section>
 
-  <?php if ($isacademyteacher): ?>
+  <?php if ($isfullteacher): ?>
     <form class="pqh-filter" method="get" aria-label="Search assigned students">
       <div class="pqh-field">
         <label for="pqh-studentq">Search student</label>
-        <input class="pqh-input" id="pqh-studentq" name="studentq" value="<?php echo s($studentsearch); ?>" placeholder="Name, userid, email, username, or group">
+        <input class="pqh-input" id="pqh-studentq" name="studentq" value="<?php echo s($studentsearch); ?>" placeholder="Name, 5-digit ID, email, username, or group">
       </div>
       <div class="pqh-field">
         <label for="pqh-groupid">Group</label>
@@ -1896,54 +2460,121 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
     </form>
   <?php endif; ?>
 
-  <?php if ($role === 'student' || (($role === 'parent' || $role === 'teacher') && $selectedchild) || in_array($role, ['admin', 'school_principal'], true)): ?>
+  <?php if ($role === 'teacher' && $selectedchild): ?>
+    <?php $selectedstudentinfo = pqh_student_basic_info((int)$selectedchild['studentid'], $selectedchild); ?>
+    <section class="pqh-course-panel" aria-label="Selected student information">
+      <div class="pqh-course-panel__head">
+        <div>
+          <h2>Student information</h2>
+        </div>
+        <?php if (!empty($selectedstudentinfo['special_care'])): ?>
+          <span class="pqh-special-care" title="Special care">+ Special care</span>
+        <?php endif; ?>
+      </div>
+      <div class="pqh-student-profile">
+        <span class="pqh-student-profile__item"><b>Student Name</b><span><?php echo s($selectedstudentinfo['student_name'] !== '' ? $selectedstudentinfo['student_name'] : 'Not set'); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Parent Name</b><span><?php echo s($selectedstudentinfo['parent_name'] !== '' ? $selectedstudentinfo['parent_name'] : 'Not linked'); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Student ID</b><span><?php echo s($selectedstudentinfo['student_id'] !== '' ? $selectedstudentinfo['student_id'] : 'Not set'); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Parent ID</b><span><?php echo s($selectedstudentinfo['parent_id'] !== '' ? $selectedstudentinfo['parent_id'] : 'Not linked'); ?></span></span>
+        <span class="pqh-student-profile__item pqh-student-profile__item--wide"><b>Student location</b><span><?php echo s($selectedstudentinfo['location'] !== '' ? $selectedstudentinfo['location'] : 'Not set'); ?></span></span>
+      </div>
+    </section>
+  <?php endif; ?>
+
+  <?php if ($pqhshowcoursepanel && ($role === 'student' || ($role === 'teacher' && $teacherenrolledcourses) || (($role === 'parent' || $role === 'teacher') && $selectedchild) || in_array($role, ['admin', 'school_principal'], true))): ?>
     <?php
-      $coursepaneltitle = 'My courses';
-      $coursepanelsubtitle = 'Only Moodle-enrolled courses appear here.';
-      $coursepanelcourses = $currentstudentcourses;
-      $coursepanelstudentid = $role === 'student' ? (int)$USER->id : 0;
-      $coursepanelsupport = $role === 'student' ? pqh_student_course_support_context((int)$USER->id) : [];
+      $coursepanelsections = [];
+      if ($role === 'student') {
+          $coursepanelsections[] = [
+              'title' => 'My courses',
+              'subtitle' => 'Only Moodle-enrolled courses appear here.',
+              'courses' => $currentstudentcourses,
+              'studentid' => (int)$USER->id,
+              'support' => pqh_student_course_support_context((int)$USER->id),
+              'empty' => 'No active Moodle course enrollment was found for your account yet.',
+              'launchmode' => 'student_context',
+          ];
+      } else if ($role === 'teacher' && $teacherenrolledcourses) {
+          $coursepanelsections[] = [
+              'title' => 'Teacher enrolled courses',
+              'subtitle' => '',
+              'courses' => $teacherenrolledcourses,
+              'studentid' => 0,
+              'support' => [],
+              'empty' => 'No teacher-only Moodle course enrollment was found for your account yet.',
+              'launchmode' => 'moodle_direct',
+          ];
+      }
       if (($role === 'parent' || $role === 'teacher') && $selectedchild) {
-          $coursepaneltitle = ($role === 'teacher' ? 'Student courses' : 'Child courses');
-          $coursepanelsubtitle = 'Courses are based on this student\'s Moodle enrollment.';
-          $coursepanelcourses = $selectedchildcourses;
-          $coursepanelstudentid = (int)$selectedchild['studentid'];
-          $coursepanelsupport = pqh_student_course_support_context((int)$selectedchild['studentid']);
+          $coursepanelsections[] = [
+              'title' => ($role === 'teacher' ? 'Student enrolled courses' : 'Child courses'),
+              'subtitle' => '',
+              'courses' => $selectedchildcourses,
+              'studentid' => (int)$selectedchild['studentid'],
+              'support' => pqh_student_course_support_context((int)$selectedchild['studentid']),
+              'empty' => 'No active Moodle course enrollment was found for this student yet.',
+              'launchmode' => 'student_context',
+          ];
       }
       if (in_array($role, ['admin', 'school_principal'], true)) {
-          $coursepaneltitle = 'Academy courses';
-          $coursepanelsubtitle = 'Course launch registry for the five academy tracks.';
-          $coursepanelcourses = pqh_course_catalog();
-          $coursepanelsupport = [];
+          $coursepanelsections[] = [
+              'title' => 'Academy courses',
+              'subtitle' => 'Course launch registry for the five academy tracks.',
+              'courses' => pqh_course_catalog(),
+              'studentid' => 0,
+              'support' => [],
+              'empty' => 'No academy courses are configured yet.',
+              'launchmode' => 'student_context',
+          ];
       }
     ?>
+    <?php foreach ($coursepanelsections as $coursepanelsection): ?>
+      <?php
+        $coursepaneltitle = (string)$coursepanelsection['title'];
+        $coursepanelsubtitle = (string)$coursepanelsection['subtitle'];
+        $coursepanelcourses = (array)$coursepanelsection['courses'];
+        $coursepanelstudentid = (int)$coursepanelsection['studentid'];
+        $coursepanelsupport = (array)$coursepanelsection['support'];
+        $coursepanelempty = (string)$coursepanelsection['empty'];
+        $coursepanellaunchmode = (string)($coursepanelsection['launchmode'] ?? 'student_context');
+      ?>
     <section class="pqh-course-panel" aria-label="<?php echo s($coursepaneltitle); ?>">
       <div class="pqh-course-panel__head">
         <div>
           <h2><?php echo s($coursepaneltitle); ?></h2>
-          <p><?php echo s($coursepanelsubtitle); ?></p>
+          <?php if ($coursepanelsubtitle !== ''): ?><p><?php echo s($coursepanelsubtitle); ?></p><?php endif; ?>
         </div>
       </div>
       <?php if (!$coursepanelcourses): ?>
-        <div class="pqh-course-empty">No active Moodle course enrollment was found for this student yet.</div>
+        <div class="pqh-course-empty"><?php echo s($coursepanelempty); ?></div>
       <?php else: ?>
         <div class="pqh-course-grid">
           <?php foreach ($coursepanelcourses as $course): ?>
             <?php
               $coursekey = (string)$course['key'];
-              $showcurrentlesson = $role === 'student' && $coursekey === 'pre_quraan' && $course['status'] === 'live';
+              $coursenumber = trim((string)($course['course_number'] ?? ''));
+              if ($coursenumber === '' && (int)($course['moodlecourseid'] ?? 0) > 0) {
+                  $coursenumber = 'TBD';
+              }
+              if ($coursenumber === '') {
+                  $coursenumber = 'TBD';
+              }
+              $showcurrentlesson = $coursepanelstudentid === (int)$USER->id && $coursekey === 'pre_quraan' && $course['status'] === 'live';
               $canlaunchcourse = $role !== 'parent';
               $showvirtualtutor = $coursekey === 'pre_quraan' && $coursepanelstudentid > 0 && pqh_is_managed_student($coursepanelstudentid);
+              $courseurl = $coursepanellaunchmode === 'moodle_direct' && (int)($course['moodlecourseid'] ?? 0) > 0
+                  ? new moodle_url('/course/view.php', ['id' => (int)$course['moodlecourseid']])
+                  : pqh_course_launch_link($coursekey, $coursepanelstudentid);
             ?>
             <div class="pqh-course-card">
               <span>
                 <h3><?php echo s((string)$course['title']); ?></h3>
-                <p><?php echo s((string)$course['summary']); ?></p>
+                <span class="pqh-course-card__number">Course number: <?php echo s($coursenumber); ?></span>
               </span>
               <span class="pqh-course-card__actions pqh-workspace-actions">
                 <?php if ($canlaunchcourse): ?>
-                  <a class="pqh-course-card__status <?php echo $course['status'] === 'live' ? 'pqh-course-card__status--live' : ''; ?>" href="<?php echo pqh_course_launch_link($coursekey, $coursepanelstudentid)->out(false); ?>">
-                    <?php echo $course['status'] === 'live' ? 'Open course home' : 'Placeholder ready'; ?>
+                  <a class="pqh-course-card__status <?php echo $course['status'] === 'live' ? 'pqh-course-card__status--live' : ''; ?>" href="<?php echo $courseurl->out(false); ?>">
+                    <?php echo $coursepanellaunchmode === 'moodle_direct' ? 'Open course' : ($course['status'] === 'live' ? 'Open course home' : 'Placeholder ready'); ?>
                   </a>
                 <?php else: ?>
                   <span class="pqh-course-card__status pqh-course-card__status--readonly">
@@ -1962,6 +2593,7 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
         </div>
       <?php endif; ?>
     </section>
+    <?php endforeach; ?>
   <?php endif; ?>
 
   <?php if (in_array($role, ['student', 'parent'], true) && $hasworkspace): ?>
@@ -2005,14 +2637,14 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
       <a class="pqh-quick-card" href="<?php echo pqh_live_series_schedule_link((int)$selectedchild['studentid'])->out(false); ?>"><strong>Class Series</strong><span>Recurring classes and schedule changes</span></a>
       <a class="pqh-quick-card" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => (int)$selectedchild['studentid']]))->out(false); ?>"><strong>Live Calendar</strong><span>Monthly classes and add-to-calendar links</span></a>
       <?php if ($role === 'teacher'): ?>
-        <a class="pqh-quick-card" href="<?php echo pqh_live_teacher_link()->out(false); ?>"><strong>Teacher Workspace</strong><span>Today's classes and post-class reviews</span></a>
+        <a class="pqh-quick-card" href="<?php echo pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Teacher Workspace</strong><span>Today's classes and post-class reviews</span></a>
         <a class="pqh-quick-card" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>"><strong>Teacher Schedule</strong><span>Your upcoming and recent live classes</span></a>
         <a class="pqh-quick-card" href="<?php echo pqh_meeting_rooms_link('teacher_meeting')->out(false); ?>"><strong>Teacher Meetings</strong><span>Join head-teacher rooms by time zone, language, and teaching level</span></a>
         <a class="pqh-quick-card" href="<?php echo pqh_meeting_rooms_link('teacher_parent_room')->out(false); ?>"><strong>Teacher-Parent Rooms</strong><span>Coordinate student support with families</span></a>
-        <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_availability.php')->out(false); ?>"><strong>Availability</strong><span>Maintain your teaching windows</span></a>
+        <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_availability.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Availability</strong><span>Maintain your teaching windows</span></a>
         <a class="pqh-quick-card pqh-live-template-link" target="_blank" rel="noopener" href="<?php echo pqh_live_session_agenda_template_url()->out(false); ?>"><strong>Live Session Agenda</strong><span>Download the fillable BBB slide template</span></a>
-        <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_practice_coach.php')->out(false); ?>"><strong>Practice Coach</strong><span>Review teacherless-session support prompts</span></a>
-        <a class="pqh-quick-card" href="<?php echo pqh_live_followups_link()->out(false); ?>"><strong>Parent Follow-Ups</strong><span>Respond to families and close follow-ups</span></a>
+        <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_practice_coach.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Practice Coach</strong><span>Review teacherless-session support prompts</span></a>
+        <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_followups.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Parent Follow-Ups</strong><span>Respond to families and close follow-ups</span></a>
       <?php endif; ?>
       <?php if ($role === 'parent'): ?>
         <a class="pqh-quick-card" href="<?php echo pqh_teacher_marketplace_link()->out(false); ?>"><strong>Teacher Marketplace</strong><span>Review approved private teacher and tutor profiles</span></a>
@@ -2028,22 +2660,33 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
       <a class="pqh-quick-card" href="<?php echo pqh_quiz_report_link((int)$selectedchild['studentid'])->out(false); ?>"><strong>Quiz Reports</strong><span>Review alphabet quiz passes, skills, and missed questions</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_recordings_link((int)$selectedchild['studentid'])->out(false); ?>"><strong>Speak Recordings</strong><span><?php echo $role === 'teacher' ? 'Listen to student Speak practice' : 'Listen to child Speak practice'; ?></span></a>
     <?php elseif ($role === 'teacher'): ?>
+      <?php if ($isindependentteacher && $hasworkspace): ?>
+        <a class="pqh-quick-card" href="<?php echo pqh_teacher_student_connect_link($currentworkspaceid)->out(false); ?>"><strong>Find or Invite Student</strong><span>Reuse an existing learner identity or invite a genuinely new student</span></a>
+        <a class="pqh-quick-card" href="<?php echo pqh_course_offerings_link($currentworkspaceid)->out(false); ?>"><strong>Manage Courses</strong><span>Create courses, services, seats, pricing, and enrollment requests</span></a>
+      <?php endif; ?>
       <a class="pqh-quick-card" href="#pqh-studentq"><strong>Class Roster</strong><span>Search assigned students and progress</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_course_transcript_link(0, $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Unofficial Transcripts</strong><span>Open read-only transcripts for assigned students</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_live_teacher_link()->out(false); ?>"><strong>Teacher Workspace</strong><span>Today's classes and post-class reviews</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_live_sessions_link()->out(false); ?>"><strong>Live Sessions</strong><span>Start assigned review classes</span></a>
+      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_teacher.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Teacher Workspace</strong><span>Today's classes and post-class reviews</span></a>
+      <?php if ($isindependentteacher): ?>
+        <a class="pqh-quick-card" href="<?php echo pqh_live_session_create_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Create Live Session</strong><span>Schedule a class and submit it for marketplace approval</span></a>
+      <?php endif; ?>
+      <a class="pqh-quick-card" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Live Sessions</strong><span>Start assigned review classes</span></a>
       <a class="pqh-quick-card pqh-live-guide-link" target="_blank" rel="noopener" href="<?php echo pqh_live_session_explainer_url()->out(false); ?>"><strong>Live Session Guide</strong><span>Watch how to start, join audio, and use support tools</span></a>
       <a class="pqh-quick-card pqh-live-template-link" target="_blank" rel="noopener" href="<?php echo pqh_live_session_agenda_template_url()->out(false); ?>"><strong>Live Session Agenda</strong><span>Download the fillable BBB slide template</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_meeting_rooms_link('teacher_meeting')->out(false); ?>"><strong>Teacher Meetings</strong><span>Join head-teacher community rooms</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_meeting_rooms_link('teacher_parent_room')->out(false); ?>"><strong>Teacher-Parent Rooms</strong><span>Coordinate student support with families</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>"><strong>Live Schedule</strong><span>Review upcoming class schedule</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_availability.php')->out(false); ?>"><strong>Availability</strong><span>Maintain teaching windows</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_practice_coach.php')->out(false); ?>"><strong>Practice Coach</strong><span>Teacherless-session support prompts</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_live_followups_link()->out(false); ?>"><strong>Parent Follow-Ups</strong><span>Respond to families and close follow-ups</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_managed_reports_link()->out(false); ?>"><strong>Managed Reports</strong><span>Progress, focus, practice, quiz, and live-class summaries</span></a>
+      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_availability.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Availability</strong><span>Maintain teaching windows</span></a>
+      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_practice_coach.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Practice Coach</strong><span>Teacherless-session support prompts</span></a>
+      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_followups.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Parent Follow-Ups</strong><span>Respond to families and close follow-ups</span></a>
+      <?php if ($hasworkspace): ?>
+        <a class="pqh-quick-card" href="<?php echo (new moodle_url('/local/hubredirect/workspace_reports.php', ['workspaceid' => $currentworkspaceid]))->out(false); ?>"><strong>Workspace Reports</strong><span>Teacher load, sessions, attendance, materials, and quiz summaries</span></a>
+      <?php endif; ?>
+      <a class="pqh-quick-card" href="<?php echo pqh_managed_reports_link(0, $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Student Reports</strong><span>Progress, focus, practice, quiz, and live-class summaries</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_quiz_report_link()->out(false); ?>"><strong>Quiz Reports</strong><span>Review alphabet quiz scores and skill gaps</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('communications.php')->out(false); ?>"><strong>Communications</strong><span>Open messages and announcements</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('support.php', ['teacherid' => (int)$USER->id, 'supporttype' => 'student_teacher'])->out(false); ?>"><strong>Support</strong><span>Reply to student, parent, and help desk conversations</span></a>
+      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('communications.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Communications</strong><span>Open messages and announcements</span></a>
+      <button class="pqh-quick-card" type="button" data-pq-support-action="open"><strong>Open Support</strong><span>Reply to student, parent, and help desk conversations</span></button>
+      <button class="pqh-quick-card" type="button" data-pq-support-action="new"><strong>New Request</strong><span>Start a new institutional help request</span></button>
     <?php elseif ($role === 'admin'): ?>
       <a class="pqh-quick-card" href="<?php echo pqh_master_dashboard_link()->out(false); ?>"><strong>Master Dashboard</strong><span>All links categorized by role and system</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_live_admin_link()->out(false); ?>"><strong>Live Admin Menu</strong><span>All live-session tools in one place</span></a>
@@ -2086,7 +2729,8 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
       <a class="pqh-quick-card" href="<?php echo pqh_managed_reports_link((int)$USER->id)->out(false); ?>"><strong>My Report</strong><span>See lesson, focus, practice, quiz, and live-class progress</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_quiz_report_link((int)$USER->id)->out(false); ?>"><strong>Quiz Reports</strong><span>See your alphabet quiz score and passes</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id])->out(false); ?>"><strong>Communications</strong><span>Open messages and announcements</span></a>
-      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id, 'supporttype' => 'student_helpdesk'])->out(false); ?>"><strong>Support</strong><span>Ask for help and continue support conversations</span></a>
+      <button class="pqh-quick-card" type="button" data-pq-support-action="open"><strong>Open Support</strong><span>Continue your support conversations</span></button>
+      <button class="pqh-quick-card" type="button" data-pq-support-action="new"><strong>New Request</strong><span>Ask the institutional help desk for assistance</span></button>
     <?php endif; ?>
   </section>
   <?php endif; ?>
@@ -2307,44 +2951,23 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
       <?php if ($role === 'teacher'): ?>
         <section class="pqh-grid" aria-label="Teacher dashboard">
           <article class="pqh-card pqh-card--wide">
-            <?php if ($isacademyteacher): ?>
-              <h3>Teacher tools</h3>
-              <p>Start assigned classes, review your schedule, manage availability, and follow up with families.</p>
-              <div class="pqh-actions pqh-workspace-actions">
-                <?php if ($hasworkspace): ?>
-                  <a class="pqh-btn" href="<?php echo pqh_workspace_dashboard_link($currentworkspaceid)->out(false); ?>">Workspace dashboard</a>
-                <?php endif; ?>
-                <a class="pqh-btn" href="<?php echo pqh_live_teacher_link()->out(false); ?>">Teacher workspace</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_sessions_link()->out(false); ?>">Live sessions</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">Live schedule</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_meeting_rooms_link('teacher_meeting')->out(false); ?>">Teacher meetings</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_meeting_rooms_link('teacher_parent_room')->out(false); ?>">Teacher-parent rooms</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_availability.php')->out(false); ?>">Availability</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_practice_coach.php')->out(false); ?>">Practice coach</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_followups_link()->out(false); ?>">Parent follow-ups</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_managed_reports_link()->out(false); ?>">Managed reports</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_quiz_report_link()->out(false); ?>">Quiz reports</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('communications.php')->out(false); ?>">Communications</a>
-              </div>
+            <?php if ($isfullteacher): ?>
+              <h3><?php echo $isindependentteacher ? 'Independent teacher workspace' : 'Teacher overview'; ?></h3>
+              <p><?php echo $isindependentteacher ? 'Select a student to review dashboard status. Daily work tools are in Teacher Workspace.' : 'Select a student to review dashboard status. Daily work tools are in Teacher Workspace.'; ?></p>
             <?php else: ?>
-              <h3>Private tutor tools</h3>
-              <p>Manage your private tutor profile, availability, and parent marketplace messages.</p>
-              <div class="pqh-actions pqh-workspace-actions">
-                <a class="pqh-btn" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_profile.php', ['teacherid' => (int)$USER->id]))->out(false); ?>">View marketplace profile</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('communications.php', ['opencomm' => 'messages'])->out(false); ?>">Messages</a>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_availability.php')->out(false); ?>">Availability</a>
-              </div>
+              <h3>Marketplace teacher overview</h3>
+              <p>Marketplace profile, availability, and learner inquiry work is handled in Teacher Workspace.</p>
             <?php endif; ?>
           </article>
         </section>
-        <?php if ($isacademyteacher): ?>
+        <?php if ($isfullteacher): ?>
           <?php if (!empty($allchildren)): ?>
             <div class="pqh-empty">No assigned students matched this search. Try a different student userid, name, username, email, or group.</div>
           <?php else: ?>
-            <div class="pqh-empty">No students are assigned to this teacher dashboard yet. Add rows to the teacher-student assignment table, or add managed students to one of this teacher's cohorts.</div>
+            <div class="pqh-empty"><?php echo $isindependentteacher ? 'No students are in this teacher workspace yet. Use Find or invite student to reuse an existing learner identity or create a new learner.' : "No students are assigned to this teacher dashboard yet. Add managed students to one of this teacher's cohorts or assignment groups."; ?></div>
           <?php endif; ?>
         <?php else: ?>
-          <div class="pqh-empty">Private tutor access is limited to marketplace profile, availability, and parent messages until <?php echo s($pqhbrandname); ?> assigns live-class students or academy teacher duties.</div>
+            <div class="pqh-empty">Marketplace teacher access is limited to profile, availability, and messages until a learner or client match is approved.</div>
         <?php endif; ?>
       <?php else: ?>
         <section class="pqh-grid" aria-label="Parent dashboard">
@@ -2442,7 +3065,107 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
         </section>
       <?php endif; ?>
 
-      <section class="pqh-grid" aria-label="<?php echo $role === 'teacher' ? 'Teacher dashboard' : 'Parent dashboard'; ?>">
+      <?php if ($role === 'teacher'): ?>
+        <?php $teachermetrics = (array)($teacherliveoverview['metrics'] ?? []); ?>
+        <section class="pqh-teacher-overview-layout" aria-label="Teacher dashboard overview">
+          <div class="pqh-teacher-status">
+            <div class="pqh-teacher-metrics" aria-label="Live class summary">
+              <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['today'] ?? 0); ?></strong><span>today's classes</span></div>
+              <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['upcoming'] ?? 0); ?></strong><span>next 7 days</span></div>
+              <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['needsreview'] ?? 0); ?></strong><span>awaiting review</span></div>
+              <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['followups'] ?? 0); ?></strong><span>open follow-ups</span></div>
+              <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['coaching'] ?? 0); ?></strong><span>quality coaching</span></div>
+              <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['improvementplans'] ?? 0); ?></strong><span>improvement plans</span></div>
+              <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['studentsweek'] ?? 0); ?></strong><span>students this week</span></div>
+            </div>
+            <?php if (empty($teacherliveoverview['ready'])): ?>
+              <article class="pqh-teacher-panel">
+                <h3>Today</h3>
+                <div class="pqh-teacher-empty">Live-class tables are not installed yet.</div>
+              </article>
+            <?php else: ?>
+              <?php echo pqh_teacher_live_panel_html('Today', (array)($teacherliveoverview['today'] ?? []), 'No live classes scheduled today.'); ?>
+              <div class="pqh-teacher-panel-grid">
+                <?php echo pqh_teacher_live_panel_html('Awaiting Review', (array)($teacherliveoverview['needsreview'] ?? []), 'No recent classes need attendance or notes.', 'review'); ?>
+                <?php echo pqh_teacher_live_panel_html('Upcoming', (array)($teacherliveoverview['upcoming'] ?? []), 'No upcoming classes in the next 7 days.'); ?>
+              </div>
+              <?php echo pqh_teacher_live_panel_html('Quality Coaching', (array)($teacherliveoverview['coaching'] ?? []), 'No assigned quality coaching.', 'coaching'); ?>
+              <?php echo pqh_teacher_live_panel_html('Improvement Plans', (array)($teacherliveoverview['improvementplans'] ?? []), 'No active improvement plans.', 'plan'); ?>
+              <?php echo pqh_teacher_live_panel_html('Parent Follow-Ups', (array)($teacherliveoverview['followups'] ?? []), 'No open parent follow-ups.', 'followup'); ?>
+              <?php echo pqh_teacher_live_panel_html('Recent Completed Classes', (array)($teacherliveoverview['recentcompleted'] ?? []), 'No recent completed classes.'); ?>
+            <?php endif; ?>
+          </div>
+          <aside class="pqh-dashboard-sidebar" aria-label="Student information">
+            <article class="pqh-card">
+              <h3>Messages</h3>
+              <p><?php echo $messages['latest'] !== '' ? 'Latest: ' . s($messages['latest']) : 'No private messages yet.'; ?></p>
+              <div class="pqh-metric"><?php echo (int)$messages['unread']; ?></div>
+              <p>unread</p>
+            </article>
+
+            <article class="pqh-card">
+              <h3>Upcoming Sessions</h3>
+              <?php if (empty($upcomingsessions['tables_ready'])): ?>
+                <p>Live-session tables are not installed yet.</p>
+              <?php elseif ((int)$upcomingsessions['count'] <= 0): ?>
+                <p>No live sessions are visible for this account yet.</p>
+              <?php else: ?>
+                <?php $nextsession = $upcomingsessions['latest']; ?>
+                <p><?php echo s((string)($nextsession->title ?? 'Upcoming session')); ?></p>
+                <div class="pqh-metric"><?php echo (int)$upcomingsessions['count']; ?></div>
+                <p>next: <?php echo userdate((int)$nextsession->scheduled_start, get_string('strftimedatetimeshort')); ?></p>
+              <?php endif; ?>
+            </article>
+
+            <article id="pqh-progress" class="pqh-card">
+              <h3>Progress</h3>
+              <p><?php echo (int)$progress['completed']; ?> completed units out of <?php echo (int)$progress['units']; ?> started.</p>
+              <div class="pqh-metric"><?php echo (int)$progress['stars']; ?></div>
+              <p>total stars</p>
+            </article>
+
+            <article class="pqh-card">
+              <h3>Current Activity</h3>
+              <?php if ($progress['latest']): ?>
+                <p><?php echo s($progress['latest']->unit_title ?: $progress['latest']->lesson_title ?: 'Lesson activity'); ?></p>
+                <div class="pqh-metric"><?php echo isset($progress['latest']->completion_percent) ? (int)$progress['latest']->completion_percent : 0; ?>%</div>
+                <p><?php echo s(str_replace('_', ' ', (string)$progress['latest']->overall_status)); ?></p>
+              <?php else: ?>
+                <p>No lesson progress has been recorded yet.</p>
+              <?php endif; ?>
+            </article>
+
+            <article class="pqh-card">
+              <h3>Focus &amp; Tracking</h3>
+              <?php if (!$focus['tables_ready']): ?>
+                <p>Focus tracking tables are not installed yet.</p>
+              <?php elseif ((int)$focus['sessions'] <= 0): ?>
+                <p>No focus activity has been recorded yet.</p>
+                <span class="pqh-focus-pill">No data yet</span>
+              <?php else: ?>
+                <p><?php echo s($focus['latest_unit'] !== '' ? 'Latest: ' . $focus['latest_unit'] : 'Recent lesson activity tracked.'); ?></p>
+                <span class="pqh-focus-pill pqh-focus-pill--<?php echo s($focus['focus_class']); ?>"><?php echo s($focus['focus_label']); ?></span>
+                <div class="pqh-mini-list">
+                  <div class="pqh-mini-stat">
+                    <strong><?php echo s(pqh_format_duration((int)$focus['active_ms'])); ?></strong>
+                    <span>active time</span>
+                  </div>
+                  <div class="pqh-mini-stat">
+                    <strong><?php echo s(pqh_count_duration((int)$focus['leave_count'], 10)); ?></strong>
+                    <span>away time</span>
+                  </div>
+                  <div class="pqh-mini-stat">
+                    <strong><?php echo s(pqh_count_duration((int)$focus['idle_count'], 25)); ?></strong>
+                    <span>idle time</span>
+                  </div>
+                </div>
+                <p style="margin-top:10px">Last tracked <?php echo userdate((int)$focus['last_time'], get_string('strftimedatetimeshort')); ?></p>
+              <?php endif; ?>
+            </article>
+          </aside>
+        </section>
+      <?php else: ?>
+      <section class="pqh-grid" aria-label="Parent dashboard">
         <?php if ($role === 'parent'): ?>
           <article class="pqh-card pqh-card--wide">
             <h3>Parent dashboard</h3>
@@ -2478,7 +3201,7 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
             <p>Review progress, quiz results, managed reports, and Speak practice recordings.</p>
             <div class="pqh-actions pqh-workspace-actions">
               <a class="pqh-btn pqh-btn--secondary" href="#pqh-progress">Progress</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_managed_reports_link((int)$selectedchild['studentid'])->out(false); ?>">Managed report</a>
+              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_managed_reports_link((int)$selectedchild['studentid'], $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Managed report</a>
               <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_quiz_report_link((int)$selectedchild['studentid'])->out(false); ?>">Quiz report</a>
               <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_recordings_link((int)$selectedchild['studentid'])->out(false); ?>">Speak recordings</a>
             </div>
@@ -2494,44 +3217,6 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
               <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_meeting_rooms_link('teacher_parent_room')->out(false); ?>">Teacher-parent rooms</a>
             </div>
           </article>
-        <?php else: ?>
-          <article class="pqh-card pqh-card--wide">
-            <h3><?php echo s($selectedchild['name']); ?></h3>
-            <p>Review this student, open communications, or audit the course without changing progress.</p>
-            <div class="pqh-actions pqh-workspace-actions">
-              <?php if ($hasworkspace): ?>
-                <a class="pqh-btn" href="<?php echo pqh_workspace_dashboard_link($currentworkspaceid)->out(false); ?>">Workspace dashboard</a>
-              <?php endif; ?>
-              <?php if (isset($selectedchildcourses['pre_quraan'])): ?>
-                <a class="pqh-btn" href="<?php echo pqh_lesson_link((int)$selectedchild['cohortid'], '', false)->out(false); ?>">Audit Pre-Quraan</a>
-              <?php endif; ?>
-              <?php if (pqh_is_managed_student((int)$selectedchild['studentid'])): ?>
-                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_virtual_tutor_link((int)$selectedchild['studentid'])->out(false); ?>">Virtual tutor</a>
-              <?php endif; ?>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_parent_trust_link((int)$selectedchild['studentid'])->out(false); ?>">Parent live hub</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_schedule_link((int)$selectedchild['studentid'])->out(false); ?>">Live schedule</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_series_schedule_link((int)$selectedchild['studentid'])->out(false); ?>">Class series</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => (int)$selectedchild['studentid']]))->out(false); ?>">Live calendar</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_course_transcript_link((int)$selectedchild['studentid'], $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Unofficial transcript</a>
-              <a class="pqh-btn pqh-btn--secondary js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">Open messages</a>
-              <a class="pqh-btn pqh-btn--secondary js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'announcements', (int)$selectedchild['studentid'])->out(false); ?>">Open announcements</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_summaries_link((int)$selectedchild['studentid'])->out(false); ?>">Live summaries</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_trust_link((int)$selectedchild['studentid'])->out(false); ?>">Trust center</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_recordings_link((int)$selectedchild['studentid'])->out(false); ?>">Live recordings</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_managed_reports_link((int)$selectedchild['studentid'])->out(false); ?>">Managed report</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_recordings_link((int)$selectedchild['studentid'])->out(false); ?>">Review Speak recordings</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_quiz_report_link((int)$selectedchild['studentid'])->out(false); ?>">Quiz report</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_link()->out(false); ?>">Teacher workspace</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">Teacher schedule</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_meeting_rooms_link('teacher_meeting')->out(false); ?>">Teacher meetings</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_meeting_rooms_link('teacher_parent_room')->out(false); ?>">Teacher-parent rooms</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_availability.php')->out(false); ?>">Availability</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_practice_coach.php')->out(false); ?>">Practice coach</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_followups_link()->out(false); ?>">Parent follow-ups</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_managed_reports_link()->out(false); ?>">Managed reports</a>
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_quiz_report_link((int)$selectedchild['studentid'])->out(false); ?>">Student quiz report</a>
-            </div>
-          </article>
         <?php endif; ?>
 
         <article class="pqh-card">
@@ -2539,6 +3224,20 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
           <p><?php echo $messages['latest'] !== '' ? 'Latest: ' . s($messages['latest']) : 'No private messages yet.'; ?></p>
           <div class="pqh-metric"><?php echo (int)$messages['unread']; ?></div>
           <p>unread</p>
+        </article>
+
+        <article class="pqh-card">
+          <h3>Upcoming Sessions</h3>
+          <?php if (empty($upcomingsessions['tables_ready'])): ?>
+            <p>Live-session tables are not installed yet.</p>
+          <?php elseif ((int)$upcomingsessions['count'] <= 0): ?>
+            <p>No live sessions are visible for this account yet.</p>
+          <?php else: ?>
+            <?php $nextsession = $upcomingsessions['latest']; ?>
+            <p><?php echo s((string)($nextsession->title ?? 'Upcoming session')); ?></p>
+            <div class="pqh-metric"><?php echo (int)$upcomingsessions['count']; ?></div>
+            <p>next: <?php echo userdate((int)$nextsession->scheduled_start, get_string('strftimedatetimeshort')); ?></p>
+          <?php endif; ?>
         </article>
 
         <article class="pqh-card">
@@ -2587,22 +3286,25 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
           <?php endif; ?>
         </article>
 
-        <article class="pqh-card">
-          <h3>Speak Recordings</h3>
-          <?php if (!$speakrecordings['tables_ready']): ?>
-            <p>Speak recording table is not installed yet.</p>
-          <?php elseif ((int)$speakrecordings['count'] <= 0): ?>
-            <p>No Speak recordings have been submitted yet.</p>
-          <?php else: ?>
-            <p><?php echo $speakrecordings['latest'] ? 'Latest: ' . s($speakrecordings['latest']->unitid . ' / ' . ($speakrecordings['latest']->letter_name ?: $speakrecordings['latest']->letter_text ?: 'Speak')) : 'Recordings are ready for review.'; ?></p>
-            <div class="pqh-metric"><?php echo (int)$speakrecordings['count']; ?></div>
-            <p>recordings</p>
-            <div class="pqh-actions pqh-workspace-actions">
-              <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_recordings_link((int)$selectedchild['studentid'])->out(false); ?>">Open recordings</a>
-            </div>
-          <?php endif; ?>
-        </article>
+        <?php if ($role !== 'teacher'): ?>
+          <article class="pqh-card">
+            <h3>Speak Recordings</h3>
+            <?php if (!$speakrecordings['tables_ready']): ?>
+              <p>Speak recording table is not installed yet.</p>
+            <?php elseif ((int)$speakrecordings['count'] <= 0): ?>
+              <p>No Speak recordings have been submitted yet.</p>
+            <?php else: ?>
+              <p><?php echo $speakrecordings['latest'] ? 'Latest: ' . s($speakrecordings['latest']->unitid . ' / ' . ($speakrecordings['latest']->letter_name ?: $speakrecordings['latest']->letter_text ?: 'Speak')) : 'Recordings are ready for review.'; ?></p>
+              <div class="pqh-metric"><?php echo (int)$speakrecordings['count']; ?></div>
+              <p>recordings</p>
+              <div class="pqh-actions pqh-workspace-actions">
+                <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_recordings_link((int)$selectedchild['studentid'])->out(false); ?>">Open recordings</a>
+              </div>
+            <?php endif; ?>
+          </article>
+        <?php endif; ?>
       </section>
+      <?php endif; ?>
     <?php endif; ?>
   <?php elseif ($role === 'school_principal'): ?>
     <section class="pqh-grid" aria-label="School principal dashboard">
@@ -2671,6 +3373,61 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_leadership.php')->out(false); ?>">Leadership review</a>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_improvement_plans.php')->out(false); ?>">Improvement plans</a>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_followups_link()->out(false); ?>">Follow-ups</a>
+        </div>
+      </article>
+    </section>
+  <?php elseif ($role === 'admin' && $pqhismarketplace): ?>
+    <section class="pqh-grid" aria-label="Teacher marketplace admin dashboard">
+      <article class="pqh-card pqh-card--wide">
+        <h3>Teacher Applications</h3>
+        <p>Review public teacher intake submissions, approve qualified independent teachers, and convert applications into marketplace profiles.</p>
+        <div class="pqh-actions pqh-workspace-actions">
+          <a class="pqh-btn" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake_requests.php', $pqhpageparams))->out(false); ?>">Review applications</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/public_teacher_intake.php', $pqhpageparams))->out(false); ?>">Public teacher form</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake.php', $pqhpageparams))->out(false); ?>">Create teacher profile</a>
+        </div>
+      </article>
+      <article class="pqh-card">
+        <h3>Marketplace Profiles</h3>
+        <p>Publish independent teacher profiles, update visibility, review vetting status, and preview what families see.</p>
+        <div class="pqh-actions pqh-workspace-actions">
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_admin.php', $pqhpageparams))->out(false); ?>">Profile admin</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace.php', $pqhpageparams))->out(false); ?>">Public marketplace</a>
+        </div>
+      </article>
+      <article class="pqh-card">
+        <h3>Teacher Requests</h3>
+        <p>Review parent, adult learner, and institution interest in listed teachers before matching or follow-up.</p>
+        <div class="pqh-actions pqh-workspace-actions">
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_admin.php', $pqhpageparams))->out(false); ?>">Request queue</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketplace_requests.php', $pqhpageparams))->out(false); ?>">My requests view</a>
+        </div>
+      </article>
+      <article class="pqh-card">
+        <h3>Student Intake</h3>
+        <p>Capture learner needs and use those details when matching families, adults, or institutions with teachers.</p>
+        <div class="pqh-actions pqh-workspace-actions">
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/public_intake.php', $pqhpageparams))->out(false); ?>">Public student form</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/student_intake.php', $pqhpageparams))->out(false); ?>">Student intake</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/intake_requests.php', $pqhpageparams))->out(false); ?>">Student requests</a>
+        </div>
+      </article>
+      <article class="pqh-card">
+        <h3>Teacher Operations</h3>
+        <p>Maintain availability, teacher records, meeting support, and operational follow-up for independent teachers.</p>
+        <div class="pqh-actions pqh-workspace-actions">
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_directory.php', $pqhpageparams))->out(false); ?>">Teacher directory</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $pqhpageparams))->out(false); ?>">Availability</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $pqhpageparams))->out(false); ?>">Follow-ups</a>
+        </div>
+      </article>
+      <article class="pqh-card">
+        <h3>Configuration</h3>
+        <p>Adjust intake fields, account lookup tools, and admin utilities that support marketplace onboarding.</p>
+        <div class="pqh-actions pqh-workspace-actions">
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake_config.php', $pqhpageparams))->out(false); ?>">Teacher form config</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/student_intake_config.php', $pqhpageparams))->out(false); ?>">Student form config</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/account_ids.php', $pqhpageparams))->out(false); ?>">Account IDs</a>
         </div>
       </article>
     </section>
@@ -2772,6 +3529,7 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
       }
       $studentteacher = ($studentdashboardcontext['teacher'] ?? '') !== '' ? $studentdashboardcontext['teacher'] : 'Not assigned';
       $studentparent = ($studentdashboardcontext['parent'] ?? '') !== '' ? $studentdashboardcontext['parent'] : 'Not linked';
+      $studentaccountnumber = pqh_user_five_digit_id((int)$USER->id);
       $studentlocation = pqh_join_nonempty([
           $studentdashboardcontext['country'] ?? '',
           $studentdashboardcontext['city'] ?? '',
@@ -2783,7 +3541,6 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
       $studentgroups = ($studentdashboardcontext['groups'] ?? '') !== '' ? $studentdashboardcontext['groups'] : 'Not assigned';
       $studentrecurring = ($studentdashboardcontext['recurring'] ?? '') !== '' ? $studentdashboardcontext['recurring'] : 'No active recurring series';
       $studentsupport = ($studentdashboardcontext['support'] ?? '') !== '' ? $studentdashboardcontext['support'] : 'No extra support context recorded';
-      $hasprequraan = isset($currentstudentcourses['pre_quraan']);
       $studentprogressunits = (int)($progress['units'] ?? 0);
       $studentprogresscompleted = (int)($progress['completed'] ?? 0);
       $studentprogressinprogress = (int)($progress['inprogress'] ?? 0);
@@ -2844,98 +3601,146 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
           $studentfocussummary = implode(' | ', $studentfocusbits);
       }
     ?>
-    <section class="pqh-progress-block" aria-label="Learning progress">
-      <div class="pqh-progress-main">
-        <span class="pqh-progress-kicker">Progress</span>
-        <h2><?php echo $studentprogresspercent; ?>% completed</h2>
-        <p class="pqh-progress-copy">
-          <?php echo $studentprogresscompleted; ?> completed lessons,
-          <?php echo $studentprogressinprogress; ?> in progress,
-          across <?php echo $studentprogressunits; ?> tracked lesson<?php echo $studentprogressunits === 1 ? '' : 's'; ?>.
-        </p>
-        <div class="pqh-progress-meter" aria-hidden="true"><span style="width: <?php echo $studentprogresspercent; ?>%"></span></div>
-        <div class="pqh-progress-stats">
-          <span class="pqh-progress-stat"><strong><?php echo $studentprogresscompleted; ?></strong><span>Completed</span></span>
-          <span class="pqh-progress-stat"><strong><?php echo $studentprogressinprogress; ?></strong><span>In progress</span></span>
-          <span class="pqh-progress-stat"><strong><?php echo $studentprogresssteps; ?></strong><span>Steps done</span></span>
-          <span class="pqh-progress-stat"><strong><?php echo $studentunreadmessages; ?></strong><span>Unread messages</span></span>
-          <span class="pqh-progress-stat"><strong><?php echo $studentfocussessions; ?></strong><span>Focus sessions</span></span>
+    <section class="pqh-teacher-overview-layout pqh-student-dashboard-layout" aria-label="Student dashboard overview">
+      <div class="pqh-teacher-status">
+        <div class="pqh-teacher-metrics" aria-label="Learning summary">
+          <div class="pqh-teacher-metric"><strong><?php echo count($currentstudentcourses); ?></strong><span>enrolled courses</span></div>
+          <div class="pqh-teacher-metric"><strong><?php echo $studentprogresscompleted; ?></strong><span>completed units</span></div>
+          <div class="pqh-teacher-metric"><strong><?php echo $studentprogressinprogress; ?></strong><span>in progress</span></div>
+          <div class="pqh-teacher-metric"><strong><?php echo $studentprogresssteps; ?></strong><span>steps done</span></div>
+          <div class="pqh-teacher-metric"><strong><?php echo (int)($upcomingsessions['count'] ?? 0); ?></strong><span>upcoming sessions</span></div>
+          <div class="pqh-teacher-metric"><strong><?php echo $studentfocussessions; ?></strong><span>focus sessions</span></div>
+          <div class="pqh-teacher-metric"><strong><?php echo $studentspeakcount; ?></strong><span>speak recordings</span></div>
+        </div>
+
+        <article class="pqh-teacher-panel">
+          <h3>Learning Overview</h3>
+          <p>Your teacher, family contact, location, groups, and learning support information.</p>
+          <?php if ($currentstudentenrollmentstatus !== 'approved'): ?>
+            <div class="pqh-alert pqh-alert--error">Enrollment approval is pending. A parent or guardian must approve enrollment before lessons can begin.</div>
+          <?php endif; ?>
+          <div class="pqh-student-profile">
+            <span class="pqh-student-profile__item"><b>Teacher</b><span><?php echo s($studentteacher); ?></span></span>
+            <span class="pqh-student-profile__item"><b>Parent</b><span><?php echo s($studentparent); ?></span></span>
+            <span class="pqh-student-profile__item"><b>Student account</b><span><?php echo s($studentaccountnumber); ?></span></span>
+            <span class="pqh-student-profile__item"><b>Location</b><span><?php echo s($studentlocation); ?></span></span>
+            <span class="pqh-student-profile__item"><b>Time zone</b><span><?php echo s($studenttimezone); ?></span></span>
+            <span class="pqh-student-profile__item"><b>Groups</b><span><?php echo s($studentgroups); ?></span></span>
+            <span class="pqh-student-profile__item"><b>Enrollment</b><span><?php echo s(ucwords(str_replace('_', ' ', $currentstudentenrollmentstatus ?: 'not recorded'))); ?></span></span>
+            <span class="pqh-student-profile__item"><b>Support notes</b><span><?php echo s($studentsupport); ?></span></span>
+            <span class="pqh-student-profile__item"><b>Recurring sessions</b><span><?php echo s($studentrecurring); ?></span></span>
+          </div>
+        </article>
+
+        <article class="pqh-teacher-panel">
+          <h3>Learning Progress</h3>
+          <p><?php echo $studentprogresspercent; ?>% complete across <?php echo $studentprogressunits; ?> tracked unit<?php echo $studentprogressunits === 1 ? '' : 's'; ?>.</p>
+          <div class="pqh-progress-meter" aria-hidden="true"><span style="width: <?php echo $studentprogresspercent; ?>%"></span></div>
+          <div class="pqh-mini-list">
+            <div class="pqh-mini-stat"><strong><?php echo $studentprogresscompleted; ?></strong><span>completed</span></div>
+            <div class="pqh-mini-stat"><strong><?php echo $studentprogressinprogress; ?></strong><span>in progress</span></div>
+            <div class="pqh-mini-stat"><strong><?php echo $studentprogresssteps; ?></strong><span>steps done</span></div>
+          </div>
+        </article>
+
+        <div class="pqh-teacher-panel-grid">
+          <article class="pqh-teacher-panel">
+            <h3>Latest Learning Activity</h3>
+            <div class="pqh-teacher-list">
+              <div class="pqh-teacher-row"><strong><?php echo s($studentlatesttitle); ?></strong><span><?php echo s($studentlatestmeta); ?></span></div>
+              <div class="pqh-teacher-row"><strong>Focus: <?php echo s($studentfocuslabel); ?></strong><span><?php echo s($studentfocussummary); ?></span></div>
+              <div class="pqh-teacher-row"><strong>Speak practice</strong><span><?php echo $studentspeakcount; ?> approved recording<?php echo $studentspeakcount === 1 ? '' : 's'; ?> available.</span></div>
+            </div>
+          </article>
+          <article class="pqh-teacher-panel">
+            <h3>Live Learning</h3>
+            <?php if (empty($upcomingsessions['tables_ready'])): ?>
+              <div class="pqh-teacher-empty">Live-session tables are not installed yet.</div>
+            <?php elseif ((int)($upcomingsessions['count'] ?? 0) <= 0): ?>
+              <div class="pqh-teacher-empty">No upcoming live sessions are visible yet.</div>
+            <?php else: ?>
+              <?php $studentnextsession = $upcomingsessions['latest']; ?>
+              <div class="pqh-teacher-list">
+                <div class="pqh-teacher-row"><strong><?php echo s((string)($studentnextsession->title ?? 'Upcoming session')); ?></strong><span><?php echo userdate((int)$studentnextsession->scheduled_start, get_string('strftimedatetimeshort')); ?></span></div>
+                <div class="pqh-teacher-row"><strong><?php echo (int)$upcomingsessions['count']; ?> upcoming</strong><span><?php echo s($studentrecurring); ?></span></div>
+              </div>
+            <?php endif; ?>
+          </article>
         </div>
       </div>
-      <div class="pqh-progress-feed">
-        <span class="pqh-progress-latest"><b>Latest activity</b><span><?php echo s($studentlatesttitle); ?><?php if ($studentlatestmeta !== ''): ?><br><?php echo s($studentlatestmeta); ?><?php endif; ?></span></span>
-        <span class="pqh-progress-latest"><b>Focus &amp; tracking <span class="pqh-focus-pill pqh-focus-pill--<?php echo s($studentfocusclass); ?>"><?php echo s($studentfocuslabel); ?></span></b><span><?php echo s($studentfocussummary); ?></span></span>
-        <span class="pqh-progress-latest"><b>Speak practice</b><span><?php echo $studentspeakcount; ?> approved recording<?php echo $studentspeakcount === 1 ? '' : 's'; ?> available for review.</span></span>
-      </div>
-    </section>
-    <section class="pqh-student-overview" aria-label="Student learning overview">
-      <article class="pqh-student-panel pqh-student-panel--primary">
-        <h2>Learning overview</h2>
-        <p>Your course access, live-class setup, family contact, and support notes in one place.</p>
-        <?php if ($currentstudentenrollmentstatus !== 'approved'): ?>
-          <div class="pqh-alert pqh-alert--error">Enrollment approval is pending. A parent or guardian must approve enrollment before lessons can begin.</div>
-        <?php endif; ?>
-        <div class="pqh-student-profile">
-          <span class="pqh-student-profile__item"><b>Teacher</b><span><?php echo s($studentteacher); ?></span></span>
-          <span class="pqh-student-profile__item"><b>Parent</b><span><?php echo s($studentparent); ?></span></span>
-          <span class="pqh-student-profile__item"><b>Location</b><span><?php echo s($studentlocation); ?></span></span>
-          <span class="pqh-student-profile__item"><b>Time zone</b><span><?php echo s($studenttimezone); ?></span></span>
-          <span class="pqh-student-profile__item"><b>Groups</b><span><?php echo s($studentgroups); ?></span></span>
-          <span class="pqh-student-profile__item pqh-student-profile__item--wide"><b>Support notes</b><span><?php echo s($studentsupport); ?></span></span>
-          <span class="pqh-student-profile__item pqh-student-profile__item--wide"><b>Recurring sessions</b><span><?php echo s($studentrecurring); ?></span></span>
-        </div>
-      </article>
-      <aside class="pqh-student-panel" aria-label="Next actions">
-        <h3>Next actions</h3>
-        <p>Start with today's lesson, then check live classes and materials.</p>
-        <div class="pqh-student-action-list">
-          <?php if ($hasprequraan): ?>
-            <a class="pqh-student-action pqh-student-action--primary" href="<?php echo pqh_student_lesson_link((int)$USER->id)->out(false); ?>"><span><?php echo $currentstudentenrollmentstatus !== 'approved' ? 'View approval status' : 'Open current lesson'; ?></span><span>&rarr;</span></a>
+
+      <aside class="pqh-dashboard-sidebar" aria-label="Student information">
+        <article class="pqh-card">
+          <h3>Messages</h3>
+          <p><?php echo $messages['latest'] !== '' ? 'Latest: ' . s($messages['latest']) : 'No private messages yet.'; ?></p>
+          <div class="pqh-metric"><?php echo $studentunreadmessages; ?></div>
+          <p>unread</p>
+        </article>
+
+        <article class="pqh-card">
+          <h3>Upcoming Sessions</h3>
+          <?php if (empty($upcomingsessions['tables_ready'])): ?>
+            <p>Live-session tables are not installed yet.</p>
+          <?php elseif ((int)($upcomingsessions['count'] ?? 0) <= 0): ?>
+            <p>No live sessions are visible for this account yet.</p>
+          <?php else: ?>
+            <?php $studentnextsession = $upcomingsessions['latest']; ?>
+            <p><?php echo s((string)($studentnextsession->title ?? 'Upcoming session')); ?></p>
+            <div class="pqh-metric"><?php echo (int)$upcomingsessions['count']; ?></div>
+            <p>next: <?php echo userdate((int)$studentnextsession->scheduled_start, get_string('strftimedatetimeshort')); ?></p>
           <?php endif; ?>
-          <?php if (pqh_is_managed_student((int)$USER->id)): ?>
-            <a class="pqh-student-action" href="<?php echo pqh_virtual_tutor_link((int)$USER->id)->out(false); ?>"><span>Virtual tutor</span><span>&rarr;</span></a>
+        </article>
+
+        <article class="pqh-card">
+          <h3>Progress</h3>
+          <p><?php echo $studentprogresscompleted; ?> completed units out of <?php echo $studentprogressunits; ?> started.</p>
+          <div class="pqh-metric"><?php echo $studentprogresspercent; ?>%</div>
+          <p><?php echo $studentprogresssteps; ?> steps done</p>
+        </article>
+
+        <article class="pqh-card">
+          <h3>Current Activity</h3>
+          <p><?php echo s($studentlatesttitle); ?></p>
+          <?php if ($studentlatest): ?>
+            <div class="pqh-metric"><?php echo isset($studentlatest->completion_percent) ? (int)$studentlatest->completion_percent : 0; ?>%</div>
+            <p><?php echo s($studentlatestmeta); ?></p>
+          <?php else: ?>
+            <p>No lesson progress has been recorded yet.</p>
           <?php endif; ?>
-          <a class="pqh-student-action" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><span>Live sessions</span><span>&rarr;</span></a>
-          <a class="pqh-student-action" href="<?php echo pqh_live_schedule_link((int)$USER->id)->out(false); ?>"><span>Live schedule</span><span>&rarr;</span></a>
-          <a class="pqh-student-action" href="<?php echo pqh_live_series_schedule_link((int)$USER->id)->out(false); ?>"><span>Class series</span><span>&rarr;</span></a>
-          <a class="pqh-student-action" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => (int)$USER->id]))->out(false); ?>"><span>Live calendar</span><span>&rarr;</span></a>
-          <?php if ($hasworkspace): ?>
-            <a class="pqh-student-action" href="<?php echo pqh_workspace_student_link($currentworkspaceid, (int)$USER->id)->out(false); ?>"><span>Workspace materials</span><span>&rarr;</span></a>
-            <a class="pqh-student-action" href="<?php echo pqh_workspace_student_link($currentworkspaceid, (int)$USER->id)->out(false); ?>"><span>Workspace profile</span><span>&rarr;</span></a>
+        </article>
+
+        <article class="pqh-card">
+          <h3>Focus &amp; Tracking</h3>
+          <?php if (!$studentfocusready): ?>
+            <p>Focus tracking tables are not installed yet.</p>
+          <?php elseif ($studentfocussessions <= 0): ?>
+            <p>No focus activity has been recorded yet.</p>
+            <span class="pqh-focus-pill">No data yet</span>
+          <?php else: ?>
+            <p><?php echo s($focus['latest_unit'] !== '' ? 'Latest: ' . $focus['latest_unit'] : 'Recent lesson activity tracked.'); ?></p>
+            <span class="pqh-focus-pill pqh-focus-pill--<?php echo s($studentfocusclass); ?>"><?php echo s($studentfocuslabel); ?></span>
+            <div class="pqh-mini-list">
+              <div class="pqh-mini-stat"><strong><?php echo s(pqh_format_duration((int)$focus['active_ms'])); ?></strong><span>active time</span></div>
+              <div class="pqh-mini-stat"><strong><?php echo s(pqh_count_duration((int)$focus['leave_count'], 10)); ?></strong><span>away time</span></div>
+              <div class="pqh-mini-stat"><strong><?php echo s(pqh_count_duration((int)$focus['idle_count'], 25)); ?></strong><span>idle time</span></div>
+            </div>
+            <p style="margin-top:10px">Last tracked <?php echo userdate((int)$focus['last_time'], get_string('strftimedatetimeshort')); ?></p>
           <?php endif; ?>
-          <a class="pqh-student-action" href="<?php echo pqh_course_transcript_link((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><span>Unofficial transcript</span><span>&rarr;</span></a>
-        </div>
+        </article>
+
+        <article class="pqh-card">
+          <h3>Speak Practice</h3>
+          <?php if (!$speakrecordings['tables_ready']): ?>
+            <p>Speak recording table is not installed yet.</p>
+          <?php elseif ($studentspeakcount <= 0): ?>
+            <p>No Speak recordings have been submitted yet.</p>
+          <?php else: ?>
+            <p><?php echo $speakrecordings['latest'] ? 'Latest: ' . s($speakrecordings['latest']->unitid . ' / ' . ($speakrecordings['latest']->letter_name ?: $speakrecordings['latest']->letter_text ?: 'Speak')) : 'Recordings are available.'; ?></p>
+            <div class="pqh-metric"><?php echo $studentspeakcount; ?></div>
+            <p>recordings</p>
+          <?php endif; ?>
+        </article>
       </aside>
-    </section>
-    <section class="pqh-student-report-grid" aria-label="Student reports and communication">
-      <article class="pqh-student-report">
-        <h3>Class feedback</h3>
-        <p>Review teacher summaries, safety status, and approved class recordings when they are available.</p>
-        <div class="pqh-actions pqh-workspace-actions">
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_summaries_link((int)$USER->id)->out(false); ?>">Teacher feedback</a>
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_trust_link((int)$USER->id)->out(false); ?>">Trust center</a>
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_recordings_link((int)$USER->id)->out(false); ?>">Live recordings</a>
-        </div>
-      </article>
-      <article class="pqh-student-report">
-        <h3>Practice reports</h3>
-        <p>Review quiz results, Speak practice recordings, and your learning report.</p>
-        <div class="pqh-actions pqh-workspace-actions">
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_quiz_report_link((int)$USER->id)->out(false); ?>">Quiz report</a>
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_managed_reports_link((int)$USER->id)->out(false); ?>">My report</a>
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_recordings_link((int)$USER->id)->out(false); ?>">Speak recordings</a>
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_course_transcript_link((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Unofficial transcript</a>
-        </div>
-      </article>
-      <article class="pqh-student-report">
-        <h3>Communications</h3>
-        <p>Open messages and announcements from your class team.</p>
-        <div class="pqh-actions pqh-workspace-actions">
-          <a class="pqh-btn" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">Open messages</a>
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'announcements'])->out(false); ?>">Announcements</a>
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id, 'supporttype' => 'student_helpdesk'])->out(false); ?>">Support</a>
-        </div>
-      </article>
     </section>
   <?php endif; ?>
 </div>
@@ -3013,4 +3818,13 @@ document.addEventListener('click', function(event) {
 <script src="<?php echo s($assetbase); ?>/shared/js/shared-communications-panel.js?v=<?php echo s($commcachekey); ?>"></script>
 <?php endif; ?>
 <?php
+if (in_array($role, ['student', 'teacher'], true)) {
+    echo pqh_embedded_support_html(
+        $hasworkspace ? $currentworkspaceid : 0,
+        (int)$USER->id,
+        $role === 'teacher' ? (int)$USER->id : 0,
+        'student_helpdesk',
+        $pqhconsumercontext
+    );
+}
 echo $OUTPUT->footer();

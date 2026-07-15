@@ -56,14 +56,14 @@
 
   function moodleOrigin() {
     try {
+      if (window.__prequran_moodle_origin) return new URL(window.__prequran_moodle_origin).origin;
       const params = new URLSearchParams(window.location.search || '');
       const configured = params.get('moodle_origin') || params.get('moodle_base') || params.get('moodle');
       if (configured) return new URL(configured).origin;
 
-      const host = String(window.location.hostname || '').toLowerCase();
-      if (host.indexOf('quraantest') !== -1) return 'https://quraantest.academy';
+      if (document.referrer) return new URL(document.referrer).origin;
     } catch(e) {}
-    return 'https://quraan.academy';
+    return window.location.origin;
   }
 
   fetch(

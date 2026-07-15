@@ -38,6 +38,7 @@ const notificationsDeliverySpec = readText('tests/e2e/notifications-delivery.spe
 const dataExportComplianceSpec = readText('tests/e2e/data-export-compliance.spec.ts');
 const dataLifecycleCleanupSpec = readText('tests/e2e/data-lifecycle-cleanup.spec.ts');
 const failureWorkflowControlsSpec = readText('tests/e2e/failure-workflow-controls.spec.ts');
+const institutionGovernanceSpec = readText('tests/e2e/institution-governance.spec.ts');
 const crossRoleGoldenPathSpec = readText('tests/e2e/cross-role-golden-path.spec.ts');
 const performanceReliabilitySpec = readText('tests/e2e/performance-reliability.spec.ts');
 const accessibilityResponsiveSpec = readText('tests/e2e/accessibility-responsive.spec.ts');
@@ -47,6 +48,7 @@ const routesHelper = readText('tests/e2e/helpers/routes.ts');
 const liveBbbHelper = readText('tests/e2e/helpers/live-bbb.ts');
 const livePilotReadinessEndpoint = readText('src/moodle/local_hubredirect/live_pilot_readiness.php');
 const sqaVerificationSweep = readText('tools/run-eduplatform-sqa-verification-sweep.js');
+const sqaScheduleRunner = readText('tools/run-eduplatform-sqa-schedule.js');
 const phase11Runbook = readText('docs/eduplatform-sqa-phase-11-runbook.md');
 const operatorChecklist = readText('docs/eduplatform-sqa-operator-checklist.md');
 
@@ -62,6 +64,7 @@ const expectedScripts = [
   'test:e2e:data-export-compliance',
   'test:e2e:data-lifecycle-cleanup',
   'test:e2e:failure-workflow-controls',
+  'test:e2e:institution-governance',
   'test:e2e:cross-role-golden-path',
   'test:e2e:performance-reliability',
   'test:e2e:accessibility-responsive',
@@ -100,6 +103,15 @@ const expectedScripts = [
   'test:e2e:lifecycle-controls',
   'test:e2e:failure-phase1',
   'test:e2e:failure-controls',
+  'test:e2e:institution-phase1',
+  'test:e2e:institution-phase2',
+  'test:e2e:institution-phase3',
+  'test:e2e:institution-phase4',
+  'test:e2e:institution-phase5',
+  'test:e2e:institution-phase6',
+  'test:e2e:institution-phase7',
+  'test:e2e:institution-phase8',
+  'test:e2e:institution-controls',
   'test:e2e:cross-role-phase1',
   'test:e2e:cross-role-controls',
   'test:e2e:performance-phase1',
@@ -123,6 +135,7 @@ const expectedScripts = [
   'test:e2e:sqa-sweep',
   'test:e2e:schedule:daily',
   'test:e2e:schedule:weekly',
+  'test:e2e:schedule:validate',
   'test:e2e:deployment-drift',
   'test:e2e:evidence-bundle',
   'test:e2e:phase4',
@@ -187,6 +200,14 @@ const expectedEnvFlags = [
   'EDUPLATFORM_ENABLE_DATA_EXPORT_COMPLIANCE',
   'EDUPLATFORM_ENABLE_DATA_LIFECYCLE_CLEANUP',
   'EDUPLATFORM_ENABLE_FAILURE_WORKFLOW_CONTROLS',
+  'EDUPLATFORM_ENABLE_INSTITUTION_SCHOOL_MODELS',
+  'EDUPLATFORM_ENABLE_INSTITUTION_OPERATIONS_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_REPORTING_BRANDING',
+  'EDUPLATFORM_ENABLE_INSTITUTION_MOBILITY_LIFECYCLE',
+  'EDUPLATFORM_ENABLE_INSTITUTION_SECURITY_MATRIX',
+  'EDUPLATFORM_ENABLE_INSTITUTION_COMMUNICATIONS_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_ACADEMIC_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_READINESS_ROLLUP',
   'EDUPLATFORM_ENABLE_CROSS_ROLE_GOLDEN_PATH',
   'EDUPLATFORM_ENABLE_PERFORMANCE_RELIABILITY_SMOKE',
   'EDUPLATFORM_PERFORMANCE_LOAD_THRESHOLD_MS',
@@ -209,6 +230,7 @@ const expectedEnvFlags = [
   'EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN',
   'EDUPLATFORM_HUBREDIRECT_DRIFT_PROBE_URL',
   'EDUPLATFORM_HUBREDIRECT_DRIFT_INCLUDE',
+  'EDUPLATFORM_HUBREDIRECT_DRIFT_REQUIRE_PROBE',
   'EDUPLATFORM_EVIDENCE_BUNDLE_LABEL',
   'EDUPLATFORM_SQA_ALLOW_LIVE_WEEKLY',
   'EDUPLATFORM_SQA_WEEKLY_PHASES',
@@ -320,6 +342,20 @@ for (const groupName of [
 }
 
 for (const groupName of [
+  'institution school models live action',
+  'institution admissions enrollment finance isolation live action',
+  'institution reporting rollups and branding portal isolation live action',
+  'institution staff mobility and data lifecycle live action',
+  'institution security cross-school access matrix live action',
+  'institution communications notifications isolation live action',
+  'institution academic course isolation live action',
+  'institution final readiness rollup live action',
+  'institution governance negative controls',
+]) {
+  expectIncludes('institution-governance.spec.ts', institutionGovernanceSpec, groupName);
+}
+
+for (const groupName of [
   'full cross-role golden path live action',
   'cross-role golden path negative controls',
 ]) {
@@ -382,6 +418,14 @@ for (const command of [
   'npm.cmd run test:e2e:compliance-phase1',
   'npm.cmd run test:e2e:lifecycle-phase1',
   'npm.cmd run test:e2e:failure-phase1',
+  'npm.cmd run test:e2e:institution-phase1',
+  'npm.cmd run test:e2e:institution-phase2',
+  'npm.cmd run test:e2e:institution-phase3',
+  'npm.cmd run test:e2e:institution-phase4',
+  'npm.cmd run test:e2e:institution-phase5',
+  'npm.cmd run test:e2e:institution-phase6',
+  'npm.cmd run test:e2e:institution-phase7',
+  'npm.cmd run test:e2e:institution-phase8',
   'npm.cmd run test:e2e:cross-role-phase1',
   'npm.cmd run test:e2e:performance-phase1',
   'npm.cmd run test:e2e:accessibility-phase1',
@@ -403,10 +447,47 @@ for (const command of [
   'npm.cmd run test:e2e:evidence-bundle',
   'npm.cmd run test:e2e:schedule:daily',
   'npm.cmd run test:e2e:schedule:weekly',
+  'npm.cmd run test:e2e:schedule:validate',
   'npx playwright show-report',
 ]) {
   expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, command);
   expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, command);
+}
+
+for (const phrase of [
+  'dailyPlan',
+  'weeklyPlan',
+  'test:e2e:bbb-phase13',
+  'test:e2e:institution-phase1',
+  'test:e2e:institution-phase2',
+  'test:e2e:institution-phase3',
+  'test:e2e:institution-phase4',
+  'test:e2e:institution-phase5',
+  'test:e2e:institution-phase6',
+  'test:e2e:institution-phase7',
+  'test:e2e:institution-phase8',
+  'EDUPLATFORM_ENABLE_LIVE_BBB_PILOT_READINESS',
+  'EDUPLATFORM_ENABLE_INSTITUTION_SCHOOL_MODELS',
+  'EDUPLATFORM_ENABLE_INSTITUTION_OPERATIONS_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_REPORTING_BRANDING',
+  'EDUPLATFORM_ENABLE_INSTITUTION_MOBILITY_LIFECYCLE',
+  'EDUPLATFORM_ENABLE_INSTITUTION_SECURITY_MATRIX',
+  'EDUPLATFORM_ENABLE_INSTITUTION_COMMUNICATIONS_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_ACADEMIC_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_READINESS_ROLLUP',
+  'validateScheduleConfig',
+  'Weekly live step',
+  'Daily safe step',
+]) {
+  expectIncludes('tools/run-eduplatform-sqa-schedule.js', sqaScheduleRunner, phrase);
+}
+
+for (const phrase of [
+  '--probe-only',
+  'EDUPLATFORM_HUBREDIRECT_DRIFT_REQUIRE_PROBE',
+  'Probe did not return JSON',
+]) {
+  expectIncludes('tools/verify-hubredirect-deployment-drift.js', readText('tools/verify-hubredirect-deployment-drift.js'), phrase);
 }
 
 for (const phrase of [
@@ -541,6 +622,43 @@ for (const phrase of [
 }
 
 for (const phrase of [
+  'EDUPLATFORM_ENABLE_INSTITUTION_SCHOOL_MODELS',
+  'EDUPLATFORM_ENABLE_INSTITUTION_OPERATIONS_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_REPORTING_BRANDING',
+  'EDUPLATFORM_ENABLE_INSTITUTION_MOBILITY_LIFECYCLE',
+  'EDUPLATFORM_ENABLE_INSTITUTION_SECURITY_MATRIX',
+  'EDUPLATFORM_ENABLE_INSTITUTION_COMMUNICATIONS_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_ACADEMIC_ISOLATION',
+  'EDUPLATFORM_ENABLE_INSTITUTION_READINESS_ROLLUP',
+  'institution-governance-summary',
+  'Wholly Owned Schools',
+  'Franchise Schools',
+  'institution_school_functional_test.php',
+  'institution_operations_isolation.php',
+  'institution_reporting_branding.php',
+  'institution_mobility_lifecycle.php',
+  'institution_security_matrix.php',
+  'institution_communications_isolation.php',
+  'institution_academic_isolation.php',
+  'institution_readiness_rollup.php',
+  'Institution Reporting Rollups',
+  'School Branding / Domain / Portal Isolation',
+  'Staff Mobility / Transfer Controls',
+  'Institution Data Lifecycle',
+  'Institution Security / Cross-School Access Matrix',
+  'Institution Communications / Notifications Isolation',
+  'Institution Academic / Course Isolation',
+  'Institution Final Rollup / Readiness',
+  'CSV/PDF exports preserve school identifiers',
+  'branded portal isolation',
+  'owned_branch',
+  'franchise_member',
+]) {
+  expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
+  expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
   'EDUPLATFORM_ENABLE_CROSS_ROLE_GOLDEN_PATH',
   'cross-role-golden-path-summary',
   'Full Cross-Role Golden Path',
@@ -659,6 +777,78 @@ for (const phrase of [
 ]) {
   expectIncludes('docs/eduplatform-sqa-phase-11-runbook.md', phase11Runbook, phrase);
   expectIncludes('docs/eduplatform-sqa-operator-checklist.md', operatorChecklist, phrase);
+}
+
+for (const phrase of [
+  'institutionSchoolFunctionalTest',
+  '/local/hubredirect/institution_school_functional_test.php',
+  'institutionOperationsIsolation',
+  '/local/hubredirect/institution_operations_isolation.php',
+  'institutionReportingBranding',
+  '/local/hubredirect/institution_reporting_branding.php',
+  'institutionMobilityLifecycle',
+  '/local/hubredirect/institution_mobility_lifecycle.php',
+  'institutionSecurityMatrix',
+  '/local/hubredirect/institution_security_matrix.php',
+  'institutionCommunicationsIsolation',
+  '/local/hubredirect/institution_communications_isolation.php',
+  'institutionAcademicIsolation',
+  '/local/hubredirect/institution_academic_isolation.php',
+  'institutionReadinessRollup',
+  '/local/hubredirect/institution_readiness_rollup.php',
+  'workspaces',
+  '/local/hubredirect/workspaces.php',
+]) {
+  expectIncludes('tests/e2e/helpers/routes.ts', routesHelper, phrase);
+  expectIncludes('tests/e2e/institution-governance.spec.ts', institutionGovernanceSpec, phrase);
+}
+
+for (const phrase of [
+  'enableInstitutionSchoolModels',
+  'EDUPLATFORM_ENABLE_INSTITUTION_SCHOOL_MODELS',
+  'enableInstitutionOperationsIsolation',
+  'EDUPLATFORM_ENABLE_INSTITUTION_OPERATIONS_ISOLATION',
+  'enableInstitutionReportingBranding',
+  'EDUPLATFORM_ENABLE_INSTITUTION_REPORTING_BRANDING',
+  'enableInstitutionMobilityLifecycle',
+  'EDUPLATFORM_ENABLE_INSTITUTION_MOBILITY_LIFECYCLE',
+  'enableInstitutionSecurityMatrix',
+  'EDUPLATFORM_ENABLE_INSTITUTION_SECURITY_MATRIX',
+  'enableInstitutionCommunicationsIsolation',
+  'EDUPLATFORM_ENABLE_INSTITUTION_COMMUNICATIONS_ISOLATION',
+  'enableInstitutionAcademicIsolation',
+  'EDUPLATFORM_ENABLE_INSTITUTION_ACADEMIC_ISOLATION',
+  'enableInstitutionReadinessRollup',
+  'EDUPLATFORM_ENABLE_INSTITUTION_READINESS_ROLLUP',
+]) {
+  expectIncludes('tests/e2e/helpers/env.ts', envHelper, phrase);
+}
+
+for (const phrase of [
+  'owned_branch_institution_admin_can_manage',
+  'franchise_admin_has_governance_not_operations',
+  'franchise_not_linked_to_owned_group',
+  'branch_a_admissions_do_not_leak_to_branch_b',
+  'institution_admin_owned_pipeline_rollup_excludes_franchise',
+  'parent_billing_visibility_child_school_scoped',
+  'institution_owned_school_reports_aggregate_owned_branches',
+  'franchise_excluded_from_operational_totals',
+  'csv_pdf_exports_preserve_school_identifiers',
+  'direct_url_cross_school_portal_blocked',
+  'teacher_branch_a_cannot_access_branch_b_without_assignment',
+  'teacher_explicit_branch_b_assignment_grants_access',
+  'student_transfer_updates_workspace_membership',
+  'archived_school_retained_in_institution_audit',
+  'student_branch_a_direct_url_branch_b_blocked',
+  'institution_admin_owned_rollup_not_franchise_operations',
+  'communications_isolation_audit_recorded',
+  'institution_owned_announcement_rollup_excludes_franchise',
+  'branch_a_course_offering_scoped',
+  'institution_owned_academic_rollup_excludes_franchise',
+  'institution_phase_7_academic_isolation_evidence',
+  'final_institution_readiness_export_available',
+]) {
+  expectIncludes('tests/e2e/helpers/institution-governance.ts', readText('tests/e2e/helpers/institution-governance.ts'), phrase);
 }
 
 for (const phrase of [

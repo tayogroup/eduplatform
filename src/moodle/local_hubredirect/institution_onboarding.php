@@ -28,6 +28,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $adminneedle = trim(optional_param('adminuser', '', PARAM_TEXT));
         $publicdomain = pqhi_normalize_domain(optional_param('publicdomain', '', PARAM_TEXT));
         $appdomain = pqhi_normalize_domain(optional_param('appdomain', '', PARAM_TEXT));
+        $websiteprofile = pqhi_consumer_website_profile([
+            'website_mode' => optional_param('website_mode', 'hosted', PARAM_ALPHANUMEXT),
+            'external_website_url' => optional_param('externalwebsiteurl', '', PARAM_URL),
+            'domain_management' => optional_param('domainmanagement', 'consumer_managed', PARAM_ALPHANUMEXT),
+            'portal_label' => optional_param('portallabel', 'Learning portal', PARAM_TEXT),
+            'branding_source' => optional_param('brandingsource', 'eduplatform_settings', PARAM_ALPHANUMEXT),
+            'intake_location' => optional_param('intakelocation', 'eduplatform', PARAM_ALPHANUMEXT),
+            'integration_method' => optional_param('integrationmethod', 'links', PARAM_ALPHANUMEXT),
+            'return_url' => optional_param('returnurl', '', PARAM_URL),
+        ]);
+        if ($websiteprofile['website_mode'] !== 'hosted') {
+            $publicdomain = '';
+        }
+        $institutiontype = pqhi_clean_institution_type(optional_param('institution_type', 'primary_education', PARAM_ALPHANUMEXT));
+        $faithsubcategory = $institutiontype === 'faith_based_education'
+            ? pqhi_clean_faith_subcategory(optional_param('faith_subcategory', '', PARAM_ALPHANUMEXT))
+            : '';
+        $teachingmethod = pqhi_clean_teaching_method(optional_param('teaching_method', 'regular', PARAM_ALPHANUMEXT));
+        $operatortype = pqhi_clean_operator_type(optional_param('operator_type', 'private_entity', PARAM_ALPHANUMEXT));
         if ($name === '') {
             throw new invalid_parameter_exception('Institution name is required.');
         }
@@ -38,9 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $now = time();
         $settings = [
             'created_from' => 'institution_onboarding',
+            'institution_type' => $institutiontype,
+            'faith_subcategory' => $faithsubcategory,
+            'teaching_method' => $teachingmethod,
+            'operator_type' => $operatortype,
             'initial_courses' => trim(optional_param('initialcourses', 'Pre-Quraan', PARAM_TEXT)),
             'default_public_domain' => $publicdomain,
             'default_app_domain' => $appdomain,
+            'website_mode' => $websiteprofile['website_mode'],
+            'external_website_url' => $websiteprofile['external_website_url'],
         ];
         $workspaceid = (int)$DB->insert_record('local_prequran_workspace', pqhi_record_for_existing_columns('local_prequran_workspace', (object)[
             'name' => $name,
@@ -65,6 +90,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'primary_color' => trim(optional_param('primarycolor', '#2f6f4e', PARAM_TEXT)),
             'accent_color' => trim(optional_param('accentcolor', '#d99a26', PARAM_TEXT)),
             'surface_color' => trim(optional_param('surfacecolor', '#f4f8fb', PARAM_TEXT)),
+            'institution_type' => $institutiontype,
+            'faith_subcategory' => $faithsubcategory,
+            'teaching_method' => $teachingmethod,
+            'operator_type' => $operatortype,
+            'website_mode' => $websiteprofile['website_mode'],
+            'external_website_url' => $websiteprofile['external_website_url'],
+            'domain_management' => $websiteprofile['domain_management'],
+            'portal_label' => $websiteprofile['portal_label'],
+            'branding_source' => $websiteprofile['branding_source'],
+            'intake_location' => $websiteprofile['intake_location'],
+            'integration_method' => $websiteprofile['integration_method'],
+            'return_url' => $websiteprofile['return_url'],
             'landing_headline' => trim(optional_param('headline', $name, PARAM_TEXT)),
             'landing_subtitle' => trim(optional_param('subtitle', '', PARAM_TEXT)),
             'landing_body' => trim(optional_param('bodycopy', '', PARAM_TEXT)),
@@ -73,12 +110,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ], (int)$USER->id);
         pqhi_upsert_workspace_member($workspaceid, (int)$admin->id, 'owner', (int)$USER->id, 'Created by institution onboarding wizard.');
         pqhi_upsert_workspace_member($workspaceid, (int)$admin->id, 'admin', (int)$USER->id, 'Created by institution onboarding wizard.');
-        if ($publicdomain !== '') {
-            pqhi_upsert_consumer_domain($consumerid, $workspaceid, $publicdomain, 'public', 1, (int)$USER->id);
-        }
-        if ($appdomain !== '' && $appdomain !== $publicdomain) {
-            pqhi_upsert_consumer_domain($consumerid, $workspaceid, $appdomain, 'app', $publicdomain === '' ? 1 : 0, (int)$USER->id);
-        }
+        pqhi_sync_consumer_domain($consumerid, $workspaceid, $publicdomain, 'public', 1, (int)$USER->id);
+        pqhi_sync_consumer_domain($consumerid, $workspaceid, $appdomain, 'app', $publicdomain === '' ? 1 : 0, (int)$USER->id);
         $created = [
             'workspaceid' => $workspaceid,
             'consumerid' => $consumerid,
@@ -110,6 +143,11 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Institution Onboarding');
 $PAGE->set_heading('Institution Onboarding');
 $PAGE->add_body_class('pqhib-page');
+$requestedinstitutiontype = pqhi_clean_institution_type(optional_param('institution_type', 'primary_education', PARAM_ALPHANUMEXT));
+$requestedfaithsubcategory = pqhi_clean_faith_subcategory(optional_param('faith_subcategory', '', PARAM_ALPHANUMEXT));
+$requestedteachingmethod = pqhi_clean_teaching_method(optional_param('teaching_method', 'regular', PARAM_ALPHANUMEXT));
+$requestedoperatortype = pqhi_clean_operator_type(optional_param('operator_type', 'private_entity', PARAM_ALPHANUMEXT));
+$requestedwebsitemode = pqhi_clean_option(optional_param('website_mode', 'hosted', PARAM_ALPHANUMEXT), pqhi_website_mode_options(), 'hosted');
 
 echo $OUTPUT->header();
 ?>
@@ -149,9 +187,21 @@ body.pqhib-page #page,body.pqhib-page #page-content,body.pqhib-page #region-main
         <div class="pqhib-formgrid">
           <div class="pqhib-field"><label>Institution name</label><input class="pqhib-input" name="name" required></div>
           <div class="pqhib-field"><label>Consumer slug</label><input class="pqhib-input" name="slug" placeholder="auto-generated if blank"></div>
+          <div class="pqhib-field pqhib-field--wide"><label>Institution type</label><select class="pqhib-input" name="institution_type"><?php foreach (pqhi_institution_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedinstitutiontype === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+          <div class="pqhib-field pqhi-faith-subcategory-field"><label>Faith sub-category</label><select class="pqhib-input" name="faith_subcategory"><option value="">Select</option><?php foreach (pqhi_faith_subcategory_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedfaithsubcategory === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+          <div class="pqhib-field"><label>Teaching method</label><select class="pqhib-input" name="teaching_method"><?php foreach (pqhi_teaching_method_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedteachingmethod === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+          <div class="pqhib-field"><label>Operator type</label><select class="pqhib-input" name="operator_type"><?php foreach (pqhi_operator_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedoperatortype === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
           <div class="pqhib-field pqhib-field--wide"><label>First admin user</label><input class="pqhib-input" name="adminuser" placeholder="Moodle user ID, email, or username" required></div>
-          <div class="pqhib-field"><label>Public domain</label><input class="pqhib-input" name="publicdomain" placeholder="example.org"></div>
-          <div class="pqhib-field"><label>App domain</label><input class="pqhib-input" name="appdomain" placeholder="app.example.org"></div>
+          <div class="pqhib-field pqhib-field--wide"><label>Website hosting mode</label><select class="pqhib-input" name="website_mode"><?php foreach (pqhi_website_mode_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedwebsitemode === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+          <div class="pqhib-field pqhi-hosted-website-field"><label>EduPlatform-hosted public domain</label><input class="pqhib-input" name="publicdomain" placeholder="school.example.org"></div>
+          <div class="pqhib-field pqhi-external-website-field"><label>Existing website URL</label><input class="pqhib-input" name="externalwebsiteurl" placeholder="https://www.example.org"></div>
+          <div class="pqhib-field"><label>Learning portal domain</label><input class="pqhib-input" name="appdomain" placeholder="learn.example.org"></div>
+          <div class="pqhib-field"><label>Portal label</label><input class="pqhib-input" name="portallabel" value="Learning portal"></div>
+          <div class="pqhib-field"><label>Portal domain management</label><select class="pqhib-input" name="domainmanagement"><?php foreach (pqhi_domain_management_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+          <div class="pqhib-field"><label>Branding source</label><select class="pqhib-input" name="brandingsource"><?php foreach (pqhi_branding_source_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+          <div class="pqhib-field"><label>Public intake location</label><select class="pqhib-input" name="intakelocation"><?php foreach (pqhi_intake_location_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+          <div class="pqhib-field"><label>Website integration</label><select class="pqhib-input" name="integrationmethod"><?php foreach (pqhi_integration_method_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select></div>
+          <div class="pqhib-field"><label>Return URL after intake</label><input class="pqhib-input" name="returnurl" placeholder="https://www.example.org/thank-you"></div>
           <div class="pqhib-field"><label>Support email</label><input class="pqhib-input" name="supportemail"></div>
           <div class="pqhib-field"><label>Logo URL</label><input class="pqhib-input" name="logourl"></div>
           <div class="pqhib-field"><label>Initials</label><input class="pqhib-input" name="brandinitials" maxlength="6"></div>
@@ -195,5 +245,39 @@ body.pqhib-page #page,body.pqhib-page #page-content,body.pqhib-page #region-main
     </section>
   </div>
 </main>
+<script>
+(function() {
+  var type = document.querySelector('select[name="institution_type"]');
+  var field = document.querySelector('.pqhi-faith-subcategory-field');
+  var subcategory = field ? field.querySelector('select[name="faith_subcategory"]') : null;
+  var websiteMode = document.querySelector('select[name="website_mode"]');
+  var hostedWebsiteField = document.querySelector('.pqhi-hosted-website-field');
+  var externalWebsiteField = document.querySelector('.pqhi-external-website-field');
+  var externalWebsiteInput = externalWebsiteField ? externalWebsiteField.querySelector('input') : null;
+  function syncFaithSubcategory() {
+    var show = type && type.value === 'faith_based_education';
+    if (field) {
+      field.style.display = show ? '' : 'none';
+    }
+    if (!show && subcategory) {
+      subcategory.value = '';
+    }
+  }
+  function syncWebsiteMode() {
+    var external = websiteMode && websiteMode.value !== 'hosted';
+    if (hostedWebsiteField) hostedWebsiteField.style.display = external ? 'none' : '';
+    if (externalWebsiteField) externalWebsiteField.style.display = external ? '' : 'none';
+    if (externalWebsiteInput) externalWebsiteInput.required = !!external;
+  }
+  if (type && field) {
+    type.addEventListener('change', syncFaithSubcategory);
+    syncFaithSubcategory();
+  }
+  if (websiteMode) {
+    websiteMode.addEventListener('change', syncWebsiteMode);
+    syncWebsiteMode();
+  }
+})();
+</script>
 <?php
 echo $OUTPUT->footer();

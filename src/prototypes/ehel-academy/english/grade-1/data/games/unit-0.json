@@ -1,0 +1,489 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 1,
+  "unit": 0,
+  "unitId": "eng-g01-t00-u00",
+  "title": "Alphabet & Sounds Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "choices": [
+            "apple",
+            "dog",
+            "goat"
+          ],
+          "answer": "apple",
+          "explanation": "apple: A naming word used when we talk about letters, sounds, blending and first sight words."
+        },
+        {
+          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "choices": [
+            "apple",
+            "dog",
+            "moon"
+          ],
+          "answer": "moon",
+          "explanation": "moon: A naming word used when we talk about letters, sounds, blending and first sight words."
+        },
+        {
+          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "choices": [
+            "dog",
+            "yo-yo",
+            "apple"
+          ],
+          "answer": "yo-yo",
+          "explanation": "yo-yo: A naming word used when we talk about letters, sounds, blending and first sight words."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "answer": "ball"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "answer": "kite"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "answer": "umbrella"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "apple.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a apple."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hat.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a hat."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "pen.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a pen."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which is a sight word?",
+          "choices": [
+            "the",
+            "zebra",
+            "orange",
+            "queen"
+          ],
+          "answer": "the",
+          "explanation": "The correct answer is the."
+        },
+        {
+          "prompt": "Complete: I ___ a cat.",
+          "choices": [
+            "see",
+            "moon",
+            "hat",
+            "pen"
+          ],
+          "answer": "see",
+          "explanation": "The correct answer is see."
+        },
+        {
+          "prompt": "Which sentence begins with a capital letter?",
+          "choices": [
+            "I see a cat.",
+            "i see a cat.",
+            "see a cat.",
+            "cat I see"
+          ],
+          "answer": "I see a cat.",
+          "explanation": "The correct answer is I see a cat.."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What can you do now after Week 1: Learn the Alphabet (A–Z)?",
+          "choices": [
+            "Accept a demonstrated skill from the week's objectives.",
+            "A",
+            "m"
+          ],
+          "answer": "Accept a demonstrated skill from the week's objectives.",
+          "explanation": "Review the unit text evidence: Accept a demonstrated skill from the week's objectives."
+        },
+        {
+          "prompt": "What can you do now after Week 3: Phonics (N–Z)?",
+          "choices": [
+            "A",
+            "m",
+            "Accept a demonstrated skill from the week's objectives."
+          ],
+          "answer": "Accept a demonstrated skill from the week's objectives.",
+          "explanation": "Review the unit text evidence: Accept a demonstrated skill from the week's objectives."
+        },
+        {
+          "prompt": "What can you do now after Week 5: First Sight Words + Alphabet Practice?",
+          "choices": [
+            "m",
+            "Accept a demonstrated skill from the week's objectives.",
+            "A"
+          ],
+          "answer": "Accept a demonstrated skill from the week's objectives.",
+          "explanation": "Review the unit text evidence: Accept a demonstrated skill from the week's objectives."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Sound and say 1",
+          "target": "Listen, point, repeat and change one part: A says /a/."
+        },
+        {
+          "prompt": "Sound and say 3",
+          "target": "Listen, point, repeat and change one part: S says /s/."
+        },
+        {
+          "prompt": "Sound and say 5",
+          "target": "Listen, point, repeat and change one part: I see a ___."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "water.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a water."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "see.",
+            "a",
+            "is",
+            "This"
+          ],
+          "answer": "This is a see."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "m.",
+            "is",
+            "answer",
+            "correct",
+            "The"
+          ],
+          "answer": "The correct answer is m."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'pen' mean in this unit?",
+          "choices": [
+            "A naming word used when we talk about letters, sounds, blending and first sight words.",
+            "Accept a demonstrated skill from the week's objectives.",
+            "A"
+          ],
+          "answer": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "explanation": "pen: A naming word used when we talk about letters, sounds, blending and first sight words."
+        },
+        {
+          "prompt": "What does 'the' mean in this unit?",
+          "choices": [
+            "Accept a demonstrated skill from the week's objectives.",
+            "A",
+            "A naming word used when we talk about letters, sounds, blending and first sight words."
+          ],
+          "answer": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "explanation": "the: A naming word used when we talk about letters, sounds, blending and first sight words."
+        },
+        {
+          "prompt": "What does 'dog' mean in this unit?",
+          "choices": [
+            "A",
+            "A naming word used when we talk about letters, sounds, blending and first sight words.",
+            "Accept a demonstrated skill from the week's objectives."
+          ],
+          "answer": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "explanation": "dog: A naming word used when we talk about letters, sounds, blending and first sight words."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'van'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "van is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'it'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "it is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'jam'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "jam is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "cat",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ],
+            [
+              "goat",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ],
+            [
+              "kite",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "orange",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ],
+            [
+              "sun",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ],
+            [
+              "water",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "I",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ],
+            [
+              "see",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ],
+            [
+              "we",
+              "A naming word used when we talk about letters, sounds, blending and first sight words."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which word begins with /s/?",
+          "choices": [
+            "sun",
+            "moon",
+            "dog",
+            "hat"
+          ],
+          "answer": "sun",
+          "explanation": "The correct answer is sun."
+        },
+        {
+          "prompt": "Blend c-a-t.",
+          "choices": [
+            "cat",
+            "cap",
+            "cot",
+            "can"
+          ],
+          "answer": "cat",
+          "explanation": "The correct answer is cat."
+        },
+        {
+          "prompt": "Blend s-u-n.",
+          "choices": [
+            "sun",
+            "sit",
+            "sum",
+            "run"
+          ],
+          "answer": "sun",
+          "explanation": "The correct answer is sun."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which is the uppercase partner for a?",
+          "choices": [
+            "A",
+            "B",
+            "D",
+            "O"
+          ],
+          "answer": "A",
+          "explanation": "The correct answer is A."
+        },
+        {
+          "prompt": "Which is the lowercase partner for M?",
+          "choices": [
+            "m",
+            "n",
+            "w",
+            "s"
+          ],
+          "answer": "m",
+          "explanation": "The correct answer is m."
+        },
+        {
+          "prompt": "Which word begins with /b/?",
+          "choices": [
+            "ball",
+            "cat",
+            "sun",
+            "fish"
+          ],
+          "answer": "ball",
+          "explanation": "The correct answer is ball."
+        }
+      ]
+    }
+  ]
+}

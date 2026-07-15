@@ -2,7 +2,7 @@
 
 // Language + category labels
 export const I18N = {
-  en:{ _dir:'ltr', _lang:'en', title:'Pre-Quran Arabic', parentLbl:'Parent',
+  en:{ _dir:'ltr', _lang:'en', title:'EduPlatform Arabic', parentLbl:'Parent',
     cats:{
       alphabet:'Alphabet',
       movements:'Movements',
@@ -115,19 +115,16 @@ export const I18N = {
 
 const currentMoodleOrigin = () => {
   try {
+    if (window.__prequran_moodle_origin) return new URL(window.__prequran_moodle_origin).origin;
     const params = new URLSearchParams(window.location.search || "");
     const configured = params.get("moodle_origin") || params.get("moodle_base") || params.get("moodle");
     if (configured) return new URL(configured).origin;
 
-    const host = String(window.location.hostname || "").toLowerCase();
-    if (host.includes("quraantest")) return "https://quraantest.academy";
-
     if (document.referrer) {
-      const referrerHost = new URL(document.referrer).hostname.toLowerCase();
-      if (referrerHost.includes("quraantest")) return "https://quraantest.academy";
+      return new URL(document.referrer).origin;
     }
   } catch (_e) {}
-  return "https://quraan.academy";
+  return window.location.origin;
 };
 
 export const MOODLE_ORIGIN = currentMoodleOrigin();

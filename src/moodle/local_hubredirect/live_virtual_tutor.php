@@ -56,7 +56,7 @@ $PAGE->add_body_class('pqh-live-virtual-tutor-page');
 
 if ($embed && !headers_sent()) {
     @header_remove('X-Frame-Options');
-    $frameancestors = [rtrim((string)$CFG->wwwroot, '/'), 'https://eduplatform.ai', 'https://app.eduplatform.ai'];
+    $frameancestors = [rtrim((string)$CFG->wwwroot, '/')];
     foreach (pqh_resource_allowed_origins() as $origin) {
         $frameancestors[] = $origin;
     }

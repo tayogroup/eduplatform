@@ -1,0 +1,514 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 4,
+  "unit": 9,
+  "unitId": "eng-g04-t03-u09",
+  "title": "Places, People, and Plans Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: Travelling to new places for fun or to learn about them.",
+          "choices": [
+            "tourism",
+            "airport",
+            "railroad"
+          ],
+          "answer": "tourism",
+          "explanation": "tourism: Travelling to new places for fun or to learn about them."
+        },
+        {
+          "prompt": "Which word means: A big shopping centre with many stores under one roof.",
+          "choices": [
+            "tourism",
+            "airport",
+            "mall"
+          ],
+          "answer": "mall",
+          "explanation": "mall: A big shopping centre with many stores under one roof."
+        },
+        {
+          "prompt": "Which word means: A machine that carries people up and down between floors.",
+          "choices": [
+            "airport",
+            "elevator",
+            "tourism"
+          ],
+          "answer": "elevator",
+          "explanation": "elevator: A machine that carries people up and down between floors."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A place where aeroplanes take off and land.",
+          "answer": "airport"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A big shopping centre with many stores under one roof.",
+          "answer": "mall"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Something you pay to use for a short time.",
+          "answer": "rental"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "summer.",
+            "every",
+            "coast",
+            "the",
+            "to",
+            "visitors",
+            "many",
+            "brings",
+            "Tourism"
+          ],
+          "answer": "Tourism brings many visitors to the coast every summer."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "country.",
+            "the",
+            "across",
+            "way",
+            "the",
+            "all",
+            "runs",
+            "railroad",
+            "The"
+          ],
+          "answer": "The railroad runs all the way across the country."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "mall.",
+            "the",
+            "at",
+            "shoes",
+            "new",
+            "bought",
+            "We"
+          ],
+          "answer": "We bought new shoes at the mall."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "What does 'museum' mean?",
+          "choices": [
+            "A building where you see old or special things and learn about them.",
+            "A place where people buy and eat meals that cooks make.",
+            "A place where people work at desks.",
+            "Buildings where things are made, like clothes or toys."
+          ],
+          "answer": "A building where you see old or special things and learn about them.",
+          "explanation": "We saw dinosaur bones at the museum."
+        },
+        {
+          "prompt": "What does 'mall' mean?",
+          "choices": [
+            "A big shopping centre with many stores under one roof.",
+            "A place where people work at desks.",
+            "Buildings where things are made, like clothes or toys.",
+            "The area around your home."
+          ],
+          "answer": "A big shopping centre with many stores under one roof.",
+          "explanation": "We bought new shoes at the mall."
+        },
+        {
+          "prompt": "What does 'restaurant' mean?",
+          "choices": [
+            "A place where people buy and eat meals that cooks make.",
+            "Buildings where things are made, like clothes or toys.",
+            "The area around your home.",
+            "The door or gate where you go into a place."
+          ],
+          "answer": "A place where people buy and eat meals that cooks make.",
+          "explanation": "We had rice and chicken at a new restaurant."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "Where did the family go first, before the train arrived?",
+          "choices": [
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "Travelling to new places for fun or to learn about them.",
+            "A place where aeroplanes take off and land."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "What are Samira and Ishmael going to do first?",
+          "choices": [
+            "Travelling to new places for fun or to learn about them.",
+            "A place where aeroplanes take off and land.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        },
+        {
+          "prompt": "After the elevator, which way do you turn?",
+          "choices": [
+            "A place where aeroplanes take off and land.",
+            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+            "Travelling to new places for fun or to learn about them."
+          ],
+          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
+          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Invite a Friend",
+          "target": "Would you like to visit the museum with me?"
+        },
+        {
+          "prompt": "Speaking 3: Where Am I?",
+          "target": "Can you buy food there?"
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "nation.",
+            "whole",
+            "the",
+            "for",
+            "shoes",
+            "make",
+            "factories",
+            "The"
+          ],
+          "answer": "The factories make shoes for the whole nation."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "floor.",
+            "fifth",
+            "the",
+            "to",
+            "elevator",
+            "the",
+            "took",
+            "We"
+          ],
+          "answer": "We took the elevator to the fifth floor."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "o'clock.",
+            "four",
+            "at",
+            "station",
+            "the",
+            "at",
+            "arrive",
+            "will",
+            "We"
+          ],
+          "answer": "We will arrive at the station at four o'clock."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'restaurant' mean in this unit?",
+          "choices": [
+            "A place where people buy and eat meals that cooks make.",
+            "Travelling to new places for fun or to learn about them.",
+            "A place where aeroplanes take off and land."
+          ],
+          "answer": "A place where people buy and eat meals that cooks make.",
+          "explanation": "restaurant: A place where people buy and eat meals that cooks make."
+        },
+        {
+          "prompt": "What does 'rental' mean in this unit?",
+          "choices": [
+            "Travelling to new places for fun or to learn about them.",
+            "A place where aeroplanes take off and land.",
+            "Something you pay to use for a short time."
+          ],
+          "answer": "Something you pay to use for a short time.",
+          "explanation": "rental: Something you pay to use for a short time."
+        },
+        {
+          "prompt": "What does 'airport' mean in this unit?",
+          "choices": [
+            "The track that trains travel along.",
+            "A place where aeroplanes take off and land.",
+            "Travelling to new places for fun or to learn about them."
+          ],
+          "answer": "A place where aeroplanes take off and land.",
+          "explanation": "airport: A place where aeroplanes take off and land."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'entrance'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "entrance is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'horizon'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "horizon is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'nation'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "nation is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "station",
+              "A place where trains or buses stop to pick up people."
+            ],
+            [
+              "capital",
+              "The main city of a country, where the government is."
+            ],
+            [
+              "museum",
+              "A building where you see old or special things and learn about them."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "office",
+              "A place where people work at desks."
+            ],
+            [
+              "neighbourhood",
+              "The area around your home."
+            ],
+            [
+              "hallway",
+              "A long path inside a building that joins rooms."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "customer",
+              "A person who buys something from a shop or business."
+            ],
+            [
+              "event",
+              "Something special that happens, like a party or a game."
+            ],
+            [
+              "equator",
+              "The imaginary line around the middle of the Earth."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does 'railroad' mean?",
+          "choices": [
+            "A big shopping centre with many stores under one roof.",
+            "A building where you see old or special things and learn about them.",
+            "A country and all the people who live in it.",
+            "The track that trains travel along."
+          ],
+          "answer": "The track that trains travel along.",
+          "explanation": "The railroad runs all the way across the country."
+        },
+        {
+          "prompt": "What does 'capital' mean?",
+          "choices": [
+            "A big shopping centre with many stores under one roof.",
+            "A building where you see old or special things and learn about them.",
+            "A place where people buy and eat meals that cooks make.",
+            "The main city of a country, where the government is."
+          ],
+          "answer": "The main city of a country, where the government is.",
+          "explanation": "Nairobi is the capital of Kenya."
+        },
+        {
+          "prompt": "What does 'nation' mean?",
+          "choices": [
+            "A big shopping centre with many stores under one roof.",
+            "A country and all the people who live in it.",
+            "A place where people buy and eat meals that cooks make.",
+            "A place where people work at desks."
+          ],
+          "answer": "A country and all the people who live in it.",
+          "explanation": "Kenya is a proud nation with beautiful places."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'tourism' mean?",
+          "choices": [
+            "A place where trains or buses stop to pick up people.",
+            "The main city of a country, where the government is.",
+            "The track that trains travel along.",
+            "Travelling to new places for fun or to learn about them."
+          ],
+          "answer": "Travelling to new places for fun or to learn about them.",
+          "explanation": "Tourism brings many visitors to the coast every summer."
+        },
+        {
+          "prompt": "What does 'airport' mean?",
+          "choices": [
+            "A country and all the people who live in it.",
+            "A place where aeroplanes take off and land.",
+            "The main city of a country, where the government is.",
+            "The track that trains travel along."
+          ],
+          "answer": "A place where aeroplanes take off and land.",
+          "explanation": "We waited at the airport for our flight to Nairobi."
+        },
+        {
+          "prompt": "What does 'station' mean?",
+          "choices": [
+            "A building where you see old or special things and learn about them.",
+            "A country and all the people who live in it.",
+            "A place where trains or buses stop to pick up people.",
+            "The main city of a country, where the government is."
+          ],
+          "answer": "A place where trains or buses stop to pick up people.",
+          "explanation": "We waited at the station for the morning train."
+        }
+      ]
+    }
+  ]
+}

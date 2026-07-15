@@ -59,7 +59,7 @@
       showStatusRow: true,
       managedOnlyStatusRow: false, // usually false; status row is OK for all, but "Managed Practice Steps" label will adapt
       managedOnlyStartDialog: true,
-      unmanagedHideStepper: true,
+      unmanagedHideStepper: false,
       unmanagedHideProgressBadges: true,
       headerMode: "auto", // "auto" | "minimal" | "full"
       aboutLabel: cfg.aboutLabel || "", // e.g. "About Tanween"

@@ -144,9 +144,12 @@ function pqwm_can_view_material(stdClass $material, int $userid): bool {
         return true;
     }
     $guardianlinks = [];
+    $guardianparams = [];
     foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
         if (pqh_table_exists_safe($table)) {
-            $guardianlinks[] = "EXISTS (SELECT 1 FROM {{$table}} gl WHERE gl.studentid = a.targetid AND gl.guardianid = :guardianid)";
+            $paramname = 'guardianid' . count($guardianlinks);
+            $guardianlinks[] = "EXISTS (SELECT 1 FROM {{$table}} gl WHERE gl.studentid = a.targetid AND gl.guardianid = :{$paramname})";
+            $guardianparams[$paramname] = $userid;
         }
     }
     if (!$guardianlinks) {
@@ -165,8 +168,7 @@ function pqwm_can_view_material(stdClass $material, int $userid): bool {
             'materialid' => $materialid,
             'targettype' => 'student',
             'status' => 'active',
-            'guardianid' => $userid,
-        ]
+        ] + $guardianparams
     );
 }
 

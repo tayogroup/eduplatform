@@ -35,7 +35,7 @@ Each series card now shows recent communication audit rows:
 - `notification_skipped`
 - `series_change_notifications_processed`
 - `series_cancel_notifications_processed`
-- `series_single_session_cancel_notifications_processed`
+- `series_single_cancel_notice`
 
 This gives admin/teacher staff a quick operational view without opening phpMyAdmin.
 
@@ -65,4 +65,3 @@ Optional verification SQL:
 5. Cancel one future session and confirm notifications are processed.
 6. Run `verify_live_series_notifications.sql` in phpMyAdmin.
 7. Confirm audit rows show `notification_sent`, `notification_skipped`, or `notification_failed`.
-

@@ -1,0 +1,509 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 2,
+  "unit": 9,
+  "unitId": "eng-g02-t03-u09",
+  "title": "Let's Explore the City! Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A building where books are kept to read or borrow.",
+          "choices": [
+            "library",
+            "shopping center",
+            "ferry"
+          ],
+          "answer": "library",
+          "explanation": "library: A building where books are kept to read or borrow."
+        },
+        {
+          "prompt": "Which word means: An aircraft that can fly straight up and hover.",
+          "choices": [
+            "library",
+            "shopping center",
+            "helicopter"
+          ],
+          "answer": "helicopter",
+          "explanation": "helicopter: An aircraft that can fly straight up and hover."
+        },
+        {
+          "prompt": "Which word means: A reptile with a hard shell.",
+          "choices": [
+            "shopping center",
+            "turtle",
+            "library"
+          ],
+          "answer": "turtle",
+          "explanation": "turtle: A reptile with a hard shell."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A train that runs below the city streets.",
+          "answer": "underground"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A drawing that shows where places are.",
+          "answer": "map"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Very impressive or surprising.",
+          "answer": "amazing"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "books.",
+            "borrow",
+            "to",
+            "library",
+            "the",
+            "to",
+            "go",
+            "I"
+          ],
+          "answer": "I go to the library to borrow books."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "river.",
+            "the",
+            "across",
+            "ferry",
+            "the",
+            "took",
+            "We"
+          ],
+          "answer": "We took the ferry across the river."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "helicopter.",
+            "a",
+            "from",
+            "city",
+            "the",
+            "saw",
+            "We"
+          ],
+          "answer": "We saw the city from a helicopter."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which word means: The many cars and vehicles moving on the roads.",
+          "choices": [
+            "traffic",
+            "shopping center",
+            "underground",
+            "ferry"
+          ],
+          "answer": "traffic",
+          "explanation": "traffic: The many cars and vehicles moving on the roads. There is a lot of traffic in the city center."
+        },
+        {
+          "prompt": "What type of word is 'helicopter'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "helicopter: An aircraft that can fly straight up and hover. We saw the city from a helicopter."
+        },
+        {
+          "prompt": "We take the ____ to school every morning.",
+          "choices": [
+            "bus",
+            "ferry",
+            "Ferris wheel",
+            "market"
+          ],
+          "answer": "bus",
+          "explanation": "bus: A large vehicle that carries many people. We take the bus to school every morning."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'underground'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "We took the underground to the museum."
+        },
+        {
+          "prompt": "We took the ____ across the river.",
+          "choices": [
+            "ferry",
+            "library",
+            "shopping center",
+            "underground"
+          ],
+          "answer": "ferry",
+          "explanation": "We took the ferry across the river."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "Ferris wheel",
+            "Freriswheel",
+            "Ferriswhee",
+            "Ferriswheell"
+          ],
+          "answer": "Ferris wheel",
+          "explanation": "We saw the whole city from the Ferris wheel."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Talk About City Places",
+          "target": "This is a ______."
+        },
+        {
+          "prompt": "Speaking Game — Mystery Animal",
+          "target": "I am thinking of an animal. It is ______ and ______."
+        },
+        {
+          "prompt": "Speaking 5 - Aquarium Expert",
+          "target": "Describe three sea animals and state two true facts about each."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "light.",
+            "traffic",
+            "the",
+            "to",
+            "ahead",
+            "straight",
+            "Walk"
+          ],
+          "answer": "Walk straight ahead to the traffic light."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shell.",
+            "its",
+            "into",
+            "head",
+            "its",
+            "pulled",
+            "turtle",
+            "The"
+          ],
+          "answer": "The turtle pulled its head into its shell."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "animals.",
+            "clever",
+            "very",
+            "are",
+            "Octopuses"
+          ],
+          "answer": "Octopuses are very clever animals."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'map' mean in this unit?",
+          "choices": [
+            "A drawing that shows where places are.",
+            "A building where books are kept to read or borrow.",
+            "A large building with many shops inside."
+          ],
+          "answer": "A drawing that shows where places are.",
+          "explanation": "map: A drawing that shows where places are."
+        },
+        {
+          "prompt": "What does 'amazing' mean in this unit?",
+          "choices": [
+            "A building where books are kept to read or borrow.",
+            "A large building with many shops inside.",
+            "Very impressive or surprising."
+          ],
+          "answer": "Very impressive or surprising.",
+          "explanation": "amazing: Very impressive or surprising."
+        },
+        {
+          "prompt": "What does 'shopping center' mean in this unit?",
+          "choices": [
+            "A boat that carries people across water.",
+            "A large building with many shops inside.",
+            "A building where books are kept to read or borrow."
+          ],
+          "answer": "A large building with many shops inside.",
+          "explanation": "shopping center: A large building with many shops inside."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'octopus'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "octopus is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'huge'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "huge is used as a adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'market'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "market is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "underground",
+              "A train that runs below the city streets."
+            ],
+            [
+              "Ferris wheel",
+              "A big wheel at a park that you ride for fun."
+            ],
+            [
+              "helicopter",
+              "An aircraft that can fly straight up and hover."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "map",
+              "A drawing that shows where places are."
+            ],
+            [
+              "aquarium",
+              "A building where sea animals are kept for people to see."
+            ],
+            [
+              "penguin",
+              "A black-and-white bird that swims but cannot fly."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "amazing",
+              "Very impressive or surprising."
+            ],
+            [
+              "clever",
+              "Quick to learn or understand."
+            ],
+            [
+              "scary",
+              "Making you feel afraid."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "We took the ____ across the river.",
+          "choices": [
+            "ferry",
+            "library",
+            "shopping center",
+            "underground"
+          ],
+          "answer": "ferry",
+          "explanation": "We took the ferry across the river."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "Ferris wheel",
+            "Freriswheel",
+            "Ferriswhee",
+            "Ferriswheell"
+          ],
+          "answer": "Ferris wheel",
+          "explanation": "We saw the whole city from the Ferris wheel."
+        },
+        {
+          "prompt": "Which word means: A busy place where people buy and sell things.",
+          "choices": [
+            "market",
+            "library",
+            "shopping center",
+            "underground"
+          ],
+          "answer": "market",
+          "explanation": "market: A busy place where people buy and sell things. Mum buys fruit and fish at the market."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'library' mean?",
+          "choices": [
+            "A building where books are kept to read or borrow.",
+            "A large building with many shops inside.",
+            "A train that runs below the city streets.",
+            "A boat that carries people across water."
+          ],
+          "answer": "A building where books are kept to read or borrow.",
+          "explanation": "I go to the library to borrow books."
+        },
+        {
+          "prompt": "Which word means: A large building with many shops inside.",
+          "choices": [
+            "shopping center",
+            "library",
+            "underground",
+            "ferry"
+          ],
+          "answer": "shopping center",
+          "explanation": "We bought new clothes at the shopping center."
+        },
+        {
+          "prompt": "What type of word is 'underground'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "We took the underground to the museum."
+        }
+      ]
+    }
+  ]
+}

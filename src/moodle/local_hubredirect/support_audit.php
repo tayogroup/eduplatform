@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/accesslib.php');
+$prequranlocallib = $CFG->dirroot . '/local/prequran/locallib.php';
+if (file_exists($prequranlocallib)) {
+    require_once($prequranlocallib);
+}
 require_login();
 
 $context = context_system::instance();
@@ -29,22 +33,15 @@ function pqsa_ready(): bool {
         && $manager->table_exists('local_prequran_support_policy');
 }
 
-function pqsa_policy(int $workspaceid): array {
-    global $DB;
-    $policy = [
+function pqsa_policy(int $workspaceid, int $consumerid): array {
+    if (function_exists('local_prequran_support_effective_policy')) {
+        return local_prequran_support_effective_policy($workspaceid, $consumerid);
+    }
+    return [
         'async_enabled' => (int)get_config('local_prequran', 'support_async_enabled') === 1,
         'livechat_enabled' => (int)get_config('local_prequran', 'support_livechat_enabled') === 1,
         'source' => 'global',
     ];
-    if ($workspaceid > 0 && $DB->get_manager()->table_exists('local_prequran_support_policy')) {
-        $record = $DB->get_record('local_prequran_support_policy', ['workspaceid' => $workspaceid, 'status' => 'active'], '*', IGNORE_MULTIPLE);
-        if ($record) {
-            $policy['async_enabled'] = !empty($record->async_enabled);
-            $policy['livechat_enabled'] = !empty($record->livechat_enabled);
-            $policy['source'] = 'workspace';
-        }
-    }
-    return $policy;
 }
 
 function pqsa_where(int $workspaceid, int $ticketid, int $conversationid, string $action, bool $canrestricted, array &$params): string {
@@ -143,7 +140,7 @@ if ($ready) {
        ORDER BY c DESC, action ASC",
         $workspaceid > 0 ? ['workspaceid' => $workspaceid] : []
     );
-    $policy = pqsa_policy($workspaceid);
+    $policy = pqsa_policy($workspaceid, (int)($consumercontext->consumerid ?? 0));
     $open = (int)$DB->count_records_select('local_prequran_support_ticket', "status NOT IN ('resolved', 'closed')" . ($workspaceid > 0 ? ' AND workspaceid = ?' : ''), $workspaceid > 0 ? [$workspaceid] : []);
     $breached = (int)$DB->count_records_select('local_prequran_support_ticket', "status NOT IN ('resolved', 'closed') AND sla_resolution_due > 0 AND sla_resolution_due < ?" . ($workspaceid > 0 ? ' AND workspaceid = ?' : ''), $workspaceid > 0 ? [time(), $workspaceid] : [time()]);
     $restricted = (int)$DB->count_records_select('local_prequran_support_ticket', "visibility = 'restricted'" . ($workspaceid > 0 ? ' AND workspaceid = ?' : ''), $workspaceid > 0 ? [$workspaceid] : []);

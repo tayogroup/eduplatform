@@ -130,6 +130,7 @@ function contentType(filePath) {
     '.mp3': 'audio/mpeg',
     '.mp4': 'video/mp4',
     '.png': 'image/png',
+    '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     '.svg': 'image/svg+xml',
     '.webp': 'image/webp',
   }[ext] || 'application/octet-stream';

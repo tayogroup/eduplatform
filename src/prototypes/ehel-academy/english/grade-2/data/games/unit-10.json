@@ -1,0 +1,512 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 2,
+  "unit": 10,
+  "unitId": "eng-g02-t03-u10",
+  "title": "My English World: Grade 2 Capstone Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: The word that a person is called.",
+          "choices": [
+            "name",
+            "head",
+            "butterfly"
+          ],
+          "answer": "name",
+          "explanation": "name: The word that a person is called."
+        },
+        {
+          "prompt": "Which word means: A person whose job is to clean windows.",
+          "choices": [
+            "name",
+            "head",
+            "window cleaner"
+          ],
+          "answer": "window cleaner",
+          "explanation": "window cleaner: A person whose job is to clean windows."
+        },
+        {
+          "prompt": "Which word means: The part at the end of your arm, with fingers.",
+          "choices": [
+            "head",
+            "hand",
+            "name"
+          ],
+          "answer": "hand",
+          "explanation": "hand: The part at the end of your arm, with fingers."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person who lives near you.",
+          "answer": "neighbour"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person you work or play with.",
+          "answer": "partner"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The star that gives Earth light and heat in the day.",
+          "answer": "sun"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "name?",
+            "your",
+            "is",
+            "What",
+            "Samira.",
+            "is",
+            "name",
+            "My"
+          ],
+          "answer": "My name is Samira. What is your name?"
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "shade.",
+            "us",
+            "gives",
+            "and",
+            "air",
+            "the",
+            "clean",
+            "helps",
+            "trees",
+            "Planting"
+          ],
+          "answer": "Planting trees helps clean the air and gives us shade."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "field.",
+            "the",
+            "in",
+            "playing",
+            "are",
+            "children",
+            "Twenty"
+          ],
+          "answer": "Twenty children are playing in the field."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which sentence describes the past?",
+          "choices": [
+            "I wrote a poem.",
+            "I will write a poem.",
+            "I am writing a poem.",
+            "I write poems."
+          ],
+          "answer": "I wrote a poem.",
+          "explanation": "Wrote tells about a completed past action."
+        },
+        {
+          "prompt": "Which sentence states a future goal?",
+          "choices": [
+            "I will read longer stories.",
+            "I read a story.",
+            "I am reading now.",
+            "I wrote a story."
+          ],
+          "answer": "I will read longer stories.",
+          "explanation": "Will expresses a future action or goal."
+        },
+        {
+          "prompt": "What is the best feedback?",
+          "choices": [
+            "Your details are clear; add punctuation to the last sentence.",
+            "It is bad.",
+            "Change everything.",
+            "I do not like it."
+          ],
+          "answer": "Your details are clear; add punctuation to the last sentence.",
+          "explanation": "Useful feedback is kind, specific and actionable."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "What six earlier pieces did Samira find in her folder?",
+          "choices": [
+            "Her welcome card, neighbourhood poem, firefighter drawing, sky journal, measurement table, garden promise and city map are named;...",
+            "She introduced herself and wrote about a neighbour, healthy habit, plant, home and city place, using pictures, labels and...",
+            "Use the kind, specific suggestion to improve the project."
+          ],
+          "answer": "Her welcome card, neighbourhood poem, firefighter drawing, sky journal, measurement table, garden promise and city map are named;...",
+          "explanation": "Review the unit text evidence: Her welcome card, neighbourhood poem, firefighter drawing, sky journal, measurement table, garden promise and city map are named;..."
+        },
+        {
+          "prompt": "What was Samira's next English goal?",
+          "choices": [
+            "She introduced herself and wrote about a neighbour, healthy habit, plant, home and city place, using pictures, labels and...",
+            "Reading aloud helps them notice unclear language, missing words and punctuation before submitting.",
+            "She wanted to read longer stories by herself."
+          ],
+          "answer": "She wanted to read longer stories by herself.",
+          "explanation": "Review the unit text evidence: She wanted to read longer stories by herself."
+        },
+        {
+          "prompt": "Why should learners read every page aloud?",
+          "choices": [
+            "Her plant page, because she used labels and complete sentences.",
+            "Reading aloud helps them notice unclear language, missing words and punctuation before submitting.",
+            "She remembered to breathe and speak slowly."
+          ],
+          "answer": "Reading aloud helps them notice unclear language, missing words and punctuation before submitting.",
+          "explanation": "Review the unit text evidence: Reading aloud helps them notice unclear language, missing words and punctuation before submitting."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Introduce My English World",
+          "target": "Give a 30-second introduction with your name, project title and the four earlier units you selected."
+        },
+        {
+          "prompt": "Speaking 3 - Read Aloud with Expression",
+          "target": "Planting trees helps clean the air and gives us shade."
+        },
+        {
+          "prompt": "Speaking 5 - Rehearse and Answer Questions",
+          "target": "Give a two-minute rehearsal, then answer one What question and one How question from a partner."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "eat.",
+            "I",
+            "before",
+            "hands",
+            "my",
+            "wash",
+            "I"
+          ],
+          "answer": "I wash my hands before I eat."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "please?",
+            "me,",
+            "for",
+            "name",
+            "your",
+            "spell",
+            "you",
+            "Can"
+          ],
+          "answer": "Can you spell your name for me, please?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "thing.",
+            "one",
+            "than",
+            "more",
+            "for",
+            "are",
+            "there",
+            "Use"
+          ],
+          "answer": "Use there are for more than one thing."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'light' mean in this unit?",
+          "choices": [
+            "The brightness that lets us see things.",
+            "The word that a person is called.",
+            "The top part of your body, with your eyes, ears, nose and mouth."
+          ],
+          "answer": "The brightness that lets us see things.",
+          "explanation": "light: The brightness that lets us see things."
+        },
+        {
+          "prompt": "What does 'thirty' mean in this unit?",
+          "choices": [
+            "The word that a person is called.",
+            "The top part of your body, with your eyes, ears, nose and mouth.",
+            "The number 30."
+          ],
+          "answer": "The number 30.",
+          "explanation": "thirty: The number 30."
+        },
+        {
+          "prompt": "What does 'head' mean in this unit?",
+          "choices": [
+            "An insect with large, colourful wings that flies from flower to flower.",
+            "The top part of your body, with your eyes, ears, nose and mouth.",
+            "The word that a person is called."
+          ],
+          "answer": "The top part of your body, with your eyes, ears, nose and mouth.",
+          "explanation": "head: The top part of your body, with your eyes, ears, nose and mouth."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'shopping center'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "shopping center is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'spell'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "spell is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'house'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "house is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "head",
+              "The top part of your body, with your eyes, ears, nose and mouth."
+            ],
+            [
+              "butterfly",
+              "An insect with large, colourful wings that flies from flower to flower."
+            ],
+            [
+              "library",
+              "A building where books are kept to read or borrow."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "light",
+              "The brightness that lets us see things."
+            ],
+            [
+              "watering",
+              "Giving water to plants to help them grow."
+            ],
+            [
+              "like",
+              "To enjoy something or think it is good."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "thirty",
+              "The number 30."
+            ],
+            [
+              "hut",
+              "A small, simple house with only one or two rooms."
+            ],
+            [
+              "reporter",
+              "A person who finds out news and writes stories about it."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "There ___ three pictures beside the booklet.",
+          "choices": [
+            "are",
+            "is",
+            "am",
+            "was"
+          ],
+          "answer": "are",
+          "explanation": "Use there are for more than one thing."
+        },
+        {
+          "prompt": "Which sentence gives a correct comparison?",
+          "choices": [
+            "The metre is longer than the centimetre.",
+            "The metre is long than the centimetre.",
+            "The metre longer the centimetre.",
+            "The metre is longest than."
+          ],
+          "answer": "The metre is longer than the centimetre.",
+          "explanation": "Longer than is the correct comparison form."
+        },
+        {
+          "prompt": "Which sentence describes an action happening now?",
+          "choices": [
+            "Selma is reading.",
+            "Selma read yesterday.",
+            "Selma will read.",
+            "Selma likes books."
+          ],
+          "answer": "Selma is reading.",
+          "explanation": "Is plus reading describes an action happening now."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "This is Samira. ___ is presenting her booklet.",
+          "choices": [
+            "She",
+            "He",
+            "They",
+            "We"
+          ],
+          "answer": "She",
+          "explanation": "Use she for one girl or woman."
+        },
+        {
+          "prompt": "The learners ___ listening carefully.",
+          "choices": [
+            "are",
+            "is",
+            "am",
+            "was"
+          ],
+          "answer": "are",
+          "explanation": "Use are with the plural subject learners."
+        },
+        {
+          "prompt": "Which question asks about a person?",
+          "choices": [
+            "Who helped you?",
+            "What is your topic?",
+            "Where is the book?",
+            "How did you revise?"
+          ],
+          "answer": "Who helped you?",
+          "explanation": "Who asks about a person."
+        }
+      ]
+    }
+  ]
+}

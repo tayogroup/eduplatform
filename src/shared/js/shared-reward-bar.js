@@ -6,13 +6,72 @@
       getCompletedSteps: () => 0,
       getTotalStars: () => 0,
       getCompletedUnits: () => 0,
-      getFocusState: () => ({ cls: 'focus-keep', text: 'Try to Focus' })
+      getFocusState: () => ({ cls: 'focus-keep', text: 'Try to Focus' }),
+      getCurrentStepId: () => ''
     }, config || {});
 
     let ready = false;
+    let matchStats = null;
+    let matchListenerBound = false;
+
+    function escapeHtml(value){
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function bindMatchListener(){
+      if (matchListenerBound) return;
+      matchListenerBound = true;
+      try{
+        window.addEventListener('pq-match-progress', function(event){
+          try{
+            const detail = event && event.detail ? event.detail : null;
+            matchStats = detail && detail.active !== false ? detail : null;
+            render(false);
+          }catch(_e){}
+        });
+      }catch(_e){}
+    }
+
+    function buildMatchTrackerHtml(){
+      try{
+        const stepId = String(cfg.getCurrentStepId ? cfg.getCurrentStepId() : '').toLowerCase();
+        if (stepId && stepId !== 'match') return '';
+        if (!matchStats || matchStats.active === false) return '';
+
+        const total = Math.max(0, Number(matchStats.total || 0));
+        const correct = Math.max(0, Number(matchStats.correct || 0));
+        const percent = Math.max(0, Math.min(100, Number(matchStats.percent || 0)));
+        const game = Math.max(1, Number(matchStats.game || 1));
+        const maxGames = Math.max(0, Number(matchStats.maxGames || 0));
+        const remainingCorrect = Math.max(0, Number(matchStats.remainingCorrect || 0));
+        const remainingItems = Math.max(0, Number(matchStats.remainingItems || 0));
+        const lives = Math.max(0, Number(matchStats.lives || 0));
+        const gameText = maxGames > 0 ? (game + '/' + maxGames) : String(game);
+        const needText = remainingCorrect > 0 ? String(remainingCorrect) : 'Done';
+
+        return '' +
+          '<span class="pq-stars-divider pq-match-divider" aria-hidden="true"></span>' +
+          '<span class="pq-match-tracker" aria-label="Match progress">' +
+            '<span class="pq-match-tracker__title">Match</span>' +
+            '<span class="pq-match-tracker__item"><span>Game</span><strong>' + escapeHtml(gameText) + '</strong></span>' +
+            '<span class="pq-match-tracker__item"><span>Correct</span><strong>' + correct + '/' + total + ' (' + percent + '%)</strong></span>' +
+            '<span class="pq-match-tracker__item"><span>Need</span><strong>' + escapeHtml(needText) + '</strong></span>' +
+            '<span class="pq-match-tracker__item"><span>Left</span><strong>' + remainingItems + '</strong></span>' +
+            '<span class="pq-match-tracker__item"><span>Lives</span><strong>' + lives + '</strong></span>' +
+          '</span>';
+      }catch(_e){
+        return '';
+      }
+    }
 
     function ensureUI(){
       try{
+        bindMatchListener();
         if (ready && document.getElementById('pqStepRewardStars')) return;
         const host = document.getElementById(cfg.hostId);
         if (!host) return;
@@ -79,6 +138,27 @@
 #pqStepRewardStars .pq-total-count .pq-total-star{
   font-size:1rem;line-height:1;
 }
+#pqStepRewardStars .pq-match-tracker{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;
+  min-height:34px;padding:6px 10px;border-radius:16px;
+  background:linear-gradient(180deg,#eef8ff 0%,#d8edff 100%);
+  border:1px solid rgba(48,112,171,.18);
+  color:#123a5c;font-weight:900;
+  box-shadow:0 5px 12px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.55);
+}
+#pqStepRewardStars .pq-match-tracker__title{
+  padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.72);
+  color:#0f4b7d;font-size:.82rem;text-transform:uppercase;
+}
+#pqStepRewardStars .pq-match-tracker__item{
+  display:inline-flex;align-items:center;gap:4px;white-space:nowrap;font-size:.82rem;
+}
+#pqStepRewardStars .pq-match-tracker__item span{
+  color:#52708a;font-size:.76rem;
+}
+#pqStepRewardStars .pq-match-tracker__item strong{
+  color:#123a5c;font-size:.86rem;
+}
 #pqStepRewardStars .pq-focus-label{
   display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
   min-height:34px;padding:7px 14px;border-radius:999px;
@@ -131,7 +211,8 @@
   #pqStepRewardStars{width:100%;justify-content:center}
   #pqStepRewardStars .pq-stars-divider{display:none}
   #pqStepRewardStars .pq-stars-group,
-  #pqStepRewardStars .pq-total-group{width:100%;justify-content:center}
+  #pqStepRewardStars .pq-total-group,
+  #pqStepRewardStars .pq-match-tracker{width:100%;justify-content:center}
 }
 `;
           document.head.appendChild(st);
@@ -199,6 +280,7 @@
             '<span class="pq-group-label"><span class="pq-group-label__en">Units Done</span><span class="pq-group-label__ar" dir="rtl">المكتملة</span></span>' +
             '<span class="pq-total-count">' + completedUnits + ' <span class="pq-total-star" aria-hidden="true">📘</span></span>' +
           '</span>' +
+          buildMatchTrackerHtml() +
           '<span class="pq-focus-label ' + focus.cls + '"><span class="pq-focus-label__en">' + focus.text + '</span><span class="pq-focus-label__ar" dir="rtl">' + focusAr + '</span></span>';
 
         const newLabel = wrap.querySelector('.pq-focus-label');

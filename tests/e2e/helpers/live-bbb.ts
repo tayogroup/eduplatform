@@ -381,7 +381,7 @@ export class LiveBbbOperationsPage {
         ].join('\n'),
       );
     }
-    expect(bodyText).toMatch(/Opening the BBB classroom|Continue to Class|Please wait while the Live Session is being loaded/i);
+    expect(bodyText).toMatch(/Opening the BBB classroom|Opening the live classroom|Continue to Class|Please wait while the Live Session is being loaded/i);
     expect(bodyText).toContain(title);
     return {
       title,

@@ -130,6 +130,106 @@ function pqh_table_has_field_safe(string $table, string $field): bool {
     return array_key_exists($field, $columns);
 }
 
+function pqh_active_teacher_profile_models(int $userid): array {
+    global $DB;
+    if ($userid <= 0 || !pqh_table_exists_safe('local_prequran_teacher_profile')
+            || !pqh_table_has_field_safe('local_prequran_teacher_profile', 'teacher_work_models')) {
+        return [];
+    }
+    $statusfilter = '';
+    $params = ['userid' => $userid];
+    if (pqh_table_has_field_safe('local_prequran_teacher_profile', 'status')) {
+        $statusfilter = ' AND LOWER(status) NOT IN (:archived, :inactive, :rejected)';
+        $params += ['archived' => 'archived', 'inactive' => 'inactive', 'rejected' => 'rejected'];
+    }
+    $storedvalues = $DB->get_fieldset_select(
+        'local_prequran_teacher_profile',
+        'teacher_work_models',
+        'userid = :userid' . $statusfilter,
+        $params
+    );
+    if (!$storedvalues) {
+        return [];
+    }
+    $aliases = [
+        'independent_teacher' => 'independent_teacher',
+        'independent teacher' => 'independent_teacher',
+        'independent teacher/tutor' => 'independent_teacher',
+        'private/internal teacher only' => 'independent_teacher',
+        'school_teacher' => 'independent_teacher',
+        'teach for one school' => 'independent_teacher',
+        'multi_school_teacher' => 'independent_teacher',
+        'teach for multiple schools' => 'independent_teacher',
+        'marketplace_teacher' => 'marketplace_teacher',
+        'marketplace teacher/tutor' => 'marketplace_teacher',
+        'marketplace_tutor' => 'marketplace_teacher',
+        'public marketplace tutor' => 'marketplace_teacher',
+    ];
+    $models = [];
+    foreach ($storedvalues as $stored) {
+        foreach (array_map('trim', explode(',', (string)$stored)) as $part) {
+            $key = strtolower((string)$part);
+            if ($key !== '' && isset($aliases[$key]) && !in_array($aliases[$key], $models, true)) {
+                $models[] = $aliases[$key];
+            }
+        }
+    }
+    return $models;
+}
+
+function pqh_has_independent_teacher_profile(int $userid): bool {
+    return in_array('independent_teacher', pqh_active_teacher_profile_models($userid), true);
+}
+
+function pqh_has_teacher_profile(int $userid): bool {
+    return pqh_active_teacher_profile_models($userid) !== [];
+}
+
+function pqh_independent_teacher_workspace_ids(int $userid): array {
+    global $DB;
+    if ($userid <= 0 || !pqh_has_independent_teacher_profile($userid)
+            || !pqh_table_exists_safe('local_prequran_teacher_profile')) {
+        return [];
+    }
+    $ids = [];
+    if (pqh_table_has_field_safe('local_prequran_teacher_profile', 'workspaceid')) {
+        $statusfilter = '';
+        $params = ['userid' => $userid, 'zeroworkspace' => 0];
+        if (pqh_table_has_field_safe('local_prequran_teacher_profile', 'status')) {
+            $statusfilter = ' AND LOWER(status) NOT IN (:archived, :inactive, :rejected)';
+            $params += ['archived' => 'archived', 'inactive' => 'inactive', 'rejected' => 'rejected'];
+        }
+        $rows = $DB->get_records_select(
+            'local_prequran_teacher_profile',
+            'userid = :userid AND workspaceid > :zeroworkspace' . $statusfilter,
+            $params,
+            'timemodified DESC, id DESC',
+            'id, workspaceid'
+        );
+        foreach ($rows as $row) {
+            $workspaceid = (int)($row->workspaceid ?? 0);
+            if ($workspaceid > 0 && pqh_consumer_context_allows_workspace(null, $workspaceid)) {
+                $ids[$workspaceid] = $workspaceid;
+            }
+        }
+    }
+    if (!$ids && pqh_table_has_field_safe('local_prequran_teacher_profile', 'consumerid')) {
+        $consumerid = (int)$DB->get_field('local_prequran_teacher_profile', 'consumerid', ['userid' => $userid], IGNORE_MISSING);
+        if ($consumerid > 0 && pqh_consumer_schema_ready()) {
+            $consumer = $DB->get_record('local_prequran_consumer', ['id' => $consumerid, 'status' => 'active'], '*', IGNORE_MISSING);
+            if ($consumer) {
+                $context = pqh_consumer_context_from_records($consumer, null);
+                foreach (pqh_consumer_context_workspace_ids($context) as $workspaceid) {
+                    if ($workspaceid > 0 && pqh_consumer_context_allows_workspace(null, $workspaceid)) {
+                        $ids[$workspaceid] = $workspaceid;
+                    }
+                }
+            }
+        }
+    }
+    return array_values($ids);
+}
+
 function pqh_account_no_value($userorid): string {
     global $DB;
 
@@ -165,10 +265,6 @@ function pqh_default_workspace_id(): int {
     if (!pqh_table_exists_safe('local_prequran_workspace')) {
         return 0;
     }
-    $workspaceid = (int)$DB->get_field('local_prequran_workspace', 'id', ['slug' => 'quraan-academy'], IGNORE_MISSING);
-    if ($workspaceid > 0) {
-        return $workspaceid;
-    }
     return (int)$DB->get_field_select(
         'local_prequran_workspace',
         'id',
@@ -203,25 +299,45 @@ function pqh_consumer_schema_ready(): bool {
         && pqh_table_exists_safe('local_prequran_consumer_domain');
 }
 
+function pqh_org_group_schema_ready(): bool {
+    return pqh_table_exists_safe('local_prequran_org_group')
+        && pqh_table_exists_safe('local_prequran_org_group_member');
+}
+
 function pqh_fallback_consumer_context(string $host = ''): stdClass {
+    global $CFG;
+    $platformhost = pqh_normalize_consumer_host((string)(parse_url((string)($CFG->wwwroot ?? ''), PHP_URL_HOST) ?: ''));
+    $supportemail = trim((string)($CFG->supportemail ?? ''));
     $context = (object)[
         'consumerid' => 0,
         'consumerslug' => 'eduplatform',
         'consumername' => 'EduPlatform',
         'consumer_type' => 'platform_foundation',
+        'institution_type' => '',
+        'faith_subcategory' => '',
+        'teaching_method' => '',
+        'operator_type' => '',
+        'website_mode' => 'hosted',
+        'externalwebsiteurl' => '',
+        'domainmanagement' => 'eduplatform_managed',
+        'portallabel' => 'Learning portal',
+        'brandingsource' => 'eduplatform_settings',
+        'intakelocation' => 'eduplatform',
+        'integrationmethod' => 'links',
+        'returnurl' => '',
         'workspaceid' => 0,
-        'domain' => $host !== '' ? $host : 'eduplatform.ai',
+        'domain' => $host !== '' ? $host : $platformhost,
         'domain_type' => 'public',
         'isprimarydomain' => 1,
         'trusted_domain' => false,
-        'supportemail' => 'support@eduplatform.ai',
+        'supportemail' => $supportemail,
         'logourl' => '',
         'themejson' => '',
         'copyjson' => '',
         'defaultpublicpath' => '/local/hubredirect/platform_landing.php',
         'defaultdashboardpath' => '/local/hubredirect/platform_dashboard.php',
         'emailfromname' => 'EduPlatform',
-        'emailreplyto' => 'support@eduplatform.ai',
+        'emailreplyto' => $supportemail,
     ];
     return $context;
 }
@@ -231,15 +347,23 @@ function pqh_consumer_context_from_records(stdClass $consumer, ?stdClass $domain
     if ($workspaceid <= 0) {
         $workspaceid = (int)($consumer->primaryworkspaceid ?? 0);
     }
-    if ($workspaceid <= 0 && (string)($consumer->slug ?? '') === 'quraan-academy') {
-        $workspaceid = pqh_default_workspace_id();
-    }
-
     return (object)[
         'consumerid' => (int)$consumer->id,
         'consumerslug' => (string)$consumer->slug,
         'consumername' => (string)$consumer->name,
         'consumer_type' => (string)($consumer->consumer_type ?? ''),
+        'institution_type' => (string)($consumer->institution_type ?? ''),
+        'faith_subcategory' => (string)($consumer->faith_subcategory ?? ''),
+        'teaching_method' => (string)($consumer->teaching_method ?? ''),
+        'operator_type' => (string)($consumer->operator_type ?? ''),
+        'website_mode' => (string)($consumer->website_mode ?? 'hosted'),
+        'externalwebsiteurl' => (string)($consumer->externalwebsiteurl ?? ''),
+        'domainmanagement' => (string)($consumer->domainmanagement ?? 'consumer_managed'),
+        'portallabel' => (string)($consumer->portallabel ?? 'Learning portal'),
+        'brandingsource' => (string)($consumer->brandingsource ?? 'eduplatform_settings'),
+        'intakelocation' => (string)($consumer->intakelocation ?? 'eduplatform'),
+        'integrationmethod' => (string)($consumer->integrationmethod ?? 'links'),
+        'returnurl' => (string)($consumer->returnurl ?? ''),
         'workspaceid' => $workspaceid,
         'domain' => $domain ? (string)$domain->domain : '',
         'domain_type' => $domain ? (string)$domain->domain_type : '',
@@ -254,6 +378,23 @@ function pqh_consumer_context_from_records(stdClass $consumer, ?stdClass $domain
         'emailfromname' => (string)($consumer->emailfromname ?? $consumer->name),
         'emailreplyto' => (string)($consumer->emailreplyto ?? $consumer->supportemail ?? ''),
     ];
+}
+
+function pqh_apply_consumer_embed_headers(stdClass $context): void {
+    $embedenabled = (string)($context->website_mode ?? '') === 'external_with_embeds'
+        || (string)($context->intakelocation ?? '') === 'embedded'
+        || (string)($context->integrationmethod ?? '') === 'embedded';
+    if (!$embedenabled) {
+        return;
+    }
+    $websiteurl = trim((string)($context->externalwebsiteurl ?? ''));
+    $scheme = strtolower((string)(parse_url($websiteurl, PHP_URL_SCHEME) ?: ''));
+    $host = pqh_normalize_consumer_host((string)(parse_url($websiteurl, PHP_URL_HOST) ?: ''));
+    if (!in_array($scheme, ['http', 'https'], true) || $host === '') {
+        return;
+    }
+    @header_remove('X-Frame-Options');
+    @header("Content-Security-Policy: frame-ancestors 'self' " . $scheme . '://' . $host, true);
 }
 
 function pqh_json_array(string $json): array {
@@ -282,18 +423,45 @@ function pqh_clean_brand_url(string $value): string {
 
 function pqh_consumer_theme(?stdClass $consumer = null): array {
     $theme = pqh_json_array((string)($consumer->themejson ?? ''));
-    $primary = (string)($theme['primary_color'] ?? '#2f6f4e');
-    $accent = (string)($theme['accent_color'] ?? '#d99a26');
-    $surface = (string)($theme['surface_color'] ?? '#f4f8fb');
+    $clean = static function(string $value, string $fallback): string {
+        return preg_match('/^#[0-9a-fA-F]{6}$/', $value) ? $value : $fallback;
+    };
+    $primary = $clean((string)($theme['primary_color'] ?? ''), '#2f6f4e');
+    $accent = $clean((string)($theme['accent_color'] ?? ''), '#d99a26');
+    $surface = $clean((string)($theme['surface_color'] ?? ''), '#f4f8fb');
+    $headerbg = $clean((string)($theme['dashboard_header_bg'] ?? ''), $primary);
+    $headertext = $clean((string)($theme['dashboard_header_text'] ?? ''), '#ffffff');
+    $pagebody = $clean((string)($theme['page_body_bg'] ?? ''), $surface);
+    $reportheader = $clean((string)($theme['report_header_bg'] ?? ''), $primary);
+    $reportheadertext = $clean((string)($theme['report_header_text'] ?? ''), '#ffffff');
+    $reportbody = $clean((string)($theme['report_body_bg'] ?? ''), '#ffffff');
     return [
-        'primary_color' => preg_match('/^#[0-9a-fA-F]{6}$/', $primary) ? $primary : '#2f6f4e',
-        'accent_color' => preg_match('/^#[0-9a-fA-F]{6}$/', $accent) ? $accent : '#d99a26',
-        'surface_color' => preg_match('/^#[0-9a-fA-F]{6}$/', $surface) ? $surface : '#f4f8fb',
+        'primary_color' => $primary,
+        'accent_color' => $accent,
+        'surface_color' => $surface,
+        'dashboard_header_bg' => $headerbg,
+        'dashboard_header_text' => $headertext,
+        'page_body_bg' => $pagebody,
+        'report_header_bg' => $reportheader,
+        'report_header_text' => $reportheadertext,
+        'report_body_bg' => $reportbody,
     ];
 }
 
 function pqh_consumer_copy(?stdClass $consumer = null): array {
     return pqh_json_array((string)($consumer->copyjson ?? ''));
+}
+
+function pqh_consumer_feature_enabled(?stdClass $consumer, string $feature, bool $default = false): bool {
+    $copy = pqh_consumer_copy($consumer);
+    $features = isset($copy['features']) && is_array($copy['features']) ? $copy['features'] : [];
+    if (array_key_exists($feature, $features)) {
+        return (bool)$features[$feature];
+    }
+    if ($feature === 'teacher_marketplace') {
+        return (string)($consumer->consumer_type ?? '') === 'marketplace';
+    }
+    return $default;
 }
 
 function pqh_consumer_hero_image_url(?stdClass $consumer = null, string $fallback = '/local/ehelhome/pix/landing-welcome.jpg'): string {
@@ -348,10 +516,52 @@ function pqh_consumer_context_by_workspace(int $workspaceid): ?stdClass {
         'primaryworkspaceid' => $workspaceid,
         'status' => 'active',
     ], '*', IGNORE_MISSING);
-    if (!$consumer) {
-        return null;
+    $context = $consumer ? pqh_consumer_context_from_records($consumer, null) : null;
+
+    $parentcontext = null;
+    if (pqh_org_group_schema_ready()) {
+        $parentconsumer = $DB->get_record_sql(
+            "SELECT c.*
+               FROM {local_prequran_org_group_member} gm
+               JOIN {local_prequran_org_group} g ON g.id = gm.groupid
+               JOIN {local_prequran_consumer} c ON c.id = g.parentconsumerid
+              WHERE gm.member_type = :membertype
+                AND gm.memberid = :workspaceid
+                AND gm.relationship_type = :relationship
+                AND gm.status = :memberstatus
+                AND g.group_type = :grouptype
+                AND g.status = :groupstatus
+                AND c.status = :consumerstatus
+           ORDER BY gm.id ASC",
+            [
+                'membertype' => 'workspace',
+                'workspaceid' => $workspaceid,
+                'relationship' => 'owned_branch',
+                'memberstatus' => 'active',
+                'grouptype' => 'owned_group',
+                'groupstatus' => 'active',
+                'consumerstatus' => 'active',
+            ],
+            IGNORE_MULTIPLE
+        );
+        if ($parentconsumer) {
+            $parentcontext = pqh_consumer_context_from_records($parentconsumer, null);
+        }
     }
-    return pqh_consumer_context_from_records($consumer, null);
+    if (!$context) {
+        if ($parentcontext) {
+            $parentcontext->workspaceid = $workspaceid;
+            $parentcontext->inherited_theme_from_consumerid = (int)($parentcontext->consumerid ?? 0);
+        }
+        return $parentcontext;
+    }
+    if ($parentcontext) {
+        $parenttheme = pqh_json_array((string)($parentcontext->themejson ?? ''));
+        $localtheme = pqh_json_array((string)($context->themejson ?? ''));
+        $context->themejson = json_encode(array_merge($parenttheme, $localtheme), JSON_UNESCAPED_SLASHES);
+        $context->inherited_theme_from_consumerid = (int)($parentcontext->consumerid ?? 0);
+    }
+    return $context;
 }
 
 function pqh_user_primary_workspace_id(int $userid): int {
@@ -438,9 +648,6 @@ function pqh_user_primary_consumer_context(int $userid): ?stdClass {
         $context = pqh_consumer_context_by_workspace($workspaceid);
         if ($context) {
             return $context;
-        }
-        if ($workspaceid === pqh_default_workspace_id()) {
-            return pqh_consumer_context_by_slug('quraan-academy');
         }
     }
 
@@ -581,6 +788,36 @@ function pqh_consumer_url(string $path, ?stdClass $context = null, array $params
     return new moodle_url($url, $params);
 }
 
+function pqh_teacher_public_slug(stdClass $teacher): string {
+    $application = json_decode((string)($teacher->application_json ?? ''), true);
+    $configured = is_array($application) ? trim((string)($application['public_profile_slug'] ?? '')) : '';
+    $name = $configured !== '' ? $configured : trim((string)($teacher->teacher_display_name ?? ''));
+    if ($name === '') {
+        $name = trim((string)($teacher->firstname ?? '') . ' ' . (string)($teacher->lastname ?? ''));
+    }
+    $name = core_text::strtolower($name);
+    $name = preg_replace('/\s+(teacher|tutor|educator|instructor)$/u', '', $name);
+    $slug = preg_replace('/[^a-z0-9]+/', '-', (string)$name);
+    $slug = trim((string)$slug, '-');
+    return $slug !== '' ? $slug : 'teacher-' . max(0, (int)($teacher->userid ?? 0));
+}
+
+function pqh_teacher_public_profile_url(stdClass $teacher, ?stdClass $context = null): moodle_url {
+    $context = $context ?: pqh_current_consumer_context();
+    if (!pqh_consumer_feature_enabled($context, 'teacher_marketplace')) {
+        return new moodle_url('/local/hubredirect/teacher_marketplace_profile.php', [
+            'teacherid' => (int)($teacher->userid ?? 0),
+            'consumer' => (string)($context->consumerslug ?? ''),
+        ]);
+    }
+    $slug = pqh_teacher_public_slug($teacher);
+    $domain = pqh_normalize_consumer_host((string)($context->domain ?? ''));
+    if ($domain === '') {
+        return new moodle_url('/teacher/' . rawurlencode($slug));
+    }
+    return new moodle_url('https://' . $domain . '/teacher/' . rawurlencode($slug));
+}
+
 function pqh_workspace_roles(): array {
     return [
         'owner' => 'Owner',
@@ -611,7 +848,7 @@ function pqh_workspace_types(): array {
 
 function pqh_user_workspaces(int $userid): array {
     global $DB;
-    if ($userid <= 0 || !pqh_table_exists_safe('local_prequran_workspace') || !pqh_table_exists_safe('local_prequran_workspace_member')) {
+    if ($userid <= 0 || !pqh_table_exists_safe('local_prequran_workspace')) {
         return [];
     }
     if (pqh_can_manage_academy_operations($userid)) {
@@ -623,17 +860,43 @@ function pqh_user_workspaces(int $userid): array {
             'id,name,slug,workspace_type,ownerid,status,plan_code'
         ));
     }
-    return array_values($DB->get_records_sql(
-        "SELECT w.id, w.name, w.slug, w.workspace_type, w.ownerid, w.status, w.plan_code,
-                wm.workspace_role, wm.status AS member_status
-           FROM {local_prequran_workspace} w
-           JOIN {local_prequran_workspace_member} wm ON wm.workspaceid = w.id
-          WHERE wm.userid = :userid
-            AND wm.status = :memberstatus
-            AND w.status <> :archived
-       ORDER BY w.name ASC",
-        ['userid' => $userid, 'memberstatus' => 'active', 'archived' => 'archived']
-    ));
+    $workspaces = [];
+    if (pqh_table_exists_safe('local_prequran_workspace_member')) {
+        foreach ($DB->get_records_sql(
+            "SELECT w.id, w.name, w.slug, w.workspace_type, w.ownerid, w.status, w.plan_code,
+                    wm.workspace_role, wm.status AS member_status
+               FROM {local_prequran_workspace} w
+               JOIN {local_prequran_workspace_member} wm ON wm.workspaceid = w.id
+              WHERE wm.userid = :userid
+                AND wm.status = :memberstatus
+                AND w.status <> :archived
+           ORDER BY w.name ASC",
+            ['userid' => $userid, 'memberstatus' => 'active', 'archived' => 'archived']
+        ) as $workspace) {
+            $workspaces[(int)$workspace->id] = $workspace;
+        }
+    }
+    foreach (pqh_independent_teacher_workspace_ids($userid) as $workspaceid) {
+        if (isset($workspaces[$workspaceid])) {
+            continue;
+        }
+        $workspace = $DB->get_record_select(
+            'local_prequran_workspace',
+            'id = ? AND status <> ?',
+            [$workspaceid, 'archived'],
+            'id,name,slug,workspace_type,ownerid,status,plan_code',
+            IGNORE_MISSING
+        );
+        if ($workspace) {
+            $workspace->workspace_role = 'teacher';
+            $workspace->member_status = 'active';
+            $workspaces[$workspaceid] = $workspace;
+        }
+    }
+    uasort($workspaces, static function($a, $b): int {
+        return strcasecmp((string)($a->name ?? ''), (string)($b->name ?? ''));
+    });
+    return array_values($workspaces);
 }
 
 function pqh_user_workspace_role(int $userid, int $workspaceid): string {
@@ -644,20 +907,23 @@ function pqh_user_workspace_role(int $userid, int $workspaceid): string {
     if (pqh_can_manage_academy_operations($userid)) {
         return 'platform_admin';
     }
-    if (!pqh_table_exists_safe('local_prequran_workspace_member')) {
-        return '';
+    $roles = [];
+    if (pqh_table_exists_safe('local_prequran_workspace_member')) {
+        $roles = $DB->get_fieldset_select(
+            'local_prequran_workspace_member',
+            'workspace_role',
+            'userid = ? AND workspaceid = ? AND status = ?',
+            [$userid, $workspaceid, 'active']
+        );
     }
-    $roles = $DB->get_fieldset_select(
-        'local_prequran_workspace_member',
-        'workspace_role',
-        'userid = ? AND workspaceid = ? AND status = ?',
-        [$userid, $workspaceid, 'active']
-    );
     $rank = ['owner', 'admin', 'coordinator', 'registrar', 'finance', 'support', 'teacher', 'assistant_teacher', 'auditor', 'sponsor', 'parent', 'student'];
     foreach ($rank as $role) {
         if (in_array($role, $roles, true)) {
             return $role;
         }
+    }
+    if (in_array($workspaceid, pqh_independent_teacher_workspace_ids($userid), true)) {
+        return 'teacher';
     }
     return '';
 }
@@ -668,8 +934,35 @@ function pqh_user_can_manage_workspace(int $userid, int $workspaceid): bool {
 }
 
 function pqh_user_can_teach_in_workspace(int $userid, int $workspaceid): bool {
+    if ($workspaceid > 0 && in_array($workspaceid, pqh_independent_teacher_workspace_ids($userid), true)) {
+        return true;
+    }
     $role = pqh_user_workspace_role($userid, $workspaceid);
     return in_array($role, ['platform_admin', 'owner', 'admin', 'teacher', 'assistant_teacher'], true);
+}
+
+function pqh_user_can_create_live_sessions(int $userid, int $workspaceid = 0): bool {
+    global $DB;
+    if ($userid <= 0) {
+        return false;
+    }
+    if (is_siteadmin($userid) || pqh_can_manage_academy_operations($userid)) {
+        return true;
+    }
+    if (pqh_has_independent_teacher_profile($userid)) {
+        return true;
+    }
+    if ($workspaceid > 0 && pqh_user_can_teach_in_workspace($userid, $workspaceid)) {
+        return true;
+    }
+    return $DB->record_exists_sql(
+        "SELECT 1
+           FROM {role_assignments} ra
+           JOIN {role} r ON r.id = ra.roleid
+          WHERE ra.userid = :userid
+            AND r.shortname IN ('editingteacher', 'teacher', 'manager')",
+        ['userid' => $userid]
+    );
 }
 
 function pqh_workspace_role_default_caps(string $role): array {
@@ -694,6 +987,12 @@ function pqh_workspace_role_default_caps(string $role): array {
 function pqh_user_has_workspace_capability(int $userid, int $workspaceid, string $capability): bool {
     global $DB;
 
+    if ($workspaceid > 0 && in_array($workspaceid, pqh_independent_teacher_workspace_ids($userid), true)) {
+        $teachercaps = pqh_workspace_role_default_caps('teacher');
+        if (in_array('*', $teachercaps, true) || in_array($capability, $teachercaps, true)) {
+            return true;
+        }
+    }
     $role = pqh_user_workspace_role($userid, $workspaceid);
     if ($role === '') {
         return false;
@@ -718,6 +1017,26 @@ function pqh_user_has_workspace_capability(int $userid, int $workspaceid, string
     }
     $caps = pqh_workspace_role_default_caps($role);
     return in_array('*', $caps, true) || in_array($capability, $caps, true);
+}
+
+function pqh_user_allowed_workspace_ids(int $userid, string $capability): array {
+    if ($userid <= 0) {
+        return [];
+    }
+    $ids = [];
+    $teachercaps = pqh_workspace_role_default_caps('teacher');
+    if (in_array('*', $teachercaps, true) || in_array($capability, $teachercaps, true)) {
+        foreach (pqh_independent_teacher_workspace_ids($userid) as $workspaceid) {
+            $ids[] = $workspaceid;
+        }
+    }
+    foreach (pqh_user_workspaces($userid) as $workspace) {
+        $workspaceid = (int)($workspace->id ?? 0);
+        if ($workspaceid > 0 && pqh_user_has_workspace_capability($userid, $workspaceid, $capability)) {
+            $ids[] = $workspaceid;
+        }
+    }
+    return array_values(array_unique($ids));
 }
 
 function pqh_consumer_context_workspace_ids(?stdClass $context = null): array {
@@ -815,6 +1134,12 @@ function pqh_current_workspace_id(int $userid, int $requestedid = 0): int {
     global $SESSION;
     $workspaces = pqh_user_workspaces($userid);
     if (!$workspaces) {
+        foreach (pqh_independent_teacher_workspace_ids($userid) as $workspaceid) {
+            if ($workspaceid > 0) {
+                $SESSION->local_prequran_workspaceid = $workspaceid;
+                return $workspaceid;
+            }
+        }
         $fallback = pqh_can_manage_academy_operations($userid) ? pqh_default_workspace_id() : 0;
         return pqh_consumer_context_allows_workspace(null, $fallback) ? $fallback : 0;
     }
@@ -822,8 +1147,18 @@ function pqh_current_workspace_id(int $userid, int $requestedid = 0): int {
     $allowed = [];
     foreach ($workspaces as $workspace) {
         $id = (int)$workspace->id;
-        if (pqh_consumer_context_allows_workspace($consumercontext, $id)) {
+        $issoloteacherworkspace = (string)($workspace->workspace_type ?? '') === 'solo_teacher'
+            && pqh_has_independent_teacher_profile($userid)
+            && pqh_user_workspace_role($userid, $id) === 'teacher';
+        if (pqh_consumer_context_allows_workspace($consumercontext, $id) || $issoloteacherworkspace) {
             $allowed[$id] = true;
+        }
+    }
+    if (!$allowed) {
+        foreach (pqh_independent_teacher_workspace_ids($userid) as $workspaceid) {
+            if ($workspaceid > 0) {
+                $allowed[$workspaceid] = true;
+            }
         }
     }
     if (!$allowed) {
@@ -837,32 +1172,51 @@ function pqh_current_workspace_id(int $userid, int $requestedid = 0): int {
     if ($sessionid > 0 && isset($allowed[$sessionid])) {
         return $sessionid;
     }
-    $first = (int)$workspaces[0]->id;
+    $first = (int)array_key_first($allowed);
     $SESSION->local_prequran_workspaceid = $first;
     return $first;
 }
 
-function pqh_workspace_header_css(): string {
-    return <<<'CSS'
-.pqh-workspace-top{position:relative;overflow:hidden;grid-template-columns:minmax(0,1fr) auto!important;padding:22px 24px!important;border-color:rgba(105,76,45,.14)!important;border-radius:16px!important;background:linear-gradient(135deg,#eaffea 0%,#fff 58%,#fff7e7 100%)!important;box-shadow:0 16px 38px rgba(105,76,45,.08)!important}
-.pqh-workspace-title{display:flex!important;align-items:center!important;gap:14px!important;margin:0!important;color:#221b22!important;font-size:30px!important;font-weight:950!important;line-height:1.08!important;letter-spacing:0!important}
-.pqh-brand-mark{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:#2f6f4e;color:#fff;font-size:16px;font-weight:950;letter-spacing:.2px;overflow:hidden}
+function pqh_workspace_header_css(?int $workspaceid = null): string {
+    $workspaceid = $workspaceid ?? optional_param('workspaceid', 0, PARAM_INT);
+    if ($workspaceid <= 0) {
+        $workspaceid = optional_param('consumer_workspaceid', 0, PARAM_INT);
+    }
+    $consumer = $workspaceid > 0 ? pqh_consumer_context_by_workspace($workspaceid) : pqh_requested_consumer_context();
+    $theme = pqh_consumer_theme($consumer);
+    $primary = (string)$theme['primary_color'];
+    $accent = (string)$theme['accent_color'];
+    $surface = (string)$theme['surface_color'];
+    $dashboardheader = (string)$theme['dashboard_header_bg'];
+    $dashboardtext = (string)$theme['dashboard_header_text'];
+    $pagebody = (string)$theme['page_body_bg'];
+    $reportheader = (string)$theme['report_header_bg'];
+    $reportheadertext = (string)$theme['report_header_text'];
+    $reportbody = (string)$theme['report_body_bg'];
+    return <<<CSS
+:root{--pqh-brand-primary:{$primary};--pqh-brand-accent:{$accent};--pqh-brand-surface:{$surface};--pqh-dashboard-header-bg:{$dashboardheader};--pqh-dashboard-header-text:{$dashboardtext};--pqh-page-body-bg:{$pagebody};--pqh-report-header-bg:{$reportheader};--pqh-report-header-text:{$reportheadertext};--pqh-report-body-bg:{$reportbody}}
+body{background:var(--pqh-page-body-bg)!important}
+.pqh-workspace-top,.qqh-worksqace-toq{position:relative;overflow:hidden;grid-template-columns:minmax(0,1fr) auto!important;padding:22px 24px!important;border-color:rgba(105,76,45,.14)!important;border-radius:16px!important;background:linear-gradient(135deg,var(--pqh-dashboard-header-bg) 0%,var(--pqh-brand-surface) 62%,#fff 100%)!important;box-shadow:0 16px 38px rgba(105,76,45,.08)!important}
+.pqh-workspace-title,.qqh-worksqace-title{display:flex!important;align-items:center!important;gap:14px!important;margin:0!important;color:var(--pqh-dashboard-header-text)!important;font-size:30px!important;font-weight:950!important;line-height:1.08!important;letter-spacing:0!important;text-shadow:0 1px 1px rgba(0,0,0,.12)}
+.pqh-brand-mark{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:var(--pqh-brand-primary);color:#fff;font-size:16px;font-weight:950;letter-spacing:.2px;overflow:hidden}
 .pqh-brand-mark img{display:block;width:100%;height:100%;object-fit:cover}
-.pqh-workspace-sub{margin:7px 0 0!important;color:#60735f!important;font-size:14px!important;font-weight:850!important}
-.pqh-workspace-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:9px!important;flex-wrap:wrap!important}
-.pqh-workspace-actions a,.pqh-workspace-actions button{min-height:40px!important;padding:0 14px!important;border-radius:10px!important;border:1px solid rgba(23,48,68,.12)!important;background:#eef7ee!important;color:#173044!important;text-decoration:none!important;font-size:13px!important;font-weight:950!important;box-shadow:0 2px 0 rgba(23,48,68,.04)!important;cursor:pointer!important}
-.pqh-workspace-actions a:hover,.pqh-workspace-actions button:hover{background:#e1f2e1!important;border-color:rgba(47,111,78,.24)!important}
-.pqh-workspace-actions a.pqh-live-guide-link,.pqh-live-guide-link,.pqh-workspace-actions a.pqh-live-template-link,.pqh-live-template-link{background:#fff4dc!important;border-color:rgba(214,166,66,.54)!important;color:#4d3522!important}
-.pqh-workspace-actions a.pqh-live-guide-link:hover,.pqh-live-guide-link:hover,.pqh-workspace-actions a.pqh-live-template-link:hover,.pqh-live-template-link:hover{background:#ffe9b5!important;border-color:rgba(214,166,66,.78)!important;color:#4d3522!important}
-.pqh-workspace-actions a.pqh-workspace-logout{background:#d6a642!important;border-color:#d6a642!important;color:#221b22!important}
-.pqh-workspace-actions a.pqh-workspace-logout:hover{background:#c89632!important;border-color:#c89632!important}
-.pqh-workspace-actions select{min-height:40px!important;border-radius:10px!important;border:1px solid rgba(23,48,68,.18)!important;background:#fff!important;color:#173044!important;font-size:13px!important;font-weight:900!important}
-@media(max-width:760px){.pqh-workspace-top{grid-template-columns:1fr!important;padding:18px!important}.pqh-brand-mark{width:38px;height:38px}.pqh-workspace-actions{justify-content:flex-start!important}.pqh-workspace-actions a,.pqh-workspace-actions button,.pqh-workspace-actions select{width:auto;max-width:100%}}
+.pqh-workspace-sub,.qqh-worksqace-sub{margin:7px 0 0!important;color:var(--pqh-dashboard-header-text)!important;font-size:14px!important;font-weight:850!important;opacity:.9}
+.pqh-workspace-actions,.qqh-worksqace-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:9px!important;flex-wrap:wrap!important}
+.pqh-workspace-actions a,.pqh-workspace-actions button,.qqh-worksqace-actions a,.qqh-worksqace-actions button{min-height:40px!important;padding:0 14px!important;border-radius:10px!important;border:1px solid rgba(23,48,68,.12)!important;background:var(--pqh-brand-surface)!important;color:#173044!important;text-decoration:none!important;font-size:13px!important;font-weight:950!important;box-shadow:0 2px 0 rgba(23,48,68,.04)!important;cursor:pointer!important}
+.pqh-workspace-actions a:hover,.pqh-workspace-actions button:hover,.qqh-worksqace-actions a:hover,.qqh-worksqace-actions button:hover{background:#fff!important;border-color:var(--pqh-brand-primary)!important}
+.pqh-workspace-actions a.pqh-live-guide-link,.qqh-worksqace-actions a.pqh-live-guide-link,.pqh-live-guide-link,.pqh-workspace-actions a.pqh-live-template-link,.qqh-worksqace-actions a.pqh-live-template-link,.pqh-live-template-link{background:var(--pqh-brand-accent)!important;border-color:var(--pqh-brand-accent)!important;color:#221b22!important}
+.pqh-workspace-actions a.pqh-live-guide-link:hover,.qqh-worksqace-actions a.pqh-live-guide-link:hover,.pqh-live-guide-link:hover,.pqh-workspace-actions a.pqh-live-template-link:hover,.qqh-worksqace-actions a.pqh-live-template-link:hover,.pqh-live-template-link:hover{background:#fff!important;border-color:var(--pqh-brand-accent)!important;color:#221b22!important}
+.pqh-workspace-actions a.pqh-workspace-logout,.qqh-worksqace-actions a.pqh-workspace-logout{background:var(--pqh-brand-accent)!important;border-color:var(--pqh-brand-accent)!important;color:#221b22!important}
+.pqh-workspace-actions a.pqh-workspace-logout:hover,.qqh-worksqace-actions a.pqh-workspace-logout:hover{background:#fff!important;border-color:var(--pqh-brand-accent)!important}
+.pqh-workspace-actions select,.qqh-worksqace-actions select{min-height:40px!important;border-radius:10px!important;border:1px solid rgba(23,48,68,.18)!important;background:#fff!important;color:#173044!important;font-size:13px!important;font-weight:900!important}
+.pqh-report-header,.pqh-report-title,.pqirb-table thead,.pqw-table thead,.pqh-table thead{background:var(--pqh-report-header-bg)!important;color:var(--pqh-report-header-text)!important}
+.pqh-report-body,.pqh-report-card,.pqirb-card,.pqw-panel,.pqh-panel{background:var(--pqh-report-body-bg)!important}
+@media(max-width:760px){.pqh-workspace-top,.qqh-worksqace-toq{grid-template-columns:1fr!important;padding:18px!important}.pqh-brand-mark{width:38px;height:38px}.pqh-workspace-actions,.qqh-worksqace-actions{justify-content:flex-start!important}.pqh-workspace-actions a,.pqh-workspace-actions button,.pqh-workspace-actions select,.qqh-worksqace-actions a,.qqh-worksqace-actions button,.qqh-worksqace-actions select{width:auto;max-width:100%}}
 CSS;
 }
 
-function pqh_dashboard_header_css(): string {
-    return pqh_workspace_header_css();
+function pqh_dashboard_header_css(?int $workspaceid = null): string {
+    return pqh_workspace_header_css($workspaceid);
 }
 
 function pqh_live_session_explainer_media_url(): moodle_url {
@@ -873,8 +1227,42 @@ function pqh_live_session_explainer_url(): moodle_url {
     return new moodle_url('/local/hubredirect/live_session_guide.php');
 }
 
-function pqh_live_session_agenda_template_source_url(): moodle_url {
-    return new moodle_url(pqh_bunny_cdn_url('pre_quraan/live-session-templates/live-session-agenda-template.pptx'));
+function pqh_live_session_agenda_template_variant(string $variant = 'en'): array {
+    $variant = strtolower(trim($variant));
+    if (in_array($variant, ['ar', 'arabic'], true)) {
+        return [
+            'variant' => 'ar',
+            'configkey' => 'bunny_live_session_agenda_template_path_ar',
+            'path' => 'pre_quraan/live-session-templates/live-session-agenda-template-ar.pptx',
+            'filename' => 'Live Session Agenda template Arabic.pptx',
+            'localfile' => 'live-session-agenda-template-ar.pptx',
+        ];
+    }
+    return [
+        'variant' => 'en',
+        'configkey' => 'bunny_live_session_agenda_template_path',
+        'path' => 'pre_quraan/live-session-templates/live-session-agenda-template.pptx',
+        'filename' => 'Live Session Agenda template.pptx',
+        'localfile' => 'live-session-agenda-template.pptx',
+    ];
+}
+
+function pqh_live_session_agenda_template_source_url(string $variant = 'en'): moodle_url {
+    $template = pqh_live_session_agenda_template_variant($variant);
+    return new moodle_url(pqh_bunny_cdn_url((string)$template['path']));
+}
+
+function pqh_live_session_agenda_template_marker(string $variant = 'en'): string {
+    $template = pqh_live_session_agenda_template_variant($variant);
+    return 'local-template://' . (string)$template['variant'];
+}
+
+function pqh_live_session_agenda_template_from_marker(string $path): ?array {
+    $path = strtolower(trim($path));
+    if (!preg_match('#^local-template://(ar|en)$#', $path, $matches)) {
+        return null;
+    }
+    return pqh_live_session_agenda_template_variant($matches[1]);
 }
 
 function pqh_live_session_agenda_template_url(): moodle_url {
@@ -1106,6 +1494,37 @@ function pqh_fetch_from_bunny_storage(string $path, array $config): string {
     return (string)$bytes;
 }
 
+function pqh_live_session_agenda_local_template_bytes(string $filename): ?string {
+    $filename = clean_filename($filename);
+    if ($filename === '') {
+        return null;
+    }
+    $localpath = __DIR__ . '/pix/' . $filename;
+    if (!is_readable($localpath)) {
+        return null;
+    }
+    $bytes = file_get_contents($localpath);
+    return $bytes === false || $bytes === '' ? null : (string)$bytes;
+}
+
+function pqh_live_session_agenda_bytes($session): string {
+    $path = trim((string)($session->agenda_slides_path ?? ''));
+    if ($path === '') {
+        throw new invalid_parameter_exception('No agenda slides are attached to this live session yet.');
+    }
+    $localtemplate = pqh_live_session_agenda_template_from_marker($path);
+    if ($localtemplate !== null) {
+        $bytes = pqh_live_session_agenda_local_template_bytes((string)$localtemplate['localfile']);
+        if ($bytes === null) {
+            throw new invalid_parameter_exception('The local agenda template file is missing.');
+        }
+        return $bytes;
+    }
+
+    $config = pqh_bunny_storage_config('bunny_live_session_slides_prefix', 'pre_quraan/live-session-slides');
+    return pqh_fetch_from_bunny_storage($path, $config);
+}
+
 function pqh_live_session_agenda_storage_path(int $sessionid, string $filename): string {
     $config = pqh_bunny_storage_config('bunny_live_session_slides_prefix', 'pre_quraan/live-session-slides');
     $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
@@ -1182,6 +1601,23 @@ function pqh_live_session_agenda_editor_enabled(): bool {
     return trim((string)get_config('local_prequran', 'onlyoffice_document_server_url')) !== '';
 }
 
+function pqh_onlyoffice_plugins_config(): array {
+    return [
+        'autostart' => [
+            'asc.{9DC93CDB-B576-4F0C-B55E-FCC9C48DD007}',
+        ],
+        'pluginsData' => [
+            'https://onlyoffice.github.io/sdkjs-plugins/content/ai/config.json',
+            'https://onlyoffice.github.io/sdkjs-plugins/content/languagetool/config.json',
+            'https://onlyoffice.github.io/sdkjs-plugins/content/translator/config.json',
+            'https://onlyoffice.github.io/sdkjs-plugins/content/zotero/config.json',
+            'https://onlyoffice.github.io/sdkjs-plugins/content/youtube/config.json',
+            'https://onlyoffice.github.io/sdkjs-plugins/content/ocr/config.json',
+            'https://onlyoffice.github.io/sdkjs-plugins/content/drawio/config.json',
+        ],
+    ];
+}
+
 function pqh_live_session_user_can_manage_agenda($session, int $userid): bool {
     global $DB;
     if ($userid <= 0) {
@@ -1218,27 +1654,39 @@ function pqh_live_session_agenda_required_fields_ready(): bool {
     return true;
 }
 
-function pqh_attach_default_agenda_to_live_session(int $sessionid, int $userid = 0): ?stdClass {
+function pqh_attach_default_agenda_to_live_session(int $sessionid, int $userid = 0, string $variant = 'en', bool $replace = false): ?stdClass {
     global $DB;
     if ($sessionid <= 0 || !pqh_live_session_agenda_required_fields_ready()) {
         return null;
     }
     $session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING);
-    if (!$session || trim((string)($session->agenda_slides_path ?? '')) !== '') {
+    if (!$session || (!$replace && trim((string)($session->agenda_slides_path ?? '')) !== '')) {
         return $session ?: null;
     }
 
     $config = pqh_bunny_storage_config('bunny_live_session_slides_prefix', 'pre_quraan/live-session-slides');
-    $templatepath = trim((string)get_config('local_prequran', 'bunny_live_session_agenda_template_path'));
+    $template = pqh_live_session_agenda_template_variant($variant);
+    $templatepath = trim((string)get_config('local_prequran', (string)$template['configkey']));
     if ($templatepath === '') {
-        $templatepath = 'pre_quraan/live-session-templates/live-session-agenda-template.pptx';
+        $templatepath = (string)$template['path'];
     }
     $templatepath = trim(str_replace('\\', '/', $templatepath), '/');
-    $filename = 'Live Session Agenda template.pptx';
+    $filename = (string)$template['filename'];
     $mimetype = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-    $bytes = pqh_fetch_from_bunny_storage($templatepath, $config);
+    try {
+        $bytes = pqh_fetch_from_bunny_storage($templatepath, $config);
+    } catch (Throwable $e) {
+        $bytes = pqh_live_session_agenda_local_template_bytes((string)$template['localfile']);
+        if ($bytes === null) {
+            throw $e;
+        }
+    }
     $path = pqh_live_session_agenda_storage_path($sessionid, $filename);
-    pqh_upload_bytes_to_bunny_storage($path, $bytes, $mimetype, $config);
+    try {
+        pqh_upload_bytes_to_bunny_storage($path, $bytes, $mimetype, $config);
+    } catch (Throwable $e) {
+        $path = pqh_live_session_agenda_template_marker((string)$template['variant']);
+    }
 
     $session->agenda_slides_path = $path;
     $session->agenda_slides_filename = $filename;
@@ -1291,4 +1739,74 @@ function pqh_live_session_agenda_template_link(string $class = ''): string {
             'download' => 'Live Session Agenda template.pptx',
         ]
     );
+}
+
+function pqh_embedded_support_ws_token(): string {
+    global $CFG, $DB;
+
+    require_once($CFG->libdir . '/externallib.php');
+    $fallback = (string)get_config('local_prequran', 'ws_token');
+    try {
+        $service = $DB->get_record('external_services', [
+            'shortname' => 'prequran_ws',
+            'enabled' => 1,
+        ]);
+        if (!$service || !function_exists('external_generate_token_for_current_user')) {
+            return $fallback;
+        }
+        $token = external_generate_token_for_current_user($service);
+        return is_object($token) && !empty($token->token) ? (string)$token->token : $fallback;
+    } catch (Throwable $e) {
+        return $fallback;
+    }
+}
+
+function pqh_embedded_support_html(
+    int $workspaceid,
+    int $studentid,
+    int $teacherid = 0,
+    string $supporttype = 'student_helpdesk',
+    $consumercontext = null
+): string {
+    global $CFG, $USER;
+
+    $token = pqh_embedded_support_ws_token();
+    if (!in_array($supporttype, ['student_helpdesk', 'student_teacher', 'parent_teacher'], true)) {
+        $supporttype = 'student_helpdesk';
+    }
+    if (!$consumercontext) {
+        $consumercontext = pqh_current_consumer_context();
+    }
+    $consumerid = (int)($consumercontext->consumerid ?? 0);
+    $managedstudent = $workspaceid > 0
+        && pqh_user_workspace_role((int)$USER->id, $workspaceid) === 'student';
+    $context = context_system::instance();
+    $assetbase = rtrim(pqh_shared_resource_cdn_base_url(), '/') . '/pre_quraan';
+    $cachekey = 'support-livechat-20260713b';
+    $cssurl = $assetbase . '/shared/css/support.css?v=' . $cachekey;
+    $jsurl = $assetbase . '/shared/js/shared-support-panel.js?v=' . $cachekey;
+    $config = [
+        '__prequran_ws_token' => $token,
+        '__prequran_ws_endpoint' => rtrim((string)$CFG->wwwroot, '/') . '/webservice/rest/server.php',
+        '__prequran_moodle_origin' => rtrim((string)$CFG->wwwroot, '/'),
+        '__prequran_support_uid' => (int)$USER->id,
+        '__prequran_support_consumerid' => $consumerid,
+        '__prequran_support_workspaceid' => $workspaceid,
+        '__prequran_support_studentid' => $studentid,
+        '__prequran_support_teacherid' => $teacherid,
+        '__prequran_support_type' => $supporttype,
+        '__prequran_support_managed_student' => $managedstudent ? '1' : '0',
+        '__prequran_support_staff' => is_siteadmin((int)$USER->id)
+            || has_capability('local/prequran:supportviewqueue', $context),
+        '__prequran_support_can_convert' => is_siteadmin((int)$USER->id)
+            || has_capability('local/prequran:supportconvert', $context),
+    ];
+    $script = '';
+    foreach ($config as $name => $value) {
+        $script .= 'window.' . $name . '=' . json_encode($value) . ';';
+    }
+
+    return '<link rel="stylesheet" href="' . s($cssurl) . '">'
+        . '<script>' . $script . '</script>'
+        . '<script src="' . s($jsurl) . '"></script>';
 }

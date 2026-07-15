@@ -1,5 +1,5 @@
 /*
-  Pre-Quraan Alphabet runtime fragment: progress.js
+  EduPlatform Alphabet runtime fragment: progress.js
   Moodle managed-progress web services, DOM references, lecture UI, and settings/filter helpers.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -1365,7 +1365,7 @@ async function __pqHandleQaSkipStepClick(ev) {
     await __pqRefreshAfterQaSkip();
   } catch (err) {
     try {
-      console.error('[Pre-Quraan] QA skip step failed', err);
+      console.error('[EduPlatform] QA skip step failed', err);
     } catch (_e) {}
     if (await __pqTryQaSkipStepFallback(target && target.stepId)) {
       __pqNotifyQaSkipStep('Skipped this step in integration. Moodle progress will update after services are upgraded.', 'success');

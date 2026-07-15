@@ -111,12 +111,100 @@ function pqlmat_insert_document_bytes($session, string $bytes, string $filename,
     }
     require_once($locallib);
 
-    local_prequran_bbb_insert_document_bytes((string)$session->bbb_meeting_id, $bytes, $filename, true, false, $removable);
+    local_prequran_bbb_insert_document_bytes((string)$session->bbb_meeting_id, $bytes, $filename, true, false, $removable, [
+        'fitToWidth' => 'true',
+        'fitToPage' => 'true',
+    ]);
     pqlmat_audit((int)$session->id, $auditaction, $targettype, $targetid, [
         'filename' => $filename,
         'bytes' => strlen($bytes),
         'transfer' => 'embedded',
     ] + $details);
+}
+
+function pqlmat_add_query_param(string $url, string $name, string $value): string {
+    if ($url === '') {
+        return '';
+    }
+    return $url . (strpos($url, '?') === false ? '?' : '&') . rawurlencode($name) . '=' . rawurlencode($value);
+}
+
+function pqlmat_agenda_public_url($session): string {
+    $url = pqh_live_session_agenda_public_url($session);
+    if ($url === '') {
+        return '';
+    }
+    $version = max((int)($session->agenda_slides_uploadedat ?? 0), (int)($session->timemodified ?? 0), 1);
+    return pqlmat_add_query_param($url, 'v', (string)$version);
+}
+
+function pqlmat_insert_agenda_url($session, string $filename): void {
+    global $CFG;
+    if (empty($session->bbb_created) || (string)($session->status ?? '') !== 'live') {
+        pqlmat_stop('The BBB room is not live yet. Start class before swapping materials.', 'Live room not started');
+    }
+    $locallib = $CFG->dirroot . '/local/prequran/locallib.php';
+    if (!file_exists($locallib)) {
+        pqlmat_stop('The live classroom service is not ready. Please ask support to review the live-room configuration.', 'Live classroom unavailable');
+    }
+    require_once($locallib);
+    if (!function_exists('local_prequran_bbb_insert_document')) {
+        pqlmat_stop('The live classroom document service is not ready.', 'Live classroom unavailable');
+    }
+    $url = pqlmat_agenda_public_url($session);
+    if ($url === '') {
+        pqlmat_stop('The agenda deck does not have a public document URL.', 'Agenda deck unavailable');
+    }
+
+    local_prequran_bbb_insert_document((string)$session->bbb_meeting_id, $url, $filename, true, false, false, [
+        'fitToWidth' => 'true',
+        'fitToPage' => 'true',
+    ]);
+    pqlmat_audit((int)$session->id, 'bbb_agenda_restored', 'session', (int)$session->id, [
+        'filename' => $filename,
+        'transfer' => 'public_url',
+        'url' => $url,
+        'bunny_path' => trim((string)($session->agenda_slides_path ?? '')),
+    ]);
+}
+
+function pqlmat_material_public_url($material): string {
+    $url = pqh_workspace_material_public_url($material);
+    if ($url === '') {
+        return '';
+    }
+    $version = max((int)($material->timemodified ?? 0), 1);
+    return pqlmat_add_query_param($url, 'v', (string)$version);
+}
+
+function pqlmat_insert_material_url($session, $material, string $filename): void {
+    global $CFG;
+    if (empty($session->bbb_created) || (string)($session->status ?? '') !== 'live') {
+        pqlmat_stop('The BBB room is not live yet. Start class before swapping materials.', 'Live room not started');
+    }
+    $locallib = $CFG->dirroot . '/local/prequran/locallib.php';
+    if (!file_exists($locallib)) {
+        pqlmat_stop('The live classroom service is not ready. Please ask support to review the live-room configuration.', 'Live classroom unavailable');
+    }
+    require_once($locallib);
+    if (!function_exists('local_prequran_bbb_insert_document')) {
+        pqlmat_stop('The live classroom document service is not ready.', 'Live classroom unavailable');
+    }
+    $url = pqlmat_material_public_url($material);
+    if ($url === '') {
+        pqlmat_stop('Choose a PDF or PowerPoint file stored in Bunny.', 'Material unavailable');
+    }
+
+    local_prequran_bbb_insert_document((string)$session->bbb_meeting_id, $url, $filename, true, false, true, [
+        'fitToWidth' => 'true',
+        'fitToPage' => 'true',
+    ]);
+    pqlmat_audit((int)$session->id, 'bbb_material_inserted', 'workspace_material', (int)$material->id, [
+        'filename' => $filename,
+        'transfer' => 'public_url',
+        'url' => $url,
+        'bunny_path' => pqh_workspace_material_bunny_path($material),
+    ]);
 }
 
 function pqlmat_fetch_agenda_bytes($session): string {
@@ -175,10 +263,7 @@ if ($action === 'insert') {
     if ($materialid <= 0) {
         try {
             $agendafile = clean_filename((string)($session->agenda_slides_filename ?? 'Live Session Agenda template.pptx'));
-            $bytes = pqlmat_fetch_agenda_bytes($session);
-            pqlmat_insert_document_bytes($session, $bytes, $agendafile !== '' ? $agendafile : 'Live Session Agenda template.pptx', false, 'bbb_agenda_restored', 'session', $sessionid, [
-                'bunny_path' => trim((string)($session->agenda_slides_path ?? '')),
-            ]);
+            pqlmat_insert_agenda_url($session, $agendafile !== '' ? $agendafile : 'Live Session Agenda template.pptx');
             redirect($returnurl, 'Agenda restored in the live room.', 2, \core\output\notification::NOTIFY_SUCCESS);
         } catch (Throwable $e) {
             pqlmat_audit($sessionid, 'bbb_agenda_restore_failed', 'session', $sessionid, ['error' => $e->getMessage()]);
@@ -199,10 +284,7 @@ if ($action === 'insert') {
     }
     try {
         $filename = pqh_workspace_material_filename($material);
-        $bytes = pqlmat_fetch_material_bytes($material);
-        pqlmat_insert_document_bytes($session, $bytes, $filename, true, 'bbb_material_inserted', 'workspace_material', $materialid, [
-            'bunny_path' => pqh_workspace_material_bunny_path($material),
-        ]);
+        pqlmat_insert_material_url($session, $material, $filename);
         redirect($returnurl, 'Material sent to the live room.', 2, \core\output\notification::NOTIFY_SUCCESS);
     } catch (Throwable $e) {
         pqlmat_audit($sessionid, 'bbb_material_insert_failed', 'workspace_material', $materialid, ['error' => $e->getMessage()]);
@@ -239,6 +321,7 @@ echo $OUTPUT->header();
 .pqlmat-empty{padding:24px;color:#5e7280;font-size:14px;font-weight:850;text-align:center}
 .pqlmat-inline{display:inline;margin:0}
 .pqlmat-return{display:flex;justify-content:flex-end;padding:12px 14px;background:#fff}
+body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-region="footer-container"],body.pqlmat-page .logininfo,body.pqlmat-page .tool_dataprivacy,body.pqlmat-page .homelink,body.pqlmat-page .mobilelink{display:none!important}
 @media(max-width:760px){.pqlmat-wrap{padding:12px}.pqlmat-top{display:block}.pqlmat-actions{justify-content:flex-start;margin-top:12px}.pqlmat-table,.pqlmat-table tbody,.pqlmat-table tr,.pqlmat-table td{display:block;width:100%}.pqlmat-table thead{display:none}.pqlmat-table td{border-bottom:0;padding:8px 12px}.pqlmat-table tr{border-bottom:1px solid rgba(23,48,68,.1);padding:8px 0}}
 </style>
 <main class="pqlmat-wrap<?php echo $compact ? ' pqlmat-wrap--compact' : ''; ?>">
@@ -330,5 +413,55 @@ echo $OUTPUT->header();
     <?php endif; ?>
   </section>
 </main>
+<script>
+(function(){
+  var sessionId = '<?php echo (int)$sessionid; ?>';
+  var closeKey = 'pqa_live_session_closed_' + sessionId;
+  var maxSignalAgeMs = 12 * 60 * 60 * 1000;
+
+  function recentCloseSignal() {
+    try {
+      var value = parseInt(window.localStorage.getItem(closeKey) || '0', 10);
+      return value > 0 && Date.now() - value < maxSignalAgeMs;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function closeMaterials() {
+    try {
+      window.close();
+    } catch (e) {}
+    window.setTimeout(function(){
+      if (!window.closed && document.body) {
+        document.body.innerHTML = '<main class="pqlmat-wrap"><section class="pqlmat-panel"><div class="pqlmat-empty">The live session has ended. You can close this Quraan Materials window.</div></section></main>';
+      }
+    }, 300);
+  }
+
+  if (recentCloseSignal()) {
+    closeMaterials();
+    return;
+  }
+
+  window.addEventListener('storage', function(event) {
+    if (event.key === closeKey && recentCloseSignal()) {
+      closeMaterials();
+    }
+  });
+
+  window.setInterval(function(){
+    try {
+      if (window.opener && window.opener.closed) {
+        closeMaterials();
+        return;
+      }
+    } catch (e) {}
+    if (recentCloseSignal()) {
+      closeMaterials();
+    }
+  }, 1500);
+})();
+</script>
 <?php
 echo $OUTPUT->footer();

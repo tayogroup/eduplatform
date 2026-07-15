@@ -1775,7 +1775,6 @@ if (optional_param('showtoken', 0, PARAM_INT)) {
     echo "token_len=" . strlen((string)$wstoken) . "\n";
     echo "token_prefix=" . substr((string)$wstoken, 0, 6) . "\n";
     echo "token_suffix=" . substr((string)$wstoken, -6) . "\n";
-    echo "service_user=prequran_ws@ehelacademy.org\n";
     exit;
 }
 

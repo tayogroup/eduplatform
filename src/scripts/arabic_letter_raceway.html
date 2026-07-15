@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8"/>
@@ -597,7 +597,7 @@ select,.toggle{
         <section class="quiz-card">
           <div class="clue-box">
             <div class="signal" aria-hidden="true">
-              <div class="big" id="signalGlyph">؟</div>
+              <div class="big" id="signalGlyph">?</div>
               <div class="small" id="signalText">listen</div>
             </div>
             <div class="clue-copy">
@@ -654,37 +654,37 @@ select,.toggle{
 "use strict";
 
 const LETTERS = [
-  {id:"alif",letter:"ا",name:"Alif",sound:"aa",dots:0,place:"throat opening",clue:"A long open sound. Keep the mouth open and smooth.",tags:["long","open"]},
-  {id:"baa",letter:"ب",name:"Ba",sound:"b",dots:1,place:"two lips",clue:"Close both lips, then release a soft b sound.",tags:["lips","one dot below"]},
-  {id:"taa",letter:"ت",name:"Ta",sound:"t",dots:2,place:"tongue tip",clue:"Touch the tongue tip near the upper gums, then release.",tags:["tip","two dots"]},
-  {id:"thaa",letter:"ث",name:"Tha",sound:"th",dots:3,place:"tongue and teeth",clue:"Let the tongue touch the front teeth for a light th sound.",tags:["teeth","three dots"]},
-  {id:"jeem",letter:"ج",name:"Jeem",sound:"j",dots:1,place:"middle tongue",clue:"Raise the middle of the tongue for a soft j sound.",tags:["middle","dot below"]},
-  {id:"haa",letter:"ح",name:"Haa",sound:"strong h",dots:0,place:"middle throat",clue:"A stronger h from the middle of the throat.",tags:["throat","no dots"]},
-  {id:"khaa",letter:"خ",name:"Kha",sound:"kh",dots:1,place:"upper throat",clue:"A scratchy airy kh from high in the throat.",tags:["throat","one dot"]},
-  {id:"daal",letter:"د",name:"Dal",sound:"d",dots:0,place:"tongue tip",clue:"A light d tap from the tongue tip.",tags:["tip","no dots"]},
-  {id:"dhaal",letter:"ذ",name:"Dhal",sound:"dh",dots:1,place:"tongue and teeth",clue:"A voiced th-like sound with the tongue near the teeth.",tags:["teeth","one dot"]},
-  {id:"raa",letter:"ر",name:"Ra",sound:"r",dots:0,place:"tongue tip",clue:"A quick tap from the tongue tip.",tags:["tap","no dots"]},
-  {id:"zay",letter:"ز",name:"Zay",sound:"z",dots:1,place:"front tongue",clue:"A buzzing z sound near the front teeth.",tags:["buzz","one dot"]},
-  {id:"seen",letter:"س",name:"Seen",sound:"s",dots:0,place:"front tongue",clue:"A thin s sound with air moving forward.",tags:["hiss","no dots"]},
-  {id:"sheen",letter:"ش",name:"Sheen",sound:"sh",dots:3,place:"middle tongue",clue:"A wide sh sound, like asking for quiet.",tags:["air","three dots"]},
-  {id:"saad",letter:"ص",name:"Sad",sound:"heavy s",dots:0,place:"tongue tip",clue:"A fuller heavy s sound.",tags:["heavy","no dots"]},
-  {id:"daad",letter:"ض",name:"Dad",sound:"heavy d",dots:1,place:"side tongue",clue:"A heavy sound from the side of the tongue.",tags:["heavy","one dot"]},
-  {id:"taa-heavy",letter:"ط",name:"Taa",sound:"heavy t",dots:0,place:"tongue tip",clue:"A heavy t with a fuller mouth shape.",tags:["heavy","no dots"]},
-  {id:"zaa-heavy",letter:"ظ",name:"Dhaa",sound:"heavy dh",dots:1,place:"tongue and teeth",clue:"A heavy voiced th sound.",tags:["heavy","one dot"]},
-  {id:"ayn",letter:"ع",name:"Ayn",sound:"ayn",dots:0,place:"middle throat",clue:"A voiced sound squeezed gently from the middle throat.",tags:["throat","no dots"]},
-  {id:"ghayn",letter:"غ",name:"Ghayn",sound:"gh",dots:1,place:"upper throat",clue:"A voiced rough gh near the upper throat.",tags:["throat","one dot"]},
-  {id:"faa",letter:"ف",name:"Fa",sound:"f",dots:1,place:"lip and teeth",clue:"Touch lower lip to upper teeth and blow gently.",tags:["air","one dot"]},
-  {id:"qaaf",letter:"ق",name:"Qaf",sound:"deep q",dots:2,place:"back tongue",clue:"A deep pop from the very back of the tongue.",tags:["deep","two dots"]},
-  {id:"kaaf",letter:"ك",name:"Kaf",sound:"k",dots:0,place:"back tongue",clue:"A lighter k from the back tongue.",tags:["light","no dots"]},
-  {id:"laam",letter:"ل",name:"Lam",sound:"l",dots:0,place:"tongue tip",clue:"A clear l from the tongue tip.",tags:["clear","no dots"]},
-  {id:"meem",letter:"م",name:"Meem",sound:"m",dots:0,place:"two lips",clue:"Close both lips and hum through the nose.",tags:["hum","no dots"]},
-  {id:"noon",letter:"ن",name:"Noon",sound:"n",dots:1,place:"tongue tip",clue:"Touch the tongue tip and let the nose hum.",tags:["nose","one dot"]},
-  {id:"haa-soft",letter:"ه",name:"Ha",sound:"soft h",dots:0,place:"deep throat",clue:"A soft breath from deep in the throat.",tags:["breath","no dots"]},
-  {id:"waw",letter:"و",name:"Waw",sound:"w",dots:0,place:"rounded lips",clue:"Round the lips for a w sound.",tags:["round","no dots"]},
-  {id:"yaa",letter:"ي",name:"Ya",sound:"y",dots:2,place:"middle tongue",clue:"Raise the middle tongue for a y sound.",tags:["middle","two dots"]}
+  {id:"alif",letter:"?",name:"Alif",sound:"aa",dots:0,place:"throat opening",clue:"A long open sound. Keep the mouth open and smooth.",tags:["long","open"]},
+  {id:"baa",letter:"?",name:"Ba",sound:"b",dots:1,place:"two lips",clue:"Close both lips, then release a soft b sound.",tags:["lips","one dot below"]},
+  {id:"taa",letter:"?",name:"Ta",sound:"t",dots:2,place:"tongue tip",clue:"Touch the tongue tip near the upper gums, then release.",tags:["tip","two dots"]},
+  {id:"thaa",letter:"?",name:"Tha",sound:"th",dots:3,place:"tongue and teeth",clue:"Let the tongue touch the front teeth for a light th sound.",tags:["teeth","three dots"]},
+  {id:"jeem",letter:"?",name:"Jeem",sound:"j",dots:1,place:"middle tongue",clue:"Raise the middle of the tongue for a soft j sound.",tags:["middle","dot below"]},
+  {id:"haa",letter:"?",name:"Haa",sound:"strong h",dots:0,place:"middle throat",clue:"A stronger h from the middle of the throat.",tags:["throat","no dots"]},
+  {id:"khaa",letter:"?",name:"Kha",sound:"kh",dots:1,place:"upper throat",clue:"A scratchy airy kh from high in the throat.",tags:["throat","one dot"]},
+  {id:"daal",letter:"?",name:"Dal",sound:"d",dots:0,place:"tongue tip",clue:"A light d tap from the tongue tip.",tags:["tip","no dots"]},
+  {id:"dhaal",letter:"?",name:"Dhal",sound:"dh",dots:1,place:"tongue and teeth",clue:"A voiced th-like sound with the tongue near the teeth.",tags:["teeth","one dot"]},
+  {id:"raa",letter:"?",name:"Ra",sound:"r",dots:0,place:"tongue tip",clue:"A quick tap from the tongue tip.",tags:["tap","no dots"]},
+  {id:"zay",letter:"?",name:"Zay",sound:"z",dots:1,place:"front tongue",clue:"A buzzing z sound near the front teeth.",tags:["buzz","one dot"]},
+  {id:"seen",letter:"?",name:"Seen",sound:"s",dots:0,place:"front tongue",clue:"A thin s sound with air moving forward.",tags:["hiss","no dots"]},
+  {id:"sheen",letter:"?",name:"Sheen",sound:"sh",dots:3,place:"middle tongue",clue:"A wide sh sound, like asking for quiet.",tags:["air","three dots"]},
+  {id:"saad",letter:"?",name:"Sad",sound:"heavy s",dots:0,place:"tongue tip",clue:"A fuller heavy s sound.",tags:["heavy","no dots"]},
+  {id:"daad",letter:"?",name:"Dad",sound:"heavy d",dots:1,place:"side tongue",clue:"A heavy sound from the side of the tongue.",tags:["heavy","one dot"]},
+  {id:"taa-heavy",letter:"?",name:"Taa",sound:"heavy t",dots:0,place:"tongue tip",clue:"A heavy t with a fuller mouth shape.",tags:["heavy","no dots"]},
+  {id:"zaa-heavy",letter:"?",name:"Dhaa",sound:"heavy dh",dots:1,place:"tongue and teeth",clue:"A heavy voiced th sound.",tags:["heavy","one dot"]},
+  {id:"ayn",letter:"?",name:"Ayn",sound:"ayn",dots:0,place:"middle throat",clue:"A voiced sound squeezed gently from the middle throat.",tags:["throat","no dots"]},
+  {id:"ghayn",letter:"?",name:"Ghayn",sound:"gh",dots:1,place:"upper throat",clue:"A voiced rough gh near the upper throat.",tags:["throat","one dot"]},
+  {id:"faa",letter:"?",name:"Fa",sound:"f",dots:1,place:"lip and teeth",clue:"Touch lower lip to upper teeth and blow gently.",tags:["air","one dot"]},
+  {id:"qaaf",letter:"?",name:"Qaf",sound:"deep q",dots:2,place:"back tongue",clue:"A deep pop from the very back of the tongue.",tags:["deep","two dots"]},
+  {id:"kaaf",letter:"?",name:"Kaf",sound:"k",dots:0,place:"back tongue",clue:"A lighter k from the back tongue.",tags:["light","no dots"]},
+  {id:"laam",letter:"?",name:"Lam",sound:"l",dots:0,place:"tongue tip",clue:"A clear l from the tongue tip.",tags:["clear","no dots"]},
+  {id:"meem",letter:"?",name:"Meem",sound:"m",dots:0,place:"two lips",clue:"Close both lips and hum through the nose.",tags:["hum","no dots"]},
+  {id:"noon",letter:"?",name:"Noon",sound:"n",dots:1,place:"tongue tip",clue:"Touch the tongue tip and let the nose hum.",tags:["nose","one dot"]},
+  {id:"haa-soft",letter:"?",name:"Ha",sound:"soft h",dots:0,place:"deep throat",clue:"A soft breath from deep in the throat.",tags:["breath","no dots"]},
+  {id:"waw",letter:"?",name:"Waw",sound:"w",dots:0,place:"rounded lips",clue:"Round the lips for a w sound.",tags:["round","no dots"]},
+  {id:"yaa",letter:"?",name:"Ya",sound:"y",dots:2,place:"middle tongue",clue:"Raise the middle tongue for a y sound.",tags:["middle","two dots"]}
 ];
 
-const AUDIO_BASE = "https://ehelacademy.b-cdn.net/pre_quraan/lessons/lesson1/audios/adult_male_alphabet/";
+const AUDIO_BASE = "/pre_quraan/lessons/lesson1/audios/adult_male_alphabet/";
 const AUDIO_CACHE_BUST = "?v=a4";
 const LOCAL_PREVIEW = /^(localhost|127\.0\.0\.1|::1)$/i.test(window.location.hostname || "");
 const LOCAL_AUDIO_BASE = "/pre_quraan/media/lessons/alphabet/media/audio/male/";
@@ -1173,7 +1173,7 @@ function renderClue(){
   if(!item) return;
   state.clueKind = item.qKind || (state.round % 3 === 0 ? "sound" : state.round % 3 === 1 ? "mouth" : "dots");
   const cluePrefix = `Clue ${questionNumber()} of ${Math.max(state.deck.length,1)}: `;
-  els.signalGlyph.textContent = "؟";
+  els.signalGlyph.textContent = "?";
   els.signalText.textContent = state.clueKind === "sound" ? "listen" : "clue";
   if(state.clueKind === "sound"){
     els.clueTitle.textContent = cluePrefix + "Sound clue";
@@ -1523,10 +1523,10 @@ function speakFallback(text,message){
 
 function filenameCandidates(ar){
   switch(ar){
-    case "ه": return ["ه","هـ","ـه"];
-    case "و": return ["و","وـ"];
-    case "ج": return ["ج","جـ"];
-    case "خ": return ["خ","خـ"];
+    case "?": return ["?","??","??"];
+    case "?": return ["?","??"];
+    case "?": return ["?","??"];
+    case "?": return ["?","??"];
     default: return [ar];
   }
 }

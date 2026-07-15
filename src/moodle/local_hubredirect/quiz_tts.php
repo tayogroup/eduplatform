@@ -24,8 +24,6 @@ function pqh_quiz_tts_origin_allowed(string $origin): bool {
     }
 
     $allowed = array_merge($allowed, pqh_resource_allowed_origins());
-    $allowed[] = 'https://eduplatform.ai';
-    $allowed[] = 'https://app.eduplatform.ai';
     $allowed[] = 'http://127.0.0.1:4173';
     $allowed[] = 'http://localhost:4173';
 
@@ -122,7 +120,7 @@ $text = preg_replace('/\s+/', ' ', $text);
 if ($text === '') {
     pqh_quiz_tts_json_error(400, 'Missing text.');
 }
-if (core_text::strlen($text) > 650) {
+if (core_text::strlen($text) > 5000) {
     pqh_quiz_tts_json_error(400, 'Text is too long.');
 }
 
@@ -151,8 +149,15 @@ if ($apikey === '') {
 }
 
 $purpose = trim((string)($payload['purpose'] ?? ''));
+$voicespeed = 1.0;
+if ($purpose === 'ehel_math') {
+    $requestedspeed = isset($payload['speed']) && is_numeric($payload['speed']) ? (float)$payload['speed'] : 0.90;
+    $voicespeed = max(0.70, min(1.0, $requestedspeed));
+}
 $voiceid = '';
-if ($purpose === 'practice_coach') {
+if ($purpose === 'ehel_english' || $purpose === 'ehel_math' || $purpose === 'ehel_course_page') {
+    $voiceid = 'XfNU2rGpBa01ckF309OY';
+} else if ($purpose === 'practice_coach') {
     $voiceid = pqh_quiz_tts_config_value(
         'practice_coach_voice_id',
         'local_prequran_practice_coach_voice_id',
@@ -193,6 +198,7 @@ $body = json_encode([
         'stability' => 0.48,
         'similarity_boost' => 0.82,
         'style' => 0.32,
+        'speed' => $voicespeed,
         'use_speaker_boost' => true,
     ],
 ]);

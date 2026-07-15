@@ -20,6 +20,23 @@ if ($workspaceid > 0) {
 $sessionid = optional_param('sessionid', 0, PARAM_INT);
 $return = optional_param('return', '', PARAM_LOCALURL);
 $returnurl = $return !== '' ? new moodle_url($return) : new moodle_url($workspaceid > 0 ? '/local/hubredirect/live_sessions.php' : '/local/hubredirect/live_teacher.php', $urlparams);
+$templatevariant = strtolower(trim(optional_param('templatevariant', '', PARAM_ALPHA)));
+if (!in_array($templatevariant, ['ar', 'en'], true)) {
+    $templatevariant = '';
+}
+$editorlangraw = strtolower(trim(optional_param('editorlang', '', PARAM_ALPHANUMEXT)));
+$editorlangmap = [
+    'ar' => 'ar',
+    'arabic' => 'ar',
+    'ar-sa' => 'ar',
+    'en' => 'en',
+    'english' => 'en',
+    'en-us' => 'en',
+];
+$editorlang = $editorlangmap[$editorlangraw] ?? substr((string)current_language(), 0, 2);
+if (!in_array($editorlang, ['ar', 'en'], true)) {
+    $editorlang = 'en';
+}
 
 if (!pqh_table_exists_safe('local_prequran_live_session')) {
     pqh_access_denied('Live session tables are not installed.', $returnurl, 'Agenda editor unavailable');
@@ -36,9 +53,15 @@ if (!pqh_live_session_user_can_manage_agenda($session, (int)$USER->id)) {
     pqh_access_denied('Only the session teacher and academy admins can edit agenda slides.', $returnurl, 'Live-session agenda access required');
 }
 
-if (empty($session->agenda_slides_path)) {
+if ($templatevariant !== '') {
     try {
-        $session = pqh_attach_default_agenda_to_live_session($sessionid, (int)$USER->id) ?: $session;
+        $session = pqh_attach_default_agenda_to_live_session($sessionid, (int)$USER->id, $templatevariant, true) ?: $session;
+    } catch (Throwable $e) {
+        pqh_access_denied('The selected agenda template could not be prepared for online editing. Please ask support to upload the current agenda template files.', $returnurl, 'Agenda editor unavailable');
+    }
+} else if (empty($session->agenda_slides_path)) {
+    try {
+        $session = pqh_attach_default_agenda_to_live_session($sessionid, (int)$USER->id, $editorlang === 'ar' ? 'ar' : 'en') ?: $session;
     } catch (Throwable $e) {
         pqh_access_denied('The agenda template could not be prepared for online editing. Please ask support to review the agenda template storage setup.', $returnurl, 'Agenda editor unavailable');
     }
@@ -64,17 +87,22 @@ body.pqh-agenda-editor-page #page-footer,
 body.pqh-agenda-editor-page .drawer,
 body.pqh-agenda-editor-page .drawer-toggles,
 body.pqh-agenda-editor-page .block-region{display:none!important}
+html:has(body.pqh-agenda-editor-page),
+body.pqh-agenda-editor-page{height:100%;overflow:hidden!important}
 body.pqh-agenda-editor-page #page,
 body.pqh-agenda-editor-page #page-content,
 body.pqh-agenda-editor-page #region-main,
 body.pqh-agenda-editor-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqh-editor-shell{height:100vh;display:grid;grid-template-rows:auto 1fr;background:#f5f8fb;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
+.pqh-editor-shell{height:100vh;height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden;background:#f5f8fb;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
 .pqh-editor-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:#fff;border-bottom:1px solid rgba(23,48,68,.12)}
 .pqh-editor-title{margin:0;font-size:16px;font-weight:950}
 .pqh-editor-meta{margin:3px 0 0;color:#5e7280;font-size:12px;font-weight:800}
 .pqh-editor-actions{display:flex;gap:8px;flex-wrap:wrap}
 .pqh-editor-btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:8px;background:#eef7ee;color:#173044!important;text-decoration:none;font-size:13px;font-weight:950;border:1px solid rgba(23,48,68,.12)}
-.pqh-editor-frame{min-height:0}
+.pqh-editor-lang{background:#fff;color:#173044!important}
+.pqh-editor-lang--active{background:#2f6f4e;color:#fff!important}
+.pqh-editor-frame{min-height:0;overflow:hidden;position:relative}
+#pqh-onlyoffice-editor{width:100%!important;height:100%!important;min-height:0!important;overflow:hidden!important}
 .pqh-editor-empty{max-width:760px;margin:42px auto;padding:18px;background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:10px;font-weight:850}
 </style>
 <main class="pqh-editor-shell">
@@ -84,6 +112,8 @@ body.pqh-agenda-editor-page .main-inner{margin:0!important;padding:0!important;m
       <p class="pqh-editor-meta"><?php echo s((string)$session->title); ?> - <?php echo s((string)($session->agenda_slides_filename ?? 'Live Session Agenda template.pptx')); ?></p>
     </div>
     <div class="pqh-editor-actions">
+      <a class="pqh-editor-btn pqh-editor-lang<?php echo $editorlang === 'en' ? ' pqh-editor-lang--active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid, 'editorlang' => 'en', 'templatevariant' => 'en']))->out(false); ?>">English</a>
+      <a class="pqh-editor-btn pqh-editor-lang<?php echo $editorlang === 'ar' ? ' pqh-editor-lang--active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid, 'editorlang' => 'ar', 'templatevariant' => 'ar']))->out(false); ?>">Arabic</a>
       <a class="pqh-editor-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_file.php', $urlparams + ['sessionid' => $sessionid]))->out(false); ?>">Download</a>
       <a class="pqh-editor-btn" href="<?php echo $returnurl->out(false); ?>">Back</a>
     </div>
@@ -99,7 +129,9 @@ body.pqh-agenda-editor-page .main-inner{margin:0!important;padding:0!important;m
         if ($filename === '') {
             $filename = 'Live Session Agenda template.pptx';
         }
-        $sourceurl = pqh_live_session_agenda_source_url($sessionid, $key)->out(false);
+        $sourceurl = pqh_live_session_agenda_source_url($sessionid, $key, [
+            'v' => max((int)($session->agenda_slides_uploadedat ?? 0), (int)($session->timemodified ?? 0), 1),
+        ])->out(false);
         $callbackurl = pqh_live_session_agenda_callback_url($sessionid, $key)->out(false);
         $config = [
             'documentType' => 'slide',
@@ -134,7 +166,8 @@ body.pqh-agenda-editor-page .main-inner{margin:0!important;padding:0!important;m
             'editorConfig' => [
                 'mode' => 'edit',
                 'callbackUrl' => $callbackurl,
-                'lang' => current_language(),
+                'lang' => $editorlang,
+                'plugins' => pqh_onlyoffice_plugins_config(),
                 'user' => [
                     'group' => '',
                     'id' => (string)$USER->id,
@@ -156,6 +189,21 @@ body.pqh-agenda-editor-page .main-inner{margin:0!important;padding:0!important;m
       <script src="<?php echo s($docserver); ?>/web-apps/apps/api/documents/api.js"></script>
       <script>
       window.PQH_ONLYOFFICE_CONFIG = <?php echo json_encode($config, JSON_UNESCAPED_SLASHES); ?>;
+      (function(){
+        function sizeEditorFrame() {
+          var shell = document.querySelector('.pqh-editor-shell');
+          var top = document.querySelector('.pqh-editor-top');
+          var frame = document.querySelector('.pqh-editor-frame');
+          if (!shell || !top || !frame) {
+            return;
+          }
+          var height = Math.max(360, window.innerHeight - top.getBoundingClientRect().height);
+          frame.style.height = height + 'px';
+          frame.style.maxHeight = height + 'px';
+        }
+        sizeEditorFrame();
+        window.addEventListener('resize', sizeEditorFrame);
+      }());
       window.PQH_ONLYOFFICE_EDITOR = new DocsAPI.DocEditor("pqh-onlyoffice-editor", window.PQH_ONLYOFFICE_CONFIG);
       </script>
     <?php endif; ?>

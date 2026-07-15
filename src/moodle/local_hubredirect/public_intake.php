@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/course_offeringlib.php');
+require_once(__DIR__ . '/institutionlib.php');
 
 $ehp_public_pages = __DIR__ . '/../ehelhome/public_pages.php';
 if (!file_exists($ehp_public_pages)) {
@@ -115,31 +116,135 @@ function pqpir_labels(array $values, array $options): array {
 }
 
 function pqpir_placement_level_options(array $options): array {
-    $levels = $options['current_levels'] ?? [];
-    $definitions = $options['level_definitions']['pre_quraan'] ?? [];
-    $withdescriptions = [];
-    foreach ($levels as $value => $label) {
-        $description = trim((string)($definitions[$value] ?? ''));
-        $withdescriptions[$value] = $description !== '' ? (string)$label . ' - ' . $description : (string)$label;
-    }
-    return $withdescriptions;
+    return $options['current_levels'] ?? [];
 }
 
 function pqpir_field_label(string $name): string {
     $labels = [
         'form_security' => 'Form security',
         'parent_name' => 'Parent/guardian name',
+        'parent_relationship' => 'Relationship to student',
+        'parent_relationship_other' => 'Relationship description',
         'parent_email' => 'Parent/guardian email or phone',
         'parent_phone' => 'Parent phone / WhatsApp',
+        'emergency_contact_name' => 'Emergency contact name',
+        'emergency_contact_phone' => 'Emergency contact phone',
         'student_firstname' => 'Student first name',
         'student_middle_name' => 'Student middle name',
         'student_lastname' => 'Student last name',
         'student_display_name' => 'Student display name',
         'student_access_type' => 'Student access type',
         'student_email' => 'Student email or phone',
+        'date_of_birth' => 'Date of birth',
         'age_years' => 'Age',
         'gender' => 'Gender',
         'special_needs' => 'Special Needs',
+        'current_grade' => 'Current grade/year',
+        'school_curriculum' => 'School curriculum',
+        'current_school_name' => 'Current school name',
+        'student_lives_with' => 'Student lives with',
+        'primary_learning_goal' => 'Primary learning goal',
+        'medical_safety_notes' => 'Medical/allergy/safety notes',
+        'preferred_class_format' => 'Preferred class format',
+        'preferred_group_size' => 'Preferred group size',
+        'preferred_teacher_gender' => 'Preferred teacher gender',
+        'school_term' => 'School term/admission year',
+        'islamic_program_interest' => 'Islamic program interest',
+        'quran_reading_level' => 'Quran reading level',
+        'tajweed_level' => 'Tajweed level',
+        'memorization_status' => 'Memorization status',
+        'memorized_portion' => 'Memorized portion',
+        'arabic_reading_ability' => 'Arabic reading ability',
+        'prior_islamic_studies' => 'Prior Islamic studies',
+        'islamic_learning_goal' => 'Islamic learning goal',
+        'previous_learning_method' => 'Previous learning method',
+        'tafsir_level' => 'Tafsir level',
+        'islamic_notes' => 'Islamic studies notes',
+        'christian_program_interest' => 'Christian program interest',
+        'bible_reading_level' => 'Bible reading level',
+        'bible_knowledge_level' => 'Bible knowledge level',
+        'christian_studies_level' => 'Christian studies level',
+        'prior_christian_studies' => 'Previous Christian studies',
+        'christian_previous_learning_method' => 'Previous learning method',
+        'christian_learning_goal' => 'Primary learning goal',
+        'christian_notes' => 'Additional Christian studies notes',
+        'higher_application_level' => 'Application level',
+        'higher_program_field' => 'Program or field of study',
+        'higher_specialization' => 'Intended specialization',
+        'higher_highest_qualification' => 'Highest qualification completed',
+        'higher_previous_institution' => 'Previous institution',
+        'higher_qualification_title' => 'Qualification title',
+        'higher_completion_year' => 'Graduation or expected completion year',
+        'higher_academic_result' => 'Academic result',
+        'higher_academic_status' => 'Current academic status',
+        'higher_admission_route' => 'Admission route',
+        'higher_transfer_credits' => 'Transfer credits requested',
+        'higher_study_mode' => 'Preferred study mode',
+        'higher_study_load' => 'Preferred study load',
+        'higher_preferred_intake' => 'Preferred intake or academic term',
+        'higher_research_interest' => 'Research interest or proposed topic',
+        'higher_funding_method' => 'Funding method',
+        'higher_financial_aid_interest' => 'Scholarship or financial-aid interest',
+        'higher_support_needs' => 'Academic support or accessibility needs',
+        'technical_program' => 'Training program or trade',
+        'technical_specialization' => 'Specific specialization',
+        'technical_training_level' => 'Training level',
+        'technical_previous_experience' => 'Previous technical experience',
+        'technical_previous_learning_method' => 'Previous learning method',
+        'technical_experience_duration' => 'Experience duration',
+        'technical_employment_status' => 'Current employment status',
+        'technical_employer_workshop' => 'Current employer or workshop',
+        'technical_training_goal' => 'Primary training goal',
+        'technical_certification_sought' => 'Certification sought',
+        'technical_training_format' => 'Preferred training format',
+        'technical_training_schedule' => 'Preferred training schedule',
+        'technical_tools_experience' => 'Tools or equipment experience',
+        'technical_tool_access' => 'Access to required tools or equipment',
+        'technical_digital_skill_level' => 'Computer or digital skill level',
+        'technical_safety_training' => 'Safety training completed',
+        'technical_protective_equipment' => 'Protective equipment available',
+        'technical_support_needs' => 'Practical support or accessibility needs',
+        'technical_notes' => 'Additional technical training notes',
+        'professional_area' => 'Professional development area',
+        'professional_topic_skill' => 'Specific topic or skill',
+        'professional_current_role' => 'Current professional role',
+        'professional_industry' => 'Industry or sector',
+        'professional_employment_status' => 'Employment status',
+        'professional_employer' => 'Employer or organisation',
+        'professional_experience_years' => 'Years of professional experience',
+        'professional_responsibility_level' => 'Current responsibility level',
+        'professional_development_goal' => 'Primary development goal',
+        'professional_skill_level' => 'Current skill level',
+        'professional_credential_sought' => 'Certification or credential sought',
+        'professional_certification_deadline' => 'Certification deadline',
+        'professional_learning_format' => 'Preferred learning format',
+        'professional_learning_schedule' => 'Preferred learning schedule',
+        'professional_course_intensity' => 'Preferred course intensity',
+        'professional_employer_sponsored' => 'Employer-sponsored training',
+        'professional_cpd_required' => 'Continuing professional development credits required',
+        'professional_cpd_credits' => 'Required number of CPD credits or hours',
+        'professional_workplace_outcome' => 'Expected workplace outcome',
+        'professional_support_needs' => 'Professional support or accessibility needs',
+        'professional_notes' => 'Additional professional development notes',
+        'adult_learning_area' => 'Learning area of interest',
+        'adult_subject_skill' => 'Specific subject or skill',
+        'adult_education_level' => 'Highest education level completed',
+        'adult_literacy_level' => 'Current literacy level',
+        'adult_numeracy_level' => 'Current numeracy level',
+        'adult_digital_skill_level' => 'Digital skill level',
+        'adult_previous_experience' => 'Previous adult-learning experience',
+        'adult_previous_learning_method' => 'Previous learning method',
+        'adult_learning_goal' => 'Primary learning goal',
+        'adult_employment_status' => 'Current employment status',
+        'adult_learning_format' => 'Preferred learning format',
+        'adult_learning_pace' => 'Preferred learning pace',
+        'adult_class_arrangement' => 'Preferred class arrangement',
+        'adult_childcare_impact' => 'Childcare responsibilities affecting attendance',
+        'adult_work_impact' => 'Work responsibilities affecting attendance',
+        'adult_access_limitations' => 'Transport or connectivity limitations',
+        'adult_learning_confidence' => 'Confidence returning to learning',
+        'adult_support_needs' => 'Learning support or accessibility needs',
+        'adult_notes' => 'Additional adult-learning notes',
         'course_type' => 'Course',
         'country' => 'Country',
         'city' => 'City',
@@ -396,11 +501,36 @@ function pqpir_teacher_preference_label(?stdClass $teacher): string {
 
 $context = context_system::instance();
 $consumercontext = pqh_requested_consumer_context();
+$requestedslug = trim(optional_param('consumer', '', PARAM_ALPHANUMEXT));
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($requestedslug !== '' && (string)($consumercontext->consumerslug ?? '') !== $requestedslug) {
+    $slugcontext = pqh_consumer_context_by_slug($requestedslug);
+    if ((string)($slugcontext->consumerslug ?? '') === $requestedslug
+        && ($requestedworkspaceid <= 0 || (int)($slugcontext->workspaceid ?? 0) === $requestedworkspaceid)) {
+        $consumercontext = $slugcontext;
+    }
+}
+if ($requestedworkspaceid > 0 && (int)($consumercontext->workspaceid ?? 0) !== $requestedworkspaceid) {
+    $workspacecontext = pqh_consumer_context_by_workspace($requestedworkspaceid);
+    if ($workspacecontext) {
+        $consumercontext = $workspacecontext;
+    }
+}
+pqh_apply_consumer_embed_headers($consumercontext);
 $consumerparams = ['consumer' => (string)$consumercontext->consumerslug];
 if ((int)$consumercontext->workspaceid > 0) {
     $consumerparams['workspaceid'] = (int)$consumercontext->workspaceid;
 }
 $brandname = (string)$consumercontext->consumername;
+$institutiontype = pqhi_clean_institution_type((string)($consumercontext->institution_type ?? ''), '');
+$faithsubcategory = pqhi_clean_faith_subcategory((string)($consumercontext->faith_subcategory ?? ''));
+$isprimaryeducation = $institutiontype === 'primary_education';
+$ishighereducation = $institutiontype === 'higher_education';
+$istechnicaltraining = $institutiontype === 'technical_training';
+$isprofessionaldevelopment = $institutiontype === 'professional_development';
+$isadultlearning = $institutiontype === 'adult_learning';
+$isislamicstudies = $institutiontype === 'faith_based_education' && $faithsubcategory === 'islamic_studies';
+$ischristianstudies = $institutiontype === 'faith_based_education' && $faithsubcategory === 'christian_studies';
 $options['course_types'] = pqpir_public_course_options($consumercontext, $options['course_types'] ?? []);
 $requestedteacherid = optional_param('teacherid', 0, PARAM_INT);
 $teacherpreference = pqpir_teacher_preference($requestedteacherid, (int)$consumercontext->consumerid);
@@ -431,17 +561,128 @@ $formtime = (int)$SESSION->pqpir_formtime;
 $formtoken = pqpir_security_token($formtime);
 $form = [
     'parent_name' => '',
+    'parent_relationship' => '',
+    'parent_relationship_other' => '',
     'parent_email' => '',
     'parent_phone' => '',
+    'emergency_contact_name' => '',
+    'emergency_contact_phone' => '',
     'student_firstname' => '',
     'student_middle_name' => '',
     'student_lastname' => '',
     'student_display_name' => '',
     'student_access_type' => 'managed',
     'student_email' => '',
+    'date_of_birth' => '',
     'age_years' => '',
     'gender' => '',
     'special_needs' => '',
+    'current_grade' => '',
+    'school_curriculum' => '',
+    'current_school_name' => '',
+    'student_lives_with' => '',
+    'primary_learning_goal' => '',
+    'medical_safety_notes' => '',
+    'preferred_class_format' => '',
+    'preferred_group_size' => '',
+    'preferred_teacher_gender' => '',
+    'school_term' => '',
+    'islamic_program_interest' => '',
+    'quran_reading_level' => '',
+    'tajweed_level' => '',
+    'memorization_status' => '',
+    'memorized_portion' => '',
+    'arabic_reading_ability' => '',
+    'prior_islamic_studies' => '',
+    'islamic_learning_goal' => '',
+    'previous_learning_method' => '',
+    'tafsir_level' => '',
+    'islamic_notes' => '',
+    'christian_program_interest' => '',
+    'bible_reading_level' => '',
+    'bible_knowledge_level' => '',
+    'christian_studies_level' => '',
+    'prior_christian_studies' => '',
+    'christian_previous_learning_method' => '',
+    'christian_learning_goal' => '',
+    'christian_notes' => '',
+    'higher_application_level' => '',
+    'higher_program_field' => '',
+    'higher_specialization' => '',
+    'higher_highest_qualification' => '',
+    'higher_previous_institution' => '',
+    'higher_qualification_title' => '',
+    'higher_completion_year' => '',
+    'higher_academic_result' => '',
+    'higher_academic_status' => '',
+    'higher_admission_route' => '',
+    'higher_transfer_credits' => '',
+    'higher_study_mode' => '',
+    'higher_study_load' => '',
+    'higher_preferred_intake' => '',
+    'higher_research_interest' => '',
+    'higher_funding_method' => '',
+    'higher_financial_aid_interest' => '',
+    'higher_support_needs' => '',
+    'technical_program' => '',
+    'technical_specialization' => '',
+    'technical_training_level' => '',
+    'technical_previous_experience' => '',
+    'technical_previous_learning_method' => '',
+    'technical_experience_duration' => '',
+    'technical_employment_status' => '',
+    'technical_employer_workshop' => '',
+    'technical_training_goal' => '',
+    'technical_certification_sought' => '',
+    'technical_training_format' => '',
+    'technical_training_schedule' => '',
+    'technical_tools_experience' => '',
+    'technical_tool_access' => '',
+    'technical_digital_skill_level' => '',
+    'technical_safety_training' => '',
+    'technical_protective_equipment' => '',
+    'technical_support_needs' => '',
+    'technical_notes' => '',
+    'professional_area' => '',
+    'professional_topic_skill' => '',
+    'professional_current_role' => '',
+    'professional_industry' => '',
+    'professional_employment_status' => '',
+    'professional_employer' => '',
+    'professional_experience_years' => '',
+    'professional_responsibility_level' => '',
+    'professional_development_goal' => '',
+    'professional_skill_level' => '',
+    'professional_credential_sought' => '',
+    'professional_certification_deadline' => '',
+    'professional_learning_format' => '',
+    'professional_learning_schedule' => '',
+    'professional_course_intensity' => '',
+    'professional_employer_sponsored' => '',
+    'professional_cpd_required' => '',
+    'professional_cpd_credits' => '',
+    'professional_workplace_outcome' => '',
+    'professional_support_needs' => '',
+    'professional_notes' => '',
+    'adult_learning_area' => '',
+    'adult_subject_skill' => '',
+    'adult_education_level' => '',
+    'adult_literacy_level' => '',
+    'adult_numeracy_level' => '',
+    'adult_digital_skill_level' => '',
+    'adult_previous_experience' => '',
+    'adult_previous_learning_method' => '',
+    'adult_learning_goal' => '',
+    'adult_employment_status' => '',
+    'adult_learning_format' => '',
+    'adult_learning_pace' => '',
+    'adult_class_arrangement' => '',
+    'adult_childcare_impact' => '',
+    'adult_work_impact' => '',
+    'adult_access_limitations' => '',
+    'adult_learning_confidence' => '',
+    'adult_support_needs' => '',
+    'adult_notes' => '',
     'course_type' => '',
     'country' => '',
     'city' => '',
@@ -469,17 +710,128 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $honeypot = optional_param('website', '', PARAM_TEXT);
     $form = [
         'parent_name' => pqpir_limit_text(pqpir_trim('parent_name'), 255),
+        'parent_relationship' => pqpir_limit_text(pqpir_trim('parent_relationship'), 40),
+        'parent_relationship_other' => pqpir_limit_text(pqpir_trim('parent_relationship_other'), 255),
         'parent_email' => pqpir_contact('parent_email'),
         'parent_phone' => pqpir_contact('parent_phone'),
+        'emergency_contact_name' => pqpir_limit_text(pqpir_trim('emergency_contact_name'), 255),
+        'emergency_contact_phone' => pqpir_contact('emergency_contact_phone'),
         'student_firstname' => pqpir_limit_text(pqpir_trim('student_firstname'), 100),
         'student_middle_name' => pqpir_limit_text(pqpir_trim('student_middle_name'), 100),
         'student_lastname' => pqpir_limit_text(pqpir_trim('student_lastname'), 100),
         'student_display_name' => pqpir_limit_text(pqpir_trim('student_display_name'), 255),
         'student_access_type' => pqpir_trim('student_access_type', 'managed'),
         'student_email' => pqpir_contact('student_email'),
+        'date_of_birth' => pqpir_limit_text(pqpir_trim('date_of_birth'), 20),
         'age_years' => (string)optional_param('age_years', 0, PARAM_INT),
         'gender' => pqpir_trim('gender'),
         'special_needs' => pqpir_trim('special_needs'),
+        'current_grade' => pqpir_limit_text(pqpir_trim('current_grade'), 80),
+        'school_curriculum' => pqpir_limit_text(pqpir_trim('school_curriculum'), 120),
+        'current_school_name' => pqpir_limit_text(pqpir_trim('current_school_name'), 255),
+        'student_lives_with' => pqpir_limit_text(pqpir_trim('student_lives_with'), 80),
+        'primary_learning_goal' => pqpir_limit_text(pqpir_trim('primary_learning_goal'), 255),
+        'medical_safety_notes' => pqpir_limit_text(pqpir_trim('medical_safety_notes'), 2000),
+        'preferred_class_format' => pqpir_limit_text(pqpir_trim('preferred_class_format'), 80),
+        'preferred_group_size' => pqpir_limit_text(pqpir_trim('preferred_group_size'), 80),
+        'preferred_teacher_gender' => pqpir_limit_text(pqpir_trim('preferred_teacher_gender'), 40),
+        'school_term' => pqpir_limit_text(pqpir_trim('school_term'), 80),
+        'islamic_program_interest' => pqpir_limit_text(pqpir_trim('islamic_program_interest'), 80),
+        'quran_reading_level' => pqpir_limit_text(pqpir_trim('quran_reading_level'), 80),
+        'tajweed_level' => pqpir_limit_text(pqpir_trim('tajweed_level'), 80),
+        'memorization_status' => pqpir_limit_text(pqpir_trim('memorization_status'), 80),
+        'memorized_portion' => pqpir_limit_text(pqpir_trim('memorized_portion'), 255),
+        'arabic_reading_ability' => pqpir_limit_text(pqpir_trim('arabic_reading_ability'), 80),
+        'prior_islamic_studies' => pqpir_limit_text(pqpir_trim('prior_islamic_studies'), 2000),
+        'islamic_learning_goal' => pqpir_limit_text(pqpir_trim('islamic_learning_goal'), 255),
+        'previous_learning_method' => pqpir_limit_text(pqpir_trim('previous_learning_method'), 80),
+        'tafsir_level' => pqpir_limit_text(pqpir_trim('tafsir_level'), 80),
+        'islamic_notes' => pqpir_limit_text(pqpir_trim('islamic_notes'), 2000),
+        'christian_program_interest' => pqpir_limit_text(pqpir_trim('christian_program_interest'), 80),
+        'bible_reading_level' => pqpir_limit_text(pqpir_trim('bible_reading_level'), 80),
+        'bible_knowledge_level' => pqpir_limit_text(pqpir_trim('bible_knowledge_level'), 80),
+        'christian_studies_level' => pqpir_limit_text(pqpir_trim('christian_studies_level'), 80),
+        'prior_christian_studies' => pqpir_limit_text(pqpir_trim('prior_christian_studies'), 2000),
+        'christian_previous_learning_method' => pqpir_limit_text(pqpir_trim('christian_previous_learning_method'), 80),
+        'christian_learning_goal' => pqpir_limit_text(pqpir_trim('christian_learning_goal'), 255),
+        'christian_notes' => pqpir_limit_text(pqpir_trim('christian_notes'), 2000),
+        'higher_application_level' => pqpir_limit_text(pqpir_trim('higher_application_level'), 80),
+        'higher_program_field' => pqpir_limit_text(pqpir_trim('higher_program_field'), 255),
+        'higher_specialization' => pqpir_limit_text(pqpir_trim('higher_specialization'), 255),
+        'higher_highest_qualification' => pqpir_limit_text(pqpir_trim('higher_highest_qualification'), 80),
+        'higher_previous_institution' => pqpir_limit_text(pqpir_trim('higher_previous_institution'), 255),
+        'higher_qualification_title' => pqpir_limit_text(pqpir_trim('higher_qualification_title'), 255),
+        'higher_completion_year' => pqpir_limit_text(pqpir_trim('higher_completion_year'), 20),
+        'higher_academic_result' => pqpir_limit_text(pqpir_trim('higher_academic_result'), 120),
+        'higher_academic_status' => pqpir_limit_text(pqpir_trim('higher_academic_status'), 80),
+        'higher_admission_route' => pqpir_limit_text(pqpir_trim('higher_admission_route'), 80),
+        'higher_transfer_credits' => pqpir_limit_text(pqpir_trim('higher_transfer_credits'), 20),
+        'higher_study_mode' => pqpir_limit_text(pqpir_trim('higher_study_mode'), 40),
+        'higher_study_load' => pqpir_limit_text(pqpir_trim('higher_study_load'), 40),
+        'higher_preferred_intake' => pqpir_limit_text(pqpir_trim('higher_preferred_intake'), 120),
+        'higher_research_interest' => pqpir_limit_text(pqpir_trim('higher_research_interest'), 2000),
+        'higher_funding_method' => pqpir_limit_text(pqpir_trim('higher_funding_method'), 80),
+        'higher_financial_aid_interest' => pqpir_limit_text(pqpir_trim('higher_financial_aid_interest'), 20),
+        'higher_support_needs' => pqpir_limit_text(pqpir_trim('higher_support_needs'), 2000),
+        'technical_program' => pqpir_limit_text(pqpir_trim('technical_program'), 80),
+        'technical_specialization' => pqpir_limit_text(pqpir_trim('technical_specialization'), 255),
+        'technical_training_level' => pqpir_limit_text(pqpir_trim('technical_training_level'), 80),
+        'technical_previous_experience' => pqpir_limit_text(pqpir_trim('technical_previous_experience'), 80),
+        'technical_previous_learning_method' => pqpir_limit_text(pqpir_trim('technical_previous_learning_method'), 80),
+        'technical_experience_duration' => pqpir_limit_text(pqpir_trim('technical_experience_duration'), 40),
+        'technical_employment_status' => pqpir_limit_text(pqpir_trim('technical_employment_status'), 80),
+        'technical_employer_workshop' => pqpir_limit_text(pqpir_trim('technical_employer_workshop'), 255),
+        'technical_training_goal' => pqpir_limit_text(pqpir_trim('technical_training_goal'), 80),
+        'technical_certification_sought' => pqpir_limit_text(pqpir_trim('technical_certification_sought'), 255),
+        'technical_training_format' => pqpir_limit_text(pqpir_trim('technical_training_format'), 80),
+        'technical_training_schedule' => pqpir_limit_text(pqpir_trim('technical_training_schedule'), 40),
+        'technical_tools_experience' => pqpir_limit_text(pqpir_trim('technical_tools_experience'), 2000),
+        'technical_tool_access' => pqpir_limit_text(pqpir_trim('technical_tool_access'), 40),
+        'technical_digital_skill_level' => pqpir_limit_text(pqpir_trim('technical_digital_skill_level'), 40),
+        'technical_safety_training' => pqpir_limit_text(pqpir_trim('technical_safety_training'), 20),
+        'technical_protective_equipment' => pqpir_limit_text(pqpir_trim('technical_protective_equipment'), 40),
+        'technical_support_needs' => pqpir_limit_text(pqpir_trim('technical_support_needs'), 2000),
+        'technical_notes' => pqpir_limit_text(pqpir_trim('technical_notes'), 2000),
+        'professional_area' => pqpir_limit_text(pqpir_trim('professional_area'), 80),
+        'professional_topic_skill' => pqpir_limit_text(pqpir_trim('professional_topic_skill'), 255),
+        'professional_current_role' => pqpir_limit_text(pqpir_trim('professional_current_role'), 255),
+        'professional_industry' => pqpir_limit_text(pqpir_trim('professional_industry'), 80),
+        'professional_employment_status' => pqpir_limit_text(pqpir_trim('professional_employment_status'), 80),
+        'professional_employer' => pqpir_limit_text(pqpir_trim('professional_employer'), 255),
+        'professional_experience_years' => pqpir_limit_text(pqpir_trim('professional_experience_years'), 40),
+        'professional_responsibility_level' => pqpir_limit_text(pqpir_trim('professional_responsibility_level'), 80),
+        'professional_development_goal' => pqpir_limit_text(pqpir_trim('professional_development_goal'), 80),
+        'professional_skill_level' => pqpir_limit_text(pqpir_trim('professional_skill_level'), 40),
+        'professional_credential_sought' => pqpir_limit_text(pqpir_trim('professional_credential_sought'), 255),
+        'professional_certification_deadline' => pqpir_limit_text(pqpir_trim('professional_certification_deadline'), 20),
+        'professional_learning_format' => pqpir_limit_text(pqpir_trim('professional_learning_format'), 80),
+        'professional_learning_schedule' => pqpir_limit_text(pqpir_trim('professional_learning_schedule'), 40),
+        'professional_course_intensity' => pqpir_limit_text(pqpir_trim('professional_course_intensity'), 80),
+        'professional_employer_sponsored' => pqpir_limit_text(pqpir_trim('professional_employer_sponsored'), 40),
+        'professional_cpd_required' => pqpir_limit_text(pqpir_trim('professional_cpd_required'), 20),
+        'professional_cpd_credits' => pqpir_limit_text(pqpir_trim('professional_cpd_credits'), 40),
+        'professional_workplace_outcome' => pqpir_limit_text(pqpir_trim('professional_workplace_outcome'), 2000),
+        'professional_support_needs' => pqpir_limit_text(pqpir_trim('professional_support_needs'), 2000),
+        'professional_notes' => pqpir_limit_text(pqpir_trim('professional_notes'), 2000),
+        'adult_learning_area' => pqpir_limit_text(pqpir_trim('adult_learning_area'), 80),
+        'adult_subject_skill' => pqpir_limit_text(pqpir_trim('adult_subject_skill'), 255),
+        'adult_education_level' => pqpir_limit_text(pqpir_trim('adult_education_level'), 80),
+        'adult_literacy_level' => pqpir_limit_text(pqpir_trim('adult_literacy_level'), 80),
+        'adult_numeracy_level' => pqpir_limit_text(pqpir_trim('adult_numeracy_level'), 80),
+        'adult_digital_skill_level' => pqpir_limit_text(pqpir_trim('adult_digital_skill_level'), 40),
+        'adult_previous_experience' => pqpir_limit_text(pqpir_trim('adult_previous_experience'), 80),
+        'adult_previous_learning_method' => pqpir_limit_text(pqpir_trim('adult_previous_learning_method'), 80),
+        'adult_learning_goal' => pqpir_limit_text(pqpir_trim('adult_learning_goal'), 80),
+        'adult_employment_status' => pqpir_limit_text(pqpir_trim('adult_employment_status'), 80),
+        'adult_learning_format' => pqpir_limit_text(pqpir_trim('adult_learning_format'), 80),
+        'adult_learning_pace' => pqpir_limit_text(pqpir_trim('adult_learning_pace'), 40),
+        'adult_class_arrangement' => pqpir_limit_text(pqpir_trim('adult_class_arrangement'), 40),
+        'adult_childcare_impact' => pqpir_limit_text(pqpir_trim('adult_childcare_impact'), 40),
+        'adult_work_impact' => pqpir_limit_text(pqpir_trim('adult_work_impact'), 20),
+        'adult_access_limitations' => pqpir_limit_text(pqpir_trim('adult_access_limitations'), 40),
+        'adult_learning_confidence' => pqpir_limit_text(pqpir_trim('adult_learning_confidence'), 40),
+        'adult_support_needs' => pqpir_limit_text(pqpir_trim('adult_support_needs'), 2000),
+        'adult_notes' => pqpir_limit_text(pqpir_trim('adult_notes'), 2000),
         'course_type' => pqpir_trim('course_type'),
         'country' => pqpir_trim('country'),
         'city' => pqpir_trim('city'),
@@ -529,11 +881,8 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'student_firstname' => 'Please enter the student first name.',
         'student_middle_name' => 'Please enter the student middle name.',
         'student_lastname' => 'Please enter the student last name.',
-        'age_years' => 'Please enter the student age.',
-            'gender' => 'Please select the student gender.',
-            'special_needs' => 'Please select Yes or No for Special Needs.',
-            'course_type' => 'Please select the course.',
-            'country' => 'Please select the country.',
+        'course_type' => 'Please select the course.',
+        'country' => 'Please select the country.',
         'city' => 'Please select the city.',
         'timezone' => 'Please select the time zone.',
         'primary_language' => 'Please select the primary language.',
@@ -546,13 +895,16 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[$field] = $errormessage;
         }
     }
-    if ($isadultstudent) {
-        if (pqpir_value($form, 'student_email') === '') {
-            $errors['student_email'] = 'Adult students must provide their own email address or phone number.';
-        }
-    } else {
+    if ($isprimaryeducation) {
         foreach ([
+            'date_of_birth' => 'Please enter the student date of birth.',
+            'age_years' => 'Please enter the student age.',
+            'gender' => 'Please select the student gender.',
+            'special_needs' => 'Please select Yes or No for Special Needs.',
+            'current_grade' => 'Please select the current grade/year.',
             'parent_name' => 'Please enter the parent/guardian name.',
+            'parent_relationship' => 'Please select the parent/guardian relationship to the student.',
+            'emergency_contact_phone' => 'Please enter an emergency contact phone.',
         ] as $field => $errormessage) {
             if (pqpir_value($form, $field) === '') {
                 $errors[$field] = $errormessage;
@@ -562,12 +914,204 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors['parent_phone'] = 'Please enter a parent/guardian phone, WhatsApp, or email contact.';
         }
     }
-    foreach (['parent_email', 'parent_phone', 'student_email'] as $contactfield) {
+    if ($ishighereducation) {
+        foreach ([
+            'higher_application_level' => 'Please select the application level.',
+            'higher_program_field' => 'Please enter the program or field of study.',
+            'higher_highest_qualification' => 'Please select the highest qualification completed.',
+            'higher_academic_status' => 'Please select the current academic status.',
+            'higher_study_mode' => 'Please select the preferred study mode.',
+            'higher_study_load' => 'Please select the preferred study load.',
+        ] as $field => $errormessage) {
+            if (pqpir_value($form, $field) === '') {
+                $errors[$field] = $errormessage;
+            }
+        }
+        foreach ([
+            'higher_application_level' => 'higher_application_levels',
+            'higher_highest_qualification' => 'higher_qualification_levels',
+            'higher_academic_status' => 'higher_academic_statuses',
+            'higher_admission_route' => 'higher_admission_routes',
+            'higher_transfer_credits' => 'higher_transfer_credit_options',
+            'higher_study_mode' => 'higher_study_modes',
+            'higher_study_load' => 'higher_study_loads',
+            'higher_funding_method' => 'higher_funding_methods',
+            'higher_financial_aid_interest' => 'higher_financial_aid_options',
+        ] as $field => $optionkey) {
+            if (pqpir_value($form, $field) !== '' && !array_key_exists(pqpir_value($form, $field), $options[$optionkey] ?? [])) {
+                $errors[$field] = 'Please select a valid option.';
+            }
+        }
+    }
+    if ($istechnicaltraining) {
+        foreach ([
+            'technical_program' => 'Please select the training program or trade.',
+            'technical_training_level' => 'Please select the training level.',
+            'technical_previous_experience' => 'Please select the previous technical experience.',
+            'technical_training_goal' => 'Please select the primary training goal.',
+            'technical_training_format' => 'Please select the preferred training format.',
+            'technical_tool_access' => 'Please select access to required tools or equipment.',
+        ] as $field => $errormessage) {
+            if (pqpir_value($form, $field) === '') {
+                $errors[$field] = $errormessage;
+            }
+        }
+        foreach ([
+            'technical_program' => 'technical_programs',
+            'technical_training_level' => 'technical_training_levels',
+            'technical_previous_experience' => 'technical_experience_types',
+            'technical_previous_learning_method' => 'technical_learning_methods',
+            'technical_experience_duration' => 'technical_experience_durations',
+            'technical_employment_status' => 'technical_employment_statuses',
+            'technical_training_goal' => 'technical_training_goals',
+            'technical_training_format' => 'technical_training_formats',
+            'technical_training_schedule' => 'technical_training_schedules',
+            'technical_tool_access' => 'technical_tool_access_options',
+            'technical_digital_skill_level' => 'technical_digital_skill_levels',
+            'technical_safety_training' => 'technical_yes_no_unsure',
+            'technical_protective_equipment' => 'technical_protective_equipment_options',
+        ] as $field => $optionkey) {
+            if (pqpir_value($form, $field) !== '' && !array_key_exists(pqpir_value($form, $field), $options[$optionkey] ?? [])) {
+                $errors[$field] = 'Please select a valid option.';
+            }
+        }
+    }
+    if ($isprofessionaldevelopment) {
+        foreach ([
+            'professional_area' => 'Please select the professional development area.',
+            'professional_current_role' => 'Please enter the current professional role.',
+            'professional_employment_status' => 'Please select the employment status.',
+            'professional_development_goal' => 'Please select the primary development goal.',
+            'professional_skill_level' => 'Please select the current skill level.',
+            'professional_learning_format' => 'Please select the preferred learning format.',
+        ] as $field => $errormessage) {
+            if (pqpir_value($form, $field) === '') {
+                $errors[$field] = $errormessage;
+            }
+        }
+        foreach ([
+            'professional_area' => 'professional_development_areas',
+            'professional_industry' => 'professional_industries',
+            'professional_employment_status' => 'professional_employment_statuses',
+            'professional_experience_years' => 'professional_experience_ranges',
+            'professional_responsibility_level' => 'professional_responsibility_levels',
+            'professional_development_goal' => 'professional_development_goals',
+            'professional_skill_level' => 'professional_skill_levels',
+            'professional_learning_format' => 'professional_learning_formats',
+            'professional_learning_schedule' => 'professional_learning_schedules',
+            'professional_course_intensity' => 'professional_course_intensities',
+            'professional_employer_sponsored' => 'professional_sponsorship_options',
+            'professional_cpd_required' => 'professional_cpd_options',
+        ] as $field => $optionkey) {
+            if (pqpir_value($form, $field) !== '' && !array_key_exists(pqpir_value($form, $field), $options[$optionkey] ?? [])) {
+                $errors[$field] = 'Please select a valid option.';
+            }
+        }
+    }
+    if ($isadultlearning) {
+        foreach ([
+            'adult_learning_area' => 'Please select the learning area of interest.',
+            'adult_education_level' => 'Please select the highest education level completed.',
+            'adult_learning_goal' => 'Please select the primary learning goal.',
+            'adult_learning_format' => 'Please select the preferred learning format.',
+            'adult_learning_pace' => 'Please select the preferred learning pace.',
+        ] as $field => $errormessage) {
+            if (pqpir_value($form, $field) === '') {
+                $errors[$field] = $errormessage;
+            }
+        }
+        foreach ([
+            'adult_learning_area' => 'adult_learning_areas',
+            'adult_education_level' => 'adult_education_levels',
+            'adult_literacy_level' => 'adult_literacy_levels',
+            'adult_numeracy_level' => 'adult_numeracy_levels',
+            'adult_digital_skill_level' => 'adult_digital_skill_levels',
+            'adult_previous_experience' => 'adult_previous_experiences',
+            'adult_previous_learning_method' => 'adult_learning_methods',
+            'adult_learning_goal' => 'adult_learning_goals',
+            'adult_employment_status' => 'adult_employment_statuses',
+            'adult_learning_format' => 'adult_learning_formats',
+            'adult_learning_pace' => 'adult_learning_paces',
+            'adult_class_arrangement' => 'adult_class_arrangements',
+            'adult_childcare_impact' => 'adult_childcare_options',
+            'adult_work_impact' => 'adult_attendance_impact_options',
+            'adult_access_limitations' => 'adult_access_limitations',
+            'adult_learning_confidence' => 'adult_learning_confidence_levels',
+        ] as $field => $optionkey) {
+            if (pqpir_value($form, $field) !== '' && !array_key_exists(pqpir_value($form, $field), $options[$optionkey] ?? [])) {
+                $errors[$field] = 'Please select a valid option.';
+            }
+        }
+    }
+    if ($isadultstudent) {
+        if (pqpir_value($form, 'student_email') === '') {
+            $errors['student_email'] = 'Adult students must provide their own email address or phone number.';
+        }
+    } else {
+        foreach ([
+            'parent_name' => 'Please enter the parent/guardian name.',
+            'parent_relationship' => 'Please select the parent/guardian relationship to the student.',
+        ] as $field => $errormessage) {
+            if (pqpir_value($form, $field) === '') {
+                $errors[$field] = $errormessage;
+            }
+        }
+        if (pqpir_value($form, 'parent_relationship') === 'other' && pqpir_value($form, 'parent_relationship_other') === '') {
+            $errors['parent_relationship_other'] = 'Please describe the parent/guardian relationship to the student.';
+        }
+        if (pqpir_value($form, 'parent_phone') === '' && pqpir_value($form, 'parent_email') === '') {
+            $errors['parent_phone'] = 'Please enter a parent/guardian phone, WhatsApp, or email contact.';
+        }
+    }
+    if (pqpir_value($form, 'parent_relationship') !== '' && !array_key_exists(pqpir_value($form, 'parent_relationship'), $options['parent_relationships'] ?? [])) {
+        $errors['parent_relationship'] = 'Please select a valid relationship.';
+    }
+    foreach ([
+        'current_grade' => 'primary_grade_levels',
+        'school_curriculum' => 'primary_curricula',
+        'student_lives_with' => 'student_lives_with_options',
+        'preferred_class_format' => 'primary_class_formats',
+        'preferred_group_size' => 'primary_group_sizes',
+        'preferred_teacher_gender' => 'teacher_gender_preferences',
+    ] as $field => $optionkey) {
+        if (pqpir_value($form, $field) !== '' && !array_key_exists(pqpir_value($form, $field), $options[$optionkey] ?? [])) {
+            $errors[$field] = 'Please select a valid option.';
+        }
+    }
+    if ($isislamicstudies) {
+        foreach ([
+            'islamic_program_interest' => 'islamic_program_interests',
+            'quran_reading_level' => 'quran_reading_levels',
+            'tajweed_level' => 'tajweed_levels',
+            'memorization_status' => 'memorization_statuses',
+            'arabic_reading_ability' => 'arabic_reading_abilities',
+            'previous_learning_method' => 'previous_learning_methods',
+            'tafsir_level' => 'tafsir_levels',
+        ] as $field => $optionkey) {
+            if (pqpir_value($form, $field) !== '' && !array_key_exists(pqpir_value($form, $field), $options[$optionkey] ?? [])) {
+                $errors[$field] = 'Please select a valid option.';
+            }
+        }
+    }
+    if ($ischristianstudies) {
+        foreach ([
+            'christian_program_interest' => 'christian_program_interests',
+            'bible_reading_level' => 'bible_reading_levels',
+            'bible_knowledge_level' => 'bible_knowledge_levels',
+            'christian_studies_level' => 'christian_studies_levels',
+            'christian_previous_learning_method' => 'christian_previous_learning_methods',
+        ] as $field => $optionkey) {
+            if (pqpir_value($form, $field) !== '' && !array_key_exists(pqpir_value($form, $field), $options[$optionkey] ?? [])) {
+                $errors[$field] = 'Please select a valid option.';
+            }
+        }
+    }
+    foreach (['parent_email', 'parent_phone', 'student_email', 'emergency_contact_phone'] as $contactfield) {
         if (!pqpir_contact_ok(pqpir_value($form, $contactfield))) {
             $errors[$contactfield] = 'Enter a valid email address or phone number.';
         }
     }
-    if (!in_array(pqpir_value($form, 'special_needs'), ['yes', 'no'], true)) {
+    if (($isprimaryeducation || pqpir_value($form, 'special_needs') !== '') && !in_array(pqpir_value($form, 'special_needs'), ['yes', 'no'], true)) {
         $errors['special_needs'] = 'Please select Yes or No for Special Needs.';
     }
     if (!array_key_exists(pqpir_value($form, 'course_type'), $options['course_types'] ?? [])) {
@@ -660,6 +1204,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'student_display_name' => $displayname,
             'student_access_type' => pqpir_value($form, 'student_access_type'),
             'student_email' => pqpir_value($form, 'student_email'),
+            'date_of_birth' => pqpir_value($form, 'date_of_birth'),
             'age_years' => (int)$form['age_years'],
             'gender' => pqpir_value($form, 'gender'),
             'country' => pqpir_value($form, 'country'),
@@ -694,6 +1239,122 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (pqpir_table_has_column('local_prequran_intake_request', 'course_type')) {
             $requestrecord->course_type = pqpir_value($form, 'course_type');
         }
+        foreach ([
+            'parent_relationship',
+            'parent_relationship_other',
+            'emergency_contact_name',
+            'emergency_contact_phone',
+            'current_grade',
+            'school_curriculum',
+            'current_school_name',
+            'student_lives_with',
+            'primary_learning_goal',
+            'medical_safety_notes',
+            'preferred_class_format',
+            'preferred_group_size',
+            'preferred_teacher_gender',
+            'school_term',
+            'islamic_program_interest',
+            'quran_reading_level',
+            'tajweed_level',
+            'memorization_status',
+            'memorized_portion',
+            'arabic_reading_ability',
+            'prior_islamic_studies',
+            'islamic_learning_goal',
+            'previous_learning_method',
+            'tafsir_level',
+            'islamic_notes',
+            'christian_program_interest',
+            'bible_reading_level',
+            'bible_knowledge_level',
+            'christian_studies_level',
+            'prior_christian_studies',
+            'christian_previous_learning_method',
+            'christian_learning_goal',
+            'christian_notes',
+            'higher_application_level',
+            'higher_program_field',
+            'higher_specialization',
+            'higher_highest_qualification',
+            'higher_previous_institution',
+            'higher_qualification_title',
+            'higher_completion_year',
+            'higher_academic_result',
+            'higher_academic_status',
+            'higher_admission_route',
+            'higher_transfer_credits',
+            'higher_study_mode',
+            'higher_study_load',
+            'higher_preferred_intake',
+            'higher_research_interest',
+            'higher_funding_method',
+            'higher_financial_aid_interest',
+            'higher_support_needs',
+            'technical_program',
+            'technical_specialization',
+            'technical_training_level',
+            'technical_previous_experience',
+            'technical_previous_learning_method',
+            'technical_experience_duration',
+            'technical_employment_status',
+            'technical_employer_workshop',
+            'technical_training_goal',
+            'technical_certification_sought',
+            'technical_training_format',
+            'technical_training_schedule',
+            'technical_tools_experience',
+            'technical_tool_access',
+            'technical_digital_skill_level',
+            'technical_safety_training',
+            'technical_protective_equipment',
+            'technical_support_needs',
+            'technical_notes',
+            'professional_area',
+            'professional_topic_skill',
+            'professional_current_role',
+            'professional_industry',
+            'professional_employment_status',
+            'professional_employer',
+            'professional_experience_years',
+            'professional_responsibility_level',
+            'professional_development_goal',
+            'professional_skill_level',
+            'professional_credential_sought',
+            'professional_certification_deadline',
+            'professional_learning_format',
+            'professional_learning_schedule',
+            'professional_course_intensity',
+            'professional_employer_sponsored',
+            'professional_cpd_required',
+            'professional_cpd_credits',
+            'professional_workplace_outcome',
+            'professional_support_needs',
+            'professional_notes',
+            'adult_learning_area',
+            'adult_subject_skill',
+            'adult_education_level',
+            'adult_literacy_level',
+            'adult_numeracy_level',
+            'adult_digital_skill_level',
+            'adult_previous_experience',
+            'adult_previous_learning_method',
+            'adult_learning_goal',
+            'adult_employment_status',
+            'adult_learning_format',
+            'adult_learning_pace',
+            'adult_class_arrangement',
+            'adult_childcare_impact',
+            'adult_work_impact',
+            'adult_access_limitations',
+            'adult_learning_confidence',
+            'adult_support_needs',
+            'adult_notes',
+        ] as $extrafield) {
+            if (pqpir_table_has_column('local_prequran_intake_request', $extrafield)) {
+                $requestrecord->{$extrafield} = pqpir_value($form, $extrafield);
+            }
+        }
         if (pqpir_table_has_column('local_prequran_intake_request', 'consumerid')) {
             $requestrecord->consumerid = (int)$consumercontext->consumerid;
         }
@@ -708,6 +1369,10 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'consumerid' => (int)$consumercontext->consumerid,
             'consumerslug' => (string)$consumercontext->consumerslug,
         ]);
+        $returnurl = trim((string)($consumercontext->returnurl ?? ''));
+        if ($returnurl !== '' && preg_match('#^https?://#i', $returnurl)) {
+            redirect($returnurl);
+        }
         redirect(new moodle_url('/local/hubredirect/public_intake.php', ['submitted' => 1] + $consumerparams));
     }
 }
@@ -765,27 +1430,190 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           </div>
           <?php if ($teacherpreferencelabel !== ''): ?><div class="pqpir-pref">Preferred teacher: <?php echo s($teacherpreferencelabel); ?></div><?php endif; ?>
 
-          <h3>Parent / guardian <span class="pqpir-muted">(required only when the student is under 18)</span></h3>
-          <div class="pqpir-grid">
-            <div class="pqpir-field<?php echo isset($errors['parent_name']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian name</label><input class="pqpir-input" name="parent_name" value="<?php echo s(pqpir_value($form, 'parent_name')); ?>"><?php echo pqpir_error($errors, 'parent_name'); ?></div>
-            <div class="pqpir-field<?php echo isset($errors['parent_email']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian email or phone</label><input class="pqpir-input" name="parent_email" value="<?php echo s(pqpir_value($form, 'parent_email')); ?>"><?php echo pqpir_error($errors, 'parent_email'); ?></div>
-            <div class="pqpir-field<?php echo isset($errors['parent_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian phone / WhatsApp</label><input class="pqpir-input" name="parent_phone" value="<?php echo s(pqpir_value($form, 'parent_phone')); ?>"><?php echo pqpir_error($errors, 'parent_phone'); ?></div>
-          </div>
-
-          <h3>Student</h3>
+          <h3>Basic learner information</h3>
           <div class="pqpir-grid">
             <div class="pqpir-field<?php echo isset($errors['student_firstname']) ? ' pqpir-field--error' : ''; ?>"><label>First name</label><input class="pqpir-input" name="student_firstname" value="<?php echo s(pqpir_value($form, 'student_firstname')); ?>"><?php echo pqpir_error($errors, 'student_firstname'); ?></div>
             <div class="pqpir-field<?php echo isset($errors['student_middle_name']) ? ' pqpir-field--error' : ''; ?>"><label>Middle name</label><input class="pqpir-input" name="student_middle_name" value="<?php echo s(pqpir_value($form, 'student_middle_name')); ?>"><?php echo pqpir_error($errors, 'student_middle_name'); ?></div>
             <div class="pqpir-field<?php echo isset($errors['student_lastname']) ? ' pqpir-field--error' : ''; ?>"><label>Last name</label><input class="pqpir-input" name="student_lastname" value="<?php echo s(pqpir_value($form, 'student_lastname')); ?>"><?php echo pqpir_error($errors, 'student_lastname'); ?></div>
-            <div class="pqpir-field"><label>Display name</label><input class="pqpir-input" name="student_display_name" value="<?php echo s(pqpir_value($form, 'student_display_name')); ?>"></div>
-            <div class="pqpir-field<?php echo isset($errors['student_access_type']) ? ' pqpir-field--error' : ''; ?>"><label>Student access type</label><?php echo pqpir_select('student_access_type', $options['student_access_types'] ?? [], $form, $errors); ?></div>
-            <div class="pqpir-field<?php echo isset($errors['student_email']) ? ' pqpir-field--error' : ''; ?>"><label>Student email or phone</label><input class="pqpir-input" name="student_email" value="<?php echo s(pqpir_value($form, 'student_email')); ?>" placeholder="Required for students 18 or older"><?php echo pqpir_error($errors, 'student_email'); ?></div>
-            <div class="pqpir-field<?php echo isset($errors['age_years']) ? ' pqpir-field--error' : ''; ?>"><label>Age</label><input class="pqpir-input" name="age_years" type="number" min="1" max="99" value="<?php echo s(pqpir_value($form, 'age_years')); ?>"><?php echo pqpir_error($errors, 'age_years'); ?></div>
-            <div class="pqpir-field<?php echo isset($errors['gender']) ? ' pqpir-field--error' : ''; ?>"><label>Gender</label><select class="pqpir-input" name="gender"><option value="">Select</option><option value="female"<?php echo pqpir_selected($form, 'gender', 'female'); ?>>Female</option><option value="male"<?php echo pqpir_selected($form, 'gender', 'male'); ?>>Male</option></select><?php echo pqpir_error($errors, 'gender'); ?></div>
-            <div class="pqpir-field<?php echo isset($errors['special_needs']) ? ' pqpir-field--error' : ''; ?>"><label>Special Needs</label><select class="pqpir-input" name="special_needs"><option value="">Select</option><option value="no"<?php echo pqpir_selected($form, 'special_needs', 'no'); ?>>No</option><option value="yes"<?php echo pqpir_selected($form, 'special_needs', 'yes'); ?>>Yes</option></select><?php echo pqpir_error($errors, 'special_needs'); ?></div>
+            <div class="pqpir-field"><label>Preferred name</label><input class="pqpir-input" name="student_display_name" value="<?php echo s(pqpir_value($form, 'student_display_name')); ?>"></div>
+            <div class="pqpir-field<?php echo isset($errors['student_email']) ? ' pqpir-field--error' : ''; ?>"><label>Email address or phone / WhatsApp</label><input class="pqpir-input" name="student_email" value="<?php echo s(pqpir_value($form, 'student_email')); ?>"><?php echo pqpir_error($errors, 'student_email'); ?></div>
           </div>
 
-          <h3>Placement</h3>
+          <?php if ($isprimaryeducation): ?>
+            <h3>Primary education details</h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['date_of_birth']) ? ' pqpir-field--error' : ''; ?>"><label>Date of birth</label><input class="pqpir-input" name="date_of_birth" type="date" value="<?php echo s(pqpir_value($form, 'date_of_birth')); ?>"><?php echo pqpir_error($errors, 'date_of_birth'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['age_years']) ? ' pqpir-field--error' : ''; ?>"><label>Age</label><input class="pqpir-input" name="age_years" type="number" min="1" max="99" value="<?php echo s(pqpir_value($form, 'age_years')); ?>"><?php echo pqpir_error($errors, 'age_years'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['gender']) ? ' pqpir-field--error' : ''; ?>"><label>Gender</label><select class="pqpir-input" name="gender"><option value="">Select</option><option value="female"<?php echo pqpir_selected($form, 'gender', 'female'); ?>>Female</option><option value="male"<?php echo pqpir_selected($form, 'gender', 'male'); ?>>Male</option></select><?php echo pqpir_error($errors, 'gender'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['current_grade']) ? ' pqpir-field--error' : ''; ?>"><label>Current grade/year</label><?php echo pqpir_select('current_grade', $options['primary_grade_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['school_curriculum']) ? ' pqpir-field--error' : ''; ?>"><label>School curriculum</label><?php echo pqpir_select('school_curriculum', $options['primary_curricula'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['current_school_name']) ? ' pqpir-field--error' : ''; ?>"><label>Current school name</label><input class="pqpir-input" name="current_school_name" value="<?php echo s(pqpir_value($form, 'current_school_name')); ?>"><?php echo pqpir_error($errors, 'current_school_name'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['student_lives_with']) ? ' pqpir-field--error' : ''; ?>"><label>Student lives with</label><?php echo pqpir_select('student_lives_with', $options['student_lives_with_options'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['primary_learning_goal']) ? ' pqpir-field--error' : ''; ?>"><label>Primary learning goal</label><input class="pqpir-input" name="primary_learning_goal" value="<?php echo s(pqpir_value($form, 'primary_learning_goal')); ?>"><?php echo pqpir_error($errors, 'primary_learning_goal'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['preferred_class_format']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred class format</label><?php echo pqpir_select('preferred_class_format', $options['primary_class_formats'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['preferred_group_size']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred group size</label><?php echo pqpir_select('preferred_group_size', $options['primary_group_sizes'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['preferred_teacher_gender']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred teacher gender</label><?php echo pqpir_select('preferred_teacher_gender', $options['teacher_gender_preferences'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['school_term']) ? ' pqpir-field--error' : ''; ?>"><label>School term/admission year</label><input class="pqpir-input" name="school_term" value="<?php echo s(pqpir_value($form, 'school_term')); ?>"><?php echo pqpir_error($errors, 'school_term'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['special_needs']) ? ' pqpir-field--error' : ''; ?>"><label>Special learning needs / accommodations</label><select class="pqpir-input" name="special_needs"><option value="">Select</option><option value="no"<?php echo pqpir_selected($form, 'special_needs', 'no'); ?>>No</option><option value="yes"<?php echo pqpir_selected($form, 'special_needs', 'yes'); ?>>Yes</option></select><?php echo pqpir_error($errors, 'special_needs'); ?></div>
+            </div>
+            <div class="pqpir-field<?php echo isset($errors['medical_safety_notes']) ? ' pqpir-field--error' : ''; ?>"><label>Medical/allergy/safety notes</label><textarea class="pqpir-input pqpir-textarea" name="medical_safety_notes"><?php echo s(pqpir_value($form, 'medical_safety_notes')); ?></textarea><?php echo pqpir_error($errors, 'medical_safety_notes'); ?></div>
+
+            <h3>Parent / guardian</h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['parent_name']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian name</label><input class="pqpir-input" name="parent_name" value="<?php echo s(pqpir_value($form, 'parent_name')); ?>"><?php echo pqpir_error($errors, 'parent_name'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_relationship']) ? ' pqpir-field--error' : ''; ?>"><label>Relationship to student</label><?php echo pqpir_select('parent_relationship', $options['parent_relationships'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field pqpir-parent-relationship-other<?php echo isset($errors['parent_relationship_other']) ? ' pqpir-field--error' : ''; ?>"><label>Describe relationship</label><input class="pqpir-input" name="parent_relationship_other" value="<?php echo s(pqpir_value($form, 'parent_relationship_other')); ?>"><?php echo pqpir_error($errors, 'parent_relationship_other'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_email']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian email or phone</label><input class="pqpir-input" name="parent_email" value="<?php echo s(pqpir_value($form, 'parent_email')); ?>"><?php echo pqpir_error($errors, 'parent_email'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian phone / WhatsApp</label><input class="pqpir-input" name="parent_phone" value="<?php echo s(pqpir_value($form, 'parent_phone')); ?>"><?php echo pqpir_error($errors, 'parent_phone'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['emergency_contact_name']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact name</label><input class="pqpir-input" name="emergency_contact_name" value="<?php echo s(pqpir_value($form, 'emergency_contact_name')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_name'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['emergency_contact_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact phone</label><input class="pqpir-input" name="emergency_contact_phone" value="<?php echo s(pqpir_value($form, 'emergency_contact_phone')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_phone'); ?></div>
+            </div>
+          <?php else: ?>
+            <h3>Parent / guardian <span class="pqpir-muted">(required only when the student is under 18)</span></h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['parent_name']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian name</label><input class="pqpir-input" name="parent_name" value="<?php echo s(pqpir_value($form, 'parent_name')); ?>"><?php echo pqpir_error($errors, 'parent_name'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_relationship']) ? ' pqpir-field--error' : ''; ?>"><label>Relationship to student</label><?php echo pqpir_select('parent_relationship', $options['parent_relationships'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field pqpir-parent-relationship-other<?php echo isset($errors['parent_relationship_other']) ? ' pqpir-field--error' : ''; ?>"><label>Describe relationship</label><input class="pqpir-input" name="parent_relationship_other" value="<?php echo s(pqpir_value($form, 'parent_relationship_other')); ?>"><?php echo pqpir_error($errors, 'parent_relationship_other'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_email']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian email or phone</label><input class="pqpir-input" name="parent_email" value="<?php echo s(pqpir_value($form, 'parent_email')); ?>"><?php echo pqpir_error($errors, 'parent_email'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian phone / WhatsApp</label><input class="pqpir-input" name="parent_phone" value="<?php echo s(pqpir_value($form, 'parent_phone')); ?>"><?php echo pqpir_error($errors, 'parent_phone'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['emergency_contact_name']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact name</label><input class="pqpir-input" name="emergency_contact_name" value="<?php echo s(pqpir_value($form, 'emergency_contact_name')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_name'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['emergency_contact_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact phone</label><input class="pqpir-input" name="emergency_contact_phone" value="<?php echo s(pqpir_value($form, 'emergency_contact_phone')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_phone'); ?></div>
+            </div>
+          <?php endif; ?>
+
+          <?php if ($isadultlearning): ?>
+            <h3>Adult learning details</h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['adult_learning_area']) ? ' pqpir-field--error' : ''; ?>"><label>Learning area of interest</label><?php echo pqpir_select('adult_learning_area', $options['adult_learning_areas'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Specific subject or skill</label><input class="pqpir-input" name="adult_subject_skill" value="<?php echo s(pqpir_value($form, 'adult_subject_skill')); ?>"></div>
+              <div class="pqpir-field<?php echo isset($errors['adult_education_level']) ? ' pqpir-field--error' : ''; ?>"><label>Highest education level completed</label><?php echo pqpir_select('adult_education_level', $options['adult_education_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Current literacy level</label><?php echo pqpir_select('adult_literacy_level', $options['adult_literacy_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Current numeracy level</label><?php echo pqpir_select('adult_numeracy_level', $options['adult_numeracy_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Digital skill level</label><?php echo pqpir_select('adult_digital_skill_level', $options['adult_digital_skill_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Previous adult-learning experience</label><?php echo pqpir_select('adult_previous_experience', $options['adult_previous_experiences'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Previous learning method</label><?php echo pqpir_select('adult_previous_learning_method', $options['adult_learning_methods'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['adult_learning_goal']) ? ' pqpir-field--error' : ''; ?>"><label>Primary learning goal</label><?php echo pqpir_select('adult_learning_goal', $options['adult_learning_goals'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Current employment status</label><?php echo pqpir_select('adult_employment_status', $options['adult_employment_statuses'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['adult_learning_format']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred learning format</label><?php echo pqpir_select('adult_learning_format', $options['adult_learning_formats'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['adult_learning_pace']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred learning pace</label><?php echo pqpir_select('adult_learning_pace', $options['adult_learning_paces'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Preferred class arrangement</label><?php echo pqpir_select('adult_class_arrangement', $options['adult_class_arrangements'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Childcare responsibilities affecting attendance</label><?php echo pqpir_select('adult_childcare_impact', $options['adult_childcare_options'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Work responsibilities affecting attendance</label><?php echo pqpir_select('adult_work_impact', $options['adult_attendance_impact_options'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Transport or connectivity limitations</label><?php echo pqpir_select('adult_access_limitations', $options['adult_access_limitations'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Confidence returning to learning</label><?php echo pqpir_select('adult_learning_confidence', $options['adult_learning_confidence_levels'] ?? [], $form, $errors); ?></div>
+            </div>
+            <div class="pqpir-field"><label>Learning support or accessibility needs</label><textarea class="pqpir-input pqpir-textarea" name="adult_support_needs"><?php echo s(pqpir_value($form, 'adult_support_needs')); ?></textarea></div>
+            <div class="pqpir-field"><label>Additional adult-learning notes</label><textarea class="pqpir-input pqpir-textarea" name="adult_notes"><?php echo s(pqpir_value($form, 'adult_notes')); ?></textarea></div>
+          <?php endif; ?>
+
+          <?php if ($isprofessionaldevelopment): ?>
+            <h3>Professional development details</h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['professional_area']) ? ' pqpir-field--error' : ''; ?>"><label>Professional development area</label><?php echo pqpir_select('professional_area', $options['professional_development_areas'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Specific topic or skill</label><input class="pqpir-input" name="professional_topic_skill" value="<?php echo s(pqpir_value($form, 'professional_topic_skill')); ?>"></div>
+              <div class="pqpir-field<?php echo isset($errors['professional_current_role']) ? ' pqpir-field--error' : ''; ?>"><label>Current professional role</label><input class="pqpir-input" name="professional_current_role" value="<?php echo s(pqpir_value($form, 'professional_current_role')); ?>"><?php echo pqpir_error($errors, 'professional_current_role'); ?></div>
+              <div class="pqpir-field"><label>Industry or sector</label><?php echo pqpir_select('professional_industry', $options['professional_industries'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['professional_employment_status']) ? ' pqpir-field--error' : ''; ?>"><label>Employment status</label><?php echo pqpir_select('professional_employment_status', $options['professional_employment_statuses'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Employer or organisation</label><input class="pqpir-input" name="professional_employer" value="<?php echo s(pqpir_value($form, 'professional_employer')); ?>"></div>
+              <div class="pqpir-field"><label>Years of professional experience</label><?php echo pqpir_select('professional_experience_years', $options['professional_experience_ranges'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Current responsibility level</label><?php echo pqpir_select('professional_responsibility_level', $options['professional_responsibility_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['professional_development_goal']) ? ' pqpir-field--error' : ''; ?>"><label>Primary development goal</label><?php echo pqpir_select('professional_development_goal', $options['professional_development_goals'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['professional_skill_level']) ? ' pqpir-field--error' : ''; ?>"><label>Current skill level</label><?php echo pqpir_select('professional_skill_level', $options['professional_skill_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Certification or credential sought</label><input class="pqpir-input" name="professional_credential_sought" value="<?php echo s(pqpir_value($form, 'professional_credential_sought')); ?>"></div>
+              <div class="pqpir-field"><label>Certification deadline</label><input class="pqpir-input" name="professional_certification_deadline" type="date" value="<?php echo s(pqpir_value($form, 'professional_certification_deadline')); ?>"></div>
+              <div class="pqpir-field<?php echo isset($errors['professional_learning_format']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred learning format</label><?php echo pqpir_select('professional_learning_format', $options['professional_learning_formats'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Preferred learning schedule</label><?php echo pqpir_select('professional_learning_schedule', $options['professional_learning_schedules'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Preferred course intensity</label><?php echo pqpir_select('professional_course_intensity', $options['professional_course_intensities'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Employer-sponsored training</label><?php echo pqpir_select('professional_employer_sponsored', $options['professional_sponsorship_options'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>CPD credits required</label><?php echo pqpir_select('professional_cpd_required', $options['professional_cpd_options'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Required CPD credits or hours</label><input class="pqpir-input" name="professional_cpd_credits" type="number" min="0" value="<?php echo s(pqpir_value($form, 'professional_cpd_credits')); ?>"></div>
+            </div>
+            <div class="pqpir-field"><label>Expected workplace outcome</label><textarea class="pqpir-input pqpir-textarea" name="professional_workplace_outcome"><?php echo s(pqpir_value($form, 'professional_workplace_outcome')); ?></textarea></div>
+            <div class="pqpir-field"><label>Professional support or accessibility needs</label><textarea class="pqpir-input pqpir-textarea" name="professional_support_needs"><?php echo s(pqpir_value($form, 'professional_support_needs')); ?></textarea></div>
+            <div class="pqpir-field"><label>Additional professional development notes</label><textarea class="pqpir-input pqpir-textarea" name="professional_notes"><?php echo s(pqpir_value($form, 'professional_notes')); ?></textarea></div>
+          <?php endif; ?>
+
+          <?php if ($istechnicaltraining): ?>
+            <h3>Technical training details</h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['technical_program']) ? ' pqpir-field--error' : ''; ?>"><label>Training program or trade</label><?php echo pqpir_select('technical_program', $options['technical_programs'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Specific specialization</label><input class="pqpir-input" name="technical_specialization" value="<?php echo s(pqpir_value($form, 'technical_specialization')); ?>"></div>
+              <div class="pqpir-field<?php echo isset($errors['technical_training_level']) ? ' pqpir-field--error' : ''; ?>"><label>Training level</label><?php echo pqpir_select('technical_training_level', $options['technical_training_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['technical_previous_experience']) ? ' pqpir-field--error' : ''; ?>"><label>Previous technical experience</label><?php echo pqpir_select('technical_previous_experience', $options['technical_experience_types'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Previous learning method</label><?php echo pqpir_select('technical_previous_learning_method', $options['technical_learning_methods'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Experience duration</label><?php echo pqpir_select('technical_experience_duration', $options['technical_experience_durations'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Current employment status</label><?php echo pqpir_select('technical_employment_status', $options['technical_employment_statuses'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Current employer or workshop</label><input class="pqpir-input" name="technical_employer_workshop" value="<?php echo s(pqpir_value($form, 'technical_employer_workshop')); ?>"></div>
+              <div class="pqpir-field<?php echo isset($errors['technical_training_goal']) ? ' pqpir-field--error' : ''; ?>"><label>Primary training goal</label><?php echo pqpir_select('technical_training_goal', $options['technical_training_goals'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Certification sought</label><input class="pqpir-input" name="technical_certification_sought" value="<?php echo s(pqpir_value($form, 'technical_certification_sought')); ?>"></div>
+              <div class="pqpir-field<?php echo isset($errors['technical_training_format']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred training format</label><?php echo pqpir_select('technical_training_format', $options['technical_training_formats'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Preferred training schedule</label><?php echo pqpir_select('technical_training_schedule', $options['technical_training_schedules'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['technical_tool_access']) ? ' pqpir-field--error' : ''; ?>"><label>Access to required tools or equipment</label><?php echo pqpir_select('technical_tool_access', $options['technical_tool_access_options'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Computer or digital skill level</label><?php echo pqpir_select('technical_digital_skill_level', $options['technical_digital_skill_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Safety training completed</label><?php echo pqpir_select('technical_safety_training', $options['technical_yes_no_unsure'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Protective equipment available</label><?php echo pqpir_select('technical_protective_equipment', $options['technical_protective_equipment_options'] ?? [], $form, $errors); ?></div>
+            </div>
+            <div class="pqpir-field"><label>Tools or equipment experience</label><textarea class="pqpir-input pqpir-textarea" name="technical_tools_experience"><?php echo s(pqpir_value($form, 'technical_tools_experience')); ?></textarea></div>
+            <div class="pqpir-field"><label>Practical support or accessibility needs</label><textarea class="pqpir-input pqpir-textarea" name="technical_support_needs"><?php echo s(pqpir_value($form, 'technical_support_needs')); ?></textarea></div>
+            <div class="pqpir-field"><label>Additional technical training notes</label><textarea class="pqpir-input pqpir-textarea" name="technical_notes"><?php echo s(pqpir_value($form, 'technical_notes')); ?></textarea></div>
+          <?php endif; ?>
+
+          <?php if ($ishighereducation): ?>
+            <h3>Higher education details</h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['higher_application_level']) ? ' pqpir-field--error' : ''; ?>"><label>Application level</label><?php echo pqpir_select('higher_application_level', $options['higher_application_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['higher_program_field']) ? ' pqpir-field--error' : ''; ?>"><label>Program or field of study</label><input class="pqpir-input" name="higher_program_field" value="<?php echo s(pqpir_value($form, 'higher_program_field')); ?>"><?php echo pqpir_error($errors, 'higher_program_field'); ?></div>
+              <div class="pqpir-field"><label>Intended specialization</label><input class="pqpir-input" name="higher_specialization" value="<?php echo s(pqpir_value($form, 'higher_specialization')); ?>"></div>
+              <div class="pqpir-field<?php echo isset($errors['higher_highest_qualification']) ? ' pqpir-field--error' : ''; ?>"><label>Highest qualification completed</label><?php echo pqpir_select('higher_highest_qualification', $options['higher_qualification_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Previous institution</label><input class="pqpir-input" name="higher_previous_institution" value="<?php echo s(pqpir_value($form, 'higher_previous_institution')); ?>"></div>
+              <div class="pqpir-field"><label>Qualification title</label><input class="pqpir-input" name="higher_qualification_title" value="<?php echo s(pqpir_value($form, 'higher_qualification_title')); ?>"></div>
+              <div class="pqpir-field"><label>Graduation or expected completion year</label><input class="pqpir-input" name="higher_completion_year" type="number" min="1900" max="2100" value="<?php echo s(pqpir_value($form, 'higher_completion_year')); ?>"></div>
+              <div class="pqpir-field"><label>Academic result</label><input class="pqpir-input" name="higher_academic_result" value="<?php echo s(pqpir_value($form, 'higher_academic_result')); ?>"></div>
+              <div class="pqpir-field<?php echo isset($errors['higher_academic_status']) ? ' pqpir-field--error' : ''; ?>"><label>Current academic status</label><?php echo pqpir_select('higher_academic_status', $options['higher_academic_statuses'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Admission route</label><?php echo pqpir_select('higher_admission_route', $options['higher_admission_routes'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Transfer credits requested</label><?php echo pqpir_select('higher_transfer_credits', $options['higher_transfer_credit_options'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['higher_study_mode']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred study mode</label><?php echo pqpir_select('higher_study_mode', $options['higher_study_modes'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['higher_study_load']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred study load</label><?php echo pqpir_select('higher_study_load', $options['higher_study_loads'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Preferred intake or academic term</label><input class="pqpir-input" name="higher_preferred_intake" value="<?php echo s(pqpir_value($form, 'higher_preferred_intake')); ?>"></div>
+              <div class="pqpir-field"><label>Funding method</label><?php echo pqpir_select('higher_funding_method', $options['higher_funding_methods'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Scholarship or financial-aid interest</label><?php echo pqpir_select('higher_financial_aid_interest', $options['higher_financial_aid_options'] ?? [], $form, $errors); ?></div>
+            </div>
+            <div class="pqpir-field"><label>Research interest or proposed topic</label><textarea class="pqpir-input pqpir-textarea" name="higher_research_interest"><?php echo s(pqpir_value($form, 'higher_research_interest')); ?></textarea></div>
+            <div class="pqpir-field"><label>Academic support or accessibility needs</label><textarea class="pqpir-input pqpir-textarea" name="higher_support_needs"><?php echo s(pqpir_value($form, 'higher_support_needs')); ?></textarea></div>
+          <?php endif; ?>
+
+          <?php if ($isislamicstudies): ?>
+            <h3>Islamic studies details</h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['islamic_program_interest']) ? ' pqpir-field--error' : ''; ?>"><label>Islamic program interest</label><?php echo pqpir_select('islamic_program_interest', $options['islamic_program_interests'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['quran_reading_level']) ? ' pqpir-field--error' : ''; ?>"><label>Quran reading level</label><?php echo pqpir_select('quran_reading_level', $options['quran_reading_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['tajweed_level']) ? ' pqpir-field--error' : ''; ?>"><label>Tajweed level</label><?php echo pqpir_select('tajweed_level', $options['tajweed_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['memorization_status']) ? ' pqpir-field--error' : ''; ?>"><label>Memorization status</label><?php echo pqpir_select('memorization_status', $options['memorization_statuses'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['memorized_portion']) ? ' pqpir-field--error' : ''; ?>"><label>Memorized portion</label><input class="pqpir-input" name="memorized_portion" value="<?php echo s(pqpir_value($form, 'memorized_portion')); ?>"><?php echo pqpir_error($errors, 'memorized_portion'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['arabic_reading_ability']) ? ' pqpir-field--error' : ''; ?>"><label>Arabic reading ability</label><?php echo pqpir_select('arabic_reading_ability', $options['arabic_reading_abilities'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['islamic_learning_goal']) ? ' pqpir-field--error' : ''; ?>"><label>Islamic learning goal</label><input class="pqpir-input" name="islamic_learning_goal" value="<?php echo s(pqpir_value($form, 'islamic_learning_goal')); ?>"><?php echo pqpir_error($errors, 'islamic_learning_goal'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['previous_learning_method']) ? ' pqpir-field--error' : ''; ?>"><label>Previous learning method</label><?php echo pqpir_select('previous_learning_method', $options['previous_learning_methods'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['tafsir_level']) ? ' pqpir-field--error' : ''; ?>"><label>Tafsir level</label><?php echo pqpir_select('tafsir_level', $options['tafsir_levels'] ?? [], $form, $errors); ?></div>
+            </div>
+            <div class="pqpir-field<?php echo isset($errors['prior_islamic_studies']) ? ' pqpir-field--error' : ''; ?>"><label>Prior Islamic studies</label><textarea class="pqpir-input pqpir-textarea" name="prior_islamic_studies"><?php echo s(pqpir_value($form, 'prior_islamic_studies')); ?></textarea><?php echo pqpir_error($errors, 'prior_islamic_studies'); ?></div>
+            <div class="pqpir-field<?php echo isset($errors['islamic_notes']) ? ' pqpir-field--error' : ''; ?>"><label>Islamic studies notes</label><textarea class="pqpir-input pqpir-textarea" name="islamic_notes"><?php echo s(pqpir_value($form, 'islamic_notes')); ?></textarea><?php echo pqpir_error($errors, 'islamic_notes'); ?></div>
+          <?php endif; ?>
+
+          <?php if ($ischristianstudies): ?>
+            <h3>Christian studies details</h3>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['christian_program_interest']) ? ' pqpir-field--error' : ''; ?>"><label>Christian program interest</label><?php echo pqpir_select('christian_program_interest', $options['christian_program_interests'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['bible_reading_level']) ? ' pqpir-field--error' : ''; ?>"><label>Bible reading level</label><?php echo pqpir_select('bible_reading_level', $options['bible_reading_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['bible_knowledge_level']) ? ' pqpir-field--error' : ''; ?>"><label>Bible knowledge level</label><?php echo pqpir_select('bible_knowledge_level', $options['bible_knowledge_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['christian_studies_level']) ? ' pqpir-field--error' : ''; ?>"><label>Christian studies level</label><?php echo pqpir_select('christian_studies_level', $options['christian_studies_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['christian_previous_learning_method']) ? ' pqpir-field--error' : ''; ?>"><label>Previous learning method</label><?php echo pqpir_select('christian_previous_learning_method', $options['christian_previous_learning_methods'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['christian_learning_goal']) ? ' pqpir-field--error' : ''; ?>"><label>Primary learning goal</label><input class="pqpir-input" name="christian_learning_goal" value="<?php echo s(pqpir_value($form, 'christian_learning_goal')); ?>"><?php echo pqpir_error($errors, 'christian_learning_goal'); ?></div>
+            </div>
+            <div class="pqpir-field<?php echo isset($errors['prior_christian_studies']) ? ' pqpir-field--error' : ''; ?>"><label>Previous Christian studies</label><textarea class="pqpir-input pqpir-textarea" name="prior_christian_studies"><?php echo s(pqpir_value($form, 'prior_christian_studies')); ?></textarea><?php echo pqpir_error($errors, 'prior_christian_studies'); ?></div>
+            <div class="pqpir-field<?php echo isset($errors['christian_notes']) ? ' pqpir-field--error' : ''; ?>"><label>Additional Christian studies notes</label><textarea class="pqpir-input pqpir-textarea" name="christian_notes"><?php echo s(pqpir_value($form, 'christian_notes')); ?></textarea><?php echo pqpir_error($errors, 'christian_notes'); ?></div>
+          <?php endif; ?>
+
+          <h3>Program and learning preferences</h3>
           <div class="pqpir-grid">
             <div class="pqpir-field<?php echo isset($errors['course_type']) ? ' pqpir-field--error' : ''; ?>"><label>Course</label><?php echo pqpir_select('course_type', $options['course_types'] ?? [], $form, $errors); ?><?php if (empty($options['course_types'])): ?><div class="pqpir-muted">No public courses are available for this institution yet.</div><?php endif; ?></div>
             <div class="pqpir-field<?php echo isset($errors['country']) ? ' pqpir-field--error' : ''; ?>"><label>Country</label><?php echo pqpir_select('country', $options['countries'] ?? [], $form, $errors); ?></div>
@@ -853,6 +1681,8 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
   var timezone = document.querySelector('select[name="timezone"]');
   var city = document.querySelector('select[name="city"]');
   var cityOther = document.querySelector('.pqpir-city-other');
+  var parentRelationship = document.querySelector('select[name="parent_relationship"]');
+  var parentRelationshipOther = document.querySelector('.pqpir-parent-relationship-other');
   if (!country || !timezone || !city) {
     return;
   }
@@ -896,11 +1726,20 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
       cityOther.classList.toggle('pqpir-city-other--visible', city.value === 'Other');
     }
   }
+  function refreshParentRelationship() {
+    if (parentRelationshipOther && parentRelationship) {
+      parentRelationshipOther.style.display = parentRelationship.value === 'other' ? 'grid' : 'none';
+    }
+  }
   country.addEventListener('change', refreshTimezones);
   country.addEventListener('change', refreshCities);
   city.addEventListener('change', refreshCities);
+  if (parentRelationship) {
+    parentRelationship.addEventListener('change', refreshParentRelationship);
+  }
   refreshTimezones();
   refreshCities();
+  refreshParentRelationship();
 })();
 </script>
 <?php

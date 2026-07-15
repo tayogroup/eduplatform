@@ -7,7 +7,7 @@
 /* ===== bootstrap.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: bootstrap.js
+  EduPlatform Alphabet runtime fragment: bootstrap.js
   Runtime bootstrap, config, shared state, and lesson data setup.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -107,7 +107,7 @@
     !window.UNIT_CFG ||
     typeof window.UNIT_CFG !== 'object'
   ) {
-    const message = 'Pre-Quraan unit config missing: unit.config.js must load before the shared runtime bundle.';
+    const message = 'EduPlatform unit config missing: unit.config.js must load before the shared runtime bundle.';
 
     try {
       document.documentElement.innerHTML = [
@@ -142,12 +142,12 @@
 
   ['unitid', 'wsGetFunction', 'wsSetFunction'].forEach(function (key) {
     if (!UNIT_CFG[key]) {
-      __pqFailConfig('Pre-Quraan unit config missing required field: ' + key);
+      __pqFailConfig('EduPlatform unit config missing required field: ' + key);
     }
   });
 
   if (!Array.isArray(UNIT_CFG.steps) || !UNIT_CFG.steps.length) {
-    __pqFailConfig('Pre-Quraan unit config missing required field: steps');
+    __pqFailConfig('EduPlatform unit config missing required field: steps');
   }
 
   /**
@@ -529,7 +529,7 @@ const LESSON_DEF = {
         }));
       }
 
-      __pqFailConfig('Pre-Quraan unit config missing required field: steps');
+      __pqFailConfig('EduPlatform unit config missing required field: steps');
     })()
   };
 
@@ -723,7 +723,11 @@ const LESSON_DEF = {
       getCompletedSteps: () => __pqCountCompletedSteps(),
       getTotalStars: () => __pqGetTotalStarsEarned(),
       getCompletedUnits: () => __pqGetCompletedUnitsCount(),
-      getFocusState: () => __pqGetFocusBadgeState()
+      getFocusState: () => __pqGetFocusBadgeState(),
+      getCurrentStepId: () => {
+        const current = getCurrentStep();
+        return String((current && current.step && current.step.id) || '');
+      }
     });
 
     return __pqRewardBar;
@@ -1386,7 +1390,7 @@ const SOUND_IMAGE_BY_KEY = Object.fromEntries(
 /* ===== steps.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: steps.js
+  EduPlatform Alphabet runtime fragment: steps.js
   Step definitions, managed/review/free-practice mode helpers, and per-step play tracking.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -2019,7 +2023,7 @@ tiles.forEach((tile) => {
 /* ===== progress.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: progress.js
+  EduPlatform Alphabet runtime fragment: progress.js
   Moodle managed-progress web services, DOM references, lecture UI, and settings/filter helpers.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -3385,7 +3389,7 @@ async function __pqHandleQaSkipStepClick(ev) {
     await __pqRefreshAfterQaSkip();
   } catch (err) {
     try {
-      console.error('[Pre-Quraan] QA skip step failed', err);
+      console.error('[EduPlatform] QA skip step failed', err);
     } catch (_e) {}
     if (await __pqTryQaSkipStepFallback(target && target.stepId)) {
       __pqNotifyQaSkipStep('Skipped this step in integration. Moodle progress will update after services are upgraded.', 'success');
@@ -4954,7 +4958,7 @@ function __pqIsPassFilterStep(stepId) {
 /* ===== grid.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: grid.js
+  EduPlatform Alphabet runtime fragment: grid.js
   Grid/media state, tile rendering, Write adapter setup, and grid interaction helpers.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -7112,7 +7116,7 @@ function markActive() {
 /* ===== media.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: media.js
+  EduPlatform Alphabet runtime fragment: media.js
   Shared playlist/watch media engine helpers.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -8222,8 +8226,8 @@ async function __pqRepeatQualityCheck(key, blob) {
 
 /* ===== playback.js ===== */
 
-﻿/*
-  Pre-Quraan Alphabet runtime fragment: playback.js
+/*
+  EduPlatform Alphabet runtime fragment: playback.js
   Playlist playback, Watch/Sound/Listen+/Words/Repeat/Match flows, and playing-tile effects.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -11244,11 +11248,10 @@ async function playAll() {
   // ============================================================
 
 
-
 /* ===== step-state.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: step-state.js
+  EduPlatform Alphabet runtime fragment: step-state.js
   Current step normalization, current-step lookup, and Write button refresh helpers.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -11418,7 +11421,7 @@ function __pqWaitUntil(testFn, timeoutMs, intervalMs) {
 /* ===== speak.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: speak.js
+  EduPlatform Alphabet runtime fragment: speak.js
   Speak bridge, Speak modal, Speak progress, and recording controls.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -14063,7 +14066,7 @@ return engine;
 /* ===== submit.js ===== */
 
 /*
-  Pre-Quraan shared Submit step.
+  EduPlatform shared Submit step.
   Audio-only, full-unit teacher submission with practice media.
 */
 
@@ -14659,7 +14662,7 @@ try {
 /* ===== write.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: write.js
+  EduPlatform Alphabet runtime fragment: write.js
   Current-step control updates and Write UI/stepper rendering sync.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -15430,7 +15433,7 @@ async function markPlaylistStepCompleted(stepId) {
 /* ===== ui-bindings.js ===== */
 
 /*
-  Pre-Quraan Alphabet runtime fragment: ui-bindings.js
+  EduPlatform Alphabet runtime fragment: ui-bindings.js
   Final UI bindings, shell/runtime orchestration, and startup.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.
@@ -16110,7 +16113,7 @@ try {
     const identity = cfg && cfg.identity && typeof cfg.identity === 'object' ? cfg.identity : {};
     const unitId = String(identity.unitId || cfg.unitid || '').trim();
     const lessonId = String(identity.lessonId || cfg.lessonid || unitId || '').trim();
-    const fallbackTitle = String(unitId || lessonId || 'Pre-Quraan Unit');
+    const fallbackTitle = String(unitId || lessonId || 'EduPlatform Unit');
     const readUi = (typeof __pqLocalizedCfg === 'function') ? __pqLocalizedCfg : __cfg;
     const pageTitle = String(readUi('ui.pageTitle', readUi('ui.lessonTitle', fallbackTitle, 'ui'), 'ui')).trim() || fallbackTitle;
     const headerTitle = String(readUi('ui.headerTitle', pageTitle, 'ui')).trim() || pageTitle;

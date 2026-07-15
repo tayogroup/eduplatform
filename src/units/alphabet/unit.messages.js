@@ -14,7 +14,7 @@
         text: "Great job finishing the lesson. Now you will learn the alphabet rules. You will learn that the Arabic alphabet has 29 letters. You will learn letter names, letter sounds, dots, heavy letters, light letters, and short vowels. Read carefully, then press Rules to listen. When the rules audio finishes two times, this step will be complete."
       },
       listen: {
-        audio: "alphabet_listen_step_all_lettlers.mp3",
+        audio: "alphabet_listen_step_all_letters.mp3",
         text: "Now it is time to listen. This step helps your ears learn the sound of each letter. You will hear every letter in the alphabet. Do not repeat yet. Just listen carefully and notice how each letter sounds different."
       },
       watch: {

@@ -2,6 +2,9 @@ CREATE TABLE mdlgx_local_prequran_live_session (
   id BIGINT(20) NOT NULL AUTO_INCREMENT,
   cohortid BIGINT(20) NOT NULL DEFAULT 0,
   teacherid BIGINT(20) NOT NULL,
+  session_type VARCHAR(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'teacher_led',
+  teacher_required TINYINT(1) NOT NULL DEFAULT 1,
+  report_to_teacherid BIGINT(20) NOT NULL DEFAULT 0,
   lessonid VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   unitid VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   title VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -27,6 +30,8 @@ CREATE TABLE mdlgx_local_prequran_live_session (
   PRIMARY KEY (id),
   UNIQUE KEY mdlgx_lpreqlive_session_bbb_uix (bbb_meeting_id),
   KEY mdlgx_lpreqlive_session_teacher_time_ix (teacherid, scheduled_start),
+  KEY mdlgx_lpreqlive_session_type_ix (session_type, status, scheduled_start),
+  KEY mdlgx_lpreqlive_session_report_ix (report_to_teacherid, scheduled_start),
   KEY mdlgx_lpreqlive_session_cohort_time_ix (cohortid, scheduled_start),
   KEY mdlgx_lpreqlive_session_status_time_ix (status, scheduled_start),
   KEY mdlgx_lpreqlive_session_lesson_unit_ix (lessonid, unitid)

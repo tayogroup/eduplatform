@@ -1,0 +1,337 @@
+{
+  "schemaVersion": "Ehel English Content Template v1.1",
+  "unitId": "eng-g02-t01-u02",
+  "minimumCounts": {
+    "grammar": 6,
+    "speaking": 6,
+    "writing": 6,
+    "activities": 6,
+    "quizzes": 10,
+    "liveSessions": 6
+  },
+  "audio": {
+    "provider": "ElevenLabs",
+    "voiceId": "XfNU2rGpBa01ckF309OY",
+    "modelId": "eleven_multilingual_v2",
+    "language": "en-GB"
+  },
+  "grammar": [
+    {
+      "grammarId": "eng-g02-t01-u02-grammar01",
+      "conceptId": "eng-g02-t01-u02-concept-question-words",
+      "sequence": 1,
+      "practiceType": "Guided recognition",
+      "title": "What and Who: Choose the Question Word",
+      "explanation": "Use what to ask about a thing, action or job. Use who to ask about a person.",
+      "ruleAndExamples": "What is Selma doing? She is driving the bus.\nWho is driving the bus? Selma is driving the bus.",
+      "commonMistake": "Mistake: Who is the firefighter doing?\nFix: What is the firefighter doing?",
+      "memoryTip": "Who asks for a person. What asks for information about a thing or action.",
+      "practice": "Choose What or Who: ___ is the bus driver? | ___ is the doctor doing? | ___ is helping Samira? | ___ does a firefighter wear? | ___ is your teacher?",
+      "outcomeId": "eng-g02-t01-u02-lo03"
+    },
+    {
+      "grammarId": "eng-g02-t01-u02-grammar03",
+      "conceptId": "eng-g02-t01-u02-concept-question-words",
+      "sequence": 2,
+      "practiceType": "Guided construction",
+      "title": "What and Who: Build the Question",
+      "explanation": "Begin with What or Who, keep the words in question order, and finish with a question mark.",
+      "ruleAndExamples": "Who helps sick people? A doctor helps sick people.\nWhat is the farmer growing? The farmer is growing maize.",
+      "commonMistake": "Mistake: Who the bus drives?\nFix: Who drives the bus?",
+      "memoryTip": "Question word first, question mark last.",
+      "practice": "Build one What question and one Who question for each scene: a firefighter using a hose; a nurse helping a child; a farmer growing beans.",
+      "outcomeId": "eng-g02-t01-u02-lo03"
+    },
+    {
+      "grammarId": "eng-g02-t01-u02-grammar02",
+      "conceptId": "eng-g02-t01-u02-concept-present-continuous",
+      "sequence": 3,
+      "practiceType": "Guided recognition",
+      "title": "Actions Now: Choose Is or Are",
+      "explanation": "Use the present continuous for an action happening now. Use is with one person or thing and are with more than one.",
+      "ruleAndExamples": "The driver is waving.\nThe firefighters are climbing.\nWe are helping our neighbours.",
+      "commonMistake": "Mistake: The firefighters is climbing.\nFix: The firefighters are climbing.",
+      "memoryTip": "One is; more than one are.",
+      "practice": "Complete with is or are: The officer ___ helping. | The children ___ counting. | Samira ___ watching. | We ___ learning. | The farmers ___ growing maize.",
+      "outcomeId": "eng-g02-t01-u02-lo05"
+    },
+    {
+      "grammarId": "eng-g02-t01-u02-grammar04",
+      "conceptId": "eng-g02-t01-u02-concept-present-continuous",
+      "sequence": 4,
+      "practiceType": "Word building",
+      "title": "Action Words: Add -ing",
+      "explanation": "Add -ing to many action words to show that the action is happening now. Some words change before -ing is added.",
+      "ruleAndExamples": "help + ing = helping\ndrive - e + ing = driving\nrun + n + ing = running",
+      "commonMistake": "Mistake: driveing.\nFix: driving. Drop the final e before adding -ing.",
+      "memoryTip": "Look at the action word before you add -ing.",
+      "practice": "Write the -ing form: help | teach | rescue | drive | clean | run.",
+      "outcomeId": "eng-g02-t01-u02-lo05"
+    },
+    {
+      "grammarId": "eng-g02-t01-u02-grammar05",
+      "conceptId": "eng-g02-t01-u02-concept-present-continuous",
+      "sequence": 5,
+      "practiceType": "Sentence construction",
+      "title": "Actions Now: Build Complete Sentences",
+      "explanation": "A complete present-continuous sentence needs a subject, is or are, and an action word ending in -ing.",
+      "ruleAndExamples": "The window cleaner is cleaning the glass.\nThe neighbours are carrying boxes.",
+      "commonMistake": "Mistake: The nurse helping the child.\nFix: The nurse is helping the child.",
+      "memoryTip": "Who + is or are + action-ing.",
+      "practice": "Put the words in order: is / Ishmael / cleaning / the window | are / the firefighters / water / using | helping / Samira and Hooyo / are / Samira.",
+      "outcomeId": "eng-g02-t01-u02-lo05"
+    },
+    {
+      "grammarId": "eng-g02-t01-u02-grammar06",
+      "conceptId": "eng-g02-t01-u02-concept-present-continuous",
+      "sequence": 6,
+      "practiceType": "Independent production",
+      "title": "Neighbourhood Reporter",
+      "explanation": "Use the present continuous to report what different people are doing in a busy neighbourhood scene.",
+      "ruleAndExamples": "Selma is driving the bus. Two firefighters are putting out the fire. Adam is keeping people safe.",
+      "commonMistake": "Check that is or are matches the person or people you name.",
+      "memoryTip": "Look, name, choose is or are, then say the action.",
+      "practice": "Describe six actions in the neighbourhood picture. Use at least three sentences with is and two sentences with are.",
+      "outcomeId": "eng-g02-t01-u02-lo05"
+    }
+  ],
+  "speakingAdditions": [
+    {
+      "speakingId": "eng-g02-t01-u02-speak04",
+      "sequence": 4,
+      "activityType": "Information gap",
+      "title": "Speaking 4 - Who and What Detective",
+      "instructionsAndModelLines": "Look at a neighbourhood scene. Ask three Who questions and three What questions. Model: Who is driving the bus? Selma is driving. What is Ishmael doing? He is cleaning a window.",
+      "recordingRequired": true,
+      "aiTutorPrompt": "Answer my six neighbourhood questions, then tell me whether I used Who and What correctly.",
+      "outcomeId": "eng-g02-t01-u02-lo03"
+    },
+    {
+      "speakingId": "eng-g02-t01-u02-speak05",
+      "sequence": 5,
+      "activityType": "Picture description",
+      "title": "Speaking 5 - What Is Happening Now?",
+      "instructionsAndModelLines": "Describe six actions in the picture using is or are and an -ing word. Model: The firefighter is carrying a hose. The neighbours are helping Samira.",
+      "recordingRequired": true,
+      "aiTutorPrompt": "Listen to my six action sentences. Check my use of is, are and -ing.",
+      "outcomeId": "eng-g02-t01-u02-lo05"
+    },
+    {
+      "speakingId": "eng-g02-t01-u02-speak06",
+      "sequence": 6,
+      "activityType": "Role-play",
+      "title": "Speaking 6 - Be a Good Neighbour",
+      "instructionsAndModelLines": "Role-play noticing that a neighbour needs help. Ask what happened, offer help and respond politely. Model: What happened? Your box is heavy. I can help you carry it. Thank you, good neighbour!",
+      "recordingRequired": true,
+      "aiTutorPrompt": "Role-play a neighbour who needs simple help, then give me feedback on my questions and kind response.",
+      "outcomeId": "eng-g02-t01-u02-lo01"
+    }
+  ],
+  "writingAdditions": [
+    {
+      "writingId": "eng-g02-t01-u02-write04",
+      "sequence": 4,
+      "title": "Writing 4 - A Community Helper Card",
+      "promptAndInstructions": "Create a fact card about one community helper. Name the job, explain two duties, and name two clothes or tools used for the job.",
+      "modelText": "A firefighter helps people. A firefighter puts out fires and rescues people. Firefighters wear helmets and boots. They use a hose and ladder.",
+      "sentenceStarter": "A ___ helps our community by",
+      "expectedLength": "4-5 complete sentences",
+      "successCriteria": "I named the job; explained two duties; named two clothes or tools; used complete sentences and punctuation",
+      "support": "Use the jobs-and-equipment word bank and the model card.",
+      "extension": "Add a sentence explaining why the job is important.",
+      "rubricId": "rub-writing-v1",
+      "outcomeId": "eng-g02-t01-u02-lo06"
+    },
+    {
+      "writingId": "eng-g02-t01-u02-write05",
+      "sequence": 5,
+      "title": "Writing 5 - Warta Street News Report",
+      "promptAndInstructions": "Write a short report about the fire on Warta Street. Tell where it happened, who came to help, what people did and how the event ended.",
+      "modelText": "A fire started near the market on Warta Street. Firefighters came in a red fire engine. They put out the fire and rescued the goats. The neighbours helped Samira clean her shop. Everyone was safe in the end.",
+      "sentenceStarter": "A fire started near",
+      "expectedLength": "5-6 complete sentences",
+      "successCriteria": "I explained where, who, what and the ending; used story facts; put events in order; checked capitals and punctuation",
+      "support": "Use the story, the sequence words first, next and finally, and the model report.",
+      "extension": "Add one quotation from a character.",
+      "rubricId": "rub-writing-v1",
+      "outcomeId": "eng-g02-t01-u02-lo02"
+    },
+    {
+      "writingId": "eng-g02-t01-u02-write06",
+      "sequence": 6,
+      "title": "Writing 6 - My Good-Neighbour Promise",
+      "promptAndInstructions": "Write six sentences about how you can be a good neighbour at home, at school or on your street. Include one action you can do this week.",
+      "modelText": "I can greet my neighbours kindly. I can carry a bag for an older person. I can keep our shared space clean. I can listen when someone needs help. This week, I will help sweep near our door. Good neighbours work together.",
+      "sentenceStarter": "I can be a good neighbour by",
+      "expectedLength": "6 complete sentences",
+      "successCriteria": "I wrote six relevant promises; included one action for this week; used clear verbs; checked complete sentences",
+      "support": "Use I can and I will sentence starters.",
+      "extension": "Explain how one promise will help another person.",
+      "rubricId": "rub-writing-v1",
+      "outcomeId": "eng-g02-t01-u02-lo01"
+    }
+  ],
+  "activityAdditions": [
+    {
+      "activityId": "eng-g02-t01-u02-act05",
+      "sequence": 5,
+      "title": "Activity 5 - Who Uses It?",
+      "activityType": "Sorting challenge",
+      "instructionsAndItems": "Sort each item under the correct helper: hose | helmet | stethoscope | medicine | books | board | badge | whistle | seeds | tractor.",
+      "answerSummary": "Firefighter: hose, helmet; doctor: stethoscope, medicine; teacher: books, board; police officer: badge, whistle; farmer: seeds, tractor.",
+      "outcomeId": "eng-g02-t01-u02-lo06",
+      "deliveryMode": "Online drag-and-sort or workbook"
+    },
+    {
+      "activityId": "eng-g02-t01-u02-act06",
+      "sequence": 6,
+      "title": "Activity 6 - Neighbourhood Action Hunt",
+      "activityType": "Observation and sentence challenge",
+      "instructionsAndItems": "Find or imagine six people helping in a neighbourhood. For each person, record the job and one action happening now using is or are + verb-ing.",
+      "answerSummary": "Answers vary; require six sensible job-and-action pairs with correct is/are + verb-ing sentences.",
+      "outcomeId": "eng-g02-t01-u02-lo05",
+      "deliveryMode": "Home, classroom or live session"
+    }
+  ],
+  "quizAdditions": [
+    {
+      "quizId": "eng-g02-t01-u02-quiz01",
+      "questionId": "eng-g02-t01-u02-quiz01-q06",
+      "sequence": 6,
+      "questionType": "Multiple choice",
+      "question": "Who helps people who are sick?",
+      "options": "A doctor | A farmer | A bus driver | A reporter",
+      "correctAnswer": "A doctor",
+      "explanation": "A doctor helps people who are sick.",
+      "marks": 1,
+      "outcomeId": "eng-g02-t01-u02-lo02",
+      "difficulty": "Core"
+    },
+    {
+      "quizId": "eng-g02-t01-u02-quiz01",
+      "questionId": "eng-g02-t01-u02-quiz01-q07",
+      "sequence": 7,
+      "questionType": "Multiple choice",
+      "question": "Which question asks about an action?",
+      "options": "What is the firefighter doing? | Who is the firefighter? | Who is your neighbour? | Who drives the bus?",
+      "correctAnswer": "What is the firefighter doing?",
+      "explanation": "Use What to ask about an action.",
+      "marks": 1,
+      "outcomeId": "eng-g02-t01-u02-lo03",
+      "difficulty": "Core"
+    },
+    {
+      "quizId": "eng-g02-t01-u02-quiz01",
+      "questionId": "eng-g02-t01-u02-quiz01-q08",
+      "sequence": 8,
+      "questionType": "Multiple choice",
+      "question": "The firefighters ___ climbing the ladder.",
+      "options": "are | is | am | be",
+      "correctAnswer": "are",
+      "explanation": "Firefighters means more than one person, so use are.",
+      "marks": 1,
+      "outcomeId": "eng-g02-t01-u02-lo05",
+      "difficulty": "Core"
+    },
+    {
+      "quizId": "eng-g02-t01-u02-quiz01",
+      "questionId": "eng-g02-t01-u02-quiz01-q09",
+      "sequence": 9,
+      "questionType": "Multiple choice",
+      "question": "Which is the correct -ing form of drive?",
+      "options": "driving | driveing | drivving | drived",
+      "correctAnswer": "driving",
+      "explanation": "Drop the final e in drive before adding -ing.",
+      "marks": 1,
+      "outcomeId": "eng-g02-t01-u02-lo05",
+      "difficulty": "Core"
+    },
+    {
+      "quizId": "eng-g02-t01-u02-quiz01",
+      "questionId": "eng-g02-t01-u02-quiz01-q10",
+      "sequence": 10,
+      "questionType": "Multiple choice",
+      "question": "Which clothes protect a firefighter's head and feet?",
+      "options": "A helmet and boots | A mask and gloves | A uniform and badge | A coat and scarf",
+      "correctAnswer": "A helmet and boots",
+      "explanation": "A helmet protects the head and strong boots protect the feet.",
+      "marks": 1,
+      "outcomeId": "eng-g02-t01-u02-lo06",
+      "difficulty": "Core"
+    }
+  ],
+  "liveSessions": [
+    {
+      "liveSessionId": "eng-g02-t01-u02-live01",
+      "week": 1,
+      "sessionWithinWeek": 1,
+      "sessionNo": 1,
+      "title": "Meet the neighbourhood helpers",
+      "durationMin": 45,
+      "beforeSession": "Watch the teacher vocabulary lecture and learn the People in Your Neighbourhood group.",
+      "agenda": "5 min welcome; 10 min picture talk; 10 min vocabulary retrieval; 15 min describe-a-job speaking; 5 min reflection",
+      "afterSession": "Complete Speaking 1 and add five helpers to My Word Book.",
+      "outcomeIds": "eng-g02-t01-u02-lo01 | eng-g02-t01-u02-lo02"
+    },
+    {
+      "liveSessionId": "eng-g02-t01-u02-live02",
+      "week": 1,
+      "sessionWithinWeek": 2,
+      "sessionNo": 2,
+      "title": "Firefighters, equipment and safety",
+      "durationMin": 45,
+      "beforeSession": "Listen to Firefighters and Their Equipment and bring one safety question.",
+      "agenda": "5 min retrieval; 10 min shared reading; 10 min equipment sorting; 15 min comprehension discussion; 5 min safety exit ticket",
+      "afterSession": "Complete Activity 4 and improve two reading answers.",
+      "outcomeIds": "eng-g02-t01-u02-lo02 | eng-g02-t01-u02-lo06"
+    },
+    {
+      "liveSessionId": "eng-g02-t01-u02-live03",
+      "week": 1,
+      "sessionWithinWeek": 3,
+      "sessionNo": 3,
+      "title": "Ask with What and Who",
+      "durationMin": 45,
+      "beforeSession": "Complete Grammar Practices 1 and 2.",
+      "agenda": "5 min warm-up; 10 min What/Who sort; 10 min teacher modelling; 15 min question detective speaking; 5 min feedback",
+      "afterSession": "Record Speaking 4 and correct one question.",
+      "outcomeIds": "eng-g02-t01-u02-lo03"
+    },
+    {
+      "liveSessionId": "eng-g02-t01-u02-live04",
+      "week": 2,
+      "sessionWithinWeek": 1,
+      "sessionNo": 4,
+      "title": "Actions happening now",
+      "durationMin": 45,
+      "beforeSession": "Complete Grammar Practices 3-6 and practise the action words.",
+      "agenda": "5 min action mime; 10 min is/are check; 10 min build -ing words; 15 min neighbourhood reporting; 5 min review",
+      "afterSession": "Complete Activity 6 and record Speaking 5.",
+      "outcomeIds": "eng-g02-t01-u02-lo05"
+    },
+    {
+      "liveSessionId": "eng-g02-t01-u02-live05",
+      "week": 2,
+      "sessionWithinWeek": 2,
+      "sessionNo": 5,
+      "title": "The Helpers of Warta Street",
+      "durationMin": 45,
+      "beforeSession": "Listen to the story and choose one helper you admire.",
+      "agenda": "5 min prediction; 10 min echo reading; 10 min event sequencing; 15 min Warta Street news writing; 5 min peer feedback",
+      "afterSession": "Revise Writing 5 using story evidence.",
+      "outcomeIds": "eng-g02-t01-u02-lo01 | eng-g02-t01-u02-lo02 | eng-g02-t01-u02-lo05"
+    },
+    {
+      "liveSessionId": "eng-g02-t01-u02-live06",
+      "week": 2,
+      "sessionWithinWeek": 3,
+      "sessionNo": 6,
+      "title": "Good-neighbour showcase and review",
+      "durationMin": 45,
+      "beforeSession": "Complete the ten-question quiz and bring one portfolio piece.",
+      "agenda": "10 min retrieval game; 10 min quiz corrections; 10 min role-plays; 10 min portfolio shares; 5 min self-assessment",
+      "afterSession": "Complete Writing 6 and save the final self-assessment.",
+      "outcomeIds": "eng-g02-t01-u02-lo01 | eng-g02-t01-u02-lo02 | eng-g02-t01-u02-lo03 | eng-g02-t01-u02-lo04 | eng-g02-t01-u02-lo05 | eng-g02-t01-u02-lo06"
+    }
+  ]
+}

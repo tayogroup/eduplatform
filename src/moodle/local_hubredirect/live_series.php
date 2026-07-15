@@ -63,6 +63,9 @@ function pqlser_is_teacher(int $userid): bool {
     if (is_siteadmin($userid) || ((int)$USER->id === $userid && is_siteadmin($USER)) || pqh_can_manage_academy_operations($userid)) {
         return true;
     }
+    if (pqh_user_can_create_live_sessions($userid)) {
+        return true;
+    }
     if (pqlser_table_exists('local_prequran_teacher_student')
         && $DB->record_exists('local_prequran_teacher_student', ['teacherid' => $userid, 'status' => 'active'])) {
         return true;
@@ -331,7 +334,11 @@ function pqlser_ack_current(int $seriesid, int $studentid, int $parentid, int $l
 }
 
 $canoperate = is_siteadmin($USER) || pqh_can_manage_academy_operations((int)$USER->id);
-if (!$canoperate && (!pqlser_is_teacher((int)$USER->id) || pqlser_is_managed_student((int)$USER->id))) {
+$canmanageseries = $canoperate || pqh_user_can_create_live_sessions(
+    (int)$USER->id,
+    (int)($consumercontext->workspaceid ?? 0)
+);
+if (!$canmanageseries) {
     pqh_access_denied(
         'Only teachers and administrators can manage live class series.',
         new moodle_url('/local/hubredirect/dashboard.php'),

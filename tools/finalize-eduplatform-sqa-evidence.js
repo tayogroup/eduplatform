@@ -156,6 +156,7 @@ function writeReadme(bundleDir, manifest) {
     '- `playwright-report/`: HTML Playwright report, when present.',
     '- `artifacts/`: Playwright per-test artifacts, screenshots, videos, and attachments.',
     '- `sqa-schedule/`: scheduled runner JSON summaries, when present.',
+    '- `sqa-verification-sweep/`: package verifier, route smoke, and control sweep summaries.',
     '- `root-test-results/`: root-level result JSON/CSV/PDF/Markdown evidence.',
     '- `referenced-artifacts/`: files referenced from journey summary manifests.',
     '- `manifest.json`: file inventory with SHA-256 checksums.',
@@ -231,6 +232,7 @@ function main() {
   copyDir(path.join(testResultsDir, 'playwright-report'), path.join(bundleDir, 'playwright-report'), manifest, 'playwright-report');
   copyDir(path.join(testResultsDir, 'artifacts'), path.join(bundleDir, 'artifacts'), manifest, 'artifacts');
   copyDir(path.join(testResultsDir, 'sqa-schedule'), path.join(bundleDir, 'sqa-schedule'), manifest, 'sqa-schedule');
+  copyDir(path.join(testResultsDir, 'sqa-verification-sweep'), path.join(bundleDir, 'sqa-verification-sweep'), manifest, 'sqa-verification-sweep');
   collectRootEvidence(bundleDir, manifest);
   copyReferencedArtifacts(bundleDir, manifest);
 

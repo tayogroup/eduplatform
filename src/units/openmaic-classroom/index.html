@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>OpenMAIC Classroom Player</title>
+  <link rel="stylesheet" href="/pre_quraan/shared/css/support.css?v=support-phase3-20260703a">
+  <link rel="stylesheet" href="./unit.css">
+</head>
+<body>
+  <main class="maic-shell">
+    <header class="maic-header">
+      <div>
+        <p class="eyebrow">Quraan Academy</p>
+        <h1>OpenMAIC Classroom Player</h1>
+      </div>
+      <div class="top-actions maic-actions">
+        <a class="home-link" href="/pre_quraan/app/index.html">Back</a>
+      </div>
+    </header>
+
+    <section id="dropZone" class="import-panel">
+      <div>
+        <h2>Import an OpenMAIC ZIP</h2>
+        <p>Export a classroom from OpenMAIC, then drop the ZIP here to play its interactive scenes and audio.</p>
+      </div>
+      <label class="file-button">
+        <input id="zipInput" type="file" accept=".zip,application/zip">
+        Choose ZIP
+      </label>
+      <p id="importStatus" class="status-text">Waiting for classroom package.</p>
+    </section>
+
+    <section id="player" class="player" hidden>
+      <aside class="scene-list">
+        <div class="classroom-title">
+          <p class="eyebrow">Classroom</p>
+          <h2 id="classroomTitle">Untitled</h2>
+        </div>
+        <div id="sceneButtons" class="scene-buttons" aria-label="Scenes"></div>
+      </aside>
+
+      <section class="stage-panel">
+        <div class="stage-toolbar">
+          <button id="prevScene" type="button">Previous</button>
+          <span id="sceneCounter" class="counter">0 / 0</span>
+          <button id="nextScene" type="button">Next</button>
+          <button id="playAudio" class="primary" type="button">Play Scene Audio</button>
+          <button id="stopAudio" type="button">Stop</button>
+        </div>
+
+        <article class="scene-card">
+          <div class="scene-heading">
+            <p id="sceneType" class="eyebrow">Scene</p>
+            <h2 id="sceneTitle">Select a scene</h2>
+          </div>
+          <div id="sceneCanvas" class="scene-canvas"></div>
+          <div id="speechPanel" class="speech-panel" aria-live="polite"></div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="/pre_quraan/shared/js/shared-support-panel.js?v=support-phase3-20260703a"></script>
+  <script src="./unit.runtime.js"></script>
+</body>
+</html>

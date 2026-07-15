@@ -1,6 +1,6 @@
 // pq_core_grid_helper_v1.0_LOCKED.js
 // -----------------------------------------------------------------------------
-// PreQuraan Shared Grid Helper v1.0
+// EduPlatform Shared Grid Helper v1.0
 // Purpose: Keep Tanween / Madd / Movement grids consistent so they never drift.
 // - Standardizes: index mapping, visual column placement, and PlayAll ordering.
 // - Separates: visual layout from play order (configurable).

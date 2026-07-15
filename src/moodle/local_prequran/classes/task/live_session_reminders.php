@@ -17,6 +17,7 @@ class live_session_reminders extends \core\task\scheduled_task {
         }
 
         $this->mark_ended_sessions_awaiting_review();
+        $this->send_practice_coach_session_reports();
         $this->send_before_class_reminders('24h', 23 * HOURSECS, 25 * HOURSECS);
         $this->send_before_class_reminders('1h', 50 * MINSECS, 70 * MINSECS);
         $this->send_teacher_followups();
@@ -113,6 +114,74 @@ class live_session_reminders extends \core\task\scheduled_task {
             return false;
         }
         return array_key_exists($column, $columns);
+    }
+
+    private function brand_for_workspace(int $workspaceid): string {
+        global $DB;
+
+        if ($workspaceid <= 0 || !$DB->get_manager()->table_exists('local_prequran_consumer')) {
+            return 'EduPlatform';
+        }
+
+        try {
+            $consumer = $DB->get_record_sql(
+                "SELECT name
+                   FROM {local_prequran_consumer}
+                  WHERE primaryworkspaceid = :workspaceid
+                    AND status = :status
+               ORDER BY id ASC",
+                ['workspaceid' => $workspaceid, 'status' => 'active'],
+                IGNORE_MULTIPLE
+            );
+            $name = trim((string)($consumer->name ?? ''));
+            return $name !== '' ? $name : 'EduPlatform';
+        } catch (\Throwable $e) {
+            return 'EduPlatform';
+        }
+    }
+
+    private function brand_for_session($session): string {
+        return $this->brand_for_workspace((int)($session->workspaceid ?? 0));
+    }
+
+    private function brand_for_session_id(int $sessionid): string {
+        global $DB;
+
+        if ($sessionid <= 0 || !$this->column_exists('local_prequran_live_session', 'workspaceid')) {
+            return 'EduPlatform';
+        }
+
+        try {
+            return $this->brand_for_workspace((int)$DB->get_field('local_prequran_live_session', 'workspaceid', ['id' => $sessionid], IGNORE_MISSING));
+        } catch (\Throwable $e) {
+            return 'EduPlatform';
+        }
+    }
+
+    private function brand_for_series($series): string {
+        global $DB;
+
+        $workspaceid = (int)($series->workspaceid ?? 0);
+        if ($workspaceid > 0) {
+            return $this->brand_for_workspace($workspaceid);
+        }
+
+        if (empty($series->id) || !$this->column_exists('local_prequran_live_session', 'workspaceid')) {
+            return 'EduPlatform';
+        }
+
+        try {
+            $workspaceid = (int)$DB->get_field_sql(
+                "SELECT MAX(workspaceid)
+                   FROM {local_prequran_live_session}
+                  WHERE seriesid = :seriesid
+                    AND workspaceid > 0",
+                ['seriesid' => (int)$series->id]
+            );
+            return $workspaceid > 0 ? $this->brand_for_workspace($workspaceid) : 'EduPlatform';
+        } catch (\Throwable $e) {
+            return 'EduPlatform';
+        }
     }
 
     private function mark_attempted(int $sessionid, int $targetid, string $action, array $details = []): void {
@@ -219,6 +288,176 @@ class live_session_reminders extends \core\task\scheduled_task {
         ]);
     }
 
+    private function send_practice_coach_session_reports(): void {
+        global $DB;
+
+        $manager = $DB->get_manager();
+        if (!$manager->table_exists('local_prequran_practice_coach_event')) {
+            return;
+        }
+        if (!$this->column_exists('local_prequran_live_session', 'session_type')
+                && !$this->column_exists('local_prequran_live_session', 'teacher_required')) {
+            return;
+        }
+
+        $now = time();
+        $since = $now - (14 * DAYSECS);
+        $reportselect = $this->column_exists('local_prequran_live_session', 'report_to_teacherid')
+            ? 's.report_to_teacherid,'
+            : '0 AS report_to_teacherid,';
+        $modewhere = [];
+        if ($this->column_exists('local_prequran_live_session', 'session_type')) {
+            $modewhere[] = "s.session_type = 'supervised_practice'";
+        }
+        if ($this->column_exists('local_prequran_live_session', 'teacher_required')) {
+            $modewhere[] = 's.teacher_required = 0';
+        }
+        $modesql = '(' . implode(' OR ', $modewhere) . ')';
+
+        $sessions = $DB->get_records_sql(
+            "SELECT DISTINCT s.id, s.title, s.teacherid, {$reportselect}
+                    s.lessonid, s.unitid, s.scheduled_start, s.scheduled_end, s.status
+               FROM {local_prequran_live_session} s
+               JOIN {local_prequran_practice_coach_event} e ON e.live_sessionid = s.id
+              WHERE s.scheduled_end < :nowtime
+                AND s.scheduled_end >= :since
+                AND s.status IN ('awaiting_review', 'completed', 'live', 'needs_review')
+                AND {$modesql}
+           ORDER BY s.scheduled_end ASC, s.id ASC",
+            ['nowtime' => $now, 'since' => $since],
+            0,
+            50
+        );
+
+        $sent = 0;
+        foreach ($sessions as $session) {
+            $sessionid = (int)$session->id;
+            if ($this->audit_exists_for_session($sessionid, 'practice_coach_summary_prepared')) {
+                continue;
+            }
+
+            $followupexpr = $this->column_exists('local_prequran_practice_coach_event', 'recommendation_key')
+                ? "SUM(CASE WHEN recommendation_key = 'teacher_followup' THEN 1 ELSE 0 END)"
+                : '0';
+            $rows = $DB->get_records_sql(
+                "SELECT userid,
+                        COUNT(1) AS total_events,
+                        SUM(CASE WHEN trigger_key = 'idle_nudge' THEN 1 ELSE 0 END) AS idle_events,
+                        SUM(CASE WHEN trigger_key IN ('screen_return', 'focus_return') THEN 1 ELSE 0 END) AS away_events,
+                        {$followupexpr} AS followup_events,
+                        MIN(timecreated) AS first_event,
+                        MAX(timecreated) AS last_event
+                   FROM {local_prequran_practice_coach_event}
+                  WHERE live_sessionid = :sessionid
+               GROUP BY userid
+               ORDER BY userid ASC",
+                ['sessionid' => $sessionid]
+            );
+            if (!$rows) {
+                continue;
+            }
+
+            $studentlines = [];
+            foreach ($rows as $row) {
+                $studentid = (int)$row->userid;
+                $student = \core_user::get_user($studentid);
+                $name = $student ? fullname($student) : 'Student ' . $studentid;
+                $total = (int)$row->total_events;
+                $idle = (int)$row->idle_events;
+                $away = (int)$row->away_events;
+                $followups = (int)$row->followup_events;
+                $recommendation = $followups > 0 || $idle >= 3 || $away >= 3
+                    ? 'teacher follow-up recommended'
+                    : 'continue current lesson practice';
+                $studentlines[] = $name . ': ' . $total . ' coach prompt(s), ' . $idle . ' idle, ' . $away . ' away/return, ' . $recommendation . '.';
+                $this->mark_student_attempted($sessionid, $studentid, 'practice_coach_student_summary_available', [
+                    'total_events' => $total,
+                    'idle_events' => $idle,
+                    'away_events' => $away,
+                    'followup_events' => $followups,
+                    'recommendation' => $recommendation,
+                ]);
+
+                $parentmessage = 'A supervised practice summary is ready for ' . $name . ' from "' . (string)$session->title . '". Practice Coach gave ' . $total . ' support prompt(s). Suggested next step: ' . $recommendation . '.';
+                $parenturl = new \moodle_url('/local/hubredirect/live_summaries.php', ['sessionid' => $sessionid, 'childid' => $studentid]);
+                foreach (local_prequran_notify_parent_ids_for_student($studentid) as $parentid) {
+                    $action = 'practice_coach_parent_report_sent';
+                    if ($this->audit_exists($sessionid, (int)$parentid, $action)) {
+                        continue;
+                    }
+                    local_prequran_notify_user_live_update(
+                        $sessionid,
+                        (int)$parentid,
+                        'Supervised practice summary ready',
+                        $parentmessage,
+                        $parenturl,
+                        'Open live summary',
+                        'practice_coach_parent_summary',
+                        $studentid
+                    );
+                    $this->mark_attempted($sessionid, (int)$parentid, $action, [
+                        'role' => 'parent',
+                        'studentid' => $studentid,
+                    ]);
+                    $sent++;
+                }
+            }
+
+            $reportteacherid = (int)($session->report_to_teacherid ?? 0);
+            if ($reportteacherid <= 0) {
+                $reportteacherid = (int)$session->teacherid;
+            }
+            $reporturl = new \moodle_url('/local/hubredirect/live_practice_coach.php', ['sessionid' => $sessionid]);
+            $summary = 'Practice Coach summary is ready for "' . (string)$session->title . "\".\n\n" . implode("\n", $studentlines);
+            if ($reportteacherid > 0 && !$this->audit_exists($sessionid, $reportteacherid, 'practice_coach_summary_teacher_sent')) {
+                local_prequran_notify_user_live_update(
+                    $sessionid,
+                    $reportteacherid,
+                    'Practice Coach summary ready',
+                    $summary,
+                    $reporturl,
+                    'Open Practice Coach report',
+                    'practice_coach_teacher_summary'
+                );
+                $this->mark_attempted($sessionid, $reportteacherid, 'practice_coach_summary_teacher_sent', [
+                    'role' => 'teacher',
+                    'student_count' => count($rows),
+                ]);
+                $sent++;
+            }
+
+            foreach (get_admins() as $admin) {
+                $action = 'practice_coach_summary_admin_sent';
+                if ($this->audit_exists($sessionid, (int)$admin->id, $action)) {
+                    continue;
+                }
+                local_prequran_notify_user_live_update(
+                    $sessionid,
+                    (int)$admin->id,
+                    'Practice Coach admin review available',
+                    $summary,
+                    $reporturl,
+                    'Open Practice Coach report',
+                    'practice_coach_admin_summary'
+                );
+                $this->mark_attempted($sessionid, (int)$admin->id, $action, [
+                    'role' => 'admin',
+                    'student_count' => count($rows),
+                ]);
+                $sent++;
+            }
+
+            $this->mark_session_attempted($sessionid, 'practice_coach_summary_prepared', [
+                'student_count' => count($rows),
+                'report_to_teacherid' => $reportteacherid,
+            ]);
+        }
+
+        if ($sent > 0) {
+            mtrace('PreQuran Practice Coach: sent ' . $sent . ' supervised-practice summary notification(s).');
+        }
+    }
+
     private function send_before_class_reminders(string $key, int $fromoffset, int $tooffset): void {
         global $DB;
 
@@ -236,7 +475,7 @@ class live_session_reminders extends \core\task\scheduled_task {
             $start = userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort'));
             $url = new \moodle_url('/local/hubredirect/live_sessions.php');
             $subject = 'Live class reminder';
-            $message = 'Reminder: your Quraan Academy live class "' . (string)$session->title . '" is scheduled for ' . $start . '.';
+            $message = 'Reminder: your ' . $this->brand_for_session($session) . ' live class "' . (string)$session->title . '" is scheduled for ' . $start . '.';
 
             if ((int)$session->teacherid > 0 && !$this->audit_exists((int)$session->id, (int)$session->teacherid, $action)) {
                 local_prequran_notify_user_live_update((int)$session->id, (int)$session->teacherid, $subject, $message, $url, 'Open live sessions', 'live_class_reminder_' . $key);
@@ -346,7 +585,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     (int)$session->id,
                     (int)$admin->id,
                     'Live class missing post-session review',
-                    'A Quraan Academy live class has no saved post-session review: "' . (string)$session->title . '".',
+                    'A ' . $this->brand_for_session($session) . ' live class has no saved post-session review: "' . (string)$session->title . '".',
                     $url,
                     'Review live class',
                     'live_admin_review_followup'
@@ -439,7 +678,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                 $sessionid,
                 (int)$parentid,
                 'Live class follow-up reminder',
-                'A Quraan Academy live-class follow-up is still waiting for your review.',
+                'A ' . $this->brand_for_session_id($sessionid) . ' live-class follow-up is still waiting for your review.',
                 $url,
                 'View follow-up',
                 'live_followup_parent_reminder',
@@ -467,7 +706,7 @@ class live_session_reminders extends \core\task\scheduled_task {
             $sessionid,
             $teacherid,
             'Live class follow-up still open',
-            'A Quraan Academy live-class follow-up is still unresolved.',
+            'A ' . $this->brand_for_session_id($sessionid) . ' live-class follow-up is still unresolved.',
             new \moodle_url('/local/hubredirect/live_review.php', ['sessionid' => $sessionid]),
             'Resolve follow-up',
             'live_followup_teacher_reminder',
@@ -492,7 +731,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                 $sessionid,
                 (int)$admin->id,
                 'Live follow-up needs admin attention',
-                'A Quraan Academy live-class follow-up needs admin review.',
+                'A ' . $this->brand_for_session_id($sessionid) . ' live-class follow-up needs admin review.',
                 new \moodle_url('/local/hubredirect/live_ops.php'),
                 'Open live operations',
                 'live_followup_admin_escalation',
@@ -543,7 +782,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     (int)$session->id,
                     (int)$admin->id,
                     'Live class quality review needed',
-                    'A Quraan Academy live class is ready for admin quality review: "' . (string)$session->title . '".',
+                    'A ' . $this->brand_for_session($session) . ' live class is ready for admin quality review: "' . (string)$session->title . '".',
                     new \moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => (int)$session->id]),
                     'Review class quality',
                     'live_quality_review_reminder'
@@ -592,7 +831,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     $sessionid,
                     $teacherid,
                     'QA coaching follow-up',
-                    'A Quraan Academy live-class coaching item needs your attention: "' . (string)$session->title . '".',
+                    'A ' . $this->brand_for_session($session) . ' live-class coaching item needs your attention: "' . (string)$session->title . '".',
                     new \moodle_url('/local/hubredirect/live_teacher.php'),
                     'Open teacher workspace',
                     'live_quality_coaching_teacher_reminder'
@@ -711,7 +950,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     $sessionid,
                     $teacherid,
                     'Improvement plan acknowledgement needed',
-                    'A Quraan Academy teacher improvement plan is waiting for your acknowledgement: "' . (string)$session->title . '".',
+                    'A ' . $this->brand_for_session($session) . ' teacher improvement plan is waiting for your acknowledgement: "' . (string)$session->title . '".',
                     new \moodle_url('/local/hubredirect/live_teacher.php'),
                     'Open teacher workspace',
                     'live_improvement_plan_teacher_reminder'
@@ -733,7 +972,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     $sessionid,
                     $teacherid,
                     'Improvement plan due soon',
-                    'A Quraan Academy teacher improvement plan is due soon for "' . (string)$session->title . '".',
+                    'A ' . $this->brand_for_session($session) . ' teacher improvement plan is due soon for "' . (string)$session->title . '".',
                     new \moodle_url('/local/hubredirect/live_teacher.php'),
                     'Open teacher workspace',
                     'live_improvement_plan_due_soon'
@@ -770,7 +1009,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     $sessionid,
                     (int)$admin->id,
                     'Teacher improvement plan overdue',
-                    'A Quraan Academy teacher improvement plan is overdue for "' . (string)$session->title . '".',
+                    'A ' . $this->brand_for_session($session) . ' teacher improvement plan is overdue for "' . (string)$session->title . '".',
                     new \moodle_url('/local/hubredirect/live_leadership.php', ['teacherid' => $teacherid, 'status' => 'all']),
                     'Open leadership review',
                     'live_improvement_plan_admin_escalation'
@@ -954,7 +1193,7 @@ class live_session_reminders extends \core\task\scheduled_task {
             0,
             $parentid,
             'Please acknowledge live class schedule change',
-            'A Quraan Academy recurring live class schedule changed. Please review and acknowledge the updated schedule.',
+            'A ' . $this->brand_for_series($series) . ' recurring live class schedule changed. Please review and acknowledge the updated schedule.',
             new \moodle_url('/local/hubredirect/live_series_schedule.php', ['childid' => $studentid]),
             'Review live class schedule',
             'series_ack_auto_reminder',
@@ -992,7 +1231,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                 0,
                 (int)$admin->id,
                 'Parent schedule acknowledgement overdue',
-                'A parent has not acknowledged a Quraan Academy recurring live class schedule change.',
+                'A parent has not acknowledged a ' . $this->brand_for_series($series) . ' recurring live class schedule change.',
                 new \moodle_url('/local/hubredirect/live_series.php'),
                 'Open class series',
                 'series_ack_admin_escalation',
@@ -1187,7 +1426,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                 $sessionid,
                 (int)$admin->id,
                 'Leadership QA review flagged',
-                'A Quraan Academy live class was automatically flagged for leadership review: "' . (string)$session->title . '". Reason: ' . $reason,
+                'A ' . $this->brand_for_session($session) . ' live class was automatically flagged for leadership review: "' . (string)$session->title . '". Reason: ' . $reason,
                 new \moodle_url('/local/hubredirect/live_quality.php', ['sessionid' => $sessionid]),
                 'Open leadership review',
                 'live_leadership_review_alert'

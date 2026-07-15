@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" data-stage="2">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17324d">
+  <title>Ehel Academy Mathematics</title>
+  <link rel="stylesheet" href="./shared/course-ui.css?v=geometry-webgl-20260715q">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to lesson</a>
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Ehel Academy Mathematics">
+      <span class="brand-mark">E</span>
+      <span><strong>Ehel Academy</strong><small>Primary Mathematics</small></span>
+    </a>
+    <div class="unit-progress">
+      <span><strong id="progress-value">0%</strong> Unit progress</span>
+      <div class="progress-track" role="progressbar" aria-label="Unit progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div>
+    </div>
+    <div class="top-actions">
+      <select id="stage-select" class="top-grade-picker" aria-label="Choose Mathematics stage"></select>
+      <select id="top-unit-select" class="top-unit-picker" aria-label="Choose Mathematics unit"></select>
+      <button class="icon-button voice-toggle" id="voice-toggle" type="button" aria-label="Sound settings" title="Sound settings"><span aria-hidden="true">♪</span></button>
+      <button class="profile-button" type="button" aria-label="Learner profile"><span>AM</span><small>Maths lab</small></button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="course-context">
+        <span id="course-label">Preparing Mathematics</span>
+        <label class="unit-picker-label" for="unit-select">Choose unit</label>
+        <select id="unit-select" class="unit-picker" aria-label="Choose Mathematics unit"></select>
+        <p id="unit-title">Preparing course…</p>
+      </div>
+      <nav id="section-nav" aria-label="Unit sections"></nav>
+      <button class="teacher-switch" id="teacher-switch" type="button"><span aria-hidden="true">T</span><span>Teacher resources</span></button>
+    </aside>
+
+    <main id="content" class="content" tabindex="-1">
+      <div id="loading" class="loading"><span></span><p>Preparing your Mathematics lesson…</p></div>
+      <div id="app" hidden></div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+    if (location.protocol === "file:") {
+      const loading = document.getElementById("loading");
+      loading.className = "panel review-banner";
+      loading.innerHTML = '<h2>Open the Mathematics preview server</h2><p>This course loads structured lesson data and cannot run directly from a <code>file:///</code> address.</p><p>Double-click <strong>Open Stage 2 Mathematics.cmd</strong> in the project folder, or start the preview server and use the HTTP link below.</p><p><a class="button primary" href="http://localhost:4287/prototypes/ehel-academy/mathematics/?stage=2&unit=1#overview">Open working Mathematics link</a></p>';
+    } else {
+      const courseScript = document.createElement("script");
+      courseScript.type = "module";
+      courseScript.src = "./shared/course-ui.js?v=geometry-webgl-20260715q";
+      document.body.appendChild(courseScript);
+    }
+  </script>
+</body>
+</html>

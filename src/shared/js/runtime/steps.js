@@ -1,5 +1,5 @@
 /*
-  Pre-Quraan Alphabet runtime fragment: steps.js
+  EduPlatform Alphabet runtime fragment: steps.js
   Step definitions, managed/review/free-practice mode helpers, and per-step play tracking.
   This file is assembled with the other runtime fragments by tools/build-unit-runtime-bundle.js.
   It is intentionally not loaded directly in the browser.

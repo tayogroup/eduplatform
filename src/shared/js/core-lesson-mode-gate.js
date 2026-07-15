@@ -49,7 +49,9 @@
     var pauseBtn    = els.btnPause    || document.getElementById('btnPause');
 
     if (stepperRoot) {
-      if (practiceFree) stepperRoot.hidden = true;
+      // Keep the step map visible in free/unmanaged practice too. The runtime
+      // still avoids managed writes when there are no tokens.
+      stepperRoot.hidden = false;
     }
 
     if (practiceFree) {

@@ -368,6 +368,21 @@ function pqadm_convert_application(int $applicationid, int $workspaceid, $consum
         if ($offering) {
             $existingreq = $DB->get_record('local_prequran_course_enrol_req', ['offeringid' => (int)$offering->id, 'studentid' => $studentid], '*', IGNORE_MISSING);
             $moodleenrolled = pqco_enrol_student_in_moodle_course($studentid, (int)$offering->moodlecourseid);
+            if ($moodleenrolled) {
+                pqco_enrol_assigned_teachers_in_moodle_course(
+                    $studentid,
+                    (int)$offering->moodlecourseid,
+                    $workspaceid,
+                    [
+                        'consumerid' => (int)($consumercontext->consumerid ?? 0),
+                        'workspaceid' => $workspaceid,
+                        'offeringid' => (int)$offering->id,
+                        'studentid' => $studentid,
+                        'moodlecourseid' => (int)$offering->moodlecourseid,
+                        'source' => 'admissions_conversion',
+                    ]
+                );
+            }
             $request = (object)[
                 'offeringid' => (int)$offering->id,
                 'consumerid' => (int)($consumercontext->consumerid ?? 0),

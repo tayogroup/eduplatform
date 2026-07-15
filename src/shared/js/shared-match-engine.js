@@ -55,6 +55,7 @@
 
     lives: 5,
     gameCount: 0,
+    gameStartedCount: 0,
 
     autoAdvanceTimer: null,
 
@@ -90,6 +91,56 @@
     const grid = getGrid();
     if (!grid) return [];
     return Array.from(grid.querySelectorAll('.tile'));
+  }
+
+  function getCounterStorageKey() {
+    try {
+      const cfg = state.cfg || window.UNIT_CFG || {};
+      const identity = cfg.identity && typeof cfg.identity === 'object' ? cfg.identity : {};
+      const unit = String(identity.unitId || cfg.unitid || 'unit').trim() || 'unit';
+      const step = String(state.stepId || 'match').trim() || 'match';
+      const user = String(window.__prequran_uid || cfg.userid || cfg.userId || 'guest').trim() || 'guest';
+      return 'pq.matchProgress.v1.' + user + '.' + unit + '.' + step;
+    } catch (_e) {
+      return '';
+    }
+  }
+
+  function loadCounterState() {
+    try {
+      const key = getCounterStorageKey();
+      if (!key || !window.sessionStorage) return null;
+      const raw = window.sessionStorage.getItem(key);
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      return {
+        completed: Math.max(0, Number(data.completed || 0)),
+        started: Math.max(0, Number(data.started || 0))
+      };
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  function saveCounterState() {
+    try {
+      const key = getCounterStorageKey();
+      if (!key || !window.sessionStorage) return;
+      window.sessionStorage.setItem(key, JSON.stringify({
+        completed: Math.max(0, Number(state.gameCount || 0)),
+        started: Math.max(0, Number(state.gameStartedCount || 0)),
+        updatedAt: Date.now()
+      }));
+    } catch (_e) {}
+  }
+
+  function recordCompletedGame() {
+    state.gameCount = Math.max(
+      Math.max(0, Number(state.gameCount || 0)),
+      Math.max(0, Number(state.gameStartedCount || 0))
+    );
+    saveCounterState();
+    return state.gameCount;
   }
 
   function getTileKey(tile) {
@@ -233,6 +284,60 @@
     const cfg = getMatchCfg(state.cfg);
     const messages = cfg.messages || {};
     return messages[type] || fallback;
+  }
+
+  function getRequiredCorrectCount() {
+    try {
+      const cfg = getMatchCfg(state.cfg);
+      const rule = Number(cfg.minCorrectToPass || 0);
+      const total = Math.max(1, Number(state.sequence.length || 0));
+
+      if (!rule) return 0;
+      if (rule > 0 && rule <= 1) return Math.ceil(total * rule);
+      return Math.ceil(rule);
+    } catch (_e) {
+      return 0;
+    }
+  }
+
+  function emitProgress(active, statusText) {
+    try {
+      const total = Math.max(0, Number(state.sequence.length || 0));
+      const correct = Math.max(0, Number(state.correct || 0));
+      const wrong = Math.max(0, Number(state.wrong || 0));
+      const requiredCorrect = Math.max(0, getRequiredCorrectCount());
+      const percent = total > 0 ? Math.round((correct / total) * 100) : 0;
+      const maxGames = Math.max(0, Number(opt('maxGames', 3)) || 0);
+      let currentGame = Math.max(
+        0,
+        Number(state.gameStartedCount || 0),
+        Math.max(0, Number(state.gameCount || 0)) + (active === false ? 0 : 1)
+      );
+      if (maxGames > 0) currentGame = Math.min(maxGames, currentGame);
+      const remainingItems = total > 0
+        ? Math.max(0, total - Math.min(total, Number(state.index || 0)))
+        : 0;
+
+      window.dispatchEvent(new CustomEvent('pq-match-progress', {
+        detail: {
+          active: active !== false,
+          stepId: state.stepId || 'match',
+          game: currentGame,
+          maxGames,
+          total,
+          currentIndex: Math.max(0, Number(state.index || 0)),
+          correct,
+          wrong,
+          percent,
+          requiredCorrect,
+          remainingCorrect: Math.max(0, requiredCorrect - correct),
+          remainingItems,
+          lives: Math.max(0, Number(state.lives || 0)),
+          passed: requiredCorrect > 0 ? correct >= requiredCorrect : false,
+          statusText: String(statusText || '')
+        }
+      }));
+    } catch (_e) {}
   }
 
   function playTone(kind) {
@@ -412,6 +517,7 @@
     }
 
     setStatus('Match ' + (state.index + 1) + ' of ' + state.sequence.length);
+    emitProgress(true, 'playing');
 
     try {
       if (typeof state.playAudioForKey === 'function') {
@@ -474,6 +580,7 @@
       playTone('correct');
 
       setStatus('Correct — ' + state.correct + '/' + state.sequence.length);
+      emitProgress(true, 'correct');
 
       window.setTimeout(function () {
         state.locked = false;
@@ -509,6 +616,7 @@
     }
 
     setStatus('Try again — lives ' + Math.max(0, state.lives));
+    emitProgress(true, 'try-again');
 
     window.setTimeout(function () {
       tile.classList.remove('pq-match-wrong', 'pq-match-shake');
@@ -522,7 +630,7 @@
       state.locked = false;
 
       if (state.lives <= 0) {
-        state.gameCount += 1;
+        recordCompletedGame();
 
         const maxGames = Number(opt('maxGames', 3));
         if (maxGames > 0 && state.gameCount >= maxGames) {
@@ -590,13 +698,14 @@ function complete() {
     const passed = __pqMatchPassCheck();
 
     if (!passed) {
-      state.gameCount += 1;
+      recordCompletedGame();
 
       const maxGames = Number(opt('maxGames', 3));
       const tryMsg = messageFor('tryAgain', 'Try again to pass');
 
       setStatus(tryMsg);
       showPopup(tryMsg);
+      emitProgress(true, tryMsg);
 
       if (maxGames > 0 && state.gameCount >= maxGames) {
         if (opt('completeWhenMaxGamesUsed', true) !== false) {
@@ -627,9 +736,12 @@ function complete() {
 
     const doneMsg = messageFor('completed', 'Great job! Match complete.');
 
+    recordCompletedGame();
+
     setStatus(doneMsg);
     showPopup(doneMsg);
     playAudioMessage('completed');
+    emitProgress(false, doneMsg);
 
     try {
       if (typeof state.onComplete === 'function') {
@@ -638,7 +750,7 @@ function complete() {
           total: state.sequence.length,
           correct: state.correct,
           wrong: state.wrong,
-          games: state.gameCount + 1,
+          games: state.gameCount,
           passed: true
         });
       }
@@ -667,7 +779,6 @@ function complete() {
     }
 
     state.mounted = true;
-    state.gameCount = 0;
     start(true);
 
     return true;
@@ -679,7 +790,17 @@ function complete() {
     clearAutoAdvanceTimer();
 
     if (resetGameCounter === true) {
-      state.gameCount = 0;
+      const persisted = loadCounterState();
+      state.gameCount = persisted ? Math.max(0, Number(persisted.completed || 0)) : 0;
+      state.gameStartedCount = persisted ? Math.max(0, Number(persisted.started || 0)) : 0;
+    }
+
+    const maxGames = Number(opt('maxGames', 3));
+    if (state.gameStartedCount <= state.gameCount) {
+      state.gameStartedCount = (maxGames > 0 && state.gameCount >= maxGames)
+        ? state.gameCount
+        : state.gameCount + 1;
+      saveCounterState();
     }
 
     state.sequence = buildSequence();
@@ -701,8 +822,10 @@ function complete() {
 
     if (opt('autoPlayPrompt', true) === false) {
       setStatus('Match ' + (state.index + 1) + ' of ' + state.sequence.length);
+      emitProgress(true, 'ready');
       scheduleAutoAdvance();
     } else {
+      emitProgress(true, 'ready');
       playCurrent();
     }
   }
@@ -711,6 +834,7 @@ function complete() {
     state.paused = true;
     clearAutoAdvanceTimer();
     setStatus('Paused');
+    emitProgress(true, 'paused');
   }
 
   function resume() {
@@ -727,6 +851,7 @@ function complete() {
     state.currentKey = '';
     clearTileStates();
     setStatus('');
+    emitProgress(false, 'stopped');
   }
 
   function replayPrompt() {
@@ -761,7 +886,8 @@ function complete() {
         wrongForCurrent: state.wrongForCurrent,
         playsSinceShuffle: state.playsSinceShuffle,
         lives: state.lives,
-        gameCount: state.gameCount
+        gameCount: state.gameCount,
+        gameStartedCount: state.gameStartedCount
       };
     }
   };

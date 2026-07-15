@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
+  <title>WordQuest | Ehel Academy</title>
+  <link rel="stylesheet" href="./vocabulary.css">
+</head>
+<body>
+  <a class="skip-link" href="#learning-stage">Skip to the word</a>
+
+  <header class="topbar">
+    <div class="brand" aria-label="Ehel Academy WordQuest">
+      <span class="brand-mark" aria-hidden="true">W</span>
+      <span>
+        <strong>WordQuest</strong>
+        <small>Ehel Academy</small>
+      </span>
+    </div>
+
+    <div class="lesson-progress" aria-label="Lesson progress">
+      <div class="progress-copy">
+        <span id="progress-context">Unit 1 · Greetings and Introductions</span>
+        <strong id="progress-label">1 of 8 words</strong>
+      </div>
+      <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12">
+        <span id="progress-fill"></span>
+      </div>
+    </div>
+
+    <div class="learner-status">
+      <span class="streak"><i data-lucide="flame"></i><strong>3</strong><span>day streak</span></span>
+      <span class="xp"><i data-lucide="sparkles"></i><strong id="xp-count">120</strong><span>XP</span></span>
+      <button class="avatar" type="button" aria-label="Open Amina's profile">AM</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section id="lecture-gate" class="lecture-gate" aria-labelledby="lecture-title">
+      <div class="lecture-copy">
+        <span class="lecture-step"><i data-lucide="play-circle"></i>Step 1 of 6</span>
+        <label class="lecture-unit-picker" for="lecture-unit-select"><span>Choose unit</span><select id="lecture-unit-select" aria-label="Choose a Grade 2 vocabulary unit"></select></label>
+        <span id="lecture-unit-kicker" class="eyebrow">Unit 1 of 9</span>
+        <h1 id="lecture-title">Welcome and Calendar</h1>
+        <p id="lecture-description">Teacher Nuur introduces the unit vocabulary before practice begins.</p>
+        <ul id="lecture-goals" class="lecture-goals">
+          <li><i data-lucide="check"></i>Hear all eight words</li>
+          <li><i data-lucide="check"></i>Learn noun, verb, adjective and adverb</li>
+          <li><i data-lucide="check"></i>Say the words with the teacher</li>
+        </ul>
+        <div class="teacher-signoff">
+          <img src="./assets/teacher-nuur.png" alt="Teacher Nuur">
+          <span><strong>Teacher Nuur</strong><small>English vocabulary</small></span>
+        </div>
+      </div>
+
+      <div class="lecture-player-shell">
+        <video id="lecture-video" controls preload="metadata" poster="./media/teacher-lecture-poster.jpg">
+          <source id="lecture-source" src="./media/unit-1-vocabulary-lecture.mp4" type="video/mp4">
+          <track id="lecture-captions" kind="captions" src="./media/unit-1-vocabulary-lecture.vtt" srclang="en" label="English" default>
+          Your browser does not support the lesson video.
+        </video>
+        <div class="lecture-player-footer">
+          <div>
+            <span id="lecture-status" class="lecture-status"><i data-lucide="circle"></i>Watch the lecture to unlock the lesson</span>
+            <div class="lecture-watch-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="lecture-watch-fill"></span></div>
+          </div>
+          <button id="continue-to-lesson" class="primary-button" type="button" disabled>Continue to words<i data-lucide="arrow-right"></i></button>
+        </div>
+        <details class="lecture-transcript">
+          <summary>Read lecture transcript</summary>
+          <p id="lecture-transcript-copy">Teacher Nuur introduces the unit and its vocabulary groups.</p>
+        </details>
+      </div>
+    </section>
+
+    <div id="lesson-workspace" class="lesson-workspace hidden">
+    <aside class="word-rail" aria-label="Vocabulary group">
+      <div class="curriculum-picker">
+        <label for="unit-select">Grade 2 unit</label>
+        <select id="unit-select" aria-label="Choose a Grade 2 vocabulary unit"></select>
+      </div>
+      <div class="rail-heading">
+        <span id="rail-unit-label" class="eyebrow">Unit 1: Welcome and Calendar</span>
+        <h1 id="rail-group-title">Greetings and Introductions</h1>
+        <p id="rail-word-count">6 useful words</p>
+      </div>
+      <nav id="group-tabs" class="group-tabs" aria-label="Vocabulary groups"></nav>
+      <div id="word-list" class="word-list"></div>
+      <button id="review-button" class="review-button" type="button">
+        <i data-lucide="rotate-ccw"></i>
+        Review tricky words
+      </button>
+      <button id="replay-lecture" class="review-button replay-lecture" type="button">
+        <i data-lucide="play-circle"></i>
+        Replay teacher lecture
+      </button>
+    </aside>
+
+    <section id="learning-stage" class="learning-stage" tabindex="-1">
+      <nav class="mode-tabs" aria-label="Learning modes">
+        <button class="mode-tab active" type="button" data-mode="learn" aria-selected="true">
+          <i data-lucide="book-open"></i><span>Learn</span><span class="tab-state" id="learn-state">1</span>
+        </button>
+        <button class="mode-tab" type="button" data-mode="practice" aria-selected="false">
+          <i data-lucide="pencil-line"></i><span>Practice</span><span class="tab-state" id="practice-state">2</span>
+        </button>
+        <button class="mode-tab" type="button" data-mode="tutor" aria-selected="false">
+          <i data-lucide="messages-square"></i><span>AI Tutor</span><span class="tab-state" id="tutor-state">3</span>
+        </button>
+        <button class="mode-tab" type="button" data-mode="quiz" aria-selected="false">
+          <i data-lucide="badge-check"></i><span>Quiz</span><span class="tab-state" id="quiz-state">4</span>
+        </button>
+      </nav>
+
+      <div id="learn-view" class="mode-view active" data-view="learn">
+        <div class="word-lesson">
+          <figure class="word-visual">
+            <img id="word-image" src="./assets/unit-1-welcome-calendar.png" alt="Children greeting one another beside a colourful classroom calendar">
+            <figcaption id="visual-caption">Unit 1: Welcome and Calendar</figcaption>
+          </figure>
+
+          <div class="word-content">
+            <div class="word-heading-row">
+              <div>
+                <span id="word-type" class="word-type">noun</span>
+                <h2 id="word-title">neighbour</h2>
+                <p id="phonetic" class="phonetic">/NAY-buh/</p>
+              </div>
+              <div class="audio-actions">
+                <button id="listen-button" class="primary-icon-button" type="button">
+                  <i data-lucide="volume-2"></i><span>Listen</span>
+                </button>
+                <button id="slow-button" class="secondary-icon-button" type="button" aria-label="Hear the word slowly">
+                  <i data-lucide="snail"></i><span>Slow</span>
+                </button>
+              </div>
+            </div>
+
+            <section class="meaning-block" aria-labelledby="meaning-label">
+              <span id="meaning-label" class="section-label">Simple meaning</span>
+              <p id="word-meaning">A person who lives near you.</p>
+            </section>
+
+            <section class="word-type-lesson" aria-labelledby="word-type-label">
+              <div class="section-row">
+                <span id="word-type-label" class="section-label">Word type</span>
+                <span id="type-count" class="type-count">2 nouns in this group</span>
+              </div>
+              <div id="type-selector" class="type-selector" aria-label="Word types in this group"></div>
+              <div class="type-explanation">
+                <span id="type-symbol" aria-hidden="true">N</span>
+                <div><strong id="type-title">Noun</strong><p id="type-definition">Names a person, place, thing or idea.</p></div>
+              </div>
+            </section>
+
+            <section class="sentence-deck" aria-labelledby="example-label">
+              <div class="section-row">
+                <span id="example-label" class="section-label">In five sentences</span>
+                <span id="sentence-position" class="sentence-position">Sentence 1 of 5</span>
+              </div>
+              <button id="sentence-card" class="sentence-card" type="button" aria-label="Flip sentence card">
+                <span class="sentence-card-inner">
+                  <span class="sentence-card-face sentence-card-front">
+                    <span class="card-side-label">Read the sentence</span>
+                    <span id="word-example" class="sentence-text">Our <mark>neighbour</mark> waves to us every morning.</span>
+                    <span class="flip-cue"><i data-lucide="rotate-3d"></i>Flip for the word-type clue</span>
+                  </span>
+                  <span class="sentence-card-face sentence-card-back">
+                    <span class="card-side-label">Why it works</span>
+                    <strong id="sentence-back-title">Neighbour is a noun</strong>
+                    <span id="sentence-back-copy">It names the person who lives nearby.</span>
+                    <span class="flip-cue"><i data-lucide="rotate-3d"></i>Flip back to the sentence</span>
+                  </span>
+                </span>
+              </button>
+              <div class="sentence-controls">
+                <button id="previous-sentence" class="secondary-icon-button" type="button" aria-label="Previous sentence"><i data-lucide="arrow-left"></i></button>
+                <div id="sentence-dots" class="sentence-dots" aria-label="Sentence cards"></div>
+                <button id="sentence-audio" class="text-button sentence-audio" type="button"><i data-lucide="volume-2"></i>Hear sentence</button>
+                <button id="next-sentence" class="secondary-icon-button" type="button" aria-label="Next sentence"><i data-lucide="arrow-right"></i></button>
+              </div>
+            </section>
+
+            <div class="quick-check">
+              <span class="section-label">Quick check</span>
+              <p id="quick-question">Who is your neighbour?</p>
+              <div id="quick-options" class="choice-row"></div>
+              <p id="quick-feedback" class="inline-feedback" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lesson-actions">
+          <button id="previous-word" class="secondary-button" type="button"><i data-lucide="arrow-left"></i>Previous</button>
+          <button id="know-word" class="primary-button" type="button">I know this word<i data-lucide="check"></i></button>
+          <button id="next-word" class="secondary-button" type="button">Next<i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div id="practice-view" class="mode-view" data-view="practice">
+        <div class="practice-header">
+          <span class="eyebrow">Use the word</span>
+          <h2>Make <em id="practice-word">neighbour</em> yours</h2>
+          <p>One sentence and one spelling challenge.</p>
+        </div>
+
+        <div class="practice-grid">
+          <section class="practice-panel sentence-panel">
+            <div class="panel-title">
+              <span class="number-badge">1</span>
+              <div><h3>Your sentence</h3><p>Use the word in a complete idea.</p></div>
+            </div>
+            <label class="input-label" for="sentence-input">Write a sentence with <strong id="sentence-word">neighbour</strong>.</label>
+            <textarea id="sentence-input" maxlength="160" placeholder="My neighbour..."></textarea>
+            <div class="input-meta"><span id="sentence-count">0 / 160</span><button id="sentence-hint" class="text-button" type="button"><i data-lucide="lightbulb"></i>Sentence starter</button></div>
+            <button id="check-sentence" class="primary-button full-width" type="button">Check my sentence<i data-lucide="wand-sparkles"></i></button>
+            <div id="sentence-feedback" class="feedback-box" aria-live="polite"></div>
+          </section>
+
+          <section class="practice-panel spelling-panel">
+            <div class="panel-title">
+              <span class="number-badge coral">2</span>
+              <div><h3>Spell by sound</h3><p>Listen, then build the word.</p></div>
+            </div>
+            <button id="spelling-audio" class="listen-prompt" type="button"><i data-lucide="volume-2"></i><span>Play word</span></button>
+            <div id="spelling-slots" class="spelling-slots" aria-label="Spelling answer"></div>
+            <div id="letter-bank" class="letter-bank" aria-label="Letter choices"></div>
+            <div class="spelling-actions">
+              <button id="clear-spelling" class="secondary-button" type="button"><i data-lucide="delete"></i>Clear</button>
+              <button id="check-spelling" class="primary-button" type="button">Check spelling<i data-lucide="check"></i></button>
+            </div>
+            <div id="spelling-feedback" class="feedback-box" aria-live="polite"></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="tutor-view" class="mode-view" data-view="tutor">
+        <div class="tutor-layout">
+          <div class="tutor-intro">
+            <span class="tutor-mark"><i data-lucide="sparkles"></i></span>
+            <span class="eyebrow">AI tutor practice</span>
+            <h2>Talk it through with Nuur</h2>
+            <p id="tutor-prompt">Tell me about a good neighbour. Try to use the word "neighbour" in your answer.</p>
+            <div class="prompt-chips">
+              <button type="button" data-tutor-chip="My neighbour is kind because">My neighbour is kind because...</button>
+              <button type="button" data-tutor-chip="A good neighbour can">A good neighbour can...</button>
+            </div>
+          </div>
+
+          <div class="chat-panel">
+            <div id="chat-log" class="chat-log" aria-live="polite">
+              <div class="chat-message tutor-message"><span>N</span><p>Hello, Amina! I am ready to practise today's word with you.</p></div>
+            </div>
+            <div class="chat-compose">
+              <label class="sr-only" for="tutor-input">Your answer</label>
+              <input id="tutor-input" type="text" maxlength="180" placeholder="Type your answer...">
+              <button id="tutor-mic" type="button" aria-label="Speak your answer"><i data-lucide="mic"></i></button>
+              <button id="send-tutor" type="button" aria-label="Send answer"><i data-lucide="send"></i></button>
+            </div>
+            <p class="prototype-note">Prototype coach: responses are simulated for this demonstration.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="quiz-view" class="mode-view" data-view="quiz">
+        <div id="quiz-start" class="quiz-start">
+          <span class="quiz-seal"><i data-lucide="trophy"></i></span>
+          <span class="eyebrow">Vocabulary quiz</span>
+          <h2>Ready for the Word Challenge?</h2>
+          <p>Five quick questions. Earn 20 XP for every correct answer.</p>
+          <div class="quiz-snapshot">
+            <span><strong>5</strong> questions</span>
+            <span><strong>100</strong> XP available</span>
+            <span><strong>80%</strong> mastery goal</span>
+          </div>
+          <button id="start-quiz" class="primary-button large-button" type="button">Start challenge<i data-lucide="play"></i></button>
+        </div>
+
+        <div id="quiz-question" class="quiz-question hidden">
+          <div class="quiz-topline"><span id="quiz-progress-copy">Question 1 of 5</span><span id="quiz-score">0 XP</span></div>
+          <div class="quiz-progress-track"><span id="quiz-progress-fill"></span></div>
+          <span id="quiz-kind" class="word-type">Meaning</span>
+          <h2 id="quiz-prompt">What does neighbour mean?</h2>
+          <div id="quiz-visual" class="quiz-visual hidden"></div>
+          <div id="quiz-options" class="quiz-options"></div>
+          <p id="quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+          <button id="next-question" class="primary-button quiz-next hidden" type="button">Next question<i data-lucide="arrow-right"></i></button>
+        </div>
+
+        <div id="quiz-result" class="quiz-result hidden">
+          <span id="result-seal" class="quiz-seal"><i data-lucide="star"></i></span>
+          <span class="eyebrow">Challenge complete</span>
+          <h2 id="result-title">Brilliant word power!</h2>
+          <p id="result-copy"></p>
+          <div class="result-score"><strong id="result-score">0 / 5</strong><span id="result-xp">+0 XP</span></div>
+          <button id="retry-quiz" class="secondary-button" type="button"><i data-lucide="rotate-ccw"></i>Try again</button>
+          <button id="finish-lesson" class="primary-button" type="button">Finish lesson<i data-lucide="flag"></i></button>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <audio id="pronunciation-audio" preload="auto" aria-hidden="true"></audio>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script type="module" src="./grade2-vocabulary.js"></script>
+</body>
+</html>

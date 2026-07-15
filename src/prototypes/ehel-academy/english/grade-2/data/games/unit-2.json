@@ -1,0 +1,514 @@
+{
+  "schemaVersion": "Ehel English Games v1.0",
+  "grade": 2,
+  "unit": 2,
+  "unitId": "eng-g02-t01-u02",
+  "title": "Good Neighbours and Jobs Game Zone",
+  "source": "Generated from approved unit runtime and linked master dictionary",
+  "masteryScore": 2,
+  "games": [
+    {
+      "id": "meaning-match",
+      "type": "choice",
+      "icon": "images",
+      "title": "Meaning Match",
+      "skill": "Vocabulary",
+      "description": "Match each unit word to its approved child-friendly meaning.",
+      "rounds": [
+        {
+          "prompt": "Which word means: A person who lives near you.",
+          "choices": [
+            "neighbour",
+            "window cleaner",
+            "reporter"
+          ],
+          "answer": "neighbour",
+          "explanation": "neighbour: A person who lives near you."
+        },
+        {
+          "prompt": "Which word means: Strong shoes that cover the feet and part of the legs.",
+          "choices": [
+            "neighbour",
+            "window cleaner",
+            "boots"
+          ],
+          "answer": "boots",
+          "explanation": "boots: Strong shoes that cover the feet and part of the legs."
+        },
+        {
+          "prompt": "Which word means: A person who grows food and looks after animals.",
+          "choices": [
+            "window cleaner",
+            "farmer",
+            "neighbour"
+          ],
+          "answer": "farmer",
+          "explanation": "farmer: A person who grows food and looks after animals."
+        }
+      ]
+    },
+    {
+      "id": "spelling-builder",
+      "type": "spelling",
+      "icon": "blocks",
+      "title": "Spelling Builder",
+      "skill": "Spelling",
+      "description": "Choose letter tiles to build important unit words.",
+      "rounds": [
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person who finds out news and writes stories about it.",
+          "answer": "reporter"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The special clothes people wear for a job.",
+          "answer": "uniform"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Doing something to make things easier for someone.",
+          "answer": "helping"
+        }
+      ]
+    },
+    {
+      "id": "sentence-puzzle",
+      "type": "sentence",
+      "icon": "puzzle",
+      "title": "Sentence Puzzle",
+      "skill": "Sentence building",
+      "description": "Put unit words into the correct sentence order.",
+      "rounds": [
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "garden.",
+            "her",
+            "in",
+            "flowers",
+            "grows",
+            "Nadia",
+            "neighbour",
+            "My"
+          ],
+          "answer": "My neighbour Nadia grows flowers in her garden."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "tree.",
+            "the",
+            "from",
+            "cat",
+            "the",
+            "rescued",
+            "firefighter",
+            "brave",
+            "The"
+          ],
+          "answer": "The brave firefighter rescued the cat from the tree."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "smoke.",
+            "in",
+            "air",
+            "fresh",
+            "breathe",
+            "to",
+            "mask",
+            "a",
+            "wears",
+            "firefighter",
+            "The"
+          ],
+          "answer": "The firefighter wears a mask to breathe fresh air in smoke."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Which question asks about an action?",
+          "choices": [
+            "What is the firefighter doing?",
+            "Who is the firefighter?",
+            "Who is your neighbour?",
+            "Who drives the bus?"
+          ],
+          "answer": "What is the firefighter doing?",
+          "explanation": "Use What to ask about an action."
+        },
+        {
+          "prompt": "The firefighters ___ climbing the ladder.",
+          "choices": [
+            "are",
+            "is",
+            "am",
+            "be"
+          ],
+          "answer": "are",
+          "explanation": "Firefighters means more than one person, so use are."
+        },
+        {
+          "prompt": "Which is the correct -ing form of drive?",
+          "choices": [
+            "driving",
+            "driveing",
+            "drivving",
+            "drived"
+          ],
+          "answer": "driving",
+          "explanation": "Drop the final e in drive before adding -ing."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "Why do firefighters wear masks? Why do they wear gloves?",
+          "choices": [
+            "Masks help firefighters breathe fresh air; gloves protect their hands from hot things.",
+            "The neighbours are helping one another.",
+            "Ishmael brought water, Selma swept, Adam carried boxes, and the firefighters helped clean Sarah's shop."
+          ],
+          "answer": "Masks help firefighters breathe fresh air; gloves protect their hands from hot things.",
+          "explanation": "Review the unit text evidence: Masks help firefighters breathe fresh air; gloves protect their hands from hot things."
+        },
+        {
+          "prompt": "On which street does Samira live? What is near it?",
+          "choices": [
+            "The neighbours are helping one another.",
+            "They chose to help her after finishing their own important jobs, showing kindness and teamwork.",
+            "Samira lives on Warta Street, near the market."
+          ],
+          "answer": "Samira lives on Warta Street, near the market.",
+          "explanation": "Review the unit text evidence: Samira lives on Warta Street, near the market."
+        },
+        {
+          "prompt": "How did the neighbours help old Sarah after the fire?",
+          "choices": [
+            "Anyone can notice a need and help kindly; helping is not limited to a person's paid job.",
+            "Ishmael brought water, Selma swept, Adam carried boxes, and the firefighters helped clean Sarah's shop.",
+            "Samira lives on Warta Street, near the market."
+          ],
+          "answer": "Ishmael brought water, Selma swept, Adam carried boxes, and the firefighters helped clean Sarah's shop.",
+          "explanation": "Review the unit text evidence: Ishmael brought water, Selma swept, Adam carried boxes, and the firefighters helped clean Sarah's shop."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Describe a Job",
+          "target": "A ______ (job) helps people by ______."
+        },
+        {
+          "prompt": "Speaking Game — Who Am I?",
+          "target": "Are you a ______?"
+        },
+        {
+          "prompt": "Speaking 5 - What Is Happening Now?",
+          "target": "Describe six actions in the picture using is or are and an -ing word."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "words.",
+            "English",
+            "new",
+            "read",
+            "us",
+            "helps",
+            "teacher",
+            "My"
+          ],
+          "answer": "My teacher helps us read new English words."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "words.",
+            "new",
+            "us",
+            "teaching",
+            "is",
+            "teacher",
+            "The"
+          ],
+          "answer": "The teacher is teaching us new words."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sick.",
+            "are",
+            "who",
+            "people",
+            "helps",
+            "doctor",
+            "A"
+          ],
+          "answer": "A doctor helps people who are sick."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'gloves' mean in this unit?",
+          "choices": [
+            "Coverings for the hands, with a part for each finger.",
+            "A person who lives near you.",
+            "A person whose job is to clean windows."
+          ],
+          "answer": "Coverings for the hands, with a part for each finger.",
+          "explanation": "gloves: Coverings for the hands, with a part for each finger."
+        },
+        {
+          "prompt": "What does 'shopkeeper' mean in this unit?",
+          "choices": [
+            "A person who lives near you.",
+            "A person whose job is to clean windows.",
+            "A person who sells things in a shop."
+          ],
+          "answer": "A person who sells things in a shop.",
+          "explanation": "shopkeeper: A person who sells things in a shop."
+        },
+        {
+          "prompt": "What does 'window cleaner' mean in this unit?",
+          "choices": [
+            "A person who finds out news and writes stories about it.",
+            "A person whose job is to clean windows.",
+            "A person who lives near you."
+          ],
+          "answer": "A person whose job is to clean windows.",
+          "explanation": "window cleaner: A person whose job is to clean windows."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'nurse'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "nurse is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'growing'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "growing is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'firefighter'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "firefighter is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "police officer",
+              "A person who keeps people safe and helps them follow the law."
+            ],
+            [
+              "bus driver",
+              "A person whose job is to drive a bus."
+            ],
+            [
+              "helmet",
+              "A hard hat that protects the head."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "mask",
+              "A covering for the face."
+            ],
+            [
+              "doctor",
+              "A person who helps people who are sick."
+            ],
+            [
+              "teacher",
+              "A person who helps others learn."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "helping",
+              "Doing something to make things easier for someone."
+            ],
+            [
+              "rescuing",
+              "Saving someone from danger."
+            ],
+            [
+              "driving",
+              "Making a car or bus go."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "The ____ asked questions about our market day.",
+          "choices": [
+            "reporter",
+            "neighbour",
+            "window cleaner",
+            "police officer"
+          ],
+          "answer": "reporter",
+          "explanation": "The reporter asked questions about our market day."
+        },
+        {
+          "prompt": "Which spelling is correct?",
+          "choices": [
+            "bus driver",
+            "bsudriver",
+            "busdrive",
+            "busdriverr"
+          ],
+          "answer": "bus driver",
+          "explanation": "The bus driver takes people from our town to the city."
+        },
+        {
+          "prompt": "Who helps people who are sick?",
+          "choices": [
+            "A doctor",
+            "A farmer",
+            "A bus driver",
+            "A reporter"
+          ],
+          "answer": "A doctor",
+          "explanation": "A doctor helps people who are sick."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does 'neighbour' mean?",
+          "choices": [
+            "A person who lives near you.",
+            "A person whose job is to clean windows.",
+            "A person who keeps people safe and helps them follow the law.",
+            "A person who finds out news and writes stories about it."
+          ],
+          "answer": "A person who lives near you.",
+          "explanation": "My neighbour Nadia grows flowers in her garden."
+        },
+        {
+          "prompt": "Which word means: A person whose job is to clean windows.",
+          "choices": [
+            "window cleaner",
+            "neighbour",
+            "police officer",
+            "reporter"
+          ],
+          "answer": "window cleaner",
+          "explanation": "The window cleaner uses a long pole to reach the high windows."
+        },
+        {
+          "prompt": "What type of word is 'police officer'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective",
+            "Adverb"
+          ],
+          "answer": "Noun",
+          "explanation": "The police officer helped the children cross the busy road."
+        }
+      ]
+    }
+  ]
+}

@@ -10,7 +10,11 @@ $context = context_system::instance();
 $PAGE->set_context($context);
 $consumercontext = pqh_requested_consumer_context();
 $requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
-$workspaceid = $requestedworkspaceid > 0 ? $requestedworkspaceid : (int)($consumercontext->workspaceid ?? 0);
+$workspacecandidateid = $requestedworkspaceid > 0 ? $requestedworkspaceid : (int)($consumercontext->workspaceid ?? 0);
+$workspaceid = pqh_current_workspace_id((int)$USER->id, $workspacecandidateid);
+if ($workspaceid <= 0 && $workspacecandidateid > 0) {
+    $workspaceid = $workspacecandidateid;
+}
 $urlparams = [];
 if (!empty($consumercontext->consumerslug)) {
     $urlparams['consumer'] = (string)$consumercontext->consumerslug;
@@ -72,16 +76,38 @@ function pqlav_is_teacher(int $userid): bool {
     if (is_siteadmin($userid)) {
         return true;
     }
+    if (pqh_has_independent_teacher_profile($userid)) {
+        return true;
+    }
     if (pqlav_table_exists('local_prequran_teacher_profile')
         && $DB->record_exists_select(
             'local_prequran_teacher_profile',
-            'userid = ? AND status IN (?, ?)',
-            [$userid, 'active', 'pending']
+            "userid = ? AND (status IS NULL OR status = '' OR LOWER(status) NOT IN (?, ?, ?))",
+            [$userid, 'archived', 'inactive', 'rejected']
         )) {
         return true;
     }
     if (pqlav_table_exists('local_prequran_teacher_student')
         && $DB->record_exists('local_prequran_teacher_student', ['teacherid' => $userid, 'status' => 'active'])) {
+        return true;
+    }
+    if (pqlav_table_exists('local_prequran_class_group')
+        && $DB->record_exists_select('local_prequran_class_group', 'teacherid = ? AND status <> ?', [$userid, 'archived'])) {
+        return true;
+    }
+    if (pqlav_table_exists('local_prequran_live_session')
+        && $DB->record_exists_select('local_prequran_live_session', 'teacherid = :teacherid AND status <> :cancelled', [
+            'teacherid' => $userid,
+            'cancelled' => 'cancelled',
+        ])) {
+        return true;
+    }
+    if (pqlav_table_exists('local_prequran_live_participant')
+        && $DB->record_exists('local_prequran_live_participant', [
+            'userid' => $userid,
+            'role' => 'teacher',
+            'status' => 'active',
+        ])) {
         return true;
     }
     return $DB->record_exists_sql(
@@ -207,9 +233,10 @@ $canmanageavailability = pqh_can_manage_academy_operations((int)$USER->id)
     || has_capability('moodle/user:update', $context)
     || has_capability('moodle/category:manage', $context);
 
-if (!$canmanageavailability && (!pqlav_is_teacher((int)$USER->id) || pqlav_is_managed_student((int)$USER->id))) {
+$isavailabilityteacher = pqlav_is_teacher((int)$USER->id);
+if (!$canmanageavailability && !$isavailabilityteacher) {
     pqh_access_denied(
-        'Only teachers and academy operations users can manage availability.',
+        'Only teachers and platform operations users can manage availability.',
         $dashboardurl,
         'Teacher availability access required'
     );

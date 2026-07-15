@@ -125,6 +125,22 @@ function pqea_upsert_enrollment_approval(int $studentid, int $parentid, string $
         }
     }
 
+    if (pqea_table_exists('local_prequran_teacher_request')) {
+        $DB->set_field_select(
+            'local_prequran_teacher_request',
+            'request_status',
+            'parent_confirmed',
+            'studentid = :studentid AND parentid = :parentid AND request_status IN (:selectionrequested, :academyreview, :teachercontacted)',
+            [
+                'studentid' => $studentid,
+                'parentid' => $parentid,
+                'selectionrequested' => 'selection_requested',
+                'academyreview' => 'academy_review',
+                'teachercontacted' => 'teacher_contacted',
+            ]
+        );
+    }
+
     if (pqea_table_exists('local_prequran_live_audit')) {
         $DB->insert_record('local_prequran_live_audit', (object)[
             'sessionid' => 0,

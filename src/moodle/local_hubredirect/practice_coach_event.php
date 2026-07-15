@@ -24,8 +24,6 @@ function pqh_practice_coach_origin_allowed(string $origin): bool {
     }
 
     $allowed = array_merge($allowed, pqh_resource_allowed_origins());
-    $allowed[] = 'https://eduplatform.ai';
-    $allowed[] = 'https://app.eduplatform.ai';
     $allowed[] = 'http://127.0.0.1:4173';
     $allowed[] = 'http://localhost:4173';
 

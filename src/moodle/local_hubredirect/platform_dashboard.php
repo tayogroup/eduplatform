@@ -154,6 +154,8 @@ body.pqpd-page #page,body.pqpd-page #page-content,body.pqpd-page #region-main,bo
                   if ($workspaceid > 0) {
                       $params['workspaceid'] = $workspaceid;
                   }
+                  $consumercontext = pqh_consumer_context_by_slug((string)$consumer->slug);
+                  $workspaceurl = pqh_consumer_url('/local/hubredirect/workspace_dashboard.php', $consumercontext, $params);
                   ?>
                   <div class="pqpd-row">
                     <div>
@@ -173,7 +175,7 @@ body.pqpd-page #page,body.pqpd-page #page-content,body.pqpd-page #region-main,bo
                         <a class="pqpd-btn" href="<?php echo (new moodle_url('/local/hubredirect/platform_consumers.php', ['focus' => (string)$consumer->slug]))->out(false); ?>">Manage</a>
                       <?php endif; ?>
                       <?php if ($workspaceid > 0): ?>
-                        <a class="pqpd-btn" href="<?php echo (new moodle_url('/local/hubredirect/workspace_dashboard.php', $params))->out(false); ?>">Workspace</a>
+                        <a class="pqpd-btn" href="<?php echo $workspaceurl->out(false); ?>">Workspace</a>
                       <?php endif; ?>
                     </div>
                   </div>

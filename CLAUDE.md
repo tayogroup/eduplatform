@@ -51,7 +51,8 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 ## Git
 
 - Work on `main` (or feature branches off it). History before 2026-07-16 lived on `codex/*` branches, now merged and deleted.
-- Local backup remote `backup` → `C:\Users\inawa\Documents\Claude Code\EduPlatform-backup\eduplatform.git`. Refresh with `git push backup --all --follow-tags` after significant work.
+- Primary remote `origin` → `https://github.com/tayogroup/eduplatform` (private). Push after significant work.
+- Local backup remote `backup` → `C:\Users\inawa\Documents\Claude Code\EduPlatform-backup\eduplatform.git`. Refresh both with `git push origin main --follow-tags` and `git push backup --all --follow-tags`.
 
 ## Verification before committing
 

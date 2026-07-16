@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 
-// Generates the 12 vector illustrations for "Musa Helps a Friend",
-// the sequel to "Musa's Muddy Stripes". Flat picture-book style with the
-// same cast and visual continuity rules documented in the book's PROMPTS.md.
-// Output: src/prototypes/ehel-academy/english/ebooks/musa-helps-a-friend/page-NN.svg
+// Generates the vector illustrations for the Musa picture-book series:
+//   - Musa's Muddy Stripes        (book 1)
+//   - Musa Helps a Friend         (book 2, sequel)
+// One shared character/scenery kit keeps the cast identical across books.
+// Usage: node tools/create-musa-ebook-illustrations.js [muddy-stripes|helps-a-friend|all]
+// Output: src/prototypes/ehel-academy/english/ebooks/<book>/page-NN.svg
 
 const fs = require("fs");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const outDir = path.join(root, "src", "prototypes", "ehel-academy", "english", "ebooks", "musa-helps-a-friend");
+const ebooksRoot = path.join(root, "src", "prototypes", "ehel-academy", "english", "ebooks");
 
 const W = 1600;
 const H = 1000;
@@ -31,17 +33,16 @@ const C = {
   elephant: "#aab4be", elephantDark: "#8e99a5", elephantInnerEar: "#cfb6b6",
   ostrichBody: "#33333d", ostrichNeck: "#e9ddc8", ostrichBeak: "#d9a05b",
   monkey: "#8f9a86", monkeyFace: "#e8dcc8",
+  leaf: "#79a15a", leafDark: "#5c7d43",
   rainbow: ["#e76f51", "#f4c95d", "#8ab17d", "#7fa8d9", "#9d82c4"],
 };
 
-// ---------------------------------------------------------------- helpers
+// ---------------------------------------------------------------- shared bits
 
 function face(mood, s = 1) {
-  // eye + mouth for a character group already positioned at head origin
   const eye = `<circle cx="0" cy="0" r="${9 * s}" fill="${C.eyeBrown}"/><circle cx="${2.5 * s}" cy="${-3 * s}" r="${3 * s}" fill="#fff"/>`;
   if (mood === "sad") return `${eye}<path d="M ${-14 * s} ${-14 * s} q ${10 * s} ${-6 * s} ${20 * s} ${-2 * s}" stroke="${C.ink}" stroke-width="${3 * s}" fill="none" stroke-linecap="round"/>`;
-  if (mood === "surprised") return `${eye}`;
-  return eye; // happy default; mouths are drawn on the muzzle by each character
+  return eye;
 }
 
 function mouth(mood, s = 1) {
@@ -55,12 +56,15 @@ function mudSpots(list, color = C.mud) {
 }
 
 // ---------------------------------------------------------------- characters
-// All characters face right at scale 1; wrap with translate/scale(-1,1) to flip.
+// All characters face right at scale 1; flip mirrors them.
 
-function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", muddy = false, pull = false }) {
-  const legBack = pose === "run" ? -22 : pull ? -30 : 0;
-  const legFront = pose === "run" ? 24 : pull ? 26 : 0;
-  const lean = pull ? -12 : 0;
+function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", muddy = false, heavyMud = false, pull = false, sunk = false }) {
+  let legBack = 0;
+  let legFront = 0;
+  let lean = 0;
+  if (pose === "run") { legBack = -22; legFront = 24; }
+  if (pose === "leap") { legBack = 44; legFront = -48; lean = -16; }
+  if (pull) { legBack = -30; legFront = 26; lean = -12; }
   const stripes = `
     <path d="M -55 -48 q 6 30 -2 52" stroke="${C.ink}" stroke-width="11" fill="none" stroke-linecap="round"/>
     <path d="M -28 -55 q 5 34 -2 62" stroke="${C.ink}" stroke-width="11" fill="none" stroke-linecap="round"/>
@@ -69,15 +73,20 @@ function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", mudd
     <path d="M 62 -30 q 14 2 24 -6" stroke="${C.ink}" stroke-width="8" fill="none" stroke-linecap="round"/>
     <path d="M 70 -52 q 12 4 22 -2" stroke="${C.ink}" stroke-width="8" fill="none" stroke-linecap="round"/>`;
   const heart = `<path d="M 46 -18 c -5 -8 -16 -5 -16 3 c 0 7 9 12 16 17 c 7 -5 16 -10 16 -17 c 0 -8 -11 -11 -16 -3 z" fill="${C.ink}"/>`;
+  const mud = heavyMud
+    ? mudSpots([[-52, -6, 26], [-12, 14, 24], [22, -18, 20], [48, 10, 16], [-30, -38, 15], [10, -44, 13]])
+    : muddy ? mudSpots([[-40, 6, 20], [8, 22, 16], [-4, -30, 13], [40, 6, 12]]) : "";
   const leg = (lx, rot, back) => `<g transform="translate(${lx} 34) rotate(${rot})"><rect x="-9" y="0" width="18" height="66" rx="9" fill="${back ? "#f1ede9" : C.zebraBody}" stroke="${C.ink}" stroke-width="4"/><path d="M -9 18 h 18 M -9 36 h 18" stroke="${C.ink}" stroke-width="6"/><rect x="-10" y="58" width="20" height="12" rx="5" fill="${C.ink}"/></g>`;
+  const legs = sunk ? "" : `${leg(-58, legBack, true)}${leg(30, -legFront * 0.4, true)}`;
+  const legsFront = sunk ? "" : `${leg(-38, legFront, false)}${leg(58, pose === "leap" ? legBack * 0.7 : legBack ? -legBack : 0, false)}`;
+  const shadow = sunk || pose === "leap" ? "" : `<ellipse cx="0" cy="96" rx="88" ry="14" fill="${C.ink}" opacity="0.10"/>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s}) rotate(${lean})">
-    <ellipse cx="0" cy="96" rx="88" ry="14" fill="${C.ink}" opacity="0.10"/>
-    ${leg(-58, legBack, true)}${leg(30, -legFront * 0.4, true)}
+    ${shadow}${legs}
     <path d="M -86 6 q -20 -4 -26 12 q 12 8 26 2" fill="${C.zebraBody}" stroke="${C.ink}" stroke-width="4"/>
     <path d="M -108 16 l -6 16 q 10 4 14 -4 z" fill="${C.ink}"/>
     <ellipse cx="0" cy="-6" rx="95" ry="58" fill="${C.zebraBody}" stroke="${C.ink}" stroke-width="5"/>
-    ${stripes}${muddy ? mudSpots([[-40, 6, 20], [8, 22, 16], [-4, -30, 13], [40, 6, 12]]) : ""}${heart}
-    ${leg(-38, legFront, false)}${leg(58, legBack ? -legBack : 0, false)}
+    ${stripes}${mud}${heart}
+    ${legsFront}
     <path d="M 62 -34 q 26 -34 52 -44 l 26 8 q -8 34 -34 48 z" fill="${C.zebraBody}" stroke="${C.ink}" stroke-width="5"/>
     <path d="M 84 -66 q 4 14 -6 24 M 104 -72 q 2 12 -6 22" stroke="${C.ink}" stroke-width="7" fill="none" stroke-linecap="round"/>
     <g transform="translate(150 -84)">
@@ -94,20 +103,21 @@ function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", mudd
   </g>`;
 }
 
-function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false }) {
+function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose = "stand" }) {
   const neck = bend
     ? `<path d="M 40 -30 q 60 -10 96 44 l 26 -6 q -22 -74 -104 -74 z" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>`
     : `<path d="M 40 -30 q 24 -90 56 -128 l 30 10 q -14 84 -52 130 z" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>`;
   const headPos = bend ? "translate(158 16) rotate(24)" : "translate(120 -156) rotate(-12)";
   const patches = [[-46, -18, 15], [-8, -34, 13], [-16, 14, 14], [26, -6, 12], [18, 30, 10], [52, -26, 9]]
     .map(([px, py, r]) => `<circle cx="${px}" cy="${py}" r="${r}" fill="${C.giraffePatch}"/>`).join("");
-  const leg = (lx, back) => `<g transform="translate(${lx} 30)"><rect x="-8" y="0" width="16" height="86" rx="8" fill="${back ? "#d8a552" : C.giraffe}" stroke="${C.ink}" stroke-width="4"/><rect x="-9" y="76" width="18" height="12" rx="5" fill="${C.ink}"/></g>`;
+  const rot = pose === "run" ? 14 : 0;
+  const leg = (lx, back, r) => `<g transform="translate(${lx} 30) rotate(${r})"><rect x="-8" y="0" width="16" height="86" rx="8" fill="${back ? "#d8a552" : C.giraffe}" stroke="${C.ink}" stroke-width="4"/><rect x="-9" y="76" width="18" height="12" rx="5" fill="${C.ink}"/></g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="112" rx="82" ry="13" fill="${C.ink}" opacity="0.10"/>
-    ${leg(-52, true)}${leg(28, true)}
+    ${leg(-52, true, -rot)}${leg(28, true, rot)}
     <ellipse cx="-4" cy="-4" rx="82" ry="52" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>
     ${patches}
-    ${leg(-30, false)}${leg(52, false)}
+    ${leg(-30, false, rot)}${leg(52, false, -rot)}
     <path d="M -80 -10 q -18 6 -16 24 l 10 4 q 8 -12 14 -18 z" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="4"/>
     <path d="M -92 16 l -4 14 q 10 2 12 -8 z" fill="${C.ink}"/>
     ${neck}
@@ -125,10 +135,11 @@ function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false }) {
   </g>`;
 }
 
-function elephant({ x, y, s = 1, flip = false, mood = "happy", stuck = false, trunkUp = false, muddy = false }) {
+function elephant({ x, y, s = 1, flip = false, mood = "happy", stuck = false, trunkUp = false, muddy = false, pose = "stand" }) {
+  const rot = pose === "run" ? 12 : 0;
   const legs = stuck ? "" : `
-    <g transform="translate(-42 28)"><rect x="-13" y="0" width="26" height="56" rx="12" fill="${C.elephantDark}" stroke="${C.ink}" stroke-width="4"/></g>
-    <g transform="translate(34 28)"><rect x="-13" y="0" width="26" height="56" rx="12" fill="${C.elephant}" stroke="${C.ink}" stroke-width="4"/></g>`;
+    <g transform="translate(-42 28) rotate(${-rot})"><rect x="-13" y="0" width="26" height="56" rx="12" fill="${C.elephantDark}" stroke="${C.ink}" stroke-width="4"/></g>
+    <g transform="translate(34 28) rotate(${rot})"><rect x="-13" y="0" width="26" height="56" rx="12" fill="${C.elephant}" stroke="${C.ink}" stroke-width="4"/></g>`;
   const trunk = trunkUp
     ? `<path d="M 74 -26 q 40 -12 44 -52 q 0 -12 -12 -10 q -6 30 -40 40 z" fill="${C.elephant}" stroke="${C.ink}" stroke-width="4.5"/>`
     : `<path d="M 74 -26 q 34 12 30 56 q -2 12 -14 8 q 0 -34 -24 -44 z" fill="${C.elephant}" stroke="${C.ink}" stroke-width="4.5"/>`;
@@ -149,14 +160,20 @@ function elephant({ x, y, s = 1, flip = false, mood = "happy", stuck = false, tr
   </g>`;
 }
 
-function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand" }) {
+function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", fanning = false }) {
   const legRot = pose === "run" ? 20 : 0;
   const leg = (lx, rot) => `<g transform="translate(${lx} 26) rotate(${rot})"><rect x="-5" y="0" width="10" height="88" rx="5" fill="${C.ostrichNeck}" stroke="${C.ink}" stroke-width="3.4"/><path d="M -8 84 l 10 12 l 8 -12" fill="none" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/></g>`;
+  const fan = fanning
+    ? `<g stroke="#f4efe4" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.9">
+        <path d="M -70 -40 q -40 -20 -50 -56"/><path d="M -78 -16 q -46 -6 -66 -32"/><path d="M -76 8 q -48 8 -72 -8"/>
+      </g>`
+    : "";
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="118" rx="58" ry="11" fill="${C.ink}" opacity="0.10"/>
     ${leg(-20, legRot)}${leg(18, -legRot)}
     <ellipse cx="-6" cy="0" rx="62" ry="46" fill="${C.ostrichBody}" stroke="${C.ink}" stroke-width="5"/>
     <path d="M -58 -18 q -22 -4 -30 12 q 14 12 32 4 z M -52 6 q -22 0 -28 16 q 16 10 32 0 z" fill="#f4efe4" stroke="${C.ink}" stroke-width="4"/>
+    ${fan}
     <path d="M 34 -22 q 10 -66 22 -92 l 22 4 q -4 34 -18 94 z" fill="${C.ostrichNeck}" stroke="${C.ink}" stroke-width="4.5"/>
     <g transform="translate(72 -122)">
       <ellipse cx="0" cy="0" rx="26" ry="22" fill="${C.ostrichNeck}" stroke="${C.ink}" stroke-width="4.5"/>
@@ -167,15 +184,23 @@ function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand" }) 
   </g>`;
 }
 
-function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down" }) {
+function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leaves = false }) {
   const arm = (ax, rot) => `<g transform="translate(${ax} -14) rotate(${rot})"><rect x="-6" y="0" width="12" height="52" rx="6" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/><circle cx="0" cy="54" r="8" fill="${C.monkeyFace}" stroke="${C.ink}" stroke-width="3"/></g>`;
   const up = arms === "up";
+  const leafFan = leaves
+    ? `<g transform="translate(${up ? -52 : -44} ${up ? -66 : 40})">
+        <path d="M 0 0 q -26 -20 -18 -48 q 24 6 24 44 z" fill="${C.leaf}" stroke="${C.leafDark}" stroke-width="3"/>
+        <path d="M 8 2 q 0 -34 22 -48 q 14 22 -10 50 z" fill="${C.leaf}" stroke="${C.leafDark}" stroke-width="3"/>
+        <path d="M -4 6 q -34 -4 -44 -26 q 20 -14 44 12 z" fill="${C.leaf}" stroke="${C.leafDark}" stroke-width="3"/>
+      </g>`
+    : "";
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="66" rx="42" ry="9" fill="${C.ink}" opacity="0.10"/>
     <path d="M -30 30 q -44 4 -48 -34 q 0 -14 12 -10 q 2 26 34 30 z" fill="${C.monkey}" stroke="${C.ink}" stroke-width="4"/>
     <ellipse cx="0" cy="16" rx="38" ry="42" fill="${C.monkey}" stroke="${C.ink}" stroke-width="4.5"/>
     <ellipse cx="4" cy="26" rx="20" ry="24" fill="${C.monkeyFace}"/>
     ${arm(-24, up ? 150 : 24)}${arm(24, up ? -150 : -24)}
+    ${leafFan}
     <g transform="translate(-14 52)"><rect x="-6" y="0" width="12" height="24" rx="6" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/></g>
     <g transform="translate(16 52)"><rect x="-6" y="0" width="12" height="24" rx="6" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/></g>
     <g transform="translate(0 -30)">
@@ -212,6 +237,12 @@ function ground() {
     ${[120, 380, 660, 940, 1240, 1480].map((gx) => `<path d="M ${gx} ${780 + (gx % 3) * 40} q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="${C.grassDark}" opacity="0.8"/>`).join("")}`;
 }
 
+function tallGrass(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})" stroke="${C.grassDark}" stroke-width="10" fill="none" stroke-linecap="round">
+    <path d="M 0 0 q -10 -70 -34 -96"/><path d="M 22 0 q 4 -80 -6 -116"/><path d="M 44 0 q 18 -66 44 -88"/><path d="M 66 0 q 8 -56 0 -80"/>
+  </g>`;
+}
+
 function acacia(x, y, s = 1) {
   return `<g transform="translate(${x} ${y}) scale(${s})">
     <path d="M -8 0 q -4 -70 -30 -110 M 6 0 q 8 -76 40 -116 M 0 -60 q -20 -30 -52 -44 M 2 -66 q 26 -26 58 -36" stroke="${C.acaciaTrunk}" stroke-width="14" fill="none" stroke-linecap="round"/>
@@ -226,6 +257,14 @@ function puddle(x, y, rx, ry, muddyLevel = 1) {
   return `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${C.mudDark}"/>
     <ellipse cx="${x}" cy="${y - 6}" rx="${rx - 14}" ry="${ry - 10}" fill="${fill}"/>
     <ellipse cx="${x - rx * 0.3}" cy="${y - ry * 0.34}" rx="${rx * 0.36}" ry="${ry * 0.26}" fill="${inner}" opacity="0.8"/>`;
+}
+
+function fallenBranch(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -130 10 q 90 -26 260 -6" stroke="${C.acaciaTrunk}" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <path d="M -40 -2 l -26 -38 M 60 -6 l 20 -40 M -100 4 l -18 -28" stroke="${C.acaciaTrunk}" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <ellipse cx="-14" cy="34" rx="150" ry="14" fill="${C.ink}" opacity="0.08"/>
+  </g>`;
 }
 
 function rain() {
@@ -247,6 +286,24 @@ function splashArcs(x, y, color = C.mud) {
     ${mudSpots([[x - 210, y - 150, 14], [x + 220, y - 160, 16], [x - 120, y - 220, 11], [x + 100, y - 230, 12], [x - 20, y - 250, 10]], color)}`;
 }
 
+function waterSpray(x1, y1, x2, y2) {
+  const mx = (x1 + x2) / 2;
+  const my = Math.min(y1, y2) - 180;
+  let drops = "";
+  for (let i = 1; i < 8; i += 1) {
+    const t = i / 8;
+    const bx = (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * mx + t * t * x2;
+    const by = (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * my + t * t * y2;
+    drops += `<circle cx="${bx}" cy="${by + 26}" r="${7 + (i % 3) * 2}" fill="${C.water}" opacity="0.85"/>`;
+  }
+  return `<path d="M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}" stroke="${C.water}" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.85"/>
+    <path d="M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}" stroke="${C.waterLight}" stroke-width="7" fill="none" stroke-linecap="round"/>${drops}`;
+}
+
+function sunnyPatch(x, y) {
+  return `<ellipse cx="${x}" cy="${y}" rx="220" ry="52" fill="${C.sunGlow}" opacity="0.8"/>`;
+}
+
 function rainbow(x, y) {
   return C.rainbow.map((color, index) => `<path d="M ${x - 330 + index * 22} ${y} a ${330 - index * 22} ${330 - index * 22} 0 0 1 ${(330 - index * 22) * 2} 0" fill="none" stroke="${color}" stroke-width="20" opacity="0.75"/>`).join("");
 }
@@ -256,34 +313,116 @@ function vine(points, width = 12) {
     <path d="${points}" fill="none" stroke="#79a15a" stroke-width="${width * 0.45}" stroke-linecap="round"/>`;
 }
 
-// ---------------------------------------------------------------- pages
-
 const basicScene = (rainy = false) => `${sky(rainy)}${rainy ? "" : sun()}${hills()}${ground()}`;
 
-const pages = [
-  // 1 cover: all five friends around the puddle
+// ---------------------------------------------------------------- book 1: Musa's Muddy Stripes
+
+const muddyStripesPages = [
+  // 1 cover: Musa with all four friends beside the muddy puddle
+  `${basicScene()}${acacia(210, 640, 1.1)}${acacia(1430, 620, 0.9)}
+   ${puddle(800, 880, 280, 62)}
+   ${giraffe({ x: 380, y: 640, s: 1.02 })}
+   ${elephant({ x: 1220, y: 700, s: 0.98, flip: true })}
+   ${ostrich({ x: 1040, y: 650, s: 0.9, flip: true })}
+   ${monkey({ x: 540, y: 740, s: 0.95 })}
+   ${zebra({ x: 800, y: 670, s: 1.12 })}`,
+
+  // 2 Musa trots alone through tall golden grass
+  `${basicScene()}${acacia(1380, 640, 1.05)}
+   ${tallGrass(220, 900, 1.4)}${tallGrass(1240, 940, 1.5)}${tallGrass(1420, 860, 1.1)}
+   ${zebra({ x: 720, y: 690, s: 1.2, pose: "run" })}
+   <g stroke="${C.grassDark}" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.7"><path d="M 430 800 q -50 -8 -80 10"/><path d="M 1030 810 q 50 -10 84 6"/></g>`,
+
+  // 3 Musa runs ahead of the smiling giraffe
+  `${basicScene()}${acacia(200, 630, 1)}
+   ${giraffe({ x: 430, y: 630, s: 0.98, pose: "run" })}
+   ${zebra({ x: 1050, y: 690, s: 1.12, pose: "run" })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 780 760 q -40 -12 -70 6"/><path d="M 690 800 q -36 -8 -62 8"/></g>`,
+
+  // 4 Musa runs ahead while the little elephant waves her trunk
+  `${basicScene()}${acacia(1420, 630, 1)}
+   ${elephant({ x: 420, y: 710, s: 1, trunkUp: true, pose: "run" })}
+   ${zebra({ x: 1080, y: 690, s: 1.12, pose: "run" })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 760 780 q -40 -12 -70 6"/><path d="M 680 820 q -36 -8 -62 8"/></g>`,
+
+  // 5 Musa and the ostrich run together
+  `${basicScene()}${acacia(240, 640, 1.05)}${tallGrass(1400, 900, 1.3)}
+   ${ostrich({ x: 560, y: 660, s: 0.95, pose: "run" })}
+   ${zebra({ x: 1020, y: 690, s: 1.12, pose: "run" })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 330 800 q -40 -12 -70 6"/><path d="M 760 800 q -36 -10 -64 6"/></g>`,
+
+  // 6 Musa leaps over a fallen branch
+  `${basicScene()}${acacia(1400, 640, 1)}
+   ${fallenBranch(800, 900, 1.15)}
+   ${zebra({ x: 790, y: 560, s: 1.15, pose: "leap" })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.7"><path d="M 520 700 q -46 -8 -80 10"/><path d="M 470 750 q -40 -6 -70 10"/></g>`,
+
+  // 7 SPLASH! Musa slips into the muddy puddle
+  `${basicScene()}${acacia(220, 630, 1)}
+   ${puddle(900, 870, 330, 76)}
+   ${splashArcs(900, 850)}
+   ${zebra({ x: 900, y: 750, s: 1.1, mood: "surprised", sunk: true })}`,
+
+  // 8 mud covers his stripes; Musa feels sad
+  `${basicScene()}${acacia(1410, 640, 1)}
+   ${puddle(1030, 890, 280, 62)}
+   ${zebra({ x: 620, y: 700, s: 1.12, mood: "sad", heavyMud: true })}
+   ${mudSpots([[420, 870, 22], [820, 930, 18]])}`,
+
+  // 9 the vervet monkey brushes him with soft leaves
+  `${basicScene()}${acacia(240, 640, 1.05)}
+   ${puddle(1240, 900, 200, 48)}
+   ${zebra({ x: 850, y: 700, s: 1.1, mood: "sad", heavyMud: true, flip: true })}
+   ${monkey({ x: 430, y: 750, s: 1, arms: "up", leaves: true })}
+   <g stroke="${C.leaf}" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 560 620 q 30 -20 60 -14"/><path d="M 560 660 q 34 -8 64 2"/></g>`,
+
+  // 10 the elephant sprays Musa with cool water
+  `${basicScene()}${acacia(1420, 630, 0.95)}
+   ${puddle(760, 910, 220, 50, 0)}
+   ${elephant({ x: 380, y: 710, s: 1.05, trunkUp: true })}
+   ${waterSpray(500, 540, 900, 560)}
+   ${zebra({ x: 980, y: 700, s: 1.1, mood: "surprised", muddy: true, flip: true })}
+   <g stroke="${C.water}" stroke-width="7" fill="none" stroke-linecap="round"><path d="M 880 760 q -14 30 -34 40"/><path d="M 1100 750 q 14 32 32 44"/></g>`,
+
+  // 11 the ostrich fans him; the giraffe finds a sunny place
+  `${basicScene()}${sunnyPatch(1180, 840)}${acacia(180, 630, 1)}
+   ${ostrich({ x: 480, y: 660, s: 0.95, fanning: true })}
+   ${zebra({ x: 880, y: 690, s: 1.08, muddy: false })}
+   ${giraffe({ x: 1330, y: 620, s: 0.95, flip: true })}`,
+
+  // 12 stripes shine again; everyone splashes and laughs
+  `${basicScene()}${rainbow(800, 560)}${acacia(180, 640, 1)}${acacia(1440, 630, 0.9)}
+   ${puddle(800, 890, 280, 62, 0)}
+   ${zebra({ x: 780, y: 680, s: 1.1 })}
+   ${elephant({ x: 1120, y: 700, s: 0.95, flip: true, trunkUp: true })}
+   ${giraffe({ x: 360, y: 620, s: 0.92 })}
+   ${ostrich({ x: 1330, y: 650, s: 0.85, flip: true })}
+   ${monkey({ x: 540, y: 770, s: 0.9, arms: "up" })}
+   <g stroke="${C.water}" stroke-width="7" fill="none" stroke-linecap="round"><path d="M 600 840 q -24 -36 -58 -44"/><path d="M 1000 850 q 26 -38 60 -46"/></g>`,
+];
+
+// ---------------------------------------------------------------- book 2: Musa Helps a Friend
+
+const helpsAFriendPages = [
   `${basicScene()}${acacia(210, 640, 1.1)}${acacia(1430, 620, 0.9)}
    ${puddle(800, 870, 300, 66)}
-   ${giraffe({ x: 400, y: 640, s: 1.05, flip: false })}
+   ${giraffe({ x: 400, y: 640, s: 1.05 })}
    ${elephant({ x: 1210, y: 700, s: 1, flip: true, trunkUp: true })}
    ${ostrich({ x: 1050, y: 650, s: 0.92, flip: true })}
    ${monkey({ x: 560, y: 740, s: 0.95, arms: "up" })}
    ${zebra({ x: 800, y: 680, s: 1.1 })}`,
 
-  // 2 rainy night over the savanna
   `${basicScene(true)}
    <circle cx="1330" cy="150" r="62" fill="#f4f0e2" opacity="0.85"/><circle cx="1306" cy="138" r="52" fill="${C.rainTop}"/>
    ${acacia(280, 650, 1.15)}${acacia(1330, 630, 0.95)}
    ${puddle(520, 850, 200, 48)}${puddle(1080, 900, 240, 54)}${puddle(820, 760, 120, 30)}
    ${rain()}`,
 
-  // 3 Musa splashes out to play
   `${basicScene()}${acacia(1380, 640, 1.05)}
    ${puddle(560, 900, 210, 50)}
    ${zebra({ x: 620, y: 700, s: 1.15, pose: "run" })}
    <g stroke="${C.water}" stroke-width="8" fill="none" stroke-linecap="round"><path d="M 430 860 q -30 -40 -70 -50"/><path d="M 700 870 q 30 -44 66 -56"/></g>`,
 
-  // 4 Musa hears a sad sound
   `${basicScene()}${acacia(260, 640, 1.1)}
    ${zebra({ x: 560, y: 690, s: 1.15, mood: "surprised" })}
    <g stroke="#7d97ad" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.85">
@@ -291,34 +430,29 @@ const pages = [
    </g>
    <path d="M 1000 620 q 60 -20 120 0 q -20 60 -60 60 q -40 0 -60 -60 z" fill="${C.grassDark}" opacity="0.6"/>`,
 
-  // 5 the little elephant is stuck in the deep mud
   `${basicScene()}${acacia(220, 630, 1.05)}
    ${puddle(980, 850, 340, 80)}
    ${elephant({ x: 980, y: 760, s: 1.05, stuck: true, mood: "sad" })}
    ${mudSpots([[760, 800, 24], [1220, 810, 20], [980, 900, 26]])}`,
 
-  // 6 Musa comforts her
   `${basicScene()}${acacia(1400, 640, 1)}
    ${puddle(1000, 860, 320, 74)}
    ${elephant({ x: 1030, y: 780, s: 1, stuck: true, mood: "sad" })}
    ${zebra({ x: 520, y: 700, s: 1.1 })}
    <g fill="#e76f51" opacity="0.9"><path d="M 700 400 c -8 -14 -28 -9 -28 5 c 0 12 15 20 28 29 c 13 -9 28 -17 28 -29 c 0 -14 -20 -19 -28 -5 z"/></g>`,
 
-  // 7 Musa calls the friends
   `${basicScene()}${acacia(200, 640, 1.05)}
    ${zebra({ x: 430, y: 690, s: 1.02, mood: "surprised" })}
    ${giraffe({ x: 900, y: 620, s: 0.98, flip: true })}
    ${ostrich({ x: 1180, y: 660, s: 0.9, flip: true, pose: "run" })}
    ${monkey({ x: 1400, y: 780, s: 0.9, flip: true, arms: "up" })}`,
 
-  // 8 monkey brings a vine; elephant holds it
   `${basicScene()}${acacia(1410, 630, 1)}
    ${puddle(1060, 860, 300, 70)}
    ${elephant({ x: 1090, y: 780, s: 1, stuck: true, mood: "surprised", trunkUp: true })}
    ${vine("M 420 700 q 200 -90 420 -40 q 140 30 220 -10")}
    ${monkey({ x: 400, y: 700, s: 0.95, arms: "up" })}`,
 
-  // 9 everyone pulls
   `${basicScene()}${acacia(180, 630, 1)}
    ${puddle(1180, 870, 280, 66)}
    ${elephant({ x: 1200, y: 790, s: 0.98, stuck: true, mood: "surprised", trunkUp: true })}
@@ -328,7 +462,6 @@ const pages = [
    ${ostrich({ x: 300, y: 680, s: 0.85, flip: true, pose: "run" })}
    ${monkey({ x: 940, y: 760, s: 0.85, arms: "up", mood: "surprised" })}`,
 
-  // 10 POP! out she comes, mud everywhere
   `${basicScene()}${acacia(1420, 640, 0.95)}
    ${puddle(1080, 890, 300, 66)}
    ${splashArcs(1080, 890)}
@@ -336,7 +469,6 @@ const pages = [
    ${zebra({ x: 460, y: 700, s: 1, mood: "surprised", muddy: true })}
    ${monkey({ x: 1330, y: 780, s: 0.88, arms: "up", mood: "surprised" })}`,
 
-  // 11 everyone muddy and laughing
   `${basicScene()}${acacia(230, 640, 1)}
    ${puddle(820, 900, 240, 54)}
    ${zebra({ x: 620, y: 690, s: 1.05, muddy: true })}
@@ -346,7 +478,6 @@ const pages = [
    ${monkey({ x: 1400, y: 780, s: 0.9, flip: true, arms: "up" })}
    ${mudSpots([[350, 560, 12], [980, 520, 12], [1240, 600, 10]])}`,
 
-  // 12 rainbow ending
   `${basicScene()}${rainbow(800, 560)}${acacia(180, 640, 1)}${acacia(1440, 630, 0.9)}
    ${puddle(800, 890, 280, 62, 0)}
    ${zebra({ x: 660, y: 690, s: 1.05 })}
@@ -359,13 +490,24 @@ const pages = [
 
 // ---------------------------------------------------------------- write files
 
-fs.mkdirSync(outDir, { recursive: true });
+const books = {
+  "muddy-stripes": { dir: "musas-muddy-stripes", pages: muddyStripesPages },
+  "helps-a-friend": { dir: "musa-helps-a-friend", pages: helpsAFriendPages },
+};
 
-pages.forEach((body, index) => {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img">\n${body}\n</svg>\n`;
-  const file = path.join(outDir, `page-${String(index + 1).padStart(2, "0")}.svg`);
-  fs.writeFileSync(file, svg, "utf8");
-  console.log(`Wrote ${path.relative(root, file)}`);
-});
+const selection = process.argv[2] && process.argv[2] !== "all" ? [process.argv[2]] : Object.keys(books);
 
-console.log(`Done: ${pages.length} illustrations in ${path.relative(root, outDir)}`);
+for (const key of selection) {
+  const book = books[key];
+  if (!book) {
+    console.error(`Unknown book "${key}". Use: ${Object.keys(books).join(", ")}, or all.`);
+    process.exit(1);
+  }
+  const outDir = path.join(ebooksRoot, book.dir);
+  fs.mkdirSync(outDir, { recursive: true });
+  book.pages.forEach((body, index) => {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img">\n${body}\n</svg>\n`;
+    fs.writeFileSync(path.join(outDir, `page-${String(index + 1).padStart(2, "0")}.svg`), svg, "utf8");
+  });
+  console.log(`Wrote ${book.pages.length} pages to ${path.relative(root, outDir)}`);
+}

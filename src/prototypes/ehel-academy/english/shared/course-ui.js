@@ -2158,6 +2158,7 @@ function renderEbooks() {
           <div><span class="eyebrow">${escapeHtml(book.level)} · recommended for early readers</span><h2>${escapeHtml(book.title)}</h2><p>${escapeHtml(book.description)}</p></div>
           <div class="course-ebook-header-actions">
             <button class="button primary" id="watch-ebook" type="button" aria-label="Watch the story: narrated pages that turn by themselves">${icon("play")} Watch the story</button>
+            <span class="course-ebook-pagecount" id="ebook-page-count" aria-live="polite"></span>
           </div>
         </header>
         <div id="course-ebook-page"></div>
@@ -2169,7 +2170,7 @@ function renderEbooks() {
     const page = book.pages[activeEbookPage];
     const isLastPage = activeEbookPage === book.pages.length - 1;
     $("#course-ebook-page").innerHTML = `<div class="course-ebook-progress" role="progressbar" aria-label="Book progress" aria-valuemin="1" aria-valuemax="${book.pages.length}" aria-valuenow="${activeEbookPage + 1}" aria-valuetext="Page ${activeEbookPage + 1} of ${book.pages.length}"><span style="width:${((activeEbookPage + 1) / book.pages.length) * 100}%"></span></div>
-      <div class="course-ebook-toolbar"><span>Page <strong>${activeEbookPage + 1}</strong> of ${book.pages.length}</span><button class="sr-only" id="listen-ebook-page" type="button" tabindex="-1" aria-hidden="true">Narration</button></div>
+      <button class="sr-only" id="listen-ebook-page" type="button" tabindex="-1" aria-hidden="true">Narration</button>
       <figure class="course-ebook-illustration" id="ebook-stage"><img src="${ebookAsset(book, page.image)}" alt="${escapeHtml(page.alt)}"><figcaption class="sr-only">Original illustration by ${escapeHtml(book.illustrator)}.</figcaption></figure>
       <div class="course-ebook-transcript" aria-live="polite"><div class="course-ebook-transcript-head"><span>Read along</span><h3 tabindex="-1">Page ${activeEbookPage + 1}</h3></div><p>${escapeHtml(page.text)}</p></div>
       <div class="course-ebook-controls"><button class="button secondary" id="previous-ebook-page" type="button" ${activeEbookPage === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous page</button>${isLastPage ? `<button class="button gold" id="finish-ebook" type="button">${icon("check")} Finish book</button>` : `<span>Keep reading</span>`}<button class="button secondary" id="next-ebook-page" type="button" ${isLastPage ? "disabled" : ""}>Next page ${icon("arrow-right")}</button></div>`;
@@ -2205,6 +2206,8 @@ function renderEbooks() {
         })
         .catch(() => {});
     }
+    const pageCount = $("#ebook-page-count");
+    if (pageCount) pageCount.innerHTML = `Page <strong>${activeEbookPage + 1}</strong> of ${book.pages.length}`;
     $("#listen-ebook-page").addEventListener("click", async (event) => {
       if (ebookWatchActive) { stopEbookWatch(); return; }
       const listenButton = event.currentTarget;

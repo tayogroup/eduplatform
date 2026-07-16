@@ -1856,6 +1856,104 @@ const luluCityPages = [
    ${wildBird(550, 500, 1, true)}`,
 ];
 
+// ---------------------------------------------------------------- capstone crossover (Unit 10)
+// The Big Friends Party: every series in one celebration.
+
+const friendsPartyPages = [
+  // 1 cover: the whole world under the party banner
+  `${basicScene()}${rainbow(800, 520)}${raceBanner(800, 560, 1.1)}
+   ${zebra({ x: 480, y: 700, s: 0.9 })}
+   ${kiki({ x: 700, y: 810, s: 1, arms: "up", backpack: true })}
+   ${donkey({ x: 950, y: 720, s: 0.85 })}
+   ${lulu({ x: 800, y: 330, s: 1.5, flying: true })}
+   ${elephant({ x: 1220, y: 730, s: 0.8, flip: true, trunkUp: true })}
+   ${monkey({ x: 300, y: 780, s: 0.8, arms: "up" })}`,
+
+  // 2 Lulu flies home from the big city
+  `${basicScene()}${cityBuildings(280, 600, 0.55)}${acacia(1250, 630, 1.05)}
+   ${lulu({ x: 800, y: 380, s: 1.7, flying: true, arms: "up" })}
+   ${tallGrass(1450, 930, 1.2)}`,
+
+  // 3 Musa says: a party for all our friends!
+  `${basicScene()}${acacia(300, 630, 1.05)}${puddle(1150, 890, 240, 54)}
+   ${zebra({ x: 700, y: 690, s: 1.15, mood: "surprised" })}
+   ${lulu({ x: 1000, y: 440, s: 1.5, flying: true })}`,
+
+  // 4 Kiki comes from school with the games
+  `${basicScene()}${schoolBell(280, 840, 0.9)}
+   ${giraffe({ x: 600, y: 620, s: 0.95, glasses: true })}
+   ${kiki({ x: 900, y: 800, s: 1.15, backpack: true, arms: "up" })}
+   ${playBall(1100, 880, 0.9)}
+   ${kite(1300, 350, 0.8)}`,
+
+  // 5 Duku comes from the farm with food
+  `${basicScene()}${barn(280, 850, 0.7)}${fence(1300, 900, 0.9, 2)}
+   ${donkey({ x: 650, y: 710, s: 1.05 })}
+   ${hen({ x: 900, y: 840, s: 0.95 })}
+   ${goat({ x: 1130, y: 770, s: 0.85 })}
+   ${mango(800, 890, 1.2)}${mango(850, 910, 1)}${carrot(760, 900, 1)}`,
+
+  // 6 the little elephant fills the puddle
+  `${basicScene()}${acacia(1400, 630, 0.95)}
+   ${puddle(900, 880, 320, 70, 0)}
+   ${elephant({ x: 480, y: 720, s: 1, trunkUp: true })}
+   ${waterSpray(600, 560, 950, 590)}
+   ${lulu({ x: 1250, y: 460, s: 1.3, flying: true })}`,
+
+  // 7 making the long, long table
+  `${basicScene()}${acacia(240, 630, 1)}
+   ${bench(700, 890, 1.6)}${bench(1100, 890, 1.6)}
+   ${donkey({ x: 400, y: 730, s: 0.85 })}
+   ${kiki({ x: 850, y: 800, s: 1, arms: "up" })}
+   ${goat({ x: 1300, y: 780, s: 0.8, flip: true })}
+   ${dustPuffs(900, 870)}`,
+
+  // 8 hello hello - everyone greets everyone
+  `${basicScene()}${raceBanner(800, 540, 1)}
+   ${zebra({ x: 380, y: 710, s: 0.85 })}
+   ${kiki({ x: 620, y: 810, s: 0.95, arms: "up" })}
+   ${hen({ x: 820, y: 850, s: 0.85 })}
+   ${ostrich({ x: 1000, y: 690, s: 0.75, flip: true })}
+   ${monkey({ x: 1200, y: 790, s: 0.8, flip: true, flower: true, arms: "up" })}
+   ${chick(920, 900, 0.9)}`,
+
+  // 9 games and taking turns
+  `${basicScene()}${acacia(1380, 620, 1.05)}${swing(1380, 800, 0.9)}
+   ${playBall(800, 880, 1.1)}
+   ${kiki({ x: 550, y: 800, s: 1, arms: "up" })}
+   ${zebra({ x: 1050, y: 700, s: 0.9, pose: "run" })}
+   ${kite(300, 300, 0.8)}
+   ${ostrich({ x: 1250, y: 720, s: 0.65 })}`,
+
+  // 10 eating and Mama's soft song
+  `${basicScene()}${bench(800, 900, 2)}
+   ${monkey({ x: 400, y: 770, s: 0.95, flower: true })}
+   ${kiki({ x: 620, y: 820, s: 0.95 })}
+   ${donkey({ x: 900, y: 740, s: 0.8 })}
+   ${hen({ x: 1120, y: 850, s: 0.85 })}
+   ${mango(750, 870, 1)}${carrot(820, 880, 0.9)}
+   <g fill="#5a5148"><g class="anim-float" style="animation-delay:0s"><circle cx="500" cy="520" r="9"/><rect x="506" y="470" width="5" height="52" rx="2.5"/></g><g class="anim-float" style="animation-delay:0.9s"><circle cx="590" cy="470" r="9"/><rect x="596" y="420" width="5" height="52" rx="2.5"/></g></g>`,
+
+  // 11 stars come out; the chicks sleep in the hay
+  `${nightScene()}${haystack(1100, 900, 1.1)}
+   ${chick(1050, 800, 0.9)}${chick(1130, 790, 0.85)}${chick(1190, 805, 0.9)}
+   ${hen({ x: 850, y: 840, s: 0.95 })}
+   ${zebra({ x: 400, y: 710, s: 0.85 })}
+   ${lulu({ x: 620, y: 500, s: 1.2 })}
+   ${nest(620, 530, 1)}`,
+
+  // 12 look at our world - friends everywhere
+  `${basicScene()}${rainbow(800, 500)}${acacia(180, 640, 0.95)}${cityBuildings(1450, 620, 0.4)}
+   ${lulu({ x: 800, y: 320, s: 1.5, flying: true, arms: "up" })}
+   ${zebra({ x: 400, y: 700, s: 0.85 })}
+   ${kiki({ x: 620, y: 810, s: 0.9, arms: "up" })}
+   ${donkey({ x: 860, y: 730, s: 0.75 })}
+   ${elephant({ x: 1080, y: 740, s: 0.7, flip: true, trunkUp: true })}
+   ${giraffe({ x: 220, y: 620, s: 0.75, glasses: true })}
+   ${goat({ x: 1300, y: 780, s: 0.65, flip: true })}
+   ${wildBird(950, 450, 0.9, true)}`,
+];
+
 // ---------------------------------------------------------------- write files
 
 const books = {
@@ -1871,6 +1969,7 @@ const books = {
   "lulu-go": { dir: "lulu-says-lets-go", pages: luluGoPages },
   "lulu-water": { dir: "lulu-and-the-wonderful-water", pages: luluWaterPages },
   "lulu-city": { dir: "lulu-in-the-city", pages: luluCityPages },
+  "friends-party": { dir: "the-big-friends-party", pages: friendsPartyPages },
 };
 
 const selection = process.argv[2] && process.argv[2] !== "all" ? [process.argv[2]] : Object.keys(books);

@@ -16,6 +16,9 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const ebooksRoot = path.join(root, "src", "prototypes", "ehel-academy", "english", "ebooks");
 
+// Global size boost for every animal character (props and scenery unchanged).
+const ANIMAL_SCALE = 1.3;
+
 const W = 1600;
 const H = 1000;
 
@@ -122,6 +125,7 @@ function mudSpots(list, color = C.mud) {
 // stays outside the idle-bob wrapper so it never floats.
 
 function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", muddy = false, heavyMud = false, pull = false, sunk = false }) {
+  s *= ANIMAL_SCALE;
   let legBack = 0;
   let legFront = 0;
   let lean = 0;
@@ -174,6 +178,7 @@ function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", mudd
 }
 
 function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose = "stand", glasses = false }) {
+  s *= ANIMAL_SCALE;
   const neck = bend
     ? `<path d="M 40 -30 q 60 -10 96 44 l 26 -6 q -22 -74 -104 -74 z" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>`
     : `<path d="M 40 -30 q 24 -90 56 -128 l 30 10 q -14 84 -52 130 z" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>`;
@@ -214,6 +219,7 @@ function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose
 }
 
 function elephant({ x, y, s = 1, flip = false, mood = "happy", stuck = false, trunkUp = false, muddy = false, pose = "stand" }) {
+  s *= ANIMAL_SCALE;
   const rot = pose === "run" ? 12 : 0;
   const legs = stuck ? "" : `
     <g transform="translate(-42 28) rotate(${-rot})"><rect x="-13" y="0" width="26" height="56" rx="12" fill="${C.elephantDark}" stroke="${C.ink}" stroke-width="4"/></g>
@@ -246,6 +252,7 @@ function elephant({ x, y, s = 1, flip = false, mood = "happy", stuck = false, tr
 }
 
 function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", fanning = false }) {
+  s *= ANIMAL_SCALE;
   const legRot = pose === "run" ? 20 : 0;
   const leg = (lx, rot) => `<g transform="translate(${lx} 26) rotate(${rot})"><rect x="-5" y="0" width="10" height="88" rx="5" fill="${C.ostrichNeck}" stroke="${C.ink}" stroke-width="3.4"/><path d="M -8 84 l 10 12 l 8 -12" fill="none" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/></g>`;
   const fan = fanning
@@ -276,6 +283,7 @@ function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", fa
 }
 
 function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leaves = false, flower = false, shade = null }) {
+  s *= ANIMAL_SCALE;
   const bodyFill = shade || C.monkey;
   const arm = (ax, rot) => `<g transform="translate(${ax} -14) rotate(${rot})"><rect x="-6" y="0" width="12" height="52" rx="6" fill="${bodyFill}" stroke="${C.ink}" stroke-width="3.4"/><circle cx="0" cy="54" r="8" fill="${C.monkeyFace}" stroke="${C.ink}" stroke-width="3"/></g>`;
   const flowerMark = flower
@@ -320,6 +328,7 @@ function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leav
 // Kiki: a young vervet monkey (Musa's monkey friend is her uncle). Rounder
 // head, cheek tufts, and an optional little red school backpack.
 function kiki({ x, y, s = 1, flip = false, mood = "happy", arms = "down", backpack = false }) {
+  s *= ANIMAL_SCALE;
   const up = arms === "up";
   const arm = (ax, rot) => `<g transform="translate(${ax} -6) rotate(${rot})"><rect x="-5" y="0" width="10" height="40" rx="5" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3"/><circle cx="0" cy="42" r="7" fill="${C.monkeyFace}" stroke="${C.ink}" stroke-width="2.6"/></g>`;
   const pack = backpack
@@ -355,6 +364,7 @@ function kiki({ x, y, s = 1, flip = false, mood = "happy", arms = "down", backpa
 
 // Duku: a little gray donkey, hero of the Term 2 farm books.
 function donkey({ x, y, s = 1, flip = false, mood = "happy", pose = "stand" }) {
+  s *= ANIMAL_SCALE;
   const legBack = pose === "run" ? -20 : 0;
   const legFront = pose === "run" ? 22 : 0;
   const gray = "#b9b0a6";
@@ -393,6 +403,7 @@ function donkey({ x, y, s = 1, flip = false, mood = "happy", pose = "stand" }) {
 
 // Koko: a plump rust-brown hen.
 function hen({ x, y, s = 1, flip = false, mood = "happy" }) {
+  s *= ANIMAL_SCALE;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="64" rx="44" ry="9" fill="${C.ink}" opacity="0.10"/>
     <g class="tap-target" data-tap="hen" data-mood="${mood}">
@@ -415,6 +426,7 @@ function hen({ x, y, s = 1, flip = false, mood = "happy" }) {
 
 // Gigi: a cream nanny goat with little horns and a beard.
 function goat({ x, y, s = 1, flip = false, mood = "happy" }) {
+  s *= ANIMAL_SCALE;
   const cream = "#e8e2d2";
   const leg = (lx, back) => `<g transform="translate(${lx} 26)"><rect x="-7" y="0" width="14" height="50" rx="7" fill="${back ? "#d3ccba" : cream}" stroke="${C.ink}" stroke-width="3.6"/><rect x="-8" y="43" width="16" height="10" rx="4" fill="#5a5148"/></g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
@@ -442,6 +454,7 @@ function goat({ x, y, s = 1, flip = false, mood = "happy" }) {
 
 // A tiny yellow chick (Pip and siblings).
 function chick(x, y, s = 1, mood = "happy") {
+  s *= ANIMAL_SCALE;
   return `<g transform="translate(${x} ${y}) scale(${s})">
     <g class="tap-target" data-tap="chick">
     <g class="anim-idle" style="${delayAt(x, y, 1.2)}; animation-duration: 1.6s">
@@ -459,6 +472,7 @@ function chick(x, y, s = 1, mood = "happy") {
 
 // A small wild savanna bird.
 function wildBird(x, y, s = 1, flying = false) {
+  s *= ANIMAL_SCALE;
   return `<g transform="translate(${x} ${y}) scale(${s})">
     <g class="tap-target" data-tap="bird">
     <g class="${flying ? "anim-float" : "anim-idle"}" style="${delayAt(x, y, 1.4)}; animation-duration: 2s">
@@ -476,6 +490,7 @@ function wildBird(x, y, s = 1, flying = false) {
 
 // Lulu: a little swallow, hero of the Term 3 journey books.
 function lulu({ x, y, s = 1, flip = false, mood = "happy", flying = false }) {
+  s *= ANIMAL_SCALE;
   const blue = "#3f6ea5";
   const blueDark = "#2e5480";
   const wings = flying

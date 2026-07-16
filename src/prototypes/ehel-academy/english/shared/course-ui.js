@@ -546,11 +546,11 @@ function playStorySound(soundKey) {
   });
 }
 
-function stopEbookWatch() {
+function stopEbookWatch({ keepFullscreen = false } = {}) {
   ebookWatchActive = false;
   ebookWatchToken += 1;
   if (tapSoundPlayer) tapSoundPlayer.pause();
-  if (document.fullscreenElement?.classList?.contains("course-ebook-reader") && document.exitFullscreen) {
+  if (!keepFullscreen && document.fullscreenElement?.classList?.contains("course-ebook-reader") && document.exitFullscreen) {
     document.exitFullscreen().catch(() => {});
   }
   const watchButton = $("#watch-ebook");
@@ -2223,8 +2223,8 @@ function renderEbooks() {
       await playStorySound(page.sound);
       if (listenButton.isConnected) playPageNarration(listenButton, page.text);
     });
-    $("#previous-ebook-page").addEventListener("click", () => { stopEbookWatch(); activeEbookPage -= 1; drawPage(true); });
-    $("#next-ebook-page").addEventListener("click", () => { stopEbookWatch(); activeEbookPage += 1; drawPage(true); });
+    $("#previous-ebook-page").addEventListener("click", () => { stopEbookWatch({ keepFullscreen: true }); activeEbookPage -= 1; drawPage(true); });
+    $("#next-ebook-page").addEventListener("click", () => { stopEbookWatch({ keepFullscreen: true }); activeEbookPage += 1; drawPage(true); });
     if ($("#finish-ebook")) $("#finish-ebook").addEventListener("click", () => { stopEbookWatch(); complete("ebooks", `${book.title} complete. Well read!`); });
     icons();
     if (shouldFocus) focusDynamicContent(".course-ebook-transcript h3", `Page ${activeEbookPage + 1} of ${book.pages.length}. ${page.text}`);

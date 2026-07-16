@@ -38,6 +38,14 @@ const SOUNDS = [
   { key: "wind", seconds: 1.7, prompt: "One short gentle gust of wind whoosh lifting a kite, soft and airy, child friendly" },
   { key: "lullaby", seconds: 2.2, prompt: "A very short gentle humming lullaby phrase, warm motherly hum, soft and soothing, no words, no background noise" },
   { key: "crickets", seconds: 2, prompt: "Gentle quiet night crickets chirping softly under the stars, calm and peaceful, no other sounds" },
+  { key: "duku-happy", seconds: 1.6, prompt: "One short cheerful little donkey hee-haw bray, young and playful, cartoon style, child friendly, no background noise" },
+  { key: "duku-sad", seconds: 1.7, prompt: "One short soft sad little donkey whimper snort, gentle storybook sound, child friendly, no background noise" },
+  { key: "duku-surprised", seconds: 1.4, prompt: "One short startled little donkey snort and half bray, cartoon style, child friendly" },
+  { key: "hen", seconds: 1.5, prompt: "One short friendly hen clucking, buk buk buk, warm farm sound, child friendly, no background noise" },
+  { key: "goat", seconds: 1.4, prompt: "One short cheerful goat bleat, meeeh, playful farm sound, child friendly, no background noise" },
+  { key: "chick", seconds: 1.3, prompt: "Two tiny baby chick peeps, peep peep, very small and cute, child friendly, no background noise" },
+  { key: "bird", seconds: 1.5, prompt: "Short sweet little songbird tweeting melody, bright and cheerful, no background noise" },
+  { key: "crunch", seconds: 1.2, prompt: "One crisp playful carrot crunch bite, cartoon munch, child friendly, no background noise" },
 ];
 
 function loadDotEnv(filePath) {

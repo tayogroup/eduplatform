@@ -353,6 +353,127 @@ function kiki({ x, y, s = 1, flip = false, mood = "happy", arms = "down", backpa
   </g>`;
 }
 
+// Duku: a little gray donkey, hero of the Term 2 farm books.
+function donkey({ x, y, s = 1, flip = false, mood = "happy", pose = "stand" }) {
+  const legBack = pose === "run" ? -20 : 0;
+  const legFront = pose === "run" ? 22 : 0;
+  const gray = "#b9b0a6";
+  const grayDark = "#a39a8f";
+  const leg = (lx, rot, back) => `<g transform="translate(${lx} 30) rotate(${rot})"><rect x="-8" y="0" width="16" height="58" rx="8" fill="${back ? grayDark : gray}" stroke="${C.ink}" stroke-width="4"/><rect x="-9" y="50" width="18" height="11" rx="5" fill="${C.ink}"/></g>`;
+  const tail = `<g class="anim-tail" style="${delayAt(x, y)}">
+    <path d="M -76 4 q -16 -2 -22 12 q 10 8 22 2" fill="${gray}" stroke="${C.ink}" stroke-width="4"/>
+    <path d="M -96 14 l -6 14 q 10 4 14 -4 z" fill="#5a5148"/>
+  </g>`;
+  return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
+    <ellipse cx="0" cy="88" rx="78" ry="12" fill="${C.ink}" opacity="0.10"/>
+    <g class="tap-target" data-tap="duku" data-mood="${mood}">
+    <g class="anim-idle" style="${delayAt(x, y)}">
+    ${leg(-50, legBack, true)}${leg(26, -legFront * 0.4, true)}${tail}
+    <ellipse cx="0" cy="-4" rx="84" ry="50" fill="${gray}" stroke="${C.ink}" stroke-width="5"/>
+    <ellipse cx="-14" cy="10" rx="34" ry="24" fill="#d8d2c8" opacity="0.8"/>
+    ${leg(-32, legFront, false)}${leg(50, legBack ? -legBack : 0, false)}
+    <path d="M 54 -28 q 22 -30 44 -38 l 24 8 q -8 30 -30 42 z" fill="${gray}" stroke="${C.ink}" stroke-width="5"/>
+    <path d="M 72 -56 q 3 12 -5 20 M 90 -62 q 2 10 -5 18" stroke="#5a5148" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <g transform="translate(130 -74)">
+      <ellipse cx="0" cy="0" rx="40" ry="30" fill="${gray}" stroke="${C.ink}" stroke-width="5"/>
+      <path d="M 22 4 q 22 2 24 14 q -2 13 -22 11 q -15 -2 -18 -12 z" fill="#8f867c" stroke="${C.ink}" stroke-width="4"/>
+      <circle cx="34" cy="13" r="3.2" fill="${C.ink}"/>
+      <g transform="translate(30 20)">${mouth(mood, 0.85)}</g>
+      <path d="M -18 -22 q -14 -34 -4 -48 q 12 -4 16 40 z" fill="${gray}" stroke="${C.ink}" stroke-width="4"/>
+      <path d="M -14 -34 q -4 -18 0 -28" stroke="#d8d2c8" stroke-width="5" fill="none"/>
+      <path d="M 6 -26 q -4 -36 8 -48 q 12 0 8 44 z" fill="${gray}" stroke="${C.ink}" stroke-width="4"/>
+      <path d="M 10 -38 q 0 -18 4 -28" stroke="#d8d2c8" stroke-width="5" fill="none"/>
+      <path d="M -32 -14 q -8 -20 4 -26 M -20 -20 q -4 -14 4 -20" stroke="#5a5148" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <g transform="translate(4 -4)">${face(mood, 1)}</g>
+    </g>
+    </g>
+    </g>
+  </g>`;
+}
+
+// Koko: a plump rust-brown hen.
+function hen({ x, y, s = 1, flip = false, mood = "happy" }) {
+  return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
+    <ellipse cx="0" cy="64" rx="44" ry="9" fill="${C.ink}" opacity="0.10"/>
+    <g class="tap-target" data-tap="hen" data-mood="${mood}">
+    <g class="anim-idle" style="${delayAt(x, y, 2)}">
+    <path d="M -14 44 l -4 18 M 14 44 l 4 18 M -22 60 h 16 M 8 60 h 16" stroke="${C.ostrichBeak}" stroke-width="5" stroke-linecap="round"/>
+    <g class="anim-tail" style="${delayAt(x, y, 2)}"><path d="M -40 -6 q -26 -26 -18 -46 q 16 2 24 20 q -18 2 -6 26 z M -34 4 q -34 -14 -34 -36 q 18 -4 30 16 z" fill="#a3542f" stroke="${C.ink}" stroke-width="4"/></g>
+    <ellipse cx="0" cy="14" rx="46" ry="38" fill="#c96f45" stroke="${C.ink}" stroke-width="4.5"/>
+    <path d="M -8 -2 q 26 -8 36 12 q -8 22 -34 16 z" fill="#e0966c" stroke="${C.ink}" stroke-width="3.4"/>
+    <g transform="translate(24 -34)">
+      <circle cx="0" cy="0" r="22" fill="#c96f45" stroke="${C.ink}" stroke-width="4.5"/>
+      <path d="M -12 -18 q -2 -12 8 -12 q 2 8 -2 12 q 10 -8 16 0 q -4 8 -12 8" fill="#d94f43" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M 18 0 l 20 6 l -18 8 z" fill="${C.ostrichBeak}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M 16 12 q 4 6 0 10" fill="#d94f43" stroke="${C.ink}" stroke-width="2.6"/>
+      <g transform="translate(-2 -4)">${face(mood, 0.7)}</g>
+    </g>
+    </g>
+    </g>
+  </g>`;
+}
+
+// Gigi: a cream nanny goat with little horns and a beard.
+function goat({ x, y, s = 1, flip = false, mood = "happy" }) {
+  const cream = "#e8e2d2";
+  const leg = (lx, back) => `<g transform="translate(${lx} 26)"><rect x="-7" y="0" width="14" height="50" rx="7" fill="${back ? "#d3ccba" : cream}" stroke="${C.ink}" stroke-width="3.6"/><rect x="-8" y="43" width="16" height="10" rx="4" fill="#5a5148"/></g>`;
+  return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
+    <ellipse cx="0" cy="80" rx="66" ry="11" fill="${C.ink}" opacity="0.10"/>
+    <g class="tap-target" data-tap="goat" data-mood="${mood}">
+    <g class="anim-idle" style="${delayAt(x, y, 2.2)}">
+    ${leg(-42, true)}${leg(22, true)}
+    <g class="anim-tail" style="${delayAt(x, y, 2.2)}"><path d="M -62 -14 q -14 -14 -8 -26 q 12 2 16 18 z" fill="${cream}" stroke="${C.ink}" stroke-width="3.6"/></g>
+    <ellipse cx="0" cy="-2" rx="68" ry="42" fill="${cream}" stroke="${C.ink}" stroke-width="4.5"/>
+    ${leg(-26, false)}${leg(42, false)}
+    <g transform="translate(84 -46)">
+      <ellipse cx="0" cy="0" rx="32" ry="26" fill="${cream}" stroke="${C.ink}" stroke-width="4.5"/>
+      <path d="M -8 -24 q -4 -20 6 -26 q 8 8 4 26 z M 10 -22 q 2 -20 14 -22 q 6 10 -4 24 z" fill="#c9a86a" stroke="${C.ink}" stroke-width="3.4"/>
+      <path d="M -26 -6 q -14 -2 -18 8 q 10 8 20 2 z" fill="${cream}" stroke="${C.ink}" stroke-width="3.4"/>
+      <path d="M 24 2 q 16 0 18 11 q -2 10 -17 9 q -12 -2 -14 -10 z" fill="#d3ccba" stroke="${C.ink}" stroke-width="3.4"/>
+      <path d="M 14 22 q 2 12 -4 18 q -8 -2 -6 -14" fill="${cream}" stroke="${C.ink}" stroke-width="3"/>
+      <circle cx="34" cy="9" r="2.8" fill="${C.ink}"/>
+      <g transform="translate(28 16)">${mouth(mood, 0.65)}</g>
+      <g transform="translate(2 -4)">${face(mood, 0.8)}</g>
+    </g>
+    </g>
+    </g>
+  </g>`;
+}
+
+// A tiny yellow chick (Pip and siblings).
+function chick(x, y, s = 1, mood = "happy") {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <g class="tap-target" data-tap="chick">
+    <g class="anim-idle" style="${delayAt(x, y, 1.2)}; animation-duration: 1.6s">
+    <path d="M -6 26 l -2 8 M 6 26 l 2 8 M -12 33 h 12 M 2 33 h 12" stroke="${C.ostrichBeak}" stroke-width="3.4" stroke-linecap="round"/>
+    <circle cx="0" cy="6" r="20" fill="#f4d35e" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M -18 4 q -10 2 -12 10 q 8 4 14 -2 z" fill="#e9bc38" stroke="${C.ink}" stroke-width="2.6"/>
+    <circle cx="8" cy="-14" r="13" fill="#f4d35e" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M 19 -14 l 12 4 l -11 5 z" fill="${C.ostrichBeak}" stroke="${C.ink}" stroke-width="2.4"/>
+    <path d="M 2 -26 q 2 -8 8 -6" stroke="${C.ink}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <g transform="translate(6 -16)">${face(mood, 0.5)}</g>
+    </g>
+    </g>
+  </g>`;
+}
+
+// A small wild savanna bird.
+function wildBird(x, y, s = 1, flying = false) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <g class="tap-target" data-tap="bird">
+    <g class="${flying ? "anim-float" : "anim-idle"}" style="${delayAt(x, y, 1.4)}; animation-duration: 2s">
+    <ellipse cx="0" cy="0" rx="20" ry="14" fill="#7fa8d9" stroke="${C.ink}" stroke-width="3"/>
+    <path d="M -4 -4 q -14 ${flying ? -18 : -6} -24 ${flying ? -12 : 0} q 8 ${flying ? 12 : 8} 22 6 z" fill="#5d86b8" stroke="${C.ink}" stroke-width="2.6"/>
+    <path d="M -18 4 q -10 6 -16 4 q 4 -8 12 -9 z" fill="#5d86b8" stroke="${C.ink}" stroke-width="2.4"/>
+    <circle cx="16" cy="-8" r="10" fill="#7fa8d9" stroke="${C.ink}" stroke-width="3"/>
+    <path d="M 25 -8 l 10 3 l -9 4 z" fill="${C.ostrichBeak}" stroke="${C.ink}" stroke-width="2.2"/>
+    <g transform="translate(14 -10)">${face("happy", 0.4)}</g>
+    ${flying ? "" : `<path d="M -4 13 l -2 8 M 6 13 l 2 8" stroke="${C.ostrichBeak}" stroke-width="2.6" stroke-linecap="round"/>`}
+    </g>
+    </g>
+  </g>`;
+}
+
 // ---------------------------------------------------------------- scenery
 
 function sky(rainy = false) {
@@ -533,6 +654,85 @@ function thoughtBubble(x, y, s = 1, inner = "") {
     <ellipse cx="30" cy="-10" rx="170" ry="110" fill="#ffffff" opacity="0.95" stroke="#cbd7df" stroke-width="4"/>
     ${inner}
   </g>`;
+}
+
+// Farm scenery for the Term 2 books.
+function barn(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-150" y="-160" width="300" height="160" rx="6" fill="#b06a4a" stroke="${C.ink}" stroke-width="5"/>
+    <path d="M -170 -160 L 0 -260 L 170 -160 Z" fill="#d9b45f" stroke="${C.ink}" stroke-width="5"/>
+    <path d="M -150 -178 L 0 -266 M -110 -200 L 0 -252 M 150 -178 L 0 -266 M 110 -200 L 0 -252" stroke="#c39c48" stroke-width="5"/>
+    <path d="M -44 0 v -104 q 0 -18 44 -18 q 44 0 44 18 v 104 z" fill="#7d4a32" stroke="${C.ink}" stroke-width="4.5"/>
+    <path d="M -44 -60 L 44 -6 M 44 -60 L -44 -6" stroke="#5f3826" stroke-width="6"/>
+    <circle cx="0" cy="-190" r="22" fill="#f6f0d8" stroke="${C.ink}" stroke-width="4"/>
+    <path d="M -22 -190 h 44 M 0 -212 v 44" stroke="${C.ink}" stroke-width="3"/>
+  </g>`;
+}
+
+function fence(x, y, s = 1, panels = 3) {
+  let bits = "";
+  for (let i = 0; i <= panels; i += 1) {
+    bits += `<rect x="${i * 90 - 6}" y="-64" width="12" height="70" rx="5" fill="#b08758" stroke="${C.ink}" stroke-width="3"/>`;
+  }
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    ${bits}
+    <rect x="-6" y="-52" width="${panels * 90 + 12}" height="10" rx="5" fill="#c9a06c" stroke="${C.ink}" stroke-width="3"/>
+    <rect x="-6" y="-26" width="${panels * 90 + 12}" height="10" rx="5" fill="#c9a06c" stroke="${C.ink}" stroke-width="3"/>
+  </g>`;
+}
+
+function haystack(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -110 0 q 0 -96 110 -96 q 110 0 110 96 z" fill="#e9c86a" stroke="${C.ink}" stroke-width="4.5"/>
+    <path d="M -70 -20 q 20 -14 34 2 M 10 -50 q 20 -12 34 4 M -20 -66 q 16 -10 28 2 M 40 -22 q 18 -12 32 2" stroke="#c39c48" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </g>`;
+}
+
+function seedRow(x, y, s = 1, { sprouts = true } = {}) {
+  let plants = "";
+  for (let i = 0; i < 5; i += 1) {
+    const px = i * 70 - 140;
+    plants += sprouts
+      ? `<g class="anim-grass" style="${delayAt(x + px, y, 3)}"><path d="M ${px} -6 q -8 -18 -18 -22 M ${px} -6 q 0 -24 -4 -30 M ${px} -6 q 8 -16 18 -20" stroke="#79a15a" stroke-width="5" fill="none" stroke-linecap="round"/></g>`
+      : `<circle cx="${px}" cy="-8" r="5" fill="#5f4630"/>`;
+  }
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -170 0 q 170 -22 340 0 q -170 22 -340 0 z" fill="#8a6242" stroke="#6f5238" stroke-width="4"/>
+    ${plants}
+  </g>`;
+}
+
+function scarecrow(x, y, s = 1, { hat = true } = {}) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <g class="tap-target" data-tap="scarecrow">
+    <g class="anim-canopy" style="animation-duration:4.5s">
+    <rect x="-7" y="-190" width="14" height="190" rx="6" fill="${C.acaciaTrunk}"/>
+    <rect x="-96" y="-160" width="192" height="13" rx="6" fill="${C.acaciaTrunk}"/>
+    <path d="M -40 -148 q -14 40 -22 44 M 40 -148 q 14 40 22 44" stroke="#e9c86a" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M -34 -146 q 34 -16 68 0 q 10 60 -34 60 q -44 0 -34 -60 z" fill="#8ab17d" stroke="${C.ink}" stroke-width="4"/>
+    <path d="M -18 -88 q 18 10 36 0 l -4 22 q -14 8 -28 0 z" fill="#e9c86a" stroke="#c39c48" stroke-width="3"/>
+    <circle cx="0" cy="-172" r="30" fill="#f2d8a7" stroke="${C.ink}" stroke-width="4"/>
+    <circle cx="-10" cy="-176" r="4" fill="${C.ink}"/><circle cx="10" cy="-176" r="4" fill="${C.ink}"/>
+    <path d="M -10 -164 q 10 8 20 0" stroke="${C.ink}" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    ${hat ? `<path d="M -34 -196 q 34 -12 68 0 l -10 -8 q -6 -22 -24 -22 q -18 0 -24 22 z" fill="#a3542f" stroke="${C.ink}" stroke-width="4"/>` : ""}
+    </g>
+    </g>
+  </g>`;
+}
+
+function carrot(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="tap-target" data-tap="carrot">
+    <path d="M -12 -8 q 12 -10 26 0 l -10 46 q -3 8 -8 0 z" fill="#e08a3c" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M -4 -12 q -8 -16 -16 -18 M 2 -14 q 0 -16 -2 -22 M 8 -12 q 8 -14 16 -16" stroke="#79a15a" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </g></g>`;
+}
+
+function bigFlower(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="anim-grass" style="${delayAt(x, y, 3)}">
+    <path d="M 0 0 q -4 -40 0 -60" stroke="#5c7d43" stroke-width="6" fill="none"/>
+    ${[0, 60, 120, 180, 240, 300].map((a) => `<ellipse cx="0" cy="-78" rx="10" ry="17" fill="#e78fb3" transform="rotate(${a} 0 -60)"/>`).join("")}
+    <circle cx="0" cy="-60" r="10" fill="${C.sun}" stroke="${C.ink}" stroke-width="3"/>
+  </g></g>`;
 }
 
 function raceBanner(x, y, s = 1) {
@@ -1111,6 +1311,226 @@ const kikiGamePages = [
    ${ostrich({ x: 900, y: 740, s: 0.55 })}`,
 ];
 
+// ---------------------------------------------------------------- Duku farm series (Term 2)
+// Book 1: Duku Makes a Scarecrow
+
+const dukuScarecrowPages = [
+  // 1 cover: the farm crew and their scarecrow
+  `${basicScene()}${barn(300, 850, 0.9)}${fence(1180, 900, 1, 3)}
+   ${scarecrow(1050, 840, 1)}
+   ${donkey({ x: 640, y: 700, s: 1 })}
+   ${hen({ x: 900, y: 830, s: 1 })}
+   ${goat({ x: 1370, y: 760, s: 0.85, flip: true })}`,
+
+  // 2 Duku's green farm
+  `${basicScene()}${barn(1150, 860, 1.1)}${fence(180, 900, 1, 4)}
+   ${donkey({ x: 600, y: 700, s: 1.15 })}
+   ${tallGrass(300, 930, 1.2)}`,
+
+  // 3 Koko plants seeds
+  `${basicScene()}${barn(260, 840, 0.75)}
+   ${seedRow(850, 900, 1.1, { sprouts: false })}
+   ${hen({ x: 1250, y: 820, s: 1.15 })}`,
+
+  // 4 the birds come to eat them
+  `${basicScene()}${fence(1240, 900, 1, 2)}
+   ${seedRow(750, 900, 1.1, { sprouts: false })}
+   ${wildBird(620, 850, 1.1)}${wildBird(800, 870, 1)}${wildBird(950, 840, 1.05, true)}
+   ${hen({ x: 1250, y: 810, s: 1.1, mood: "surprised" })}`,
+
+  // 5 Duku's idea
+  `${basicScene()}${acacia(1420, 630, 0.95)}
+   ${donkey({ x: 620, y: 700, s: 1.15, mood: "surprised" })}
+   ${hen({ x: 1000, y: 830, s: 0.95 })}
+   ${goat({ x: 1250, y: 770, s: 0.85, flip: true })}`,
+
+  // 6 Gigi finds a stick
+  `${basicScene()}${acacia(300, 630, 1)}${fence(1240, 900, 1, 2)}
+   ${goat({ x: 800, y: 760, s: 1.05 })}
+   <path d="M 950 860 l 220 -26" stroke="${C.acaciaTrunk}" stroke-width="14" stroke-linecap="round"/>
+   <path d="M 1080 842 l 24 -34" stroke="${C.acaciaTrunk}" stroke-width="8" stroke-linecap="round"/>`,
+
+  // 7 straw and an old hat
+  `${basicScene()}${haystack(400, 900, 0.9)}
+   ${hen({ x: 700, y: 830, s: 1 })}
+   ${donkey({ x: 1050, y: 710, s: 1 })}
+   <path d="M 1240 860 q 40 -14 80 0 l -12 -8 q -8 -26 -28 -26 q -20 0 -28 26 z" fill="#a3542f" stroke="${C.ink}" stroke-width="4"/>`,
+
+  // 8 tap tap tap - building together
+  `${basicScene()}${scarecrow(800, 850, 1.05, { hat: false })}
+   ${donkey({ x: 420, y: 720, s: 0.95 })}
+   ${goat({ x: 1150, y: 770, s: 0.85, flip: true })}
+   ${hen({ x: 1330, y: 840, s: 0.9, flip: true })}
+   ${dustPuffs(800, 890)}`,
+
+  // 9 the funny scarecrow is done
+  `${basicScene()}${scarecrow(800, 840, 1.15)}
+   ${donkey({ x: 400, y: 710, s: 1 })}
+   ${hen({ x: 620, y: 850, s: 0.95 })}
+   ${goat({ x: 1180, y: 770, s: 0.9, flip: true })}`,
+
+  // 10 the birds fly away hungry
+  `${basicScene()}${scarecrow(500, 840, 0.95)}
+   ${wildBird(900, 400, 1, true)}${wildBird(1050, 330, 0.95, true)}${wildBird(1200, 420, 1.05, true)}
+   ${donkey({ x: 1000, y: 720, s: 1, mood: "sad" })}`,
+
+  // 11 a little garden just for the birds
+  `${basicScene()}${seedRow(500, 910, 0.9)}
+   ${wildBird(400, 850, 1)}${wildBird(600, 860, 0.95)}
+   ${donkey({ x: 950, y: 710, s: 1 })}
+   ${hen({ x: 1230, y: 830, s: 0.95 })}
+   ${goat({ x: 1420, y: 780, s: 0.8, flip: true })}`,
+
+  // 12 everyone has food
+  `${basicScene()}${scarecrow(300, 840, 0.9)}${seedRow(1150, 910, 0.9)}
+   ${wildBird(1050, 850, 1)}${wildBird(1250, 860, 0.95)}
+   ${donkey({ x: 650, y: 700, s: 1.05 })}
+   ${hen({ x: 900, y: 840, s: 0.95 })}
+   ${goat({ x: 1420, y: 770, s: 0.8, flip: true })}`,
+];
+
+// Book 2: The Little Lost Chick
+
+const lostChickPages = [
+  // 1 cover: Koko and her chicks at the barn
+  `${basicScene()}${barn(1150, 860, 1)}${fence(180, 900, 1, 3)}
+   ${hen({ x: 600, y: 820, s: 1.2 })}
+   ${chick(780, 880, 1.1)}${chick(850, 900, 1)}${chick(920, 880, 1.05)}${chick(990, 900, 0.95)}${chick(1060, 880, 1)}`,
+
+  // 2 good morning farm
+  `${basicScene()}${barn(400, 860, 1)}${fence(1100, 900, 1, 3)}
+   ${donkey({ x: 900, y: 710, s: 1.05 })}
+   ${tallGrass(1400, 930, 1.2)}`,
+
+  // 3 five little chicks
+  `${basicScene()}${fence(950, 900, 1, 3)}
+   ${hen({ x: 450, y: 820, s: 1.15 })}
+   ${chick(700, 890, 1.1)}${chick(810, 900, 1)}${chick(920, 890, 1.05)}${chick(1030, 900, 0.95)}${chick(1140, 890, 1)}`,
+
+  // 4 Pip loves to hop
+  `${basicScene()}${acacia(280, 630, 1)}
+   ${chick(800, 850, 1.6, "happy")}
+   ${hen({ x: 1200, y: 820, s: 1.05 })}
+   <g stroke="#cbb27a" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 680 900 q 20 -40 60 -50"/><path d="M 900 890 q 24 -44 62 -52"/></g>`,
+
+  // 5 counting one two three four
+  `${basicScene()}${barn(280, 840, 0.75)}
+   ${hen({ x: 600, y: 810, s: 1.15, mood: "surprised" })}
+   ${chick(850, 890, 1.05)}${chick(960, 900, 1)}${chick(1070, 890, 1.05)}${chick(1180, 900, 0.95)}`,
+
+  // 6 where is little Pip
+  `${basicScene()}${fence(1150, 900, 1, 3)}
+   ${hen({ x: 500, y: 820, s: 1.1, mood: "sad" })}
+   ${donkey({ x: 850, y: 720, s: 1, mood: "sad" })}
+   ${goat({ x: 1250, y: 770, s: 0.85, flip: true, mood: "sad" })}`,
+
+  // 7 Duku looks in the barn
+  `${basicScene()}${barn(800, 880, 1.3)}
+   ${donkey({ x: 400, y: 730, s: 1.05, mood: "surprised" })}`,
+
+  // 8 Gigi looks by the pond
+  `${basicScene()}${acacia(250, 630, 1)}
+   ${puddle(950, 880, 300, 66, 0)}
+   ${goat({ x: 550, y: 770, s: 1, mood: "surprised" })}`,
+
+  // 9 Musa looks in the tall grass
+  `${basicScene()}${tallGrass(500, 920, 1.8)}${tallGrass(800, 940, 1.6)}${tallGrass(1100, 920, 1.7)}
+   ${zebra({ x: 400, y: 690, s: 1.05, mood: "surprised" })}`,
+
+  // 10 a tiny sound - peep peep
+  `${basicScene()}${haystack(1100, 900, 1.1)}
+   ${hen({ x: 500, y: 820, s: 1.05, mood: "surprised" })}
+   ${donkey({ x: 750, y: 720, s: 0.95, mood: "surprised" })}
+   <g stroke="#7d97ad" stroke-width="7" fill="none" stroke-linecap="round">
+     <path class="anim-wave" style="animation-delay:0s" d="M 1010 620 q 24 -24 0 -48"/>
+     <path class="anim-wave" style="animation-delay:0.4s" d="M 1050 640 q 38 -38 0 -76"/>
+   </g>`,
+
+  // 11 Pip asleep in the soft hay
+  `${basicScene()}${haystack(800, 900, 1.4)}
+   ${chick(800, 790, 1.4)}
+   ${hen({ x: 420, y: 830, s: 1.05 })}`,
+
+  // 12 safe at home
+  `${basicScene()}${barn(1200, 860, 0.95)}
+   ${hen({ x: 500, y: 820, s: 1.1 })}
+   ${chick(680, 890, 1)}${chick(760, 900, 0.95)}${chick(840, 890, 1)}${chick(920, 900, 0.95)}${chick(1000, 880, 1.05)}
+   ${donkey({ x: 300, y: 730, s: 0.85 })}${goat({ x: 1420, y: 790, s: 0.7, flip: true })}`,
+];
+
+// Book 3: Duku's Five Senses
+
+const dukuSensesPages = [
+  // 1 cover: Duku and Kiki with sun, flower and mango
+  `${basicScene()}${barn(300, 850, 0.8)}${bigFlower(1250, 900, 1.2)}
+   ${donkey({ x: 700, y: 710, s: 1.1 })}
+   ${kiki({ x: 1050, y: 810, s: 1.1, arms: "up" })}
+   ${mango(950, 880, 1.3)}`,
+
+  // 2 a fresh new day
+  `${basicScene()}${barn(1150, 860, 1)}${fence(200, 900, 1, 3)}
+   ${donkey({ x: 650, y: 710, s: 1.15 })}`,
+
+  // 3 he SAW the bright sun
+  `${basicScene()}${acacia(250, 630, 1)}
+   ${donkey({ x: 800, y: 720, s: 1.1, flip: true })}
+   <g class="anim-glow"><circle cx="1350" cy="160" r="150" fill="${C.sunGlow}" opacity="0.5"/></g>`,
+
+  // 4 he HEARD the little birds
+  `${basicScene()}${acacia(1100, 620, 1.2)}
+   ${wildBird(1000, 420, 1)}${wildBird(1180, 380, 0.95)}${wildBird(1300, 450, 1.05, true)}
+   ${donkey({ x: 550, y: 710, s: 1.1 })}
+   <g stroke="#7d97ad" stroke-width="6" fill="none" stroke-linecap="round">
+     <path class="anim-wave" style="animation-delay:0s" d="M 900 480 q 20 -20 0 -40"/>
+     <path class="anim-wave" style="animation-delay:0.5s" d="M 935 500 q 30 -30 0 -60"/>
+   </g>`,
+
+  // 5 he SMELLED the sweet mango tree
+  `${basicScene()}${acacia(1000, 620, 1.3)}
+   ${mango(900, 460, 1)}${mango(1050, 430, 1)}${mango(1150, 480, 0.95)}
+   ${donkey({ x: 550, y: 710, s: 1.1 })}
+   <g stroke="#e0966c" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.8">
+     <path class="anim-wave" style="animation-delay:0s" d="M 760 600 q 14 -24 0 -46"/>
+     <path class="anim-wave" style="animation-delay:0.6s" d="M 800 590 q 16 -28 0 -52"/>
+   </g>`,
+
+  // 6 he TOUCHED the soft hay
+  `${basicScene()}${haystack(950, 900, 1.3)}
+   ${donkey({ x: 550, y: 720, s: 1.1 })}`,
+
+  // 7 he TASTED a crunchy carrot
+  `${basicScene()}${fence(1150, 900, 1, 3)}
+   ${donkey({ x: 700, y: 710, s: 1.15 })}
+   ${carrot(950, 840, 1.6)}`,
+
+  // 8 Kiki comes to visit
+  `${basicScene()}${barn(300, 850, 0.8)}
+   ${kiki({ x: 950, y: 800, s: 1.2, arms: "up" })}
+   ${donkey({ x: 600, y: 710, s: 1.05 })}`,
+
+  // 9 what do you hear? a bell!
+  `${basicScene()}${schoolBell(1100, 850, 1.2)}
+   ${kiki({ x: 700, y: 800, s: 1.1, arms: "up" })}
+   ${donkey({ x: 400, y: 720, s: 1, mood: "surprised" })}`,
+
+  // 10 what do you smell? a flower!
+  `${basicScene()}${bigFlower(950, 890, 1.5)}
+   ${kiki({ x: 650, y: 800, s: 1.1 })}
+   ${donkey({ x: 350, y: 720, s: 1 })}`,
+
+  // 11 what do you taste? sweet mango!
+  `${basicScene()}${acacia(1350, 630, 1)}
+   ${mango(950, 850, 1.6)}
+   ${kiki({ x: 650, y: 800, s: 1.1, arms: "up" })}
+   ${donkey({ x: 350, y: 720, s: 1 })}`,
+
+  // 12 five senses hooray
+  `${basicScene()}${bigFlower(250, 900, 1.1)}${carrot(1350, 880, 1.2)}${mango(1250, 900, 1.2)}
+   ${donkey({ x: 700, y: 710, s: 1.1 })}
+   ${kiki({ x: 1020, y: 800, s: 1.15, arms: "up" })}
+   ${wildBird(450, 850, 0.95)}`,
+];
+
 // ---------------------------------------------------------------- write files
 
 const books = {
@@ -1120,6 +1540,9 @@ const books = {
   "kiki-school": { dir: "kiki-goes-to-school", pages: kikiSchoolPages },
   "kiki-family": { dir: "kikis-family-day", pages: kikiFamilyPages },
   "kiki-game": { dir: "kiki-and-the-big-game", pages: kikiGamePages },
+  "duku-scarecrow": { dir: "duku-makes-a-scarecrow", pages: dukuScarecrowPages },
+  "lost-chick": { dir: "the-little-lost-chick", pages: lostChickPages },
+  "duku-senses": { dir: "dukus-five-senses", pages: dukuSensesPages },
 };
 
 const selection = process.argv[2] && process.argv[2] !== "all" ? [process.argv[2]] : Object.keys(books);

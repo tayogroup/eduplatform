@@ -2143,11 +2143,14 @@ function renderEbooks() {
 
   currentPageNarration = `Books. ${book.title}. ${book.description}`;
   $("#app").innerHTML = `<header class="page-header books-header"><div><span class="eyebrow">Independent reading library</span><h1>Books</h1></div>
+      <div class="books-header-side">
+      <button class="button secondary" id="listen-whole-ebook" type="button">${icon("audio-lines")} Listen to whole book</button>
       <div class="course-ebook-shelfbar">
         <button class="course-ebook-shelf-title course-ebook-shelf-chip" id="shelf-toggle" type="button" aria-expanded="false" aria-controls="shelf-pop">${icon("library-big")}<div><strong>My shelf</strong><small>${gradeEbooks.length} ${gradeEbooks.length === 1 ? "book" : "books"} · tap to browse</small></div>${icon("chevron-down")}</button>
         <nav class="course-ebook-shelf-pop" id="shelf-pop" hidden aria-label="Book library">
           ${gradeEbooks.map((item) => `<button class="course-ebook-book ${item.id === book.id ? "active" : ""}" data-ebook="${item.id}" type="button" aria-current="${item.id === book.id ? "page" : "false"}"><img src="${ebookAsset(item, item.pages[0].image)}" alt=""><span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.level)} · Illustrated story</small></span>${icon("chevron-right")}</button>`).join("")}
         </nav>
+      </div>
       </div></header>
     <div class="course-ebook-layout compact">
       <section class="course-ebook-reader" aria-label="${escapeHtml(book.title)} eBook reader">
@@ -2155,11 +2158,9 @@ function renderEbooks() {
           <div><span class="eyebrow">${escapeHtml(book.level)} · recommended for early readers</span><h2>${escapeHtml(book.title)}</h2><p>${escapeHtml(book.description)}</p></div>
           <div class="course-ebook-header-actions">
             <button class="button primary" id="watch-ebook" type="button" aria-label="Watch the story: narrated pages that turn by themselves">${icon("play")} Watch the story</button>
-            <button class="button secondary" id="listen-whole-ebook" type="button">${icon("audio-lines")} Listen to whole book</button>
           </div>
         </header>
         <div id="course-ebook-page"></div>
-        <footer class="course-ebook-credit"><strong>Book credit</strong><p>${escapeHtml(book.attribution)}</p></footer>
       </section>
     </div>`;
 
@@ -2170,8 +2171,7 @@ function renderEbooks() {
     $("#course-ebook-page").innerHTML = `<div class="course-ebook-progress" role="progressbar" aria-label="Book progress" aria-valuemin="1" aria-valuemax="${book.pages.length}" aria-valuenow="${activeEbookPage + 1}" aria-valuetext="Page ${activeEbookPage + 1} of ${book.pages.length}"><span style="width:${((activeEbookPage + 1) / book.pages.length) * 100}%"></span></div>
       <div class="course-ebook-toolbar"><span>Page <strong>${activeEbookPage + 1}</strong> of ${book.pages.length}</span><button class="sr-only" id="listen-ebook-page" type="button" tabindex="-1" aria-hidden="true">Narration</button></div>
       <figure class="course-ebook-illustration" id="ebook-stage"><img src="${ebookAsset(book, page.image)}" alt="${escapeHtml(page.alt)}"><figcaption class="sr-only">Original illustration by ${escapeHtml(book.illustrator)}.</figcaption></figure>
-      <div class="course-ebook-transcript" aria-live="polite"><span>Read along</span><h3 tabindex="-1">Page ${activeEbookPage + 1}</h3><p>${escapeHtml(page.text)}</p></div>
-      <div class="course-ebook-thumbnails" aria-label="Choose a page">${book.pages.map((item, index) => `<button class="course-ebook-thumbnail ${index === activeEbookPage ? "active" : ""}" data-ebook-page="${index}" type="button" aria-label="Open page ${index + 1}" aria-current="${index === activeEbookPage ? "page" : "false"}"><img src="${ebookAsset(book, item.image)}" alt=""><span>${index + 1}</span></button>`).join("")}</div>
+      <div class="course-ebook-transcript" aria-live="polite"><div class="course-ebook-transcript-head"><span>Read along</span><h3 tabindex="-1">Page ${activeEbookPage + 1}</h3></div><p>${escapeHtml(page.text)}</p></div>
       <div class="course-ebook-controls"><button class="button secondary" id="previous-ebook-page" type="button" ${activeEbookPage === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous page</button>${isLastPage ? `<button class="button gold" id="finish-ebook" type="button">${icon("check")} Finish book</button>` : `<span>Keep reading</span>`}<button class="button secondary" id="next-ebook-page" type="button" ${isLastPage ? "disabled" : ""}>Next page ${icon("arrow-right")}</button></div>`;
 
     const stage = $("#ebook-stage");
@@ -2214,7 +2214,6 @@ function renderEbooks() {
     });
     $("#previous-ebook-page").addEventListener("click", () => { stopEbookWatch(); activeEbookPage -= 1; drawPage(true); });
     $("#next-ebook-page").addEventListener("click", () => { stopEbookWatch(); activeEbookPage += 1; drawPage(true); });
-    $$('[data-ebook-page]').forEach((button) => button.addEventListener("click", () => { stopEbookWatch(); activeEbookPage = Number(button.dataset.ebookPage); drawPage(true); }));
     if ($("#finish-ebook")) $("#finish-ebook").addEventListener("click", () => { stopEbookWatch(); complete("ebooks", `${book.title} complete. Well read!`); });
     icons();
     if (shouldFocus) focusDynamicContent(".course-ebook-transcript h3", `Page ${activeEbookPage + 1} of ${book.pages.length}. ${page.text}`);
@@ -2230,6 +2229,7 @@ function renderEbooks() {
     watchButton.innerHTML = `${icon("square")} Stop watching`;
     watchButton.setAttribute("aria-label", "Stop watching the story");
     icons();
+    $("#ebook-stage")?.scrollIntoView({ behavior: "smooth", block: "start" });
     while (ebookWatchActive && ebookWatchToken === token) {
       if (!$("#course-ebook-page")) break;
       drawPage();

@@ -2141,14 +2141,15 @@ function renderEbooks() {
   activeEbookId = book.id;
   activeEbookPage = Math.max(0, Math.min(activeEbookPage, book.pages.length - 1));
 
-  $("#app").innerHTML = `${pageHeader("Independent reading library", "Books", "Open an illustrated book, listen with ElevenLabs, and turn the pages at your own pace.", `${gradeEbooks.length} ${gradeEbooks.length === 1 ? "book" : "books"} available`)}
-    <div class="course-ebook-layout compact">
+  currentPageNarration = `Books. ${book.title}. ${book.description}`;
+  $("#app").innerHTML = `<header class="page-header books-header"><div><span class="eyebrow">Independent reading library</span><h1>Books</h1></div>
       <div class="course-ebook-shelfbar">
         <button class="course-ebook-shelf-title course-ebook-shelf-chip" id="shelf-toggle" type="button" aria-expanded="false" aria-controls="shelf-pop">${icon("library-big")}<div><strong>My shelf</strong><small>${gradeEbooks.length} ${gradeEbooks.length === 1 ? "book" : "books"} · tap to browse</small></div>${icon("chevron-down")}</button>
         <nav class="course-ebook-shelf-pop" id="shelf-pop" hidden aria-label="Book library">
           ${gradeEbooks.map((item) => `<button class="course-ebook-book ${item.id === book.id ? "active" : ""}" data-ebook="${item.id}" type="button" aria-current="${item.id === book.id ? "page" : "false"}"><img src="${ebookAsset(item, item.pages[0].image)}" alt=""><span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.level)} · Illustrated story</small></span>${icon("chevron-right")}</button>`).join("")}
         </nav>
-      </div>
+      </div></header>
+    <div class="course-ebook-layout compact">
       <section class="course-ebook-reader" aria-label="${escapeHtml(book.title)} eBook reader">
         <header class="course-ebook-header">
           <div><span class="eyebrow">${escapeHtml(book.level)} · recommended for early readers</span><h2>${escapeHtml(book.title)}</h2><p>${escapeHtml(book.description)}</p></div>
@@ -2259,12 +2260,12 @@ function renderEbooks() {
     shelfPop.hidden = !open;
     shelfToggle.setAttribute("aria-expanded", String(open));
   });
-  $(".course-ebook-layout").addEventListener("click", (event) => {
+  [$(".books-header"), $(".course-ebook-layout")].forEach((zone) => zone && zone.addEventListener("click", (event) => {
     if (!shelfPop.hidden && !event.target.closest(".course-ebook-shelfbar")) {
       shelfPop.hidden = true;
       shelfToggle.setAttribute("aria-expanded", "false");
     }
-  });
+  }));
   $("#listen-whole-ebook").addEventListener("click", () => { stopEbookWatch(); openEbookReadAloud(book); });
   $$('[data-ebook]').forEach((button) => button.addEventListener("click", () => {
     stopEbookWatch();

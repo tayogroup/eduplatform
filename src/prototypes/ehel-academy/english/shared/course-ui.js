@@ -33,7 +33,7 @@ const sections = [
   ["activities", "shapes", "Activities"],
   ["games", "gamepad-2", "Games"],
   ["quiz", "badge-check", "Quiz"],
-  ["ebooks", "library-big", "eBooks"],
+  ["ebooks", "library-big", "Books"],
   ["live", "video", "Live sessions"],
   ["reflect", "sparkles", "My progress"],
 ];
@@ -2133,7 +2133,7 @@ function renderEbooks() {
   ebookWatchToken += 1;
   const gradeEbooks = ebookCatalog.filter((item) => item.grades.includes(gradeNumber) && (!item.units || item.units.includes(unitNumber)));
   if (!gradeEbooks.length) {
-    $("#app").innerHTML = `${pageHeader("Independent reading library", "eBooks", `Grade ${gradeNumber} illustrated books for this unit will appear here as they are approved.`, "Library being prepared")}
+    $("#app").innerHTML = `${pageHeader("Independent reading library", "Books", `Grade ${gradeNumber} illustrated books for this unit will appear here as they are approved.`, "Library being prepared")}
       <section class="panel empty-library"><span>${icon("library-big")}</span><h2>Your Unit ${unitNumber} shelf</h2><p>There are no approved eBooks for this unit yet. Each unit gets its own story - keep learning!</p></section>`;
     return;
   }
@@ -2141,7 +2141,7 @@ function renderEbooks() {
   activeEbookId = book.id;
   activeEbookPage = Math.max(0, Math.min(activeEbookPage, book.pages.length - 1));
 
-  $("#app").innerHTML = `${pageHeader("Independent reading library", "eBooks", "Open an illustrated book, listen with ElevenLabs, and turn the pages at your own pace.", `${gradeEbooks.length} ${gradeEbooks.length === 1 ? "book" : "books"} available`)}
+  $("#app").innerHTML = `${pageHeader("Independent reading library", "Books", "Open an illustrated book, listen with ElevenLabs, and turn the pages at your own pace.", `${gradeEbooks.length} ${gradeEbooks.length === 1 ? "book" : "books"} available`)}
     <div class="course-ebook-layout">
       <nav class="course-ebook-shelf" aria-label="eBook library">
         <div class="course-ebook-shelf-title">${icon("library-big")}<div><strong>My eBook shelf</strong><small>Illustrated read-aloud books</small></div></div>

@@ -474,6 +474,125 @@ function wildBird(x, y, s = 1, flying = false) {
   </g>`;
 }
 
+// Lulu: a little swallow, hero of the Term 3 journey books.
+function lulu({ x, y, s = 1, flip = false, mood = "happy", flying = false }) {
+  const blue = "#3f6ea5";
+  const blueDark = "#2e5480";
+  const wings = flying
+    ? `<path d="M -6 -8 q -30 -34 -64 -38 q 10 26 44 36 z" fill="${blueDark}" stroke="${C.ink}" stroke-width="3"/>
+       <path d="M 2 -6 q 18 -34 48 -42 q -2 26 -30 42 z" fill="${blueDark}" stroke="${C.ink}" stroke-width="3"/>`
+    : `<path d="M -8 -4 q -26 -8 -38 6 q 12 14 36 8 z" fill="${blueDark}" stroke="${C.ink}" stroke-width="3"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
+    <g class="tap-target" data-tap="lulu" data-mood="${mood}">
+    <g class="${flying ? "anim-float" : "anim-idle"}" style="${delayAt(x, y, 1.6)}; animation-duration: 2.2s">
+    <path d="M -22 6 l -26 14 l 4 -16 l -8 -8 q 16 -8 30 2 z" fill="${blueDark}" stroke="${C.ink}" stroke-width="2.8"/>
+    <ellipse cx="0" cy="0" rx="26" ry="18" fill="${blue}" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M -4 6 q 14 10 26 4 q 2 -10 -6 -14 z" fill="#f2e8d5"/>
+    ${wings}
+    <circle cx="22" cy="-12" r="13" fill="${blue}" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M 18 -4 q 8 6 12 2 q 0 -8 -8 -8 z" fill="#c96f45"/>
+    <path d="M 33 -13 l 12 4 l -11 5 z" fill="${C.ostrichBeak}" stroke="${C.ink}" stroke-width="2.4"/>
+    <g transform="translate(20 -15)">${face(mood, 0.45)}</g>
+    ${flying ? "" : `<path d="M -4 17 l -2 9 M 6 17 l 2 9" stroke="${C.ostrichBeak}" stroke-width="3" stroke-linecap="round"/>`}
+    </g>
+    </g>
+  </g>`;
+}
+
+// Journey scenery for the Term 3 books.
+function river(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -160 -260 q 120 40 40 120 q -90 90 40 140 q 110 44 60 120 L -60 120 q -80 -70 10 -140 q 90 -70 -30 -130 q -70 -40 -80 -110 z" fill="${C.water}" stroke="${C.waterLight}" stroke-width="6"/>
+    <path class="anim-flow" d="M -120 -240 q 90 50 10 120 q -80 80 40 140 q 90 40 50 100" stroke="${C.waterLight}" stroke-width="6" fill="none"/>
+  </g>`;
+}
+
+function lake(x, y, rx, ry) {
+  return `<g class="tap-target" data-tap="lake">
+    <ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${C.water}" stroke="${C.waterLight}" stroke-width="8"/>
+    <ellipse class="anim-ripple" cx="${x - rx * 0.3}" cy="${y - ry * 0.3}" rx="${rx * 0.4}" ry="${ry * 0.3}" fill="${C.waterLight}" opacity="0.7"/>
+    <ellipse class="anim-ripple" style="animation-delay:1.4s" cx="${x + rx * 0.35}" cy="${y + ry * 0.2}" rx="${rx * 0.25}" ry="${ry * 0.2}" fill="${C.waterLight}" opacity="0.55"/>
+  </g>`;
+}
+
+function sailboat(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="tap-target" data-tap="boat"><g class="anim-idle" style="animation-duration:3.2s">
+    <path d="M -70 0 q 70 26 140 0 l -22 34 q -48 12 -96 0 z" fill="#b06a4a" stroke="${C.ink}" stroke-width="4"/>
+    <rect x="-4" y="-120" width="8" height="120" fill="${C.acaciaTrunk}"/>
+    <path d="M 4 -116 q 66 30 4 104 z" fill="#f4efe4" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M -4 -110 q -50 24 -4 92 z" fill="#e76f51" stroke="${C.ink}" stroke-width="3.4"/>
+  </g></g></g>`;
+}
+
+function fish(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="tap-target" data-tap="fish"><g class="anim-float" style="animation-duration:2s">
+    <path d="M -26 0 q 20 -18 44 0 q -20 18 -44 0 z" fill="#f2a541" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M -24 0 l -16 -12 l 0 24 z" fill="#e08a3c" stroke="${C.ink}" stroke-width="3"/>
+    <circle cx="8" cy="-3" r="3" fill="${C.ink}"/>
+    <path d="M -34 26 q 10 -6 20 0 M -10 34 q 10 -6 20 0" stroke="${C.waterLight}" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g></g></g>`;
+}
+
+function bigLeaf(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="anim-canopy" style="animation-duration:4s">
+    <path d="M 0 0 q -10 -60 -30 -80 M 0 0 q 4 -70 -2 -96" stroke="#5c7d43" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M -30 -80 q -90 -60 -60 -150 q 100 10 88 130 q -4 24 -28 20 z" fill="${C.leaf}" stroke="${C.leafDark}" stroke-width="5"/>
+    <path d="M -44 -96 q -40 -50 -34 -110" stroke="${C.leafDark}" stroke-width="4" fill="none"/>
+  </g></g>`;
+}
+
+// A row of cheerful city buildings; window lights show at night.
+function cityBuildings(x, y, s = 1, { lit = false } = {}) {
+  const win = (wx, wy) => `<rect x="${wx}" y="${wy}" width="22" height="26" rx="4" fill="${lit ? "#f4c95d" : "#dfe9f2"}" stroke="${C.ink}" stroke-width="2.6"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-320" y="-240" width="150" height="240" rx="8" fill="#c98f6a" stroke="${C.ink}" stroke-width="5"/>
+    ${win(-292, -206)}${win(-252, -206)}${win(-292, -150)}${win(-252, -150)}${win(-292, -94)}${win(-252, -94)}
+    <rect x="-150" y="-320" width="160" height="320" rx="8" fill="#8fa8c9" stroke="${C.ink}" stroke-width="5"/>
+    ${win(-118, -284)}${win(-72, -284)}${win(-118, -222)}${win(-72, -222)}${win(-118, -160)}${win(-72, -160)}${win(-118, -98)}${win(-72, -98)}
+    <rect x="30" y="-200" width="140" height="200" rx="8" fill="#9d82c4" stroke="${C.ink}" stroke-width="5"/>
+    ${win(56, -166)}${win(102, -166)}${win(56, -110)}${win(102, -110)}
+    <rect x="190" y="-270" width="150" height="270" rx="8" fill="#8ab17d" stroke="${C.ink}" stroke-width="5"/>
+    ${win(218, -234)}${win(262, -234)}${win(218, -172)}${win(262, -172)}${win(218, -110)}${win(262, -110)}
+  </g>`;
+}
+
+function marketStall(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="tap-target" data-tap="market">
+    <rect x="-110" y="-90" width="12" height="90" fill="${C.acaciaTrunk}"/><rect x="98" y="-90" width="12" height="90" fill="${C.acaciaTrunk}"/>
+    <path d="M -130 -90 h 260 l -14 -46 h -232 z" fill="#e76f51" stroke="${C.ink}" stroke-width="4"/>
+    <path d="M -130 -90 q 22 22 44 0 q 21 22 43 0 q 21 22 43 0 q 21 22 43 0 q 21 22 43 0 q 22 22 44 0" fill="#f4efe4" stroke="${C.ink}" stroke-width="3.4"/>
+    <rect x="-104" y="-34" width="208" height="34" rx="6" fill="#b08758" stroke="${C.ink}" stroke-width="4"/>
+    ${mango(-60, -48, 0.85)}${mango(-10, -52, 0.9)}${mango(40, -48, 0.85)}
+    ${carrot(80, -58, 0.7)}
+  </g></g>`;
+}
+
+function lampPost(x, y, s = 1, { lit = false } = {}) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-6" y="-190" width="12" height="190" rx="5" fill="#4a4a52" stroke="${C.ink}" stroke-width="3.4"/>
+    ${lit ? `<circle class="anim-glow" cx="0" cy="-208" r="42" fill="${C.sunGlow}" opacity="0.5"/>` : ""}
+    <circle cx="0" cy="-208" r="20" fill="${lit ? "#f4c95d" : "#dfe9f2"}" stroke="${C.ink}" stroke-width="4"/>
+    <path d="M -14 -228 q 14 -12 28 0" stroke="${C.ink}" stroke-width="4" fill="none"/>
+  </g>`;
+}
+
+function clockTower(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="tap-target" data-tap="clock">
+    <rect x="-56" y="-330" width="112" height="330" rx="8" fill="#d9b45f" stroke="${C.ink}" stroke-width="5"/>
+    <path d="M -70 -330 L 0 -392 L 70 -330 Z" fill="#b06a4a" stroke="${C.ink}" stroke-width="5"/>
+    <circle cx="0" cy="-268" r="40" fill="#f6f0d8" stroke="${C.ink}" stroke-width="5"/>
+    <path d="M 0 -268 v -26 M 0 -268 l 18 10" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/>
+    <rect x="-18" y="-90" width="36" height="90" rx="6" fill="#7d4a32" stroke="${C.ink}" stroke-width="4"/>
+  </g></g>`;
+}
+
+function nest(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -46 0 q 46 26 92 0 q -8 26 -46 26 q -38 0 -46 -26 z" fill="#a3542f" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M -40 2 q 20 -10 38 -2 M 2 4 q 20 -10 38 -4" stroke="#c9a06c" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>`;
+}
+
 // ---------------------------------------------------------------- scenery
 
 function sky(rainy = false) {
@@ -1531,6 +1650,212 @@ const dukuSensesPages = [
    ${wildBird(450, 850, 0.95)}`,
 ];
 
+// ---------------------------------------------------------------- Lulu journey series (Term 3)
+// Book 1: Lulu Says Let's Go!
+
+const luluGoPages = [
+  // 1 cover: Lulu flying high over the savanna
+  `${basicScene()}${acacia(300, 640, 1.1)}${acacia(1350, 630, 0.95)}
+   ${lulu({ x: 800, y: 340, s: 1.8, flying: true })}
+   ${zebra({ x: 520, y: 720, s: 0.8 })}
+   ${monkey({ x: 1150, y: 780, s: 0.75, arms: "up" })}`,
+
+  // 2 Lulu lived by the big acacia
+  `${basicScene()}${acacia(800, 610, 1.5)}
+   ${lulu({ x: 830, y: 470, s: 1.6 })}
+   ${tallGrass(250, 920, 1.3)}`,
+
+  // 3 time to fly to the great lake
+  `${basicScene()}${acacia(300, 630, 1.05)}
+   ${lulu({ x: 700, y: 450, s: 1.7, flying: true, arms: "up" })}
+   ${wildBird(420, 520, 0.9, true)}`,
+
+  // 4 goodbye Musa
+  `${basicScene()}${puddle(650, 890, 240, 54)}
+   ${zebra({ x: 620, y: 700, s: 1.05, mood: "happy" })}
+   ${lulu({ x: 1050, y: 420, s: 1.6, flying: true })}`,
+
+  // 5 over Duku's farm
+  `${basicScene()}${barn(500, 900, 0.7)}${fence(900, 920, 0.8, 3)}
+   ${donkey({ x: 750, y: 790, s: 0.68 })}
+   ${lulu({ x: 1100, y: 380, s: 1.6, flying: true })}`,
+
+  // 6 up up up - the world looked small
+  `${basicScene()}
+   ${acacia(400, 780, 0.5)}${acacia(1200, 800, 0.45)}${barn(800, 830, 0.35)}
+   ${lulu({ x: 800, y: 280, s: 1.9, flying: true })}
+   <g stroke="#f4efe4" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.7"><path d="M 400 340 q 60 -18 120 0"/><path d="M 1150 420 q 60 -18 120 0"/></g>`,
+
+  // 7 she flew fast and far
+  `${basicScene()}${tallGrass(300, 930, 1.2)}
+   ${lulu({ x: 900, y: 400, s: 1.8, flying: true })}
+   <g stroke="#9db4c6" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 500 380 q 90 -30 180 0"/><path d="M 460 480 q 90 -30 180 0"/></g>`,
+
+  // 8 tired wings
+  `${basicScene(true)}
+   ${lulu({ x: 800, y: 480, s: 1.7, flying: true, mood: "sad" })}
+   ${hills()}`,
+
+  // 9 resting in a tall tree
+  `${basicScene()}${acacia(900, 620, 1.4)}
+   ${lulu({ x: 930, y: 470, s: 1.5, mood: "sad" })}`,
+
+  // 10 a kind old bird shares her seeds
+  `${basicScene()}${acacia(800, 610, 1.4)}
+   ${lulu({ x: 700, y: 480, s: 1.4 })}
+   ${wildBird(920, 470, 1.5)}
+   ${seedRow(820, 500, 0.35, { sprouts: false })}`,
+
+  // 11 thank you - now I can go on
+  `${basicScene()}${acacia(350, 630, 1.05)}
+   ${lulu({ x: 800, y: 400, s: 1.7, flying: true, arms: "up" })}
+   ${wildBird(500, 470, 1.1, true)}`,
+
+  // 12 the great lake is near
+  `${basicScene()}${lake(1250, 640, 330, 60)}
+   ${lulu({ x: 700, y: 380, s: 1.8, flying: true })}
+   ${tallGrass(250, 920, 1.3)}`,
+];
+
+// Book 2: Lulu and the Wonderful Water
+
+const luluWaterPages = [
+  // 1 cover: Lulu over the sparkling lake
+  `${basicScene()}${lake(800, 800, 520, 130)}
+   ${sailboat(1100, 780, 0.9)}
+   ${lulu({ x: 550, y: 420, s: 1.8, flying: true })}
+   ${fish(450, 780, 1.1)}`,
+
+  // 2 following the little river
+  `${basicScene()}${river(800, 700, 1)}
+   ${lulu({ x: 500, y: 400, s: 1.6, flying: true })}
+   ${acacia(1300, 630, 0.95)}`,
+
+  // 3 the river runs down the hills
+  `${basicScene()}${river(650, 680, 1.1)}
+   ${lulu({ x: 1050, y: 420, s: 1.6, flying: true })}
+   ${tallGrass(1350, 920, 1.2)}`,
+
+  // 4 rain begins to fall
+  `${basicScene(true)}
+   <g class="anim-cloud"><circle cx="500" cy="180" r="66" fill="#f4f0e2" opacity="0.85"/><circle cx="560" cy="200" r="52" fill="${C.rainTop}"/></g>
+   ${rain()}
+   ${lulu({ x: 800, y: 460, s: 1.6, flying: true, mood: "surprised" })}`,
+
+  // 5 hiding under a big leaf
+  `${basicScene(true)}${rain()}
+   ${bigLeaf(800, 860, 1.5)}
+   ${lulu({ x: 760, y: 800, s: 1.4 })}`,
+
+  // 6 the rain stops - a rainbow
+  `${basicScene()}${rainbow(800, 500)}
+   ${lulu({ x: 800, y: 380, s: 1.7, flying: true, arms: "up" })}
+   ${puddle(500, 900, 200, 46)}${puddle(1150, 920, 220, 48)}`,
+
+  // 7 the great lake at last
+  `${basicScene()}${lake(800, 820, 600, 140)}
+   ${lulu({ x: 800, y: 420, s: 1.8, flying: true, mood: "surprised" })}`,
+
+  // 8 hello little fish
+  `${basicScene()}${lake(800, 850, 560, 120)}
+   ${fish(750, 760, 1.6)}
+   ${lulu({ x: 500, y: 560, s: 1.5, flying: true })}`,
+
+  // 9 the little elephant splashing
+  `${basicScene()}${lake(900, 850, 500, 110)}
+   ${elephant({ x: 950, y: 760, s: 0.95, trunkUp: true })}
+   ${splashArcs(950, 850, C.water)}
+   ${lulu({ x: 450, y: 500, s: 1.5, flying: true })}`,
+
+  // 10 a white boat sails by
+  `${basicScene()}${lake(800, 850, 560, 120)}
+   ${sailboat(950, 800, 1.2)}
+   ${lulu({ x: 450, y: 480, s: 1.5, flying: true, arms: "up" })}`,
+
+  // 11 cool clean water
+  `${basicScene()}${lake(800, 860, 540, 110)}
+   ${lulu({ x: 700, y: 740, s: 1.6 })}
+   ${fish(1050, 790, 1.1)}`,
+
+  // 12 water is wonderful
+  `${basicScene()}${rainbow(800, 560)}${lake(800, 870, 560, 110)}
+   ${lulu({ x: 800, y: 500, s: 1.8, flying: true, arms: "up" })}
+   ${fish(500, 800, 1.1)}${sailboat(1200, 810, 0.8)}`,
+];
+
+// Book 3: Lulu in the City
+
+const luluCityPages = [
+  // 1 cover: the big city skyline
+  `${basicScene()}${cityBuildings(800, 700, 1)}
+   ${lulu({ x: 500, y: 350, s: 1.8, flying: true })}
+   ${lampPost(1350, 880, 1)}`,
+
+  // 2 past the lake was the big city
+  `${basicScene()}${lake(300, 880, 260, 60)}${cityBuildings(1000, 680, 0.9)}
+   ${lulu({ x: 550, y: 420, s: 1.6, flying: true, mood: "surprised" })}`,
+
+  // 3 busy streets and tall buildings
+  `${basicScene()}${cityBuildings(700, 660, 1.1)}
+   <path d="M 0 900 q 400 -30 800 0 q 400 30 800 0 L 1600 1000 L 0 1000 Z" fill="#b9b0a6" stroke="#a39a8f" stroke-width="5"/>
+   ${lulu({ x: 1250, y: 420, s: 1.6, flying: true })}
+   ${lampPost(300, 880, 1)}${lampPost(1300, 900, 0.9)}`,
+
+  // 4 the market and its mangoes
+  `${basicScene()}${cityBuildings(400, 620, 0.7)}
+   ${marketStall(950, 880, 1.3)}
+   ${lulu({ x: 550, y: 550, s: 1.5, flying: true, arms: "up" })}`,
+
+  // 5 Kiki and Mama at the market
+  `${basicScene()}${marketStall(1050, 880, 1.2)}
+   ${kiki({ x: 600, y: 810, s: 1.1, arms: "up" })}
+   ${monkey({ x: 400, y: 760, s: 0.95, flower: true })}
+   ${lulu({ x: 850, y: 560, s: 1.4, flying: true })}`,
+
+  // 6 the city park
+  `${basicScene()}${acacia(500, 630, 1.1)}${acacia(1150, 640, 1)}
+   ${lampPost(800, 880, 1)}
+   ${kiki({ x: 1000, y: 810, s: 1 })}
+   ${lulu({ x: 620, y: 480, s: 1.4, flying: true })}`,
+
+  // 7 the big clock tower
+  `${basicScene()}${clockTower(800, 900, 1.1)}
+   ${lulu({ x: 500, y: 400, s: 1.5, flying: true, mood: "surprised" })}
+   ${kiki({ x: 1100, y: 820, s: 0.95, arms: "up" })}`,
+
+  // 8 ding dong - the clock sings
+  `${basicScene()}${clockTower(700, 900, 1.05)}
+   <g stroke="#7d97ad" stroke-width="8" fill="none" stroke-linecap="round">
+     <path class="anim-wave" style="animation-delay:0s" d="M 850 560 q 26 -26 0 -52"/>
+     <path class="anim-wave" style="animation-delay:0.4s" d="M 895 580 q 40 -40 0 -80"/>
+     <path class="anim-wave" style="animation-delay:0.8s" d="M 940 600 q 54 -54 0 -108"/>
+   </g>
+   ${lulu({ x: 1150, y: 480, s: 1.5, flying: true, arms: "up" })}`,
+
+  // 9 city lights at night
+  `${nightScene()}${cityBuildings(800, 700, 1, { lit: true })}
+   ${lampPost(300, 880, 1, { lit: true })}${lampPost(1350, 900, 0.9, { lit: true })}
+   ${lulu({ x: 500, y: 400, s: 1.6, flying: true })}`,
+
+  // 10 a nest by the park lamp
+  `${nightScene()}${acacia(900, 640, 1.2)}${lampPost(600, 880, 1.1, { lit: true })}
+   ${nest(930, 500, 1.3)}
+   ${lulu({ x: 930, y: 470, s: 1.4 })}`,
+
+  // 11 the city hums good night
+  `${nightScene()}${cityBuildings(1050, 720, 0.85, { lit: true })}${acacia(350, 650, 1)}
+   ${nest(380, 520, 1.2)}
+   ${lulu({ x: 380, y: 490, s: 1.3 })}
+   <g fill="#f6f0d8"><g class="anim-float" style="animation-delay:0s"><circle cx="700" cy="420" r="8"/><rect x="705" y="376" width="4.5" height="46" rx="2"/></g><g class="anim-float" style="animation-delay:0.9s"><circle cx="790" cy="380" r="8"/><rect x="795" y="336" width="4.5" height="46" rx="2"/></g></g>`,
+
+  // 12 friends make every place home
+  `${basicScene()}${cityBuildings(400, 640, 0.7)}${acacia(1250, 630, 1)}
+   ${lulu({ x: 800, y: 420, s: 1.7, flying: true, arms: "up" })}
+   ${kiki({ x: 1050, y: 810, s: 1, arms: "up" })}
+   ${monkey({ x: 1300, y: 770, s: 0.9, flower: true, arms: "up" })}
+   ${wildBird(550, 500, 1, true)}`,
+];
+
 // ---------------------------------------------------------------- write files
 
 const books = {
@@ -1543,6 +1868,9 @@ const books = {
   "duku-scarecrow": { dir: "duku-makes-a-scarecrow", pages: dukuScarecrowPages },
   "lost-chick": { dir: "the-little-lost-chick", pages: lostChickPages },
   "duku-senses": { dir: "dukus-five-senses", pages: dukuSensesPages },
+  "lulu-go": { dir: "lulu-says-lets-go", pages: luluGoPages },
+  "lulu-water": { dir: "lulu-and-the-wonderful-water", pages: luluWaterPages },
+  "lulu-city": { dir: "lulu-in-the-city", pages: luluCityPages },
 };
 
 const selection = process.argv[2] && process.argv[2] !== "all" ? [process.argv[2]] : Object.keys(books);

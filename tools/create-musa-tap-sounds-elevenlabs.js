@@ -46,6 +46,12 @@ const SOUNDS = [
   { key: "chick", seconds: 1.3, prompt: "Two tiny baby chick peeps, peep peep, very small and cute, child friendly, no background noise" },
   { key: "bird", seconds: 1.5, prompt: "Short sweet little songbird tweeting melody, bright and cheerful, no background noise" },
   { key: "crunch", seconds: 1.2, prompt: "One crisp playful carrot crunch bite, cartoon munch, child friendly, no background noise" },
+  { key: "lulu-happy", seconds: 1.4, prompt: "One short cheerful little swallow chirp trill, bright happy songbird, child friendly, no background noise" },
+  { key: "lulu-sad", seconds: 1.6, prompt: "One short soft tired sad little bird peep, gentle drooping chirp, storybook sound, no background noise" },
+  { key: "lulu-surprised", seconds: 1.3, prompt: "One short surprised little bird chirp squeak, quick and bright, cartoon style, child friendly" },
+  { key: "river", seconds: 2, prompt: "A gentle small river flowing and babbling over stones, soft and fresh, no other sounds" },
+  { key: "rain", seconds: 2, prompt: "Gentle soft rain pattering on leaves, calm and cozy, child friendly, no thunder" },
+  { key: "market", seconds: 1.8, prompt: "A short cheerful busy market ambience, soft friendly chatter and bustle, warm and happy, child friendly" },
 ];
 
 function loadDotEnv(filePath) {

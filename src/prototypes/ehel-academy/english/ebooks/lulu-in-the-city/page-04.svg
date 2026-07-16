@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img">
+<style>
+@media (prefers-reduced-motion: no-preference) {
+  .anim-idle { animation: idle 3.8s ease-in-out infinite alternate; }
+  @keyframes idle { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+  .anim-tail { transform-box: fill-box; transform-origin: 100% 20%; animation: tail 2.6s ease-in-out infinite alternate; }
+  @keyframes tail { from { transform: rotate(-6deg); } to { transform: rotate(8deg); } }
+  .anim-blink { transform-box: fill-box; transform-origin: center; animation: blink 5.2s infinite; }
+  @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 95%, 97% { transform: scaleY(0.12); } }
+  .anim-glow { transform-box: fill-box; transform-origin: center; animation: glow 4.2s ease-in-out infinite alternate; }
+  @keyframes glow { from { transform: scale(1); opacity: 0.5; } to { transform: scale(1.08); opacity: 0.75; } }
+  .anim-shimmer { animation: shimmer 5s ease-in-out infinite alternate; }
+  @keyframes shimmer { from { opacity: 0.62; } to { opacity: 0.92; } }
+  .anim-grass { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 3.2s ease-in-out infinite alternate; }
+  .anim-canopy { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 5.6s ease-in-out infinite alternate; }
+  @keyframes sway { from { transform: rotate(-1.8deg); } to { transform: rotate(2.2deg); } }
+  .anim-rain { animation: rainfall 1.15s linear infinite; }
+  @keyframes rainfall { from { transform: translateY(-32px); opacity: 0.85; } 75% { opacity: 0.55; } to { transform: translateY(72px); opacity: 0; } }
+  .anim-ripple { transform-box: fill-box; transform-origin: center; animation: ripple 3.4s ease-in-out infinite alternate; }
+  @keyframes ripple { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.18); opacity: 0.55; } }
+  .anim-drip { animation: drip 1s ease-in infinite; }
+  @keyframes drip { from { transform: translateY(-12px); opacity: 0.95; } to { transform: translateY(28px); opacity: 0; } }
+  .anim-flow { stroke-dasharray: 26 20; animation: flow 0.8s linear infinite; }
+  @keyframes flow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -46; } }
+  .anim-splash { transform-box: fill-box; transform-origin: 50% 100%; animation: splashPulse 1.7s ease-in-out infinite alternate; }
+  @keyframes splashPulse { from { transform: scale(0.97); } to { transform: scale(1.05); } }
+  .anim-strain { transform-box: fill-box; transform-origin: center; animation: strain 0.9s ease-in-out infinite alternate; }
+  @keyframes strain { from { transform: translateX(-5px); } to { transform: translateX(4px); } }
+  .anim-float { transform-box: fill-box; transform-origin: center; animation: floaty 2.6s ease-in-out infinite alternate; }
+  @keyframes floaty { from { transform: translateY(0) scale(1); } to { transform: translateY(-12px) scale(1.08); } }
+  .anim-wave { animation: wave 2.4s ease-in-out infinite; opacity: 0; }
+  @keyframes wave { 0% { opacity: 0; } 30% { opacity: 0.9; } 60%, 100% { opacity: 0; } }
+  .anim-cloud { animation: cloudDrift 9s ease-in-out infinite alternate; }
+  @keyframes cloudDrift { from { transform: translateX(-18px); } to { transform: translateX(22px); } }
+  .tap-target { cursor: pointer; }
+  .tap-target.tap-play { transform-box: fill-box; transform-origin: 50% 85%; animation: tapWiggle 0.7s ease-in-out; }
+  .tap-target[data-tap="puddle"].tap-play { transform-origin: center; animation: tapSplash 0.85s ease-out; }
+  .tap-target[data-tap="sun"].tap-play { transform-origin: center; animation: tapPulse 0.6s ease-in-out; }
+  .tap-target[data-tap="tree"].tap-play { transform-origin: 50% 100%; animation: tapShake 0.7s ease-in-out; }
+  @keyframes tapWiggle { 0% { transform: rotate(0); } 25% { transform: rotate(-4deg) scale(1.03); } 55% { transform: rotate(3deg) scale(1.04); } 80% { transform: rotate(-1.5deg); } 100% { transform: rotate(0); } }
+  @keyframes tapSplash { 0% { transform: scale(1); } 40% { transform: scale(1.06, 0.94); } 70% { transform: scale(0.97, 1.03); } 100% { transform: scale(1); } }
+  @keyframes tapPulse { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+  @keyframes tapShake { 0% { transform: rotate(0); } 20% { transform: rotate(2.4deg); } 45% { transform: rotate(-2deg); } 70% { transform: rotate(1.2deg); } 100% { transform: rotate(0); } }
+  .tap-burst { opacity: 0; }
+  .tap-target.tap-play .tap-burst { opacity: 1; }
+  .tap-target.tap-play .tap-burst circle { animation: burstUp 0.6s ease-out forwards; }
+  @keyframes burstUp { from { transform: translateY(0); opacity: 0.95; } to { transform: translateY(-90px); opacity: 0; } }
+}
+</style>
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0f4"/><stop offset="1" stop-color="#eef8fd"/></linearGradient></defs>
+    <rect width="1600" height="1000" fill="url(#sky)"/><g class="tap-target" data-tap="sun"><circle class="anim-glow" cx="1350" cy="160" r="120" fill="#fdeebc" opacity="0.6"/><circle cx="1350" cy="160" r="78" fill="#f9d976"/></g><path d="M 0 560 q 260 -110 520 -30 q 300 90 620 -20 q 240 -76 460 10 L 1600 640 L 0 640 Z" fill="#a9c4dd" opacity="0.55"/><rect x="0" y="590" width="1600" height="410" fill="#e7cd7f"/>
+    <path d="M 0 720 q 400 -50 800 0 q 400 50 800 0 L 1600 1000 L 0 1000 Z" fill="#d9b45f"/>
+    <g class="anim-grass" style="animation-delay:1.00s"><path d="M 120 780 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:0.50s"><path d="M 380 860 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:2.50s"><path d="M 660 780 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:1.50s"><path d="M 940 820 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:0.00s"><path d="M 1240 820 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:0.00s"><path d="M 1480 820 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g transform="translate(400 620) scale(0.7)">
+    <rect x="-320" y="-240" width="150" height="240" rx="8" fill="#c98f6a" stroke="#2b2b33" stroke-width="5"/>
+    <rect x="-292" y="-206" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-252" y="-206" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-292" y="-150" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-252" y="-150" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-292" y="-94" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-252" y="-94" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/>
+    <rect x="-150" y="-320" width="160" height="320" rx="8" fill="#8fa8c9" stroke="#2b2b33" stroke-width="5"/>
+    <rect x="-118" y="-284" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-72" y="-284" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-118" y="-222" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-72" y="-222" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-118" y="-160" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-72" y="-160" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-118" y="-98" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="-72" y="-98" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/>
+    <rect x="30" y="-200" width="140" height="200" rx="8" fill="#9d82c4" stroke="#2b2b33" stroke-width="5"/>
+    <rect x="56" y="-166" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="102" y="-166" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="56" y="-110" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="102" y="-110" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/>
+    <rect x="190" y="-270" width="150" height="270" rx="8" fill="#8ab17d" stroke="#2b2b33" stroke-width="5"/>
+    <rect x="218" y="-234" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="262" y="-234" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="218" y="-172" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="262" y="-172" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="218" y="-110" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/><rect x="262" y="-110" width="22" height="26" rx="4" fill="#dfe9f2" stroke="#2b2b33" stroke-width="2.6"/>
+  </g>
+   <g transform="translate(950 880) scale(1.3)"><g class="tap-target" data-tap="market">
+    <rect x="-110" y="-90" width="12" height="90" fill="#8a6242"/><rect x="98" y="-90" width="12" height="90" fill="#8a6242"/>
+    <path d="M -130 -90 h 260 l -14 -46 h -232 z" fill="#e76f51" stroke="#2b2b33" stroke-width="4"/>
+    <path d="M -130 -90 q 22 22 44 0 q 21 22 43 0 q 21 22 43 0 q 21 22 43 0 q 21 22 43 0 q 22 22 44 0" fill="#f4efe4" stroke="#2b2b33" stroke-width="3.4"/>
+    <rect x="-104" y="-34" width="208" height="34" rx="6" fill="#b08758" stroke="#2b2b33" stroke-width="4"/>
+    <g transform="translate(-60 -48) scale(0.85)">
+    <path d="M 0 -14 q 22 -4 26 16 q 2 22 -22 24 q -26 0 -26 -22 q 0 -16 22 -18 z" fill="#f2a541" stroke="#2b2b33" stroke-width="3.4"/>
+    <path d="M 2 -14 q 4 -10 12 -12" stroke="#5c7d43" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g><g transform="translate(-10 -52) scale(0.9)">
+    <path d="M 0 -14 q 22 -4 26 16 q 2 22 -22 24 q -26 0 -26 -22 q 0 -16 22 -18 z" fill="#f2a541" stroke="#2b2b33" stroke-width="3.4"/>
+    <path d="M 2 -14 q 4 -10 12 -12" stroke="#5c7d43" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g><g transform="translate(40 -48) scale(0.85)">
+    <path d="M 0 -14 q 22 -4 26 16 q 2 22 -22 24 q -26 0 -26 -22 q 0 -16 22 -18 z" fill="#f2a541" stroke="#2b2b33" stroke-width="3.4"/>
+    <path d="M 2 -14 q 4 -10 12 -12" stroke="#5c7d43" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+    <g transform="translate(80 -58) scale(0.7)"><g class="tap-target" data-tap="carrot">
+    <path d="M -12 -8 q 12 -10 26 0 l -10 46 q -3 8 -8 0 z" fill="#e08a3c" stroke="#2b2b33" stroke-width="3.4"/>
+    <path d="M -4 -12 q -8 -16 -16 -18 M 2 -14 q 0 -16 -2 -22 M 8 -12 q 8 -14 16 -16" stroke="#79a15a" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </g></g>
+  </g></g>
+   <g transform="translate(550 550) scale(1.5 1.5)">
+    <g class="tap-target" data-tap="lulu" data-mood="happy">
+    <g class="anim-float" style="animation-delay:0.53s; animation-duration: 2.2s">
+    <path d="M -22 6 l -26 14 l 4 -16 l -8 -8 q 16 -8 30 2 z" fill="#2e5480" stroke="#2b2b33" stroke-width="2.8"/>
+    <ellipse cx="0" cy="0" rx="26" ry="18" fill="#3f6ea5" stroke="#2b2b33" stroke-width="3.4"/>
+    <path d="M -4 6 q 14 10 26 4 q 2 -10 -6 -14 z" fill="#f2e8d5"/>
+    <path d="M -6 -8 q -30 -34 -64 -38 q 10 26 44 36 z" fill="#2e5480" stroke="#2b2b33" stroke-width="3"/>
+       <path d="M 2 -6 q 18 -34 48 -42 q -2 26 -30 42 z" fill="#2e5480" stroke="#2b2b33" stroke-width="3"/>
+    <circle cx="22" cy="-12" r="13" fill="#3f6ea5" stroke="#2b2b33" stroke-width="3.4"/>
+    <path d="M 18 -4 q 8 6 12 2 q 0 -8 -8 -8 z" fill="#c96f45"/>
+    <path d="M 33 -13 l 12 4 l -11 5 z" fill="#d9a05b" stroke="#2b2b33" stroke-width="2.4"/>
+    <g transform="translate(20 -15)"><g class="anim-blink"><circle cx="0" cy="0" r="4.05" fill="#6b4a2f"/><circle cx="1.125" cy="-1.35" r="1.35" fill="#fff"/></g></g>
+    
+    </g>
+    </g>
+  </g>
+</svg>

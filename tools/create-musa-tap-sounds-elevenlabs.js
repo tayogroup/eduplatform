@@ -9,8 +9,11 @@
 
 const fs = require("fs");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
+// Generated effects come out quiet; boost them ~30% with a clip limiter.
+const VOLUME_FILTER = "volume=1.3,alimiter=limit=0.95";
 const outDir = path.join(root, "src", "prototypes", "ehel-academy", "english", "ebooks", "tap-sounds");
 const apiUrl = "https://api.elevenlabs.io/v1/sound-generation";
 
@@ -55,6 +58,18 @@ async function generate(sound, key) {
   return buffer;
 }
 
+function boostVolume(filePath) {
+  const ffmpeg = process.env.FFMPEG_PATH || "ffmpeg";
+  const boosted = `${filePath}.boost.mp3`;
+  const result = spawnSync(ffmpeg, ["-y", "-loglevel", "error", "-i", filePath, "-af", VOLUME_FILTER, "-c:a", "libmp3lame", "-q:a", "3", boosted], { stdio: "inherit" });
+  if (result.status === 0 && fs.existsSync(boosted) && fs.statSync(boosted).size > 0) {
+    fs.renameSync(boosted, filePath);
+  } else {
+    if (fs.existsSync(boosted)) fs.unlinkSync(boosted);
+    console.warn(`(volume boost skipped for ${path.basename(filePath)} - ffmpeg unavailable or failed)`);
+  }
+}
+
 async function main() {
   if (typeof fetch !== "function") {
     console.error("This script needs Node.js with built-in fetch support.");
@@ -80,7 +95,8 @@ async function main() {
     process.stdout.write(`Generating ${sound.key}... `);
     const buffer = await generate(sound, key);
     fs.writeFileSync(outPath, buffer);
-    console.log(`${(buffer.length / 1024).toFixed(0)} KB`);
+    boostVolume(outPath);
+    console.log(`${(fs.statSync(outPath).size / 1024).toFixed(0)} KB`);
     generated += 1;
   }
   console.log(`Done: ${generated} generated, ${skipped} already present, in ${path.relative(root, outDir)}`);

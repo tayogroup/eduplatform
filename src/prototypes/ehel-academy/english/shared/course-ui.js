@@ -210,7 +210,7 @@ function playTapSound(type, mood) {
   try {
     if (!tapSoundPlayer) {
       tapSoundPlayer = new Audio();
-      tapSoundPlayer.volume = 0.6;
+      tapSoundPlayer.volume = 1;
       tapSoundPlayer.preload = "auto";
     }
     tapSoundPlayer.pause();

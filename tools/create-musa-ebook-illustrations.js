@@ -17,7 +17,7 @@ const root = path.resolve(__dirname, "..");
 const ebooksRoot = path.join(root, "src", "prototypes", "ehel-academy", "english", "ebooks");
 
 // Global size boost for every animal character (props and scenery unchanged).
-const ANIMAL_SCALE = 1.5;
+const ANIMAL_SCALE = 2;
 
 const W = 1600;
 const H = 1000;
@@ -1431,7 +1431,7 @@ const kikiGamePages = [
   `${basicScene()}${acacia(220, 630, 1)}
    ${kite(600, 330, 0.9)}
    ${giraffe({ x: 950, y: 620, s: 0.95 })}
-   ${zebra({ x: 1300, y: 700, s: 0.95 })}
+   ${zebra({ x: 1150, y: 700, s: 0.95 })}
    ${kiki({ x: 550, y: 800, s: 1.15, arms: "up" })}
    ${elephant({ x: 800, y: 770, s: 0.58, trunkUp: true })}`,
 

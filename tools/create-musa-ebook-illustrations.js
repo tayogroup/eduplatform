@@ -373,6 +373,40 @@ function fallenBranch(x, y, s = 1) {
   </g>`;
 }
 
+function raceBanner(x, y, s = 1) {
+  let flags = "";
+  for (let i = 0; i < 8; i += 1) {
+    const t = (i + 0.5) / 8;
+    const fx = -304 + 608 * t;
+    const fy = (1 - t) * (1 - t) * -180 + 2 * (1 - t) * t * -134 + t * t * -180;
+    flags += `<path d="M ${fx.toFixed(0)} ${fy.toFixed(0)} l 26 5 l -10 36 z" fill="${C.rainbow[i % C.rainbow.length]}"/>`;
+  }
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-310" y="-190" width="12" height="190" rx="6" fill="${C.acaciaTrunk}"/>
+    <rect x="298" y="-190" width="12" height="190" rx="6" fill="${C.acaciaTrunk}"/>
+    <path d="M -304 -180 q 304 46 608 0" stroke="#5c7d43" stroke-width="6" fill="none"/>
+    ${flags}
+  </g>`;
+}
+
+function dustPuffs(x, y) {
+  return `<g class="anim-splash" opacity="0.55">
+    <ellipse cx="${x - 60}" cy="${y}" rx="34" ry="16" fill="#c9b699"/>
+    <ellipse cx="${x + 10}" cy="${y - 14}" rx="26" ry="12" fill="#d6c6ac"/>
+    <ellipse cx="${x + 70}" cy="${y + 4}" rx="30" ry="14" fill="#c9b699"/>
+  </g>`;
+}
+
+function confetti(x, y) {
+  let dots = "";
+  for (let i = 0; i < 14; i += 1) {
+    const dx = x - 260 + (i * 41) % 520;
+    const dy = y - 60 - ((i * 73) % 180);
+    dots += `<circle class="anim-drip" style="animation-delay:${((i % 7) / 7).toFixed(2)}s" cx="${dx}" cy="${dy}" r="${7 + (i % 3) * 2}" fill="${C.rainbow[i % C.rainbow.length]}" opacity="0.9"/>`;
+  }
+  return dots;
+}
+
 function rain() {
   let drops = "";
   for (let i = 0; i < 60; i += 1) {
@@ -584,11 +618,100 @@ const helpsAFriendPages = [
    <g class="anim-splash" stroke="${C.water}" stroke-width="7" fill="none" stroke-linecap="round"><path d="M 600 840 q -24 -36 -58 -44"/><path d="M 1010 850 q 26 -38 60 -46"/></g>`,
 ];
 
+// ---------------------------------------------------------------- book 3: Musa's Big Race
+
+const bigRacePages = [
+  // 1 cover: everyone at the race banner
+  `${basicScene()}${acacia(180, 640, 1)}${acacia(1450, 630, 0.9)}
+   ${raceBanner(800, 560, 1.1)}
+   ${giraffe({ x: 360, y: 640, s: 0.98 })}
+   ${elephant({ x: 1200, y: 700, s: 0.96, flip: true, trunkUp: true })}
+   ${ostrich({ x: 1030, y: 650, s: 0.9, flip: true })}
+   ${monkey({ x: 540, y: 750, s: 0.92, arms: "up" })}
+   ${zebra({ x: 790, y: 690, s: 1.1 })}`,
+
+  // 2 race day: friends line up
+  `${basicScene()}${acacia(1440, 630, 0.9)}
+   ${raceBanner(430, 570, 0.9)}
+   ${zebra({ x: 340, y: 700, s: 0.95 })}
+   ${giraffe({ x: 620, y: 650, s: 0.9 })}
+   ${elephant({ x: 900, y: 720, s: 0.9 })}
+   ${ostrich({ x: 1130, y: 680, s: 0.85 })}
+   ${monkey({ x: 1380, y: 770, s: 0.9, flip: true })}`,
+
+  // 3 ready steady go
+  `${basicScene()}${acacia(220, 630, 1)}
+   ${monkey({ x: 350, y: 730, s: 1.05, arms: "up", mood: "surprised" })}
+   ${zebra({ x: 700, y: 700, s: 0.98, pose: "run" })}
+   ${ostrich({ x: 1000, y: 660, s: 0.86, pose: "run" })}
+   ${elephant({ x: 1280, y: 720, s: 0.86, pose: "run" })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 520 810 q -40 -12 -70 6"/><path d="M 850 820 q -36 -10 -64 6"/></g>`,
+
+  // 4 Musa in front
+  `${basicScene()}${acacia(1400, 640, 1)}${tallGrass(1280, 930, 1.3)}
+   ${zebra({ x: 1000, y: 680, s: 1.18, pose: "run" })}
+   ${ostrich({ x: 420, y: 690, s: 0.7, pose: "run" })}
+   ${giraffe({ x: 220, y: 660, s: 0.68, pose: "run" })}
+   ${elephant({ x: 590, y: 740, s: 0.66, pose: "run" })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 760 790 q -40 -12 -70 6"/><path d="M 700 830 q -36 -8 -62 8"/></g>`,
+
+  // 5 past the big acacia
+  `${basicScene()}${acacia(400, 620, 1.5)}${tallGrass(180, 920, 1.4)}
+   ${zebra({ x: 950, y: 690, s: 1.15, pose: "run" })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 700 800 q -46 -8 -80 10"/></g>`,
+
+  // 6 the leap (series motif)
+  `${basicScene()}${acacia(210, 640, 0.95)}
+   ${fallenBranch(870, 900, 1.1)}
+   ${zebra({ x: 860, y: 560, s: 1.15, pose: "leap" })}
+   ${tallGrass(1400, 920, 1.2)}`,
+
+  // 7 BUMP! the little elephant trips
+  `${basicScene()}${acacia(1420, 630, 0.95)}
+   ${dustPuffs(760, 830)}
+   ${elephant({ x: 760, y: 770, s: 1.05, stuck: true, mood: "sad" })}
+   ${ostrich({ x: 1350, y: 660, s: 0.7, flip: false, pose: "run" })}`,
+
+  // 8 Musa stops: the finish line is so close
+  `${basicScene()}${raceBanner(1330, 580, 0.85)}${acacia(180, 630, 0.95)}
+   ${zebra({ x: 820, y: 690, s: 1.12, flip: true, mood: "surprised" })}
+   ${elephant({ x: 300, y: 790, s: 0.62, stuck: true, mood: "sad" })}`,
+
+  // 9 Musa runs back to his friend
+  `${basicScene()}${acacia(1430, 640, 0.95)}
+   ${elephant({ x: 950, y: 770, s: 1, stuck: true, mood: "sad" })}
+   ${zebra({ x: 480, y: 700, s: 1.08, pose: "run" })}
+   <g class="anim-float" fill="#e76f51" opacity="0.9"><path d="M 700 400 c -8 -14 -28 -9 -28 5 c 0 12 15 20 28 29 c 13 -9 28 -17 28 -29 c 0 -14 -20 -19 -28 -5 z"/></g>`,
+
+  // 10 running the last part together
+  `${basicScene()}${raceBanner(1350, 570, 0.8)}${acacia(200, 630, 0.95)}
+   ${zebra({ x: 640, y: 690, s: 1.05, pose: "run" })}
+   ${elephant({ x: 1000, y: 710, s: 0.95, pose: "run", trunkUp: true })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 430 800 q -40 -12 -70 6"/><path d="M 810 820 q -36 -8 -62 8"/></g>`,
+
+  // 11 the ostrich wins; everyone cheers
+  `${basicScene()}${raceBanner(800, 560, 1.05)}${confetti(800, 420)}
+   ${ostrich({ x: 800, y: 650, s: 1 })}
+   ${monkey({ x: 470, y: 760, s: 0.95, arms: "up" })}
+   ${giraffe({ x: 250, y: 630, s: 0.88 })}
+   ${zebra({ x: 1120, y: 700, s: 0.95, flip: true })}
+   ${elephant({ x: 1420, y: 730, s: 0.85, flip: true, trunkUp: true })}`,
+
+  // 12 a real winner (trilogy rainbow ending)
+  `${basicScene()}${rainbow(800, 560)}${acacia(180, 640, 1)}${acacia(1440, 630, 0.9)}
+   ${zebra({ x: 700, y: 690, s: 1.08 })}
+   ${elephant({ x: 1020, y: 710, s: 0.95, flip: true, trunkUp: true })}
+   ${giraffe({ x: 360, y: 620, s: 0.9 })}
+   ${ostrich({ x: 1260, y: 650, s: 0.85, flip: true })}
+   ${monkey({ x: 850, y: 780, s: 0.85, arms: "up" })}`,
+];
+
 // ---------------------------------------------------------------- write files
 
 const books = {
   "muddy-stripes": { dir: "musas-muddy-stripes", pages: muddyStripesPages },
   "helps-a-friend": { dir: "musa-helps-a-friend", pages: helpsAFriendPages },
+  "big-race": { dir: "musas-big-race", pages: bigRacePages },
 };
 
 const selection = process.argv[2] && process.argv[2] !== "all" ? [process.argv[2]] : Object.keys(books);

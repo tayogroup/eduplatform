@@ -550,6 +550,9 @@ function stopEbookWatch() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
   if (tapSoundPlayer) tapSoundPlayer.pause();
+  if (document.fullscreenElement?.classList?.contains("course-ebook-reader") && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
   const watchButton = $("#watch-ebook");
   if (watchButton) {
     watchButton.classList.remove("watching");
@@ -2232,6 +2235,10 @@ function renderEbooks() {
     watchButton.innerHTML = `${icon("square")} Stop watching`;
     watchButton.setAttribute("aria-label", "Stop watching the story");
     icons();
+    const readerElement = $(".course-ebook-reader");
+    if (readerElement?.requestFullscreen && !document.fullscreenElement) {
+      readerElement.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
+    }
     $("#ebook-stage")?.scrollIntoView({ behavior: "smooth", block: "start" });
     while (ebookWatchActive && ebookWatchToken === token) {
       if (!$("#course-ebook-page")) break;

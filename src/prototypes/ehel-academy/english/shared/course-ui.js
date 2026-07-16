@@ -2174,9 +2174,14 @@ function renderEbooks() {
     const isLastPage = activeEbookPage === book.pages.length - 1;
     $("#course-ebook-page").innerHTML = `<div class="course-ebook-progress" role="progressbar" aria-label="Book progress" aria-valuemin="1" aria-valuemax="${book.pages.length}" aria-valuenow="${activeEbookPage + 1}" aria-valuetext="Page ${activeEbookPage + 1} of ${book.pages.length}"><span style="width:${((activeEbookPage + 1) / book.pages.length) * 100}%"></span></div>
       <button class="sr-only" id="listen-ebook-page" type="button" tabindex="-1" aria-hidden="true">Narration</button>
-      <figure class="course-ebook-illustration" id="ebook-stage"><img src="${ebookAsset(book, page.image)}" alt="${escapeHtml(page.alt)}"><figcaption class="sr-only">Original illustration by ${escapeHtml(book.illustrator)}.</figcaption></figure>
+      <figure class="course-ebook-illustration" id="ebook-stage">
+        <button class="course-ebook-nav prev" id="previous-ebook-page" type="button" aria-label="Previous page" ${activeEbookPage === 0 ? "disabled" : ""}>${icon("chevron-left")}</button>
+        <img src="${ebookAsset(book, page.image)}" alt="${escapeHtml(page.alt)}">
+        <button class="course-ebook-nav next" id="next-ebook-page" type="button" aria-label="Next page" ${isLastPage ? "disabled" : ""}>${icon("chevron-right")}</button>
+        <figcaption class="sr-only">Original illustration by ${escapeHtml(book.illustrator)}.</figcaption>
+      </figure>
       <div class="course-ebook-transcript" aria-live="polite"><div class="course-ebook-transcript-head"><span>Read along</span><h3 tabindex="-1">Page ${activeEbookPage + 1}</h3></div><p>${escapeHtml(page.text)}</p></div>
-      <div class="course-ebook-controls"><button class="button secondary" id="previous-ebook-page" type="button" ${activeEbookPage === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous page</button>${isLastPage ? `<button class="button gold" id="finish-ebook" type="button">${icon("check")} Finish book</button>` : `<span>Keep reading</span>`}<button class="button secondary" id="next-ebook-page" type="button" ${isLastPage ? "disabled" : ""}>Next page ${icon("arrow-right")}</button></div>`;
+      ${isLastPage ? `<div class="course-ebook-controls"><button class="button gold" id="finish-ebook" type="button">${icon("check")} Finish book</button></div>` : ""}`;
 
     const stage = $("#ebook-stage");
     if (stage && /\.svg$/i.test(page.image)) {

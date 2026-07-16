@@ -103,18 +103,18 @@ const ebookCatalog = [
     sourcePdf: "./ebooks/musas-muddy-stripes/original.pdf",
     attribution: "Musa's Muddy Stripes is an original Grade 1 story created for Ehel Academy in 2026. Story and illustrations by Ehel Academy Learning Studio, drawn in the shared Musa series vector style. No story wording or artwork from Smile Please! was reused.",
     pages: [
-      { image: "page-01.svg", text: "Musa's Muddy Stripes. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Musa the young zebra standing with a giraffe, elephant, ostrich and vervet monkey on the African savanna" },
+      { image: "page-01.svg", sound: "zebra-happy", text: "Musa's Muddy Stripes. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Musa the young zebra standing with a giraffe, elephant, ostrich and vervet monkey on the African savanna" },
       { image: "page-02.svg", text: "Musa the zebra loved to run.", alt: "Musa running through golden savanna grass on a sunny morning" },
-      { image: "page-03.svg", text: "He ran past the tall giraffe.", alt: "Musa running ahead of his smiling giraffe friend" },
-      { image: "page-04.svg", text: "He ran past the little elephant.", alt: "Musa running ahead while a young elephant waves her trunk" },
-      { image: "page-05.svg", text: "He ran past the swift ostrich.", alt: "Musa and his ostrich friend running together across the savanna" },
+      { image: "page-03.svg", sound: "giraffe", text: "He ran past the tall giraffe.", alt: "Musa running ahead of his smiling giraffe friend" },
+      { image: "page-04.svg", sound: "elephant-happy", text: "He ran past the little elephant.", alt: "Musa running ahead while a young elephant waves her trunk" },
+      { image: "page-05.svg", sound: "ostrich", text: "He ran past the swift ostrich.", alt: "Musa and his ostrich friend running together across the savanna" },
       { image: "page-06.svg", text: "He leapt over a fallen branch.", alt: "Musa making a joyful leap over a small fallen branch" },
-      { image: "page-07.svg", text: "Then - SPLASH! Musa slipped into a muddy puddle.", alt: "A surprised Musa landing safely in a shallow muddy puddle" },
-      { image: "page-08.svg", text: "Mud covered his stripes. Musa felt sad.", alt: "Musa standing sadly beside the puddle with wet mud on his stripes" },
-      { image: "page-09.svg", text: "The vervet monkey brushed him with soft leaves. But the mud stayed.", alt: "A vervet monkey gently brushing mud from Musa with green leaves" },
-      { image: "page-10.svg", text: "The elephant sprayed Musa with cool water. Splash, splash, splash!", alt: "The young elephant rinsing muddy Musa with a sparkling arc of water" },
-      { image: "page-11.svg", text: "The ostrich fanned him. The giraffe found a warm, sunny place.", alt: "The ostrich fanning Musa while the giraffe points toward the warm sun" },
-      { image: "page-12.svg", text: "Musa's stripes shone again. \"Thank you, friends!\" he said. Then everyone splashed and laughed.", alt: "A clean and happy Musa splashing in the puddle while all his friends laugh together" },
+      { image: "page-07.svg", sound: "puddle", text: "Then - SPLASH! Musa slipped into a muddy puddle.", alt: "A surprised Musa landing safely in a shallow muddy puddle" },
+      { image: "page-08.svg", sound: "zebra-sad", text: "Mud covered his stripes. Musa felt sad.", alt: "Musa standing sadly beside the puddle with wet mud on his stripes" },
+      { image: "page-09.svg", sound: "monkey", text: "The vervet monkey brushed him with soft leaves. But the mud stayed.", alt: "A vervet monkey gently brushing mud from Musa with green leaves" },
+      { image: "page-10.svg", sound: "elephant-happy", text: "The elephant sprayed Musa with cool water. Splash, splash, splash!", alt: "The young elephant rinsing muddy Musa with a sparkling arc of water" },
+      { image: "page-11.svg", sound: "ostrich", text: "The ostrich fanned him. The giraffe found a warm, sunny place.", alt: "The ostrich fanning Musa while the giraffe points toward the warm sun" },
+      { image: "page-12.svg", sound: "zebra-happy", text: "Musa's stripes shone again. \"Thank you, friends!\" he said. Then everyone splashed and laughed.", alt: "A clean and happy Musa splashing in the puddle while all his friends laugh together" },
     ],
   },
   {
@@ -127,18 +127,18 @@ const ebookCatalog = [
     illustrator: "Ehel Academy Learning Studio",
     attribution: "Musa Helps a Friend is an original Grade 1 story created for Ehel Academy in 2026, the sequel to Musa's Muddy Stripes. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
     pages: [
-      { image: "page-01.svg", text: "Musa Helps a Friend. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Musa the young zebra with the giraffe, little elephant, ostrich and vervet monkey around a big puddle on the savanna" },
-      { image: "page-02.svg", text: "Rain fell all night. The savanna was full of puddles.", alt: "The savanna on a gray morning after rain, dotted with fresh puddles" },
-      { image: "page-03.svg", text: "Musa the zebra ran out to play. Splish, splash!", alt: "Musa happily splashing through a shallow puddle in the morning light" },
-      { image: "page-04.svg", text: "Then he heard a sad sound. \"Help! Help!\"", alt: "Musa standing alert with his ears up, listening toward the tall reeds" },
+      { image: "page-01.svg", sound: "zebra-happy", text: "Musa Helps a Friend. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Musa the young zebra with the giraffe, little elephant, ostrich and vervet monkey around a big puddle on the savanna" },
+      { image: "page-02.svg", sound: "tree", text: "Rain fell all night. The savanna was full of puddles.", alt: "The savanna on a gray morning after rain, dotted with fresh puddles" },
+      { image: "page-03.svg", sound: "puddle", text: "Musa the zebra ran out to play. Splish, splash!", alt: "Musa happily splashing through a shallow puddle in the morning light" },
+      { image: "page-04.svg", sound: "elephant-sad", text: "Then he heard a sad sound. \"Help! Help!\"", alt: "Musa standing alert with his ears up, listening toward the tall reeds" },
       { image: "page-05.svg", text: "The little elephant was stuck in the deep mud.", alt: "The little elephant stuck belly-deep in a wide muddy puddle, looking sad" },
-      { image: "page-06.svg", text: "\"Do not be sad,\" said Musa. \"Friends can help!\"", alt: "Musa at the edge of the puddle speaking kindly to the sad little elephant" },
-      { image: "page-07.svg", text: "Musa called the giraffe, the ostrich, and the monkey.", alt: "The giraffe, ostrich and vervet monkey hurrying across the grass toward Musa" },
+      { image: "page-06.svg", sound: "zebra-happy", text: "\"Do not be sad,\" said Musa. \"Friends can help!\"", alt: "Musa at the edge of the puddle speaking kindly to the sad little elephant" },
+      { image: "page-07.svg", sound: "monkey", text: "Musa called the giraffe, the ostrich, and the monkey.", alt: "The giraffe, ostrich and vervet monkey hurrying across the grass toward Musa" },
       { image: "page-08.svg", text: "The monkey found a long, strong vine. The elephant held it with her trunk.", alt: "The vervet monkey holding one end of a long vine while the little elephant grips the other end with her trunk" },
-      { image: "page-09.svg", text: "Musa pulled. The giraffe pulled. The ostrich pulled. \"One, two, three!\"", alt: "Musa, the giraffe and the ostrich pulling the vine together while the monkey cheers" },
-      { image: "page-10.svg", text: "POP! Out came the little elephant. Mud flew everywhere!", alt: "The little elephant popping free of the mud as drops of mud fly through the air" },
-      { image: "page-11.svg", text: "Now everyone was muddy. They laughed and laughed.", alt: "All five friends speckled with mud, laughing together beside the puddle" },
-      { image: "page-12.svg", text: "\"Thank you, friends!\" said the little elephant. \"Helping a friend is the best game of all.\"", alt: "The friends splashing in clean rainwater under a soft rainbow while the little elephant beams" },
+      { image: "page-09.svg", sound: "ostrich", text: "Musa pulled. The giraffe pulled. The ostrich pulled. \"One, two, three!\"", alt: "Musa, the giraffe and the ostrich pulling the vine together while the monkey cheers" },
+      { image: "page-10.svg", sound: "elephant-surprised", text: "POP! Out came the little elephant. Mud flew everywhere!", alt: "The little elephant popping free of the mud as drops of mud fly through the air" },
+      { image: "page-11.svg", sound: "monkey", text: "Now everyone was muddy. They laughed and laughed.", alt: "All five friends speckled with mud, laughing together beside the puddle" },
+      { image: "page-12.svg", sound: "elephant-happy", text: "\"Thank you, friends!\" said the little elephant. \"Helping a friend is the best game of all.\"", alt: "The friends splashing in clean rainwater under a soft rainbow while the little elephant beams" },
     ],
   },
   {
@@ -202,29 +202,73 @@ const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant"]);
 const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
 let tapSoundPlayer = null;
 
+function ensureTapSoundPlayer() {
+  if (!tapSoundPlayer) {
+    tapSoundPlayer = new Audio();
+    tapSoundPlayer.volume = 1;
+    tapSoundPlayer.preload = "auto";
+  }
+  return tapSoundPlayer;
+}
+
+function tapSoundUrl(soundKey) {
+  return new URL(`./ebooks/tap-sounds/${soundKey}.mp3`, document.baseURI).href;
+}
+
 function playTapSound(type, mood) {
   if (!audioEnabled || !type) return;
   const soundKey = TAP_SOUND_MOOD_TYPES.has(type)
     ? `${type}-${TAP_SOUND_MOODS.has(mood) ? mood : "happy"}`
     : type;
   try {
-    if (!tapSoundPlayer) {
-      tapSoundPlayer = new Audio();
-      tapSoundPlayer.volume = 1;
-      tapSoundPlayer.preload = "auto";
-    }
-    tapSoundPlayer.pause();
-    tapSoundPlayer.src = new URL(`./ebooks/tap-sounds/${soundKey}.mp3`, document.baseURI).href;
-    tapSoundPlayer.currentTime = 0;
-    tapSoundPlayer.play().catch(() => {});
+    const player = ensureTapSoundPlayer();
+    player.pause();
+    player.src = tapSoundUrl(soundKey);
+    player.currentTime = 0;
+    player.play().catch(() => {});
   } catch {
     // Tap sounds are a garnish; never let them break the reader.
   }
 }
 
+// Plays a page's story sound cue and resolves when it finishes (or after a
+// short safety timeout), so narration can follow it like a storybook sting.
+function playStorySound(soundKey) {
+  if (!audioEnabled || !soundKey) return Promise.resolve();
+  let player;
+  try {
+    player = ensureTapSoundPlayer();
+  } catch {
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    let settled = false;
+    const done = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      player.removeEventListener("ended", done);
+      player.removeEventListener("error", done);
+      resolve();
+    };
+    const timer = setTimeout(done, 2600);
+    player.addEventListener("ended", done);
+    player.addEventListener("error", done);
+    try {
+      player.pause();
+      player.src = tapSoundUrl(soundKey);
+      player.currentTime = 0;
+      player.play().catch(done);
+    } catch {
+      done();
+    }
+  });
+}
+
 function stopEbookWatch() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
+  if (tapSoundPlayer) tapSoundPlayer.pause();
   const watchButton = $("#watch-ebook");
   if (watchButton) {
     watchButton.classList.remove("watching");
@@ -1877,9 +1921,12 @@ function renderEbooks() {
         })
         .catch(() => {});
     }
-    $("#listen-ebook-page").addEventListener("click", (event) => {
+    $("#listen-ebook-page").addEventListener("click", async (event) => {
       if (ebookWatchActive) { stopEbookWatch(); return; }
-      playPageNarration(event.currentTarget, page.text);
+      const listenButton = event.currentTarget;
+      if (activeAudioButton === listenButton) { playPageNarration(listenButton, page.text); return; }
+      await playStorySound(page.sound);
+      if (listenButton.isConnected) playPageNarration(listenButton, page.text);
     });
     $("#previous-ebook-page").addEventListener("click", () => { stopEbookWatch(); activeEbookPage -= 1; drawPage(true); });
     $("#next-ebook-page").addEventListener("click", () => { stopEbookWatch(); activeEbookPage += 1; drawPage(true); });
@@ -1904,6 +1951,8 @@ function renderEbooks() {
       drawPage();
       const pageButton = $("#listen-ebook-page");
       if (!pageButton) break;
+      await playStorySound(book.pages[activeEbookPage].sound);
+      if (!ebookWatchActive || ebookWatchToken !== token) return;
       const narrated = await playPageNarration(pageButton, book.pages[activeEbookPage].text);
       if (!ebookWatchActive || ebookWatchToken !== token) return;
       if (!narrated) break;

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img">
+<style>
+@media (prefers-reduced-motion: no-preference) {
+  .anim-idle { animation: idle 3.8s ease-in-out infinite alternate; }
+  @keyframes idle { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+  .anim-tail { transform-box: fill-box; transform-origin: 100% 20%; animation: tail 2.6s ease-in-out infinite alternate; }
+  @keyframes tail { from { transform: rotate(-6deg); } to { transform: rotate(8deg); } }
+  .anim-blink { transform-box: fill-box; transform-origin: center; animation: blink 5.2s infinite; }
+  @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 95%, 97% { transform: scaleY(0.12); } }
+  .anim-glow { transform-box: fill-box; transform-origin: center; animation: glow 4.2s ease-in-out infinite alternate; }
+  @keyframes glow { from { transform: scale(1); opacity: 0.5; } to { transform: scale(1.08); opacity: 0.75; } }
+  .anim-shimmer { animation: shimmer 5s ease-in-out infinite alternate; }
+  @keyframes shimmer { from { opacity: 0.62; } to { opacity: 0.92; } }
+  .anim-grass { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 3.2s ease-in-out infinite alternate; }
+  .anim-canopy { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 5.6s ease-in-out infinite alternate; }
+  @keyframes sway { from { transform: rotate(-1.8deg); } to { transform: rotate(2.2deg); } }
+  .anim-rain { animation: rainfall 1.15s linear infinite; }
+  @keyframes rainfall { from { transform: translateY(-32px); opacity: 0.85; } 75% { opacity: 0.55; } to { transform: translateY(72px); opacity: 0; } }
+  .anim-ripple { transform-box: fill-box; transform-origin: center; animation: ripple 3.4s ease-in-out infinite alternate; }
+  @keyframes ripple { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.18); opacity: 0.55; } }
+  .anim-drip { animation: drip 1s ease-in infinite; }
+  @keyframes drip { from { transform: translateY(-12px); opacity: 0.95; } to { transform: translateY(28px); opacity: 0; } }
+  .anim-flow { stroke-dasharray: 26 20; animation: flow 0.8s linear infinite; }
+  @keyframes flow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -46; } }
+  .anim-splash { transform-box: fill-box; transform-origin: 50% 100%; animation: splashPulse 1.7s ease-in-out infinite alternate; }
+  @keyframes splashPulse { from { transform: scale(0.97); } to { transform: scale(1.05); } }
+  .anim-strain { transform-box: fill-box; transform-origin: center; animation: strain 0.9s ease-in-out infinite alternate; }
+  @keyframes strain { from { transform: translateX(-5px); } to { transform: translateX(4px); } }
+  .anim-float { transform-box: fill-box; transform-origin: center; animation: floaty 2.6s ease-in-out infinite alternate; }
+  @keyframes floaty { from { transform: translateY(0) scale(1); } to { transform: translateY(-12px) scale(1.08); } }
+  .anim-wave { animation: wave 2.4s ease-in-out infinite; opacity: 0; }
+  @keyframes wave { 0% { opacity: 0; } 30% { opacity: 0.9; } 60%, 100% { opacity: 0; } }
+  .anim-cloud { animation: cloudDrift 9s ease-in-out infinite alternate; }
+  @keyframes cloudDrift { from { transform: translateX(-18px); } to { transform: translateX(22px); } }
+  .tap-target { cursor: pointer; }
+  .tap-target.tap-play { transform-box: fill-box; transform-origin: 50% 85%; animation: tapWiggle 0.7s ease-in-out; }
+  .tap-target[data-tap="puddle"].tap-play { transform-origin: center; animation: tapSplash 0.85s ease-out; }
+  .tap-target[data-tap="sun"].tap-play { transform-origin: center; animation: tapPulse 0.6s ease-in-out; }
+  .tap-target[data-tap="tree"].tap-play { transform-origin: 50% 100%; animation: tapShake 0.7s ease-in-out; }
+  @keyframes tapWiggle { 0% { transform: rotate(0); } 25% { transform: rotate(-4deg) scale(1.03); } 55% { transform: rotate(3deg) scale(1.04); } 80% { transform: rotate(-1.5deg); } 100% { transform: rotate(0); } }
+  @keyframes tapSplash { 0% { transform: scale(1); } 40% { transform: scale(1.06, 0.94); } 70% { transform: scale(0.97, 1.03); } 100% { transform: scale(1); } }
+  @keyframes tapPulse { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+  @keyframes tapShake { 0% { transform: rotate(0); } 20% { transform: rotate(2.4deg); } 45% { transform: rotate(-2deg); } 70% { transform: rotate(1.2deg); } 100% { transform: rotate(0); } }
+  .tap-burst { opacity: 0; }
+  .tap-target.tap-play .tap-burst { opacity: 1; }
+  .tap-target.tap-play .tap-burst circle { animation: burstUp 0.6s ease-out forwards; }
+  @keyframes burstUp { from { transform: translateY(0); opacity: 0.95; } to { transform: translateY(-90px); opacity: 0; } }
+}
+</style>
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0f4"/><stop offset="1" stop-color="#eef8fd"/></linearGradient></defs>
+    <rect width="1600" height="1000" fill="url(#sky)"/><g class="tap-target" data-tap="sun"><circle class="anim-glow" cx="1350" cy="160" r="120" fill="#fdeebc" opacity="0.6"/><circle cx="1350" cy="160" r="78" fill="#f9d976"/></g><path d="M 0 560 q 260 -110 520 -30 q 300 90 620 -20 q 240 -76 460 10 L 1600 640 L 0 640 Z" fill="#a9c4dd" opacity="0.55"/><rect x="0" y="590" width="1600" height="410" fill="#e7cd7f"/>
+    <path d="M 0 720 q 400 -50 800 0 q 400 50 800 0 L 1600 1000 L 0 1000 Z" fill="#d9b45f"/>
+    <g class="anim-grass" style="animation-delay:1.00s"><path d="M 120 780 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:0.50s"><path d="M 380 860 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:2.50s"><path d="M 660 780 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:1.50s"><path d="M 940 820 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:0.00s"><path d="M 1240 820 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g class="anim-grass" style="animation-delay:0.00s"><path d="M 1480 820 q 6 -34 14 -40 q 2 24 10 38 q 10 -18 18 -22 q -2 22 -8 34 z" fill="#c39c48" opacity="0.8"/></g><g transform="translate(1050 600) scale(1.5)">
+    <g class="tap-target" data-tap="tree">
+    <path d="M -8 0 q -4 -70 -30 -110 M 6 0 q 8 -76 40 -116 M 0 -60 q -20 -30 -52 -44 M 2 -66 q 26 -26 58 -36" stroke="#8a6242" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <g class="anim-canopy" style="animation-delay:1.00s">
+      <ellipse cx="-46" cy="-124" rx="86" ry="30" fill="#6c8b4a"/>
+      <ellipse cx="30" cy="-142" rx="110" ry="34" fill="#7fa05a"/>
+    </g>
+    </g>
+  </g>
+   <g transform="translate(1120 420) scale(0.85)">
+    <g class="">
+      <g class="tap-target" data-tap="kite">
+      <path d="M 0 -70 L 44 0 L 0 70 L -44 0 Z" fill="#d94f43" stroke="#2b2b33" stroke-width="4"/>
+      <path d="M 0 -70 V 70 M -44 0 H 44" stroke="#a53a30" stroke-width="3.4"/>
+      <path d="M 0 70 q 14 24 2 44 q -14 18 -2 40" stroke="#a53a30" stroke-width="4" fill="none"/>
+      <path d="M -8 108 l 16 -8 M -4 148 l 16 -8" stroke="#f4c95d" stroke-width="7" stroke-linecap="round"/>
+      </g>
+    </g>
+    
+  </g>
+   <g transform="translate(550 810) scale(1.15 1.15)">
+    <ellipse cx="0" cy="58" rx="34" ry="8" fill="#2b2b33" opacity="0.10"/>
+    <g class="tap-target" data-tap="kiki" data-mood="sad">
+    <g class="anim-idle" style="animation-delay:0.27s">
+    <g class="anim-tail" style="animation-delay:0.27s">
+    <path d="M -24 26 q -38 6 -42 -26 q 0 -12 10 -9 q 2 22 30 25 z" fill="#8f9a86" stroke="#2b2b33" stroke-width="3.4"/>
+  </g>
+    <ellipse cx="0" cy="18" rx="28" ry="32" fill="#8f9a86" stroke="#2b2b33" stroke-width="3.8"/>
+    <ellipse cx="2" cy="26" rx="15" ry="18" fill="#e8dcc8"/>
+    <g transform="translate(-18 -6) rotate(20)"><rect x="-5" y="0" width="10" height="40" rx="5" fill="#8f9a86" stroke="#2b2b33" stroke-width="3"/><circle cx="0" cy="42" r="7" fill="#e8dcc8" stroke="#2b2b33" stroke-width="2.6"/></g><g transform="translate(18 -6) rotate(-20)"><rect x="-5" y="0" width="10" height="40" rx="5" fill="#8f9a86" stroke="#2b2b33" stroke-width="3"/><circle cx="0" cy="42" r="7" fill="#e8dcc8" stroke="#2b2b33" stroke-width="2.6"/></g>
+    <g transform="translate(-11 44)"><rect x="-5" y="0" width="10" height="20" rx="5" fill="#8f9a86" stroke="#2b2b33" stroke-width="3"/></g>
+    <g transform="translate(12 44)"><rect x="-5" y="0" width="10" height="20" rx="5" fill="#8f9a86" stroke="#2b2b33" stroke-width="3"/></g>
+    <g transform="translate(0 -22)">
+      <circle cx="0" cy="0" r="24" fill="#8f9a86" stroke="#2b2b33" stroke-width="3.8"/>
+      <path d="M -24 -8 q -10 -4 -12 4 q 4 8 14 4 z M 24 -8 q 10 -4 12 4 q -4 8 -14 4 z" fill="#e8dcc8" stroke="#2b2b33" stroke-width="2.6"/>
+      <ellipse cx="1" cy="7" rx="16" ry="14" fill="#e8dcc8"/>
+      <circle cx="-21" cy="-4" r="8" fill="#8f9a86" stroke="#2b2b33" stroke-width="3"/>
+      <circle cx="21" cy="-4" r="8" fill="#8f9a86" stroke="#2b2b33" stroke-width="3"/>
+      <path d="M -8 -22 q -2 -12 6 -14 q 8 0 6 12 M 4 -23 q 4 -10 10 -8 q 6 4 0 12" fill="#8f9a86" stroke="#2b2b33" stroke-width="2.6"/>
+      <g transform="translate(1 -1)"><g class="anim-blink"><circle cx="0" cy="0" r="6.4799999999999995" fill="#6b4a2f"/><circle cx="1.7999999999999998" cy="-2.16" r="2.16" fill="#fff"/></g><path d="M -10.08 -10.08 q 7.199999999999999 -4.32 14.399999999999999 -1.44" stroke="#2b2b33" stroke-width="2.16" fill="none" stroke-linecap="round"/></g>
+      <g transform="translate(1 9)"><path d="M -6 3.5999999999999996 q 6 -4.8 12 0" stroke="#2b2b33" stroke-width="1.7999999999999998" fill="none" stroke-linecap="round"/></g>
+    </g>
+    </g>
+    </g>
+  </g>
+   <g transform="translate(850 770) scale(0.6 0.6)">
+    <ellipse cx="0" cy="86" rx="78" ry="12" fill="#2b2b33" opacity="0.10"/>
+    <g class="tap-target" data-tap="elephant" data-mood="sad">
+    <g class="anim-idle" style="animation-delay:0.00s">
+    
+    <g transform="translate(-42 28) rotate(0)"><rect x="-13" y="0" width="26" height="56" rx="12" fill="#8e99a5" stroke="#2b2b33" stroke-width="4"/></g>
+    <g transform="translate(34 28) rotate(0)"><rect x="-13" y="0" width="26" height="56" rx="12" fill="#aab4be" stroke="#2b2b33" stroke-width="4"/></g>
+    <ellipse cx="-6" cy="-2" rx="80" ry="56" fill="#aab4be" stroke="#2b2b33" stroke-width="5"/>
+    
+    <g class="anim-tail" style="animation-delay:0.00s">
+    <path d="M -80 0 q -14 4 -12 18 l 8 2 q 6 -10 12 -12 z" fill="#aab4be" stroke="#2b2b33" stroke-width="4"/>
+  </g>
+    <g transform="translate(44 -40)">
+      <path d="M -26 -6 q -34 -22 -30 6 q 4 26 28 22 z" fill="#8e99a5" stroke="#2b2b33" stroke-width="4"/>
+      <path d="M -40 -2 q -14 -10 -12 4 q 2 12 14 10 z" fill="#cfb6b6"/>
+      <ellipse cx="8" cy="0" rx="42" ry="34" fill="#aab4be" stroke="#2b2b33" stroke-width="5"/>
+      <g transform="translate(6 -6)"><g class="anim-blink"><circle cx="0" cy="0" r="9" fill="#6b4a2f"/><circle cx="2.5" cy="-3" r="3" fill="#fff"/></g><path d="M -14 -14 q 10 -6 20 -2" stroke="#2b2b33" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+      <g transform="translate(16 16)"><path d="M -8 4.800000000000001 q 8 -6.4 16 0" stroke="#2b2b33" stroke-width="2.4000000000000004" fill="none" stroke-linecap="round"/></g>
+    </g>
+    <path d="M 74 -26 q 34 12 30 56 q -2 12 -14 8 q 0 -34 -24 -44 z" fill="#aab4be" stroke="#2b2b33" stroke-width="4.5"/>
+    </g>
+    </g>
+  </g>
+</svg>

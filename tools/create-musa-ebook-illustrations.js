@@ -173,7 +173,7 @@ function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", mudd
   </g>`;
 }
 
-function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose = "stand" }) {
+function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose = "stand", glasses = false }) {
   const neck = bend
     ? `<path d="M 40 -30 q 60 -10 96 44 l 26 -6 q -22 -74 -104 -74 z" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>`
     : `<path d="M 40 -30 q 24 -90 56 -128 l 30 10 q -14 84 -52 130 z" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>`;
@@ -206,6 +206,7 @@ function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose
       <circle cx="16" cy="-46" r="6" fill="${C.giraffePatch}" stroke="${C.ink}" stroke-width="3"/>
       <path d="M -28 -14 l -14 -8 q -2 10 8 14 z" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="3.4"/>
       <g transform="translate(4 -4)">${face(mood, 0.9)}</g>
+      ${glasses ? `<g fill="none" stroke="${C.ink}" stroke-width="3.4"><circle cx="4" cy="-5" r="13"/><circle cx="26" cy="-1" r="11"/><path d="M 16 -7 q 3 2 4 5"/></g>` : ""}
     </g>
     </g>
     </g>
@@ -274,8 +275,12 @@ function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", fa
   </g>`;
 }
 
-function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leaves = false }) {
-  const arm = (ax, rot) => `<g transform="translate(${ax} -14) rotate(${rot})"><rect x="-6" y="0" width="12" height="52" rx="6" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/><circle cx="0" cy="54" r="8" fill="${C.monkeyFace}" stroke="${C.ink}" stroke-width="3"/></g>`;
+function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leaves = false, flower = false, shade = null }) {
+  const bodyFill = shade || C.monkey;
+  const arm = (ax, rot) => `<g transform="translate(${ax} -14) rotate(${rot})"><rect x="-6" y="0" width="12" height="52" rx="6" fill="${bodyFill}" stroke="${C.ink}" stroke-width="3.4"/><circle cx="0" cy="54" r="8" fill="${C.monkeyFace}" stroke="${C.ink}" stroke-width="3"/></g>`;
+  const flowerMark = flower
+    ? `<g transform="translate(-20 -52)">${[0, 72, 144, 216, 288].map((a) => `<ellipse cx="0" cy="-8" rx="5" ry="8" fill="#e78fb3" transform="rotate(${a})"/>`).join("")}<circle cx="0" cy="0" r="5" fill="${C.sun}"/></g>`
+    : "";
   const up = arms === "up";
   const leafFan = leaves
     ? `<g transform="translate(${up ? -52 : -44} ${up ? -66 : 40})"><g class="anim-splash">
@@ -285,26 +290,63 @@ function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leav
       </g></g>`
     : "";
   const tail = `<g class="anim-tail" style="${delayAt(x, y, 1.8)}">
-    <path d="M -30 30 q -44 4 -48 -34 q 0 -14 12 -10 q 2 26 34 30 z" fill="${C.monkey}" stroke="${C.ink}" stroke-width="4"/>
+    <path d="M -30 30 q -44 4 -48 -34 q 0 -14 12 -10 q 2 26 34 30 z" fill="${bodyFill}" stroke="${C.ink}" stroke-width="4"/>
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="66" rx="42" ry="9" fill="${C.ink}" opacity="0.10"/>
     <g class="tap-target" data-tap="monkey" data-mood="${mood}">
     <g class="anim-idle" style="${delayAt(x, y, 1.8)}">
     ${tail}
-    <ellipse cx="0" cy="16" rx="38" ry="42" fill="${C.monkey}" stroke="${C.ink}" stroke-width="4.5"/>
+    <ellipse cx="0" cy="16" rx="38" ry="42" fill="${bodyFill}" stroke="${C.ink}" stroke-width="4.5"/>
     <ellipse cx="4" cy="26" rx="20" ry="24" fill="${C.monkeyFace}"/>
     ${arm(-24, up ? 150 : 24)}${arm(24, up ? -150 : -24)}
     ${leafFan}
-    <g transform="translate(-14 52)"><rect x="-6" y="0" width="12" height="24" rx="6" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/></g>
-    <g transform="translate(16 52)"><rect x="-6" y="0" width="12" height="24" rx="6" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/></g>
+    <g transform="translate(-14 52)"><rect x="-6" y="0" width="12" height="24" rx="6" fill="${bodyFill}" stroke="${C.ink}" stroke-width="3.4"/></g>
+    <g transform="translate(16 52)"><rect x="-6" y="0" width="12" height="24" rx="6" fill="${bodyFill}" stroke="${C.ink}" stroke-width="3.4"/></g>
     <g transform="translate(0 -30)">
-      <circle cx="0" cy="0" r="26" fill="${C.monkey}" stroke="${C.ink}" stroke-width="4.5"/>
+      <circle cx="0" cy="0" r="26" fill="${bodyFill}" stroke="${C.ink}" stroke-width="4.5"/>
       <ellipse cx="2" cy="6" rx="17" ry="15" fill="${C.monkeyFace}"/>
-      <circle cx="-24" cy="-4" r="9" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/>
-      <circle cx="24" cy="-4" r="9" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/>
+      <circle cx="-24" cy="-4" r="9" fill="${bodyFill}" stroke="${C.ink}" stroke-width="3.4"/>
+      <circle cx="24" cy="-4" r="9" fill="${bodyFill}" stroke="${C.ink}" stroke-width="3.4"/>
       <g transform="translate(2 0)">${face(mood, 0.75)}</g>
       <g transform="translate(2 8)">${mouth(mood, 0.6)}</g>
+      ${flowerMark}
+    </g>
+    </g>
+    </g>
+  </g>`;
+}
+
+// Kiki: a young vervet monkey (Musa's monkey friend is her uncle). Rounder
+// head, cheek tufts, and an optional little red school backpack.
+function kiki({ x, y, s = 1, flip = false, mood = "happy", arms = "down", backpack = false }) {
+  const up = arms === "up";
+  const arm = (ax, rot) => `<g transform="translate(${ax} -6) rotate(${rot})"><rect x="-5" y="0" width="10" height="40" rx="5" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3"/><circle cx="0" cy="42" r="7" fill="${C.monkeyFace}" stroke="${C.ink}" stroke-width="2.6"/></g>`;
+  const pack = backpack
+    ? `<g><rect x="-52" y="-26" width="30" height="42" rx="10" fill="#d94f43" stroke="${C.ink}" stroke-width="3.4"/><rect x="-47" y="-18" width="20" height="14" rx="5" fill="#f4c95d" stroke="${C.ink}" stroke-width="2.6"/><path d="M -24 -20 q 14 -4 22 4 M -24 2 q 14 -2 22 6" stroke="#a53a30" stroke-width="5" fill="none"/></g>`
+    : "";
+  const tail = `<g class="anim-tail" style="${delayAt(x, y, 1.6)}">
+    <path d="M -24 26 q -38 6 -42 -26 q 0 -12 10 -9 q 2 22 30 25 z" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.4"/>
+  </g>`;
+  return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
+    <ellipse cx="0" cy="58" rx="34" ry="8" fill="${C.ink}" opacity="0.10"/>
+    <g class="tap-target" data-tap="kiki" data-mood="${mood}">
+    <g class="anim-idle" style="${delayAt(x, y, 1.6)}">
+    ${tail}${pack}
+    <ellipse cx="0" cy="18" rx="28" ry="32" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.8"/>
+    <ellipse cx="2" cy="26" rx="15" ry="18" fill="${C.monkeyFace}"/>
+    ${arm(-18, up ? 150 : 20)}${arm(18, up ? -150 : -20)}
+    <g transform="translate(-11 44)"><rect x="-5" y="0" width="10" height="20" rx="5" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3"/></g>
+    <g transform="translate(12 44)"><rect x="-5" y="0" width="10" height="20" rx="5" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3"/></g>
+    <g transform="translate(0 -22)">
+      <circle cx="0" cy="0" r="24" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3.8"/>
+      <path d="M -24 -8 q -10 -4 -12 4 q 4 8 14 4 z M 24 -8 q 10 -4 12 4 q -4 8 -14 4 z" fill="${C.monkeyFace}" stroke="${C.ink}" stroke-width="2.6"/>
+      <ellipse cx="1" cy="7" rx="16" ry="14" fill="${C.monkeyFace}"/>
+      <circle cx="-21" cy="-4" r="8" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3"/>
+      <circle cx="21" cy="-4" r="8" fill="${C.monkey}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M -8 -22 q -2 -12 6 -14 q 8 0 6 12 M 4 -23 q 4 -10 10 -8 q 6 4 0 12" fill="${C.monkey}" stroke="${C.ink}" stroke-width="2.6"/>
+      <g transform="translate(1 -1)">${face(mood, 0.72)}</g>
+      <g transform="translate(1 9)">${mouth(mood, 0.6)}</g>
     </g>
     </g>
     </g>
@@ -370,6 +412,126 @@ function fallenBranch(x, y, s = 1) {
     <path d="M -130 10 q 90 -26 260 -6" stroke="${C.acaciaTrunk}" stroke-width="26" fill="none" stroke-linecap="round"/>
     <path d="M -40 -2 l -26 -38 M 60 -6 l 20 -40 M -100 4 l -18 -28" stroke="${C.acaciaTrunk}" stroke-width="12" fill="none" stroke-linecap="round"/>
     <ellipse cx="-14" cy="34" rx="150" ry="14" fill="${C.ink}" opacity="0.08"/>
+  </g>`;
+}
+
+// Night version of the standard scene: deep-blue sky, glowing moon, stars.
+function nightScene() {
+  let stars = "";
+  for (let i = 0; i < 16; i += 1) {
+    const sx = (i * 197 + 60) % W;
+    const sy = 40 + ((i * 131) % 420);
+    stars += `<circle class="anim-glow" style="animation-delay:${((i % 5) / 2).toFixed(1)}s" cx="${sx}" cy="${sy}" r="${3 + (i % 3)}" fill="#f6f0d8" opacity="0.9"/>`;
+  }
+  return `<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#27395c"/><stop offset="1" stop-color="#51678f"/></linearGradient></defs>
+    <rect width="${W}" height="${H}" fill="url(#sky)"/>
+    ${stars}
+    <g class="tap-target" data-tap="moon"><circle cx="1320" cy="170" r="95" fill="#fdeebc" opacity="0.35"/><circle cx="1320" cy="170" r="66" fill="#f6ecc4"/><circle cx="1298" cy="152" r="12" fill="#e8dca8"/><circle cx="1338" cy="188" r="8" fill="#e8dca8"/></g>
+    ${hills()}${ground()}
+    <rect x="0" y="590" width="${W}" height="${H - 590}" fill="#1d2b4a" opacity="0.30"/>`;
+}
+
+// The tree school: a big shade acacia with a chalkboard, benches and a bell.
+function chalkboard(x, y, s = 1, content = "shapes") {
+  const doodle = content === "dots"
+    ? `<circle cx="-42" cy="-58" r="9" fill="#f6f0d8"/><circle cx="0" cy="-58" r="9" fill="#f6f0d8"/><circle cx="42" cy="-58" r="9" fill="#f6f0d8"/>`
+    : `<circle cx="-40" cy="-62" r="14" fill="none" stroke="#f6f0d8" stroke-width="4"/><path d="M 20 -76 l 8 16 l 18 2 l -13 12 l 3 18 l -16 -9 l -16 9 l 3 -18 l -13 -12 l 18 -2 z" fill="none" stroke="#f6f0d8" stroke-width="4"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -70 0 l 22 -110 M 70 0 l -22 -110" stroke="${C.acaciaTrunk}" stroke-width="10" stroke-linecap="round"/>
+    <rect x="-84" y="-140" width="168" height="104" rx="8" fill="#3d5245" stroke="${C.acaciaTrunk}" stroke-width="8"/>
+    ${doodle}
+  </g>`;
+}
+
+function bench(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-90" y="-14" width="180" height="16" rx="7" fill="#b08758" stroke="${C.ink}" stroke-width="3.4"/>
+    <rect x="-74" y="2" width="12" height="34" fill="#8a6242"/>
+    <rect x="62" y="2" width="12" height="34" fill="#8a6242"/>
+  </g>`;
+}
+
+function schoolBell(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-6" y="-150" width="12" height="150" rx="6" fill="${C.acaciaTrunk}"/>
+    <path d="M -6 -150 q 40 -10 60 8" stroke="${C.acaciaTrunk}" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <g class="tap-target" data-tap="bell"><g class="anim-tail" style="animation-duration:1.8s">
+      <path d="M 54 -138 q -26 4 -26 34 q 0 14 26 14 q 26 0 26 -14 q 0 -30 -26 -34 z" fill="${C.sun}" stroke="${C.ink}" stroke-width="4"/>
+      <circle cx="54" cy="-84" r="7" fill="${C.ink}"/>
+    </g></g>
+  </g>`;
+}
+
+// The monkey family home: a stout baobab with a round door and window.
+function baobabHome(x, y, s = 1, { lit = false } = {}) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -110 0 q -18 -150 -40 -190 q 60 -34 150 -34 q 90 0 150 34 q -22 40 -40 190 z" transform="scale(0.9 1) translate(-10 0)" fill="#9c7550" stroke="${C.ink}" stroke-width="6"/>
+    <path d="M -150 -200 q -50 -40 -60 -90 M -90 -214 q -10 -60 -40 -90 M 0 -220 q 0 -60 -6 -96 M 90 -214 q 16 -56 44 -86 M 150 -200 q 46 -44 56 -88" stroke="#8a6242" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <ellipse cx="-120" cy="-300" rx="90" ry="34" fill="${C.acaciaLeafDark}"/>
+    <ellipse cx="20" cy="-330" rx="120" ry="40" fill="${C.acaciaLeaf}"/>
+    <ellipse cx="150" cy="-296" rx="80" ry="30" fill="${C.acaciaLeafDark}"/>
+    <path d="M -34 0 q 0 -76 34 -76 q 34 0 34 76 z" fill="${lit ? "#f4c95d" : "#5f4630"}" stroke="${C.ink}" stroke-width="5"/>
+    <circle cx="70" cy="-120" r="26" fill="${lit ? "#f4c95d" : "#7d5b3e"}" stroke="${C.ink}" stroke-width="5"/>
+    <path d="M 58 -120 h 24 M 70 -132 v 24" stroke="${C.ink}" stroke-width="3.4"/>
+  </g>`;
+}
+
+function swing(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -120 -190 q 120 -40 240 0" stroke="${C.acaciaTrunk}" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <g class="anim-tail" style="animation-duration:2.8s">
+      <path d="M -34 -182 l 6 128 M 40 -184 l -4 130" stroke="#c9b699" stroke-width="6"/>
+      <rect x="-42" y="-56" width="88" height="14" rx="7" fill="#b08758" stroke="${C.ink}" stroke-width="3.4"/>
+    </g>
+  </g>`;
+}
+
+function kite(x, y, s = 1, { stuck = false } = {}) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <g class="${stuck ? "" : "anim-float"}">
+      <g class="tap-target" data-tap="kite">
+      <path d="M 0 -70 L 44 0 L 0 70 L -44 0 Z" fill="#d94f43" stroke="${C.ink}" stroke-width="4"/>
+      <path d="M 0 -70 V 70 M -44 0 H 44" stroke="#a53a30" stroke-width="3.4"/>
+      <path d="M 0 70 q 14 24 2 44 q -14 18 -2 40" stroke="#a53a30" stroke-width="4" fill="none"/>
+      <path d="M -8 108 l 16 -8 M -4 148 l 16 -8" stroke="#f4c95d" stroke-width="7" stroke-linecap="round"/>
+      </g>
+    </g>
+    ${stuck ? "" : `<path d="M 0 74 q -60 130 -170 210" stroke="#8f8f96" stroke-width="3.4" fill="none"/>`}
+  </g>`;
+}
+
+function playBall(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="tap-target" data-tap="ball"><g class="anim-idle" style="animation-duration:1.4s">
+    <circle cx="0" cy="0" r="42" fill="#f4efe4" stroke="${C.ink}" stroke-width="4.5"/>
+    <path d="M 0 -42 q 20 20 0 42 q -20 22 0 42 M -42 0 q 22 -18 42 0 q 20 18 42 0" stroke="#e76f51" stroke-width="6" fill="none"/>
+    <circle cx="0" cy="0" r="13" fill="#7fa8d9" stroke="${C.ink}" stroke-width="3.4"/>
+  </g></g></g>`;
+}
+
+function cookpot(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <ellipse cx="-30" cy="26" rx="16" ry="10" fill="#8f8f96"/><ellipse cx="30" cy="26" rx="16" ry="10" fill="#8f8f96"/><ellipse cx="0" cy="32" rx="16" ry="10" fill="#a5a5ac"/>
+    <path d="M -20 16 q 20 -18 40 0 M -6 20 l 6 -14 l 6 14" stroke="#e08a3c" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M -52 -6 q 0 -30 52 -30 q 52 0 52 30 q 0 26 -52 26 q -52 0 -52 -26 z" fill="#4a4a52" stroke="${C.ink}" stroke-width="4.5"/>
+    <path d="M -52 -10 h 104" stroke="${C.ink}" stroke-width="3.4"/>
+    <g class="anim-wave" style="animation-delay:0s"><path d="M -16 -44 q -8 -16 4 -30" stroke="#dfe6ea" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+    <g class="anim-wave" style="animation-delay:0.8s"><path d="M 14 -44 q 10 -18 -2 -34" stroke="#dfe6ea" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+  </g>`;
+}
+
+function mango(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M 0 -14 q 22 -4 26 16 q 2 22 -22 24 q -26 0 -26 -22 q 0 -16 22 -18 z" fill="#f2a541" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M 2 -14 q 4 -10 12 -12" stroke="#5c7d43" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>`;
+}
+
+function thoughtBubble(x, y, s = 1, inner = "") {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <circle cx="-120" cy="120" r="12" fill="#ffffff" opacity="0.9"/>
+    <circle cx="-88" cy="86" r="20" fill="#ffffff" opacity="0.92"/>
+    <ellipse cx="30" cy="-10" rx="170" ry="110" fill="#ffffff" opacity="0.95" stroke="#cbd7df" stroke-width="4"/>
+    ${inner}
   </g>`;
 }
 
@@ -706,12 +868,258 @@ const bigRacePages = [
    ${monkey({ x: 850, y: 780, s: 0.85, arms: "up" })}`,
 ];
 
+// ---------------------------------------------------------------- Kiki series (Term 1)
+// Book 1: Kiki Goes to School
+
+const kikiSchoolPages = [
+  // 1 cover: the tree school
+  `${basicScene()}${acacia(1150, 600, 1.35)}
+   ${chalkboard(1130, 830, 1)}${schoolBell(360, 840, 1)}
+   ${giraffe({ x: 620, y: 630, s: 0.9, glasses: true })}
+   ${elephant({ x: 1420, y: 760, s: 0.6 })}
+   ${ostrich({ x: 880, y: 740, s: 0.55 })}
+   ${kiki({ x: 470, y: 800, s: 1.25, backpack: true, arms: "up" })}`,
+
+  // 2 first day: leaving home with the new red bag
+  `${basicScene()}${baobabHome(320, 900, 0.9)}
+   ${monkey({ x: 210, y: 760, s: 0.95, flower: true, arms: "up" })}
+   ${monkey({ x: 420, y: 750, s: 1.1, shade: "#77836f", arms: "up" })}
+   ${kiki({ x: 900, y: 800, s: 1.2, backpack: true })}
+   ${tallGrass(1360, 930, 1.3)}`,
+
+  // 3 Musa cameo on the path
+  `${basicScene()}${acacia(1420, 630, 0.95)}
+   ${zebra({ x: 1000, y: 690, s: 1.05 })}
+   ${kiki({ x: 480, y: 800, s: 1.2, backpack: true, flip: true, arms: "up" })}`,
+
+  // 4 the school looks big; Kiki feels shy
+  `${basicScene()}${acacia(1050, 590, 1.5)}
+   ${chalkboard(1040, 840, 1.1)}${schoolBell(1420, 840, 1)}${bench(760, 900, 1)}
+   ${kiki({ x: 280, y: 810, s: 1.15, backpack: true, mood: "sad" })}`,
+
+  // 5 Miss Twiga says welcome
+  `${basicScene()}${acacia(240, 630, 1)}
+   ${giraffe({ x: 850, y: 620, s: 1.05, glasses: true, bend: true })}
+   ${kiki({ x: 1250, y: 800, s: 1.2, backpack: true, arms: "up" })}`,
+
+  // 6 sitting next to the little elephant
+  `${basicScene()}${acacia(1400, 620, 1.1)}${chalkboard(1380, 850, 0.9)}
+   ${elephant({ x: 900, y: 720, s: 0.8 })}
+   ${kiki({ x: 560, y: 790, s: 1.15 })}
+   ${bench(720, 900, 1.5)}`,
+
+  // 7 learning hello
+  `${basicScene()}${chalkboard(400, 800, 1.3)}
+   ${giraffe({ x: 800, y: 620, s: 0.85, glasses: true })}
+   ${kiki({ x: 1100, y: 800, s: 1.1, arms: "up" })}
+   ${elephant({ x: 1380, y: 760, s: 0.62, trunkUp: true })}`,
+
+  // 8 counting one two three
+  `${basicScene()}${chalkboard(400, 800, 1.3, "dots")}
+   ${giraffe({ x: 800, y: 620, s: 0.85, glasses: true })}
+   ${kiki({ x: 1080, y: 800, s: 1.1, arms: "up" })}
+   ${ostrich({ x: 1360, y: 740, s: 0.6 })}`,
+
+  // 9 sharing the mango
+  `${basicScene()}${acacia(220, 630, 1)}
+   ${kiki({ x: 660, y: 800, s: 1.15 })}
+   ${elephant({ x: 1020, y: 740, s: 0.75, trunkUp: true })}
+   ${mango(830, 830, 1.4)}${mango(880, 850, 1.1)}`,
+
+  // 10 a new friend
+  `${basicScene()}${acacia(1420, 630, 0.95)}${tallGrass(200, 920, 1.3)}
+   ${kiki({ x: 620, y: 800, s: 1.15, arms: "up" })}
+   ${ostrich({ x: 950, y: 720, s: 0.72, pose: "run" })}`,
+
+  // 11 the bell rings
+  `${basicScene()}${schoolBell(800, 840, 1.4)}${acacia(1350, 630, 1)}
+   ${giraffe({ x: 320, y: 630, s: 0.85, glasses: true })}
+   ${kiki({ x: 1080, y: 800, s: 1.15, backpack: true, arms: "up" })}
+   ${elephant({ x: 1370, y: 770, s: 0.6 })}`,
+
+  // 12 telling the family at night
+  `${nightScene()}${baobabHome(1150, 900, 1, { lit: true })}
+   ${monkey({ x: 420, y: 760, s: 0.95, flower: true })}
+   ${monkey({ x: 640, y: 750, s: 1.1, shade: "#77836f" })}
+   ${kiki({ x: 850, y: 800, s: 1.2, arms: "up" })}
+   ${kiki({ x: 260, y: 830, s: 0.62 })}`,
+];
+
+// Book 2: Kiki's Family Day
+
+const kikiFamilyPages = [
+  // 1 cover: the family at the baobab
+  `${basicScene()}${baobabHome(1100, 900, 1.05)}
+   ${monkey({ x: 340, y: 750, s: 0.98, flower: true })}
+   ${monkey({ x: 560, y: 740, s: 1.15, shade: "#77836f" })}
+   ${kiki({ x: 760, y: 800, s: 1.2, arms: "up" })}
+   ${kiki({ x: 420, y: 840, s: 0.62 })}`,
+
+  // 2 the baobab home
+  `${basicScene()}${baobabHome(800, 910, 1.25)}${tallGrass(220, 930, 1.4)}${tallGrass(1400, 940, 1.3)}`,
+
+  // 3 Mama, Papa and little Nia
+  `${basicScene()}${baobabHome(240, 890, 0.8)}
+   ${monkey({ x: 620, y: 750, s: 1, flower: true })}
+   ${monkey({ x: 900, y: 740, s: 1.18, shade: "#77836f" })}
+   ${kiki({ x: 1160, y: 830, s: 0.62 })}
+   ${kiki({ x: 1360, y: 790, s: 1.15, arms: "up" })}`,
+
+  // 4 helping Mama cook
+  `${basicScene()}${baobabHome(1350, 890, 0.8)}
+   ${cookpot(780, 870, 1.3)}
+   ${monkey({ x: 480, y: 750, s: 1, flower: true })}
+   ${kiki({ x: 1050, y: 810, s: 1.15, arms: "up" })}`,
+
+  // 5 helping Papa with mangoes
+  `${basicScene()}${acacia(1150, 620, 1.3)}
+   ${mango(1050, 470, 1)}${mango(1180, 440, 1)}${mango(1280, 490, 1)}
+   ${monkey({ x: 880, y: 740, s: 1.18, shade: "#77836f", arms: "up" })}
+   ${kiki({ x: 480, y: 810, s: 1.15 })}
+   ${mango(560, 860, 1.2)}${mango(610, 880, 1)}`,
+
+  // 6 Nia drops her banana
+  `${basicScene()}${baobabHome(280, 890, 0.85)}
+   ${kiki({ x: 850, y: 830, s: 0.72, mood: "sad" })}
+   <path d="M 940 900 q 30 -26 64 -10 q -8 26 -40 26 q -18 0 -24 -16 z" fill="#f4d35e" stroke="${C.ink}" stroke-width="3.4"/>
+   ${kiki({ x: 1250, y: 790, s: 1.15, mood: "surprised", flip: true })}`,
+
+  // 7 Kiki shares hers (series kindness motif)
+  `${basicScene()}${acacia(1420, 630, 0.95)}
+   ${kiki({ x: 700, y: 800, s: 1.15, arms: "up" })}
+   ${kiki({ x: 1000, y: 840, s: 0.72 })}
+   <path d="M 850 760 q 30 -26 64 -10 q -8 26 -40 26 q -18 0 -24 -16 z" fill="#f4d35e" stroke="${C.ink}" stroke-width="3.4"/>
+   <g class="anim-float" fill="#e76f51" opacity="0.9"><path d="M 860 520 c -8 -14 -28 -9 -28 5 c 0 12 15 20 28 29 c 13 -9 28 -17 28 -29 c 0 -14 -20 -19 -28 -5 z"/></g>`,
+
+  // 8 dinner together
+  `${basicScene()}${baobabHome(1350, 890, 0.8)}
+   ${cookpot(800, 880, 1.2)}
+   ${monkey({ x: 430, y: 760, s: 0.95, flower: true })}
+   ${monkey({ x: 620, y: 750, s: 1.12, shade: "#77836f" })}
+   ${kiki({ x: 1010, y: 810, s: 1.1 })}
+   ${kiki({ x: 1160, y: 850, s: 0.6 })}
+   ${mango(900, 920, 1.1)}${mango(700, 940, 1)}`,
+
+  // 9 Papa's story about a brave zebra
+  `${nightScene()}${baobabHome(280, 890, 0.85, { lit: true })}
+   ${monkey({ x: 640, y: 760, s: 1.15, shade: "#77836f", arms: "up" })}
+   ${kiki({ x: 900, y: 820, s: 1.1 })}
+   ${kiki({ x: 1040, y: 850, s: 0.6 })}
+   ${thoughtBubble(1180, 380, 1, zebra({ x: 30, y: 30, s: 0.34, pose: "run" }))}`,
+
+  // 10 Mama's soft song
+  `${nightScene()}${baobabHome(1280, 890, 0.85, { lit: true })}
+   ${monkey({ x: 620, y: 750, s: 1, flower: true })}
+   ${kiki({ x: 900, y: 830, s: 1.1 })}
+   ${kiki({ x: 1030, y: 860, s: 0.6 })}
+   <g fill="#f6f0d8"><g class="anim-float" style="animation-delay:0s"><circle cx="700" cy="520" r="9"/><rect x="706" y="470" width="5" height="52" rx="2.5"/></g><g class="anim-float" style="animation-delay:0.9s"><circle cx="790" cy="470" r="9"/><rect x="796" y="420" width="5" height="52" rx="2.5"/></g></g>`,
+
+  // 11 goodnight hugs
+  `${nightScene()}${baobabHome(1200, 900, 1, { lit: true })}
+   ${monkey({ x: 480, y: 760, s: 0.98, flower: true, arms: "up" })}
+   ${monkey({ x: 700, y: 750, s: 1.15, shade: "#77836f", arms: "up" })}
+   ${kiki({ x: 590, y: 820, s: 1.1, arms: "up" })}
+   ${kiki({ x: 820, y: 850, s: 0.6, arms: "up" })}`,
+
+  // 12 dreaming of a happy home
+  `${nightScene()}${baobabHome(800, 920, 1.2, { lit: false })}
+   ${kiki({ x: 1330, y: 840, s: 0.9 })}
+   ${tallGrass(220, 940, 1.3)}`,
+];
+
+// Book 3: Kiki and the Big Game
+
+const kikiGamePages = [
+  // 1 cover: the playground
+  `${basicScene()}${acacia(1150, 590, 1.4)}${swing(1150, 780, 1)}
+   ${kite(400, 300, 0.9)}
+   ${playBall(700, 880, 1)}
+   ${kiki({ x: 480, y: 800, s: 1.2, arms: "up" })}
+   ${elephant({ x: 900, y: 750, s: 0.62 })}
+   ${ostrich({ x: 1400, y: 750, s: 0.58 })}`,
+
+  // 2 play day at school
+  `${basicScene()}${chalkboard(320, 800, 1)}${schoolBell(1430, 840, 1)}
+   ${giraffe({ x: 650, y: 630, s: 0.85, glasses: true })}
+   ${kiki({ x: 950, y: 800, s: 1.15, arms: "up" })}
+   ${elephant({ x: 1200, y: 760, s: 0.6, trunkUp: true })}`,
+
+  // 3 playing ball
+  `${basicScene()}${acacia(220, 630, 1)}
+   ${playBall(800, 860, 1.2)}
+   ${kiki({ x: 520, y: 800, s: 1.15, arms: "up" })}
+   ${elephant({ x: 1080, y: 740, s: 0.72, trunkUp: true })}
+   ${ostrich({ x: 1350, y: 720, s: 0.62 })}`,
+
+  // 4 the ostrich runs fast
+  `${basicScene()}${acacia(1420, 630, 0.95)}${tallGrass(200, 920, 1.3)}
+   ${ostrich({ x: 900, y: 690, s: 0.95, pose: "run" })}
+   ${kiki({ x: 400, y: 800, s: 1.15, arms: "up" })}
+   <g stroke="#cbb27a" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 660 800 q -40 -12 -70 6"/></g>`,
+
+  // 5 high on the swing
+  `${basicScene()}${acacia(800, 570, 1.5)}${swing(800, 760, 1.3)}
+   ${kiki({ x: 800, y: 640, s: 1, arms: "up" })}
+   ${elephant({ x: 320, y: 760, s: 0.62 })}`,
+
+  // 6 flying the big red kite
+  `${basicScene()}${acacia(220, 630, 1)}
+   ${kite(1050, 320, 1.1)}
+   ${kiki({ x: 850, y: 800, s: 1.15, arms: "up" })}
+   ${elephant({ x: 1200, y: 760, s: 0.62, trunkUp: true })}`,
+
+  // 7 the wind takes the kite
+  `${basicScene()}
+   ${kite(1250, 240, 0.95)}
+   <g stroke="#9db4c6" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8"><path d="M 500 320 q 90 -40 180 0 q 90 40 180 0"/><path d="M 420 440 q 90 -40 180 0 q 90 40 180 0"/></g>
+   ${kiki({ x: 620, y: 800, s: 1.15, mood: "surprised", arms: "up" })}
+   ${elephant({ x: 950, y: 760, s: 0.62, mood: "surprised" })}`,
+
+  // 8 stuck in the tall tall tree
+  `${basicScene()}${acacia(1050, 600, 1.5)}
+   ${kite(1120, 420, 0.85, { stuck: true })}
+   ${kiki({ x: 550, y: 810, s: 1.15, mood: "sad" })}
+   ${elephant({ x: 850, y: 770, s: 0.6, mood: "sad" })}`,
+
+  // 9 Kiki has an idea
+  `${basicScene()}${acacia(1420, 630, 0.95)}
+   ${kiki({ x: 700, y: 800, s: 1.25, mood: "surprised", arms: "up" })}
+   ${elephant({ x: 1050, y: 760, s: 0.62 })}
+   ${ostrich({ x: 1300, y: 730, s: 0.58 })}`,
+
+  // 10 the tall friend reaches up up up
+  `${basicScene()}${acacia(1050, 600, 1.5)}
+   ${kite(1120, 420, 0.85, { stuck: true })}
+   ${giraffe({ x: 780, y: 620, s: 1.1 })}
+   ${kiki({ x: 420, y: 810, s: 1.1, arms: "up" })}`,
+
+  // 11 hooray - and Musa comes to play
+  `${basicScene()}${acacia(220, 630, 1)}
+   ${kite(600, 330, 0.9)}
+   ${giraffe({ x: 950, y: 620, s: 0.95 })}
+   ${zebra({ x: 1300, y: 700, s: 0.95 })}
+   ${kiki({ x: 550, y: 800, s: 1.15, arms: "up" })}
+   ${elephant({ x: 800, y: 770, s: 0.58, trunkUp: true })}`,
+
+  // 12 games are best with friends
+  `${basicScene()}${acacia(1400, 620, 1.1)}${swing(1400, 800, 0.9)}
+   ${kite(300, 280, 0.85)}
+   ${playBall(760, 880, 1)}
+   ${kiki({ x: 550, y: 800, s: 1.15, arms: "up" })}
+   ${zebra({ x: 1050, y: 700, s: 0.9 })}
+   ${elephant({ x: 1330, y: 760, s: 0.55, trunkUp: true })}
+   ${ostrich({ x: 900, y: 740, s: 0.55 })}`,
+];
+
 // ---------------------------------------------------------------- write files
 
 const books = {
   "muddy-stripes": { dir: "musas-muddy-stripes", pages: muddyStripesPages },
   "helps-a-friend": { dir: "musa-helps-a-friend", pages: helpsAFriendPages },
   "big-race": { dir: "musas-big-race", pages: bigRacePages },
+  "kiki-school": { dir: "kiki-goes-to-school", pages: kikiSchoolPages },
+  "kiki-family": { dir: "kikis-family-day", pages: kikiFamilyPages },
+  "kiki-game": { dir: "kiki-and-the-big-game", pages: kikiGamePages },
 };
 
 const selection = process.argv[2] && process.argv[2] !== "all" ? [process.argv[2]] : Object.keys(books);

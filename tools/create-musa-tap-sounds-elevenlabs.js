@@ -30,6 +30,14 @@ const SOUNDS = [
   { key: "puddle", seconds: 1.2, prompt: "One single playful water splash in a small puddle, cartoon style, bright, no background noise" },
   { key: "tree", seconds: 1.5, prompt: "One short gentle rustle of acacia tree leaves in a soft breeze, calm and natural" },
   { key: "sun", seconds: 1.3, prompt: "One short warm magical sparkle chime, gentle ascending glitter tones, happy children's storybook sound" },
+  { key: "kiki-happy", seconds: 1.4, prompt: "One short cheerful little monkey giggle squeak, small young monkey, bright and playful, child friendly, no background noise" },
+  { key: "kiki-sad", seconds: 1.6, prompt: "One short soft sad little monkey whimper squeak, small young monkey, gentle storybook sound, no background noise" },
+  { key: "kiki-surprised", seconds: 1.3, prompt: "One short surprised little monkey squeak gasp, small young monkey, cartoon style, child friendly" },
+  { key: "bell", seconds: 1.6, prompt: "One bright cheerful school hand bell ringing twice, ding ding, clear and happy, no background noise" },
+  { key: "ball", seconds: 1.2, prompt: "One playful rubber ball bounce, boing boing, cartoon style, child friendly, no background noise" },
+  { key: "wind", seconds: 1.7, prompt: "One short gentle gust of wind whoosh lifting a kite, soft and airy, child friendly" },
+  { key: "lullaby", seconds: 2.2, prompt: "A very short gentle humming lullaby phrase, warm motherly hum, soft and soothing, no words, no background noise" },
+  { key: "crickets", seconds: 2, prompt: "Gentle quiet night crickets chirping softly under the stars, calm and peaceful, no other sounds" },
 ];
 
 function loadDotEnv(filePath) {

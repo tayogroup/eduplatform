@@ -43,6 +43,7 @@ const ebookCatalog = [
     id: "smile-please",
     title: "Smile Please!",
     grades: [1],
+    units: [0],
     level: "Level 1",
     description: "Follow a young fawn as he races through the forest and discovers a reason to smile.",
     author: "Sanjiv Jaiswal 'Sanjay'",
@@ -69,6 +70,7 @@ const ebookCatalog = [
     id: "too-big-too-small",
     title: "Too Big! Too Small!",
     grades: [1],
+    units: [0],
     level: "Level 1",
     description: "Shanu wonders how she can be too big for some things and too small for others.",
     author: "Lavanya Karthik",
@@ -96,6 +98,7 @@ const ebookCatalog = [
     id: "musas-muddy-stripes",
     title: "Musa's Muddy Stripes",
     grades: [1],
+    units: [0],
     level: "Level 1",
     description: "Musa slips into a muddy puddle, and his savanna friends help his stripes shine again.",
     author: "Ehel Academy",
@@ -121,6 +124,7 @@ const ebookCatalog = [
     id: "musa-helps-a-friend",
     title: "Musa Helps a Friend",
     grades: [1],
+    units: [0],
     level: "Level 1",
     description: "The little elephant is stuck in the mud, and Musa knows just what good friends can do.",
     author: "Ehel Academy",
@@ -145,6 +149,7 @@ const ebookCatalog = [
     id: "musas-big-race",
     title: "Musa's Big Race",
     grades: [1],
+    units: [0],
     level: "Level 1",
     description: "It is race day on the savanna, and Musa must choose between winning and a friend.",
     author: "Ehel Academy",
@@ -166,9 +171,85 @@ const ebookCatalog = [
     ],
   },
   {
+    id: "kiki-goes-to-school",
+    title: "Kiki Goes to School",
+    grades: [1],
+    units: [1],
+    level: "Level 1",
+    description: "It is Kiki's first day at the tree school, and she is a little shy.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Kiki Goes to School is an original Grade 1 story created for Ehel Academy in 2026, book one of the Kiki series, set in the same storyworld as the Musa books. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "kiki-happy", text: "Kiki Goes to School. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Kiki the young vervet monkey with her red school bag at the tree school with her teacher and classmates" },
+      { image: "page-02.svg", text: "Today was Kiki's first day of school. She had a new red bag.", alt: "Kiki setting off from the baobab home with her red backpack while Mama and Papa wave" },
+      { image: "page-03.svg", sound: "zebra-happy", text: "On the path she met Musa. \"Good luck, Kiki!\" he said.", alt: "Musa the zebra greeting Kiki on the path to school" },
+      { image: "page-04.svg", sound: "kiki-sad", text: "The school was big. Kiki felt shy.", alt: "Kiki standing small and shy in front of the big tree school with its chalkboard and bell" },
+      { image: "page-05.svg", sound: "giraffe", text: "\"Welcome!\" said Miss Twiga, the teacher.", alt: "Miss Twiga the giraffe teacher with her reading glasses bending down to welcome Kiki" },
+      { image: "page-06.svg", sound: "elephant-happy", text: "Kiki sat on a bench next to the little elephant.", alt: "Kiki and the little elephant sitting together at a school bench" },
+      { image: "page-07.svg", text: "They learned to say hello. \"Hello! Hello!\"", alt: "The class raising their hands by the chalkboard as they learn to say hello" },
+      { image: "page-08.svg", text: "They counted one, two, three!", alt: "The class counting three dots drawn on the chalkboard" },
+      { image: "page-09.svg", sound: "kiki-happy", text: "At playtime, Kiki shared her sweet mango.", alt: "Kiki sharing her mango with the little elephant at playtime" },
+      { image: "page-10.svg", sound: "ostrich", text: "She made a new friend, the little ostrich.", alt: "Kiki playing with her new friend the little ostrich in the grass" },
+      { image: "page-11.svg", sound: "bell", text: "Ring, ring! The school bell rang. Home time!", alt: "The school bell ringing as the children wave goodbye to Miss Twiga" },
+      { image: "page-12.svg", sound: "crickets", text: "\"I love school!\" Kiki told her family that night.", alt: "Kiki telling her family about school outside the lit baobab home under the stars" },
+    ],
+  },
+  {
+    id: "kikis-family-day",
+    title: "Kiki's Family Day",
+    grades: [1],
+    units: [2],
+    level: "Level 1",
+    description: "A day at home with Mama, Papa and little sister Nia in the big baobab tree.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Kiki's Family Day is an original Grade 1 story created for Ehel Academy in 2026, book two of the Kiki series, set in the same storyworld as the Musa books. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "kiki-happy", text: "Kiki's Family Day. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Kiki with Mama, Papa and little sister Nia in front of the big baobab tree" },
+      { image: "page-02.svg", sound: "tree", text: "Kiki's home was in the big baobab tree.", alt: "The big baobab tree home with its round door and window" },
+      { image: "page-03.svg", sound: "monkey", text: "This is Mama. This is Papa. And this is her little sister, Nia.", alt: "Mama with a flower behind her ear, big Papa, and tiny little sister Nia" },
+      { image: "page-04.svg", text: "Mama cooked dinner. Kiki helped stir the pot.", alt: "Mama and Kiki cooking dinner in a big pot over the fire" },
+      { image: "page-05.svg", text: "Papa picked mangoes. Kiki helped carry them.", alt: "Papa picking mangoes from the tree while Kiki carries some" },
+      { image: "page-06.svg", sound: "kiki-sad", text: "Little Nia dropped her banana. She cried and cried.", alt: "Little Nia crying over her dropped banana while Kiki looks around in surprise" },
+      { image: "page-07.svg", sound: "kiki-happy", text: "\"Do not cry,\" said Kiki. \"You can have mine.\"", alt: "Kiki giving her own banana to little Nia with a small heart floating in the air" },
+      { image: "page-08.svg", sound: "monkey", text: "The family ate dinner together. Yum, yum!", alt: "The whole monkey family eating dinner together around the pot" },
+      { image: "page-09.svg", sound: "zebra-happy", text: "Papa told a story about a brave little zebra.", alt: "Papa telling a bedtime story while a little zebra runs through a thought bubble" },
+      { image: "page-10.svg", sound: "lullaby", text: "Mama sang a soft, sweet song.", alt: "Mama singing a lullaby under the stars with music notes floating" },
+      { image: "page-11.svg", text: "Kiki hugged her family. \"Good night, good night!\"", alt: "Kiki and Nia hugging Mama and Papa good night by the lit baobab home" },
+      { image: "page-12.svg", sound: "crickets", text: "Kiki slept and dreamed of her happy home.", alt: "The quiet baobab home at night under the moon and stars" },
+    ],
+  },
+  {
+    id: "kiki-and-the-big-game",
+    title: "Kiki and the Big Game",
+    grades: [1],
+    units: [3],
+    level: "Level 1",
+    description: "Ball, swing and a runaway kite - play day with Kiki and her friends.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Kiki and the Big Game is an original Grade 1 story created for Ehel Academy in 2026, book three of the Kiki series, set in the same storyworld as the Musa books. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "kiki-happy", text: "Kiki and the Big Game. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of the school playground with Kiki, the swing, the ball and a red kite" },
+      { image: "page-02.svg", sound: "bell", text: "It was play day at school. Hooray!", alt: "Miss Twiga and the excited children at school on play day" },
+      { image: "page-03.svg", sound: "ball", text: "Kiki and her friends played with the ball.", alt: "Kiki, the little elephant and the little ostrich playing with a striped ball" },
+      { image: "page-04.svg", sound: "ostrich", text: "The little ostrich ran fast. Run, run, run!", alt: "The little ostrich running fast while Kiki cheers" },
+      { image: "page-05.svg", sound: "kiki-happy", text: "Kiki went high on the swing. Whee!", alt: "Kiki swinging high on the rope swing under the big acacia" },
+      { image: "page-06.svg", sound: "wind", text: "They flew a big red kite. Up, up, up!", alt: "Kiki and the little elephant flying a big red kite" },
+      { image: "page-07.svg", sound: "wind", text: "Then the wind took the kite. Oh no!", alt: "The wind carrying the red kite away while Kiki and the elephant watch in surprise" },
+      { image: "page-08.svg", sound: "kiki-sad", text: "The kite was stuck in the tall, tall tree.", alt: "The red kite stuck high in the tall acacia while Kiki and the elephant look sad" },
+      { image: "page-09.svg", sound: "kiki-surprised", text: "\"I know!\" said Kiki. \"Let us ask a tall friend.\"", alt: "Kiki jumping up with an idea while her friends watch" },
+      { image: "page-10.svg", sound: "giraffe", text: "The giraffe reached up, up, up. She got the kite!", alt: "The tall giraffe reaching high into the acacia for the stuck kite" },
+      { image: "page-11.svg", sound: "zebra-happy", text: "\"Thank you!\" they cheered. Musa came to play too.", alt: "The friends cheering with the rescued kite as Musa the zebra arrives to play" },
+      { image: "page-12.svg", sound: "kiki-happy", text: "Everyone took turns. Games are best with friends!", alt: "All the friends playing together with the ball, the swing and the kite flying high" },
+    ],
+  },
+  {
     id: "bheema-the-sleepyhead",
     title: "Bheema, the Sleepyhead",
     grades: [1],
+    units: [0],
     level: "Level 1 · developing reader",
     description: "Bheema tries several ways to wake up early before a tiny friend finally helps him.",
     author: "Kiran Kasturia",
@@ -222,8 +303,9 @@ let activeEbookId = ebookCatalog[0].id;
 let ebookWatchActive = false;
 let ebookWatchToken = 0;
 
-const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant"]);
+const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki"]);
 const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
+const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby" };
 let tapSoundPlayer = null;
 
 function ensureTapSoundPlayer() {
@@ -243,7 +325,7 @@ function playTapSound(type, mood) {
   if (!audioEnabled || !type) return;
   const soundKey = TAP_SOUND_MOOD_TYPES.has(type)
     ? `${type}-${TAP_SOUND_MOODS.has(mood) ? mood : "happy"}`
-    : type;
+    : TAP_SOUND_ALIASES[type] || type;
   try {
     const player = ensureTapSoundPlayer();
     player.pause();
@@ -1874,10 +1956,10 @@ function openEbookReadAloud(book) {
 function renderEbooks() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
-  const gradeEbooks = ebookCatalog.filter((item) => item.grades.includes(gradeNumber));
+  const gradeEbooks = ebookCatalog.filter((item) => item.grades.includes(gradeNumber) && (!item.units || item.units.includes(unitNumber)));
   if (!gradeEbooks.length) {
-    $("#app").innerHTML = `${pageHeader("Independent reading library", "eBooks", `Grade ${gradeNumber} illustrated books will appear here as they are approved.`, "Library being prepared")}
-      <section class="panel empty-library"><span>${icon("library-big")}</span><h2>Your Grade ${gradeNumber} shelf</h2><p>There are no approved eBooks for this grade yet.</p></section>`;
+    $("#app").innerHTML = `${pageHeader("Independent reading library", "eBooks", `Grade ${gradeNumber} illustrated books for this unit will appear here as they are approved.`, "Library being prepared")}
+      <section class="panel empty-library"><span>${icon("library-big")}</span><h2>Your Unit ${unitNumber} shelf</h2><p>There are no approved eBooks for this unit yet. Each unit gets its own story - keep learning!</p></section>`;
     return;
   }
   const book = gradeEbooks.find((item) => item.id === activeEbookId) || gradeEbooks[0];

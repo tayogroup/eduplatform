@@ -149,7 +149,7 @@ function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", mudd
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s}) rotate(${lean})">
     ${shadow}
-    <g class="tap-target" data-tap="zebra">
+    <g class="tap-target" data-tap="zebra" data-mood="${mood}">
     <g class="anim-idle" style="${delayAt(x, y)}">
     ${legs}${tail}
     <ellipse cx="0" cy="-6" rx="95" ry="58" fill="${C.zebraBody}" stroke="${C.ink}" stroke-width="5"/>
@@ -188,7 +188,7 @@ function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="112" rx="82" ry="13" fill="${C.ink}" opacity="0.10"/>
-    <g class="tap-target" data-tap="giraffe">
+    <g class="tap-target" data-tap="giraffe" data-mood="${mood}">
     <g class="anim-idle" style="${delayAt(x, y, 3)}">
     ${leg(-52, true, -rot)}${leg(28, true, rot)}
     <ellipse cx="-4" cy="-4" rx="82" ry="52" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>
@@ -225,7 +225,7 @@ function elephant({ x, y, s = 1, flip = false, mood = "happy", stuck = false, tr
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     ${stuck ? "" : `<ellipse cx="0" cy="86" rx="78" ry="12" fill="${C.ink}" opacity="0.10"/>`}
-    <g class="tap-target" data-tap="elephant">
+    <g class="tap-target" data-tap="elephant" data-mood="${mood}">
     <g class="anim-idle" style="${delayAt(x, y, 2)}">
     ${legs}
     <ellipse cx="-6" cy="-2" rx="80" ry="56" fill="${C.elephant}" stroke="${C.ink}" stroke-width="5"/>
@@ -257,7 +257,7 @@ function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", fa
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="118" rx="58" ry="11" fill="${C.ink}" opacity="0.10"/>
-    <g class="tap-target" data-tap="ostrich">
+    <g class="tap-target" data-tap="ostrich" data-mood="${mood}">
     <g class="anim-idle" style="${delayAt(x, y, 2)}">
     ${leg(-20, legRot)}${leg(18, -legRot)}
     <ellipse cx="-6" cy="0" rx="62" ry="46" fill="${C.ostrichBody}" stroke="${C.ink}" stroke-width="5"/>
@@ -289,7 +289,7 @@ function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leav
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="66" rx="42" ry="9" fill="${C.ink}" opacity="0.10"/>
-    <g class="tap-target" data-tap="monkey">
+    <g class="tap-target" data-tap="monkey" data-mood="${mood}">
     <g class="anim-idle" style="${delayAt(x, y, 1.8)}">
     ${tail}
     <ellipse cx="0" cy="16" rx="38" ry="42" fill="${C.monkey}" stroke="${C.ink}" stroke-width="4.5"/>

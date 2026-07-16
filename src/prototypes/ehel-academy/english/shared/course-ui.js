@@ -198,6 +198,30 @@ let activeEbookId = ebookCatalog[0].id;
 let ebookWatchActive = false;
 let ebookWatchToken = 0;
 
+const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant"]);
+const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
+let tapSoundPlayer = null;
+
+function playTapSound(type, mood) {
+  if (!audioEnabled || !type) return;
+  const soundKey = TAP_SOUND_MOOD_TYPES.has(type)
+    ? `${type}-${TAP_SOUND_MOODS.has(mood) ? mood : "happy"}`
+    : type;
+  try {
+    if (!tapSoundPlayer) {
+      tapSoundPlayer = new Audio();
+      tapSoundPlayer.volume = 0.6;
+      tapSoundPlayer.preload = "auto";
+    }
+    tapSoundPlayer.pause();
+    tapSoundPlayer.src = new URL(`./ebooks/tap-sounds/${soundKey}.mp3`, document.baseURI).href;
+    tapSoundPlayer.currentTime = 0;
+    tapSoundPlayer.play().catch(() => {});
+  } catch {
+    // Tap sounds are a garnish; never let them break the reader.
+  }
+}
+
 function stopEbookWatch() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
@@ -1838,6 +1862,7 @@ function renderEbooks() {
           svg.addEventListener("pointerdown", (event) => {
             const target = event.target.closest?.("[data-tap]");
             if (!target) return;
+            playTapSound(target.dataset.tap, target.dataset.mood);
             target.classList.remove("tap-play");
             void target.getBoundingClientRect();
             target.classList.add("tap-play");

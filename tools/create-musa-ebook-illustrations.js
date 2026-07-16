@@ -17,7 +17,7 @@ const root = path.resolve(__dirname, "..");
 const ebooksRoot = path.join(root, "src", "prototypes", "ehel-academy", "english", "ebooks");
 
 // Global size boost for every animal character (props and scenery unchanged).
-const ANIMAL_SCALE = 1.3;
+const ANIMAL_SCALE = 1.5;
 
 const W = 1600;
 const H = 1000;

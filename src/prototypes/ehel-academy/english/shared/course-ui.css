@@ -264,6 +264,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .course-ebook-book small { margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.3; }
 .course-ebook-reader { min-width: 0; overflow: hidden; border: 1px solid #cbd7df; border-radius: 8px; background: white; box-shadow: var(--shadow); }
 .course-ebook-header { min-height: 118px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+.course-ebook-header-actions { display: flex; flex-direction: column; gap: 10px; flex: none; }
+.course-ebook-header-actions .button { justify-content: center; }
+#watch-ebook.watching { background: #e76f51; border-color: #e76f51; }
 .course-ebook-header h2 { margin: 5px 0 7px; font: 700 31px/1.12 Georgia, serif; letter-spacing: 0; }
 .course-ebook-header p { max-width: 650px; margin: 0; color: var(--muted); line-height: 1.5; }
 .course-ebook-progress { height: 7px; background: #dbe4e9; }

@@ -195,6 +195,21 @@ let gamePairSelection = [];
 let gameMistakes = 0;
 let currentPageNarration = "";
 let activeEbookId = ebookCatalog[0].id;
+let ebookWatchActive = false;
+let ebookWatchToken = 0;
+
+function stopEbookWatch() {
+  ebookWatchActive = false;
+  ebookWatchToken += 1;
+  const watchButton = $("#watch-ebook");
+  if (watchButton) {
+    watchButton.classList.remove("watching");
+    watchButton.innerHTML = `${icon("play")} Watch the story`;
+    watchButton.setAttribute("aria-label", "Watch the story: narrated pages that turn by themselves");
+    icons();
+  }
+  stopAudio();
+}
 let activeEbookPage = 0;
 const aiVoiceCache = new Map();
 const aiVoicePending = new Map();
@@ -679,11 +694,12 @@ async function aiVoiceUrl(text) {
 }
 
 async function playPageNarration(button, narrationOverride = null) {
-  if (!audioEnabled) return toast("Sound is muted. Use the sound button in the header to turn it on.");
+  if (!audioEnabled) { toast("Sound is muted. Use the sound button in the header to turn it on."); return false; }
   if (activeAudioButton === button) {
     stopAudio();
-    return;
+    return false;
   }
+  let narrationOk = true;
   const narration = narrationOverride || collectPageNarration();
   if (!narration) return toast("There is nothing on this page to read yet.");
   stopAudio();
@@ -724,10 +740,12 @@ async function playPageNarration(button, narrationOverride = null) {
       });
     }
   } catch (error) {
+    narrationOk = false;
     if (requestId === audioRequestId && button.isConnected) toast("ElevenLabs narration is unavailable. Please try again.");
   } finally {
     if (requestId === audioRequestId) stopAudio();
   }
+  return narrationOk;
 }
 
 async function prepareReadingNarration(reading, button) {
@@ -1762,6 +1780,8 @@ function openEbookReadAloud(book) {
 }
 
 function renderEbooks() {
+  ebookWatchActive = false;
+  ebookWatchToken += 1;
   const gradeEbooks = ebookCatalog.filter((item) => item.grades.includes(gradeNumber));
   if (!gradeEbooks.length) {
     $("#app").innerHTML = `${pageHeader("Independent reading library", "eBooks", `Grade ${gradeNumber} illustrated books will appear here as they are approved.`, "Library being prepared")}
@@ -1781,7 +1801,10 @@ function renderEbooks() {
       <section class="course-ebook-reader" aria-label="${escapeHtml(book.title)} eBook reader">
         <header class="course-ebook-header">
           <div><span class="eyebrow">${escapeHtml(book.level)} · recommended for early readers</span><h2>${escapeHtml(book.title)}</h2><p>${escapeHtml(book.description)}</p></div>
-          <button class="button secondary" id="listen-whole-ebook" type="button">${icon("audio-lines")} Listen to whole book</button>
+          <div class="course-ebook-header-actions">
+            <button class="button primary" id="watch-ebook" type="button" aria-label="Watch the story: narrated pages that turn by themselves">${icon("play")} Watch the story</button>
+            <button class="button secondary" id="listen-whole-ebook" type="button">${icon("audio-lines")} Listen to whole book</button>
+          </div>
         </header>
         <div id="course-ebook-page"></div>
         <footer class="course-ebook-credit"><strong>Book credit</strong><p>${escapeHtml(book.attribution)}</p></footer>
@@ -1799,17 +1822,52 @@ function renderEbooks() {
       <div class="course-ebook-thumbnails" aria-label="Choose a page">${book.pages.map((item, index) => `<button class="course-ebook-thumbnail ${index === activeEbookPage ? "active" : ""}" data-ebook-page="${index}" type="button" aria-label="Open page ${index + 1}" aria-current="${index === activeEbookPage ? "page" : "false"}"><img src="${ebookAsset(book, item.image)}" alt=""><span>${index + 1}</span></button>`).join("")}</div>
       <div class="course-ebook-controls"><button class="button secondary" id="previous-ebook-page" type="button" ${activeEbookPage === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous page</button>${isLastPage ? `<button class="button gold" id="finish-ebook" type="button">${icon("check")} Finish book</button>` : `<span>Keep reading</span>`}<button class="button secondary" id="next-ebook-page" type="button" ${isLastPage ? "disabled" : ""}>Next page ${icon("arrow-right")}</button></div>`;
 
-    $("#listen-ebook-page").addEventListener("click", (event) => playPageNarration(event.currentTarget, page.text));
-    $("#previous-ebook-page").addEventListener("click", () => { activeEbookPage -= 1; drawPage(true); });
-    $("#next-ebook-page").addEventListener("click", () => { activeEbookPage += 1; drawPage(true); });
-    $$('[data-ebook-page]').forEach((button) => button.addEventListener("click", () => { activeEbookPage = Number(button.dataset.ebookPage); drawPage(true); }));
-    if ($("#finish-ebook")) $("#finish-ebook").addEventListener("click", () => complete("ebooks", `${book.title} complete. Well read!`));
+    $("#listen-ebook-page").addEventListener("click", (event) => {
+      if (ebookWatchActive) { stopEbookWatch(); return; }
+      playPageNarration(event.currentTarget, page.text);
+    });
+    $("#previous-ebook-page").addEventListener("click", () => { stopEbookWatch(); activeEbookPage -= 1; drawPage(true); });
+    $("#next-ebook-page").addEventListener("click", () => { stopEbookWatch(); activeEbookPage += 1; drawPage(true); });
+    $$('[data-ebook-page]').forEach((button) => button.addEventListener("click", () => { stopEbookWatch(); activeEbookPage = Number(button.dataset.ebookPage); drawPage(true); }));
+    if ($("#finish-ebook")) $("#finish-ebook").addEventListener("click", () => { stopEbookWatch(); complete("ebooks", `${book.title} complete. Well read!`); });
     icons();
     if (shouldFocus) focusDynamicContent(".course-ebook-transcript h3", `Page ${activeEbookPage + 1} of ${book.pages.length}. ${page.text}`);
   };
 
-  $("#listen-whole-ebook").addEventListener("click", () => openEbookReadAloud(book));
+  const runWatch = async () => {
+    if (ebookWatchActive) { stopEbookWatch(); return; }
+    if (!audioEnabled) return toast("Sound is muted. Use the sound button in the header to turn it on.");
+    ebookWatchActive = true;
+    const token = ++ebookWatchToken;
+    const watchButton = $("#watch-ebook");
+    watchButton.classList.add("watching");
+    watchButton.innerHTML = `${icon("square")} Stop watching`;
+    watchButton.setAttribute("aria-label", "Stop watching the story");
+    icons();
+    while (ebookWatchActive && ebookWatchToken === token) {
+      if (!$("#course-ebook-page")) break;
+      drawPage();
+      const pageButton = $("#listen-ebook-page");
+      if (!pageButton) break;
+      const narrated = await playPageNarration(pageButton, book.pages[activeEbookPage].text);
+      if (!ebookWatchActive || ebookWatchToken !== token) return;
+      if (!narrated) break;
+      if (activeEbookPage >= book.pages.length - 1) {
+        stopEbookWatch();
+        drawPage();
+        complete("ebooks", `${book.title} complete. Well watched!`);
+        return;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 900));
+      if (!ebookWatchActive || ebookWatchToken !== token) return;
+      activeEbookPage += 1;
+    }
+    if (ebookWatchActive && ebookWatchToken === token) stopEbookWatch();
+  };
+  $("#watch-ebook").addEventListener("click", runWatch);
+  $("#listen-whole-ebook").addEventListener("click", () => { stopEbookWatch(); openEbookReadAloud(book); });
   $$('[data-ebook]').forEach((button) => button.addEventListener("click", () => {
+    stopEbookWatch();
     activeEbookId = button.dataset.ebook;
     activeEbookPage = 0;
     const selectedBook = gradeEbooks.find((item) => item.id === activeEbookId);

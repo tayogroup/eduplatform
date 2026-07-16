@@ -77,6 +77,19 @@ const STYLE = `<style>
   @keyframes wave { 0% { opacity: 0; } 30% { opacity: 0.9; } 60%, 100% { opacity: 0; } }
   .anim-cloud { animation: cloudDrift 9s ease-in-out infinite alternate; }
   @keyframes cloudDrift { from { transform: translateX(-18px); } to { transform: translateX(22px); } }
+  .tap-target { cursor: pointer; }
+  .tap-target.tap-play { transform-box: fill-box; transform-origin: 50% 85%; animation: tapWiggle 0.7s ease-in-out; }
+  .tap-target[data-tap="puddle"].tap-play { transform-origin: center; animation: tapSplash 0.85s ease-out; }
+  .tap-target[data-tap="sun"].tap-play { transform-origin: center; animation: tapPulse 0.6s ease-in-out; }
+  .tap-target[data-tap="tree"].tap-play { transform-origin: 50% 100%; animation: tapShake 0.7s ease-in-out; }
+  @keyframes tapWiggle { 0% { transform: rotate(0); } 25% { transform: rotate(-4deg) scale(1.03); } 55% { transform: rotate(3deg) scale(1.04); } 80% { transform: rotate(-1.5deg); } 100% { transform: rotate(0); } }
+  @keyframes tapSplash { 0% { transform: scale(1); } 40% { transform: scale(1.06, 0.94); } 70% { transform: scale(0.97, 1.03); } 100% { transform: scale(1); } }
+  @keyframes tapPulse { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+  @keyframes tapShake { 0% { transform: rotate(0); } 20% { transform: rotate(2.4deg); } 45% { transform: rotate(-2deg); } 70% { transform: rotate(1.2deg); } 100% { transform: rotate(0); } }
+  .tap-burst { opacity: 0; }
+  .tap-target.tap-play .tap-burst { opacity: 1; }
+  .tap-target.tap-play .tap-burst circle { animation: burstUp 0.6s ease-out forwards; }
+  @keyframes burstUp { from { transform: translateY(0); opacity: 0.95; } to { transform: translateY(-90px); opacity: 0; } }
 }
 </style>`;
 
@@ -136,6 +149,7 @@ function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", mudd
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s}) rotate(${lean})">
     ${shadow}
+    <g class="tap-target" data-tap="zebra">
     <g class="anim-idle" style="${delayAt(x, y)}">
     ${legs}${tail}
     <ellipse cx="0" cy="-6" rx="95" ry="58" fill="${C.zebraBody}" stroke="${C.ink}" stroke-width="5"/>
@@ -153,6 +167,7 @@ function zebra({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", mudd
       <path d="M -34 -12 q -6 12 -2 22 M -14 -22 q -4 10 -2 18" stroke="${C.ink}" stroke-width="6" fill="none" stroke-linecap="round"/>
       <g transform="translate(6 -4)">${face(mood, 1.1)}</g>
       <path d="M -42 -22 q -14 -18 -2 -30 q 12 -8 18 6 M -22 -34 q -8 -18 6 -24 q 12 -4 12 10 M -2 -40 q -2 -18 12 -18 q 12 2 6 16" fill="${C.ink}"/>
+    </g>
     </g>
     </g>
   </g>`;
@@ -173,6 +188,7 @@ function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="112" rx="82" ry="13" fill="${C.ink}" opacity="0.10"/>
+    <g class="tap-target" data-tap="giraffe">
     <g class="anim-idle" style="${delayAt(x, y, 3)}">
     ${leg(-52, true, -rot)}${leg(28, true, rot)}
     <ellipse cx="-4" cy="-4" rx="82" ry="52" fill="${C.giraffe}" stroke="${C.ink}" stroke-width="5"/>
@@ -192,6 +208,7 @@ function giraffe({ x, y, s = 1, flip = false, mood = "happy", bend = false, pose
       <g transform="translate(4 -4)">${face(mood, 0.9)}</g>
     </g>
     </g>
+    </g>
   </g>`;
 }
 
@@ -208,6 +225,7 @@ function elephant({ x, y, s = 1, flip = false, mood = "happy", stuck = false, tr
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     ${stuck ? "" : `<ellipse cx="0" cy="86" rx="78" ry="12" fill="${C.ink}" opacity="0.10"/>`}
+    <g class="tap-target" data-tap="elephant">
     <g class="anim-idle" style="${delayAt(x, y, 2)}">
     ${legs}
     <ellipse cx="-6" cy="-2" rx="80" ry="56" fill="${C.elephant}" stroke="${C.ink}" stroke-width="5"/>
@@ -221,6 +239,7 @@ function elephant({ x, y, s = 1, flip = false, mood = "happy", stuck = false, tr
       <g transform="translate(16 16)">${mouth(mood, 0.8)}</g>
     </g>
     ${trunk}
+    </g>
     </g>
   </g>`;
 }
@@ -238,6 +257,7 @@ function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", fa
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="118" rx="58" ry="11" fill="${C.ink}" opacity="0.10"/>
+    <g class="tap-target" data-tap="ostrich">
     <g class="anim-idle" style="${delayAt(x, y, 2)}">
     ${leg(-20, legRot)}${leg(18, -legRot)}
     <ellipse cx="-6" cy="0" rx="62" ry="46" fill="${C.ostrichBody}" stroke="${C.ink}" stroke-width="5"/>
@@ -248,6 +268,7 @@ function ostrich({ x, y, s = 1, flip = false, mood = "happy", pose = "stand", fa
       <path d="M 20 0 l 26 6 l -24 10 z" fill="${C.ostrichBeak}" stroke="${C.ink}" stroke-width="3.4"/>
       <g transform="translate(0 -4)">${face(mood, 0.85)}</g>
       <path d="M -14 -18 q 2 -10 10 -10 M 0 -20 q 4 -8 10 -6" stroke="${C.ink}" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    </g>
     </g>
     </g>
   </g>`;
@@ -268,6 +289,7 @@ function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leav
   </g>`;
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
     <ellipse cx="0" cy="66" rx="42" ry="9" fill="${C.ink}" opacity="0.10"/>
+    <g class="tap-target" data-tap="monkey">
     <g class="anim-idle" style="${delayAt(x, y, 1.8)}">
     ${tail}
     <ellipse cx="0" cy="16" rx="38" ry="42" fill="${C.monkey}" stroke="${C.ink}" stroke-width="4.5"/>
@@ -285,6 +307,7 @@ function monkey({ x, y, s = 1, flip = false, mood = "happy", arms = "down", leav
       <g transform="translate(2 8)">${mouth(mood, 0.6)}</g>
     </g>
     </g>
+    </g>
   </g>`;
 }
 
@@ -298,7 +321,7 @@ function sky(rainy = false) {
 }
 
 function sun(x = 1350, y = 160) {
-  return `<circle class="anim-glow" cx="${x}" cy="${y}" r="120" fill="${C.sunGlow}" opacity="0.6"/><circle cx="${x}" cy="${y}" r="78" fill="${C.sun}"/>`;
+  return `<g class="tap-target" data-tap="sun"><circle class="anim-glow" cx="${x}" cy="${y}" r="120" fill="${C.sunGlow}" opacity="0.6"/><circle cx="${x}" cy="${y}" r="78" fill="${C.sun}"/></g>`;
 }
 
 function hills() {
@@ -319,10 +342,12 @@ function tallGrass(x, y, s = 1) {
 
 function acacia(x, y, s = 1) {
   return `<g transform="translate(${x} ${y}) scale(${s})">
+    <g class="tap-target" data-tap="tree">
     <path d="M -8 0 q -4 -70 -30 -110 M 6 0 q 8 -76 40 -116 M 0 -60 q -20 -30 -52 -44 M 2 -66 q 26 -26 58 -36" stroke="${C.acaciaTrunk}" stroke-width="14" fill="none" stroke-linecap="round"/>
     <g class="anim-canopy" style="${delayAt(x, y, 4)}">
       <ellipse cx="-46" cy="-124" rx="86" ry="30" fill="${C.acaciaLeafDark}"/>
       <ellipse cx="30" cy="-142" rx="110" ry="34" fill="${C.acaciaLeaf}"/>
+    </g>
     </g>
   </g>`;
 }
@@ -330,9 +355,14 @@ function acacia(x, y, s = 1) {
 function puddle(x, y, rx, ry, muddyLevel = 1) {
   const fill = muddyLevel > 0 ? C.mud : C.water;
   const inner = muddyLevel > 0 ? C.mudLight : C.waterLight;
-  return `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${C.mudDark}"/>
+  const burst = [-0.6, -0.25, 0.05, 0.35, 0.65]
+    .map((t, i) => `<circle cx="${x + rx * t}" cy="${y - ry - 8}" r="${8 + (i % 3) * 2}" fill="${fill}" style="animation-delay:${(i * 0.04).toFixed(2)}s"/>`).join("");
+  return `<g class="tap-target" data-tap="puddle">
+    <ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${C.mudDark}"/>
     <ellipse cx="${x}" cy="${y - 6}" rx="${rx - 14}" ry="${ry - 10}" fill="${fill}"/>
-    <ellipse class="anim-ripple" style="${delayAt(x, y, 2.6)}" cx="${x - rx * 0.3}" cy="${y - ry * 0.34}" rx="${rx * 0.36}" ry="${ry * 0.26}" fill="${inner}" opacity="0.8"/>`;
+    <ellipse class="anim-ripple" style="${delayAt(x, y, 2.6)}" cx="${x - rx * 0.3}" cy="${y - ry * 0.34}" rx="${rx * 0.36}" ry="${ry * 0.26}" fill="${inner}" opacity="0.8"/>
+    <g class="tap-burst">${burst}</g>
+  </g>`;
 }
 
 function fallenBranch(x, y, s = 1) {

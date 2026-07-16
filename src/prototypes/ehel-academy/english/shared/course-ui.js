@@ -1817,11 +1817,41 @@ function renderEbooks() {
     const isLastPage = activeEbookPage === book.pages.length - 1;
     $("#course-ebook-page").innerHTML = `<div class="course-ebook-progress" role="progressbar" aria-label="Book progress" aria-valuemin="1" aria-valuemax="${book.pages.length}" aria-valuenow="${activeEbookPage + 1}" aria-valuetext="Page ${activeEbookPage + 1} of ${book.pages.length}"><span style="width:${((activeEbookPage + 1) / book.pages.length) * 100}%"></span></div>
       <div class="course-ebook-toolbar"><span>Page <strong>${activeEbookPage + 1}</strong> of ${book.pages.length}</span><button class="button primary" id="listen-ebook-page" type="button">${icon("volume-2")} Listen to this page</button></div>
-      <figure class="course-ebook-illustration"><img src="${ebookAsset(book, page.image)}" alt="${escapeHtml(page.alt)}"><figcaption class="sr-only">Original illustration by ${escapeHtml(book.illustrator)}.</figcaption></figure>
+      <figure class="course-ebook-illustration" id="ebook-stage"><img src="${ebookAsset(book, page.image)}" alt="${escapeHtml(page.alt)}"><figcaption class="sr-only">Original illustration by ${escapeHtml(book.illustrator)}.</figcaption></figure>
       <div class="course-ebook-transcript" aria-live="polite"><span>Read along</span><h3 tabindex="-1">Page ${activeEbookPage + 1}</h3><p>${escapeHtml(page.text)}</p></div>
       <div class="course-ebook-thumbnails" aria-label="Choose a page">${book.pages.map((item, index) => `<button class="course-ebook-thumbnail ${index === activeEbookPage ? "active" : ""}" data-ebook-page="${index}" type="button" aria-label="Open page ${index + 1}" aria-current="${index === activeEbookPage ? "page" : "false"}"><img src="${ebookAsset(book, item.image)}" alt=""><span>${index + 1}</span></button>`).join("")}</div>
       <div class="course-ebook-controls"><button class="button secondary" id="previous-ebook-page" type="button" ${activeEbookPage === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous page</button>${isLastPage ? `<button class="button gold" id="finish-ebook" type="button">${icon("check")} Finish book</button>` : `<span>Keep reading</span>`}<button class="button secondary" id="next-ebook-page" type="button" ${isLastPage ? "disabled" : ""}>Next page ${icon("arrow-right")}</button></div>`;
 
+    const stage = $("#ebook-stage");
+    if (stage && /\.svg$/i.test(page.image)) {
+      const pageAtRequest = activeEbookPage;
+      fetch(ebookAsset(book, page.image))
+        .then((response) => (response.ok ? response.text() : Promise.reject(new Error("illustration fetch failed"))))
+        .then((markup) => {
+          if (activeEbookPage !== pageAtRequest || !stage.isConnected) return;
+          const svg = new DOMParser().parseFromString(markup, "image/svg+xml").documentElement;
+          if (!svg || svg.nodeName.toLowerCase() !== "svg") return;
+          svg.setAttribute("role", "img");
+          svg.setAttribute("aria-label", page.alt);
+          svg.classList.add("course-ebook-stage-svg");
+          stage.querySelector("img")?.replaceWith(svg);
+          svg.addEventListener("pointerdown", (event) => {
+            const target = event.target.closest?.("[data-tap]");
+            if (!target) return;
+            target.classList.remove("tap-play");
+            void target.getBoundingClientRect();
+            target.classList.add("tap-play");
+            const clearTap = () => target.classList.remove("tap-play");
+            target.addEventListener("animationend", function clear(ended) {
+              if (ended.target !== target) return;
+              clearTap();
+              target.removeEventListener("animationend", clear);
+            });
+            setTimeout(clearTap, 1400);
+          });
+        })
+        .catch(() => {});
+    }
     $("#listen-ebook-page").addEventListener("click", (event) => {
       if (ebookWatchActive) { stopEbookWatch(); return; }
       playPageNarration(event.currentTarget, page.text);

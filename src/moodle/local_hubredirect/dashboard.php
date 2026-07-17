@@ -2095,7 +2095,13 @@ foreach ($children as $child) {
     }
 }
 $teacherstudentcoursescope = $role === 'teacher' ? pqh_teacher_student_course_scope($allchildren) : ['coursekeys' => [], 'moodlecourseids' => []];
-$currentstudentcourses = $role === 'student' ? pqh_user_courses((int)$USER->id) : [];
+$currentstudentcourses = [];
+if ($role === 'student') {
+    $currentstudentcourses = pqh_user_courses((int)$USER->id);
+    // Also list Moodle enrolments outside the fixed course catalog (for
+    // example institution courses), mirroring the teacher card behaviour.
+    $currentstudentcourses += pqh_user_moodle_course_cards((int)$USER->id, [], array_keys($currentstudentcourses));
+}
 $teacherenrolledcourses = $role === 'teacher'
     ? pqh_user_moodle_course_cards((int)$USER->id, $teacherstudentcoursescope['moodlecourseids'], $teacherstudentcoursescope['coursekeys'])
     : [];

@@ -8,7 +8,11 @@
 -- 4. Purge caches afterwards so the dashboard counters refresh.
 
 SET @workspaceid := 15;
-SET @consumerid := (SELECT consumerid FROM mdl_local_prequran_workspace WHERE id = @workspaceid);
+-- The consumer row points at the workspace via primaryworkspaceid.
+-- If this returns NULL (multi-workspace consumer), use the slug lookup
+-- on the next line instead.
+SET @consumerid := (SELECT id FROM mdl_local_prequran_consumer WHERE primaryworkspaceid = @workspaceid LIMIT 1);
+-- SET @consumerid := (SELECT id FROM mdl_local_prequran_consumer WHERE slug = 'institution-1784275208');
 
 START TRANSACTION;
 

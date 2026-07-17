@@ -669,7 +669,7 @@ body.pqh-live-page .secondary-navigation{display:none!important}
 <?php if ($openmaterials): ?>
 <div class="pql-split" id="pql-split" hidden>
   <div class="pql-split__bar">
-    <span class="pql-split__title"><?php echo $sessiontitle; ?></span>
+    <span class="pql-split__title"></span>
     <div class="pql-split__actions">
       <button id="pql-split-toggle" class="pql-split__btn" type="button">Show materials</button>
       <button id="pql-split-tutor" class="pql-split__btn" type="button">Virtual tutor</button>
@@ -1609,6 +1609,9 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
             (int)$USER->id,
             [
                 'userdata-prequran-role' => $role,
+                // Hide the meeting title / "Open session details" control in
+                // the BBB top bar; the surrounding page already frames the class.
+                'userdata-bbb_custom_style' => '[data-test="presentationTitle"],button[aria-label*="session details" i]{display:none!important;}',
                 'userdata-prequran-sessionid' => (int)$session->id,
                 'userdata-prequran-workspaceid' => $workspaceid > 0 ? $workspaceid : (int)($session->workspaceid ?? 0),
                 'userdata-prequran-studentid' => $studentid,
@@ -1929,7 +1932,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718K</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718L</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

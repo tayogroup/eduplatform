@@ -1564,6 +1564,9 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
                     'sessionid' => (int)$session->id,
                 ])->out(false),
                 'welcome' => $welcometext,
+                // Explicit blank banner: without it some BBB setups inject a
+                // server-default banner bar across the top of the classroom.
+                'bannerText' => ' ',
                 'lockSettingsDisableCam' => true,
                 'disabledFeatures' => 'virtualBackgrounds,customVirtualBackgrounds,cameraAsContent',
             ];
@@ -1926,7 +1929,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718J</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718K</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

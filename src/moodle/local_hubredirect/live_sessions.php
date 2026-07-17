@@ -1577,6 +1577,7 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
     // dead one is rebuilt with the same ID and passwords), so teachers and
     // admin observers always run it before joining to self-heal dead rooms.
     $roomexisted = !empty($session->bbb_created);
+    $roomjustcreated = false;
     if (!$roomexisted || in_array($role, ['teacher', 'admin_observer'], true)) {
         if (!in_array($role, ['teacher', 'admin_observer'], true)) {
             pqh_access_denied('The teacher has not started this live session yet.', $returnurl, 'Live session not started');
@@ -1627,6 +1628,9 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
             pql_audit((int)$session->id, 'bbb_create_failed', 'session', (int)$session->id, ['error' => $e->getMessage()]);
             pqh_access_denied('The live room could not be started. Please ask support to review the BigBlueButton configuration.', $returnurl, 'Live room unavailable');
         }
+        // duplicateWarning means the room was already running; anything else
+        // means this create call actually built (or rebuilt) the room.
+        $roomjustcreated = strtolower((string)($xml->messageKey ?? '')) !== 'duplicatewarning';
         $session->bbb_internal_meeting_id = (string)($xml->internalMeetingID ?? '');
         $session->bbb_created = 1;
         $session->bbb_create_time = time();
@@ -1644,7 +1648,11 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
         ]);
     }
 
-    if (in_array($role, ['teacher', 'admin_observer'], true)) {
+    // Insert the agenda deck only when the room was just built. Re-inserting
+    // on every join forced BBB to re-convert the PPTX, flashing "Something
+    // went wrong. Attempting to recover..." in the presentation area, and it
+    // also stomped whatever deck or whiteboard the teacher had made current.
+    if ($roomjustcreated && in_array($role, ['teacher', 'admin_observer'], true)) {
         pql_insert_agenda_slides_into_bbb($session, 'teacher_start_or_join');
     }
 
@@ -1992,7 +2000,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718R</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718S</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

@@ -1538,7 +1538,16 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
         pqh_access_denied('Please refresh the live sessions page and try again.', $returnurl, 'Live sessions action expired');
     }
     if (!$cancreate) {
-        pqh_access_denied('You cannot create live sessions.', $returnurl, 'Live sessions access required');
+        // Staging diagnostic: expose which inputs the permission saw so a
+        // deny is debuggable from the error page alone. The build marker
+        // also proves which file version served the request.
+        $diagrole = pqh_user_workspace_role((int)$USER->id, (int)$pageworkspaceid);
+        $diag = ' [diag build=20260717A userid=' . (int)$USER->id
+            . ' workspaceid=' . (int)$pageworkspaceid
+            . ' workspace_role=' . ($diagrole === '' ? 'none' : $diagrole)
+            . ' teacher_ws=' . implode('/', array_slice(pql_live_teacher_workspace_ids((int)$USER->id), 0, 5))
+            . ']';
+        pqh_access_denied('You cannot create live sessions.' . $diag, $returnurl, 'Live sessions access required');
     }
     $createdfromwizard = optional_param('created_from_wizard', 0, PARAM_BOOL);
 

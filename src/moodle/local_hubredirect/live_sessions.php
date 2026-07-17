@@ -1571,7 +1571,13 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
     // param entirely would make BBB fall back to the server's default message.
     $welcometext = ' ';
 
-    if (empty($session->bbb_created)) {
+    // BBB ends a room when it empties or its duration passes, while
+    // bbb_created stays set - joining then fails with invalidMeetingIdentifier.
+    // The create call is idempotent (a running room is returned untouched, a
+    // dead one is rebuilt with the same ID and passwords), so teachers and
+    // admin observers always run it before joining to self-heal dead rooms.
+    $roomexisted = !empty($session->bbb_created);
+    if (!$roomexisted || in_array($role, ['teacher', 'admin_observer'], true)) {
         if (!in_array($role, ['teacher', 'admin_observer'], true)) {
             pqh_access_denied('The teacher has not started this live session yet.', $returnurl, 'Live session not started');
         }
@@ -1634,6 +1640,7 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
             'recording_requested' => !empty($recordingdecision['requested']),
             'recording_enabled' => $recordingallowed,
             'recording_consent_reason' => $recordingdecision['reason'],
+            'recreate_check' => $roomexisted,
         ]);
     }
 
@@ -1985,7 +1992,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718Q</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718R</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

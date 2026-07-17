@@ -353,4 +353,74 @@ COMMIT;
 
 fs.writeFileSync(path.join(outDir, "demo-data.sql"), sql.join("\n\n") + "\n", "utf8");
 console.log(`Wrote demo-data.sql (${allUsers.length} users, ${COURSES.length} courses, ${enrolPairs.length} enrolments)`);
+
+// ---------------------------------------------------------------- workspace linking SQL
+// Run AFTER demo-data.sql. Links the Moodle records to the EduPlatform
+// workspace so the workspace dashboard counters (students, teachers,
+// course offerings) light up. Membership and offering shapes follow
+// local_hubredirect (admissionslib.php / course_offerings.php).
+const linkSql = `-- Somali University: link demo records to the EduPlatform workspace
+-- Run AFTER demo-data.sql. MySQL/MariaDB, prefix mdl_ (adjust if needed).
+--
+-- 1. SET the workspace id below. Yours is in the dashboard URL,
+--    e.g. workspace_dashboard.php?...&workspaceid=15  ->  15
+-- 2. The consumer id is read from the workspace row automatically.
+-- 3. Safe to re-run: inserts skip rows that already exist.
+-- 4. Purge caches afterwards so the dashboard counters refresh.
+
+SET @workspaceid := 15;
+SET @consumerid := (SELECT consumerid FROM mdl_local_prequran_workspace WHERE id = @workspaceid);
+
+START TRANSACTION;
+
+-- Workspace members: admin, teachers, students -------------------------
+INSERT INTO mdl_local_prequran_workspace_member (workspaceid, userid, workspace_role, status, timecreated, timemodified)
+SELECT @workspaceid, u.id, 'admin', 'active', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+FROM mdl_user u
+WHERE u.username = 'su-admin' AND u.deleted = 0
+  AND NOT EXISTS (SELECT 1 FROM mdl_local_prequran_workspace_member m
+                  WHERE m.workspaceid = @workspaceid AND m.userid = u.id);
+
+INSERT INTO mdl_local_prequran_workspace_member (workspaceid, userid, workspace_role, status, timecreated, timemodified)
+SELECT @workspaceid, u.id, 'teacher', 'active', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+FROM mdl_user u
+WHERE u.username LIKE 'su-teacher%' AND u.deleted = 0
+  AND NOT EXISTS (SELECT 1 FROM mdl_local_prequran_workspace_member m
+                  WHERE m.workspaceid = @workspaceid AND m.userid = u.id);
+
+INSERT INTO mdl_local_prequran_workspace_member (workspaceid, userid, workspace_role, status, timecreated, timemodified)
+SELECT @workspaceid, u.id, 'student', 'active', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+FROM mdl_user u
+WHERE u.username LIKE 'su-student%' AND u.deleted = 0
+  AND NOT EXISTS (SELECT 1 FROM mdl_local_prequran_workspace_member m
+                  WHERE m.workspaceid = @workspaceid AND m.userid = u.id);
+
+-- Published course offerings (one per su-* course) ---------------------
+${COURSES.map((c) => `INSERT INTO mdl_local_prequran_course_offering
+  (consumerid, workspaceid, moodlecourseid, course_key, title, summary,
+   capacity, tuition_amount, pricing_currency, visibility, approval_mode,
+   status, createdby, startdate, enddate, timecreated, timemodified)
+SELECT @consumerid, @workspaceid, c.id, ${sqlStr(c.id.toLowerCase())}, ${sqlStr(c.fullname)},
+       ${sqlStr(`${c.fullname} - Somali University demo offering. Schedule: ${c.schedule}.`)},
+       ${c.capacity}, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
+       UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+FROM mdl_course c
+WHERE c.shortname = ${sqlStr(c.id.toLowerCase())}
+  AND NOT EXISTS (SELECT 1 FROM mdl_local_prequran_course_offering o
+                  WHERE o.workspaceid = @workspaceid AND o.moodlecourseid = c.id);`).join("\n\n")}
+
+COMMIT;
+
+-- If an insert fails with "Unknown column", that optional column does
+-- not exist in your plugin version - remove it from the column list and
+-- its value from the SELECT, then re-run.
+--
+-- CLEANUP (when the demo is over; uncomment to use)
+-- DELETE m FROM mdl_local_prequran_workspace_member m JOIN mdl_user u ON u.id = m.userid
+--   WHERE m.workspaceid = @workspaceid AND u.username LIKE 'su-%';
+-- DELETE FROM mdl_local_prequran_course_offering
+--   WHERE workspaceid = @workspaceid AND course_key LIKE 'su-%';
+`;
+fs.writeFileSync(path.join(outDir, "workspace-link.sql"), linkSql, "utf8");
+console.log("Wrote workspace-link.sql (members + published offerings)");
 console.log(`\nDone: package in ${path.relative(root, outDir)}`);

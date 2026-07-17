@@ -1528,7 +1528,9 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
         'live_sessionid' => $sessionid,
     ]);
     $lessonurlout = $lessonurl->out(false);
-    $welcometext = 'Welcome to ' . $pqlbrandname . '.';
+    // A single space suppresses the chat welcome banner: omitting the welcome
+    // param entirely would make BBB fall back to the server's default message.
+    $welcometext = ' ';
 
     if (empty($session->bbb_created)) {
         if (!in_array($role, ['teacher', 'admin_observer'], true)) {
@@ -1924,7 +1926,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718I</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718J</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

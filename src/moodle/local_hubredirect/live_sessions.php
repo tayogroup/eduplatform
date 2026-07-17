@@ -1630,9 +1630,20 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
                     }
                 }
                 $conflicts = pql_schedule_conflicts($teacherid, $studentids, $starts, $duration);
+                if ((int)$USER->id === $teacherid) {
+                    // A teacher scheduling their own session is implicitly
+                    // available at that time: their published availability is
+                    // advisory for students booking them, not a veto on their
+                    // own planning. Before approvals were removed this was
+                    // handled by the pending-status exception request, which
+                    // no longer exists, so filter availability conflicts here.
+                    // Real double-bookings (overlap, capacity) still block.
+                    $conflicts = array_values(array_filter($conflicts, static function(array $conflict): bool {
+                        return (string)($conflict['type'] ?? '') !== 'availability';
+                    }));
+                }
                 $creatorcanapprove = pql_can_approve_live_session((int)$USER->id, $pageworkspaceid);
-                $teacherexceptionrequest = (int)$USER->id === $teacherid
-                    && in_array((string)$payload['status'], ['pending_institution_approval', 'pending_marketplace_approval'], true);
+                $teacherexceptionrequest = (int)$USER->id === $teacherid;
                 $canoverride = $overrideconflicts
                     && $overridereason !== ''
                     && ($creatorcanapprove || $teacherexceptionrequest);
@@ -1803,7 +1814,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718D</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718E</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

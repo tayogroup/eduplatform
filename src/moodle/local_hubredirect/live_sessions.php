@@ -293,6 +293,25 @@ function pql_can_approve_live_session(int $userid, int $workspaceid): bool {
     return pqh_user_can_manage_workspace($userid, $workspaceid);
 }
 
+function pql_workspace_setting_enabled(int $workspaceid, string $key): bool {
+    global $DB;
+    if ($workspaceid <= 0
+            || !pqh_table_exists_safe('local_prequran_workspace')
+            || !pqh_table_has_field_safe('local_prequran_workspace', 'settingsjson')) {
+        return false;
+    }
+    try {
+        $json = (string)$DB->get_field('local_prequran_workspace', 'settingsjson', ['id' => $workspaceid], IGNORE_MISSING);
+    } catch (Throwable $e) {
+        return false;
+    }
+    if (trim($json) === '') {
+        return false;
+    }
+    $settings = json_decode($json, true);
+    return is_array($settings) && !empty($settings[$key]);
+}
+
 function pql_created_session_status(int $creatorid, int $teacherid, int $workspaceid): string {
     if (pql_can_approve_live_session($creatorid, $workspaceid) || is_siteadmin($creatorid)) {
         return 'scheduled';
@@ -302,6 +321,13 @@ function pql_created_session_status(int $creatorid, int $teacherid, int $workspa
     }
     if ($creatorid === $teacherid && pql_has_independent_teacher_profile_record($teacherid)) {
         return 'pending_marketplace_approval';
+    }
+    // Workspace policy: institutions can let their teachers publish live
+    // sessions directly (teacher_session_autopublish in settingsjson).
+    if ($creatorid === $teacherid
+            && pql_user_can_teach_live_workspace($creatorid, $workspaceid)
+            && pql_workspace_setting_enabled($workspaceid, 'teacher_session_autopublish')) {
+        return 'scheduled';
     }
     return 'pending_institution_approval';
 }

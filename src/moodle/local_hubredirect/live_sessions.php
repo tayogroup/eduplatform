@@ -1975,7 +1975,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718N</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718O</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>
@@ -2266,7 +2266,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
                       </form>
                     <?php endif; ?>
                   <?php else: ?>
-                    <a class="pql-btn pql-btn--start" href="<?php echo $joinurl->out(false); ?>"<?php if ($launchwithmaterials): ?> data-pql-preopen-materials="1" data-pql-material-window="pqa_quraan_materials_<?php echo (int)$session->id; ?>"<?php endif; ?>><?php echo s($buttontext); ?></a>
+                    <a class="pql-btn pql-btn--start" href="<?php echo $joinurl->out(false); ?>"><?php echo s($buttontext); ?></a>
                   <?php endif; ?>
                   <?php if ((int)$session->teacherid === (int)$USER->id || is_siteadmin($USER)): ?>
                     <a class="pql-btn pql-btn--light" href="<?php echo $monitorurl->out(false); ?>">Lesson monitor</a>
@@ -2283,42 +2283,26 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
 </main>
 <script>
 (function(){
-  function materialsFeatures() {
-    var screenWidth = window.screen && window.screen.availWidth ? window.screen.availWidth : 1280;
-    var screenHeight = window.screen && window.screen.availHeight ? window.screen.availHeight : 820;
-    var width = Math.min(520, Math.max(380, Math.floor(screenWidth * 0.28)));
-    var height = Math.min(760, Math.max(560, screenHeight - 120));
-    var left = Math.max(0, screenWidth - width - 24);
-    var top = 40;
-    return 'popup=yes,width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
-  }
-
-  function preopenMaterialsWindow(link) {
-    var name = link.getAttribute('data-pql-material-window') || 'pqa_quraan_materials_live_helper';
-    var popup = window.open('about:blank', name, materialsFeatures());
-    if (!popup) {
-      return false;
-    }
-    try {
-      popup.document.open();
-      popup.document.write('<!doctype html><html><head><title>Teacher Materials</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f8f6;color:#173044;font-family:system-ui,-apple-system,Segoe UI,sans-serif}main{padding:24px;text-align:center}h1{font-size:20px;margin:0 0 8px}p{margin:0;color:#60735f;font-weight:700}</style></head><body><main><h1>Teacher Materials</h1><p>Opening beside the live classroom...</p></main></body></html>');
-      popup.document.close();
-    } catch (e) {}
-    try {
-      popup.blur();
-    } catch (e) {}
-    try {
-      window.focus();
-    } catch (e) {}
-    return true;
-  }
-
+  // Request fullscreen inside the Start/Join class click - a real user
+  // gesture, so the browser grants it - and let the same-origin navigation
+  // proceed; Chromium-family browsers keep fullscreen across it, so the
+  // split view arrives already fullscreen. The old materials popup preopen
+  // that lived here is gone: materials are docked inside the split view now.
   document.addEventListener('click', function(event) {
-    var target = event.target && event.target.closest ? event.target.closest('a[data-pql-preopen-materials="1"]') : null;
+    var target = event.target && event.target.closest ? event.target.closest('a.pql-btn--start') : null;
     if (!target) {
       return;
     }
-    preopenMaterialsWindow(target);
+    var root = document.documentElement;
+    var request = root.requestFullscreen || root.webkitRequestFullscreen;
+    if (request && !document.fullscreenElement) {
+      try {
+        var result = request.call(root);
+        if (result && typeof result.catch === 'function') {
+          result.catch(function(){});
+        }
+      } catch (e) {}
+    }
   }, true);
 })();
 </script>

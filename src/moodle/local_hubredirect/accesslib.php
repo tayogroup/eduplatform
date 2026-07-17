@@ -1623,12 +1623,16 @@ function pqh_live_session_user_can_manage_agenda($session, int $userid): bool {
     if ($userid <= 0) {
         return false;
     }
+    // The session teacher and platform admins always manage their own session's
+    // materials. Independent-teacher sessions carry the teacher's personal
+    // workspaceid, which is not in the marketplace consumer's workspace list,
+    // so this must be decided before the consumer-context veto below.
+    if (pqh_can_manage_academy_operations($userid) || (int)$session->teacherid === $userid) {
+        return true;
+    }
     $sessionworkspaceid = (int)($session->workspaceid ?? 0);
     if ($sessionworkspaceid > 0 && !pqh_consumer_context_allows_workspace(null, $sessionworkspaceid)) {
         return false;
-    }
-    if (pqh_can_manage_academy_operations($userid) || (int)$session->teacherid === $userid) {
-        return true;
     }
     if (!empty($session->workspaceid) && pqh_user_can_teach_in_workspace($userid, (int)$session->workspaceid)) {
         return true;

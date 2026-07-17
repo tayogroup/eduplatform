@@ -604,7 +604,7 @@ function pql_live_tutor_studentid($session, $participant): int {
     return $studentid ? (int)$studentid : 0;
 }
 
-function pql_live_launch_bridge(string $joinurl, moodle_url $tutorurl, moodle_url $lessonurl, $session, ?moodle_url $materialsurl = null, string $role = ''): void {
+function pql_live_launch_bridge(string $joinurl, moodle_url $tutorurl, moodle_url $lessonurl, $session, ?moodle_url $materialsurl = null, string $role = '', ?moodle_url $exiturl = null): void {
     global $OUTPUT, $PAGE;
 
     $PAGE->set_pagelayout('embedded');
@@ -617,6 +617,7 @@ function pql_live_launch_bridge(string $joinurl, moodle_url $tutorurl, moodle_ur
     $materialsurljson = json_encode($materialsurl ? $materialsurl->out(false) : '');
     $openmaterials = $materialsurl && in_array($role, ['teacher', 'admin_observer'], true);
     $openmaterialsjson = json_encode($openmaterials);
+    $exiturljson = json_encode($exiturl ? $exiturl->out(false) : '');
     $sessiontitle = s((string)$session->title);
 
     echo $OUTPUT->header();
@@ -640,6 +641,17 @@ body.pqh-live-page .secondary-navigation{display:none!important}
 .pql-bridge__actions{display:flex;flex-wrap:wrap;gap:10px}
 .pql-bridge__btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid rgba(105,76,45,.18);background:#6f4e32;color:#fff!important;text-decoration:none!important;font-size:14px;font-weight:950;cursor:pointer}
 .pql-bridge__btn--light{background:#fff7e7;color:#3f2c1f!important}
+.pql-split{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#10202e}
+.pql-split[hidden]{display:none}
+.pql-split__bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 12px;background:#173044;color:#fff}
+.pql-split__title{font-size:13px;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pql-split__actions{display:flex;gap:7px;flex-wrap:wrap}
+.pql-split__btn{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 11px;border-radius:8px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff!important;font-size:12px;font-weight:900;cursor:pointer;text-decoration:none!important}
+.pql-split__btn:hover{background:rgba(255,255,255,.22)}
+.pql-split__body{flex:1;display:flex;min-height:0}
+.pql-split__class{flex:1;min-width:0;height:100%;border:0;background:#10202e}
+.pql-split__materials{width:min(420px,38vw);height:100%;border:0;border-left:1px solid rgba(255,255,255,.18);background:#fff}
+.pql-split--nomat .pql-split__materials{display:none}
 </style>
 <main class="pql-bridge">
   <section class="pql-bridge__card">
@@ -653,12 +665,32 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     </div>
   </section>
 </main>
+<?php if ($openmaterials): ?>
+<div class="pql-split" id="pql-split" hidden>
+  <div class="pql-split__bar">
+    <span class="pql-split__title"><?php echo $sessiontitle; ?></span>
+    <div class="pql-split__actions">
+      <button id="pql-split-toggle" class="pql-split__btn" type="button">Hide materials</button>
+      <button id="pql-split-tutor" class="pql-split__btn" type="button">Virtual tutor</button>
+      <button id="pql-split-newtab" class="pql-split__btn" type="button">Open class in its own tab</button>
+      <?php if ($exiturl): ?><a id="pql-split-exit" class="pql-split__btn" href="<?php echo $exiturl->out(false); ?>">Exit</a><?php endif; ?>
+    </div>
+  </div>
+  <div class="pql-split__body">
+    <iframe id="pql-split-class" class="pql-split__class" title="Live classroom" allow="camera *; microphone *; display-capture *; autoplay *; fullscreen *; speaker-selection *" allowfullscreen></iframe>
+    <iframe id="pql-split-materials" class="pql-split__materials" title="Teacher Materials"></iframe>
+  </div>
+</div>
+<?php endif; ?>
 <script>
 (function(){
   var joinUrl = <?php echo $joinurljson; ?>;
   var tutorUrl = <?php echo $tutorurljson; ?>;
   var materialsUrl = <?php echo $materialsurljson; ?>;
   var shouldOpenMaterials = <?php echo $openmaterialsjson; ?>;
+  var exitUrl = <?php echo $exiturljson; ?>;
+  var closeKey = 'pqa_live_session_closed_<?php echo (int)$session->id; ?>';
+  var splitActive = false;
   var popupName = 'pqa_virtual_tutor_<?php echo (int)$session->id; ?>';
   var materialsPopupName = 'pqa_quraan_materials_<?php echo (int)$session->id; ?>';
 
@@ -737,6 +769,65 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     window.setTimeout(openClass, 250);
   }
 
+  function ensureCompact(url) {
+    return url.indexOf('compact=1') === -1 ? addParam(url, 'compact', '1') : url;
+  }
+
+  function renderSplit() {
+    var split = document.getElementById('pql-split');
+    if (!split) {
+      return false;
+    }
+    try {
+      window.localStorage.removeItem(closeKey);
+    } catch (e) {}
+    split.hidden = false;
+    splitActive = true;
+    var classFrame = document.getElementById('pql-split-class');
+    var materialsFrame = document.getElementById('pql-split-materials');
+    if (classFrame && !classFrame.src) {
+      classFrame.src = joinUrl;
+    }
+    if (materialsFrame && materialsUrl && !materialsFrame.src) {
+      materialsFrame.src = ensureCompact(materialsUrl);
+    }
+    var toggleButton = document.getElementById('pql-split-toggle');
+    if (toggleButton) {
+      toggleButton.addEventListener('click', function(){
+        var hidden = split.classList.toggle('pql-split--nomat');
+        toggleButton.textContent = hidden ? 'Show materials' : 'Hide materials';
+      });
+    }
+    var tutorSplitButton = document.getElementById('pql-split-tutor');
+    if (tutorSplitButton) {
+      tutorSplitButton.addEventListener('click', openTutor);
+    }
+    var newTabButton = document.getElementById('pql-split-newtab');
+    if (newTabButton) {
+      newTabButton.addEventListener('click', function(){
+        // One BBB connection per user: release the embedded room first.
+        if (classFrame) {
+          classFrame.src = 'about:blank';
+        }
+        window.open(joinUrl, '_blank');
+        newTabButton.disabled = true;
+        newTabButton.textContent = 'Class opened in its own tab';
+      });
+    }
+    // When the class is ended, the closed page stamps localStorage; leave
+    // the split view and return to the live sessions list automatically.
+    window.setInterval(function(){
+      var value = 0;
+      try {
+        value = parseInt(window.localStorage.getItem(closeKey) || '0', 10);
+      } catch (e) {}
+      if (value > 0 && exitUrl) {
+        window.location.replace(exitUrl);
+      }
+    }, 1500);
+    return true;
+  }
+
   var tutorButton = document.getElementById('pql-open-tutor');
   var toolsButton = document.getElementById('pql-open-tools');
   var materialsButton = document.getElementById('pql-open-materials');
@@ -765,6 +856,9 @@ body.pqh-live-page .secondary-navigation{display:none!important}
   }
 
   function showFallback() {
+    if (splitActive) {
+      return;
+    }
     var bridge = document.querySelector('.pql-bridge');
     if (bridge) {
       bridge.classList.add('is-visible');
@@ -777,6 +871,9 @@ body.pqh-live-page .secondary-navigation{display:none!important}
   }
 
   function launchLiveSession() {
+    if (shouldOpenMaterials && renderSplit()) {
+      return;
+    }
     if (shouldOpenMaterials) {
       openMaterials();
     }
@@ -1525,7 +1622,15 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
     }
     pql_audit((int)$session->id, 'join_redirect', 'user', (int)$USER->id, ['role' => $role]);
     pql_mark_student_join($session, $participant, $role);
-    pql_live_launch_bridge($joinurl, $tutorurl, $lessonurl, $session, pqh_live_session_materials_control_url((int)$session->id), $role);
+    pql_live_launch_bridge(
+        $joinurl,
+        $tutorurl,
+        $lessonurl,
+        $session,
+        pqh_live_session_materials_control_url((int)$session->id),
+        $role,
+        pql_url('/local/hubredirect/live_sessions.php', $sessionurlparams)
+    );
 }
 
 if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'create') {
@@ -1814,7 +1919,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718F</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718G</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

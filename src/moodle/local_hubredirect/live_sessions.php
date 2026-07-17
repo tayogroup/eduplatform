@@ -1799,7 +1799,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton.</p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260717C</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>
@@ -1883,7 +1883,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
               <div class="pql-checks">
                 <?php foreach ($teacherstudents as $student): ?>
                   <label class="pql-check">
-                    <input type="checkbox" name="studentids[]" value="<?php echo (int)$student['studentid']; ?>">
+                    <input type="checkbox" name="studentids[]" value="<?php echo (int)$student['studentid']; ?>" <?php echo count($teacherstudents) === 1 ? 'checked' : ''; ?>>
                     <span><?php echo s($student['name']); ?></span>
                   </label>
                 <?php endforeach; ?>

@@ -1736,12 +1736,12 @@ function pqh_live_ops_link(): moodle_url {
     return new moodle_url('/local/hubredirect/live_ops.php');
 }
 
-function pqh_live_create_wizard_link(): moodle_url {
-    return new moodle_url('/local/hubredirect/live_create_wizard.php');
+function pqh_live_create_wizard_link(int $workspaceid = 0): moodle_url {
+    return new moodle_url('/local/hubredirect/live_create_wizard.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : []);
 }
 
-function pqh_live_series_wizard_link(): moodle_url {
-    return new moodle_url('/local/hubredirect/live_series_wizard.php');
+function pqh_live_series_wizard_link(int $workspaceid = 0): moodle_url {
+    return new moodle_url('/local/hubredirect/live_series_wizard.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : []);
 }
 
 function pqh_live_followups_link(): moodle_url {
@@ -2699,6 +2699,8 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
       <?php if ($hasworkspace): ?>
         <a class="pqh-quick-card" href="<?php echo (new moodle_url('/local/hubredirect/workspace_reports.php', ['workspaceid' => $currentworkspaceid]))->out(false); ?>"><strong>Workspace Reports</strong><span>Teacher load, sessions, attendance, materials, and quiz summaries</span></a>
       <?php endif; ?>
+      <a class="pqh-quick-card" href="<?php echo pqh_live_create_wizard_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Create Session</strong><span>Guided one-time class setup</span></a>
+      <a class="pqh-quick-card" href="<?php echo pqh_live_series_wizard_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Create Series</strong><span>Guided recurring class setup</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_managed_reports_link(0, $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Student Reports</strong><span>Progress, focus, practice, quiz, and live-class summaries</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_quiz_report_link()->out(false); ?>"><strong>Quiz Reports</strong><span>Review alphabet quiz scores and skill gaps</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_hub_link('communications.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Communications</strong><span>Open messages and announcements</span></a>

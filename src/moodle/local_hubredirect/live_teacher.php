@@ -746,6 +746,8 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
         <?php if ($workspaceid > 0): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Workspace dashboard</a><?php endif; ?>
         <?php if ($workspaceid > 0): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_office.php', ['workspaceid' => $workspaceid] + ($selectedchild ? ['childid' => (int)$selectedchild['studentid']] : []))->out(false); ?>">Document Studio</a><?php endif; ?>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $teacherbaseurlparams))->out(false); ?>">Live sessions</a>
+        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create session</a>
+        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create series</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $teacherbaseurlparams))->out(false); ?>">Class series</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $teacherbaseurlparams))->out(false); ?>">Availability</a>

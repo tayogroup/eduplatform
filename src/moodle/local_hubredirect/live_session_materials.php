@@ -103,14 +103,34 @@ function pqlmat_max_embedded_document_bytes(): int {
 }
 
 function pqlmat_blank_whiteboard_pdf(): string {
-    // A minimal valid one-page empty PDF (960x540, 16:9) built with correct
-    // xref offsets so BBB's converter accepts it. Annotating happens on the
-    // BBB whiteboard layer, so the page itself stays empty.
+    // A minimal valid one-page 16:9 PDF (960x540) with a graph-paper grid,
+    // built with correct xref offsets so BBB's converter accepts it. Keep in
+    // sync with whiteboard_pdf.php, which serves the same page by URL.
+    $content = "0.5 w\n0.87 0.90 0.93 RG\n";
+    for ($x = 30; $x < 960; $x += 30) {
+        if ($x % 150 === 0) {
+            continue;
+        }
+        $content .= $x . " 0 m " . $x . " 540 l S\n";
+    }
+    for ($y = 30; $y < 540; $y += 30) {
+        if ($y % 150 === 0) {
+            continue;
+        }
+        $content .= "0 " . $y . " m 960 " . $y . " l S\n";
+    }
+    $content .= "0.76 0.81 0.87 RG\n";
+    for ($x = 150; $x < 960; $x += 150) {
+        $content .= $x . " 0 m " . $x . " 540 l S\n";
+    }
+    for ($y = 150; $y < 540; $y += 150) {
+        $content .= "0 " . $y . " m 960 " . $y . " l S\n";
+    }
     $objects = [
         "1 0 obj\n<</Type/Catalog/Pages 2 0 R>>\nendobj\n",
         "2 0 obj\n<</Type/Pages/Kids[3 0 R]/Count 1>>\nendobj\n",
         "3 0 obj\n<</Type/Page/Parent 2 0 R/MediaBox[0 0 960 540]/Resources<<>>/Contents 4 0 R>>\nendobj\n",
-        "4 0 obj\n<</Length 0>>\nstream\n\nendstream\nendobj\n",
+        "4 0 obj\n<</Length " . strlen($content) . ">>\nstream\n" . $content . "endstream\nendobj\n",
     ];
     $pdf = "%PDF-1.4\n";
     $offsets = [];

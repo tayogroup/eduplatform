@@ -440,4 +440,102 @@ COMMIT;
 `;
 fs.writeFileSync(path.join(outDir, "workspace-link.sql"), linkSql.replace(/\bmdl_/g, DB_PREFIX), "utf8");
 console.log("Wrote workspace-link.sql (members + published offerings)");
+
+// ---------------------------------------------------------------- student linking SQL
+// Run AFTER workspace-link.sql. Creates class groups (one per teacher),
+// puts every enrolled student into the right teacher's group, and gives
+// each student a primary teacher. Shapes follow live_grouping.php and
+// workspace_people.php. Teacher slots: course index ci (0-4), section k
+// (0-5) -> teacher username su-teacher{ci+1+5k}; students distribute by
+// MOD(userid, 6).
+const courseMapRows = COURSES.map((c, ci) => `(${sqlStr(c.id.toLowerCase())}, ${ci}, ${sqlStr(c.fullname)}, ${sqlStr(c.schedule)})`).join(",\n");
+const sectionsPerCourse = Math.floor(TEACHER_COUNT / COURSES.length);
+const kUnion = Array.from({ length: sectionsPerCourse }, (_, k) => `SELECT ${k} AS k`).join(" UNION ALL ");
+
+const studentLinksSql = `-- Somali University: link students to teachers and class groups
+-- Run AFTER workspace-link.sql. MySQL/MariaDB. Prefix from DB_PREFIX (mdlgx_).
+--
+-- Creates:
+--   * ${TEACHER_COUNT} class groups (one per teacher, named per course section)
+--   * group members: every course enrolment placed in one of the course's
+--     ${sectionsPerCourse} sections (spread by MOD(userid, ${sectionsPerCourse}))
+--   * one primary teacher per student (from their first course's section)
+-- Safe to re-run; purge caches afterwards.
+
+SET @workspaceid := 15;
+
+START TRANSACTION;
+
+DROP TEMPORARY TABLE IF EXISTS tmp_su_cmap;
+CREATE TEMPORARY TABLE tmp_su_cmap (shortname VARCHAR(255) PRIMARY KEY, ci INT, title VARCHAR(255), schedule VARCHAR(80));
+INSERT INTO tmp_su_cmap (shortname, ci, title, schedule) VALUES
+${courseMapRows};
+
+-- 1) Class groups: one per teacher ------------------------------------
+INSERT INTO mdl_local_prequran_class_group
+  (workspaceid, poolid, teacherid, title, age_min, age_max, gender_policy,
+   schedule_summary, max_students, status, createdby, timecreated, timemodified)
+SELECT @workspaceid, 0, t.id,
+       CONCAT(m.title, ' - Group ', s.k + 1),
+       18, 99, 'flexible', m.schedule, 40, 'open', 0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+FROM tmp_su_cmap m
+JOIN (${kUnion}) s
+JOIN mdl_user t ON t.username = CONCAT('su-teacher', m.ci + 1 + ${COURSES.length} * s.k) AND t.deleted = 0
+WHERE NOT EXISTS (SELECT 1 FROM mdl_local_prequran_class_group g
+                  WHERE g.title = CONCAT(m.title, ' - Group ', s.k + 1)
+                    AND g.workspaceid = @workspaceid);
+
+-- 2) Group members: place each enrolment in its course section --------
+INSERT INTO mdl_local_prequran_group_member
+  (workspaceid, groupid, poolid, studentid, match_score, match_status,
+   assignment_status, match_details, assignedby, timecreated, timemodified)
+SELECT @workspaceid, g.id, 0, u.id, 100, 'manual', 'active',
+       'Somali University demo assignment.', 0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+FROM mdl_user u
+JOIN mdl_user_enrolments ue ON ue.userid = u.id
+JOIN mdl_enrol e ON e.id = ue.enrolid AND e.enrol = 'manual'
+JOIN mdl_course c ON c.id = e.courseid
+JOIN tmp_su_cmap m ON m.shortname = c.shortname
+JOIN mdl_local_prequran_class_group g
+  ON g.workspaceid = @workspaceid
+ AND g.title = CONCAT(m.title, ' - Group ', MOD(u.id, ${sectionsPerCourse}) + 1)
+WHERE u.username LIKE 'su-student%' AND u.deleted = 0
+  AND NOT EXISTS (SELECT 1 FROM mdl_local_prequran_group_member gm
+                  WHERE gm.groupid = g.id AND gm.studentid = u.id);
+
+-- 3) Primary teacher per student (from their first course) ------------
+INSERT INTO mdl_local_prequran_teacher_student
+  (workspaceid, teacherid, studentid, cohortid, status, assignedby, timecreated, timemodified)
+SELECT @workspaceid, t.id, fc.uid, 0, 'active', 0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+FROM (
+  SELECT u.id AS uid, MIN(m.ci) AS ci
+  FROM mdl_user u
+  JOIN mdl_user_enrolments ue ON ue.userid = u.id
+  JOIN mdl_enrol e ON e.id = ue.enrolid AND e.enrol = 'manual'
+  JOIN mdl_course c ON c.id = e.courseid
+  JOIN tmp_su_cmap m ON m.shortname = c.shortname
+  WHERE u.username LIKE 'su-student%' AND u.deleted = 0
+  GROUP BY u.id
+) fc
+JOIN mdl_user t ON t.username = CONCAT('su-teacher', fc.ci + 1 + ${COURSES.length} * MOD(fc.uid, ${sectionsPerCourse})) AND t.deleted = 0
+WHERE NOT EXISTS (SELECT 1 FROM mdl_local_prequran_teacher_student ts
+                  WHERE ts.workspaceid = @workspaceid AND ts.studentid = fc.uid);
+
+DROP TEMPORARY TABLE IF EXISTS tmp_su_cmap;
+
+COMMIT;
+
+-- If an insert fails with "Unknown column", that optional column does
+-- not exist in your plugin version - remove it and its value, re-run.
+--
+-- CLEANUP (when the demo is over; uncomment to use)
+-- DELETE gm FROM mdl_local_prequran_group_member gm JOIN mdl_user u ON u.id = gm.studentid
+--   WHERE gm.workspaceid = @workspaceid AND u.username LIKE 'su-%';
+-- DELETE FROM mdl_local_prequran_class_group
+--   WHERE workspaceid = @workspaceid AND title LIKE '%- Group %' AND createdby = 0;
+-- DELETE ts FROM mdl_local_prequran_teacher_student ts JOIN mdl_user u ON u.id = ts.studentid
+--   WHERE ts.workspaceid = @workspaceid AND u.username LIKE 'su-%';
+`;
+fs.writeFileSync(path.join(outDir, "student-links.sql"), studentLinksSql.replace(/\bmdl_/g, DB_PREFIX), "utf8");
+console.log("Wrote student-links.sql (class groups, group members, primary teachers)");
 console.log(`\nDone: package in ${path.relative(root, outDir)}`);

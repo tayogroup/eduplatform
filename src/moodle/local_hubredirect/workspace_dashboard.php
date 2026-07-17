@@ -381,6 +381,13 @@ $consumerparams = [];
 if (trim((string)($consumercontext->consumerslug ?? '')) !== '') {
     $consumerparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+// Teachers and students use the standard dashboard experience across all
+// consumer types; the workspace dashboard is the management view for
+// owners, admins, and platform operators.
+if (!$canmanage && !$canacademyops
+        && in_array($role, ['teacher', 'assistant_teacher', 'student'], true)) {
+    redirect(new moodle_url('/local/hubredirect/dashboard.php', $consumerparams));
+}
 $workspaceparams = $consumerparams + ['workspaceid' => $workspaceid];
 $primarydomain = (string)($consumercontext->domain ?? '');
 foreach ($domains as $domainrow) {

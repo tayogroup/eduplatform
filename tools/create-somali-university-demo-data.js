@@ -538,4 +538,56 @@ COMMIT;
 `;
 fs.writeFileSync(path.join(outDir, "student-links.sql"), studentLinksSql.replace(/\bmdl_/g, DB_PREFIX), "utf8");
 console.log("Wrote student-links.sql (class groups, group members, primary teachers)");
+
+// ---------------------------------------------------------------- student profiles SQL
+// Run AFTER workspace-link.sql. Creates local_prequran_student_profile
+// rows so pickers and portals show display names, level, timezone,
+// consent and demographics (shape from admissionslib.php
+// pqadm_upsert_student_profile plus the picker fields the session
+// wizard reads).
+const profileRows = students.map((s) => `(${sqlStr(s.username)},${sqlStr(`${s.first} ${s.last}`)},${s.age},${sqlStr(s.gender)},${sqlStr(s.city)},${sqlStr(s.courses[0].fullname)})`);
+const profileChunks = [];
+for (let i = 0; i < profileRows.length; i += 200) profileChunks.push(profileRows.slice(i, i + 200));
+
+const profilesSql = `-- Somali University: student profiles for pickers and portals
+-- Run AFTER workspace-link.sql. MySQL/MariaDB. Prefix from DB_PREFIX (mdlgx_).
+-- Safe to re-run (skips users that already have a profile). If an insert
+-- fails with "Unknown column", remove that column and its value, re-run.
+
+SET @workspaceid := 15;
+
+START TRANSACTION;
+
+DROP TEMPORARY TABLE IF EXISTS tmp_su_profiles;
+CREATE TEMPORARY TABLE tmp_su_profiles (
+  username VARCHAR(100) PRIMARY KEY,
+  display_name VARCHAR(255),
+  age INT,
+  gender VARCHAR(20),
+  city VARCHAR(120),
+  course_type VARCHAR(255)
+);
+${profileChunks.map((chunk) => `INSERT INTO tmp_su_profiles (username, display_name, age, gender, city, course_type) VALUES\n${chunk.join(",\n")};`).join("\n")}
+
+INSERT INTO mdl_local_prequran_student_profile
+  (userid, workspaceid, student_display_name, current_level, course_type,
+   status, gender, age_years, city, country, timezone, primary_language,
+   live_class_consent, recording_consent, createdby, timecreated, timemodified)
+SELECT u.id, @workspaceid, t.display_name, 'year_1', t.course_type,
+       'active', t.gender, t.age, t.city, ${sqlStr(WORKSPACE.country)}, ${sqlStr(WORKSPACE.timezone)}, 'Somali',
+       'yes', 'yes', 0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+FROM tmp_su_profiles t
+JOIN mdl_user u ON u.username = t.username AND u.deleted = 0
+WHERE NOT EXISTS (SELECT 1 FROM mdl_local_prequran_student_profile sp WHERE sp.userid = u.id);
+
+DROP TEMPORARY TABLE IF EXISTS tmp_su_profiles;
+
+COMMIT;
+
+-- CLEANUP (when the demo is over; uncomment to use)
+-- DELETE sp FROM mdl_local_prequran_student_profile sp JOIN mdl_user u ON u.id = sp.userid
+--   WHERE u.username LIKE 'su-%';
+`;
+fs.writeFileSync(path.join(outDir, "student-profiles.sql"), profilesSql.replace(/\bmdl_/g, DB_PREFIX), "utf8");
+console.log("Wrote student-profiles.sql (picker/portal profile rows)");
 console.log(`\nDone: package in ${path.relative(root, outDir)}`);

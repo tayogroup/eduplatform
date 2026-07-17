@@ -32,17 +32,17 @@ $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url($returnurl);
 $PAGE->set_pagelayout('popup');
-$PAGE->set_title('Teacher Materials');
-$PAGE->set_heading('Teacher Materials');
+$PAGE->set_title('Quraan Materials');
+$PAGE->set_heading('Quraan Materials');
 $PAGE->add_body_class('pqlmat-page');
 
 if (!pqh_table_exists_safe('local_prequran_live_session')) {
-    pqh_access_denied('Live-session tables are not ready. Please ask support to complete the live-session upgrade.', $safecloseurl, 'Teacher Materials unavailable');
+    pqh_access_denied('Live-session tables are not ready. Please ask support to complete the live-session upgrade.', $safecloseurl, 'Quraan Materials unavailable');
 }
 
 $session = $sessionid > 0 ? $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING) : false;
 if (!$session) {
-    pqh_access_denied('Choose a valid live session before opening Teacher Materials.', $safecloseurl, 'Teacher Materials unavailable');
+    pqh_access_denied('Choose a valid live session before opening Quraan Materials.', $safecloseurl, 'Quraan Materials unavailable');
 }
 if ($workspaceid <= 0 && !empty($session->workspaceid)) {
     $workspaceid = (int)$session->workspaceid;
@@ -63,7 +63,7 @@ function pqlmat_url(string $path, array $urlparams, array $params = []): moodle_
     return new moodle_url($path, $urlparams + $params);
 }
 
-function pqlmat_stop(string $message, string $title = 'Teacher Materials unavailable'): void {
+function pqlmat_stop(string $message, string $title = 'Quraan Materials unavailable'): void {
     global $returnurl;
     pqh_access_denied($message, $returnurl, $title);
 }
@@ -247,8 +247,7 @@ function pqlmat_materials(int $workspaceid): array {
 }
 
 $workspaceid = pqlmat_workspace_id($session);
-if ($workspaceid > 0 && (int)$session->teacherid !== (int)$USER->id
-        && !pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)) {
+if ($workspaceid > 0 && !pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied(
         'Only workspace teaching and admin users can use this materials library.',
         $safecloseurl,
@@ -259,7 +258,7 @@ if ($workspaceid > 0 && (int)$session->teacherid !== (int)$USER->id
 $notice = '';
 if ($action === 'insert') {
     if (!confirm_sesskey()) {
-        pqh_access_denied('Please reopen Teacher Materials and try again.', $returnurl, 'Teacher Materials action expired');
+        pqh_access_denied('Please reopen Quraan Materials and try again.', $returnurl, 'Quraan Materials action expired');
     }
     if ($materialid <= 0) {
         try {
@@ -329,7 +328,7 @@ body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-reg
   <?php if (!$compact): ?>
   <section class="pqlmat-top">
     <div>
-      <h1>Teacher Materials</h1>
+      <h1>Quraan Materials</h1>
       <p class="pqlmat-sub"><?php echo s((string)$session->title); ?> - swaps the active BBB presentation for this live room.</p>
     </div>
     <div class="pqlmat-actions">
@@ -435,7 +434,7 @@ body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-reg
     } catch (e) {}
     window.setTimeout(function(){
       if (!window.closed && document.body) {
-        document.body.innerHTML = '<main class="pqlmat-wrap"><section class="pqlmat-panel"><div class="pqlmat-empty">The live session has ended. You can close this Teacher Materials window.</div></section></main>';
+        document.body.innerHTML = '<main class="pqlmat-wrap"><section class="pqlmat-panel"><div class="pqlmat-empty">The live session has ended. You can close this Quraan Materials window.</div></section></main>';
       }
     }, 300);
   }

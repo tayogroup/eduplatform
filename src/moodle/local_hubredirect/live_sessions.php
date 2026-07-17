@@ -510,7 +510,7 @@ function pql_agenda_slides_controls($session, string $returnurl): string {
         );
         $html .= html_writer::link(
             pqh_live_session_materials_url($sessionid),
-            'Teacher Materials',
+            'Quraan Materials',
             ['class' => 'pql-btn pql-btn--light', 'target' => '_blank', 'rel' => 'noopener']
         );
         $html .= html_writer::span('Attached: ' . s($filename), 'pql-agenda__status');
@@ -523,7 +523,7 @@ function pql_agenda_slides_controls($session, string $returnurl): string {
         );
         $html .= html_writer::link(
             pqh_live_session_materials_url($sessionid),
-            'Teacher Materials',
+            'Quraan Materials',
             ['class' => 'pql-btn pql-btn--light', 'target' => '_blank', 'rel' => 'noopener']
         );
     }
@@ -648,7 +648,7 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     <div class="pql-bridge__actions">
       <?php if ($openmaterials): ?><button id="pql-open-class-materials" class="pql-bridge__btn" type="button">Open Class + Materials</button><?php endif; ?>
       <button id="pql-open-tools" class="pql-bridge__btn pql-bridge__btn--light" type="button">Open Tutor + Materials</button>
-      <?php if ($materialsurl): ?><a id="pql-open-materials" class="pql-bridge__btn pql-bridge__btn--light" target="_blank" rel="noopener" href="<?php echo $materialsurl->out(false); ?>">Open Teacher Materials</a><?php endif; ?>
+      <?php if ($materialsurl): ?><a id="pql-open-materials" class="pql-bridge__btn pql-bridge__btn--light" target="_blank" rel="noopener" href="<?php echo $materialsurl->out(false); ?>">Open Quraan Materials</a><?php endif; ?>
       <button id="pql-open-class" class="pql-bridge__btn<?php echo $openmaterials ? ' pql-bridge__btn--light' : ''; ?>" type="button">Continue to Class</button>
     </div>
   </section>
@@ -771,7 +771,7 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     }
     if (status) {
       status.textContent = shouldOpenMaterials
-        ? 'The live classroom should be opening. If Teacher Materials did not open, use Open Class + Materials.'
+        ? 'The live classroom should be opening. If Quraan Materials did not open, use Open Class + Materials.'
         : 'The live classroom should be opening. If it did not open, use Continue to Class.';
     }
   }
@@ -844,7 +844,7 @@ body.pqh-live-page .secondary-navigation{display:none!important}
 <main class="pql-closed">
   <section class="pql-closed__card">
     <h1>Live session closed</h1>
-    <p>Closing Teacher Materials and returning you to your workspace.</p>
+    <p>Closing Quraan Materials and returning you to your workspace.</p>
   </section>
 </main>
 <script>
@@ -2088,7 +2088,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     }
     try {
       popup.document.open();
-      popup.document.write('<!doctype html><html><head><title>Teacher Materials</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f8f6;color:#173044;font-family:system-ui,-apple-system,Segoe UI,sans-serif}main{padding:24px;text-align:center}h1{font-size:20px;margin:0 0 8px}p{margin:0;color:#60735f;font-weight:700}</style></head><body><main><h1>Teacher Materials</h1><p>Opening beside the live classroom...</p></main></body></html>');
+      popup.document.write('<!doctype html><html><head><title>Quraan Materials</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f8f6;color:#173044;font-family:system-ui,-apple-system,Segoe UI,sans-serif}main{padding:24px;text-align:center}h1{font-size:20px;margin:0 0 8px}p{margin:0;color:#60735f;font-weight:700}</style></head><body><main><h1>Quraan Materials</h1><p>Opening beside the live classroom...</p></main></body></html>');
       popup.document.close();
     } catch (e) {}
     try {

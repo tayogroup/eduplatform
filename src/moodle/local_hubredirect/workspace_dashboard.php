@@ -339,6 +339,38 @@ $sessions = pqwd_upcoming_sessions($workspaceid);
 $domains = pqwd_workspace_domains($workspaceid);
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $canteach = pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid);
+if ($canteach && !$canmanage) {
+    // Teachers see only their own students: direct teacher-student
+    // assignments plus members of class groups they lead. Workspace
+    // admins/owners keep the full list.
+    $teacherscopedids = [];
+    if (pqh_table_exists_safe('local_prequran_teacher_student')) {
+        $rows = $DB->get_records('local_prequran_teacher_student', [
+            'teacherid' => (int)$USER->id,
+            'status' => 'active',
+        ], '', 'id,studentid');
+        foreach ($rows as $row) {
+            $teacherscopedids[(int)$row->studentid] = true;
+        }
+    }
+    if (pqh_table_exists_safe('local_prequran_class_group') && pqh_table_exists_safe('local_prequran_group_member')) {
+        $rows = $DB->get_records_sql(
+            "SELECT gm.id, gm.studentid
+               FROM {local_prequran_group_member} gm
+               JOIN {local_prequran_class_group} g ON g.id = gm.groupid
+              WHERE g.teacherid = :teacherid
+                AND gm.assignment_status = :status",
+            ['teacherid' => (int)$USER->id, 'status' => 'active']
+        );
+        foreach ($rows as $row) {
+            $teacherscopedids[(int)$row->studentid] = true;
+        }
+    }
+    $students = array_values(array_filter($students, static function(array $student) use ($teacherscopedids): bool {
+        return isset($teacherscopedids[(int)$student['studentid']]);
+    }));
+    $studentcourses = pqwd_student_course_labels(array_column(array_slice($students, 0, 20), 'studentid'));
+}
 $canmanageofferings = $canmanage || (
     (string)($workspace->workspace_type ?? '') === 'solo_teacher'
     && pqh_has_independent_teacher_profile((int)$USER->id)

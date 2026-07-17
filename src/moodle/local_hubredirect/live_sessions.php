@@ -274,13 +274,19 @@ function pql_can_create_live_session(int $userid, int $workspaceid): bool {
     if ($isindependentteacher) {
         return true;
     }
+    // A teaching role in the workspace outranks the managed-student veto:
+    // custom profile fields can default to yes for every account, which
+    // would otherwise misclassify institution teachers as students.
+    if ($workspaceid > 0 && pql_user_can_teach_live_workspace($userid, $workspaceid)) {
+        return true;
+    }
     if (pql_is_managed_student($userid)) {
         return false;
     }
     if ($workspaceid > 0) {
-        return pql_user_can_teach_live_workspace($userid, $workspaceid);
+        return false;
     }
-    return $isindependentteacher || pqh_user_can_create_live_sessions($userid, $workspaceid) || pql_is_teacher($userid);
+    return pqh_user_can_create_live_sessions($userid, $workspaceid) || pql_is_teacher($userid);
 }
 
 function pql_can_approve_live_session(int $userid, int $workspaceid): bool {
@@ -1542,10 +1548,12 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
         // deny is debuggable from the error page alone. The build marker
         // also proves which file version served the request.
         $diagrole = pqh_user_workspace_role((int)$USER->id, (int)$pageworkspaceid);
-        $diag = ' [diag build=20260717A userid=' . (int)$USER->id
+        $diag = ' [diag build=20260717B userid=' . (int)$USER->id
             . ' workspaceid=' . (int)$pageworkspaceid
             . ' workspace_role=' . ($diagrole === '' ? 'none' : $diagrole)
             . ' teacher_ws=' . implode('/', array_slice(pql_live_teacher_workspace_ids((int)$USER->id), 0, 5))
+            . ' managed=' . (pql_is_managed_student((int)$USER->id) ? '1' : '0')
+            . ' teach_ws_ok=' . (pql_user_can_teach_live_workspace((int)$USER->id, (int)$pageworkspaceid) ? '1' : '0')
             . ']';
         pqh_access_denied('You cannot create live sessions.' . $diag, $returnurl, 'Live sessions access required');
     }

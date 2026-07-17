@@ -1600,6 +1600,10 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
         $start = pql_parse_local_datetime($date, $time, $tz);
         if (!$start) {
             $error = 'Enter a valid date and time.';
+        } else if (($start + max(15, $duration) * MINSECS) <= time()) {
+            $error = 'That time is already in the past, so the session would never appear in Upcoming Sessions. You chose '
+                . userdate($start, get_string('strftimedatetimeshort')) . ' but the server time is now '
+                . userdate(time(), get_string('strftimedatetimeshort')) . '. Pick a future date and time.';
         } else {
             if ($recurring && !pql_series_ready()) {
                 $error = 'Recurring classes need the Phase 16 series SQL installed first.';
@@ -1799,7 +1803,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260717C</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718D</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

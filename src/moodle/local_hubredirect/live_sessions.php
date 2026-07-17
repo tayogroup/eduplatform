@@ -319,23 +319,12 @@ function pql_workspace_setting_enabled(int $workspaceid, string $key): bool {
 }
 
 function pql_created_session_status(int $creatorid, int $teacherid, int $workspaceid): string {
-    if (pql_can_approve_live_session($creatorid, $workspaceid) || is_siteadmin($creatorid)) {
-        return 'scheduled';
-    }
-    if ($creatorid === $teacherid && pql_is_independent_workspace($workspaceid)) {
-        return 'pending_marketplace_approval';
-    }
-    if ($creatorid === $teacherid && pql_has_independent_teacher_profile_record($teacherid)) {
-        return 'pending_marketplace_approval';
-    }
-    // Workspace policy: institutions can let their teachers publish live
-    // sessions directly (teacher_session_autopublish in settingsjson).
-    if ($creatorid === $teacherid
-            && pql_user_can_teach_live_workspace($creatorid, $workspaceid)
-            && pql_workspace_setting_enabled($workspaceid, 'teacher_session_autopublish')) {
-        return 'scheduled';
-    }
-    return 'pending_institution_approval';
+    // Platform-wide policy (2026-07-17): teacher-created sessions publish
+    // immediately on every consumer type - marketplace, independent, and
+    // institution - identical to admin-created sessions. The approval
+    // statuses remain supported for existing records and future policy
+    // changes, but nothing new is created in a pending state.
+    return 'scheduled';
 }
 
 function pql_parse_local_datetime(string $date, string $time, string $timezone): int {
@@ -1544,18 +1533,7 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
         pqh_access_denied('Please refresh the live sessions page and try again.', $returnurl, 'Live sessions action expired');
     }
     if (!$cancreate) {
-        // Staging diagnostic: expose which inputs the permission saw so a
-        // deny is debuggable from the error page alone. The build marker
-        // also proves which file version served the request.
-        $diagrole = pqh_user_workspace_role((int)$USER->id, (int)$pageworkspaceid);
-        $diag = ' [diag build=20260717B userid=' . (int)$USER->id
-            . ' workspaceid=' . (int)$pageworkspaceid
-            . ' workspace_role=' . ($diagrole === '' ? 'none' : $diagrole)
-            . ' teacher_ws=' . implode('/', array_slice(pql_live_teacher_workspace_ids((int)$USER->id), 0, 5))
-            . ' managed=' . (pql_is_managed_student((int)$USER->id) ? '1' : '0')
-            . ' teach_ws_ok=' . (pql_user_can_teach_live_workspace((int)$USER->id, (int)$pageworkspaceid) ? '1' : '0')
-            . ']';
-        pqh_access_denied('You cannot create live sessions.' . $diag, $returnurl, 'Live sessions access required');
+        pqh_access_denied('You cannot create live sessions.', $returnurl, 'Live sessions access required');
     }
     $createdfromwizard = optional_param('created_from_wizard', 0, PARAM_BOOL);
 
@@ -1862,7 +1840,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
         <h2><?php echo $prefillcreatedfromwizard ? 'Complete Wizard Session' : 'Create Session'; ?></h2>
         <?php if (!is_siteadmin($USER)): ?>
           <div class="pql-alert">
-            Teacher-created sessions are submitted for approval before they can start.
+            Sessions you create are scheduled immediately and appear for your students right away.
           </div>
         <?php endif; ?>
         <form method="post">

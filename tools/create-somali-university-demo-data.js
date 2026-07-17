@@ -44,11 +44,11 @@ const WORKSPACE = {
 };
 
 const COURSES = [
-  { id: "SU-ENG101", fullname: "English Foundations", category: "Languages", teacherIndex: 0, capacity: 240, schedule: "Mon/Wed 10:00 AM" },
-  { id: "SU-MATH101", fullname: "Mathematics Foundations", category: "Sciences", teacherIndex: 1, capacity: 240, schedule: "Tue/Thu 8:00 AM" },
-  { id: "SU-QURN101", fullname: "Quraan Recitation and Tajweed", category: "Islamic Studies", teacherIndex: 2, capacity: 210, schedule: "Sat/Sun 4:00 PM" },
-  { id: "SU-ARB101", fullname: "Arabic Language Basics", category: "Languages", teacherIndex: 3, capacity: 240, schedule: "Mon/Thu 2:00 PM" },
-  { id: "SU-ISL101", fullname: "Islamic Studies Foundations", category: "Islamic Studies", teacherIndex: 4, capacity: 270, schedule: "Tue/Sat 6:00 PM" },
+  { id: "SU-ENG101", fullname: "Academic English I", category: "Languages", teacherIndex: 0, capacity: 240, schedule: "Mon/Wed 10:00 AM" },
+  { id: "SU-MATH101", fullname: "University Mathematics I", category: "Sciences", teacherIndex: 1, capacity: 240, schedule: "Tue/Thu 8:00 AM" },
+  { id: "SU-QURN101", fullname: "Quraan Studies I", category: "Islamic Studies", teacherIndex: 2, capacity: 210, schedule: "Sat/Sun 4:00 PM" },
+  { id: "SU-ARB101", fullname: "Arabic Language I", category: "Languages", teacherIndex: 3, capacity: 240, schedule: "Mon/Thu 2:00 PM" },
+  { id: "SU-ISL101", fullname: "Islamic Studies I", category: "Islamic Studies", teacherIndex: 4, capacity: 270, schedule: "Tue/Sat 6:00 PM" },
 ];
 
 function csvCell(value) {
@@ -95,7 +95,7 @@ for (let i = 0; i < TEACHER_COUNT; i += 1) {
   teacherRows.push([
     `SU-T-${pad(i + 1)}`, `Teacher ${first} ${last}`, first, last, username, teacher.email, `+252610020${pad(i + 1)}`, i % 2 ? "whatsapp" : "email", teacher.gender,
     WORKSPACE.country, WORKSPACE.city, WORKSPACE.timezone, "Somalia", "Somali", "English, Arabic",
-    course.fullname, "foundations", 40, 20, "Monday, Tuesday, Wednesday, Thursday, Saturday", course.schedule, "", `Leads ${course.fullname} (${course.id}); ${course.schedule}.`,
+    course.fullname, "year_1", 40, 20, "Monday, Tuesday, Wednesday, Thursday, Saturday", course.schedule, "", `Leads ${course.fullname} (${course.id}); ${course.schedule}.`,
     "yes", "yes", "yes", "active", "no", "mixed adult cohorts", "18-30", `Course capacity ${course.capacity}.`, "yes", "yes", "standard monthly QA",
     "Demo teacher record for Somali University onboarding.",
   ]);
@@ -136,7 +136,7 @@ for (let i = 1; i <= STUDENT_COUNT; i += 1) {
   studentRows.push([
     i, `${first} ${last}`, first, last, age, "yes", female ? "female" : "male", "no",
     myCourses.map((c) => c.fullname).join("; "), WORKSPACE.country, city, WORKSPACE.timezone, "Somalia", "Somali", "English, Arabic",
-    "foundations", "secondary_completed", myCourses.length * 2, days.join(", "), hour, days.map((d) => `${d} ${hour}`).join("; "),
+    "year_1", "secondary_completed", myCourses.length * 2, days.join(", "), hour, days.map((d) => `${d} ${hour}`).join("; "),
     "no", "", "", "", "yes", "yes", "Adult learner; consent captured directly. Demo record.",
     `Somalia | ${myCourses[0].fullname} | foundations | ${female ? "female" : "male"} | adults`, 20, "yes", "yes",
     "Demo student record for Somali University onboarding.",
@@ -281,7 +281,7 @@ WHERE NOT EXISTS (SELECT 1 FROM mdl_user u WHERE u.username = t.username AND u.d
 for (const c of COURSES) {
   sql.push(`INSERT INTO mdl_course (category, sortorder, fullname, shortname, idnumber, summary, summaryformat, format, startdate, visible, timecreated, timemodified)
 SELECT (SELECT MIN(id) FROM mdl_course_categories), 0, ${sqlStr(c.fullname)}, ${sqlStr(c.id.toLowerCase())}, ${sqlStr(c.id)},
-       ${sqlStr(`${c.fullname} - Somali University demo course. Schedule: ${c.schedule}.`)}, 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+       ${sqlStr(`${c.fullname} - Somali University Year 1 course. Schedule: ${c.schedule}.`)}, 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 WHERE NOT EXISTS (SELECT 1 FROM mdl_course WHERE shortname = ${sqlStr(c.id.toLowerCase())});`);
 }
 
@@ -418,7 +418,7 @@ ${COURSES.map((c) => `INSERT INTO mdl_local_prequran_course_offering
    capacity, tuition_amount, pricing_currency, visibility, approval_mode,
    status, createdby, startdate, enddate, timecreated, timemodified)
 SELECT @consumerid, @workspaceid, c.id, ${sqlStr(c.id.toLowerCase())}, ${sqlStr(c.fullname)},
-       ${sqlStr(`${c.fullname} - Somali University demo offering. Schedule: ${c.schedule}.`)},
+       ${sqlStr(`${c.fullname} - Somali University Year 1 offering. Schedule: ${c.schedule}.`)},
        ${c.capacity}, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
        UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 FROM mdl_course c

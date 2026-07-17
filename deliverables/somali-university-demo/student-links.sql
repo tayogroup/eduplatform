@@ -15,11 +15,11 @@ START TRANSACTION;
 DROP TEMPORARY TABLE IF EXISTS tmp_su_cmap;
 CREATE TEMPORARY TABLE tmp_su_cmap (shortname VARCHAR(255) PRIMARY KEY, ci INT, title VARCHAR(255), schedule VARCHAR(80));
 INSERT INTO tmp_su_cmap (shortname, ci, title, schedule) VALUES
-('su-eng101', 0, 'English Foundations', 'Mon/Wed 10:00 AM'),
-('su-math101', 1, 'Mathematics Foundations', 'Tue/Thu 8:00 AM'),
-('su-qurn101', 2, 'Quraan Recitation and Tajweed', 'Sat/Sun 4:00 PM'),
-('su-arb101', 3, 'Arabic Language Basics', 'Mon/Thu 2:00 PM'),
-('su-isl101', 4, 'Islamic Studies Foundations', 'Tue/Sat 6:00 PM');
+('su-eng101', 0, 'Academic English I', 'Mon/Wed 10:00 AM'),
+('su-math101', 1, 'University Mathematics I', 'Tue/Thu 8:00 AM'),
+('su-qurn101', 2, 'Quraan Studies I', 'Sat/Sun 4:00 PM'),
+('su-arb101', 3, 'Arabic Language I', 'Mon/Thu 2:00 PM'),
+('su-isl101', 4, 'Islamic Studies I', 'Tue/Sat 6:00 PM');
 
 -- 1) Class groups: one per teacher ------------------------------------
 INSERT INTO mdlgx_local_prequran_class_group

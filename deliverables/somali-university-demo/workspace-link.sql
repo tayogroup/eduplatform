@@ -43,8 +43,8 @@ INSERT INTO mdlgx_local_prequran_course_offering
   (consumerid, workspaceid, moodlecourseid, course_key, title, summary,
    capacity, tuition_amount, pricing_currency, visibility, approval_mode,
    status, createdby, startdate, enddate, timecreated, timemodified)
-SELECT @consumerid, @workspaceid, c.id, 'su-eng101', 'English Foundations',
-       'English Foundations - Somali University demo offering. Schedule: Mon/Wed 10:00 AM.',
+SELECT @consumerid, @workspaceid, c.id, 'su-eng101', 'Academic English I',
+       'Academic English I - Somali University Year 1 offering. Schedule: Mon/Wed 10:00 AM.',
        240, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
        UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 FROM mdlgx_course c
@@ -56,8 +56,8 @@ INSERT INTO mdlgx_local_prequran_course_offering
   (consumerid, workspaceid, moodlecourseid, course_key, title, summary,
    capacity, tuition_amount, pricing_currency, visibility, approval_mode,
    status, createdby, startdate, enddate, timecreated, timemodified)
-SELECT @consumerid, @workspaceid, c.id, 'su-math101', 'Mathematics Foundations',
-       'Mathematics Foundations - Somali University demo offering. Schedule: Tue/Thu 8:00 AM.',
+SELECT @consumerid, @workspaceid, c.id, 'su-math101', 'University Mathematics I',
+       'University Mathematics I - Somali University Year 1 offering. Schedule: Tue/Thu 8:00 AM.',
        240, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
        UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 FROM mdlgx_course c
@@ -69,8 +69,8 @@ INSERT INTO mdlgx_local_prequran_course_offering
   (consumerid, workspaceid, moodlecourseid, course_key, title, summary,
    capacity, tuition_amount, pricing_currency, visibility, approval_mode,
    status, createdby, startdate, enddate, timecreated, timemodified)
-SELECT @consumerid, @workspaceid, c.id, 'su-qurn101', 'Quraan Recitation and Tajweed',
-       'Quraan Recitation and Tajweed - Somali University demo offering. Schedule: Sat/Sun 4:00 PM.',
+SELECT @consumerid, @workspaceid, c.id, 'su-qurn101', 'Quraan Studies I',
+       'Quraan Studies I - Somali University Year 1 offering. Schedule: Sat/Sun 4:00 PM.',
        210, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
        UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 FROM mdlgx_course c
@@ -82,8 +82,8 @@ INSERT INTO mdlgx_local_prequran_course_offering
   (consumerid, workspaceid, moodlecourseid, course_key, title, summary,
    capacity, tuition_amount, pricing_currency, visibility, approval_mode,
    status, createdby, startdate, enddate, timecreated, timemodified)
-SELECT @consumerid, @workspaceid, c.id, 'su-arb101', 'Arabic Language Basics',
-       'Arabic Language Basics - Somali University demo offering. Schedule: Mon/Thu 2:00 PM.',
+SELECT @consumerid, @workspaceid, c.id, 'su-arb101', 'Arabic Language I',
+       'Arabic Language I - Somali University Year 1 offering. Schedule: Mon/Thu 2:00 PM.',
        240, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
        UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 FROM mdlgx_course c
@@ -95,8 +95,8 @@ INSERT INTO mdlgx_local_prequran_course_offering
   (consumerid, workspaceid, moodlecourseid, course_key, title, summary,
    capacity, tuition_amount, pricing_currency, visibility, approval_mode,
    status, createdby, startdate, enddate, timecreated, timemodified)
-SELECT @consumerid, @workspaceid, c.id, 'su-isl101', 'Islamic Studies Foundations',
-       'Islamic Studies Foundations - Somali University demo offering. Schedule: Tue/Sat 6:00 PM.',
+SELECT @consumerid, @workspaceid, c.id, 'su-isl101', 'Islamic Studies I',
+       'Islamic Studies I - Somali University Year 1 offering. Schedule: Tue/Sat 6:00 PM.',
        270, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
        UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 FROM mdlgx_course c

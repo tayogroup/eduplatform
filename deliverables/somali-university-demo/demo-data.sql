@@ -576,28 +576,28 @@ WHERE NOT EXISTS (SELECT 1 FROM mdlgx_user u WHERE u.username = t.username AND u
 -- 2) Courses ----------------------------------------------------------
 
 INSERT INTO mdlgx_course (category, sortorder, fullname, shortname, idnumber, summary, summaryformat, format, startdate, visible, timecreated, timemodified)
-SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'English Foundations', 'su-eng101', 'SU-ENG101',
-       'English Foundations - Somali University demo course. Schedule: Mon/Wed 10:00 AM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'Academic English I', 'su-eng101', 'SU-ENG101',
+       'Academic English I - Somali University Year 1 course. Schedule: Mon/Wed 10:00 AM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 WHERE NOT EXISTS (SELECT 1 FROM mdlgx_course WHERE shortname = 'su-eng101');
 
 INSERT INTO mdlgx_course (category, sortorder, fullname, shortname, idnumber, summary, summaryformat, format, startdate, visible, timecreated, timemodified)
-SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'Mathematics Foundations', 'su-math101', 'SU-MATH101',
-       'Mathematics Foundations - Somali University demo course. Schedule: Tue/Thu 8:00 AM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'University Mathematics I', 'su-math101', 'SU-MATH101',
+       'University Mathematics I - Somali University Year 1 course. Schedule: Tue/Thu 8:00 AM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 WHERE NOT EXISTS (SELECT 1 FROM mdlgx_course WHERE shortname = 'su-math101');
 
 INSERT INTO mdlgx_course (category, sortorder, fullname, shortname, idnumber, summary, summaryformat, format, startdate, visible, timecreated, timemodified)
-SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'Quraan Recitation and Tajweed', 'su-qurn101', 'SU-QURN101',
-       'Quraan Recitation and Tajweed - Somali University demo course. Schedule: Sat/Sun 4:00 PM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'Quraan Studies I', 'su-qurn101', 'SU-QURN101',
+       'Quraan Studies I - Somali University Year 1 course. Schedule: Sat/Sun 4:00 PM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 WHERE NOT EXISTS (SELECT 1 FROM mdlgx_course WHERE shortname = 'su-qurn101');
 
 INSERT INTO mdlgx_course (category, sortorder, fullname, shortname, idnumber, summary, summaryformat, format, startdate, visible, timecreated, timemodified)
-SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'Arabic Language Basics', 'su-arb101', 'SU-ARB101',
-       'Arabic Language Basics - Somali University demo course. Schedule: Mon/Thu 2:00 PM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'Arabic Language I', 'su-arb101', 'SU-ARB101',
+       'Arabic Language I - Somali University Year 1 course. Schedule: Mon/Thu 2:00 PM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 WHERE NOT EXISTS (SELECT 1 FROM mdlgx_course WHERE shortname = 'su-arb101');
 
 INSERT INTO mdlgx_course (category, sortorder, fullname, shortname, idnumber, summary, summaryformat, format, startdate, visible, timecreated, timemodified)
-SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'Islamic Studies Foundations', 'su-isl101', 'SU-ISL101',
-       'Islamic Studies Foundations - Somali University demo course. Schedule: Tue/Sat 6:00 PM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
+SELECT (SELECT MIN(id) FROM mdlgx_course_categories), 0, 'Islamic Studies I', 'su-isl101', 'SU-ISL101',
+       'Islamic Studies I - Somali University Year 1 course. Schedule: Tue/Sat 6:00 PM.', 1, 'topics', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 WHERE NOT EXISTS (SELECT 1 FROM mdlgx_course WHERE shortname = 'su-isl101');
 
 -- 3) Course contexts (created with correct path/depth) ----------------

@@ -669,10 +669,11 @@ body.pqh-live-page .secondary-navigation{display:none!important}
 <?php if ($openmaterials): ?>
 <div class="pql-split" id="pql-split" hidden>
   <div class="pql-split__bar">
-    <span class="pql-split__title"></span>
+    <span class="pql-split__title"><?php echo $sessiontitle; ?></span>
     <div class="pql-split__actions">
       <button id="pql-split-toggle" class="pql-split__btn" type="button">Show materials</button>
       <button id="pql-split-tutor" class="pql-split__btn" type="button">Virtual tutor</button>
+      <button id="pql-split-fullscreen" class="pql-split__btn" type="button">Fullscreen</button>
       <?php if ($exiturl): ?><a id="pql-split-exit" class="pql-split__btn" href="<?php echo $exiturl->out(false); ?>">Exit</a><?php endif; ?>
     </div>
   </div>
@@ -806,6 +807,44 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     var tutorSplitButton = document.getElementById('pql-split-tutor');
     if (tutorSplitButton) {
       tutorSplitButton.addEventListener('click', openTutor);
+    }
+    var fullscreenButton = document.getElementById('pql-split-fullscreen');
+    function enterFullscreen() {
+      var target = document.documentElement;
+      var request = target.requestFullscreen || target.webkitRequestFullscreen;
+      if (request && !document.fullscreenElement) {
+        try {
+          var result = request.call(target);
+          if (result && typeof result.catch === 'function') {
+            result.catch(function(){});
+          }
+        } catch (e) {}
+      }
+    }
+    if (fullscreenButton) {
+      fullscreenButton.addEventListener('click', function(){
+        if (document.fullscreenElement) {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        } else {
+          enterFullscreen();
+        }
+      });
+      document.addEventListener('fullscreenchange', function(){
+        fullscreenButton.textContent = document.fullscreenElement ? 'Exit fullscreen' : 'Fullscreen';
+      });
+    }
+    // Browsers only honour fullscreen from a user gesture. Launching from the
+    // Start class click sometimes carries over; when it does not, the first
+    // click on the top bar (or the Fullscreen button) completes it.
+    enterFullscreen();
+    var bar = split.querySelector('.pql-split__bar');
+    if (bar) {
+      bar.addEventListener('click', function once(){
+        bar.removeEventListener('click', once);
+        enterFullscreen();
+      });
     }
     // When the class is ended, the closed page stamps localStorage; leave
     // the split view and return to the live sessions list automatically.
@@ -1936,7 +1975,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718M</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718N</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

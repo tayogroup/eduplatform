@@ -5,7 +5,7 @@
 // server with no Moodle session, and generating at runtime keeps the xref
 // byte offsets exact regardless of file-transfer line-ending rewrites.
 
-// Graph-paper grid on a 960x540 page: fine lines every 30pt, stronger
+// Vertical-line grid on a 960x540 page: fine lines every 30pt, stronger
 // lines every 150pt. Annotating happens on the BBB whiteboard layer above.
 $content = "0.5 w\n0.87 0.90 0.93 RG\n";
 for ($x = 30; $x < 960; $x += 30) {
@@ -14,18 +14,9 @@ for ($x = 30; $x < 960; $x += 30) {
     }
     $content .= $x . " 0 m " . $x . " 540 l S\n";
 }
-for ($y = 30; $y < 540; $y += 30) {
-    if ($y % 150 === 0) {
-        continue;
-    }
-    $content .= "0 " . $y . " m 960 " . $y . " l S\n";
-}
 $content .= "0.76 0.81 0.87 RG\n";
 for ($x = 150; $x < 960; $x += 150) {
     $content .= $x . " 0 m " . $x . " 540 l S\n";
-}
-for ($y = 150; $y < 540; $y += 150) {
-    $content .= "0 " . $y . " m 960 " . $y . " l S\n";
 }
 
 $objects = [

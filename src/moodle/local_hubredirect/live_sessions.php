@@ -604,7 +604,7 @@ function pql_live_tutor_studentid($session, $participant): int {
     return $studentid ? (int)$studentid : 0;
 }
 
-function pql_live_launch_bridge(string $joinurl, moodle_url $tutorurl, moodle_url $lessonurl, $session, ?moodle_url $materialsurl = null, string $role = '', ?moodle_url $exiturl = null): void {
+function pql_live_launch_bridge(string $joinurl, moodle_url $tutorurl, moodle_url $lessonurl, $session, ?moodle_url $materialsurl = null, string $role = '', ?moodle_url $exiturl = null, ?moodle_url $directjoinurl = null): void {
     global $OUTPUT, $PAGE;
 
     $PAGE->set_pagelayout('embedded');
@@ -618,6 +618,7 @@ function pql_live_launch_bridge(string $joinurl, moodle_url $tutorurl, moodle_ur
     $openmaterials = $materialsurl && in_array($role, ['teacher', 'admin_observer'], true);
     $openmaterialsjson = json_encode($openmaterials);
     $exiturljson = json_encode($exiturl ? $exiturl->out(false) : '');
+    $directjoinurljson = json_encode($directjoinurl ? $directjoinurl->out(false) : '');
     $sessiontitle = s((string)$session->title);
 
     echo $OUTPUT->header();
@@ -689,6 +690,7 @@ body.pqh-live-page .secondary-navigation{display:none!important}
   var materialsUrl = <?php echo $materialsurljson; ?>;
   var shouldOpenMaterials = <?php echo $openmaterialsjson; ?>;
   var exitUrl = <?php echo $exiturljson; ?>;
+  var directJoinUrl = <?php echo $directjoinurljson; ?>;
   var closeKey = 'pqa_live_session_closed_<?php echo (int)$session->id; ?>';
   var splitActive = false;
   var popupName = 'pqa_virtual_tutor_<?php echo (int)$session->id; ?>';
@@ -786,7 +788,9 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     var classFrame = document.getElementById('pql-split-class');
     var materialsFrame = document.getElementById('pql-split-materials');
     if (classFrame && !classFrame.src) {
-      classFrame.src = joinUrl;
+      // Prefer the server round-trip: every load of the frame then gets its
+      // own fresh BBB join URL instead of reusing the one baked into this page.
+      classFrame.src = directJoinUrl || joinUrl;
     }
     if (materialsFrame && materialsUrl && !materialsFrame.src) {
       materialsFrame.src = ensureCompact(materialsUrl);
@@ -805,11 +809,13 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     var newTabButton = document.getElementById('pql-split-newtab');
     if (newTabButton) {
       newTabButton.addEventListener('click', function(){
-        // One BBB connection per user: release the embedded room first.
+        // One BBB connection per user: release the embedded room first, then
+        // let the new tab request its own fresh join URL from the server -
+        // the one rendered into this page was consumed by the embedded room.
         if (classFrame) {
           classFrame.src = 'about:blank';
         }
-        window.open(joinUrl, '_blank');
+        window.open(directJoinUrl || joinUrl, '_blank');
         newTabButton.disabled = true;
         newTabButton.textContent = 'Class opened in its own tab';
       });
@@ -1622,6 +1628,12 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
     }
     pql_audit((int)$session->id, 'join_redirect', 'user', (int)$USER->id, ['role' => $role]);
     pql_mark_student_join($session, $participant, $role);
+    if (optional_param('directjoin', 0, PARAM_BOOL)) {
+        // Fresh, server-issued join for "open class in its own tab": the join
+        // URL rendered into the bridge is consumed by the embedded room, so a
+        // new tab must come back here for its own link instead of reusing it.
+        redirect($joinurl);
+    }
     pql_live_launch_bridge(
         $joinurl,
         $tutorurl,
@@ -1629,7 +1641,13 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
         $session,
         pqh_live_session_materials_control_url((int)$session->id),
         $role,
-        pql_url('/local/hubredirect/live_sessions.php', $sessionurlparams)
+        pql_url('/local/hubredirect/live_sessions.php', $sessionurlparams),
+        pql_url('/local/hubredirect/live_sessions.php', $sessionurlparams, [
+            'action' => 'join',
+            'sessionid' => (int)$session->id,
+            'sesskey' => sesskey(),
+            'directjoin' => 1,
+        ])
     );
 }
 
@@ -1919,7 +1937,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718G</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718H</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

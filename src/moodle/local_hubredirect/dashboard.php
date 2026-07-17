@@ -146,6 +146,17 @@ function pqh_has_academy_teacher_role(int $userid): bool {
         && $DB->record_exists('local_prequran_live_participant', ['userid' => $userid, 'role' => 'teacher', 'status' => 'active'])) {
         return true;
     }
+    // Institution workspaces: an active workspace membership with a
+    // teaching role makes someone a teacher even before any students,
+    // groups, or sessions are assigned.
+    if (pqh_table_exists('local_prequran_workspace_member')
+        && $DB->record_exists_select(
+            'local_prequran_workspace_member',
+            "userid = ? AND status = 'active' AND workspace_role IN ('teacher', 'assistant_teacher')",
+            [$userid]
+        )) {
+        return true;
+    }
     return $DB->record_exists_sql(
         "SELECT 1
            FROM {role_assignments} ra

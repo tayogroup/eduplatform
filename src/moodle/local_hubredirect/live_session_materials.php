@@ -102,20 +102,24 @@ function pqlmat_max_embedded_document_bytes(): int {
     return 10 * 1024 * 1024;
 }
 
-function pqlmat_blank_whiteboard_pdf(): string {
-    // A minimal valid one-page 16:9 PDF (960x540) ruled with horizontal
-    // lines, built with correct xref offsets so BBB's converter accepts it.
-    // Keep in sync with whiteboard_pdf.php, which serves the same page by URL.
-    $content = "0.5 w\n0.87 0.90 0.93 RG\n";
-    for ($y = 30; $y < 540; $y += 30) {
-        if ($y % 150 === 0) {
-            continue;
+function pqlmat_whiteboard_pdf(string $style = 'grid'): string {
+    // A minimal valid one-page 16:9 PDF (960x540), either ruled with
+    // horizontal lines ("grid") or empty ("blank"), built with correct xref
+    // offsets so BBB's converter accepts it. Keep in sync with
+    // whiteboard_pdf.php, which serves the same pages by URL.
+    $content = '';
+    if ($style !== 'blank') {
+        $content = "0.5 w\n0.87 0.90 0.93 RG\n";
+        for ($y = 30; $y < 540; $y += 30) {
+            if ($y % 150 === 0) {
+                continue;
+            }
+            $content .= "0 " . $y . " m 960 " . $y . " l S\n";
         }
-        $content .= "0 " . $y . " m 960 " . $y . " l S\n";
-    }
-    $content .= "0.76 0.81 0.87 RG\n";
-    for ($y = 150; $y < 540; $y += 150) {
-        $content .= "0 " . $y . " m 960 " . $y . " l S\n";
+        $content .= "0.76 0.81 0.87 RG\n";
+        for ($y = 150; $y < 540; $y += 150) {
+            $content .= "0 " . $y . " m 960 " . $y . " l S\n";
+        }
     }
     $objects = [
         "1 0 obj\n<</Type/Catalog/Pages 2 0 R>>\nendobj\n",
@@ -138,7 +142,7 @@ function pqlmat_blank_whiteboard_pdf(): string {
     return $pdf;
 }
 
-function pqlmat_insert_whiteboard($session): void {
+function pqlmat_insert_whiteboard($session, string $style = 'grid'): void {
     global $CFG;
     if (empty($session->bbb_created) || (string)($session->status ?? '') !== 'live') {
         pqlmat_stop('The BBB room is not live yet. Start class before swapping materials.', 'Live room not started');
@@ -149,21 +153,24 @@ function pqlmat_insert_whiteboard($session): void {
     }
     require_once($locallib);
     $options = ['fitToWidth' => 'true', 'fitToPage' => 'true'];
+    $filename = $style === 'blank' ? 'Blank Whiteboard.pdf' : 'Grid Whiteboard.pdf';
     // Prefer the public-URL insert - the same proven path Return to Agenda
     // uses - and fall back to embedding the bytes in the API call.
     try {
         if (!function_exists('local_prequran_bbb_insert_document')) {
             throw new moodle_exception('bbb_api_error', 'local_prequran', '', 'insert_document unavailable');
         }
-        $url = (new moodle_url('/local/hubredirect/whiteboard_pdf.php', ['v' => (string)time()]))->out(false);
-        local_prequran_bbb_insert_document((string)$session->bbb_meeting_id, $url, 'Whiteboard.pdf', true, false, true, $options);
+        $url = (new moodle_url('/local/hubredirect/whiteboard_pdf.php', ['style' => $style, 'v' => (string)time()]))->out(false);
+        local_prequran_bbb_insert_document((string)$session->bbb_meeting_id, $url, $filename, true, false, true, $options);
         pqlmat_audit((int)$session->id, 'bbb_whiteboard_inserted', 'session', (int)$session->id, [
+            'style' => $style,
             'transfer' => 'public_url',
             'url' => $url,
         ]);
     } catch (Throwable $e) {
-        local_prequran_bbb_insert_document_bytes((string)$session->bbb_meeting_id, pqlmat_blank_whiteboard_pdf(), 'Whiteboard.pdf', true, false, true, $options);
+        local_prequran_bbb_insert_document_bytes((string)$session->bbb_meeting_id, pqlmat_whiteboard_pdf($style), $filename, true, false, true, $options);
         pqlmat_audit((int)$session->id, 'bbb_whiteboard_inserted', 'session', (int)$session->id, [
+            'style' => $style,
             'transfer' => 'embedded',
             'urlerror' => $e->getMessage(),
         ]);
@@ -334,9 +341,15 @@ if ($action === 'whiteboard') {
     if (!confirm_sesskey()) {
         pqh_access_denied('Please reopen Teacher Materials and try again.', $returnurl, 'Teacher Materials action expired');
     }
+    $wbstyle = optional_param('wbstyle', 'grid', PARAM_ALPHA) === 'blank' ? 'blank' : 'grid';
     try {
-        pqlmat_insert_whiteboard($session);
-        redirect($returnurl, 'Blank whiteboard opened in the live room.', 2, \core\output\notification::NOTIFY_SUCCESS);
+        pqlmat_insert_whiteboard($session, $wbstyle);
+        redirect(
+            $returnurl,
+            ($wbstyle === 'blank' ? 'Blank' : 'Grid') . ' whiteboard opened in the live room.',
+            2,
+            \core\output\notification::NOTIFY_SUCCESS
+        );
     } catch (Throwable $e) {
         pqlmat_audit($sessionid, 'bbb_whiteboard_insert_failed', 'session', $sessionid, ['error' => $e->getMessage()]);
         pqh_access_denied('The whiteboard could not be sent to the live room. Please ask support to review the live-room material setup.', $returnurl, 'Whiteboard unavailable');
@@ -432,9 +445,18 @@ body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-reg
         <form class="pqlmat-inline" method="post">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="whiteboard">
+          <input type="hidden" name="wbstyle" value="grid">
           <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
           <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
-          <button class="pqlmat-btn" type="submit">Blank whiteboard</button>
+          <button class="pqlmat-btn" type="submit">Grid WB</button>
+        </form>
+        <form class="pqlmat-inline" method="post">
+          <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+          <input type="hidden" name="action" value="whiteboard">
+          <input type="hidden" name="wbstyle" value="blank">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
+          <button class="pqlmat-btn" type="submit">Blank WB</button>
         </form>
         <?php if ($agendaurl !== ''): ?>
         <form class="pqlmat-inline" method="post">
@@ -463,10 +485,20 @@ body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-reg
       <form class="pqlmat-inline" method="post">
         <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
         <input type="hidden" name="action" value="whiteboard">
+        <input type="hidden" name="wbstyle" value="grid">
         <input type="hidden" name="compact" value="1">
         <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
         <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
-        <button class="pqlmat-btn" type="submit">Blank whiteboard</button>
+        <button class="pqlmat-btn" type="submit">Grid WB</button>
+      </form>
+      <form class="pqlmat-inline" method="post">
+        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+        <input type="hidden" name="action" value="whiteboard">
+        <input type="hidden" name="wbstyle" value="blank">
+        <input type="hidden" name="compact" value="1">
+        <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+        <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
+        <button class="pqlmat-btn" type="submit">Blank WB</button>
       </form>
       <?php if ($agendaurl !== ''): ?>
       <form class="pqlmat-inline" method="post">

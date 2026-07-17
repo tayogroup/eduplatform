@@ -5,18 +5,23 @@
 // server with no Moodle session, and generating at runtime keeps the xref
 // byte offsets exact regardless of file-transfer line-ending rewrites.
 
-// Ruled-page grid on a 960x540 page: fine horizontal lines every 30pt,
-// stronger ones every 150pt. Annotating happens on the BBB layer above.
-$content = "0.5 w\n0.87 0.90 0.93 RG\n";
-for ($y = 30; $y < 540; $y += 30) {
-    if ($y % 150 === 0) {
-        continue;
+// Two styles, chosen by ?style=: "grid" (default) rules the page with fine
+// horizontal lines every 30pt and stronger ones every 150pt; "blank" serves
+// an empty page. Annotating happens on the BBB whiteboard layer above.
+$style = isset($_GET['style']) ? strtolower((string)$_GET['style']) : 'grid';
+$content = '';
+if ($style !== 'blank') {
+    $content = "0.5 w\n0.87 0.90 0.93 RG\n";
+    for ($y = 30; $y < 540; $y += 30) {
+        if ($y % 150 === 0) {
+            continue;
+        }
+        $content .= "0 " . $y . " m 960 " . $y . " l S\n";
     }
-    $content .= "0 " . $y . " m 960 " . $y . " l S\n";
-}
-$content .= "0.76 0.81 0.87 RG\n";
-for ($y = 150; $y < 540; $y += 150) {
-    $content .= "0 " . $y . " m 960 " . $y . " l S\n";
+    $content .= "0.76 0.81 0.87 RG\n";
+    for ($y = 150; $y < 540; $y += 150) {
+        $content .= "0 " . $y . " m 960 " . $y . " l S\n";
+    }
 }
 
 $objects = [

@@ -8,10 +8,10 @@ pattern. Do not import into production with these passwords.
 ## Contents
 
 - admin.csv - 1 institution administrator (workspace owner)
-- teachers.csv - 5 teachers, same columns as local_hubredirect mock_teacher_data.csv
-- students.csv - 100 adult students, same columns as mock_student_data.csv
+- teachers.csv - 30 teachers (each course has one lead and several section teachers), same columns as local_hubredirect mock_teacher_data.csv
+- students.csv - 500 adult students, same columns as mock_student_data.csv
 - courses.csv - 5 courses, each led by one teacher
-- enrollments.csv - 195 student-course enrollments (1-3 courses per student)
+- enrollments.csv - 976 student-course enrollments (1-3 courses per student)
 - moodle-upload-users.csv - single file for Moodle: Site administration > Users > Upload users
 - workspace.json - workspace descriptor (institution type, per docs/workspace-institution-model.md)
 

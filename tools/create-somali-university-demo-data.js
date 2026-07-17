@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 // Generates a complete demo onboarding package for the "Somali University"
-// institution workspace: 1 admin, 5 teachers, 5 courses, 100 students,
+// institution workspace: 1 admin, TEACHER_COUNT teachers across 5 courses,
+// STUDENT_COUNT students,
 // enrollments, and a Moodle-standard upload-users CSV. Deterministic
 // (seeded) so reruns produce identical data. Demo/staging use only.
 // Output: deliverables/somali-university-demo/
@@ -13,6 +14,9 @@ const root = path.resolve(__dirname, "..");
 const outDir = path.join(root, "deliverables", "somali-university-demo");
 
 // Deterministic pseudo-random (LCG) so the package is reproducible.
+const STUDENT_COUNT = 500;
+const TEACHER_COUNT = 30;
+
 let seed = 20260717;
 function rand() {
   seed = (seed * 1103515245 + 12345) % 2147483648;
@@ -40,11 +44,11 @@ const WORKSPACE = {
 };
 
 const COURSES = [
-  { id: "SU-ENG101", fullname: "English Foundations", category: "Languages", teacherIndex: 0, capacity: 40, schedule: "Mon/Wed 10:00 AM" },
-  { id: "SU-MATH101", fullname: "Mathematics Foundations", category: "Sciences", teacherIndex: 1, capacity: 40, schedule: "Tue/Thu 8:00 AM" },
-  { id: "SU-QURN101", fullname: "Quraan Recitation and Tajweed", category: "Islamic Studies", teacherIndex: 2, capacity: 35, schedule: "Sat/Sun 4:00 PM" },
-  { id: "SU-ARB101", fullname: "Arabic Language Basics", category: "Languages", teacherIndex: 3, capacity: 40, schedule: "Mon/Thu 2:00 PM" },
-  { id: "SU-ISL101", fullname: "Islamic Studies Foundations", category: "Islamic Studies", teacherIndex: 4, capacity: 45, schedule: "Tue/Sat 6:00 PM" },
+  { id: "SU-ENG101", fullname: "English Foundations", category: "Languages", teacherIndex: 0, capacity: 240, schedule: "Mon/Wed 10:00 AM" },
+  { id: "SU-MATH101", fullname: "Mathematics Foundations", category: "Sciences", teacherIndex: 1, capacity: 240, schedule: "Tue/Thu 8:00 AM" },
+  { id: "SU-QURN101", fullname: "Quraan Recitation and Tajweed", category: "Islamic Studies", teacherIndex: 2, capacity: 210, schedule: "Sat/Sun 4:00 PM" },
+  { id: "SU-ARB101", fullname: "Arabic Language Basics", category: "Languages", teacherIndex: 3, capacity: 240, schedule: "Mon/Thu 2:00 PM" },
+  { id: "SU-ISL101", fullname: "Islamic Studies Foundations", category: "Islamic Studies", teacherIndex: 4, capacity: 270, schedule: "Tue/Sat 6:00 PM" },
 ];
 
 function csvCell(value) {
@@ -80,16 +84,16 @@ const teacherHeader = ["mock_teacher_no", "teacher_display_name", "teacher_first
 
 const teachers = [];
 const teacherRows = [teacherHeader];
-for (let i = 0; i < 5; i += 1) {
+for (let i = 0; i < TEACHER_COUNT; i += 1) {
   const female = i % 2 === 0;
   const first = pick(female ? FEMALE : MALE);
-  const last = SURNAMES[(i * 5 + 3) % SURNAMES.length];
+  const last = SURNAMES[(i * 7 + 3) % SURNAMES.length];
   const username = `su-teacher${i + 1}`;
-  const course = COURSES[i];
+  const course = COURSES[i % COURSES.length];
   const teacher = { first, last, username, email: `${username}@${DOMAIN}`, course, gender: female ? "female" : "male", password: `SUDemo-T${i + 1}-2026!` };
   teachers.push(teacher);
   teacherRows.push([
-    `SU-T-${pad(i + 1)}`, `Teacher ${first} ${last}`, first, last, username, teacher.email, `+2526100200${i + 1}`, i % 2 ? "whatsapp" : "email", teacher.gender,
+    `SU-T-${pad(i + 1)}`, `Teacher ${first} ${last}`, first, last, username, teacher.email, `+252610020${pad(i + 1)}`, i % 2 ? "whatsapp" : "email", teacher.gender,
     WORKSPACE.country, WORKSPACE.city, WORKSPACE.timezone, "Somalia", "Somali", "English, Arabic",
     course.fullname, "foundations", 40, 20, "Monday, Tuesday, Wednesday, Thursday, Saturday", course.schedule, "", `Leads ${course.fullname} (${course.id}); ${course.schedule}.`,
     "yes", "yes", "yes", "active", "no", "mixed adult cohorts", "18-30", `Course capacity ${course.capacity}.`, "yes", "yes", "standard monthly QA",
@@ -114,10 +118,10 @@ const studentRows = [studentHeader];
 const enrollmentRows = [["student_username", "student_name", "course_id", "course_name", "role"]];
 const usedNames = new Set();
 
-for (let i = 1; i <= 100; i += 1) {
+for (let i = 1; i <= STUDENT_COUNT; i += 1) {
   const female = rand() < 0.5;
   let first; let last;
-  do { first = pick(female ? FEMALE : MALE); last = pick(SURNAMES); } while (usedNames.has(`${first} ${last}`) && usedNames.size < 500);
+  do { first = pick(female ? FEMALE : MALE); last = pick(SURNAMES); } while (usedNames.has(`${first} ${last}`) && usedNames.size < 1200);
   usedNames.add(`${first} ${last}`);
   const username = `su-student${pad(i)}`;
   const age = 18 + Math.floor(rand() * 11);
@@ -180,8 +184,8 @@ pattern. Do not import into production with these passwords.
 ## Contents
 
 - admin.csv - 1 institution administrator (workspace owner)
-- teachers.csv - 5 teachers, same columns as local_hubredirect mock_teacher_data.csv
-- students.csv - 100 adult students, same columns as mock_student_data.csv
+- teachers.csv - ${teachers.length} teachers (each course has one lead and several section teachers), same columns as local_hubredirect mock_teacher_data.csv
+- students.csv - ${students.length} adult students, same columns as mock_student_data.csv
 - courses.csv - 5 courses, each led by one teacher
 - enrollments.csv - ${enrollmentRows.length - 1} student-course enrollments (1-3 courses per student)
 - moodle-upload-users.csv - single file for Moodle: Site administration > Users > Upload users

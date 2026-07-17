@@ -131,7 +131,7 @@ for (let i = 1; i <= STUDENT_COUNT; i += 1) {
   const courseCount = 1 + Math.floor(rand() * 3);
   const shuffled = [...COURSES].sort(() => rand() - 0.5);
   const myCourses = shuffled.slice(0, courseCount);
-  const student = { username, first, last, email: `${username}@${DOMAIN}`, courses: myCourses, password: `SUDemo-S${pad(i)}-2026!` };
+  const student = { username, first, last, email: `${username}@${DOMAIN}`, courses: myCourses, password: `SUDemo-S${pad(i)}-2026!`, age, gender: female ? "female" : "male", city };
   students.push(student);
   studentRows.push([
     i, `${first} ${last}`, first, last, age, "yes", female ? "female" : "male", "no",

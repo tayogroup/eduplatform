@@ -46,9 +46,9 @@ const WORKSPACE = {
 const COURSES = [
   { id: "SU-ENG101", fullname: "Academic English I", category: "Languages", teacherIndex: 0, capacity: 240, schedule: "Mon/Wed 10:00 AM" },
   { id: "SU-MATH101", fullname: "University Mathematics I", category: "Sciences", teacherIndex: 1, capacity: 240, schedule: "Tue/Thu 8:00 AM" },
-  { id: "SU-QURN101", fullname: "Quraan Studies I", category: "Islamic Studies", teacherIndex: 2, capacity: 210, schedule: "Sat/Sun 4:00 PM" },
+  { id: "SU-ICT101", fullname: "Introduction to Computing", category: "Computing", teacherIndex: 2, capacity: 210, schedule: "Sat/Sun 4:00 PM" },
   { id: "SU-ARB101", fullname: "Arabic Language I", category: "Languages", teacherIndex: 3, capacity: 240, schedule: "Mon/Thu 2:00 PM" },
-  { id: "SU-ISL101", fullname: "Islamic Studies I", category: "Islamic Studies", teacherIndex: 4, capacity: 270, schedule: "Tue/Sat 6:00 PM" },
+  { id: "SU-ECON101", fullname: "Principles of Economics I", category: "Business", teacherIndex: 4, capacity: 270, schedule: "Tue/Sat 6:00 PM" },
 ];
 
 function csvCell(value) {

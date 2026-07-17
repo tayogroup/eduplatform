@@ -69,12 +69,12 @@ INSERT INTO mdlgx_local_prequran_course_offering
   (consumerid, workspaceid, moodlecourseid, course_key, title, summary,
    capacity, tuition_amount, pricing_currency, visibility, approval_mode,
    status, createdby, startdate, enddate, timecreated, timemodified)
-SELECT @consumerid, @workspaceid, c.id, 'su-qurn101', 'Quraan Studies I',
-       'Quraan Studies I - Somali University Year 1 offering. Schedule: Sat/Sun 4:00 PM.',
+SELECT @consumerid, @workspaceid, c.id, 'su-ict101', 'Introduction to Computing',
+       'Introduction to Computing - Somali University Year 1 offering. Schedule: Sat/Sun 4:00 PM.',
        210, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
        UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 FROM mdlgx_course c
-WHERE c.shortname = 'su-qurn101'
+WHERE c.shortname = 'su-ict101'
   AND NOT EXISTS (SELECT 1 FROM mdlgx_local_prequran_course_offering o
                   WHERE o.workspaceid = @workspaceid AND o.moodlecourseid = c.id);
 
@@ -95,12 +95,12 @@ INSERT INTO mdlgx_local_prequran_course_offering
   (consumerid, workspaceid, moodlecourseid, course_key, title, summary,
    capacity, tuition_amount, pricing_currency, visibility, approval_mode,
    status, createdby, startdate, enddate, timecreated, timemodified)
-SELECT @consumerid, @workspaceid, c.id, 'su-isl101', 'Islamic Studies I',
-       'Islamic Studies I - Somali University Year 1 offering. Schedule: Tue/Sat 6:00 PM.',
+SELECT @consumerid, @workspaceid, c.id, 'su-econ101', 'Principles of Economics I',
+       'Principles of Economics I - Somali University Year 1 offering. Schedule: Tue/Sat 6:00 PM.',
        270, '0.00', 'USD', 'public', 'admin_approval', 'published', 0,
        UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + (180 * 86400), UNIX_TIMESTAMP(), UNIX_TIMESTAMP()
 FROM mdlgx_course c
-WHERE c.shortname = 'su-isl101'
+WHERE c.shortname = 'su-econ101'
   AND NOT EXISTS (SELECT 1 FROM mdlgx_local_prequran_course_offering o
                   WHERE o.workspaceid = @workspaceid AND o.moodlecourseid = c.id);
 

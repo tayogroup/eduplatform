@@ -102,6 +102,31 @@ function pqlmat_max_embedded_document_bytes(): int {
     return 10 * 1024 * 1024;
 }
 
+function pqlmat_blank_whiteboard_pdf(): string {
+    // A minimal valid one-page empty PDF (960x540, 16:9) built with correct
+    // xref offsets so BBB's converter accepts it. Annotating happens on the
+    // BBB whiteboard layer, so the page itself stays empty.
+    $objects = [
+        "1 0 obj\n<</Type/Catalog/Pages 2 0 R>>\nendobj\n",
+        "2 0 obj\n<</Type/Pages/Kids[3 0 R]/Count 1>>\nendobj\n",
+        "3 0 obj\n<</Type/Page/Parent 2 0 R/MediaBox[0 0 960 540]/Resources<<>>/Contents 4 0 R>>\nendobj\n",
+        "4 0 obj\n<</Length 0>>\nstream\n\nendstream\nendobj\n",
+    ];
+    $pdf = "%PDF-1.4\n";
+    $offsets = [];
+    foreach ($objects as $object) {
+        $offsets[] = strlen($pdf);
+        $pdf .= $object;
+    }
+    $xrefpos = strlen($pdf);
+    $pdf .= "xref\n0 " . (count($objects) + 1) . "\n0000000000 65535 f \n";
+    foreach ($offsets as $offset) {
+        $pdf .= sprintf("%010d 00000 n \n", $offset);
+    }
+    $pdf .= "trailer\n<</Size " . (count($objects) + 1) . "/Root 1 0 R>>\nstartxref\n" . $xrefpos . "\n%%EOF";
+    return $pdf;
+}
+
 function pqlmat_insert_document_bytes($session, string $bytes, string $filename, bool $removable, string $auditaction, string $targettype, int $targetid, array $details = []): void {
     global $CFG;
     if (empty($session->bbb_created) || (string)($session->status ?? '') !== 'live') {
@@ -262,6 +287,26 @@ if ($workspaceid > 0 && (int)$session->teacherid !== (int)$USER->id
 }
 
 $notice = '';
+if ($action === 'whiteboard') {
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please reopen Teacher Materials and try again.', $returnurl, 'Teacher Materials action expired');
+    }
+    try {
+        pqlmat_insert_document_bytes(
+            $session,
+            pqlmat_blank_whiteboard_pdf(),
+            'Whiteboard.pdf',
+            true,
+            'bbb_whiteboard_inserted',
+            'session',
+            (int)$session->id
+        );
+        redirect($returnurl, 'Blank whiteboard opened in the live room.', 2, \core\output\notification::NOTIFY_SUCCESS);
+    } catch (Throwable $e) {
+        pqlmat_audit($sessionid, 'bbb_whiteboard_insert_failed', 'session', $sessionid, ['error' => $e->getMessage()]);
+        pqh_access_denied('The whiteboard could not be sent to the live room. Please ask support to review the live-room material setup.', $returnurl, 'Whiteboard unavailable');
+    }
+}
 if ($action === 'insert') {
     if (!confirm_sesskey()) {
         pqh_access_denied('Please reopen Teacher Materials and try again.', $returnurl, 'Teacher Materials action expired');
@@ -326,7 +371,7 @@ echo $OUTPUT->header();
 .pqlmat-pill{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;background:#fff7e7;color:#4d3522;font-size:12px;font-weight:950}
 .pqlmat-empty{padding:24px;color:#5e7280;font-size:14px;font-weight:850;text-align:center}
 .pqlmat-inline{display:inline;margin:0}
-.pqlmat-return{display:flex;justify-content:flex-end;padding:12px 14px;background:#fff}
+.pqlmat-return{display:flex;gap:8px;justify-content:flex-end;padding:12px 14px;background:#fff}
 body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-region="footer-container"],body.pqlmat-page .logininfo,body.pqlmat-page .tool_dataprivacy,body.pqlmat-page .homelink,body.pqlmat-page .mobilelink{display:none!important}
 @media(max-width:760px){.pqlmat-wrap{padding:12px}.pqlmat-top{display:block}.pqlmat-actions{justify-content:flex-start;margin-top:12px}.pqlmat-table,.pqlmat-table tbody,.pqlmat-table tr,.pqlmat-table td{display:block;width:100%}.pqlmat-table thead{display:none}.pqlmat-table td{border-bottom:0;padding:8px 12px}.pqlmat-table tr{border-bottom:1px solid rgba(23,48,68,.1);padding:8px 0}}
 </style>
@@ -348,16 +393,25 @@ body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-reg
   <section class="pqlmat-panel">
     <div class="pqlmat-panel-head">
       <h2>Session Deck</h2>
-      <?php if ($agendaurl !== ''): ?>
-      <form class="pqlmat-inline" method="post">
-        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
-        <input type="hidden" name="action" value="insert">
-        <input type="hidden" name="materialid" value="0">
-        <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
-        <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
-        <button class="pqlmat-btn pqlmat-btn--primary" type="submit">Return to Agenda</button>
-      </form>
-      <?php endif; ?>
+      <div class="pqlmat-actions">
+        <form class="pqlmat-inline" method="post">
+          <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+          <input type="hidden" name="action" value="whiteboard">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
+          <button class="pqlmat-btn" type="submit">Blank whiteboard</button>
+        </form>
+        <?php if ($agendaurl !== ''): ?>
+        <form class="pqlmat-inline" method="post">
+          <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+          <input type="hidden" name="action" value="insert">
+          <input type="hidden" name="materialid" value="0">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
+          <button class="pqlmat-btn pqlmat-btn--primary" type="submit">Return to Agenda</button>
+        </form>
+        <?php endif; ?>
+      </div>
     </div>
     <?php if ($agendaurl === ''): ?>
       <div class="pqlmat-empty">No agenda deck is attached to this session yet.</div>
@@ -370,19 +424,28 @@ body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-reg
   </section>
   <?php else: ?>
   <section class="pqlmat-panel pqlmat-panel--compact">
-    <?php if ($agendaurl !== ''): ?>
-      <div class="pqlmat-return">
-        <form class="pqlmat-inline" method="post">
-          <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
-          <input type="hidden" name="action" value="insert">
-          <input type="hidden" name="materialid" value="0">
-          <input type="hidden" name="compact" value="1">
-          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
-          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
-          <button class="pqlmat-btn pqlmat-btn--primary" type="submit">Return to Agenda</button>
-        </form>
-      </div>
-    <?php else: ?>
+    <div class="pqlmat-return">
+      <form class="pqlmat-inline" method="post">
+        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+        <input type="hidden" name="action" value="whiteboard">
+        <input type="hidden" name="compact" value="1">
+        <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+        <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
+        <button class="pqlmat-btn" type="submit">Blank whiteboard</button>
+      </form>
+      <?php if ($agendaurl !== ''): ?>
+      <form class="pqlmat-inline" method="post">
+        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+        <input type="hidden" name="action" value="insert">
+        <input type="hidden" name="materialid" value="0">
+        <input type="hidden" name="compact" value="1">
+        <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+        <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
+        <button class="pqlmat-btn pqlmat-btn--primary" type="submit">Return to Agenda</button>
+      </form>
+      <?php endif; ?>
+    </div>
+    <?php if ($agendaurl === ''): ?>
       <div class="pqlmat-empty">No agenda deck is attached to this session yet.</div>
     <?php endif; ?>
   </section>

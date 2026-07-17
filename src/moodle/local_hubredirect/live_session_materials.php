@@ -127,6 +127,38 @@ function pqlmat_blank_whiteboard_pdf(): string {
     return $pdf;
 }
 
+function pqlmat_insert_whiteboard($session): void {
+    global $CFG;
+    if (empty($session->bbb_created) || (string)($session->status ?? '') !== 'live') {
+        pqlmat_stop('The BBB room is not live yet. Start class before swapping materials.', 'Live room not started');
+    }
+    $locallib = $CFG->dirroot . '/local/prequran/locallib.php';
+    if (!file_exists($locallib)) {
+        pqlmat_stop('The live classroom service is not ready. Please ask support to review the live-room configuration.', 'Live classroom unavailable');
+    }
+    require_once($locallib);
+    $options = ['fitToWidth' => 'true', 'fitToPage' => 'true'];
+    // Prefer the public-URL insert - the same proven path Return to Agenda
+    // uses - and fall back to embedding the bytes in the API call.
+    try {
+        if (!function_exists('local_prequran_bbb_insert_document')) {
+            throw new moodle_exception('bbb_api_error', 'local_prequran', '', 'insert_document unavailable');
+        }
+        $url = (new moodle_url('/local/hubredirect/whiteboard_pdf.php', ['v' => (string)time()]))->out(false);
+        local_prequran_bbb_insert_document((string)$session->bbb_meeting_id, $url, 'Whiteboard.pdf', true, false, true, $options);
+        pqlmat_audit((int)$session->id, 'bbb_whiteboard_inserted', 'session', (int)$session->id, [
+            'transfer' => 'public_url',
+            'url' => $url,
+        ]);
+    } catch (Throwable $e) {
+        local_prequran_bbb_insert_document_bytes((string)$session->bbb_meeting_id, pqlmat_blank_whiteboard_pdf(), 'Whiteboard.pdf', true, false, true, $options);
+        pqlmat_audit((int)$session->id, 'bbb_whiteboard_inserted', 'session', (int)$session->id, [
+            'transfer' => 'embedded',
+            'urlerror' => $e->getMessage(),
+        ]);
+    }
+}
+
 function pqlmat_insert_document_bytes($session, string $bytes, string $filename, bool $removable, string $auditaction, string $targettype, int $targetid, array $details = []): void {
     global $CFG;
     if (empty($session->bbb_created) || (string)($session->status ?? '') !== 'live') {
@@ -292,15 +324,7 @@ if ($action === 'whiteboard') {
         pqh_access_denied('Please reopen Teacher Materials and try again.', $returnurl, 'Teacher Materials action expired');
     }
     try {
-        pqlmat_insert_document_bytes(
-            $session,
-            pqlmat_blank_whiteboard_pdf(),
-            'Whiteboard.pdf',
-            true,
-            'bbb_whiteboard_inserted',
-            'session',
-            (int)$session->id
-        );
+        pqlmat_insert_whiteboard($session);
         redirect($returnurl, 'Blank whiteboard opened in the live room.', 2, \core\output\notification::NOTIFY_SUCCESS);
     } catch (Throwable $e) {
         pqlmat_audit($sessionid, 'bbb_whiteboard_insert_failed', 'session', $sessionid, ['error' => $e->getMessage()]);

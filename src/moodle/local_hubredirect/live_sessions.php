@@ -671,9 +671,8 @@ body.pqh-live-page .secondary-navigation{display:none!important}
   <div class="pql-split__bar">
     <span class="pql-split__title"><?php echo $sessiontitle; ?></span>
     <div class="pql-split__actions">
-      <button id="pql-split-toggle" class="pql-split__btn" type="button">Hide materials</button>
+      <button id="pql-split-toggle" class="pql-split__btn" type="button">Show materials</button>
       <button id="pql-split-tutor" class="pql-split__btn" type="button">Virtual tutor</button>
-      <button id="pql-split-newtab" class="pql-split__btn" type="button">Open class in its own tab</button>
       <?php if ($exiturl): ?><a id="pql-split-exit" class="pql-split__btn" href="<?php echo $exiturl->out(false); ?>">Exit</a><?php endif; ?>
     </div>
   </div>
@@ -784,6 +783,8 @@ body.pqh-live-page .secondary-navigation{display:none!important}
       window.localStorage.removeItem(closeKey);
     } catch (e) {}
     split.hidden = false;
+    // Start with the classroom at full width; the toggle reveals materials.
+    split.classList.add('pql-split--nomat');
     splitActive = true;
     var classFrame = document.getElementById('pql-split-class');
     var materialsFrame = document.getElementById('pql-split-materials');
@@ -805,20 +806,6 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     var tutorSplitButton = document.getElementById('pql-split-tutor');
     if (tutorSplitButton) {
       tutorSplitButton.addEventListener('click', openTutor);
-    }
-    var newTabButton = document.getElementById('pql-split-newtab');
-    if (newTabButton) {
-      newTabButton.addEventListener('click', function(){
-        // One BBB connection per user: release the embedded room first, then
-        // let the new tab request its own fresh join URL from the server -
-        // the one rendered into this page was consumed by the embedded room.
-        if (classFrame) {
-          classFrame.src = 'about:blank';
-        }
-        window.open(directJoinUrl || joinUrl, '_blank');
-        newTabButton.disabled = true;
-        newTabButton.textContent = 'Class opened in its own tab';
-      });
     }
     // When the class is ended, the closed page stamps localStorage; leave
     // the split view and return to the live sessions list automatically.
@@ -1937,7 +1924,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718H</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718I</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

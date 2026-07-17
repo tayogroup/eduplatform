@@ -1299,8 +1299,8 @@ $prefilltitle = optional_param('title', 'Pre-Quran review session', PARAM_TEXT);
 $prefillsessiondate = optional_param('sessiondate', '', PARAM_TEXT);
 $prefillsessiontime = optional_param('sessiontime', '', PARAM_TEXT);
 $prefillduration = optional_param('duration', 60, PARAM_INT);
-$prefilllessonid = optional_param('lessonid', '', PARAM_ALPHANUMEXT);
-$prefillunitid = optional_param('unitid', '', PARAM_ALPHANUMEXT);
+$prefilllessonid = optional_param('lessonid', 'alphabet', PARAM_ALPHANUMEXT);
+$prefillunitid = optional_param('unitid', 'alphabet_listen', PARAM_ALPHANUMEXT);
 $prefillrecording = optional_param('recording_enabled', $recordingdefault ? 1 : 0, PARAM_BOOL);
 $prefilloverride = optional_param('override_conflicts', 0, PARAM_BOOL);
 $prefilloverridereason = optional_param('override_reason', '', PARAM_TEXT);
@@ -1550,6 +1550,12 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
     $duration = optional_param('duration', 60, PARAM_INT);
     $lessonid = optional_param('lessonid', '', PARAM_ALPHANUMEXT);
     $unitid = optional_param('unitid', '', PARAM_ALPHANUMEXT);
+    if ($lessonid === '') {
+        $lessonid = 'alphabet';
+    }
+    if ($unitid === '') {
+        $unitid = 'alphabet_listen';
+    }
     $cohortid = optional_param('cohortid', 0, PARAM_INT);
     $groupid = optional_param('groupid', 0, PARAM_INT);
     $recording = optional_param('recording_enabled', $recordingdefault ? 1 : 0, PARAM_BOOL);
@@ -1587,10 +1593,8 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
         $error = 'Enter a live session title.';
     } else if ($date === '' || $time === '') {
         $error = 'Choose a live session date and time.';
-    } else if ($lessonid === '' || $unitid === '') {
-        $error = 'Choose the lesson ID and unit ID for this live review session.';
     } else if (!$studentids) {
-        $error = 'Choose at least one student.';
+        $error = 'Tick at least one student in the Students list, then create the session again.';
     } else {
         $tz = pql_valid_timezone(optional_param('timezone', pql_default_schedule_timezone(), PARAM_TEXT));
         $start = pql_parse_local_datetime($date, $time, $tz);
@@ -1730,7 +1734,7 @@ $teacherstudents = $cancreate && !is_siteadmin($USER) ? pql_teacher_students((in
 $classgroups = (is_siteadmin($USER) && pql_table_exists('local_prequran_class_group'))
     ? $DB->get_records_select('local_prequran_class_group', "status IN ('open', 'active')", [], 'title ASC', '*', 0, 100)
     : [];
-$sessions = $error === '' ? pql_visible_sessions() : [];
+$sessions = pql_live_tables_ready() ? pql_visible_sessions() : [];
 
 echo $OUTPUT->header();
 ?>
@@ -1832,7 +1836,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     </section>
 
     <?php if ($notice !== ''): ?><div class="pql-alert pql-alert--ok"><?php echo s($notice); ?></div><?php endif; ?>
-    <?php if ($error !== ''): ?><div class="pql-alert pql-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
+    <?php if ($error !== ''): ?><div class="pql-alert pql-alert--bad" id="pql-form-error"><?php echo s($error); ?></div><?php endif; ?>
 
     <div class="pql-grid">
       <?php if ($cancreate && pql_live_tables_ready()): ?>
@@ -1843,7 +1847,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
             Sessions you create are scheduled immediately and appear for your students right away.
           </div>
         <?php endif; ?>
-        <form method="post">
+        <form method="post" id="pql-create-form">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="create">
           <input type="hidden" name="timezone" value="<?php echo s(pql_default_schedule_timezone()); ?>">
@@ -1980,14 +1984,47 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
             </div>
           <?php endif; ?>
           <button class="pql-btn" type="submit">Create live session</button>
+          <div class="pql-alert pql-alert--bad" id="pql-student-warning" style="display:none;margin-top:10px">Tick at least one student in the Students list above before creating the session.</div>
         </form>
       </section>
+      <script>
+      (function(){
+        var serverError = document.getElementById('pql-form-error');
+        if (serverError) {
+          serverError.scrollIntoView({block: 'center'});
+        }
+        var form = document.getElementById('pql-create-form');
+        if (!form) {
+          return;
+        }
+        form.addEventListener('submit', function(event){
+          var boxes = form.querySelectorAll('input[type="checkbox"][name="studentids[]"]');
+          if (!boxes.length) {
+            return;
+          }
+          var anychecked = false;
+          boxes.forEach(function(box){
+            if (box.checked) {
+              anychecked = true;
+            }
+          });
+          if (!anychecked) {
+            event.preventDefault();
+            var warning = document.getElementById('pql-student-warning');
+            if (warning) {
+              warning.style.display = 'block';
+            }
+            boxes[0].closest('.pql-field').scrollIntoView({block: 'center'});
+          }
+        });
+      })();
+      </script>
       <?php endif; ?>
 
       <section class="pql-panel">
         <h2>Upcoming Sessions</h2>
         <?php if (!$sessions): ?>
-          <div class="pql-empty">No live sessions are visible for this account yet.</div>
+          <div class="pql-empty">No upcoming live sessions. Sessions leave this list automatically once their scheduled end time passes.</div>
         <?php else: ?>
           <div class="pql-list">
             <?php foreach ($sessions as $session): ?>

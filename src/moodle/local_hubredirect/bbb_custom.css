@@ -1,0 +1,15 @@
+/* Injected into the BigBlueButton client via userdata-bbb_custom_style_url
+   (see live_sessions.php join parameters). Hides the meeting title and the
+   "Open session details" control in the BBB top bar across client versions;
+   the surrounding EduPlatform page already frames the class. Editing this
+   file applies to the next join - no PHP deploy needed. */
+
+[data-test="presentationTitle"],
+[data-test="sessionDetails"],
+[data-test="openSessionDetails"],
+[data-test="sessionDetailsButton"],
+button[aria-label*="session details" i],
+h1[class*="presentationTitle" i],
+[class*="presentationTitle" i] {
+    display: none !important;
+}

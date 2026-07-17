@@ -214,6 +214,31 @@ function pqwd_student_teacher_labels(int $workspaceid): array {
     return $labels;
 }
 
+function pqwd_student_course_labels(array $studentids): array {
+    global $DB;
+    $studentids = array_values(array_unique(array_filter(array_map('intval', $studentids))));
+    if (!$studentids) {
+        return [];
+    }
+    [$insql, $params] = $DB->get_in_or_equal($studentids, SQL_PARAMS_NAMED, 'sid');
+    $rows = $DB->get_records_sql(
+        "SELECT ue.id, ue.userid, c.fullname
+           FROM {user_enrolments} ue
+           JOIN {enrol} e ON e.id = ue.enrolid
+           JOIN {course} c ON c.id = e.courseid
+          WHERE ue.userid $insql
+            AND ue.status = 0
+            AND c.visible = 1
+       ORDER BY c.fullname ASC",
+        $params
+    );
+    $labels = [];
+    foreach ($rows as $row) {
+        $labels[(int)$row->userid][(string)$row->fullname] = (string)$row->fullname;
+    }
+    return array_map('array_values', $labels);
+}
+
 function pqwd_recent_members(int $workspaceid): array {
     global $DB;
     if (!pqh_table_exists_safe('local_prequran_workspace_member')) {
@@ -308,6 +333,7 @@ if ($soloteacherid <= 0 && $issoloteacherworkspace && $role === 'teacher') {
 }
 $students = pqwd_workspace_students($workspaceid, $soloteacherid);
 $studentteachers = pqwd_student_teacher_labels($workspaceid);
+$studentcourses = pqwd_student_course_labels(array_column(array_slice($students, 0, 20), 'studentid'));
 $members = pqwd_recent_members($workspaceid);
 $sessions = pqwd_upcoming_sessions($workspaceid);
 $domains = pqwd_workspace_domains($workspaceid);
@@ -605,12 +631,13 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
           <div class="pqwd-empty">No students are linked to this workspace yet.</div>
         <?php else: ?>
           <table class="pqwd-table">
-            <thead><tr><th>Student</th><th>Teacher</th><th>Level</th><th>Status</th><th>Links</th></tr></thead>
+            <thead><tr><th>Student</th><th>Teacher</th><th>Courses enrolled</th><th>Level</th><th>Status</th><th>Links</th></tr></thead>
             <tbody>
               <?php foreach (array_slice($students, 0, 20) as $student): ?>
                 <tr>
                   <td data-label="Student"><span class="pqwd-name"><?php echo s($student['name']); ?></span><span class="pqwd-muted">Account No. <?php echo s((string)($student['accountno'] ?? '') !== '' ? (string)$student['accountno'] : 'pending repair'); ?> / User #<?php echo (int)$student['studentid']; ?></span></td>
                   <td data-label="Teacher"><?php echo s(implode(', ', $studentteachers[(int)$student['studentid']] ?? [])); ?></td>
+                  <td data-label="Courses enrolled"><?php $coursenames = $studentcourses[(int)$student['studentid']] ?? []; echo $coursenames ? s(implode(', ', $coursenames)) : '<span class="pqwd-muted">none</span>'; ?></td>
                   <td data-label="Level"><?php echo s((string)($student['level'] ?? '')); ?></td>
                   <td data-label="Status"><span class="pqwd-pill"><?php echo s((string)($student['status'] ?? 'active')); ?></span></td>
                   <td data-label="Links">

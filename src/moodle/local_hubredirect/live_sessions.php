@@ -1606,6 +1606,9 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
                 // Explicit blank banner: without it some BBB setups inject a
                 // server-default banner bar across the top of the classroom.
                 'bannerText' => ' ',
+                // Zoom-style: webcams lead, the presentation stays minimized
+                // until the teacher brings it up.
+                'meetingLayout' => 'VIDEO_FOCUS',
                 'lockSettingsDisableCam' => true,
                 'disabledFeatures' => 'virtualBackgrounds,customVirtualBackgrounds,cameraAsContent',
             ];
@@ -1655,6 +1658,13 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
                 // is a fallback if the client blocks external style URLs.
                 'userdata-bbb_custom_style_url' => (new moodle_url('/local/hubredirect/bbb_custom.css'))->out(false),
                 'userdata-bbb_custom_style' => '[data-test="presentationTitle"],button[aria-label*="session details" i],[class*="presentationTitle" i]{display:none!important;}',
+                // Zoom-style joining: land on the video grid with audio
+                // connected in one step (mic still muted by muteOnStart),
+                // no listen-only detour, no echo test.
+                'userdata-bbb_hide_presentation_on_join' => 'true',
+                'userdata-bbb_auto_join_audio' => 'true',
+                'userdata-bbb_listen_only_mode' => 'false',
+                'userdata-bbb_skip_check_audio' => 'true',
                 'userdata-prequran-sessionid' => (int)$session->id,
                 'userdata-prequran-workspaceid' => $workspaceid > 0 ? $workspaceid : (int)($session->workspaceid ?? 0),
                 'userdata-prequran-studentid' => $studentid,
@@ -1975,7 +1985,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
     <section class="pql-top pqh-workspace-top">
       <div>
         <h1 class="pql-title pqh-workspace-title">Live Sessions</h1>
-        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718O</span></p>
+        <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718P</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>

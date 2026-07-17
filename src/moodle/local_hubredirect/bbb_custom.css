@@ -1,9 +1,13 @@
 /* Injected into the BigBlueButton client via userdata-bbb_custom_style_url
-   (see live_sessions.php join parameters). Hides the meeting title and the
-   "Open session details" control in the BBB top bar across client versions;
-   the surrounding EduPlatform page already frames the class. Editing this
-   file applies to the next join - no PHP deploy needed. */
+   (see live_sessions.php join parameters). Editing this file applies to the
+   next join - no PHP deploy needed.
 
+   BBB generates hashed class names, so rules target stable data-test hooks
+   and case-insensitive class fragments. A selector that no longer matches a
+   given BBB version is a harmless no-op - tune freely. */
+
+/* --- Hide the meeting title / "Open session details" control: the
+       surrounding EduPlatform page already frames the class. --- */
 [data-test="presentationTitle"],
 [data-test="sessionDetails"],
 [data-test="openSessionDetails"],
@@ -12,4 +16,44 @@ button[aria-label*="session details" i],
 h1[class*="presentationTitle" i],
 [class*="presentationTitle" i] {
     display: none !important;
+}
+
+/* --- Zoom-style skin ------------------------------------------------- */
+
+/* Rounded video tiles, cover-fit like Zoom's gallery */
+[data-test="webcamVideoItem"],
+[data-test="webcamVideoItem"] video,
+[class*="videoContainer" i] video,
+video[class*="media" i] {
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Bottom action bar as a dark floating pill, Zoom-toolbar style */
+[data-test="actionsBar"],
+section[class*="actionsbar" i],
+div[class*="actionsbar" i] {
+    background: rgba(28, 28, 30, 0.92) !important;
+    border-radius: 14px !important;
+    padding: 6px 14px !important;
+    margin: 0 auto 10px !important;
+    width: fit-content !important;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* Name tags on tiles: compact dark chip in the corner, Zoom-style */
+[data-test="webcamVideoItem"] [class*="dropdownTrigger" i],
+[data-test="webcamVideoItem"] [class*="userName" i],
+[class*="videoContainer" i] [class*="userName" i] {
+    background: rgba(0, 0, 0, 0.55) !important;
+    border-radius: 6px !important;
+    padding: 2px 8px !important;
+    font-size: 12px !important;
+    color: #fff !important;
+}
+
+/* Darken the media area behind the tiles so the grid floats like Zoom's */
+[data-test="mediaArea"],
+div[class*="mediaArea" i] {
+    background: #121214 !important;
 }

@@ -205,7 +205,7 @@ function pqltch_agenda_slides_controls($session, string $returnurl, array $urlpa
         );
         $html .= html_writer::link(
             pqh_live_session_materials_url($sessionid, $urlparams),
-            'Quraan Materials',
+            'Teacher Materials',
             ['class' => 'pqltch-btn pqltch-btn--light', 'target' => '_blank', 'rel' => 'noopener']
         );
         $html .= html_writer::span('Attached: ' . s($filename), 'pqltch-agenda__status');
@@ -218,7 +218,7 @@ function pqltch_agenda_slides_controls($session, string $returnurl, array $urlpa
         );
         $html .= html_writer::link(
             pqh_live_session_materials_url($sessionid, $urlparams),
-            'Quraan Materials',
+            'Teacher Materials',
             ['class' => 'pqltch-btn pqltch-btn--light', 'target' => '_blank', 'rel' => 'noopener']
         );
     }

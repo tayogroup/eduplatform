@@ -505,7 +505,17 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
   --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
   --pqh-primary-ink:#17498f;--pqh-r:14px;
   --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
-  background:var(--pqh-bg);color:var(--pqh-ink);padding-left:94px}
+  background:var(--pqh-bg);color:var(--pqh-ink);padding:0 0 56px 76px}
+.pqwd-wrap{padding:24px 24px 0}
+.pqwd-topbar{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 24px;background:linear-gradient(115deg,#2166d1,#4d8be0);border-bottom:1px solid rgba(255,255,255,.22);box-shadow:0 6px 18px -12px rgba(23,73,143,.5)}
+.pqwd-topbar__brand{display:flex;align-items:center;gap:10px;color:#fff;font-size:17px;font-weight:800}
+.pqwd-topbar__brand .pqh-brand-mark{width:38px;height:38px;background:#fff!important;color:#2166d1!important;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;font-weight:800;overflow:hidden}
+.pqwd-topbar__brand .pqh-brand-mark img{display:block;width:100%;height:100%;object-fit:cover}
+.pqwd-topbar__nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pqwd-topbar__nav a,.pqwd-topbar__nav button{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0!important;border-radius:9px;background:transparent!important;color:rgba(255,255,255,.92)!important;font-size:13px;font-weight:650!important;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
+.pqwd-topbar__nav a:hover,.pqwd-topbar__nav button:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
+.pqwd-topbar__nav .pqwd-topbar__logout{background:#fff!important;color:#17498f!important;font-weight:700!important}
+.pqwd-topbar__nav .pqwd-topbar__logout:hover{background:#e9f1fc!important;color:#0f2237!important}
 .pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:76px;z-index:80;display:flex;flex-direction:column;gap:4px;padding:12px 8px;background:var(--pqh-surface);border-right:1px solid var(--pqh-line);overflow-y:auto}
 .pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 auto 12px;border-radius:13px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
 .pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px;border:0;border-radius:11px;background:transparent;color:var(--pqh-muted)!important;font:600 10px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer}
@@ -538,7 +548,7 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 .pqwd-table th,.pqwd-table td{border-color:var(--pqh-line)}
 .pqwd-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
 .pqwd-select{border:1px solid var(--pqh-line)!important;border-radius:10px!important;background:var(--pqh-surface)!important;color:var(--pqh-ink)!important;font-weight:550!important}
-@media(max-width:900px){.pqwd-shell{padding-left:18px}.pqh-gnav{display:none}}
+@media(max-width:900px){.pqwd-shell{padding-left:0}.pqh-gnav{display:none}.pqwd-topbar{flex-wrap:wrap}}
 </style>
 <main class="pqwd-shell">
 <nav class="pqh-gnav" aria-label="Global navigation">
@@ -561,6 +571,29 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
     Logout
   </a>
 </nav>
+<div class="pqwd-topbar">
+  <div class="pqwd-topbar__brand">
+    <span class="pqh-brand-mark">
+      <?php if ($brandlogo !== ''): ?>
+        <img src="<?php echo s($brandlogo); ?>" alt="<?php echo s($brandname); ?>">
+      <?php else: ?>
+        <?php echo s($brandinitial); ?>
+      <?php endif; ?>
+    </span>
+    <span><?php echo s($workspace->name); ?></span>
+  </div>
+  <div class="pqwd-topbar__nav">
+    <button type="button" onclick="window.history.back()">Back</button>
+    <a href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Home</a>
+    <?php if ($canmanage): ?><a href="<?php echo (new moodle_url('/local/hubredirect/workspace_people.php', $workspaceparams))->out(false); ?>">Manage people</a><?php endif; ?>
+    <?php if ($canmanage): ?><a href="<?php echo $brandediturl->out(false); ?>">Settings</a><?php endif; ?>
+    <?php if ($canacademyops): ?><a href="<?php echo $workspacesadminurl->out(false); ?>">Manage workspaces</a><?php endif; ?>
+    <?php if ($canacademyops): ?><a href="<?php echo $platformconsumersurl->out(false); ?>">Platform consumers</a><?php endif; ?>
+    <?php if ($canteach): ?><button type="button" data-pq-support-action="open">Manage tickets</button><?php endif; ?>
+    <?php if ($canteach): ?><button type="button" data-pq-support-action="new">Create a ticket</button><?php endif; ?>
+    <a class="pqwd-topbar__logout" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">Logout</a>
+  </div>
+</div>
   <div class="pqwd-wrap">
     <section class="pqwd-top pqh-workspace-top">
       <div>
@@ -584,15 +617,6 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
             <?php endforeach; ?>
           </select>
         <?php endif; ?>
-        <button class="pqwd-btn pqwd-btn--light" type="button" onclick="window.history.back()">Back</button>
-        <a class="pqwd-btn pqwd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Home</a>
-        <?php if ($canmanage): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_people.php', $workspaceparams))->out(false); ?>">Manage people</a><?php endif; ?>
-        <?php if ($canmanage): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $brandediturl->out(false); ?>">Settings</a><?php endif; ?>
-        <?php if ($canacademyops): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $workspacesadminurl->out(false); ?>">Manage workspaces</a><?php endif; ?>
-        <?php if ($canacademyops): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $platformconsumersurl->out(false); ?>">Platform consumers</a><?php endif; ?>
-        <?php if ($canteach): ?><button class="pqwd-btn pqwd-btn--light" type="button" data-pq-support-action="open">Manage tickets</button><?php endif; ?>
-        <?php if ($canteach): ?><button class="pqwd-btn" type="button" data-pq-support-action="new">Create a ticket</button><?php endif; ?>
-        <a class="pqwd-btn pqh-workspace-logout" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">Logout</a>
       </form>
     </section>
 

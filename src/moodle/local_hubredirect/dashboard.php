@@ -2748,6 +2748,13 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
             <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">Schedule</a>
           </div>
         <?php endif; ?>
+        <?php if ($hasworkspace): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+            <span class="pqh-todo__body"><strong>Students needing attention</strong><span>Early-warning rules: inactivity, low attendance, missed classes.</span></span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('at_risk_report.php', ['workspaceid' => $currentworkspaceid])->out(false); ?>">Review</a>
+          </div>
+        <?php endif; ?>
         <?php if ($pqhtodocount === 0 && (int)($pqhtodometrics['upcoming'] ?? 0) === 0): ?>
           <div class="pqh-todo__item">
             <span class="pqh-todo__ico pqh-todo__ico--ok"><svg viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg></span>

@@ -2776,7 +2776,8 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
               }
               $showcurrentlesson = $coursepanelstudentid === (int)$USER->id && $coursekey === 'pre_quraan' && $course['status'] === 'live';
               $canlaunchcourse = $role !== 'parent';
-              $showvirtualtutor = $coursekey === 'pre_quraan' && $coursepanelstudentid > 0 && pqh_is_managed_student($coursepanelstudentid);
+              $showvirtualtutor = $coursekey === 'pre_quraan' && $coursepanelstudentid > 0 && pqh_is_managed_student($coursepanelstudentid)
+                  && $coursepaneltitle !== 'Student enrolled courses';
               $courseurl = $coursepanellaunchmode === 'moodle_direct' && (int)($course['moodlecourseid'] ?? 0) > 0
                   ? new moodle_url('/course/view.php', ['id' => (int)$course['moodlecourseid']])
                   : pqh_course_launch_link($coursekey, $coursepanelstudentid);

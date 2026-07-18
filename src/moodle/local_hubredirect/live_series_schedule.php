@@ -472,8 +472,10 @@ body.pqh-live-series-schedule-page .main-inner{margin:0!important;padding:0!impo
 @media(max-width:760px){.pqlps-top,.pqlps-head,.pqlps-session,.pqlps-change{display:block}.pqlps-actions{margin-top:12px}.pqlps-title{font-size:25px}}
 <?php echo pqh_dashboard_header_css(); ?>
 <?php echo pqh_design_system_css('.pqlps-shell'); ?>
+<?php echo pqh_design_shell_css('.pqlps-shell'); ?>
 </style>
-<main class="pqlps-shell"><div class="pqlps-wrap">
+<main class="pqlps-shell">
+<?php echo pqh_design_shell_html('pqlps-shell'); ?><div class="pqlps-wrap">
   <section class="pqlps-top pqh-workspace-top">
     <div><p class="pqlps-kicker">Recurring live classes</p><h1 class="pqlps-title pqh-workspace-title">Series schedule for <?php echo s($childname); ?></h1><p class="pqlps-sub pqh-workspace-sub">Latest class times, cancellations, summaries, recordings, and parent-safe change history.</p></div>
     <div class="pqlps-actions pqh-workspace-actions">

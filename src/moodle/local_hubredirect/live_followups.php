@@ -499,8 +499,10 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
 @media(max-width:900px){.pqlf-top{display:block}.pqlf-actions{margin-top:12px}.pqlf-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlf-filter,.pqlf-grid,.pqlf-update{grid-template-columns:1fr}.pqlf-filter{display:block}.pqlf-field{margin-bottom:10px}}
 <?php echo pqh_dashboard_header_css(); ?>
 <?php echo pqh_design_system_css('.pqlf-shell'); ?>
+<?php echo pqh_design_shell_css('.pqlf-shell'); ?>
 </style>
 <main class="pqlf-shell">
+<?php echo pqh_design_shell_html('pqlf-shell'); ?>
   <div class="pqlf-wrap">
     <section class="pqlf-top pqh-workspace-top">
       <div>

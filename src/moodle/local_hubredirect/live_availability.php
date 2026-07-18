@@ -421,8 +421,10 @@ body.pqh-live-availability-page .main-inner{margin:0!important;padding:0!importa
 @media(max-width:760px){.pqlav-top{display:block}.pqlav-actions{margin-top:12px}.pqlav-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 <?php echo pqh_design_system_css('.pqlav-shell'); ?>
+<?php echo pqh_design_shell_css('.pqlav-shell'); ?>
 </style>
 <main class="pqlav-shell">
+<?php echo pqh_design_shell_html('pqlav-shell'); ?>
   <div class="pqlav-wrap">
     <section class="pqlav-top pqh-workspace-top">
       <div>

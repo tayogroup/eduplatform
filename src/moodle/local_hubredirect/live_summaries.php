@@ -623,8 +623,10 @@ body.pqh-live-summaries-page{background:#f4f7fb!important}
 .pqls-shell [class*="-card"],.pqls-shell [class*="-panel"],.pqls-shell [class*="-summary"],.pqls-shell [class*="-item"]{background:var(--pqh-surface);border-color:var(--pqh-line)!important;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05)}
 .pqls-shell [class*="-pill"]{background:var(--pqh-tint)!important;color:var(--pqh-primary-ink)!important;border-radius:8px!important;font-weight:650!important}
 .pqls-shell h1,.pqls-shell h2,.pqls-shell h3{color:var(--pqh-ink)}
+<?php echo pqh_design_shell_css('.pqls-shell'); ?>
 </style>
 <main class="pqls-shell">
+<?php echo pqh_design_shell_html('pqls-shell'); ?>
   <div class="pqls-wrap">
     <section class="pqls-top pqh-workspace-top">
       <div>

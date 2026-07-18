@@ -180,8 +180,10 @@ body.pqw-materials-page #page,body.pqw-materials-page #page-content,body.pqw-mat
 @media(max-width:980px){.pqwm-top,.pqwm-grid,.pqwm-metrics{grid-template-columns:1fr}.pqwm-actions{justify-content:flex-start}}
 <?php echo pqh_workspace_header_css(); ?>
 <?php echo pqh_design_system_css('.pqwm-shell'); ?>
+<?php echo pqh_design_shell_css('.pqwm-shell'); ?>
 </style>
 <main class="pqwm-shell">
+<?php echo pqh_design_shell_html('pqwm-shell'); ?>
   <div class="pqwm-wrap">
     <section class="pqwm-top pqh-workspace-top">
       <div>

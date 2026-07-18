@@ -420,8 +420,10 @@ body.pqh-live-calendar-page .main-inner{margin:0!important;padding:0!important;m
 @media(max-width:820px){.pqlcal-top,.pqlcal-head{display:block}.pqlcal-actions{margin-top:12px}.pqlcal-calendar{display:grid;grid-template-columns:1fr}.pqlcal-dayname{display:none}.pqlcal-day{min-height:auto}.pqlcal-title{font-size:25px}}
 <?php echo pqh_dashboard_header_css(); ?>
 <?php echo pqh_design_system_css('.pqlcal-shell'); ?>
+<?php echo pqh_design_shell_css('.pqlcal-shell'); ?>
 </style>
 <main class="pqlcal-shell">
+<?php echo pqh_design_shell_html('pqlcal-shell'); ?>
   <div class="pqlcal-wrap">
     <section class="pqlcal-top pqh-workspace-top">
       <div>

@@ -1248,6 +1248,83 @@ function pqh_design_system_css(string $scope): string {
 CSS;
 }
 
+/**
+ * Standard application shell styles (nav rail + blue app bar + expandable
+ * rail), scoped to a page's shell class. Pair with pqh_design_shell_html().
+ */
+function pqh_design_shell_css(string $scope): string {
+    return <<<CSS
+/* ---- standard shell: rail + blue app bar (shared) ---- */
+{$scope}{padding:0 0 54px 76px!important}
+{$scope}>[class*="-wrap"]{padding:24px 24px 0}
+.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:76px;z-index:80;display:flex;flex-direction:column;gap:4px;padding:12px 8px;background:#fff;border-right:1px solid #e4e9ef;overflow-y:auto}
+.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 auto 12px;border-radius:13px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
+.pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px;border:0;border-radius:11px;background:transparent!important;color:#5b6b7c!important;font:600 10px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
+.pqh-gnav__item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pqh-gnav__item:hover{background:#edf3fc!important;color:#17498f!important;text-decoration:none!important}
+.pqh-gnav__item.is-active{background:#edf3fc!important;color:#2166d1!important;font-weight:700}
+.pqh-gnav__spacer{flex:1}
+.pqh-appbar{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 24px;background:linear-gradient(115deg,#2166d1,#4d8be0);border-bottom:1px solid rgba(255,255,255,.22);box-shadow:0 6px 18px -12px rgba(23,73,143,.5)}
+.pqh-appbar__brand{display:flex;align-items:center;gap:10px;color:#fff;font-size:17px;font-weight:800}
+.pqh-appbar__mark{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;background:#fff;color:#2166d1;font-weight:800}
+.pqh-appbar__nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pqh-appbar__nav a,.pqh-appbar__nav button{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0!important;border-radius:9px;background:transparent!important;color:rgba(255,255,255,.92)!important;font-size:13px;font-weight:650!important;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
+.pqh-appbar__nav a:hover,.pqh-appbar__nav button:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
+.pqh-appbar__nav .pqh-appbar__logout{background:#fff!important;color:#17498f!important;font-weight:700!important}
+.pqh-appbar__nav .pqh-appbar__logout:hover{background:#e9f1fc!important;color:#0f2237!important}
+{$scope}.pqh-rail-x{padding-left:216px!important}
+{$scope}.pqh-rail-x .pqh-gnav{width:216px}
+{$scope}.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
+{$scope}.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
+@media(max-width:900px){{$scope},{$scope}.pqh-rail-x{padding-left:0!important}.pqh-gnav{display:none}.pqh-appbar{flex-wrap:wrap}}
+CSS;
+}
+
+/**
+ * Standard application shell markup: nav rail, blue app bar, and the
+ * expandable-rail script. Echo directly after the page's <main> opens.
+ */
+function pqh_design_shell_html(string $shellclass, string $active = ''): string {
+    $ctx = pqh_requested_consumer_context();
+    $brand = trim((string)($ctx->consumername ?? '')) ?: 'EduPlatform';
+    $initials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $brand) ?: 'EP', 0, 2));
+    $params = [];
+    if (trim((string)($ctx->consumerslug ?? '')) !== '') {
+        $params['consumer'] = (string)$ctx->consumerslug;
+    }
+    $ws = optional_param('workspaceid', 0, PARAM_INT);
+    if ($ws > 0) {
+        $params['workspaceid'] = $ws;
+    }
+    $items = [
+        'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', $params), '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'],
+        'workspace' => ['Workspace', new moodle_url('/local/hubredirect/teacher_workspace.php', $params), '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>'],
+        'live' => ['Live', new moodle_url('/local/hubredirect/live_sessions.php', $params), '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/>'],
+        'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params), '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>'],
+    ];
+    $logouturl = (new moodle_url('/local/hubredirect/logout.php'))->out(false);
+    $html = '<nav class="pqh-gnav" aria-label="Global navigation">';
+    $html .= '<a class="pqh-gnav__brand" href="' . $items['dashboard'][1]->out(false) . '" title="' . s($brand) . '">' . s($initials) . '</a>';
+    foreach ($items as $key => $item) {
+        $html .= '<a class="pqh-gnav__item' . ($key === $active ? ' is-active' : '') . '" href="' . $item[1]->out(false) . '">'
+            . '<svg viewBox="0 0 24 24">' . $item[2] . '</svg>' . s($item[0]) . '</a>';
+    }
+    $html .= '<span class="pqh-gnav__spacer"></span>';
+    $html .= '<a class="pqh-gnav__item" href="' . $logouturl . '"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Logout</a>';
+    $html .= '<button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation"><svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>Menu</button>';
+    $html .= '</nav>';
+    $html .= '<div class="pqh-appbar"><div class="pqh-appbar__brand"><span class="pqh-appbar__mark">' . s($initials) . '</span><span>' . s($brand) . '</span></div><div class="pqh-appbar__nav">';
+    $html .= '<a href="' . $items['dashboard'][1]->out(false) . '">Dashboard</a>';
+    $html .= '<a href="' . $items['workspace'][1]->out(false) . '">Teacher workspace</a>';
+    $html .= '<a href="' . $items['live'][1]->out(false) . '">Live sessions</a>';
+    $html .= '<a class="pqh-appbar__logout" href="' . $logouturl . '">Logout</a>';
+    $html .= '</div></div>';
+    $html .= '<script>(function(){var shell=document.querySelector(".' . $shellclass . '");var toggle=document.getElementById("pqh-rail-toggle");var key="pqh_rail_expanded";'
+        . 'try{if(window.localStorage.getItem(key)==="1"){shell.classList.add("pqh-rail-x");}}catch(e){}'
+        . 'if(toggle){toggle.addEventListener("click",function(){var x=shell.classList.toggle("pqh-rail-x");try{window.localStorage.setItem(key,x?"1":"0");}catch(e){}});}})();</script>';
+    return $html;
+}
+
 function pqh_live_session_explainer_media_url(): moodle_url {
     return new moodle_url('/local/hubredirect/pix/live_session_explainer.mp4');
 }

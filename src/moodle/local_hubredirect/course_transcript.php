@@ -182,8 +182,10 @@ body.pqct-page #page,body.pqct-page #page-content,body.pqct-page #region-main,bo
 @media(max-width:980px){.pqct-top,.pqct-filter,.pqct-student,.pqct-line-grid{grid-template-columns:1fr}.pqct-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pqct-actions{justify-content:flex-start}}
 @media(max-width:560px){.pqct-shell{padding:18px 12px 42px}.pqct-grid{grid-template-columns:1fr}.pqct-title{font-size:25px}.pqct-line-head{grid-template-columns:1fr}}
 <?php echo pqh_design_system_css('.pqct-shell'); ?>
+<?php echo pqh_design_shell_css('.pqct-shell'); ?>
 </style>
-<main class="pqct-shell"><div class="pqct-wrap">
+<main class="pqct-shell">
+<?php echo pqh_design_shell_html('pqct-shell'); ?><div class="pqct-wrap">
   <section class="pqct-top">
     <div>
       <p class="pqct-kicker">Unofficial Transcript</p>

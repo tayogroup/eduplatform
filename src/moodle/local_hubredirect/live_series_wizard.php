@@ -299,8 +299,10 @@ body.pqh-live-series-wizard-page #page,body.pqh-live-series-wizard-page #page-co
 @media(max-width:780px){.pqlsw-top{display:block}.pqlsw-actions{margin-top:12px}.pqlsw-grid,.pqlsw-steps{grid-template-columns:1fr}.pqlsw-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 <?php echo pqh_design_system_css('.pqlsw-shell'); ?>
+<?php echo pqh_design_shell_css('.pqlsw-shell'); ?>
 </style>
-<main class="pqlsw-shell"><div class="pqlsw-wrap">
+<main class="pqlsw-shell">
+<?php echo pqh_design_shell_html('pqlsw-shell'); ?><div class="pqlsw-wrap">
   <section class="pqlsw-top pqh-workspace-top"><div><h1 class="pqlsw-title pqh-workspace-title">Guided Recurring Class Series Wizard</h1><p class="pqlsw-sub pqh-workspace-sub">Preview every generated class date before creating a recurring BBB live-session series.</p></div><div class="pqlsw-actions pqh-workspace-actions"><?php echo pqh_live_session_explainer_link(); ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $urlparams))->out(false); ?>">Single session wizard</a><?php if ($pqlswisadmin): ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Capacity</a><?php endif; ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a><a class="pqlsw-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a></div></section>
   <section class="pqlsw-steps"><?php foreach ([1 => 'Teacher', 2 => 'Students', 3 => 'Lesson', 4 => 'Recurrence', 5 => 'Safety', 6 => 'Review'] as $num => $label): ?><div class="pqlsw-step <?php echo $step === $num ? 'pqlsw-step--active' : ''; ?>"><?php echo (int)$num; ?>. <?php echo s($label); ?></div><?php endforeach; ?></section>
   <section class="pqlsw-panel">

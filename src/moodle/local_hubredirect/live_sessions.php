@@ -654,6 +654,7 @@ body.pqh-live-page .secondary-navigation{display:none!important}
 .pql-split__materials{width:min(420px,38vw);height:100%;border:0;border-left:1px solid rgba(255,255,255,.18);background:#fff}
 .pql-split--nomat .pql-split__materials{display:none}
 <?php echo pqh_design_system_css('.pql-shell'); ?>
+<?php echo pqh_design_shell_css('.pql-shell'); ?>
 </style>
 <main class="pql-bridge">
   <section class="pql-bridge__card">
@@ -1997,6 +1998,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
 <main class="pql-shell">
+<?php echo pqh_design_shell_html('pql-shell'); ?>
   <div class="pql-wrap">
     <section class="pql-top pqh-workspace-top">
       <div>

@@ -90,8 +90,10 @@ body.pqh-office-studio-page #page,body.pqh-office-studio-page #page-content,body
 @media(max-width:900px){.pqho-top,.pqho-grid,.pqho-create{display:block}.pqho-tile{margin-bottom:10px}.pqho-actions{margin-top:12px}}
 <?php echo pqh_dashboard_header_css(); ?>
 <?php echo pqh_design_system_css('.pqho-shell'); ?>
+<?php echo pqh_design_shell_css('.pqho-shell'); ?>
 </style>
 <main class="pqho-shell">
+<?php echo pqh_design_shell_html('pqho-shell'); ?>
   <div class="pqho-wrap">
     <section class="pqho-top pqh-workspace-top">
       <div>

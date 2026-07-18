@@ -670,8 +670,10 @@ body.pqh-managed-report-page .main-inner{margin:0!important;padding:0!important;
 @media(max-width:560px){.pqmr-shell{padding:18px 10px 42px}.pqmr-title{font-size:24px}.pqmr-summary{grid-template-columns:1fr}.pqmr-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 <?php echo pqh_design_system_css('.pqmr-shell'); ?>
+<?php echo pqh_design_shell_css('.pqmr-shell'); ?>
 </style>
 <main class="pqmr-shell">
+<?php echo pqh_design_shell_html('pqmr-shell'); ?>
   <div class="pqmr-wrap">
     <section class="pqmr-top pqh-workspace-top">
       <div>

@@ -243,8 +243,10 @@ body.pqh-recordings-page .main-inner{margin:0!important;padding:0!important;max-
 .pqr-empty{padding:28px;text-align:center;color:#64745a;font-weight:850}
 @media(max-width:720px){.pqr-top{display:block}.pqr-table,.pqr-table tbody,.pqr-table tr,.pqr-table td{display:block;width:100%}.pqr-table thead{display:none}.pqr-table td{padding:8px 0;border:0}.pqr-table tr{padding:10px 0;border-bottom:1px solid rgba(111,78,50,.1)}}
 <?php echo pqh_design_system_css('.pqr-shell'); ?>
+<?php echo pqh_design_shell_css('.pqr-shell'); ?>
 </style>
 <main class="pqr-shell">
+<?php echo pqh_design_shell_html('pqr-shell'); ?>
   <div class="pqr-wrap">
     <section class="pqr-top">
       <div>

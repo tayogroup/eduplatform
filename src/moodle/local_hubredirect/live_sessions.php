@@ -2027,7 +2027,6 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_series.php', $urlparams)->out(false); ?>">Class series</a>
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_availability.php', $urlparams)->out(false); ?>">Availability</a>
         <?php endif; ?>
-        <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_schedule.php', $urlparams)->out(false); ?>">Live schedule</a>
         <a class="pql-btn pqh-workspace-logout" href="<?php echo pql_url('/local/hubredirect/logout.php', $urlparams)->out(false); ?>">Logout</a>
       </div>
     </section>

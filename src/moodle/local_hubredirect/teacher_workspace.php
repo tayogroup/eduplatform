@@ -893,6 +893,7 @@ $pqltchbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqltc
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $teacherbaseurlparams))->out(false); ?>">Class series</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $teacherbaseurlparams))->out(false); ?>">Availability</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', $teacherbaseurlparams))->out(false); ?>">Live schedule</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $teacherbaseurlparams))->out(false); ?>">Calendar</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', $teacherbaseurlparams))->out(false); ?>">Live summaries</a>
             <a class="pqltch-btn pqltch-btn--light" target="_blank" rel="noopener" href="<?php echo pqh_live_session_explainer_url()->out(false); ?>">Watch live-session guide</a>

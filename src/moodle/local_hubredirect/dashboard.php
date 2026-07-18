@@ -2396,25 +2396,25 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
        flat white panels. Layout modeled on the Canvas LMS dashboard. ---- */
 .pqh-shell{background:#f2f4f6;min-height:100vh;padding-left:84px}
 .pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:84px;z-index:80;display:flex;flex-direction:column;align-items:stretch;gap:2px;padding:10px 6px;background:#173044;overflow-y:auto}
-.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:46px;height:46px;margin:2px auto 10px;border-radius:12px;background:#2f6f4e;color:#fff!important;font:950 16px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important}
+.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:46px;height:46px;margin:2px auto 10px;border-radius:12px;background:#1d5b8c;color:#fff!important;font:950 16px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important}
 .pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 2px;border:0;border-radius:10px;background:transparent;color:#e8eef4!important;font:800 10.5px/1.1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer}
 .pqh-gnav__item svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .pqh-gnav__item:hover{background:rgba(255,255,255,.14);text-decoration:none!important}
 .pqh-gnav__item.is-active{background:#fff;color:#173044!important}
 .pqh-gnav__spacer{flex:1}
 .pqh-topbar{background:#fff;border-bottom:1px solid #d5dbe0;box-shadow:none}
-.pqh-hero{background:#e9f3ec;border:1px solid #cfe0d5;box-shadow:none;border-radius:12px;padding:22px 24px}
+.pqh-hero{background:#e7f0f9;border:1px solid #cdddee;box-shadow:none;border-radius:12px;padding:22px 24px}
 .pqh-title{color:#173044}
-.pqh-kicker{color:#2f6f4e}
+.pqh-kicker{color:#1d5b8c}
 .pqh-course-panel,.pqh-card,.pqh-teacher-panel,.pqh-teacher-metric,.pqh-filter,.pqh-sql-panel,.pqh-live-child{border-color:#d5dbe0!important;box-shadow:0 1px 3px rgba(23,48,68,.06)!important;border-radius:12px}
-.pqh-course-panel{background:#f0f7f2;border-color:#d3e3d9!important}
+.pqh-course-panel{background:#eef4fa;border-color:#d2dfea!important}
 .pqh-card{background:#eef4fa;border-color:#d2dfea!important}
-.pqh-teacher-panel{background:#f1f5fa;border-color:#d2dfea!important}
+.pqh-teacher-panel{background:#f1f6fb;border-color:#d2dfea!important}
 .pqh-teacher-metric{background:#fbf5e6;border-color:#e6d9b8!important}
 .pqh-filter{background:#faf3ea;border-color:#e6d6c2!important}
-.pqh-live-child{background:#f0f7f2;border-color:#d3e3d9!important}
+.pqh-live-child{background:#eef4fa;border-color:#d2dfea!important}
 .pqh-dashboard-sidebar .pqh-card:nth-child(3n+1){background:#eef4fa;border-color:#d2dfea!important}
-.pqh-dashboard-sidebar .pqh-card:nth-child(3n+2){background:#f0f7f2;border-color:#d3e3d9!important}
+.pqh-dashboard-sidebar .pqh-card:nth-child(3n+2){background:#e7f0f9;border-color:#cdddee!important}
 .pqh-dashboard-sidebar .pqh-card:nth-child(3n){background:#fbf5e6;border-color:#e6d9b8!important}
 .pqh-student-profile__item,.pqh-teacher-row,.pqh-mini-stat,.pqh-live-session{background:#fff}
 .pqh-course-panel__head h2,.pqh-card h3,.pqh-teacher-panel h3,.pqh-course-panel h2,.pqh-config__head h2,.pqh-tools__head h2,.pqh-live-monitor__head h2{color:#173044}
@@ -2422,22 +2422,22 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-course-grid{gap:16px}
 .pqh-course-card{position:relative;padding:0;overflow:hidden;background:#fff;border:1px solid #d5dbe0;border-radius:12px;box-shadow:0 1px 3px rgba(23,48,68,.08);transition:box-shadow .15s ease}
 .pqh-course-card:hover{background:#fff;box-shadow:0 8px 20px rgba(23,48,68,.16);text-decoration:none}
-.pqh-course-card::before{content:"";display:block;height:72px;background:var(--pqhcc,#2f6f4e)}
-.pqh-course-grid .pqh-course-card:nth-child(5n+1){--pqhcc:#2f6f4e}
-.pqh-course-grid .pqh-course-card:nth-child(5n+2){--pqhcc:#1d5b8c}
+.pqh-course-card::before{content:"";display:block;height:72px;background:var(--pqhcc,#1d5b8c)}
+.pqh-course-grid .pqh-course-card:nth-child(5n+1){--pqhcc:#1d5b8c}
+.pqh-course-grid .pqh-course-card:nth-child(5n+2){--pqhcc:#2f6f4e}
 .pqh-course-grid .pqh-course-card:nth-child(5n+3){--pqhcc:#b85042}
 .pqh-course-grid .pqh-course-card:nth-child(5n+4){--pqhcc:#8a6d1f}
 .pqh-course-grid .pqh-course-card:nth-child(5n+5){--pqhcc:#5d5a8c}
 .pqh-course-card>span{display:block;padding:0 14px}
 .pqh-course-card>span:first-of-type{padding-top:12px}
 .pqh-course-card h3{color:#173044;font-size:16px}
-.pqh-course-card h3::before{content:"";display:inline-block;width:9px;height:9px;margin-right:7px;border-radius:50%;background:var(--pqhcc,#2f6f4e)}
+.pqh-course-card h3::before{content:"";display:inline-block;width:9px;height:9px;margin-right:7px;border-radius:50%;background:var(--pqhcc,#1d5b8c)}
 .pqh-course-card__number{margin:5px 0 10px}
 .pqh-course-card__actions{padding:0 14px 14px!important}
-.pqh-btn{background:#2f6f4e}
-.pqh-btn--secondary{background:#fff;border-color:#d5dbe0}
-.pqh-quick-card{background:#f0f7f2;color:#173044;border:1px solid #d3e3d9;box-shadow:0 1px 3px rgba(23,48,68,.06)}
-.pqh-quick-card:nth-child(even){background:#eef4fa;border-color:#d2dfea;box-shadow:0 1px 3px rgba(23,48,68,.06)}
+.pqh-btn{background:#1d5b8c}
+.pqh-btn--secondary{background:#fff;border-color:#d5dbe0;color:#173044!important}
+.pqh-quick-card{background:#eef4fa;color:#173044;border:1px solid #d2dfea;box-shadow:0 1px 3px rgba(23,48,68,.06)}
+.pqh-quick-card:nth-child(even){background:#e7f0f9;border-color:#cdddee;box-shadow:0 1px 3px rgba(23,48,68,.06)}
 .pqh-quick-card strong{color:#173044}
 .pqh-quick-card span{color:#5e7280}
 .pqh-dashboard-sidebar .pqh-card h3{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:#5e7280}

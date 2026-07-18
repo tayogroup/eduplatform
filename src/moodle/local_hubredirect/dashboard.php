@@ -2410,12 +2410,12 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-course-panel{background:#eef4fa;border-color:#d2dfea!important}
 .pqh-card{background:#eef4fa;border-color:#d2dfea!important}
 .pqh-teacher-panel{background:#f1f6fb;border-color:#d2dfea!important}
-.pqh-teacher-metric{background:#fbf5e6;border-color:#e6d9b8!important}
-.pqh-filter{background:#faf3ea;border-color:#e6d6c2!important}
+.pqh-teacher-metric{background:#eef4fa;border-color:#d2dfea!important}
+.pqh-filter{background:#f1f6fb;border-color:#d2dfea!important}
 .pqh-live-child{background:#eef4fa;border-color:#d2dfea!important}
 .pqh-dashboard-sidebar .pqh-card:nth-child(3n+1){background:#eef4fa;border-color:#d2dfea!important}
 .pqh-dashboard-sidebar .pqh-card:nth-child(3n+2){background:#e7f0f9;border-color:#cdddee!important}
-.pqh-dashboard-sidebar .pqh-card:nth-child(3n){background:#fbf5e6;border-color:#e6d9b8!important}
+.pqh-dashboard-sidebar .pqh-card:nth-child(3n){background:#f1f6fb;border-color:#d2dfea!important}
 .pqh-student-profile__item,.pqh-teacher-row,.pqh-mini-stat,.pqh-live-session{background:#fff}
 .pqh-course-panel__head h2,.pqh-card h3,.pqh-teacher-panel h3,.pqh-course-panel h2,.pqh-config__head h2,.pqh-tools__head h2,.pqh-live-monitor__head h2{color:#173044}
 .pqh-metric{color:#173044}
@@ -2425,9 +2425,9 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-course-card::before{content:"";display:block;height:72px;background:var(--pqhcc,#1d5b8c)}
 .pqh-course-grid .pqh-course-card:nth-child(5n+1){--pqhcc:#1d5b8c}
 .pqh-course-grid .pqh-course-card:nth-child(5n+2){--pqhcc:#2a7d9c}
-.pqh-course-grid .pqh-course-card:nth-child(5n+3){--pqhcc:#b85042}
-.pqh-course-grid .pqh-course-card:nth-child(5n+4){--pqhcc:#8a6d1f}
-.pqh-course-grid .pqh-course-card:nth-child(5n+5){--pqhcc:#5d5a8c}
+.pqh-course-grid .pqh-course-card:nth-child(5n+3){--pqhcc:#4a6fa5}
+.pqh-course-grid .pqh-course-card:nth-child(5n+4){--pqhcc:#146c94}
+.pqh-course-grid .pqh-course-card:nth-child(5n+5){--pqhcc:#3a5f8a}
 .pqh-course-card>span{display:block;padding:0 14px}
 .pqh-course-card>span:first-of-type{padding-top:12px}
 .pqh-course-card h3{color:#173044;font-size:16px}
@@ -2458,6 +2458,28 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 body.pqh-dashboard-page .pq-comm-panel__toolbar,body.pqh-dashboard-page .pq-comm-panel__statusbar{background:#eef4fa}
 body.pqh-dashboard-page .pq-comm-thread:hover{background:#f4f8fc}
 body.pqh-dashboard-page .pq-comm-tab.is-active{background:#1d5b8c}
+/* Warm remnants (brown text, gold/cream badges and chips) -> blue family. */
+.pqh-subtitle,.pqh-course-panel__head p,.pqh-course-card__number,.pqh-card p,.pqh-course-card p,
+.pqh-config__head p,.pqh-tools__head p,.pqh-live-monitor__head p,.pqh-sql-panel p,.pqh-filter-count,
+.pqh-course-empty,.pqh-mini-stat span,.pqh-teacher-metric span,.pqh-live-session__stat span,
+.pqh-live-session__top span,.pqh-teacher-row span,.pqh-config-meta{color:#5e7280!important}
+.pqh-field label,.pqh-course-card__detail b,.pqh-student-profile__item b,.pqh-config-table th{color:#1d5b8c!important}
+.pqh-mini-stat strong,.pqh-teacher-metric strong,.pqh-live-session__stat strong,.pqh-live-session__top strong{color:#173044!important}
+.pqh-input,.pqh-select{color:#173044}
+.pqh-course-empty{background:#f4f8fc;border-color:rgba(29,91,140,.28)}
+.pqh-course-card__status{background:#e7eef5;color:#3d5568}
+.pqh-course-card__status--live{background:#e3eef8;color:#1d5b8c}
+.pqh-live-status--scheduled{background:#e7eef5;color:#1d5b8c}
+.pqh-focus-pill--good{background:#e7eef5;color:#1d5b8c}
+.pqh-focus-pill--support{background:#e3eef8;color:#3a5f8a}
+.pqh-config__badge{background:#e7f0f9;color:#1d5b8c}
+.pqh-special-care{background:#e7f0f9;color:#1d5b8c;border-color:rgba(29,91,140,.28)}
+.pqh-logout{background:#e7f0f9;color:#1d5b8c!important;border-color:rgba(29,91,140,.28)}
+.pqh-logout:hover{background:#d6e6f4;color:#173044!important}
+.pqh-top-action,.pqh-back{background:#eef4fa!important;color:#1d5b8c!important;border-color:#cdddee!important}
+.pqh-top-action:hover,.pqh-back:hover{background:#dcebf7!important;color:#173044!important}
+.pqh-mini-stat{border-color:rgba(29,91,140,.12)}
+.pqh-progress-meter span{background:linear-gradient(90deg,#1d5b8c,#5a9bd0)}
 @media(max-width:900px){.pqh-shell{padding-left:0}.pqh-gnav{display:none}}
 </style>
 <main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?>">

@@ -817,10 +817,6 @@ $pqltchbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqltc
         <p class="pqltch-sub pqh-workspace-sub"><?php echo s($teachername); ?><?php echo $workspace ? ' - ' . s((string)$workspace->name) : ''; ?> - student and teacher action tools.</p>
       </div>
       <div class="pqltch-actions pqh-workspace-actions">
-        <?php echo pqh_live_session_explainer_link(); ?>
-        <?php echo pqh_live_session_agenda_template_link(); ?>
-        <?php if ($workspaceid > 0): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Workspace dashboard</a><?php endif; ?>
-        <?php if ($workspaceid > 0): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_office.php', ['workspaceid' => $workspaceid] + ($selectedchild ? ['childid' => (int)$selectedchild['studentid']] : []))->out(false); ?>">Document Studio</a><?php endif; ?>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $teacherbaseurlparams))->out(false); ?>">Live sessions</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create session</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create series</a>
@@ -880,6 +876,8 @@ $pqltchbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqltc
           <h2>Teacher Operations</h2>
           <p>Daily teacher work tools now live here.</p>
           <div class="pqltch-actions pqh-workspace-actions">
+            <?php echo pqh_live_session_explainer_link(); ?>
+            <?php echo pqh_live_session_agenda_template_link(); ?>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_homework.php', $workspaceid > 0 ? (['workspaceid' => $workspaceid] + $urlparams) : $urlparams)->out(false); ?>">Homework</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_teacher_schedule.php', ['teacherid' => (int)$teacherid])->out(false); ?>">Teacher schedule</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_sessions.php', ['session_type' => 'teacher_meeting', 'title' => 'Teacher Meeting Room'])->out(false); ?>">Teacher meetings</a>

@@ -472,6 +472,20 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
 .pqlsch-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
 @media(max-width:760px){.pqlsch-top{display:block}.pqlsch-actions{margin-top:14px}.pqlsch-grid{grid-template-columns:1fr}.pqlsch-card__head{display:block}.pqlsch-title{font-size:25px}}
 <?php echo pqh_dashboard_header_css(); ?>
+/* ---- EduPlatform design system layer (2026-07-19) ---- */
+.pqlsch-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#fff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;
+  background:var(--pqh-bg)!important;color:var(--pqh-ink)}
+.pqlsch-shell .pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:14px!important}
+.pqlsch-shell .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqlsch-shell .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqlsch-shell .pqh-workspace-actions a,.pqlsch-shell .pqh-workspace-actions button,.pqlsch-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqlsch-shell .pqh-workspace-actions a:hover,.pqlsch-shell .pqh-workspace-actions button:hover,.pqlsch-btn:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqlsch-shell .pqh-workspace-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
+.pqlsch-shell [class*="-card"],.pqlsch-shell [class*="-panel"],.pqlsch-shell [class*="-session"],.pqlsch-shell [class*="-day"]{background:var(--pqh-surface);border-color:var(--pqh-line)!important;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05)}
+.pqlsch-shell [class*="-pill"]{background:var(--pqh-tint)!important;color:var(--pqh-primary-ink)!important;border-radius:8px!important;font-weight:650!important}
+.pqlsch-shell h1,.pqlsch-shell h2,.pqlsch-shell h3{color:var(--pqh-ink)}
 </style>
 <main class="pqlsch-shell">
   <div class="pqlsch-wrap">

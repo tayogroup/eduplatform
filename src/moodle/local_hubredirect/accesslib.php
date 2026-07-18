@@ -426,9 +426,9 @@ function pqh_consumer_theme(?stdClass $consumer = null): array {
     $clean = static function(string $value, string $fallback): string {
         return preg_match('/^#[0-9a-fA-F]{6}$/', $value) ? $value : $fallback;
     };
-    $primary = $clean((string)($theme['primary_color'] ?? ''), '#2f6f4e');
-    $accent = $clean((string)($theme['accent_color'] ?? ''), '#d99a26');
-    $surface = $clean((string)($theme['surface_color'] ?? ''), '#f4f8fb');
+    $primary = $clean((string)($theme['primary_color'] ?? ''), '#2166d1');
+    $accent = $clean((string)($theme['accent_color'] ?? ''), '#4d8be0');
+    $surface = $clean((string)($theme['surface_color'] ?? ''), '#eef4fa');
     $headerbg = $clean((string)($theme['dashboard_header_bg'] ?? ''), $primary);
     $headertext = $clean((string)($theme['dashboard_header_text'] ?? ''), '#ffffff');
     $pagebody = $clean((string)($theme['page_body_bg'] ?? ''), $surface);

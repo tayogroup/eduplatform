@@ -2424,7 +2424,7 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-course-card:hover{background:#fff;box-shadow:0 8px 20px rgba(23,48,68,.16);text-decoration:none}
 .pqh-course-card::before{content:"";display:block;height:72px;background:var(--pqhcc,#1d5b8c)}
 .pqh-course-grid .pqh-course-card:nth-child(5n+1){--pqhcc:#1d5b8c}
-.pqh-course-grid .pqh-course-card:nth-child(5n+2){--pqhcc:#2f6f4e}
+.pqh-course-grid .pqh-course-card:nth-child(5n+2){--pqhcc:#2a7d9c}
 .pqh-course-grid .pqh-course-card:nth-child(5n+3){--pqhcc:#b85042}
 .pqh-course-grid .pqh-course-card:nth-child(5n+4){--pqhcc:#8a6d1f}
 .pqh-course-grid .pqh-course-card:nth-child(5n+5){--pqhcc:#5d5a8c}
@@ -2441,6 +2441,23 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-quick-card strong{color:#173044}
 .pqh-quick-card span{color:#5e7280}
 .pqh-dashboard-sidebar .pqh-card h3{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:#5e7280}
+/* Remap every remaining green from the base theme to the blue family. */
+.pqh-brand__mark{background:#1d5b8c!important}
+.pqh-course-card__status--live{background:#e3eef8;color:#1d5b8c}
+.pqh-course-card__lesson{color:#1d5b8c!important;border-color:rgba(29,91,140,.30)}
+.pqh-course-card__lesson:hover{background:#eef4fa}
+.pqh-course-card__detail{border-color:rgba(29,91,140,.14)}
+.pqh-course-card__detail span,.pqh-student-profile__item span{color:#3d5568}
+.pqh-progress-meter{background:#e7eef5;border-color:rgba(29,91,140,.18)}
+.pqh-progress-meter span{background:linear-gradient(90deg,#1d5b8c,#d8a33d)}
+.pqh-live-status--live{background:#e3eef8;color:#1d5b8c}
+.pqh-focus-pill--great{background:#e3eef8;color:#1d5b8c}
+.pqh-alert--success{background:#e3eef8;color:#1d5b8c;border-color:rgba(29,91,140,.28)}
+.pqh-live-session__stat{background:#f1f6fb;border-color:rgba(29,91,140,.12)}
+.pqh-config-table td{background:#f7fafd}
+body.pqh-dashboard-page .pq-comm-panel__toolbar,body.pqh-dashboard-page .pq-comm-panel__statusbar{background:#eef4fa}
+body.pqh-dashboard-page .pq-comm-thread:hover{background:#f4f8fc}
+body.pqh-dashboard-page .pq-comm-tab.is-active{background:#1d5b8c}
 @media(max-width:900px){.pqh-shell{padding-left:0}.pqh-gnav{display:none}}
 </style>
 <main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?>">

@@ -2128,6 +2128,7 @@ $currentstudentenrollmentstatus = $role === 'student' ? pqh_enrollment_approval_
 $currentworkspaceid = pqh_current_workspace_id((int)$USER->id);
 $hasworkspace = $currentworkspaceid > 0;
 $teacherliveoverview = $role === 'teacher' ? pqh_teacher_live_overview((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0) : [];
+$pqhisyounglearner = $role === 'student' && pqh_is_managed_student((int)$USER->id);
 $pqhlogoutparams = $pqhpageparams;
 if ($currentworkspaceid > 0 && empty($pqhlogoutparams['workspaceid'])) {
     $pqhlogoutparams['workspaceid'] = $currentworkspaceid;
@@ -2546,6 +2547,24 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-shell.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
 .pqh-shell.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
 @media(max-width:900px){.pqh-shell.pqh-rail-x{padding-left:0}}
+/* ---- Phase 2: young-learner mode + weekly summary ---- */
+.pqh-young{background:linear-gradient(180deg,#eef5ff,#f8fbff)!important;border-color:#d7e6f9!important}
+.pqh-ybig{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:14px;background:var(--pqh-primary);color:#fff!important;font-size:16px;font-weight:750;text-decoration:none!important;box-shadow:0 10px 22px -10px rgba(33,102,209,.6)}
+.pqh-ybig:hover{background:var(--pqh-primary-ink);text-decoration:none!important}
+.pqh-ycards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:16px}
+.pqh-ycard{display:flex;flex-direction:column;gap:7px;min-height:118px;padding:16px;border-radius:18px;color:#fff!important;text-decoration:none!important;box-shadow:var(--pqh-shadow);transition:transform .15s ease}
+.pqh-ycard:hover{transform:translateY(-2px);text-decoration:none!important}
+.pqh-ycard strong{font-size:16px;font-weight:800}
+.pqh-ycard span{font-size:12.5px;font-weight:600;opacity:.94}
+.pqh-ycard--1{background:linear-gradient(135deg,#0f7f9e,#3aa7c4)}
+.pqh-ycard--2{background:linear-gradient(135deg,#2166d1,#5b93e6)}
+.pqh-ycard--3{background:linear-gradient(135deg,#7a5fc0,#a08ad9)}
+.pqh-ycard--4{background:linear-gradient(135deg,#c07f2e,#dba658)}
+.pqh-ystars{font-size:18px;letter-spacing:3px}
+.pqh-week{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.pqh-week>div{background:var(--pqh-bg);border-radius:11px;padding:11px 12px}
+.pqh-week b{display:block;font-size:19px;font-weight:750;letter-spacing:-.01em}
+.pqh-week span{display:block;margin-top:2px;color:var(--pqh-faint);font-size:10.5px;font-weight:650;text-transform:uppercase;letter-spacing:.05em}
 /* ---- neutralize the consumer-theme header gradient (green) on this page ---- */
 .pqh-hero.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
 .pqh-hero .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
@@ -2740,6 +2759,106 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     </section>
   <?php endif; ?>
 
+  <?php if ($pqhisyounglearner): ?>
+    <?php
+      $pqhyoungcontinue = null;
+      foreach ($currentstudentcourses as $pqhyc) {
+          if ((string)($pqhyc['key'] ?? '') === 'pre_quraan' && (string)($pqhyc['status'] ?? '') === 'live') {
+              $pqhyoungcontinue = pqh_student_lesson_link((int)$USER->id);
+              break;
+          }
+      }
+      if (!$pqhyoungcontinue && $currentstudentcourses) {
+          $pqhyfirst = reset($currentstudentcourses);
+          $pqhyoungcontinue = pqh_course_launch_link((string)($pqhyfirst['key'] ?? 'pre_quraan'), (int)$USER->id);
+      }
+      $pqhyoungdone = (int)($progress['completed'] ?? 0);
+      $pqhyoungstars = str_repeat('★', max(1, min(5, $pqhyoungdone))) . str_repeat('☆', max(0, 5 - max(1, min(5, $pqhyoungdone))));
+      $pqhyoungnext = !empty($upcomingsessions['count']) ? ($upcomingsessions['latest'] ?? null) : null;
+    ?>
+    <section class="pqh-course-panel pqh-young" aria-label="My learning">
+      <div class="pqh-course-panel__head">
+        <div>
+          <h2>Ready to learn<?php echo $pqhyoungdone > 0 ? ' — you finished ' . $pqhyoungdone . ' unit' . ($pqhyoungdone === 1 ? '' : 's') . '!' : '?'; ?> 🌟</h2>
+          <p>Pick up right where you left off.</p>
+        </div>
+        <?php if ($pqhyoungcontinue): ?><a class="pqh-ybig" href="<?php echo $pqhyoungcontinue->out(false); ?>">▶ Continue learning</a><?php endif; ?>
+      </div>
+      <div class="pqh-ycards">
+        <?php if ($pqhyoungcontinue): ?>
+          <a class="pqh-ycard pqh-ycard--1" href="<?php echo $pqhyoungcontinue->out(false); ?>"><strong>Today's lesson</strong><span>Keep going — you're doing great!</span><span class="pqh-ystars" aria-label="<?php echo min(5, max(1, $pqhyoungdone)); ?> of 5 stars"><?php echo $pqhyoungstars; ?></span></a>
+        <?php endif; ?>
+        <a class="pqh-ycard pqh-ycard--2" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Live class</strong><span><?php echo $pqhyoungnext && !empty($pqhyoungnext->title) ? s((string)$pqhyoungnext->title) . ' · ' . userdate((int)($pqhyoungnext->scheduled_start ?? 0), get_string('strftimedatetimeshort')) : 'No class booked yet'; ?></span><span>🎥 See you there!</span></a>
+        <a class="pqh-ycard pqh-ycard--3 js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>"><strong>Teacher message</strong><span><?php echo ($messages['latest'] ?? '') !== '' ? s((string)$messages['latest']) : 'Say hello to your teacher!'; ?></span><span>💬 Open messages</span></a>
+        <a class="pqh-ycard pqh-ycard--4" href="<?php echo pqh_hub_link('recordings.php', ['childid' => (int)$USER->id])->out(false); ?>"><strong>My recordings</strong><span><?php echo (int)($speakrecordings['count'] ?? 0); ?> practice recording<?php echo (int)($speakrecordings['count'] ?? 0) === 1 ? '' : 's'; ?></span><span>🎤 Listen back</span></a>
+      </div>
+    </section>
+  <?php elseif ($role === 'student'): ?>
+    <section class="pqh-course-panel" aria-label="Up next">
+      <div class="pqh-course-panel__head"><div><h2>Up next</h2><p>Your week at a glance.</p></div></div>
+      <div class="pqh-todo">
+        <?php if (!empty($upcomingsessions['count'])): $pqhstunext = $upcomingsessions['latest'] ?? null; ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span>
+            <span class="pqh-todo__body"><strong>Next live class</strong><span><?php echo $pqhstunext && !empty($pqhstunext->title) ? s((string)$pqhstunext->title) . ' · ' . userdate((int)($pqhstunext->scheduled_start ?? 0), get_string('strftimedatetimeshort')) : (int)$upcomingsessions['count'] . ' upcoming'; ?></span></span>
+            <a class="pqh-btn" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Join info</a>
+          </div>
+        <?php endif; ?>
+        <?php if ((int)($progress['inprogress'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+            <span class="pqh-todo__body"><strong><?php echo (int)$progress['inprogress']; ?> unit<?php echo (int)$progress['inprogress'] === 1 ? '' : 's'; ?> in progress</strong><span>Continue where you left off.</span></span>
+            <a class="pqh-btn pqh-btn--secondary" href="#pqh-courses">Continue</a>
+          </div>
+        <?php endif; ?>
+        <?php if ((int)($messages['unread'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--risk"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+            <span class="pqh-todo__body"><strong><?php echo (int)$messages['unread']; ?> unread message<?php echo (int)$messages['unread'] === 1 ? '' : 's'; ?></strong><span>Your teacher may be waiting on a reply.</span></span>
+            <a class="pqh-btn pqh-btn--secondary js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">Read</a>
+          </div>
+        <?php endif; ?>
+        <?php if (empty($upcomingsessions['count']) && (int)($progress['inprogress'] ?? 0) === 0 && (int)($messages['unread'] ?? 0) === 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--ok"><svg viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg></span>
+            <span class="pqh-todo__body"><strong>All caught up</strong><span>Nothing waiting — explore your courses below.</span></span>
+          </div>
+        <?php endif; ?>
+      </div>
+    </section>
+  <?php endif; ?>
+
+  <?php if ($role === 'parent' && $selectedchild): ?>
+    <section class="pqh-course-panel" aria-label="This week">
+      <div class="pqh-course-panel__head">
+        <div><h2>This week · <?php echo s($selectedchild['name']); ?></h2><p>Progress, time, and what's coming up.</p></div>
+        <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_summaries_link((int)$selectedchild['studentid'])->out(false); ?>">Teacher feedback</a>
+      </div>
+      <div class="pqh-week">
+        <div><b><?php echo (int)($progress['completed'] ?? 0); ?></b><span>units completed</span></div>
+        <div><b><?php echo (int)($progress['inprogress'] ?? 0); ?></b><span>in progress</span></div>
+        <div><b><?php echo (int)($upcomingsessions['count'] ?? 0); ?></b><span>upcoming classes</span></div>
+        <div><b><?php echo !empty($focus['active_ms']) ? s(pqh_format_duration((int)$focus['active_ms'])) : '—'; ?></b><span>learning time</span></div>
+        <div><b><?php echo (int)($speakrecordings['count'] ?? 0); ?></b><span>practice recordings</span></div>
+      </div>
+      <div class="pqh-todo" style="margin-top:12px">
+        <?php if (!empty($upcomingsessions['count'])): $pqhparnext = $upcomingsessions['latest'] ?? null; ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span>
+            <span class="pqh-todo__body"><strong>Next class<?php echo $pqhparnext && !empty($pqhparnext->title) ? ': ' . s((string)$pqhparnext->title) : ''; ?></strong><span><?php echo $pqhparnext ? userdate((int)($pqhparnext->scheduled_start ?? 0), get_string('strftimedatetimeshort')) : 'See the live schedule'; ?></span></span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_schedule_link((int)$selectedchild['studentid'])->out(false); ?>">Schedule</a>
+          </div>
+        <?php endif; ?>
+        <div class="pqh-todo__item">
+          <span class="pqh-todo__ico pqh-todo__ico--ok"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+          <span class="pqh-todo__body"><strong>Stay in touch</strong><span>Message the teacher or review recordings together.</span></span>
+          <a class="pqh-btn pqh-btn--secondary js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">Message</a>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_recordings_link((int)$selectedchild['studentid'])->out(false); ?>">Recordings</a>
+        </div>
+      </div>
+    </section>
+  <?php endif; ?>
+
   <?php if ($isfullteacher): ?>
     <form class="pqh-filter" method="get" aria-label="Search assigned students">
       <div class="pqh-field">
@@ -2901,7 +3020,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <?php endforeach; ?>
   <?php endif; ?>
 
-  <?php if (in_array($role, ['student', 'parent'], true) && $hasworkspace): ?>
+  <?php if (in_array($role, ['student', 'parent'], true) && $hasworkspace && !$pqhisyounglearner): ?>
     <section class="pqh-card pqh-card--wide" aria-label="Course catalog">
       <h3>Course Catalog</h3>
       <p>Review institution course seats, start and end dates, syllabus, prerequisites, and request enrollment.</p>
@@ -3820,6 +3939,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       </article>
     </section>
   <?php else: ?>
+    <?php if (!$pqhisyounglearner): ?>
     <?php
       $studentdashboardcontext = pqh_student_course_support_context((int)$USER->id);
       if (!is_array($studentdashboardcontext)) {
@@ -4049,6 +4169,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         </article>
       </aside>
     </section>
+    <?php endif; ?>
   <?php endif; ?>
 </div>
 <div id="pqHeaderActionSlot" hidden></div>

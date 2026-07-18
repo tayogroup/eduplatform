@@ -2414,16 +2414,17 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-gnav__item.is-active{background:var(--pqh-tint);color:var(--pqh-primary)!important;font-weight:700}
 .pqh-gnav__spacer{flex:1}
 /* ---- top bar: sticky, translucent ---- */
-.pqh-topbar{position:sticky;top:0;z-index:70;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--pqh-line);box-shadow:none}
-.pqh-brand{color:var(--pqh-ink)}
-.pqh-brand__mark,.pqh-brand-mark{background:linear-gradient(115deg,#2166d1,#4d8be0)!important;color:#fff!important;border-radius:10px}
-.pqh-top-action,.pqh-back{background:transparent!important;color:var(--pqh-muted)!important;border:1px solid transparent!important;border-radius:9px;font-weight:650!important}
-.pqh-top-action:hover,.pqh-back:hover{background:var(--pqh-tint)!important;color:var(--pqh-primary-ink)!important}
-.pqh-logout{background:var(--pqh-ink);color:#fff!important;border:0;border-radius:9px;font-weight:650}
-.pqh-logout:hover{background:#1c3a5c;color:#fff!important}
-.pqh-font-control{color:var(--pqh-faint)}
-.pqh-font-control a{color:var(--pqh-muted);border-radius:7px}
-.pqh-font-control a.is-active{background:var(--pqh-tint);color:var(--pqh-primary)}
+.pqh-topbar{position:sticky;top:0;z-index:70;background:linear-gradient(115deg,#2166d1,#4d8be0);border-bottom:1px solid rgba(255,255,255,.22);box-shadow:0 6px 18px -12px rgba(23,73,143,.5)}
+.pqh-brand{color:#fff}
+.pqh-brand__mark{background:#fff!important;color:#2166d1!important;border-radius:10px}
+.pqh-brand-mark{background:linear-gradient(115deg,#2166d1,#4d8be0)!important;color:#fff!important;border-radius:10px}
+.pqh-top-action,.pqh-back{background:transparent!important;color:rgba(255,255,255,.92)!important;border:1px solid transparent!important;border-radius:9px;font-weight:650!important}
+.pqh-top-action:hover,.pqh-back:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
+.pqh-logout{background:#fff;color:#17498f!important;border:0;border-radius:9px;font-weight:700}
+.pqh-logout:hover{background:#e9f1fc;color:#0f2237!important}
+.pqh-font-control{color:rgba(255,255,255,.75)}
+.pqh-font-control a{color:rgba(255,255,255,.85);border-radius:7px}
+.pqh-font-control a.is-active{background:rgba(255,255,255,.25);color:#fff}
 /* ---- page header (was the boxy hero) ---- */
 .pqh-wrap{max-width:1240px;padding:26px 26px 60px}
 .pqh-hero{background:transparent;border:0;box-shadow:none;border-radius:0;padding:4px 2px 10px;margin-bottom:14px;align-items:center}

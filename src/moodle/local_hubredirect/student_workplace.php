@@ -94,6 +94,29 @@ body.pqhsw-page header,body.pqhsw-page footer,body.pqhsw-page nav.navbar,body.pq
 body.pqhsw-page #page,body.pqhsw-page #page-content,body.pqhsw-page #region-main,body.pqhsw-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
 .pqhsw-shell{min-height:100vh;padding:28px 18px 56px;background:#f6f8fb;color:#173044;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.pqhsw-wrap{max-width:1180px;margin:0 auto}.pqhsw-top,.pqhsw-card{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqhsw-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}.pqhsw-title{margin:0;color:#221b22;font-size:29px;font-weight:950}.pqhsw-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqhsw-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pqhsw-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950}.pqhsw-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqhsw-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.pqhsw-card h2{margin:0 0 8px;color:#4d3522;font-size:19px;font-weight:950}.pqhsw-card p{margin:0 0 14px;color:#5e7280;font-size:13px;font-weight:780;line-height:1.4}.pqhsw-card-actions{display:flex;gap:8px;flex-wrap:wrap}.pqhsw-card--primary{background:#f4fff2;border-color:rgba(47,111,78,.18)}.pqhsw-card--tools{grid-column:1/-1}.pqhsw-tool-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.pqhsw-tool-grid .pqhsw-btn{width:100%;min-width:0;text-align:center}@media(max-width:980px){.pqhsw-top,.pqhsw-grid{grid-template-columns:1fr}.pqhsw-actions{justify-content:flex-start}.pqhsw-tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.pqhsw-tool-grid{grid-template-columns:1fr}}
 <?php echo pqh_dashboard_header_css($workspaceid); ?>
+/* ============================================================
+   Student workplace design system (2026-07-18): same modern
+   layer as the dashboard - tokens, blue header band, quiet
+   white surfaces, ghost chips, single blue accent.
+   ============================================================ */
+.pqhsw-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;
+  --pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#ffffff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
+  --pqh-primary-ink:#17498f;--pqh-r:14px;
+  --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
+  background:var(--pqh-bg);color:var(--pqh-ink)}
+.pqhsw-top.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+.pqhsw-title,.pqhsw-title.pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqhsw-sub,.pqhsw-sub.pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqhsw-btn,.pqh-workspace-actions a,.pqh-workspace-actions button{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqhsw-btn:hover,.pqh-workspace-actions a:hover,.pqh-workspace-actions button:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqhsw-btn[data-pq-support-action="new"]{background:var(--pqh-primary)!important;border-color:var(--pqh-primary)!important;color:#fff!important}
+.pqhsw-card-actions .pqhsw-btn:not(.pqhsw-btn--light){background:var(--pqh-primary)!important;border-color:var(--pqh-primary)!important;color:#fff!important}
+.pqhsw-card{background:var(--pqh-surface);border:1px solid var(--pqh-line)!important;border-radius:var(--pqh-r);box-shadow:var(--pqh-shadow)}
+.pqhsw-card--primary{background:var(--pqh-tint);border-color:var(--pqh-tint-2)!important}
+.pqhsw-card h2{color:var(--pqh-ink);font-size:17px;font-weight:750;letter-spacing:-.01em}
+.pqhsw-card p{color:var(--pqh-muted);font-weight:500}
 </style>
 <main class="pqhsw-shell">
   <div class="pqhsw-wrap">
@@ -107,8 +130,8 @@ body.pqhsw-page #page,body.pqhsw-page #page-content,body.pqhsw-page #region-main
         <a class="pqhsw-btn pqhsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/communications.php', ['studentid' => $studentid, 'opencomm' => 'messages']))->out(false); ?>">Messages</a>
         <a class="pqhsw-btn pqhsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', ['workspaceid' => $workspaceid]))->out(false); ?>">Live sessions</a>
         <a class="pqhsw-btn pqhsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/communications.php', ['studentid' => $studentid, 'opencomm' => 'announcements']))->out(false); ?>">Announcements</a>
-        <button class="pqhsw-btn pqhsw-btn--light" type="button" data-pq-support-action="open">Open Support</button>
-        <button class="pqhsw-btn" type="button" data-pq-support-action="new">New Request</button>
+        <button class="pqhsw-btn pqhsw-btn--light" type="button" data-pq-support-action="open">Manage tickets</button>
+        <button class="pqhsw-btn" type="button" data-pq-support-action="new">Create a ticket</button>
       </nav>
     </section>
     <section class="pqhsw-grid" aria-label="Student work areas">

@@ -2528,7 +2528,7 @@ body.pqh-dashboard-page .pq-comm-thread:hover{background:var(--pqh-tint)}
 body.pqh-dashboard-page .pq-comm-tab.is-active{background:var(--pqh-primary);color:#fff}
 body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:var(--pqh-line)}
 /* ---- neutralize the consumer-theme header gradient (green) on this page ---- */
-.pqh-hero.pqh-workspace-top{background:var(--pqh-tint)!important;border:1px solid var(--pqh-tint-2)!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+.pqh-hero.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
 .pqh-hero .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
 .pqh-hero .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
 .pqh-brand-mark{background:var(--pqh-primary)!important}

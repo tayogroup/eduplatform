@@ -2392,8 +2392,97 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 @media(max-width:920px){.pqh-quick{grid-template-columns:repeat(2,minmax(0,1fr))}.pqh-role-chip{display:none}.pqh-role-nav{display:flex}}
 @media(max-width:560px){.pqh-topbar{height:auto;padding:14px 16px}.pqh-quick{grid-template-columns:1fr}.pqh-wrap{padding:20px 14px 42px}.pqh-mini-list,.pqh-live-session__stats,.pqh-course-grid,.pqh-student-profile{grid-template-columns:1fr}.pqh-student-profile__item--wide{grid-column:auto}body.pqh-dashboard-page .pq-comm-panel__sheet{top:auto;right:0;bottom:0;left:0;width:auto;height:min(86vh,720px);border-radius:16px 16px 0 0}body.pqh-dashboard-page .pq-comm-tabs{max-width:none}}
 <?php echo pqh_dashboard_header_css(); ?>
+/* ---- Canvas-style skin (2026-07-18): global nav rail, banner course cards,
+       flat white panels. Layout modeled on the Canvas LMS dashboard. ---- */
+.pqh-shell{background:#f2f4f6;min-height:100vh;padding-left:84px}
+.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:84px;z-index:80;display:flex;flex-direction:column;align-items:stretch;gap:2px;padding:10px 6px;background:#173044;overflow-y:auto}
+.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:46px;height:46px;margin:2px auto 10px;border-radius:12px;background:#2f6f4e;color:#fff!important;font:950 16px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important}
+.pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 2px;border:0;border-radius:10px;background:transparent;color:#e8eef4!important;font:800 10.5px/1.1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer}
+.pqh-gnav__item svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pqh-gnav__item:hover{background:rgba(255,255,255,.14);text-decoration:none!important}
+.pqh-gnav__item.is-active{background:#fff;color:#173044!important}
+.pqh-gnav__spacer{flex:1}
+.pqh-topbar{background:#fff;border-bottom:1px solid #d5dbe0;box-shadow:none}
+.pqh-hero{background:#fff;border:1px solid #d5dbe0;box-shadow:none;border-radius:12px;padding:22px 24px}
+.pqh-title{color:#173044}
+.pqh-kicker{color:#2f6f4e}
+.pqh-course-panel,.pqh-card,.pqh-teacher-panel,.pqh-teacher-metric,.pqh-filter,.pqh-sql-panel,.pqh-live-child{border-color:#d5dbe0!important;box-shadow:0 1px 3px rgba(23,48,68,.06)!important;border-radius:12px}
+.pqh-course-panel__head h2,.pqh-card h3,.pqh-teacher-panel h3,.pqh-course-panel h2,.pqh-config__head h2,.pqh-tools__head h2,.pqh-live-monitor__head h2{color:#173044}
+.pqh-metric{color:#173044}
+.pqh-course-grid{gap:16px}
+.pqh-course-card{position:relative;padding:0;overflow:hidden;background:#fff;border:1px solid #d5dbe0;border-radius:12px;box-shadow:0 1px 3px rgba(23,48,68,.08);transition:box-shadow .15s ease}
+.pqh-course-card:hover{background:#fff;box-shadow:0 8px 20px rgba(23,48,68,.16);text-decoration:none}
+.pqh-course-card::before{content:"";display:block;height:72px;background:var(--pqhcc,#2f6f4e)}
+.pqh-course-grid .pqh-course-card:nth-child(5n+1){--pqhcc:#2f6f4e}
+.pqh-course-grid .pqh-course-card:nth-child(5n+2){--pqhcc:#1d5b8c}
+.pqh-course-grid .pqh-course-card:nth-child(5n+3){--pqhcc:#b85042}
+.pqh-course-grid .pqh-course-card:nth-child(5n+4){--pqhcc:#8a6d1f}
+.pqh-course-grid .pqh-course-card:nth-child(5n+5){--pqhcc:#5d5a8c}
+.pqh-course-card>span{display:block;padding:0 14px}
+.pqh-course-card>span:first-of-type{padding-top:12px}
+.pqh-course-card h3{color:#173044;font-size:16px}
+.pqh-course-card h3::before{content:"";display:inline-block;width:9px;height:9px;margin-right:7px;border-radius:50%;background:var(--pqhcc,#2f6f4e)}
+.pqh-course-card__number{margin:5px 0 10px}
+.pqh-course-card__actions{padding:0 14px 14px!important}
+.pqh-btn{background:#2f6f4e}
+.pqh-btn--secondary{background:#fff;border-color:#d5dbe0}
+.pqh-quick-card{background:#fff;color:#173044;border:1px solid #d5dbe0;box-shadow:0 1px 3px rgba(23,48,68,.06)}
+.pqh-quick-card:nth-child(even){background:#fff;box-shadow:0 1px 3px rgba(23,48,68,.06)}
+.pqh-quick-card strong{color:#173044}
+.pqh-quick-card span{color:#5e7280}
+.pqh-dashboard-sidebar .pqh-card h3{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:#5e7280}
+@media(max-width:900px){.pqh-shell{padding-left:0}.pqh-gnav{display:none}}
 </style>
 <main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?>">
+<?php $pqhdashboardhomeurl = new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams); ?>
+<nav class="pqh-gnav" aria-label="Global navigation">
+  <a class="pqh-gnav__brand" href="<?php echo $pqhdashboardhomeurl->out(false); ?>" title="<?php echo s($pqhbrandname); ?>"><?php echo s($pqhbrandinitials); ?></a>
+  <a class="pqh-gnav__item is-active" href="<?php echo $pqhdashboardhomeurl->out(false); ?>">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    Dashboard
+  </a>
+  <a class="pqh-gnav__item" href="#pqh-courses">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Courses
+  </a>
+  <a class="pqh-gnav__item" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">
+    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg>
+    Live
+  </a>
+  <?php if ($role === 'teacher'): ?>
+    <a class="pqh-gnav__item" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Schedule
+    </a>
+  <?php elseif (in_array($role, ['parent'], true) && $selectedchild): ?>
+    <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => (int)$selectedchild['studentid']]))->out(false); ?>">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Calendar
+    </a>
+  <?php endif; ?>
+  <?php if ($role === 'student'): ?>
+    <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      Inbox
+    </a>
+  <?php elseif (in_array($role, ['teacher', 'parent'], true) && $selectedchild): ?>
+    <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      Inbox
+    </a>
+  <?php endif; ?>
+  <?php if (in_array($role, ['student', 'teacher'], true)): ?>
+    <button class="pqh-gnav__item" type="button" data-pq-support-action="open">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+      Help
+    </button>
+  <?php endif; ?>
+  <span class="pqh-gnav__spacer"></span>
+  <a class="pqh-gnav__item" href="<?php echo $pqhlogouturl->out(false); ?>">
+    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+    Logout
+  </a>
+</nav>
 <div class="pqh-topbar">
   <div class="pqh-brand"><span class="pqh-brand__mark"><?php echo s($pqhbrandinitials); ?></span><span><?php echo s($pqhbrandname); ?></span></div>
   <div class="pqh-role-nav" aria-label="Dashboard roles">
@@ -2498,6 +2587,7 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
     </section>
   <?php endif; ?>
 
+  <span id="pqh-courses"></span>
   <?php if ($pqhshowcoursepanel && ($role === 'student' || ($role === 'teacher' && $teacherenrolledcourses) || (($role === 'parent' || $role === 'teacher') && $selectedchild) || in_array($role, ['admin', 'school_principal'], true))): ?>
     <?php
       $coursepanelsections = [];

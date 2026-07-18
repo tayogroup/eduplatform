@@ -2022,7 +2022,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
           <a class="pql-btn pql-btn--start" href="#create-session">Create session</a>
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_create_wizard.php', $urlparams)->out(false); ?>">Create wizard</a>
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_series_wizard.php', $urlparams)->out(false); ?>">Series wizard</a>
-          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_teacher.php', $urlparams)->out(false); ?>">Teacher workspace</a>
+          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/teacher_workspace.php', $urlparams)->out(false); ?>">Teacher workspace</a>
           <?php if (is_siteadmin($USER)): ?>
             <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_capacity.php', $urlparams)->out(false); ?>">Capacity planning</a>
           <?php endif; ?>

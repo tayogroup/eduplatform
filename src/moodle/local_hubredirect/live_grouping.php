@@ -354,7 +354,7 @@ function pqlgrp_teacher_link_data(array $teachers): array {
         $links[(string)$teacherid] = [
             'profile' => (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => $teacherid]))->out(false),
             'availability' => (new moodle_url('/local/hubredirect/live_availability.php', ['teacherid' => $teacherid]))->out(false),
-            'classes' => (new moodle_url('/local/hubredirect/live_teacher.php', ['teacherid' => $teacherid]))->out(false),
+            'classes' => (new moodle_url('/local/hubredirect/teacher_workspace.php', ['teacherid' => $teacherid]))->out(false),
             'directory' => (new moodle_url('/local/hubredirect/live_teacher_directory.php'))->out(false),
             'moodle' => (new moodle_url('/user/profile.php', ['id' => $teacherid]))->out(false),
         ];

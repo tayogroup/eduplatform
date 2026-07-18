@@ -146,7 +146,7 @@ $matrix = [
         'role' => 'Teacher',
         'account' => $teacherid > 0 ? 'Teacher user #' . $teacherid : 'Create/assign a teacher first',
         'links' => [
-            ['Teacher workspace', pqitm_domain_url($primarydomain, '/local/hubredirect/live_teacher.php', $consumerparams)],
+            ['Teacher workspace', pqitm_domain_url($primarydomain, '/local/hubredirect/teacher_workspace.php', $consumerparams)],
             ['Live sessions', pqitm_domain_url($primarydomain, '/local/hubredirect/live_sessions.php', $consumerparams)],
             ['Review sample session', pqitm_domain_url($primarydomain, '/local/hubredirect/live_review.php', $consumerparams + ['sessionid' => $sessionid])],
         ],

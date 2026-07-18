@@ -480,7 +480,7 @@ body.pqh-live-monitor-page .main-inner{margin:0!important;padding:0!important;ma
       <div class="pqlmon-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', $urlparams))->out(false); ?>">Attendance &amp; notes</a>
-        <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', $workspaceurlparams))->out(false); ?>">Teacher workspace</a>
+        <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', $workspaceurlparams))->out(false); ?>">Teacher workspace</a>
         <a class="pqlmon-btn pqlmon-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $workspaceurlparams))->out(false); ?>">Live sessions</a>
         <a class="pqlmon-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', array_merge($urlparams, ['action' => 'join', 'sesskey' => sesskey()])))->out(false); ?>">Start class</a>
       </div>

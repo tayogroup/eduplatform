@@ -431,7 +431,7 @@ body.pqh-live-availability-page .main-inner{margin:0!important;padding:0!importa
       <div class="pqlav-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>
         <a class="pqlav-btn pqlav-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a>
-        <a class="pqlav-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', $urlparams))->out(false); ?>">Teacher workspace</a>
+        <a class="pqlav-btn" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', $urlparams))->out(false); ?>">Teacher workspace</a>
       </div>
     </section>
     <?php if ($notice !== ''): ?><div class="pqlav-alert pqlav-alert--ok"><?php echo s($notice); ?></div><?php endif; ?>

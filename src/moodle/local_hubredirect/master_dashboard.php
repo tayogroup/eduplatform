@@ -101,7 +101,7 @@ $links = [
     'Live Sessions' => [
         ['Live admin menu', '/local/hubredirect/live_admin.php', $consumerparams, 'Live operations hub.'],
         ['Live sessions', '/local/hubredirect/live_sessions.php', $consumerparams, 'Create, start, join, and review live sessions.'],
-        ['Teacher workspace', '/local/hubredirect/live_teacher.php', $consumerparams, 'Teacher class day workflow.'],
+        ['Teacher workspace', '/local/hubredirect/teacher_workspace.php', $consumerparams, 'Teacher class day workflow.'],
         ['Recurring series', '/local/hubredirect/live_series.php', $consumerparams, 'Recurring schedule management.'],
         ['Recordings admin', '/local/hubredirect/live_recordings_admin.php', $consumerparams, 'Review, publish, and retain recordings.'],
         ['Quality analytics', '/local/hubredirect/live_quality_analytics.php', $consumerparams, 'Quality review summaries and coaching data.'],

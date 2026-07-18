@@ -568,7 +568,7 @@ body.pqh-live-teacher-profile-page .main-inner{margin:0!important;padding:0!impo
               <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => $teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'export' => 'profile']))->out(false); ?>">Export CSV</a>
               <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => $teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'export' => 'reviewpack']))->out(false); ?>">Export review pack</a>
               <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', ['teacherid' => $teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to), 'print' => 1]))->out(false); ?>">Printable review pack</a>
-              <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', ['teacherid' => $teacherid]))->out(false); ?>">Teacher workspace</a>
+              <a class="pqltp-btn pqltp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', ['teacherid' => $teacherid]))->out(false); ?>">Teacher workspace</a>
             </div>
           <?php endif; ?>
         </form>

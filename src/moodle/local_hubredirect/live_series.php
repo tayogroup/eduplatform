@@ -823,7 +823,7 @@ body.pqh-live-series-page .main-inner{margin:0!important;padding:0!important;max
         <?php if ($canoperate): ?>
           <a class="pqlser-btn pqlser-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php'))->out(false); ?>">Series wizard</a>
         <?php endif; ?>
-        <a class="pqlser-btn pqlser-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php'))->out(false); ?>">Teacher workspace</a>
+        <a class="pqlser-btn pqlser-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php'))->out(false); ?>">Teacher workspace</a>
         <a class="pqlser-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Dashboard</a>
       </div>
     </section>

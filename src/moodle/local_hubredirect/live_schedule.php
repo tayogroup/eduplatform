@@ -488,7 +488,7 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
           <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_schedule.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Class series</a>
           <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Calendar</a>
         <?php else: ?>
-          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php'))->out(false); ?>">Teacher workspace</a>
+          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php'))->out(false); ?>">Teacher workspace</a>
           <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php'))->out(false); ?>">Class series</a>
         <?php endif; ?>
         <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>

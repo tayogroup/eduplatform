@@ -26,7 +26,7 @@ $isstudentoffice = $workspaceid > 0
     && !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $returnurl = $isstudentoffice
     ? new moodle_url('/local/hubredirect/student_workplace.php', $urlparams)
-    : new moodle_url('/local/hubredirect/live_teacher.php', $urlparams);
+    : new moodle_url('/local/hubredirect/teacher_workspace.php', $urlparams);
 if ($workspaceid <= 0 || !pqho_user_can_use_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Choose a workspace before opening Document Studio.', $returnurl, 'Document Studio access required');
 }

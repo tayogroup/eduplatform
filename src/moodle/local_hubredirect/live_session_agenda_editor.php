@@ -19,7 +19,7 @@ if ($workspaceid > 0) {
 }
 $sessionid = optional_param('sessionid', 0, PARAM_INT);
 $return = optional_param('return', '', PARAM_LOCALURL);
-$returnurl = $return !== '' ? new moodle_url($return) : new moodle_url($workspaceid > 0 ? '/local/hubredirect/live_sessions.php' : '/local/hubredirect/live_teacher.php', $urlparams);
+$returnurl = $return !== '' ? new moodle_url($return) : new moodle_url($workspaceid > 0 ? '/local/hubredirect/live_sessions.php' : '/local/hubredirect/teacher_workspace.php', $urlparams);
 $templatevariant = strtolower(trim(optional_param('templatevariant', '', PARAM_ALPHA)));
 if (!in_array($templatevariant, ['ar', 'en'], true)) {
     $templatevariant = '';

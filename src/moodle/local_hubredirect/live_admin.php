@@ -109,7 +109,7 @@ $groups = [
     ],
     '4. Live Classroom & Post-Class Work' => [
         ['Live sessions', '/local/hubredirect/live_sessions.php', 'Create, start, join, and monitor BBB live-session records.'],
-        ['Teacher workspace', '/local/hubredirect/live_teacher.php', 'Teacher day view with start class, lesson monitor, attendance, notes, and completion actions.'],
+        ['Teacher workspace', '/local/hubredirect/teacher_workspace.php', 'Teacher day view with start class, lesson monitor, attendance, notes, and completion actions.'],
         ['Live Session Agenda template', pqh_live_session_agenda_template_url()->out(false), 'Download the fillable BBB slide template teachers prepare before each live session.'],
         ['Live lesson monitor', '/local/hubredirect/live_monitor.php', 'Teacher view of student self-study progress during a live review session.'],
         ['Practice Coach report', '/local/hubredirect/live_practice_coach.php', 'Chatbot Practice Coach events for teacherless supervised-practice sessions.'],
@@ -181,7 +181,7 @@ $workflows = [
     ['8', 'Build pools and groups', '/local/hubredirect/live_grouping.php', 'Create matching pools and class groups using course, timezone, language, age, level, gender, and availability.'],
     ['9', 'Check capacity', '/local/hubredirect/live_capacity.php', 'Confirm teacher load, open seats, and class capacity before assigning recurring sessions.'],
     ['10', 'Create session or series', '/local/hubredirect/live_create_wizard.php', 'Create a one-time class, or use the recurring wizard when the class repeats weekly.'],
-    ['11', 'Run live class', '/local/hubredirect/live_teacher.php', 'Teacher starts BBB, monitors student lesson progress, and supports the live review.'],
+    ['11', 'Run live class', '/local/hubredirect/teacher_workspace.php', 'Teacher starts BBB, monitors student lesson progress, and supports the live review.'],
     ['12', 'Complete post-class review', '/local/hubredirect/live_review.php', 'Mark attendance, add feedback, assign homework, publish parent summary, and complete the session.'],
     ['13', 'Review recordings and QA', '/local/hubredirect/live_recordings_admin.php', 'Admin reviews recordings and quality before anything becomes parent-visible.'],
     ['14', 'Monitor operations', '/local/hubredirect/live_ops.php', 'Use daily operations, parent follow-ups, reports, retention, and audit pages for ongoing management.'],

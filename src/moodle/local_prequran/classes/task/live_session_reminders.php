@@ -832,7 +832,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     $teacherid,
                     'QA coaching follow-up',
                     'A ' . $this->brand_for_session($session) . ' live-class coaching item needs your attention: "' . (string)$session->title . '".',
-                    new \moodle_url('/local/hubredirect/live_teacher.php'),
+                    new \moodle_url('/local/hubredirect/teacher_workspace.php'),
                     'Open teacher workspace',
                     'live_quality_coaching_teacher_reminder'
                 );
@@ -951,7 +951,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     $teacherid,
                     'Improvement plan acknowledgement needed',
                     'A ' . $this->brand_for_session($session) . ' teacher improvement plan is waiting for your acknowledgement: "' . (string)$session->title . '".',
-                    new \moodle_url('/local/hubredirect/live_teacher.php'),
+                    new \moodle_url('/local/hubredirect/teacher_workspace.php'),
                     'Open teacher workspace',
                     'live_improvement_plan_teacher_reminder'
                 );
@@ -973,7 +973,7 @@ class live_session_reminders extends \core\task\scheduled_task {
                     $teacherid,
                     'Improvement plan due soon',
                     'A ' . $this->brand_for_session($session) . ' teacher improvement plan is due soon for "' . (string)$session->title . '".',
-                    new \moodle_url('/local/hubredirect/live_teacher.php'),
+                    new \moodle_url('/local/hubredirect/teacher_workspace.php'),
                     'Open teacher workspace',
                     'live_improvement_plan_due_soon'
                 );

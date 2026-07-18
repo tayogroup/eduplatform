@@ -497,7 +497,7 @@ body.pqh-live-improvement-page .main-inner{margin:0!important;padding:0!importan
                   <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_leadership.php', pqlip_url_params($urlparams, ['teacherid' => (int)$plan->teacherid, 'status' => 'all'])))->out(false); ?>">Leadership case</a>
                   <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality.php', pqlip_url_params($urlparams, ['sessionid' => (int)$plan->id])))->out(false); ?>">QA review</a>
                   <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_review.php', pqlip_url_params($urlparams, ['sessionid' => (int)$plan->id])))->out(false); ?>">Class review</a>
-                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', pqlip_url_params($urlparams, ['teacherid' => (int)$plan->teacherid])))->out(false); ?>">Teacher workspace</a>
+                  <a class="pqlip-btn pqlip-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', pqlip_url_params($urlparams, ['teacherid' => (int)$plan->teacherid])))->out(false); ?>">Teacher workspace</a>
                 </div>
               </article>
             <?php endforeach; ?>

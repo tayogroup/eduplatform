@@ -493,7 +493,7 @@ body.pqh-live-teacher-directory-page .main-inner{margin:0!important;padding:0!im
               <td>
                 <div class="pqltd-actions pqh-workspace-actions">
                   <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher_profile.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to)])))->out(false); ?>">Profile</a>
-                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid])))->out(false); ?>">Workspace</a>
+                  <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid])))->out(false); ?>">Workspace</a>
                   <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', pqltd_url_params($urlparams, ['step' => 2, 'teacherid' => (int)$row->teacherid])))->out(false); ?>">Create</a>
                   <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_quality_analytics.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'from' => date('Y-m-d', $from), 'to' => date('Y-m-d', $to)])))->out(false); ?>">QA</a>
                   <a class="pqltd-btn pqltd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_improvement_plans.php', pqltd_url_params($urlparams, ['teacherid' => (int)$row->teacherid, 'status' => 'all'])))->out(false); ?>">Plans</a>

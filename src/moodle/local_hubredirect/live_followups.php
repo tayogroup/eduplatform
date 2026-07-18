@@ -508,7 +508,7 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
       </div>
       <div class="pqlf-actions pqh-workspace-actions">
         <?php echo pqh_live_session_explainer_link(); ?>
-        <a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_teacher.php', $urlparams))->out(false); ?>">Teacher workspace</a>
+        <a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', $urlparams))->out(false); ?>">Teacher workspace</a>
         <?php if ($isadmin): ?><a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Live ops</a><?php endif; ?>
         <a class="pqlf-btn pqlf-btn--light" href="<?php echo (new moodle_url($dashboardpath, $urlparams))->out(false); ?>">Dashboard</a>
       </div>

@@ -25,7 +25,7 @@ $pageparams = $contextparams + [
     'sessionid' => $sessionid,
     'studentid' => $studentid,
 ];
-$returnurl = new moodle_url('/local/hubredirect/live_teacher.php', $contextparams);
+$returnurl = new moodle_url('/local/hubredirect/teacher_workspace.php', $contextparams);
 $sessionlisturl = new moodle_url('/local/hubredirect/live_sessions.php', $contextparams);
 
 $context = context_system::instance();

@@ -2942,6 +2942,12 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         <a class="pqh-ycard pqh-ycard--3 js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>"><strong>Teacher message</strong><span><?php echo ($messages['latest'] ?? '') !== '' ? s((string)$messages['latest']) : 'Say hello to your teacher!'; ?></span><span>💬 Open messages</span></a>
         <a class="pqh-ycard pqh-ycard--4" href="<?php echo pqh_hub_link('recordings.php', ['childid' => (int)$USER->id])->out(false); ?>"><strong>My recordings</strong><span><?php echo (int)($speakrecordings['count'] ?? 0); ?> practice recording<?php echo (int)($speakrecordings['count'] ?? 0) === 1 ? '' : 's'; ?></span><span>🎤 Listen back</span></a>
       </div>
+      <div class="pqh-actions pqh-workspace-actions" style="margin-top:14px">
+        <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/student_workplace.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Student Workplace</a>
+        <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_schedule_link((int)$USER->id)->out(false); ?>">Live schedule</a>
+        <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => (int)$USER->id]))->out(false); ?>">Live calendar</a>
+        <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_course_transcript_link((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">My progress</a>
+      </div>
     </section>
   <?php elseif ($role === 'student'): ?>
     <section class="pqh-course-panel" aria-label="Up next"<?php echo pqh_widget_attrs('todo'); ?>>

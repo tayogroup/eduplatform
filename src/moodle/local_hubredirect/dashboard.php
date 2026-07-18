@@ -2528,6 +2528,24 @@ body.pqh-dashboard-page .pq-comm-panel__toolbar,body.pqh-dashboard-page .pq-comm
 body.pqh-dashboard-page .pq-comm-thread:hover{background:var(--pqh-tint)}
 body.pqh-dashboard-page .pq-comm-tab.is-active{background:var(--pqh-primary);color:#fff}
 body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:var(--pqh-line)}
+/* ---- Phase 1 redesign components: to-do panel + expandable rail ---- */
+.pqh-todo{display:grid;gap:8px}
+.pqh-todo__item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;background:var(--pqh-bg)}
+.pqh-todo__ico{flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.pqh-todo__ico svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pqh-todo__ico--info{background:#e9f1fc;color:#2166d1}
+.pqh-todo__ico--warn{background:#faf1dd;color:#b7791f}
+.pqh-todo__ico--risk{background:#fbe9e7;color:#c0392b}
+.pqh-todo__ico--ok{background:#e8f4ec;color:#2e7d4f}
+.pqh-todo__body{min-width:0;flex:1}
+.pqh-todo__body strong{display:block;font-size:13px;font-weight:700;color:var(--pqh-ink)}
+.pqh-todo__body span{display:block;color:var(--pqh-muted);font-size:11.5px;font-weight:500}
+.pqh-todo__item .pqh-btn{min-height:30px;padding:0 12px;font-size:12px}
+.pqh-shell.pqh-rail-x{padding-left:216px}
+.pqh-shell.pqh-rail-x .pqh-gnav{width:216px}
+.pqh-shell.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
+.pqh-shell.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
+@media(max-width:900px){.pqh-shell.pqh-rail-x{padding-left:0}}
 /* ---- neutralize the consumer-theme header gradient (green) on this page ---- */
 .pqh-hero.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
 .pqh-hero .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
@@ -2590,7 +2608,25 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
     Logout
   </a>
+  <button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation">
+    <svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>
+    Menu
+  </button>
 </nav>
+<script>
+(function(){
+  var shell = document.querySelector('.pqh-shell');
+  var toggle = document.getElementById('pqh-rail-toggle');
+  var key = 'pqh_rail_expanded';
+  try { if (window.localStorage.getItem(key) === '1') { shell.classList.add('pqh-rail-x'); } } catch (e) {}
+  if (toggle) {
+    toggle.addEventListener('click', function(){
+      var expanded = shell.classList.toggle('pqh-rail-x');
+      try { window.localStorage.setItem(key, expanded ? '1' : '0'); } catch (e) {}
+    });
+  }
+})();
+</script>
 <div class="pqh-topbar">
   <div class="pqh-brand"><span class="pqh-brand__mark"><?php echo s($pqhbrandinitials); ?></span><span><?php echo s($pqhbrandname); ?></span></div>
   <div class="pqh-role-nav" aria-label="Dashboard roles">
@@ -2640,6 +2676,69 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       </form>
     <?php endif; ?>
   </section>
+
+  <?php if ($role === 'teacher' && !empty($teacherliveoverview['ready'])): ?>
+    <?php
+      $pqhtodometrics = (array)($teacherliveoverview['metrics'] ?? []);
+      $pqhtodotoday = (array)($teacherliveoverview['today'] ?? []);
+      $pqhtodonext = $pqhtodotoday ? reset($pqhtodotoday) : null;
+      $pqhtodocount = (int)($pqhtodometrics['today'] ?? 0) + (int)($pqhtodometrics['needsreview'] ?? 0) + (int)($pqhtodometrics['followups'] ?? 0);
+    ?>
+    <section class="pqh-course-panel" aria-label="To do">
+      <div class="pqh-course-panel__head">
+        <div><h2>To do</h2><p>Your prioritized next actions.</p></div>
+      </div>
+      <div class="pqh-todo">
+        <?php if ((int)($pqhtodometrics['today'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo (int)$pqhtodometrics['today']; ?> live class<?php echo (int)$pqhtodometrics['today'] === 1 ? '' : 'es'; ?> today</strong>
+              <span><?php echo ($pqhtodonext && !empty($pqhtodonext->title)) ? s((string)$pqhtodonext->title) . ' · ' . userdate((int)($pqhtodonext->scheduled_start ?? 0), get_string('strftimetime')) : 'Open live sessions to start on time.'; ?></span>
+            </span>
+            <a class="pqh-btn" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Start</a>
+          </div>
+        <?php endif; ?>
+        <?php if ((int)($pqhtodometrics['needsreview'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--warn"><svg viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo (int)$pqhtodometrics['needsreview']; ?> session<?php echo (int)$pqhtodometrics['needsreview'] === 1 ? '' : 's'; ?> awaiting review</strong>
+              <span>Record attendance and post-class notes.</span>
+            </span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Review</a>
+          </div>
+        <?php endif; ?>
+        <?php if ((int)($pqhtodometrics['followups'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--risk"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo (int)$pqhtodometrics['followups']; ?> parent follow-up<?php echo (int)$pqhtodometrics['followups'] === 1 ? '' : 's'; ?> open</strong>
+              <span>Families are waiting on a reply.</span>
+            </span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_followups.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Respond</a>
+          </div>
+        <?php endif; ?>
+        <?php if ((int)($pqhtodometrics['upcoming'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--info"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo (int)$pqhtodometrics['upcoming']; ?> class<?php echo (int)$pqhtodometrics['upcoming'] === 1 ? '' : 'es'; ?> in the next 7 days</strong>
+              <span>Check your teaching schedule.</span>
+            </span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">Schedule</a>
+          </div>
+        <?php endif; ?>
+        <?php if ($pqhtodocount === 0 && (int)($pqhtodometrics['upcoming'] ?? 0) === 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--ok"><svg viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg></span>
+            <span class="pqh-todo__body"><strong>All caught up</strong><span>No classes, reviews, or follow-ups waiting.</span></span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_create_wizard.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Create session</a>
+          </div>
+        <?php endif; ?>
+      </div>
+    </section>
+  <?php endif; ?>
 
   <?php if ($isfullteacher): ?>
     <form class="pqh-filter" method="get" aria-label="Search assigned students">

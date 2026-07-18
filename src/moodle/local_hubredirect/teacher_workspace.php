@@ -854,6 +854,21 @@ $pqltchbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqltc
           </article>
         <?php endif; ?>
         <article class="pqltch-tool-group">
+          <h2>Teacher Operations</h2>
+          <p>Daily teacher work tools now live here.</p>
+          <div class="pqltch-actions pqh-workspace-actions">
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_homework.php', $workspaceid > 0 ? (['workspaceid' => $workspaceid] + $urlparams) : $urlparams)->out(false); ?>">Homework</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_teacher_schedule.php', ['teacherid' => (int)$teacherid])->out(false); ?>">Teacher schedule</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_sessions.php', ['session_type' => 'teacher_meeting', 'title' => 'Teacher Meeting Room'])->out(false); ?>">Teacher meetings</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_sessions.php', ['session_type' => 'teacher_parent_room', 'title' => 'Teacher-Parent Room'])->out(false); ?>">Teacher-parent rooms</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_availability.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Availability</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_practice_coach.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Practice coach</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_followups.php')->out(false); ?>">Parent follow-ups</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('managed_reports.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Managed reports</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('quiz_report.php', ['pq_env' => 'integration', 'lessonid' => 'alphabet', 'unitid' => 'alphabet_quiz'])->out(false); ?>">Quiz reports</a>
+          </div>
+        </article>
+        <article class="pqltch-tool-group">
           <h2>Document Studio</h2>
           <p>Create and edit teaching documents, spreadsheets, presentations, PDFs, course materials, and lesson resources with ONLYOFFICE.</p>
           <div class="pqltch-actions pqh-workspace-actions">
@@ -878,23 +893,8 @@ $pqltchbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqltc
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $teacherbaseurlparams))->out(false); ?>">Class series</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $teacherbaseurlparams))->out(false); ?>">Availability</a>
-          </div>
-        </article>
-        <article class="pqltch-tool-group">
-          <h2>Teacher Operations</h2>
-          <p>Daily teacher work tools now live here.</p>
-          <div class="pqltch-actions pqh-workspace-actions">
-            <?php echo pqh_live_session_explainer_link(); ?>
-            <?php echo pqh_live_session_agenda_template_link(); ?>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_homework.php', $workspaceid > 0 ? (['workspaceid' => $workspaceid] + $urlparams) : $urlparams)->out(false); ?>">Homework</a>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_teacher_schedule.php', ['teacherid' => (int)$teacherid])->out(false); ?>">Teacher schedule</a>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_sessions.php', ['session_type' => 'teacher_meeting', 'title' => 'Teacher Meeting Room'])->out(false); ?>">Teacher meetings</a>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_sessions.php', ['session_type' => 'teacher_parent_room', 'title' => 'Teacher-Parent Room'])->out(false); ?>">Teacher-parent rooms</a>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_availability.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Availability</a>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_practice_coach.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Practice coach</a>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_followups.php')->out(false); ?>">Parent follow-ups</a>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('managed_reports.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Managed reports</a>
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('quiz_report.php', ['pq_env' => 'integration', 'lessonid' => 'alphabet', 'unitid' => 'alphabet_quiz'])->out(false); ?>">Quiz reports</a>
+            <a class="pqltch-btn pqltch-btn--light" target="_blank" rel="noopener" href="<?php echo pqh_live_session_explainer_url()->out(false); ?>">Watch live-session guide</a>
+            <a class="pqltch-btn pqltch-btn--light" target="_blank" rel="noopener" href="<?php echo pqh_live_session_agenda_template_url()->out(false); ?>">Live Session Agenda template</a>
           </div>
         </article>
       </section>

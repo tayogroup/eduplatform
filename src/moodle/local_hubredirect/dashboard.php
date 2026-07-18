@@ -2145,7 +2145,7 @@ $pqhbackfallback = new moodle_url('/local/hubredirect/dashboard.php', $pqhpagepa
 $pqhismarketplace = pqh_consumer_feature_enabled($pqhconsumercontext, 'teacher_marketplace');
 $pqhshowcoursepanel = !($pqhismarketplace && in_array($role, ['admin', 'school_principal'], true));
 $pqhherokicker = ($role === 'school_principal' ? 'School principal' : ($role === 'sqa_tester' ? 'SQA tester' : ucfirst($role))) . ' dashboard';
-$pqhherotitle = 'Assalamu alaikum, ' . fullname($USER);
+$pqhherotitle = 'Welcome, ' . fullname($USER);
 $pqhherosubtitle = 'A simple home for messages, progress, lessons, and next steps.';
 if ($pqhismarketplace && $role === 'admin') {
     $pqhherokicker = $pqhbrandname . ' marketplace admin';
@@ -2606,12 +2606,12 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/student_workplace.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Student Workplace</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">Messages</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'announcements'])->out(false); ?>">Announcements</a>
-      <button class="pqh-top-action" type="button" data-pq-support-action="open">Open Support</button>
-      <button class="pqh-top-action" type="button" data-pq-support-action="new">New Request</button>
+      <button class="pqh-top-action" type="button" data-pq-support-action="open">Manage tickets</button>
+      <button class="pqh-top-action" type="button" data-pq-support-action="new">Create a ticket</button>
     <?php endif; ?>
     <?php if ($role === 'teacher'): ?>
-      <button class="pqh-top-action" type="button" data-pq-support-action="open">Open Support</button>
-      <button class="pqh-top-action" type="button" data-pq-support-action="new">New Request</button>
+      <button class="pqh-top-action" type="button" data-pq-support-action="open">Manage tickets</button>
+      <button class="pqh-top-action" type="button" data-pq-support-action="new">Create a ticket</button>
     <?php endif; ?>
     <a class="pqh-logout pqh-workspace-logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
   </div>
@@ -2893,8 +2893,8 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <a class="pqh-quick-card" href="<?php echo pqh_managed_reports_link(0, $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Student Reports</strong><span>Progress, focus, practice, quiz, and live-class summaries</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_quiz_report_link()->out(false); ?>"><strong>Quiz Reports</strong><span>Review alphabet quiz scores and skill gaps</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_hub_link('communications.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Communications</strong><span>Open messages and announcements</span></a>
-      <button class="pqh-quick-card" type="button" data-pq-support-action="open"><strong>Open Support</strong><span>Reply to student, parent, and help desk conversations</span></button>
-      <button class="pqh-quick-card" type="button" data-pq-support-action="new"><strong>New Request</strong><span>Start a new institutional help request</span></button>
+      <button class="pqh-quick-card" type="button" data-pq-support-action="open"><strong>Manage tickets</strong><span>Reply to student, parent, and help desk conversations</span></button>
+      <button class="pqh-quick-card" type="button" data-pq-support-action="new"><strong>Create a ticket</strong><span>Start a new institutional help request</span></button>
     <?php elseif ($role === 'admin'): ?>
       <a class="pqh-quick-card" href="<?php echo pqh_master_dashboard_link()->out(false); ?>"><strong>Master Dashboard</strong><span>All links categorized by role and system</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_live_admin_link()->out(false); ?>"><strong>Live Admin Menu</strong><span>All live-session tools in one place</span></a>
@@ -2937,8 +2937,8 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <a class="pqh-quick-card" href="<?php echo pqh_managed_reports_link((int)$USER->id)->out(false); ?>"><strong>My Report</strong><span>See lesson, focus, practice, quiz, and live-class progress</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_quiz_report_link((int)$USER->id)->out(false); ?>"><strong>Quiz Reports</strong><span>See your alphabet quiz score and passes</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id])->out(false); ?>"><strong>Communications</strong><span>Open messages and announcements</span></a>
-      <button class="pqh-quick-card" type="button" data-pq-support-action="open"><strong>Open Support</strong><span>Continue your support conversations</span></button>
-      <button class="pqh-quick-card" type="button" data-pq-support-action="new"><strong>New Request</strong><span>Ask the institutional help desk for assistance</span></button>
+      <button class="pqh-quick-card" type="button" data-pq-support-action="open"><strong>Manage tickets</strong><span>Continue your support conversations</span></button>
+      <button class="pqh-quick-card" type="button" data-pq-support-action="new"><strong>Create a ticket</strong><span>Ask the institutional help desk for assistance</span></button>
     <?php endif; ?>
   </section>
   <?php endif; ?>

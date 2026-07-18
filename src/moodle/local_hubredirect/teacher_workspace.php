@@ -816,16 +816,12 @@ $pqltchbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqltc
         <h1 class="pqltch-title pqh-workspace-title">Teacher Live-Class Workspace</h1>
         <p class="pqltch-sub pqh-workspace-sub"><?php echo s($teachername); ?><?php echo $workspace ? ' - ' . s((string)$workspace->name) : ''; ?> - student and teacher action tools.</p>
       </div>
+      <?php if (is_siteadmin($USER)): ?>
       <div class="pqltch-actions pqh-workspace-actions">
-        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $teacherbaseurlparams))->out(false); ?>">Live sessions</a>
-        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create session</a>
-        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create series</a>
-        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>
-        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $teacherbaseurlparams))->out(false); ?>">Class series</a>
-        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $teacherbaseurlparams))->out(false); ?>">Availability</a>
-        <?php if (is_siteadmin($USER)): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php', $urlparams))->out(false); ?>">Admin menu</a><?php endif; ?>
-        <?php if (is_siteadmin($USER)): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Admin ops</a><?php endif; ?>
+        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php', $urlparams))->out(false); ?>">Admin menu</a>
+        <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Admin ops</a>
       </div>
+      <?php endif; ?>
     </section>
 
     <?php if (optional_param('result', '', PARAM_ALPHANUMEXT) === 'coaching_acknowledged'): ?><div class="pqltch-alert">Quality coaching acknowledged.</div><?php endif; ?>
@@ -870,6 +866,18 @@ $pqltchbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqltc
             <?php else: ?>
               <span class="pqltch-empty">Choose a workspace before creating office materials.</span>
             <?php endif; ?>
+          </div>
+        </article>
+        <article class="pqltch-tool-group">
+          <h2>Live Sessions</h2>
+          <p>Schedule, run, and follow up on live classes.</p>
+          <div class="pqltch-actions pqh-workspace-actions">
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $teacherbaseurlparams))->out(false); ?>">Live sessions</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create session</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create series</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $teacherbaseurlparams))->out(false); ?>">Class series</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $teacherbaseurlparams))->out(false); ?>">Availability</a>
           </div>
         </article>
         <article class="pqltch-tool-group">

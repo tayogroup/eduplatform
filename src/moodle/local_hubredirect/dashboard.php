@@ -2600,15 +2600,11 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <?php endif; ?>
     <?php if ($role === 'teacher' && $selectedchild): ?>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">Messages</a>
-      <a class="pqh-top-action" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Live sessions</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'announcements', (int)$selectedchild['studentid'])->out(false); ?>">Announcements</a>
-    <?php elseif ($role === 'teacher'): ?>
-      <a class="pqh-top-action" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Live sessions</a>
     <?php endif; ?>
     <?php if ($role === 'student'): ?>
       <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/student_workplace.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Student Workplace</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">Messages</a>
-      <a class="pqh-top-action" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Live sessions</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'announcements'])->out(false); ?>">Announcements</a>
       <button class="pqh-top-action" type="button" data-pq-support-action="open">Open Support</button>
       <button class="pqh-top-action" type="button" data-pq-support-action="new">New Request</button>
@@ -2617,12 +2613,6 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <button class="pqh-top-action" type="button" data-pq-support-action="open">Open Support</button>
       <button class="pqh-top-action" type="button" data-pq-support-action="new">New Request</button>
     <?php endif; ?>
-    <span class="pqh-font-control" aria-label="Font size">
-      <span>Text</span>
-      <a class="<?php echo $pqhfontsize === 'normal' ? 'is-active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', array_merge($pqhpageparams, ['fontsize' => 'normal'])))->out(false); ?>">A</a>
-      <a class="<?php echo $pqhfontsize === 'large' ? 'is-active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', array_merge($pqhpageparams, ['fontsize' => 'large'])))->out(false); ?>">A</a>
-      <a class="<?php echo $pqhfontsize === 'xlarge' ? 'is-active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', array_merge($pqhpageparams, ['fontsize' => 'xlarge'])))->out(false); ?>">A</a>
-    </span>
     <a class="pqh-logout pqh-workspace-logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
   </div>
 </div>

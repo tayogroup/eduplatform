@@ -887,7 +887,6 @@ $pqltchbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqltc
           <h2>Live Sessions</h2>
           <p>Schedule, run, and follow up on live classes.</p>
           <div class="pqltch-actions pqh-workspace-actions">
-            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $teacherbaseurlparams))->out(false); ?>">Live sessions</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create session</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_wizard.php', $teacherbaseurlparams))->out(false); ?>">Create series</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>

@@ -623,6 +623,11 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 .pqwd-todo__body strong{display:block;font-size:12.5px;font-weight:700;color:var(--pqh-ink)}
 .pqwd-todo__body span{display:block;color:var(--pqh-muted);font-size:11.5px;font-weight:500}
 @media(max-width:900px){.pqwd-shell{padding-left:0}.pqh-gnav{display:none}.pqwd-topbar{flex-wrap:wrap}}
+.pqwd-shell.pqh-rail-x{padding-left:216px}
+.pqwd-shell.pqh-rail-x .pqh-gnav{width:216px}
+.pqwd-shell.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
+.pqwd-shell.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
+@media(max-width:900px){.pqwd-shell.pqh-rail-x{padding-left:0}}
 </style>
 <main class="pqwd-shell">
 <nav class="pqh-gnav" aria-label="Global navigation">
@@ -644,7 +649,25 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
     <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
     Logout
   </a>
+  <button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation">
+    <svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>
+    Menu
+  </button>
 </nav>
+<script>
+(function(){
+  var shell = document.querySelector('.pqwd-shell');
+  var toggle = document.getElementById('pqh-rail-toggle');
+  var key = 'pqh_rail_expanded';
+  try { if (window.localStorage.getItem(key) === '1') { shell.classList.add('pqh-rail-x'); } } catch (e) {}
+  if (toggle) {
+    toggle.addEventListener('click', function(){
+      var expanded = shell.classList.toggle('pqh-rail-x');
+      try { window.localStorage.setItem(key, expanded ? '1' : '0'); } catch (e) {}
+    });
+  }
+})();
+</script>
 <div class="pqwd-topbar">
   <div class="pqwd-topbar__brand">
     <span class="pqh-brand-mark">

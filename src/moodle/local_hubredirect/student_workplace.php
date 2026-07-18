@@ -135,6 +135,11 @@ body.pqhsw-page #page,body.pqhsw-page #page-content,body.pqhsw-page #region-main
 .pqh-appbar__nav .pqh-appbar__logout{background:#fff!important;color:#17498f!important;font-weight:700!important}
 .pqh-appbar__nav .pqh-appbar__logout:hover{background:#e9f1fc!important;color:#0f2237!important}
 @media(max-width:900px){.pqhsw-shell{padding-left:0}.pqh-gnav{display:none}.pqh-appbar{flex-wrap:wrap}}
+.pqhsw-shell.pqh-rail-x{padding-left:216px}
+.pqhsw-shell.pqh-rail-x .pqh-gnav{width:216px}
+.pqhsw-shell.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
+.pqhsw-shell.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
+@media(max-width:900px){.pqhsw-shell.pqh-rail-x{padding-left:0}}
 </style>
 <main class="pqhsw-shell">
 <?php
@@ -161,7 +166,25 @@ $pqhswbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqhswb
     <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
     Logout
   </a>
+  <button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation">
+    <svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>
+    Menu
+  </button>
 </nav>
+<script>
+(function(){
+  var shell = document.querySelector('.pqhsw-shell');
+  var toggle = document.getElementById('pqh-rail-toggle');
+  var key = 'pqh_rail_expanded';
+  try { if (window.localStorage.getItem(key) === '1') { shell.classList.add('pqh-rail-x'); } } catch (e) {}
+  if (toggle) {
+    toggle.addEventListener('click', function(){
+      var expanded = shell.classList.toggle('pqh-rail-x');
+      try { window.localStorage.setItem(key, expanded ? '1' : '0'); } catch (e) {}
+    });
+  }
+})();
+</script>
 <div class="pqh-appbar">
   <div class="pqh-appbar__brand"><span class="pqh-appbar__mark"><?php echo s($pqhswbrandinitials); ?></span><span><?php echo s($pqhswbrandname); ?></span></div>
   <div class="pqh-appbar__nav">

@@ -2020,8 +2020,6 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
         <?php endif; ?>
         <?php if ($cancreate): ?>
           <a class="pql-btn pql-btn--start" href="#create-session">Create session</a>
-          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_create_wizard.php', $urlparams)->out(false); ?>">Create wizard</a>
-          <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_series_wizard.php', $urlparams)->out(false); ?>">Series wizard</a>
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/teacher_workspace.php', $urlparams)->out(false); ?>">Teacher workspace</a>
           <?php if (is_siteadmin($USER)): ?>
             <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_capacity.php', $urlparams)->out(false); ?>">Capacity planning</a>
@@ -2030,8 +2028,6 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_availability.php', $urlparams)->out(false); ?>">Availability</a>
         <?php endif; ?>
         <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_schedule.php', $urlparams)->out(false); ?>">Live schedule</a>
-        <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_calendar.php', $urlparams)->out(false); ?>">Calendar</a>
-        <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_summaries.php', $urlparams)->out(false); ?>">Live summaries</a>
         <a class="pql-btn pqh-workspace-logout" href="<?php echo pql_url('/local/hubredirect/logout.php', $urlparams)->out(false); ?>">Logout</a>
       </div>
     </section>

@@ -495,8 +495,72 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
         width: 100%;
     }
 }
+/* ============================================================
+   Workspace design system (2026-07-18): same modern layer as the
+   dashboard - tokens, blue top band, light rail, quiet surfaces.
+   ============================================================ */
+.pqwd-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;
+  --pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#ffffff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
+  --pqh-primary-ink:#17498f;--pqh-r:14px;
+  --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
+  background:var(--pqh-bg);color:var(--pqh-ink);padding-left:94px}
+.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:76px;z-index:80;display:flex;flex-direction:column;gap:4px;padding:12px 8px;background:var(--pqh-surface);border-right:1px solid var(--pqh-line);overflow-y:auto}
+.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 auto 12px;border-radius:13px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
+.pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px;border:0;border-radius:11px;background:transparent;color:var(--pqh-muted)!important;font:600 10px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer}
+.pqh-gnav__item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pqh-gnav__item:hover{background:var(--pqh-tint);color:var(--pqh-primary-ink)!important;text-decoration:none!important}
+.pqh-gnav__item.is-active{background:var(--pqh-tint);color:var(--pqh-primary)!important;font-weight:700}
+.pqh-gnav__spacer{flex:1}
+.pqwd-top.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+.pqwd-title,.pqwd-title.pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqwd-sub,.pqwd-sub.pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqh-brand-mark{background:linear-gradient(115deg,#2166d1,#4d8be0)!important;color:#fff!important}
+.pqwd-actions .pqwd-btn,.pqwd-actions .pqwd-select,.pqh-workspace-actions a,.pqh-workspace-actions button{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqwd-actions .pqwd-btn:hover,.pqh-workspace-actions a:hover,.pqh-workspace-actions button:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important}
+.pqwd-actions .pqwd-btn[data-pq-support-action="new"]{background:var(--pqh-primary)!important;border-color:var(--pqh-primary)!important;color:#fff!important}
+.pqwd-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
+.pqwd-actions a.pqh-workspace-logout:hover{background:#1c3a5c!important}
+.pqwd-panel,.pqwd-metric{background:var(--pqh-surface);border:1px solid var(--pqh-line)!important;border-radius:var(--pqh-r);box-shadow:var(--pqh-shadow)}
+.pqwd-panel h2{color:var(--pqh-ink);font-size:17px;font-weight:750;letter-spacing:-.01em}
+.pqwd-metric strong{color:var(--pqh-ink);font-size:24px;font-weight:750;letter-spacing:-.02em}
+.pqwd-metric span{color:var(--pqh-faint);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.pqwd-link{background:var(--pqh-surface);border:1px solid var(--pqh-line);border-radius:12px;transition:transform .16s ease,box-shadow .16s ease;box-shadow:var(--pqh-shadow)}
+.pqwd-link:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(15,34,55,.06),0 18px 38px -16px rgba(15,34,55,.22);text-decoration:none}
+.pqwd-link strong{color:var(--pqh-ink);font-weight:700}
+.pqwd-link span{color:var(--pqh-muted);font-weight:500}
+.pqwd-public{background:var(--pqh-surface)!important}
+.pqwd-pill,.pqwd-code{background:var(--pqh-tint);color:var(--pqh-primary-ink);font-weight:650;border-radius:8px}
+.pqwd-muted{color:var(--pqh-muted);font-weight:500}
+.pqwd-name{color:var(--pqh-ink);font-weight:650}
+.pqwd-table th{color:var(--pqh-faint);font-weight:700}
+.pqwd-table th,.pqwd-table td{border-color:var(--pqh-line)}
+.pqwd-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
+.pqwd-select{border:1px solid var(--pqh-line)!important;border-radius:10px!important;background:var(--pqh-surface)!important;color:var(--pqh-ink)!important;font-weight:550!important}
+@media(max-width:900px){.pqwd-shell{padding-left:18px}.pqh-gnav{display:none}}
 </style>
 <main class="pqwd-shell">
+<nav class="pqh-gnav" aria-label="Global navigation">
+  <a class="pqh-gnav__brand" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>" title="Home"><?php echo s($brandinitial); ?></a>
+  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    Dashboard
+  </a>
+  <a class="pqh-gnav__item is-active" href="<?php echo (new moodle_url('/local/hubredirect/workspace_dashboard.php', $workspaceparams))->out(false); ?>">
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+    Workspace
+  </a>
+  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $workspaceparams))->out(false); ?>">
+    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg>
+    Live
+  </a>
+  <span class="pqh-gnav__spacer"></span>
+  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">
+    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+    Logout
+  </a>
+</nav>
   <div class="pqwd-wrap">
     <section class="pqwd-top pqh-workspace-top">
       <div>
@@ -526,8 +590,8 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
         <?php if ($canmanage): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $brandediturl->out(false); ?>">Settings</a><?php endif; ?>
         <?php if ($canacademyops): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $workspacesadminurl->out(false); ?>">Manage workspaces</a><?php endif; ?>
         <?php if ($canacademyops): ?><a class="pqwd-btn pqwd-btn--light" href="<?php echo $platformconsumersurl->out(false); ?>">Platform consumers</a><?php endif; ?>
-        <?php if ($canteach): ?><button class="pqwd-btn pqwd-btn--light" type="button" data-pq-support-action="open">Open Support</button><?php endif; ?>
-        <?php if ($canteach): ?><button class="pqwd-btn" type="button" data-pq-support-action="new">New Request</button><?php endif; ?>
+        <?php if ($canteach): ?><button class="pqwd-btn pqwd-btn--light" type="button" data-pq-support-action="open">Manage tickets</button><?php endif; ?>
+        <?php if ($canteach): ?><button class="pqwd-btn" type="button" data-pq-support-action="new">Create a ticket</button><?php endif; ?>
         <a class="pqwd-btn pqh-workspace-logout" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">Logout</a>
       </form>
     </section>

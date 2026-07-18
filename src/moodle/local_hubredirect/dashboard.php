@@ -2580,10 +2580,10 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     </a>
   <?php endif; ?>
   <?php if (in_array($role, ['student', 'teacher'], true)): ?>
-    <button class="pqh-gnav__item" type="button" data-pq-support-action="open">
+    <a class="pqh-gnav__item" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id])->out(false); ?>">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
       Help
-    </button>
+    </a>
   <?php endif; ?>
   <span class="pqh-gnav__spacer"></span>
   <a class="pqh-gnav__item" href="<?php echo $pqhlogouturl->out(false); ?>">
@@ -2606,12 +2606,12 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/student_workplace.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Student Workplace</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">Messages</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'announcements'])->out(false); ?>">Announcements</a>
-      <button class="pqh-top-action" type="button" data-pq-support-action="open">Manage tickets</button>
-      <button class="pqh-top-action" type="button" data-pq-support-action="new">Create a ticket</button>
+      <a class="pqh-top-action" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id])->out(false); ?>">Manage tickets</a>
+      <a class="pqh-top-action" data-pq-support-action="new" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id, 'new' => 1])->out(false); ?>">Create a ticket</a>
     <?php endif; ?>
     <?php if ($role === 'teacher'): ?>
-      <button class="pqh-top-action" type="button" data-pq-support-action="open">Manage tickets</button>
-      <button class="pqh-top-action" type="button" data-pq-support-action="new">Create a ticket</button>
+      <a class="pqh-top-action" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ($selectedchild ? ['studentid' => (int)$selectedchild['studentid'], 'supporttype' => 'student_teacher'] : []) + ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Manage tickets</a>
+      <a class="pqh-top-action" data-pq-support-action="new" href="<?php echo pqh_hub_link('support.php', (['new' => 1]) + ($selectedchild ? ['studentid' => (int)$selectedchild['studentid'], 'supporttype' => 'student_teacher'] : []) + ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Create a ticket</a>
     <?php endif; ?>
     <a class="pqh-logout pqh-workspace-logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
   </div>

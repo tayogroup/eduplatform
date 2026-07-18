@@ -732,6 +732,31 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
 @media(max-width:920px){.pqltch-tool-grid{grid-template-columns:1fr}.pqltch-top{display:block}.pqltch-actions{margin-top:12px}}
 @media(max-width:560px){.pqltch-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
+/* ============================================================
+   Teacher workspace design system (2026-07-18): same modern
+   layer as the dashboard - tokens, blue header band, quiet
+   white surfaces, ghost chips, single blue accent.
+   ============================================================ */
+.pqltch-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;
+  --pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#ffffff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
+  --pqh-primary-ink:#17498f;--pqh-r:14px;
+  --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
+  background:var(--pqh-bg);color:var(--pqh-ink)}
+.pqltch-top.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+.pqltch-title,.pqltch-title.pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqltch-sub,.pqltch-sub.pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqltch-btn,.pqh-workspace-actions a,.pqh-workspace-actions button{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqltch-btn:hover,.pqh-workspace-actions a:hover,.pqh-workspace-actions button:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqltch-btn[data-pq-support-action="new"]{background:var(--pqh-primary)!important;border-color:var(--pqh-primary)!important;color:#fff!important}
+.pqltch-btn--start{background:var(--pqh-primary)!important;border-color:var(--pqh-primary)!important;color:#fff!important}
+.pqh-live-guide-link,.pqh-live-template-link,.pqh-workspace-actions a.pqh-live-guide-link,.pqh-workspace-actions a.pqh-live-template-link{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;color:var(--pqh-primary-ink)!important}
+.pqltch-tool-group{background:var(--pqh-surface);border:1px solid var(--pqh-line);border-radius:var(--pqh-r);box-shadow:var(--pqh-shadow)}
+.pqltch-tool-group h2{color:var(--pqh-ink);font-size:17px;font-weight:750;letter-spacing:-.01em}
+.pqltch-tool-group p{color:var(--pqh-muted);font-weight:500}
+.pqltch-alert{background:var(--pqh-tint);color:var(--pqh-primary-ink);border:1px solid var(--pqh-tint-2);font-weight:600;border-radius:11px}
+.pqltch-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
 </style>
 <main class="pqltch-shell">
   <div class="pqltch-wrap">
@@ -751,8 +776,8 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $teacherbaseurlparams))->out(false); ?>">Class series</a>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $teacherbaseurlparams))->out(false); ?>">Availability</a>
-        <button class="pqltch-btn pqltch-btn--light" type="button" data-pq-support-action="open">Open Support</button>
-        <button class="pqltch-btn" type="button" data-pq-support-action="new">New Request</button>
+        <button class="pqltch-btn pqltch-btn--light" type="button" data-pq-support-action="open">Manage tickets</button>
+        <button class="pqltch-btn" type="button" data-pq-support-action="new">Create a ticket</button>
         <a class="pqltch-btn pqltch-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
         <?php if (is_siteadmin($USER)): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_admin.php', $urlparams))->out(false); ?>">Admin menu</a><?php endif; ?>
         <?php if (is_siteadmin($USER)): ?><a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $urlparams))->out(false); ?>">Admin ops</a><?php endif; ?>

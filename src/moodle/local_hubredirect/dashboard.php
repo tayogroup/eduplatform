@@ -2416,7 +2416,7 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 /* ---- top bar: sticky, translucent ---- */
 .pqh-topbar{position:sticky;top:0;z-index:70;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--pqh-line);box-shadow:none}
 .pqh-brand{color:var(--pqh-ink)}
-.pqh-brand__mark{background:var(--pqh-primary)!important;border-radius:10px}
+.pqh-brand__mark,.pqh-brand-mark{background:linear-gradient(115deg,#2166d1,#4d8be0)!important;color:#fff!important;border-radius:10px}
 .pqh-top-action,.pqh-back{background:transparent!important;color:var(--pqh-muted)!important;border:1px solid transparent!important;border-radius:9px;font-weight:650!important}
 .pqh-top-action:hover,.pqh-back:hover{background:var(--pqh-tint)!important;color:var(--pqh-primary-ink)!important}
 .pqh-logout{background:var(--pqh-ink);color:#fff!important;border:0;border-radius:9px;font-weight:650}

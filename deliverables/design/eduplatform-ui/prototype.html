@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduPlatform UI Prototype</title>
+<style>
+/* ============================================================
+   EduPlatform design tokens (original design system, 2026-07-19)
+   Canvas-inspired architecture; distinct EduPlatform visual identity.
+   ============================================================ */
+:root{
+  --ink:#0f2237; --muted:#5b6b7c; --faint:#8494a5;
+  --line:#e4e9ef; --bg:#f4f6f9; --surface:#ffffff;
+  --tint:#edf3fc; --tint-2:#e0ebfa;
+  --primary:#2166d1; --primary-ink:#17498f; --primary-soft:#4d8be0;
+  --ok:#2e7d4f; --ok-bg:#e8f4ec;
+  --info:#2166d1; --info-bg:#e9f1fc;
+  --warn:#b7791f; --warn-bg:#faf1dd;
+  --risk:#c0392b; --risk-bg:#fbe9e7;
+  --idle:#8494a5; --idle-bg:#eef1f4;
+  --r-lg:16px; --r-md:12px; --r-sm:9px;
+  --shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
+  --shadow-lift:0 2px 4px rgba(15,34,55,.06),0 18px 38px -16px rgba(15,34,55,.22);
+  --nav-w:248px; --nav-w-min:72px; --topbar-h:60px;
+  --fs-title:24px; --fs-h2:17px; --fs-body:13.5px; --fs-small:12px; --fs-micro:10.5px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 var(--fs-body)/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;cursor:pointer}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;z-index:200}
+.skip:focus{left:0}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
+
+/* ---- shell ---- */
+.shell{display:grid;grid-template-columns:var(--nav-w) 1fr;min-height:100vh;transition:grid-template-columns .18s ease}
+.shell.nav-min{grid-template-columns:var(--nav-w-min) 1fr}
+
+/* ---- global nav ---- */
+.gnav{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px;padding:14px 10px;background:var(--surface);border-right:1px solid var(--line);overflow-y:auto;z-index:60}
+.gnav__brand{display:flex;align-items:center;gap:10px;padding:4px 8px 14px}
+.gnav__mark{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(115deg,var(--primary),var(--primary-soft));color:#fff;font-weight:800;font-size:14px;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
+.gnav__name{font-weight:800;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+.gnav__item{display:flex;align-items:center;gap:11px;padding:9px 10px;border:0;border-radius:var(--r-sm);background:transparent;color:var(--muted);font-weight:600;font-size:13px;text-align:left;white-space:nowrap;width:100%;position:relative}
+.gnav__item svg{flex:0 0 auto;width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.gnav__item:hover{background:var(--tint);color:var(--primary-ink)}
+.gnav__item[aria-current="page"]{background:var(--tint);color:var(--primary);font-weight:700}
+.gnav__badge{margin-left:auto;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--risk);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.gnav__foot{margin-top:auto;border-top:1px solid var(--line);padding-top:8px}
+.gnav__collapse{color:var(--faint)}
+.shell.nav-min .gnav__name,.shell.nav-min .gnav__label,.shell.nav-min .gnav__badge{display:none}
+.shell.nav-min .gnav__item{justify-content:center;padding:11px 0}
+.shell.nav-min .gnav__brand{justify-content:center;padding-left:0;padding-right:0}
+
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;height:var(--topbar-h);padding:0 22px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar__title{font-size:16px;font-weight:750;letter-spacing:-.01em;margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.select,.search{height:36px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);color:var(--ink);font:inherit;font-size:12.5px;font-weight:550;padding:0 10px}
+.search{width:200px}
+.iconbtn{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid transparent;border-radius:var(--r-sm);background:transparent;color:var(--muted)}
+.iconbtn:hover{background:var(--tint);color:var(--primary-ink)}
+.iconbtn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.iconbtn .dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--risk);border:2px solid #fff}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--tint-2);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:750;border:0}
+.rolepick{height:36px;border:1px solid var(--tint-2);border-radius:var(--r-sm);background:var(--tint);color:var(--primary-ink);font-weight:650;font-size:12.5px;padding:0 10px}
+
+/* ---- content ---- */
+.main{min-width:0}
+.content{padding:22px;max-width:1440px}
+.screen{display:none}
+.screen.is-active{display:block}
+.crumbs{display:flex;gap:6px;align-items:center;color:var(--faint);font-size:var(--fs-small);font-weight:600;margin:0 0 10px}
+.crumbs a{color:var(--muted)}
+.pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.pagehead h1{margin:0;font-size:var(--fs-title);font-weight:800;letter-spacing:-.02em}
+.pagehead p{margin:4px 0 0;color:var(--muted);font-weight:500}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---- components ---- */
+.grid{display:grid;gap:14px}
+.g-kpi{grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}
+.g-2{grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);align-items:start}
+.g-cards{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.g-charts{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:16px}
+.card h2{margin:0 0 4px;font-size:var(--fs-h2);font-weight:750;letter-spacing:-.01em}
+.card .sub{margin:0 0 12px;color:var(--muted);font-size:var(--fs-small);font-weight:500}
+.stack{display:grid;gap:14px}
+
+.kpi{padding:14px 15px}
+.kpi__label{color:var(--faint);font-size:var(--fs-micro);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.kpi__row{display:flex;align-items:baseline;gap:8px;margin-top:5px}
+.kpi__value{font-size:25px;font-weight:800;letter-spacing:-.02em}
+.kpi__delta{font-size:11.5px;font-weight:700}
+.kpi__delta.up{color:var(--ok)} .kpi__delta.down{color:var(--risk)} .kpi__delta.flat{color:var(--faint)}
+.kpi__spark{margin-top:8px;display:flex;align-items:flex-end;gap:2px;height:22px}
+.kpi__spark i{flex:1;background:var(--tint-2);border-radius:2px 2px 0 0;min-height:3px}
+.kpi__spark i.hi{background:var(--primary)}
+.kpi a{display:inline-block;margin-top:8px;font-size:11.5px;font-weight:650}
+
+.chip{display:inline-flex;align-items:center;gap:5px;min-height:22px;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:700}
+.chip svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.chip--ok{background:var(--ok-bg);color:var(--ok)}
+.chip--info{background:var(--info-bg);color:var(--info)}
+.chip--warn{background:var(--warn-bg);color:var(--warn)}
+.chip--risk{background:var(--risk-bg);color:var(--risk)}
+.chip--idle{background:var(--idle-bg);color:var(--idle)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-weight:650;font-size:12.5px;text-decoration:none}
+.btn:hover{background:var(--tint);border-color:var(--tint-2);text-decoration:none}
+.btn--primary{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 6px 14px -8px rgba(33,102,209,.55)}
+.btn--primary:hover{background:var(--primary-ink);border-color:var(--primary-ink)}
+.btn--sm{min-height:29px;padding:0 10px;font-size:11.5px;border-radius:8px}
+.btn--big{min-height:52px;padding:0 26px;font-size:16px;border-radius:14px}
+
+.todo{display:grid;gap:8px}
+.todo__item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r-md);background:var(--bg)}
+.todo__ico{flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.todo__ico svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.todo__ico--warn{background:var(--warn-bg);color:var(--warn)}
+.todo__ico--risk{background:var(--risk-bg);color:var(--risk)}
+.todo__ico--info{background:var(--info-bg);color:var(--info)}
+.todo__ico--ok{background:var(--ok-bg);color:var(--ok)}
+.todo__body{min-width:0;flex:1}
+.todo__body strong{display:block;font-size:12.5px;font-weight:700}
+.todo__body span{display:block;color:var(--muted);font-size:11.5px;font-weight:500}
+.todo__item .btn{flex:0 0 auto}
+
+.ccard{padding:0;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease}
+.ccard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.ccard__cover{height:74px;background:linear-gradient(115deg,var(--cc,#2166d1),var(--cc2,#4d8be0));position:relative}
+.ccard__cover .chip{position:absolute;right:10px;top:10px;background:rgba(255,255,255,.92)}
+.ccard__body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.ccard__body h3{margin:0;font-size:14.5px;font-weight:750;letter-spacing:-.01em}
+.ccard__meta{color:var(--faint);font-size:11.5px;font-weight:600}
+.progress{height:7px;border-radius:999px;background:var(--tint);overflow:hidden}
+.progress i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--primary-soft))}
+.progress--ok i{background:var(--ok)}
+.ccard__actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.cc-1{--cc:#2166d1;--cc2:#4d8be0}.cc-2{--cc:#0f7f9e;--cc2:#3aa7c4}.cc-3{--cc:#4f5fc4;--cc2:#7b88dd}.cc-4{--cc:#0d5c8c;--cc2:#3383b4}.cc-5{--cc:#33567e;--cc2:#5c7ea6}
+
+/* charts */
+.bars{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:6px}
+.bars>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+.bars i{width:100%;max-width:34px;border-radius:6px 6px 0 0;background:var(--tint-2)}
+.bars i.f{background:var(--primary)}
+.bars i.ok{background:var(--ok)} .bars i.warn{background:var(--warn)} .bars i.risk{background:var(--risk)}
+.bars b{font-size:10px;color:var(--faint);font-weight:650}
+.stackbar{display:flex;height:14px;border-radius:999px;overflow:hidden}
+.stackbar i{height:100%}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px;font-size:11px;color:var(--muted);font-weight:600}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px}
+.donut{--p:70;width:110px;height:110px;border-radius:50%;background:conic-gradient(var(--primary) calc(var(--p)*1%),var(--tint) 0);display:flex;align-items:center;justify-content:center;margin:6px auto}
+.donut>span{width:76px;height:76px;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:19px}
+.donut small{font-size:10px;color:var(--faint);font-weight:650}
+.heat{display:grid;grid-template-columns:repeat(14,1fr);gap:3px}
+.heat i{aspect-ratio:1;border-radius:3px;background:var(--tint)}
+.heat i.l1{background:#cfe0f6}.heat i.l2{background:#8fb8ea}.heat i.l3{background:#4d8be0}.heat i.l4{background:#2166d1}
+
+/* tables */
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:var(--r-md)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:680px}
+thead th{position:sticky;top:0;background:var(--bg);color:var(--faint);text-align:left;font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:.05em;padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap}
+tbody td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--tint)}
+.tstrong{font-weight:700}
+.tmuted{color:var(--muted);font-size:11.5px}
+.tableops{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.tableops .search{flex:1;min-width:150px;max-width:260px}
+.tableops .spacer{margin-left:auto}
+
+/* young learner */
+.young{background:linear-gradient(180deg,#eef5ff, #f8fbff);border-radius:var(--r-lg);padding:22px}
+.young h1{font-size:27px;margin:0 0 4px}
+.young .sub{font-size:14px}
+.young-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:16px}
+.ycard{border:0;border-radius:20px;padding:18px;color:#fff;display:flex;flex-direction:column;gap:8px;min-height:130px;box-shadow:var(--shadow);text-align:left}
+.ycard h3{margin:0;font-size:17px;font-weight:800}
+.ycard span{font-size:12.5px;font-weight:650;opacity:.92}
+.ycard .stars{font-size:17px;letter-spacing:2px}
+.y-1{background:linear-gradient(135deg,#2f8f6b,#59b98c)}
+.y-2{background:linear-gradient(135deg,#2166d1,#5b93e6)}
+.y-3{background:linear-gradient(135deg,#7a5fc0,#a08ad9)}
+.y-4{background:linear-gradient(135deg,#c07f2e,#dba658)}
+
+/* modules */
+.module{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.module+.module{margin-top:10px}
+.module__head{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);cursor:pointer}
+.module__head strong{font-size:13.5px;font-weight:750;flex:1}
+.module__head .tmuted{white-space:nowrap}
+.module__body{padding:6px 14px 12px;display:none}
+.module.open .module__body{display:block}
+.activity{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:12.5px}
+.activity:last-child{border-bottom:0}
+.activity .chip{margin-left:auto}
+
+.notice{display:grid;gap:8px}
+.section-label{font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin:14px 0 6px}
+.empty{border:1px dashed var(--line);border-radius:var(--r-md);padding:22px;text-align:center;color:var(--muted);font-weight:550}
+.empty strong{display:block;color:var(--ink);font-weight:750;margin-bottom:3px}
+
+/* mobile */
+.mobilebar{display:none}
+@media(max-width:880px){
+  .shell{grid-template-columns:1fr}
+  .gnav{display:none}
+  .topbar{padding:0 14px}
+  .topbar .select,.topbar .search{display:none}
+  .content{padding:14px 14px 84px}
+  .g-2{grid-template-columns:1fr}
+  .mobilebar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;background:var(--surface);border-top:1px solid var(--line);padding:4px 6px calc(6px + env(safe-area-inset-bottom))}
+  .mobilebar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:48px;border:0;background:none;color:var(--muted);font-size:10px;font-weight:650;border-radius:10px}
+  .mobilebar button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .mobilebar button.is-active{color:var(--primary);background:var(--tint)}
+  table{min-width:0}
+  .tablewrap table, .tablewrap thead{display:none}
+  .tablewrap .mcards{display:grid;gap:8px;padding:10px}
+  .mcard{border:1px solid var(--line);border-radius:var(--r-md);padding:12px;background:var(--surface)}
+  .mcard b{display:block;font-size:13px}
+}
+@media(min-width:881px){.tablewrap .mcards{display:none}}
+@media print{.gnav,.topbar,.mobilebar,.filters,.tableops{display:none!important}.shell{grid-template-columns:1fr}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell" id="shell">
+
+<!-- ================= GLOBAL NAV ================= -->
+<nav class="gnav" id="gnav" aria-label="Global navigation">
+  <div class="gnav__brand">
+    <span class="gnav__mark">EP</span>
+    <span class="gnav__name">EduPlatform</span>
+  </div>
+  <!-- items are role-filtered by JS via data-roles -->
+  <button class="gnav__item" data-screen="dashboard" data-roles="all">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    <span class="gnav__label">Dashboard</span>
+  </button>
+  <button class="gnav__item" data-screen="course" data-roles="teacher,student,young,parent,inst">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    <span class="gnav__label">Courses</span>
+  </button>
+  <button class="gnav__item" data-roles="all">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    <span class="gnav__label">Calendar</span>
+  </button>
+  <button class="gnav__item" data-roles="teacher,student,young,parent,inst">
+    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg>
+    <span class="gnav__label">Live Classes</span>
+    <span class="gnav__badge" aria-label="2 sessions today">2</span>
+  </button>
+  <button class="gnav__item" data-roles="all">
+    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+    <span class="gnav__label">Messages</span>
+    <span class="gnav__badge" aria-label="3 unread">3</span>
+  </button>
+  <button class="gnav__item" data-screen="atrisk" data-roles="platform,inst,teacher">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
+    <span class="gnav__label">Reports</span>
+  </button>
+  <button class="gnav__item" data-roles="platform,inst,help">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+    <span class="gnav__label">Help Desk</span>
+    <span class="gnav__badge">5</span>
+  </button>
+  <button class="gnav__item" data-roles="platform,inst">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span class="gnav__label">Users</span>
+  </button>
+  <button class="gnav__item" data-roles="platform">
+    <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+    <span class="gnav__label">Institutions</span>
+  </button>
+  <button class="gnav__item" data-roles="platform,inst">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <span class="gnav__label">Settings</span>
+  </button>
+  <div class="gnav__foot">
+    <button class="gnav__item">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <span class="gnav__label">My profile</span>
+    </button>
+    <button class="gnav__item gnav__collapse" id="collapseBtn" aria-label="Collapse navigation">
+      <svg viewBox="0 0 24 24"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg>
+      <span class="gnav__label">Collapse</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ================= MAIN ================= -->
+<div class="main">
+  <header class="topbar">
+    <span class="topbar__title" id="pageTitle">Dashboard</span>
+    <select class="rolepick" id="rolePick" aria-label="Prototype: switch role">
+      <option value="platform">Role: Platform admin</option>
+      <option value="inst">Role: Institution admin</option>
+      <option value="teacher" selected>Role: Teacher</option>
+      <option value="student">Role: Student</option>
+      <option value="young">Role: Young learner</option>
+      <option value="parent">Role: Parent</option>
+    </select>
+    <select class="select" aria-label="Institution"><option>Somali University</option><option>EduForTomorrow</option><option>All institutions</option></select>
+    <select class="select" aria-label="Academic term"><option>2026 · Term 3</option><option>2026 · Term 2</option></select>
+    <input class="search" type="search" placeholder="Search students, courses…" aria-label="Global search">
+    <button class="iconbtn" aria-label="Notifications, 4 unread"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot"></span></button>
+    <button class="iconbtn" aria-label="Help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></button>
+    <button class="avatar" aria-label="Account menu">AT</button>
+  </header>
+
+  <main class="content" id="main">
+
+  <!-- ============ PLATFORM ADMIN DASHBOARD ============ -->
+  <section class="screen" data-role="platform" data-screen="dashboard" aria-label="Platform administrator dashboard">
+    <div class="pagehead">
+      <div><h1>Platform overview</h1><p>All institutions · last 30 days</p></div>
+      <div class="filters"><select class="select"><option>Last 30 days</option></select><a class="btn" href="#">Export</a></div>
+    </div>
+    <div class="grid g-kpi">
+      <div class="card kpi"><div class="kpi__label">Institutions</div><div class="kpi__row"><span class="kpi__value">12</span><span class="kpi__delta up">▲ 2</span></div><div class="kpi__spark"><i style="height:30%"></i><i style="height:35%"></i><i style="height:45%"></i><i style="height:50%"></i><i style="height:60%"></i><i style="height:70%"></i><i class="hi" style="height:100%"></i></div><a href="#">Institution report</a></div>
+      <div class="card kpi"><div class="kpi__label">Students</div><div class="kpi__row"><span class="kpi__value">3,482</span><span class="kpi__delta up">▲ 6.1%</span></div><div class="kpi__spark"><i style="height:40%"></i><i style="height:44%"></i><i style="height:52%"></i><i style="height:58%"></i><i style="height:66%"></i><i style="height:80%"></i><i class="hi" style="height:100%"></i></div><a href="#">User report</a></div>
+      <div class="card kpi"><div class="kpi__label">Teachers</div><div class="kpi__row"><span class="kpi__value">214</span><span class="kpi__delta up">▲ 3.4%</span></div><div class="kpi__spark"><i style="height:55%"></i><i style="height:60%"></i><i style="height:62%"></i><i style="height:70%"></i><i style="height:74%"></i><i style="height:88%"></i><i class="hi" style="height:100%"></i></div><a href="#">Teacher activity</a></div>
+      <div class="card kpi"><div class="kpi__label">Live sessions today</div><div class="kpi__row"><span class="kpi__value">57</span><span class="kpi__delta flat">— 0%</span></div><div class="kpi__spark"><i style="height:70%"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:66%"></i><i style="height:90%"></i><i style="height:74%"></i><i class="hi" style="height:100%"></i></div><a href="#">Live-class usage</a></div>
+      <div class="card kpi"><div class="kpi__label">Monthly active users</div><div class="kpi__row"><span class="kpi__value">2,911</span><span class="kpi__delta up">▲ 9%</span></div><div class="kpi__spark"><i style="height:35%"></i><i style="height:42%"></i><i style="height:55%"></i><i style="height:61%"></i><i style="height:72%"></i><i style="height:85%"></i><i class="hi" style="height:100%"></i></div><a href="#">Engagement</a></div>
+      <div class="card kpi"><div class="kpi__label">Open tickets</div><div class="kpi__row"><span class="kpi__value">23</span><span class="kpi__delta down">▲ 5</span></div><div class="kpi__spark"><i style="height:40%"></i><i style="height:35%"></i><i style="height:52%"></i><i style="height:48%"></i><i style="height:64%"></i><i style="height:80%"></i><i class="hi" style="height:100%"></i></div><a href="#">Help-desk report</a></div>
+      <div class="card kpi"><div class="kpi__label">Availability</div><div class="kpi__row"><span class="kpi__value">99.97%</span><span class="kpi__delta up">▲ 0.02</span></div><div class="kpi__spark"><i style="height:95%"></i><i style="height:97%"></i><i style="height:96%"></i><i style="height:98%"></i><i style="height:97%"></i><i style="height:99%"></i><i class="hi" style="height:100%"></i></div><a href="#">Status history</a></div>
+      <div class="card kpi"><div class="kpi__label">Storage used</div><div class="kpi__row"><span class="kpi__value">1.8 TB</span><span class="kpi__delta warn" style="color:var(--warn)">▲ 4%</span></div><div class="progress" style="margin-top:10px"><i style="width:72%"></i></div><a href="#">Media usage</a></div>
+    </div>
+
+    <div class="grid g-2" style="margin-top:14px">
+      <div class="stack">
+        <div class="card">
+          <h2>Active users by institution</h2><p class="sub">Weekly active users · this term</p>
+          <div class="bars" role="img" aria-label="Bar chart: Somali University 820, EduForTomorrow 640, Quraan Academy 510, Al-Nuur School 300, Horizon Tutors 180">
+            <div><i class="f" style="height:100%"></i><b>Somali U</b></div>
+            <div><i class="f" style="height:78%"></i><b>EduForT.</b></div>
+            <div><i class="f" style="height:62%"></i><b>Quraan A.</b></div>
+            <div><i style="height:37%"></i><b>Al-Nuur</b></div>
+            <div><i style="height:22%"></i><b>Horizon</b></div>
+          </div>
+          <div class="legend"><span><i style="background:var(--primary)"></i>Above target</span><span><i style="background:var(--tint-2)"></i>Below target</span></div>
+        </div>
+        <div class="card">
+          <h2>Completion rate by institution</h2><p class="sub">Course completion · rolling 90 days</p>
+          <div class="stack" style="gap:9px">
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:650"><span>Somali University</span><span>81%</span></div><div class="progress progress--ok"><i style="width:81%"></i></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:650"><span>Quraan Academy</span><span>74%</span></div><div class="progress"><i style="width:74%"></i></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:650"><span>EduForTomorrow</span><span>68%</span></div><div class="progress"><i style="width:68%"></i></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:650"><span>Al-Nuur School</span><span style="color:var(--risk)">41%</span></div><div class="progress"><i style="width:41%;background:var(--risk)"></i></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Needs attention</h2><p class="sub">Grouped by urgency · links act directly</p>
+        <div class="section-label">Urgent</div>
+        <div class="todo">
+          <div class="todo__item"><span class="todo__ico todo__ico--risk"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span><span class="todo__body"><strong>Backup task failed twice</strong><span>Scheduled task · last run 02:10</span></span><a class="btn btn--sm" href="#">Review</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--risk"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></span><span class="todo__body"><strong>3 high-priority tickets &gt; 24 h</strong><span>Help desk · SLA breach risk</span></span><a class="btn btn--sm" href="#">Open queue</a></div>
+        </div>
+        <div class="section-label">Requires action</div>
+        <div class="todo">
+          <div class="todo__item"><span class="todo__ico todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg></span><span class="todo__body"><strong>Al-Nuur School activity down 38%</strong><span>vs previous 30 days</span></span><a class="btn btn--sm" href="#">Contact</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span class="todo__body"><strong>4 courses have no teacher</strong><span>Somali University · Term 3</span></span><a class="btn btn--sm" href="#">Assign</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></span><span class="todo__body"><strong>Horizon Tutors at 92% storage</strong><span>Limit 50 GB</span></span><a class="btn btn--sm" href="#">Manage</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSTITUTION ADMIN DASHBOARD ============ -->
+  <section class="screen" data-role="inst" data-screen="dashboard" aria-label="Institution administrator dashboard">
+    <div class="pagehead">
+      <div><h1>Somali University</h1><p>Institution overview · 2026 Term 3</p></div>
+      <div class="filters">
+        <select class="select"><option>All branches</option></select>
+        <select class="select"><option>All grades</option><option>Year 1</option></select>
+        <select class="select"><option>All teachers</option></select>
+        <select class="select"><option>Term 3</option></select>
+        <a class="btn" href="#">Export</a>
+      </div>
+    </div>
+    <div class="grid g-kpi">
+      <div class="card kpi"><div class="kpi__label">Enrolled students</div><div class="kpi__row"><span class="kpi__value">500</span><span class="kpi__delta up">▲ 24</span></div><a href="#">Enrolment trends</a></div>
+      <div class="card kpi"><div class="kpi__label">Active teachers</div><div class="kpi__row"><span class="kpi__value">30</span><span class="kpi__delta flat">—</span></div><a href="#">Teacher activity</a></div>
+      <div class="card kpi"><div class="kpi__label">Attendance rate</div><div class="kpi__row"><span class="kpi__value">92%</span><span class="kpi__delta up">▲ 1.5</span></div><a href="#">Attendance report</a></div>
+      <div class="card kpi"><div class="kpi__label">Completion rate</div><div class="kpi__row"><span class="kpi__value">81%</span><span class="kpi__delta up">▲ 3</span></div><a href="#">Completion report</a></div>
+      <div class="card kpi"><div class="kpi__label">Average grade</div><div class="kpi__row"><span class="kpi__value">B−</span><span class="kpi__delta flat">—</span></div><a href="#">Grade distribution</a></div>
+      <div class="card kpi"><div class="kpi__label">Students at risk</div><div class="kpi__row"><span class="kpi__value" style="color:var(--risk)">17</span><span class="kpi__delta down">▲ 4</span></div><a href="#">Intervention list</a></div>
+      <div class="card kpi"><div class="kpi__label">Live sessions this week</div><div class="kpi__row"><span class="kpi__value">126</span><span class="kpi__delta up">▲ 8</span></div><a href="#">Live-class report</a></div>
+    </div>
+    <div class="grid g-2" style="margin-top:14px">
+      <div class="stack">
+        <div class="card">
+          <h2>Assignment submission status</h2><p class="sub">All Year-1 courses · this week</p>
+          <div class="stackbar" role="img" aria-label="Submitted on time 64%, late 17%, missing 19%"><i style="width:64%;background:var(--ok)"></i><i style="width:17%;background:var(--warn)"></i><i style="width:19%;background:var(--risk)"></i></div>
+          <div class="legend"><span><i style="background:var(--ok)"></i>On time 64%</span><span><i style="background:var(--warn)"></i>Late 17%</span><span><i style="background:var(--risk)"></i>Missing 19%</span></div>
+        </div>
+        <div class="card">
+          <h2>Weekly engagement heatmap</h2><p class="sub">Logins per day · darker = more active</p>
+          <div class="heat" role="img" aria-label="Activity heatmap over last 14 days, weekday activity high, weekends low"><i class="l2"></i><i class="l3"></i><i class="l3"></i><i class="l4"></i><i class="l3"></i><i class="l1"></i><i></i><i class="l2"></i><i class="l4"></i><i class="l4"></i><i class="l3"></i><i class="l4"></i><i class="l1"></i><i></i></div>
+        </div>
+        <div class="card">
+          <h2>Grade distribution</h2><p class="sub">All courses · Term 3 to date</p>
+          <div class="bars" role="img" aria-label="Grade distribution: A 18%, B 34%, C 27%, D 14%, F 7%">
+            <div><i class="ok" style="height:52%"></i><b>A</b></div>
+            <div><i class="ok" style="height:100%"></i><b>B</b></div>
+            <div><i class="f" style="height:80%"></i><b>C</b></div>
+            <div><i class="warn" style="height:42%"></i><b>D</b></div>
+            <div><i class="risk" style="height:20%"></i><b>F</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Students requiring intervention</h2><p class="sub">Top of the at-risk queue</p>
+        <div class="todo">
+          <div class="todo__item"><span class="todo__ico todo__ico--risk"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span><span class="todo__body"><strong>Abdi Osman · Year 1</strong><span>No login 12 days · 3 missing assignments</span></span><a class="btn btn--sm" href="#">Open</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--risk"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span><span class="todo__body"><strong>Hodan Ali · Year 1</strong><span>Attendance 54% · grades declining</span></span><a class="btn btn--sm" href="#">Open</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--warn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span><span class="todo__body"><strong>Yusuf Noor · Year 1</strong><span>Missed 3 live classes in a row</span></span><a class="btn btn--sm" href="#">Open</a></div>
+        </div>
+        <a class="btn" style="margin-top:12px;width:100%" href="#" data-goto="atrisk">View full at-risk report</a>
+        <div class="section-label">This week</div>
+        <div class="todo">
+          <div class="todo__item"><span class="todo__ico todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span><span class="todo__body"><strong>126 live sessions scheduled</strong><span>Next: Academic English I · today 16:00</span></span></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--ok"><svg viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg></span><span class="todo__body"><strong>Term-3 enrolment approvals complete</strong><span>Finished yesterday</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEACHER DASHBOARD ============ -->
+  <section class="screen is-active" data-role="teacher" data-screen="dashboard" aria-label="Teacher dashboard">
+    <div class="pagehead">
+      <div><h1>Good morning, Amal</h1><p>Saturday 19 July · 2 classes today</p></div>
+      <div class="filters"><a class="btn btn--primary" href="#">Start next class · 16:00</a></div>
+    </div>
+    <div class="grid g-kpi">
+      <div class="card kpi"><div class="kpi__label">Classes today</div><div class="kpi__row"><span class="kpi__value">2</span></div><a href="#">Schedule</a></div>
+      <div class="card kpi"><div class="kpi__label">To grade</div><div class="kpi__row"><span class="kpi__value" style="color:var(--warn)">14</span></div><a href="#">Grading queue</a></div>
+      <div class="card kpi"><div class="kpi__label">Unread messages</div><div class="kpi__row"><span class="kpi__value">3</span></div><a href="#">Inbox</a></div>
+      <div class="card kpi"><div class="kpi__label">Students needing attention</div><div class="kpi__row"><span class="kpi__value" style="color:var(--risk)">4</span></div><a href="#" data-goto="atrisk">Review</a></div>
+      <div class="card kpi"><div class="kpi__label">Deadlines this week</div><div class="kpi__row"><span class="kpi__value">6</span></div><a href="#">Calendar</a></div>
+    </div>
+
+    <div class="grid g-2" style="margin-top:14px">
+      <div>
+        <div class="section-label">My courses</div>
+        <div class="grid g-cards">
+          <div class="card ccard cc-1">
+            <div class="ccard__cover"><span class="chip">Year 1</span></div>
+            <div class="ccard__body">
+              <h3>Academic English I</h3>
+              <span class="ccard__meta">28 students · next class today 16:00</span>
+              <div class="progress" aria-label="Course progress 62%"><i style="width:62%"></i></div>
+              <span class="ccard__meta"><span class="chip chip--warn">6 to grade</span> <span class="chip chip--info">Live today</span></span>
+              <div class="ccard__actions"><a class="btn btn--sm btn--primary" href="#" data-goto="course">Open</a><a class="btn btn--sm" href="#">Start class</a><a class="btn btn--sm" href="#">Gradebook</a></div>
+            </div>
+          </div>
+          <div class="card ccard cc-2">
+            <div class="ccard__cover"><span class="chip">Year 1</span></div>
+            <div class="ccard__body">
+              <h3>University Mathematics I</h3>
+              <span class="ccard__meta">26 students · next class Mon 10:00</span>
+              <div class="progress" aria-label="Course progress 54%"><i style="width:54%"></i></div>
+              <span class="ccard__meta"><span class="chip chip--warn">8 to grade</span> <span class="chip chip--risk">2 at risk</span></span>
+              <div class="ccard__actions"><a class="btn btn--sm btn--primary" href="#" data-goto="course">Open</a><a class="btn btn--sm" href="#">Attendance</a><a class="btn btn--sm" href="#">Message</a></div>
+            </div>
+          </div>
+          <div class="card ccard cc-3">
+            <div class="ccard__cover"><span class="chip">Tutoring</span></div>
+            <div class="ccard__body">
+              <h3>Pre-Quraan · Salman</h3>
+              <span class="ccard__meta">1 student · next session Tue 18:00</span>
+              <div class="progress progress--ok" aria-label="Course progress 88%"><i style="width:88%"></i></div>
+              <span class="ccard__meta"><span class="chip chip--ok">On track</span></span>
+              <div class="ccard__actions"><a class="btn btn--sm btn--primary" href="#" data-goto="course">Open</a><a class="btn btn--sm" href="#">Analytics</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>Class analytics · Academic English I</h2><p class="sub">Weekly submissions and attendance</p>
+          <div class="grid g-charts">
+            <div>
+              <div class="section-label" style="margin-top:0">Submission status</div>
+              <div class="stackbar" role="img" aria-label="On time 71%, late 15%, missing 14%"><i style="width:71%;background:var(--ok)"></i><i style="width:15%;background:var(--warn)"></i><i style="width:14%;background:var(--risk)"></i></div>
+              <div class="legend"><span><i style="background:var(--ok)"></i>On time</span><span><i style="background:var(--warn)"></i>Late</span><span><i style="background:var(--risk)"></i>Missing</span></div>
+            </div>
+            <div>
+              <div class="section-label" style="margin-top:0">Attendance trend</div>
+              <div class="bars" style="height:74px" role="img" aria-label="Attendance last five weeks: 88, 90, 86, 92, 94 percent">
+                <div><i class="f" style="height:82%"></i><b>W1</b></div><div><i class="f" style="height:86%"></i><b>W2</b></div><div><i class="f" style="height:78%"></i><b>W3</b></div><div><i class="f" style="height:90%"></i><b>W4</b></div><div><i class="ok" style="height:96%"></i><b>W5</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>To do</h2><p class="sub">Prioritized · every item has an action</p>
+        <div class="todo">
+          <div class="todo__item"><span class="todo__ico todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><span class="todo__body"><strong>Grade 6 essays</strong><span>Academic English I · due today</span></span><a class="btn btn--sm btn--primary" href="#">Grade</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--risk"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span><span class="todo__body"><strong>3 students missing homework</strong><span>Mathematics I · unit 4</span></span><a class="btn btn--sm" href="#">Remind</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span><span class="todo__body"><strong>Reply to Khadra Ahmed</strong><span>Parent message · 2 h ago</span></span><a class="btn btn--sm" href="#">Reply</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span><span class="todo__body"><strong>Live class 16:00</strong><span>Academic English I · room ready</span></span><a class="btn btn--sm" href="#">Start</a></div>
+          <div class="todo__item"><span class="todo__ico todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="todo__body"><strong>Attendance not recorded</strong><span>Thursday's Mathematics class</span></span><a class="btn btn--sm" href="#">Record</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STUDENT DASHBOARD (older) ============ -->
+  <section class="screen" data-role="student" data-screen="dashboard" aria-label="Student dashboard">
+    <div class="pagehead">
+      <div><h1>Welcome back, Ifrah</h1><p>You're on track in 3 of 4 courses</p></div>
+      <div class="filters"><a class="btn btn--primary" href="#" data-goto="course">Continue learning</a></div>
+    </div>
+    <div class="grid g-kpi">
+      <div class="card kpi"><div class="kpi__label">Due this week</div><div class="kpi__row"><span class="kpi__value">4</span></div><a href="#">View deadlines</a></div>
+      <div class="card kpi"><div class="kpi__label">Missing work</div><div class="kpi__row"><span class="kpi__value" style="color:var(--risk)">1</span></div><a href="#">Submit now</a></div>
+      <div class="card kpi"><div class="kpi__label">Current average</div><div class="kpi__row"><span class="kpi__value">B+</span><span class="kpi__delta up">▲</span></div><a href="#">Grades</a></div>
+      <div class="card kpi"><div class="kpi__label">Next live class</div><div class="kpi__row"><span class="kpi__value" style="font-size:17px">Today 16:00</span></div><a href="#">Join info</a></div>
+    </div>
+    <div class="grid g-2" style="margin-top:14px">
+      <div>
+        <div class="section-label">My courses</div>
+        <div class="grid g-cards">
+          <div class="card ccard cc-1"><div class="ccard__cover"></div><div class="ccard__body"><h3>Academic English I</h3><span class="ccard__meta">Next: Essay draft · due Tue</span><div class="progress"><i style="width:62%"></i></div><span class="ccard__meta">62% complete · grade B+</span><div class="ccard__actions"><a class="btn btn--sm btn--primary" href="#" data-goto="course">Continue</a></div></div></div>
+          <div class="card ccard cc-4"><div class="ccard__cover"></div><div class="ccard__body"><h3>University Mathematics I</h3><span class="ccard__meta">Next: Problem set 5 · due Fri</span><div class="progress"><i style="width:48%"></i></div><span class="ccard__meta">48% complete · grade B−</span><div class="ccard__actions"><a class="btn btn--sm btn--primary" href="#" data-goto="course">Continue</a></div></div></div>
+          <div class="card ccard cc-2"><div class="ccard__cover"></div><div class="ccard__body"><h3>Introduction to Computing</h3><span class="ccard__meta"><span class="chip chip--risk">1 missing task</span></span><div class="progress"><i style="width:39%;background:var(--warn)"></i></div><span class="ccard__meta">39% complete · grade C+</span><div class="ccard__actions"><a class="btn btn--sm btn--primary" href="#" data-goto="course">Continue</a></div></div></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h2>Up next</h2><p class="sub">Your week at a glance</p>
+          <div class="todo">
+            <div class="todo__item"><span class="todo__ico todo__ico--risk"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></span><span class="todo__body"><strong>Computing quiz 3 — missing</strong><span>Was due Thursday</span></span><a class="btn btn--sm btn--primary" href="#">Do it</a></div>
+            <div class="todo__item"><span class="todo__ico todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span><span class="todo__body"><strong>Live: Academic English I</strong><span>Today 16:00 · Amal Teacher</span></span><a class="btn btn--sm" href="#">Join</a></div>
+            <div class="todo__item"><span class="todo__ico todo__ico--warn"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="todo__body"><strong>Essay draft due Tuesday</strong><span>Academic English I</span></span><a class="btn btn--sm" href="#">Open</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Recent feedback</h2><p class="sub">From your teachers</p>
+          <div class="todo">
+            <div class="todo__item"><span class="todo__ico todo__ico--ok"><svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9a2 2 0 0 0-2-2.3z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="todo__body"><strong>Essay 2 · 86%</strong><span>"Strong structure — watch citations."</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ YOUNG LEARNER DASHBOARD ============ -->
+  <section class="screen" data-role="young" data-screen="dashboard" aria-label="Young learner dashboard">
+    <div class="young">
+      <h1>Hi Salman! 🌟</h1>
+      <p class="sub" style="color:var(--muted);font-weight:600">You finished 3 activities yesterday. Amazing!</p>
+      <a class="btn btn--primary btn--big" style="margin-top:12px" href="#">▶ Continue learning</a>
+      <div class="young-cards">
+        <button class="ycard y-1"><h3>Reading Story</h3><span>Musa's Muddy Stripes · page 4</span><span class="stars" aria-label="3 of 5 stars">★★★☆☆</span></button>
+        <button class="ycard y-2"><h3>Letters Practice</h3><span>Today's lesson · 10 minutes</span><span class="stars" aria-label="5 of 5 stars">★★★★★</span></button>
+        <button class="ycard y-3"><h3>Numbers Game</h3><span>New! Counting to 50</span><span>🎈 Let's try it</span></button>
+        <button class="ycard y-4"><h3>Live Class</h3><span>Teacher Amal · today 6:00 pm</span><span>🎥 See you there!</span></button>
+      </div>
+      <div class="grid g-2" style="margin-top:16px">
+        <div class="card"><h2>My badges</h2><p class="sub">You earned 2 new badges this week</p><div style="font-size:30px;letter-spacing:8px">🏅⭐📚🔥</div></div>
+        <div class="card"><h2>Message from Teacher Amal</h2><p class="sub">"Wonderful reading yesterday, Salman! Today we practice the letter ص."</p><a class="btn btn--sm" href="#">Say thanks 👋</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARENT DASHBOARD ============ -->
+  <section class="screen" data-role="parent" data-screen="dashboard" aria-label="Parent dashboard">
+    <div class="pagehead">
+      <div><h1>Family overview</h1><p>Khadra Ahmed · 2 children</p></div>
+      <div class="filters"><select class="select" aria-label="Select child"><option>Salman · Age 8</option><option>Ifrah · Year 1</option></select></div>
+    </div>
+    <div class="grid g-kpi">
+      <div class="card kpi"><div class="kpi__label">Overall progress</div><div class="kpi__row"><span class="kpi__value">74%</span><span class="kpi__delta up">▲ 5</span></div><a href="#">By course</a></div>
+      <div class="card kpi"><div class="kpi__label">Attendance</div><div class="kpi__row"><span class="kpi__value">96%</span><span class="kpi__delta flat">—</span></div><a href="#">Attendance</a></div>
+      <div class="card kpi"><div class="kpi__label">Learning time this week</div><div class="kpi__row"><span class="kpi__value">4h 20m</span><span class="kpi__delta up">▲ 40m</span></div><a href="#">Learning time</a></div>
+      <div class="card kpi"><div class="kpi__label">Missing work</div><div class="kpi__row"><span class="kpi__value" style="color:var(--ok)">0</span></div><a href="#">Assignments</a></div>
+    </div>
+    <div class="grid g-2" style="margin-top:14px">
+      <div class="stack">
+        <div class="card">
+          <h2>Weekly summary · Salman</h2><p class="sub">12–18 July</p>
+          <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px">
+            <div style="background:var(--bg);border-radius:10px;padding:10px"><b style="font-size:19px">9</b><div class="tmuted">lessons done</div></div>
+            <div style="background:var(--bg);border-radius:10px;padding:10px"><b style="font-size:19px">3/3</b><div class="tmuted">live classes</div></div>
+            <div style="background:var(--bg);border-radius:10px;padding:10px"><b style="font-size:19px">4h 20m</b><div class="tmuted">learning time</div></div>
+            <div style="background:var(--bg);border-radius:10px;padding:10px"><b style="font-size:19px">2</b><div class="tmuted">badges earned</div></div>
+          </div>
+          <div class="section-label">Teacher feedback</div>
+          <p style="margin:0;color:var(--muted)">"Salman's letter recognition improved a lot this week. Please practice the story audio twice before Tuesday."</p>
+          <div class="section-label">Suggested for you</div>
+          <div class="todo">
+            <div class="todo__item"><span class="todo__ico todo__ico--info"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span class="todo__body"><strong>Listen to the story together</strong><span>10 minutes · builds this week's vocabulary</span></span><a class="btn btn--sm" href="#">Open story</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Strengths &amp; support areas</h2><p class="sub">Based on the last 30 days</p>
+          <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+            <div><div class="section-label" style="margin-top:0;color:var(--ok)">Strengths</div><span class="chip chip--ok">Reading fluency</span> <span class="chip chip--ok">Attendance</span></div>
+            <div><div class="section-label" style="margin-top:0;color:var(--warn)">Needs practice</div><span class="chip chip--warn">Letter ص sounds</span> <span class="chip chip--warn">Number writing</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h2>Upcoming</h2><p class="sub">Salman's schedule</p>
+          <div class="todo">
+            <div class="todo__item"><span class="todo__ico todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span><span class="todo__body"><strong>Live class · today 18:00</strong><span>Teacher Amal · Pre-Quraan</span></span><a class="btn btn--sm" href="#">Observe</a></div>
+            <div class="todo__item"><span class="todo__ico todo__ico--warn"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="todo__body"><strong>Reading practice due Tuesday</strong><span>Story unit 4</span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Recent grades</h2><p class="sub">Drill into any course</p>
+          <div class="todo">
+            <div class="todo__item"><span class="todo__ico todo__ico--ok"><svg viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="todo__body"><strong>Letters quiz · 9/10</strong><span>Friday · Pre-Quraan</span></span><a class="btn btn--sm" href="#" data-goto="course">View</a></div>
+            <div class="todo__item"><span class="todo__ico todo__ico--ok"><svg viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="todo__body"><strong>Story reading · Great</strong><span>Wednesday · with audio</span></span><a class="btn btn--sm" href="#" data-goto="course">View</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Messages</h2>
+          <div class="todo"><div class="todo__item"><span class="todo__ico todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span><span class="todo__body"><strong>Teacher Amal</strong><span>"Salman did wonderfully today…"</span></span><a class="btn btn--sm" href="#">Reply</a></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COURSE HOMEPAGE ============ -->
+  <section class="screen" data-role="teacher,student,parent,inst,young" data-screen="course" aria-label="Course homepage">
+    <p class="crumbs"><a href="#" data-goto="dashboard">Dashboard</a> › <a href="#">Courses</a> › <span>Academic English I</span></p>
+    <div class="card ccard cc-1" style="overflow:visible">
+      <div class="ccard__cover" style="height:96px;border-radius:var(--r-lg) var(--r-lg) 0 0"></div>
+      <div class="ccard__body" style="flex-direction:row;flex-wrap:wrap;align-items:center;gap:14px">
+        <div style="flex:1;min-width:220px">
+          <h3 style="font-size:19px">Academic English I <span class="chip chip--info">Year 1</span></h3>
+          <span class="ccard__meta">Amal Teacher · 28 students · Term 3</span>
+          <div class="progress" style="margin-top:8px;max-width:340px"><i style="width:62%"></i></div>
+          <span class="ccard__meta">62% complete · next required: Essay draft (due Tue)</span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn btn--primary" href="#">Continue course</a>
+          <a class="btn" href="#">Join live class · 16:00</a>
+          <a class="btn" href="#">Gradebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g-2" style="margin-top:14px">
+      <div class="card">
+        <h2>Modules</h2><p class="sub">4 of 9 complete · estimated 6 h remaining</p>
+        <div class="module open">
+          <div class="module__head" role="button" tabindex="0"><strong>Unit 5 · Persuasive writing</strong><span class="chip chip--info">In progress</span><span class="tmuted">4 activities · 55%</span></div>
+          <div class="module__body">
+            <div class="activity">📖 Reading: Persuasion techniques <span class="chip chip--ok">Done</span></div>
+            <div class="activity">🎥 Live class: workshop <span class="chip chip--ok">Attended</span></div>
+            <div class="activity">✍️ Essay draft <span class="chip chip--warn">Due Tue</span></div>
+            <div class="activity">✅ Unit quiz <span class="chip chip--idle">Not started</span></div>
+          </div>
+        </div>
+        <div class="module">
+          <div class="module__head" role="button" tabindex="0"><strong>Unit 6 · Research skills</strong><span class="chip chip--idle">Locked</span><span class="tmuted">5 activities · opens 24 Jul</span></div>
+          <div class="module__body"><div class="empty"><strong>Locked</strong>Complete Unit 5 to open this module.</div></div>
+        </div>
+        <div class="module">
+          <div class="module__head" role="button" tabindex="0"><strong>Unit 4 · Reading comprehension</strong><span class="chip chip--ok">Complete</span><span class="tmuted">6 activities · 100%</span></div>
+          <div class="module__body"><div class="activity">All activities complete · avg 84% <span class="chip chip--ok">Great</span></div></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card"><h2>Announcements</h2><div class="todo"><div class="todo__item"><span class="todo__ico todo__ico--info"><svg viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span><span class="todo__body"><strong>Essay workshop moved to 16:00</strong><span>Posted yesterday</span></span></div></div></div>
+        <div class="card"><h2>Grades</h2><p class="sub">Current: B+ (86%)</p><div class="stack" style="gap:8px"><div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:650"><span>Essays</span><span>86%</span></div><div class="progress"><i style="width:86%"></i></div></div><div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:650"><span>Quizzes</span><span>78%</span></div><div class="progress"><i style="width:78%"></i></div></div><div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:650"><span>Participation</span><span>95%</span></div><div class="progress progress--ok"><i style="width:95%"></i></div></div></div></div>
+        <div class="card"><h2>Attendance</h2><p class="sub">14 of 15 sessions</p><span class="chip chip--ok">93% · On track</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AT-RISK REPORT ============ -->
+  <section class="screen" data-role="platform,inst,teacher" data-screen="atrisk" aria-label="At-risk students report">
+    <p class="crumbs"><a href="#" data-goto="dashboard">Dashboard</a> › <a href="#">Reports</a> › <span>At-risk students</span></p>
+    <div class="pagehead">
+      <div><h1>At-risk students</h1><p>Somali University · rules: no login 7d+, 2+ missing, attendance &lt; 70%, declining grades</p></div>
+      <div class="filters">
+        <select class="select"><option>All risk levels</option><option>High</option><option>Medium</option></select>
+        <select class="select"><option>All courses</option></select>
+        <select class="select"><option>Last 30 days</option></select>
+        <a class="btn" href="#">Saved views</a><a class="btn" href="#">Export CSV</a><a class="btn" href="#">PDF</a>
+      </div>
+    </div>
+    <div class="grid g-kpi">
+      <div class="card kpi"><div class="kpi__label">High risk</div><div class="kpi__row"><span class="kpi__value" style="color:var(--risk)">6</span></div></div>
+      <div class="card kpi"><div class="kpi__label">Medium risk</div><div class="kpi__row"><span class="kpi__value" style="color:var(--warn)">11</span></div></div>
+      <div class="card kpi"><div class="kpi__label">Reviewed this week</div><div class="kpi__row"><span class="kpi__value">9</span></div></div>
+      <div class="card kpi"><div class="kpi__label">Interventions open</div><div class="kpi__row"><span class="kpi__value">5</span></div></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="tableops">
+        <input class="search" type="search" placeholder="Search student…" aria-label="Search students">
+        <span class="spacer"></span>
+        <a class="btn btn--sm" href="#">Columns</a><a class="btn btn--sm" href="#">Print</a>
+      </div>
+      <div class="tablewrap">
+        <table id="riskTable">
+          <thead><tr><th>Student</th><th>Course</th><th>Risk</th><th>Reasons</th><th>Last activity</th><th>Attend.</th><th>Grade</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td class="tstrong">Abdi Osman<div class="tmuted">Year 1 · #70003</div></td><td>Mathematics I</td><td><span class="chip chip--risk">High</span></td><td class="tmuted">No login 12d · 3 missing</td><td>6 Jul</td><td>61%</td><td>D</td><td><a class="btn btn--sm" href="#">Message</a> <a class="btn btn--sm" href="#">Note</a></td></tr>
+            <tr><td class="tstrong">Hodan Ali<div class="tmuted">Year 1 · #70011</div></td><td>Academic English I</td><td><span class="chip chip--risk">High</span></td><td class="tmuted">Attendance 54% · declining</td><td>15 Jul</td><td>54%</td><td>C−</td><td><a class="btn btn--sm" href="#">Message</a> <a class="btn btn--sm" href="#">Meet</a></td></tr>
+            <tr><td class="tstrong">Yusuf Noor<div class="tmuted">Year 1 · #70027</div></td><td>Computing</td><td><span class="chip chip--warn">Medium</span></td><td class="tmuted">3 live classes missed</td><td>17 Jul</td><td>72%</td><td>B−</td><td><a class="btn btn--sm" href="#">Notify teacher</a></td></tr>
+            <tr><td class="tstrong">Amina Farah<div class="tmuted">Year 1 · #70042</div></td><td>Economics I</td><td><span class="chip chip--warn">Medium</span></td><td class="tmuted">2 missing assignments</td><td>18 Jul</td><td>84%</td><td>B</td><td><a class="btn btn--sm" href="#">Remind</a> <a class="btn btn--sm" href="#">Reviewed ✓</a></td></tr>
+          </tbody>
+        </table>
+        <div class="mcards" aria-hidden="true">
+          <div class="mcard"><b>Abdi Osman</b><span class="chip chip--risk">High</span><div class="tmuted">Math I · no login 12d · 3 missing</div><div style="margin-top:8px"><a class="btn btn--sm" href="#">Message</a> <a class="btn btn--sm" href="#">Note</a></div></div>
+          <div class="mcard"><b>Hodan Ali</b><span class="chip chip--risk">High</span><div class="tmuted">English I · attendance 54%</div><div style="margin-top:8px"><a class="btn btn--sm" href="#">Message</a></div></div>
+        </div>
+      </div>
+      <p class="tmuted" style="margin:10px 2px 0">Showing 4 of 17 · <a href="#">Next page</a> · Sort by clicking column headers · secondary details open in a drawer.</p>
+    </div>
+  </section>
+
+  </main>
+</div>
+</div>
+
+<!-- ============ MOBILE BOTTOM NAV ============ -->
+<nav class="mobilebar" aria-label="Primary mobile navigation">
+  <button class="is-active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Home</button>
+  <button><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Courses</button>
+  <button><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg>Live</button>
+  <button><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>Inbox</button>
+  <button><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>More</button>
+</nav>
+
+<script>
+(function(){
+  var shell=document.getElementById('shell');
+  var role='teacher';
+  var screen='dashboard';
+  var titles={dashboard:'Dashboard',course:'Academic English I',atrisk:'At-risk students'};
+
+  function apply(){
+    document.querySelectorAll('.screen').forEach(function(s){
+      var roles=(s.getAttribute('data-role')||'').split(',');
+      var match=roles.indexOf(role)>-1 && s.getAttribute('data-screen')===screen;
+      s.classList.toggle('is-active',match);
+    });
+    // if nothing matched (screen not available for role), fall back to dashboard
+    if(!document.querySelector('.screen.is-active')){screen='dashboard';return apply();}
+    document.getElementById('pageTitle').textContent=titles[screen]||'Dashboard';
+    document.querySelectorAll('.gnav__item[data-roles]').forEach(function(item){
+      var r=item.getAttribute('data-roles');
+      var show=r==='all'||r.split(',').indexOf(role)>-1;
+      item.style.display=show?'':'none';
+      if(item.hasAttribute('data-screen')){
+        if(item.getAttribute('data-screen')===screen){item.setAttribute('aria-current','page');}
+        else{item.removeAttribute('aria-current');}
+      }
+    });
+  }
+  document.getElementById('rolePick').addEventListener('change',function(){role=this.value;screen='dashboard';apply();});
+  document.querySelectorAll('[data-screen].gnav__item').forEach(function(b){b.addEventListener('click',function(){screen=this.getAttribute('data-screen');apply();});});
+  document.addEventListener('click',function(e){
+    var g=e.target.closest?e.target.closest('[data-goto]'):null;
+    if(g){e.preventDefault();screen=g.getAttribute('data-goto');apply();}
+  });
+  document.getElementById('collapseBtn').addEventListener('click',function(){shell.classList.toggle('nav-min');});
+  document.querySelectorAll('.module__head').forEach(function(h){
+    function t(){h.parentElement.classList.toggle('open');}
+    h.addEventListener('click',t);
+    h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();t();}});
+  });
+  // simple table sort
+  document.querySelectorAll('#riskTable thead th').forEach(function(th,idx){
+    th.addEventListener('click',function(){
+      var tb=th.closest('table').tBodies[0];
+      var rows=[].slice.call(tb.rows);
+      var dir=th.__d=!th.__d;
+      rows.sort(function(a,b){var x=a.cells[idx].textContent.trim(),y=b.cells[idx].textContent.trim();return dir?x.localeCompare(y,undefined,{numeric:true}):y.localeCompare(x,undefined,{numeric:true});});
+      rows.forEach(function(r){tb.appendChild(r);});
+    });
+  });
+  apply();
+})();
+</script>
+</body>
+</html>

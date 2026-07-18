@@ -2403,10 +2403,20 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-gnav__item.is-active{background:#fff;color:#173044!important}
 .pqh-gnav__spacer{flex:1}
 .pqh-topbar{background:#fff;border-bottom:1px solid #d5dbe0;box-shadow:none}
-.pqh-hero{background:#fff;border:1px solid #d5dbe0;box-shadow:none;border-radius:12px;padding:22px 24px}
+.pqh-hero{background:#e9f3ec;border:1px solid #cfe0d5;box-shadow:none;border-radius:12px;padding:22px 24px}
 .pqh-title{color:#173044}
 .pqh-kicker{color:#2f6f4e}
 .pqh-course-panel,.pqh-card,.pqh-teacher-panel,.pqh-teacher-metric,.pqh-filter,.pqh-sql-panel,.pqh-live-child{border-color:#d5dbe0!important;box-shadow:0 1px 3px rgba(23,48,68,.06)!important;border-radius:12px}
+.pqh-course-panel{background:#f0f7f2;border-color:#d3e3d9!important}
+.pqh-card{background:#eef4fa;border-color:#d2dfea!important}
+.pqh-teacher-panel{background:#f1f5fa;border-color:#d2dfea!important}
+.pqh-teacher-metric{background:#fbf5e6;border-color:#e6d9b8!important}
+.pqh-filter{background:#faf3ea;border-color:#e6d6c2!important}
+.pqh-live-child{background:#f0f7f2;border-color:#d3e3d9!important}
+.pqh-dashboard-sidebar .pqh-card:nth-child(3n+1){background:#eef4fa;border-color:#d2dfea!important}
+.pqh-dashboard-sidebar .pqh-card:nth-child(3n+2){background:#f0f7f2;border-color:#d3e3d9!important}
+.pqh-dashboard-sidebar .pqh-card:nth-child(3n){background:#fbf5e6;border-color:#e6d9b8!important}
+.pqh-student-profile__item,.pqh-teacher-row,.pqh-mini-stat,.pqh-live-session{background:#fff}
 .pqh-course-panel__head h2,.pqh-card h3,.pqh-teacher-panel h3,.pqh-course-panel h2,.pqh-config__head h2,.pqh-tools__head h2,.pqh-live-monitor__head h2{color:#173044}
 .pqh-metric{color:#173044}
 .pqh-course-grid{gap:16px}
@@ -2426,8 +2436,8 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-course-card__actions{padding:0 14px 14px!important}
 .pqh-btn{background:#2f6f4e}
 .pqh-btn--secondary{background:#fff;border-color:#d5dbe0}
-.pqh-quick-card{background:#fff;color:#173044;border:1px solid #d5dbe0;box-shadow:0 1px 3px rgba(23,48,68,.06)}
-.pqh-quick-card:nth-child(even){background:#fff;box-shadow:0 1px 3px rgba(23,48,68,.06)}
+.pqh-quick-card{background:#f0f7f2;color:#173044;border:1px solid #d3e3d9;box-shadow:0 1px 3px rgba(23,48,68,.06)}
+.pqh-quick-card:nth-child(even){background:#eef4fa;border-color:#d2dfea;box-shadow:0 1px 3px rgba(23,48,68,.06)}
 .pqh-quick-card strong{color:#173044}
 .pqh-quick-card span{color:#5e7280}
 .pqh-dashboard-sidebar .pqh-card h3{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:#5e7280}

@@ -422,6 +422,65 @@ $metrics = [
     'pending_enrollments' => pqwd_count_records('local_prequran_course_enrol_req', ['workspaceid' => $workspaceid, 'status' => 'pending']),
 ];
 
+// ---- Phase 3 analytics: computed live per workspace (tenant scale keeps
+// these queries cheap; move to scheduled aggregation if tenants grow). ----
+$pqwdnow = time();
+$pqwdweek = [];
+$pqwdweekmax = 1;
+$pqwdheld30 = 0;
+$pqwdattrate = null;
+if (pqh_table_exists_safe('local_prequran_live_session')) {
+    for ($pqwdi = 6; $pqwdi >= 0; $pqwdi--) {
+        $pqwddaystart = usergetmidnight($pqwdnow - $pqwdi * DAYSECS);
+        $pqwdcount = (int)$DB->count_records_select(
+            'local_prequran_live_session',
+            'workspaceid = ? AND scheduled_start >= ? AND scheduled_start < ? AND status <> ?',
+            [$workspaceid, $pqwddaystart, $pqwddaystart + DAYSECS, 'cancelled']
+        );
+        $pqwdweek[] = ['label' => userdate($pqwddaystart, '%a'), 'count' => $pqwdcount];
+        $pqwdweekmax = max($pqwdweekmax, $pqwdcount);
+    }
+    $pqwdheld30 = (int)$DB->count_records_select(
+        'local_prequran_live_session',
+        'workspaceid = ? AND scheduled_end >= ? AND scheduled_end < ? AND status IN (?, ?)',
+        [$workspaceid, $pqwdnow - 30 * DAYSECS, $pqwdnow, 'completed', 'live']
+    );
+    if (pqh_table_exists_safe('local_prequran_live_attendance') && pqh_table_exists_safe('local_prequran_live_participant')) {
+        $pqwdexpected = (int)$DB->count_records_sql(
+            "SELECT COUNT(1)
+               FROM {local_prequran_live_participant} p
+               JOIN {local_prequran_live_session} s ON s.id = p.sessionid
+              WHERE s.workspaceid = ? AND p.role = 'student' AND p.status = 'active'
+                AND s.scheduled_end >= ? AND s.scheduled_end < ? AND s.status <> 'cancelled'",
+            [$workspaceid, $pqwdnow - 30 * DAYSECS, $pqwdnow]
+        );
+        $pqwdattended = (int)$DB->count_records_sql(
+            "SELECT COUNT(1)
+               FROM {local_prequran_live_attendance} a
+               JOIN {local_prequran_live_session} s ON s.id = a.sessionid
+              WHERE s.workspaceid = ? AND a.join_time > 0
+                AND s.scheduled_end >= ? AND s.scheduled_end < ?",
+            [$workspaceid, $pqwdnow - 30 * DAYSECS, $pqwdnow]
+        );
+        if ($pqwdexpected > 0) {
+            $pqwdattrate = (int)round(100 * min($pqwdattended, $pqwdexpected) / $pqwdexpected);
+        }
+    }
+}
+$pqwdinactive = 0;
+$pqwdstudentids = [];
+foreach ($students as $pqwdstudent) {
+    $pqwdsid = (int)($pqwdstudent['studentid'] ?? 0);
+    if ($pqwdsid > 0) {
+        $pqwdstudentids[$pqwdsid] = $pqwdsid;
+    }
+}
+if ($pqwdstudentids) {
+    [$pqwdinsql, $pqwdinparams] = $DB->get_in_or_equal(array_values($pqwdstudentids), SQL_PARAMS_NAMED, 'pqwdst');
+    $pqwdinparams['cutoff'] = $pqwdnow - 14 * DAYSECS;
+    $pqwdinactive = (int)$DB->count_records_select('user', "id $pqwdinsql AND deleted = 0 AND lastaccess < :cutoff", $pqwdinparams);
+}
+
 echo $OUTPUT->header();
 ?>
 <style>
@@ -548,6 +607,21 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 .pqwd-table th,.pqwd-table td{border-color:var(--pqh-line)}
 .pqwd-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
 .pqwd-select{border:1px solid var(--pqh-line)!important;border-radius:10px!important;background:var(--pqh-surface)!important;color:var(--pqh-ink)!important;font-weight:550!important}
+.pqwd-bars{display:flex;align-items:flex-end;gap:10px;height:130px;padding-top:8px}
+.pqwd-bars>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0;height:100%}
+.pqwd-bars i{width:100%;max-width:38px;border-radius:7px 7px 0 0;background:var(--pqh-tint-2)}
+.pqwd-bars i.f{background:var(--pqh-primary)}
+.pqwd-bars b{font-size:10.5px;color:var(--pqh-faint);font-weight:650}
+.pqwd-bars em{font-style:normal;font-size:11px;font-weight:750;color:var(--pqh-ink)}
+.pqwd-todo{display:grid;gap:8px}
+.pqwd-todo__item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;background:var(--pqh-bg)}
+.pqwd-todo__ico{flex:0 0 auto;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800}
+.pqwd-todo__ico--warn{background:#faf1dd;color:#b7791f}
+.pqwd-todo__ico--risk{background:#fbe9e7;color:#c0392b}
+.pqwd-todo__ico--ok{background:#e8f4ec;color:#2e7d4f}
+.pqwd-todo__body{min-width:0;flex:1}
+.pqwd-todo__body strong{display:block;font-size:12.5px;font-weight:700;color:var(--pqh-ink)}
+.pqwd-todo__body span{display:block;color:var(--pqh-muted);font-size:11.5px;font-weight:500}
 @media(max-width:900px){.pqwd-shell{padding-left:0}.pqh-gnav{display:none}.pqwd-topbar{flex-wrap:wrap}}
 </style>
 <main class="pqwd-shell">
@@ -660,6 +734,40 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
       <div class="pqwd-metric"><strong><?php echo (int)$metrics['sessions']; ?></strong><span>upcoming sessions</span></div>
       <div class="pqwd-metric"><strong><?php echo (int)$metrics['offerings']; ?></strong><span>course offerings</span></div>
       <div class="pqwd-metric"><strong><?php echo (int)$metrics['pending_enrollments']; ?></strong><span>pending enrollments</span></div>
+      <div class="pqwd-metric"><strong><?php echo $pqwdattrate !== null ? $pqwdattrate . '%' : '—'; ?></strong><span>attendance · 30d</span></div>
+      <div class="pqwd-metric"><strong><?php echo (int)$pqwdheld30; ?></strong><span>sessions held · 30d</span></div>
+      <div class="pqwd-metric"><strong<?php echo $pqwdinactive > 0 ? ' style="color:#c0392b"' : ''; ?>><?php echo (int)$pqwdinactive; ?></strong><span>inactive students · 14d</span></div>
+    </section>
+
+    <section class="pqwd-grid" aria-label="Workspace analytics" style="margin-bottom:14px">
+      <div class="pqwd-panel">
+        <h2>Live sessions · last 7 days</h2>
+        <div class="pqwd-bars" role="img" aria-label="Sessions per day over the last seven days: <?php echo s(implode(', ', array_map(static function(array $d): string { return $d['label'] . ' ' . $d['count']; }, $pqwdweek))); ?>">
+          <?php foreach ($pqwdweek as $pqwdday): ?>
+            <div><i style="height:<?php echo max(6, (int)round(100 * $pqwdday['count'] / $pqwdweekmax)); ?>%"<?php echo $pqwdday['count'] > 0 ? ' class="f"' : ''; ?>></i><b><?php echo s($pqwdday['label']); ?></b><em><?php echo (int)$pqwdday['count']; ?></em></div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <div class="pqwd-panel">
+        <h2>Needs attention</h2>
+        <div class="pqwd-todo">
+          <?php if ((int)$metrics['pending_enrollments'] > 0): ?>
+            <div class="pqwd-todo__item"><span class="pqwd-todo__ico pqwd-todo__ico--warn">!</span><span class="pqwd-todo__body"><strong><?php echo (int)$metrics['pending_enrollments']; ?> enrollment request<?php echo (int)$metrics['pending_enrollments'] === 1 ? '' : 's'; ?> pending</strong><span>Families are waiting on approval.</span></span><a class="pqwd-btn pqwd-btn--compact" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $workspaceparams))->out(false); ?>">Review</a></div>
+          <?php endif; ?>
+          <?php if ($pqwdinactive > 0): ?>
+            <div class="pqwd-todo__item"><span class="pqwd-todo__ico pqwd-todo__ico--risk">●</span><span class="pqwd-todo__body"><strong><?php echo (int)$pqwdinactive; ?> student<?php echo $pqwdinactive === 1 ? '' : 's'; ?> inactive 14+ days</strong><span>No platform access recorded recently.</span></span><a class="pqwd-btn pqwd-btn--compact" href="<?php echo (new moodle_url('/local/hubredirect/workspace_people.php', $workspaceparams))->out(false); ?>">See who</a></div>
+          <?php endif; ?>
+          <?php if ((int)$metrics['sessions'] === 0): ?>
+            <div class="pqwd-todo__item"><span class="pqwd-todo__ico pqwd-todo__ico--warn">▶</span><span class="pqwd-todo__body"><strong>No upcoming live sessions</strong><span>Nothing is on the schedule yet.</span></span><a class="pqwd-btn pqwd-btn--compact" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $workspaceparams))->out(false); ?>">Create</a></div>
+          <?php endif; ?>
+          <?php if ((int)$metrics['offerings'] === 0): ?>
+            <div class="pqwd-todo__item"><span class="pqwd-todo__ico pqwd-todo__ico--warn">◆</span><span class="pqwd-todo__body"><strong>No published course offerings</strong><span>Students cannot request enrollment yet.</span></span><a class="pqwd-btn pqwd-btn--compact" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $workspaceparams))->out(false); ?>">Publish</a></div>
+          <?php endif; ?>
+          <?php if ((int)$metrics['pending_enrollments'] === 0 && $pqwdinactive === 0 && (int)$metrics['sessions'] > 0 && (int)$metrics['offerings'] > 0): ?>
+            <div class="pqwd-todo__item"><span class="pqwd-todo__ico pqwd-todo__ico--ok">✓</span><span class="pqwd-todo__body"><strong>All clear</strong><span>No pending approvals, inactive students, or scheduling gaps.</span></span></div>
+          <?php endif; ?>
+        </div>
+      </div>
     </section>
 
     <section class="pqwd-cardlinks" aria-label="Workspace actions">

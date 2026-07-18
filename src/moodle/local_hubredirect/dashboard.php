@@ -3858,6 +3858,78 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       </article>
     </section>
   <?php elseif ($role === 'admin'): ?>
+    <?php
+      // ---- Phase 3: platform overview KPIs (guarded live counts). ----
+      $pqhplatnow = time();
+      $pqhplat = ['institutions' => null, 'workspaces' => null, 'students' => null, 'teachers' => null, 'today' => null, 'upcoming7' => null];
+      $pqhplatquiet = [];
+      if (pqh_table_exists_safe('local_prequran_consumer')) {
+          $pqhplat['institutions'] = (int)$DB->count_records('local_prequran_consumer');
+      }
+      if (pqh_table_exists_safe('local_prequran_workspace')) {
+          $pqhplat['workspaces'] = (int)$DB->count_records('local_prequran_workspace');
+      }
+      if (pqh_table_exists_safe('local_prequran_workspace_member')) {
+          $pqhplat['students'] = (int)$DB->count_records_sql(
+              "SELECT COUNT(DISTINCT userid) FROM {local_prequran_workspace_member} WHERE workspace_role = 'student' AND status = 'active'"
+          );
+      }
+      if (pqh_table_exists_safe('local_prequran_teacher_profile')) {
+          $pqhplat['teachers'] = (int)$DB->count_records_select(
+              'local_prequran_teacher_profile',
+              "status IS NULL OR status = '' OR LOWER(status) NOT IN ('archived', 'inactive', 'rejected')"
+          );
+      }
+      if (pqh_table_exists_safe('local_prequran_live_session')) {
+          $pqhplattoday = usergetmidnight($pqhplatnow);
+          $pqhplat['today'] = (int)$DB->count_records_select(
+              'local_prequran_live_session',
+              'scheduled_start >= ? AND scheduled_start < ? AND status <> ?',
+              [$pqhplattoday, $pqhplattoday + DAYSECS, 'cancelled']
+          );
+          $pqhplat['upcoming7'] = (int)$DB->count_records_select(
+              'local_prequran_live_session',
+              'scheduled_start >= ? AND scheduled_start < ? AND status <> ?',
+              [$pqhplatnow, $pqhplatnow + 7 * DAYSECS, 'cancelled']
+          );
+          if (pqh_table_exists_safe('local_prequran_consumer') && pqh_table_exists_safe('local_prequran_workspace')) {
+              $pqhplatquiet = $DB->get_records_sql(
+                  "SELECT c.id, c.name
+                     FROM {local_prequran_consumer} c
+                     JOIN {local_prequran_workspace} w ON w.id = c.primaryworkspaceid
+                    WHERE NOT EXISTS (
+                          SELECT 1 FROM {local_prequran_live_session} s
+                           WHERE s.workspaceid = w.id
+                             AND s.scheduled_start >= ?
+                             AND s.status <> 'cancelled')",
+                  [$pqhplatnow - 30 * DAYSECS], 0, 5
+              );
+          }
+      }
+    ?>
+    <section class="pqh-course-panel" aria-label="Platform overview">
+      <div class="pqh-course-panel__head"><div><h2>Platform overview</h2><p>Live counts across every consumer and workspace.</p></div></div>
+      <div class="pqh-week">
+        <div><b><?php echo $pqhplat['institutions'] !== null ? (int)$pqhplat['institutions'] : '—'; ?></b><span>consumers</span></div>
+        <div><b><?php echo $pqhplat['workspaces'] !== null ? (int)$pqhplat['workspaces'] : '—'; ?></b><span>workspaces</span></div>
+        <div><b><?php echo $pqhplat['students'] !== null ? (int)$pqhplat['students'] : '—'; ?></b><span>active students</span></div>
+        <div><b><?php echo $pqhplat['teachers'] !== null ? (int)$pqhplat['teachers'] : '—'; ?></b><span>teachers</span></div>
+        <div><b><?php echo $pqhplat['today'] !== null ? (int)$pqhplat['today'] : '—'; ?></b><span>sessions today</span></div>
+        <div><b><?php echo $pqhplat['upcoming7'] !== null ? (int)$pqhplat['upcoming7'] : '—'; ?></b><span>sessions · next 7d</span></div>
+      </div>
+      <?php if ($pqhplatquiet): ?>
+        <div class="pqh-todo" style="margin-top:12px">
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo count($pqhplatquiet); ?> consumer<?php echo count($pqhplatquiet) === 1 ? '' : 's'; ?> with no live sessions in 30 days</strong>
+              <span><?php echo s(implode(', ', array_map(static function($pqhq): string { return (string)$pqhq->name; }, $pqhplatquiet))); ?></span>
+            </span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/platform_consumers.php'))->out(false); ?>">Review</a>
+          </div>
+        </div>
+      <?php endif; ?>
+    </section>
     <section class="pqh-grid" aria-label="Admin dashboard">
       <article class="pqh-card pqh-card--wide">
         <h3>Live Academy Operations</h3>

@@ -859,6 +859,7 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
 @media(max-width:920px){.pqlpt-layout{grid-template-columns:1fr}.pqlpt-grid{grid-template-columns:1fr 1fr}.pqlpt-top{display:block}.pqlpt-actions{margin-top:14px}}
 @media(max-width:620px){.pqlpt-shell{padding:18px 10px 42px}.pqlpt-top,.pqlpt-card{padding:16px}.pqlpt-grid,.pqlpt-mini,.pqlpt-live-activity,.pqlpt-support__grid,.pqlpt-support__form{grid-template-columns:1fr}.pqlpt-support__wide{grid-column:auto}.pqlpt-row,.pqlpt-alert{display:block}.pqlpt-title{font-size:27px}.pqlpt-btn{width:100%;margin-top:8px}.pqlpt-pill{margin-top:10px}.pqlpt-item h3{font-size:17px;overflow-wrap:anywhere}.pqlpt-meta,.pqlpt-field p{overflow-wrap:anywhere}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqlpt-shell'); ?>
 </style>
 <main class="pqlpt-shell">
   <div class="pqlpt-wrap">

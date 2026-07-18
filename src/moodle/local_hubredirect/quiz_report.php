@@ -473,6 +473,7 @@ body.pqh-quiz-report-page{background:#f5f8fb!important}
 .pqqr-empty{padding:22px;border-radius:12px;border:1px dashed rgba(23,50,74,.22);color:#58677a;background:#fbfdff;font-weight:850}
 @media(max-width:900px){.pqqr-hero{display:block}.pqqr-form{grid-template-columns:1fr}.pqqr-grid{grid-template-columns:1fr 1fr}.pqqr-table,.pqqr-table tbody,.pqqr-table tr,.pqqr-table td{display:block;width:100%}.pqqr-table thead{display:none}.pqqr-table tr{margin-bottom:10px}.pqqr-table td{border-left:1px solid rgba(23,50,74,.08);border-right:1px solid rgba(23,50,74,.08);border-radius:0}.pqqr-table td:first-child{border-radius:9px 9px 0 0}.pqqr-table td:last-child{border-radius:0 0 9px 9px}}
 @media(max-width:540px){.pqqr-grid{grid-template-columns:1fr}.pqqr-wrap{padding:20px 12px 42px}.pqqr-title{font-size:25px}}
+<?php echo pqh_design_system_css('.pqqr-shell'); ?>
 </style>
 <main class="pqqr-shell">
   <div class="pqqr-top">

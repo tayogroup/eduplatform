@@ -420,6 +420,7 @@ body.pqh-live-availability-page .main-inner{margin:0!important;padding:0!importa
 .pqlav-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}
 @media(max-width:760px){.pqlav-top{display:block}.pqlav-actions{margin-top:12px}.pqlav-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqlav-shell'); ?>
 </style>
 <main class="pqlav-shell">
   <div class="pqlav-wrap">

@@ -242,6 +242,7 @@ body.pqh-recordings-page .main-inner{margin:0!important;padding:0!important;max-
 .pqr-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border-radius:10px;background:#6f4e32;color:#fff!important;text-decoration:none!important;font-size:13px;font-weight:950}
 .pqr-empty{padding:28px;text-align:center;color:#64745a;font-weight:850}
 @media(max-width:720px){.pqr-top{display:block}.pqr-table,.pqr-table tbody,.pqr-table tr,.pqr-table td{display:block;width:100%}.pqr-table thead{display:none}.pqr-table td{padding:8px 0;border:0}.pqr-table tr{padding:10px 0;border-bottom:1px solid rgba(111,78,50,.1)}}
+<?php echo pqh_design_system_css('.pqr-shell'); ?>
 </style>
 <main class="pqr-shell">
   <div class="pqr-wrap">

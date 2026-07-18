@@ -354,6 +354,7 @@ body.pqh-practice-coach-report-page .main-inner{margin:0!important;padding:0!imp
 @media(max-width:980px){.pqlpc-form,.pqlpc-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlpc-grid{grid-template-columns:1fr}.pqlpc-top{display:block}.pqlpc-actions{margin-top:12px}}
 @media(max-width:560px){.pqlpc-form,.pqlpc-metrics{grid-template-columns:1fr}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqlpc-shell'); ?>
 </style>
 <main class="pqlpc-shell">
   <div class="pqlpc-wrap">

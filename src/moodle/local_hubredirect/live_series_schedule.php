@@ -471,6 +471,7 @@ body.pqh-live-series-schedule-page .main-inner{margin:0!important;padding:0!impo
 .pqlps-empty{padding:18px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
 @media(max-width:760px){.pqlps-top,.pqlps-head,.pqlps-session,.pqlps-change{display:block}.pqlps-actions{margin-top:12px}.pqlps-title{font-size:25px}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqlps-shell'); ?>
 </style>
 <main class="pqlps-shell"><div class="pqlps-wrap">
   <section class="pqlps-top pqh-workspace-top">

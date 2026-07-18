@@ -653,6 +653,7 @@ body.pqh-live-page .secondary-navigation{display:none!important}
 .pql-split__class{flex:1;min-width:0;height:100%;border:0;background:#10202e}
 .pql-split__materials{width:min(420px,38vw);height:100%;border:0;border-left:1px solid rgba(255,255,255,.18);background:#fff}
 .pql-split--nomat .pql-split__materials{display:none}
+<?php echo pqh_design_system_css('.pql-shell'); ?>
 </style>
 <main class="pql-bridge">
   <section class="pql-bridge__card">

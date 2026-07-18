@@ -818,6 +818,7 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
 .pqlwiz-selected-count{font-weight:950;color:#173044}
 .pqlwiz-manual{margin-top:12px}
 @media(max-width:780px){.pqlwiz-top{display:block}.pqlwiz-actions{margin-top:12px}.pqlwiz-grid,.pqlwiz-steps,.pqlwiz-availability-grid,.pqlwiz-filter-grid{grid-template-columns:1fr}.pqlwiz-title{font-size:24px}.pqlwiz-availability-head{display:block}.pqlwiz-availability-head .pqlwiz-btn{margin-top:10px}.pqlwiz-roster table{min-width:760px}}
+<?php echo pqh_design_system_css('.pqlwiz-shell'); ?>
 </style>
 <main class="pqlwiz-shell">
   <div class="pqlwiz-wrap">

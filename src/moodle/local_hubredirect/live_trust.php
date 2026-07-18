@@ -505,6 +505,7 @@ body.pqh-live-trust-page{background:#f4f7fb!important}
 @media(max-width:860px){.pqlt-top{display:block}.pqlt-actions{margin-top:14px}.pqlt-grid,.pqlt-policy{grid-template-columns:1fr 1fr}.pqlt-title{font-size:25px}}
 @media(max-width:560px){.pqlt-grid,.pqlt-policy,.pqlt-consent-grid{grid-template-columns:1fr}.pqlt-card__head{display:block}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqlt-shell'); ?>
 </style>
 <main class="pqlt-shell">
   <div class="pqlt-wrap">

@@ -809,6 +809,7 @@ body.pqh-live-series-page .main-inner{margin:0!important;padding:0!important;max
 @media(max-width:900px){.pqlser-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.pqlser-top,.pqlser-head,.pqlser-session,.pqlser-comm-row{display:block}.pqlser-actions,.pqlser-field{margin-top:12px}.pqlser-field{display:grid}.pqlser-grid{grid-template-columns:1fr}.pqlser-title{font-size:24px}.pqlser-session form{margin-top:8px;display:grid}.pqlser-session .pqlser-input{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqlser-shell'); ?>
 </style>
 <main class="pqlser-shell">
   <div class="pqlser-wrap">

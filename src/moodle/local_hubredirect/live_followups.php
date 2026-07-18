@@ -498,6 +498,7 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
 .pqlf-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-size:14px;font-weight:850}
 @media(max-width:900px){.pqlf-top{display:block}.pqlf-actions{margin-top:12px}.pqlf-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqlf-filter,.pqlf-grid,.pqlf-update{grid-template-columns:1fr}.pqlf-filter{display:block}.pqlf-field{margin-bottom:10px}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqlf-shell'); ?>
 </style>
 <main class="pqlf-shell">
   <div class="pqlf-wrap">

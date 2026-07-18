@@ -265,6 +265,7 @@ body.pqh-live-recordings-parent-page .main-inner{margin:0!important;padding:0!im
 .pqlrp-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
 @media(max-width:720px){.pqlrp-top{display:block}.pqlrp-title{font-size:25px}.pqlrp-actions{margin-top:12px}.pqlrp-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqlrp-shell'); ?>
 </style>
 <main class="pqlrp-shell">
   <div class="pqlrp-wrap">

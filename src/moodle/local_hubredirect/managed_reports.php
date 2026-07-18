@@ -669,6 +669,7 @@ body.pqh-managed-report-page .main-inner{margin:0!important;padding:0!important;
 @media(max-width:980px){.pqmr-top,.pqmr-filter{grid-template-columns:1fr}.pqmr-actions{justify-content:flex-start}.pqmr-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.pqmr-table,.pqmr-table tbody,.pqmr-table tr,.pqmr-table td{display:block;width:100%}.pqmr-table thead{display:none}.pqmr-table tr{border-bottom:1px solid rgba(23,48,68,.12)}.pqmr-table td{border:0}.pqmr-table td::before{content:attr(data-label);display:block;margin-bottom:3px;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}}
 @media(max-width:560px){.pqmr-shell{padding:18px 10px 42px}.pqmr-title{font-size:24px}.pqmr-summary{grid-template-columns:1fr}.pqmr-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqmr-shell'); ?>
 </style>
 <main class="pqmr-shell">
   <div class="pqmr-wrap">

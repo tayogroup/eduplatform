@@ -1219,6 +1219,35 @@ function pqh_dashboard_header_css(?int $workspaceid = null): string {
     return pqh_workspace_header_css($workspaceid);
 }
 
+/**
+ * Shared EduPlatform design-system layer (2026-07-19). Appended at the end of
+ * a page's style block, scoped to its shell class, it converts the legacy
+ * look to the blue token system: light page, blue gradient header band,
+ * ghost buttons, white hairline panels, tint pills. Generic attribute
+ * selectors cover per-page class prefixes; unmatched rules are no-ops.
+ */
+function pqh_design_system_css(string $scope): string {
+    return <<<CSS
+/* ---- EduPlatform design system layer (shared) ---- */
+{$scope}{--pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#fff;--pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;background:var(--pqh-bg)!important;color:var(--pqh-ink)}
+{$scope} .pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:14px!important}
+{$scope} .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+{$scope} .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+{$scope} .pqh-workspace-actions a,{$scope} .pqh-workspace-actions button,{$scope} [class*="-btn"]{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+{$scope} .pqh-workspace-actions a:hover,{$scope} .pqh-workspace-actions button:hover,{$scope} [class*="-btn"]:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+{$scope} [class*="--start"],{$scope} [class*="--primary"],{$scope} button[type="submit"][class*="-btn"]{background:var(--pqh-primary)!important;border-color:var(--pqh-primary)!important;color:#fff!important}
+{$scope} [class*="--danger"]{background:#c0392b!important;border-color:#c0392b!important;color:#fff!important}
+{$scope} .pqh-workspace-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
+{$scope} [class*="-panel"],{$scope} [class*="-card"],{$scope} [class*="-box"],{$scope} [class*="-group"]{background:var(--pqh-surface);border-color:var(--pqh-line)!important;border-radius:14px}
+{$scope} [class*="-pill"],{$scope} [class*="-status"]{background:var(--pqh-tint)!important;color:var(--pqh-primary-ink)!important;border-radius:8px!important;font-weight:650!important;border-color:var(--pqh-tint-2)!important}
+{$scope} [class*="-input"],{$scope} [class*="-select"]{border:1px solid var(--pqh-line)!important;border-radius:10px!important;background:var(--pqh-surface)!important;color:var(--pqh-ink)!important;font-weight:550!important}
+{$scope} [class*="-fill"]{background:var(--pqh-primary)!important}
+{$scope} [class*="-empty"]{background:var(--pqh-surface)!important;border:1px dashed var(--pqh-line)!important;border-radius:14px!important;color:var(--pqh-muted)!important;font-weight:550!important}
+{$scope} h1,{$scope} h2,{$scope} h3{color:var(--pqh-ink)}
+{$scope} th{color:var(--pqh-faint)!important;font-weight:700!important}
+CSS;
+}
+
 function pqh_live_session_explainer_media_url(): moodle_url {
     return new moodle_url('/local/hubredirect/pix/live_session_explainer.mp4');
 }

@@ -2129,6 +2129,67 @@ $currentworkspaceid = pqh_current_workspace_id((int)$USER->id);
 $hasworkspace = $currentworkspaceid > 0;
 $teacherliveoverview = $role === 'teacher' ? pqh_teacher_live_overview((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0) : [];
 $pqhisyounglearner = $role === 'student' && pqh_is_managed_student((int)$USER->id);
+
+// ---- Phase 5: dashboard customization (per-user Moodle preferences). ----
+$pqhwidgetdefs = [];
+if ($role === 'teacher') {
+    $pqhwidgetdefs = ['todo' => 'To-do panel', 'courses' => 'Course cards', 'overview' => 'Teaching overview'];
+} else if ($role === 'student') {
+    $pqhwidgetdefs = $pqhisyounglearner
+        ? ['todo' => 'My learning panel', 'courses' => 'Course cards']
+        : ['todo' => 'Up next panel', 'courses' => 'Course cards', 'catalog' => 'Course catalog', 'overview' => 'Learning overview'];
+} else if ($role === 'parent') {
+    $pqhwidgetdefs = ['todo' => 'This week summary', 'courses' => 'Child courses', 'catalog' => 'Course catalog'];
+} else if ($role === 'admin') {
+    $pqhwidgetdefs = ['platform' => 'Platform overview'];
+}
+if ($pqhwidgetdefs && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'savedashprefs' && confirm_sesskey()) {
+    $pqhshown = optional_param_array('showwidget', [], PARAM_ALPHANUMEXT);
+    set_user_preference('pqh_dash_hidden', implode(',', array_diff(array_keys($pqhwidgetdefs), $pqhshown)));
+    set_user_preference('pqh_dash_density', optional_param('density', 'comfortable', PARAM_ALPHA) === 'compact' ? 'compact' : 'comfortable');
+    redirect(new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams));
+}
+$pqhhiddenwidgets = array_filter(explode(',', (string)get_user_preferences('pqh_dash_hidden', '')));
+$pqhdensity = get_user_preferences('pqh_dash_density', 'comfortable') === 'compact' ? 'compact' : 'comfortable';
+function pqh_widget_attrs(string $key): string {
+    global $pqhhiddenwidgets;
+    return ' data-pqh-widget="' . s($key) . '"' . (in_array($key, $pqhhiddenwidgets, true) ? ' style="display:none"' : '');
+}
+
+// ---- Phase 5: grouped notification center (assembled from live data). ----
+$pqhnotif = ['urgent' => [], 'action' => [], 'upcoming' => [], 'info' => []];
+if ($role === 'teacher' && !empty($teacherliveoverview['ready'])) {
+    $pqhnm = (array)($teacherliveoverview['metrics'] ?? []);
+    if ((int)($pqhnm['followups'] ?? 0) > 0) {
+        $pqhnotif['urgent'][] = ['t' => (int)$pqhnm['followups'] . ' parent follow-ups open', 's' => 'Families are waiting on a reply', 'u' => pqh_hub_link('live_followups.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])];
+    }
+    if ((int)($pqhnm['needsreview'] ?? 0) > 0) {
+        $pqhnotif['action'][] = ['t' => (int)$pqhnm['needsreview'] . ' sessions awaiting review', 's' => 'Attendance and notes', 'u' => pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0)];
+    }
+    if ((int)($pqhnm['today'] ?? 0) > 0) {
+        $pqhnotif['upcoming'][] = ['t' => (int)$pqhnm['today'] . ' live classes today', 's' => 'Open live sessions to start on time', 'u' => pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)];
+    }
+    if ((int)($pqhnm['upcoming'] ?? 0) > 0) {
+        $pqhnotif['info'][] = ['t' => (int)$pqhnm['upcoming'] . ' classes in the next 7 days', 's' => 'Teaching schedule', 'u' => pqh_live_teacher_schedule_link((int)$USER->id)];
+    }
+}
+if (in_array($role, ['student', 'parent'], true) || $pqhisyounglearner) {
+    if ((int)($messages['unread'] ?? 0) > 0) {
+        $pqhnotif['action'][] = ['t' => (int)$messages['unread'] . ' unread messages', 's' => 'Open your inbox', 'u' => pqh_hub_link('communications.php', ['studentid' => $selectedchild ? (int)$selectedchild['studentid'] : (int)$USER->id, 'opencomm' => 'messages'])];
+    }
+    if (!empty($upcomingsessions['count'])) {
+        $pqhnlatest = $upcomingsessions['latest'] ?? null;
+        $pqhnotif['upcoming'][] = ['t' => 'Next live class', 's' => $pqhnlatest && !empty($pqhnlatest->title) ? (string)$pqhnlatest->title . ' · ' . userdate((int)($pqhnlatest->scheduled_start ?? 0), get_string('strftimedatetimeshort')) : (int)$upcomingsessions['count'] . ' upcoming', 'u' => pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)];
+    }
+    if (($messages['latest'] ?? '') !== '') {
+        $pqhnotif['info'][] = ['t' => 'Latest message', 's' => core_text::substr((string)$messages['latest'], 0, 80), 'u' => pqh_hub_link('communications.php', ['studentid' => $selectedchild ? (int)$selectedchild['studentid'] : (int)$USER->id, 'opencomm' => 'messages'])];
+    }
+}
+if ($role === 'student' && $currentstudentenrollmentstatus !== '' && $currentstudentenrollmentstatus !== 'approved') {
+    $pqhnotif['urgent'][] = ['t' => 'Enrollment approval pending', 's' => 'A guardian must approve before lessons begin', 'u' => new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams)];
+}
+$pqhnotifcount = count($pqhnotif['urgent']) + count($pqhnotif['action']);
+$pqhnotifany = array_filter($pqhnotif);
 $pqhlogoutparams = $pqhpageparams;
 if ($currentworkspaceid > 0 && empty($pqhlogoutparams['workspaceid'])) {
     $pqhlogoutparams['workspaceid'] = $currentworkspaceid;
@@ -2565,6 +2626,32 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-week>div{background:var(--pqh-bg);border-radius:11px;padding:11px 12px}
 .pqh-week b{display:block;font-size:19px;font-weight:750;letter-spacing:-.01em}
 .pqh-week span{display:block;margin-top:2px;color:var(--pqh-faint);font-size:10.5px;font-weight:650;text-transform:uppercase;letter-spacing:.05em}
+/* ---- Phase 5: customization + notification center ---- */
+.pqh-compact .pqh-wrap{padding-top:14px}
+.pqh-compact .pqh-course-panel{padding:13px 14px}
+.pqh-compact .pqh-course-grid,.pqh-compact .pqh-grid{gap:10px}
+.pqh-compact .pqh-todo{gap:5px}
+.pqh-compact .pqh-todo__item{padding:7px 10px}
+.pqh-compact .pqh-teacher-metrics{gap:7px}
+.pqh-compact .pqh-hero.pqh-workspace-top{padding:14px 18px!important}
+.pqh-customize{position:relative;flex:0 0 auto}
+.pqh-customize__panel{position:absolute;right:0;top:calc(100% + 8px);z-index:90;width:230px;display:grid;gap:8px;padding:14px;background:var(--pqh-surface);border:1px solid var(--pqh-line);border-radius:14px;box-shadow:0 2px 4px rgba(15,34,55,.06),0 18px 38px -14px rgba(15,34,55,.25)}
+.pqh-customize__panel strong{font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:var(--pqh-faint)}
+.pqh-customize__panel label{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:550;color:var(--pqh-ink)}
+.pqh-notif{position:relative;display:inline-flex}
+.pqh-notif__bell{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;border-radius:9px;background:rgba(255,255,255,.14);color:#fff;cursor:pointer}
+.pqh-notif__bell:hover{background:rgba(255,255,255,.26)}
+.pqh-notif__bell svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pqh-notif__badge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#c0392b;color:#fff;font-size:10px;font-weight:750;display:flex;align-items:center;justify-content:center;border:2px solid #2166d1}
+.pqh-notif__panel{position:absolute;right:0;top:calc(100% + 10px);z-index:95;width:300px;max-height:70vh;overflow:auto;padding:8px;background:var(--pqh-surface,#fff);border:1px solid #e4e9ef;border-radius:14px;box-shadow:0 2px 4px rgba(15,34,55,.06),0 18px 38px -14px rgba(15,34,55,.28)}
+.pqh-notif__group{padding:8px 8px 4px;font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.07em;color:#8494a5}
+.pqh-notif__group--urgent{color:#c0392b}
+.pqh-notif__group--action{color:#b7791f}
+.pqh-notif__item{display:block;padding:8px 9px;border-radius:10px;text-decoration:none!important}
+.pqh-notif__item:hover{background:#edf3fc}
+.pqh-notif__item strong{display:block;color:#0f2237;font-size:12.5px;font-weight:700}
+.pqh-notif__item span{display:block;color:#5b6b7c;font-size:11.5px;font-weight:500}
+@media(max-width:560px){.pqh-notif__panel{position:fixed;left:10px;right:10px;top:64px;width:auto}}
 /* ---- neutralize the consumer-theme header gradient (green) on this page ---- */
 .pqh-hero.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
 .pqh-hero .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
@@ -2578,7 +2665,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 /* ---- responsive ---- */
 @media(max-width:900px){.pqh-shell{padding-left:0}.pqh-gnav{display:none}.pqh-wrap{padding:18px 14px 44px}}
 </style>
-<main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?>">
+<main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?><?php echo $pqhdensity === 'compact' ? ' pqh-compact' : ''; ?>">
 <?php $pqhdashboardhomeurl = new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams); ?>
 <nav class="pqh-gnav" aria-label="Global navigation">
   <a class="pqh-gnav__brand" href="<?php echo $pqhdashboardhomeurl->out(false); ?>" title="<?php echo s($pqhbrandname); ?>"><?php echo s($pqhbrandinitials); ?></a>
@@ -2644,6 +2731,24 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       try { window.localStorage.setItem(key, expanded ? '1' : '0'); } catch (e) {}
     });
   }
+  // Phase 5: delegated toggles for the notification bell and customize panel.
+  function togglePanel(btnid, panelid) {
+    var btn = document.getElementById(btnid);
+    var panel = document.getElementById(panelid);
+    if (!btn || !panel) { return; }
+    panel.hidden = !panel.hidden;
+    btn.setAttribute('aria-expanded', panel.hidden ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e){
+    var bell = e.target.closest ? e.target.closest('#pqh-bell') : null;
+    var cust = e.target.closest ? e.target.closest('#pqh-customize-btn') : null;
+    if (bell) { togglePanel('pqh-bell', 'pqh-notif-panel'); return; }
+    if (cust) { togglePanel('pqh-customize-btn', 'pqh-customize-panel'); return; }
+    var np = document.getElementById('pqh-notif-panel');
+    if (np && !np.hidden && !e.target.closest('.pqh-notif')) { np.hidden = true; }
+    var cp = document.getElementById('pqh-customize-panel');
+    if (cp && !cp.hidden && !e.target.closest('.pqh-customize')) { cp.hidden = true; }
+  });
 })();
 </script>
 <div class="pqh-topbar">
@@ -2667,6 +2772,27 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <?php if ($role === 'teacher'): ?>
       <a class="pqh-top-action" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ($selectedchild ? ['studentid' => (int)$selectedchild['studentid'], 'supporttype' => 'student_teacher'] : []) + ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Manage tickets</a>
       <a class="pqh-top-action" data-pq-support-action="new" href="<?php echo pqh_hub_link('support.php', (['new' => 1]) + ($selectedchild ? ['studentid' => (int)$selectedchild['studentid'], 'supporttype' => 'student_teacher'] : []) + ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Create a ticket</a>
+    <?php endif; ?>
+    <?php if ($pqhnotifany): ?>
+      <span class="pqh-notif">
+        <button class="pqh-notif__bell" id="pqh-bell" type="button" aria-label="Notifications<?php echo $pqhnotifcount > 0 ? ', ' . $pqhnotifcount . ' needing action' : ''; ?>" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <?php if ($pqhnotifcount > 0): ?><span class="pqh-notif__badge"><?php echo $pqhnotifcount; ?></span><?php endif; ?>
+        </button>
+        <div class="pqh-notif__panel" id="pqh-notif-panel" hidden>
+          <?php foreach (['urgent' => 'Urgent', 'action' => 'Requires action', 'upcoming' => 'Upcoming', 'info' => 'Informational'] as $pqhngroup => $pqhnlabel): ?>
+            <?php if (!empty($pqhnotif[$pqhngroup])): ?>
+              <div class="pqh-notif__group pqh-notif__group--<?php echo $pqhngroup; ?>"><?php echo $pqhnlabel; ?></div>
+              <?php foreach ($pqhnotif[$pqhngroup] as $pqhnitem): ?>
+                <a class="pqh-notif__item" href="<?php echo $pqhnitem['u']->out(false); ?>">
+                  <strong><?php echo s((string)$pqhnitem['t']); ?></strong>
+                  <span><?php echo s((string)$pqhnitem['s']); ?></span>
+                </a>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </div>
+      </span>
     <?php endif; ?>
     <a class="pqh-logout pqh-workspace-logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
   </div>
@@ -2694,6 +2820,23 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         </select>
       </form>
     <?php endif; ?>
+    <?php if ($pqhwidgetdefs): ?>
+      <div class="pqh-customize">
+        <button class="pqh-btn pqh-btn--secondary" type="button" id="pqh-customize-btn" aria-haspopup="true" aria-expanded="false">Customize</button>
+        <form class="pqh-customize__panel" id="pqh-customize-panel" method="post" hidden>
+          <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+          <input type="hidden" name="action" value="savedashprefs">
+          <strong>Show widgets</strong>
+          <?php foreach ($pqhwidgetdefs as $pqhwkey => $pqhwlabel): ?>
+            <label><input type="checkbox" name="showwidget[]" value="<?php echo s($pqhwkey); ?>" <?php echo in_array($pqhwkey, $pqhhiddenwidgets, true) ? '' : 'checked'; ?>> <?php echo s($pqhwlabel); ?></label>
+          <?php endforeach; ?>
+          <strong>Density</strong>
+          <label><input type="radio" name="density" value="comfortable" <?php echo $pqhdensity === 'comfortable' ? 'checked' : ''; ?>> Comfortable</label>
+          <label><input type="radio" name="density" value="compact" <?php echo $pqhdensity === 'compact' ? 'checked' : ''; ?>> Compact</label>
+          <button class="pqh-btn" type="submit">Save layout</button>
+        </form>
+      </div>
+    <?php endif; ?>
   </section>
 
   <?php if ($role === 'teacher' && !empty($teacherliveoverview['ready'])): ?>
@@ -2703,7 +2846,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       $pqhtodonext = $pqhtodotoday ? reset($pqhtodotoday) : null;
       $pqhtodocount = (int)($pqhtodometrics['today'] ?? 0) + (int)($pqhtodometrics['needsreview'] ?? 0) + (int)($pqhtodometrics['followups'] ?? 0);
     ?>
-    <section class="pqh-course-panel" aria-label="To do">
+    <section class="pqh-course-panel" aria-label="To do"<?php echo pqh_widget_attrs('todo'); ?>>
       <div class="pqh-course-panel__head">
         <div><h2>To do</h2><p>Your prioritized next actions.</p></div>
       </div>
@@ -2783,7 +2926,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       $pqhyoungstars = str_repeat('★', max(1, min(5, $pqhyoungdone))) . str_repeat('☆', max(0, 5 - max(1, min(5, $pqhyoungdone))));
       $pqhyoungnext = !empty($upcomingsessions['count']) ? ($upcomingsessions['latest'] ?? null) : null;
     ?>
-    <section class="pqh-course-panel pqh-young" aria-label="My learning">
+    <section class="pqh-course-panel pqh-young" aria-label="My learning"<?php echo pqh_widget_attrs('todo'); ?>>
       <div class="pqh-course-panel__head">
         <div>
           <h2>Ready to learn<?php echo $pqhyoungdone > 0 ? ' — you finished ' . $pqhyoungdone . ' unit' . ($pqhyoungdone === 1 ? '' : 's') . '!' : '?'; ?> 🌟</h2>
@@ -2801,7 +2944,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       </div>
     </section>
   <?php elseif ($role === 'student'): ?>
-    <section class="pqh-course-panel" aria-label="Up next">
+    <section class="pqh-course-panel" aria-label="Up next"<?php echo pqh_widget_attrs('todo'); ?>>
       <div class="pqh-course-panel__head"><div><h2>Up next</h2><p>Your week at a glance.</p></div></div>
       <div class="pqh-todo">
         <?php if (!empty($upcomingsessions['count'])): $pqhstunext = $upcomingsessions['latest'] ?? null; ?>
@@ -2836,7 +2979,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
   <?php endif; ?>
 
   <?php if ($role === 'parent' && $selectedchild): ?>
-    <section class="pqh-course-panel" aria-label="This week">
+    <section class="pqh-course-panel" aria-label="This week"<?php echo pqh_widget_attrs('todo'); ?>>
       <div class="pqh-course-panel__head">
         <div><h2>This week · <?php echo s($selectedchild['name']); ?></h2><p>Progress, time, and what's coming up.</p></div>
         <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_summaries_link((int)$selectedchild['studentid'])->out(false); ?>">Teacher feedback</a>
@@ -2968,7 +3111,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         $coursepanelempty = (string)$coursepanelsection['empty'];
         $coursepanellaunchmode = (string)($coursepanelsection['launchmode'] ?? 'student_context');
       ?>
-    <section class="pqh-course-panel" aria-label="<?php echo s($coursepaneltitle); ?>">
+    <section class="pqh-course-panel" aria-label="<?php echo s($coursepaneltitle); ?>"<?php echo pqh_widget_attrs('courses'); ?>>
       <div class="pqh-course-panel__head">
         <div>
           <h2><?php echo s($coursepaneltitle); ?></h2>
@@ -3028,7 +3171,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
   <?php endif; ?>
 
   <?php if (in_array($role, ['student', 'parent'], true) && $hasworkspace && !$pqhisyounglearner): ?>
-    <section class="pqh-card pqh-card--wide" aria-label="Course catalog">
+    <section class="pqh-card pqh-card--wide" aria-label="Course catalog"<?php echo pqh_widget_attrs('catalog'); ?>>
       <h3>Course Catalog</h3>
       <p>Review institution course seats, start and end dates, syllabus, prerequisites, and request enrollment.</p>
       <div class="pqh-actions pqh-workspace-actions">
@@ -3500,7 +3643,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 
       <?php if ($role === 'teacher'): ?>
         <?php $teachermetrics = (array)($teacherliveoverview['metrics'] ?? []); ?>
-        <section class="pqh-teacher-overview-layout" aria-label="Teacher dashboard overview">
+        <section class="pqh-teacher-overview-layout" aria-label="Teacher dashboard overview"<?php echo pqh_widget_attrs('overview'); ?>>
           <div class="pqh-teacher-status">
             <div class="pqh-teacher-metrics" aria-label="Live class summary">
               <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['today'] ?? 0); ?></strong><span>today's classes</span></div>
@@ -3914,7 +4057,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
           }
       }
     ?>
-    <section class="pqh-course-panel" aria-label="Platform overview">
+    <section class="pqh-course-panel" aria-label="Platform overview"<?php echo pqh_widget_attrs('platform'); ?>>
       <div class="pqh-course-panel__head"><div><h2>Platform overview</h2><p>Live counts across every consumer and workspace.</p></div></div>
       <div class="pqh-week">
         <div><b><?php echo $pqhplat['institutions'] !== null ? (int)$pqhplat['institutions'] : '—'; ?></b><span>consumers</span></div>
@@ -4107,7 +4250,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
           $studentfocussummary = implode(' | ', $studentfocusbits);
       }
     ?>
-    <section class="pqh-teacher-overview-layout pqh-student-dashboard-layout" aria-label="Student dashboard overview">
+    <section class="pqh-teacher-overview-layout pqh-student-dashboard-layout" aria-label="Student dashboard overview"<?php echo pqh_widget_attrs('overview'); ?>>
       <div class="pqh-teacher-status">
         <div class="pqh-teacher-metrics" aria-label="Learning summary">
           <div class="pqh-teacher-metric"><strong><?php echo count($currentstudentcourses); ?></strong><span>enrolled courses</span></div>

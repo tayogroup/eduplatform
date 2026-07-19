@@ -48,7 +48,10 @@ if ((string)($pqhconsumercontext->consumerslug ?? '') !== '') {
 if ((int)($pqhconsumercontext->workspaceid ?? 0) > 0) {
     $pqhpageparams['workspaceid'] = (int)$pqhconsumercontext->workspaceid;
 }
-$PAGE->set_url(new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams));
+$PAGE->set_url(new moodle_url(
+    defined('PQH_TEACHER_DASHBOARD_WRAPPER') ? '/local/hubredirect/teacher_dashboard.php' : '/local/hubredirect/dashboard.php',
+    $pqhpageparams
+));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title($pqhbrandname . ' Dashboard');
 $PAGE->set_heading($pqhbrandname . ' Dashboard');

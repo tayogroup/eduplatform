@@ -2632,10 +2632,24 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-notif__item strong{display:block;color:#0f2237;font-size:12.5px;font-weight:700}
 .pqh-notif__item span{display:block;color:#5b6b7c;font-size:11.5px;font-weight:500}
 @media(max-width:560px){.pqh-notif__panel{position:fixed;left:10px;right:10px;top:64px;width:auto}}
-/* ---- neutralize the consumer-theme header gradient (green) on this page ---- */
-.pqh-hero.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
-.pqh-hero .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+/* ---- prototype pagehead: clean heading on the page background, no band ---- */
+.pqh-hero.pqh-workspace-top{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:6px 2px 12px!important}
+.pqh-hero .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:24px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
 .pqh-hero .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqh-hero .pqh-kicker{display:none}
+/* ---- prototype KPI cards (label above value, card surface, link color) ---- */
+.pqh-teacher-metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+.pqh-teacher-metric{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:5px;padding:14px 15px;background:var(--pqh-surface);border:1px solid var(--pqh-line);border-radius:16px;box-shadow:var(--pqh-shadow)}
+.pqh-teacher-metric strong{font-size:25px;font-weight:800;letter-spacing:-.02em;color:var(--pqh-ink)}
+.pqh-teacher-metric span{color:var(--pqh-faint);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+/* ---- prototype two-column layout: content left, action panel right ---- */
+@media(min-width:1101px){
+.pqh-wrap--cols{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);column-gap:16px;align-content:start}
+.pqh-wrap--cols>*{grid-column:1/-1;min-width:0}
+.pqh-wrap--cols>.pqh-hero{grid-column:1/-1;grid-row:1}
+.pqh-wrap--cols>section[aria-label="To do"],.pqh-wrap--cols>section[aria-label="Up next"],.pqh-wrap--cols>section[aria-label="This week"]{grid-column:2;grid-row:2/span 12;align-self:start}
+.pqh-wrap--cols>section:not([aria-label="To do"]):not([aria-label="Up next"]):not([aria-label="This week"]):not(.pqh-hero){grid-column:1}
+}
 .pqh-brand-mark{background:var(--pqh-primary)!important}
 .pqh-workspace-actions a,.pqh-workspace-actions button{background:var(--pqh-surface)!important;border-color:var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;box-shadow:none!important}
 .pqh-workspace-actions a:hover,.pqh-workspace-actions button:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important}
@@ -2778,7 +2792,12 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <a class="pqh-appbar__logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
   </div>
 </div>
-<div class="pqh-wrap">
+<?php
+$pqhhasrightpanel = ($role === 'teacher' && !empty($teacherliveoverview['ready']))
+    || ($role === 'student' && !$pqhisyounglearner)
+    || ($role === 'parent' && $selectedchild);
+?>
+<div class="pqh-wrap<?php echo $pqhhasrightpanel ? ' pqh-wrap--cols' : ''; ?>">
   <section class="pqh-hero pqh-workspace-top">
     <div>
       <p class="pqh-kicker"><?php echo s($pqhherokicker); ?></p>

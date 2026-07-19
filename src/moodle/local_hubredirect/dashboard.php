@@ -2137,7 +2137,8 @@ $pqhtdash = null;
 if ($role === 'teacher') {
     $pqhtdash = [
         'tograde' => 0, 'deadlines' => 0, 'attention' => 0,
-        'gradebycourse' => [], 'substatus' => ['done' => 0, 'open' => 0, 'overdue' => 0],
+        'gradebycourse' => [], 'hwbycourse' => [],
+        'substatus' => ['done' => 0, 'open' => 0, 'overdue' => 0],
         'attweeks' => [],
     ];
     $pqhtnow = time();
@@ -2175,6 +2176,11 @@ if ($role === 'teacher') {
             foreach ($pqhtsubs as $pqhtsub) {
                 $pqhtsstatus = (string)$pqhtsub->status;
                 $pqhtsdue = (int)$pqhtsub->duedate;
+                $pqhthwcid = (int)$pqhtsub->moodlecourseid;
+                $pqhtdash['hwbycourse'][$pqhthwcid]['total'] = ($pqhtdash['hwbycourse'][$pqhthwcid]['total'] ?? 0) + 1;
+                if (in_array($pqhtsstatus, ['submitted', 'graded'], true)) {
+                    $pqhtdash['hwbycourse'][$pqhthwcid]['done'] = ($pqhtdash['hwbycourse'][$pqhthwcid]['done'] ?? 0) + 1;
+                }
                 if ($pqhtsstatus === 'submitted') {
                     $pqhtdash['tograde']++;
                     $pqhtcid = (int)$pqhtsub->moodlecourseid;
@@ -2802,6 +2808,9 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-tccard__chips .is-grade{background:#faf1dd;color:#b7791f}
 .pqh-tccard__chips .is-live{background:#e9f1fc;color:#2166d1}
 .pqh-tccard__chips .is-ok{background:#e8f4ec;color:#2e7d4f}
+.pqh-tccard__chips .is-risk{background:#fbe9e7;color:#c0392b}
+.pqh-tccard__bar{display:block;height:7px;border-radius:999px;background:var(--pqh-tint);overflow:hidden;margin:8px 0 2px}
+.pqh-tccard__bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pqh-primary),#4d8be0)}
 .pqh-tanalytics__row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:end}
 .pqh-tanalytics__label{margin:0 0 8px;color:var(--pqh-faint);font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em}
 .pqh-stackbar{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--pqh-tint)}
@@ -3324,9 +3333,69 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
                   : pqh_course_launch_link($coursekey, $coursepanelstudentid);
             ?>
             <?php
-              $pqhtcoursegrade = $role === 'teacher' && $pqhtdash !== null
-                  ? (int)($pqhtdash['gradebycourse'][(int)($course['moodlecourseid'] ?? 0)] ?? 0)
-                  : 0;
+              $pqhtcoursegrade = 0;
+              $pqhtcardmeta = '';
+              $pqhtcardpct = null;
+              $pqhtcardlive = false;
+              $pqhtcardrisk = false;
+              if ($role === 'teacher' && $pqhtdash !== null) {
+                  if (!isset($pqhtenrolcache)) {
+                      $pqhtenrolcache = [];
+                      $pqhtnextcache = [];
+                      $pqhtriskcache = [];
+                  }
+                  $pqhtcid = (int)($course['moodlecourseid'] ?? 0);
+                  $pqhtcoursegrade = (int)($pqhtdash['gradebycourse'][$pqhtcid] ?? 0);
+                  $pqhthwcourse = $pqhtdash['hwbycourse'][$pqhtcid] ?? null;
+                  if ($pqhthwcourse && (int)($pqhthwcourse['total'] ?? 0) > 0) {
+                      $pqhtcardpct = (int)round(100 * (int)($pqhthwcourse['done'] ?? 0) / (int)$pqhthwcourse['total']);
+                  }
+                  if ($coursepanelstudentid > 0) {
+                      $pqhtcardmeta = '1 student';
+                      if (!array_key_exists($coursepanelstudentid, $pqhtnextcache)) {
+                          try {
+                              $pqhtnextrows = $DB->get_records_sql(
+                                  "SELECT ls.id, ls.scheduled_start
+                                     FROM {local_prequran_live_session} ls
+                                     JOIN {local_prequran_live_participant} p ON p.sessionid = ls.id
+                                    WHERE p.userid = ? AND ls.teacherid = ? AND ls.status <> 'cancelled' AND ls.scheduled_start > ?
+                                 ORDER BY ls.scheduled_start ASC",
+                                  [$coursepanelstudentid, (int)$USER->id, time()], 0, 1
+                              );
+                              $pqhtnextcache[$coursepanelstudentid] = $pqhtnextrows ? (int)reset($pqhtnextrows)->scheduled_start : 0;
+                          } catch (Throwable $e) {
+                              $pqhtnextcache[$coursepanelstudentid] = 0;
+                          }
+                      }
+                      if ($pqhtnextcache[$coursepanelstudentid] > 0) {
+                          $pqhtcardmeta .= ' · next session ' . userdate($pqhtnextcache[$coursepanelstudentid], '%a %H:%M');
+                          $pqhtcardlive = userdate($pqhtnextcache[$coursepanelstudentid], '%Y%m%d') === userdate(time(), '%Y%m%d');
+                      }
+                      if (!array_key_exists($coursepanelstudentid, $pqhtriskcache)) {
+                          try {
+                              $pqhtriskcache[$coursepanelstudentid] = (int)$DB->get_field('user', 'lastaccess', ['id' => $coursepanelstudentid]) < time() - 14 * DAYSECS;
+                          } catch (Throwable $e) {
+                              $pqhtriskcache[$coursepanelstudentid] = false;
+                          }
+                      }
+                      $pqhtcardrisk = (bool)$pqhtriskcache[$coursepanelstudentid];
+                  } else if ($pqhtcid > 0) {
+                      if (!isset($pqhtenrolcache[$pqhtcid])) {
+                          try {
+                              $pqhtenrolcache[$pqhtcid] = (int)$DB->count_records_sql(
+                                  "SELECT COUNT(DISTINCT ue.userid)
+                                     FROM {user_enrolments} ue
+                                     JOIN {enrol} e ON e.id = ue.enrolid
+                                    WHERE e.courseid = ? AND ue.status = 0",
+                                  [$pqhtcid]
+                              );
+                          } catch (Throwable $e) {
+                              $pqhtenrolcache[$pqhtcid] = 0;
+                          }
+                      }
+                      $pqhtcardmeta = $pqhtenrolcache[$pqhtcid] . ' student' . ($pqhtenrolcache[$pqhtcid] === 1 ? '' : 's');
+                  }
+              }
             ?>
             <div class="pqh-course-card">
               <?php if ($role === 'teacher'): ?>
@@ -3334,18 +3403,27 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
               <?php endif; ?>
               <span>
                 <h3><?php echo s((string)$course['title']); ?></h3>
-                <span class="pqh-course-card__number">Course number: <?php echo s($coursenumber); ?></span>
+                <?php if ($role === 'teacher' && $pqhtcardmeta !== ''): ?>
+                  <span class="pqh-tccard__meta"><?php echo s($pqhtcardmeta); ?></span>
+                <?php else: ?>
+                  <span class="pqh-course-card__number">Course number: <?php echo s($coursenumber); ?></span>
+                <?php endif; ?>
+                <?php if ($role === 'teacher' && $pqhtcardpct !== null): ?>
+                  <span class="pqh-tccard__bar"><i style="width:<?php echo $pqhtcardpct; ?>%"></i></span>
+                <?php endif; ?>
               </span>
-              <?php if ($role === 'teacher' && ($pqhtcoursegrade > 0 || $course['status'] === 'live')): ?>
+              <?php if ($role === 'teacher' && ($pqhtcoursegrade > 0 || $pqhtcardlive || $pqhtcardrisk || $course['status'] === 'live')): ?>
                 <span class="pqh-tccard__chips">
                   <?php if ($pqhtcoursegrade > 0): ?><span class="is-grade"><?php echo $pqhtcoursegrade; ?> to grade</span><?php endif; ?>
-                  <?php if ($course['status'] === 'live'): ?><span class="is-ok">On track</span><?php endif; ?>
+                  <?php if ($pqhtcardlive): ?><span class="is-live">Live today</span><?php endif; ?>
+                  <?php if ($pqhtcardrisk): ?><span class="is-risk">At risk</span><?php endif; ?>
+                  <?php if (!$pqhtcardrisk && $course['status'] === 'live'): ?><span class="is-ok">On track</span><?php endif; ?>
                 </span>
               <?php endif; ?>
               <span class="pqh-course-card__actions pqh-workspace-actions">
                 <?php if ($canlaunchcourse): ?>
-                  <a class="pqh-course-card__status <?php echo $course['status'] === 'live' ? 'pqh-course-card__status--live' : ''; ?>" href="<?php echo $courseurl->out(false); ?>">
-                    <?php echo $coursepanellaunchmode === 'moodle_direct' ? 'Open course' : ($course['status'] === 'live' ? 'Open course home' : 'Placeholder ready'); ?>
+                  <a class="pqh-course-card__status <?php echo $role === 'teacher' || $course['status'] === 'live' ? 'pqh-course-card__status--live' : ''; ?>" href="<?php echo $courseurl->out(false); ?>">
+                    <?php echo $role === 'teacher' ? 'Open' : ($coursepanellaunchmode === 'moodle_direct' ? 'Open course' : ($course['status'] === 'live' ? 'Open course home' : 'Placeholder ready')); ?>
                   </a>
                 <?php else: ?>
                   <span class="pqh-course-card__status pqh-course-card__status--readonly">

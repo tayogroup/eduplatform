@@ -5,6 +5,42 @@ enrolled child devices over encrypted DNS with per-device Client IDs. The
 Moodle plugin (local_hubredirect/safenet.php + safenetlib.php) is the only
 management surface — parents never touch AdGuard.
 
+## VPS sizing
+
+DNS filtering is CPU-light; the sizing drivers are (1) the 30-day query log on
+disk and (2) memory for AdGuard's in-RAM stats. Rule of thumb: a child device
+makes ~5–10k DNS queries/day ≈ **~2–3 MB of query log per device per day**,
+so 30-day retention ≈ **60–90 MB of disk per device**.
+
+| Stage | Devices | Spec per VPS | Example / price |
+|---|---|---|---|
+| Pilot | ≤ 100 | 2 vCPU, 4 GB RAM, 40 GB NVMe | Hetzner CX22 (~€4/mo), Vultr/DO 2 GB (~$10–12/mo) |
+| Rollout | ≤ 1,000 | 2 vCPU, 4 GB RAM, 80–100 GB NVMe | Hetzner CX32 (~€7/mo), DO 4 GB (~$24/mo) |
+| Scale | ≤ 5,000 | 4 vCPU, 8 GB RAM, 160+ GB (or trim retention) | ~€15–30/mo each |
+
+Guidance:
+
+- **Buy 4 GB RAM from day one** even though 1 GB would run: AdGuard keeps
+  stats/log indexes in memory, DoT/DoH TLS sessions add up, and the sync and
+  certbot tooling live on the same box. The price difference is a few dollars.
+- **Disk math before RAM math**: at 1,000 devices the 30-day log is ~60–90 GB.
+  If disk becomes the constraint, first shorten `querylog.interval` (e.g. 14
+  days) or disable per-query logging and keep only statistics — parents' portal
+  summaries use aggregated stats, so raw-log retention is a policy choice, not
+  a functional requirement.
+- **Bandwidth is a non-issue**: even 1,000 devices is ~1–2 Mbps of DNS traffic;
+  every provider's included transfer covers it hundreds of times over.
+- **Placement**: two different providers/regions for real redundancy, chosen
+  near the families. Suggested split: one EU node (Hetzner Falkenstein or
+  Helsinki — good routing to East Africa and Europe) + one US East node
+  (Vultr/DigitalOcean New Jersey or Atlanta) for North-American families.
+  Both hostnames go into every device profile; the OS tries the reachable one.
+- **Requirements when ordering**: dedicated IPv4, ports 53/443/853/784 open
+  (no provider DNS-port blocking), KVM-based (not container/VPS-lite), snapshots
+  or backups add-on enabled (~$1–2/mo).
+- **Upgrade trigger**: sustained CPU > 40%, RAM > 70%, or disk > 70% — resize
+  in place (both suggested providers support live/offline resizes).
+
 ## Bring-up order
 
 1. **DNS records**: `dns1.safe.<domain>` and `dns2.safe.<domain>` → the two VPS.

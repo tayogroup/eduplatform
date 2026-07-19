@@ -54,4 +54,5 @@ function xmldb_local_prequran_install(): void {
     xmldb_local_prequran_ensure_data_operations_schema();
     xmldb_local_prequran_ensure_support_schema();
     xmldb_local_prequran_ensure_sqa_tracker_schema();
+    xmldb_local_prequran_ensure_safenet_schema();
 }

@@ -3784,6 +3784,14 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
           </article>
 
           <article class="pqh-card">
+            <h3>Safe Internet</h3>
+            <p>Child-safe web filtering on your child's devices — at home and on any Wi-Fi.</p>
+            <div class="pqh-actions pqh-workspace-actions">
+              <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/safenet.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Manage devices</a>
+            </div>
+          </article>
+
+          <article class="pqh-card">
             <h3>Communications</h3>
             <p>Open messages, announcements, and meeting rooms for family support.</p>
             <div class="pqh-actions pqh-workspace-actions">

@@ -2,6 +2,8 @@
 
 *2026-07-19 — review of the "central cloud filtering service" proposal (AdGuard Home + WireGuard + device registration + Moodle integration) and a phased implementation plan for EduPlatform / Ehel Academy.*
 
+**Scope clarifications (2026-07-19):** (1) Safe Internet is a **platform service offered by EduPlatform to its consumers** (edufortomorrow.com, uniso.site, quraantest.academy, future tenants) for *their* students — so every table, policy, and report is scoped by `consumerid` + `workspaceid` like the rest of the platform, and the feature is enabled per consumer via the existing `copyjson` feature flags (`safe_internet`). (2) **Safe Exam Browser is out of scope for now** — exam lockdown is deferred entirely; only the network-level child-safe and Learning Mode policies are in scope.
+
 ---
 
 ## Part 1 — Review of the proposal
@@ -43,8 +45,8 @@ Query logs are behavioral data about minors. Before the first real family: a wri
 **6. Bypass: aim for *detection + friction*, not perfect prevention.**
 Perfect prevention needs school-owned MDM devices — out of scope for family-owned hardware. The achievable bar: OS-level friction (the table above) plus **detection**: the filtering server knows when a registered device stops resolving through it. A device that goes silent during scheduled learning hours triggers the proposal's "early-disconnection alert" to the parent. That feedback loop, not technical lockdown, is the realistic enforcement mechanism, and it should be messaged to parents that way.
 
-**7. Exam mode already has an owner — Safe Exam Browser.**
-The assessment track (see `assessment-phase0-runbook.md`) already plans SEB for high-stakes quizzes. SEB locks the *device and browser*, which is strictly stronger than network allowlisting for exams. So: **"Learning Mode" = AdGuard per-client allowlist toggled by Moodle** (light, network-level, good for live sessions and homework hours); **"Exam Mode" = SEB** (already planned). Do not build the full-tunnel exam VPN — it duplicates SEB with a weaker guarantee.
+**7. Do not build a network-level exam mode.**
+Exam lockdown is deferred entirely (SEB, from the assessment track, would be its eventual owner — a browser/device lock is strictly stronger than network allowlisting). In this project the strictest network policy is **Learning Mode** (AdGuard per-client allowlist toggled by Moodle) for live sessions and homework hours. No full-tunnel exam VPN.
 
 **8. Honest build-vs-buy checkpoint.**
 NextDNS (or similar) sells per-device encrypted DNS with parental categories at roughly $20/year per family, with the same Client-ID mechanics and none of the ops burden. Self-hosting AdGuard wins on data custody, per-family cost at scale, allowlist control, and the Moodle API integration — but the pilot should state this comparison openly so the decision is deliberate. (Recommendation: self-host, for data custody and the Learning-Mode API integration; revisit if ops burden bites.)
@@ -122,7 +124,7 @@ New local plugin (working name `local_ehelsafenet`), UI in the existing blue des
 - [ ] Policy toggle via API: `child-safe` (default) ↔ `learning` (allowlist-only: Ehel + session materials) ↔ `paused` (parent override, time-boxed).
 - [ ] Hook into live sessions: session start (the existing `live_sessions.php` flow) pushes `learning` for enrolled participant devices; session end / timeout restores `child-safe`. Always fail back to `child-safe`, never to `learning`, on errors.
 - [ ] Homework mode: parent- or teacher-scheduled learning windows (schedule stored in `safenet_policy`, cron-applied).
-- [ ] Exam integration: **no network exam mode** — SEB (assessment track) remains the exam lockdown; Learning Mode may run alongside it.
+- [ ] Exam integration: out of scope — no network exam mode; Learning Mode is the strictest policy this project ships.
 - [ ] **Gate:** a real live session on quraantest.academy flips a pilot device into Learning Mode and back, with audit rows proving both transitions.
 
 ### Phase 5 — Hardening and scale (after pilot readout)

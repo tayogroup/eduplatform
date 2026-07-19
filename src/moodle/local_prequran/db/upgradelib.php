@@ -5481,3 +5481,49 @@ function xmldb_local_prequran_ensure_sqa_tracker_schema(): void {
         ]
     );
 }
+
+function xmldb_local_prequran_ensure_safenet_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_safenet_dev'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('childid'),
+        xmldb_local_prequran_field_int('parentid'),
+        xmldb_local_prequran_field_char('clientid', 64),
+        xmldb_local_prequran_field_char('label', 255),
+        xmldb_local_prequran_field_char('platform', 40, 'other'),
+        xmldb_local_prequran_field_char('status', 40, 'active'),
+        xmldb_local_prequran_field_char('policy', 40, 'childsafe'),
+        xmldb_local_prequran_field_int('policy_until'),
+        xmldb_local_prequran_field_char('syncstatus', 40, 'pending'),
+        xmldb_local_prequran_field_int('lastseen'),
+        xmldb_local_prequran_field_int('enrolledby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [
+        new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id']),
+        new xmldb_key('preqsafedev_client_uix', XMLDB_KEY_UNIQUE, ['clientid']),
+    ], [
+        new xmldb_index('preqsafedev_cons_ix', XMLDB_INDEX_NOTUNIQUE, ['consumerid', 'workspaceid', 'status']),
+        new xmldb_index('preqsafedev_child_ix', XMLDB_INDEX_NOTUNIQUE, ['childid', 'status']),
+        new xmldb_index('preqsafedev_parent_ix', XMLDB_INDEX_NOTUNIQUE, ['parentid', 'status']),
+        new xmldb_index('preqsafedev_sync_ix', XMLDB_INDEX_NOTUNIQUE, ['syncstatus', 'timemodified']),
+    ]);
+
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_safenet_evt'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('deviceid'),
+        xmldb_local_prequran_field_int('actorid'),
+        xmldb_local_prequran_field_char('action', 64),
+        xmldb_local_prequran_field_text('detailsjson'),
+        xmldb_local_prequran_field_int('timecreated'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqsafeevt_dev_ix', XMLDB_INDEX_NOTUNIQUE, ['deviceid', 'timecreated']),
+        new xmldb_index('preqsafeevt_cons_ix', XMLDB_INDEX_NOTUNIQUE, ['consumerid', 'workspaceid', 'timecreated']),
+    ]);
+}

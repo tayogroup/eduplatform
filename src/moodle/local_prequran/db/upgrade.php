@@ -571,5 +571,10 @@ function xmldb_local_prequran_upgrade($oldversion): bool {
         upgrade_plugin_savepoint(true, 202607150001, 'local', 'prequran');
     }
 
+    if ($oldversion < 202607190001) {
+        xmldb_local_prequran_ensure_safenet_schema();
+        upgrade_plugin_savepoint(true, 202607190001, 'local', 'prequran');
+    }
+
     return true;
 }

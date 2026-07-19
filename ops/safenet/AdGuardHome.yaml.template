@@ -1,0 +1,90 @@
+# Ehel Safe Internet — AdGuard Home reference configuration.
+# Merge these sections into /opt/AdGuardHome/AdGuardHome.yaml (service stopped).
+# Placeholders: {{DNS_DOMAIN}} = this resolver's hostname (e.g. dns1.safe.example.com)
+
+http:
+  address: 127.0.0.1:8443   # admin UI loopback-only; reach via SSH tunnel or ufw-allowed IP
+
+dns:
+  bind_hosts:
+    - 0.0.0.0
+  port: 53
+  # Family-safe upstreams as defense-in-depth under our own blocklists:
+  upstream_dns:
+    - https://dns10.quad9.net/dns-query        # Quad9 secured
+    - https://family.cloudflare-dns.com/dns-query  # 1.1.1.3 malware+adult
+  bootstrap_dns:
+    - 9.9.9.10
+    - 1.1.1.3
+  # Privacy: keep answers, trim client detail retention to 30 days (see querylog below).
+  aaaa_disabled: false
+  handle_ddr: true
+
+tls:
+  enabled: true
+  server_name: "{{DNS_DOMAIN}}"
+  force_https: false
+  port_https: 443
+  port_dns_over_tls: 853
+  port_dns_over_quic: 784
+  # WILDCARD cert required for client IDs (deviceid.{{DNS_DOMAIN}}):
+  certificate_path: /etc/letsencrypt/live/{{DNS_DOMAIN}}/fullchain.pem
+  private_key_path: /etc/letsencrypt/live/{{DNS_DOMAIN}}/privkey.pem
+
+querylog:
+  enabled: true
+  interval: 720h        # 30 days — the family data policy retention
+  size_memory: 1000
+
+statistics:
+  enabled: true
+  interval: 720h
+
+filtering:
+  protection_enabled: true
+  filtering_enabled: true
+  parental_enabled: true        # AdGuard parental (adult content) service
+  safe_search:
+    enabled: true
+    google: true
+    bing: true
+    duckduckgo: true
+    youtube: true               # DNS-level YouTube Restricted Mode
+
+filters:
+  - enabled: true
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt   # AdGuard DNS filter
+    name: AdGuard DNS filter
+    id: 1
+  - enabled: true
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt   # AdAway
+    name: AdAway Default Blocklist
+    id: 2
+  - enabled: true
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_44.txt  # HaGeZi Multi PRO
+    name: HaGeZi Multi PRO
+    id: 44
+  - enabled: true
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_30.txt  # Phishing URL blocklist
+    name: Phishing URL Blocklist
+    id: 30
+
+# Platform allowlist baseline — never let a blocklist break the classroom.
+# (AdGuard custom rules; @@ = allow, important overrides everything.)
+user_rules:
+  - '@@||edufortomorrow.com^$important'
+  - '@@||uniso.site^$important'
+  - '@@||quraantest.academy^$important'
+  - '@@||b-cdn.net^$important'            # Bunny CDN (verify actual pull-zone hosts)
+  - '@@||bigbluebutton.org^$important'    # replace with the actual BBB server host
+  # Add: the BBB server hostname, TURN/STUN hosts, and any LMS asset domains.
+
+# Per-device clients are managed by the Moodle bridge via the REST API.
+# Each registered device becomes an entry like:
+# clients:
+#   persistent:
+#     - name: "EFT w14 Salman iPad"        # label from the portal
+#       ids: ["d1a2b3c4d5"]                # ClientID → device uses d1a2b3c4d5.{{DNS_DOMAIN}}
+#       tags: ["user_child"]
+#       use_global_settings: true          # child-safe default
+#       # Learning Mode flips this client to blocked_services/allowlist-only.

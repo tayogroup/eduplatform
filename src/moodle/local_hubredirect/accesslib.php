@@ -1382,7 +1382,7 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
     $viewer = pqh_shell_viewer_kind((int)$USER->id);
     if ($viewer === 'student') {
         $items = [
-            'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', $params), $icons['dashboard']],
+            'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/student_dashboard.php', $params), $icons['dashboard']],
             'workspace' => ['Workplace', new moodle_url('/local/hubredirect/student_workplace.php', $params), $icons['workspace']],
             'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params + ['childid' => (int)$USER->id]), $icons['schedule']],
         ];

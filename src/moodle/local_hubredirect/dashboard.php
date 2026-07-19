@@ -4433,7 +4433,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 (function() {
   try {
     if (window.history && window.history.replaceState) {
-      window.history.replaceState(null, document.title, <?php echo json_encode((new moodle_url('/local/hubredirect/dashboard.php', array_merge($pqhpageparams, ['fontsize' => $pqhfontsize])))->out(false)); ?>);
+      window.history.replaceState(null, document.title, <?php echo json_encode((new moodle_url(defined('PQH_TEACHER_DASHBOARD_WRAPPER') ? '/local/hubredirect/teacher_dashboard.php' : '/local/hubredirect/dashboard.php', array_merge($pqhpageparams, ['fontsize' => $pqhfontsize])))->out(false)); ?>);
     }
   } catch (error) {}
 

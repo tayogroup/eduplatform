@@ -43,6 +43,11 @@ Guidance:
 
 ## Bring-up order
 
+0. **First login hardening** (providers often hand over password-based root SSH):
+   `ssh-copy-id root@<server>`, then in `/etc/ssh/sshd_config` set
+   `PasswordAuthentication no` and `PermitRootLogin prohibit-password`,
+   then `systemctl reload sshd`. Verify key login from a second terminal
+   before closing the first.
 1. **DNS records**: `dns1.safe.<domain>` and `dns2.safe.<domain>` → the two VPS.
    Plus a wildcard record `*.dns1.safe.<domain>` / `*.dns2.safe.<domain>`
    (client-ID hostnames resolve to the same server).

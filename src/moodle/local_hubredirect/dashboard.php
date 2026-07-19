@@ -3022,6 +3022,29 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     </section>
   <?php endif; ?>
 
+  <?php if ($isfullteacher): ?>
+    <form class="pqh-filter" method="get" aria-label="Search assigned students">
+      <div class="pqh-field">
+        <label for="pqh-studentq">Search student</label>
+        <input class="pqh-input" id="pqh-studentq" name="studentq" value="<?php echo s($studentsearch); ?>" placeholder="Name, 5-digit ID, email, username, or group">
+      </div>
+      <div class="pqh-field">
+        <label for="pqh-groupid">Group</label>
+        <select class="pqh-select" id="pqh-groupid" name="groupid">
+          <option value="0">All groups</option>
+          <?php foreach ($studentgroups as $groupid => $groupname): ?>
+            <option value="<?php echo (int)$groupid; ?>" <?php echo (int)$groupid === (int)$studentgroupid ? 'selected' : ''; ?>>
+              <?php echo s($groupname); ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <button class="pqh-btn" type="submit">Search</button>
+      <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Clear</a>
+      <p class="pqh-filter-count">Showing <?php echo count($children); ?> of <?php echo count($allchildren); ?> assigned students.</p>
+    </form>
+  <?php endif; ?>
+
   <?php if ($role === 'teacher' && !empty($teacherliveoverview['ready'])): ?>
     <?php
       $pqhtodometrics = (array)($teacherliveoverview['metrics'] ?? []);
@@ -3190,29 +3213,6 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         </div>
       </div>
     </section>
-  <?php endif; ?>
-
-  <?php if ($isfullteacher): ?>
-    <form class="pqh-filter" method="get" aria-label="Search assigned students">
-      <div class="pqh-field">
-        <label for="pqh-studentq">Search student</label>
-        <input class="pqh-input" id="pqh-studentq" name="studentq" value="<?php echo s($studentsearch); ?>" placeholder="Name, 5-digit ID, email, username, or group">
-      </div>
-      <div class="pqh-field">
-        <label for="pqh-groupid">Group</label>
-        <select class="pqh-select" id="pqh-groupid" name="groupid">
-          <option value="0">All groups</option>
-          <?php foreach ($studentgroups as $groupid => $groupname): ?>
-            <option value="<?php echo (int)$groupid; ?>" <?php echo (int)$groupid === (int)$studentgroupid ? 'selected' : ''; ?>>
-              <?php echo s($groupname); ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
-      </div>
-      <button class="pqh-btn" type="submit">Search</button>
-      <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Clear</a>
-      <p class="pqh-filter-count">Showing <?php echo count($children); ?> of <?php echo count($allchildren); ?> assigned students.</p>
-    </form>
   <?php endif; ?>
 
   <?php if ($role === 'teacher' && $selectedchild): ?>

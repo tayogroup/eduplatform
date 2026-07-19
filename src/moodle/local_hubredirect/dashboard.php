@@ -2788,20 +2788,12 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <?php if ($role === 'teacher'): ?>
       <a class="pqh-top-action" href="<?php echo pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0, $selectedchild ? (int)$selectedchild['studentid'] : 0)->out(false); ?>">Teacher workspace</a>
     <?php endif; ?>
-    <?php if ($role === 'teacher' && $selectedchild): ?>
-      <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">Messages</a>
-      <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'announcements', (int)$selectedchild['studentid'])->out(false); ?>">Announcements</a>
-    <?php endif; ?>
     <?php if ($role === 'student'): ?>
       <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/student_workplace.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Student Workplace</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">Messages</a>
       <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'announcements'])->out(false); ?>">Announcements</a>
       <a class="pqh-top-action" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id])->out(false); ?>">Manage tickets</a>
       <a class="pqh-top-action" data-pq-support-action="new" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id, 'new' => 1])->out(false); ?>">Create a ticket</a>
-    <?php endif; ?>
-    <?php if ($role === 'teacher'): ?>
-      <a class="pqh-top-action" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ($selectedchild ? ['studentid' => (int)$selectedchild['studentid'], 'supporttype' => 'student_teacher'] : []) + ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Manage tickets</a>
-      <a class="pqh-top-action" data-pq-support-action="new" href="<?php echo pqh_hub_link('support.php', (['new' => 1]) + ($selectedchild ? ['studentid' => (int)$selectedchild['studentid'], 'supporttype' => 'student_teacher'] : []) + ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Create a ticket</a>
     <?php endif; ?>
     <?php if ($pqhnotifany): ?>
       <span class="pqh-notif">

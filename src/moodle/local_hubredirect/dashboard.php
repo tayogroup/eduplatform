@@ -2131,6 +2131,114 @@ $currentstudentenrollmentstatus = $role === 'student' ? pqh_enrollment_approval_
 $currentworkspaceid = pqh_current_workspace_id((int)$USER->id);
 $hasworkspace = $currentworkspaceid > 0;
 $teacherliveoverview = $role === 'teacher' ? pqh_teacher_live_overview((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0) : [];
+// Teacher dashboard prototype data: KPI counters, per-course grading
+// queues, submission-status mix, and a five-week attendance trend.
+$pqhtdash = null;
+if ($role === 'teacher') {
+    $pqhtdash = [
+        'tograde' => 0, 'deadlines' => 0, 'attention' => 0,
+        'gradebycourse' => [], 'substatus' => ['done' => 0, 'open' => 0, 'overdue' => 0],
+        'attweeks' => [],
+    ];
+    $pqhtnow = time();
+    $pqhtstudentids = [];
+    try {
+        $pqhtstudentids = array_map('intval', array_keys($DB->get_records_sql_menu(
+            "SELECT DISTINCT studentid, 1 FROM {local_prequran_teacher_student} WHERE teacherid = ? AND status = 'active'",
+            [(int)$USER->id]
+        )));
+    } catch (Throwable $e) {
+        $pqhtstudentids = [];
+    }
+    if (pqh_table_exists_safe('local_prequran_homework') && pqh_table_exists_safe('local_prequran_homework_sub')) {
+        try {
+            if ($pqhtstudentids) {
+                [$pqhtinsql, $pqhtinparams] = $DB->get_in_or_equal($pqhtstudentids);
+                $pqhtsubs = $DB->get_records_sql(
+                    "SELECT s.id, s.status, h.duedate, h.moodlecourseid
+                       FROM {local_prequran_homework_sub} s
+                       JOIN {local_prequran_homework} h ON h.id = s.homeworkid
+                      WHERE s.studentid {$pqhtinsql} AND h.status = 'published'",
+                    $pqhtinparams
+                );
+            } else if ($hasworkspace) {
+                $pqhtsubs = $DB->get_records_sql(
+                    "SELECT s.id, s.status, h.duedate, h.moodlecourseid
+                       FROM {local_prequran_homework_sub} s
+                       JOIN {local_prequran_homework} h ON h.id = s.homeworkid
+                      WHERE s.workspaceid = ? AND h.status = 'published'",
+                    [$currentworkspaceid]
+                );
+            } else {
+                $pqhtsubs = [];
+            }
+            foreach ($pqhtsubs as $pqhtsub) {
+                $pqhtsstatus = (string)$pqhtsub->status;
+                $pqhtsdue = (int)$pqhtsub->duedate;
+                if ($pqhtsstatus === 'submitted') {
+                    $pqhtdash['tograde']++;
+                    $pqhtcid = (int)$pqhtsub->moodlecourseid;
+                    $pqhtdash['gradebycourse'][$pqhtcid] = ($pqhtdash['gradebycourse'][$pqhtcid] ?? 0) + 1;
+                }
+                if (in_array($pqhtsstatus, ['submitted', 'graded'], true)) {
+                    $pqhtdash['substatus']['done']++;
+                } else if ($pqhtsdue > 0 && $pqhtsdue < $pqhtnow) {
+                    $pqhtdash['substatus']['overdue']++;
+                } else {
+                    $pqhtdash['substatus']['open']++;
+                    if ($pqhtsdue > $pqhtnow && $pqhtsdue <= $pqhtnow + 7 * DAYSECS) {
+                        $pqhtdash['deadlines']++;
+                    }
+                }
+            }
+        } catch (Throwable $e) {
+            // Homework tables not ready; counters stay zero.
+        }
+    }
+    if ($pqhtstudentids) {
+        try {
+            [$pqhtinsql, $pqhtinparams] = $DB->get_in_or_equal($pqhtstudentids);
+            $pqhtdash['attention'] = (int)$DB->count_records_select(
+                'user',
+                "id {$pqhtinsql} AND deleted = 0 AND lastaccess < ?",
+                array_merge($pqhtinparams, [$pqhtnow - 14 * DAYSECS])
+            );
+        } catch (Throwable $e) {
+            $pqhtdash['attention'] = 0;
+        }
+    }
+    if (pqh_table_exists_safe('local_prequran_live_attendance') && pqh_table_exists_safe('local_prequran_live_participant')) {
+        try {
+            for ($pqhtw = 4; $pqhtw >= 0; $pqhtw--) {
+                $pqhtwend = $pqhtnow - $pqhtw * 7 * DAYSECS;
+                $pqhtwstart = $pqhtwend - 7 * DAYSECS;
+                $pqhtexpected = (int)$DB->count_records_sql(
+                    "SELECT COUNT(1)
+                       FROM {local_prequran_live_participant} p
+                       JOIN {local_prequran_live_session} s ON s.id = p.sessionid
+                      WHERE s.teacherid = ? AND p.role = 'student' AND p.status = 'active'
+                        AND s.scheduled_end >= ? AND s.scheduled_end < ? AND s.status <> 'cancelled'",
+                    [(int)$USER->id, $pqhtwstart, $pqhtwend]
+                );
+                $pqhtattended = (int)$DB->count_records_sql(
+                    "SELECT COUNT(1)
+                       FROM {local_prequran_live_attendance} a
+                       JOIN {local_prequran_live_session} s ON s.id = a.sessionid
+                      WHERE s.teacherid = ? AND a.join_time > 0
+                        AND s.scheduled_end >= ? AND s.scheduled_end < ?",
+                    [(int)$USER->id, $pqhtwstart, $pqhtwend]
+                );
+                $pqhtdash['attweeks'][] = [
+                    'label' => 'W' . (5 - $pqhtw),
+                    'rate' => $pqhtexpected > 0 ? (int)round(100 * min($pqhtattended, $pqhtexpected) / $pqhtexpected) : null,
+                ];
+            }
+        } catch (Throwable $e) {
+            $pqhtdash['attweeks'] = [];
+        }
+    }
+}
+
 $pqhisyounglearner = $role === 'student' && pqh_is_managed_student((int)$USER->id);
 
 // Teachers have their own home URL; the wrapper defines the constant so
@@ -2670,6 +2778,45 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-live-guide-link,.pqh-live-template-link,.pqh-workspace-actions a.pqh-live-guide-link,.pqh-workspace-actions a.pqh-live-template-link{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;color:var(--pqh-primary-ink)!important}
 .pqh-workspace-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
 .pqh-workspace-actions a.pqh-workspace-logout:hover{background:#1c3a5c!important}
+/* ---- teacher prototype: KPI row, two columns, course card extras, analytics ---- */
+.pqh-tkpi{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:14px;margin-bottom:16px}
+.pqh-tkpi__card{padding:14px 15px;background:var(--pqh-surface);border:1px solid var(--pqh-line);border-radius:16px;box-shadow:var(--pqh-shadow)}
+.pqh-tkpi__card b{display:block;color:var(--pqh-faint);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.pqh-tkpi__card strong{display:block;margin-top:5px;font-size:25px;font-weight:800;letter-spacing:-.02em;color:var(--pqh-ink)}
+.pqh-tkpi__card strong.is-grade{color:#b7791f}
+.pqh-tkpi__card strong.is-risk{color:#c0392b}
+.pqh-tkpi__card a{display:inline-block;margin-top:8px;color:var(--pqh-primary);font-size:11.5px;font-weight:650;text-decoration:none}
+.pqh-tkpi__card a:hover{text-decoration:underline}
+@media(min-width:1101px){
+.pqh-wrap--tcols{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);column-gap:16px;align-content:start}
+.pqh-wrap--tcols>*{grid-column:1/-1;min-width:0}
+.pqh-wrap--tcols>.pqh-hero{grid-column:1/-1;grid-row:1}
+.pqh-wrap--tcols>.pqh-tkpi{grid-column:1/-1;grid-row:2}
+.pqh-wrap--tcols>section[aria-label="To do"]{grid-column:2;grid-row:3/span 14;align-self:start}
+.pqh-wrap--tcols>section:not([aria-label="To do"]):not(.pqh-hero):not(.pqh-tkpi){grid-column:1}
+}
+.pqh-tccard__chip{position:absolute;top:10px;right:10px;z-index:1;min-height:22px;display:inline-flex;align-items:center;padding:1px 9px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--pqh-ink);font-size:11px;font-weight:700}
+.pqh-tccard__meta{display:block;margin:2px 0 8px;color:var(--pqh-faint);font-size:11.5px;font-weight:600}
+.pqh-tccard__chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 10px}
+.pqh-tccard__chips span{display:inline-flex;align-items:center;min-height:22px;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:700}
+.pqh-tccard__chips .is-grade{background:#faf1dd;color:#b7791f}
+.pqh-tccard__chips .is-live{background:#e9f1fc;color:#2166d1}
+.pqh-tccard__chips .is-ok{background:#e8f4ec;color:#2e7d4f}
+.pqh-tanalytics__row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:end}
+.pqh-tanalytics__label{margin:0 0 8px;color:var(--pqh-faint);font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em}
+.pqh-stackbar{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--pqh-tint)}
+.pqh-stackbar i{height:100%}
+.pqh-stackbar .sb-done{background:#2e7d4f}
+.pqh-stackbar .sb-open{background:#b7791f}
+.pqh-stackbar .sb-overdue{background:#c0392b}
+.pqh-tlegend{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px;font-size:11px;color:var(--pqh-muted);font-weight:600}
+.pqh-tlegend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px}
+.pqh-tbars{display:flex;align-items:flex-end;gap:8px;height:110px;padding-top:6px}
+.pqh-tbars>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;min-width:0;height:100%}
+.pqh-tbars i{width:100%;max-width:34px;border-radius:6px 6px 0 0;background:var(--pqh-primary);min-height:3px}
+.pqh-tbars i.is-empty{background:var(--pqh-tint-2)}
+.pqh-tbars b{font-size:10px;color:var(--pqh-faint);font-weight:650}
+@media(max-width:820px){.pqh-tanalytics__row{grid-template-columns:1fr}}
 /* ---- responsive ---- */
 @media(max-width:900px){.pqh-shell{padding-left:0}.pqh-gnav{display:none}.pqh-wrap{padding:18px 14px 44px}}
 </style>
@@ -2822,7 +2969,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <a class="pqh-appbar__logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
   </div>
 </div>
-<div class="pqh-wrap">
+<div class="pqh-wrap<?php echo $role === 'teacher' && !empty($teacherliveoverview['ready']) ? ' pqh-wrap--tcols' : ''; ?>">
   <section class="pqh-hero pqh-workspace-top">
     <div>
       <p class="pqh-kicker"><?php echo s($pqhherokicker); ?></p>
@@ -2864,6 +3011,17 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <?php endif; ?>
   </section>
 
+  <?php if ($role === 'teacher' && $pqhtdash !== null): ?>
+    <?php $pqhtkpimetrics = (array)($teacherliveoverview['metrics'] ?? []); ?>
+    <section class="pqh-tkpi" aria-label="Today at a glance">
+      <div class="pqh-tkpi__card"><b>Classes today</b><strong><?php echo (int)($pqhtkpimetrics['today'] ?? 0); ?></strong><a href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">Schedule</a></div>
+      <div class="pqh-tkpi__card"><b>To grade</b><strong<?php echo $pqhtdash['tograde'] > 0 ? ' class="is-grade"' : ''; ?>><?php echo (int)$pqhtdash['tograde']; ?></strong><a href="<?php echo pqh_hub_link('teacher_homework.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Grading queue</a></div>
+      <div class="pqh-tkpi__card"><b>Unread messages</b><strong><?php echo (int)($messages['unread'] ?? 0); ?></strong><a class="js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []) + ['opencomm' => 'messages'])->out(false); ?>">Inbox</a></div>
+      <div class="pqh-tkpi__card"><b>Students needing attention</b><strong<?php echo $pqhtdash['attention'] > 0 ? ' class="is-risk"' : ''; ?>><?php echo (int)$pqhtdash['attention']; ?></strong><a href="<?php echo pqh_hub_link('at_risk_report.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Review</a></div>
+      <div class="pqh-tkpi__card"><b>Deadlines this week</b><strong><?php echo (int)$pqhtdash['deadlines']; ?></strong><a href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php'))->out(false); ?>">Calendar</a></div>
+    </section>
+  <?php endif; ?>
+
   <?php if ($role === 'teacher' && !empty($teacherliveoverview['ready'])): ?>
     <?php
       $pqhtodometrics = (array)($teacherliveoverview['metrics'] ?? []);
@@ -2873,7 +3031,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     ?>
     <section class="pqh-course-panel" aria-label="To do"<?php echo pqh_widget_attrs('todo'); ?>>
       <div class="pqh-course-panel__head">
-        <div><h2>To do</h2><p>Your prioritized next actions.</p></div>
+        <div><h2>To do</h2><p>Prioritized · every item has an action.</p></div>
       </div>
       <div class="pqh-todo">
         <?php if ((int)($pqhtodometrics['today'] ?? 0) > 0): ?>
@@ -3165,11 +3323,25 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
                   ? new moodle_url('/course/view.php', ['id' => (int)$course['moodlecourseid']])
                   : pqh_course_launch_link($coursekey, $coursepanelstudentid);
             ?>
+            <?php
+              $pqhtcoursegrade = $role === 'teacher' && $pqhtdash !== null
+                  ? (int)($pqhtdash['gradebycourse'][(int)($course['moodlecourseid'] ?? 0)] ?? 0)
+                  : 0;
+            ?>
             <div class="pqh-course-card">
+              <?php if ($role === 'teacher'): ?>
+                <span class="pqh-tccard__chip"><?php echo $coursepanellaunchmode === 'moodle_direct' ? 'Course' : 'Tutoring'; ?></span>
+              <?php endif; ?>
               <span>
                 <h3><?php echo s((string)$course['title']); ?></h3>
                 <span class="pqh-course-card__number">Course number: <?php echo s($coursenumber); ?></span>
               </span>
+              <?php if ($role === 'teacher' && ($pqhtcoursegrade > 0 || $course['status'] === 'live')): ?>
+                <span class="pqh-tccard__chips">
+                  <?php if ($pqhtcoursegrade > 0): ?><span class="is-grade"><?php echo $pqhtcoursegrade; ?> to grade</span><?php endif; ?>
+                  <?php if ($course['status'] === 'live'): ?><span class="is-ok">On track</span><?php endif; ?>
+                </span>
+              <?php endif; ?>
               <span class="pqh-course-card__actions pqh-workspace-actions">
                 <?php if ($canlaunchcourse): ?>
                   <a class="pqh-course-card__status <?php echo $course['status'] === 'live' ? 'pqh-course-card__status--live' : ''; ?>" href="<?php echo $courseurl->out(false); ?>">
@@ -3186,6 +3358,10 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
                 <?php if ($showvirtualtutor): ?>
                   <a class="pqh-course-card__lesson" href="<?php echo pqh_virtual_tutor_link($coursepanelstudentid)->out(false); ?>">Virtual tutor</a>
                 <?php endif; ?>
+                <?php if ($role === 'teacher'): ?>
+                  <a class="pqh-course-card__lesson" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Start class</a>
+                  <a class="pqh-course-card__lesson" href="<?php echo pqh_hub_link('teacher_homework.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Gradebook</a>
+                <?php endif; ?>
               </span>
             </div>
           <?php endforeach; ?>
@@ -3193,6 +3369,55 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <?php endif; ?>
     </section>
     <?php endforeach; ?>
+    <?php if ($role === 'teacher' && $pqhtdash !== null): ?>
+      <?php
+        $pqhtsubtotal = array_sum($pqhtdash['substatus']);
+        $pqhtattany = (bool)array_filter($pqhtdash['attweeks'], static fn($w) => $w['rate'] !== null);
+      ?>
+      <section class="pqh-course-panel" aria-label="Class analytics">
+        <div class="pqh-course-panel__head">
+          <div><h2>Class analytics</h2><p>Homework submissions and attendance.</p></div>
+        </div>
+        <div class="pqh-tanalytics__row">
+          <div>
+            <p class="pqh-tanalytics__label">Submission status</p>
+            <?php if ($pqhtsubtotal > 0): ?>
+              <div class="pqh-stackbar" role="img" aria-label="Submissions: <?php echo (int)$pqhtdash['substatus']['done']; ?> submitted or graded, <?php echo (int)$pqhtdash['substatus']['open']; ?> in progress, <?php echo (int)$pqhtdash['substatus']['overdue']; ?> overdue">
+                <i class="sb-done" style="width:<?php echo round(100 * $pqhtdash['substatus']['done'] / $pqhtsubtotal); ?>%"></i>
+                <i class="sb-open" style="width:<?php echo round(100 * $pqhtdash['substatus']['open'] / $pqhtsubtotal); ?>%"></i>
+                <i class="sb-overdue" style="width:<?php echo round(100 * $pqhtdash['substatus']['overdue'] / $pqhtsubtotal); ?>%"></i>
+              </div>
+              <div class="pqh-tlegend">
+                <span><i style="background:#2e7d4f"></i>Submitted / graded</span>
+                <span><i style="background:#b7791f"></i>In progress</span>
+                <span><i style="background:#c0392b"></i>Overdue</span>
+              </div>
+            <?php else: ?>
+              <div class="pqh-course-empty">No homework assigned yet.</div>
+            <?php endif; ?>
+          </div>
+          <div>
+            <p class="pqh-tanalytics__label">Attendance trend</p>
+            <?php if ($pqhtattany): ?>
+              <div class="pqh-tbars">
+                <?php foreach ($pqhtdash['attweeks'] as $pqhtweek): ?>
+                  <div>
+                    <?php if ($pqhtweek['rate'] !== null): ?>
+                      <i style="height:<?php echo max(4, (int)$pqhtweek['rate']); ?>%" title="<?php echo (int)$pqhtweek['rate']; ?>%"></i>
+                    <?php else: ?>
+                      <i class="is-empty" style="height:4%"></i>
+                    <?php endif; ?>
+                    <b><?php echo s((string)$pqhtweek['label']); ?></b>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php else: ?>
+              <div class="pqh-course-empty">No attendance recorded in the last five weeks.</div>
+            <?php endif; ?>
+          </div>
+        </div>
+      </section>
+    <?php endif; ?>
   <?php endif; ?>
 
   <?php if (in_array($role, ['student', 'parent'], true) && $hasworkspace && !$pqhisyounglearner): ?>

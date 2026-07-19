@@ -319,8 +319,11 @@ body.pqh-atrisk-page #page,body.pqh-atrisk-page #page-content,body.pqh-atrisk-pa
   .parr-table tr{border-bottom:1px solid var(--pqh-line);padding:8px 0}
 }
 @media print{.parr-filters,.parr-actions,.parr-btn{display:none!important}.parr-shell{background:#fff;padding:0}.parr-card{box-shadow:none}}
+<?php echo pqh_design_system_css('.parr-shell'); ?>
+<?php echo pqh_design_shell_css('.parr-shell'); ?>
 </style>
 <main class="parr-shell">
+<?php echo pqh_design_shell_html('parr-shell', '', ['title' => 'At-Risk Students']); ?>
   <div class="parr-wrap">
     <p class="parr-crumbs"><a href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', $urlparams))->out(false); ?>">Dashboard</a> › <a href="<?php echo (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false); ?>">Workspace</a> › At-risk students</p>
     <div class="parr-head">

@@ -1249,34 +1249,42 @@ CSS;
 }
 
 /**
- * Standard application shell styles (nav rail + blue app bar + expandable
- * rail), scoped to a page's shell class. Pair with pqh_design_shell_html().
+ * Standard application shell styles per the approved prototype
+ * (deliverables/design/eduplatform-ui/prototype.html): wide labeled
+ * sidebar, expanded by default and collapsible to icons, plus a white
+ * blurred 60px top bar carrying the page title. Scoped to a page's
+ * shell class. Pair with pqh_design_shell_html().
  */
 function pqh_design_shell_css(string $scope): string {
     return <<<CSS
-/* ---- standard shell: rail + blue app bar (shared) ---- */
-{$scope}{padding:0 0 54px 76px!important}
-{$scope}>[class*="-wrap"]{padding:24px 24px 0}
-.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:76px;z-index:80;display:flex;flex-direction:column;gap:4px;padding:12px 8px;background:#fff;border-right:1px solid #e4e9ef;overflow-y:auto}
-.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 auto 12px;border-radius:13px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
-.pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px;border:0;border-radius:11px;background:transparent!important;color:#5b6b7c!important;font:600 10px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
-.pqh-gnav__item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* ---- standard shell: labeled sidebar + white top bar (prototype) ---- */
+{$scope}{padding:0 0 54px 248px!important;transition:padding .18s ease}
+{$scope}.pqh-rail-min{padding-left:72px!important}
+{$scope}>[class*="-wrap"]{padding:24px 24px 0;max-width:1440px}
+.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:248px;z-index:80;display:flex;flex-direction:column;gap:2px;padding:14px 10px;background:#fff;border-right:1px solid #e4e9ef;overflow-y:auto;transition:width .18s ease}
+{$scope}.pqh-rail-min .pqh-gnav{width:72px}
+.pqh-gnav__brand{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;text-decoration:none!important;background:transparent!important;border:0}
+.pqh-gnav__mark{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 14px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
+.pqh-gnav__name{font:800 15px/1.2 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#0f2237;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pqh-gnav__item{display:flex;flex-direction:row;align-items:center;gap:11px;padding:9px 10px;border:0;border-radius:9px;background:transparent!important;color:#5b6b7c!important;font:600 13px/1.3 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:left;white-space:nowrap;width:100%;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
+.pqh-gnav__item svg{flex:0 0 auto;width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .pqh-gnav__item:hover{background:#edf3fc!important;color:#17498f!important;text-decoration:none!important}
 .pqh-gnav__item.is-active{background:#edf3fc!important;color:#2166d1!important;font-weight:700}
 .pqh-gnav__spacer{flex:1}
-.pqh-appbar{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 24px;background:linear-gradient(115deg,#2166d1,#4d8be0);border-bottom:1px solid rgba(255,255,255,.22);box-shadow:0 6px 18px -12px rgba(23,73,143,.5)}
-.pqh-appbar__brand{display:flex;align-items:center;gap:10px;color:#fff;font-size:17px;font-weight:800}
-.pqh-appbar__mark{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;background:#fff;color:#2166d1;font-weight:800}
+.pqh-gnav__foot{margin-top:auto;border-top:1px solid #e4e9ef;padding-top:8px;display:flex;flex-direction:column;gap:2px}
+.pqh-gnav__foot .pqh-gnav__item{color:#8494a5!important}
+{$scope}.pqh-rail-min .pqh-gnav__label,{$scope}.pqh-rail-min .pqh-gnav__name{display:none}
+{$scope}.pqh-rail-min .pqh-gnav__item{justify-content:center;padding:11px 0}
+{$scope}.pqh-rail-min .pqh-gnav__brand{justify-content:center;padding-left:0;padding-right:0}
+.pqh-appbar{position:sticky;top:0;z-index:70;display:flex;align-items:center;gap:12px;height:60px;padding:0 22px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #e4e9ef;box-shadow:none}
+.pqh-appbar__brand{display:flex;align-items:center;gap:10px;color:#0f2237;font-size:16px;font-weight:750;letter-spacing:-.01em;margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pqh-appbar__mark{display:none}
 .pqh-appbar__nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.pqh-appbar__nav a,.pqh-appbar__nav button{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0!important;border-radius:9px;background:transparent!important;color:rgba(255,255,255,.92)!important;font-size:13px;font-weight:650!important;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
-.pqh-appbar__nav a:hover,.pqh-appbar__nav button:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
-.pqh-appbar__nav .pqh-appbar__logout{background:#fff!important;color:#17498f!important;font-weight:700!important}
-.pqh-appbar__nav .pqh-appbar__logout:hover{background:#e9f1fc!important;color:#0f2237!important}
-{$scope}.pqh-rail-x{padding-left:216px!important}
-{$scope}.pqh-rail-x .pqh-gnav{width:216px}
-{$scope}.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
-{$scope}.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
-@media(max-width:900px){{$scope},{$scope}.pqh-rail-x{padding-left:0!important}.pqh-gnav{display:none}.pqh-appbar{flex-wrap:wrap}}
+.pqh-appbar__nav a,.pqh-appbar__nav button{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:1px solid transparent!important;border-radius:9px;background:transparent!important;color:#5b6b7c!important;font-size:12.5px;font-weight:650!important;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
+.pqh-appbar__nav a:hover,.pqh-appbar__nav button:hover{background:#edf3fc!important;color:#17498f!important}
+.pqh-appbar__nav .pqh-appbar__logout{background:#2166d1!important;color:#fff!important;font-weight:700!important;box-shadow:0 6px 14px -8px rgba(33,102,209,.55)!important}
+.pqh-appbar__nav .pqh-appbar__logout:hover{background:#17498f!important;color:#fff!important}
+@media(max-width:900px){{$scope},{$scope}.pqh-rail-min{padding-left:0!important}.pqh-gnav{display:none}.pqh-appbar{height:auto;min-height:60px;padding:8px 14px;flex-wrap:wrap}}
 CSS;
 }
 
@@ -1352,7 +1360,7 @@ function pqh_shell_viewer_kind(int $userid): string {
     return 'parent';
 }
 
-function pqh_design_shell_html(string $shellclass, string $active = ''): string {
+function pqh_design_shell_html(string $shellclass, string $active = '', array $opts = []): string {
     global $USER;
     $ctx = pqh_requested_consumer_context();
     $brand = trim((string)($ctx->consumername ?? '')) ?: 'EduPlatform';
@@ -1405,25 +1413,37 @@ function pqh_design_shell_html(string $shellclass, string $active = ''): string 
         ];
     }
     $logouturl = (new moodle_url('/local/hubredirect/logout.php'))->out(false);
+    $title = trim((string)($opts['title'] ?? '')) ?: $brand;
     $html = '<nav class="pqh-gnav" aria-label="Global navigation">';
-    $html .= '<a class="pqh-gnav__brand" href="' . $items['dashboard'][1]->out(false) . '" title="' . s($brand) . '">' . s($initials) . '</a>';
+    $html .= '<a class="pqh-gnav__brand" href="' . $items['dashboard'][1]->out(false) . '" title="' . s($brand) . '">'
+        . '<span class="pqh-gnav__mark">' . s($initials) . '</span>'
+        . '<span class="pqh-gnav__name">' . s($brand) . '</span></a>';
     foreach ($items as $key => $item) {
         $html .= '<a class="pqh-gnav__item' . ($key === $active ? ' is-active' : '') . '" href="' . $item[1]->out(false) . '">'
-            . '<svg viewBox="0 0 24 24">' . $item[2] . '</svg>' . s($item[0]) . '</a>';
+            . '<svg viewBox="0 0 24 24">' . $item[2] . '</svg><span class="pqh-gnav__label">' . s($item[0]) . '</span></a>';
     }
-    $html .= '<span class="pqh-gnav__spacer"></span>';
-    $html .= '<a class="pqh-gnav__item" href="' . $logouturl . '"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Logout</a>';
-    $html .= '<button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation"><svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>Menu</button>';
-    $html .= '</nav>';
-    $html .= '<div class="pqh-appbar"><div class="pqh-appbar__brand"><span class="pqh-appbar__mark">' . s($initials) . '</span><span>' . s($brand) . '</span></div><div class="pqh-appbar__nav">';
+    $html .= '<div class="pqh-gnav__foot">';
+    $html .= '<a class="pqh-gnav__item" href="' . $logouturl . '"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg><span class="pqh-gnav__label">Logout</span></a>';
+    $html .= '<button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Collapse or expand navigation"><svg viewBox="0 0 24 24"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg><span class="pqh-gnav__label">Collapse</span></button>';
+    $html .= '</div></nav>';
+    $html .= '<div class="pqh-appbar"><div class="pqh-appbar__brand">' . s($title) . '</div><div class="pqh-appbar__nav">';
     foreach ($appbar as $link) {
         $html .= '<a href="' . $link[1]->out(false) . '">' . s($link[0]) . '</a>';
     }
+    if (!empty($opts['links']) && is_array($opts['links'])) {
+        foreach ($opts['links'] as $link) {
+            $url = $link[1] instanceof moodle_url ? $link[1]->out(false) : (string)$link[1];
+            $html .= '<a href="' . $url . '">' . s((string)$link[0]) . '</a>';
+        }
+    }
+    if (!empty($opts['extrahtml'])) {
+        $html .= (string)$opts['extrahtml'];
+    }
     $html .= '<a class="pqh-appbar__logout" href="' . $logouturl . '">Logout</a>';
     $html .= '</div></div>';
-    $html .= '<script>(function(){var shell=document.querySelector(".' . $shellclass . '");var toggle=document.getElementById("pqh-rail-toggle");var key="pqh_rail_expanded";'
-        . 'try{if(window.localStorage.getItem(key)==="1"){shell.classList.add("pqh-rail-x");}}catch(e){}'
-        . 'if(toggle){toggle.addEventListener("click",function(){var x=shell.classList.toggle("pqh-rail-x");try{window.localStorage.setItem(key,x?"1":"0");}catch(e){}});}})();</script>';
+    $html .= '<script>(function(){var shell=document.querySelector(".' . $shellclass . '");var toggle=document.getElementById("pqh-rail-toggle");var key="pqh_rail_min";'
+        . 'try{if(window.localStorage.getItem(key)==="1"){shell.classList.add("pqh-rail-min");}}catch(e){}'
+        . 'if(toggle){toggle.addEventListener("click",function(){var x=shell.classList.toggle("pqh-rail-min");try{window.localStorage.setItem(key,x?"1":"0");}catch(e){}});}})();</script>';
     return $html;
 }
 

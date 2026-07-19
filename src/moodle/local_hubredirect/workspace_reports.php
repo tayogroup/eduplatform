@@ -1130,8 +1130,11 @@ body.pqw-reports-page #page,body.pqw-reports-page #page-content,body.pqw-reports
 .pqwr-track,.pqwr-hbar-track{background:var(--pqh-tint)!important}
 .pqwr-empty{background:var(--pqh-surface)!important;border:1px dashed var(--pqh-line)!important;border-radius:14px!important;color:var(--pqh-muted)!important;font-weight:550!important}
 .pqwr-link{color:var(--pqh-primary)!important}
+<?php echo pqh_design_system_css('.pqwr-shell'); ?>
+<?php echo pqh_design_shell_css('.pqwr-shell'); ?>
 </style>
 <main class="pqwr-shell">
+<?php echo pqh_design_shell_html('pqwr-shell', '', ['title' => 'Workspace Reports']); ?>
   <div class="pqwr-wrap">
     <section class="pqwr-top pqh-workspace-top">
       <div>

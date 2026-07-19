@@ -566,22 +566,7 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
   --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
   background:var(--pqh-bg);color:var(--pqh-ink);padding:0 0 56px 76px}
 .pqwd-wrap{padding:24px 24px 0}
-.pqwd-topbar{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 24px;background:linear-gradient(115deg,#2166d1,#4d8be0);border-bottom:1px solid rgba(255,255,255,.22);box-shadow:0 6px 18px -12px rgba(23,73,143,.5)}
-.pqwd-topbar__brand{display:flex;align-items:center;gap:10px;color:#fff;font-size:17px;font-weight:800}
-.pqwd-topbar__brand .pqh-brand-mark{width:38px;height:38px;background:#fff!important;color:#2166d1!important;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;font-weight:800;overflow:hidden}
 .pqwd-topbar__brand .pqh-brand-mark img{display:block;width:100%;height:100%;object-fit:cover}
-.pqwd-topbar__nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.pqwd-topbar__nav a,.pqwd-topbar__nav button{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0!important;border-radius:9px;background:transparent!important;color:rgba(255,255,255,.92)!important;font-size:13px;font-weight:650!important;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
-.pqwd-topbar__nav a:hover,.pqwd-topbar__nav button:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
-.pqwd-topbar__nav .pqwd-topbar__logout{background:#fff!important;color:#17498f!important;font-weight:700!important}
-.pqwd-topbar__nav .pqwd-topbar__logout:hover{background:#e9f1fc!important;color:#0f2237!important}
-.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:76px;z-index:80;display:flex;flex-direction:column;gap:4px;padding:12px 8px;background:var(--pqh-surface);border-right:1px solid var(--pqh-line);overflow-y:auto}
-.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 auto 12px;border-radius:13px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
-.pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px;border:0;border-radius:11px;background:transparent;color:var(--pqh-muted)!important;font:600 10px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer}
-.pqh-gnav__item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.pqh-gnav__item:hover{background:var(--pqh-tint);color:var(--pqh-primary-ink)!important;text-decoration:none!important}
-.pqh-gnav__item.is-active{background:var(--pqh-tint);color:var(--pqh-primary)!important;font-weight:700}
-.pqh-gnav__spacer{flex:1}
 .pqwd-top.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
 .pqwd-title,.pqwd-title.pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
 .pqwd-sub,.pqwd-sub.pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
@@ -622,75 +607,30 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 .pqwd-todo__body{min-width:0;flex:1}
 .pqwd-todo__body strong{display:block;font-size:12.5px;font-weight:700;color:var(--pqh-ink)}
 .pqwd-todo__body span{display:block;color:var(--pqh-muted);font-size:11.5px;font-weight:500}
-@media(max-width:900px){.pqwd-shell{padding-left:0}.pqh-gnav{display:none}.pqwd-topbar{flex-wrap:wrap}}
-.pqwd-shell.pqh-rail-x{padding-left:216px}
-.pqwd-shell.pqh-rail-x .pqh-gnav{width:216px}
-.pqwd-shell.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
-.pqwd-shell.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
-@media(max-width:900px){.pqwd-shell.pqh-rail-x{padding-left:0}}
+<?php echo pqh_design_shell_css('.pqwd-shell'); ?>
 </style>
 <main class="pqwd-shell">
-<nav class="pqh-gnav" aria-label="Global navigation">
-  <a class="pqh-gnav__brand" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>" title="Home"><?php echo s($brandinitial); ?></a>
-  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">
-    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-    Dashboard
-  </a>
-  <a class="pqh-gnav__item is-active" href="<?php echo (new moodle_url('/local/hubredirect/workspace_dashboard.php', $workspaceparams))->out(false); ?>">
-    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-    Workspace
-  </a>
-  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $workspaceparams))->out(false); ?>">
-    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg>
-    Live
-  </a>
-  <span class="pqh-gnav__spacer"></span>
-  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">
-    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
-    Logout
-  </a>
-  <button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation">
-    <svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>
-    Menu
-  </button>
-</nav>
-<script>
-(function(){
-  var shell = document.querySelector('.pqwd-shell');
-  var toggle = document.getElementById('pqh-rail-toggle');
-  var key = 'pqh_rail_expanded';
-  try { if (window.localStorage.getItem(key) === '1') { shell.classList.add('pqh-rail-x'); } } catch (e) {}
-  if (toggle) {
-    toggle.addEventListener('click', function(){
-      var expanded = shell.classList.toggle('pqh-rail-x');
-      try { window.localStorage.setItem(key, expanded ? '1' : '0'); } catch (e) {}
-    });
-  }
-})();
-</script>
-<div class="pqwd-topbar">
-  <div class="pqwd-topbar__brand">
-    <span class="pqh-brand-mark">
-      <?php if ($brandlogo !== ''): ?>
-        <img src="<?php echo s($brandlogo); ?>" alt="<?php echo s($brandname); ?>">
-      <?php else: ?>
-        <?php echo s($brandinitial); ?>
-      <?php endif; ?>
-    </span>
-    <span><?php echo s($workspace->name); ?></span>
-  </div>
-  <div class="pqwd-topbar__nav">
-    <button type="button" onclick="window.history.back()">Back</button>
-    <a href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Home</a>
-    <?php if ($canmanage): ?><a href="<?php echo (new moodle_url('/local/hubredirect/workspace_people.php', $workspaceparams))->out(false); ?>">Manage people</a><?php endif; ?>
-    <?php if ($canmanage): ?><a href="<?php echo $brandediturl->out(false); ?>">Settings</a><?php endif; ?>
-    <?php if ($canacademyops): ?><a href="<?php echo $workspacesadminurl->out(false); ?>">Manage workspaces</a><?php endif; ?>
-    <?php if ($canacademyops): ?><a href="<?php echo $platformconsumersurl->out(false); ?>">Platform consumers</a><?php endif; ?>
-    <?php if ($canteach): ?><button type="button" data-pq-support-action="open">Manage tickets</button><?php endif; ?>
-    <?php if ($canteach): ?><button type="button" data-pq-support-action="new">Create a ticket</button><?php endif; ?>
-    <a class="pqwd-topbar__logout" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">Logout</a>
-  </div>
-</div>
+<?php
+$pqwdshelllinks = [];
+if ($canmanage) {
+    $pqwdshelllinks[] = ['Manage people', new moodle_url('/local/hubredirect/workspace_people.php', $workspaceparams)];
+    $pqwdshelllinks[] = ['Settings', $brandediturl];
+}
+if ($canacademyops) {
+    $pqwdshelllinks[] = ['Manage workspaces', $workspacesadminurl];
+    $pqwdshelllinks[] = ['Platform consumers', $platformconsumersurl];
+}
+$pqwdshellextra = '<button type="button" onclick="window.history.back()">Back</button>';
+if ($canteach) {
+    $pqwdshellextra .= '<button type="button" data-pq-support-action="open">Manage tickets</button>'
+        . '<button type="button" data-pq-support-action="new">Create a ticket</button>';
+}
+echo pqh_design_shell_html('pqwd-shell', 'workspace', [
+    'title' => (string)$workspace->name,
+    'links' => $pqwdshelllinks,
+    'extrahtml' => $pqwdshellextra,
+]);
+?>
   <div class="pqwd-wrap">
     <section class="pqwd-top pqh-workspace-top">
       <div>

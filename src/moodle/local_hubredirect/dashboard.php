@@ -2466,27 +2466,12 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
   --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
   --pqh-primary-ink:#17498f;--pqh-r:14px;
   --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
-  background:var(--pqh-bg);min-height:100vh;padding-left:76px;color:var(--pqh-ink)}
-/* ---- global nav rail: light, quiet ---- */
-.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:76px;z-index:80;display:flex;flex-direction:column;gap:4px;padding:12px 8px;background:var(--pqh-surface);border-right:1px solid var(--pqh-line);overflow-y:auto}
-.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 auto 12px;border-radius:13px;background:var(--pqh-primary);color:#fff!important;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
-.pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px;border:0;border-radius:11px;background:transparent;color:var(--pqh-muted)!important;font:600 10px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer}
-.pqh-gnav__item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.pqh-gnav__item:hover{background:var(--pqh-tint);color:var(--pqh-primary-ink)!important;text-decoration:none!important}
-.pqh-gnav__item.is-active{background:var(--pqh-tint);color:var(--pqh-primary)!important;font-weight:700}
-.pqh-gnav__spacer{flex:1}
-/* ---- top bar: sticky, translucent ---- */
-.pqh-topbar{position:sticky;top:0;z-index:70;background:linear-gradient(115deg,#2166d1,#4d8be0);border-bottom:1px solid rgba(255,255,255,.22);box-shadow:0 6px 18px -12px rgba(23,73,143,.5)}
-.pqh-brand{color:#fff}
-.pqh-brand__mark{background:#fff!important;color:#2166d1!important;border-radius:10px}
+  background:var(--pqh-bg);min-height:100vh;color:var(--pqh-ink)}
+<?php echo pqh_design_shell_css('.pqh-shell'); ?>
 .pqh-brand-mark{background:linear-gradient(115deg,#2166d1,#4d8be0)!important;color:#fff!important;border-radius:10px}
-.pqh-top-action,.pqh-back{background:transparent!important;color:rgba(255,255,255,.92)!important;border:1px solid transparent!important;border-radius:9px;font-weight:650!important}
-.pqh-top-action:hover,.pqh-back:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
-.pqh-logout{background:#fff;color:#17498f!important;border:0;border-radius:9px;font-weight:700}
-.pqh-logout:hover{background:#e9f1fc;color:#0f2237!important}
-.pqh-font-control{color:rgba(255,255,255,.75)}
-.pqh-font-control a{color:rgba(255,255,255,.85);border-radius:7px}
-.pqh-font-control a.is-active{background:rgba(255,255,255,.25);color:#fff}
+.pqh-font-control{color:var(--pqh-faint)}
+.pqh-font-control a{color:var(--pqh-muted);border-radius:7px}
+.pqh-font-control a.is-active{background:var(--pqh-tint);color:var(--pqh-primary-ink)}
 /* ---- page header (was the boxy hero) ---- */
 .pqh-wrap{max-width:1240px;padding:26px 26px 60px}
 .pqh-hero{background:transparent;border:0;box-shadow:none;border-radius:0;padding:4px 2px 10px;margin-bottom:14px;align-items:center}
@@ -2603,11 +2588,6 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-todo__body strong{display:block;font-size:13px;font-weight:700;color:var(--pqh-ink)}
 .pqh-todo__body span{display:block;color:var(--pqh-muted);font-size:11.5px;font-weight:500}
 .pqh-todo__item .pqh-btn{min-height:30px;padding:0 12px;font-size:12px}
-.pqh-shell.pqh-rail-x{padding-left:216px}
-.pqh-shell.pqh-rail-x .pqh-gnav{width:216px}
-.pqh-shell.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
-.pqh-shell.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
-@media(max-width:900px){.pqh-shell.pqh-rail-x{padding-left:0}}
 /* ---- Phase 2: young-learner mode + weekly summary ---- */
 .pqh-young{background:linear-gradient(180deg,#eef5ff,#f8fbff)!important;border-color:#d7e6f9!important}
 .pqh-ybig{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:14px;background:var(--pqh-primary);color:#fff!important;font-size:16px;font-weight:750;text-decoration:none!important;box-shadow:0 10px 22px -10px rgba(33,102,209,.6)}
@@ -2639,10 +2619,10 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-customize__panel strong{font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:var(--pqh-faint)}
 .pqh-customize__panel label{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:550;color:var(--pqh-ink)}
 .pqh-notif{position:relative;display:inline-flex}
-.pqh-notif__bell{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;border-radius:9px;background:rgba(255,255,255,.14);color:#fff;cursor:pointer}
-.pqh-notif__bell:hover{background:rgba(255,255,255,.26)}
+.pqh-notif__bell{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;border-radius:9px;background:transparent;color:var(--pqh-muted,#5b6b7c);cursor:pointer}
+.pqh-notif__bell:hover{background:var(--pqh-tint,#edf3fc);color:var(--pqh-primary-ink,#17498f)}
 .pqh-notif__bell svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.pqh-notif__badge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#c0392b;color:#fff;font-size:10px;font-weight:750;display:flex;align-items:center;justify-content:center;border:2px solid #2166d1}
+.pqh-notif__badge{position:absolute;top:-2px;right:-2px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#c0392b;color:#fff;font-size:10px;font-weight:750;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
 .pqh-notif__panel{position:absolute;right:0;top:calc(100% + 10px);z-index:95;width:300px;max-height:70vh;overflow:auto;padding:8px;background:var(--pqh-surface,#fff);border:1px solid #e4e9ef;border-radius:14px;box-shadow:0 2px 4px rgba(15,34,55,.06),0 18px 38px -14px rgba(15,34,55,.28)}
 .pqh-notif__group{padding:8px 8px 4px;font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.07em;color:#8494a5}
 .pqh-notif__group--urgent{color:#c0392b}
@@ -2668,67 +2648,68 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 <main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?><?php echo $pqhdensity === 'compact' ? ' pqh-compact' : ''; ?>">
 <?php $pqhdashboardhomeurl = new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams); ?>
 <nav class="pqh-gnav" aria-label="Global navigation">
-  <a class="pqh-gnav__brand" href="<?php echo $pqhdashboardhomeurl->out(false); ?>" title="<?php echo s($pqhbrandname); ?>"><?php echo s($pqhbrandinitials); ?></a>
+  <a class="pqh-gnav__brand" href="<?php echo $pqhdashboardhomeurl->out(false); ?>" title="<?php echo s($pqhbrandname); ?>"><span class="pqh-gnav__mark"><?php echo s($pqhbrandinitials); ?></span><span class="pqh-gnav__name"><?php echo s($pqhbrandname); ?></span></a>
   <a class="pqh-gnav__item is-active" href="<?php echo $pqhdashboardhomeurl->out(false); ?>">
     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-    Dashboard
+    <span class="pqh-gnav__label">Dashboard</span>
   </a>
   <a class="pqh-gnav__item" href="#pqh-courses">
     <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-    Courses
+    <span class="pqh-gnav__label">Courses</span>
   </a>
   <a class="pqh-gnav__item" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">
     <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg>
-    Live
+    <span class="pqh-gnav__label">Live Classes</span>
   </a>
   <?php if ($role === 'teacher'): ?>
     <a class="pqh-gnav__item" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      Schedule
+      <span class="pqh-gnav__label">Schedule</span>
     </a>
   <?php elseif (in_array($role, ['parent'], true) && $selectedchild): ?>
     <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => (int)$selectedchild['studentid']]))->out(false); ?>">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      Calendar
+      <span class="pqh-gnav__label">Calendar</span>
     </a>
   <?php endif; ?>
   <?php if ($role === 'student'): ?>
     <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">
       <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-      Inbox
+      <span class="pqh-gnav__label">Messages</span>
     </a>
   <?php elseif (in_array($role, ['teacher', 'parent'], true) && $selectedchild): ?>
     <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">
       <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-      Inbox
+      <span class="pqh-gnav__label">Messages</span>
     </a>
   <?php endif; ?>
   <?php if (in_array($role, ['student', 'teacher'], true)): ?>
     <a class="pqh-gnav__item" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id])->out(false); ?>">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-      Help
+      <span class="pqh-gnav__label">Help Desk</span>
     </a>
   <?php endif; ?>
-  <span class="pqh-gnav__spacer"></span>
-  <a class="pqh-gnav__item" href="<?php echo $pqhlogouturl->out(false); ?>">
-    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
-    Logout
-  </a>
-  <button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation">
-    <svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>
-    Menu
-  </button>
+  <div class="pqh-gnav__foot">
+    <a class="pqh-gnav__item" href="<?php echo $pqhlogouturl->out(false); ?>">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+      <span class="pqh-gnav__label">Logout</span>
+    </a>
+    <button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Collapse or expand navigation">
+      <svg viewBox="0 0 24 24"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg>
+      <span class="pqh-gnav__label">Collapse</span>
+    </button>
+  </div>
 </nav>
 <script>
 (function(){
   var shell = document.querySelector('.pqh-shell');
   var toggle = document.getElementById('pqh-rail-toggle');
-  var key = 'pqh_rail_expanded';
-  try { if (window.localStorage.getItem(key) === '1') { shell.classList.add('pqh-rail-x'); } } catch (e) {}
+  var key = 'pqh_rail_min';
+  try { if (window.localStorage.getItem(key) === '1') { shell.classList.add('pqh-rail-min'); } } catch (e) {}
   if (toggle) {
     toggle.addEventListener('click', function(){
-      var expanded = shell.classList.toggle('pqh-rail-x');
-      try { window.localStorage.setItem(key, expanded ? '1' : '0'); } catch (e) {}
+      var min = shell.classList.toggle('pqh-rail-min');
+      try { window.localStorage.setItem(key, min ? '1' : '0'); } catch (e) {}
     });
   }
   // Phase 5: delegated toggles for the notification bell and customize panel.
@@ -2751,9 +2732,9 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
   });
 })();
 </script>
-<div class="pqh-topbar">
-  <div class="pqh-brand"><span class="pqh-brand__mark"><?php echo s($pqhbrandinitials); ?></span><span><?php echo s($pqhbrandname); ?></span></div>
-  <div class="pqh-role-nav" aria-label="Dashboard roles">
+<div class="pqh-appbar">
+  <div class="pqh-appbar__brand"><?php echo s($pqhherotitle); ?></div>
+  <div class="pqh-appbar__nav" aria-label="Dashboard actions">
     <button class="pqh-back" type="button" data-fallback="<?php echo s($pqhbackfallback->out(false)); ?>">Back</button>
     <?php if ($role === 'teacher'): ?>
       <a class="pqh-top-action" href="<?php echo pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0, $selectedchild ? (int)$selectedchild['studentid'] : 0)->out(false); ?>">Teacher workspace</a>
@@ -2794,7 +2775,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         </div>
       </span>
     <?php endif; ?>
-    <a class="pqh-logout pqh-workspace-logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
+    <a class="pqh-appbar__logout" href="<?php echo $pqhlogouturl->out(false); ?>">Logout</a>
   </div>
 </div>
 <div class="pqh-wrap">

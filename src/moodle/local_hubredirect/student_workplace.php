@@ -117,86 +117,19 @@ body.pqhsw-page #page,body.pqhsw-page #page-content,body.pqhsw-page #region-main
 .pqhsw-card--primary{background:var(--pqh-tint);border-color:var(--pqh-tint-2)!important}
 .pqhsw-card h2{color:var(--pqh-ink);font-size:17px;font-weight:750;letter-spacing:-.01em}
 .pqhsw-card p{color:var(--pqh-muted);font-weight:500}
-.pqhsw-shell{padding:0 0 56px 76px}
-.pqhsw-wrap{padding:24px 24px 0}
-.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:76px;z-index:80;display:flex;flex-direction:column;gap:4px;padding:12px 8px;background:var(--pqh-surface);border-right:1px solid var(--pqh-line);overflow-y:auto}
-.pqh-gnav__brand{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 auto 12px;border-radius:13px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-decoration:none!important;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
-.pqh-gnav__item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px;border:0;border-radius:11px;background:transparent;color:var(--pqh-muted)!important;font:600 10px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center;text-decoration:none!important;cursor:pointer}
-.pqh-gnav__item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.pqh-gnav__item:hover{background:var(--pqh-tint);color:var(--pqh-primary-ink)!important;text-decoration:none!important}
-.pqh-gnav__item.is-active{background:var(--pqh-tint);color:var(--pqh-primary)!important;font-weight:700}
-.pqh-gnav__spacer{flex:1}
-.pqh-appbar{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 24px;background:linear-gradient(115deg,#2166d1,#4d8be0);border-bottom:1px solid rgba(255,255,255,.22);box-shadow:0 6px 18px -12px rgba(23,73,143,.5)}
-.pqh-appbar__brand{display:flex;align-items:center;gap:10px;color:#fff;font-size:17px;font-weight:800}
-.pqh-appbar__mark{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;background:#fff;color:#2166d1;font-weight:800}
-.pqh-appbar__nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.pqh-appbar__nav a,.pqh-appbar__nav button{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0!important;border-radius:9px;background:transparent!important;color:rgba(255,255,255,.92)!important;font-size:13px;font-weight:650!important;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
-.pqh-appbar__nav a:hover,.pqh-appbar__nav button:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
-.pqh-appbar__nav .pqh-appbar__logout{background:#fff!important;color:#17498f!important;font-weight:700!important}
-.pqh-appbar__nav .pqh-appbar__logout:hover{background:#e9f1fc!important;color:#0f2237!important}
-@media(max-width:900px){.pqhsw-shell{padding-left:0}.pqh-gnav{display:none}.pqh-appbar{flex-wrap:wrap}}
-.pqhsw-shell.pqh-rail-x{padding-left:216px}
-.pqhsw-shell.pqh-rail-x .pqh-gnav{width:216px}
-.pqhsw-shell.pqh-rail-x .pqh-gnav__item{flex-direction:row;justify-content:flex-start;gap:11px;padding:10px 12px;font-size:12.5px;text-align:left}
-.pqhsw-shell.pqh-rail-x .pqh-gnav__brand{margin-left:10px;margin-right:auto}
-@media(max-width:900px){.pqhsw-shell.pqh-rail-x{padding-left:0}}
+<?php echo pqh_design_shell_css('.pqhsw-shell'); ?>
 </style>
 <main class="pqhsw-shell">
 <?php
-$pqhswctx = pqh_requested_consumer_context();
-$pqhswbrandname = trim((string)($pqhswctx->consumername ?? '')) ?: 'EduPlatform';
-$pqhswbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqhswbrandname) ?: 'EP', 0, 2));
+echo pqh_design_shell_html('pqhsw-shell', 'workspace', [
+    'title' => 'Student Workplace',
+    'links' => [
+        ['Messages', new moodle_url('/local/hubredirect/communications.php', ['studentid' => $studentid, 'opencomm' => 'messages'])],
+        ['Announcements', new moodle_url('/local/hubredirect/communications.php', ['studentid' => $studentid, 'opencomm' => 'announcements'])],
+    ],
+    'extrahtml' => '<button type="button" data-pq-support-action="open">Manage tickets</button><button type="button" data-pq-support-action="new">Create a ticket</button>',
+]);
 ?>
-<nav class="pqh-gnav" aria-label="Global navigation">
-  <a class="pqh-gnav__brand" href="<?php echo $dashboardurl->out(false); ?>" title="<?php echo s($pqhswbrandname); ?>"><?php echo s($pqhswbrandinitials); ?></a>
-  <a class="pqh-gnav__item" href="<?php echo $dashboardurl->out(false); ?>">
-    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-    Dashboard
-  </a>
-  <a class="pqh-gnav__item is-active" href="<?php echo (new moodle_url('/local/hubredirect/student_workplace.php', ['workspaceid' => $workspaceid]))->out(false); ?>">
-    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-    Workplace
-  </a>
-  <a class="pqh-gnav__item" href="<?php echo $studenttools['Live schedule']->out(false); ?>">
-    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-    Schedule
-  </a>
-  <span class="pqh-gnav__spacer"></span>
-  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">
-    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
-    Logout
-  </a>
-  <button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation">
-    <svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>
-    Menu
-  </button>
-</nav>
-<script>
-(function(){
-  var shell = document.querySelector('.pqhsw-shell');
-  var toggle = document.getElementById('pqh-rail-toggle');
-  var key = 'pqh_rail_expanded';
-  try { if (window.localStorage.getItem(key) === '1') { shell.classList.add('pqh-rail-x'); } } catch (e) {}
-  if (toggle) {
-    toggle.addEventListener('click', function(){
-      var expanded = shell.classList.toggle('pqh-rail-x');
-      try { window.localStorage.setItem(key, expanded ? '1' : '0'); } catch (e) {}
-    });
-  }
-})();
-</script>
-<div class="pqh-appbar">
-  <div class="pqh-appbar__brand"><span class="pqh-appbar__mark"><?php echo s($pqhswbrandinitials); ?></span><span><?php echo s($pqhswbrandname); ?></span></div>
-  <div class="pqh-appbar__nav">
-    <a href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
-    <a href="<?php echo (new moodle_url('/local/hubredirect/communications.php', ['studentid' => $studentid, 'opencomm' => 'messages']))->out(false); ?>">Messages</a>
-    <a href="<?php echo $studenttools['Live schedule']->out(false); ?>">Live schedule</a>
-    <a href="<?php echo (new moodle_url('/local/hubredirect/communications.php', ['studentid' => $studentid, 'opencomm' => 'announcements']))->out(false); ?>">Announcements</a>
-    <button type="button" data-pq-support-action="open">Manage tickets</button>
-    <button type="button" data-pq-support-action="new">Create a ticket</button>
-    <a class="pqh-appbar__logout" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">Logout</a>
-  </div>
-</div>
   <div class="pqhsw-wrap">
     <section class="pqhsw-top pqh-workspace-top">
       <div>

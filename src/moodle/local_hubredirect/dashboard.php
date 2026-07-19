@@ -2702,16 +2702,40 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
       <span class="pqh-gnav__label">Messages</span>
     </a>
-  <?php elseif (in_array($role, ['teacher', 'parent'], true) && $selectedchild): ?>
-    <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">
-      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-      <span class="pqh-gnav__label">Messages</span>
-    </a>
-  <?php endif; ?>
-  <?php if (in_array($role, ['student', 'teacher'], true)): ?>
     <a class="pqh-gnav__item" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id])->out(false); ?>">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
       <span class="pqh-gnav__label">Help Desk</span>
+    </a>
+  <?php elseif ($role === 'teacher'): ?>
+    <?php
+      $pqhnavcommmessages = $selectedchild
+          ? pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])
+          : pqh_hub_link('communications.php', ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []) + ['opencomm' => 'messages']);
+      $pqhnavcommannounce = $selectedchild
+          ? pqh_communications_link((int)$selectedchild['cohortid'], 'announcements', (int)$selectedchild['studentid'])
+          : pqh_hub_link('communications.php', ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []) + ['opencomm' => 'announcements']);
+      $pqhnavsupportparams = ($selectedchild ? ['studentid' => (int)$selectedchild['studentid'], 'supporttype' => 'student_teacher'] : []) + ($hasworkspace ? ['workspaceid' => $currentworkspaceid] : []);
+    ?>
+    <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="messages" href="<?php echo $pqhnavcommmessages->out(false); ?>">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      <span class="pqh-gnav__label">Messages</span>
+    </a>
+    <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="announcements" href="<?php echo $pqhnavcommannounce->out(false); ?>">
+      <svg viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+      <span class="pqh-gnav__label">Announcements</span>
+    </a>
+    <a class="pqh-gnav__item" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', $pqhnavsupportparams)->out(false); ?>">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+      <span class="pqh-gnav__label">Manage tickets</span>
+    </a>
+    <a class="pqh-gnav__item" data-pq-support-action="new" href="<?php echo pqh_hub_link('support.php', ['new' => 1] + $pqhnavsupportparams)->out(false); ?>">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+      <span class="pqh-gnav__label">Create a ticket</span>
+    </a>
+  <?php elseif ($role === 'parent' && $selectedchild): ?>
+    <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      <span class="pqh-gnav__label">Messages</span>
     </a>
   <?php endif; ?>
   <div class="pqh-gnav__foot">

@@ -2811,6 +2811,8 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-tccard__chips .is-risk{background:#fbe9e7;color:#c0392b}
 .pqh-tccard__bar{display:block;height:7px;border-radius:999px;background:var(--pqh-tint);overflow:hidden;margin:8px 0 2px}
 .pqh-tccard__bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pqh-primary),#4d8be0)}
+.pqh-teacher-overview-layout--single{display:block!important}
+.pqh-teacher-overview-layout--single .pqh-dashboard-sidebar{margin-top:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
 .pqh-course-panel--bare{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important}
 .pqh-course-panel--bare .pqh-course-panel__head h2{margin:0 0 8px;color:var(--pqh-faint)!important;font-size:10.5px!important;font-weight:750!important;text-transform:uppercase;letter-spacing:.07em}
 .pqh-course-panel--bare .pqh-course-panel__head p{display:none}
@@ -3974,7 +3976,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 
       <?php if ($role === 'teacher'): ?>
         <?php $teachermetrics = (array)($teacherliveoverview['metrics'] ?? []); ?>
-        <section class="pqh-teacher-overview-layout" aria-label="Teacher dashboard overview"<?php echo pqh_widget_attrs('overview'); ?>>
+        <section class="pqh-teacher-overview-layout pqh-teacher-overview-layout--single" aria-label="Teacher dashboard overview"<?php echo pqh_widget_attrs('overview'); ?>>
           <div class="pqh-teacher-status">
             <div class="pqh-teacher-metrics" aria-label="Live class summary">
               <div class="pqh-teacher-metric"><strong><?php echo (int)($teachermetrics['today'] ?? 0); ?></strong><span>today's classes</span></div>
@@ -4003,27 +4005,6 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
             <?php endif; ?>
           </div>
           <aside class="pqh-dashboard-sidebar" aria-label="Student information">
-            <article class="pqh-card">
-              <h3>Messages</h3>
-              <p><?php echo $messages['latest'] !== '' ? 'Latest: ' . s($messages['latest']) : 'No private messages yet.'; ?></p>
-              <div class="pqh-metric"><?php echo (int)$messages['unread']; ?></div>
-              <p>unread</p>
-            </article>
-
-            <article class="pqh-card">
-              <h3>Upcoming Sessions</h3>
-              <?php if (empty($upcomingsessions['tables_ready'])): ?>
-                <p>Live-session tables are not installed yet.</p>
-              <?php elseif ((int)$upcomingsessions['count'] <= 0): ?>
-                <p>No live sessions are visible for this account yet.</p>
-              <?php else: ?>
-                <?php $nextsession = $upcomingsessions['latest']; ?>
-                <p><?php echo s((string)($nextsession->title ?? 'Upcoming session')); ?></p>
-                <div class="pqh-metric"><?php echo (int)$upcomingsessions['count']; ?></div>
-                <p>next: <?php echo userdate((int)$nextsession->scheduled_start, get_string('strftimedatetimeshort')); ?></p>
-              <?php endif; ?>
-            </article>
-
             <article id="pqh-progress" class="pqh-card">
               <h3>Progress</h3>
               <p><?php echo (int)$progress['completed']; ?> completed units out of <?php echo (int)$progress['units']; ?> started.</p>

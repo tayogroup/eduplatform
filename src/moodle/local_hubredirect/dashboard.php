@@ -2130,6 +2130,18 @@ $hasworkspace = $currentworkspaceid > 0;
 $teacherliveoverview = $role === 'teacher' ? pqh_teacher_live_overview((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0) : [];
 $pqhisyounglearner = $role === 'student' && pqh_is_managed_student((int)$USER->id);
 
+// Teachers have their own home URL; the wrapper defines the constant so
+// the shared logic below still renders there without looping.
+if ($role === 'teacher' && !defined('PQH_TEACHER_DASHBOARD_WRAPPER')) {
+    $pqhtdparams = [];
+    foreach ($_GET as $pqhtdkey => $pqhtdvalue) {
+        if (is_scalar($pqhtdvalue)) {
+            $pqhtdparams[(string)$pqhtdkey] = (string)$pqhtdvalue;
+        }
+    }
+    redirect(new moodle_url('/local/hubredirect/teacher_dashboard.php', $pqhtdparams));
+}
+
 // Students have their own home now.
 if ($role === 'student') {
     $pqhsdctx = pqh_requested_consumer_context();

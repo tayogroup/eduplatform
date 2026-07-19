@@ -1400,8 +1400,11 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
             ['Live schedule', $items['schedule'][1]],
         ];
     } else {
+        $staffhome = (is_siteadmin((int)$USER->id) || pqh_is_school_principal((int)$USER->id))
+            ? '/local/hubredirect/dashboard.php'
+            : '/local/hubredirect/teacher_dashboard.php';
         $items = [
-            'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', $params), $icons['dashboard']],
+            'dashboard' => ['Dashboard', new moodle_url($staffhome, $params), $icons['dashboard']],
             'workspace' => ['Workspace', new moodle_url('/local/hubredirect/teacher_workspace.php', $params), $icons['workspace']],
             'live' => ['Live', new moodle_url('/local/hubredirect/live_sessions.php', $params), $icons['live']],
             'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params), $icons['schedule']],

@@ -1284,7 +1284,76 @@ CSS;
  * Standard application shell markup: nav rail, blue app bar, and the
  * expandable-rail script. Echo directly after the page's <main> opens.
  */
+function pqh_shell_viewer_kind(int $userid): string {
+    global $DB;
+    if ($userid <= 0) {
+        return 'staff';
+    }
+    if (is_siteadmin($userid) || pqh_is_school_principal($userid)) {
+        return 'staff';
+    }
+    try {
+        if ($DB->record_exists_select(
+            'local_prequran_workspace_member',
+            "userid = ? AND status = 'active' AND workspace_role IN ('teacher', 'assistant_teacher', 'admin', 'owner', 'manager')",
+            [$userid]
+        )) {
+            return 'staff';
+        }
+    } catch (Throwable $e) {
+        // Table missing on older schemas; fall through.
+    }
+    try {
+        if ($DB->record_exists('local_prequran_teacher_student', ['teacherid' => $userid, 'status' => 'active'])) {
+            return 'staff';
+        }
+    } catch (Throwable $e) {
+        // Fall through.
+    }
+    try {
+        if ($DB->record_exists_select(
+            'local_prequran_teacher_profile',
+            'userid = ? AND LOWER(status) NOT IN (?, ?, ?)',
+            [$userid, 'archived', 'inactive', 'rejected']
+        )) {
+            return 'staff';
+        }
+    } catch (Throwable $e) {
+        // Fall through.
+    }
+    if ($DB->record_exists_sql(
+        "SELECT 1
+           FROM {role_assignments} ra
+           JOIN {role} r ON r.id = ra.roleid
+          WHERE ra.userid = ?
+            AND r.shortname IN ('editingteacher', 'teacher', 'manager')",
+        [$userid]
+    )) {
+        return 'staff';
+    }
+    try {
+        if ($DB->record_exists_select(
+            'local_prequran_workspace_member',
+            "userid = ? AND status = 'active' AND workspace_role = 'student'",
+            [$userid]
+        )) {
+            return 'student';
+        }
+    } catch (Throwable $e) {
+        // Fall through.
+    }
+    try {
+        if ($DB->record_exists('local_prequran_student_profile', ['userid' => $userid])) {
+            return 'student';
+        }
+    } catch (Throwable $e) {
+        // Fall through.
+    }
+    return 'parent';
+}
+
 function pqh_design_shell_html(string $shellclass, string $active = ''): string {
+    global $USER;
     $ctx = pqh_requested_consumer_context();
     $brand = trim((string)($ctx->consumername ?? '')) ?: 'EduPlatform';
     $initials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $brand) ?: 'EP', 0, 2));
@@ -1296,12 +1365,45 @@ function pqh_design_shell_html(string $shellclass, string $active = ''): string 
     if ($ws > 0) {
         $params['workspaceid'] = $ws;
     }
-    $items = [
-        'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', $params), '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'],
-        'workspace' => ['Workspace', new moodle_url('/local/hubredirect/teacher_workspace.php', $params), '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>'],
-        'live' => ['Live', new moodle_url('/local/hubredirect/live_sessions.php', $params), '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/>'],
-        'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params), '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>'],
+    $icons = [
+        'dashboard' => '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+        'workspace' => '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>',
+        'live' => '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/>',
+        'schedule' => '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
     ];
+    $viewer = pqh_shell_viewer_kind((int)$USER->id);
+    if ($viewer === 'student') {
+        $items = [
+            'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', $params), $icons['dashboard']],
+            'workspace' => ['Workplace', new moodle_url('/local/hubredirect/student_workplace.php', $params), $icons['workspace']],
+            'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params + ['childid' => (int)$USER->id]), $icons['schedule']],
+        ];
+        $appbar = [
+            ['Dashboard', $items['dashboard'][1]],
+            ['Student workplace', $items['workspace'][1]],
+        ];
+    } else if ($viewer === 'parent') {
+        $items = [
+            'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', $params), $icons['dashboard']],
+            'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params), $icons['schedule']],
+        ];
+        $appbar = [
+            ['Dashboard', $items['dashboard'][1]],
+            ['Live schedule', $items['schedule'][1]],
+        ];
+    } else {
+        $items = [
+            'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', $params), $icons['dashboard']],
+            'workspace' => ['Workspace', new moodle_url('/local/hubredirect/teacher_workspace.php', $params), $icons['workspace']],
+            'live' => ['Live', new moodle_url('/local/hubredirect/live_sessions.php', $params), $icons['live']],
+            'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params), $icons['schedule']],
+        ];
+        $appbar = [
+            ['Dashboard', $items['dashboard'][1]],
+            ['Teacher workspace', $items['workspace'][1]],
+            ['Live sessions', $items['live'][1]],
+        ];
+    }
     $logouturl = (new moodle_url('/local/hubredirect/logout.php'))->out(false);
     $html = '<nav class="pqh-gnav" aria-label="Global navigation">';
     $html .= '<a class="pqh-gnav__brand" href="' . $items['dashboard'][1]->out(false) . '" title="' . s($brand) . '">' . s($initials) . '</a>';
@@ -1314,9 +1416,9 @@ function pqh_design_shell_html(string $shellclass, string $active = ''): string 
     $html .= '<button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Expand or collapse navigation"><svg viewBox="0 0 24 24"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>Menu</button>';
     $html .= '</nav>';
     $html .= '<div class="pqh-appbar"><div class="pqh-appbar__brand"><span class="pqh-appbar__mark">' . s($initials) . '</span><span>' . s($brand) . '</span></div><div class="pqh-appbar__nav">';
-    $html .= '<a href="' . $items['dashboard'][1]->out(false) . '">Dashboard</a>';
-    $html .= '<a href="' . $items['workspace'][1]->out(false) . '">Teacher workspace</a>';
-    $html .= '<a href="' . $items['live'][1]->out(false) . '">Live sessions</a>';
+    foreach ($appbar as $link) {
+        $html .= '<a href="' . $link[1]->out(false) . '">' . s($link[0]) . '</a>';
+    }
     $html .= '<a class="pqh-appbar__logout" href="' . $logouturl . '">Logout</a>';
     $html .= '</div></div>';
     $html .= '<script>(function(){var shell=document.querySelector(".' . $shellclass . '");var toggle=document.getElementById("pqh-rail-toggle");var key="pqh_rail_expanded";'

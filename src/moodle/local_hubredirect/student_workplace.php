@@ -157,9 +157,9 @@ $pqhswbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqhswb
     <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
     Workplace
   </a>
-  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', ['workspaceid' => $workspaceid]))->out(false); ?>">
-    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg>
-    Live
+  <a class="pqh-gnav__item" href="<?php echo $studenttools['Live schedule']->out(false); ?>">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Schedule
   </a>
   <span class="pqh-gnav__spacer"></span>
   <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">
@@ -190,7 +190,7 @@ $pqhswbrandinitials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $pqhswb
   <div class="pqh-appbar__nav">
     <a href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a>
     <a href="<?php echo (new moodle_url('/local/hubredirect/communications.php', ['studentid' => $studentid, 'opencomm' => 'messages']))->out(false); ?>">Messages</a>
-    <a href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', ['workspaceid' => $workspaceid]))->out(false); ?>">Live sessions</a>
+    <a href="<?php echo $studenttools['Live schedule']->out(false); ?>">Live schedule</a>
     <a href="<?php echo (new moodle_url('/local/hubredirect/communications.php', ['studentid' => $studentid, 'opencomm' => 'announcements']))->out(false); ?>">Announcements</a>
     <button type="button" data-pq-support-action="open">Manage tickets</button>
     <button type="button" data-pq-support-action="new">Create a ticket</button>

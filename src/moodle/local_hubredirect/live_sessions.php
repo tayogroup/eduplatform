@@ -624,7 +624,7 @@ function pql_live_launch_bridge(string $joinurl, moodle_url $tutorurl, moodle_ur
     echo $OUTPUT->header();
     ?>
 <style>
-html,body{min-height:100%;background:#f4f8f6!important}
+html,body{min-height:100%;background:#f4f6f9!important}
 body{margin:0!important}
 body.pqh-live-page header,
 body.pqh-live-page footer,
@@ -634,14 +634,14 @@ body.pqh-live-page #page-footer,
 body.pqh-live-page .drawer,
 body.pqh-live-page .drawer-toggles,
 body.pqh-live-page .secondary-navigation{display:none!important}
-.pql-bridge{min-height:100vh;display:none;place-items:center;padding:24px;color:#243325;font-family:inherit}
+.pql-bridge{min-height:100vh;display:none;place-items:center;padding:24px;color:#0f2237;font-family:inherit}
 .pql-bridge.is-visible{display:grid}
-.pql-bridge__card{width:min(560px,100%);padding:24px;border:1px solid rgba(105,76,45,.14);border-radius:14px;background:#fff;box-shadow:0 24px 70px rgba(23,48,68,.14)}
-.pql-bridge__card h1{margin:0 0 8px;color:#221b22;font-size:28px;line-height:1.1;font-weight:950;letter-spacing:0}
-.pql-bridge__card p{margin:0 0 18px;color:#60735f;font-size:15px;font-weight:800}
+.pql-bridge__card{width:min(560px,100%);padding:24px;border:1px solid #e4e9ef;border-radius:14px;background:#fff;box-shadow:0 24px 70px rgba(23,48,68,.14)}
+.pql-bridge__card h1{margin:0 0 8px;color:#0f2237;font-size:28px;line-height:1.1;font-weight:950;letter-spacing:0}
+.pql-bridge__card p{margin:0 0 18px;color:#5b6b7c;font-size:15px;font-weight:800}
 .pql-bridge__actions{display:flex;flex-wrap:wrap;gap:10px}
-.pql-bridge__btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid rgba(105,76,45,.18);background:#6f4e32;color:#fff!important;text-decoration:none!important;font-size:14px;font-weight:950;cursor:pointer}
-.pql-bridge__btn--light{background:#fff7e7;color:#3f2c1f!important}
+.pql-bridge__btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid rgba(33,102,209,.25);background:#2166d1;color:#fff!important;text-decoration:none!important;font-size:14px;font-weight:950;cursor:pointer}
+.pql-bridge__btn--light{background:#edf3fc;color:#17498f!important}
 .pql-split{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#10202e}
 .pql-split[hidden]{display:none}
 .pql-split__bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 12px;background:#173044;color:#fff}
@@ -653,8 +653,6 @@ body.pqh-live-page .secondary-navigation{display:none!important}
 .pql-split__class{flex:1;min-width:0;height:100%;border:0;background:#10202e}
 .pql-split__materials{width:min(420px,38vw);height:100%;border:0;border-left:1px solid rgba(255,255,255,.18);background:#fff}
 .pql-split--nomat .pql-split__materials{display:none}
-<?php echo pqh_design_system_css('.pql-shell'); ?>
-<?php echo pqh_design_shell_css('.pql-shell'); ?>
 </style>
 <main class="pql-bridge">
   <section class="pql-bridge__card">
@@ -957,7 +955,7 @@ function pql_live_closed_page(int $sessionid, moodle_url $fallbackurl): void {
     echo $OUTPUT->header();
     ?>
 <style>
-html,body{min-height:100%;background:#f4f8f6!important}
+html,body{min-height:100%;background:#f4f6f9!important}
 body{margin:0!important}
 body.pqh-live-page header,
 body.pqh-live-page footer,
@@ -967,10 +965,10 @@ body.pqh-live-page #page-footer,
 body.pqh-live-page .drawer,
 body.pqh-live-page .drawer-toggles,
 body.pqh-live-page .secondary-navigation{display:none!important}
-.pql-closed{min-height:100vh;display:grid;place-items:center;padding:24px;color:#243325;font-family:inherit}
-.pql-closed__card{width:min(520px,100%);padding:24px;border:1px solid rgba(105,76,45,.14);border-radius:14px;background:#fff;box-shadow:0 24px 70px rgba(23,48,68,.14)}
-.pql-closed__card h1{margin:0 0 8px;color:#221b22;font-size:26px;line-height:1.1;font-weight:950;letter-spacing:0}
-.pql-closed__card p{margin:0;color:#60735f;font-size:15px;font-weight:800}
+.pql-closed{min-height:100vh;display:grid;place-items:center;padding:24px;color:#0f2237;font-family:inherit}
+.pql-closed__card{width:min(520px,100%);padding:24px;border:1px solid #e4e9ef;border-radius:14px;background:#fff;box-shadow:0 24px 70px rgba(23,48,68,.14)}
+.pql-closed__card h1{margin:0 0 8px;color:#0f2237;font-size:26px;line-height:1.1;font-weight:950;letter-spacing:0}
+.pql-closed__card p{margin:0;color:#5b6b7c;font-size:15px;font-weight:800}
 </style>
 <main class="pql-closed">
   <section class="pql-closed__card">
@@ -1972,7 +1970,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
 .pql-check:last-child{border-bottom:0}
 .pql-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950;cursor:pointer}
 .pql-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}
-.pql-btn--start{background:#6f4e32}
+.pql-btn--start{background:#2166d1}
 .pql-btn--danger{background:#8a332b}
 .pql-inline-form{display:inline-flex;margin:0}
 .pql-alert{margin-bottom:14px;padding:12px 14px;border-radius:8px;font-size:14px;font-weight:850;white-space:pre-line}
@@ -1996,6 +1994,8 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
 .pql-agenda__status{color:#5e7280;font-size:12px;font-weight:850}
 @media(max-width:850px){.pql-grid{grid-template-columns:1fr}.pql-top{display:block}.pql-title{font-size:24px}.pql-agenda__file{max-width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pql-shell'); ?>
+<?php echo pqh_design_shell_css('.pql-shell'); ?>
 </style>
 <main class="pql-shell">
 <?php echo pqh_design_shell_html('pql-shell'); ?>

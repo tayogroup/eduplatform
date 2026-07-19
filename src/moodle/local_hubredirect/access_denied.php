@@ -57,23 +57,26 @@ body.pqh-access-page #page-content,
 body.pqh-access-page #region-main,
 body.pqh-access-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
 body.pqh-access-page{background:#f4f7fb!important}
-.pqha-shell{min-height:100vh;padding:42px 18px;background:linear-gradient(180deg,#f1fff4 0,#fff 48%,#fff7e7 100%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#17324a}
+.pqha-shell{min-height:100vh;padding:42px 18px;background:#f4f6f9;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#0f2237}
 .pqha-wrap{max-width:860px;margin:0 auto}
 .pqha-top{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.pqha-mark{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#6f4e32;color:#fff;font-weight:950}
-.pqha-brand{margin:0;color:#4d3522;font-size:20px;font-weight:950}
-.pqha-card{padding:30px;border-radius:18px;background:#fff;border:1px solid rgba(111,78,50,.14);box-shadow:0 18px 46px rgba(105,76,45,.10)}
-.pqha-pill{display:inline-flex;align-items:center;min-height:30px;padding:0 11px;border-radius:999px;background:#eaffea;color:#3f8a55;font-size:13px;font-weight:950}
-.pqha-title{margin:16px 0 10px;color:#4d3522;font-size:32px;line-height:1.1;font-weight:950}
-.pqha-message{margin:0;color:#5f734e;font-size:17px;line-height:1.55;font-weight:760}
+.pqha-mark{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff;font-weight:950}
+.pqha-brand{margin:0;color:#0f2237;font-size:20px;font-weight:950}
+.pqha-card{padding:30px;border-radius:18px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqha-pill{display:inline-flex;align-items:center;min-height:30px;padding:0 11px;border-radius:999px;background:#edf3fc;color:#17498f;font-size:13px;font-weight:950}
+.pqha-title{margin:16px 0 10px;color:#0f2237;font-size:32px;line-height:1.1;font-weight:950}
+.pqha-message{margin:0;color:#5b6b7c;font-size:17px;line-height:1.55;font-weight:760}
 .pqha-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.pqha-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:10px;background:#3f8a55;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950}
-.pqha-btn--light{background:#eef4f6;color:#17324a!important;border:1px solid rgba(23,48,68,.12)}
-.pqha-note{margin:16px 0 0;color:#70806c;font-size:13px;font-weight:700}
-@media(max-width:620px){.pqha-shell{padding:24px 14px}.pqha-card{padding:22px}.pqha-title{font-size:25px}.pqha-actions{display:grid}}
+.pqha-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:10px;background:#2166d1;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950}
+.pqha-btn--light{background:#edf3fc;color:#17498f!important;border:1px solid #e0ebfa}
+.pqha-note{margin:16px 0 0;color:#8494a5;font-size:13px;font-weight:700}
+@media(max-width:620px){.pqha-card{padding:22px}.pqha-title{font-size:25px}.pqha-actions{display:grid}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqha-shell'); ?>
+<?php echo pqh_design_shell_css('.pqha-shell'); ?>
 </style>
 <main class="pqha-shell">
+<?php echo pqh_design_shell_html('pqha-shell'); ?>
   <div class="pqha-wrap">
     <div class="pqha-top pqh-workspace-top">
       <div class="pqha-mark"><?php echo s($consumerinitial); ?></div>
@@ -84,7 +87,7 @@ body.pqh-access-page{background:#f4f7fb!important}
       <h1 class="pqha-title pqh-workspace-title"><?php echo s($title); ?></h1>
       <p class="pqha-message"><?php echo s($message); ?></p>
       <div class="pqha-actions pqh-workspace-actions">
-        <a class="pqha-btn" href="<?php echo $dashboardurl->out(false); ?>">Back to dashboard</a>
+        <a class="pqha-btn pqha-btn--primary" href="<?php echo $dashboardurl->out(false); ?>">Back to dashboard</a>
         <a class="pqha-btn pqha-btn--light" href="<?php echo $returnurl->out(false); ?>">Go back</a>
       </div>
       <p class="pqha-note">If this does not look right, please ask your parent, teacher, or <?php echo s($consumername); ?> support for help.</p>

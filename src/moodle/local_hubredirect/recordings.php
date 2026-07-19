@@ -390,8 +390,11 @@ body.pqh-recordings-page{background:#f4f7fb!important}
 .pqr-empty{max-width:980px;margin:34px auto;padding:24px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
 @media(max-width:640px){.pqr-top{display:block}.pqr-btn{margin-top:14px}.pqr-group__head{display:block}.pqr-chain{margin-top:12px}.pqr-card__head{display:block}.pqr-title{font-size:25px}}
 <?php echo pqh_dashboard_header_css(); ?>
+<?php echo pqh_design_system_css('.pqr-shell'); ?>
+<?php echo pqh_design_shell_css('.pqr-shell'); ?>
 </style>
 <main class="pqr-shell">
+<?php echo pqh_design_shell_html('pqr-shell'); ?>
   <div class="pqr-wrap">
     <section class="pqr-top pqh-workspace-top">
       <div>

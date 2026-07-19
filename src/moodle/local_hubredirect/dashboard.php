@@ -3022,75 +3022,6 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     </section>
   <?php endif; ?>
 
-  <?php if ($role === 'teacher' && !empty($teacherliveoverview['ready'])): ?>
-    <?php
-      $pqhtodometrics = (array)($teacherliveoverview['metrics'] ?? []);
-      $pqhtodotoday = (array)($teacherliveoverview['today'] ?? []);
-      $pqhtodonext = $pqhtodotoday ? reset($pqhtodotoday) : null;
-      $pqhtodocount = (int)($pqhtodometrics['today'] ?? 0) + (int)($pqhtodometrics['needsreview'] ?? 0) + (int)($pqhtodometrics['followups'] ?? 0);
-    ?>
-    <section class="pqh-course-panel" aria-label="To do"<?php echo pqh_widget_attrs('todo'); ?>>
-      <div class="pqh-course-panel__head">
-        <div><h2>To do</h2><p>Prioritized · every item has an action.</p></div>
-      </div>
-      <div class="pqh-todo">
-        <?php if ((int)($pqhtodometrics['today'] ?? 0) > 0): ?>
-          <div class="pqh-todo__item">
-            <span class="pqh-todo__ico pqh-todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span>
-            <span class="pqh-todo__body">
-              <strong><?php echo (int)$pqhtodometrics['today']; ?> live class<?php echo (int)$pqhtodometrics['today'] === 1 ? '' : 'es'; ?> today</strong>
-              <span><?php echo ($pqhtodonext && !empty($pqhtodonext->title)) ? s((string)$pqhtodonext->title) . ' · ' . userdate((int)($pqhtodonext->scheduled_start ?? 0), get_string('strftimetime')) : 'Open live sessions to start on time.'; ?></span>
-            </span>
-            <a class="pqh-btn" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Start</a>
-          </div>
-        <?php endif; ?>
-        <?php if ((int)($pqhtodometrics['needsreview'] ?? 0) > 0): ?>
-          <div class="pqh-todo__item">
-            <span class="pqh-todo__ico pqh-todo__ico--warn"><svg viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
-            <span class="pqh-todo__body">
-              <strong><?php echo (int)$pqhtodometrics['needsreview']; ?> session<?php echo (int)$pqhtodometrics['needsreview'] === 1 ? '' : 's'; ?> awaiting review</strong>
-              <span>Record attendance and post-class notes.</span>
-            </span>
-            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Review</a>
-          </div>
-        <?php endif; ?>
-        <?php if ((int)($pqhtodometrics['followups'] ?? 0) > 0): ?>
-          <div class="pqh-todo__item">
-            <span class="pqh-todo__ico pqh-todo__ico--risk"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
-            <span class="pqh-todo__body">
-              <strong><?php echo (int)$pqhtodometrics['followups']; ?> parent follow-up<?php echo (int)$pqhtodometrics['followups'] === 1 ? '' : 's'; ?> open</strong>
-              <span>Families are waiting on a reply.</span>
-            </span>
-            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_followups.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Respond</a>
-          </div>
-        <?php endif; ?>
-        <?php if ((int)($pqhtodometrics['upcoming'] ?? 0) > 0): ?>
-          <div class="pqh-todo__item">
-            <span class="pqh-todo__ico pqh-todo__ico--info"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
-            <span class="pqh-todo__body">
-              <strong><?php echo (int)$pqhtodometrics['upcoming']; ?> class<?php echo (int)$pqhtodometrics['upcoming'] === 1 ? '' : 'es'; ?> in the next 7 days</strong>
-              <span>Check your teaching schedule.</span>
-            </span>
-            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">Schedule</a>
-          </div>
-        <?php endif; ?>
-        <?php if ($hasworkspace): ?>
-          <div class="pqh-todo__item">
-            <span class="pqh-todo__ico pqh-todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
-            <span class="pqh-todo__body"><strong>Students needing attention</strong><span>Early-warning rules: inactivity, low attendance, missed classes.</span></span>
-            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('at_risk_report.php', ['workspaceid' => $currentworkspaceid])->out(false); ?>">Review</a>
-          </div>
-        <?php endif; ?>
-        <?php if ($pqhtodocount === 0 && (int)($pqhtodometrics['upcoming'] ?? 0) === 0): ?>
-          <div class="pqh-todo__item">
-            <span class="pqh-todo__ico pqh-todo__ico--ok"><svg viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg></span>
-            <span class="pqh-todo__body"><strong>All caught up</strong><span>No classes, reviews, or follow-ups waiting.</span></span>
-            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_create_wizard.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Create session</a>
-          </div>
-        <?php endif; ?>
-      </div>
-    </section>
-  <?php endif; ?>
 
   <?php if ($pqhisyounglearner): ?>
     <?php
@@ -3232,6 +3163,75 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         <span class="pqh-student-profile__item"><b>Student ID</b><span><?php echo s($selectedstudentinfo['student_id'] !== '' ? $selectedstudentinfo['student_id'] : 'Not set'); ?></span></span>
         <span class="pqh-student-profile__item"><b>Parent ID</b><span><?php echo s($selectedstudentinfo['parent_id'] !== '' ? $selectedstudentinfo['parent_id'] : 'Not linked'); ?></span></span>
         <span class="pqh-student-profile__item pqh-student-profile__item--wide"><b>Student location</b><span><?php echo s($selectedstudentinfo['location'] !== '' ? $selectedstudentinfo['location'] : 'Not set'); ?></span></span>
+      </div>
+    </section>
+  <?php endif; ?>
+  <?php if ($role === 'teacher' && !empty($teacherliveoverview['ready'])): ?>
+    <?php
+      $pqhtodometrics = (array)($teacherliveoverview['metrics'] ?? []);
+      $pqhtodotoday = (array)($teacherliveoverview['today'] ?? []);
+      $pqhtodonext = $pqhtodotoday ? reset($pqhtodotoday) : null;
+      $pqhtodocount = (int)($pqhtodometrics['today'] ?? 0) + (int)($pqhtodometrics['needsreview'] ?? 0) + (int)($pqhtodometrics['followups'] ?? 0);
+    ?>
+    <section class="pqh-course-panel" aria-label="To do"<?php echo pqh_widget_attrs('todo'); ?>>
+      <div class="pqh-course-panel__head">
+        <div><h2>To do</h2><p>Prioritized · every item has an action.</p></div>
+      </div>
+      <div class="pqh-todo">
+        <?php if ((int)($pqhtodometrics['today'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--info"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo (int)$pqhtodometrics['today']; ?> live class<?php echo (int)$pqhtodometrics['today'] === 1 ? '' : 'es'; ?> today</strong>
+              <span><?php echo ($pqhtodonext && !empty($pqhtodonext->title)) ? s((string)$pqhtodonext->title) . ' · ' . userdate((int)($pqhtodonext->scheduled_start ?? 0), get_string('strftimetime')) : 'Open live sessions to start on time.'; ?></span>
+            </span>
+            <a class="pqh-btn" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Start</a>
+          </div>
+        <?php endif; ?>
+        <?php if ((int)($pqhtodometrics['needsreview'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--warn"><svg viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo (int)$pqhtodometrics['needsreview']; ?> session<?php echo (int)$pqhtodometrics['needsreview'] === 1 ? '' : 's'; ?> awaiting review</strong>
+              <span>Record attendance and post-class notes.</span>
+            </span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Review</a>
+          </div>
+        <?php endif; ?>
+        <?php if ((int)($pqhtodometrics['followups'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--risk"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo (int)$pqhtodometrics['followups']; ?> parent follow-up<?php echo (int)$pqhtodometrics['followups'] === 1 ? '' : 's'; ?> open</strong>
+              <span>Families are waiting on a reply.</span>
+            </span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_followups.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Respond</a>
+          </div>
+        <?php endif; ?>
+        <?php if ((int)($pqhtodometrics['upcoming'] ?? 0) > 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--info"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+            <span class="pqh-todo__body">
+              <strong><?php echo (int)$pqhtodometrics['upcoming']; ?> class<?php echo (int)$pqhtodometrics['upcoming'] === 1 ? '' : 'es'; ?> in the next 7 days</strong>
+              <span>Check your teaching schedule.</span>
+            </span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">Schedule</a>
+          </div>
+        <?php endif; ?>
+        <?php if ($hasworkspace): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--warn"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+            <span class="pqh-todo__body"><strong>Students needing attention</strong><span>Early-warning rules: inactivity, low attendance, missed classes.</span></span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('at_risk_report.php', ['workspaceid' => $currentworkspaceid])->out(false); ?>">Review</a>
+          </div>
+        <?php endif; ?>
+        <?php if ($pqhtodocount === 0 && (int)($pqhtodometrics['upcoming'] ?? 0) === 0): ?>
+          <div class="pqh-todo__item">
+            <span class="pqh-todo__ico pqh-todo__ico--ok"><svg viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg></span>
+            <span class="pqh-todo__body"><strong>All caught up</strong><span>No classes, reviews, or follow-ups waiting.</span></span>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('live_create_wizard.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">Create session</a>
+          </div>
+        <?php endif; ?>
       </div>
     </section>
   <?php endif; ?>

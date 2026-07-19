@@ -2811,6 +2811,9 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-tccard__chips .is-risk{background:#fbe9e7;color:#c0392b}
 .pqh-tccard__bar{display:block;height:7px;border-radius:999px;background:var(--pqh-tint);overflow:hidden;margin:8px 0 2px}
 .pqh-tccard__bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pqh-primary),#4d8be0)}
+.pqh-course-panel--bare{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important}
+.pqh-course-panel--bare .pqh-course-panel__head h2{margin:0 0 8px;color:var(--pqh-faint)!important;font-size:10.5px!important;font-weight:750!important;text-transform:uppercase;letter-spacing:.07em}
+.pqh-course-panel--bare .pqh-course-panel__head p{display:none}
 .pqh-tanalytics__row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:end}
 .pqh-tanalytics__label{margin:0 0 8px;color:var(--pqh-faint);font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em}
 .pqh-stackbar{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--pqh-tint)}
@@ -3261,7 +3264,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
           ];
       } else if ($role === 'teacher' && $teacherenrolledcourses) {
           $coursepanelsections[] = [
-              'title' => 'Teacher enrolled courses',
+              'title' => 'My courses',
               'subtitle' => '',
               'courses' => $teacherenrolledcourses,
               'studentid' => 0,
@@ -3303,7 +3306,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         $coursepanelempty = (string)$coursepanelsection['empty'];
         $coursepanellaunchmode = (string)($coursepanelsection['launchmode'] ?? 'student_context');
       ?>
-    <section class="pqh-course-panel" aria-label="<?php echo s($coursepaneltitle); ?>"<?php echo pqh_widget_attrs('courses'); ?>>
+    <section class="pqh-course-panel<?php echo $role === 'teacher' ? ' pqh-course-panel--bare' : ''; ?>" aria-label="<?php echo s($coursepaneltitle); ?>"<?php echo pqh_widget_attrs('courses'); ?>>
       <div class="pqh-course-panel__head">
         <div>
           <h2><?php echo s($coursepaneltitle); ?></h2>

@@ -2789,11 +2789,11 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-tkpi__card a:hover{text-decoration:underline}
 @media(min-width:1101px){
 .pqh-wrap--tcols{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);column-gap:16px;align-content:start}
-.pqh-wrap--tcols>*{grid-column:1/-1;min-width:0}
+.pqh-wrap--tcols>*{grid-column:1;min-width:0}
 .pqh-wrap--tcols>.pqh-hero{grid-column:1/-1;grid-row:1}
 .pqh-wrap--tcols>.pqh-tkpi{grid-column:1/-1;grid-row:2}
-.pqh-wrap--tcols>section[aria-label="To do"]{grid-column:2;grid-row:3/span 14;align-self:start}
-.pqh-wrap--tcols>section:not([aria-label="To do"]):not(.pqh-hero):not(.pqh-tkpi){grid-column:1}
+.pqh-wrap--tcols>form.pqh-filter{grid-column:1/-1;grid-row:3}
+.pqh-wrap--tcols>section[aria-label="To do"]{grid-column:2;grid-row:4/span 14;align-self:start}
 }
 .pqh-tccard__chip{position:absolute;top:10px;right:10px;z-index:1;min-height:22px;display:inline-flex;align-items:center;padding:1px 9px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--pqh-ink);font-size:11px;font-weight:700}
 .pqh-tccard__meta{display:block;margin:2px 0 8px;color:var(--pqh-faint);font-size:11.5px;font-weight:600}

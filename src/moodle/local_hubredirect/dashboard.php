@@ -2130,6 +2130,20 @@ $hasworkspace = $currentworkspaceid > 0;
 $teacherliveoverview = $role === 'teacher' ? pqh_teacher_live_overview((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0) : [];
 $pqhisyounglearner = $role === 'student' && pqh_is_managed_student((int)$USER->id);
 
+// Regular students have their own home now; young learners keep the
+// simplified panel here.
+if ($role === 'student' && !$pqhisyounglearner) {
+    $pqhsdctx = pqh_requested_consumer_context();
+    $pqhsdparams = [];
+    if (trim((string)($pqhsdctx->consumerslug ?? '')) !== '') {
+        $pqhsdparams['consumer'] = (string)$pqhsdctx->consumerslug;
+    }
+    if ($hasworkspace) {
+        $pqhsdparams['workspaceid'] = $currentworkspaceid;
+    }
+    redirect(new moodle_url('/local/hubredirect/student_dashboard.php', $pqhsdparams));
+}
+
 // ---- Phase 5: dashboard customization (per-user Moodle preferences). ----
 $pqhwidgetdefs = [];
 if ($role === 'teacher') {

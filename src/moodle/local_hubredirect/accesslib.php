@@ -1422,6 +1422,15 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
         $html .= '<a class="pqh-gnav__item' . ($key === $active ? ' is-active' : '') . '" href="' . $item[1]->out(false) . '">'
             . '<svg viewBox="0 0 24 24">' . $item[2] . '</svg><span class="pqh-gnav__label">' . s($item[0]) . '</span></a>';
     }
+    if (!empty($opts['navitems']) && is_array($opts['navitems'])) {
+        foreach ($opts['navitems'] as $item) {
+            $url = ($item['url'] ?? '') instanceof moodle_url ? $item['url']->out(false) : (string)($item['url'] ?? '#');
+            $attrs = trim((string)($item['attrs'] ?? ''));
+            $html .= '<a class="pqh-gnav__item"' . ($attrs !== '' ? ' ' . $attrs : '') . ' href="' . $url . '">'
+                . '<svg viewBox="0 0 24 24">' . (string)($item['icon'] ?? '') . '</svg>'
+                . '<span class="pqh-gnav__label">' . s((string)($item['label'] ?? '')) . '</span></a>';
+        }
+    }
     $html .= '<div class="pqh-gnav__foot">';
     $html .= '<a class="pqh-gnav__item" href="' . $logouturl . '"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg><span class="pqh-gnav__label">Logout</span></a>';
     $html .= '<button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Collapse or expand navigation"><svg viewBox="0 0 24 24"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg><span class="pqh-gnav__label">Collapse</span></button>';

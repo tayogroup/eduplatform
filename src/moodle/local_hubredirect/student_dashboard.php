@@ -254,7 +254,37 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 <?php echo pqh_design_shell_css('.pqhsd-shell'); ?>
 </style>
 <main class="pqhsd-shell">
-<?php echo pqh_design_shell_html('pqhsd-shell', 'dashboard', ['title' => 'Dashboard']); ?>
+<?php
+echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
+    'title' => 'Dashboard',
+    'navitems' => [
+        [
+            'label' => 'Messages',
+            'url' => new moodle_url('/local/hubredirect/communications.php', ['studentid' => $userid, 'opencomm' => 'messages']),
+            'icon' => '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/>',
+            'attrs' => 'data-opencomm="messages"',
+        ],
+        [
+            'label' => 'Announcements',
+            'url' => new moodle_url('/local/hubredirect/communications.php', ['studentid' => $userid, 'opencomm' => 'announcements']),
+            'icon' => '<path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+            'attrs' => 'data-opencomm="announcements"',
+        ],
+        [
+            'label' => 'Manage tickets',
+            'url' => new moodle_url('/local/hubredirect/support.php', ['studentid' => $userid]),
+            'icon' => '<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+            'attrs' => 'data-pq-support-action="open"',
+        ],
+        [
+            'label' => 'Create a ticket',
+            'url' => new moodle_url('/local/hubredirect/support.php', ['studentid' => $userid, 'new' => 1]),
+            'icon' => '<circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/>',
+            'attrs' => 'data-pq-support-action="new"',
+        ],
+    ],
+]);
+?>
 <div class="pqhsd-wrap">
   <div class="pqhsd-pagehead">
     <div>

@@ -2130,9 +2130,8 @@ $hasworkspace = $currentworkspaceid > 0;
 $teacherliveoverview = $role === 'teacher' ? pqh_teacher_live_overview((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0) : [];
 $pqhisyounglearner = $role === 'student' && pqh_is_managed_student((int)$USER->id);
 
-// Regular students have their own home now; young learners keep the
-// simplified panel here.
-if ($role === 'student' && !$pqhisyounglearner) {
+// Students have their own home now.
+if ($role === 'student') {
     $pqhsdctx = pqh_requested_consumer_context();
     $pqhsdparams = [];
     if (trim((string)($pqhsdctx->consumerslug ?? '')) !== '') {

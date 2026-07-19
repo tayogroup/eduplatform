@@ -13,22 +13,6 @@ if (pqh_shell_viewer_kind($userid) === 'staff') {
     redirect(new moodle_url('/local/hubredirect/dashboard.php'));
 }
 
-// Young learners (managed students) keep the simplified dashboard panel.
-require_once($CFG->dirroot . '/user/profile/lib.php');
-try {
-    $pqhsdprofile = profile_user_record($userid, false);
-    foreach (['managed_student', 'managedstudent', 'managed'] as $pqhsdfield) {
-        if (isset($pqhsdprofile->{$pqhsdfield})) {
-            if (in_array(strtolower(trim((string)$pqhsdprofile->{$pqhsdfield})), ['1', 'yes', 'true', 'on'], true)) {
-                redirect(new moodle_url('/local/hubredirect/dashboard.php'));
-            }
-            break;
-        }
-    }
-} catch (Throwable $e) {
-    // Profile lookup unavailable; treat as a regular student.
-}
-
 $consumercontext = pqh_requested_consumer_context();
 $urlparams = [];
 if (trim((string)($consumercontext->consumerslug ?? '')) !== '') {

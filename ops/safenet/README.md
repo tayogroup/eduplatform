@@ -41,6 +41,27 @@ Guidance:
 - **Upgrade trigger**: sustained CPU > 40%, RAM > 70%, or disk > 70% — resize
   in place (both suggested providers support live/offline resizes).
 
+## Chosen providers (decided 2026-07-20)
+
+- **dns1 (primary)** — Hetzner Cloud **CX23** (2 vCPU / 4 GB / 40 GB NVMe,
+  €5.49/mo excl. VAT + 20% backups add-on), region Falkenstein or Helsinki,
+  Ubuntu 24.04, SSH key at creation, IPv4 + IPv6 enabled. Port/AUP posture
+  verified: only outbound mail ports blocked; service agreement prohibits only
+  crypto-mining/scanning/spoofing.
+- **dns2 (secondary)** — DigitalOcean **Basic Regular Droplet**, region NYC3 or
+  ATL1 (US East), Ubuntu 24.04, SSH key at creation, backups add-on. Start at
+  **1 vCPU / 2 GB / 50 GB ($12/mo)** and resize **CPU/RAM-only** to
+  2 vCPU / 4 GB when device count passes ~200 (reversible, keeps the 50 GB
+  disk so downgrade stays possible). DO support confirmed in writing
+  (2026-07-20): inbound 53 unblocked (only outbound SMTP filtered), KVM, clean
+  images, static IPv4, PTR auto-set from an FQDN droplet name.
+- Rejected: ScalaHosting managed plan (panel occupies ports) and their
+  self-managed VPS ($24.95/mo — ~6x market for identical spec; AUP approval on
+  file in ticket if ever revisited). Premium "General Purpose /
+  block-storage-only" tiers at any provider are the wrong product line.
+- **Naming**: droplet/server hostnames must be the FQDNs (dns1.safe.<domain> /
+  dns2.safe.<domain>) — on DO this is also what sets the PTR record.
+
 ## Bring-up order
 
 0. **First login hardening** (providers often hand over password-based root SSH):

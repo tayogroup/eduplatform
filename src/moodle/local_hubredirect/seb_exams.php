@@ -212,8 +212,8 @@ echo $OUTPUT->header();
             <label for="pqsm-known">Exam content</label>
             <select class="pqsm-select" id="pqsm-known" name="knowncontent">
               <option value="">Choose content...</option>
-              <?php foreach (pqh_seb_known_content() as $url => $label): ?>
-                <option value="<?php echo s($url); ?>"><?php echo s($label); ?></option>
+              <?php foreach (pqh_seb_known_content() as $url => $meta): ?>
+                <option value="<?php echo s($url); ?>"><?php echo s((string)$meta['label']); ?></option>
               <?php endforeach; ?>
             </select>
           </div>
@@ -260,6 +260,7 @@ echo $OUTPUT->header();
               <?php if (trim((string)$exam->embedurl) === ''): ?><span class="pqsm-pill">No content URL</span><?php endif; ?>
             </p>
             <div class="pqsm-rowactions">
+              <a class="pqsm-btn pqsm-btn--light" href="<?php echo pqh_seb_results_url((int)$exam->id)->out(false); ?>">Results</a>
               <a class="pqsm-btn pqsm-btn--light" href="<?php echo pqh_seb_exam_url((int)$exam->id)->out(false); ?>">Open exam page</a>
               <a class="pqsm-btn pqsm-btn--light" href="<?php echo pqh_seb_config_download_url((int)$exam->id)->out(false); ?>">Download config</a>
               <?php if ((string)$exam->status === 'active'): ?>

@@ -22,13 +22,34 @@ function pqh_seb_tables_ready(): bool {
         && pqh_table_exists_safe('local_prequran_seb_attempt');
 }
 
-// Content the exam creator can pick without knowing URLs. Custom URLs are
+// Content the exam creator can pick without knowing URLs, with lesson/unit
+// metadata so results can deep-link into the quiz report. Custom URLs are
 // also accepted; English/Mathematics entries join this list once their
 // production URLs are decided.
 function pqh_seb_known_content(): array {
     return [
-        '/local/hubredirect/issue_child.php?goto=alphabet_quiz&managed_student=0' => 'Alphabet quiz unit (Pre-Quraan)',
+        '/local/hubredirect/issue_child.php?goto=alphabet_quiz&managed_student=0' => [
+            'label' => 'Alphabet quiz unit (Pre-Quraan)',
+            'lessonid' => 'alphabet',
+            'unitid' => 'alphabet_quiz',
+        ],
     ];
+}
+
+// Quiz report deep link for an exam's content, when the content is a known
+// unit with report data. Returns null for custom URLs we cannot map.
+function pqh_seb_quizreport_url(stdClass $exam, int $userid): ?moodle_url {
+    $known = pqh_seb_known_content();
+    $meta = $known[trim((string)$exam->embedurl)] ?? null;
+    if (!$meta || empty($meta['lessonid']) || empty($meta['unitid'])) {
+        return null;
+    }
+    return new moodle_url('/local/hubredirect/quiz_report.php', [
+        'pq_env' => 'integration',
+        'lessonid' => (string)$meta['lessonid'],
+        'unitid' => (string)$meta['unitid'],
+        'userid' => $userid,
+    ]);
 }
 
 function pqh_seb_exam_record(int $examid): ?stdClass {
@@ -288,6 +309,50 @@ function pqh_seb_audit(string $action, int $examid, array $details = []): void {
 // ---------------------------------------------------------------------------
 // Queries for the management and student surfaces.
 // ---------------------------------------------------------------------------
+
+function pqh_seb_results_url(int $examid): moodle_url {
+    return new moodle_url('/local/hubredirect/seb_results.php', ['examid' => $examid]);
+}
+
+// One row per assigned student with their attempt (or null): the results view.
+function pqh_seb_exam_results(stdClass $exam): array {
+    global $DB;
+    $rows = [];
+    $attempts = $DB->get_records('local_prequran_seb_attempt', ['examid' => (int)$exam->id]);
+    $byuser = [];
+    foreach ($attempts as $attempt) {
+        $byuser[(int)$attempt->userid] = $attempt;
+    }
+    foreach (pqh_seb_exam_studentids((int)$exam->id) as $studentid) {
+        $user = core_user::get_user($studentid);
+        $rows[] = (object)[
+            'studentid' => $studentid,
+            'name' => $user ? fullname($user) : ('Student ' . $studentid),
+            'attempt' => $byuser[$studentid] ?? null,
+        ];
+    }
+    usort($rows, static function($a, $b) {
+        return strcasecmp((string)$a->name, (string)$b->name);
+    });
+    return $rows;
+}
+
+// Teacher remedy for crashed or interrupted attempts: wipe the attempt so
+// the student can start fresh. Audited.
+function pqh_seb_attempt_reset(stdClass $exam, int $studentid): void {
+    global $DB;
+    $attempt = pqh_seb_attempt((int)$exam->id, $studentid);
+    if (!$attempt) {
+        return;
+    }
+    $DB->delete_records('local_prequran_seb_attempt', ['id' => (int)$attempt->id]);
+    pqh_seb_audit('seb_attempt_reset', (int)$exam->id, [
+        'studentid' => $studentid,
+        'previous_status' => (string)$attempt->status,
+        'previous_started' => (int)$attempt->timestarted,
+        'previous_finished' => (int)$attempt->timefinished,
+    ]);
+}
 
 function pqh_seb_exams_for_manager(int $userid, int $workspaceid): array {
     global $DB;

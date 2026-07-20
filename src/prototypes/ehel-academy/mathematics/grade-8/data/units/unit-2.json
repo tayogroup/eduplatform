@@ -1,0 +1,1788 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.222Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "math-g08-u02",
+    "unitNo": 2,
+    "unitTitle": "Expressions, Formulae and Equations",
+    "unitOverview": "Welcome to Unit 2, where you step through one of the most important doorways in all of mathematics: the doorway from arithmetic into algebra. Until now, most of your maths has used fixed numbers – 7 camels, 40 shillings, 12 dates. In this unit you will start using letters such as x, y and n to stand for numbers that can change or that you do not yet know. This single idea turns mathematics into a powerful language for describing patterns, writing rules, and solving problems that would be almost impossible with numbers alone.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 2 (1)/Year 8 - Unit 2 Lesson.docx",
+      "Year 8 (1)/Unit 2 (1)/Year 8 - Unit 2 Activities.docx",
+      "Year 8 (1)/Unit 2 (1)/Year 8 - Unit 2 Practice.docx",
+      "Year 8 (1)/Unit 2 (1)/Year 8 - Unit 2 Reference.docx"
+    ],
+    "sourceBlockCount": 368,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "This unit is designed for self-paced learning, so you move at your own speed. Read each explanation slowly, and copy every worked example onto paper, doing the steps yourself rather than only reading them. Algebra is a subject you learn through your pencil, not just your eyes. Your AI tutor is available day and night to give you extra questions, explain a tricky step in a new way, or check your working line by line. Your teacher will also meet with you about twice a week to help with anything that still feels difficult.",
+    "One warning before we begin: algebra rewards care and neatness. A single lost minus sign or a term combined wrongly can change the whole answer. Do not rush. Write each step underneath the last, keep your equals signs lined up, and check your work by substituting a number back in. If you make a mistake, that is not failure – it is exactly the information you need to know what to practise next. Every mathematician, engineer and scientist you admire once sat where you sit now, learning these very same rules.",
+    "Understand a variable as a letter that stands for an unknown or changing number.",
+    "Identify the terms, coefficients and constants in an algebraic expression.",
+    "Write algebraic expressions from words, pictures and real-life situations.",
+    "Simplify expressions by collecting like terms, keeping signs correct.",
+    "Expand brackets using the distributive law, including negative multipliers.",
+    "Factorise expressions by taking out the highest common factor.",
+    "Substitute numbers, including negatives, into expressions and formulae.",
+    "Solve linear equations, including those with brackets and variables on both sides."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-variables-terms-and-expressions",
+      "title": "Variables, Terms and Expressions",
+      "explanation": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change. When Amina writes n for the number of goats her family owns, that letter can be 12 one year and 15 the next – the letter stays the same, but the value it holds can change. This is the shift from arithmetic to algebra: instead of thinking about one fixed number, you think about a whole family of numbers at once. An algebraic expression is a group of numbers and variables joined by…",
+      "example": "Every expression is built from terms. A term is a single piece of the expression, and terms are separated by + or − signs. In the expression 3x² + 2x − 7, there are three terms: 3x², 2x and −7. Notice that the minus…"
+    },
+    {
+      "id": "concept-2-building-expressions-from-words",
+      "title": "Building Expressions from Words",
+      "explanation": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols. The trick is to know which words point to which operations, and to choose a letter for the unknown quantity before you start. Here are the most common translations. More than and increased by mean add. Less than and decreased by mean subtract – but watch the order carefully. Times, product of and multiplied by mean multiply. Divided by…",
+      "example": "5 less than a number n → n − 5 (not 5 − n – order matters!)"
+    },
+    {
+      "id": "concept-3-simplifying-by-collecting-like-terms",
+      "title": "Simplifying by Collecting Like Terms",
+      "explanation": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms. Like terms are terms that have exactly the same variable part – the same letters raised to the same powers. Only like terms can be added or subtracted together. For example, 3x and 7x are like terms because both are just x to the first power, so 3x + 7x = 10x. Likewise 2x²y and −5x²y are like terms because both have x² and y.…",
+      "example": "Why does collecting like terms work? It is really the distributive law used in reverse: 3x + 7x = (3 + 7)x = 10x. You are simply counting how many x's you have, just as 3 camels plus 7 camels makes 10 camels. You cannot…"
+    },
+    {
+      "id": "concept-4-expanding-brackets",
+      "title": "Expanding Brackets",
+      "explanation": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term inside the bracket. Removing brackets this way is called expanding. Start simple. To expand 3(x + 4), multiply the 3 by each term inside: 3 × x = 3x, and 3 × 4 = 12. So 3(x + 4) = 3x + 12. A very common mistake is to write 3(x + 4) = 3x + 4, forgetting to multiply the 4. The bracket means the 3 belongs…",
+      "example": "Signs need extra care. To expand 5(2x − 3), we get 5 × 2x = 10x and 5 × (−3) = −15, so the answer is 10x − 15. When the multiplier is negative, every sign inside flips. To expand −2(3x − 4), we do −2 × 3x = −6x and −2 ×…"
+    },
+    {
+      "id": "concept-5-factorising-expressions",
+      "title": "Factorising Expressions",
+      "explanation": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket. This is a powerful skill because a factorised expression often reveals structure that the expanded form hides. Look at 12x + 18. Both terms share a factor: the HCF of 12 and 18 is 6. Take out the 6, and ask what is left inside: 12x ÷ 6 = 2x, and 18 ÷ 6 = 3. So 12x + 18 = 6(2x + 3). You can always check a…",
+      "example": "Try 15y − 10. The HCF of 15 and 10 is 5. Dividing gives 15y ÷ 5 = 3y and −10 ÷ 5 = −2, so 15y − 10 = 5(3y − 2). To *factorise completely* means to take out the largest possible common factor. Writing 15y − 10 = 5(3y −…"
+    },
+    {
+      "id": "concept-6-formulae-and-substitution",
+      "title": "Formulae and Substitution",
+      "explanation": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A is the subject. Formulae appear everywhere: in geometry, science, trade and daily life, because they capture a relationship once and let you use it again and again. Substitution means replacing each letter with a given number and then working out the value.…",
+      "example": "Substituting negative numbers needs special care, and brackets are your best friend. To evaluate x² − 2x when x = −3, write (−3)² − 2(−3). Now (−3)² = 9 and −2(−3) = +6, so the value is 9 + 6 = 15. Without the brackets…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Variables, Terms and Expressions",
+      "context": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change. When Amina writes n for the number of goats her family owns, that letter can be 12 one year and 15 the next – the letter stays…",
+      "prompt": "Simplify: a) 5x + 3x b) 7a − 4a + 2a c) 9m + m − 3m.",
+      "answer": "1) a) 8x, b) 5a, c) 7m.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 8x, b) 5a, c) 7m."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Building Expressions from Words",
+      "context": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols. The trick is to know which words point to which operations, and to choose a…",
+      "prompt": "Write an expression: a) 7 more than twice a number n b) a number decreased by 8.",
+      "answer": "a) 2n + 7, b) x − 8.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 2n + 7, b) x − 8."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Simplifying by Collecting Like Terms",
+      "context": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms. Like terms are terms that have exactly the same variable part – the…",
+      "prompt": "Expand: a) 4(x + 5) b) 3(2y − 1).",
+      "answer": "a) 4x + 20, b) 6y − 3.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 4x + 20, b) 6y − 3."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Expanding Brackets",
+      "context": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term inside the bracket. Removing brackets this…",
+      "prompt": "Evaluate 3x + 4 when a) x = 5 b) x = 0 c) x = −2.",
+      "answer": "a) 19, b) 4, c) −2.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 19, b) 4, c) −2."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Factorising Expressions",
+      "context": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket. This is a powerful skill because a factorised…",
+      "prompt": "State the coefficient and constant in 6x − 9.",
+      "answer": "coefficient 6, constant −9.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "coefficient 6, constant −9."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Formulae and Substitution",
+      "context": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A…",
+      "prompt": "Simplify: a) 6x + 4y − 2x + 3y b) 3a² + 5a − 2a² + 4a − 1.",
+      "answer": "1) a) 4x + 7y, b) a² + 9a − 1.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 4x + 7y, b) a² + 9a − 1."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Variables, Terms and Expressions",
+      "modelType": "concept-model-1",
+      "purpose": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change. When Amina writes n for the number of goats her family owns, that letter can be 12 one…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Building Expressions from Words",
+      "modelType": "concept-model-2",
+      "purpose": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols. The trick is to know which words point…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Simplifying by Collecting Like Terms",
+      "modelType": "concept-model-3",
+      "purpose": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms. Like terms are terms that have…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Expanding Brackets",
+      "modelType": "concept-model-4",
+      "purpose": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Factorising Expressions",
+      "modelType": "concept-model-5",
+      "purpose": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket. This is a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Formulae and Substitution",
+      "modelType": "concept-model-6",
+      "purpose": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to solve a linear equation",
+      "example": "In the expression 6a²b + 2ab − 5, name the variables, the coefficients, and the constant.",
+      "steps": [
+        "If there are brackets, expand them first.",
+        "Collect the variable terms on one side and the constants on the other.",
+        "Undo addition or subtraction, then undo multiplication or division.",
+        "Check by substituting your answer back into the original equation."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to substitute into a formula",
+      "example": "A taxi in Mombasa charges 5 shillings plus 2 shillings per kilometre. Write an expression for the cost of travelling k kilometres.",
+      "steps": [
+        "Write each number in place of its letter, using brackets for negatives.",
+        "Work out powers first, then multiplication and division, then addition and subtraction.",
+        "State the answer with units if the formula has them."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to factorise",
+      "example": "Simplify 6x + 4y − 2x + 3y.",
+      "steps": [
+        "Find the HCF of the numbers, and any letter common to every term.",
+        "Divide each term by the HCF to find what goes inside the bracket.",
+        "Write HCF(bracket), then expand to check you get the original."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Expand and simplify",
+      "example": "Expand and simplify 4(2x − 1) − 3(x + 2).",
+      "steps": [
+        "Solution: Expand each bracket: 4(2x − 1) = 8x − 4, and −3(x + 2) = −3x − 6 (the minus multiplies both terms).",
+        "Now collect like terms: 8x − 3x = 5x, and −4 − 6 = −10.",
+        "The answer is 5x − 10."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Factorise completely",
+      "example": "Factorise 18a + 12b − 6.",
+      "steps": [
+        "Solution: Find the HCF of 18, 12 and 6, which is 6.",
+        "Divide each term: 18a ÷ 6 = 3a, 12b ÷ 6 = 2b, and −6 ÷ 6 = −1.",
+        "So the answer is 6(3a + 2b − 1).",
+        "Check by expanding: 6(3a + 2b − 1) = 18a + 12b − 6."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Substitute into a formula",
+      "example": "Using v = u + at, find v when u = 10, a = 3 and t = 4.",
+      "steps": [
+        "Solution: Replace each letter: v = 10 + (3)(4).",
+        "Do the multiplication first: 3 × 4 = 12.",
+        "Then v = 10 + 12 = 22.",
+        "Following the order of operations keeps the answer correct."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Name the parts of an expression",
+      "prompt": "In the expression 6a²b + 2ab − 5, name the variables, the coefficients, and the constant.",
+      "solution": "Solution: The variables are a and b. The coefficients are 6 (in 6a²b) and 2 (in 2ab). The constant term is −5, the piece with no variable. Remember to keep the minus sign attached to the 5."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Build an expression from words",
+      "prompt": "A taxi in Mombasa charges 5 shillings plus 2 shillings per kilometre. Write an expression for the cost of travelling k kilometres.",
+      "solution": "Solution: The 5 shillings is fixed. The 2 shillings is charged once for each kilometre, so k kilometres cost 2k. The total is 5 + 2k. If k = 10, the cost is 5 + 2(10) = 25 shillings."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Collect like terms",
+      "prompt": "Simplify 6x + 4y − 2x + 3y.",
+      "solution": "Solution: Group the x-terms: 6x − 2x = 4x. Group the y-terms: 4y + 3y = 7y. There are no other terms, so the answer is 4x + 7y. Keep the −2x sign attached as you gather the x group."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Expand and simplify",
+      "prompt": "Expand and simplify 4(2x − 1) − 3(x + 2).",
+      "solution": "Solution: Expand each bracket: 4(2x − 1) = 8x − 4, and −3(x + 2) = −3x − 6 (the minus multiplies both terms). Now collect like terms: 8x − 3x = 5x, and −4 − 6 = −10. The answer is 5x − 10."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Factorise completely",
+      "prompt": "Factorise 18a + 12b − 6.",
+      "solution": "Solution: Find the HCF of 18, 12 and 6, which is 6. Divide each term: 18a ÷ 6 = 3a, 12b ÷ 6 = 2b, and −6 ÷ 6 = −1. So the answer is 6(3a + 2b − 1). Check by expanding: 6(3a + 2b − 1) = 18a + 12b − 6."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Substitute into a formula",
+      "prompt": "Using v = u + at, find v when u = 10, a = 3 and t = 4.",
+      "solution": "Solution: Replace each letter: v = 10 + (3)(4). Do the multiplication first: 3 × 4 = 12. Then v = 10 + 12 = 22. Following the order of operations keeps the answer correct."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Substitute a negative number",
+      "prompt": "Evaluate x² − 2x when x = −3.",
+      "solution": "Solution: Write the substitution with brackets: (−3)² − 2(−3). Now (−3)² = 9 and −2(−3) = +6. So the value is 9 + 6 = 15. The brackets stop us from making a sign error."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Solve an equation with variables on both sides",
+      "prompt": "Solve 5x − 3 = 3x + 9.",
+      "solution": "Solution: Subtract 3x from both sides: 2x − 3 = 9. Add 3 to both sides: 2x = 12. Divide by 2: x = 6. Check: 5(6) − 3 = 27 and 3(6) + 9 = 27, so both sides match."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Solve an equation with a bracket",
+      "prompt": "Solve 4(x − 2) = 20.",
+      "solution": "Solution: Expand the bracket first: 4x − 8 = 20. Add 8 to both sides: 4x = 28. Divide by 4: x = 7. Check: 4(7 − 2) = 4 × 5 = 20. Correct."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Solve an inequality (with a flip)",
+      "prompt": "Solve −2x > 6.",
+      "solution": "Solution: Divide both sides by −2. Because we divided by a negative number, we reverse the inequality sign: x < −3. Any number smaller than −3 satisfies the original inequality; you can test x = −4: −2(−4) = 8, which is indeed greater than 6."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Rearrange P = 2l + 2w to make w the subject.",
+      "solution": "."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
+      "solution": "Use the section 3: challenge guidance and explain each step."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Simplify: a) 5x + 3x b) 7a − 4a + 2a c) 9m + m − 3m.",
+      "answer": "1) a) 8x, b) 5a, c) 7m.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write an expression: a) 7 more than twice a number n b) a number decreased by 8.",
+      "answer": "a) 2n + 7, b) x − 8.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Expand: a) 4(x + 5) b) 3(2y − 1).",
+      "answer": "a) 4x + 20, b) 6y − 3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Evaluate 3x + 4 when a) x = 5 b) x = 0 c) x = −2.",
+      "answer": "a) 19, b) 4, c) −2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "State the coefficient and constant in 6x − 9.",
+      "answer": "coefficient 6, constant −9.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Simplify: a) 6x + 4y − 2x + 3y b) 3a² + 5a − 2a² + 4a − 1.",
+      "answer": "1) a) 4x + 7y, b) a² + 9a − 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Expand and simplify: a) 3(x + 4) + 2(x − 1) b) 4(2x − 1) − 3(x + 2).",
+      "answer": "a) 5x + 10, b) 5x − 10.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Factorise completely: a) 12x + 18 b) 15y − 10 c) 21m − 14n + 7.",
+      "answer": "a) 6(2x +",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Solve: a) x + 9 = 15 b) 4x = 28 c) 3x − 7 = 14.",
+      "answer": ", b) 5(3y −",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Substitute: If v = u + at, find v when u = 10, a = 3, t = 4.",
+      "answer": ", c) 7(3m − 2n +",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Rearrange P = 2l + 2w to make w the subject.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
+      "answer": "Use the section 3: challenge guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Matchstick Patterns (Discover a Formula)",
+      "materials": "matchsticks, small sticks, or dry pasta.",
+      "steps": [
+        "Make one square with 4 sticks. Add a second square joined to the first – how many sticks now? Add a third.",
+        "Record your results in a table: 1 square = 4, 2 squares = 7, 3 squares = 10, 4 squares = ___.",
+        "How many sticks does each new square add? Use this to write a formula for s sticks and n squares.",
+        "Check your formula: it should give 3n + 1. Test it for 5 squares and count to confirm.",
+        "This shows how a formula captures a growing pattern in one short rule."
+      ]
+    },
+    {
+      "title": "The Balance Scale (Solving Equations)",
+      "materials": "a simple balance (a ruler on a pencil), and small equal objects such as stones or beans, plus a hidden cup.",
+      "steps": [
+        "Put a cup with an unknown number of beans plus 3 loose beans on one side, and 12 beans on the other, so it balances.",
+        "This models the equation x + 3 = 12. Remove 3 beans from BOTH sides to keep the balance.",
+        "The cup now balances against 9 beans, so x = 9. Open the cup and check.",
+        "Invent your own balance puzzles for a family member and let them solve for the hidden number."
+      ]
+    },
+    {
+      "title": "Algebra Bingo (Substitution Race)",
+      "materials": "paper, pencil, and a partner.",
+      "steps": [
+        "Each player draws a 3×3 grid and writes nine different numbers from −5 to 20 in the boxes.",
+        "One player calls an expression and a value, such as 2x + 1 with x = 4.",
+        "Both players work out the answer (here, 9) and cross it off if it is on their grid.",
+        "The first to cross off a full line wins. This trains fast, accurate substitution."
+      ]
+    },
+    {
+      "title": "Market Formula Investigation",
+      "materials": "a real or pretend market with priced goods (use stones as shillings).",
+      "steps": [
+        "Choose an item, for example sambusas at 3 shillings each, and add a fixed 5-shilling delivery fee.",
+        "Write a formula for the total cost C of buying n sambusas: C = 3n + 5.",
+        "Use your formula to find the cost of 4, 7 and 10 sambusas without adding one at a time.",
+        "Now work backwards: if a friend paid 26 shillings, form the equation 3n + 5 = 26 and solve to find how many sambusas they bought."
+      ]
+    },
+    {
+      "title": "Expand-and-Factorise Card Match (Group Game)",
+      "materials": "paper cards, and two or more players.",
+      "steps": [
+        "On some cards write expanded expressions (for example 12x + 18); on matching cards write the factorised form (6(2x + 3)).",
+        "Shuffle all cards and lay them face down in a grid.",
+        "Players take turns flipping two cards, trying to match an expanded form with its factorised partner.",
+        "Check each claimed match by expanding the bracket. Whoever finds the most matches wins."
+      ]
+    },
+    {
+      "title": "Inequality Number-Line Walk",
+      "materials": "chalk or a long strip of paper marked with a number line from −10 to 10.",
+      "steps": [
+        "A caller shouts an inequality, such as x > 3, x ≤ −2, or −2x > 6 (solve to x < −3).",
+        "Walk to and stand on numbers that satisfy the inequality; a partner checks each one.",
+        "Use an open hand for a strict inequality (< or >) and a closed fist for ≤ or ≥ to show whether the end value is included.",
+        "Discuss why −2x > 6 requires flipping the sign when you divide by −2.",
+        "After your activities, talk or write about: Which activity helped you understand variables and formulae best? What was the trickiest part – perhaps keeping signs correct, or flipping the inequality? What would you like more practice with? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key rule 1",
+        "text": "Collecting Like Terms Only combine terms with exactly the same variable part. 3x + 7x = 10x, but 2x + 3y cannot be combined. Keep each sign attached to its own term."
+      },
+      {
+        "title": "Key rule 2",
+        "text": "Distributive Law (Expanding) a(b + c) = ab + ac. Multiply the outside term by EVERY term inside. 3(x + 4) = 3x + 12. −2(3x − 4) = −6x + 8."
+      },
+      {
+        "title": "Key rule 3",
+        "text": "Factorising Take out the highest common factor (HCF) into a bracket. 12x + 18 = 6(2x + 3). Check by expanding."
+      },
+      {
+        "title": "Balance Rule",
+        "text": "(Equations) Whatever you do to one side, do to the other. Undo operations one at a time until the variable is alone."
+      },
+      {
+        "title": "Inequality Rule",
+        "text": "Solve like an equation, with ONE difference. If you multiply or divide by a negative number, reverse the sign. −2x > 6 gives x < −3."
+      }
+    ],
+    "terms": [
+      [
+        "Variable",
+        "A letter standing for an unknown or changing number"
+      ],
+      [
+        "Term",
+        "A single part of an expression, separated by + or −"
+      ],
+      [
+        "Coefficient",
+        "The number multiplying a variable"
+      ],
+      [
+        "Constant",
+        "A term with no variable"
+      ],
+      [
+        "Like terms",
+        "Terms with the same variable part"
+      ],
+      [
+        "Expression",
+        "Terms joined by operations, no equals sign"
+      ],
+      [
+        "Equation",
+        "A statement that two expressions are equal"
+      ],
+      [
+        "Formula",
+        "A rule linking quantities with letters"
+      ],
+      [
+        "Inequality",
+        "A statement using <, >, ≤ or ≥"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "2x + 3y = 5xy",
+        "x and y differ, so leave as 2x + 3y"
+      ],
+      [
+        "3(x + 4) = 3x + 4",
+        "Multiply the 3 by both: 3x + 12"
+      ],
+      [
+        "−2(x − 4) = −2x − 8",
+        "−2 × −4 = +8, so −2x + 8"
+      ],
+      [
+        "−2x > 6 gives x > −3",
+        "Dividing by a negative reverses: x < −3"
+      ],
+      [
+        "(−3)² = −9",
+        "(−3)² = 9; a negative squared is positive"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Simplify: a) 5x + 3x b) 7a − 4a + 2a c) 9m + m − 3m.",
+      "answer": "1) a) 8x, b) 5a, c) 7m.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 8x, b) 5a, c) 7m."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write an expression: a) 7 more than twice a number n b) a number decreased by 8.",
+      "answer": "a) 2n + 7, b) x − 8.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 2n + 7, b) x − 8."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Expand: a) 4(x + 5) b) 3(2y − 1).",
+      "answer": "a) 4x + 20, b) 6y − 3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 4x + 20, b) 6y − 3."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Evaluate 3x + 4 when a) x = 5 b) x = 0 c) x = −2.",
+      "answer": "a) 19, b) 4, c) −2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 19, b) 4, c) −2."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "State the coefficient and constant in 6x − 9.",
+      "answer": "coefficient 6, constant −9.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "coefficient 6, constant −9."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Simplify: a) 6x + 4y − 2x + 3y b) 3a² + 5a − 2a² + 4a − 1.",
+      "answer": "1) a) 4x + 7y, b) a² + 9a − 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 4x + 7y, b) a² + 9a − 1."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Expand and simplify: a) 3(x + 4) + 2(x − 1) b) 4(2x − 1) − 3(x + 2).",
+      "answer": "a) 5x + 10, b) 5x − 10.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 5x + 10, b) 5x − 10."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Factorise completely: a) 12x + 18 b) 15y − 10 c) 21m − 14n + 7.",
+      "answer": "a) 6(2x +",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 6(2x +"
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "Solve: a) x + 9 = 15 b) 4x = 28 c) 3x − 7 = 14.",
+      "answer": ", b) 5(3y −",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", b) 5(3y −"
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Substitute: If v = u + at, find v when u = 10, a = 3, t = 4.",
+      "answer": ", c) 7(3m − 2n +",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", c) 7(3m − 2n +"
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Rearrange P = 2l + 2w to make w the subject.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
+      "answer": "Use the section 3: challenge guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 3: challenge guidance and explain each step."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A concert charges 25 shillings per ticket plus a 5-shilling booking fee per order. Write an expression for the cost of n tickets, find the cost of 8 tickets, and work out how many tickets were bought if someone paid 155 shillings.",
+      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Company A charges 30 shillings per month plus 0.10 per text; Company B charges 25 plus 0.15 per text. For how many texts do the two plans cost the same?",
+      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "Three times a number minus 5 equals 22. Find the number.",
+      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A rectangle has length (2x + 3) and width (x − 1). Write expressions for the perimeter and the area, then find both when x = 5.",
+      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Amina is x years old. Her brother Hassan is 3 years older. The sum of their ages is 27. Write an equation and find Amina's age.",
+      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
+      "answer": "Use the section 3: challenge guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 3: challenge guidance and explain each step."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
+      "keyIdeas": [
+        "Variable",
+        "Term",
+        "Coefficient"
+      ],
+      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Solve with brackets: a) 4(x − 2) = 20 b) (x + 4)/3 = 5.",
+      "keyIdeas": [
+        "Term",
+        "Coefficient",
+        "Constant"
+      ],
+      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Evaluate 2a²b − 3ab + b² when a = 2 and b = −1.",
+      "keyIdeas": [
+        "Coefficient",
+        "Constant",
+        "Like terms"
+      ],
+      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Solve the inequalities: a) x + 3 > 7 b) 2x ≤ 10 c) −2x > 6.",
+      "keyIdeas": [
+        "Constant",
+        "Like terms",
+        "Expression"
+      ],
+      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A rectangle has sides (4x + 1) and (2x − 3). Write a simplified expression for its perimeter.",
+      "keyIdeas": [
+        "Like terms",
+        "Expression",
+        "Equation"
+      ],
+      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Formulae and Substitution.",
+      "keyIdeas": [
+        "Variable",
+        "Term",
+        "Coefficient"
+      ],
+      "modelAnswer": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A is the subject. Formulae appear everywhere: in geometry, science, trade and daily life, because they capture a relationship once and let you use it again and again. Substitution means replacing each letter with a given number and then working out the value.…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Variable” mean?",
+        "options": [
+          "A letter standing for an unknown or changing number",
+          "A single part of an expression, separated by + or −",
+          "The number multiplying a variable",
+          "A term with no variable"
+        ],
+        "answer": "A letter standing for an unknown or changing number",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Variable means A letter standing for an unknown or changing number."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Term” mean?",
+        "options": [
+          "A single part of an expression, separated by + or −",
+          "The number multiplying a variable",
+          "A term with no variable",
+          "Terms with the same variable part"
+        ],
+        "answer": "A single part of an expression, separated by + or −",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Term means A single part of an expression, separated by + or −."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Coefficient” mean?",
+        "options": [
+          "The number multiplying a variable",
+          "A term with no variable",
+          "Terms with the same variable part",
+          "Terms joined by operations, no equals sign"
+        ],
+        "answer": "The number multiplying a variable",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Coefficient means The number multiplying a variable."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Constant” mean?",
+        "options": [
+          "A term with no variable",
+          "Terms with the same variable part",
+          "Terms joined by operations, no equals sign",
+          "A statement that two expressions are equal"
+        ],
+        "answer": "A term with no variable",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Constant means A term with no variable."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Like terms” mean?",
+        "options": [
+          "Terms with the same variable part",
+          "Terms joined by operations, no equals sign",
+          "A statement that two expressions are equal",
+          "A rule linking quantities with letters"
+        ],
+        "answer": "Terms with the same variable part",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Like terms means Terms with the same variable part."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Expression” mean?",
+        "options": [
+          "Terms joined by operations, no equals sign",
+          "A statement that two expressions are equal",
+          "A rule linking quantities with letters",
+          "A statement using <, >, ≤ or ≥"
+        ],
+        "answer": "Terms joined by operations, no equals sign",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Expression means Terms joined by operations, no equals sign."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A statement that two expressions are equal?",
+        "options": [
+          "Equation",
+          "Formula",
+          "Inequality",
+          "Variable"
+        ],
+        "answer": "Equation",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Equation means A statement that two expressions are equal."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A rule linking quantities with letters?",
+        "options": [
+          "Formula",
+          "Inequality",
+          "Variable",
+          "Term"
+        ],
+        "answer": "Formula",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Formula means A rule linking quantities with letters."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A statement using <, >, ≤ or ≥?",
+        "options": [
+          "Inequality",
+          "Variable",
+          "Term",
+          "Coefficient"
+        ],
+        "answer": "Inequality",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Inequality means A statement using <, >, ≤ or ≥."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A letter standing for an unknown or changing number?",
+        "options": [
+          "Variable",
+          "Coefficient",
+          "Constant",
+          "Like terms"
+        ],
+        "answer": "Variable",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Variable means A letter standing for an unknown or changing number."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A single part of an expression, separated by + or −?",
+        "options": [
+          "Term",
+          "Constant",
+          "Like terms",
+          "Expression"
+        ],
+        "answer": "Term",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Term means A single part of an expression, separated by + or −."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The number multiplying a variable?",
+        "options": [
+          "Coefficient",
+          "Like terms",
+          "Expression",
+          "Equation"
+        ],
+        "answer": "Coefficient",
+        "hint": "Use the Unit 2 Math Words & Symbols reference.",
+        "explanation": "Coefficient means The number multiplying a variable."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u2-game-1",
+        "icon": "?",
+        "skill": "Variable",
+        "title": "Quick Match: Variable",
+        "description": "Practise variable through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Variable” mean?",
+            "choices": [
+              "A letter standing for an unknown or changing number",
+              "A single part of an expression, separated by + or −",
+              "The number multiplying a variable",
+              "A term with no variable"
+            ],
+            "answer": "A letter standing for an unknown or changing number",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown or changing number."
+          },
+          {
+            "prompt": "What does “Constant” mean?",
+            "choices": [
+              "A term with no variable",
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal"
+            ],
+            "answer": "A term with no variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Constant means A term with no variable."
+          },
+          {
+            "prompt": "Which term matches this meaning: A statement that two expressions are equal?",
+            "choices": [
+              "Equation",
+              "Formula",
+              "Inequality",
+              "Variable"
+            ],
+            "answer": "Equation",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Equation means A statement that two expressions are equal."
+          },
+          {
+            "prompt": "Which term matches this meaning: A letter standing for an unknown or changing number?",
+            "choices": [
+              "Variable",
+              "Coefficient",
+              "Constant",
+              "Like terms"
+            ],
+            "answer": "Variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown or changing number."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-2",
+        "icon": "★",
+        "skill": "Term",
+        "title": "Concept Quest: Term",
+        "description": "Practise term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "A single part of an expression, separated by + or −",
+              "The number multiplying a variable",
+              "A term with no variable",
+              "Terms with the same variable part"
+            ],
+            "answer": "A single part of an expression, separated by + or −",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Term means A single part of an expression, separated by + or −."
+          },
+          {
+            "prompt": "What does “Like terms” mean?",
+            "choices": [
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal",
+              "A rule linking quantities with letters"
+            ],
+            "answer": "Terms with the same variable part",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Like terms means Terms with the same variable part."
+          },
+          {
+            "prompt": "Which term matches this meaning: A rule linking quantities with letters?",
+            "choices": [
+              "Formula",
+              "Inequality",
+              "Variable",
+              "Term"
+            ],
+            "answer": "Formula",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Formula means A rule linking quantities with letters."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single part of an expression, separated by + or −?",
+            "choices": [
+              "Term",
+              "Constant",
+              "Like terms",
+              "Expression"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Term means A single part of an expression, separated by + or −."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-3",
+        "icon": "◫",
+        "skill": "Coefficient",
+        "title": "Model Detective: Coefficient",
+        "description": "Practise coefficient through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Coefficient” mean?",
+            "choices": [
+              "The number multiplying a variable",
+              "A term with no variable",
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign"
+            ],
+            "answer": "The number multiplying a variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Coefficient means The number multiplying a variable."
+          },
+          {
+            "prompt": "What does “Expression” mean?",
+            "choices": [
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal",
+              "A rule linking quantities with letters",
+              "A statement using <, >, ≤ or ≥"
+            ],
+            "answer": "Terms joined by operations, no equals sign",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Expression means Terms joined by operations, no equals sign."
+          },
+          {
+            "prompt": "Which term matches this meaning: A statement using <, >, ≤ or ≥?",
+            "choices": [
+              "Inequality",
+              "Variable",
+              "Term",
+              "Coefficient"
+            ],
+            "answer": "Inequality",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Inequality means A statement using <, >, ≤ or ≥."
+          },
+          {
+            "prompt": "Which term matches this meaning: The number multiplying a variable?",
+            "choices": [
+              "Coefficient",
+              "Like terms",
+              "Expression",
+              "Equation"
+            ],
+            "answer": "Coefficient",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Coefficient means The number multiplying a variable."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-4",
+        "icon": "→",
+        "skill": "Constant",
+        "title": "Rule Runner: Constant",
+        "description": "Practise constant through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Constant” mean?",
+            "choices": [
+              "A term with no variable",
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal"
+            ],
+            "answer": "A term with no variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Constant means A term with no variable."
+          },
+          {
+            "prompt": "Which term matches this meaning: A statement that two expressions are equal?",
+            "choices": [
+              "Equation",
+              "Formula",
+              "Inequality",
+              "Variable"
+            ],
+            "answer": "Equation",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Equation means A statement that two expressions are equal."
+          },
+          {
+            "prompt": "Which term matches this meaning: A letter standing for an unknown or changing number?",
+            "choices": [
+              "Variable",
+              "Coefficient",
+              "Constant",
+              "Like terms"
+            ],
+            "answer": "Variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown or changing number."
+          },
+          {
+            "prompt": "What does “Variable” mean?",
+            "choices": [
+              "A letter standing for an unknown or changing number",
+              "A single part of an expression, separated by + or −",
+              "The number multiplying a variable",
+              "A term with no variable"
+            ],
+            "answer": "A letter standing for an unknown or changing number",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown or changing number."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-5",
+        "icon": "Σ",
+        "skill": "Like terms",
+        "title": "Vocabulary Vault: Like terms",
+        "description": "Practise like terms through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Like terms” mean?",
+            "choices": [
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal",
+              "A rule linking quantities with letters"
+            ],
+            "answer": "Terms with the same variable part",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Like terms means Terms with the same variable part."
+          },
+          {
+            "prompt": "Which term matches this meaning: A rule linking quantities with letters?",
+            "choices": [
+              "Formula",
+              "Inequality",
+              "Variable",
+              "Term"
+            ],
+            "answer": "Formula",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Formula means A rule linking quantities with letters."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single part of an expression, separated by + or −?",
+            "choices": [
+              "Term",
+              "Constant",
+              "Like terms",
+              "Expression"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Term means A single part of an expression, separated by + or −."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "A single part of an expression, separated by + or −",
+              "The number multiplying a variable",
+              "A term with no variable",
+              "Terms with the same variable part"
+            ],
+            "answer": "A single part of an expression, separated by + or −",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Term means A single part of an expression, separated by + or −."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-6",
+        "icon": "◇",
+        "skill": "Expression",
+        "title": "Challenge Cards: Expression",
+        "description": "Practise expression through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Expression” mean?",
+            "choices": [
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal",
+              "A rule linking quantities with letters",
+              "A statement using <, >, ≤ or ≥"
+            ],
+            "answer": "Terms joined by operations, no equals sign",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Expression means Terms joined by operations, no equals sign."
+          },
+          {
+            "prompt": "Which term matches this meaning: A statement using <, >, ≤ or ≥?",
+            "choices": [
+              "Inequality",
+              "Variable",
+              "Term",
+              "Coefficient"
+            ],
+            "answer": "Inequality",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Inequality means A statement using <, >, ≤ or ≥."
+          },
+          {
+            "prompt": "Which term matches this meaning: The number multiplying a variable?",
+            "choices": [
+              "Coefficient",
+              "Like terms",
+              "Expression",
+              "Equation"
+            ],
+            "answer": "Coefficient",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Coefficient means The number multiplying a variable."
+          },
+          {
+            "prompt": "What does “Coefficient” mean?",
+            "choices": [
+              "The number multiplying a variable",
+              "A term with no variable",
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign"
+            ],
+            "answer": "The number multiplying a variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Coefficient means The number multiplying a variable."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-7",
+        "icon": "⚡",
+        "skill": "Equation",
+        "title": "Think Fast: Equation",
+        "description": "Practise equation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A statement that two expressions are equal?",
+            "choices": [
+              "Equation",
+              "Formula",
+              "Inequality",
+              "Variable"
+            ],
+            "answer": "Equation",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Equation means A statement that two expressions are equal."
+          },
+          {
+            "prompt": "Which term matches this meaning: A letter standing for an unknown or changing number?",
+            "choices": [
+              "Variable",
+              "Coefficient",
+              "Constant",
+              "Like terms"
+            ],
+            "answer": "Variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown or changing number."
+          },
+          {
+            "prompt": "What does “Variable” mean?",
+            "choices": [
+              "A letter standing for an unknown or changing number",
+              "A single part of an expression, separated by + or −",
+              "The number multiplying a variable",
+              "A term with no variable"
+            ],
+            "answer": "A letter standing for an unknown or changing number",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown or changing number."
+          },
+          {
+            "prompt": "What does “Constant” mean?",
+            "choices": [
+              "A term with no variable",
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal"
+            ],
+            "answer": "A term with no variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Constant means A term with no variable."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-8",
+        "icon": "☁",
+        "skill": "Formula",
+        "title": "Explain It: Formula",
+        "description": "Practise formula through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A rule linking quantities with letters?",
+            "choices": [
+              "Formula",
+              "Inequality",
+              "Variable",
+              "Term"
+            ],
+            "answer": "Formula",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Formula means A rule linking quantities with letters."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single part of an expression, separated by + or −?",
+            "choices": [
+              "Term",
+              "Constant",
+              "Like terms",
+              "Expression"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Term means A single part of an expression, separated by + or −."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "A single part of an expression, separated by + or −",
+              "The number multiplying a variable",
+              "A term with no variable",
+              "Terms with the same variable part"
+            ],
+            "answer": "A single part of an expression, separated by + or −",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Term means A single part of an expression, separated by + or −."
+          },
+          {
+            "prompt": "What does “Like terms” mean?",
+            "choices": [
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal",
+              "A rule linking quantities with letters"
+            ],
+            "answer": "Terms with the same variable part",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Like terms means Terms with the same variable part."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-9",
+        "icon": "⌂",
+        "skill": "Inequality",
+        "title": "Real-Life Round: Inequality",
+        "description": "Practise inequality through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A statement using <, >, ≤ or ≥?",
+            "choices": [
+              "Inequality",
+              "Variable",
+              "Term",
+              "Coefficient"
+            ],
+            "answer": "Inequality",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Inequality means A statement using <, >, ≤ or ≥."
+          },
+          {
+            "prompt": "Which term matches this meaning: The number multiplying a variable?",
+            "choices": [
+              "Coefficient",
+              "Like terms",
+              "Expression",
+              "Equation"
+            ],
+            "answer": "Coefficient",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Coefficient means The number multiplying a variable."
+          },
+          {
+            "prompt": "What does “Coefficient” mean?",
+            "choices": [
+              "The number multiplying a variable",
+              "A term with no variable",
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign"
+            ],
+            "answer": "The number multiplying a variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Coefficient means The number multiplying a variable."
+          },
+          {
+            "prompt": "What does “Expression” mean?",
+            "choices": [
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal",
+              "A rule linking quantities with letters",
+              "A statement using <, >, ≤ or ≥"
+            ],
+            "answer": "Terms joined by operations, no equals sign",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Expression means Terms joined by operations, no equals sign."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-10",
+        "icon": "!",
+        "skill": "Variable",
+        "title": "Spot the Error: Variable",
+        "description": "Practise variable through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A letter standing for an unknown or changing number?",
+            "choices": [
+              "Variable",
+              "Coefficient",
+              "Constant",
+              "Like terms"
+            ],
+            "answer": "Variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown or changing number."
+          },
+          {
+            "prompt": "What does “Variable” mean?",
+            "choices": [
+              "A letter standing for an unknown or changing number",
+              "A single part of an expression, separated by + or −",
+              "The number multiplying a variable",
+              "A term with no variable"
+            ],
+            "answer": "A letter standing for an unknown or changing number",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown or changing number."
+          },
+          {
+            "prompt": "What does “Constant” mean?",
+            "choices": [
+              "A term with no variable",
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal"
+            ],
+            "answer": "A term with no variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Constant means A term with no variable."
+          },
+          {
+            "prompt": "Which term matches this meaning: A statement that two expressions are equal?",
+            "choices": [
+              "Equation",
+              "Formula",
+              "Inequality",
+              "Variable"
+            ],
+            "answer": "Equation",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Equation means A statement that two expressions are equal."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-11",
+        "icon": "≡",
+        "skill": "Term",
+        "title": "Mastery Mix: Term",
+        "description": "Practise term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A single part of an expression, separated by + or −?",
+            "choices": [
+              "Term",
+              "Constant",
+              "Like terms",
+              "Expression"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Term means A single part of an expression, separated by + or −."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "A single part of an expression, separated by + or −",
+              "The number multiplying a variable",
+              "A term with no variable",
+              "Terms with the same variable part"
+            ],
+            "answer": "A single part of an expression, separated by + or −",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Term means A single part of an expression, separated by + or −."
+          },
+          {
+            "prompt": "What does “Like terms” mean?",
+            "choices": [
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal",
+              "A rule linking quantities with letters"
+            ],
+            "answer": "Terms with the same variable part",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Like terms means Terms with the same variable part."
+          },
+          {
+            "prompt": "Which term matches this meaning: A rule linking quantities with letters?",
+            "choices": [
+              "Formula",
+              "Inequality",
+              "Variable",
+              "Term"
+            ],
+            "answer": "Formula",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Formula means A rule linking quantities with letters."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-12",
+        "icon": "T",
+        "skill": "Coefficient",
+        "title": "Unit Champion: Coefficient",
+        "description": "Practise coefficient through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The number multiplying a variable?",
+            "choices": [
+              "Coefficient",
+              "Like terms",
+              "Expression",
+              "Equation"
+            ],
+            "answer": "Coefficient",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Coefficient means The number multiplying a variable."
+          },
+          {
+            "prompt": "What does “Coefficient” mean?",
+            "choices": [
+              "The number multiplying a variable",
+              "A term with no variable",
+              "Terms with the same variable part",
+              "Terms joined by operations, no equals sign"
+            ],
+            "answer": "The number multiplying a variable",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Coefficient means The number multiplying a variable."
+          },
+          {
+            "prompt": "What does “Expression” mean?",
+            "choices": [
+              "Terms joined by operations, no equals sign",
+              "A statement that two expressions are equal",
+              "A rule linking quantities with letters",
+              "A statement using <, >, ≤ or ≥"
+            ],
+            "answer": "Terms joined by operations, no equals sign",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Expression means Terms joined by operations, no equals sign."
+          },
+          {
+            "prompt": "Which term matches this meaning: A statement using <, >, ≤ or ≥?",
+            "choices": [
+              "Inequality",
+              "Variable",
+              "Term",
+              "Coefficient"
+            ],
+            "answer": "Inequality",
+            "clue": "Use the Unit 2 Math Words & Symbols reference.",
+            "explanation": "Inequality means A statement using <, >, ≤ or ≥."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can this unit is designed for self-paced learning, so you move at your own speed. Read each explanation slowly, and copy every worked example onto paper, doing the steps yourself rather than only reading them. Algebra is a subject you learn through your pencil, not just your eyes. Your AI tutor is available day and night to give you extra questions, explain a tricky step in a new way, or check your working line by line. Your teacher will also meet with you about twice a week to help with anything that still feels difficult.",
+    "I can one warning before we begin: algebra rewards care and neatness. A single lost minus sign or a term combined wrongly can change the whole answer. Do not rush. Write each step underneath the last, keep your equals signs lined up, and check your work by substituting a number back in. If you make a mistake, that is not failure – it is exactly the information you need to know what to practise next. Every mathematician, engineer and scientist you admire once sat where you sit now, learning these very same rules.",
+    "I can understand a variable as a letter that stands for an unknown or changing number.",
+    "I can identify the terms, coefficients and constants in an algebraic expression.",
+    "I can write algebraic expressions from words, pictures and real-life situations.",
+    "I can simplify expressions by collecting like terms, keeping signs correct.",
+    "I can expand brackets using the distributive law, including negative multipliers.",
+    "I can factorise expressions by taking out the highest common factor."
+  ]
+}

@@ -1,0 +1,1790 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.237Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "math-g08-u05",
+    "unitNo": 5,
+    "unitTitle": "Angles and Constructions",
+    "unitOverview": "Welcome to Unit 5! In this unit you will become a confident master of angles and of ruler-and-compass constructions. You already know that an angle measures an amount of turn, and you can name acute, right, obtuse, straight and reflex angles. Now you will learn the powerful angle rules that let you calculate an unknown angle without measuring it at all, simply by reasoning from the angles you already know. This is real mathematical thinking: you will justify every answer with a reason, not just a number.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 5 (1)/Year 8 - Unit 5 Lesson.docx",
+      "Year 8 (1)/Unit 5 (1)/Year 8 - Unit 5 Activities.docx",
+      "Year 8 (1)/Unit 5 (1)/Year 8 - Unit 5 Practice.docx",
+      "Year 8 (1)/Unit 5 (1)/Year 8 - Unit 5 Reference.docx"
+    ],
+    "sourceBlockCount": 377,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Use the rules for angles on a straight line (sum 180°), angles around a point (sum 360°) and vertically opposite angles (equal).",
+    "Identify a transversal and the eight angles it makes with two parallel lines.",
+    "Apply the corresponding, alternate and co-interior angle rules to find unknown angles, giving a reason each time.",
+    "Use the triangle angle sum (180°) and the exterior-angle rule.",
+    "Calculate interior and exterior angles of any polygon using (n − 2) × 180° and 360° ÷ n.",
+    "Measure and calculate three-figure bearings, including back bearings.",
+    "Construct a perpendicular bisector, an angle bisector, a 60° angle, and triangles from given sides and angles using only compass and straightedge.",
+    "Set out a clear geometric argument, stating a reason for every step."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-the-basic-angle-rules",
+      "title": "The Basic Angle Rules",
+      "explanation": "Before we reach parallel lines, we must be completely fluent with three rules you can use anywhere. These are the building blocks for everything that follows, so learn them until they are automatic. Angles on a straight line add up to 180°. If several angles sit side by side along a straight line, meeting at one point on that line, their measures add to a straight angle, which is 180°. So if one angle on a line is 130°, the angle beside it must be 180° − 130° = 50°. Angles that add to 180° are called supplementary.",
+      "example": "Angles around a point add up to 360°. If several angles meet at a single point and go all the way around it, they complete a full turn, which is 360°. So if three angles around a point are 150°, 90° and an unknown…"
+    },
+    {
+      "id": "concept-2-parallel-lines-and-the-transversal",
+      "title": "Parallel Lines and the Transversal",
+      "explanation": "Parallel lines are lines that never meet, however far you extend them. They stay exactly the same distance apart and point in the same direction, like the two rails of a railway track between Nairobi and Mombasa. On a diagram we mark parallel lines with matching arrowheads, and we write AB ∥ CD to say that line AB is parallel to line CD. A transversal is simply a line that crosses two or more other lines. When a single transversal cuts across two parallel lines, it makes eight angles – four at each crossing point.…",
+      "example": "There are three key relationships to learn. Each has a letter-shape that helps you spot it, but you must always name the rule properly when you write your reason."
+    },
+    {
+      "id": "concept-3-angles-in-triangles",
+      "title": "Angles in Triangles",
+      "explanation": "The most famous rule in all of geometry is this: the three interior angles of any triangle add up to 180°. It is true for every triangle in the flat plane – tall thin ones, wide flat ones, big ones, small ones. If you know two angles of a triangle, you can always find the third by subtracting from 180°. We can prove this beautiful fact using the parallel-line rules you have just learned. Draw any triangle ABC. Through the top vertex A, draw a line that is parallel to the base BC. Now the base angle at B is equal…",
+      "example": "We can sort triangles by their angles. An acute triangle has all three angles less than 90°, for example 60°, 70° and 50°. A right-angled triangle has exactly one 90° angle, for example 90°, 60° and 30°. An obtuse…"
+    },
+    {
+      "id": "concept-4-angles-in-polygons",
+      "title": "Angles in Polygons",
+      "explanation": "A polygon is a closed flat shape made of straight sides: triangles, quadrilaterals, pentagons, hexagons and so on. The letter n stands for the number of sides. As soon as you know one simple formula, you can find the angles of a polygon with any number of sides at all. The sum of the interior angles of a polygon is (n − 2) × 180°. The idea behind the formula is to split the polygon into triangles. Choose one vertex and draw straight lines from it to every other vertex. A quadrilateral splits into 2 triangles, a…",
+      "example": "Let us test the formula. For a quadrilateral, n = 4, so the interior angles sum to (4 − 2) × 180° = 360° – which is why the four angles of any rectangle, each 90°, add to 360°. For a pentagon, n = 5, giving (5 − 2) ×…"
+    },
+    {
+      "id": "concept-5-bearings",
+      "title": "Bearings",
+      "explanation": "A bearing is a way of describing a direction using angles, and it is used every day by pilots, ship captains, hikers and surveyors. A bearing follows three clear rules. First, it is always measured from north. Second, it is always measured in the clockwise direction. Third, it is always written with three figures, so we say 060° rather than 60°, and 009° rather than 9°. Because bearings are measured clockwise from north, the four main compass directions have simple bearings: north is 000° (or 360°), east is 090°,…",
+      "example": "To measure the bearing of one place from another, you stand at the starting place, face north, and turn clockwise until you are facing the destination; the angle you have turned through is the bearing. Suppose Ibrahim…"
+    },
+    {
+      "id": "concept-6-ruler-and-compass-constructions",
+      "title": "Ruler-and-Compass Constructions",
+      "explanation": "A construction is an accurate drawing made with only two tools: a pair of compasses for drawing arcs and circles, and a straightedge (a ruler used only for straight lines, not for measuring). These are the tools the ancient Greek mathematicians used more than two thousand years ago, and constructions are still important today because they are exact, they reveal *why* geometric facts are true, and they build careful, patient hands. The golden rule of every construction is: leave all your arcs showing. The faint…",
+      "example": "Constructing an angle bisector. An angle bisector cuts an angle into two equal halves. Put the compass point on the vertex of the angle and draw an arc that crosses both arms of the angle. Now put the compass point on…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "The Basic Angle Rules",
+      "context": "Before we reach parallel lines, we must be completely fluent with three rules you can use anywhere. These are the building blocks for everything that follows, so learn them until they are automatic. Angles on a straight line add up to 180°. If several angles…",
+      "prompt": "Two angles lie on a straight line. One is 143°. Find the other.",
+      "answer": "1) 180 − 143 = 37°.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) 180 − 143 = 37°."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Parallel Lines and the Transversal",
+      "context": "Parallel lines are lines that never meet, however far you extend them. They stay exactly the same distance apart and point in the same direction, like the two rails of a railway track between Nairobi and Mombasa. On a diagram we mark parallel lines with…",
+      "prompt": "Angles around a point are 120°, 95°, 65° and x. Find x.",
+      "answer": "360 − 120 − 95 − 65 = 80°.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "360 − 120 − 95 − 65 = 80°."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Angles in Triangles",
+      "context": "The most famous rule in all of geometry is this: the three interior angles of any triangle add up to 180°. It is true for every triangle in the flat plane – tall thin ones, wide flat ones, big ones, small ones. If you know two angles of a triangle, you can…",
+      "prompt": "Two lines cross; one angle is 52°. Write down the other three angles with reasons.",
+      "answer": "52° (vertically opposite), 128° and 128° (on a straight line with 52°).",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "52° (vertically opposite), 128° and 128° (on a straight line with 52°)."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Angles in Polygons",
+      "context": "A polygon is a closed flat shape made of straight sides: triangles, quadrilaterals, pentagons, hexagons and so on. The letter n stands for the number of sides. As soon as you know one simple formula, you can find the angles of a polygon with any number of…",
+      "prompt": "On parallel lines an angle is 68°. Write its corresponding, alternate and co-interior partners.",
+      "answer": "Corresponding 68°, alternate 68°, co-interior 180 − 68 = 112°.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Corresponding 68°, alternate 68°, co-interior 180 − 68 = 112°."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Bearings",
+      "context": "A bearing is a way of describing a direction using angles, and it is used every day by pilots, ship captains, hikers and surveyors. A bearing follows three clear rules. First, it is always measured from north. Second, it is always measured in the clockwise…",
+      "prompt": "Find the third angle of a triangle with angles 48° and 71°.",
+      "answer": "180 − 48 − 71 = 61°.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "180 − 48 − 71 = 61°."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Ruler-and-Compass Constructions",
+      "context": "A construction is an accurate drawing made with only two tools: a pair of compasses for drawing arcs and circles, and a straightedge (a ruler used only for straight lines, not for measuring). These are the tools the ancient Greek mathematicians used more than…",
+      "prompt": "Write the three-figure bearing of due south and of due west.",
+      "answer": "South = 180°, West = 270°.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "South = 180°, West = 270°."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "The Basic Angle Rules",
+      "modelType": "concept-model-1",
+      "purpose": "Before we reach parallel lines, we must be completely fluent with three rules you can use anywhere. These are the building blocks for everything that follows, so learn them until they are automatic. Angles on a straight…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Parallel Lines and the Transversal",
+      "modelType": "concept-model-2",
+      "purpose": "Parallel lines are lines that never meet, however far you extend them. They stay exactly the same distance apart and point in the same direction, like the two rails of a railway track between Nairobi and Mombasa. On a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Angles in Triangles",
+      "modelType": "concept-model-3",
+      "purpose": "The most famous rule in all of geometry is this: the three interior angles of any triangle add up to 180°. It is true for every triangle in the flat plane – tall thin ones, wide flat ones, big ones, small ones. If you…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Angles in Polygons",
+      "modelType": "concept-model-4",
+      "purpose": "A polygon is a closed flat shape made of straight sides: triangles, quadrilaterals, pentagons, hexagons and so on. The letter n stands for the number of sides. As soon as you know one simple formula, you can find the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Bearings",
+      "modelType": "concept-model-5",
+      "purpose": "A bearing is a way of describing a direction using angles, and it is used every day by pilots, ship captains, hikers and surveyors. A bearing follows three clear rules. First, it is always measured from north. Second,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Ruler-and-Compass Constructions",
+      "modelType": "concept-model-6",
+      "purpose": "A construction is an accurate drawing made with only two tools: a pair of compasses for drawing arcs and circles, and a straightedge (a ruler used only for straight lines, not for measuring). These are the tools the…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find an angle on parallel lines",
+      "example": "Three angles meet at a point on a straight line: 47°, x, and 61°. Find x. Then a fourth angle completes the full turn on the other side of the line – find it.",
+      "steps": [
+        "Identify the transversal and the two parallel lines.",
+        "Decide which family the angle pair belongs to: corresponding, alternate or co-interior.",
+        "Apply the rule: equal for corresponding and alternate; add to 180° for co-interior.",
+        "Write the answer with its reason."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to find the sides or angles of a regular polygon",
+      "example": "Two parallel lines are crossed by a transversal. One angle is 118°. Find the corresponding angle, the alternate angle, and the co-interior angle, each with a reason.",
+      "steps": [
+        "Interior angle sum = (n − 2) × 180°.",
+        "Each interior angle = that sum ÷ n.",
+        "Each exterior angle = 360° ÷ n, or 180° − interior angle.",
+        "To find n from an exterior angle, use n = 360° ÷ exterior angle."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to construct a perpendicular bisector",
+      "example": "In triangle PQR, angle P = 67° and angle Q = 58°. Find angle R.",
+      "steps": [
+        "Open compasses to more than half the segment length.",
+        "Draw arcs above and below from one end.",
+        "Without changing the width, draw arcs from the other end so they cross.",
+        "Join the two crossing points – that is the perpendicular bisector."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "title": "How to construct a triangle from three sides (SSS)",
+      "example": "An exterior angle of a triangle measures 124°. One of the two remote interior angles is 67°. Find the other remote interior angle.",
+      "steps": [
+        "Check the triangle inequality: the two shorter sides must add to more than the longest.",
+        "Draw the longest side as the base.",
+        "Draw an arc of the second side’s length from one end, and of the third side’s length from the other.",
+        "Join the crossing point of the arcs to both ends of the base."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Interior angles of a polygon",
+      "example": "Find the sum of the interior angles of a regular hexagon, and hence the size of each interior angle.",
+      "steps": [
+        "Solution: For a hexagon, n = 6, so the interior angle sum = (6 − 2) × 180° = 4 × 180° = 720°.",
+        "Because it is regular, each of the six angles is equal: 720° ÷ 6 = 120°.",
+        "Check the interior angles of a polygon result carefully."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Number of sides from an angle",
+      "example": "Each interior angle of a regular polygon measures 140°. How many sides does it have?",
+      "steps": [
+        "Solution: Each exterior angle = 180° − 140° = 40° (interior and exterior angles lie on a straight line).",
+        "The exterior angles add to 360°, so the number of sides = 360° ÷ 40° = 9 sides (a nonagon).",
+        "Check the number of sides from an angle result carefully."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Angles on a line and around a point",
+      "prompt": "Three angles meet at a point on a straight line: 47°, x, and 61°. Find x. Then a fourth angle completes the full turn on the other side of the line – find it.",
+      "solution": "Solution: The three angles 47°, x and 61° lie along a straight line, so they add to 180°. Therefore x = 180° − 47° − 61° = 72°. The angles all the way around the point add to 360°, so the fourth angle on the other side of the line is 360° − 180° = 180°, which makes sense because the other side is itself a straight angle."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Parallel lines",
+      "prompt": "Two parallel lines are crossed by a transversal. One angle is 118°. Find the corresponding angle, the alternate angle, and the co-interior angle, each with a reason.",
+      "solution": "Solution: The corresponding angle equals 118° (corresponding angles on parallel lines are equal). The alternate angle equals 118° (alternate angles on parallel lines are equal). The co-interior angle equals 180° − 118° = 62° (co-interior angles on parallel lines add to 180°)."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Triangle angle sum",
+      "prompt": "In triangle PQR, angle P = 67° and angle Q = 58°. Find angle R.",
+      "solution": "Solution: The three angles add to 180°, so angle R = 180° − 67° − 58° = 55° (angles in a triangle add to 180°)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Exterior angle of a triangle",
+      "prompt": "An exterior angle of a triangle measures 124°. One of the two remote interior angles is 67°. Find the other remote interior angle.",
+      "solution": "Solution: The exterior angle equals the sum of the two remote interior angles, so the missing angle = 124° − 67° = 57° (exterior angle equals the sum of the two opposite interior angles). Check: the three interior angles are 67°, 57° and 180° − 124° = 56°, and 67 + 57 + 56 = 180. Correct."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Interior angles of a polygon",
+      "prompt": "Find the sum of the interior angles of a regular hexagon, and hence the size of each interior angle.",
+      "solution": "Solution: For a hexagon, n = 6, so the interior angle sum = (6 − 2) × 180° = 4 × 180° = 720°. Because it is regular, each of the six angles is equal: 720° ÷ 6 = 120°."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Number of sides from an angle",
+      "prompt": "Each interior angle of a regular polygon measures 140°. How many sides does it have?",
+      "solution": "Solution: Each exterior angle = 180° − 140° = 40° (interior and exterior angles lie on a straight line). The exterior angles add to 360°, so the number of sides = 360° ÷ 40° = 9 sides (a nonagon)."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Bearings and back bearings",
+      "prompt": "The bearing of Kismaayo from Garissa is 130°. A boat then sails on a bearing of 065° and turns onto 125°. Find (a) the bearing of Garissa from Kismaayo, and (b) the angle the boat turns through and its direction.",
+      "solution": "Solution: (a) The original bearing 130° is less than 180°, so add 180°: the back bearing is 130° + 180° = 310°. (b) The turn = 125° − 065° = 60°, and because the bearing increased (more clockwise), it is a turn to the right (starboard). Worked Example 8: Is the triangle possible? Can a triangle be constructed with sides 4 cm, 5 cm and 10 cm using compass and straightedge? Solution: Check the triangle inequality: the two shorter sides must add to more than the longest side. Here 4 + 5 = 9, which is less than 10, so…"
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Is the triangle possible?",
+      "prompt": "The bearing of Kismaayo from Garissa is 130°. A boat then sails on a bearing of 065° and turns onto 125°. Find (a) the bearing of Garissa from Kismaayo, and (b) the angle the boat turns through and its direction.",
+      "solution": "Solution: (a) The original bearing 130° is less than 180°, so add 180°: the back bearing is 130° + 180° = 310°. (b) The turn = 125° − 065° = 60°, and because the bearing increased (more clockwise), it is a turn to the right (starboard). Worked Example 8: Is the triangle possible? Can a triangle be constructed with sides 4 cm, 5 cm and 10 cm using compass and straightedge? Solution: Check the triangle inequality: the two shorter sides must add to more than the longest side. Here 4 + 5 = 9, which is less than 10, so…"
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "Each exterior angle of a regular polygon is 30°. How many sides has it, and what is each interior angle?",
+      "solution": "360 ÷ 30 = 12 sides; interior = 180 − 30 = 150°."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "An exterior angle of a triangle is 115°; one remote interior angle is 48°. Find the other remote interior angle and all three interior angles.",
+      "solution": "other remote interior = 115 − 48 = 67°; interior angles 48°, 67° and 180 − 115 = 65° (check 48+67+65 ="
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "The bearing of B from A is 058°. Find the bearing of A from B.",
+      "solution": "."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "The bearing of a town from a port is 205°. Find the back bearing.",
+      "solution": "058 + 180 = 238°."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Two angles lie on a straight line. One is 143°. Find the other.",
+      "answer": "1) 180 − 143 = 37°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Angles around a point are 120°, 95°, 65° and x. Find x.",
+      "answer": "360 − 120 − 95 − 65 = 80°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Two lines cross; one angle is 52°. Write down the other three angles with reasons.",
+      "answer": "52° (vertically opposite), 128° and 128° (on a straight line with 52°).",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "On parallel lines an angle is 68°. Write its corresponding, alternate and co-interior partners.",
+      "answer": "Corresponding 68°, alternate 68°, co-interior 180 − 68 = 112°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Find the third angle of a triangle with angles 48° and 71°.",
+      "answer": "180 − 48 − 71 = 61°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "Write the three-figure bearing of due south and of due west.",
+      "answer": "South = 180°, West = 270°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Find the interior angle sum of a) a pentagon, b) an octagon, c) a dodecagon (12 sides).",
+      "answer": "1) a) (5−2)×180 = 540°, b) (8−2)×180 = 1080°, c) (12−2)×180 = 1800°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Find each interior angle of a) a regular pentagon, b) a regular octagon.",
+      "answer": "a) 540 ÷ 5 = 108°, b) 1080 ÷ 8 = 135°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Each exterior angle of a regular polygon is 30°. How many sides has it, and what is each interior angle?",
+      "answer": "360 ÷ 30 = 12 sides; interior = 180 − 30 = 150°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "An exterior angle of a triangle is 115°; one remote interior angle is 48°. Find the other remote interior angle and all three interior angles.",
+      "answer": "other remote interior = 115 − 48 = 67°; interior angles 48°, 67° and 180 − 115 = 65° (check 48+67+65 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "The bearing of B from A is 058°. Find the bearing of A from B.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Core",
+      "prompt": "The bearing of a town from a port is 205°. Find the back bearing.",
+      "answer": "058 + 180 = 238°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    }
+  ],
+  "activities": [
+    {
+      "title": "The Parallel-Lines Angle Hunt",
+      "materials": "paper, a ruler, a protractor, coloured pencils.",
+      "steps": [
+        "Draw two parallel lines using both edges of your ruler, then draw a slanting transversal across them.",
+        "Measure all eight angles with your protractor and write each one on the diagram.",
+        "Colour each equal pair the same colour: corresponding pairs in one colour, alternate pairs in another.",
+        "Check: do your co-interior pairs add up to 180°? Write the additions to prove it.",
+        "This activity turns the rules from the Lesson into something you can see with your own eyes."
+      ]
+    },
+    {
+      "title": "Build a 60° Angle Without a Protractor",
+      "materials": "paper, a sharp pencil, a straightedge, a pair of compasses.",
+      "steps": [
+        "Draw a straight base line and mark a point near the left end.",
+        "Put the compass point on the mark and draw an arc that crosses the line.",
+        "Without changing the width, move the point to where the arc met the line and draw a second arc crossing the first.",
+        "Join the mark to the crossing point of the two arcs, then measure your angle – it should be almost exactly 60°.",
+        "Now bisect your 60° angle to make 30°. You have created exact angles using only arcs and a straight line, just as the ancient Greeks did."
+      ]
+    },
+    {
+      "title": "The Turning-Bearings Compass Walk",
+      "materials": "an open space, a real or drawn compass, and a friend.",
+      "steps": [
+        "Stand still and face north. Agree that this direction is 000°.",
+        "Turn clockwise and stop; ask your friend to estimate your bearing, then check with the compass.",
+        "Call out journeys: “walk on 090°” (east), then “turn to 180°” (south). What angle did you turn through?",
+        "For each pair of directions, work out the back bearing and check by walking it.",
+        "Walking the angles makes bearings feel natural, the way a ship’s captain feels them."
+      ]
+    },
+    {
+      "title": "Polygon Angle Investigation",
+      "materials": "paper, ruler, protractor.",
+      "steps": [
+        "Draw a triangle, a quadrilateral, a pentagon and a hexagon.",
+        "In each shape, split it into triangles from one vertex and count the triangles.",
+        "Predict the interior angle sum using (n − 2) × 180°, then measure to check.",
+        "Make a table of your results and look for the pattern as the number of sides grows.",
+        "An investigation like this is how mathematicians first discovered the polygon formula."
+      ]
+    },
+    {
+      "title": "Construct a Triangle for a Real Design (Family Task)",
+      "materials": "paper, straightedge, compasses, and a family member to set the challenge.",
+      "steps": [
+        "Ask a family member to give you three side lengths, for example 5 cm, 6 cm and 8 cm.",
+        "First test the triangle inequality: do the two shorter sides add to more than the longest?",
+        "If it passes, construct the triangle with SSS – base first, then two arcs – leaving all arcs showing.",
+        "Measure the three angles and check they add to 180°. Then try a set that fails the inequality and see what happens."
+      ]
+    },
+    {
+      "title": "Tessellation Tile Design (Investigation)",
+      "materials": "paper, ruler, protractor, coloured pencils.",
+      "steps": [
+        "Using the interior angles you calculated, work out which regular polygons meet exactly at a point (angles summing to 360°).",
+        "Design a repeating floor pattern, like a masjid or market floor, using squares, triangles or hexagons.",
+        "At one meeting point, write the angles and show they add to 360°.",
+        "Explain why regular pentagons cannot tile a floor on their own. (Hint: 108° does not divide into 360°.)",
+        "After your activities, talk or write about these questions: Which activity made the angle rules clearest to you? Which construction was the hardest to keep accurate, and why? Where in your own home or town do you now notice parallel lines, polygons or bearings? Share your answers with your teacher at your next session, and set yourself one goal for the week ahead."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key rule 1",
+        "text": "Basic Angle Rules Angles on a straight line add to 180 degrees (supplementary). Angles around a point add to 360 degrees (a full turn). Vertically opposite angles (where two lines cross) are equal."
+      },
+      {
+        "title": "Key rule 2",
+        "text": "Parallel-Line Rules Corresponding angles (F-shape) are equal. Alternate angles (Z-shape) are equal. Co-interior angles (C-shape) add to 180 degrees."
+      },
+      {
+        "title": "Key rule 3",
+        "text": "Triangle and Polygon Rules Angles in a triangle add to 180 degrees. An exterior angle of a triangle equals the sum of the two remote interior angles. Interior angle sum of a polygon = (n minus 2) times 180 degrees. Exterior angles of any polygon add to 360 degrees; each regular one = 360 divided by n."
+      },
+      {
+        "title": "Key rule 4",
+        "text": "Bearings Rules Measured clockwise from north, always written with three figures. North 000, East 090, South 180, West 270. Back bearing: add 180 if under 180, subtract 180 if 180 or more."
+      }
+    ],
+    "terms": [
+      [
+        "Transversal",
+        "A line crossing two or more other lines"
+      ],
+      [
+        "Corresponding angles",
+        "Same position; equal (F-shape)"
+      ],
+      [
+        "Alternate angles",
+        "Opposite sides, between the lines; equal (Z-shape)"
+      ],
+      [
+        "Co-interior angles",
+        "Same side, between the lines; add to 180° (C-shape)"
+      ],
+      [
+        "Vertically opposite",
+        "Equal angles where two lines cross"
+      ],
+      [
+        "Interior / exterior angle",
+        "Inside a vertex / between a side and the next extension"
+      ],
+      [
+        "Regular polygon",
+        "All sides and all angles equal"
+      ],
+      [
+        "Bearing",
+        "Three-figure direction, clockwise from north"
+      ],
+      [
+        "Perpendicular bisector",
+        "Cuts a segment in half at 90°"
+      ],
+      [
+        "Angle bisector",
+        "Cuts an angle into two equal halves"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Making co-interior angles equal",
+        "Co-interior angles add to 180°"
+      ],
+      [
+        "Answering with no reason",
+        "Always name the rule you used"
+      ],
+      [
+        "Writing a bearing as 60°",
+        "Write 060°"
+      ],
+      [
+        "Using (n−2)×180 for one angle",
+        "Divide the total by n"
+      ],
+      [
+        "Starting an impossible triangle",
+        "Check shorter sides sum > longest first"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Two angles lie on a straight line. One is 143°. Find the other.",
+      "answer": "1) 180 − 143 = 37°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) 180 − 143 = 37°."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Angles around a point are 120°, 95°, 65° and x. Find x.",
+      "answer": "360 − 120 − 95 − 65 = 80°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "360 − 120 − 95 − 65 = 80°."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Two lines cross; one angle is 52°. Write down the other three angles with reasons.",
+      "answer": "52° (vertically opposite), 128° and 128° (on a straight line with 52°).",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "52° (vertically opposite), 128° and 128° (on a straight line with 52°)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "On parallel lines an angle is 68°. Write its corresponding, alternate and co-interior partners.",
+      "answer": "Corresponding 68°, alternate 68°, co-interior 180 − 68 = 112°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Corresponding 68°, alternate 68°, co-interior 180 − 68 = 112°."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Find the third angle of a triangle with angles 48° and 71°.",
+      "answer": "180 − 48 − 71 = 61°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "180 − 48 − 71 = 61°."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Write the three-figure bearing of due south and of due west.",
+      "answer": "South = 180°, West = 270°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "South = 180°, West = 270°."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Find the interior angle sum of a) a pentagon, b) an octagon, c) a dodecagon (12 sides).",
+      "answer": "1) a) (5−2)×180 = 540°, b) (8−2)×180 = 1080°, c) (12−2)×180 = 1800°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) (5−2)×180 = 540°, b) (8−2)×180 = 1080°, c) (12−2)×180 = 1800°."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Find each interior angle of a) a regular pentagon, b) a regular octagon.",
+      "answer": "a) 540 ÷ 5 = 108°, b) 1080 ÷ 8 = 135°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 540 ÷ 5 = 108°, b) 1080 ÷ 8 = 135°."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Each exterior angle of a regular polygon is 30°. How many sides has it, and what is each interior angle?",
+      "answer": "360 ÷ 30 = 12 sides; interior = 180 − 30 = 150°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "360 ÷ 30 = 12 sides; interior = 180 − 30 = 150°."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "An exterior angle of a triangle is 115°; one remote interior angle is 48°. Find the other remote interior angle and all three interior angles.",
+      "answer": "other remote interior = 115 − 48 = 67°; interior angles 48°, 67° and 180 − 115 = 65° (check 48+67+65 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "other remote interior = 115 − 48 = 67°; interior angles 48°, 67° and 180 − 115 = 65° (check 48+67+65 ="
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "The bearing of B from A is 058°. Find the bearing of A from B.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo04",
+      "difficulty": "Round 3",
+      "prompt": "The bearing of a town from a port is 205°. Find the back bearing.",
+      "answer": "058 + 180 = 238°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "058 + 180 = 238°."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A roof truss has parallel top and bottom chords. A diagonal makes 35° with the bottom chord. What angle does it make with the top chord? Give the reason.",
+      "answer": "1) 35° – alternate angles between the parallel chords are equal.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 35° – alternate angles between the parallel chords are equal."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Solar panels sit on a roof that slopes at 30° to the horizontal. The panels are tilted a further 25° from the roof surface. What is the total angle of the panels from the horizontal?",
+      "answer": "30 + 25 = 55° from the horizontal.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "30 + 25 = 55° from the horizontal."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "A surveyor measures a quadrilateral plot with three angles of 87°, 94° and 102°. Find the fourth angle. The instrument reads 75° – is it correct, and by how much is it out?",
+      "answer": "Fourth angle = 360 − 87 − 94 − 102 = 77°; the 75° reading is wrong, out by 2°.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Fourth angle = 360 − 87 − 94 − 102 = 77°; the 75° reading is wrong, out by 2°."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "Amina designs a floor pattern from regular hexagons. Explain, using the interior angle, why three hexagons fit exactly around a point.",
+      "answer": "Each hexagon interior angle = 120°, and 3 × 120° = 360°, a full turn, so three meet at a point with no gap.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Each hexagon interior angle = 120°, and 3 × 120° = 360°, a full turn, so three meet at a point with no gap."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A hiker walks from camp on a bearing of 120° to a well, then wishes to return. On what bearing must she walk back?",
+      "answer": "120 + 180 = 300°.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "120 + 180 = 300°."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Design",
+      "prompt": "Can a triangle be constructed with sides 7 cm, 5 cm and 6 cm? Explain using the triangle inequality, and state which side you would draw as the base.",
+      "answer": "5 + 6 = 11 > 7, so it is possible; draw the longest side, 7 cm, as the base.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "5 + 6 = 11 > 7, so it is possible; draw the longest side, 7 cm, as the base."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "On parallel lines, two co-interior angles are (4x − 10)° and (2x + 40)°. Find x and both angles.",
+      "keyIdeas": [
+        "Transversal",
+        "Corresponding angles",
+        "Alternate angles"
+      ],
+      "modelAnswer": "1) Co-interior add to 180: (4x −"
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In triangle PQR, angle P = 2x°, angle Q = (x + 30)° and angle R = (3x − 10)°. Find all three angles.",
+      "keyIdeas": [
+        "Corresponding angles",
+        "Alternate angles",
+        "Co-interior angles"
+      ],
+      "modelAnswer": "+ (2x +"
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Two parallel lines are cut by a transversal. One angle is (5x − 20)° and its corresponding angle is (3x + 40)°. Find x and both angles.",
+      "keyIdeas": [
+        "Alternate angles",
+        "Co-interior angles",
+        "Vertically opposite"
+      ],
+      "modelAnswer": "= 180 → 6x + 30 = 180 → x = 25; angles 4(25)−10 = 90° and 2(25)+40 = 90°."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "The interior angle of a regular polygon is 5 times its exterior angle. How many sides has it?",
+      "keyIdeas": [
+        "Co-interior angles",
+        "Vertically opposite",
+        "Interior / exterior angle"
+      ],
+      "modelAnswer": "Angles add to 180: 2x + (x+30) + (3x−10) = 180 → 6x + 20 = 180 → x = 26.67; use 6x = 160, x = 80/3 ≈ 26.7; P ≈ 53.3°, Q ≈ 56.7°, R ≈ 70.0° (sum 180°)."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A ship sails on a bearing of 065° for 12 km, then changes course to 125°. Through what angle has it turned, and is it a port or starboard turn?",
+      "keyIdeas": [
+        "Vertically opposite",
+        "Interior / exterior angle",
+        "Regular polygon"
+      ],
+      "modelAnswer": "Corresponding equal: 5x − 20 = 3x + 40 → 2x = 60 → x = 30; both angles = 3(30)+40 = 130°."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Ruler-and-Compass Constructions.",
+      "keyIdeas": [
+        "Transversal",
+        "Corresponding angles",
+        "Alternate angles"
+      ],
+      "modelAnswer": "A construction is an accurate drawing made with only two tools: a pair of compasses for drawing arcs and circles, and a straightedge (a ruler used only for straight lines, not for measuring). These are the tools the ancient Greek mathematicians used more than two thousand years ago, and constructions are still important today because they are exact, they reveal *why* geometric facts are true, and they build careful, patient hands. The golden rule of every construction is: leave all your arcs showing. The faint…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Transversal” mean?",
+        "options": [
+          "A line crossing two or more other lines",
+          "Same position; equal (F-shape)",
+          "Opposite sides, between the lines; equal (Z-shape)",
+          "Same side, between the lines; add to 180° (C-shape)"
+        ],
+        "answer": "A line crossing two or more other lines",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Transversal means A line crossing two or more other lines."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Corresponding angles” mean?",
+        "options": [
+          "Same position; equal (F-shape)",
+          "Opposite sides, between the lines; equal (Z-shape)",
+          "Same side, between the lines; add to 180° (C-shape)",
+          "Equal angles where two lines cross"
+        ],
+        "answer": "Same position; equal (F-shape)",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Corresponding angles means Same position; equal (F-shape)."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Alternate angles” mean?",
+        "options": [
+          "Opposite sides, between the lines; equal (Z-shape)",
+          "Same side, between the lines; add to 180° (C-shape)",
+          "Equal angles where two lines cross",
+          "Inside a vertex / between a side and the next extension"
+        ],
+        "answer": "Opposite sides, between the lines; equal (Z-shape)",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Alternate angles means Opposite sides, between the lines; equal (Z-shape)."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Co-interior angles” mean?",
+        "options": [
+          "Same side, between the lines; add to 180° (C-shape)",
+          "Equal angles where two lines cross",
+          "Inside a vertex / between a side and the next extension",
+          "All sides and all angles equal"
+        ],
+        "answer": "Same side, between the lines; add to 180° (C-shape)",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Co-interior angles means Same side, between the lines; add to 180° (C-shape)."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Vertically opposite” mean?",
+        "options": [
+          "Equal angles where two lines cross",
+          "Inside a vertex / between a side and the next extension",
+          "All sides and all angles equal",
+          "Three-figure direction, clockwise from north"
+        ],
+        "answer": "Equal angles where two lines cross",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Vertically opposite means Equal angles where two lines cross."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Interior / exterior angle” mean?",
+        "options": [
+          "Inside a vertex / between a side and the next extension",
+          "All sides and all angles equal",
+          "Three-figure direction, clockwise from north",
+          "Cuts a segment in half at 90°"
+        ],
+        "answer": "Inside a vertex / between a side and the next extension",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Interior / exterior angle means Inside a vertex / between a side and the next extension."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: All sides and all angles equal?",
+        "options": [
+          "Regular polygon",
+          "Bearing",
+          "Perpendicular bisector",
+          "Angle bisector"
+        ],
+        "answer": "Regular polygon",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Regular polygon means All sides and all angles equal."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Three-figure direction, clockwise from north?",
+        "options": [
+          "Bearing",
+          "Perpendicular bisector",
+          "Angle bisector",
+          "Transversal"
+        ],
+        "answer": "Bearing",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Bearing means Three-figure direction, clockwise from north."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Cuts a segment in half at 90°?",
+        "options": [
+          "Perpendicular bisector",
+          "Angle bisector",
+          "Transversal",
+          "Corresponding angles"
+        ],
+        "answer": "Perpendicular bisector",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Perpendicular bisector means Cuts a segment in half at 90°."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: Cuts an angle into two equal halves?",
+        "options": [
+          "Angle bisector",
+          "Transversal",
+          "Corresponding angles",
+          "Alternate angles"
+        ],
+        "answer": "Angle bisector",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Angle bisector means Cuts an angle into two equal halves."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A line crossing two or more other lines?",
+        "options": [
+          "Transversal",
+          "Alternate angles",
+          "Co-interior angles",
+          "Vertically opposite"
+        ],
+        "answer": "Transversal",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Transversal means A line crossing two or more other lines."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: Same position; equal (F-shape)?",
+        "options": [
+          "Corresponding angles",
+          "Co-interior angles",
+          "Vertically opposite",
+          "Interior / exterior angle"
+        ],
+        "answer": "Corresponding angles",
+        "hint": "Use the Unit 5 Math Words & Symbols reference.",
+        "explanation": "Corresponding angles means Same position; equal (F-shape)."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u5-game-1",
+        "icon": "?",
+        "skill": "Transversal",
+        "title": "Quick Match: Transversal",
+        "description": "Practise transversal through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Transversal” mean?",
+            "choices": [
+              "A line crossing two or more other lines",
+              "Same position; equal (F-shape)",
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)"
+            ],
+            "answer": "A line crossing two or more other lines",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Transversal means A line crossing two or more other lines."
+          },
+          {
+            "prompt": "What does “Co-interior angles” mean?",
+            "choices": [
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal"
+            ],
+            "answer": "Same side, between the lines; add to 180° (C-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Co-interior angles means Same side, between the lines; add to 180° (C-shape)."
+          },
+          {
+            "prompt": "Which term matches this meaning: All sides and all angles equal?",
+            "choices": [
+              "Regular polygon",
+              "Bearing",
+              "Perpendicular bisector",
+              "Angle bisector"
+            ],
+            "answer": "Regular polygon",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "Which term matches this meaning: Cuts an angle into two equal halves?",
+            "choices": [
+              "Angle bisector",
+              "Transversal",
+              "Corresponding angles",
+              "Alternate angles"
+            ],
+            "answer": "Angle bisector",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Angle bisector means Cuts an angle into two equal halves."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-2",
+        "icon": "★",
+        "skill": "Corresponding angles",
+        "title": "Concept Quest: Corresponding angles",
+        "description": "Practise corresponding angles through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Corresponding angles” mean?",
+            "choices": [
+              "Same position; equal (F-shape)",
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross"
+            ],
+            "answer": "Same position; equal (F-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Corresponding angles means Same position; equal (F-shape)."
+          },
+          {
+            "prompt": "What does “Vertically opposite” mean?",
+            "choices": [
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal",
+              "Three-figure direction, clockwise from north"
+            ],
+            "answer": "Equal angles where two lines cross",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Vertically opposite means Equal angles where two lines cross."
+          },
+          {
+            "prompt": "Which term matches this meaning: Three-figure direction, clockwise from north?",
+            "choices": [
+              "Bearing",
+              "Perpendicular bisector",
+              "Angle bisector",
+              "Transversal"
+            ],
+            "answer": "Bearing",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Bearing means Three-figure direction, clockwise from north."
+          },
+          {
+            "prompt": "Which term matches this meaning: A line crossing two or more other lines?",
+            "choices": [
+              "Transversal",
+              "Alternate angles",
+              "Co-interior angles",
+              "Vertically opposite"
+            ],
+            "answer": "Transversal",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Transversal means A line crossing two or more other lines."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-3",
+        "icon": "◫",
+        "skill": "Alternate angles",
+        "title": "Model Detective: Alternate angles",
+        "description": "Practise alternate angles through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Alternate angles” mean?",
+            "choices": [
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension"
+            ],
+            "answer": "Opposite sides, between the lines; equal (Z-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Alternate angles means Opposite sides, between the lines; equal (Z-shape)."
+          },
+          {
+            "prompt": "What does “Interior / exterior angle” mean?",
+            "choices": [
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal",
+              "Three-figure direction, clockwise from north",
+              "Cuts a segment in half at 90°"
+            ],
+            "answer": "Inside a vertex / between a side and the next extension",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Interior / exterior angle means Inside a vertex / between a side and the next extension."
+          },
+          {
+            "prompt": "Which term matches this meaning: Cuts a segment in half at 90°?",
+            "choices": [
+              "Perpendicular bisector",
+              "Angle bisector",
+              "Transversal",
+              "Corresponding angles"
+            ],
+            "answer": "Perpendicular bisector",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Perpendicular bisector means Cuts a segment in half at 90°."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same position; equal (F-shape)?",
+            "choices": [
+              "Corresponding angles",
+              "Co-interior angles",
+              "Vertically opposite",
+              "Interior / exterior angle"
+            ],
+            "answer": "Corresponding angles",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Corresponding angles means Same position; equal (F-shape)."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-4",
+        "icon": "→",
+        "skill": "Co-interior angles",
+        "title": "Rule Runner: Co-interior angles",
+        "description": "Practise co-interior angles through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Co-interior angles” mean?",
+            "choices": [
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal"
+            ],
+            "answer": "Same side, between the lines; add to 180° (C-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Co-interior angles means Same side, between the lines; add to 180° (C-shape)."
+          },
+          {
+            "prompt": "Which term matches this meaning: All sides and all angles equal?",
+            "choices": [
+              "Regular polygon",
+              "Bearing",
+              "Perpendicular bisector",
+              "Angle bisector"
+            ],
+            "answer": "Regular polygon",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "Which term matches this meaning: Cuts an angle into two equal halves?",
+            "choices": [
+              "Angle bisector",
+              "Transversal",
+              "Corresponding angles",
+              "Alternate angles"
+            ],
+            "answer": "Angle bisector",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Angle bisector means Cuts an angle into two equal halves."
+          },
+          {
+            "prompt": "What does “Transversal” mean?",
+            "choices": [
+              "A line crossing two or more other lines",
+              "Same position; equal (F-shape)",
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)"
+            ],
+            "answer": "A line crossing two or more other lines",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Transversal means A line crossing two or more other lines."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-5",
+        "icon": "Σ",
+        "skill": "Vertically opposite",
+        "title": "Vocabulary Vault: Vertically opposite",
+        "description": "Practise vertically opposite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Vertically opposite” mean?",
+            "choices": [
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal",
+              "Three-figure direction, clockwise from north"
+            ],
+            "answer": "Equal angles where two lines cross",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Vertically opposite means Equal angles where two lines cross."
+          },
+          {
+            "prompt": "Which term matches this meaning: Three-figure direction, clockwise from north?",
+            "choices": [
+              "Bearing",
+              "Perpendicular bisector",
+              "Angle bisector",
+              "Transversal"
+            ],
+            "answer": "Bearing",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Bearing means Three-figure direction, clockwise from north."
+          },
+          {
+            "prompt": "Which term matches this meaning: A line crossing two or more other lines?",
+            "choices": [
+              "Transversal",
+              "Alternate angles",
+              "Co-interior angles",
+              "Vertically opposite"
+            ],
+            "answer": "Transversal",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Transversal means A line crossing two or more other lines."
+          },
+          {
+            "prompt": "What does “Corresponding angles” mean?",
+            "choices": [
+              "Same position; equal (F-shape)",
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross"
+            ],
+            "answer": "Same position; equal (F-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Corresponding angles means Same position; equal (F-shape)."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-6",
+        "icon": "◇",
+        "skill": "Interior / exterior angle",
+        "title": "Challenge Cards: Interior / exterior angle",
+        "description": "Practise interior / exterior angle through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Interior / exterior angle” mean?",
+            "choices": [
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal",
+              "Three-figure direction, clockwise from north",
+              "Cuts a segment in half at 90°"
+            ],
+            "answer": "Inside a vertex / between a side and the next extension",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Interior / exterior angle means Inside a vertex / between a side and the next extension."
+          },
+          {
+            "prompt": "Which term matches this meaning: Cuts a segment in half at 90°?",
+            "choices": [
+              "Perpendicular bisector",
+              "Angle bisector",
+              "Transversal",
+              "Corresponding angles"
+            ],
+            "answer": "Perpendicular bisector",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Perpendicular bisector means Cuts a segment in half at 90°."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same position; equal (F-shape)?",
+            "choices": [
+              "Corresponding angles",
+              "Co-interior angles",
+              "Vertically opposite",
+              "Interior / exterior angle"
+            ],
+            "answer": "Corresponding angles",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Corresponding angles means Same position; equal (F-shape)."
+          },
+          {
+            "prompt": "What does “Alternate angles” mean?",
+            "choices": [
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension"
+            ],
+            "answer": "Opposite sides, between the lines; equal (Z-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Alternate angles means Opposite sides, between the lines; equal (Z-shape)."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-7",
+        "icon": "⚡",
+        "skill": "Regular polygon",
+        "title": "Think Fast: Regular polygon",
+        "description": "Practise regular polygon through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: All sides and all angles equal?",
+            "choices": [
+              "Regular polygon",
+              "Bearing",
+              "Perpendicular bisector",
+              "Angle bisector"
+            ],
+            "answer": "Regular polygon",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "Which term matches this meaning: Cuts an angle into two equal halves?",
+            "choices": [
+              "Angle bisector",
+              "Transversal",
+              "Corresponding angles",
+              "Alternate angles"
+            ],
+            "answer": "Angle bisector",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Angle bisector means Cuts an angle into two equal halves."
+          },
+          {
+            "prompt": "What does “Transversal” mean?",
+            "choices": [
+              "A line crossing two or more other lines",
+              "Same position; equal (F-shape)",
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)"
+            ],
+            "answer": "A line crossing two or more other lines",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Transversal means A line crossing two or more other lines."
+          },
+          {
+            "prompt": "What does “Co-interior angles” mean?",
+            "choices": [
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal"
+            ],
+            "answer": "Same side, between the lines; add to 180° (C-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Co-interior angles means Same side, between the lines; add to 180° (C-shape)."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-8",
+        "icon": "☁",
+        "skill": "Bearing",
+        "title": "Explain It: Bearing",
+        "description": "Practise bearing through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Three-figure direction, clockwise from north?",
+            "choices": [
+              "Bearing",
+              "Perpendicular bisector",
+              "Angle bisector",
+              "Transversal"
+            ],
+            "answer": "Bearing",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Bearing means Three-figure direction, clockwise from north."
+          },
+          {
+            "prompt": "Which term matches this meaning: A line crossing two or more other lines?",
+            "choices": [
+              "Transversal",
+              "Alternate angles",
+              "Co-interior angles",
+              "Vertically opposite"
+            ],
+            "answer": "Transversal",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Transversal means A line crossing two or more other lines."
+          },
+          {
+            "prompt": "What does “Corresponding angles” mean?",
+            "choices": [
+              "Same position; equal (F-shape)",
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross"
+            ],
+            "answer": "Same position; equal (F-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Corresponding angles means Same position; equal (F-shape)."
+          },
+          {
+            "prompt": "What does “Vertically opposite” mean?",
+            "choices": [
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal",
+              "Three-figure direction, clockwise from north"
+            ],
+            "answer": "Equal angles where two lines cross",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Vertically opposite means Equal angles where two lines cross."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-9",
+        "icon": "⌂",
+        "skill": "Perpendicular bisector",
+        "title": "Real-Life Round: Perpendicular bisector",
+        "description": "Practise perpendicular bisector through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Cuts a segment in half at 90°?",
+            "choices": [
+              "Perpendicular bisector",
+              "Angle bisector",
+              "Transversal",
+              "Corresponding angles"
+            ],
+            "answer": "Perpendicular bisector",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Perpendicular bisector means Cuts a segment in half at 90°."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same position; equal (F-shape)?",
+            "choices": [
+              "Corresponding angles",
+              "Co-interior angles",
+              "Vertically opposite",
+              "Interior / exterior angle"
+            ],
+            "answer": "Corresponding angles",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Corresponding angles means Same position; equal (F-shape)."
+          },
+          {
+            "prompt": "What does “Alternate angles” mean?",
+            "choices": [
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension"
+            ],
+            "answer": "Opposite sides, between the lines; equal (Z-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Alternate angles means Opposite sides, between the lines; equal (Z-shape)."
+          },
+          {
+            "prompt": "What does “Interior / exterior angle” mean?",
+            "choices": [
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal",
+              "Three-figure direction, clockwise from north",
+              "Cuts a segment in half at 90°"
+            ],
+            "answer": "Inside a vertex / between a side and the next extension",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Interior / exterior angle means Inside a vertex / between a side and the next extension."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-10",
+        "icon": "!",
+        "skill": "Angle bisector",
+        "title": "Spot the Error: Angle bisector",
+        "description": "Practise angle bisector through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Cuts an angle into two equal halves?",
+            "choices": [
+              "Angle bisector",
+              "Transversal",
+              "Corresponding angles",
+              "Alternate angles"
+            ],
+            "answer": "Angle bisector",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Angle bisector means Cuts an angle into two equal halves."
+          },
+          {
+            "prompt": "What does “Transversal” mean?",
+            "choices": [
+              "A line crossing two or more other lines",
+              "Same position; equal (F-shape)",
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)"
+            ],
+            "answer": "A line crossing two or more other lines",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Transversal means A line crossing two or more other lines."
+          },
+          {
+            "prompt": "What does “Co-interior angles” mean?",
+            "choices": [
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal"
+            ],
+            "answer": "Same side, between the lines; add to 180° (C-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Co-interior angles means Same side, between the lines; add to 180° (C-shape)."
+          },
+          {
+            "prompt": "Which term matches this meaning: All sides and all angles equal?",
+            "choices": [
+              "Regular polygon",
+              "Bearing",
+              "Perpendicular bisector",
+              "Angle bisector"
+            ],
+            "answer": "Regular polygon",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-11",
+        "icon": "≡",
+        "skill": "Transversal",
+        "title": "Mastery Mix: Transversal",
+        "description": "Practise transversal through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A line crossing two or more other lines?",
+            "choices": [
+              "Transversal",
+              "Alternate angles",
+              "Co-interior angles",
+              "Vertically opposite"
+            ],
+            "answer": "Transversal",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Transversal means A line crossing two or more other lines."
+          },
+          {
+            "prompt": "What does “Corresponding angles” mean?",
+            "choices": [
+              "Same position; equal (F-shape)",
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross"
+            ],
+            "answer": "Same position; equal (F-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Corresponding angles means Same position; equal (F-shape)."
+          },
+          {
+            "prompt": "What does “Vertically opposite” mean?",
+            "choices": [
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal",
+              "Three-figure direction, clockwise from north"
+            ],
+            "answer": "Equal angles where two lines cross",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Vertically opposite means Equal angles where two lines cross."
+          },
+          {
+            "prompt": "Which term matches this meaning: Three-figure direction, clockwise from north?",
+            "choices": [
+              "Bearing",
+              "Perpendicular bisector",
+              "Angle bisector",
+              "Transversal"
+            ],
+            "answer": "Bearing",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Bearing means Three-figure direction, clockwise from north."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-12",
+        "icon": "T",
+        "skill": "Corresponding angles",
+        "title": "Unit Champion: Corresponding angles",
+        "description": "Practise corresponding angles through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Same position; equal (F-shape)?",
+            "choices": [
+              "Corresponding angles",
+              "Co-interior angles",
+              "Vertically opposite",
+              "Interior / exterior angle"
+            ],
+            "answer": "Corresponding angles",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Corresponding angles means Same position; equal (F-shape)."
+          },
+          {
+            "prompt": "What does “Alternate angles” mean?",
+            "choices": [
+              "Opposite sides, between the lines; equal (Z-shape)",
+              "Same side, between the lines; add to 180° (C-shape)",
+              "Equal angles where two lines cross",
+              "Inside a vertex / between a side and the next extension"
+            ],
+            "answer": "Opposite sides, between the lines; equal (Z-shape)",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Alternate angles means Opposite sides, between the lines; equal (Z-shape)."
+          },
+          {
+            "prompt": "What does “Interior / exterior angle” mean?",
+            "choices": [
+              "Inside a vertex / between a side and the next extension",
+              "All sides and all angles equal",
+              "Three-figure direction, clockwise from north",
+              "Cuts a segment in half at 90°"
+            ],
+            "answer": "Inside a vertex / between a side and the next extension",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Interior / exterior angle means Inside a vertex / between a side and the next extension."
+          },
+          {
+            "prompt": "Which term matches this meaning: Cuts a segment in half at 90°?",
+            "choices": [
+              "Perpendicular bisector",
+              "Angle bisector",
+              "Transversal",
+              "Corresponding angles"
+            ],
+            "answer": "Perpendicular bisector",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Perpendicular bisector means Cuts a segment in half at 90°."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can use the rules for angles on a straight line (sum 180°), angles around a point (sum 360°) and vertically opposite angles (equal).",
+    "I can identify a transversal and the eight angles it makes with two parallel lines.",
+    "I can apply the corresponding, alternate and co-interior angle rules to find unknown angles, giving a reason each time.",
+    "I can use the triangle angle sum (180°) and the exterior-angle rule.",
+    "I can calculate interior and exterior angles of any polygon using (n − 2) × 180° and 360° ÷ n.",
+    "I can measure and calculate three-figure bearings, including back bearings.",
+    "I can construct a perpendicular bisector, an angle bisector, a 60° angle, and triangles from given sides and angles using only compass and straightedge.",
+    "I can set out a clear geometric argument, stating a reason for every step."
+  ]
+}

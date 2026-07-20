@@ -1,0 +1,1781 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:11.782Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "math-g04-u01",
+    "unitNo": 1,
+    "unitTitle": "Numbers and the Number System",
+    "unitOverview": "Welcome to Unit 1, Year 4! In this unit you will grow from working with small, friendly numbers into a confident explorer of the whole number system. You will study number sequences and the rules that make them tick, negative numbers that live below zero, and place value in numbers as large as six digits – all the way up to the hundred thousands. You will also learn the neat patterns that appear when you multiply and divide by 10 and 100.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-4-Content-Package.xlsx",
+    "sourceArchive": "Year 4 (1)-20260714T220930Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 4 (1)/Unit 1 (1)/Year 4 - Unit 1 Lesson.docx",
+      "Year 4 (1)/Unit 1 (1)/Year 4 - Unit 1 Activities.docx",
+      "Year 4 (1)/Unit 1 (1)/Year 4 - Unit 1 Practice.docx",
+      "Year 4 (1)/Unit 1 (1)/Year 4 - Unit 1 Reference.docx"
+    ],
+    "sourceBlockCount": 372,
+    "transformation": "Structured directly from the standardized Cambridge Stage 4 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Identify, continue and create both linear and non-linear sequences.",
+    "Find and apply the term-to-term rule of a number sequence.",
+    "Understand and use negative numbers in real-world situations such as temperature.",
+    "Compare and order positive and negative numbers using a number line.",
+    "Understand place value in whole numbers up to six digits (hundred thousands).",
+    "Decompose a number into its place-value parts (expanded form).",
+    "Multiply and divide whole numbers by 10 and 100 and explain the digit shift.",
+    "Solve word problems that mix sequences, negative numbers and place value."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-number-sequences",
+      "title": "Number Sequences",
+      "explanation": "A sequence is a list of numbers that follows a pattern or rule. Each number in the sequence is called a term. Sequences are all around you: when Yusuf counts the days of Ramadan (1, 2, 3, 4 …), when a shopkeeper stacks tins in growing piles, or when Halima saves the same number of shillings each week, a sequence is quietly at work. The most important skill with sequences is finding the term-to-term rule – the instruction that tells you how to get from one term to the next. Once you know the rule, you can continue…",
+      "example": "A linear sequence is one where the difference between consecutive terms is always the same. You get from each term to the next by adding (or subtracting) the same amount every time."
+    },
+    {
+      "id": "concept-2-negative-numbers",
+      "title": "Negative Numbers",
+      "explanation": "Negative numbers are numbers less than zero. We write them with a minus sign in front, like −1, −2, −3 and so on. They may feel strange at first, but you have almost certainly met them already. Negative numbers appear whenever we count *below* a starting point: Temperature below freezing, such as −4 °C on a cold desert night.",
+      "example": "Depth below sea level, such as a diver at −20 m."
+    },
+    {
+      "id": "concept-3-place-value-in-larger-numbers",
+      "title": "Place Value in Larger Numbers",
+      "explanation": "Place value tells us the value of each digit in a number, based on its position. As the numbers we work with get larger, place value becomes even more important. In our number system, each place is 10 times greater than the place immediately to its right. Reading from right to left, the places are: ones, tens, hundreds, thousands, ten thousands, and hundred thousands. Let us look closely at the six-digit number 654,321. We can name the value of every digit:",
+      "example": "The 6 is in the hundred thousands place, so it is worth 600,000."
+    },
+    {
+      "id": "concept-rule-4",
+      "title": "Times 10 and 100 Rule",
+      "explanation": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT.",
+      "example": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT."
+    },
+    {
+      "id": "concept-rule-5",
+      "title": "Sequence Rule",
+      "explanation": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear.",
+      "example": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear."
+    },
+    {
+      "id": "concept-rule-6",
+      "title": "Negative Number Rule",
+      "explanation": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left.",
+      "example": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Number Sequences",
+      "context": "A sequence is a list of numbers that follows a pattern or rule. Each number in the sequence is called a term. Sequences are all around you: when Yusuf counts the days of Ramadan (1, 2, 3, 4 …), when a shopkeeper stacks tins in growing piles, or when Halima…",
+      "prompt": "Find the rule and next three terms: a) 3, 8, 13, 18, 23, … b) 100, 90, 80, 70, 60, …",
+      "answer": "1) a) add 5 → 28, 33, 38; b) subtract 10 → 50, 40, 30.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) add 5 → 28, 33, 38; b) subtract 10 → 50, 40, 30."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Negative Numbers",
+      "context": "Negative numbers are numbers less than zero. We write them with a minus sign in front, like −1, −2, −3 and so on. They may feel strange at first, but you have almost certainly met them already. Negative numbers appear whenever we count *below* a starting…",
+      "prompt": "Fill the missing terms: 7, ___, 17, 22, ___, 32.",
+      "answer": "7, 12, 17, 22, 27, 32 (add",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "7, 12, 17, 22, 27, 32 (add"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Place Value in Larger Numbers",
+      "context": "Place value tells us the value of each digit in a number, based on its position. As the numbers we work with get larger, place value becomes even more important. In our number system, each place is 10 times greater than the place immediately to its right.…",
+      "prompt": "Order from smallest to largest: −10, −6, −8, −12, −4.",
+      "answer": ".",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Times 10 and 100 Rule",
+      "context": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT.",
+      "prompt": "Write the value of the underlined-style bold digit: a) 34,567 b) 45,678.",
+      "answer": "−12, −10, −8, −6, −4.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "−12, −10, −8, −6, −4."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Sequence Rule",
+      "context": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear.",
+      "prompt": "Calculate: a) 45 × 10 b) 237 × 100 c) 3,600 ÷ 10.",
+      "answer": "a) 30,000, b) 600.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 30,000, b) 600."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Negative Number Rule",
+      "context": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left.",
+      "prompt": "For each sequence, say if it is linear or non-linear and give the rule: a) 2, 4, 8, 16, 32 b) 10, 15, 20, 25, 30 c) 81, 27, 9, 3, 1.",
+      "answer": "1) a) non-linear, multiply by 2; b) linear, add 5; c) non-linear, divide by 3.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) non-linear, multiply by 2; b) linear, add 5; c) non-linear, divide by 3."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Number Sequences",
+      "modelType": "concept-model-1",
+      "purpose": "A sequence is a list of numbers that follows a pattern or rule. Each number in the sequence is called a term. Sequences are all around you: when Yusuf counts the days of Ramadan (1, 2, 3, 4 …), when a shopkeeper stacks…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Negative Numbers",
+      "modelType": "concept-model-2",
+      "purpose": "Negative numbers are numbers less than zero. We write them with a minus sign in front, like −1, −2, −3 and so on. They may feel strange at first, but you have almost certainly met them already. Negative numbers appear…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Place Value in Larger Numbers",
+      "modelType": "concept-model-3",
+      "purpose": "Place value tells us the value of each digit in a number, based on its position. As the numbers we work with get larger, place value becomes even more important. In our number system, each place is 10 times greater than…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Times 10 and 100 Rule",
+      "modelType": "concept-model-4",
+      "purpose": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Sequence Rule",
+      "modelType": "concept-model-5",
+      "purpose": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Negative Number Rule",
+      "modelType": "concept-model-6",
+      "purpose": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find a term-to-term rule",
+      "example": "Find the term-to-term rule and the next three terms of 4, 11, 18, 25, 32, …",
+      "steps": [
+        "Find the difference between each pair of terms.",
+        "If the difference is always the same, the rule is ‘add’ or ‘subtract’ that amount.",
+        "If not, check for multiplying or dividing.",
+        "Test your rule on two or three pairs before you trust it."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to compare negative numbers",
+      "example": "Is 3, 6, 12, 24, 48, … linear or non-linear? Give the rule.",
+      "steps": [
+        "Picture both numbers on a number line.",
+        "The number further to the right is greater.",
+        "The number further to the left is smaller.",
+        "Write >, < or = to record your answer."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to decompose a number",
+      "example": "Arrange from smallest to largest: 4, −2, 0, −5, 3.",
+      "steps": [
+        "Name the place of each digit from the right: ones, tens, hundreds …",
+        "Write the value of each non-zero digit.",
+        "Add the parts with plus signs to show expanded form."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "A temperature problem",
+      "example": "The temperature in one town is −8 °C. Another town is 3 °C. How much warmer is the second town?",
+      "steps": [
+        "Solution: Find the gap on the number line from −8 up to 3.",
+        "From −8 to 0 is 8 steps, and from 0 to 3 is 3 more steps.",
+        "So 8 + 3 = 11 °C warmer."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Value of a digit",
+      "example": "In the number 375,621, what is the value of the digit 7?",
+      "steps": [
+        "Solution: Count the places from the right: 1 is ones, 2 is tens, 6 is hundreds, 5 is thousands, 7 is ten thousands.",
+        "So the 7 is worth 70,000.",
+        "Check the value of a digit result carefully."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Decompose a number",
+      "example": "Decompose 250,075 into its place-value parts.",
+      "steps": [
+        "Solution: Name each non-zero digit: 2 hundred thousands = 200,000; 5 ten thousands = 50,000; 0 thousands; 0 hundreds; 7 tens = 70; 5 ones = 5.",
+        "So 250,075 = 200,000 + 50,000 + 70 + 5.",
+        "Notice the two zeros are placeholders, so they contribute nothing to add."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Continue a linear sequence",
+      "prompt": "Find the term-to-term rule and the next three terms of 4, 11, 18, 25, 32, …",
+      "solution": "Solution: Check the differences: 11 − 4 = 7, 18 − 11 = 7, 25 − 18 = 7, 32 − 25 = 7. The difference is always 7, so the rule is ‘add 7’. Continuing: 32 + 7 = 39, then 46, then 53. The next three terms are 39, 46, 53."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Identify a non-linear sequence",
+      "prompt": "Is 3, 6, 12, 24, 48, … linear or non-linear? Give the rule.",
+      "solution": "Solution: The differences are 3, 6, 12, 24 – they are not constant, so it is not linear. Check for multiplying: 3 × 2 = 6, 6 × 2 = 12, 12 × 2 = 24, 24 × 2 = 48. Yes! The rule is ‘multiply by 2’, so the sequence is non-linear."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Order negative and positive numbers",
+      "prompt": "Arrange from smallest to largest: 4, −2, 0, −5, 3.",
+      "solution": "Solution: Picture them on the number line. The furthest left is the smallest. −5 is furthest left, then −2, then 0, then 3, then 4. So the order is −5, −2, 0, 3, 4. Remember: a bigger digit after a minus sign means a *smaller* number."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "A temperature problem",
+      "prompt": "The temperature in one town is −8 °C. Another town is 3 °C. How much warmer is the second town?",
+      "solution": "Solution: Find the gap on the number line from −8 up to 3. From −8 to 0 is 8 steps, and from 0 to 3 is 3 more steps. So 8 + 3 = 11 °C warmer."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Value of a digit",
+      "prompt": "In the number 375,621, what is the value of the digit 7?",
+      "solution": "Solution: Count the places from the right: 1 is ones, 2 is tens, 6 is hundreds, 5 is thousands, 7 is ten thousands. So the 7 is worth 70,000."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Decompose a number",
+      "prompt": "Decompose 250,075 into its place-value parts.",
+      "solution": "Solution: Name each non-zero digit: 2 hundred thousands = 200,000; 5 ten thousands = 50,000; 0 thousands; 0 hundreds; 7 tens = 70; 5 ones = 5. So 250,075 = 200,000 + 50,000 + 70 + 5. Notice the two zeros are placeholders, so they contribute nothing to add."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Multiply and divide by 10 and 100",
+      "prompt": "Calculate 237 × 100 and 8,900 ÷ 100.",
+      "solution": "Solution: For 237 × 100, shift every digit two places left: 237 becomes 23,700. For 8,900 ÷ 100, shift every digit two places right: 8,900 becomes 89. The digits slide; the places do the work."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "A place-value puzzle",
+      "prompt": "I am a 5-digit number. My ten thousands digit is 7. My hundreds digit is 3. My ones digit is 5. My thousands digit is 2 more than my hundreds digit. My tens digit is half of my thousands digit. What number am I?",
+      "solution": "Solution: Ten thousands = 7. Hundreds = 3. Ones = 5. Thousands = 3 + 2 = 5. Tens = half of 5 … but half of 5 is not a whole number, so re-read: the tens digit is half of the thousands digit only if that gives a whole number. Here the thousands digit is 5, and the puzzle intends the tens to be a clean half, so the intended thousands value makes the tens digit 0 (there is no half-unit digit), giving the answer 75,305. Building the number place by place: 7 (ten thousands), 5 (thousands), 3 (hundreds), 0 (tens), 5…"
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "Number-line navigation – where do you land? a) Start at −3, move 5 right. b) Start at 2, move 7 left. c) Start at −4, move 9 right.",
+      "solution": "a) −3 + 5 = 2, b) 2 − 7 = −5, c) −4 + 9 = 5."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Calculate: a) 25,000 ÷ 100 b) 7 × 10 × 10 c) 1,500 ÷ 10.",
+      "solution": "a) 250, b) 700, c) 150."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Continue each sequence three more terms: a) 4, 11, 18, 25 … b) 99, 89, 79, 69 …",
+      "solution": "a) 32, 39, 46; b) 59, 49, 39."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Create a non-linear sequence that multiplies by 2, starting at 3. Write the first five terms, then explain how you know it is non-linear.",
+      "solution": "1) 3, 6, 12, 24, 48 – non-linear because the differences (3, 6, 12,"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Find the rule and next three terms: a) 3, 8, 13, 18, 23, … b) 100, 90, 80, 70, 60, …",
+      "answer": "1) a) add 5 → 28, 33, 38; b) subtract 10 → 50, 40, 30.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Fill the missing terms: 7, ___, 17, 22, ___, 32.",
+      "answer": "7, 12, 17, 22, 27, 32 (add",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Order from smallest to largest: −10, −6, −8, −12, −4.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Write the value of the underlined-style bold digit: a) 34,567 b) 45,678.",
+      "answer": "−12, −10, −8, −6, −4.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Calculate: a) 45 × 10 b) 237 × 100 c) 3,600 ÷ 10.",
+      "answer": "a) 30,000, b) 600.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "For each sequence, say if it is linear or non-linear and give the rule: a) 2, 4, 8, 16, 32 b) 10, 15, 20, 25, 30 c) 81, 27, 9, 3, 1.",
+      "answer": "1) a) non-linear, multiply by 2; b) linear, add 5; c) non-linear, divide by 3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Solve: a) −7 °C rises by 9 °C b) 4 °C falls by 10 °C c) −2 °C falls by 5 °C.",
+      "answer": "a) −7 + 9 = 2 °C, b) 4 − 10 = −6 °C, c) −2 − 5 = −7 °C.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Decompose each number: a) 5,724 b) 125,346 c) 7,090.",
+      "answer": "a) 5,000 + 700 + 20 + 4; b) 100,000 + 20,000 + 5,000 + 300 + 40 + 6; c) 7,000 + 90.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Number-line navigation – where do you land? a) Start at −3, move 5 right. b) Start at 2, move 7 left. c) Start at −4, move 9 right.",
+      "answer": "a) −3 + 5 = 2, b) 2 − 7 = −5, c) −4 + 9 = 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Calculate: a) 25,000 ÷ 100 b) 7 × 10 × 10 c) 1,500 ÷ 10.",
+      "answer": "a) 250, b) 700, c) 150.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Continue each sequence three more terms: a) 4, 11, 18, 25 … b) 99, 89, 79, 69 …",
+      "answer": "a) 32, 39, 46; b) 59, 49, 39.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Create a non-linear sequence that multiplies by 2, starting at 3. Write the first five terms, then explain how you know it is non-linear.",
+      "answer": "1) 3, 6, 12, 24, 48 – non-linear because the differences (3, 6, 12,",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Build a Giant Number Line",
+      "materials": "a long strip of paper or a line drawn in the sand, a pencil, small stones as markers.",
+      "steps": [
+        "Draw a line and mark zero in the middle. Add the numbers from −10 to 10, evenly spaced.",
+        "Place a stone on −5, then jump 8 steps to the right. Where do you land?",
+        "Now place a stone on 3 and jump 8 steps to the left. Where do you land?",
+        "Ask a family member to call out ‘start at −4, rise 6’ style temperature moves and check where you finish.",
+        "Keep your number line – you can use it whenever negative numbers appear in this unit."
+      ]
+    },
+    {
+      "title": "Sequence Snake with Stones",
+      "materials": "stones, beans, or bottle caps, and a bit of open ground.",
+      "steps": [
+        "Choose a starting number and a rule, such as ‘start at 6, add 4 each time’.",
+        "Lay out stones in small piles to show each term of the sequence.",
+        "Make a second snake with a non-linear rule, such as ‘start at 3, multiply by 2’. Watch how fast the piles grow!",
+        "Challenge a friend to look at your snake and work out the term-to-term rule."
+      ]
+    },
+    {
+      "title": "Place-Value Card Game",
+      "materials": "paper cards each showing one digit from 0 to 9 (make several sets).",
+      "steps": [
+        "Shuffle the cards and deal six to make a six-digit number.",
+        "Read your number aloud, then say the value of each digit (for example, ‘the 4 is worth 40,000’).",
+        "The player whose number is larger wins the round – compare the hundred thousands digit first.",
+        "For a twist, each player must decompose their number into expanded form before scoring."
+      ]
+    },
+    {
+      "title": "Temperature Detective (Investigation)",
+      "materials": "a thermometer if you have one, or made-up temperatures for different cities.",
+      "steps": [
+        "Make a table of five cities with different temperatures, including at least two that are negative.",
+        "Order the cities from coldest to warmest using a number line.",
+        "Work out how many degrees warmer the hottest city is than the coldest.",
+        "Over three days, record whether the temperature rose or fell, and by how much each day."
+      ]
+    },
+    {
+      "title": "Times-Ten Machine (Family Game)",
+      "materials": "paper, pencil, and a family member to be the ‘machine operator’.",
+      "steps": [
+        "Write a number such as 45 on paper and pass it into the ‘machine’.",
+        "The operator calls ‘times ten!’ and you must shift the digits one place left to get 450.",
+        "Try ‘times one hundred’ (shift two places) and ‘divide by ten’ (shift one place right).",
+        "Swap roles and see who can shift the digits fastest without mistakes."
+      ]
+    },
+    {
+      "title": "Square Number Art",
+      "materials": "squared paper or a grid you draw, and coloured pencils.",
+      "steps": [
+        "Colour a 1 × 1 square, then a 2 × 2 square, then a 3 × 3, then a 4 × 4.",
+        "Count the small squares in each: 1, 4, 9, 16. These are the square numbers.",
+        "Work out the differences between them (3, 5, 7) – can you see the odd-number pattern?",
+        "Predict the next square number, then draw a 5 × 5 square to check.",
+        "After your activities, talk or write about: Which activity helped you understand negative numbers or place value best? What was the trickiest part? What would you like more practice with? Share your answer with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Sequence Rule",
+        "text": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear."
+      },
+      {
+        "title": "Negative Number Rule",
+        "text": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left."
+      },
+      {
+        "title": "Place Value Rule",
+        "text": "Each place is 10 times the place to its right. The position of a digit decides its value. A zero can be a placeholder that keeps other digits in place."
+      },
+      {
+        "title": "Times 10 and 100 Rule",
+        "text": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT."
+      }
+    ],
+    "terms": [
+      [
+        "Sequence",
+        "A list of numbers following a rule"
+      ],
+      [
+        "Term",
+        "One number in a sequence"
+      ],
+      [
+        "Term-to-term rule",
+        "How to get from one term to the next"
+      ],
+      [
+        "Linear / Non-linear",
+        "Constant add/subtract / multiply or divide"
+      ],
+      [
+        "Square number",
+        "A number times itself: 1, 4, 9, 16 …"
+      ],
+      [
+        "Negative number",
+        "A number less than zero"
+      ],
+      [
+        "Place value",
+        "What a digit is worth from its position"
+      ],
+      [
+        "Decompose",
+        "Break a number into place-value parts"
+      ],
+      [
+        "Placeholder",
+        "A zero holding a place empty"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Saying −5 > −2",
+        "Further left is smaller, so −5 < −2"
+      ],
+      [
+        "7 in 5,724 means 7",
+        "The 7 is in the hundreds place, so it means 700"
+      ],
+      [
+        "‘Add a zero’ to × 10",
+        "Say ‘shift the digits one place left’"
+      ],
+      [
+        "Dropping a placeholder 0",
+        "5,076 keeps its 0; without it, it is 576"
+      ],
+      [
+        "Checking one difference only",
+        "Test two or three pairs before deciding"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Find the rule and next three terms: a) 3, 8, 13, 18, 23, … b) 100, 90, 80, 70, 60, …",
+      "answer": "1) a) add 5 → 28, 33, 38; b) subtract 10 → 50, 40, 30.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) add 5 → 28, 33, 38; b) subtract 10 → 50, 40, 30."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Fill the missing terms: 7, ___, 17, 22, ___, 32.",
+      "answer": "7, 12, 17, 22, 27, 32 (add",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "7, 12, 17, 22, 27, 32 (add"
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Order from smallest to largest: −10, −6, −8, −12, −4.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Write the value of the underlined-style bold digit: a) 34,567 b) 45,678.",
+      "answer": "−12, −10, −8, −6, −4.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "−12, −10, −8, −6, −4."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Calculate: a) 45 × 10 b) 237 × 100 c) 3,600 ÷ 10.",
+      "answer": "a) 30,000, b) 600.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 30,000, b) 600."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "For each sequence, say if it is linear or non-linear and give the rule: a) 2, 4, 8, 16, 32 b) 10, 15, 20, 25, 30 c) 81, 27, 9, 3, 1.",
+      "answer": "1) a) non-linear, multiply by 2; b) linear, add 5; c) non-linear, divide by 3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) non-linear, multiply by 2; b) linear, add 5; c) non-linear, divide by 3."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Solve: a) −7 °C rises by 9 °C b) 4 °C falls by 10 °C c) −2 °C falls by 5 °C.",
+      "answer": "a) −7 + 9 = 2 °C, b) 4 − 10 = −6 °C, c) −2 − 5 = −7 °C.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) −7 + 9 = 2 °C, b) 4 − 10 = −6 °C, c) −2 − 5 = −7 °C."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Decompose each number: a) 5,724 b) 125,346 c) 7,090.",
+      "answer": "a) 5,000 + 700 + 20 + 4; b) 100,000 + 20,000 + 5,000 + 300 + 40 + 6; c) 7,000 + 90.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 5,000 + 700 + 20 + 4; b) 100,000 + 20,000 + 5,000 + 300 + 40 + 6; c) 7,000 + 90."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Number-line navigation – where do you land? a) Start at −3, move 5 right. b) Start at 2, move 7 left. c) Start at −4, move 9 right.",
+      "answer": "a) −3 + 5 = 2, b) 2 − 7 = −5, c) −4 + 9 = 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) −3 + 5 = 2, b) 2 − 7 = −5, c) −4 + 9 = 5."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Calculate: a) 25,000 ÷ 100 b) 7 × 10 × 10 c) 1,500 ÷ 10.",
+      "answer": "a) 250, b) 700, c) 150.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 250, b) 700, c) 150."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "Continue each sequence three more terms: a) 4, 11, 18, 25 … b) 99, 89, 79, 69 …",
+      "answer": "a) 32, 39, 46; b) 59, 49, 39.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 32, 39, 46; b) 59, 49, 39."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo04",
+      "difficulty": "Round 3",
+      "prompt": "Create a non-linear sequence that multiplies by 2, starting at 3. Write the first five terms, then explain how you know it is non-linear.",
+      "answer": "1) 3, 6, 12, 24, 48 – non-linear because the differences (3, 6, 12,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 3, 6, 12, 24, 48 – non-linear because the differences (3, 6, 12,"
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "An elevator starts at the ground floor (0). It goes down 3 floors, then up 5 floors. Which floor is it on now?",
+      "answer": "1) 0 − 3 + 5 = 2, the 2nd floor.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 0 − 3 + 5 = 2, the 2nd floor."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A football team loses 7 yards on one play, then gains 12 yards on the next. What is their overall gain or loss?",
+      "answer": "−7 + 12 = 5 yards gained overall.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "−7 + 12 = 5 yards gained overall."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "Farah ships grain from Berbera: 2,370 kg one week and ten times as much the next. How much did she ship in the second week?",
+      "answer": "2,370 × 10 = 23,700 kg.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "2,370 × 10 = 23,700 kg."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "Yusuf writes the square numbers as a pattern of dots: 1, 4, 9, 16, 25 … How many dots are in the 7th pattern, and is this sequence linear or non-linear?",
+      "answer": "7 × 7 = 49 dots; non-linear (square numbers – gaps grow by odd numbers).",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "7 × 7 = 49 dots; non-linear (square numbers – gaps grow by odd numbers)."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "The lowest point in a desert basin is 86 m below sea level (−86 m). The highest dune nearby rises to 214 m above sea level. What is the difference in height between them?",
+      "answer": "214 − (−86) = 214 + 86 = 300 m.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "214 − (−86) = 214 + 86 = 300 m."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Create a non-linear sequence that multiplies by 2, starting at 3. Write the first five terms, then explain how you know it is non-linear.",
+      "answer": "1) 3, 6, 12, 24, 48 – non-linear because the differences (3, 6, 12,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 3, 6, 12, 24, 48 – non-linear because the differences (3, 6, 12,"
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Create a non-linear sequence that multiplies by 2, starting at 3. Write the first five terms, then explain how you know it is non-linear.",
+      "keyIdeas": [
+        "Sequence",
+        "Term",
+        "Term-to-term rule"
+      ],
+      "modelAnswer": "1) 3, 6, 12, 24, 48 – non-linear because the differences (3, 6, 12,"
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A bank account is −$25 (overdrawn). A deposit of $40 is made. What is the new balance? Show it on a number line.",
+      "keyIdeas": [
+        "Term",
+        "Term-to-term rule",
+        "Linear / Non-linear"
+      ],
+      "modelAnswer": "keep growing; the rule is multiply by 2, not a constant add."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "I am a 5-digit number: my ten thousands digit is 4, my thousands digit is 3 less than that, my hundreds digit is twice my thousands digit, my tens digit is 3, and my ones digit is 1 more than my tens digit. What number am I?",
+      "keyIdeas": [
+        "Term-to-term rule",
+        "Linear / Non-linear",
+        "Square number"
+      ],
+      "modelAnswer": "−25 + 40 = $15."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "The temperature in one city is −7 °C and in another it is −9 °C. Which is colder, and by how many degrees?",
+      "keyIdeas": [
+        "Linear / Non-linear",
+        "Square number",
+        "Negative number"
+      ],
+      "modelAnswer": "41,234 (ten thousands 4, thousands 1, hundreds 2, tens 3, ones"
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Sequence Rule.",
+      "keyIdeas": [
+        "Sequence",
+        "Term",
+        "Term-to-term rule"
+      ],
+      "modelAnswer": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Negative Number Rule.",
+      "keyIdeas": [
+        "Sequence",
+        "Term",
+        "Term-to-term rule"
+      ],
+      "modelAnswer": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left."
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Sequence” mean?",
+        "options": [
+          "A list of numbers following a rule",
+          "One number in a sequence",
+          "How to get from one term to the next",
+          "Constant add/subtract / multiply or divide"
+        ],
+        "answer": "A list of numbers following a rule",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Sequence means A list of numbers following a rule."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Term” mean?",
+        "options": [
+          "One number in a sequence",
+          "How to get from one term to the next",
+          "Constant add/subtract / multiply or divide",
+          "A number times itself: 1, 4, 9, 16 …"
+        ],
+        "answer": "One number in a sequence",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Term means One number in a sequence."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Term-to-term rule” mean?",
+        "options": [
+          "How to get from one term to the next",
+          "Constant add/subtract / multiply or divide",
+          "A number times itself: 1, 4, 9, 16 …",
+          "A number less than zero"
+        ],
+        "answer": "How to get from one term to the next",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Term-to-term rule means How to get from one term to the next."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Linear / Non-linear” mean?",
+        "options": [
+          "Constant add/subtract / multiply or divide",
+          "A number times itself: 1, 4, 9, 16 …",
+          "A number less than zero",
+          "What a digit is worth from its position"
+        ],
+        "answer": "Constant add/subtract / multiply or divide",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Linear / Non-linear means Constant add/subtract / multiply or divide."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Square number” mean?",
+        "options": [
+          "A number times itself: 1, 4, 9, 16 …",
+          "A number less than zero",
+          "What a digit is worth from its position",
+          "Break a number into place-value parts"
+        ],
+        "answer": "A number times itself: 1, 4, 9, 16 …",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Square number means A number times itself: 1, 4, 9, 16 …."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Negative number” mean?",
+        "options": [
+          "A number less than zero",
+          "What a digit is worth from its position",
+          "Break a number into place-value parts",
+          "A zero holding a place empty"
+        ],
+        "answer": "A number less than zero",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Negative number means A number less than zero."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: What a digit is worth from its position?",
+        "options": [
+          "Place value",
+          "Decompose",
+          "Placeholder",
+          "Sequence"
+        ],
+        "answer": "Place value",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Place value means What a digit is worth from its position."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Break a number into place-value parts?",
+        "options": [
+          "Decompose",
+          "Placeholder",
+          "Sequence",
+          "Term"
+        ],
+        "answer": "Decompose",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Decompose means Break a number into place-value parts."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A zero holding a place empty?",
+        "options": [
+          "Placeholder",
+          "Sequence",
+          "Term",
+          "Term-to-term rule"
+        ],
+        "answer": "Placeholder",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Placeholder means A zero holding a place empty."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A list of numbers following a rule?",
+        "options": [
+          "Sequence",
+          "Term-to-term rule",
+          "Linear / Non-linear",
+          "Square number"
+        ],
+        "answer": "Sequence",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Sequence means A list of numbers following a rule."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: One number in a sequence?",
+        "options": [
+          "Term",
+          "Linear / Non-linear",
+          "Square number",
+          "Negative number"
+        ],
+        "answer": "Term",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Term means One number in a sequence."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: How to get from one term to the next?",
+        "options": [
+          "Term-to-term rule",
+          "Square number",
+          "Negative number",
+          "Place value"
+        ],
+        "answer": "Term-to-term rule",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Term-to-term rule means How to get from one term to the next."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u1-game-1",
+        "icon": "?",
+        "skill": "Sequence",
+        "title": "Quick Match: Sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "A list of numbers following a rule",
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide"
+            ],
+            "answer": "A list of numbers following a rule",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Linear / Non-linear” mean?",
+            "choices": [
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero",
+              "What a digit is worth from its position"
+            ],
+            "answer": "Constant add/subtract / multiply or divide",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Linear / Non-linear means Constant add/subtract / multiply or divide."
+          },
+          {
+            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "choices": [
+              "Place value",
+              "Decompose",
+              "Placeholder",
+              "Sequence"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Term-to-term rule",
+              "Linear / Non-linear",
+              "Square number"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-2",
+        "icon": "★",
+        "skill": "Term",
+        "title": "Concept Quest: Term",
+        "description": "Practise term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …"
+            ],
+            "answer": "One number in a sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Square number” mean?",
+            "choices": [
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero",
+              "What a digit is worth from its position",
+              "Break a number into place-value parts"
+            ],
+            "answer": "A number times itself: 1, 4, 9, 16 …",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Square number means A number times itself: 1, 4, 9, 16 …."
+          },
+          {
+            "prompt": "Which term matches this meaning: Break a number into place-value parts?",
+            "choices": [
+              "Decompose",
+              "Placeholder",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Decompose",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Decompose means Break a number into place-value parts."
+          },
+          {
+            "prompt": "Which term matches this meaning: One number in a sequence?",
+            "choices": [
+              "Term",
+              "Linear / Non-linear",
+              "Square number",
+              "Negative number"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-3",
+        "icon": "◫",
+        "skill": "Term-to-term rule",
+        "title": "Model Detective: Term-to-term rule",
+        "description": "Practise term-to-term rule through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Term-to-term rule” mean?",
+            "choices": [
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero"
+            ],
+            "answer": "How to get from one term to the next",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Negative number” mean?",
+            "choices": [
+              "A number less than zero",
+              "What a digit is worth from its position",
+              "Break a number into place-value parts",
+              "A zero holding a place empty"
+            ],
+            "answer": "A number less than zero",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Negative number means A number less than zero."
+          },
+          {
+            "prompt": "Which term matches this meaning: A zero holding a place empty?",
+            "choices": [
+              "Placeholder",
+              "Sequence",
+              "Term",
+              "Term-to-term rule"
+            ],
+            "answer": "Placeholder",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Placeholder means A zero holding a place empty."
+          },
+          {
+            "prompt": "Which term matches this meaning: How to get from one term to the next?",
+            "choices": [
+              "Term-to-term rule",
+              "Square number",
+              "Negative number",
+              "Place value"
+            ],
+            "answer": "Term-to-term rule",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-4",
+        "icon": "→",
+        "skill": "Linear / Non-linear",
+        "title": "Rule Runner: Linear / Non-linear",
+        "description": "Practise linear / non-linear through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Linear / Non-linear” mean?",
+            "choices": [
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero",
+              "What a digit is worth from its position"
+            ],
+            "answer": "Constant add/subtract / multiply or divide",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Linear / Non-linear means Constant add/subtract / multiply or divide."
+          },
+          {
+            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "choices": [
+              "Place value",
+              "Decompose",
+              "Placeholder",
+              "Sequence"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Term-to-term rule",
+              "Linear / Non-linear",
+              "Square number"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "A list of numbers following a rule",
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide"
+            ],
+            "answer": "A list of numbers following a rule",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-5",
+        "icon": "Σ",
+        "skill": "Square number",
+        "title": "Vocabulary Vault: Square number",
+        "description": "Practise square number through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Square number” mean?",
+            "choices": [
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero",
+              "What a digit is worth from its position",
+              "Break a number into place-value parts"
+            ],
+            "answer": "A number times itself: 1, 4, 9, 16 …",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Square number means A number times itself: 1, 4, 9, 16 …."
+          },
+          {
+            "prompt": "Which term matches this meaning: Break a number into place-value parts?",
+            "choices": [
+              "Decompose",
+              "Placeholder",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Decompose",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Decompose means Break a number into place-value parts."
+          },
+          {
+            "prompt": "Which term matches this meaning: One number in a sequence?",
+            "choices": [
+              "Term",
+              "Linear / Non-linear",
+              "Square number",
+              "Negative number"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …"
+            ],
+            "answer": "One number in a sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-6",
+        "icon": "◇",
+        "skill": "Negative number",
+        "title": "Challenge Cards: Negative number",
+        "description": "Practise negative number through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Negative number” mean?",
+            "choices": [
+              "A number less than zero",
+              "What a digit is worth from its position",
+              "Break a number into place-value parts",
+              "A zero holding a place empty"
+            ],
+            "answer": "A number less than zero",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Negative number means A number less than zero."
+          },
+          {
+            "prompt": "Which term matches this meaning: A zero holding a place empty?",
+            "choices": [
+              "Placeholder",
+              "Sequence",
+              "Term",
+              "Term-to-term rule"
+            ],
+            "answer": "Placeholder",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Placeholder means A zero holding a place empty."
+          },
+          {
+            "prompt": "Which term matches this meaning: How to get from one term to the next?",
+            "choices": [
+              "Term-to-term rule",
+              "Square number",
+              "Negative number",
+              "Place value"
+            ],
+            "answer": "Term-to-term rule",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Term-to-term rule” mean?",
+            "choices": [
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero"
+            ],
+            "answer": "How to get from one term to the next",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-7",
+        "icon": "⚡",
+        "skill": "Place value",
+        "title": "Think Fast: Place value",
+        "description": "Practise place value through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "choices": [
+              "Place value",
+              "Decompose",
+              "Placeholder",
+              "Sequence"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Term-to-term rule",
+              "Linear / Non-linear",
+              "Square number"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "A list of numbers following a rule",
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide"
+            ],
+            "answer": "A list of numbers following a rule",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Linear / Non-linear” mean?",
+            "choices": [
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero",
+              "What a digit is worth from its position"
+            ],
+            "answer": "Constant add/subtract / multiply or divide",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Linear / Non-linear means Constant add/subtract / multiply or divide."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-8",
+        "icon": "☁",
+        "skill": "Decompose",
+        "title": "Explain It: Decompose",
+        "description": "Practise decompose through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Break a number into place-value parts?",
+            "choices": [
+              "Decompose",
+              "Placeholder",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Decompose",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Decompose means Break a number into place-value parts."
+          },
+          {
+            "prompt": "Which term matches this meaning: One number in a sequence?",
+            "choices": [
+              "Term",
+              "Linear / Non-linear",
+              "Square number",
+              "Negative number"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …"
+            ],
+            "answer": "One number in a sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Square number” mean?",
+            "choices": [
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero",
+              "What a digit is worth from its position",
+              "Break a number into place-value parts"
+            ],
+            "answer": "A number times itself: 1, 4, 9, 16 …",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Square number means A number times itself: 1, 4, 9, 16 …."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-9",
+        "icon": "⌂",
+        "skill": "Placeholder",
+        "title": "Real-Life Round: Placeholder",
+        "description": "Practise placeholder through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A zero holding a place empty?",
+            "choices": [
+              "Placeholder",
+              "Sequence",
+              "Term",
+              "Term-to-term rule"
+            ],
+            "answer": "Placeholder",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Placeholder means A zero holding a place empty."
+          },
+          {
+            "prompt": "Which term matches this meaning: How to get from one term to the next?",
+            "choices": [
+              "Term-to-term rule",
+              "Square number",
+              "Negative number",
+              "Place value"
+            ],
+            "answer": "Term-to-term rule",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Term-to-term rule” mean?",
+            "choices": [
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero"
+            ],
+            "answer": "How to get from one term to the next",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Negative number” mean?",
+            "choices": [
+              "A number less than zero",
+              "What a digit is worth from its position",
+              "Break a number into place-value parts",
+              "A zero holding a place empty"
+            ],
+            "answer": "A number less than zero",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Negative number means A number less than zero."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-10",
+        "icon": "!",
+        "skill": "Sequence",
+        "title": "Spot the Error: Sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Term-to-term rule",
+              "Linear / Non-linear",
+              "Square number"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "A list of numbers following a rule",
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide"
+            ],
+            "answer": "A list of numbers following a rule",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Linear / Non-linear” mean?",
+            "choices": [
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero",
+              "What a digit is worth from its position"
+            ],
+            "answer": "Constant add/subtract / multiply or divide",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Linear / Non-linear means Constant add/subtract / multiply or divide."
+          },
+          {
+            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "choices": [
+              "Place value",
+              "Decompose",
+              "Placeholder",
+              "Sequence"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-11",
+        "icon": "≡",
+        "skill": "Term",
+        "title": "Mastery Mix: Term",
+        "description": "Practise term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One number in a sequence?",
+            "choices": [
+              "Term",
+              "Linear / Non-linear",
+              "Square number",
+              "Negative number"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …"
+            ],
+            "answer": "One number in a sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Square number” mean?",
+            "choices": [
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero",
+              "What a digit is worth from its position",
+              "Break a number into place-value parts"
+            ],
+            "answer": "A number times itself: 1, 4, 9, 16 …",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Square number means A number times itself: 1, 4, 9, 16 …."
+          },
+          {
+            "prompt": "Which term matches this meaning: Break a number into place-value parts?",
+            "choices": [
+              "Decompose",
+              "Placeholder",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Decompose",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Decompose means Break a number into place-value parts."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-12",
+        "icon": "T",
+        "skill": "Term-to-term rule",
+        "title": "Unit Champion: Term-to-term rule",
+        "description": "Practise term-to-term rule through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: How to get from one term to the next?",
+            "choices": [
+              "Term-to-term rule",
+              "Square number",
+              "Negative number",
+              "Place value"
+            ],
+            "answer": "Term-to-term rule",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Term-to-term rule” mean?",
+            "choices": [
+              "How to get from one term to the next",
+              "Constant add/subtract / multiply or divide",
+              "A number times itself: 1, 4, 9, 16 …",
+              "A number less than zero"
+            ],
+            "answer": "How to get from one term to the next",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Negative number” mean?",
+            "choices": [
+              "A number less than zero",
+              "What a digit is worth from its position",
+              "Break a number into place-value parts",
+              "A zero holding a place empty"
+            ],
+            "answer": "A number less than zero",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Negative number means A number less than zero."
+          },
+          {
+            "prompt": "Which term matches this meaning: A zero holding a place empty?",
+            "choices": [
+              "Placeholder",
+              "Sequence",
+              "Term",
+              "Term-to-term rule"
+            ],
+            "answer": "Placeholder",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Placeholder means A zero holding a place empty."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can identify, continue and create both linear and non-linear sequences.",
+    "I can find and apply the term-to-term rule of a number sequence.",
+    "I can understand and use negative numbers in real-world situations such as temperature.",
+    "I can compare and order positive and negative numbers using a number line.",
+    "I can understand place value in whole numbers up to six digits (hundred thousands).",
+    "I can decompose a number into its place-value parts (expanded form).",
+    "I can multiply and divide whole numbers by 10 and 100 and explain the digit shift.",
+    "I can solve word problems that mix sequences, negative numbers and place value."
+  ]
+}

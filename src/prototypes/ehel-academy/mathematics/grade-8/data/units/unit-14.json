@@ -1,0 +1,1790 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.282Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g08-u14",
+    "unitNo": 14,
+    "unitTitle": "Position and Transformation",
+    "unitOverview": "Welcome to Unit 14. In this unit you will learn how to describe exactly where a point sits on a grid, and how shapes move, flip, turn and resize without you losing track of a single corner. This branch of mathematics is called coordinate geometry and transformation geometry, and it is one of the most visual and satisfying parts of the whole course. Every time Yusuf opens a map on a phone, every time a video game moves a character across the screen, and every time an architect in Hargeisa draws a plan for a new masjid, coordinates and transformations are doing the work behind the scenes.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 14/Year 8 - Unit 14 Lesson.docx",
+      "Year 8 (1)/Unit 14/Year 8 - Unit 14 Activities.docx",
+      "Year 8 (1)/Unit 14/Year 8 - Unit 14 Practice.docx",
+      "Year 8 (1)/Unit 14/Year 8 - Unit 14 Reference.docx"
+    ],
+    "sourceBlockCount": 397,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "This unit is written for self-paced learning. That means you move at a speed that suits you. Read each explanation slowly, copy every worked example onto squared paper and check it yourself, and only move on when a section feels solid. Your AI tutor is available at any hour to set you fresh practice, mark your coordinates, or explain a step in a different way. Your teacher will meet you about twice a week to unstick anything that feels difficult and to look over your written work.",
+    "Why does this matter? Transformations are the hidden language of the modern world. Satellite navigation uses coordinates to pin your position on Earth to within a few metres, then transformations to rotate the map as you turn a corner. Animators build a single character and then translate, rotate and enlarge copies of it to fill a scene. Engineers designing a bridge between two towns test their design by reflecting and rotating it on a screen before a single beam is cut. When you master this unit you are learning to think spatially — to hold shapes in your mind and move them with confidence — which is a skill prized in engineering, computing, design, surveying and architecture.",
+    "Keep squared paper, a sharp pencil, a ruler and a set of coloured pencils beside you throughout this unit. Transformation geometry is a subject you learn with your hands as much as your head. Draw every grid, plot every point, and label the image of a shape with dashes — A becomes A′ (‘A prime’), then A″ (‘A double prime’). If a plot comes out wrong, that is not failure; it shows you precisely which step to practise again. Every step you draw yourself locks the idea more firmly into memory than a page you only read.",
+    "Plot and read coordinates in all four quadrants, including negative values.",
+    "Identify the quadrant a point lies in from the signs of its coordinates.",
+    "Calculate the distance between two points and the midpoint of a line segment.",
+    "Describe and perform a translation using a column vector.",
+    "Reflect a point or shape in the x-axis, y-axis, y = x and y = −x.",
+    "Rotate a shape about a centre through 90°, 180° and 270°, clockwise or anticlockwise.",
+    "Enlarge a shape from a centre of enlargement using a scale factor (including fractional and negative)."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-the-coordinate-plane-and-four-quadrants",
+      "title": "The Coordinate Plane and Four Quadrants",
+      "explanation": "The coordinate plane is built from two number lines that cross at right angles. The horizontal line is the x-axis; the vertical line is the y-axis. They meet at the origin, the point (0, 0). Every location on the flat plane can be pinned down by a single pair of numbers, written (x, y). The first number, x, tells you how far to move left or right; the second number, y, tells you how far to move up or down. The order never changes — x always comes first — so mathematicians say the coordinates are an *ordered* pair.…",
+      "example": "The two axes cut the plane into four regions called quadrants, numbered anticlockwise starting from the top right:"
+    },
+    {
+      "id": "concept-2-distance-and-midpoint",
+      "title": "Distance and Midpoint",
+      "explanation": "Once you can plot points, a natural question follows: how far apart are two points, and what point lies exactly halfway between them? Two neat formulas answer these questions, and both are built from the coordinates you already know how to read. The distance between two points A(x₁, y₁) and B(x₂, y₂) comes straight from Pythagoras’ theorem. Imagine a right-angled triangle whose sloping side (the hypotenuse) joins A to B. The horizontal side has length (x₂ − x₁) and the vertical side has length (y₂ − y₁).…",
+      "example": "distance = √[(x₂ − x₁)² + (y₂ − y₁)²]"
+    },
+    {
+      "id": "concept-3-translation-sliding-a-shape",
+      "title": "Translation — Sliding a Shape",
+      "explanation": "A translation slides every point of a shape the same distance in the same direction. Nothing turns, nothing flips, and nothing changes size — the shape simply glides to a new position, like a market stall pushed across the square on its wheels. Because the object and the image are identical in every way except position, a translation always produces a congruent image. We describe a translation with a column vector written (a, b), where a is the horizontal movement (positive for right, negative for left) and b is…",
+      "example": "Consider a triangle with vertices A(1, 1), B(3, 1) and C(2, 3), translated by the vector (4, 2) — that is, 4 units right and 2 units up. We add 4 to every x and 2 to every y:"
+    },
+    {
+      "id": "concept-4-reflection-flipping-a-shape",
+      "title": "Reflection — Flipping a Shape",
+      "explanation": "A reflection flips a shape across a straight line called the mirror line (or line of reflection), producing a mirror image. Every point of the object and its matching image point are the same distance from the mirror line, one on each side, and the line joining a point to its image crosses the mirror line at a right angle. Like translation, reflection keeps the shape and size unchanged, so the image is congruent to the object — but the image is ‘flipped over’, so it faces the opposite way. For this unit you need…",
+      "example": "Reflection in the x-axis: (x, y) → (x, −y). The x stays; the y changes sign."
+    },
+    {
+      "id": "concept-5-rotation-turning-a-shape",
+      "title": "Rotation — Turning a Shape",
+      "explanation": "A rotation turns a shape about a fixed point called the centre of rotation. Think of a shape pinned to a board with a drawing pin; when you spin the board, the shape turns about that pin. To describe a rotation completely you need three pieces of information: the centre of rotation, the angle of turn (usually 90°, 180° or 270°), and the direction (clockwise or anticlockwise). Miss any one of these and the description is incomplete. When the centre is the origin, there are three coordinate rules worth learning by…",
+      "example": "90° anticlockwise about the origin: (x, y) → (−y, x)."
+    },
+    {
+      "id": "concept-6-enlargement-and-scale-factor",
+      "title": "Enlargement and Scale Factor",
+      "explanation": "An enlargement changes the size of a shape while keeping its shape exactly the same. Every angle stays equal, but every length is multiplied by a number called the scale factor. Because the shape is preserved but the size changes, an enlargement produces a similar image, not a congruent one (unless the scale factor is 1, which changes nothing). To describe an enlargement fully you must give two things: the centre of enlargement and the scale factor. The scale factor tells you how the size changes:",
+      "example": "Scale factor greater than 1 → the image is bigger (a true enlargement)."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "The Coordinate Plane and Four Quadrants",
+      "context": "The coordinate plane is built from two number lines that cross at right angles. The horizontal line is the x-axis; the vertical line is the y-axis. They meet at the origin, the point (0, 0). Every location on the flat plane can be pinned down by a single pair…",
+      "prompt": "State the quadrant of each point: a) (4, 2) b) (−3, 5) c) (−2, −6) d) (7, −1).",
+      "answer": "1) a) QI b) QII c) QIII d) QIV.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) QI b) QII c) QIII d) QIV."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Distance and Midpoint",
+      "context": "Once you can plot points, a natural question follows: how far apart are two points, and what point lies exactly halfway between them? Two neat formulas answer these questions, and both are built from the coordinates you already know how to read. The distance…",
+      "prompt": "Plot and label these points on one grid: A(2, 3), B(−4, 1), C(−2, −3), D(3, −2).",
+      "answer": "Points plotted — A top-right, B top-left, C bottom-left, D bottom-right.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Points plotted — A top-right, B top-left, C bottom-left, D bottom-right."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Translation — Sliding a Shape",
+      "context": "A translation slides every point of a shape the same distance in the same direction. Nothing turns, nothing flips, and nothing changes size — the shape simply glides to a new position, like a market stall pushed across the square on its wheels. Because the…",
+      "prompt": "Reflect (5, 2) in the x-axis.",
+      "answer": "(5, −2).",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "(5, −2)."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Reflection — Flipping a Shape",
+      "context": "A reflection flips a shape across a straight line called the mirror line (or line of reflection), producing a mirror image. Every point of the object and its matching image point are the same distance from the mirror line, one on each side, and the line…",
+      "prompt": "Translate (1, 4) by the vector (3, −2).",
+      "answer": "(4,",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "(4,"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Rotation — Turning a Shape",
+      "context": "A rotation turns a shape about a fixed point called the centre of rotation. Think of a shape pinned to a board with a drawing pin; when you spin the board, the shape turns about that pin. To describe a rotation completely you need three pieces of information:…",
+      "prompt": "Find the midpoint of (2, 0) and (6, 4).",
+      "answer": ".",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Enlargement and Scale Factor",
+      "context": "An enlargement changes the size of a shape while keeping its shape exactly the same. Every angle stays equal, but every length is multiplied by a number called the scale factor. Because the shape is preserved but the size changes, an enlargement produces a…",
+      "prompt": "Find the distance between: a) A(0, 0) and B(3, 4) b) P(1, 1) and Q(4, 5).",
+      "answer": "1) a) √25 = 5 b) √(3²+4²) = √25 = 5.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) √25 = 5 b) √(3²+4²) = √25 = 5."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "The Coordinate Plane and Four Quadrants",
+      "modelType": "concept-model-1",
+      "purpose": "The coordinate plane is built from two number lines that cross at right angles. The horizontal line is the x-axis; the vertical line is the y-axis. They meet at the origin, the point (0, 0). Every location on the flat…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Distance and Midpoint",
+      "modelType": "concept-model-2",
+      "purpose": "Once you can plot points, a natural question follows: how far apart are two points, and what point lies exactly halfway between them? Two neat formulas answer these questions, and both are built from the coordinates you…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Translation — Sliding a Shape",
+      "modelType": "concept-model-3",
+      "purpose": "A translation slides every point of a shape the same distance in the same direction. Nothing turns, nothing flips, and nothing changes size — the shape simply glides to a new position, like a market stall pushed across…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Reflection — Flipping a Shape",
+      "modelType": "concept-model-4",
+      "purpose": "A reflection flips a shape across a straight line called the mirror line (or line of reflection), producing a mirror image. Every point of the object and its matching image point are the same distance from the mirror…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Rotation — Turning a Shape",
+      "modelType": "concept-model-5",
+      "purpose": "A rotation turns a shape about a fixed point called the centre of rotation. Think of a shape pinned to a board with a drawing pin; when you spin the board, the shape turns about that pin. To describe a rotation…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Enlargement and Scale Factor",
+      "modelType": "concept-model-6",
+      "purpose": "An enlargement changes the size of a shape while keeping its shape exactly the same. Every angle stays equal, but every length is multiplied by a number called the scale factor. Because the shape is preserved but the…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to describe a transformation fully",
+      "example": "In which quadrant does the point M(−5, 3) lie?",
+      "steps": [
+        "Translation: state the word and the column vector (a, b).",
+        "Reflection: state the word and the equation of the mirror line.",
+        "Rotation: state the centre, the angle, and the direction.",
+        "Enlargement: state the centre and the scale factor."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to enlarge from any centre",
+      "example": "Find the distance between P(1, 4) and Q(5, 7).",
+      "steps": [
+        "Write the centre (a, b) and the scale factor k.",
+        "For each point, work out new x = a + k(x − a).",
+        "Work out new y = b + k(y − b).",
+        "Plot and label each image point, then join them up."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to find a single equivalent transformation",
+      "example": "Find the midpoint of A(2, 6) and B(8, 2).",
+      "steps": [
+        "Carry out both transformations in order on one point.",
+        "Compare the final image with the original point.",
+        "Two reflections in parallel lines = a translation.",
+        "Two reflections in intersecting lines = a rotation about the crossing point."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Translation by a vector",
+      "example": "Translate the triangle A(1, 2), B(4, 1), C(2, 5) by the vector (2, −3).",
+      "steps": [
+        "Solution: Add 2 to each x and subtract 3 from each y.",
+        "A′(3, −1), B′(6, −2), C′(4, 2).",
+        "The vector that maps the image back to the object is (−2, 3)."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Reflection in three mirror lines",
+      "example": "Reflect the point P(4, −2) in (a) the x-axis, (b) the y-axis, (c) the line y = x.",
+      "steps": [
+        "Solution: (a) x-axis, keep x flip y: P′(4, 2).",
+        "(b) y-axis, flip x keep y: P″(−4, −2).",
+        "(c) line y = x, swap the coordinates: P‴(−2, 4)."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Rotation about the origin",
+      "example": "Rotate the point A(3, 1) about the origin by (a) 90° anticlockwise, (b) 180°, (c) 270° anticlockwise.",
+      "steps": [
+        "Solution: (a) (x, y) → (−y, x) gives A′(−1, 3).",
+        "(b) (x, y) → (−x, −y) gives A″(−3, −1).",
+        "(c) (x, y) → (y, −x) gives A‴(1, −3).",
+        "The four points form a square about the origin."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Name the quadrant",
+      "prompt": "In which quadrant does the point M(−5, 3) lie?",
+      "solution": "Solution: The x-coordinate is negative and the y-coordinate is positive, giving the sign pattern (−, +). That is the top-left region, so M is in Quadrant II. You do not even need to plot it — the signs alone decide the quadrant."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Distance between two points",
+      "prompt": "Find the distance between P(1, 4) and Q(5, 7).",
+      "solution": "Solution: Horizontal gap = 5 − 1 = 4; vertical gap = 7 − 4 = 3. Square and add: 4² + 3² = 16 + 9 = 25. Then √25 = 5 units. (This is the famous 3–4–5 right-angled triangle.)"
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Midpoint",
+      "prompt": "Find the midpoint of A(2, 6) and B(8, 2).",
+      "solution": "Solution: Average the x-values: (2 + 8) ÷ 2 = 5. Average the y-values: (6 + 2) ÷ 2 = 4. So the midpoint is (5, 4)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Translation by a vector",
+      "prompt": "Translate the triangle A(1, 2), B(4, 1), C(2, 5) by the vector (2, −3).",
+      "solution": "Solution: Add 2 to each x and subtract 3 from each y. A′(3, −1), B′(6, −2), C′(4, 2). The vector that maps the image back to the object is (−2, 3)."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Reflection in three mirror lines",
+      "prompt": "Reflect the point P(4, −2) in (a) the x-axis, (b) the y-axis, (c) the line y = x.",
+      "solution": "Solution: (a) x-axis, keep x flip y: P′(4, 2). (b) y-axis, flip x keep y: P″(−4, −2). (c) line y = x, swap the coordinates: P‴(−2, 4)."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Rotation about the origin",
+      "prompt": "Rotate the point A(3, 1) about the origin by (a) 90° anticlockwise, (b) 180°, (c) 270° anticlockwise.",
+      "solution": "Solution: (a) (x, y) → (−y, x) gives A′(−1, 3). (b) (x, y) → (−x, −y) gives A″(−3, −1). (c) (x, y) → (y, −x) gives A‴(1, −3). The four points form a square about the origin."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Enlargement from the origin",
+      "prompt": "Enlarge the triangle P(2, 1), Q(4, 1), R(3, 3) with centre (0, 0) and scale factor 2.",
+      "solution": "Solution: Multiply every coordinate by 2. P′(4, 2), Q′(8, 2), R′(6, 6). Every side is now twice as long, and the area is 2² = 4 times the original."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Enlargement, centre not the origin",
+      "prompt": "Enlarge the point A(3, 2) with centre (1, 1) and scale factor 2.",
+      "solution": "Solution: Use new = (a + k(x − a), b + k(y − b)) with a = 1, b = 1, k = 2. New x = 1 + 2(3 − 1) = 1 + 4 = 5. New y = 1 + 2(2 − 1) = 1 + 2 = 3. So A′(5, 3)."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Combining two transformations",
+      "prompt": "Triangle A(2, 1), B(4, 1), C(3, 3) is reflected in the x-axis, then translated by (1, 2). Find the final image.",
+      "solution": "Solution: Reflect in x-axis: A′(2, −1), B′(4, −1), C′(3, −3). Translate by (1, 2): A″(3, 1), B″(5, 1), C″(4, −1). The final image is A″(3, 1), B″(5, 1), C″(4, −1)."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Describing a transformation",
+      "prompt": "A triangle with A(1, 1), B(2, 1), C(1, 3) maps to A′(3, 3), B′(6, 3), C′(3, 9). Describe the transformation fully.",
+      "solution": "Solution: Every coordinate has been multiplied by 3 (1→3, and so on), and the vertices spread out from the origin. This is an enlargement, centre (0, 0), scale factor 3. Because the size changed, object and image are similar, not congruent."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Find the midpoint and the distance for A(−1, 2) and B(3, 5).",
+      "solution": "b) (−3, −1) c) (1, −3)."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Enlarge the point A(4, 3) with centre (1, 1) and scale factor 2. Show your working with the formula.",
+      "solution": "1) New x = 1 + 2(4−1) = 7; new y = 1 + 2(3−1) = 5, so A′(7,"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "State the quadrant of each point: a) (4, 2) b) (−3, 5) c) (−2, −6) d) (7, −1).",
+      "answer": "1) a) QI b) QII c) QIII d) QIV.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Plot and label these points on one grid: A(2, 3), B(−4, 1), C(−2, −3), D(3, −2).",
+      "answer": "Points plotted — A top-right, B top-left, C bottom-left, D bottom-right.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Reflect (5, 2) in the x-axis.",
+      "answer": "(5, −2).",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Translate (1, 4) by the vector (3, −2).",
+      "answer": "(4,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Find the midpoint of (2, 0) and (6, 4).",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Find the distance between: a) A(0, 0) and B(3, 4) b) P(1, 1) and Q(4, 5).",
+      "answer": "1) a) √25 = 5 b) √(3²+4²) = √25 = 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Reflect the point (4, −2) in: a) the x-axis b) the y-axis c) the line y = x.",
+      "answer": "a) (4,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Rotate the point (3, 1) about the origin: a) 90° anticlockwise b) 180° c) 270° anticlockwise.",
+      "answer": "b) (−4, −2) c) (−2,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Translate the triangle A(1, 2), B(3, 1), C(2, 4) by the vector (2, −3). Give A′B′C′.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Enlarge the triangle P(1, 1), Q(2, 1), R(1, 3) with centre (0, 0) and scale factor 2.",
+      "answer": "a) (−1,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Find the midpoint and the distance for A(−1, 2) and B(3, 5).",
+      "answer": "b) (−3, −1) c) (1, −3).",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Enlarge the point A(4, 3) with centre (1, 1) and scale factor 2. Show your working with the formula.",
+      "answer": "1) New x = 1 + 2(4−1) = 7; new y = 1 + 2(3−1) = 5, so A′(7,",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Coordinate Treasure Hunt",
+      "materials": "squared paper (or a floor marked into a grid with tape), small objects to hide as ‘treasure’.",
+      "steps": [
+        "Draw a grid with an x-axis and a y-axis, numbered from −5 to 5 in both directions.",
+        "Hide (or mark) five treasures and record each one’s coordinates secretly.",
+        "Give a partner clues such as ‘the treasure in Quadrant III’ or ‘reflect (2, 3) in the x-axis to find the next one’.",
+        "After all treasures are found, calculate the distance between two of them using the distance formula.",
+        "This game makes reading coordinates in all four quadrants quick and automatic."
+      ]
+    },
+    {
+      "title": "Transformation Art Gallery",
+      "materials": "squared paper, coloured pencils, a ruler, tracing paper.",
+      "steps": [
+        "Design a small original shape (4–6 corners) on a coordinate grid and record its coordinates.",
+        "Apply each transformation to a fresh copy: translate by (3, −2); reflect in the y-axis; rotate 90° clockwise about the origin; enlarge by scale factor 2, centre (0, 0).",
+        "Colour each image differently and label it with the transformation used.",
+        "Write one sentence under each image describing the transformation in full mathematical language.",
+        "Displaying all four transformations side by side helps you see exactly what each one changes and what it keeps the same."
+      ]
+    },
+    {
+      "title": "The Tracing-Paper Rotation Station",
+      "materials": "squared paper, tracing paper, a sharp pencil.",
+      "steps": [
+        "Draw a triangle on the grid and mark a centre of rotation with a bold dot.",
+        "Trace the triangle and the centre onto tracing paper.",
+        "Hold the pencil tip firmly on the centre and turn the tracing paper 90°, then 180°, then 270°.",
+        "Each time, prick through the corners and read off the image coordinates. Check them against the rotation rules."
+      ]
+    },
+    {
+      "title": "Enlargement with Ray Lines",
+      "materials": "squared paper, a ruler, coloured pencils.",
+      "steps": [
+        "Plot a small triangle and mark a centre of enlargement (try the origin first).",
+        "Draw straight ‘ray lines’ from the centre through each corner of the triangle, extending them outward.",
+        "For scale factor 2, measure the distance from the centre to a corner and mark a new point twice as far along the same ray.",
+        "Join the new points and compare: every side should be twice as long, and the area four times as big.",
+        "Ray lines reveal the secret of enlargement — the image always lines up with the object along straight lines from the centre."
+      ]
+    },
+    {
+      "title": "Symmetry Pattern Investigation (Family Task)",
+      "materials": "squared paper, coloured pencils, and a family member or friend.",
+      "steps": [
+        "Together, design a single tile on a grid using a simple shape.",
+        "Reflect the tile to make a mirror pair, then translate the pair to fill a whole row.",
+        "Enlarge one tile by scale factor 2 to make a matching border piece.",
+        "Talk about which parts of your pattern are congruent and which are similar, and why."
+      ]
+    },
+    {
+      "title": "Map and Bearings Walk (Investigation)",
+      "materials": "a simple grid map of your neighbourhood (or draw one), a ruler.",
+      "steps": [
+        "Mark your home, the masjid, the market and a friend’s house with coordinates.",
+        "Calculate the straight-line distance between each pair using the distance formula.",
+        "Find the midpoint between your home and the market — what is there in real life?",
+        "Plan the shortest route to visit all four places and describe the moves as translations."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "For this unit you need the four most common mirror lines, together with the coordinate rule for each:"
+      },
+      {
+        "title": "Key idea 2",
+        "text": "Let us reflect the point A(3, 2) in the x-axis. The rule keeps the x and flips the sign of the y, giving A′(3, −2). The point started 2 units above the x-axis and its image lands 2 units below it — equal distances on opposite sides, exactly as the mirror-line property promises."
+      },
+      {
+        "title": "Key idea 3",
+        "text": "Let us rotate the point A(3, 1) by 90° anticlockwise about the origin. The rule (x, y) → (−y, x) turns (3, 1) into A′(−1, 3). If we keep spinning the same point, 180° sends it to (−3, −1), and 270° anticlockwise sends it to (1, −3). The four positions — (3, 1), (−1, 3), (−3, −1), (1, −3) — sit at the corners of a square centred on the origin, which is a lovely visual check that your rules are working."
+      },
+      {
+        "title": "Key idea 4",
+        "text": "For an enlargement with centre (a, b) and scale factor k, each point moves according to the rule new point = (a + k(x − a), b + k(y − b)). In words: measure how far the point is from the centre, multiply that gap by k, and step out that new distance from the centre. When the centre is the origin this simplifies beautifully to (x, y) → (kx, ky) — you simply multiply both coordinates by the scale factor."
+      },
+      {
+        "title": "Key idea 5",
+        "text": "Two further properties are especially important and often tested. First, every length is multiplied by the scale factor, so a shape enlarged by scale factor 3 has sides three times as long. Second, the area is multiplied by the scale factor squared. So scale factor 3 makes the area 3² = 9 times bigger, and scale factor ½ makes the area (½)² = ¼ of the original. This area rule catches many students out, so underline it in your notes."
+      }
+    ],
+    "terms": [
+      [
+        "Origin",
+        "The point (0, 0) where the axes cross"
+      ],
+      [
+        "Quadrant",
+        "One of the four regions of the plane"
+      ],
+      [
+        "Object / Image",
+        "The shape before / after a transformation"
+      ],
+      [
+        "Column vector",
+        "(a, b): horizontal then vertical shift"
+      ],
+      [
+        "Mirror line",
+        "The line a shape is reflected across"
+      ],
+      [
+        "Centre of rotation",
+        "The fixed point a shape turns about"
+      ],
+      [
+        "Scale factor",
+        "How many times bigger the image is"
+      ],
+      [
+        "Congruent",
+        "Same shape and same size"
+      ],
+      [
+        "Similar",
+        "Same shape, different size"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Plotting (3, 2) as up 3, across 2",
+        "Along first, then up: across 3, up 2"
+      ],
+      [
+        "‘Reflection’ with no line",
+        "Always state the mirror line, e.g. y = x"
+      ],
+      [
+        "Forgetting the centre of rotation",
+        "Give centre, angle and direction"
+      ],
+      [
+        "Area × scale factor",
+        "Area × (scale factor)²"
+      ],
+      [
+        "Negative SF is just smaller",
+        "Negative SF also rotates 180° about the centre"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "State the quadrant of each point: a) (4, 2) b) (−3, 5) c) (−2, −6) d) (7, −1).",
+      "answer": "1) a) QI b) QII c) QIII d) QIV.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) QI b) QII c) QIII d) QIV."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Plot and label these points on one grid: A(2, 3), B(−4, 1), C(−2, −3), D(3, −2).",
+      "answer": "Points plotted — A top-right, B top-left, C bottom-left, D bottom-right.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Points plotted — A top-right, B top-left, C bottom-left, D bottom-right."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Reflect (5, 2) in the x-axis.",
+      "answer": "(5, −2).",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(5, −2)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Translate (1, 4) by the vector (3, −2).",
+      "answer": "(4,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(4,"
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Find the midpoint of (2, 0) and (6, 4).",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Find the distance between: a) A(0, 0) and B(3, 4) b) P(1, 1) and Q(4, 5).",
+      "answer": "1) a) √25 = 5 b) √(3²+4²) = √25 = 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) √25 = 5 b) √(3²+4²) = √25 = 5."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Reflect the point (4, −2) in: a) the x-axis b) the y-axis c) the line y = x.",
+      "answer": "a) (4,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) (4,"
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Rotate the point (3, 1) about the origin: a) 90° anticlockwise b) 180° c) 270° anticlockwise.",
+      "answer": "b) (−4, −2) c) (−2,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "b) (−4, −2) c) (−2,"
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "Translate the triangle A(1, 2), B(3, 1), C(2, 4) by the vector (2, −3). Give A′B′C′.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Enlarge the triangle P(1, 1), Q(2, 1), R(1, 3) with centre (0, 0) and scale factor 2.",
+      "answer": "a) (−1,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) (−1,"
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Find the midpoint and the distance for A(−1, 2) and B(3, 5).",
+      "answer": "b) (−3, −1) c) (1, −3).",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "b) (−3, −1) c) (1, −3)."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Enlarge the point A(4, 3) with centre (1, 1) and scale factor 2. Show your working with the formula.",
+      "answer": "1) New x = 1 + 2(4−1) = 7; new y = 1 + 2(3−1) = 5, so A′(7,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) New x = 1 + 2(4−1) = 7; new y = 1 + 2(3−1) = 5, so A′(7,"
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "On a grid map where each unit is 200 metres, Hassan’s home is at (1, 2) and the well is at (7, 10). Find the straight-line distance in metres.",
+      "answer": "1) Distance = √(6²+8²) = √100 = 10 units = 2000 metres.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Distance = √(6²+8²) = √100 = 10 units = 2000 metres."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A shop sign shaped like a triangle sits at (2, 1), (5, 1), (3, 4). The owner slides it by the vector (−3, 2) to a new wall. Give the new coordinates.",
+      "answer": "(−1,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "(−1,"
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "A logo is drawn at (1, 1), (3, 1), (2, 2) and enlarged by scale factor 3, centre origin, to fit a banner. Give the enlarged coordinates and state how many times the area has grown.",
+      "answer": ", (2,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": ", (2,"
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "Khadija designs a symmetric window pattern. One corner of a shape is at (4, 5); she reflects the whole shape in the y-axis. Where is the image of that corner, and is the image congruent to the object?",
+      "answer": ", (0,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": ", (0,"
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A camera drone starts at (0, 0) and its target is at (9, 12) on a grid. Find the midpoint of its path and the total straight-line distance to the target.",
+      "answer": ".",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Enlarge the point A(4, 3) with centre (1, 1) and scale factor 2. Show your working with the formula.",
+      "answer": "1) New x = 1 + 2(4−1) = 7; new y = 1 + 2(3−1) = 5, so A′(7,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) New x = 1 + 2(4−1) = 7; new y = 1 + 2(3−1) = 5, so A′(7,"
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Enlarge the point A(4, 3) with centre (1, 1) and scale factor 2. Show your working with the formula.",
+      "keyIdeas": [
+        "Origin",
+        "Quadrant",
+        "Object / Image"
+      ],
+      "modelAnswer": "1) New x = 1 + 2(4−1) = 7; new y = 1 + 2(3−1) = 5, so A′(7,"
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A triangle A(1, 1), B(3, 1), C(2, 3) is reflected in the y-axis, then rotated 180° about the origin. Find the final coordinates.",
+      "keyIdeas": [
+        "Quadrant",
+        "Object / Image",
+        "Column vector"
+      ],
+      "modelAnswer": "."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A rectangle has area 12 cm². It is enlarged by scale factor ½. Find the new area and explain your reasoning.",
+      "keyIdeas": [
+        "Object / Image",
+        "Column vector",
+        "Mirror line"
+      ],
+      "modelAnswer": "Reflect in y-axis: A′(−1,"
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Two reflections are applied to a shape, first in the x-axis and then in the y-axis. Describe the single transformation that has the same effect.",
+      "keyIdeas": [
+        "Column vector",
+        "Mirror line",
+        "Centre of rotation"
+      ],
+      "modelAnswer": ", B′(−3,"
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Point A(2, 3) maps to A′(2, −3). Describe the transformation, and state whether object and image are congruent or similar.",
+      "keyIdeas": [
+        "Mirror line",
+        "Centre of rotation",
+        "Scale factor"
+      ],
+      "modelAnswer": ", C′(−2,"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Enlargement and Scale Factor.",
+      "keyIdeas": [
+        "Origin",
+        "Quadrant",
+        "Object / Image"
+      ],
+      "modelAnswer": "An enlargement changes the size of a shape while keeping its shape exactly the same. Every angle stays equal, but every length is multiplied by a number called the scale factor. Because the shape is preserved but the size changes, an enlargement produces a similar image, not a congruent one (unless the scale factor is 1, which changes nothing). To describe an enlargement fully you must give two things: the centre of enlargement and the scale factor. The scale factor tells you how the size changes:"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Origin” mean?",
+        "options": [
+          "The point (0, 0) where the axes cross",
+          "One of the four regions of the plane",
+          "The shape before / after a transformation",
+          "(a, b): horizontal then vertical shift"
+        ],
+        "answer": "The point (0, 0) where the axes cross",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Origin means The point (0, 0) where the axes cross."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Quadrant” mean?",
+        "options": [
+          "One of the four regions of the plane",
+          "The shape before / after a transformation",
+          "(a, b): horizontal then vertical shift",
+          "The line a shape is reflected across"
+        ],
+        "answer": "One of the four regions of the plane",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Quadrant means One of the four regions of the plane."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Object / Image” mean?",
+        "options": [
+          "The shape before / after a transformation",
+          "(a, b): horizontal then vertical shift",
+          "The line a shape is reflected across",
+          "The fixed point a shape turns about"
+        ],
+        "answer": "The shape before / after a transformation",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Object / Image means The shape before / after a transformation."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Column vector” mean?",
+        "options": [
+          "(a, b): horizontal then vertical shift",
+          "The line a shape is reflected across",
+          "The fixed point a shape turns about",
+          "How many times bigger the image is"
+        ],
+        "answer": "(a, b): horizontal then vertical shift",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Column vector means (a, b): horizontal then vertical shift."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Mirror line” mean?",
+        "options": [
+          "The line a shape is reflected across",
+          "The fixed point a shape turns about",
+          "How many times bigger the image is",
+          "Same shape and same size"
+        ],
+        "answer": "The line a shape is reflected across",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Mirror line means The line a shape is reflected across."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Centre of rotation” mean?",
+        "options": [
+          "The fixed point a shape turns about",
+          "How many times bigger the image is",
+          "Same shape and same size",
+          "Same shape, different size"
+        ],
+        "answer": "The fixed point a shape turns about",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Centre of rotation means The fixed point a shape turns about."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: How many times bigger the image is?",
+        "options": [
+          "Scale factor",
+          "Congruent",
+          "Similar",
+          "Origin"
+        ],
+        "answer": "Scale factor",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Scale factor means How many times bigger the image is."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Same shape and same size?",
+        "options": [
+          "Congruent",
+          "Similar",
+          "Origin",
+          "Quadrant"
+        ],
+        "answer": "Congruent",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Congruent means Same shape and same size."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Same shape, different size?",
+        "options": [
+          "Similar",
+          "Origin",
+          "Quadrant",
+          "Object / Image"
+        ],
+        "answer": "Similar",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Similar means Same shape, different size."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The point (0, 0) where the axes cross?",
+        "options": [
+          "Origin",
+          "Object / Image",
+          "Column vector",
+          "Mirror line"
+        ],
+        "answer": "Origin",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Origin means The point (0, 0) where the axes cross."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: One of the four regions of the plane?",
+        "options": [
+          "Quadrant",
+          "Column vector",
+          "Mirror line",
+          "Centre of rotation"
+        ],
+        "answer": "Quadrant",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Quadrant means One of the four regions of the plane."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The shape before / after a transformation?",
+        "options": [
+          "Object / Image",
+          "Mirror line",
+          "Centre of rotation",
+          "Scale factor"
+        ],
+        "answer": "Object / Image",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Object / Image means The shape before / after a transformation."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u14-game-1",
+        "icon": "?",
+        "skill": "Origin",
+        "title": "Quick Match: Origin",
+        "description": "Practise origin through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Origin” mean?",
+            "choices": [
+              "The point (0, 0) where the axes cross",
+              "One of the four regions of the plane",
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift"
+            ],
+            "answer": "The point (0, 0) where the axes cross",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Column vector” mean?",
+            "choices": [
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about",
+              "How many times bigger the image is"
+            ],
+            "answer": "(a, b): horizontal then vertical shift",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Column vector means (a, b): horizontal then vertical shift."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times bigger the image is?",
+            "choices": [
+              "Scale factor",
+              "Congruent",
+              "Similar",
+              "Origin"
+            ],
+            "answer": "Scale factor",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Scale factor means How many times bigger the image is."
+          },
+          {
+            "prompt": "Which term matches this meaning: The point (0, 0) where the axes cross?",
+            "choices": [
+              "Origin",
+              "Object / Image",
+              "Column vector",
+              "Mirror line"
+            ],
+            "answer": "Origin",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The point (0, 0) where the axes cross."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-2",
+        "icon": "★",
+        "skill": "Quadrant",
+        "title": "Concept Quest: Quadrant",
+        "description": "Practise quadrant through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Quadrant” mean?",
+            "choices": [
+              "One of the four regions of the plane",
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across"
+            ],
+            "answer": "One of the four regions of the plane",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the plane."
+          },
+          {
+            "prompt": "What does “Mirror line” mean?",
+            "choices": [
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about",
+              "How many times bigger the image is",
+              "Same shape and same size"
+            ],
+            "answer": "The line a shape is reflected across",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Mirror line means The line a shape is reflected across."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape and same size?",
+            "choices": [
+              "Congruent",
+              "Similar",
+              "Origin",
+              "Quadrant"
+            ],
+            "answer": "Congruent",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Congruent means Same shape and same size."
+          },
+          {
+            "prompt": "Which term matches this meaning: One of the four regions of the plane?",
+            "choices": [
+              "Quadrant",
+              "Column vector",
+              "Mirror line",
+              "Centre of rotation"
+            ],
+            "answer": "Quadrant",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the plane."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-3",
+        "icon": "◫",
+        "skill": "Object / Image",
+        "title": "Model Detective: Object / Image",
+        "description": "Practise object / image through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Object / Image” mean?",
+            "choices": [
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about"
+            ],
+            "answer": "The shape before / after a transformation",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Object / Image means The shape before / after a transformation."
+          },
+          {
+            "prompt": "What does “Centre of rotation” mean?",
+            "choices": [
+              "The fixed point a shape turns about",
+              "How many times bigger the image is",
+              "Same shape and same size",
+              "Same shape, different size"
+            ],
+            "answer": "The fixed point a shape turns about",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Centre of rotation means The fixed point a shape turns about."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape, different size?",
+            "choices": [
+              "Similar",
+              "Origin",
+              "Quadrant",
+              "Object / Image"
+            ],
+            "answer": "Similar",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Similar means Same shape, different size."
+          },
+          {
+            "prompt": "Which term matches this meaning: The shape before / after a transformation?",
+            "choices": [
+              "Object / Image",
+              "Mirror line",
+              "Centre of rotation",
+              "Scale factor"
+            ],
+            "answer": "Object / Image",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Object / Image means The shape before / after a transformation."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-4",
+        "icon": "→",
+        "skill": "Column vector",
+        "title": "Rule Runner: Column vector",
+        "description": "Practise column vector through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Column vector” mean?",
+            "choices": [
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about",
+              "How many times bigger the image is"
+            ],
+            "answer": "(a, b): horizontal then vertical shift",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Column vector means (a, b): horizontal then vertical shift."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times bigger the image is?",
+            "choices": [
+              "Scale factor",
+              "Congruent",
+              "Similar",
+              "Origin"
+            ],
+            "answer": "Scale factor",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Scale factor means How many times bigger the image is."
+          },
+          {
+            "prompt": "Which term matches this meaning: The point (0, 0) where the axes cross?",
+            "choices": [
+              "Origin",
+              "Object / Image",
+              "Column vector",
+              "Mirror line"
+            ],
+            "answer": "Origin",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Origin” mean?",
+            "choices": [
+              "The point (0, 0) where the axes cross",
+              "One of the four regions of the plane",
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift"
+            ],
+            "answer": "The point (0, 0) where the axes cross",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The point (0, 0) where the axes cross."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-5",
+        "icon": "Σ",
+        "skill": "Mirror line",
+        "title": "Vocabulary Vault: Mirror line",
+        "description": "Practise mirror line through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Mirror line” mean?",
+            "choices": [
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about",
+              "How many times bigger the image is",
+              "Same shape and same size"
+            ],
+            "answer": "The line a shape is reflected across",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Mirror line means The line a shape is reflected across."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape and same size?",
+            "choices": [
+              "Congruent",
+              "Similar",
+              "Origin",
+              "Quadrant"
+            ],
+            "answer": "Congruent",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Congruent means Same shape and same size."
+          },
+          {
+            "prompt": "Which term matches this meaning: One of the four regions of the plane?",
+            "choices": [
+              "Quadrant",
+              "Column vector",
+              "Mirror line",
+              "Centre of rotation"
+            ],
+            "answer": "Quadrant",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the plane."
+          },
+          {
+            "prompt": "What does “Quadrant” mean?",
+            "choices": [
+              "One of the four regions of the plane",
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across"
+            ],
+            "answer": "One of the four regions of the plane",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the plane."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-6",
+        "icon": "◇",
+        "skill": "Centre of rotation",
+        "title": "Challenge Cards: Centre of rotation",
+        "description": "Practise centre of rotation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Centre of rotation” mean?",
+            "choices": [
+              "The fixed point a shape turns about",
+              "How many times bigger the image is",
+              "Same shape and same size",
+              "Same shape, different size"
+            ],
+            "answer": "The fixed point a shape turns about",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Centre of rotation means The fixed point a shape turns about."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape, different size?",
+            "choices": [
+              "Similar",
+              "Origin",
+              "Quadrant",
+              "Object / Image"
+            ],
+            "answer": "Similar",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Similar means Same shape, different size."
+          },
+          {
+            "prompt": "Which term matches this meaning: The shape before / after a transformation?",
+            "choices": [
+              "Object / Image",
+              "Mirror line",
+              "Centre of rotation",
+              "Scale factor"
+            ],
+            "answer": "Object / Image",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Object / Image means The shape before / after a transformation."
+          },
+          {
+            "prompt": "What does “Object / Image” mean?",
+            "choices": [
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about"
+            ],
+            "answer": "The shape before / after a transformation",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Object / Image means The shape before / after a transformation."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-7",
+        "icon": "⚡",
+        "skill": "Scale factor",
+        "title": "Think Fast: Scale factor",
+        "description": "Practise scale factor through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: How many times bigger the image is?",
+            "choices": [
+              "Scale factor",
+              "Congruent",
+              "Similar",
+              "Origin"
+            ],
+            "answer": "Scale factor",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Scale factor means How many times bigger the image is."
+          },
+          {
+            "prompt": "Which term matches this meaning: The point (0, 0) where the axes cross?",
+            "choices": [
+              "Origin",
+              "Object / Image",
+              "Column vector",
+              "Mirror line"
+            ],
+            "answer": "Origin",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Origin” mean?",
+            "choices": [
+              "The point (0, 0) where the axes cross",
+              "One of the four regions of the plane",
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift"
+            ],
+            "answer": "The point (0, 0) where the axes cross",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Column vector” mean?",
+            "choices": [
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about",
+              "How many times bigger the image is"
+            ],
+            "answer": "(a, b): horizontal then vertical shift",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Column vector means (a, b): horizontal then vertical shift."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-8",
+        "icon": "☁",
+        "skill": "Congruent",
+        "title": "Explain It: Congruent",
+        "description": "Practise congruent through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Same shape and same size?",
+            "choices": [
+              "Congruent",
+              "Similar",
+              "Origin",
+              "Quadrant"
+            ],
+            "answer": "Congruent",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Congruent means Same shape and same size."
+          },
+          {
+            "prompt": "Which term matches this meaning: One of the four regions of the plane?",
+            "choices": [
+              "Quadrant",
+              "Column vector",
+              "Mirror line",
+              "Centre of rotation"
+            ],
+            "answer": "Quadrant",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the plane."
+          },
+          {
+            "prompt": "What does “Quadrant” mean?",
+            "choices": [
+              "One of the four regions of the plane",
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across"
+            ],
+            "answer": "One of the four regions of the plane",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the plane."
+          },
+          {
+            "prompt": "What does “Mirror line” mean?",
+            "choices": [
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about",
+              "How many times bigger the image is",
+              "Same shape and same size"
+            ],
+            "answer": "The line a shape is reflected across",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Mirror line means The line a shape is reflected across."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-9",
+        "icon": "⌂",
+        "skill": "Similar",
+        "title": "Real-Life Round: Similar",
+        "description": "Practise similar through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Same shape, different size?",
+            "choices": [
+              "Similar",
+              "Origin",
+              "Quadrant",
+              "Object / Image"
+            ],
+            "answer": "Similar",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Similar means Same shape, different size."
+          },
+          {
+            "prompt": "Which term matches this meaning: The shape before / after a transformation?",
+            "choices": [
+              "Object / Image",
+              "Mirror line",
+              "Centre of rotation",
+              "Scale factor"
+            ],
+            "answer": "Object / Image",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Object / Image means The shape before / after a transformation."
+          },
+          {
+            "prompt": "What does “Object / Image” mean?",
+            "choices": [
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about"
+            ],
+            "answer": "The shape before / after a transformation",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Object / Image means The shape before / after a transformation."
+          },
+          {
+            "prompt": "What does “Centre of rotation” mean?",
+            "choices": [
+              "The fixed point a shape turns about",
+              "How many times bigger the image is",
+              "Same shape and same size",
+              "Same shape, different size"
+            ],
+            "answer": "The fixed point a shape turns about",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Centre of rotation means The fixed point a shape turns about."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-10",
+        "icon": "!",
+        "skill": "Origin",
+        "title": "Spot the Error: Origin",
+        "description": "Practise origin through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The point (0, 0) where the axes cross?",
+            "choices": [
+              "Origin",
+              "Object / Image",
+              "Column vector",
+              "Mirror line"
+            ],
+            "answer": "Origin",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Origin” mean?",
+            "choices": [
+              "The point (0, 0) where the axes cross",
+              "One of the four regions of the plane",
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift"
+            ],
+            "answer": "The point (0, 0) where the axes cross",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Column vector” mean?",
+            "choices": [
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about",
+              "How many times bigger the image is"
+            ],
+            "answer": "(a, b): horizontal then vertical shift",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Column vector means (a, b): horizontal then vertical shift."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times bigger the image is?",
+            "choices": [
+              "Scale factor",
+              "Congruent",
+              "Similar",
+              "Origin"
+            ],
+            "answer": "Scale factor",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Scale factor means How many times bigger the image is."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-11",
+        "icon": "≡",
+        "skill": "Quadrant",
+        "title": "Mastery Mix: Quadrant",
+        "description": "Practise quadrant through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One of the four regions of the plane?",
+            "choices": [
+              "Quadrant",
+              "Column vector",
+              "Mirror line",
+              "Centre of rotation"
+            ],
+            "answer": "Quadrant",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the plane."
+          },
+          {
+            "prompt": "What does “Quadrant” mean?",
+            "choices": [
+              "One of the four regions of the plane",
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across"
+            ],
+            "answer": "One of the four regions of the plane",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the plane."
+          },
+          {
+            "prompt": "What does “Mirror line” mean?",
+            "choices": [
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about",
+              "How many times bigger the image is",
+              "Same shape and same size"
+            ],
+            "answer": "The line a shape is reflected across",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Mirror line means The line a shape is reflected across."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape and same size?",
+            "choices": [
+              "Congruent",
+              "Similar",
+              "Origin",
+              "Quadrant"
+            ],
+            "answer": "Congruent",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Congruent means Same shape and same size."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-12",
+        "icon": "T",
+        "skill": "Object / Image",
+        "title": "Unit Champion: Object / Image",
+        "description": "Practise object / image through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The shape before / after a transformation?",
+            "choices": [
+              "Object / Image",
+              "Mirror line",
+              "Centre of rotation",
+              "Scale factor"
+            ],
+            "answer": "Object / Image",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Object / Image means The shape before / after a transformation."
+          },
+          {
+            "prompt": "What does “Object / Image” mean?",
+            "choices": [
+              "The shape before / after a transformation",
+              "(a, b): horizontal then vertical shift",
+              "The line a shape is reflected across",
+              "The fixed point a shape turns about"
+            ],
+            "answer": "The shape before / after a transformation",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Object / Image means The shape before / after a transformation."
+          },
+          {
+            "prompt": "What does “Centre of rotation” mean?",
+            "choices": [
+              "The fixed point a shape turns about",
+              "How many times bigger the image is",
+              "Same shape and same size",
+              "Same shape, different size"
+            ],
+            "answer": "The fixed point a shape turns about",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Centre of rotation means The fixed point a shape turns about."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape, different size?",
+            "choices": [
+              "Similar",
+              "Origin",
+              "Quadrant",
+              "Object / Image"
+            ],
+            "answer": "Similar",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Similar means Same shape, different size."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can this unit is written for self-paced learning. That means you move at a speed that suits you. Read each explanation slowly, copy every worked example onto squared paper and check it yourself, and only move on when a section feels solid. Your AI tutor is available at any hour to set you fresh practice, mark your coordinates, or explain a step in a different way. Your teacher will meet you about twice a week to unstick anything that feels difficult and to look over your written work.",
+    "I can why does this matter? Transformations are the hidden language of the modern world. Satellite navigation uses coordinates to pin your position on Earth to within a few metres, then transformations to rotate the map as you turn a corner. Animators build a single character and then translate, rotate and enlarge copies of it to fill a scene. Engineers designing a bridge between two towns test their design by reflecting and rotating it on a screen before a single beam is cut. When you master this unit you are learning to think spatially — to hold shapes in your mind and move them with confidence — which is a skill prized in engineering, computing, design, surveying and architecture.",
+    "I can keep squared paper, a sharp pencil, a ruler and a set of coloured pencils beside you throughout this unit. Transformation geometry is a subject you learn with your hands as much as your head. Draw every grid, plot every point, and label the image of a shape with dashes — A becomes A′ (‘A prime’), then A″ (‘A double prime’). If a plot comes out wrong, that is not failure; it shows you precisely which step to practise again. Every step you draw yourself locks the idea more firmly into memory than a page you only read.",
+    "I can plot and read coordinates in all four quadrants, including negative values.",
+    "I can identify the quadrant a point lies in from the signs of its coordinates.",
+    "I can calculate the distance between two points and the midpoint of a line segment.",
+    "I can describe and perform a translation using a column vector.",
+    "I can reflect a point or shape in the x-axis, y-axis, y = x and y = −x."
+  ]
+}

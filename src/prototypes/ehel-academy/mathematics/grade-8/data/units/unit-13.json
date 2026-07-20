@@ -1,0 +1,1793 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.277Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g08-u13",
+    "unitNo": 13,
+    "unitTitle": "Probability",
+    "unitOverview": "Welcome to Unit 13. In this unit you will study probability – the branch of mathematics that measures how likely things are to happen. Every day you meet uncertainty. Will it rain before Maghrib? Will the bus from Eastleigh arrive on time? If Amina draws a bead from a bag without looking, what colour is she most likely to pull out? Probability gives you a precise, mathematical way to answer questions like these instead of just guessing.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 13/Year 8 - Unit 13 Lesson.docx",
+      "Year 8 (1)/Unit 13/Year 8 - Unit 13 Activities.docx",
+      "Year 8 (1)/Unit 13/Year 8 - Unit 13 Practice.docx",
+      "Year 8 (1)/Unit 13/Year 8 - Unit 13 Reference.docx"
+    ],
+    "sourceBlockCount": 385,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "This unit is designed for self-paced learning. You move at your own speed. Read each explanation slowly, copy every worked example onto paper and try it yourself before you look at the solution, and only move on when you feel steady. Your AI tutor is available day and night to set you fresh questions, explain a step a different way, or mark your working. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
+    "Why does probability matter? It sits behind weather forecasts, medical tests, insurance, quality control in factories, sport, and every game of chance ever invented. A doctor reading a test result, a shopkeeper deciding how much stock to buy, a meteorologist warning of floods – all of them use probability. Learning it well trains you to think clearly about risk and to avoid being fooled by claims that only *sound* convincing. Keep a pencil, paper and, if you can, a coin and a die beside you as you read, because probability is a subject you must do, not just watch.",
+    "Describe probability as a measure of likelihood on a scale from 0 to 1.",
+    "Calculate theoretical probability for equally likely outcomes using the basic formula.",
+    "Express a probability as a fraction, decimal or percentage and convert between them.",
+    "Find the probability of an event not happening using the complement.",
+    "Add probabilities for mutually exclusive events.",
+    "Run experiments to find experimental probability (relative frequency) and compare it with theory.",
+    "Use the idea of expected frequency to predict results over many trials.",
+    "List all outcomes with a sample space diagram or two-way table."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-the-probability-scale",
+      "title": "The Probability Scale",
+      "explanation": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain – it must happen. Exactly halfway, at 0.5, the event has an even chance: it is just as likely to happen as not. It helps to picture the scale like a road with markers along it: 0, then 0.25, then 0.5, then 0.75, then 1. Near 0 the event is very unlikely; near 1 it is very likely; around the middle…",
+      "example": "Because every probability lies between 0 and 1, you have a built-in check on your own work. If you ever calculate a probability that is negative, or greater than 1, you have made a mistake somewhere – stop and find it.…"
+    },
+    {
+      "id": "concept-2-theoretical-probability",
+      "title": "Theoretical Probability",
+      "explanation": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all. This is called theoretical probability, and it comes from one formula: P(event) = number of favourable outcomes ÷ total number of possible outcomes.",
+      "example": "A favourable outcome simply means an outcome that counts as the event you want – there is nothing lucky or unlucky about the word. Suppose you roll a fair six-sided die. The total number of possible outcomes is 6,…"
+    },
+    {
+      "id": "concept-3-complementary-and-mutually-exclusive-events",
+      "title": "Complementary and Mutually Exclusive Events",
+      "explanation": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very useful rule: Using the spinner from Concept 2, P(red) = 3/8, so P(not red) = 1 − 3/8 = 5/8 = 0.625. This shortcut saves a lot of work. To find the chance of 'not red' the long way you would add P(blue) + P(green) + P(yellow); the complement lets you subtract from 1 in a single step. Whenever a question…",
+      "example": "Two events are mutually exclusive when they cannot both happen at the same time. On a single die roll, 'rolling a 2' and 'rolling a 5' are mutually exclusive, because one roll cannot be both a 2 and a 5. When events are…"
+    },
+    {
+      "id": "concept-4-experimental-probability-and-the-law-of-large-numbers",
+      "title": "Experimental Probability and the Law of Large Numbers",
+      "explanation": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all. In those cases we run an experiment and use the results. Experimental probability, also called relative frequency, is defined as: Experimental probability = number of times the event happened ÷ total number of trials.",
+      "example": "Suppose Hassan flips a coin 100 times and gets 47 heads. His experimental probability of heads is 47/100 = 0.47. The theoretical value is 0.5, so his result is close but not exactly equal. That difference is completely…"
+    },
+    {
+      "id": "concept-5-sample-space-diagrams-and-two-way-tables",
+      "title": "Sample Space Diagrams and Two-Way Tables",
+      "explanation": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you can count the favourable ones directly and read off the probability. Take rolling two dice and looking at the total. One die gives 6 outcomes; a second die also gives 6; together there are 6 × 6 = 36 equally likely outcomes. If you make a 6-by-6 grid with the…",
+      "example": "A two-way table organises data by two categories at once, and it is perfect for probability drawn from real surveys. Imagine a survey of 75 students recording favourite subject against whether they are boys or girls.…"
+    },
+    {
+      "id": "concept-6-independent-events-and-the-multiplication-rule",
+      "title": "Independent Events and the Multiplication Rule",
+      "explanation": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that both happen: P(A and B) = P(A) × P(B) (for independent events).",
+      "example": "So the probability of flipping a head and rolling a 6 is P(head) × P(6) = 1/2 × 1/6 = 1/12. The probability that two rolled dice both show 6 is 1/6 × 1/6 = 1/36 – which agrees with the sample space diagram in Concept 5,…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "The Probability Scale",
+      "context": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain – it must happen. Exactly halfway, at…",
+      "prompt": "Write each probability as a decimal and a percentage: a) 1/4 b) 3/5 c) 7/8.",
+      "answer": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Theoretical Probability",
+      "context": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all. This is called theoretical probability, and it comes from one formula:…",
+      "prompt": "A fair die is rolled. Find: a) P(5) b) P(odd number) c) P(number less than 3).",
+      "answer": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Complementary and Mutually Exclusive Events",
+      "context": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very useful rule: Using the spinner from Concept…",
+      "prompt": "If P(rain) = 0.35, find P(no rain).",
+      "answer": "1 − 0.35 = 0.65.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1 − 0.35 = 0.65."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Experimental Probability and the Law of Large Numbers",
+      "context": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all. In those cases we run an experiment and use the…",
+      "prompt": "A bag holds 4 red, 3 blue and 3 yellow counters. Find P(red) and P(yellow).",
+      "answer": "P(red) = 4/10 = 2/5, P(yellow) = 3/10.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "P(red) = 4/10 = 2/5, P(yellow) = 3/10."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Sample Space Diagrams and Two-Way Tables",
+      "context": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you…",
+      "prompt": "State whether each pair is mutually exclusive: a) 'roll a 2' and 'roll a 4'; b) 'roll an even number' and 'roll a 6'.",
+      "answer": "a) mutually exclusive (cannot be both 2 and",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) mutually exclusive (cannot be both 2 and"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Independent Events and the Multiplication Rule",
+      "context": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that…",
+      "prompt": "A spinner has 10 equal sections: 4 red, 3 blue, 2 green, 1 white. Find P(red), P(blue), P(not white), and check that all four colour probabilities add to 1.",
+      "answer": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "The Probability Scale",
+      "modelType": "concept-model-1",
+      "purpose": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Theoretical Probability",
+      "modelType": "concept-model-2",
+      "purpose": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all. This is called theoretical…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Complementary and Mutually Exclusive Events",
+      "modelType": "concept-model-3",
+      "purpose": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Experimental Probability and the Law of Large Numbers",
+      "modelType": "concept-model-4",
+      "purpose": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all. In those…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Sample Space Diagrams and Two-Way Tables",
+      "modelType": "concept-model-5",
+      "purpose": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Independent Events and the Multiplication Rule",
+      "modelType": "concept-model-6",
+      "purpose": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find a simple probability",
+      "example": "A bag contains 5 red, 3 blue and 2 green beads. One bead is drawn at random. Find P(blue).",
+      "steps": [
+        "Count the total number of equally likely outcomes.",
+        "Count the favourable outcomes (the ones you want).",
+        "Divide favourable by total.",
+        "Simplify, and convert to a decimal or percentage if asked."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "Decide: is it 'and' (both) or 'or' (either)?",
+      "example": "Using the same bag (5 red, 3 blue, 2 green), find P(not green).",
+      "steps": [
+        "For 'or' with mutually exclusive events, add the probabilities.",
+        "For 'and' with independent events, multiply the probabilities.",
+        "Check whether replacement affects the second probability."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to use a tree diagram",
+      "example": "A fair die is rolled. Find P(rolling a 1 or a 6).",
+      "steps": [
+        "Draw branches for the first event with probabilities.",
+        "From each outcome, draw branches for the second event.",
+        "Multiply along each path to get its probability.",
+        "Add the paths that give the outcome you want."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Experimental probability and expected frequency",
+      "example": "Farah rolls a die 60 times and gets these results – 1: 8, 2: 12, 3: 9, 4: 11, 5: 10, 6: 10. Find the experimental probability of an even number, and compare it with the theoretical value. How many evens would she expect in 300 rolls?",
+      "steps": [
+        "Solution: Evens are 2, 4 and 6, giving 12 + 11 + 10 = 33 even results out of 60.",
+        "Experimental P(even) = 33/60 = 11/20 = 0.55.",
+        "Theoretical P(even) = 3/6 = 0.5.",
+        "They are close; the small difference is normal variation."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Sample space for two dice",
+      "example": "Two fair dice are rolled and the totals added. Find P(total = 8) and P(total is greater than 9).",
+      "steps": [
+        "Solution: There are 6 × 6 = 36 equally likely outcomes.",
+        "A total of 8 comes from (2,6), (3,5), (4,4), (5,3), (6,2) – that is 5 outcomes – so P(8) = 5/36.",
+        "A total greater than 9 means 10, 11 or 12: totals of 10 give 3 outcomes, 11 gives 2, and 12 gives 1, so 3 + 2 + 1 = 6 outcomes, giving P(> 9) = 6/36 = 1/6."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Independent events (multiply)",
+      "example": "A coin is flipped and a die is rolled. Find P(head and a number greater than 4).",
+      "steps": [
+        "Solution: These are independent.",
+        "P(head) = 1/2.",
+        "'Greater than 4' means 5 or 6, so P(> 4) = 2/6 = 1/3.",
+        "Therefore P(head and > 4) = 1/2 × 1/3 = 1/6."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Basic theoretical probability",
+      "prompt": "A bag contains 5 red, 3 blue and 2 green beads. One bead is drawn at random. Find P(blue).",
+      "solution": "Solution: Total beads = 5 + 3 + 2 = 10. Favourable (blue) = 3. So P(blue) = 3/10 = 0.3 = 30%. Always add up the whole collection first to get the total, then count the favourable outcomes."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Using the complement",
+      "prompt": "Using the same bag (5 red, 3 blue, 2 green), find P(not green).",
+      "solution": "Solution: P(green) = 2/10 = 1/5. So P(not green) = 1 − 1/5 = 4/5 = 0.8. Check the long way: P(red) + P(blue) = 5/10 + 3/10 = 8/10 = 4/5. The complement was faster and gave the same answer."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Mutually exclusive 'or'",
+      "prompt": "A fair die is rolled. Find P(rolling a 1 or a 6).",
+      "solution": "Solution: 'Rolling a 1' and 'rolling a 6' cannot both happen on one roll, so they are mutually exclusive. P(1 or 6) = P(1) + P(6) = 1/6 + 1/6 = 2/6 = 1/3."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Experimental probability and expected frequency",
+      "prompt": "Farah rolls a die 60 times and gets these results – 1: 8, 2: 12, 3: 9, 4: 11, 5: 10, 6: 10. Find the experimental probability of an even number, and compare it with the theoretical value. How many evens would she expect in 300 rolls?",
+      "solution": "Solution: Evens are 2, 4 and 6, giving 12 + 11 + 10 = 33 even results out of 60. Experimental P(even) = 33/60 = 11/20 = 0.55. Theoretical P(even) = 3/6 = 0.5. They are close; the small difference is normal variation. Expected evens in 300 rolls = 0.5 × 300 = 150."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Sample space for two dice",
+      "prompt": "Two fair dice are rolled and the totals added. Find P(total = 8) and P(total is greater than 9).",
+      "solution": "Solution: There are 6 × 6 = 36 equally likely outcomes. A total of 8 comes from (2,6), (3,5), (4,4), (5,3), (6,2) – that is 5 outcomes – so P(8) = 5/36. A total greater than 9 means 10, 11 or 12: totals of 10 give 3 outcomes, 11 gives 2, and 12 gives 1, so 3 + 2 + 1 = 6 outcomes, giving P(> 9) = 6/36 = 1/6."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Independent events (multiply)",
+      "prompt": "A coin is flipped and a die is rolled. Find P(head and a number greater than 4).",
+      "solution": "Solution: These are independent. P(head) = 1/2. 'Greater than 4' means 5 or 6, so P(> 4) = 2/6 = 1/3. Therefore P(head and > 4) = 1/2 × 1/3 = 1/6."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Tree diagram, two flips",
+      "prompt": "A fair coin is flipped twice. Find P(exactly one head).",
+      "solution": "Solution: The four equally likely paths are HH, HT, TH, TT, each 1/4. 'Exactly one head' means HT or TH, so P = 1/4 + 1/4 = 2/4 = 1/2. Note that 'exactly one head' is different from 'at least one head' (which would also include HH)."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Dependent events, without replacement",
+      "prompt": "A bag has 4 red and 2 blue beads. Two beads are drawn without replacement. Find P(both red) and P(one of each colour).",
+      "solution": "Solution: First draw P(red) = 4/6. After removing one red, 3 red and 2 blue remain, so second draw P(red) = 3/5. P(both red) = 4/6 × 3/5 = 12/30 = 2/5. For one of each: P(red then blue) = 4/6 × 2/5 = 8/30, and P(blue then red) = 2/6 × 4/5 = 8/30. Add the two paths: 8/30 + 8/30 = 16/30 = 8/15."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "A spinner lands on green with probability 2/5. In 80 spins, how many greens are expected?",
+      "solution": "= 5/6."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "A coin is flipped and a die rolled. Find P(head and a 3) and P(tail and an even number).",
+      "solution": "Experimental P(heads) = 96/200 = 0.48; theoretical = 0.5; very close, as expected with many trials."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Two fair dice are rolled. Using a sample space diagram, find P(total = 6) and P(total = 9).",
+      "solution": "2/5 × 80 = 32 greens."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "A bag holds 5 red and 3 blue beads. Two are drawn without replacement. Find P(both red), P(both blue) and P(one of each colour).",
+      "solution": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Write each probability as a decimal and a percentage: a) 1/4 b) 3/5 c) 7/8.",
+      "answer": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "A fair die is rolled. Find: a) P(5) b) P(odd number) c) P(number less than 3).",
+      "answer": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "If P(rain) = 0.35, find P(no rain).",
+      "answer": "1 − 0.35 = 0.65.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "A bag holds 4 red, 3 blue and 3 yellow counters. Find P(red) and P(yellow).",
+      "answer": "P(red) = 4/10 = 2/5, P(yellow) = 3/10.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "State whether each pair is mutually exclusive: a) 'roll a 2' and 'roll a 4'; b) 'roll an even number' and 'roll a 6'.",
+      "answer": "a) mutually exclusive (cannot be both 2 and",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "A spinner has 10 equal sections: 4 red, 3 blue, 2 green, 1 white. Find P(red), P(blue), P(not white), and check that all four colour probabilities add to 1.",
+      "answer": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "A die is rolled. Find P(2 or 5) and P(a number greater than 1).",
+      "answer": "P(2 or",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "A coin is flipped 200 times and lands on heads 96 times. Find the experimental P(heads) and compare it with the theoretical value.",
+      "answer": "= 1/6 + 1/6 = 1/3; P(>",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "A spinner lands on green with probability 2/5. In 80 spins, how many greens are expected?",
+      "answer": "= 5/6.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "A coin is flipped and a die rolled. Find P(head and a 3) and P(tail and an even number).",
+      "answer": "Experimental P(heads) = 96/200 = 0.48; theoretical = 0.5; very close, as expected with many trials.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Two fair dice are rolled. Using a sample space diagram, find P(total = 6) and P(total = 9).",
+      "answer": "2/5 × 80 = 32 greens.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "A bag holds 5 red and 3 blue beads. Two are drawn without replacement. Find P(both red), P(both blue) and P(one of each colour).",
+      "answer": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28.",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "The Great Coin Experiment",
+      "materials": "one coin, paper, a pencil.",
+      "steps": [
+        "Flip the coin 10 times and record how many heads you get. Work out the experimental P(heads).",
+        "Now flip it another 40 times (50 in total) and update your experimental P(heads).",
+        "Keep going to 100 flips if you can, updating the fraction each time.",
+        "Watch how the fraction moves. Does it drift towards 0.5 as the number of flips grows? Write a sentence explaining what the Law of Large Numbers predicts.",
+        "Keep your results table – it is proof of the Law of Large Numbers in action."
+      ]
+    },
+    {
+      "title": "Two-Dice Totals Investigation",
+      "materials": "two dice, paper for a tally chart.",
+      "steps": [
+        "Before rolling, predict which total (from 2 to 12) will come up most often, and which least often.",
+        "Roll the two dice 50 times, adding the numbers each time, and tally each total.",
+        "Draw a bar chart of your totals. Which total won? Which was rarest?",
+        "Now build the 6-by-6 sample space of all 36 outcomes and count how many give each total. Compare the theory with your experiment.",
+        "You should find 7 is the most likely total (6 ways out of 36) and 2 and 12 the least likely (1 way each). Did your experiment agree?"
+      ]
+    },
+    {
+      "title": "Design a Fair Game",
+      "materials": "dice, a coin, or a home-made spinner; paper.",
+      "steps": [
+        "Invent a simple two-player game of chance – for example, Player A wins if two coins match, Player B wins if they differ.",
+        "Work out each player's theoretical probability of winning.",
+        "Decide whether your game is fair (equal chances). If it is not, change a rule to make it fair.",
+        "Test the game 20 times with a partner and compare the actual win rates with your theory.",
+        "For the two-coin example, both HH/TT (match) and HT/TH (differ) give 2 out of 4, so that game is already fair – can you design one that is not, then fix it?"
+      ]
+    },
+    {
+      "title": "Beads Without Replacement",
+      "materials": "a small bag or cup and 8 beads or beans in two colours (say 5 dark, 3 light).",
+      "steps": [
+        "Without looking, draw one bead, record its colour, and do not put it back.",
+        "Draw a second bead and record whether you got two of the same colour or one of each.",
+        "Return the beads and repeat the whole two-draw trial 20 times, tallying the results.",
+        "Compare your experimental results with the theory: P(both dark) = 5/8 × 4/7 = 20/56 = 5/14. How close were you?",
+        "This shows dependent events in action – the first draw really does change the chances for the second."
+      ]
+    },
+    {
+      "title": "Family Two-Way Table Survey",
+      "materials": "family members or classmates to survey, paper for a table.",
+      "steps": [
+        "Choose two yes/no or category questions – for example, 'Do you prefer bariis or anjero?' and 'Male or female?'.",
+        "Survey at least 15 people and record each answer.",
+        "Organise your results in a two-way table with row and column totals.",
+        "Calculate five different probabilities from your table, including at least one conditional probability such as P(prefers bariis given male).",
+        "Present your table to your teacher and explain one interesting relationship you found in the data."
+      ]
+    },
+    {
+      "title": "Weather Forecast Detective",
+      "materials": "access to a daily weather forecast for your city, a notebook.",
+      "steps": [
+        "For one week, write down the forecast chance of rain each day (for example, '30% chance').",
+        "Each evening, record whether it actually rained.",
+        "At the end of the week, compare the forecasts with reality. On the days the forecast said 70% or more, did it usually rain?",
+        "Write a short paragraph on what '30% chance of rain' really means and why weather is described with probability.",
+        "After your activities, talk or write about these questions: How did your experimental results compare with the theoretical predictions? What happened to the accuracy as you did more trials? Which activity made the difference between independent and dependent events clearest? Which idea would you like more practice with? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "Because every probability lies between 0 and 1, you have a built-in check on your own work. If you ever calculate a probability that is negative, or greater than 1, you have made a mistake somewhere – stop and find it. A probability of 2, or of −0.3, simply cannot exist. This single rule, 0 ≤ P(A) ≤ 1, will catch many errors before they cost you marks."
+      },
+      {
+        "title": "Key idea 2",
+        "text": "This 'sum to 1' rule is another powerful check. If Yusuf calculates the chances of the four spinner colours and they add up to more than 1, he knows at once that he has slipped somewhere. Keep it in your toolkit alongside the 0-to-1 rule from Concept 1."
+      },
+      {
+        "title": "Key idea 3",
+        "text": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very useful rule:"
+      },
+      {
+        "title": "Key idea 4",
+        "text": "Concept 6: Independent Events and the Multiplication Rule"
+      },
+      {
+        "title": "Key idea 5",
+        "text": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that both happen:"
+      },
+      {
+        "title": "Key idea 6",
+        "text": "You have now met seven big ideas: the probability scale, theoretical probability, complements and mutually exclusive events, experimental probability with the Law of Large Numbers, sample space diagrams and two-way tables, independent events with the multiplication rule, and tree diagrams with dependent events. These ideas are not separate islands – they work as one toolkit."
+      }
+    ],
+    "terms": [
+      [
+        "Outcome",
+        "A single possible result of a trial"
+      ],
+      [
+        "Sample space",
+        "The set of all possible outcomes"
+      ],
+      [
+        "Event",
+        "An outcome or group of outcomes you want"
+      ],
+      [
+        "Complement",
+        "The event 'not A'; P(not A) = 1 − P(A)"
+      ],
+      [
+        "Mutually exclusive",
+        "Events that cannot both happen at once"
+      ],
+      [
+        "Independent",
+        "One outcome does not affect the other"
+      ],
+      [
+        "Dependent",
+        "The first outcome changes the second"
+      ],
+      [
+        "Relative frequency",
+        "Experimental probability from trials"
+      ],
+      [
+        "Expected frequency",
+        "Probability × number of trials"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Adding for 'and'",
+        "Multiply independent 'and' events"
+      ],
+      [
+        "A calculation slip",
+        "Gambler's fallacy"
+      ],
+      [
+        "Thinking coins remember",
+        "Ignoring replacement"
+      ],
+      [
+        "Treating dependent as independent",
+        "P(A|B) = P(B|A)"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Write each probability as a decimal and a percentage: a) 1/4 b) 3/5 c) 7/8.",
+      "answer": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "A fair die is rolled. Find: a) P(5) b) P(odd number) c) P(number less than 3).",
+      "answer": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "If P(rain) = 0.35, find P(no rain).",
+      "answer": "1 − 0.35 = 0.65.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1 − 0.35 = 0.65."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "A bag holds 4 red, 3 blue and 3 yellow counters. Find P(red) and P(yellow).",
+      "answer": "P(red) = 4/10 = 2/5, P(yellow) = 3/10.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "P(red) = 4/10 = 2/5, P(yellow) = 3/10."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "State whether each pair is mutually exclusive: a) 'roll a 2' and 'roll a 4'; b) 'roll an even number' and 'roll a 6'.",
+      "answer": "a) mutually exclusive (cannot be both 2 and",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) mutually exclusive (cannot be both 2 and"
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "A spinner has 10 equal sections: 4 red, 3 blue, 2 green, 1 white. Find P(red), P(blue), P(not white), and check that all four colour probabilities add to 1.",
+      "answer": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "A die is rolled. Find P(2 or 5) and P(a number greater than 1).",
+      "answer": "P(2 or",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "P(2 or"
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "A coin is flipped 200 times and lands on heads 96 times. Find the experimental P(heads) and compare it with the theoretical value.",
+      "answer": "= 1/6 + 1/6 = 1/3; P(>",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "= 1/6 + 1/6 = 1/3; P(>"
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "A spinner lands on green with probability 2/5. In 80 spins, how many greens are expected?",
+      "answer": "= 5/6.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "= 5/6."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "A coin is flipped and a die rolled. Find P(head and a 3) and P(tail and an even number).",
+      "answer": "Experimental P(heads) = 96/200 = 0.48; theoretical = 0.5; very close, as expected with many trials.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Experimental P(heads) = 96/200 = 0.48; theoretical = 0.5; very close, as expected with many trials."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Two fair dice are rolled. Using a sample space diagram, find P(total = 6) and P(total = 9).",
+      "answer": "2/5 × 80 = 32 greens.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "2/5 × 80 = 32 greens."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "A bag holds 5 red and 3 blue beads. Two are drawn without replacement. Find P(both red), P(both blue) and P(one of each colour).",
+      "answer": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A carnival game in Kismaayo costs 3 shillings. You roll two dice and win 15 shillings if the total is 7. Find the probability of winning, and the expected number of wins in 36 games.",
+      "answer": "1) P(total",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) P(total"
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "The weather forecast gives a 60% chance of rain today and, independently, a 40% chance tomorrow. Find P(rain both days), P(no rain either day) and P(rain on exactly one of the two days).",
+      "answer": "= 6/36 = 1/6; expected wins in 36 games = 1/6 × 36 = 6.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "= 6/36 = 1/6; expected wins in 36 games = 1/6 × 36 = 6."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "A survey of 200 students recorded favourite sport by gender: Male – 45 football, 25 basketball, 20 athletics (90 total); Female – 35 football, 40 basketball, 35 athletics (110 total). Find P(plays football), P(is female) and P(plays athletics given the student is female).",
+      "answer": "P(rain both) = 0.6 × 0.4 = 0.24; P(no rain either) = 0.4 × 0.6 = 0.24; P(exactly one day) = 0.6 × 0.6 + 0.4 × 0.4 = 0.36 + 0.16 = 0.52.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "P(rain both) = 0.6 × 0.4 = 0.24; P(no rain either) = 0.4 × 0.6 = 0.24; P(exactly one day) = 0.6 × 0.6 + 0.4 × 0.4 = 0.36 + 0.16 = 0.52."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A bag holds 6 mangoes, of which 2 are unripe. Halima picks two without replacement for the family. Find the probability that both are ripe.",
+      "answer": "P(football) = 80/200 = 2/5; P(female) = 110/200 = 11/20; P(athletics | female) = 35/110 = 7/22.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "P(football) = 80/200 = 2/5; P(female) = 110/200 = 11/20; P(athletics | female) = 35/110 = 7/22."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A basketball player makes 75% of free throws. Assuming shots are independent, find the probability she makes all three of her next three attempts.",
+      "answer": "Ripe mangoes = 4 of 6; P(both ripe) = 4/6 × 3/5 = 12/30 = 2/5.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Ripe mangoes = 4 of 6; P(both ripe) = 4/6 × 3/5 = 12/30 = 2/5."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "A bag holds 5 red and 3 blue beads. Two are drawn without replacement. Find P(both red), P(both blue) and P(one of each colour).",
+      "answer": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A bag holds 5 red and 3 blue beads. Two are drawn without replacement. Find P(both red), P(both blue) and P(one of each colour).",
+      "keyIdeas": [
+        "Outcome",
+        "Sample space",
+        "Event"
+      ],
+      "modelAnswer": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A fair coin is flipped three times. Draw a tree diagram and find P(exactly two heads) and P(at least one head).",
+      "keyIdeas": [
+        "Sample space",
+        "Event",
+        "Complement"
+      ],
+      "modelAnswer": "Eight equally likely paths, each 1/8; exactly two heads = HHT, HTH, THH → 3/8; at least one head = 1 − P(TTT) = 1 − 1/8 = 7/8."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Two fair dice are rolled. Find P(total is a multiple of 4). (Multiples of 4 are 4, 8 and 12.)",
+      "keyIdeas": [
+        "Event",
+        "Complement",
+        "Mutually exclusive"
+      ],
+      "modelAnswer": "Total 4 → 3 outcomes, total 8 → 5, total 12 → 1, so 3 + 5 + 1 = 9, giving 9/36 = 1/4."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A test has probability 0.8 of a student passing. Two students sit it independently. Find P(both pass), P(both fail) and P(exactly one passes).",
+      "keyIdeas": [
+        "Complement",
+        "Mutually exclusive",
+        "Independent"
+      ],
+      "modelAnswer": "P(both pass) = 0.8 × 0.8 = 0.64; P(both fail) = 0.2 × 0.2 = 0.04; P(exactly one) = 0.8 × 0.2 + 0.2 × 0.8 = 0.32."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Sample Space Diagrams and Two-Way Tables.",
+      "keyIdeas": [
+        "Outcome",
+        "Sample space",
+        "Event"
+      ],
+      "modelAnswer": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you can count the favourable ones directly and read off the probability. Take rolling two dice and looking at the total. One die gives 6 outcomes; a second die also gives 6; together there are 6 × 6 = 36 equally likely outcomes. If you make a 6-by-6 grid with the…"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Independent Events and the Multiplication Rule.",
+      "keyIdeas": [
+        "Outcome",
+        "Sample space",
+        "Event"
+      ],
+      "modelAnswer": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that both happen: P(A and B) = P(A) × P(B) (for independent events)."
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Outcome” mean?",
+        "options": [
+          "A single possible result of a trial",
+          "The set of all possible outcomes",
+          "An outcome or group of outcomes you want",
+          "The event 'not A'; P(not A) = 1 − P(A)"
+        ],
+        "answer": "A single possible result of a trial",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Outcome means A single possible result of a trial."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Sample space” mean?",
+        "options": [
+          "The set of all possible outcomes",
+          "An outcome or group of outcomes you want",
+          "The event 'not A'; P(not A) = 1 − P(A)",
+          "Events that cannot both happen at once"
+        ],
+        "answer": "The set of all possible outcomes",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Sample space means The set of all possible outcomes."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Event” mean?",
+        "options": [
+          "An outcome or group of outcomes you want",
+          "The event 'not A'; P(not A) = 1 − P(A)",
+          "Events that cannot both happen at once",
+          "One outcome does not affect the other"
+        ],
+        "answer": "An outcome or group of outcomes you want",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Event means An outcome or group of outcomes you want."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Complement” mean?",
+        "options": [
+          "The event 'not A'; P(not A) = 1 − P(A)",
+          "Events that cannot both happen at once",
+          "One outcome does not affect the other",
+          "The first outcome changes the second"
+        ],
+        "answer": "The event 'not A'; P(not A) = 1 − P(A)",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Complement means The event 'not A'; P(not A) = 1 − P(A)."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Mutually exclusive” mean?",
+        "options": [
+          "Events that cannot both happen at once",
+          "One outcome does not affect the other",
+          "The first outcome changes the second",
+          "Experimental probability from trials"
+        ],
+        "answer": "Events that cannot both happen at once",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Mutually exclusive means Events that cannot both happen at once."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Independent” mean?",
+        "options": [
+          "One outcome does not affect the other",
+          "The first outcome changes the second",
+          "Experimental probability from trials",
+          "Probability × number of trials"
+        ],
+        "answer": "One outcome does not affect the other",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Independent means One outcome does not affect the other."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: The first outcome changes the second?",
+        "options": [
+          "Dependent",
+          "Relative frequency",
+          "Expected frequency",
+          "Outcome"
+        ],
+        "answer": "Dependent",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Dependent means The first outcome changes the second."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Experimental probability from trials?",
+        "options": [
+          "Relative frequency",
+          "Expected frequency",
+          "Outcome",
+          "Sample space"
+        ],
+        "answer": "Relative frequency",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Relative frequency means Experimental probability from trials."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Probability × number of trials?",
+        "options": [
+          "Expected frequency",
+          "Outcome",
+          "Sample space",
+          "Event"
+        ],
+        "answer": "Expected frequency",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Expected frequency means Probability × number of trials."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A single possible result of a trial?",
+        "options": [
+          "Outcome",
+          "Event",
+          "Complement",
+          "Mutually exclusive"
+        ],
+        "answer": "Outcome",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Outcome means A single possible result of a trial."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The set of all possible outcomes?",
+        "options": [
+          "Sample space",
+          "Complement",
+          "Mutually exclusive",
+          "Independent"
+        ],
+        "answer": "Sample space",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Sample space means The set of all possible outcomes."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: An outcome or group of outcomes you want?",
+        "options": [
+          "Event",
+          "Mutually exclusive",
+          "Independent",
+          "Dependent"
+        ],
+        "answer": "Event",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Event means An outcome or group of outcomes you want."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u13-game-1",
+        "icon": "?",
+        "skill": "Outcome",
+        "title": "Quick Match: Outcome",
+        "description": "Practise outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "A single possible result of a trial",
+              "The set of all possible outcomes",
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)"
+            ],
+            "answer": "A single possible result of a trial",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means A single possible result of a trial."
+          },
+          {
+            "prompt": "What does “Complement” mean?",
+            "choices": [
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other",
+              "The first outcome changes the second"
+            ],
+            "answer": "The event 'not A'; P(not A) = 1 − P(A)",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Complement means The event 'not A'; P(not A) = 1 − P(A)."
+          },
+          {
+            "prompt": "Which term matches this meaning: The first outcome changes the second?",
+            "choices": [
+              "Dependent",
+              "Relative frequency",
+              "Expected frequency",
+              "Outcome"
+            ],
+            "answer": "Dependent",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Dependent means The first outcome changes the second."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single possible result of a trial?",
+            "choices": [
+              "Outcome",
+              "Event",
+              "Complement",
+              "Mutually exclusive"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means A single possible result of a trial."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-2",
+        "icon": "★",
+        "skill": "Sample space",
+        "title": "Concept Quest: Sample space",
+        "description": "Practise sample space through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Sample space” mean?",
+            "choices": [
+              "The set of all possible outcomes",
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once"
+            ],
+            "answer": "The set of all possible outcomes",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Mutually exclusive” mean?",
+            "choices": [
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other",
+              "The first outcome changes the second",
+              "Experimental probability from trials"
+            ],
+            "answer": "Events that cannot both happen at once",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mutually exclusive means Events that cannot both happen at once."
+          },
+          {
+            "prompt": "Which term matches this meaning: Experimental probability from trials?",
+            "choices": [
+              "Relative frequency",
+              "Expected frequency",
+              "Outcome",
+              "Sample space"
+            ],
+            "answer": "Relative frequency",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Relative frequency means Experimental probability from trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: The set of all possible outcomes?",
+            "choices": [
+              "Sample space",
+              "Complement",
+              "Mutually exclusive",
+              "Independent"
+            ],
+            "answer": "Sample space",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-3",
+        "icon": "◫",
+        "skill": "Event",
+        "title": "Model Detective: Event",
+        "description": "Practise event through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Event” mean?",
+            "choices": [
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other"
+            ],
+            "answer": "An outcome or group of outcomes you want",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means An outcome or group of outcomes you want."
+          },
+          {
+            "prompt": "What does “Independent” mean?",
+            "choices": [
+              "One outcome does not affect the other",
+              "The first outcome changes the second",
+              "Experimental probability from trials",
+              "Probability × number of trials"
+            ],
+            "answer": "One outcome does not affect the other",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Independent means One outcome does not affect the other."
+          },
+          {
+            "prompt": "Which term matches this meaning: Probability × number of trials?",
+            "choices": [
+              "Expected frequency",
+              "Outcome",
+              "Sample space",
+              "Event"
+            ],
+            "answer": "Expected frequency",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Expected frequency means Probability × number of trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome or group of outcomes you want?",
+            "choices": [
+              "Event",
+              "Mutually exclusive",
+              "Independent",
+              "Dependent"
+            ],
+            "answer": "Event",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means An outcome or group of outcomes you want."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-4",
+        "icon": "→",
+        "skill": "Complement",
+        "title": "Rule Runner: Complement",
+        "description": "Practise complement through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Complement” mean?",
+            "choices": [
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other",
+              "The first outcome changes the second"
+            ],
+            "answer": "The event 'not A'; P(not A) = 1 − P(A)",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Complement means The event 'not A'; P(not A) = 1 − P(A)."
+          },
+          {
+            "prompt": "Which term matches this meaning: The first outcome changes the second?",
+            "choices": [
+              "Dependent",
+              "Relative frequency",
+              "Expected frequency",
+              "Outcome"
+            ],
+            "answer": "Dependent",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Dependent means The first outcome changes the second."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single possible result of a trial?",
+            "choices": [
+              "Outcome",
+              "Event",
+              "Complement",
+              "Mutually exclusive"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means A single possible result of a trial."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "A single possible result of a trial",
+              "The set of all possible outcomes",
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)"
+            ],
+            "answer": "A single possible result of a trial",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means A single possible result of a trial."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-5",
+        "icon": "Σ",
+        "skill": "Mutually exclusive",
+        "title": "Vocabulary Vault: Mutually exclusive",
+        "description": "Practise mutually exclusive through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Mutually exclusive” mean?",
+            "choices": [
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other",
+              "The first outcome changes the second",
+              "Experimental probability from trials"
+            ],
+            "answer": "Events that cannot both happen at once",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mutually exclusive means Events that cannot both happen at once."
+          },
+          {
+            "prompt": "Which term matches this meaning: Experimental probability from trials?",
+            "choices": [
+              "Relative frequency",
+              "Expected frequency",
+              "Outcome",
+              "Sample space"
+            ],
+            "answer": "Relative frequency",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Relative frequency means Experimental probability from trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: The set of all possible outcomes?",
+            "choices": [
+              "Sample space",
+              "Complement",
+              "Mutually exclusive",
+              "Independent"
+            ],
+            "answer": "Sample space",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Sample space” mean?",
+            "choices": [
+              "The set of all possible outcomes",
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once"
+            ],
+            "answer": "The set of all possible outcomes",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-6",
+        "icon": "◇",
+        "skill": "Independent",
+        "title": "Challenge Cards: Independent",
+        "description": "Practise independent through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Independent” mean?",
+            "choices": [
+              "One outcome does not affect the other",
+              "The first outcome changes the second",
+              "Experimental probability from trials",
+              "Probability × number of trials"
+            ],
+            "answer": "One outcome does not affect the other",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Independent means One outcome does not affect the other."
+          },
+          {
+            "prompt": "Which term matches this meaning: Probability × number of trials?",
+            "choices": [
+              "Expected frequency",
+              "Outcome",
+              "Sample space",
+              "Event"
+            ],
+            "answer": "Expected frequency",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Expected frequency means Probability × number of trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome or group of outcomes you want?",
+            "choices": [
+              "Event",
+              "Mutually exclusive",
+              "Independent",
+              "Dependent"
+            ],
+            "answer": "Event",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means An outcome or group of outcomes you want."
+          },
+          {
+            "prompt": "What does “Event” mean?",
+            "choices": [
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other"
+            ],
+            "answer": "An outcome or group of outcomes you want",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means An outcome or group of outcomes you want."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-7",
+        "icon": "⚡",
+        "skill": "Dependent",
+        "title": "Think Fast: Dependent",
+        "description": "Practise dependent through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The first outcome changes the second?",
+            "choices": [
+              "Dependent",
+              "Relative frequency",
+              "Expected frequency",
+              "Outcome"
+            ],
+            "answer": "Dependent",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Dependent means The first outcome changes the second."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single possible result of a trial?",
+            "choices": [
+              "Outcome",
+              "Event",
+              "Complement",
+              "Mutually exclusive"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means A single possible result of a trial."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "A single possible result of a trial",
+              "The set of all possible outcomes",
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)"
+            ],
+            "answer": "A single possible result of a trial",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means A single possible result of a trial."
+          },
+          {
+            "prompt": "What does “Complement” mean?",
+            "choices": [
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other",
+              "The first outcome changes the second"
+            ],
+            "answer": "The event 'not A'; P(not A) = 1 − P(A)",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Complement means The event 'not A'; P(not A) = 1 − P(A)."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-8",
+        "icon": "☁",
+        "skill": "Relative frequency",
+        "title": "Explain It: Relative frequency",
+        "description": "Practise relative frequency through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Experimental probability from trials?",
+            "choices": [
+              "Relative frequency",
+              "Expected frequency",
+              "Outcome",
+              "Sample space"
+            ],
+            "answer": "Relative frequency",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Relative frequency means Experimental probability from trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: The set of all possible outcomes?",
+            "choices": [
+              "Sample space",
+              "Complement",
+              "Mutually exclusive",
+              "Independent"
+            ],
+            "answer": "Sample space",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Sample space” mean?",
+            "choices": [
+              "The set of all possible outcomes",
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once"
+            ],
+            "answer": "The set of all possible outcomes",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Mutually exclusive” mean?",
+            "choices": [
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other",
+              "The first outcome changes the second",
+              "Experimental probability from trials"
+            ],
+            "answer": "Events that cannot both happen at once",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mutually exclusive means Events that cannot both happen at once."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-9",
+        "icon": "⌂",
+        "skill": "Expected frequency",
+        "title": "Real-Life Round: Expected frequency",
+        "description": "Practise expected frequency through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Probability × number of trials?",
+            "choices": [
+              "Expected frequency",
+              "Outcome",
+              "Sample space",
+              "Event"
+            ],
+            "answer": "Expected frequency",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Expected frequency means Probability × number of trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome or group of outcomes you want?",
+            "choices": [
+              "Event",
+              "Mutually exclusive",
+              "Independent",
+              "Dependent"
+            ],
+            "answer": "Event",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means An outcome or group of outcomes you want."
+          },
+          {
+            "prompt": "What does “Event” mean?",
+            "choices": [
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other"
+            ],
+            "answer": "An outcome or group of outcomes you want",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means An outcome or group of outcomes you want."
+          },
+          {
+            "prompt": "What does “Independent” mean?",
+            "choices": [
+              "One outcome does not affect the other",
+              "The first outcome changes the second",
+              "Experimental probability from trials",
+              "Probability × number of trials"
+            ],
+            "answer": "One outcome does not affect the other",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Independent means One outcome does not affect the other."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-10",
+        "icon": "!",
+        "skill": "Outcome",
+        "title": "Spot the Error: Outcome",
+        "description": "Practise outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A single possible result of a trial?",
+            "choices": [
+              "Outcome",
+              "Event",
+              "Complement",
+              "Mutually exclusive"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means A single possible result of a trial."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "A single possible result of a trial",
+              "The set of all possible outcomes",
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)"
+            ],
+            "answer": "A single possible result of a trial",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means A single possible result of a trial."
+          },
+          {
+            "prompt": "What does “Complement” mean?",
+            "choices": [
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other",
+              "The first outcome changes the second"
+            ],
+            "answer": "The event 'not A'; P(not A) = 1 − P(A)",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Complement means The event 'not A'; P(not A) = 1 − P(A)."
+          },
+          {
+            "prompt": "Which term matches this meaning: The first outcome changes the second?",
+            "choices": [
+              "Dependent",
+              "Relative frequency",
+              "Expected frequency",
+              "Outcome"
+            ],
+            "answer": "Dependent",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Dependent means The first outcome changes the second."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-11",
+        "icon": "≡",
+        "skill": "Sample space",
+        "title": "Mastery Mix: Sample space",
+        "description": "Practise sample space through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The set of all possible outcomes?",
+            "choices": [
+              "Sample space",
+              "Complement",
+              "Mutually exclusive",
+              "Independent"
+            ],
+            "answer": "Sample space",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Sample space” mean?",
+            "choices": [
+              "The set of all possible outcomes",
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once"
+            ],
+            "answer": "The set of all possible outcomes",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Mutually exclusive” mean?",
+            "choices": [
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other",
+              "The first outcome changes the second",
+              "Experimental probability from trials"
+            ],
+            "answer": "Events that cannot both happen at once",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mutually exclusive means Events that cannot both happen at once."
+          },
+          {
+            "prompt": "Which term matches this meaning: Experimental probability from trials?",
+            "choices": [
+              "Relative frequency",
+              "Expected frequency",
+              "Outcome",
+              "Sample space"
+            ],
+            "answer": "Relative frequency",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Relative frequency means Experimental probability from trials."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-12",
+        "icon": "T",
+        "skill": "Event",
+        "title": "Unit Champion: Event",
+        "description": "Practise event through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: An outcome or group of outcomes you want?",
+            "choices": [
+              "Event",
+              "Mutually exclusive",
+              "Independent",
+              "Dependent"
+            ],
+            "answer": "Event",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means An outcome or group of outcomes you want."
+          },
+          {
+            "prompt": "What does “Event” mean?",
+            "choices": [
+              "An outcome or group of outcomes you want",
+              "The event 'not A'; P(not A) = 1 − P(A)",
+              "Events that cannot both happen at once",
+              "One outcome does not affect the other"
+            ],
+            "answer": "An outcome or group of outcomes you want",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means An outcome or group of outcomes you want."
+          },
+          {
+            "prompt": "What does “Independent” mean?",
+            "choices": [
+              "One outcome does not affect the other",
+              "The first outcome changes the second",
+              "Experimental probability from trials",
+              "Probability × number of trials"
+            ],
+            "answer": "One outcome does not affect the other",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Independent means One outcome does not affect the other."
+          },
+          {
+            "prompt": "Which term matches this meaning: Probability × number of trials?",
+            "choices": [
+              "Expected frequency",
+              "Outcome",
+              "Sample space",
+              "Event"
+            ],
+            "answer": "Expected frequency",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Expected frequency means Probability × number of trials."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can this unit is designed for self-paced learning. You move at your own speed. Read each explanation slowly, copy every worked example onto paper and try it yourself before you look at the solution, and only move on when you feel steady. Your AI tutor is available day and night to set you fresh questions, explain a step a different way, or mark your working. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
+    "I can why does probability matter? It sits behind weather forecasts, medical tests, insurance, quality control in factories, sport, and every game of chance ever invented. A doctor reading a test result, a shopkeeper deciding how much stock to buy, a meteorologist warning of floods – all of them use probability. Learning it well trains you to think clearly about risk and to avoid being fooled by claims that only *sound* convincing. Keep a pencil, paper and, if you can, a coin and a die beside you as you read, because probability is a subject you must do, not just watch.",
+    "I can describe probability as a measure of likelihood on a scale from 0 to 1.",
+    "I can calculate theoretical probability for equally likely outcomes using the basic formula.",
+    "I can express a probability as a fraction, decimal or percentage and convert between them.",
+    "I can find the probability of an event not happening using the complement.",
+    "I can add probabilities for mutually exclusive events.",
+    "I can run experiments to find experimental probability (relative frequency) and compare it with theory."
+  ]
+}

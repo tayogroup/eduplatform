@@ -1,0 +1,1776 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.176Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g07-u15",
+    "unitNo": 15,
+    "unitTitle": "Shapes, Area and Volume",
+    "unitOverview": "Welcome to Unit 15! In this unit you will learn how to measure the space that shapes take up. There are two big ideas. Area tells you how much flat space a two-dimensional shape covers, like the amount of cloth needed to make a prayer mat. Volume tells you how much space a solid, three-dimensional object fills, like the amount of water a tank in Hargeisa can hold. Alongside these you will meet surface area, which tells you how much material it takes to cover the outside of a solid.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-7-Content-Package.xlsx",
+    "sourceArchive": "Year 7 (1)-20260714T221013Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 7 (1)/Unit 15/Year 7 - Unit 15 Lesson.docx",
+      "Year 7 (1)/Unit 15/Year 7 - Unit 15 Activities.docx",
+      "Year 7 (1)/Unit 15/Year 7 - Unit 15 Practice.docx",
+      "Year 7 (1)/Unit 15/Year 7 - Unit 15 Reference.docx"
+    ],
+    "sourceBlockCount": 365,
+    "transformation": "Structured directly from the standardized Cambridge Stage 7 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain what area and volume measure, and why area uses square units and volume uses cubic units.",
+    "Find the area of a triangle using A = ½ × base × height.",
+    "Find the area of a parallelogram using A = base × height, and a trapezium using A = ½ × (a + b) × height.",
+    "Break a compound (composite) shape into rectangles and triangles, then add or subtract areas.",
+    "Find the volume of a prism using V = area of cross-section × length, including cubes, cuboids and triangular prisms.",
+    "Find the surface area of a cuboid by adding the areas of all six faces.",
+    "Convert between units of length, area and volume, and choose sensible units for a task.",
+    "Solve real-world problems and check whether an answer is reasonable."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-area-volume-and-their-units",
+      "title": "Area, Volume and Their Units",
+      "explanation": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside. This is why area is always measured in square units: square centimetres (cm²), square metres (m²) or square kilometres (km²). When we say a room has an area of 12 m², we mean that 12 squares, each 1 metre by 1 metre, would exactly cover the floor. Volume measures solid, three-dimensional space. Now imagine filling a box with unit cubes that…",
+      "example": "Do not confuse area with perimeter. Perimeter is the distance all the way around the edge of a shape, measured in ordinary length units like centimetres or metres. If Amina builds a fence around a goat pen, the length…"
+    },
+    {
+      "id": "concept-2-area-of-rectangles-squares-and-triangles",
+      "title": "Area of Rectangles, Squares and Triangles",
+      "explanation": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w. This works because a rectangle is really rows of unit squares: a rectangle 5 cm long and 3 cm wide holds 3 rows of 5 squares, which is 15 squares, so its area is 15 cm². A square is just a special rectangle with all sides equal, so its area is A = s × s = s². This is exactly why multiplying a number by itself is called *squaring* it – it gives the area of a square. Now the triangle.…",
+      "example": "The single most common mistake with triangles is using the wrong height. The height must be measured at a right angle (perpendicular) to the base – it is the straight-up distance from the base to the opposite corner,…"
+    },
+    {
+      "id": "concept-3-area-of-parallelograms-and-trapeziums",
+      "title": "Area of Parallelograms and Trapeziums",
+      "explanation": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles. Its area formula is beautifully simple: A = base × height, exactly the same as a rectangle. Why? Imagine cutting a right-angled triangle off one end of the parallelogram and sliding it round to the other end – the shape becomes a perfect rectangle with the same base and the same height. Nothing was added or thrown away, so the area is unchanged. As…",
+      "example": "A trapezium (called a trapezoid in some books) is a quadrilateral with just one pair of parallel sides. These two parallel sides are the two bases; call them a and b. The distance between them, measured at a right…"
+    },
+    {
+      "id": "concept-4-compound-composite-shapes",
+      "title": "Compound (Composite) Shapes",
+      "explanation": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together. The strategy is always the same: split the shape into simple pieces you know how to measure, find each area separately, then add the areas together. Sometimes, when a piece has been cut out, you subtract instead. Drawing the split lines clearly on your diagram is half the work. Take an L-shaped room, common in older houses. Suppose the floor can be divided into two rectangles: one 12 m by…",
+      "example": "A house shape – a rectangle with a triangular roof on top – shows the *adding* method with two different shapes. If the rectangular wall is 8 m wide and 6 m tall, its area is 8 × 6 = 48 m². If the triangular roof has a…"
+    },
+    {
+      "id": "concept-5-volume-of-prisms",
+      "title": "Volume of Prisms",
+      "explanation": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone bar are all prisms. The volume of any prism is found with one powerful formula: V = area of cross-section × length. Learn this one idea and you can find the volume of a huge family of solids. The simplest prism is a cuboid (a rectangular box). Its cross-section is a rectangle of area length × width,…",
+      "example": "The formula truly shines with a triangular prism, such as a bar of chocolate or the ridge of a tent. First find the area of the triangular cross-section, then multiply by the length of the prism. Suppose the triangular…"
+    },
+    {
+      "id": "concept-6-surface-area-of-solids",
+      "title": "Surface Area of Solids",
+      "explanation": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary area. Think of wrapping a gift, painting a box, or cutting the cardboard to make a carton – all of these need surface area, not volume. A cuboid has six rectangular faces, and they come in three matching pairs: top and bottom, front and back, left and right. To…",
+      "example": "Here is a worked example with a box measuring 6 cm by 4 cm by 3 cm. The three different faces are 6 × 4 = 24 cm², 6 × 3 = 18 cm², and 4 × 3 = 12 cm². Add them: 24 + 18 + 12 = 54 cm². Double for the matching pairs: 2 ×…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Area, Volume and Their Units",
+      "context": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside. This is why area is always measured in square units: square centimetres (cm²),…",
+      "prompt": "Find the area of a rectangle 8 cm by 5 cm.",
+      "answer": "1) 8 × 5 = 40 cm².",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) 8 × 5 = 40 cm²."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Area of Rectangles, Squares and Triangles",
+      "context": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w. This works because a rectangle is really rows of unit squares: a rectangle 5 cm long and 3 cm wide holds 3 rows of 5 squares,…",
+      "prompt": "Find the area of a triangle with base 6 cm and perpendicular height 4 cm.",
+      "answer": "½ × 6 × 4 = 12 cm².",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "½ × 6 × 4 = 12 cm²."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Area of Parallelograms and Trapeziums",
+      "context": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles. Its area formula is beautifully simple: A = base × height, exactly the same as a rectangle.…",
+      "prompt": "Find the area of a parallelogram with base 10 m and height 3 m.",
+      "answer": "10 × 3 = 30 m².",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "10 × 3 = 30 m²."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Compound (Composite) Shapes",
+      "context": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together. The strategy is always the same: split the shape into simple pieces you know how to measure, find each area separately, then add the…",
+      "prompt": "Find the volume of a cube with edge 4 cm.",
+      "answer": "4³ = 64 cm³.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "4³ = 64 cm³."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Volume of Prisms",
+      "context": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone bar are all prisms. The volume of any…",
+      "prompt": "State the correct unit (cm², cm³, or cm): a) the area of a card, b) the water in a bottle, c) the length of a pencil.",
+      "answer": "a) cm², b) cm³, c) cm.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) cm², b) cm³, c) cm."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Surface Area of Solids",
+      "context": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary…",
+      "prompt": "Find the area of a triangle with base 16 cm and height 9 cm.",
+      "answer": "1) ½ × 16 × 9 = 72 cm².",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) ½ × 16 × 9 = 72 cm²."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Area, Volume and Their Units",
+      "modelType": "concept-model-1",
+      "purpose": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside. This is why area is always measured in…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Area of Rectangles, Squares and Triangles",
+      "modelType": "concept-model-2",
+      "purpose": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w. This works because a rectangle is really rows of unit squares: a rectangle 5 cm long…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Area of Parallelograms and Trapeziums",
+      "modelType": "concept-model-3",
+      "purpose": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles. Its area formula is beautifully simple: A = base ×…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Compound (Composite) Shapes",
+      "modelType": "concept-model-4",
+      "purpose": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together. The strategy is always the same: split the shape into simple pieces you know how to measure,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Volume of Prisms",
+      "modelType": "concept-model-5",
+      "purpose": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Surface Area of Solids",
+      "modelType": "concept-model-6",
+      "purpose": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find the area of a triangle",
+      "example": "A triangular flag has a base of 14 cm and a perpendicular height of 9 cm. Find its area.",
+      "steps": [
+        "Identify the base and the perpendicular height (not the slant side).",
+        "Write A = ½ × base × height.",
+        "Halve the even number first, then multiply.",
+        "Write the answer in square units."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to find the area of a compound shape",
+      "example": "A triangular garden bed has an area of 30 m² and a base of 12 m. Find its height.",
+      "steps": [
+        "Draw split lines to break the shape into rectangles and triangles.",
+        "Find the area of each simple piece.",
+        "Add the pieces that are joined on; subtract any piece that is cut out.",
+        "Check by splitting the shape a second way – you should get the same total."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to find the volume of a prism",
+      "example": "A parallelogram-shaped tile has a base of 15 cm and a perpendicular height of 6 cm. Its slanted side is 8 cm. Find its area.",
+      "steps": [
+        "Find the area of the cross-section (the shape of the end).",
+        "Multiply that area by the length of the prism.",
+        "Keep every measurement in the same unit before multiplying.",
+        "Write the answer in cubic units."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Area of a trapezium",
+      "example": "A field is a trapezium with parallel sides of 15 m and 9 m, and a perpendicular height of 7 m. Find its area.",
+      "steps": [
+        "Solution: Use A = ½ × (a + b) × h.",
+        "Add the parallel sides: 15 + 9 = 24.",
+        "Halve: ½ × 24 = 12.",
+        "Multiply by the height: 12 × 7 = 84 m²."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Compound shape (adding)",
+      "example": "A house-shaped sign is a rectangle 10 cm wide and 6 cm tall with a triangular roof of base 10 cm and height 4 cm on top. Find the total area.",
+      "steps": [
+        "Solution: Rectangle: 10 × 6 = 60 cm².",
+        "Triangle: ½ × 10 × 4 = 20 cm².",
+        "Add the parts: 60 + 20 = 80 cm²."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Compound shape (subtracting)",
+      "example": "A rectangular metal plate is 20 cm by 15 cm. A rectangular hole 6 cm by 4 cm is cut out. Find the area of metal that remains.",
+      "steps": [
+        "Solution: Whole plate: 20 × 15 = 300 cm².",
+        "Hole: 6 × 4 = 24 cm².",
+        "Subtract: 300 − 24 = 276 cm²."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Area of a triangle",
+      "prompt": "A triangular flag has a base of 14 cm and a perpendicular height of 9 cm. Find its area.",
+      "solution": "Solution: Use A = ½ × base × height. Halve the base first: ½ × 14 = 7. Then 7 × 9 = 63 cm². The unit is cm² because area is measured in square units."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Missing height of a triangle",
+      "prompt": "A triangular garden bed has an area of 30 m² and a base of 12 m. Find its height.",
+      "solution": "Solution: Start from A = ½ × base × height, so 30 = ½ × 12 × height = 6 × height. Divide both sides by 6: height = 30 ÷ 6 = 5 m."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Area of a parallelogram",
+      "prompt": "A parallelogram-shaped tile has a base of 15 cm and a perpendicular height of 6 cm. Its slanted side is 8 cm. Find its area.",
+      "solution": "Solution: Use A = base × height, and be careful to use the perpendicular height (6 cm), not the slanted side (8 cm). A = 15 × 6 = 90 cm². The 8 cm is not used at all."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Area of a trapezium",
+      "prompt": "A field is a trapezium with parallel sides of 15 m and 9 m, and a perpendicular height of 7 m. Find its area.",
+      "solution": "Solution: Use A = ½ × (a + b) × h. Add the parallel sides: 15 + 9 = 24. Halve: ½ × 24 = 12. Multiply by the height: 12 × 7 = 84 m²."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Compound shape (adding)",
+      "prompt": "A house-shaped sign is a rectangle 10 cm wide and 6 cm tall with a triangular roof of base 10 cm and height 4 cm on top. Find the total area.",
+      "solution": "Solution: Rectangle: 10 × 6 = 60 cm². Triangle: ½ × 10 × 4 = 20 cm². Add the parts: 60 + 20 = 80 cm²."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Compound shape (subtracting)",
+      "prompt": "A rectangular metal plate is 20 cm by 15 cm. A rectangular hole 6 cm by 4 cm is cut out. Find the area of metal that remains.",
+      "solution": "Solution: Whole plate: 20 × 15 = 300 cm². Hole: 6 × 4 = 24 cm². Subtract: 300 − 24 = 276 cm²."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Volume of a cuboid",
+      "prompt": "A storage crate is 8 cm long, 5 cm wide and 4 cm high. Find its volume.",
+      "solution": "Solution: Use V = length × width × height. V = 8 × 5 × 4 = 40 × 4 = 160 cm³. The unit is cm³ because volume is measured in cubic units."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Volume of a triangular prism",
+      "prompt": "A tent has a triangular cross-section with base 6 m and height 4 m, and the tent is 5 m long. Find the volume of air inside.",
+      "solution": "Solution: First the cross-section: ½ × 6 × 4 = 12 m². Then V = area of cross-section × length = 12 × 5 = 60 m³."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Surface area of a cuboid",
+      "prompt": "Find the surface area of a box measuring 5 cm by 4 cm by 2 cm.",
+      "solution": "Solution: The three different faces are 5 × 4 = 20, 5 × 2 = 10, and 4 × 2 = 8. Add them: 20 + 10 + 8 = 38. Double for the matching pairs: 2 × 38 = 76 cm²."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Area of a circle",
+      "prompt": "A circular plate has a radius of 7 cm. Find its area, using π ≈ 3.14.",
+      "solution": "Solution: Use A = πr². Square the radius first: 7² = 49. Then multiply by pi: 3.14 × 49 = 153.86 cm². Remember to square the radius before multiplying by pi."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Find the area of a circle with radius 6 cm.",
+      "solution": "54 = ½ × 12 × h = 6h, so h = 9 cm."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Convert: a) 2 m² to cm², b) 5000 cm³ to litres.",
+      "solution": "3.14 × 6² = 3.14 × 36 = 113.04 cm²."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Find the area of a rectangle 8 cm by 5 cm.",
+      "answer": "1) 8 × 5 = 40 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Find the area of a triangle with base 6 cm and perpendicular height 4 cm.",
+      "answer": "½ × 6 × 4 = 12 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Find the area of a parallelogram with base 10 m and height 3 m.",
+      "answer": "10 × 3 = 30 m².",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Find the volume of a cube with edge 4 cm.",
+      "answer": "4³ = 64 cm³.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "State the correct unit (cm², cm³, or cm): a) the area of a card, b) the water in a bottle, c) the length of a pencil.",
+      "answer": "a) cm², b) cm³, c) cm.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Find the area of a triangle with base 16 cm and height 9 cm.",
+      "answer": "1) ½ × 16 × 9 = 72 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Find the area of a trapezium with parallel sides 7 cm and 13 cm and height 8 cm.",
+      "answer": "½ × (7 +",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Find the volume of a cuboid 9 cm by 5 cm by 4 cm.",
+      "answer": "× 8 = ½ × 20 × 8 = 80 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Find the surface area of a cuboid 6 cm by 4 cm by 5 cm.",
+      "answer": "9 × 5 × 4 = 180 cm³.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "A triangle has area 54 cm² and base 12 cm. Find its perpendicular height.",
+      "answer": "faces 6×4=24, 6×5=30, 4×5=20; sum 74; ×2 = 148 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Find the area of a circle with radius 6 cm.",
+      "answer": "54 = ½ × 12 × h = 6h, so h = 9 cm.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Core",
+      "prompt": "Convert: a) 2 m² to cm², b) 5000 cm³ to litres.",
+      "answer": "3.14 × 6² = 3.14 × 36 = 113.04 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Measure Your Room (Area)",
+      "materials": "a tape measure or metre stick, paper, a pencil.",
+      "steps": [
+        "Measure the length and width of a room in your home, in metres.",
+        "Work out the floor area using area = length × width.",
+        "Estimate first, then measure – how close was your estimate?",
+        "If floor mats cost a set price per square metre, work out the cost of covering the whole floor.",
+        "Now measure a second room and compare. Which room has the larger area? Which needs more matting?"
+      ]
+    },
+    {
+      "title": "Build a Cuboid from Unit Cubes (Volume)",
+      "materials": "small identical cubes – sugar cubes, dice, or small boxes – or draw them on squared paper.",
+      "steps": [
+        "Build a cuboid, for example 4 cubes long, 3 cubes wide and 2 cubes high.",
+        "Count the cubes in the bottom layer, then count the layers.",
+        "Check that length × width × height gives the same total as counting.",
+        "Rebuild into a different cuboid with the same number of cubes. What lengths did you use?",
+        "This shows why volume is length × width × height – you are simply counting cubes a faster way."
+      ]
+    },
+    {
+      "title": "Triangle Halves (Area Investigation)",
+      "materials": "squared paper, a ruler, a pencil, scissors.",
+      "steps": [
+        "Draw a rectangle on squared paper and count its area in squares.",
+        "Draw one diagonal to split it into two triangles, then cut along the diagonal.",
+        "Place one triangle on top of the other – do they match exactly?",
+        "Explain in your own words why a triangle is half of the rectangle, so its area is ½ × base × height."
+      ]
+    },
+    {
+      "title": "The Compound-Shape Hunt (Game)",
+      "materials": "paper, a pencil, and your eyes.",
+      "steps": [
+        "Walk around your home and find three compound shapes – an L-shaped room, a stepped wall, a window with a curved top.",
+        "Sketch each one and mark the split lines that break it into rectangles and triangles.",
+        "Measure or estimate the lengths and work out each area, then add or subtract.",
+        "Challenge a family member to split the same shape a different way and check you both get the same total."
+      ]
+    },
+    {
+      "title": "Water and Volume (Investigation)",
+      "materials": "a rectangular container (a lunch box or tin), a measuring jug, water.",
+      "steps": [
+        "Measure the inside length, width and height of the container in centimetres.",
+        "Predict its volume using length × width × height, in cubic centimetres.",
+        "Fill it with water using the jug and record how many millilitres it holds (1 ml = 1 cm³).",
+        "Compare your prediction with the measured amount. Why might they differ a little?"
+      ]
+    },
+    {
+      "title": "Design a Box (Family Design Task)",
+      "materials": "card or stiff paper, a ruler, scissors, tape.",
+      "steps": [
+        "Choose a small object at home and design a cuboid box to hold it snugly.",
+        "Work out the volume the box needs, then choose sensible length, width and height.",
+        "Work out the surface area – how much card you need to cut, including the six faces.",
+        "Build your box, put the object inside, and check your calculations against the real box.",
+        "After your activities, talk or write about these questions: Which activity made area or volume clearest to you? What surprised you when you compared a prediction with a real measurement? Which formula do you now trust the most, and which do you want more practice with? Share your answers with your teacher at your next session, and set yourself one goal for the coming week."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "Getting the units right is one of the most important habits in this whole unit. In the metric system every step is a power of ten, which makes conversion tidy once you know the rule. For length: 10 mm = 1 cm, 100 cm = 1 m, 1000 m = 1 km. For area you must square those numbers, because area has two dimensions. Since 1 m = 100 cm, an area of 1 m² = 100 × 100 = 10 000 cm². For volume you must cube them: since 1 m = 100 cm, a volume of 1 m³ = 100 × 100 × 100 = 1 000 000 cm³. A very useful fact for water is that 1 litre = 1000 cm³, and 1000 litres = 1 m³."
+      },
+      {
+        "title": "Key idea 2",
+        "text": "A cuboid has six rectangular faces, and they come in three matching pairs: top and bottom, front and back, left and right. To find the surface area, work out the area of each different face, add the three, then double the total. With length l, width w and height h the rule is SA = 2(lw + lh + wh). A tidy method is to find the three different face areas, add them, and double."
+      }
+    ],
+    "terms": [
+      [
+        "Area",
+        "The flat space a 2D shape covers (square units)"
+      ],
+      [
+        "Perimeter",
+        "The distance around the edge of a shape"
+      ],
+      [
+        "Volume",
+        "The space a 3D solid fills (cubic units)"
+      ],
+      [
+        "Surface area",
+        "The total area of all the faces of a solid"
+      ],
+      [
+        "Perpendicular height",
+        "The height measured at a right angle to the base"
+      ],
+      [
+        "Parallelogram",
+        "A quadrilateral with two pairs of parallel sides"
+      ],
+      [
+        "Trapezium",
+        "A quadrilateral with one pair of parallel sides"
+      ],
+      [
+        "Prism",
+        "A solid with the same cross-section along its length"
+      ],
+      [
+        "Cross-section",
+        "The 2D shape seen when a prism is sliced straight across"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Using the slant side as height",
+        "Use the straight-up height at a right angle"
+      ],
+      [
+        "Forgetting the ½ for a triangle",
+        "Always write ½ × base × height"
+      ],
+      [
+        "Mixing area and perimeter",
+        "Area = square units; perimeter = length units"
+      ],
+      [
+        "Wrong units on the answer",
+        "Write cm² for area, cm³ for volume"
+      ],
+      [
+        "Doubling r instead of squaring",
+        "Square the radius, then multiply by π"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Find the area of a rectangle 8 cm by 5 cm.",
+      "answer": "1) 8 × 5 = 40 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) 8 × 5 = 40 cm²."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Find the area of a triangle with base 6 cm and perpendicular height 4 cm.",
+      "answer": "½ × 6 × 4 = 12 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "½ × 6 × 4 = 12 cm²."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Find the area of a parallelogram with base 10 m and height 3 m.",
+      "answer": "10 × 3 = 30 m².",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "10 × 3 = 30 m²."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Find the volume of a cube with edge 4 cm.",
+      "answer": "4³ = 64 cm³.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "4³ = 64 cm³."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "State the correct unit (cm², cm³, or cm): a) the area of a card, b) the water in a bottle, c) the length of a pencil.",
+      "answer": "a) cm², b) cm³, c) cm.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) cm², b) cm³, c) cm."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Find the area of a triangle with base 16 cm and height 9 cm.",
+      "answer": "1) ½ × 16 × 9 = 72 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) ½ × 16 × 9 = 72 cm²."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Find the area of a trapezium with parallel sides 7 cm and 13 cm and height 8 cm.",
+      "answer": "½ × (7 +",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "½ × (7 +"
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Find the volume of a cuboid 9 cm by 5 cm by 4 cm.",
+      "answer": "× 8 = ½ × 20 × 8 = 80 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "× 8 = ½ × 20 × 8 = 80 cm²."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Find the surface area of a cuboid 6 cm by 4 cm by 5 cm.",
+      "answer": "9 × 5 × 4 = 180 cm³.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "9 × 5 × 4 = 180 cm³."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "A triangle has area 54 cm² and base 12 cm. Find its perpendicular height.",
+      "answer": "faces 6×4=24, 6×5=30, 4×5=20; sum 74; ×2 = 148 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "faces 6×4=24, 6×5=30, 4×5=20; sum 74; ×2 = 148 cm²."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "Find the area of a circle with radius 6 cm.",
+      "answer": "54 = ½ × 12 × h = 6h, so h = 9 cm.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "54 = ½ × 12 × h = 6h, so h = 9 cm."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo04",
+      "difficulty": "Round 3",
+      "prompt": "Convert: a) 2 m² to cm², b) 5000 cm³ to litres.",
+      "answer": "3.14 × 6² = 3.14 × 36 = 113.04 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "3.14 × 6² = 3.14 × 36 = 113.04 cm²."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Farah paints the four walls of a rectangular room 5 m long, 4 m wide and 3 m high (ignore doors and windows). Find the total wall area. If 1 litre of paint covers 10 m², how many litres does she need?",
+      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A swimming pool in Mombasa is 20 m long, 8 m wide and 1.5 m deep. Find its volume in cubic metres, then in litres.",
+      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "Omar builds a triangular vegetable patch with base 8 m and perpendicular height 5 m. If each square metre holds 4 plants, how many plants can he grow?",
+      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A gift box is a cube of edge 15 cm. What area of wrapping paper is needed to cover it exactly, ignoring overlaps?",
+      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A garden is a rectangle 15 m by 10 m with a circular pond of radius 3 m removed. Find the remaining grass area (use π ≈ 3.14).",
+      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Convert: a) 2 m² to cm², b) 5000 cm³ to litres.",
+      "answer": "3.14 × 6² = 3.14 × 36 = 113.04 cm².",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "3.14 × 6² = 3.14 × 36 = 113.04 cm²."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "An L-shaped floor splits into rectangles 10 m by 6 m and 5 m by 4 m. Find the total area.",
+      "keyIdeas": [
+        "Area",
+        "Perimeter",
+        "Volume"
+      ],
+      "modelAnswer": "1) (10 ×"
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A triangular prism has a cross-section of base 10 cm and height 6 cm, and length 14 cm. Find its volume.",
+      "keyIdeas": [
+        "Perimeter",
+        "Volume",
+        "Surface area"
+      ],
+      "modelAnswer": "+ (5 ×"
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A rectangular sheet 25 cm by 18 cm has two square holes of side 4 cm cut out. Find the remaining area.",
+      "keyIdeas": [
+        "Volume",
+        "Surface area",
+        "Perpendicular height"
+      ],
+      "modelAnswer": "= 60 + 20 = 80 m²."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A cuboid tank has volume 360 cm³, length 9 cm and height 4 cm. Find its width.",
+      "keyIdeas": [
+        "Surface area",
+        "Perpendicular height",
+        "Parallelogram"
+      ],
+      "modelAnswer": "cross-section ½ × 10 × 6 = 30 cm², so V = 30 × 14 = 420 cm³."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A parallelogram-shaped field has area 240 m² and base 20 m. Find its perpendicular height.",
+      "keyIdeas": [
+        "Perpendicular height",
+        "Parallelogram",
+        "Trapezium"
+      ],
+      "modelAnswer": "(25 ×"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Surface Area of Solids.",
+      "keyIdeas": [
+        "Area",
+        "Perimeter",
+        "Volume"
+      ],
+      "modelAnswer": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary area. Think of wrapping a gift, painting a box, or cutting the cardboard to make a carton – all of these need surface area, not volume. A cuboid has six rectangular faces, and they come in three matching pairs: top and bottom, front and back, left and right. To…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Area” mean?",
+        "options": [
+          "The flat space a 2D shape covers (square units)",
+          "The distance around the edge of a shape",
+          "The space a 3D solid fills (cubic units)",
+          "The total area of all the faces of a solid"
+        ],
+        "answer": "The flat space a 2D shape covers (square units)",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Area means The flat space a 2D shape covers (square units)."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Perimeter” mean?",
+        "options": [
+          "The distance around the edge of a shape",
+          "The space a 3D solid fills (cubic units)",
+          "The total area of all the faces of a solid",
+          "The height measured at a right angle to the base"
+        ],
+        "answer": "The distance around the edge of a shape",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Perimeter means The distance around the edge of a shape."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Volume” mean?",
+        "options": [
+          "The space a 3D solid fills (cubic units)",
+          "The total area of all the faces of a solid",
+          "The height measured at a right angle to the base",
+          "A quadrilateral with two pairs of parallel sides"
+        ],
+        "answer": "The space a 3D solid fills (cubic units)",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Volume means The space a 3D solid fills (cubic units)."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Surface area” mean?",
+        "options": [
+          "The total area of all the faces of a solid",
+          "The height measured at a right angle to the base",
+          "A quadrilateral with two pairs of parallel sides",
+          "A quadrilateral with one pair of parallel sides"
+        ],
+        "answer": "The total area of all the faces of a solid",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Surface area means The total area of all the faces of a solid."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Perpendicular height” mean?",
+        "options": [
+          "The height measured at a right angle to the base",
+          "A quadrilateral with two pairs of parallel sides",
+          "A quadrilateral with one pair of parallel sides",
+          "A solid with the same cross-section along its length"
+        ],
+        "answer": "The height measured at a right angle to the base",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Perpendicular height means The height measured at a right angle to the base."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Parallelogram” mean?",
+        "options": [
+          "A quadrilateral with two pairs of parallel sides",
+          "A quadrilateral with one pair of parallel sides",
+          "A solid with the same cross-section along its length",
+          "The 2D shape seen when a prism is sliced straight across"
+        ],
+        "answer": "A quadrilateral with two pairs of parallel sides",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Parallelogram means A quadrilateral with two pairs of parallel sides."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A quadrilateral with one pair of parallel sides?",
+        "options": [
+          "Trapezium",
+          "Prism",
+          "Cross-section",
+          "Area"
+        ],
+        "answer": "Trapezium",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Trapezium means A quadrilateral with one pair of parallel sides."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A solid with the same cross-section along its length?",
+        "options": [
+          "Prism",
+          "Cross-section",
+          "Area",
+          "Perimeter"
+        ],
+        "answer": "Prism",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Prism means A solid with the same cross-section along its length."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: The 2D shape seen when a prism is sliced straight across?",
+        "options": [
+          "Cross-section",
+          "Area",
+          "Perimeter",
+          "Volume"
+        ],
+        "answer": "Cross-section",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Cross-section means The 2D shape seen when a prism is sliced straight across."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The flat space a 2D shape covers (square units)?",
+        "options": [
+          "Area",
+          "Volume",
+          "Surface area",
+          "Perpendicular height"
+        ],
+        "answer": "Area",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Area means The flat space a 2D shape covers (square units)."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The distance around the edge of a shape?",
+        "options": [
+          "Perimeter",
+          "Surface area",
+          "Perpendicular height",
+          "Parallelogram"
+        ],
+        "answer": "Perimeter",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Perimeter means The distance around the edge of a shape."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The space a 3D solid fills (cubic units)?",
+        "options": [
+          "Volume",
+          "Perpendicular height",
+          "Parallelogram",
+          "Trapezium"
+        ],
+        "answer": "Volume",
+        "hint": "Use the Unit 15 Math Words & Symbols reference.",
+        "explanation": "Volume means The space a 3D solid fills (cubic units)."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u15-game-1",
+        "icon": "?",
+        "skill": "Area",
+        "title": "Quick Match: Area",
+        "description": "Practise area through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Area” mean?",
+            "choices": [
+              "The flat space a 2D shape covers (square units)",
+              "The distance around the edge of a shape",
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid"
+            ],
+            "answer": "The flat space a 2D shape covers (square units)",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Area means The flat space a 2D shape covers (square units)."
+          },
+          {
+            "prompt": "What does “Surface area” mean?",
+            "choices": [
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides"
+            ],
+            "answer": "The total area of all the faces of a solid",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Surface area means The total area of all the faces of a solid."
+          },
+          {
+            "prompt": "Which term matches this meaning: A quadrilateral with one pair of parallel sides?",
+            "choices": [
+              "Trapezium",
+              "Prism",
+              "Cross-section",
+              "Area"
+            ],
+            "answer": "Trapezium",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Trapezium means A quadrilateral with one pair of parallel sides."
+          },
+          {
+            "prompt": "Which term matches this meaning: The flat space a 2D shape covers (square units)?",
+            "choices": [
+              "Area",
+              "Volume",
+              "Surface area",
+              "Perpendicular height"
+            ],
+            "answer": "Area",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Area means The flat space a 2D shape covers (square units)."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-2",
+        "icon": "★",
+        "skill": "Perimeter",
+        "title": "Concept Quest: Perimeter",
+        "description": "Practise perimeter through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Perimeter” mean?",
+            "choices": [
+              "The distance around the edge of a shape",
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base"
+            ],
+            "answer": "The distance around the edge of a shape",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perimeter means The distance around the edge of a shape."
+          },
+          {
+            "prompt": "What does “Perpendicular height” mean?",
+            "choices": [
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides",
+              "A solid with the same cross-section along its length"
+            ],
+            "answer": "The height measured at a right angle to the base",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perpendicular height means The height measured at a right angle to the base."
+          },
+          {
+            "prompt": "Which term matches this meaning: A solid with the same cross-section along its length?",
+            "choices": [
+              "Prism",
+              "Cross-section",
+              "Area",
+              "Perimeter"
+            ],
+            "answer": "Prism",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Prism means A solid with the same cross-section along its length."
+          },
+          {
+            "prompt": "Which term matches this meaning: The distance around the edge of a shape?",
+            "choices": [
+              "Perimeter",
+              "Surface area",
+              "Perpendicular height",
+              "Parallelogram"
+            ],
+            "answer": "Perimeter",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perimeter means The distance around the edge of a shape."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-3",
+        "icon": "◫",
+        "skill": "Volume",
+        "title": "Model Detective: Volume",
+        "description": "Practise volume through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Volume” mean?",
+            "choices": [
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides"
+            ],
+            "answer": "The space a 3D solid fills (cubic units)",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+          },
+          {
+            "prompt": "What does “Parallelogram” mean?",
+            "choices": [
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides",
+              "A solid with the same cross-section along its length",
+              "The 2D shape seen when a prism is sliced straight across"
+            ],
+            "answer": "A quadrilateral with two pairs of parallel sides",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Parallelogram means A quadrilateral with two pairs of parallel sides."
+          },
+          {
+            "prompt": "Which term matches this meaning: The 2D shape seen when a prism is sliced straight across?",
+            "choices": [
+              "Cross-section",
+              "Area",
+              "Perimeter",
+              "Volume"
+            ],
+            "answer": "Cross-section",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Cross-section means The 2D shape seen when a prism is sliced straight across."
+          },
+          {
+            "prompt": "Which term matches this meaning: The space a 3D solid fills (cubic units)?",
+            "choices": [
+              "Volume",
+              "Perpendicular height",
+              "Parallelogram",
+              "Trapezium"
+            ],
+            "answer": "Volume",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-4",
+        "icon": "→",
+        "skill": "Surface area",
+        "title": "Rule Runner: Surface area",
+        "description": "Practise surface area through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Surface area” mean?",
+            "choices": [
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides"
+            ],
+            "answer": "The total area of all the faces of a solid",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Surface area means The total area of all the faces of a solid."
+          },
+          {
+            "prompt": "Which term matches this meaning: A quadrilateral with one pair of parallel sides?",
+            "choices": [
+              "Trapezium",
+              "Prism",
+              "Cross-section",
+              "Area"
+            ],
+            "answer": "Trapezium",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Trapezium means A quadrilateral with one pair of parallel sides."
+          },
+          {
+            "prompt": "Which term matches this meaning: The flat space a 2D shape covers (square units)?",
+            "choices": [
+              "Area",
+              "Volume",
+              "Surface area",
+              "Perpendicular height"
+            ],
+            "answer": "Area",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Area means The flat space a 2D shape covers (square units)."
+          },
+          {
+            "prompt": "What does “Area” mean?",
+            "choices": [
+              "The flat space a 2D shape covers (square units)",
+              "The distance around the edge of a shape",
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid"
+            ],
+            "answer": "The flat space a 2D shape covers (square units)",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Area means The flat space a 2D shape covers (square units)."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-5",
+        "icon": "Σ",
+        "skill": "Perpendicular height",
+        "title": "Vocabulary Vault: Perpendicular height",
+        "description": "Practise perpendicular height through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Perpendicular height” mean?",
+            "choices": [
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides",
+              "A solid with the same cross-section along its length"
+            ],
+            "answer": "The height measured at a right angle to the base",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perpendicular height means The height measured at a right angle to the base."
+          },
+          {
+            "prompt": "Which term matches this meaning: A solid with the same cross-section along its length?",
+            "choices": [
+              "Prism",
+              "Cross-section",
+              "Area",
+              "Perimeter"
+            ],
+            "answer": "Prism",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Prism means A solid with the same cross-section along its length."
+          },
+          {
+            "prompt": "Which term matches this meaning: The distance around the edge of a shape?",
+            "choices": [
+              "Perimeter",
+              "Surface area",
+              "Perpendicular height",
+              "Parallelogram"
+            ],
+            "answer": "Perimeter",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perimeter means The distance around the edge of a shape."
+          },
+          {
+            "prompt": "What does “Perimeter” mean?",
+            "choices": [
+              "The distance around the edge of a shape",
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base"
+            ],
+            "answer": "The distance around the edge of a shape",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perimeter means The distance around the edge of a shape."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-6",
+        "icon": "◇",
+        "skill": "Parallelogram",
+        "title": "Challenge Cards: Parallelogram",
+        "description": "Practise parallelogram through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Parallelogram” mean?",
+            "choices": [
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides",
+              "A solid with the same cross-section along its length",
+              "The 2D shape seen when a prism is sliced straight across"
+            ],
+            "answer": "A quadrilateral with two pairs of parallel sides",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Parallelogram means A quadrilateral with two pairs of parallel sides."
+          },
+          {
+            "prompt": "Which term matches this meaning: The 2D shape seen when a prism is sliced straight across?",
+            "choices": [
+              "Cross-section",
+              "Area",
+              "Perimeter",
+              "Volume"
+            ],
+            "answer": "Cross-section",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Cross-section means The 2D shape seen when a prism is sliced straight across."
+          },
+          {
+            "prompt": "Which term matches this meaning: The space a 3D solid fills (cubic units)?",
+            "choices": [
+              "Volume",
+              "Perpendicular height",
+              "Parallelogram",
+              "Trapezium"
+            ],
+            "answer": "Volume",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+          },
+          {
+            "prompt": "What does “Volume” mean?",
+            "choices": [
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides"
+            ],
+            "answer": "The space a 3D solid fills (cubic units)",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-7",
+        "icon": "⚡",
+        "skill": "Trapezium",
+        "title": "Think Fast: Trapezium",
+        "description": "Practise trapezium through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A quadrilateral with one pair of parallel sides?",
+            "choices": [
+              "Trapezium",
+              "Prism",
+              "Cross-section",
+              "Area"
+            ],
+            "answer": "Trapezium",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Trapezium means A quadrilateral with one pair of parallel sides."
+          },
+          {
+            "prompt": "Which term matches this meaning: The flat space a 2D shape covers (square units)?",
+            "choices": [
+              "Area",
+              "Volume",
+              "Surface area",
+              "Perpendicular height"
+            ],
+            "answer": "Area",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Area means The flat space a 2D shape covers (square units)."
+          },
+          {
+            "prompt": "What does “Area” mean?",
+            "choices": [
+              "The flat space a 2D shape covers (square units)",
+              "The distance around the edge of a shape",
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid"
+            ],
+            "answer": "The flat space a 2D shape covers (square units)",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Area means The flat space a 2D shape covers (square units)."
+          },
+          {
+            "prompt": "What does “Surface area” mean?",
+            "choices": [
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides"
+            ],
+            "answer": "The total area of all the faces of a solid",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Surface area means The total area of all the faces of a solid."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-8",
+        "icon": "☁",
+        "skill": "Prism",
+        "title": "Explain It: Prism",
+        "description": "Practise prism through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A solid with the same cross-section along its length?",
+            "choices": [
+              "Prism",
+              "Cross-section",
+              "Area",
+              "Perimeter"
+            ],
+            "answer": "Prism",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Prism means A solid with the same cross-section along its length."
+          },
+          {
+            "prompt": "Which term matches this meaning: The distance around the edge of a shape?",
+            "choices": [
+              "Perimeter",
+              "Surface area",
+              "Perpendicular height",
+              "Parallelogram"
+            ],
+            "answer": "Perimeter",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perimeter means The distance around the edge of a shape."
+          },
+          {
+            "prompt": "What does “Perimeter” mean?",
+            "choices": [
+              "The distance around the edge of a shape",
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base"
+            ],
+            "answer": "The distance around the edge of a shape",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perimeter means The distance around the edge of a shape."
+          },
+          {
+            "prompt": "What does “Perpendicular height” mean?",
+            "choices": [
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides",
+              "A solid with the same cross-section along its length"
+            ],
+            "answer": "The height measured at a right angle to the base",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perpendicular height means The height measured at a right angle to the base."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-9",
+        "icon": "⌂",
+        "skill": "Cross-section",
+        "title": "Real-Life Round: Cross-section",
+        "description": "Practise cross-section through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The 2D shape seen when a prism is sliced straight across?",
+            "choices": [
+              "Cross-section",
+              "Area",
+              "Perimeter",
+              "Volume"
+            ],
+            "answer": "Cross-section",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Cross-section means The 2D shape seen when a prism is sliced straight across."
+          },
+          {
+            "prompt": "Which term matches this meaning: The space a 3D solid fills (cubic units)?",
+            "choices": [
+              "Volume",
+              "Perpendicular height",
+              "Parallelogram",
+              "Trapezium"
+            ],
+            "answer": "Volume",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+          },
+          {
+            "prompt": "What does “Volume” mean?",
+            "choices": [
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides"
+            ],
+            "answer": "The space a 3D solid fills (cubic units)",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+          },
+          {
+            "prompt": "What does “Parallelogram” mean?",
+            "choices": [
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides",
+              "A solid with the same cross-section along its length",
+              "The 2D shape seen when a prism is sliced straight across"
+            ],
+            "answer": "A quadrilateral with two pairs of parallel sides",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Parallelogram means A quadrilateral with two pairs of parallel sides."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-10",
+        "icon": "!",
+        "skill": "Area",
+        "title": "Spot the Error: Area",
+        "description": "Practise area through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The flat space a 2D shape covers (square units)?",
+            "choices": [
+              "Area",
+              "Volume",
+              "Surface area",
+              "Perpendicular height"
+            ],
+            "answer": "Area",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Area means The flat space a 2D shape covers (square units)."
+          },
+          {
+            "prompt": "What does “Area” mean?",
+            "choices": [
+              "The flat space a 2D shape covers (square units)",
+              "The distance around the edge of a shape",
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid"
+            ],
+            "answer": "The flat space a 2D shape covers (square units)",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Area means The flat space a 2D shape covers (square units)."
+          },
+          {
+            "prompt": "What does “Surface area” mean?",
+            "choices": [
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides"
+            ],
+            "answer": "The total area of all the faces of a solid",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Surface area means The total area of all the faces of a solid."
+          },
+          {
+            "prompt": "Which term matches this meaning: A quadrilateral with one pair of parallel sides?",
+            "choices": [
+              "Trapezium",
+              "Prism",
+              "Cross-section",
+              "Area"
+            ],
+            "answer": "Trapezium",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Trapezium means A quadrilateral with one pair of parallel sides."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-11",
+        "icon": "≡",
+        "skill": "Perimeter",
+        "title": "Mastery Mix: Perimeter",
+        "description": "Practise perimeter through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The distance around the edge of a shape?",
+            "choices": [
+              "Perimeter",
+              "Surface area",
+              "Perpendicular height",
+              "Parallelogram"
+            ],
+            "answer": "Perimeter",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perimeter means The distance around the edge of a shape."
+          },
+          {
+            "prompt": "What does “Perimeter” mean?",
+            "choices": [
+              "The distance around the edge of a shape",
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base"
+            ],
+            "answer": "The distance around the edge of a shape",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perimeter means The distance around the edge of a shape."
+          },
+          {
+            "prompt": "What does “Perpendicular height” mean?",
+            "choices": [
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides",
+              "A solid with the same cross-section along its length"
+            ],
+            "answer": "The height measured at a right angle to the base",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Perpendicular height means The height measured at a right angle to the base."
+          },
+          {
+            "prompt": "Which term matches this meaning: A solid with the same cross-section along its length?",
+            "choices": [
+              "Prism",
+              "Cross-section",
+              "Area",
+              "Perimeter"
+            ],
+            "answer": "Prism",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Prism means A solid with the same cross-section along its length."
+          }
+        ]
+      },
+      {
+        "id": "u15-game-12",
+        "icon": "T",
+        "skill": "Volume",
+        "title": "Unit Champion: Volume",
+        "description": "Practise volume through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The space a 3D solid fills (cubic units)?",
+            "choices": [
+              "Volume",
+              "Perpendicular height",
+              "Parallelogram",
+              "Trapezium"
+            ],
+            "answer": "Volume",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+          },
+          {
+            "prompt": "What does “Volume” mean?",
+            "choices": [
+              "The space a 3D solid fills (cubic units)",
+              "The total area of all the faces of a solid",
+              "The height measured at a right angle to the base",
+              "A quadrilateral with two pairs of parallel sides"
+            ],
+            "answer": "The space a 3D solid fills (cubic units)",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+          },
+          {
+            "prompt": "What does “Parallelogram” mean?",
+            "choices": [
+              "A quadrilateral with two pairs of parallel sides",
+              "A quadrilateral with one pair of parallel sides",
+              "A solid with the same cross-section along its length",
+              "The 2D shape seen when a prism is sliced straight across"
+            ],
+            "answer": "A quadrilateral with two pairs of parallel sides",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Parallelogram means A quadrilateral with two pairs of parallel sides."
+          },
+          {
+            "prompt": "Which term matches this meaning: The 2D shape seen when a prism is sliced straight across?",
+            "choices": [
+              "Cross-section",
+              "Area",
+              "Perimeter",
+              "Volume"
+            ],
+            "answer": "Cross-section",
+            "clue": "Use the Unit 15 Math Words & Symbols reference.",
+            "explanation": "Cross-section means The 2D shape seen when a prism is sliced straight across."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain what area and volume measure, and why area uses square units and volume uses cubic units.",
+    "I can find the area of a triangle using A = ½ × base × height.",
+    "I can find the area of a parallelogram using A = base × height, and a trapezium using A = ½ × (a + b) × height.",
+    "I can break a compound (composite) shape into rectangles and triangles, then add or subtract areas.",
+    "I can find the volume of a prism using V = area of cross-section × length, including cubes, cuboids and triangular prisms.",
+    "I can find the surface area of a cuboid by adding the areas of all six faces.",
+    "I can convert between units of length, area and volume, and choose sensible units for a task.",
+    "I can solve real-world problems and check whether an answer is reasonable."
+  ]
+}

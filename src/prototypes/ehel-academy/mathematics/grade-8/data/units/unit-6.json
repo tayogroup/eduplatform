@@ -1,0 +1,1775 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.242Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "math-g08-u06",
+    "unitNo": 6,
+    "unitTitle": "Collecting Data",
+    "unitOverview": "Welcome to Unit 6! In this unit you will learn how to collect data properly – the very first and most important step in every piece of statistics. Before anyone can draw a graph, calculate an average, or claim that one thing causes another, somebody first had to gather the information. If that information was collected carelessly or unfairly, every calculation built on top of it is worthless. Good statisticians know a hard truth: the answer is only ever as trustworthy as the data behind it.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 6 (1)/Year 8 - Unit 6 Lesson.docx",
+      "Year 8 (1)/Unit 6 (1)/Year 8 - Unit 6 Activities.docx",
+      "Year 8 (1)/Unit 6 (1)/Year 8 - Unit 6 Practice.docx",
+      "Year 8 (1)/Unit 6 (1)/Year 8 - Unit 6 Reference.docx"
+    ],
+    "sourceBlockCount": 393,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "This unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work through every example on paper, and only move on when the idea feels solid. Your AI tutor is available day and night to explain a point in a new way, invent extra practice, or check your reasoning. Your teacher will also meet with you about twice a week to help with anything that feels tricky. Keep a pencil and notebook beside you – statistics is something you learn by doing, not just by reading.",
+    "Why does this matter so much? We live in a world flooded with numbers. Advertisements claim that \"four out of five people prefer\" a product. News reports announce that a poll predicts an election result. Health campaigns tell us how many people a disease affects. Some of these claims are trustworthy and some are dangerously misleading, and the difference almost always lies in how the data was collected. Once you understand data collection, you will never again read a statistic in quite the same innocent way. You will ask: who was asked, how were they chosen, and was the question fair? That habit of careful questioning is one of the most valuable thinking skills you can own.",
+    "Classify data as quantitative or qualitative, and as discrete, continuous, nominal or ordinal.",
+    "Explain the difference between primary and secondary data and choose the right one for a question.",
+    "Describe and apply random, systematic, stratified and convenience sampling.",
+    "Explain the difference between a population, a sample and a census, and decide which to use.",
+    "Design clear, unbiased questionnaire questions and choose suitable question types.",
+    "Record and read data in tally charts, frequency tables and two-way tables.",
+    "Identify common types of bias and explain how to reduce them.",
+    "Plan a simple statistical investigation from question to conclusion."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-types-of-data",
+      "title": "Types of Data",
+      "explanation": "Data is simply information collected to answer a question or solve a problem. Before you collect anything, it helps enormously to know what type of data you are dealing with, because the type decides how you gather it, how you record it, and which graphs and calculations make sense later. All data splits first into two big families: quantitative and qualitative. Quantitative data is information that is measured or counted as numbers. Height, mass, age, temperature, test scores and the number of camels a family…",
+      "example": "Quantitative data divides again into discrete and continuous. Discrete data can only take separate, usually whole-number, values – you count it. The number of students in Zahra’s class, the number of goals in a football…"
+    },
+    {
+      "id": "concept-2-primary-and-secondary-data",
+      "title": "Primary and Secondary Data",
+      "explanation": "Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person ever to gather it. Surveying your own classmates about their favourite sport, measuring the growth of bean plants in a science experiment, or timing how long cars wait at a junction near Nuur Academy all produce primary data. Secondary data is information that someone else already collected, usually…",
+      "example": "Each source has real strengths. Primary data is exactly what you need: it answers your precise question, it is current, and you control how it was collected, so you can trust its quality. Its weaknesses are that it is…"
+    },
+    {
+      "id": "concept-3-populations-samples-and-sampling-methods",
+      "title": "Populations, Samples and Sampling Methods",
+      "explanation": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study. We use samples because reaching everyone is usually impossible, too slow, or too expensive. To learn what teenagers think about social media, nobody could question every teenager on Earth, but a carefully chosen sample of a thousand can give a reliable answer. A sample is only useful if it is representative – it should…",
+      "example": "Simple random sampling gives every member of the population an equal chance of being chosen. You list everyone, number them, and use a random number generator (or names drawn from a hat) to pick the sample. Its great…"
+    },
+    {
+      "id": "concept-4-census-versus-sample-survey",
+      "title": "Census versus Sample Survey",
+      "explanation": "A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic example. A sample survey collects data from only a part of the population, chosen to represent the whole. Deciding between them is a genuine trade-off. A census has powerful advantages: it gives complete information, it has no sampling error (because nobody is left out), and it lets you study even…",
+      "example": "A sample survey is cheaper, faster and less intrusive, and because you spend your resources on fewer people you can often collect higher-quality answers. Its drawback is sampling error: because you did not ask everyone,…"
+    },
+    {
+      "id": "concept-5-designing-a-questionnaire",
+      "title": "Designing a Questionnaire",
+      "explanation": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear, unambiguous, unbiased, and each ask only one thing, arranged in a sensible order. Questions come in two broad types. Closed questions give a fixed set of answers to choose from – multiple choice, yes/no, rating scales (excellent / good / fair / poor), or…",
+      "example": "The wording of a question can wreck it in several classic ways, and you must learn to avoid every one:"
+    },
+    {
+      "id": "concept-6-frequency-tables-and-two-way-tables",
+      "title": "Frequency Tables and Two-Way Tables",
+      "explanation": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth crossing them) so they are easy to count. The frequency is simply how many times each value or category occurred. Suppose Amina asks 30 classmates how they travel to school and records the tallies, giving these frequencies: The frequencies should always add up…",
+      "example": "A two-way table records two categories at the same time, with one across the top and the other down the side, so you can study how they relate. Suppose Hassan surveys 60 students, recording both their year group and…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Types of Data",
+      "context": "Data is simply information collected to answer a question or solve a problem. Before you collect anything, it helps enormously to know what type of data you are dealing with, because the type decides how you gather it, how you record it, and which graphs and…",
+      "prompt": "Classify each as discrete or continuous: (a) number of students, (b) length of a pencil, (c) number of text messages, (d) mass of a mango.",
+      "answer": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Primary and Secondary Data",
+      "context": "Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person ever to gather it. Surveying your own…",
+      "prompt": "Classify each as nominal or ordinal: (a) favourite colour, (b) exam grades A to E, (c) type of transport, (d) satisfaction rating.",
+      "answer": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Populations, Samples and Sampling Methods",
+      "context": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study. We use samples because reaching everyone is usually impossible,…",
+      "prompt": "State whether each is primary or secondary data: (a) measuring your classmates’ heights yourself, (b) using rainfall records from a website.",
+      "answer": "(a) primary, (b) secondary.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "(a) primary, (b) secondary."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Census versus Sample Survey",
+      "context": "A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic example. A sample survey collects data…",
+      "prompt": "Name the four sampling methods you have learned.",
+      "answer": "Random, systematic, stratified, convenience.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Random, systematic, stratified, convenience."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Designing a Questionnaire",
+      "context": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear,…",
+      "prompt": "True or false: a census collects data from every member of a population.",
+      "answer": "True.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "True."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Frequency Tables and Two-Way Tables",
+      "context": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth…",
+      "prompt": "A school of 900 students wants a systematic sample of 45. Find the sampling interval.",
+      "answer": "1) 900 ÷ 45 = 20.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) 900 ÷ 45 = 20."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Types of Data",
+      "modelType": "concept-model-1",
+      "purpose": "Data is simply information collected to answer a question or solve a problem. Before you collect anything, it helps enormously to know what type of data you are dealing with, because the type decides how you gather it,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Primary and Secondary Data",
+      "modelType": "concept-model-2",
+      "purpose": "Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Populations, Samples and Sampling Methods",
+      "modelType": "concept-model-3",
+      "purpose": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study. We use samples because…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Census versus Sample Survey",
+      "modelType": "concept-model-4",
+      "purpose": "A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Designing a Questionnaire",
+      "modelType": "concept-model-5",
+      "purpose": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Frequency Tables and Two-Way Tables",
+      "modelType": "concept-model-6",
+      "purpose": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to take a systematic sample",
+      "example": "Classify each of these fully: (a) the number of goats a family owns, (b) the time runners take in a race, (c) students’ favourite subjects, (d) medal positions in a competition.",
+      "steps": [
+        "Divide the population size by the sample size to get the interval n.",
+        "Choose a random starting point between 1 and n.",
+        "Select every nth member from the list from that start.",
+        "Continue until the sample is complete."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to take a stratified sample",
+      "example": "Classify each of these fully: (a) the number of goats a family owns, (b) the time runners take in a race, (c) students’ favourite subjects, (d) medal positions in a competition.",
+      "steps": [
+        "Work out the overall sampling fraction (sample size ÷ population size).",
+        "Multiply each subgroup’s size by that fraction.",
+        "Sample that many at random from each subgroup.",
+        "Check the subgroup samples add up to the total sample size."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to complete a two-way table",
+      "example": "A school has 800 students. Farah wants a systematic sample of 40. What is the sampling interval, and how does she choose the sample?",
+      "steps": [
+        "Fill in every value you are given.",
+        "Use subtraction: any missing cell = its row or column total minus the known cells.",
+        "Add each row and each column to find the totals.",
+        "Check the row totals and column totals both reach the same grand total."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "A stratified sample",
+      "example": "A school has 300 in Year 7, 200 in Year 8 and 100 in Year 9 (600 total). Ibrahim wants a stratified sample of 60. How many should he take from each year?",
+      "steps": [
+        "Solution: The sample is 60 out of 600, which is one tenth.",
+        "Take one tenth of each stratum: Year 7 gives 300 ÷ 10 = 30, Year 8 gives 200 ÷ 10 = 20, Year 9 gives 100 ÷ 10 = 10.",
+        "Check: 30 + 20 + 10 = 60.",
+        "✓"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Fix a biased question",
+      "example": "Rewrite this survey question to remove the bias: \"Don’t you agree that our wonderful new library is a huge improvement?\"",
+      "steps": [
+        "Solution: The question is both leading (\"Don’t you agree\") and loaded (\"wonderful\", \"huge improvement\").",
+        "A neutral version is: \"What is your opinion of the new library?\" with balanced options such as poor / fair / good / excellent.",
+        "Check the fix a biased question result carefully."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Complete a two-way table",
+      "example": "In a two-way table, 24 students study French and 36 study Spanish, giving 60 in total. Of the French students, 15 are girls; of the Spanish students, 20 are girls. How many boys study each language?",
+      "steps": [
+        "Solution: French boys = 24 − 15 = 9.",
+        "Spanish boys = 36 − 20 = 16.",
+        "Check the totals: girls = 15 + 20 = 35, boys = 9 + 16 = 25, and 35 + 25 = 60.",
+        "✓ The totals confirm the answer."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Classify the data type",
+      "prompt": "Classify each of these fully: (a) the number of goats a family owns, (b) the time runners take in a race, (c) students’ favourite subjects, (d) medal positions in a competition.",
+      "solution": "Solution: (a) You count goats in whole numbers, so it is discrete quantitative. (b) Time can take any value and is measured, so it is continuous quantitative. (c) Subjects are categories with no order, so they are nominal qualitative. (d) 1st, 2nd, 3rd are categories with a natural order, so they are ordinal qualitative. Worked Example 2: Primary or secondary? Omar wants to know the average rainfall in Mogadishu over the last 50 years. Should he use primary or secondary data, and why? Solution: He cannot travel…"
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Primary or secondary?",
+      "prompt": "Classify each of these fully: (a) the number of goats a family owns, (b) the time runners take in a race, (c) students’ favourite subjects, (d) medal positions in a competition.",
+      "solution": "Solution: (a) You count goats in whole numbers, so it is discrete quantitative. (b) Time can take any value and is measured, so it is continuous quantitative. (c) Subjects are categories with no order, so they are nominal qualitative. (d) 1st, 2nd, 3rd are categories with a natural order, so they are ordinal qualitative. Worked Example 2: Primary or secondary? Omar wants to know the average rainfall in Mogadishu over the last 50 years. Should he use primary or secondary data, and why? Solution: He cannot travel…"
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Work out a systematic sample",
+      "prompt": "A school has 800 students. Farah wants a systematic sample of 40. What is the sampling interval, and how does she choose the sample?",
+      "solution": "Solution: The interval is population ÷ sample size = 800 ÷ 40 = 20. She picks a random starting number between 1 and 20, say 7, then selects every 20th student from the list: the 7th, 27th, 47th, 67th, and so on, until she has 40 students."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "A stratified sample",
+      "prompt": "A school has 300 in Year 7, 200 in Year 8 and 100 in Year 9 (600 total). Ibrahim wants a stratified sample of 60. How many should he take from each year?",
+      "solution": "Solution: The sample is 60 out of 600, which is one tenth. Take one tenth of each stratum: Year 7 gives 300 ÷ 10 = 30, Year 8 gives 200 ÷ 10 = 20, Year 9 gives 100 ÷ 10 = 10. Check: 30 + 20 + 10 = 60. ✓"
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Fix a biased question",
+      "prompt": "Rewrite this survey question to remove the bias: \"Don’t you agree that our wonderful new library is a huge improvement?\"",
+      "solution": "Solution: The question is both leading (\"Don’t you agree\") and loaded (\"wonderful\", \"huge improvement\"). A neutral version is: \"What is your opinion of the new library?\" with balanced options such as poor / fair / good / excellent."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Complete a two-way table",
+      "prompt": "In a two-way table, 24 students study French and 36 study Spanish, giving 60 in total. Of the French students, 15 are girls; of the Spanish students, 20 are girls. How many boys study each language?",
+      "solution": "Solution: French boys = 24 − 15 = 9. Spanish boys = 36 − 20 = 16. Check the totals: girls = 15 + 20 = 35, boys = 9 + 16 = 25, and 35 + 25 = 60. ✓ The totals confirm the answer. Worked Example 7: Census or sample? A factory makes 10,000 light bulbs a day and must check how long they last before failing. Should it test every bulb or a sample? Explain. Solution: Testing how long a bulb lasts destroys it, so a census would leave nothing to sell. The factory must use a sample survey, testing a random selection and…"
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Census or sample?",
+      "prompt": "In a two-way table, 24 students study French and 36 study Spanish, giving 60 in total. Of the French students, 15 are girls; of the Spanish students, 20 are girls. How many boys study each language?",
+      "solution": "Solution: French boys = 24 − 15 = 9. Spanish boys = 36 − 20 = 16. Check the totals: girls = 15 + 20 = 35, boys = 9 + 16 = 25, and 35 + 25 = 60. ✓ The totals confirm the answer. Worked Example 7: Census or sample? A factory makes 10,000 light bulbs a day and must check how long they last before failing. Should it test every bulb or a sample? Explain. Solution: Testing how long a bulb lasts destroys it, so a census would leave nothing to sell. The factory must use a sample survey, testing a random selection and…"
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Identify the bias",
+      "prompt": "A radio station asks listeners to phone in to say whether they enjoyed a new song. Most callers loved it, so the station claims the song is popular. What bias is present?",
+      "solution": "Solution: Only listeners with strong feelings bother to phone, and only people already listening to that station can call. This is volunteer bias combined with selection bias, so the result cannot be generalised to everyone – the sample is not representative."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "For each research question, name the best sampling method: (a) comparing opinions fairly across three year groups, (b) a quick pilot before a big study, (c) picking names so everyone has an equal chance.",
+      "solution": "One sixth of each: adults 180 ÷ 6 = 30, children 60 ÷ 6 = 10 (check 30 + 10 ="
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Copy and complete this two-way table (find the missing values and all totals): Year 7 walk 12, Year 7 ride ?, Year 7 total 20; Year 8 walk ?, Year 8 ride 18, Year 8 total 30.",
+      "solution": "."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Explain in one sentence why testing the lifetime of every battery a factory makes is impossible.",
+      "solution": "(a) stratified, (b) convenience, (c) random."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "A magazine surveys its readers by post and gets 2 million replies, yet its prediction is completely wrong. Explain how such a large sample can still be biased.",
+      "solution": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Classify each as discrete or continuous: (a) number of students, (b) length of a pencil, (c) number of text messages, (d) mass of a mango.",
+      "answer": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Classify each as nominal or ordinal: (a) favourite colour, (b) exam grades A to E, (c) type of transport, (d) satisfaction rating.",
+      "answer": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "State whether each is primary or secondary data: (a) measuring your classmates’ heights yourself, (b) using rainfall records from a website.",
+      "answer": "(a) primary, (b) secondary.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Name the four sampling methods you have learned.",
+      "answer": "Random, systematic, stratified, convenience.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "True or false: a census collects data from every member of a population.",
+      "answer": "True.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "A school of 900 students wants a systematic sample of 45. Find the sampling interval.",
+      "answer": "1) 900 ÷ 45 = 20.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "A survey records: Walk 14, Bus 11, Cycle 7, Car x, total asked 40. Find x, then check your answer.",
+      "answer": "x = 40 − (14 + 11 +",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "A club has 240 members: 180 adults and 60 children. Find a stratified sample of 40 split correctly between the two groups.",
+      "answer": "= 40 − 32 = 8.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "For each research question, name the best sampling method: (a) comparing opinions fairly across three year groups, (b) a quick pilot before a big study, (c) picking names so everyone has an equal chance.",
+      "answer": "One sixth of each: adults 180 ÷ 6 = 30, children 60 ÷ 6 = 10 (check 30 + 10 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Copy and complete this two-way table (find the missing values and all totals): Year 7 walk 12, Year 7 ride ?, Year 7 total 20; Year 8 walk ?, Year 8 ride 18, Year 8 total 30.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Explain in one sentence why testing the lifetime of every battery a factory makes is impossible.",
+      "answer": "(a) stratified, (b) convenience, (c) random.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "A magazine surveys its readers by post and gets 2 million replies, yet its prediction is completely wrong. Explain how such a large sample can still be biased.",
+      "answer": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias.",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Data-Type Sorting Race",
+      "materials": "paper, a pen, and about fifteen small cards.",
+      "steps": [
+        "On each card, write one everyday example, such as \"shoe size\", \"favourite food\", \"time to run 100 m\" or \"exam grade\".",
+        "Make four column headings: discrete, continuous, nominal, ordinal.",
+        "Sort every card into the correct column as fast as you can.",
+        "Include a few tricky cards (like \"age\" or \"temperature\") and discuss why they can be argued more than one way.",
+        "Keep the cards – shuffle and re-sort them another day to test your memory."
+      ]
+    },
+    {
+      "title": "Run Your Own Class Survey",
+      "materials": "a question, paper for a tally chart, and about 20 people to ask.",
+      "steps": [
+        "Choose a simple question, for example \"How do you travel to school?\" with the options walk, bus, bicycle, car.",
+        "Draw a tally chart and record each answer with a tally mark, grouping in fives.",
+        "Turn your tallies into a frequency table and check the frequencies add up to the number of people you asked.",
+        "Write one sentence describing what your data shows."
+      ]
+    },
+    {
+      "title": "The Biased-Question Hunt",
+      "materials": "advertisements, posters, or online surveys you can find at home.",
+      "steps": [
+        "Collect three or four real questions from adverts or surveys.",
+        "For each one, decide whether it is fair, or leading, loaded, or double-barrelled.",
+        "Rewrite every unfair question so that it becomes neutral and clear.",
+        "Explain to a family member why your new version is better.",
+        "This activity trains your eye to spot bias everywhere – a skill you will keep for life."
+      ]
+    },
+    {
+      "title": "Sampling Simulation with Beans",
+      "materials": "a bag of mixed beans or stones of two colours, and a cup.",
+      "steps": [
+        "Fill a bag with, say, 70 light beans and 30 dark beans – this is your \"population\".",
+        "Without looking, scoop out a sample of 10 and record how many of each colour.",
+        "Work out the fraction of dark beans in your sample and compare it with the true fraction (30%).",
+        "Repeat with samples of 20 and 40 beans. Does a larger sample give an estimate closer to the truth?"
+      ]
+    },
+    {
+      "title": "Two-Way Table Investigation (Family Task)",
+      "materials": "your family or a group of friends to ask.",
+      "steps": [
+        "Choose two categories to record together, for example gender and whether the person prefers tea or milk.",
+        "Draw a two-way table with one category across the top and the other down the side.",
+        "Ask each person and add a tally to the correct cell.",
+        "Fill in all the row totals, column totals and the grand total, and check both directions add to the same total."
+      ]
+    },
+    {
+      "title": "Design and Pilot a Questionnaire",
+      "materials": "paper, a pen, and five willing volunteers.",
+      "steps": [
+        "Choose a topic you care about, such as favourite sports or screen-time habits.",
+        "Write four or five clear, unbiased questions, mixing closed and open types.",
+        "Pilot it with five people and note any question they found confusing or hard to answer.",
+        "Improve your questions based on their feedback – this is exactly what real researchers do.",
+        "After your activities, talk or write about: Which activity made data collection clearest for you? Where did you find bias hiding? What surprised you about how samples behave? Which type of data do you still find hardest to classify? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key rule 1",
+        "text": "Types of Data Quantitative = numbers. Qualitative = categories. Discrete = counted (whole values). Continuous = measured (any value). Nominal = no order. Ordinal = natural order or rank."
+      },
+      {
+        "title": "Sampling Rule",
+        "text": "A good method matters more than a big sample. A sample must be representative, or the results are biased. Random gives everyone an equal chance; stratified guarantees every subgroup appears."
+      },
+      {
+        "title": "Key rule 3",
+        "text": "Census vs Sample Census = ask everyone: complete but slow and costly. Sample = ask a representative part: fast and cheap, with some uncertainty. Use a sample when testing is destructive or the population is large."
+      }
+    ],
+    "terms": [
+      [
+        "Quantitative / Qualitative",
+        "Number data / category data"
+      ],
+      [
+        "Discrete / Continuous",
+        "Counted whole values / measured any value"
+      ],
+      [
+        "Nominal / Ordinal",
+        "No order / natural order"
+      ],
+      [
+        "Population / Sample",
+        "Whole group / representative part"
+      ],
+      [
+        "Census",
+        "Data from every member of the population"
+      ],
+      [
+        "Primary / Secondary",
+        "You collect it / already collected by others"
+      ],
+      [
+        "Bias",
+        "A systematic error making results unrepresentative"
+      ],
+      [
+        "Frequency",
+        "How many times a value or category occurs"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Treating a shirt or phone number as quantitative",
+        "Ask what the number represents – it is nominal"
+      ],
+      [
+        "Thinking a bigger sample is always better",
+        "A fair method beats a large biased sample"
+      ],
+      [
+        "Writing a leading question",
+        "Keep wording neutral and balanced"
+      ],
+      [
+        "Forgetting to check totals",
+        "Frequencies and table rows/columns must match the total"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Classify each as discrete or continuous: (a) number of students, (b) length of a pencil, (c) number of text messages, (d) mass of a mango.",
+      "answer": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Classify each as nominal or ordinal: (a) favourite colour, (b) exam grades A to E, (c) type of transport, (d) satisfaction rating.",
+      "answer": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "State whether each is primary or secondary data: (a) measuring your classmates’ heights yourself, (b) using rainfall records from a website.",
+      "answer": "(a) primary, (b) secondary.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(a) primary, (b) secondary."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Name the four sampling methods you have learned.",
+      "answer": "Random, systematic, stratified, convenience.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Random, systematic, stratified, convenience."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "True or false: a census collects data from every member of a population.",
+      "answer": "True.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "True."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "A school of 900 students wants a systematic sample of 45. Find the sampling interval.",
+      "answer": "1) 900 ÷ 45 = 20.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) 900 ÷ 45 = 20."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "A survey records: Walk 14, Bus 11, Cycle 7, Car x, total asked 40. Find x, then check your answer.",
+      "answer": "x = 40 − (14 + 11 +",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "x = 40 − (14 + 11 +"
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "A club has 240 members: 180 adults and 60 children. Find a stratified sample of 40 split correctly between the two groups.",
+      "answer": "= 40 − 32 = 8.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "= 40 − 32 = 8."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "For each research question, name the best sampling method: (a) comparing opinions fairly across three year groups, (b) a quick pilot before a big study, (c) picking names so everyone has an equal chance.",
+      "answer": "One sixth of each: adults 180 ÷ 6 = 30, children 60 ÷ 6 = 10 (check 30 + 10 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "One sixth of each: adults 180 ÷ 6 = 30, children 60 ÷ 6 = 10 (check 30 + 10 ="
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Copy and complete this two-way table (find the missing values and all totals): Year 7 walk 12, Year 7 ride ?, Year 7 total 20; Year 8 walk ?, Year 8 ride 18, Year 8 total 30.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Explain in one sentence why testing the lifetime of every battery a factory makes is impossible.",
+      "answer": "(a) stratified, (b) convenience, (c) random.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(a) stratified, (b) convenience, (c) random."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "A magazine surveys its readers by post and gets 2 million replies, yet its prediction is completely wrong. Explain how such a large sample can still be biased.",
+      "answer": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Hassan wants to know the favourite football team of students at Nuur Academy. Describe, step by step, how he could collect fair, unbiased data – including his sampling method and one sample question.",
+      "answer": "1) e.g. list all students, use stratified sampling by year group so each year is fairly represented, ask a neutral closed question such as \"Which of these teams do you support?\" with a balanced list plus \"other\"; keep answers anonymous.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) e.g. list all students, use stratified sampling by year group so each year is fairly represented, ask a neutral closed question such as \"Which of these teams do you support?\" with a balanced list plus \"other\"; keep answers anonymous."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A health worker in Kismaayo must estimate the average height of 5-year-olds in the town. Explain whether primary or secondary data is better and why, and suggest a suitable sampling method.",
+      "answer": "Primary data – he needs current local measurements that do not already exist; a random or stratified sample of the town’s 5-year-olds.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Primary data – he needs current local measurements that do not already exist; a random or stratified sample of the town’s 5-year-olds."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "A shop asks only customers who join its loyalty club to rate its service, then advertises the high score as proof that everyone is happy. Explain the bias and why the advertisement is misleading.",
+      "answer": "Only loyalty-club members (already the happiest, most regular customers) were asked – selection/volunteer bias – so the score does not represent all customers.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Only loyalty-club members (already the happiest, most regular customers) were asked – selection/volunteer bias – so the score does not represent all customers."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "Amina records the number of siblings of 30 classmates: 0 appears 4 times, 1 appears 11 times, 2 appears 8 times, 3 appears 5 times, 4 appears 2 times. Draw a frequency table and confirm the total is 30.",
+      "answer": "0→4, 1→11, 2→8, 3→5, 4→2; total 4 + 11 + 8 + 5 + 2 = 30 ✓.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "0→4, 1→11, 2→8, 3→5, 4→2; total 4 + 11 + 8 + 5 + 2 = 30 ✓."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A council wants residents’ views on a new park in Eastleigh. Explain why standing outside the existing park to ask people would give biased results, and suggest a fairer approach.",
+      "answer": "People at the existing park already like parks, so their views are not typical (location/selection bias); instead sample residents across the whole area, for example by random household selection.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "People at the existing park already like parks, so their views are not typical (location/selection bias); instead sample residents across the whole area, for example by random household selection."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "A magazine surveys its readers by post and gets 2 million replies, yet its prediction is completely wrong. Explain how such a large sample can still be biased.",
+      "answer": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A magazine surveys its readers by post and gets 2 million replies, yet its prediction is completely wrong. Explain how such a large sample can still be biased.",
+      "keyIdeas": [
+        "Quantitative / Qualitative",
+        "Discrete / Continuous",
+        "Nominal / Ordinal"
+      ],
+      "modelAnswer": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Rewrite each biased question and name the fault: (a) \"Don’t you think homework is a waste of time?\" (b) \"Do you like maths and science?\" (c) \"How wonderful is our new canteen?\"",
+      "keyIdeas": [
+        "Discrete / Continuous",
+        "Nominal / Ordinal",
+        "Population / Sample"
+      ],
+      "modelAnswer": "(a) leading – \"What is your opinion of homework?\"; (b) double-barrelled – split into two questions; (c) loaded – \"What is your opinion of the new canteen?\"."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A school has 400 in Year 7, 300 in Year 8 and 300 in Year 9. Design a stratified sample of 50 and show that your three group sizes add to 50.",
+      "keyIdeas": [
+        "Nominal / Ordinal",
+        "Population / Sample",
+        "Census"
+      ],
+      "modelAnswer": "Sample is 50 out of 1000 = one twentieth: Year 7 400 ÷ 20 = 20, Year 8 300 ÷ 20 = 15, Year 9 300 ÷ 20 = 15 (check 20 + 15 + 15 ="
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A survey on shopping habits is carried out only inside one large supermarket on a weekday morning. Identify two groups of people likely to be under-represented, and name the type of bias.",
+      "keyIdeas": [
+        "Population / Sample",
+        "Census",
+        "Primary / Secondary"
+      ],
+      "modelAnswer": "."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Designing a Questionnaire.",
+      "keyIdeas": [
+        "Quantitative / Qualitative",
+        "Discrete / Continuous",
+        "Nominal / Ordinal"
+      ],
+      "modelAnswer": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear, unambiguous, unbiased, and each ask only one thing, arranged in a sensible order. Questions come in two broad types. Closed questions give a fixed set of answers to choose from – multiple choice, yes/no, rating scales (excellent / good / fair / poor), or…"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Frequency Tables and Two-Way Tables.",
+      "keyIdeas": [
+        "Quantitative / Qualitative",
+        "Discrete / Continuous",
+        "Nominal / Ordinal"
+      ],
+      "modelAnswer": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth crossing them) so they are easy to count. The frequency is simply how many times each value or category occurred. Suppose Amina asks 30 classmates how they travel to school and records the tallies, giving these frequencies: The frequencies should always add up…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Quantitative / Qualitative” mean?",
+        "options": [
+          "Number data / category data",
+          "Counted whole values / measured any value",
+          "No order / natural order",
+          "Whole group / representative part"
+        ],
+        "answer": "Number data / category data",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Quantitative / Qualitative means Number data / category data."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Discrete / Continuous” mean?",
+        "options": [
+          "Counted whole values / measured any value",
+          "No order / natural order",
+          "Whole group / representative part",
+          "Data from every member of the population"
+        ],
+        "answer": "Counted whole values / measured any value",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Nominal / Ordinal” mean?",
+        "options": [
+          "No order / natural order",
+          "Whole group / representative part",
+          "Data from every member of the population",
+          "You collect it / already collected by others"
+        ],
+        "answer": "No order / natural order",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Nominal / Ordinal means No order / natural order."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Population / Sample” mean?",
+        "options": [
+          "Whole group / representative part",
+          "Data from every member of the population",
+          "You collect it / already collected by others",
+          "A systematic error making results unrepresentative"
+        ],
+        "answer": "Whole group / representative part",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Population / Sample means Whole group / representative part."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Census” mean?",
+        "options": [
+          "Data from every member of the population",
+          "You collect it / already collected by others",
+          "A systematic error making results unrepresentative",
+          "How many times a value or category occurs"
+        ],
+        "answer": "Data from every member of the population",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Census means Data from every member of the population."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Primary / Secondary” mean?",
+        "options": [
+          "You collect it / already collected by others",
+          "A systematic error making results unrepresentative",
+          "How many times a value or category occurs",
+          "Number data / category data"
+        ],
+        "answer": "You collect it / already collected by others",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Primary / Secondary means You collect it / already collected by others."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A systematic error making results unrepresentative?",
+        "options": [
+          "Bias",
+          "Frequency",
+          "Quantitative / Qualitative",
+          "Discrete / Continuous"
+        ],
+        "answer": "Bias",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Bias means A systematic error making results unrepresentative."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: How many times a value or category occurs?",
+        "options": [
+          "Frequency",
+          "Quantitative / Qualitative",
+          "Discrete / Continuous",
+          "Nominal / Ordinal"
+        ],
+        "answer": "Frequency",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Frequency means How many times a value or category occurs."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Number data / category data?",
+        "options": [
+          "Quantitative / Qualitative",
+          "Nominal / Ordinal",
+          "Population / Sample",
+          "Census"
+        ],
+        "answer": "Quantitative / Qualitative",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Quantitative / Qualitative means Number data / category data."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: Counted whole values / measured any value?",
+        "options": [
+          "Discrete / Continuous",
+          "Population / Sample",
+          "Census",
+          "Primary / Secondary"
+        ],
+        "answer": "Discrete / Continuous",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: No order / natural order?",
+        "options": [
+          "Nominal / Ordinal",
+          "Census",
+          "Primary / Secondary",
+          "Bias"
+        ],
+        "answer": "Nominal / Ordinal",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Nominal / Ordinal means No order / natural order."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: Whole group / representative part?",
+        "options": [
+          "Population / Sample",
+          "Primary / Secondary",
+          "Bias",
+          "Frequency"
+        ],
+        "answer": "Population / Sample",
+        "hint": "Use the Unit 6 Math Words & Symbols reference.",
+        "explanation": "Population / Sample means Whole group / representative part."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u6-game-1",
+        "icon": "?",
+        "skill": "Quantitative / Qualitative",
+        "title": "Quick Match: Quantitative / Qualitative",
+        "description": "Practise quantitative / qualitative through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Quantitative / Qualitative” mean?",
+            "choices": [
+              "Number data / category data",
+              "Counted whole values / measured any value",
+              "No order / natural order",
+              "Whole group / representative part"
+            ],
+            "answer": "Number data / category data",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Quantitative / Qualitative means Number data / category data."
+          },
+          {
+            "prompt": "What does “Population / Sample” mean?",
+            "choices": [
+              "Whole group / representative part",
+              "Data from every member of the population",
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative"
+            ],
+            "answer": "Whole group / representative part",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Population / Sample means Whole group / representative part."
+          },
+          {
+            "prompt": "Which term matches this meaning: A systematic error making results unrepresentative?",
+            "choices": [
+              "Bias",
+              "Frequency",
+              "Quantitative / Qualitative",
+              "Discrete / Continuous"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Bias means A systematic error making results unrepresentative."
+          },
+          {
+            "prompt": "Which term matches this meaning: Counted whole values / measured any value?",
+            "choices": [
+              "Discrete / Continuous",
+              "Population / Sample",
+              "Census",
+              "Primary / Secondary"
+            ],
+            "answer": "Discrete / Continuous",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-2",
+        "icon": "★",
+        "skill": "Discrete / Continuous",
+        "title": "Concept Quest: Discrete / Continuous",
+        "description": "Practise discrete / continuous through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Discrete / Continuous” mean?",
+            "choices": [
+              "Counted whole values / measured any value",
+              "No order / natural order",
+              "Whole group / representative part",
+              "Data from every member of the population"
+            ],
+            "answer": "Counted whole values / measured any value",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+          },
+          {
+            "prompt": "What does “Census” mean?",
+            "choices": [
+              "Data from every member of the population",
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative",
+              "How many times a value or category occurs"
+            ],
+            "answer": "Data from every member of the population",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Census means Data from every member of the population."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times a value or category occurs?",
+            "choices": [
+              "Frequency",
+              "Quantitative / Qualitative",
+              "Discrete / Continuous",
+              "Nominal / Ordinal"
+            ],
+            "answer": "Frequency",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Frequency means How many times a value or category occurs."
+          },
+          {
+            "prompt": "Which term matches this meaning: No order / natural order?",
+            "choices": [
+              "Nominal / Ordinal",
+              "Census",
+              "Primary / Secondary",
+              "Bias"
+            ],
+            "answer": "Nominal / Ordinal",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Nominal / Ordinal means No order / natural order."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-3",
+        "icon": "◫",
+        "skill": "Nominal / Ordinal",
+        "title": "Model Detective: Nominal / Ordinal",
+        "description": "Practise nominal / ordinal through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Nominal / Ordinal” mean?",
+            "choices": [
+              "No order / natural order",
+              "Whole group / representative part",
+              "Data from every member of the population",
+              "You collect it / already collected by others"
+            ],
+            "answer": "No order / natural order",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Nominal / Ordinal means No order / natural order."
+          },
+          {
+            "prompt": "What does “Primary / Secondary” mean?",
+            "choices": [
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative",
+              "How many times a value or category occurs",
+              "Number data / category data"
+            ],
+            "answer": "You collect it / already collected by others",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Primary / Secondary means You collect it / already collected by others."
+          },
+          {
+            "prompt": "Which term matches this meaning: Number data / category data?",
+            "choices": [
+              "Quantitative / Qualitative",
+              "Nominal / Ordinal",
+              "Population / Sample",
+              "Census"
+            ],
+            "answer": "Quantitative / Qualitative",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Quantitative / Qualitative means Number data / category data."
+          },
+          {
+            "prompt": "Which term matches this meaning: Whole group / representative part?",
+            "choices": [
+              "Population / Sample",
+              "Primary / Secondary",
+              "Bias",
+              "Frequency"
+            ],
+            "answer": "Population / Sample",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Population / Sample means Whole group / representative part."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-4",
+        "icon": "→",
+        "skill": "Population / Sample",
+        "title": "Rule Runner: Population / Sample",
+        "description": "Practise population / sample through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Population / Sample” mean?",
+            "choices": [
+              "Whole group / representative part",
+              "Data from every member of the population",
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative"
+            ],
+            "answer": "Whole group / representative part",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Population / Sample means Whole group / representative part."
+          },
+          {
+            "prompt": "Which term matches this meaning: A systematic error making results unrepresentative?",
+            "choices": [
+              "Bias",
+              "Frequency",
+              "Quantitative / Qualitative",
+              "Discrete / Continuous"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Bias means A systematic error making results unrepresentative."
+          },
+          {
+            "prompt": "Which term matches this meaning: Counted whole values / measured any value?",
+            "choices": [
+              "Discrete / Continuous",
+              "Population / Sample",
+              "Census",
+              "Primary / Secondary"
+            ],
+            "answer": "Discrete / Continuous",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+          },
+          {
+            "prompt": "What does “Quantitative / Qualitative” mean?",
+            "choices": [
+              "Number data / category data",
+              "Counted whole values / measured any value",
+              "No order / natural order",
+              "Whole group / representative part"
+            ],
+            "answer": "Number data / category data",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Quantitative / Qualitative means Number data / category data."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-5",
+        "icon": "Σ",
+        "skill": "Census",
+        "title": "Vocabulary Vault: Census",
+        "description": "Practise census through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Census” mean?",
+            "choices": [
+              "Data from every member of the population",
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative",
+              "How many times a value or category occurs"
+            ],
+            "answer": "Data from every member of the population",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Census means Data from every member of the population."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times a value or category occurs?",
+            "choices": [
+              "Frequency",
+              "Quantitative / Qualitative",
+              "Discrete / Continuous",
+              "Nominal / Ordinal"
+            ],
+            "answer": "Frequency",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Frequency means How many times a value or category occurs."
+          },
+          {
+            "prompt": "Which term matches this meaning: No order / natural order?",
+            "choices": [
+              "Nominal / Ordinal",
+              "Census",
+              "Primary / Secondary",
+              "Bias"
+            ],
+            "answer": "Nominal / Ordinal",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Nominal / Ordinal means No order / natural order."
+          },
+          {
+            "prompt": "What does “Discrete / Continuous” mean?",
+            "choices": [
+              "Counted whole values / measured any value",
+              "No order / natural order",
+              "Whole group / representative part",
+              "Data from every member of the population"
+            ],
+            "answer": "Counted whole values / measured any value",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-6",
+        "icon": "◇",
+        "skill": "Primary / Secondary",
+        "title": "Challenge Cards: Primary / Secondary",
+        "description": "Practise primary / secondary through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Primary / Secondary” mean?",
+            "choices": [
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative",
+              "How many times a value or category occurs",
+              "Number data / category data"
+            ],
+            "answer": "You collect it / already collected by others",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Primary / Secondary means You collect it / already collected by others."
+          },
+          {
+            "prompt": "Which term matches this meaning: Number data / category data?",
+            "choices": [
+              "Quantitative / Qualitative",
+              "Nominal / Ordinal",
+              "Population / Sample",
+              "Census"
+            ],
+            "answer": "Quantitative / Qualitative",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Quantitative / Qualitative means Number data / category data."
+          },
+          {
+            "prompt": "Which term matches this meaning: Whole group / representative part?",
+            "choices": [
+              "Population / Sample",
+              "Primary / Secondary",
+              "Bias",
+              "Frequency"
+            ],
+            "answer": "Population / Sample",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Population / Sample means Whole group / representative part."
+          },
+          {
+            "prompt": "What does “Nominal / Ordinal” mean?",
+            "choices": [
+              "No order / natural order",
+              "Whole group / representative part",
+              "Data from every member of the population",
+              "You collect it / already collected by others"
+            ],
+            "answer": "No order / natural order",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Nominal / Ordinal means No order / natural order."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-7",
+        "icon": "⚡",
+        "skill": "Bias",
+        "title": "Think Fast: Bias",
+        "description": "Practise bias through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A systematic error making results unrepresentative?",
+            "choices": [
+              "Bias",
+              "Frequency",
+              "Quantitative / Qualitative",
+              "Discrete / Continuous"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Bias means A systematic error making results unrepresentative."
+          },
+          {
+            "prompt": "Which term matches this meaning: Counted whole values / measured any value?",
+            "choices": [
+              "Discrete / Continuous",
+              "Population / Sample",
+              "Census",
+              "Primary / Secondary"
+            ],
+            "answer": "Discrete / Continuous",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+          },
+          {
+            "prompt": "What does “Quantitative / Qualitative” mean?",
+            "choices": [
+              "Number data / category data",
+              "Counted whole values / measured any value",
+              "No order / natural order",
+              "Whole group / representative part"
+            ],
+            "answer": "Number data / category data",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Quantitative / Qualitative means Number data / category data."
+          },
+          {
+            "prompt": "What does “Population / Sample” mean?",
+            "choices": [
+              "Whole group / representative part",
+              "Data from every member of the population",
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative"
+            ],
+            "answer": "Whole group / representative part",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Population / Sample means Whole group / representative part."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-8",
+        "icon": "☁",
+        "skill": "Frequency",
+        "title": "Explain It: Frequency",
+        "description": "Practise frequency through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: How many times a value or category occurs?",
+            "choices": [
+              "Frequency",
+              "Quantitative / Qualitative",
+              "Discrete / Continuous",
+              "Nominal / Ordinal"
+            ],
+            "answer": "Frequency",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Frequency means How many times a value or category occurs."
+          },
+          {
+            "prompt": "Which term matches this meaning: No order / natural order?",
+            "choices": [
+              "Nominal / Ordinal",
+              "Census",
+              "Primary / Secondary",
+              "Bias"
+            ],
+            "answer": "Nominal / Ordinal",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Nominal / Ordinal means No order / natural order."
+          },
+          {
+            "prompt": "What does “Discrete / Continuous” mean?",
+            "choices": [
+              "Counted whole values / measured any value",
+              "No order / natural order",
+              "Whole group / representative part",
+              "Data from every member of the population"
+            ],
+            "answer": "Counted whole values / measured any value",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+          },
+          {
+            "prompt": "What does “Census” mean?",
+            "choices": [
+              "Data from every member of the population",
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative",
+              "How many times a value or category occurs"
+            ],
+            "answer": "Data from every member of the population",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Census means Data from every member of the population."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-9",
+        "icon": "⌂",
+        "skill": "Quantitative / Qualitative",
+        "title": "Real-Life Round: Quantitative / Qualitative",
+        "description": "Practise quantitative / qualitative through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Number data / category data?",
+            "choices": [
+              "Quantitative / Qualitative",
+              "Nominal / Ordinal",
+              "Population / Sample",
+              "Census"
+            ],
+            "answer": "Quantitative / Qualitative",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Quantitative / Qualitative means Number data / category data."
+          },
+          {
+            "prompt": "Which term matches this meaning: Whole group / representative part?",
+            "choices": [
+              "Population / Sample",
+              "Primary / Secondary",
+              "Bias",
+              "Frequency"
+            ],
+            "answer": "Population / Sample",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Population / Sample means Whole group / representative part."
+          },
+          {
+            "prompt": "What does “Nominal / Ordinal” mean?",
+            "choices": [
+              "No order / natural order",
+              "Whole group / representative part",
+              "Data from every member of the population",
+              "You collect it / already collected by others"
+            ],
+            "answer": "No order / natural order",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Nominal / Ordinal means No order / natural order."
+          },
+          {
+            "prompt": "What does “Primary / Secondary” mean?",
+            "choices": [
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative",
+              "How many times a value or category occurs",
+              "Number data / category data"
+            ],
+            "answer": "You collect it / already collected by others",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Primary / Secondary means You collect it / already collected by others."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-10",
+        "icon": "!",
+        "skill": "Discrete / Continuous",
+        "title": "Spot the Error: Discrete / Continuous",
+        "description": "Practise discrete / continuous through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Counted whole values / measured any value?",
+            "choices": [
+              "Discrete / Continuous",
+              "Population / Sample",
+              "Census",
+              "Primary / Secondary"
+            ],
+            "answer": "Discrete / Continuous",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+          },
+          {
+            "prompt": "What does “Quantitative / Qualitative” mean?",
+            "choices": [
+              "Number data / category data",
+              "Counted whole values / measured any value",
+              "No order / natural order",
+              "Whole group / representative part"
+            ],
+            "answer": "Number data / category data",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Quantitative / Qualitative means Number data / category data."
+          },
+          {
+            "prompt": "What does “Population / Sample” mean?",
+            "choices": [
+              "Whole group / representative part",
+              "Data from every member of the population",
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative"
+            ],
+            "answer": "Whole group / representative part",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Population / Sample means Whole group / representative part."
+          },
+          {
+            "prompt": "Which term matches this meaning: A systematic error making results unrepresentative?",
+            "choices": [
+              "Bias",
+              "Frequency",
+              "Quantitative / Qualitative",
+              "Discrete / Continuous"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Bias means A systematic error making results unrepresentative."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-11",
+        "icon": "≡",
+        "skill": "Nominal / Ordinal",
+        "title": "Mastery Mix: Nominal / Ordinal",
+        "description": "Practise nominal / ordinal through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: No order / natural order?",
+            "choices": [
+              "Nominal / Ordinal",
+              "Census",
+              "Primary / Secondary",
+              "Bias"
+            ],
+            "answer": "Nominal / Ordinal",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Nominal / Ordinal means No order / natural order."
+          },
+          {
+            "prompt": "What does “Discrete / Continuous” mean?",
+            "choices": [
+              "Counted whole values / measured any value",
+              "No order / natural order",
+              "Whole group / representative part",
+              "Data from every member of the population"
+            ],
+            "answer": "Counted whole values / measured any value",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Discrete / Continuous means Counted whole values / measured any value."
+          },
+          {
+            "prompt": "What does “Census” mean?",
+            "choices": [
+              "Data from every member of the population",
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative",
+              "How many times a value or category occurs"
+            ],
+            "answer": "Data from every member of the population",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Census means Data from every member of the population."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times a value or category occurs?",
+            "choices": [
+              "Frequency",
+              "Quantitative / Qualitative",
+              "Discrete / Continuous",
+              "Nominal / Ordinal"
+            ],
+            "answer": "Frequency",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Frequency means How many times a value or category occurs."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-12",
+        "icon": "T",
+        "skill": "Population / Sample",
+        "title": "Unit Champion: Population / Sample",
+        "description": "Practise population / sample through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Whole group / representative part?",
+            "choices": [
+              "Population / Sample",
+              "Primary / Secondary",
+              "Bias",
+              "Frequency"
+            ],
+            "answer": "Population / Sample",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Population / Sample means Whole group / representative part."
+          },
+          {
+            "prompt": "What does “Nominal / Ordinal” mean?",
+            "choices": [
+              "No order / natural order",
+              "Whole group / representative part",
+              "Data from every member of the population",
+              "You collect it / already collected by others"
+            ],
+            "answer": "No order / natural order",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Nominal / Ordinal means No order / natural order."
+          },
+          {
+            "prompt": "What does “Primary / Secondary” mean?",
+            "choices": [
+              "You collect it / already collected by others",
+              "A systematic error making results unrepresentative",
+              "How many times a value or category occurs",
+              "Number data / category data"
+            ],
+            "answer": "You collect it / already collected by others",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Primary / Secondary means You collect it / already collected by others."
+          },
+          {
+            "prompt": "Which term matches this meaning: Number data / category data?",
+            "choices": [
+              "Quantitative / Qualitative",
+              "Nominal / Ordinal",
+              "Population / Sample",
+              "Census"
+            ],
+            "answer": "Quantitative / Qualitative",
+            "clue": "Use the Unit 6 Math Words & Symbols reference.",
+            "explanation": "Quantitative / Qualitative means Number data / category data."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can this unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work through every example on paper, and only move on when the idea feels solid. Your AI tutor is available day and night to explain a point in a new way, invent extra practice, or check your reasoning. Your teacher will also meet with you about twice a week to help with anything that feels tricky. Keep a pencil and notebook beside you – statistics is something you learn by doing, not just by reading.",
+    "I can why does this matter so much? We live in a world flooded with numbers. Advertisements claim that \"four out of five people prefer\" a product. News reports announce that a poll predicts an election result. Health campaigns tell us how many people a disease affects. Some of these claims are trustworthy and some are dangerously misleading, and the difference almost always lies in how the data was collected. Once you understand data collection, you will never again read a statistic in quite the same innocent way. You will ask: who was asked, how were they chosen, and was the question fair? That habit of careful questioning is one of the most valuable thinking skills you can own.",
+    "I can classify data as quantitative or qualitative, and as discrete, continuous, nominal or ordinal.",
+    "I can explain the difference between primary and secondary data and choose the right one for a question.",
+    "I can describe and apply random, systematic, stratified and convenience sampling.",
+    "I can explain the difference between a population, a sample and a census, and decide which to use.",
+    "I can design clear, unbiased questionnaire questions and choose suitable question types.",
+    "I can record and read data in tally charts, frequency tables and two-way tables."
+  ]
+}

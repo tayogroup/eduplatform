@@ -1,0 +1,1782 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.171Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g07-u14",
+    "unitNo": 14,
+    "unitTitle": "Position and Transformation",
+    "unitOverview": "Welcome to Unit 14! In this unit you will learn how to describe exactly where a shape sits and exactly how it moves. These are two of the most useful ideas in all of geometry. Every time Amina gives directions to her house in Hargeisa, every time Yusuf reads a map of the route to the masjid, and every time a game designer moves a character across the screen, they are using position and transformation.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-7-Content-Package.xlsx",
+    "sourceArchive": "Year 7 (1)-20260714T221013Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 7 (1)/Unit 14/Year 7 - Unit 14 Lesson.docx",
+      "Year 7 (1)/Unit 14/Year 7 - Unit 14 Activities.docx",
+      "Year 7 (1)/Unit 14/Year 7 - Unit 14 Practice.docx",
+      "Year 7 (1)/Unit 14/Year 7 - Unit 14 Reference.docx"
+    ],
+    "sourceBlockCount": 352,
+    "transformation": "Structured directly from the standardized Cambridge Stage 7 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Plot and read points in all four quadrants using coordinate pairs (x, y), including negative values.",
+    "Name the origin, the x-axis, the y-axis and the four quadrants, and know the sign pattern of each quadrant.",
+    "Describe and perform a translation using a column vector and describe it in words.",
+    "Describe and perform a reflection in a mirror line, including the x-axis, the y-axis and lines such as x = 2.",
+    "Describe and perform a rotation about a point, giving the centre, angle and direction.",
+    "Use coordinate rules to transform points quickly with algebra.",
+    "Explain why translations, reflections and rotations produce a congruent image, and combine two transformations in sequence."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-the-coordinate-grid-and-four-quadrants",
+      "title": "The Coordinate Grid and Four Quadrants",
+      "explanation": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis. They meet at a single point called the origin, whose coordinates are (0, 0). Every other point on the grid has its own unique pair of numbers, just as every house on a well-planned street has its own address. Positive and negative signs tell you the direction. A positive x means move right; a negative x means move left. A positive y…",
+      "example": "The two axes cut the grid into four regions called quadrants, numbered with Roman numerals and running anticlockwise from the top-right:"
+    },
+    {
+      "id": "concept-2-plotting-and-reading-points-accurately",
+      "title": "Plotting and Reading Points Accurately",
+      "explanation": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin every single time. Move along the x-axis by the first number, then move parallel to the y-axis by the second number, and make a small neat cross where you land. To read a point, do the reverse. Look at the point and ask two questions. First, how far left or right of the y-axis is it? That distance,…",
+      "example": "Here is a common trap to avoid. Many learners rush and swap the two numbers, plotting (2, 5) where (5, 2) belongs. Slow down and whisper the rule – x first, then y; along, then up. Another trap is to lose track of the…"
+    },
+    {
+      "id": "concept-3-translation-sliding-a-shape",
+      "title": "Translation – Sliding a Shape",
+      "explanation": "A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation. Sliding a book across a table, moving a game piece across a board, or shifting a chair straight across a room are all everyday translations. We describe a translation with a column vector, two numbers written one above the other. The top number tells you the horizontal move (right is positive, left is…",
+      "example": "To translate a shape, apply the same slide to every vertex. Suppose a triangle has vertices at A(1, 1), B(4, 1) and C(1, 3), and we translate it by (3, -2). We add 3 to each x-coordinate and subtract 2 from each…"
+    },
+    {
+      "id": "concept-4-reflection-flipping-in-a-mirror-line",
+      "title": "Reflection – Flipping in a Mirror Line",
+      "explanation": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection. When you look in a mirror you see yourself the same size and shape but reversed left to right; mathematical reflection works in exactly the same way. The reflected image is congruent to the object, but its orientation is flipped. The mirror line follows one golden rule: every point of the image is the same distance from the mirror line as the matching point of the object, but on the opposite side.…",
+      "example": "To reflect a shape neatly, reflect each vertex and then join the images. Measure the perpendicular distance from each vertex to the mirror line, then count the same distance across to the other side and mark the image…"
+    },
+    {
+      "id": "concept-5-rotation-turning-about-a-point",
+      "title": "Rotation – Turning About a Point",
+      "explanation": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge, and the hands sweeping around a clock are all rotations. Like the other transformations, rotation keeps the shape congruent – the size and shape never change, only the orientation. To describe a rotation fully you must give three pieces of information: the…",
+      "example": "The distance from any point to the centre stays exactly the same through the whole turn. If a corner starts 5 units from the centre, it finishes 5 units from the centre, just pointing in a new direction. This is why…"
+    },
+    {
+      "id": "concept-6-congruence-and-combining-transformations",
+      "title": "Congruence and Combining Transformations",
+      "explanation": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one can be placed exactly on top of the other after some combination of slides, flips and turns; every side matches a side, and every angle matches an angle. Congruence is one of the most important ideas in geometry, and transformations are the natural way to…",
+      "example": "The order usually matters. Reflecting a shape and then translating it can land in a different place from translating first and then reflecting. Always read the instructions carefully to see which move comes first. There…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "The Coordinate Grid and Four Quadrants",
+      "context": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis. They meet at a single point called the origin, whose coordinates are (0, 0).…",
+      "prompt": "Name the quadrant of each point: a) (2, 7) b) (-5, 1) c) (-3, -8) d) (6, -2).",
+      "answer": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Plotting and Reading Points Accurately",
+      "context": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin every single time. Move along the…",
+      "prompt": "Write the coordinates of the origin.",
+      "answer": "(0,",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "(0,"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Translation – Sliding a Shape",
+      "context": "A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation. Sliding a book across a table, moving a game…",
+      "prompt": "A point is 3 units left and 4 units up from the origin. Write its coordinates.",
+      "answer": ".",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Reflection – Flipping in a Mirror Line",
+      "context": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection. When you look in a mirror you see yourself the same size and shape but reversed left to right; mathematical reflection works in exactly the…",
+      "prompt": "Translate the point (1, 1) by the vector (5, 2).",
+      "answer": "(-3,",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "(-3,"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Rotation – Turning About a Point",
+      "context": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge,…",
+      "prompt": "Reflect the point (4, 5) in the x-axis.",
+      "answer": ".",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Congruence and Combining Transformations",
+      "context": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one…",
+      "prompt": "Reflect each point in the y-axis: a) (3, 2) b) (-1, 5) c) (4, -6).",
+      "answer": "1) a) (-3,",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) (-3,"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "The Coordinate Grid and Four Quadrants",
+      "modelType": "concept-model-1",
+      "purpose": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis. They meet at a single point called…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Plotting and Reading Points Accurately",
+      "modelType": "concept-model-2",
+      "purpose": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Translation – Sliding a Shape",
+      "modelType": "concept-model-3",
+      "purpose": "A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Reflection – Flipping in a Mirror Line",
+      "modelType": "concept-model-4",
+      "purpose": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection. When you look in a mirror you see yourself the same size and shape but reversed left to right;…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Rotation – Turning About a Point",
+      "modelType": "concept-model-5",
+      "purpose": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Congruence and Combining Transformations",
+      "modelType": "concept-model-6",
+      "purpose": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to plot a point",
+      "example": "In which quadrant does the point (-6, 4) lie?",
+      "steps": [
+        "Start at the origin every time.",
+        "Move along the x-axis by the first number (right if positive, left if negative).",
+        "Move parallel to the y-axis by the second number (up if positive, down if negative).",
+        "Mark a small neat cross where you land."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to translate a shape",
+      "example": "A point P is 4 units left of the y-axis and 3 units below the x-axis. Write its coordinates.",
+      "steps": [
+        "Read the vector: the top number is the horizontal move, the bottom is the vertical move.",
+        "Add the horizontal number to each x-coordinate.",
+        "Add the vertical number to each y-coordinate.",
+        "Plot the new vertices and join them in the same order."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to describe a rotation fully",
+      "example": "Triangle ABC has vertices A(2, 1), B(5, 1) and C(2, 4). Translate it by the vector (-3, 2). Give the image coordinates.",
+      "steps": [
+        "State the centre of rotation (the fixed point).",
+        "State the angle of rotation (90°, 180° or 270°).",
+        "State the direction (clockwise or anticlockwise). For 180° the direction does not matter."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Reflect in the y-axis",
+      "example": "Reflect the point Q(5, -2) in the y-axis.",
+      "steps": [
+        "Solution: The rule for the y-axis is (x, y) → (-x, y).",
+        "Change the sign of x and keep y the same.",
+        "So Q(5, -2) becomes Q′(-5, -2).",
+        "Both points are 5 units from the y-axis, on opposite sides, at the same height."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Reflect in a line x = 1",
+      "example": "Reflect the point R(4, 3) in the line x = 1.",
+      "steps": [
+        "Solution: Find how far R is from the mirror line.",
+        "R has x = 4, and the line is x = 1, so R is 4 - 1 = 3 units to the right of the line.",
+        "The image must be 3 units to the left of the line: 1 - 3 = -2.",
+        "The y-coordinate is unchanged."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Rotate 90° anticlockwise",
+      "example": "Rotate the point S(2, 1) by 90° anticlockwise about the origin.",
+      "steps": [
+        "Solution: The rule for 90° anticlockwise about the origin is (x, y) → (-y, x).",
+        "So take S(2, 1): the new x is -y = -1, and the new y is x = 2.",
+        "Therefore S′ is (-1, 2).",
+        "Check with tracing paper: pin the origin and turn a quarter turn anticlockwise, and S lands at (-1, 2)."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Name the quadrant",
+      "prompt": "In which quadrant does the point (-6, 4) lie?",
+      "solution": "Solution: The x-coordinate is negative (left of the y-axis) and the y-coordinate is positive (above the x-axis). Negative x with positive y is the top-left region, which is Quadrant II."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Plot and read",
+      "prompt": "A point P is 4 units left of the y-axis and 3 units below the x-axis. Write its coordinates.",
+      "solution": "Solution: Left of the y-axis means the x-coordinate is negative, so x = -4. Below the x-axis means the y-coordinate is negative, so y = -3. The point is P(-4, -3), which lies in Quadrant III."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Translate a triangle",
+      "prompt": "Triangle ABC has vertices A(2, 1), B(5, 1) and C(2, 4). Translate it by the vector (-3, 2). Give the image coordinates.",
+      "solution": "Solution: Add -3 to each x-coordinate and 2 to each y-coordinate. A(2, 1) → A′(-1, 3). B(5, 1) → B′(2, 3). C(2, 4) → C′(-1, 6). The image A′B′C′ is congruent to ABC and has simply slid 3 left and 2 up."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Reflect in the y-axis",
+      "prompt": "Reflect the point Q(5, -2) in the y-axis.",
+      "solution": "Solution: The rule for the y-axis is (x, y) → (-x, y). Change the sign of x and keep y the same. So Q(5, -2) becomes Q′(-5, -2). Both points are 5 units from the y-axis, on opposite sides, at the same height."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Reflect in a line x = 1",
+      "prompt": "Reflect the point R(4, 3) in the line x = 1.",
+      "solution": "Solution: Find how far R is from the mirror line. R has x = 4, and the line is x = 1, so R is 4 - 1 = 3 units to the right of the line. The image must be 3 units to the left of the line: 1 - 3 = -2. The y-coordinate is unchanged. So R′ is (-2, 3)."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Rotate 90° anticlockwise",
+      "prompt": "Rotate the point S(2, 1) by 90° anticlockwise about the origin.",
+      "solution": "Solution: The rule for 90° anticlockwise about the origin is (x, y) → (-y, x). So take S(2, 1): the new x is -y = -1, and the new y is x = 2. Therefore S′ is (-1, 2). Check with tracing paper: pin the origin and turn a quarter turn anticlockwise, and S lands at (-1, 2)."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Rotate 180°",
+      "prompt": "Rotate the point T(-3, 5) by 180° about the origin.",
+      "solution": "Solution: The rule for 180° about the origin is (x, y) → (-x, -y). Change both signs. So T(-3, 5) becomes T′(3, -5). A half turn sends every point straight through the origin to the opposite side, the same distance away."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Combine two transformations",
+      "prompt": "Point U(1, 2) is first reflected in the x-axis, then translated by (4, 1). Find the final image.",
+      "solution": "Solution: Do the reflection first. Reflecting in the x-axis uses (x, y) → (x, -y), so U(1, 2) → U′(1, -2). Now translate U′ by (4, 1): add 4 to the x and 1 to the y, giving U′′(5, -1). The final image is U′′(5, -1). Notice the order mattered – doing the translation first would have given a different point."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "Rotate the point (1, 0) by 90° anticlockwise about the origin.",
+      "solution": "A′(1,"
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Reflect the point (6, 2) in the line x = 3.",
+      "solution": ", B′(4,"
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Describe fully the single transformation that maps (2, 3) onto (2, -3).",
+      "solution": ", C′(1,"
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
+      "solution": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Name the quadrant of each point: a) (2, 7) b) (-5, 1) c) (-3, -8) d) (6, -2).",
+      "answer": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write the coordinates of the origin.",
+      "answer": "(0,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "A point is 3 units left and 4 units up from the origin. Write its coordinates.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Translate the point (1, 1) by the vector (5, 2).",
+      "answer": "(-3,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Reflect the point (4, 5) in the x-axis.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Reflect each point in the y-axis: a) (3, 2) b) (-1, 5) c) (4, -6).",
+      "answer": "1) a) (-3,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Triangle ABC has vertices A(2, 1), B(5, 1), C(2, 3). Translate it by (-1, 3) and list the image vertices.",
+      "answer": ", b) (1,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Rotate each point 180° about the origin: a) (2, 5) b) (-3, 4).",
+      "answer": ", c) (-4, -6).",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Rotate the point (1, 0) by 90° anticlockwise about the origin.",
+      "answer": "A′(1,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Reflect the point (6, 2) in the line x = 3.",
+      "answer": ", B′(4,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Describe fully the single transformation that maps (2, 3) onto (2, -3).",
+      "answer": ", C′(1,",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
+      "answer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Draw Your Own Four-Quadrant Grid",
+      "materials": "squared paper, a ruler, a pencil.",
+      "steps": [
+        "Draw an x-axis and a y-axis crossing at the centre of the page. Label the origin (0, 0).",
+        "Number both axes from -6 to 6, marking each unit carefully.",
+        "Plot one point in each quadrant and label its coordinates.",
+        "Challenge a family member to name the quadrant of each point you plotted.",
+        "Keep your grid – you can reuse it for the transformation activities below."
+      ]
+    },
+    {
+      "title": "Coordinate Picture Reveal",
+      "materials": "squared paper and a pencil.",
+      "steps": [
+        "Secretly choose a simple picture, such as a house or a boat, made from straight lines.",
+        "Write down the list of coordinates for each corner, in order.",
+        "Give only the list of coordinates to a friend and ask them to plot and join the points.",
+        "Check whether the picture they reveal matches your secret drawing.",
+        "This game trains fast, accurate plotting and reading of points in all four quadrants."
+      ]
+    },
+    {
+      "title": "Tracing-Paper Transformations",
+      "materials": "squared paper, tracing paper (or thin baking paper), a pencil.",
+      "steps": [
+        "Draw a small triangle on your grid and label its vertices.",
+        "Trace the triangle, then slide the tracing to test a translation – read off the new coordinates.",
+        "Pin the tracing at the origin with your pencil tip and turn it 90° and 180° to test rotations.",
+        "Tracing paper is the tool professionals wish they had in exams – use it to check every transformation you draw."
+      ]
+    },
+    {
+      "title": "Transformation Treasure Hunt (Family Game)",
+      "materials": "a room, some small objects, and slips of paper.",
+      "steps": [
+        "Mark a starting spot as the origin and agree which way is positive x and positive y.",
+        "Write instructions as vectors, such as ‘translate by (3, -2) steps’, leading to a hidden treasure.",
+        "Let a family member follow the clues to find the treasure, then swap roles."
+      ]
+    },
+    {
+      "title": "Symmetry Hunt and Pattern Design",
+      "materials": "your eyes, a notebook, and later some coloured pencils.",
+      "steps": [
+        "Walk around your home and find five objects with line symmetry or rotational symmetry – tiles, mats, windows, cups.",
+        "For each one, sketch it and mark the lines of symmetry or state the order of rotational symmetry.",
+        "Now design your own repeating border pattern by reflecting and translating one small motif.",
+        "Colour your pattern and explain which transformations you used to make it."
+      ]
+    },
+    {
+      "title": "Investigation – Combining Two Reflections",
+      "materials": "squared paper, tracing paper, a ruler.",
+      "steps": [
+        "Draw two parallel vertical mirror lines a few units apart, and a small shape to the left of both.",
+        "Reflect the shape in the first line, then reflect the image in the second line.",
+        "Measure how far the final image has moved from the original – what single transformation is this?",
+        "Now try two mirror lines that cross at a point, and describe the single transformation you get instead.",
+        "Write down what you discover – you have found two of the most elegant results in transformation geometry."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "Here is a common trap to avoid. Many learners rush and swap the two numbers, plotting (2, 5) where (5, 2) belongs. Slow down and whisper the rule – x first, then y; along, then up. Another trap is to lose track of the sign when working in the lower or left quadrants. If Khadija plots the vertices of a triangle and one corner drifts into the wrong quadrant, the whole triangle will look wrong. Careful, unhurried plotting is the foundation of every transformation that follows in this unit."
+      },
+      {
+        "title": "Key idea 2",
+        "text": "The mirror line follows one golden rule: every point of the image is the same distance from the mirror line as the matching point of the object, but on the opposite side. The line joining a point to its image crosses the mirror line at a right angle. So if a corner sits 3 units to the left of the mirror line, its image sits 3 units to the right of that same line, directly across from it."
+      },
+      {
+        "title": "Key idea 3",
+        "text": "Reflection in the x-axis: the rule is (x, y) → (x, -y). The x stays the same; the y changes sign. So (3, 2) becomes (3, -2)."
+      },
+      {
+        "title": "Key idea 4",
+        "text": "Reflection in the y-axis: the rule is (x, y) → (-x, y). The y stays the same; the x changes sign. So (3, 2) becomes (-3, 2)."
+      },
+      {
+        "title": "Key idea 5",
+        "text": "You have now met the whole toolkit of this unit: the coordinate grid with its four quadrants, accurate plotting and reading of points, and the three rigid transformations of translation, reflection and rotation, all held together by the idea of congruence. These ideas are not separate islands – they work as one system. A translation, a reflection and a rotation can all be written as a rule that acts on the coordinates (x, y), which is why a computer can perform millions of them every second when it draws a moving image on screen."
+      },
+      {
+        "title": "Key idea 6",
+        "text": "Think of how these pieces fit together in a single scene. A game designer places a spaceship using coordinates, slides it across the screen with a translation, flips it with a reflection when it turns to face the other way, and spins it with a rotation when it is hit. Every frame of the animation is just the same shape transformed by a new rule. When Maryam designs a repeating border pattern for a length of cloth, she reflects and translates one motif over and over, and the mathematics guarantees that every copy is perfectly congruent to the first."
+      }
+    ],
+    "terms": [
+      [
+        "Coordinates",
+        "An ordered pair (x, y) giving position"
+      ],
+      [
+        "Origin",
+        "The centre point (0, 0) where the axes cross"
+      ],
+      [
+        "Quadrant",
+        "One of the four regions of the grid"
+      ],
+      [
+        "Translation",
+        "A slide described by a column vector"
+      ],
+      [
+        "Reflection",
+        "A flip across a mirror line"
+      ],
+      [
+        "Rotation",
+        "A turn about a centre point"
+      ],
+      [
+        "Vector",
+        "Two numbers giving a horizontal and vertical move"
+      ],
+      [
+        "Congruent",
+        "Exactly the same size and shape"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Plotting (2, 5) as (5, 2)",
+        "Say: x first, then y; along, then up"
+      ],
+      [
+        "Wrong sign in a quadrant",
+        "Left and down are negative; check the quadrant"
+      ],
+      [
+        "Rotation missing a detail",
+        "Always give all three parts"
+      ],
+      [
+        "Reflection at wrong distance",
+        "Same distance both sides, at right angles"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Name the quadrant of each point: a) (2, 7) b) (-5, 1) c) (-3, -8) d) (6, -2).",
+      "answer": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write the coordinates of the origin.",
+      "answer": "(0,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(0,"
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "A point is 3 units left and 4 units up from the origin. Write its coordinates.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Translate the point (1, 1) by the vector (5, 2).",
+      "answer": "(-3,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(-3,"
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Reflect the point (4, 5) in the x-axis.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Reflect each point in the y-axis: a) (3, 2) b) (-1, 5) c) (4, -6).",
+      "answer": "1) a) (-3,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) (-3,"
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Triangle ABC has vertices A(2, 1), B(5, 1), C(2, 3). Translate it by (-1, 3) and list the image vertices.",
+      "answer": ", b) (1,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", b) (1,"
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo01",
+      "difficulty": "Round 2",
+      "prompt": "Rotate each point 180° about the origin: a) (2, 5) b) (-3, 4).",
+      "answer": ", c) (-4, -6).",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", c) (-4, -6)."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Rotate the point (1, 0) by 90° anticlockwise about the origin.",
+      "answer": "A′(1,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "A′(1,"
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "Reflect the point (6, 2) in the line x = 3.",
+      "answer": ", B′(4,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", B′(4,"
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo04",
+      "difficulty": "Round 3",
+      "prompt": "Describe fully the single transformation that maps (2, 3) onto (2, -3).",
+      "answer": ", C′(1,",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", C′(1,"
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo05",
+      "difficulty": "Round 3",
+      "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
+      "answer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,"
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "On a map of Kismaayo, the school is at (-2, 3) and the well is at (5, 3). Each unit is 100 metres. What translation vector takes you from the school to the well, and how far apart are they?",
+      "answer": "1) Vector (7,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Vector (7,"
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Farah makes a border pattern by reflecting a triangle in a vertical mirror line and then repeating it. The triangle has a corner at (2, 1) and the mirror line is x = 4. Where is the corner of the reflected triangle?",
+      "answer": "; they are 7 units = 700 metres apart.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "; they are 7 units = 700 metres apart."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "A ceiling fan has 5 identical blades spaced evenly. What is its order of rotational symmetry, and through what angle must one blade turn to sit where the next blade was?",
+      "answer": "The corner (2,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "The corner (2,"
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "Ibrahim rotates a game piece at (3, 1) by 90° anticlockwise about the origin, and Zahra rotates an identical piece by 90° clockwise. Give both image coordinates and explain why both pieces are still congruent to the original.",
+      "answer": "is 2 left of x = 4, so its image is 2 right of the line, at (6,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "is 2 left of x = 4, so its image is 2 right of the line, at (6,"
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A shape is reflected in the x-axis and its image is then reflected in the x-axis again. Explain, using the idea of inverse transformations, why the shape returns exactly to its starting position.",
+      "answer": ".",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
+      "answer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,"
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
+      "keyIdeas": [
+        "Coordinates",
+        "Origin",
+        "Quadrant"
+      ],
+      "modelAnswer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,"
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A shape is translated by (-3, 4) and then by (7, -1). Write the single equivalent vector and the vector that returns it to the start.",
+      "keyIdeas": [
+        "Origin",
+        "Quadrant",
+        "Translation"
+      ],
+      "modelAnswer": ": (-2 + 1, -4 +"
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "The point (a, b) is rotated 180° about the origin to give (-6, 9). Find a and b.",
+      "keyIdeas": [
+        "Quadrant",
+        "Translation",
+        "Reflection"
+      ],
+      "modelAnswer": "= (-1,"
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Two reflections in parallel vertical mirror lines are performed one after the other. Explain what single transformation this is equivalent to.",
+      "keyIdeas": [
+        "Translation",
+        "Reflection",
+        "Rotation"
+      ],
+      "modelAnswer": ". Final answer (-1,"
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Rotation – Turning About a Point.",
+      "keyIdeas": [
+        "Coordinates",
+        "Origin",
+        "Quadrant"
+      ],
+      "modelAnswer": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge, and the hands sweeping around a clock are all rotations. Like the other transformations, rotation keeps the shape congruent – the size and shape never change, only the orientation. To describe a rotation fully you must give three pieces of information: the…"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Congruence and Combining Transformations.",
+      "keyIdeas": [
+        "Coordinates",
+        "Origin",
+        "Quadrant"
+      ],
+      "modelAnswer": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one can be placed exactly on top of the other after some combination of slides, flips and turns; every side matches a side, and every angle matches an angle. Congruence is one of the most important ideas in geometry, and transformations are the natural way to…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Coordinates” mean?",
+        "options": [
+          "An ordered pair (x, y) giving position",
+          "The centre point (0, 0) where the axes cross",
+          "One of the four regions of the grid",
+          "A slide described by a column vector"
+        ],
+        "answer": "An ordered pair (x, y) giving position",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Coordinates means An ordered pair (x, y) giving position."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Origin” mean?",
+        "options": [
+          "The centre point (0, 0) where the axes cross",
+          "One of the four regions of the grid",
+          "A slide described by a column vector",
+          "A flip across a mirror line"
+        ],
+        "answer": "The centre point (0, 0) where the axes cross",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Origin means The centre point (0, 0) where the axes cross."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Quadrant” mean?",
+        "options": [
+          "One of the four regions of the grid",
+          "A slide described by a column vector",
+          "A flip across a mirror line",
+          "A turn about a centre point"
+        ],
+        "answer": "One of the four regions of the grid",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Quadrant means One of the four regions of the grid."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Translation” mean?",
+        "options": [
+          "A slide described by a column vector",
+          "A flip across a mirror line",
+          "A turn about a centre point",
+          "Two numbers giving a horizontal and vertical move"
+        ],
+        "answer": "A slide described by a column vector",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Translation means A slide described by a column vector."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Reflection” mean?",
+        "options": [
+          "A flip across a mirror line",
+          "A turn about a centre point",
+          "Two numbers giving a horizontal and vertical move",
+          "Exactly the same size and shape"
+        ],
+        "answer": "A flip across a mirror line",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Reflection means A flip across a mirror line."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Rotation” mean?",
+        "options": [
+          "A turn about a centre point",
+          "Two numbers giving a horizontal and vertical move",
+          "Exactly the same size and shape",
+          "An ordered pair (x, y) giving position"
+        ],
+        "answer": "A turn about a centre point",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Rotation means A turn about a centre point."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Two numbers giving a horizontal and vertical move?",
+        "options": [
+          "Vector",
+          "Congruent",
+          "Coordinates",
+          "Origin"
+        ],
+        "answer": "Vector",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Vector means Two numbers giving a horizontal and vertical move."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Exactly the same size and shape?",
+        "options": [
+          "Congruent",
+          "Coordinates",
+          "Origin",
+          "Quadrant"
+        ],
+        "answer": "Congruent",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Congruent means Exactly the same size and shape."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: An ordered pair (x, y) giving position?",
+        "options": [
+          "Coordinates",
+          "Quadrant",
+          "Translation",
+          "Reflection"
+        ],
+        "answer": "Coordinates",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Coordinates means An ordered pair (x, y) giving position."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The centre point (0, 0) where the axes cross?",
+        "options": [
+          "Origin",
+          "Translation",
+          "Reflection",
+          "Rotation"
+        ],
+        "answer": "Origin",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Origin means The centre point (0, 0) where the axes cross."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: One of the four regions of the grid?",
+        "options": [
+          "Quadrant",
+          "Reflection",
+          "Rotation",
+          "Vector"
+        ],
+        "answer": "Quadrant",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Quadrant means One of the four regions of the grid."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A slide described by a column vector?",
+        "options": [
+          "Translation",
+          "Rotation",
+          "Vector",
+          "Congruent"
+        ],
+        "answer": "Translation",
+        "hint": "Use the Unit 14 Math Words & Symbols reference.",
+        "explanation": "Translation means A slide described by a column vector."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u14-game-1",
+        "icon": "?",
+        "skill": "Coordinates",
+        "title": "Quick Match: Coordinates",
+        "description": "Practise coordinates through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Coordinates” mean?",
+            "choices": [
+              "An ordered pair (x, y) giving position",
+              "The centre point (0, 0) where the axes cross",
+              "One of the four regions of the grid",
+              "A slide described by a column vector"
+            ],
+            "answer": "An ordered pair (x, y) giving position",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Coordinates means An ordered pair (x, y) giving position."
+          },
+          {
+            "prompt": "What does “Translation” mean?",
+            "choices": [
+              "A slide described by a column vector",
+              "A flip across a mirror line",
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move"
+            ],
+            "answer": "A slide described by a column vector",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Translation means A slide described by a column vector."
+          },
+          {
+            "prompt": "Which term matches this meaning: Two numbers giving a horizontal and vertical move?",
+            "choices": [
+              "Vector",
+              "Congruent",
+              "Coordinates",
+              "Origin"
+            ],
+            "answer": "Vector",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Vector means Two numbers giving a horizontal and vertical move."
+          },
+          {
+            "prompt": "Which term matches this meaning: The centre point (0, 0) where the axes cross?",
+            "choices": [
+              "Origin",
+              "Translation",
+              "Reflection",
+              "Rotation"
+            ],
+            "answer": "Origin",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The centre point (0, 0) where the axes cross."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-2",
+        "icon": "★",
+        "skill": "Origin",
+        "title": "Concept Quest: Origin",
+        "description": "Practise origin through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Origin” mean?",
+            "choices": [
+              "The centre point (0, 0) where the axes cross",
+              "One of the four regions of the grid",
+              "A slide described by a column vector",
+              "A flip across a mirror line"
+            ],
+            "answer": "The centre point (0, 0) where the axes cross",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The centre point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Reflection” mean?",
+            "choices": [
+              "A flip across a mirror line",
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move",
+              "Exactly the same size and shape"
+            ],
+            "answer": "A flip across a mirror line",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Reflection means A flip across a mirror line."
+          },
+          {
+            "prompt": "Which term matches this meaning: Exactly the same size and shape?",
+            "choices": [
+              "Congruent",
+              "Coordinates",
+              "Origin",
+              "Quadrant"
+            ],
+            "answer": "Congruent",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Congruent means Exactly the same size and shape."
+          },
+          {
+            "prompt": "Which term matches this meaning: One of the four regions of the grid?",
+            "choices": [
+              "Quadrant",
+              "Reflection",
+              "Rotation",
+              "Vector"
+            ],
+            "answer": "Quadrant",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the grid."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-3",
+        "icon": "◫",
+        "skill": "Quadrant",
+        "title": "Model Detective: Quadrant",
+        "description": "Practise quadrant through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Quadrant” mean?",
+            "choices": [
+              "One of the four regions of the grid",
+              "A slide described by a column vector",
+              "A flip across a mirror line",
+              "A turn about a centre point"
+            ],
+            "answer": "One of the four regions of the grid",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the grid."
+          },
+          {
+            "prompt": "What does “Rotation” mean?",
+            "choices": [
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move",
+              "Exactly the same size and shape",
+              "An ordered pair (x, y) giving position"
+            ],
+            "answer": "A turn about a centre point",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Rotation means A turn about a centre point."
+          },
+          {
+            "prompt": "Which term matches this meaning: An ordered pair (x, y) giving position?",
+            "choices": [
+              "Coordinates",
+              "Quadrant",
+              "Translation",
+              "Reflection"
+            ],
+            "answer": "Coordinates",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Coordinates means An ordered pair (x, y) giving position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A slide described by a column vector?",
+            "choices": [
+              "Translation",
+              "Rotation",
+              "Vector",
+              "Congruent"
+            ],
+            "answer": "Translation",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Translation means A slide described by a column vector."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-4",
+        "icon": "→",
+        "skill": "Translation",
+        "title": "Rule Runner: Translation",
+        "description": "Practise translation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Translation” mean?",
+            "choices": [
+              "A slide described by a column vector",
+              "A flip across a mirror line",
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move"
+            ],
+            "answer": "A slide described by a column vector",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Translation means A slide described by a column vector."
+          },
+          {
+            "prompt": "Which term matches this meaning: Two numbers giving a horizontal and vertical move?",
+            "choices": [
+              "Vector",
+              "Congruent",
+              "Coordinates",
+              "Origin"
+            ],
+            "answer": "Vector",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Vector means Two numbers giving a horizontal and vertical move."
+          },
+          {
+            "prompt": "Which term matches this meaning: The centre point (0, 0) where the axes cross?",
+            "choices": [
+              "Origin",
+              "Translation",
+              "Reflection",
+              "Rotation"
+            ],
+            "answer": "Origin",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The centre point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Coordinates” mean?",
+            "choices": [
+              "An ordered pair (x, y) giving position",
+              "The centre point (0, 0) where the axes cross",
+              "One of the four regions of the grid",
+              "A slide described by a column vector"
+            ],
+            "answer": "An ordered pair (x, y) giving position",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Coordinates means An ordered pair (x, y) giving position."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-5",
+        "icon": "Σ",
+        "skill": "Reflection",
+        "title": "Vocabulary Vault: Reflection",
+        "description": "Practise reflection through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Reflection” mean?",
+            "choices": [
+              "A flip across a mirror line",
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move",
+              "Exactly the same size and shape"
+            ],
+            "answer": "A flip across a mirror line",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Reflection means A flip across a mirror line."
+          },
+          {
+            "prompt": "Which term matches this meaning: Exactly the same size and shape?",
+            "choices": [
+              "Congruent",
+              "Coordinates",
+              "Origin",
+              "Quadrant"
+            ],
+            "answer": "Congruent",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Congruent means Exactly the same size and shape."
+          },
+          {
+            "prompt": "Which term matches this meaning: One of the four regions of the grid?",
+            "choices": [
+              "Quadrant",
+              "Reflection",
+              "Rotation",
+              "Vector"
+            ],
+            "answer": "Quadrant",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the grid."
+          },
+          {
+            "prompt": "What does “Origin” mean?",
+            "choices": [
+              "The centre point (0, 0) where the axes cross",
+              "One of the four regions of the grid",
+              "A slide described by a column vector",
+              "A flip across a mirror line"
+            ],
+            "answer": "The centre point (0, 0) where the axes cross",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The centre point (0, 0) where the axes cross."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-6",
+        "icon": "◇",
+        "skill": "Rotation",
+        "title": "Challenge Cards: Rotation",
+        "description": "Practise rotation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Rotation” mean?",
+            "choices": [
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move",
+              "Exactly the same size and shape",
+              "An ordered pair (x, y) giving position"
+            ],
+            "answer": "A turn about a centre point",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Rotation means A turn about a centre point."
+          },
+          {
+            "prompt": "Which term matches this meaning: An ordered pair (x, y) giving position?",
+            "choices": [
+              "Coordinates",
+              "Quadrant",
+              "Translation",
+              "Reflection"
+            ],
+            "answer": "Coordinates",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Coordinates means An ordered pair (x, y) giving position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A slide described by a column vector?",
+            "choices": [
+              "Translation",
+              "Rotation",
+              "Vector",
+              "Congruent"
+            ],
+            "answer": "Translation",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Translation means A slide described by a column vector."
+          },
+          {
+            "prompt": "What does “Quadrant” mean?",
+            "choices": [
+              "One of the four regions of the grid",
+              "A slide described by a column vector",
+              "A flip across a mirror line",
+              "A turn about a centre point"
+            ],
+            "answer": "One of the four regions of the grid",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the grid."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-7",
+        "icon": "⚡",
+        "skill": "Vector",
+        "title": "Think Fast: Vector",
+        "description": "Practise vector through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Two numbers giving a horizontal and vertical move?",
+            "choices": [
+              "Vector",
+              "Congruent",
+              "Coordinates",
+              "Origin"
+            ],
+            "answer": "Vector",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Vector means Two numbers giving a horizontal and vertical move."
+          },
+          {
+            "prompt": "Which term matches this meaning: The centre point (0, 0) where the axes cross?",
+            "choices": [
+              "Origin",
+              "Translation",
+              "Reflection",
+              "Rotation"
+            ],
+            "answer": "Origin",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The centre point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Coordinates” mean?",
+            "choices": [
+              "An ordered pair (x, y) giving position",
+              "The centre point (0, 0) where the axes cross",
+              "One of the four regions of the grid",
+              "A slide described by a column vector"
+            ],
+            "answer": "An ordered pair (x, y) giving position",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Coordinates means An ordered pair (x, y) giving position."
+          },
+          {
+            "prompt": "What does “Translation” mean?",
+            "choices": [
+              "A slide described by a column vector",
+              "A flip across a mirror line",
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move"
+            ],
+            "answer": "A slide described by a column vector",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Translation means A slide described by a column vector."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-8",
+        "icon": "☁",
+        "skill": "Congruent",
+        "title": "Explain It: Congruent",
+        "description": "Practise congruent through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Exactly the same size and shape?",
+            "choices": [
+              "Congruent",
+              "Coordinates",
+              "Origin",
+              "Quadrant"
+            ],
+            "answer": "Congruent",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Congruent means Exactly the same size and shape."
+          },
+          {
+            "prompt": "Which term matches this meaning: One of the four regions of the grid?",
+            "choices": [
+              "Quadrant",
+              "Reflection",
+              "Rotation",
+              "Vector"
+            ],
+            "answer": "Quadrant",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the grid."
+          },
+          {
+            "prompt": "What does “Origin” mean?",
+            "choices": [
+              "The centre point (0, 0) where the axes cross",
+              "One of the four regions of the grid",
+              "A slide described by a column vector",
+              "A flip across a mirror line"
+            ],
+            "answer": "The centre point (0, 0) where the axes cross",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The centre point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Reflection” mean?",
+            "choices": [
+              "A flip across a mirror line",
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move",
+              "Exactly the same size and shape"
+            ],
+            "answer": "A flip across a mirror line",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Reflection means A flip across a mirror line."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-9",
+        "icon": "⌂",
+        "skill": "Coordinates",
+        "title": "Real-Life Round: Coordinates",
+        "description": "Practise coordinates through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: An ordered pair (x, y) giving position?",
+            "choices": [
+              "Coordinates",
+              "Quadrant",
+              "Translation",
+              "Reflection"
+            ],
+            "answer": "Coordinates",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Coordinates means An ordered pair (x, y) giving position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A slide described by a column vector?",
+            "choices": [
+              "Translation",
+              "Rotation",
+              "Vector",
+              "Congruent"
+            ],
+            "answer": "Translation",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Translation means A slide described by a column vector."
+          },
+          {
+            "prompt": "What does “Quadrant” mean?",
+            "choices": [
+              "One of the four regions of the grid",
+              "A slide described by a column vector",
+              "A flip across a mirror line",
+              "A turn about a centre point"
+            ],
+            "answer": "One of the four regions of the grid",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the grid."
+          },
+          {
+            "prompt": "What does “Rotation” mean?",
+            "choices": [
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move",
+              "Exactly the same size and shape",
+              "An ordered pair (x, y) giving position"
+            ],
+            "answer": "A turn about a centre point",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Rotation means A turn about a centre point."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-10",
+        "icon": "!",
+        "skill": "Origin",
+        "title": "Spot the Error: Origin",
+        "description": "Practise origin through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The centre point (0, 0) where the axes cross?",
+            "choices": [
+              "Origin",
+              "Translation",
+              "Reflection",
+              "Rotation"
+            ],
+            "answer": "Origin",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The centre point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Coordinates” mean?",
+            "choices": [
+              "An ordered pair (x, y) giving position",
+              "The centre point (0, 0) where the axes cross",
+              "One of the four regions of the grid",
+              "A slide described by a column vector"
+            ],
+            "answer": "An ordered pair (x, y) giving position",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Coordinates means An ordered pair (x, y) giving position."
+          },
+          {
+            "prompt": "What does “Translation” mean?",
+            "choices": [
+              "A slide described by a column vector",
+              "A flip across a mirror line",
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move"
+            ],
+            "answer": "A slide described by a column vector",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Translation means A slide described by a column vector."
+          },
+          {
+            "prompt": "Which term matches this meaning: Two numbers giving a horizontal and vertical move?",
+            "choices": [
+              "Vector",
+              "Congruent",
+              "Coordinates",
+              "Origin"
+            ],
+            "answer": "Vector",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Vector means Two numbers giving a horizontal and vertical move."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-11",
+        "icon": "≡",
+        "skill": "Quadrant",
+        "title": "Mastery Mix: Quadrant",
+        "description": "Practise quadrant through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One of the four regions of the grid?",
+            "choices": [
+              "Quadrant",
+              "Reflection",
+              "Rotation",
+              "Vector"
+            ],
+            "answer": "Quadrant",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the grid."
+          },
+          {
+            "prompt": "What does “Origin” mean?",
+            "choices": [
+              "The centre point (0, 0) where the axes cross",
+              "One of the four regions of the grid",
+              "A slide described by a column vector",
+              "A flip across a mirror line"
+            ],
+            "answer": "The centre point (0, 0) where the axes cross",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Origin means The centre point (0, 0) where the axes cross."
+          },
+          {
+            "prompt": "What does “Reflection” mean?",
+            "choices": [
+              "A flip across a mirror line",
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move",
+              "Exactly the same size and shape"
+            ],
+            "answer": "A flip across a mirror line",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Reflection means A flip across a mirror line."
+          },
+          {
+            "prompt": "Which term matches this meaning: Exactly the same size and shape?",
+            "choices": [
+              "Congruent",
+              "Coordinates",
+              "Origin",
+              "Quadrant"
+            ],
+            "answer": "Congruent",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Congruent means Exactly the same size and shape."
+          }
+        ]
+      },
+      {
+        "id": "u14-game-12",
+        "icon": "T",
+        "skill": "Translation",
+        "title": "Unit Champion: Translation",
+        "description": "Practise translation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A slide described by a column vector?",
+            "choices": [
+              "Translation",
+              "Rotation",
+              "Vector",
+              "Congruent"
+            ],
+            "answer": "Translation",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Translation means A slide described by a column vector."
+          },
+          {
+            "prompt": "What does “Quadrant” mean?",
+            "choices": [
+              "One of the four regions of the grid",
+              "A slide described by a column vector",
+              "A flip across a mirror line",
+              "A turn about a centre point"
+            ],
+            "answer": "One of the four regions of the grid",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Quadrant means One of the four regions of the grid."
+          },
+          {
+            "prompt": "What does “Rotation” mean?",
+            "choices": [
+              "A turn about a centre point",
+              "Two numbers giving a horizontal and vertical move",
+              "Exactly the same size and shape",
+              "An ordered pair (x, y) giving position"
+            ],
+            "answer": "A turn about a centre point",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Rotation means A turn about a centre point."
+          },
+          {
+            "prompt": "Which term matches this meaning: An ordered pair (x, y) giving position?",
+            "choices": [
+              "Coordinates",
+              "Quadrant",
+              "Translation",
+              "Reflection"
+            ],
+            "answer": "Coordinates",
+            "clue": "Use the Unit 14 Math Words & Symbols reference.",
+            "explanation": "Coordinates means An ordered pair (x, y) giving position."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can plot and read points in all four quadrants using coordinate pairs (x, y), including negative values.",
+    "I can name the origin, the x-axis, the y-axis and the four quadrants, and know the sign pattern of each quadrant.",
+    "I can describe and perform a translation using a column vector and describe it in words.",
+    "I can describe and perform a reflection in a mirror line, including the x-axis, the y-axis and lines such as x = 2.",
+    "I can describe and perform a rotation about a point, giving the centre, angle and direction.",
+    "I can use coordinate rules to transform points quickly with algebra.",
+    "I can explain why translations, reflections and rotations produce a congruent image, and combine two transformations in sequence."
+  ]
+}

@@ -1,0 +1,1773 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:11.942Z",
+  "stage": {
+    "id": "s05",
+    "label": "Stage 5"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "math-g05-u08",
+    "unitNo": 8,
+    "unitTitle": "Probability",
+    "unitOverview": "Welcome to Unit 8! In this unit you will explore probability – the mathematics of chance and how likely things are to happen. Every day, without even noticing, you make guesses about the future. When Amina looks up at grey clouds over Hargeisa and grabs an umbrella, when Yusuf wonders whether he will roll a six to win a game, or when a farmer near Kismaayo decides it is a good week to plant because rain is likely, they are all thinking about probability.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-5-Content-Package.xlsx",
+    "sourceArchive": "Year 5 (1)-20260714T220911Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 5 (1)/Unit 8 (1)/Year 5 - Unit 8 Lesson.docx",
+      "Year 5 (1)/Unit 8 (1)/Year 5 - Unit 8 Activities.docx",
+      "Year 5 (1)/Unit 8 (1)/Year 5 - Unit 8 Practice.docx",
+      "Year 5 (1)/Unit 8 (1)/Year 5 - Unit 8 Reference.docx"
+    ],
+    "sourceBlockCount": 366,
+    "transformation": "Structured directly from the standardized Cambridge Stage 5 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "This unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, try every worked example yourself on paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain an idea in a fresh way, or check your answers. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
+    "Why does probability matter so much? Because the real world is full of uncertainty, and people who understand chance make better decisions. Weather forecasters use probability to warn families before a storm. Doctors use it to understand how well a medicine works. Traders in the Mogadishu market judge the chance that a certain fruit will sell before it spoils. Even sharing fairly at iftar during Ramadan involves thinking about equal chances. When you learn to reason clearly about likelihood, you gain a skill you will use for the rest of your life.",
+    "As you work, keep a pencil, some paper, and if you can, a coin and a dice beside you. Probability is a subject you must do, not only read. Flip the coin, roll the dice, write down what happens, and compare it with what you expected. If a result surprises you, that is not a mistake – it is chance showing you how it behaves. Every scientist and mathematician who studies chance began exactly where you are now.",
+    "Use probability words correctly: impossible, unlikely, even chance, likely, certain.",
+    "Place events on a probability scale from 0 to 1 (and from 0% to 100%).",
+    "List all the possible outcomes of a simple experiment in an organised way.",
+    "Recognise when outcomes are equally likely.",
+    "Calculate the probability of an event as a fraction: favourable outcomes over total outcomes.",
+    "Carry out a probability experiment, record results in a tally, and analyse them.",
+    "Design fair simulations to model real-world situations."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-the-language-of-chance",
+      "title": "The Language of Chance",
+      "explanation": "Probability begins with words. Before we use fractions and numbers, we describe how likely something is using five key words. Think of them as points along a journey from ‘never’ to ‘always’: Impossible – it will never happen. Example: rolling a 7 on an ordinary six-sided dice.",
+      "example": "Unlikely – it probably will not happen, but it could. Example: snow falling in Mombasa."
+    },
+    {
+      "id": "concept-2-the-probability-scale-from-0-to-1",
+      "title": "The Probability Scale from 0 to 1",
+      "explanation": "Now we turn words into numbers. Every probability is a number between 0 and 1. Picture a straight line, like a road, with 0 at the left end and 1 at the right end. This line is the probability scale. 0 means the event is impossible – it will never happen.",
+      "example": "1 means the event is certain – it will always happen."
+    },
+    {
+      "id": "concept-3-outcomes-and-equally-likely-events",
+      "title": "Outcomes and Equally Likely Events",
+      "explanation": "An outcome is one possible result of an experiment. To think clearly about probability, you must first list *all* the possible outcomes. This sounds simple, but doing it carefully and completely is a real skill. When you flip a coin, there are exactly 2 possible outcomes: heads or tails. When you roll a six-sided dice, there are exactly 6 possible outcomes: 1, 2, 3, 4, 5 and 6. When you spin a spinner divided into 4 equal colours, there are 4 possible outcomes. Listing every outcome, and counting how many there…",
+      "example": "Outcomes are equally likely when each one has the same chance of happening. On a fair coin, heads and tails are equally likely. On a fair dice, all six numbers are equally likely. Picking any single marble from a bag…"
+    },
+    {
+      "id": "concept-4-calculating-probability-as-a-fraction",
+      "title": "Calculating Probability as a Fraction",
+      "explanation": "Here is the most powerful idea in the whole unit. When all outcomes are equally likely, we can calculate the exact probability of an event using a fraction: Probability of an event = (number of favourable outcomes) ÷ (total number of possible outcomes).",
+      "example": "A favourable outcome is simply an outcome that counts as the thing we are asking about. It does not mean a ‘good’ outcome – it just means one we are counting. Let us see this rule in action, step by step."
+    },
+    {
+      "id": "concept-5-probability-experiments-and-recording-results",
+      "title": "Probability Experiments and Recording Results",
+      "explanation": "So far we have worked out probability by thinking – this is called theoretical probability. But we can also discover probability by doing. A probability experiment is when we actually test what happens, and compare it with what we expected. Suppose Hani flips a coin 10 times. In theory she expects about 5 heads and 5 tails, because the probability of heads is 1/2. But when she actually flips, she might get 6 heads and 4 tails, or 7 heads and 3 tails. This does not mean the coin is unfair. It simply shows that…",
+      "example": "Why do experiments at all, if we can calculate the answer? For three good reasons. First, to test our predictions and see whether reality matches our thinking. Second, to collect real data, which helps us understand…"
+    },
+    {
+      "id": "concept-6-simulations-and-random-numbers",
+      "title": "Simulations and Random Numbers",
+      "explanation": "Sometimes we want to study a real-life situation that is hard, slow or impossible to test directly. In those cases we use a simulation – we use one simple thing to stand for, or model, another thing. A good simulation must have the same probability as the real situation. Here is a classic example. Suppose we want to model whether a newborn baby will be a boy or a girl, treating each as equally likely. We can simulate this with a coin: heads = boy, tails = girl. This works because a coin gives two equally likely…",
+      "example": "Simulations become really useful when the chances are not fifty-fifty. Suppose a basketball player, or a footballer taking penalties in a Garissa tournament, makes 7 out of every 10 shots. We can model this with a…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "The Language of Chance",
+      "context": "Probability begins with words. Before we use fractions and numbers, we describe how likely something is using five key words. Think of them as points along a journey from ‘never’ to ‘always’: Impossible – it will never happen. Example: rolling a 7 on an…",
+      "prompt": "Sort each event as impossible, unlikely, even chance, likely, or certain: (a) rolling a 7 on a six-sided dice; (b) getting heads on a fair coin; (c) the sun rising tomorrow; (d) snow in Kismaayo in July.",
+      "answer": "1) (a) impossible, (b) even chance, (c) likely/certain, (d) unlikely.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) (a) impossible, (b) even chance, (c) likely/certain, (d) unlikely."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "The Probability Scale from 0 to 1",
+      "context": "Now we turn words into numbers. Every probability is a number between 0 and 1. Picture a straight line, like a road, with 0 at the left end and 1 at the right end. This line is the probability scale. 0 means the event is impossible – it will never happen.",
+      "prompt": "How many possible outcomes are there when you (a) flip a coin, (b) roll a six-sided dice, (c) spin a spinner with 5 equal sections?",
+      "answer": "(a) 2, (b) 6, (c) 5.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "(a) 2, (b) 6, (c) 5."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Outcomes and Equally Likely Events",
+      "context": "An outcome is one possible result of an experiment. To think clearly about probability, you must first list *all* the possible outcomes. This sounds simple, but doing it carefully and completely is a real skill. When you flip a coin, there are exactly 2…",
+      "prompt": "True or False: (a) ‘Certain’ means it will definitely happen. (b) ‘Even chance’ means 50-50. (c) ‘Unlikely’ means the same as ‘impossible’.",
+      "answer": "(a) True, (b) True, (c) False.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "(a) True, (b) True, (c) False."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Calculating Probability as a Fraction",
+      "context": "Here is the most powerful idea in the whole unit. When all outcomes are equally likely, we can calculate the exact probability of an event using a fraction: Probability of an event = (number of favourable outcomes) ÷ (total number of possible outcomes).",
+      "prompt": "Fill in the probability word: There is a ______ chance of getting heads when flipping a fair coin.",
+      "answer": "even.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "even."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Probability Experiments and Recording Results",
+      "context": "So far we have worked out probability by thinking – this is called theoretical probability. But we can also discover probability by doing. A probability experiment is when we actually test what happens, and compare it with what we expected. Suppose Hani flips…",
+      "prompt": "Write as a fraction the probability of rolling a 6 on a fair dice.",
+      "answer": "1/6.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1/6."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Simulations and Random Numbers",
+      "context": "Sometimes we want to study a real-life situation that is hard, slow or impossible to test directly. In those cases we use a simulation – we use one simple thing to stand for, or model, another thing. A good simulation must have the same probability as the…",
+      "prompt": "A spinner has 8 equal sections: 5 red, 2 blue, 1 green. Describe the likelihood of spinning (a) red, (b) blue, (c) green, (d) yellow.",
+      "answer": "1) (a) red is likely (5/8), (b) blue is unlikely (2/8 = 1/4), (c) green is unlikely (1/8), (d) yellow is impossible (0/8 =",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) (a) red is likely (5/8), (b) blue is unlikely (2/8 = 1/4), (c) green is unlikely (1/8), (d) yellow is impossible (0/8 ="
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "The Language of Chance",
+      "modelType": "concept-model-1",
+      "purpose": "Probability begins with words. Before we use fractions and numbers, we describe how likely something is using five key words. Think of them as points along a journey from ‘never’ to ‘always’: Impossible – it will never…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The Probability Scale from 0 to 1",
+      "modelType": "concept-model-2",
+      "purpose": "Now we turn words into numbers. Every probability is a number between 0 and 1. Picture a straight line, like a road, with 0 at the left end and 1 at the right end. This line is the probability scale. 0 means the event…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Outcomes and Equally Likely Events",
+      "modelType": "concept-model-3",
+      "purpose": "An outcome is one possible result of an experiment. To think clearly about probability, you must first list *all* the possible outcomes. This sounds simple, but doing it carefully and completely is a real skill. When…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Calculating Probability as a Fraction",
+      "modelType": "concept-model-4",
+      "purpose": "Here is the most powerful idea in the whole unit. When all outcomes are equally likely, we can calculate the exact probability of an event using a fraction: Probability of an event = (number of favourable outcomes) ÷…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Probability Experiments and Recording Results",
+      "modelType": "concept-model-5",
+      "purpose": "So far we have worked out probability by thinking – this is called theoretical probability. But we can also discover probability by doing. A probability experiment is when we actually test what happens, and compare it…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Simulations and Random Numbers",
+      "modelType": "concept-model-6",
+      "purpose": "Sometimes we want to study a real-life situation that is hard, slow or impossible to test directly. In those cases we use a simulation – we use one simple thing to stand for, or model, another thing. A good simulation…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work out a probability",
+      "example": "A bag holds 10 red balls and 2 blue balls. You draw one ball without looking. Describe the likelihood of drawing a red ball.",
+      "steps": [
+        "List all the possible outcomes and count them (the total).",
+        "Check the outcomes are equally likely.",
+        "Count the favourable outcomes (the ones you want).",
+        "Write the fraction: favourable over total, then simplify."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to run a probability experiment",
+      "example": "A spinner has 8 equal sections: 6 green, 1 red, 1 blue. What is the probability of spinning green?",
+      "steps": [
+        "Predict what you expect to happen.",
+        "Carry out the trials and record each result in a tally.",
+        "Count the frequency of each outcome.",
+        "Compare your results with your prediction – and remember that more trials give a clearer picture."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to design a fair simulation",
+      "example": "If you roll a fair dice 60 times, about how many times would you expect to roll a 4?",
+      "steps": [
+        "Find the real probability you want to model.",
+        "Choose a tool (coin, dice, cards) with the right number of outcomes.",
+        "Assign outcomes so the probability matches the real situation.",
+        "Test it, then run many trials."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Reading a percentage",
+      "example": "The weather forecast for Nairobi says ‘20% chance of rain’. What does this mean, and is rain likely or unlikely?",
+      "steps": [
+        "Solution: 20% means 20 out of every 100 – so on similar days, it rains about 2 times out of every 10.",
+        "Since 20% is well below 50%, rain is unlikely.",
+        "It could still rain, but probably will not."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Design a simulation",
+      "example": "A footballer scores 7 out of every 10 penalties. Using a ten-sided dice, design a simulation.",
+      "steps": [
+        "Solution: Let the numbers 1, 2, 3, 4, 5, 6 and 7 mean a scored penalty (7 outcomes) and the numbers 8, 9 and 10 mean a miss (3 outcomes).",
+        "This gives a 7-in-10 chance of scoring, exactly matching the real player.",
+        "Each roll of the dice now models one penalty."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Interpret experiment results",
+      "example": "A bag holds coloured marbles. After 30 draws (putting the marble back each time), the results were: Red 15, Blue 10, Green 5. What might be in the bag?",
+      "steps": [
+        "Solution: The results suggest the proportions.",
+        "Red came up 15/30 = 1/2 of the time, Blue 10/30 = 1/3, Green 5/30 = 1/6.",
+        "So the bag might hold marbles in the ratio 3 red : 2 blue : 1 green – for example, 3 red, 2 blue and 1 green, or any equal multiple such as 6 red, 4 blue and 2 green."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Describe the likelihood",
+      "prompt": "A bag holds 10 red balls and 2 blue balls. You draw one ball without looking. Describe the likelihood of drawing a red ball.",
+      "solution": "Solution: There are 10 + 2 = 12 balls in total, and 10 of them are red. The probability of red is 10/12, which simplifies to 5/6. Since 5/6 is much closer to 1 than to 1/2, drawing a red ball is likely."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Probability as a fraction",
+      "prompt": "A spinner has 8 equal sections: 6 green, 1 red, 1 blue. What is the probability of spinning green?",
+      "solution": "Solution: There are 6 favourable outcomes (green) out of 8 total sections. So the probability is 6/8, which simplifies to 3/4. On the scale, 3/4 is between 1/2 and 1, so spinning green is likely."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Expected number of results",
+      "prompt": "If you roll a fair dice 60 times, about how many times would you expect to roll a 4?",
+      "solution": "Solution: The probability of a 4 is 1/6. Out of 60 rolls, you expect 1/6 of them to be 4s: 60 ÷ 6 = 10. So you would expect about 10 fours. The real number might be 8, 9, 11 or 12 – close to 10, but rarely exactly 10."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Reading a percentage",
+      "prompt": "The weather forecast for Nairobi says ‘20% chance of rain’. What does this mean, and is rain likely or unlikely?",
+      "solution": "Solution: 20% means 20 out of every 100 – so on similar days, it rains about 2 times out of every 10. Since 20% is well below 50%, rain is unlikely. It could still rain, but probably will not."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Design a simulation",
+      "prompt": "A footballer scores 7 out of every 10 penalties. Using a ten-sided dice, design a simulation.",
+      "solution": "Solution: Let the numbers 1, 2, 3, 4, 5, 6 and 7 mean a scored penalty (7 outcomes) and the numbers 8, 9 and 10 mean a miss (3 outcomes). This gives a 7-in-10 chance of scoring, exactly matching the real player. Each roll of the dice now models one penalty."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Interpret experiment results",
+      "prompt": "A bag holds coloured marbles. After 30 draws (putting the marble back each time), the results were: Red 15, Blue 10, Green 5. What might be in the bag?",
+      "solution": "Solution: The results suggest the proportions. Red came up 15/30 = 1/2 of the time, Blue 10/30 = 1/3, Green 5/30 = 1/6. So the bag might hold marbles in the ratio 3 red : 2 blue : 1 green – for example, 3 red, 2 blue and 1 green, or any equal multiple such as 6 red, 4 blue and 2 green."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "The gambler's fallacy",
+      "prompt": "Omar flips a fair coin and gets 5 heads in a row. He says, ‘Tails must come next – it is due!’ Is he right?",
+      "solution": "Solution: No. Each flip is independent – the coin has no memory of the past flips. On the next flip, the probability of heads is still 1/2 and the probability of tails is still 1/2. Five heads in a row is unusual, but it does not change the chance of the sixth flip. This mistaken thinking is called the gambler's fallacy."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Probability with cards",
+      "prompt": "From a standard deck of 52 cards, what is the probability of drawing (a) a red card, (b) an ace, (c) the ace of spades?",
+      "solution": "Solution: (a) There are 26 red cards, so 26/52 = 1/2 – an even chance. (b) There are 4 aces, so 4/52 = 1/13 – unlikely (about 8%). (c) There is only 1 ace of spades, so 1/52 – very unlikely (about 2%)."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "A bag holds 15 red balls and 5 yellow balls. Write, as a simplified fraction, the probability of drawing (a) red, (b) yellow. Which is more likely?",
+      "solution": "About 10 (probability 1/6, and 60 ÷ 6 ="
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Convert between forms: (a) write 1/2 as a percentage; (b) write 25% as a fraction; (c) is a probability of 3/4 likely or unlikely?",
+      "solution": "."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Tom flipped a coin 20 times and got 12 heads and 8 tails. Is this close to what you would expect? Explain.",
+      "solution": "(a) 15/20 = 3/4, (b) 5/20 = 1/4; red is more likely."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Design a simulation using a ten-sided dice for a basketball player who makes 7 out of 10 free throws. State which numbers mean a made shot and which mean a miss.",
+      "solution": "1) Numbers 1–7 mean a made shot (7 outcomes), 8–10 mean a miss (3 outcomes)."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Sort each event as impossible, unlikely, even chance, likely, or certain: (a) rolling a 7 on a six-sided dice; (b) getting heads on a fair coin; (c) the sun rising tomorrow; (d) snow in Kismaayo in July.",
+      "answer": "1) (a) impossible, (b) even chance, (c) likely/certain, (d) unlikely.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "How many possible outcomes are there when you (a) flip a coin, (b) roll a six-sided dice, (c) spin a spinner with 5 equal sections?",
+      "answer": "(a) 2, (b) 6, (c) 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "True or False: (a) ‘Certain’ means it will definitely happen. (b) ‘Even chance’ means 50-50. (c) ‘Unlikely’ means the same as ‘impossible’.",
+      "answer": "(a) True, (b) True, (c) False.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Fill in the probability word: There is a ______ chance of getting heads when flipping a fair coin.",
+      "answer": "even.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Write as a fraction the probability of rolling a 6 on a fair dice.",
+      "answer": "1/6.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "A spinner has 8 equal sections: 5 red, 2 blue, 1 green. Describe the likelihood of spinning (a) red, (b) blue, (c) green, (d) yellow.",
+      "answer": "1) (a) red is likely (5/8), (b) blue is unlikely (2/8 = 1/4), (c) green is unlikely (1/8), (d) yellow is impossible (0/8 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Write each probability as a simplified fraction: (a) rolling an even number on a dice; (b) rolling a number greater than 2 on a dice; (c) drawing a red card from a full deck of 52.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "If you roll a dice 60 times, about how many times would you expect to roll a 3? Explain your reasoning.",
+      "answer": "(a) 3/6 = 1/2, (b) 4/6 = 2/3, (c) 26/52 = 1/2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "A bag holds 15 red balls and 5 yellow balls. Write, as a simplified fraction, the probability of drawing (a) red, (b) yellow. Which is more likely?",
+      "answer": "About 10 (probability 1/6, and 60 ÷ 6 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Convert between forms: (a) write 1/2 as a percentage; (b) write 25% as a fraction; (c) is a probability of 3/4 likely or unlikely?",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Tom flipped a coin 20 times and got 12 heads and 8 tails. Is this close to what you would expect? Explain.",
+      "answer": "(a) 15/20 = 3/4, (b) 5/20 = 1/4; red is more likely.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Design a simulation using a ten-sided dice for a basketball player who makes 7 out of 10 free throws. State which numbers mean a made shot and which mean a miss.",
+      "answer": "1) Numbers 1–7 mean a made shot (7 outcomes), 8–10 mean a miss (3 outcomes).",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Likelihood Scale Detective",
+      "materials": "a notebook and a pencil.",
+      "steps": [
+        "Draw a long line across your page. Write ‘Impossible’ at the left end, ‘Certain’ at the right end, and ‘Even chance’ in the middle.",
+        "For each of these events, decide where it belongs on your scale: it will rain tomorrow; you will eat today; a coin will land heads; you will grow wings; the sun will rise tomorrow; you will roll a 6 on a dice.",
+        "Add five events from your own life and place them on the scale too.",
+        "Explain to a family member why you placed one tricky event where you did.",
+        "This activity trains your sense of where events sit between 0 and 1."
+      ]
+    },
+    {
+      "title": "Coin Flip Investigation",
+      "materials": "a coin and a recording sheet.",
+      "steps": [
+        "Prediction: before you start, predict what will happen if you flip a coin 20 times.",
+        "Experiment: flip the coin 20 times and record each result (H for heads, T for tails) in a tally.",
+        "Analysis: count your heads and tails. Was your prediction close?",
+        "Extension: combine your results with family or classmates. What happens to the pattern as more flips are added? (This is the law of large numbers.)"
+      ]
+    },
+    {
+      "title": "Dice Rolling Patterns",
+      "materials": "a dice and a recording chart.",
+      "steps": [
+        "Make a tally chart with a row for each number, 1 to 6.",
+        "Roll the dice 30 times and make a tally mark for each result.",
+        "Which number came up most often? Which came up least? Were the numbers roughly equally likely?",
+        "Work out how many of each number you would *expect* in 30 rolls (30 ÷ 6 = 5 each). How close were your real results?",
+        "Then draw a simple bar chart of your results using coloured squares."
+      ]
+    },
+    {
+      "title": "Bag of Surprises Experiment",
+      "materials": "an opaque bag and 10 coloured objects (buttons, beads, or stones).",
+      "steps": [
+        "Setup: without telling anyone, put 10 objects of different colours in the bag.",
+        "Experiment: without looking, draw one object, record its colour, then put it back. Repeat 20 times.",
+        "Prediction: based on your tally, predict how many of each colour are in the bag.",
+        "Reveal: empty the bag. How close was your prediction? Write each colour's probability as a fraction."
+      ]
+    },
+    {
+      "title": "Design-a-Simulation Challenge",
+      "materials": "a dice or ten numbered cards, and a pencil.",
+      "steps": [
+        "Choose a real situation with a clear chance, for example a footballer who scores 6 out of 10 penalties.",
+        "Decide which numbers on your dice or cards stand for a success and which stand for a failure, so the probability matches.",
+        "Run your simulation 20 times and tally the successes.",
+        "Compare your simulation's results with the real 6-in-10 chance. Was your simulation fair?"
+      ]
+    },
+    {
+      "title": "Is This Game Fair? (Family Game)",
+      "materials": "two dice and two players.",
+      "steps": [
+        "Roll two dice and add the numbers together.",
+        "Player 1 scores a point if the total is even; Player 2 scores if the total is odd.",
+        "Play 20 rounds and keep a tally of each player's points.",
+        "Talk about it: does this game seem fair? Why might even and odd totals be equally likely?",
+        "After your activities, talk or write about these questions: Which activity helped you understand probability best? Did any results surprise you? Where did you see the law of large numbers at work – did more trials give steadier results? What would you like more practice with? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key rule 1",
+        "text": "The Probability Scale Every probability is a number from 0 to 1. 0 = impossible, 1/2 = even chance, 1 = certain. Close to 0 = unlikely. Close to 1 = likely."
+      },
+      {
+        "title": "Key rule 2",
+        "text": "Probability as a Fraction Probability = favourable outcomes over total outcomes. Example: rolling an even number = 3 out of 6 = 1/2. Always simplify the fraction."
+      },
+      {
+        "title": "Independence Rule",
+        "text": "In a random event, past results do not change future chances. After 5 heads, the next flip is still 1/2 heads. Believing otherwise is the gambler's fallacy."
+      }
+    ],
+    "terms": [
+      [
+        "Probability",
+        "How likely an event is, from 0 to 1"
+      ],
+      [
+        "Outcome",
+        "One possible result of an experiment"
+      ],
+      [
+        "Equally likely",
+        "All outcomes have the same chance"
+      ],
+      [
+        "Favourable outcome",
+        "An outcome you are counting as a success"
+      ],
+      [
+        "Experiment",
+        "A test to see what actually happens"
+      ],
+      [
+        "Frequency",
+        "How often a result happens"
+      ],
+      [
+        "Simulation",
+        "Using one thing to model another"
+      ],
+      [
+        "Random",
+        "Every outcome has an equal chance"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Confusing impossible and unlikely",
+        "Impossible = never (0); unlikely = probably not, but possible"
+      ],
+      [
+        "Forgetting to simplify",
+        "Write 3/6 as 1/2 and 2/6 as 1/3"
+      ],
+      [
+        "Believing in lucky streaks",
+        "Each random trial is independent of the past"
+      ],
+      [
+        "Judging from too few trials",
+        "Run many trials for a reliable result"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Sort each event as impossible, unlikely, even chance, likely, or certain: (a) rolling a 7 on a six-sided dice; (b) getting heads on a fair coin; (c) the sun rising tomorrow; (d) snow in Kismaayo in July.",
+      "answer": "1) (a) impossible, (b) even chance, (c) likely/certain, (d) unlikely.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) (a) impossible, (b) even chance, (c) likely/certain, (d) unlikely."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "How many possible outcomes are there when you (a) flip a coin, (b) roll a six-sided dice, (c) spin a spinner with 5 equal sections?",
+      "answer": "(a) 2, (b) 6, (c) 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(a) 2, (b) 6, (c) 5."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "True or False: (a) ‘Certain’ means it will definitely happen. (b) ‘Even chance’ means 50-50. (c) ‘Unlikely’ means the same as ‘impossible’.",
+      "answer": "(a) True, (b) True, (c) False.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(a) True, (b) True, (c) False."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Fill in the probability word: There is a ______ chance of getting heads when flipping a fair coin.",
+      "answer": "even.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "even."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Write as a fraction the probability of rolling a 6 on a fair dice.",
+      "answer": "1/6.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1/6."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "A spinner has 8 equal sections: 5 red, 2 blue, 1 green. Describe the likelihood of spinning (a) red, (b) blue, (c) green, (d) yellow.",
+      "answer": "1) (a) red is likely (5/8), (b) blue is unlikely (2/8 = 1/4), (c) green is unlikely (1/8), (d) yellow is impossible (0/8 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) (a) red is likely (5/8), (b) blue is unlikely (2/8 = 1/4), (c) green is unlikely (1/8), (d) yellow is impossible (0/8 ="
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Write each probability as a simplified fraction: (a) rolling an even number on a dice; (b) rolling a number greater than 2 on a dice; (c) drawing a red card from a full deck of 52.",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "If you roll a dice 60 times, about how many times would you expect to roll a 3? Explain your reasoning.",
+      "answer": "(a) 3/6 = 1/2, (b) 4/6 = 2/3, (c) 26/52 = 1/2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(a) 3/6 = 1/2, (b) 4/6 = 2/3, (c) 26/52 = 1/2."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "A bag holds 15 red balls and 5 yellow balls. Write, as a simplified fraction, the probability of drawing (a) red, (b) yellow. Which is more likely?",
+      "answer": "About 10 (probability 1/6, and 60 ÷ 6 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "About 10 (probability 1/6, and 60 ÷ 6 ="
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Convert between forms: (a) write 1/2 as a percentage; (b) write 25% as a fraction; (c) is a probability of 3/4 likely or unlikely?",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Tom flipped a coin 20 times and got 12 heads and 8 tails. Is this close to what you would expect? Explain.",
+      "answer": "(a) 15/20 = 3/4, (b) 5/20 = 1/4; red is more likely.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "(a) 15/20 = 3/4, (b) 5/20 = 1/4; red is more likely."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Design a simulation using a ten-sided dice for a basketball player who makes 7 out of 10 free throws. State which numbers mean a made shot and which mean a miss.",
+      "answer": "1) Numbers 1–7 mean a made shot (7 outcomes), 8–10 mean a miss (3 outcomes).",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Numbers 1–7 mean a made shot (7 outcomes), 8–10 mean a miss (3 outcomes)."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A survey of 100 people in Hargeisa showed 40 prefer bariis, 35 prefer anjero, and 25 prefer sambusa for dinner. If one person is chosen at random, what is the probability they prefer bariis? Is it likely or unlikely?",
+      "answer": "1) 40/100 = 2/5; since 2/5 is less than 1/2 it is slightly unlikely, though bariis is the most popular.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 40/100 = 2/5; since 2/5 is less than 1/2 it is slightly unlikely, though bariis is the most popular."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "From a standard deck of 52 cards, write as simplified fractions the probability of drawing (a) a red card, (b) an ace, (c) the ace of spades.",
+      "answer": "(a) 26/52 = 1/2, (b) 4/52 = 1/13, (c) 1/52.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "(a) 26/52 = 1/2, (b) 4/52 = 1/13, (c) 1/52."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "In a class of 25 students, 15 walk to school. What is the probability, as a fraction, that a randomly chosen student walks? Describe how likely this is.",
+      "answer": "15/25 = 3/5, which is more than 1/2, so it is likely.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "15/25 = 3/5, which is more than 1/2, so it is likely."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A factory finds 2 out of every 100 items are defective. (a) What percentage is defective? (b) In 1000 items, about how many would be defective?",
+      "answer": "(a) 2%, (b) about 20.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "(a) 2%, (b) about 20."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A basketball player has made 15 out of 20 free throws this season. (a) What fraction is this, simplified? (b) What percentage? (c) How likely is she to make her next throw?",
+      "answer": "(a) 15/20 = 3/4, (b) 75%, (c) likely, since 75% is more than 50%.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "(a) 15/20 = 3/4, (b) 75%, (c) likely, since 75% is more than 50%."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Design a simulation using a ten-sided dice for a basketball player who makes 7 out of 10 free throws. State which numbers mean a made shot and which mean a miss.",
+      "answer": "1) Numbers 1–7 mean a made shot (7 outcomes), 8–10 mean a miss (3 outcomes).",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Numbers 1–7 mean a made shot (7 outcomes), 8–10 mean a miss (3 outcomes)."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Design a simulation using a ten-sided dice for a basketball player who makes 7 out of 10 free throws. State which numbers mean a made shot and which mean a miss.",
+      "keyIdeas": [
+        "Probability",
+        "Outcome",
+        "Equally likely"
+      ],
+      "modelAnswer": "1) Numbers 1–7 mean a made shot (7 outcomes), 8–10 mean a miss (3 outcomes)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A bag holds 20 marbles, some red and some blue. If the probability of drawing red is ‘likely’, give one possible number of red marbles and explain why.",
+      "keyIdeas": [
+        "Outcome",
+        "Equally likely",
+        "Favourable outcome"
+      ],
+      "modelAnswer": "More than 10 red marbles, e.g. 12, 14 or 15, because ‘likely’ means more than half of 20."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Sumaya says, ‘I have rolled three 6s in a row, so a 6 is very unlikely on my next roll.’ Explain what is wrong with her thinking.",
+      "keyIdeas": [
+        "Equally likely",
+        "Favourable outcome",
+        "Experiment"
+      ],
+      "modelAnswer": "Each roll is independent; the dice has no memory, so a 6 still has probability 1/6 on the next roll (the gambler's fallacy)."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You want to simulate weather where it rains 3 days out of 10. Using a ten-sided dice, which numbers should mean rain? Then explain how you could get close using an ordinary six-sided dice.",
+      "keyIdeas": [
+        "Favourable outcome",
+        "Experiment",
+        "Frequency"
+      ],
+      "modelAnswer": "On a ten-sided dice, 1, 2 and 3 mean rain. On a six-sided dice, let 1 and 2 mean rain (2 out of 6 = 1/3), which is close to 3 out of 10."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Probability Experiments and Recording Results.",
+      "keyIdeas": [
+        "Probability",
+        "Outcome",
+        "Equally likely"
+      ],
+      "modelAnswer": "So far we have worked out probability by thinking – this is called theoretical probability. But we can also discover probability by doing. A probability experiment is when we actually test what happens, and compare it with what we expected. Suppose Hani flips a coin 10 times. In theory she expects about 5 heads and 5 tails, because the probability of heads is 1/2. But when she actually flips, she might get 6 heads and 4 tails, or 7 heads and 3 tails. This does not mean the coin is unfair. It simply shows that…"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Simulations and Random Numbers.",
+      "keyIdeas": [
+        "Probability",
+        "Outcome",
+        "Equally likely"
+      ],
+      "modelAnswer": "Sometimes we want to study a real-life situation that is hard, slow or impossible to test directly. In those cases we use a simulation – we use one simple thing to stand for, or model, another thing. A good simulation must have the same probability as the real situation. Here is a classic example. Suppose we want to model whether a newborn baby will be a boy or a girl, treating each as equally likely. We can simulate this with a coin: heads = boy, tails = girl. This works because a coin gives two equally likely…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Probability” mean?",
+        "options": [
+          "How likely an event is, from 0 to 1",
+          "One possible result of an experiment",
+          "All outcomes have the same chance",
+          "An outcome you are counting as a success"
+        ],
+        "answer": "How likely an event is, from 0 to 1",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Probability means How likely an event is, from 0 to 1."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Outcome” mean?",
+        "options": [
+          "One possible result of an experiment",
+          "All outcomes have the same chance",
+          "An outcome you are counting as a success",
+          "A test to see what actually happens"
+        ],
+        "answer": "One possible result of an experiment",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Outcome means One possible result of an experiment."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Equally likely” mean?",
+        "options": [
+          "All outcomes have the same chance",
+          "An outcome you are counting as a success",
+          "A test to see what actually happens",
+          "How often a result happens"
+        ],
+        "answer": "All outcomes have the same chance",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Equally likely means All outcomes have the same chance."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Favourable outcome” mean?",
+        "options": [
+          "An outcome you are counting as a success",
+          "A test to see what actually happens",
+          "How often a result happens",
+          "Using one thing to model another"
+        ],
+        "answer": "An outcome you are counting as a success",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Favourable outcome means An outcome you are counting as a success."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Experiment” mean?",
+        "options": [
+          "A test to see what actually happens",
+          "How often a result happens",
+          "Using one thing to model another",
+          "Every outcome has an equal chance"
+        ],
+        "answer": "A test to see what actually happens",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Experiment means A test to see what actually happens."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Frequency” mean?",
+        "options": [
+          "How often a result happens",
+          "Using one thing to model another",
+          "Every outcome has an equal chance",
+          "How likely an event is, from 0 to 1"
+        ],
+        "answer": "How often a result happens",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Frequency means How often a result happens."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Using one thing to model another?",
+        "options": [
+          "Simulation",
+          "Random",
+          "Probability",
+          "Outcome"
+        ],
+        "answer": "Simulation",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Simulation means Using one thing to model another."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Every outcome has an equal chance?",
+        "options": [
+          "Random",
+          "Probability",
+          "Outcome",
+          "Equally likely"
+        ],
+        "answer": "Random",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Random means Every outcome has an equal chance."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: How likely an event is, from 0 to 1?",
+        "options": [
+          "Probability",
+          "Equally likely",
+          "Favourable outcome",
+          "Experiment"
+        ],
+        "answer": "Probability",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Probability means How likely an event is, from 0 to 1."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: One possible result of an experiment?",
+        "options": [
+          "Outcome",
+          "Favourable outcome",
+          "Experiment",
+          "Frequency"
+        ],
+        "answer": "Outcome",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Outcome means One possible result of an experiment."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: All outcomes have the same chance?",
+        "options": [
+          "Equally likely",
+          "Experiment",
+          "Frequency",
+          "Simulation"
+        ],
+        "answer": "Equally likely",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Equally likely means All outcomes have the same chance."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: An outcome you are counting as a success?",
+        "options": [
+          "Favourable outcome",
+          "Frequency",
+          "Simulation",
+          "Random"
+        ],
+        "answer": "Favourable outcome",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Favourable outcome means An outcome you are counting as a success."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u8-game-1",
+        "icon": "?",
+        "skill": "Probability",
+        "title": "Quick Match: Probability",
+        "description": "Practise probability through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Probability” mean?",
+            "choices": [
+              "How likely an event is, from 0 to 1",
+              "One possible result of an experiment",
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success"
+            ],
+            "answer": "How likely an event is, from 0 to 1",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Probability means How likely an event is, from 0 to 1."
+          },
+          {
+            "prompt": "What does “Favourable outcome” mean?",
+            "choices": [
+              "An outcome you are counting as a success",
+              "A test to see what actually happens",
+              "How often a result happens",
+              "Using one thing to model another"
+            ],
+            "answer": "An outcome you are counting as a success",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome you are counting as a success."
+          },
+          {
+            "prompt": "Which term matches this meaning: Using one thing to model another?",
+            "choices": [
+              "Simulation",
+              "Random",
+              "Probability",
+              "Outcome"
+            ],
+            "answer": "Simulation",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Simulation means Using one thing to model another."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible result of an experiment?",
+            "choices": [
+              "Outcome",
+              "Favourable outcome",
+              "Experiment",
+              "Frequency"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-2",
+        "icon": "★",
+        "skill": "Outcome",
+        "title": "Concept Quest: Outcome",
+        "description": "Practise outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible result of an experiment",
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success",
+              "A test to see what actually happens"
+            ],
+            "answer": "One possible result of an experiment",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Experiment” mean?",
+            "choices": [
+              "A test to see what actually happens",
+              "How often a result happens",
+              "Using one thing to model another",
+              "Every outcome has an equal chance"
+            ],
+            "answer": "A test to see what actually happens",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Experiment means A test to see what actually happens."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every outcome has an equal chance?",
+            "choices": [
+              "Random",
+              "Probability",
+              "Outcome",
+              "Equally likely"
+            ],
+            "answer": "Random",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Random means Every outcome has an equal chance."
+          },
+          {
+            "prompt": "Which term matches this meaning: All outcomes have the same chance?",
+            "choices": [
+              "Equally likely",
+              "Experiment",
+              "Frequency",
+              "Simulation"
+            ],
+            "answer": "Equally likely",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Equally likely means All outcomes have the same chance."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-3",
+        "icon": "◫",
+        "skill": "Equally likely",
+        "title": "Model Detective: Equally likely",
+        "description": "Practise equally likely through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Equally likely” mean?",
+            "choices": [
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success",
+              "A test to see what actually happens",
+              "How often a result happens"
+            ],
+            "answer": "All outcomes have the same chance",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Equally likely means All outcomes have the same chance."
+          },
+          {
+            "prompt": "What does “Frequency” mean?",
+            "choices": [
+              "How often a result happens",
+              "Using one thing to model another",
+              "Every outcome has an equal chance",
+              "How likely an event is, from 0 to 1"
+            ],
+            "answer": "How often a result happens",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Frequency means How often a result happens."
+          },
+          {
+            "prompt": "Which term matches this meaning: How likely an event is, from 0 to 1?",
+            "choices": [
+              "Probability",
+              "Equally likely",
+              "Favourable outcome",
+              "Experiment"
+            ],
+            "answer": "Probability",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Probability means How likely an event is, from 0 to 1."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome you are counting as a success?",
+            "choices": [
+              "Favourable outcome",
+              "Frequency",
+              "Simulation",
+              "Random"
+            ],
+            "answer": "Favourable outcome",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome you are counting as a success."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-4",
+        "icon": "→",
+        "skill": "Favourable outcome",
+        "title": "Rule Runner: Favourable outcome",
+        "description": "Practise favourable outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Favourable outcome” mean?",
+            "choices": [
+              "An outcome you are counting as a success",
+              "A test to see what actually happens",
+              "How often a result happens",
+              "Using one thing to model another"
+            ],
+            "answer": "An outcome you are counting as a success",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome you are counting as a success."
+          },
+          {
+            "prompt": "Which term matches this meaning: Using one thing to model another?",
+            "choices": [
+              "Simulation",
+              "Random",
+              "Probability",
+              "Outcome"
+            ],
+            "answer": "Simulation",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Simulation means Using one thing to model another."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible result of an experiment?",
+            "choices": [
+              "Outcome",
+              "Favourable outcome",
+              "Experiment",
+              "Frequency"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Probability” mean?",
+            "choices": [
+              "How likely an event is, from 0 to 1",
+              "One possible result of an experiment",
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success"
+            ],
+            "answer": "How likely an event is, from 0 to 1",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Probability means How likely an event is, from 0 to 1."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-5",
+        "icon": "Σ",
+        "skill": "Experiment",
+        "title": "Vocabulary Vault: Experiment",
+        "description": "Practise experiment through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Experiment” mean?",
+            "choices": [
+              "A test to see what actually happens",
+              "How often a result happens",
+              "Using one thing to model another",
+              "Every outcome has an equal chance"
+            ],
+            "answer": "A test to see what actually happens",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Experiment means A test to see what actually happens."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every outcome has an equal chance?",
+            "choices": [
+              "Random",
+              "Probability",
+              "Outcome",
+              "Equally likely"
+            ],
+            "answer": "Random",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Random means Every outcome has an equal chance."
+          },
+          {
+            "prompt": "Which term matches this meaning: All outcomes have the same chance?",
+            "choices": [
+              "Equally likely",
+              "Experiment",
+              "Frequency",
+              "Simulation"
+            ],
+            "answer": "Equally likely",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Equally likely means All outcomes have the same chance."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible result of an experiment",
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success",
+              "A test to see what actually happens"
+            ],
+            "answer": "One possible result of an experiment",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-6",
+        "icon": "◇",
+        "skill": "Frequency",
+        "title": "Challenge Cards: Frequency",
+        "description": "Practise frequency through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Frequency” mean?",
+            "choices": [
+              "How often a result happens",
+              "Using one thing to model another",
+              "Every outcome has an equal chance",
+              "How likely an event is, from 0 to 1"
+            ],
+            "answer": "How often a result happens",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Frequency means How often a result happens."
+          },
+          {
+            "prompt": "Which term matches this meaning: How likely an event is, from 0 to 1?",
+            "choices": [
+              "Probability",
+              "Equally likely",
+              "Favourable outcome",
+              "Experiment"
+            ],
+            "answer": "Probability",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Probability means How likely an event is, from 0 to 1."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome you are counting as a success?",
+            "choices": [
+              "Favourable outcome",
+              "Frequency",
+              "Simulation",
+              "Random"
+            ],
+            "answer": "Favourable outcome",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome you are counting as a success."
+          },
+          {
+            "prompt": "What does “Equally likely” mean?",
+            "choices": [
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success",
+              "A test to see what actually happens",
+              "How often a result happens"
+            ],
+            "answer": "All outcomes have the same chance",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Equally likely means All outcomes have the same chance."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-7",
+        "icon": "⚡",
+        "skill": "Simulation",
+        "title": "Think Fast: Simulation",
+        "description": "Practise simulation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Using one thing to model another?",
+            "choices": [
+              "Simulation",
+              "Random",
+              "Probability",
+              "Outcome"
+            ],
+            "answer": "Simulation",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Simulation means Using one thing to model another."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible result of an experiment?",
+            "choices": [
+              "Outcome",
+              "Favourable outcome",
+              "Experiment",
+              "Frequency"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Probability” mean?",
+            "choices": [
+              "How likely an event is, from 0 to 1",
+              "One possible result of an experiment",
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success"
+            ],
+            "answer": "How likely an event is, from 0 to 1",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Probability means How likely an event is, from 0 to 1."
+          },
+          {
+            "prompt": "What does “Favourable outcome” mean?",
+            "choices": [
+              "An outcome you are counting as a success",
+              "A test to see what actually happens",
+              "How often a result happens",
+              "Using one thing to model another"
+            ],
+            "answer": "An outcome you are counting as a success",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome you are counting as a success."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-8",
+        "icon": "☁",
+        "skill": "Random",
+        "title": "Explain It: Random",
+        "description": "Practise random through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Every outcome has an equal chance?",
+            "choices": [
+              "Random",
+              "Probability",
+              "Outcome",
+              "Equally likely"
+            ],
+            "answer": "Random",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Random means Every outcome has an equal chance."
+          },
+          {
+            "prompt": "Which term matches this meaning: All outcomes have the same chance?",
+            "choices": [
+              "Equally likely",
+              "Experiment",
+              "Frequency",
+              "Simulation"
+            ],
+            "answer": "Equally likely",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Equally likely means All outcomes have the same chance."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible result of an experiment",
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success",
+              "A test to see what actually happens"
+            ],
+            "answer": "One possible result of an experiment",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Experiment” mean?",
+            "choices": [
+              "A test to see what actually happens",
+              "How often a result happens",
+              "Using one thing to model another",
+              "Every outcome has an equal chance"
+            ],
+            "answer": "A test to see what actually happens",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Experiment means A test to see what actually happens."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-9",
+        "icon": "⌂",
+        "skill": "Probability",
+        "title": "Real-Life Round: Probability",
+        "description": "Practise probability through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: How likely an event is, from 0 to 1?",
+            "choices": [
+              "Probability",
+              "Equally likely",
+              "Favourable outcome",
+              "Experiment"
+            ],
+            "answer": "Probability",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Probability means How likely an event is, from 0 to 1."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome you are counting as a success?",
+            "choices": [
+              "Favourable outcome",
+              "Frequency",
+              "Simulation",
+              "Random"
+            ],
+            "answer": "Favourable outcome",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome you are counting as a success."
+          },
+          {
+            "prompt": "What does “Equally likely” mean?",
+            "choices": [
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success",
+              "A test to see what actually happens",
+              "How often a result happens"
+            ],
+            "answer": "All outcomes have the same chance",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Equally likely means All outcomes have the same chance."
+          },
+          {
+            "prompt": "What does “Frequency” mean?",
+            "choices": [
+              "How often a result happens",
+              "Using one thing to model another",
+              "Every outcome has an equal chance",
+              "How likely an event is, from 0 to 1"
+            ],
+            "answer": "How often a result happens",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Frequency means How often a result happens."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-10",
+        "icon": "!",
+        "skill": "Outcome",
+        "title": "Spot the Error: Outcome",
+        "description": "Practise outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One possible result of an experiment?",
+            "choices": [
+              "Outcome",
+              "Favourable outcome",
+              "Experiment",
+              "Frequency"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Probability” mean?",
+            "choices": [
+              "How likely an event is, from 0 to 1",
+              "One possible result of an experiment",
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success"
+            ],
+            "answer": "How likely an event is, from 0 to 1",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Probability means How likely an event is, from 0 to 1."
+          },
+          {
+            "prompt": "What does “Favourable outcome” mean?",
+            "choices": [
+              "An outcome you are counting as a success",
+              "A test to see what actually happens",
+              "How often a result happens",
+              "Using one thing to model another"
+            ],
+            "answer": "An outcome you are counting as a success",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome you are counting as a success."
+          },
+          {
+            "prompt": "Which term matches this meaning: Using one thing to model another?",
+            "choices": [
+              "Simulation",
+              "Random",
+              "Probability",
+              "Outcome"
+            ],
+            "answer": "Simulation",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Simulation means Using one thing to model another."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-11",
+        "icon": "≡",
+        "skill": "Equally likely",
+        "title": "Mastery Mix: Equally likely",
+        "description": "Practise equally likely through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: All outcomes have the same chance?",
+            "choices": [
+              "Equally likely",
+              "Experiment",
+              "Frequency",
+              "Simulation"
+            ],
+            "answer": "Equally likely",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Equally likely means All outcomes have the same chance."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible result of an experiment",
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success",
+              "A test to see what actually happens"
+            ],
+            "answer": "One possible result of an experiment",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Experiment” mean?",
+            "choices": [
+              "A test to see what actually happens",
+              "How often a result happens",
+              "Using one thing to model another",
+              "Every outcome has an equal chance"
+            ],
+            "answer": "A test to see what actually happens",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Experiment means A test to see what actually happens."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every outcome has an equal chance?",
+            "choices": [
+              "Random",
+              "Probability",
+              "Outcome",
+              "Equally likely"
+            ],
+            "answer": "Random",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Random means Every outcome has an equal chance."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-12",
+        "icon": "T",
+        "skill": "Favourable outcome",
+        "title": "Unit Champion: Favourable outcome",
+        "description": "Practise favourable outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: An outcome you are counting as a success?",
+            "choices": [
+              "Favourable outcome",
+              "Frequency",
+              "Simulation",
+              "Random"
+            ],
+            "answer": "Favourable outcome",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome you are counting as a success."
+          },
+          {
+            "prompt": "What does “Equally likely” mean?",
+            "choices": [
+              "All outcomes have the same chance",
+              "An outcome you are counting as a success",
+              "A test to see what actually happens",
+              "How often a result happens"
+            ],
+            "answer": "All outcomes have the same chance",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Equally likely means All outcomes have the same chance."
+          },
+          {
+            "prompt": "What does “Frequency” mean?",
+            "choices": [
+              "How often a result happens",
+              "Using one thing to model another",
+              "Every outcome has an equal chance",
+              "How likely an event is, from 0 to 1"
+            ],
+            "answer": "How often a result happens",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Frequency means How often a result happens."
+          },
+          {
+            "prompt": "Which term matches this meaning: How likely an event is, from 0 to 1?",
+            "choices": [
+              "Probability",
+              "Equally likely",
+              "Favourable outcome",
+              "Experiment"
+            ],
+            "answer": "Probability",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Probability means How likely an event is, from 0 to 1."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can this unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, try every worked example yourself on paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain an idea in a fresh way, or check your answers. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
+    "I can why does probability matter so much? Because the real world is full of uncertainty, and people who understand chance make better decisions. Weather forecasters use probability to warn families before a storm. Doctors use it to understand how well a medicine works. Traders in the Mogadishu market judge the chance that a certain fruit will sell before it spoils. Even sharing fairly at iftar during Ramadan involves thinking about equal chances. When you learn to reason clearly about likelihood, you gain a skill you will use for the rest of your life.",
+    "I can as you work, keep a pencil, some paper, and if you can, a coin and a dice beside you. Probability is a subject you must do, not only read. Flip the coin, roll the dice, write down what happens, and compare it with what you expected. If a result surprises you, that is not a mistake – it is chance showing you how it behaves. Every scientist and mathematician who studies chance began exactly where you are now.",
+    "I can use probability words correctly: impossible, unlikely, even chance, likely, certain.",
+    "I can place events on a probability scale from 0 to 1 (and from 0% to 100%).",
+    "I can list all the possible outcomes of a simple experiment in an organised way.",
+    "I can recognise when outcomes are equally likely.",
+    "I can calculate the probability of an event as a fraction: favourable outcomes over total outcomes."
+  ]
+}

@@ -1,0 +1,1793 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.163Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g07-u13",
+    "unitNo": 13,
+    "unitTitle": "Probability",
+    "unitOverview": "Welcome to Unit 13! In this unit you will study probability – the branch of mathematics that measures how likely something is to happen. Every day you already think about chance without noticing. Will it rain before Maghrib? Will Hassan's team win the football match on Friday? If Amina reaches into a bag of dates without looking, will she pull out a soft one or a dry one? Probability gives you a precise, mathematical way to answer questions like these instead of just guessing.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-7-Content-Package.xlsx",
+    "sourceArchive": "Year 7 (1)-20260714T221013Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 7 (1)/Unit 13/Year 7 - Unit 13 Lesson.docx",
+      "Year 7 (1)/Unit 13/Year 7 - Unit 13 Activities.docx",
+      "Year 7 (1)/Unit 13/Year 7 - Unit 13 Practice.docx",
+      "Year 7 (1)/Unit 13/Year 7 - Unit 13 Reference.docx"
+    ],
+    "sourceBlockCount": 379,
+    "transformation": "Structured directly from the standardized Cambridge Stage 7 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "This unit is designed for self-paced learning, so you move at your own speed. Read each explanation carefully, work every example on paper yourself before looking at the solution, and only move on when you feel confident. Your AI tutor is available day and night to give you extra questions, explain a step in a different way, or check your reasoning. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
+    "Why does probability matter so much? Because we live in an uncertain world, and the people who understand chance make better decisions. Weather forecasters, doctors, insurance sellers in the Mogadishu market, engineers testing water pumps, and even football coaches all use probability to weigh up risk and reward. Probability also protects you from being fooled: once you understand chance, you can spot when a game is unfair, when a claim is exaggerated, or when someone is relying on a lucky streak that cannot last. It is a genuine thinking skill, not just a set of sums.",
+    "Keep a pencil, some paper, and if you can, a coin and an ordinary six-sided die beside you as you read. Probability is a subject you must do, not just read. Flip the coin, roll the die, and record what happens – you will see the ideas of this unit come alive in front of you. If your first answer is wrong, that is not failure; it is simply a signpost telling you exactly what to practise next.",
+    "Describe how likely an event is using the words impossible, unlikely, even chance, likely and certain.",
+    "Place events on a probability scale from 0 to 1 and read values off it.",
+    "Express a probability as a fraction, a decimal and a percentage, and convert between them.",
+    "List the sample space – all the possible outcomes – of a simple experiment.",
+    "Calculate theoretical probability using P(event) = favourable outcomes / total outcomes.",
+    "Use the rule P(not A) = 1 − P(A) to find the probability an event does not happen.",
+    "Recognise mutually exclusive events and add their probabilities."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-uncertainty-and-the-language-of-chance",
+      "title": "Uncertainty and the Language of Chance",
+      "explanation": "Some things are certain. The sun will rise tomorrow. If today is Thursday, tomorrow will be Friday. Other things are impossible. You cannot roll a 7 on an ordinary six-sided die, because the die only has the faces 1 to 6. But most of life sits somewhere in between these two extremes, in the land of uncertainty. We cannot be sure whether it will rain, whether a seed will sprout, or which side a flipped coin will land on – and that is exactly where probability lives. Before we use numbers, we use words to describe…",
+      "example": "Consider flipping a coin. Even though the coin has only two sides, you cannot say for certain which way it will land. The result depends on the force of the flip, the spin, the air, and the surface it lands on – far too…"
+    },
+    {
+      "id": "concept-2-the-probability-scale-0-to-1",
+      "title": "The Probability Scale (0 to 1)",
+      "explanation": "Words like 'likely' are useful, but two people may not agree on exactly what they mean. Mathematics gives us something sharper: the probability scale, a number line that runs from 0 to 1. Every probability in the world sits somewhere on this line, and no probability can ever be less than 0 or more than 1. At the very bottom of the scale, probability 0 means the event is impossible – it can never happen. Rolling a 7 on a standard die has probability 0. At the very top, probability 1 means the event is certain – it…",
+      "example": "The exact middle of the scale, probability 1/2 (which is 0.5, or 50%), marks an even chance. A fair coin landing heads sits here. Anything to the left of the middle is unlikely (more likely not to happen than to…"
+    },
+    {
+      "id": "concept-3-fractions-decimals-and-percentages",
+      "title": "Fractions, Decimals and Percentages",
+      "explanation": "The same probability can be written in three equivalent ways: as a fraction, as a decimal, or as a percentage. Each form is useful in different situations, and being able to switch between them quickly is an essential skill in this unit. They are simply three different outfits for the very same number. A fraction is often the most natural form, because probability is built from a count of favourable outcomes over total outcomes. The probability of rolling a 6 on a die is 1/6, showing directly that there is one…",
+      "example": "A decimal is handy for comparing probabilities and for calculations. To turn a fraction into a decimal, divide the top by the bottom: 1/6 = 1 ÷ 6 = 0.167 (to three decimal places). Decimals make it easy to see, at a…"
+    },
+    {
+      "id": "concept-4-outcomes-events-and-the-sample-space",
+      "title": "Outcomes, Events and the Sample Space",
+      "explanation": "To calculate probabilities correctly, you first need three precise words. An outcome is a single possible result of an experiment. When you roll a die, the possible outcomes are 1, 2, 3, 4, 5 and 6. When you flip a coin, the outcomes are heads and tails. An outcome is one thing that could happen on one go. An event is one or more outcomes that you are interested in. An event can be simple (a single outcome) or compound (several outcomes). 'Rolling a 4' is a simple event, made of just one outcome. 'Rolling an even…",
+      "example": "The sample space is the set of all possible outcomes of an experiment. For one die roll, the sample space is {1, 2, 3, 4, 5, 6}. For one coin flip it is {heads, tails}. For spinning a spinner with four equal colours –…"
+    },
+    {
+      "id": "concept-5-calculating-theoretical-probability",
+      "title": "Calculating Theoretical Probability",
+      "explanation": "Now we reach the heart of the unit: the formula for theoretical probability. When every outcome is equally likely, the probability of an event is the number of outcomes that make the event happen, divided by the total number of possible outcomes: P(event) = number of favourable outcomes ÷ total number of possible outcomes",
+      "example": "We call this 'theoretical' because we work it out by pure reasoning about the structure of the experiment, without doing any trials at all. Let us apply it. What is the probability of rolling a 3 on a fair die? There is…"
+    },
+    {
+      "id": "concept-6-the-not-rule-and-mutually-exclusive-events",
+      "title": "The 'Not' Rule and Mutually Exclusive Events",
+      "explanation": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does: For example, the probability of rolling a 6 on a die is 1/6, so the probability of not rolling a 6 is 1 − 1/6 = 5/6. This makes sense: five of the six faces are 'not a 6'. The 'not' event is called the complement, and the rule is one…",
+      "example": "Now for mutually exclusive events. Two events are mutually exclusive if they cannot both happen at the same time. On a single die roll, 'rolling a 2' and 'rolling a 5' are mutually exclusive – one roll cannot be both a…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Uncertainty and the Language of Chance",
+      "context": "Some things are certain. The sun will rise tomorrow. If today is Thursday, tomorrow will be Friday. Other things are impossible. You cannot roll a 7 on an ordinary six-sided die, because the die only has the faces 1 to 6. But most of life sits somewhere in…",
+      "prompt": "Match each word to a probability: impossible, even chance, certain → choose from 0, 0.5, 1.",
+      "answer": "1) impossible = 0, even chance = 0.5, certain = 1.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) impossible = 0, even chance = 0.5, certain = 1."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "The Probability Scale (0 to 1)",
+      "context": "Words like 'likely' are useful, but two people may not agree on exactly what they mean. Mathematics gives us something sharper: the probability scale, a number line that runs from 0 to 1. Every probability in the world sits somewhere on this line, and no…",
+      "prompt": "A fair die is rolled. Write as fractions: a) P(2) b) P(odd number) c) P(a number from 1 to 6).",
+      "answer": "a) 1/6, b) 3/6 = 1/2, c) 6/6 = 1.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 1/6, b) 3/6 = 1/2, c) 6/6 = 1."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Fractions, Decimals and Percentages",
+      "context": "The same probability can be written in three equivalent ways: as a fraction, as a decimal, or as a percentage. Each form is useful in different situations, and being able to switch between them quickly is an essential skill in this unit. They are simply three…",
+      "prompt": "Convert to decimals and percentages: a) 1/2 b) 1/4 c) 1/5.",
+      "answer": "a) 0.5 = 50%, b) 0.25 = 25%, c) 0.2 = 20%.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 0.5 = 50%, b) 0.25 = 25%, c) 0.2 = 20%."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Outcomes, Events and the Sample Space",
+      "context": "To calculate probabilities correctly, you first need three precise words. An outcome is a single possible result of an experiment. When you roll a die, the possible outcomes are 1, 2, 3, 4, 5 and 6. When you flip a coin, the outcomes are heads and tails. An…",
+      "prompt": "A bag has 3 red and 7 blue counters. Write P(red) and P(blue) as fractions.",
+      "answer": "P(red) = 3/10, P(blue) = 7/10.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "P(red) = 3/10, P(blue) = 7/10."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Calculating Theoretical Probability",
+      "context": "Now we reach the heart of the unit: the formula for theoretical probability. When every outcome is equally likely, the probability of an event is the number of outcomes that make the event happen, divided by the total number of possible outcomes: P(event) =…",
+      "prompt": "The probability of an event is 0.35. Write the probability it does not happen.",
+      "answer": "1 − 0.35 = 0.65.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1 − 0.35 = 0.65."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "The 'Not' Rule and Mutually Exclusive Events",
+      "context": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the…",
+      "prompt": "A spinner has 10 equal sectors numbered 1 to 10. Find: a) P(a 7) b) P(an even number) c) P(a multiple of 3).",
+      "answer": "1) a) 1/10, b) 5/10 = 1/2, c) multiples of 3 are 3,6,9 → 3/10.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 1/10, b) 5/10 = 1/2, c) multiples of 3 are 3,6,9 → 3/10."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Uncertainty and the Language of Chance",
+      "modelType": "concept-model-1",
+      "purpose": "Some things are certain. The sun will rise tomorrow. If today is Thursday, tomorrow will be Friday. Other things are impossible. You cannot roll a 7 on an ordinary six-sided die, because the die only has the faces 1 to…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The Probability Scale (0 to 1)",
+      "modelType": "concept-model-2",
+      "purpose": "Words like 'likely' are useful, but two people may not agree on exactly what they mean. Mathematics gives us something sharper: the probability scale, a number line that runs from 0 to 1. Every probability in the world…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Fractions, Decimals and Percentages",
+      "modelType": "concept-model-3",
+      "purpose": "The same probability can be written in three equivalent ways: as a fraction, as a decimal, or as a percentage. Each form is useful in different situations, and being able to switch between them quickly is an essential…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Outcomes, Events and the Sample Space",
+      "modelType": "concept-model-4",
+      "purpose": "To calculate probabilities correctly, you first need three precise words. An outcome is a single possible result of an experiment. When you roll a die, the possible outcomes are 1, 2, 3, 4, 5 and 6. When you flip a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Calculating Theoretical Probability",
+      "modelType": "concept-model-5",
+      "purpose": "Now we reach the heart of the unit: the formula for theoretical probability. When every outcome is equally likely, the probability of an event is the number of outcomes that make the event happen, divided by the total…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "The 'Not' Rule and Mutually Exclusive Events",
+      "modelType": "concept-model-6",
+      "purpose": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to calculate a theoretical probability",
+      "example": "A fair six-sided die is rolled once. Find P(rolling a number less than 3), as a fraction, a decimal and a percentage.",
+      "steps": [
+        "List the sample space – every possible outcome.",
+        "Count the total number of outcomes.",
+        "Count how many outcomes are favourable (make the event happen).",
+        "Write P = favourable ÷ total, then simplify the fraction.",
+        "Convert to a decimal or percentage if the question asks."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to find an experimental probability",
+      "example": "A bag holds 5 red, 2 blue and 3 green marbles. One is drawn at random. Find P(red) and P(not red).",
+      "steps": [
+        "Do the experiment many times, keeping conditions the same.",
+        "Record every result in a frequency table with a tally.",
+        "For each outcome, divide its frequency by the total number of trials.",
+        "Compare with the theoretical value if there is one."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to convert between forms",
+      "example": "A fair die is rolled. Find the probability of rolling a 1 or a 4.",
+      "steps": [
+        "Fraction to decimal: divide the top by the bottom.",
+        "Decimal to percentage: multiply by 100.",
+        "Percentage to fraction: write it over 100 and simplify."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Two-stage sample space",
+      "example": "A coin is flipped and a die is rolled. List the sample space and find P(heads and an even number).",
+      "steps": [
+        "Solution: The sample space has 2 × 6 = 12 equally likely outcomes: H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6.",
+        "The favourable outcomes (heads with an even number) are H2, H4 and H6 – that is 3.",
+        "So P(heads and even) = 3/12 = 1/4 = 0.25 = 25%."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Experimental probability",
+      "example": "Hassan spins a spinner 40 times. It lands on 'star' 16 times. Find the experimental probability of landing on a star, and compare it with a theoretical value of 1/4 for a fair spinner.",
+      "steps": [
+        "Solution: Experimental probability = 16/40 = 2/5 = 0.4 = 40%.",
+        "The theoretical value is 1/4 = 0.25 = 25%.",
+        "The experimental result (40%) is noticeably higher than 25%, but 40 spins is not very many.",
+        "To decide whether the spinner is really biased, Hassan should spin it many more times and see whether the relative frequency settles near 25% or stays high."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Using the complement to save work",
+      "example": "A spinner has 10 equal sectors numbered 1 to 10. Find the probability of not landing on a multiple of 5.",
+      "steps": [
+        "Solution: The multiples of 5 from 1 to 10 are 5 and 10, so P(multiple of 5) = 2/10 = 1/5.",
+        "Using the complement rule, P(not a multiple of 5) = 1 − 1/5 = 4/5 = 0.8 = 80%.",
+        "This was quicker than listing the eight other numbers."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "A single die",
+      "prompt": "A fair six-sided die is rolled once. Find P(rolling a number less than 3), as a fraction, a decimal and a percentage.",
+      "solution": "Solution: The numbers less than 3 are 1 and 2, so there are 2 favourable outcomes out of 6. P = 2/6 = 1/3. As a decimal, 1 ÷ 3 = 0.33 (to 2 d.p.). As a percentage, 0.33 × 100 = 33% (to the nearest whole). So P(less than 3) = 1/3 ≈ 0.33 ≈ 33%."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Marbles in a bag",
+      "prompt": "A bag holds 5 red, 2 blue and 3 green marbles. One is drawn at random. Find P(red) and P(not red).",
+      "solution": "Solution: Total marbles = 5 + 2 + 3 = 10. P(red) = 5/10 = 1/2 = 0.5 = 50%. For the complement, P(not red) = 1 − 1/2 = 1/2. You can check directly: 'not red' means blue or green = 2 + 3 = 5 out of 10 = 1/2. Both methods agree."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Mutually exclusive events",
+      "prompt": "A fair die is rolled. Find the probability of rolling a 1 or a 4.",
+      "solution": "Solution: 'Rolling a 1' and 'rolling a 4' cannot both happen on one roll, so they are mutually exclusive and we may add. P(1) = 1/6 and P(4) = 1/6, so P(1 or 4) = 1/6 + 1/6 = 2/6 = 1/3."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Two-stage sample space",
+      "prompt": "A coin is flipped and a die is rolled. List the sample space and find P(heads and an even number).",
+      "solution": "Solution: The sample space has 2 × 6 = 12 equally likely outcomes: H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6. The favourable outcomes (heads with an even number) are H2, H4 and H6 – that is 3. So P(heads and even) = 3/12 = 1/4 = 0.25 = 25%."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Experimental probability",
+      "prompt": "Hassan spins a spinner 40 times. It lands on 'star' 16 times. Find the experimental probability of landing on a star, and compare it with a theoretical value of 1/4 for a fair spinner.",
+      "solution": "Solution: Experimental probability = 16/40 = 2/5 = 0.4 = 40%. The theoretical value is 1/4 = 0.25 = 25%. The experimental result (40%) is noticeably higher than 25%, but 40 spins is not very many. To decide whether the spinner is really biased, Hassan should spin it many more times and see whether the relative frequency settles near 25% or stays high."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Using the complement to save work",
+      "prompt": "A spinner has 10 equal sectors numbered 1 to 10. Find the probability of not landing on a multiple of 5.",
+      "solution": "Solution: The multiples of 5 from 1 to 10 are 5 and 10, so P(multiple of 5) = 2/10 = 1/5. Using the complement rule, P(not a multiple of 5) = 1 − 1/5 = 4/5 = 0.8 = 80%. This was quicker than listing the eight other numbers."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Total of two dice",
+      "prompt": "Two fair dice are rolled and the scores are added. Find P(total of 7).",
+      "solution": "Solution: There are 6 × 6 = 36 equally likely outcomes. The pairs giving a total of 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) – that is 6 favourable outcomes. So P(total of 7) = 6/36 = 1/6. This is why 7 is the most common total when rolling two dice."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Reasoning backwards",
+      "prompt": "In a bag of red and yellow sweets, the probability of drawing a red is 3/5. There are 20 sweets in total. How many are red, and how many are yellow?",
+      "solution": "Solution: P(red) = 3/5 means 3 out of every 5 sweets are red. Of 20 sweets, red = 3/5 × 20 = 12. Yellow = 20 − 12 = 8. Check: P(yellow) = 8/20 = 2/5, and 3/5 + 2/5 = 1, as it must."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "A coin is flipped and a die is rolled. List the sample space, then find P(heads and an odd number).",
+      "solution": "= 1/6 + 1/6 = 2/6 = 1/3."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Convert to fractions in simplest form: a) 20% b) 75% c) 60%.",
+      "solution": "Sample space H1–H6, T1–T6 (12 outcomes); heads with odd = H1, H3, H5 → 3/12 = 1/4."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "A spinner is spun 60 times and lands on 'blue' 27 times. Find the experimental probability of blue as a fraction, a decimal and a percentage.",
+      "solution": "a) 1/5, b) 3/4, c) 3/5."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Two fair dice are rolled and the scores added. Find: a) P(total of 8) b) P(total of 2) c) P(total greater than 10).",
+      "solution": "1) a) totals of 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5/36; b) total of 2: (1,1) = 1/36; c) greater than 10 means 11 or 12: (5,6)(6,5)(6,6) = 3/36 = 1/12."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Match each word to a probability: impossible, even chance, certain → choose from 0, 0.5, 1.",
+      "answer": "1) impossible = 0, even chance = 0.5, certain = 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "A fair die is rolled. Write as fractions: a) P(2) b) P(odd number) c) P(a number from 1 to 6).",
+      "answer": "a) 1/6, b) 3/6 = 1/2, c) 6/6 = 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Convert to decimals and percentages: a) 1/2 b) 1/4 c) 1/5.",
+      "answer": "a) 0.5 = 50%, b) 0.25 = 25%, c) 0.2 = 20%.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "A bag has 3 red and 7 blue counters. Write P(red) and P(blue) as fractions.",
+      "answer": "P(red) = 3/10, P(blue) = 7/10.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "The probability of an event is 0.35. Write the probability it does not happen.",
+      "answer": "1 − 0.35 = 0.65.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "A spinner has 10 equal sectors numbered 1 to 10. Find: a) P(a 7) b) P(an even number) c) P(a multiple of 3).",
+      "answer": "1) a) 1/10, b) 5/10 = 1/2, c) multiples of 3 are 3,6,9 → 3/10.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "A bag holds 4 green, 5 yellow and 1 red marble. Find P(green), P(yellow) and P(not red). Show that all outcomes add to 1.",
+      "answer": "P(green) = 4/10 = 2/5, P(yellow) = 5/10 = 1/2, P(not red) = 9/10; total 4/10 + 5/10 + 1/10 = 10/10 = 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "A fair die is rolled. Are 'rolling a 3' and 'rolling a 6' mutually exclusive? Find P(a 3 or a 6).",
+      "answer": "Yes, mutually exclusive (one roll cannot be both); P(3 or",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "A coin is flipped and a die is rolled. List the sample space, then find P(heads and an odd number).",
+      "answer": "= 1/6 + 1/6 = 2/6 = 1/3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Convert to fractions in simplest form: a) 20% b) 75% c) 60%.",
+      "answer": "Sample space H1–H6, T1–T6 (12 outcomes); heads with odd = H1, H3, H5 → 3/12 = 1/4.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "A spinner is spun 60 times and lands on 'blue' 27 times. Find the experimental probability of blue as a fraction, a decimal and a percentage.",
+      "answer": "a) 1/5, b) 3/4, c) 3/5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Two fair dice are rolled and the scores added. Find: a) P(total of 8) b) P(total of 2) c) P(total greater than 10).",
+      "answer": "1) a) totals of 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5/36; b) total of 2: (1,1) = 1/36; c) greater than 10 means 11 or 12: (5,6)(6,5)(6,6) = 3/36 = 1/12.",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "The Coin-Flip Investigation",
+      "materials": "a coin, paper, a pencil.",
+      "steps": [
+        "Predict: how many heads do you expect in 10 flips? Write it down.",
+        "Flip the coin 10 times and tally the heads and tails.",
+        "Now flip it 40 more times so you have 50 flips in total, keeping the tally going.",
+        "Work out the experimental probability of heads after 10 flips and after 50 flips.",
+        "Which result is closer to the theoretical 1/2? Write a sentence explaining why, using the law of large numbers."
+      ]
+    },
+    {
+      "title": "Build a Bag of Chance",
+      "materials": "a cloth bag or bowl, and small objects of two or three colours (stones, beans, or bottle caps).",
+      "steps": [
+        "Put in a known mixture, for example 5 red and 3 white – 8 objects in total.",
+        "Before drawing, calculate the theoretical P(red) and P(white).",
+        "Draw one object without looking, record its colour, and put it back. Do this 40 times.",
+        "Compare your experimental probabilities with the theoretical ones. How close are they?",
+        "Now ask a family member to secretly change the mixture and use your experiments to guess the new amounts."
+      ]
+    },
+    {
+      "title": "Make a Paper Spinner",
+      "materials": "paper, a pencil, and a paper clip or short stick as a pointer.",
+      "steps": [
+        "Draw a circle and divide it into 8 equal sectors. Colour 4 green, 2 blue and 2 orange.",
+        "Write the theoretical probability of each colour as a fraction.",
+        "Spin the pointer 40 times (flick a paper clip held by a pencil at the centre) and tally the results.",
+        "Calculate the experimental probability of each colour.",
+        "Which colour was closest to its theoretical value? Design a 'fair' spinner where all three colours are equally likely."
+      ]
+    },
+    {
+      "title": "Two-Dice Totals Investigation",
+      "materials": "two dice, paper, a pencil.",
+      "steps": [
+        "List every total from 2 to 12. Predict which total you think will come up most often.",
+        "Roll the two dice 50 times, each time adding the scores and tallying the total.",
+        "Make a bar of tallies for each total. Which total won?",
+        "Explain your result: there are 6 ways to make 7 but only 1 way to make 2 or 12.",
+        "Challenge: work out the theoretical probability of each total out of 36 and compare it to your tallies."
+      ]
+    },
+    {
+      "title": "The Fair-or-Unfair Detective (Family Game)",
+      "materials": "any everyday object with two outcomes – a bottle cap, a drawing pin, or a flat stone marked on one side.",
+      "steps": [
+        "Choose an object and decide its two outcomes (for example, cap 'open up' or 'closed up').",
+        "Everyone guesses whether the object is fair (50/50) or unfair.",
+        "Drop or flip it 60 times as a group, tallying each outcome.",
+        "Calculate the experimental probability of each outcome.",
+        "Decide together: does the evidence suggest the object is fair or unfair? Why do more trials make you more confident?"
+      ]
+    },
+    {
+      "title": "Probability Around the Home (Investigation)",
+      "materials": "just your eyes and a notebook.",
+      "steps": [
+        "Choose an event you can watch, for example 'the next car to pass is white' or 'the next person to enter wears sandals'.",
+        "Estimate the probability first, using the words impossible to certain and a fraction.",
+        "Observe 20 real examples and tally the outcomes.",
+        "Calculate the experimental probability and compare it with your estimate.",
+        "Write one sentence about what surprised you, and share it with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "By the end of this unit you will be able to place events on a probability scale from 0 to 1, calculate the probability of an event using fractions, decimals and percentages, list all the possible outcomes of an experiment in a sample space, and tell the difference between theoretical probability (what the mathematics predicts) and experimental probability (what actually happens when you try it). You will also learn about mutually exclusive events and a neat rule for finding the probability that something does *not* happen."
+      },
+      {
+        "title": "Key idea 2",
+        "text": "Use the rule P(not A) = 1 − P(A) to find the probability an event does not happen."
+      },
+      {
+        "title": "Key idea 3",
+        "text": "A very important rule follows from all this: a probability can never be bigger than 1 and never smaller than 0. If you ever calculate a probability of 1.5 or −0.2, you have made a mistake somewhere, because those numbers are off the scale. This is one of the fastest ways to check your own work. Whenever you finish a probability calculation, glance at the answer and ask: is it between 0 and 1? If not, go back."
+      },
+      {
+        "title": "Key idea 4",
+        "text": "Concept 6: The 'Not' Rule and Mutually Exclusive Events"
+      },
+      {
+        "title": "Key idea 5",
+        "text": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does:"
+      },
+      {
+        "title": "Key idea 6",
+        "text": "For example, the probability of rolling a 6 on a die is 1/6, so the probability of not rolling a 6 is 1 − 1/6 = 5/6. This makes sense: five of the six faces are 'not a 6'. The 'not' event is called the complement, and the rule is one of the most useful shortcuts in probability, especially when the event you want is complicated but its opposite is simple. If Omar wants the probability of not drawing the winning raffle ticket, it is far quicker to work out the small chance of winning and subtract from 1."
+      }
+    ],
+    "terms": [
+      [
+        "Outcome",
+        "One possible result of an experiment"
+      ],
+      [
+        "Event",
+        "One or more outcomes we are interested in"
+      ],
+      [
+        "Sample space",
+        "The set of all possible outcomes"
+      ],
+      [
+        "Theoretical probability",
+        "Probability worked out by reasoning"
+      ],
+      [
+        "Experimental probability",
+        "Probability found from doing trials"
+      ],
+      [
+        "Relative frequency",
+        "Another name for experimental probability"
+      ],
+      [
+        "Mutually exclusive",
+        "Events that cannot both happen at once"
+      ],
+      [
+        "Complement",
+        "The event of something not happening"
+      ],
+      [
+        "Fair",
+        "Every outcome is equally likely"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Probability cannot exceed 1",
+        "Forgetting the total"
+      ],
+      [
+        "Only counting favourables",
+        "Adding overlapping events"
+      ],
+      [
+        "They are not mutually exclusive",
+        "Trusting few trials"
+      ],
+      [
+        "Small samples vary a lot",
+        "Gambler's fallacy"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Match each word to a probability: impossible, even chance, certain → choose from 0, 0.5, 1.",
+      "answer": "1) impossible = 0, even chance = 0.5, certain = 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) impossible = 0, even chance = 0.5, certain = 1."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "A fair die is rolled. Write as fractions: a) P(2) b) P(odd number) c) P(a number from 1 to 6).",
+      "answer": "a) 1/6, b) 3/6 = 1/2, c) 6/6 = 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 1/6, b) 3/6 = 1/2, c) 6/6 = 1."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Convert to decimals and percentages: a) 1/2 b) 1/4 c) 1/5.",
+      "answer": "a) 0.5 = 50%, b) 0.25 = 25%, c) 0.2 = 20%.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 0.5 = 50%, b) 0.25 = 25%, c) 0.2 = 20%."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "A bag has 3 red and 7 blue counters. Write P(red) and P(blue) as fractions.",
+      "answer": "P(red) = 3/10, P(blue) = 7/10.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "P(red) = 3/10, P(blue) = 7/10."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "The probability of an event is 0.35. Write the probability it does not happen.",
+      "answer": "1 − 0.35 = 0.65.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1 − 0.35 = 0.65."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "A spinner has 10 equal sectors numbered 1 to 10. Find: a) P(a 7) b) P(an even number) c) P(a multiple of 3).",
+      "answer": "1) a) 1/10, b) 5/10 = 1/2, c) multiples of 3 are 3,6,9 → 3/10.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 1/10, b) 5/10 = 1/2, c) multiples of 3 are 3,6,9 → 3/10."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "A bag holds 4 green, 5 yellow and 1 red marble. Find P(green), P(yellow) and P(not red). Show that all outcomes add to 1.",
+      "answer": "P(green) = 4/10 = 2/5, P(yellow) = 5/10 = 1/2, P(not red) = 9/10; total 4/10 + 5/10 + 1/10 = 10/10 = 1.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "P(green) = 4/10 = 2/5, P(yellow) = 5/10 = 1/2, P(not red) = 9/10; total 4/10 + 5/10 + 1/10 = 10/10 = 1."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "A fair die is rolled. Are 'rolling a 3' and 'rolling a 6' mutually exclusive? Find P(a 3 or a 6).",
+      "answer": "Yes, mutually exclusive (one roll cannot be both); P(3 or",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Yes, mutually exclusive (one roll cannot be both); P(3 or"
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "A coin is flipped and a die is rolled. List the sample space, then find P(heads and an odd number).",
+      "answer": "= 1/6 + 1/6 = 2/6 = 1/3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "= 1/6 + 1/6 = 2/6 = 1/3."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Convert to fractions in simplest form: a) 20% b) 75% c) 60%.",
+      "answer": "Sample space H1–H6, T1–T6 (12 outcomes); heads with odd = H1, H3, H5 → 3/12 = 1/4.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Sample space H1–H6, T1–T6 (12 outcomes); heads with odd = H1, H3, H5 → 3/12 = 1/4."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "A spinner is spun 60 times and lands on 'blue' 27 times. Find the experimental probability of blue as a fraction, a decimal and a percentage.",
+      "answer": "a) 1/5, b) 3/4, c) 3/5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 1/5, b) 3/4, c) 3/5."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Two fair dice are rolled and the scores added. Find: a) P(total of 8) b) P(total of 2) c) P(total greater than 10).",
+      "answer": "1) a) totals of 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5/36; b) total of 2: (1,1) = 1/36; c) greater than 10 means 11 or 12: (5,6)(6,5)(6,6) = 3/36 = 1/12.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) a) totals of 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5/36; b) total of 2: (1,1) = 1/36; c) greater than 10 means 11 or 12: (5,6)(6,5)(6,6) = 3/36 = 1/12."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "At a Mombasa fun day, a tombola has 50 tickets and 6 of them win a prize. Hani buys one ticket. Find P(win) and P(no win) as fractions in simplest form.",
+      "answer": "1) P(win) = 6/50 = 3/25; P(no win) = 44/50 = 22/25.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) P(win) = 6/50 = 3/25; P(no win) = 44/50 = 22/25."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A forecast gives an 80% chance of rain for the football final. Find the probability it stays dry, and say whether the match is likely to be affected.",
+      "answer": "P(dry) = 1 − 0.8 = 0.2 (20%); rain is very likely, so the match is likely to be affected.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "P(dry) = 1 − 0.8 = 0.2 (20%); rain is very likely, so the match is likely to be affected."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "Maryam has a spinner with 8 equal sectors: 4 'camel', 2 'goat', 2 'cow'. Find P(camel), P(goat or cow), and P(not camel). Check your two answers for 'not camel' agree.",
+      "answer": "P(camel) = 4/8 = 1/2; P(goat or cow) = 2/8 + 2/8 = 4/8 = 1/2; P(not camel) = 1 − 1/2 = 1/2, which agrees with goat or cow = 1/2.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "P(camel) = 4/8 = 1/2; P(goat or cow) = 2/8 + 2/8 = 4/8 = 1/2; P(not camel) = 1 − 1/2 = 1/2, which agrees with goat or cow = 1/2."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "In a survey of 40 families in Kismaayo, 24 own goats and 16 do not. If one family is chosen at random, find P(owns goats) as a fraction and a percentage.",
+      "answer": "P(owns goats) = 24/40 = 3/5 = 60%.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "P(owns goats) = 24/40 = 3/5 = 60%."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Abdi tests a drawing pin by dropping it 100 times to see how often it lands point-up. It lands point-up 63 times. Find the experimental probability of 'point-up', and explain why this must be found by experiment rather than by the theoretical formula.",
+      "answer": "Experimental probability of point-up = 63/100 = 0.63 = 63%; it must be found by experiment because a drawing pin is not symmetrical, so its two outcomes are not equally likely and the theoretical formula cannot be applied.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Experimental probability of point-up = 63/100 = 0.63 = 63%; it must be found by experiment because a drawing pin is not symmetrical, so its two outcomes are not equally likely and the theoretical formula cannot be applied."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Two fair dice are rolled and the scores added. Find: a) P(total of 8) b) P(total of 2) c) P(total greater than 10).",
+      "answer": "1) a) totals of 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5/36; b) total of 2: (1,1) = 1/36; c) greater than 10 means 11 or 12: (5,6)(6,5)(6,6) = 3/36 = 1/12.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) a) totals of 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5/36; b) total of 2: (1,1) = 1/36; c) greater than 10 means 11 or 12: (5,6)(6,5)(6,6) = 3/36 = 1/12."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Two fair dice are rolled and the scores added. Find: a) P(total of 8) b) P(total of 2) c) P(total greater than 10).",
+      "keyIdeas": [
+        "Outcome",
+        "Event",
+        "Sample space"
+      ],
+      "modelAnswer": "1) a) totals of 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5/36; b) total of 2: (1,1) = 1/36; c) greater than 10 means 11 or 12: (5,6)(6,5)(6,6) = 3/36 = 1/12."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A bag of sweets has P(mint) = 3/8. There are 24 sweets. How many are mints and how many are not?",
+      "keyIdeas": [
+        "Event",
+        "Sample space",
+        "Theoretical probability"
+      ],
+      "modelAnswer": "Mints = 3/8 × 24 = 9; not mints = 24 − 9 = 15."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A die is rolled 300 times. If it is fair, how many 5s would you expect? A student records 90 fives. What might this suggest, and why is 300 rolls more convincing than 30?",
+      "keyIdeas": [
+        "Sample space",
+        "Theoretical probability",
+        "Experimental probability"
+      ],
+      "modelAnswer": "Expect 300 ÷ 6 = 50 fives; 90 is well above 50, suggesting possible bias; 300 rolls is more convincing than 30 because the law of large numbers means larger samples wander less from the true probability."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain why you may add the probabilities of 'rolling a 1' and 'rolling a 2', but you may not simply add the probabilities of 'rolling an even number' and 'rolling a number greater than 2'.",
+      "keyIdeas": [
+        "Theoretical probability",
+        "Experimental probability",
+        "Relative frequency"
+      ],
+      "modelAnswer": "'Rolling a 1' and 'rolling a 2' are mutually exclusive (cannot both happen), so their probabilities may be added; but 'even' and 'greater than 2' overlap (a 4 or 6 is both), so simply adding would count those outcomes twice."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Calculating Theoretical Probability.",
+      "keyIdeas": [
+        "Outcome",
+        "Event",
+        "Sample space"
+      ],
+      "modelAnswer": "Now we reach the heart of the unit: the formula for theoretical probability. When every outcome is equally likely, the probability of an event is the number of outcomes that make the event happen, divided by the total number of possible outcomes: P(event) = number of favourable outcomes ÷ total number of possible outcomes"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in The 'Not' Rule and Mutually Exclusive Events.",
+      "keyIdeas": [
+        "Outcome",
+        "Event",
+        "Sample space"
+      ],
+      "modelAnswer": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does: For example, the probability of rolling a 6 on a die is 1/6, so the probability of not rolling a 6 is 1 − 1/6 = 5/6. This makes sense: five of the six faces are 'not a 6'. The 'not' event is called the complement, and the rule is one…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Outcome” mean?",
+        "options": [
+          "One possible result of an experiment",
+          "One or more outcomes we are interested in",
+          "The set of all possible outcomes",
+          "Probability worked out by reasoning"
+        ],
+        "answer": "One possible result of an experiment",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Outcome means One possible result of an experiment."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Event” mean?",
+        "options": [
+          "One or more outcomes we are interested in",
+          "The set of all possible outcomes",
+          "Probability worked out by reasoning",
+          "Probability found from doing trials"
+        ],
+        "answer": "One or more outcomes we are interested in",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Event means One or more outcomes we are interested in."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Sample space” mean?",
+        "options": [
+          "The set of all possible outcomes",
+          "Probability worked out by reasoning",
+          "Probability found from doing trials",
+          "Another name for experimental probability"
+        ],
+        "answer": "The set of all possible outcomes",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Sample space means The set of all possible outcomes."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Theoretical probability” mean?",
+        "options": [
+          "Probability worked out by reasoning",
+          "Probability found from doing trials",
+          "Another name for experimental probability",
+          "Events that cannot both happen at once"
+        ],
+        "answer": "Probability worked out by reasoning",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Theoretical probability means Probability worked out by reasoning."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Experimental probability” mean?",
+        "options": [
+          "Probability found from doing trials",
+          "Another name for experimental probability",
+          "Events that cannot both happen at once",
+          "The event of something not happening"
+        ],
+        "answer": "Probability found from doing trials",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Experimental probability means Probability found from doing trials."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Relative frequency” mean?",
+        "options": [
+          "Another name for experimental probability",
+          "Events that cannot both happen at once",
+          "The event of something not happening",
+          "Every outcome is equally likely"
+        ],
+        "answer": "Another name for experimental probability",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Relative frequency means Another name for experimental probability."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Events that cannot both happen at once?",
+        "options": [
+          "Mutually exclusive",
+          "Complement",
+          "Fair",
+          "Outcome"
+        ],
+        "answer": "Mutually exclusive",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Mutually exclusive means Events that cannot both happen at once."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: The event of something not happening?",
+        "options": [
+          "Complement",
+          "Fair",
+          "Outcome",
+          "Event"
+        ],
+        "answer": "Complement",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Complement means The event of something not happening."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Every outcome is equally likely?",
+        "options": [
+          "Fair",
+          "Outcome",
+          "Event",
+          "Sample space"
+        ],
+        "answer": "Fair",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Fair means Every outcome is equally likely."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: One possible result of an experiment?",
+        "options": [
+          "Outcome",
+          "Sample space",
+          "Theoretical probability",
+          "Experimental probability"
+        ],
+        "answer": "Outcome",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Outcome means One possible result of an experiment."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: One or more outcomes we are interested in?",
+        "options": [
+          "Event",
+          "Theoretical probability",
+          "Experimental probability",
+          "Relative frequency"
+        ],
+        "answer": "Event",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Event means One or more outcomes we are interested in."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The set of all possible outcomes?",
+        "options": [
+          "Sample space",
+          "Experimental probability",
+          "Relative frequency",
+          "Mutually exclusive"
+        ],
+        "answer": "Sample space",
+        "hint": "Use the Unit 13 Math Words & Symbols reference.",
+        "explanation": "Sample space means The set of all possible outcomes."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u13-game-1",
+        "icon": "?",
+        "skill": "Outcome",
+        "title": "Quick Match: Outcome",
+        "description": "Practise outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible result of an experiment",
+              "One or more outcomes we are interested in",
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning"
+            ],
+            "answer": "One possible result of an experiment",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Theoretical probability” mean?",
+            "choices": [
+              "Probability worked out by reasoning",
+              "Probability found from doing trials",
+              "Another name for experimental probability",
+              "Events that cannot both happen at once"
+            ],
+            "answer": "Probability worked out by reasoning",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Theoretical probability means Probability worked out by reasoning."
+          },
+          {
+            "prompt": "Which term matches this meaning: Events that cannot both happen at once?",
+            "choices": [
+              "Mutually exclusive",
+              "Complement",
+              "Fair",
+              "Outcome"
+            ],
+            "answer": "Mutually exclusive",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mutually exclusive means Events that cannot both happen at once."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible result of an experiment?",
+            "choices": [
+              "Outcome",
+              "Sample space",
+              "Theoretical probability",
+              "Experimental probability"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-2",
+        "icon": "★",
+        "skill": "Event",
+        "title": "Concept Quest: Event",
+        "description": "Practise event through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Event” mean?",
+            "choices": [
+              "One or more outcomes we are interested in",
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning",
+              "Probability found from doing trials"
+            ],
+            "answer": "One or more outcomes we are interested in",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means One or more outcomes we are interested in."
+          },
+          {
+            "prompt": "What does “Experimental probability” mean?",
+            "choices": [
+              "Probability found from doing trials",
+              "Another name for experimental probability",
+              "Events that cannot both happen at once",
+              "The event of something not happening"
+            ],
+            "answer": "Probability found from doing trials",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Experimental probability means Probability found from doing trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: The event of something not happening?",
+            "choices": [
+              "Complement",
+              "Fair",
+              "Outcome",
+              "Event"
+            ],
+            "answer": "Complement",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Complement means The event of something not happening."
+          },
+          {
+            "prompt": "Which term matches this meaning: One or more outcomes we are interested in?",
+            "choices": [
+              "Event",
+              "Theoretical probability",
+              "Experimental probability",
+              "Relative frequency"
+            ],
+            "answer": "Event",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means One or more outcomes we are interested in."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-3",
+        "icon": "◫",
+        "skill": "Sample space",
+        "title": "Model Detective: Sample space",
+        "description": "Practise sample space through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Sample space” mean?",
+            "choices": [
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning",
+              "Probability found from doing trials",
+              "Another name for experimental probability"
+            ],
+            "answer": "The set of all possible outcomes",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Relative frequency” mean?",
+            "choices": [
+              "Another name for experimental probability",
+              "Events that cannot both happen at once",
+              "The event of something not happening",
+              "Every outcome is equally likely"
+            ],
+            "answer": "Another name for experimental probability",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Relative frequency means Another name for experimental probability."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every outcome is equally likely?",
+            "choices": [
+              "Fair",
+              "Outcome",
+              "Event",
+              "Sample space"
+            ],
+            "answer": "Fair",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Fair means Every outcome is equally likely."
+          },
+          {
+            "prompt": "Which term matches this meaning: The set of all possible outcomes?",
+            "choices": [
+              "Sample space",
+              "Experimental probability",
+              "Relative frequency",
+              "Mutually exclusive"
+            ],
+            "answer": "Sample space",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-4",
+        "icon": "→",
+        "skill": "Theoretical probability",
+        "title": "Rule Runner: Theoretical probability",
+        "description": "Practise theoretical probability through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Theoretical probability” mean?",
+            "choices": [
+              "Probability worked out by reasoning",
+              "Probability found from doing trials",
+              "Another name for experimental probability",
+              "Events that cannot both happen at once"
+            ],
+            "answer": "Probability worked out by reasoning",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Theoretical probability means Probability worked out by reasoning."
+          },
+          {
+            "prompt": "Which term matches this meaning: Events that cannot both happen at once?",
+            "choices": [
+              "Mutually exclusive",
+              "Complement",
+              "Fair",
+              "Outcome"
+            ],
+            "answer": "Mutually exclusive",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mutually exclusive means Events that cannot both happen at once."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible result of an experiment?",
+            "choices": [
+              "Outcome",
+              "Sample space",
+              "Theoretical probability",
+              "Experimental probability"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible result of an experiment",
+              "One or more outcomes we are interested in",
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning"
+            ],
+            "answer": "One possible result of an experiment",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-5",
+        "icon": "Σ",
+        "skill": "Experimental probability",
+        "title": "Vocabulary Vault: Experimental probability",
+        "description": "Practise experimental probability through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Experimental probability” mean?",
+            "choices": [
+              "Probability found from doing trials",
+              "Another name for experimental probability",
+              "Events that cannot both happen at once",
+              "The event of something not happening"
+            ],
+            "answer": "Probability found from doing trials",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Experimental probability means Probability found from doing trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: The event of something not happening?",
+            "choices": [
+              "Complement",
+              "Fair",
+              "Outcome",
+              "Event"
+            ],
+            "answer": "Complement",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Complement means The event of something not happening."
+          },
+          {
+            "prompt": "Which term matches this meaning: One or more outcomes we are interested in?",
+            "choices": [
+              "Event",
+              "Theoretical probability",
+              "Experimental probability",
+              "Relative frequency"
+            ],
+            "answer": "Event",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means One or more outcomes we are interested in."
+          },
+          {
+            "prompt": "What does “Event” mean?",
+            "choices": [
+              "One or more outcomes we are interested in",
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning",
+              "Probability found from doing trials"
+            ],
+            "answer": "One or more outcomes we are interested in",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means One or more outcomes we are interested in."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-6",
+        "icon": "◇",
+        "skill": "Relative frequency",
+        "title": "Challenge Cards: Relative frequency",
+        "description": "Practise relative frequency through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Relative frequency” mean?",
+            "choices": [
+              "Another name for experimental probability",
+              "Events that cannot both happen at once",
+              "The event of something not happening",
+              "Every outcome is equally likely"
+            ],
+            "answer": "Another name for experimental probability",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Relative frequency means Another name for experimental probability."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every outcome is equally likely?",
+            "choices": [
+              "Fair",
+              "Outcome",
+              "Event",
+              "Sample space"
+            ],
+            "answer": "Fair",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Fair means Every outcome is equally likely."
+          },
+          {
+            "prompt": "Which term matches this meaning: The set of all possible outcomes?",
+            "choices": [
+              "Sample space",
+              "Experimental probability",
+              "Relative frequency",
+              "Mutually exclusive"
+            ],
+            "answer": "Sample space",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Sample space” mean?",
+            "choices": [
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning",
+              "Probability found from doing trials",
+              "Another name for experimental probability"
+            ],
+            "answer": "The set of all possible outcomes",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-7",
+        "icon": "⚡",
+        "skill": "Mutually exclusive",
+        "title": "Think Fast: Mutually exclusive",
+        "description": "Practise mutually exclusive through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Events that cannot both happen at once?",
+            "choices": [
+              "Mutually exclusive",
+              "Complement",
+              "Fair",
+              "Outcome"
+            ],
+            "answer": "Mutually exclusive",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mutually exclusive means Events that cannot both happen at once."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible result of an experiment?",
+            "choices": [
+              "Outcome",
+              "Sample space",
+              "Theoretical probability",
+              "Experimental probability"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible result of an experiment",
+              "One or more outcomes we are interested in",
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning"
+            ],
+            "answer": "One possible result of an experiment",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Theoretical probability” mean?",
+            "choices": [
+              "Probability worked out by reasoning",
+              "Probability found from doing trials",
+              "Another name for experimental probability",
+              "Events that cannot both happen at once"
+            ],
+            "answer": "Probability worked out by reasoning",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Theoretical probability means Probability worked out by reasoning."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-8",
+        "icon": "☁",
+        "skill": "Complement",
+        "title": "Explain It: Complement",
+        "description": "Practise complement through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The event of something not happening?",
+            "choices": [
+              "Complement",
+              "Fair",
+              "Outcome",
+              "Event"
+            ],
+            "answer": "Complement",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Complement means The event of something not happening."
+          },
+          {
+            "prompt": "Which term matches this meaning: One or more outcomes we are interested in?",
+            "choices": [
+              "Event",
+              "Theoretical probability",
+              "Experimental probability",
+              "Relative frequency"
+            ],
+            "answer": "Event",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means One or more outcomes we are interested in."
+          },
+          {
+            "prompt": "What does “Event” mean?",
+            "choices": [
+              "One or more outcomes we are interested in",
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning",
+              "Probability found from doing trials"
+            ],
+            "answer": "One or more outcomes we are interested in",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means One or more outcomes we are interested in."
+          },
+          {
+            "prompt": "What does “Experimental probability” mean?",
+            "choices": [
+              "Probability found from doing trials",
+              "Another name for experimental probability",
+              "Events that cannot both happen at once",
+              "The event of something not happening"
+            ],
+            "answer": "Probability found from doing trials",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Experimental probability means Probability found from doing trials."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-9",
+        "icon": "⌂",
+        "skill": "Fair",
+        "title": "Real-Life Round: Fair",
+        "description": "Practise fair through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Every outcome is equally likely?",
+            "choices": [
+              "Fair",
+              "Outcome",
+              "Event",
+              "Sample space"
+            ],
+            "answer": "Fair",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Fair means Every outcome is equally likely."
+          },
+          {
+            "prompt": "Which term matches this meaning: The set of all possible outcomes?",
+            "choices": [
+              "Sample space",
+              "Experimental probability",
+              "Relative frequency",
+              "Mutually exclusive"
+            ],
+            "answer": "Sample space",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Sample space” mean?",
+            "choices": [
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning",
+              "Probability found from doing trials",
+              "Another name for experimental probability"
+            ],
+            "answer": "The set of all possible outcomes",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Relative frequency” mean?",
+            "choices": [
+              "Another name for experimental probability",
+              "Events that cannot both happen at once",
+              "The event of something not happening",
+              "Every outcome is equally likely"
+            ],
+            "answer": "Another name for experimental probability",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Relative frequency means Another name for experimental probability."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-10",
+        "icon": "!",
+        "skill": "Outcome",
+        "title": "Spot the Error: Outcome",
+        "description": "Practise outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One possible result of an experiment?",
+            "choices": [
+              "Outcome",
+              "Sample space",
+              "Theoretical probability",
+              "Experimental probability"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible result of an experiment",
+              "One or more outcomes we are interested in",
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning"
+            ],
+            "answer": "One possible result of an experiment",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible result of an experiment."
+          },
+          {
+            "prompt": "What does “Theoretical probability” mean?",
+            "choices": [
+              "Probability worked out by reasoning",
+              "Probability found from doing trials",
+              "Another name for experimental probability",
+              "Events that cannot both happen at once"
+            ],
+            "answer": "Probability worked out by reasoning",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Theoretical probability means Probability worked out by reasoning."
+          },
+          {
+            "prompt": "Which term matches this meaning: Events that cannot both happen at once?",
+            "choices": [
+              "Mutually exclusive",
+              "Complement",
+              "Fair",
+              "Outcome"
+            ],
+            "answer": "Mutually exclusive",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mutually exclusive means Events that cannot both happen at once."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-11",
+        "icon": "≡",
+        "skill": "Event",
+        "title": "Mastery Mix: Event",
+        "description": "Practise event through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One or more outcomes we are interested in?",
+            "choices": [
+              "Event",
+              "Theoretical probability",
+              "Experimental probability",
+              "Relative frequency"
+            ],
+            "answer": "Event",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means One or more outcomes we are interested in."
+          },
+          {
+            "prompt": "What does “Event” mean?",
+            "choices": [
+              "One or more outcomes we are interested in",
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning",
+              "Probability found from doing trials"
+            ],
+            "answer": "One or more outcomes we are interested in",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Event means One or more outcomes we are interested in."
+          },
+          {
+            "prompt": "What does “Experimental probability” mean?",
+            "choices": [
+              "Probability found from doing trials",
+              "Another name for experimental probability",
+              "Events that cannot both happen at once",
+              "The event of something not happening"
+            ],
+            "answer": "Probability found from doing trials",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Experimental probability means Probability found from doing trials."
+          },
+          {
+            "prompt": "Which term matches this meaning: The event of something not happening?",
+            "choices": [
+              "Complement",
+              "Fair",
+              "Outcome",
+              "Event"
+            ],
+            "answer": "Complement",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Complement means The event of something not happening."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-12",
+        "icon": "T",
+        "skill": "Sample space",
+        "title": "Unit Champion: Sample space",
+        "description": "Practise sample space through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The set of all possible outcomes?",
+            "choices": [
+              "Sample space",
+              "Experimental probability",
+              "Relative frequency",
+              "Mutually exclusive"
+            ],
+            "answer": "Sample space",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Sample space” mean?",
+            "choices": [
+              "The set of all possible outcomes",
+              "Probability worked out by reasoning",
+              "Probability found from doing trials",
+              "Another name for experimental probability"
+            ],
+            "answer": "The set of all possible outcomes",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sample space means The set of all possible outcomes."
+          },
+          {
+            "prompt": "What does “Relative frequency” mean?",
+            "choices": [
+              "Another name for experimental probability",
+              "Events that cannot both happen at once",
+              "The event of something not happening",
+              "Every outcome is equally likely"
+            ],
+            "answer": "Another name for experimental probability",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Relative frequency means Another name for experimental probability."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every outcome is equally likely?",
+            "choices": [
+              "Fair",
+              "Outcome",
+              "Event",
+              "Sample space"
+            ],
+            "answer": "Fair",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Fair means Every outcome is equally likely."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can this unit is designed for self-paced learning, so you move at your own speed. Read each explanation carefully, work every example on paper yourself before looking at the solution, and only move on when you feel confident. Your AI tutor is available day and night to give you extra questions, explain a step in a different way, or check your reasoning. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
+    "I can why does probability matter so much? Because we live in an uncertain world, and the people who understand chance make better decisions. Weather forecasters, doctors, insurance sellers in the Mogadishu market, engineers testing water pumps, and even football coaches all use probability to weigh up risk and reward. Probability also protects you from being fooled: once you understand chance, you can spot when a game is unfair, when a claim is exaggerated, or when someone is relying on a lucky streak that cannot last. It is a genuine thinking skill, not just a set of sums.",
+    "I can keep a pencil, some paper, and if you can, a coin and an ordinary six-sided die beside you as you read. Probability is a subject you must do, not just read. Flip the coin, roll the die, and record what happens – you will see the ideas of this unit come alive in front of you. If your first answer is wrong, that is not failure; it is simply a signpost telling you exactly what to practise next.",
+    "I can describe how likely an event is using the words impossible, unlikely, even chance, likely and certain.",
+    "I can place events on a probability scale from 0 to 1 and read values off it.",
+    "I can express a probability as a fraction, a decimal and a percentage, and convert between them.",
+    "I can list the sample space – all the possible outcomes – of a simple experiment.",
+    "I can calculate theoretical probability using P(event) = favourable outcomes / total outcomes."
+  ]
+}

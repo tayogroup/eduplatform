@@ -1,0 +1,1790 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.251Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "math-g08-u08",
+    "unitNo": 8,
+    "unitTitle": "Shapes and Symmetry",
+    "unitOverview": "Welcome to Unit 8! In this unit you will explore the world of geometric shapes, their properties, and the beautiful patterns of symmetry that appear all around you. From the hexagonal cells of a honeycomb, to the geometric tiling on the walls of a masjid in Mogadishu, to the round wheels of a lorry travelling from Hargeisa to Nairobi, shape and symmetry are everywhere. Your task this year is to learn to see them precisely and describe them with the correct mathematical language.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 8 (1)/Year 8 - Unit 8 Lesson (1).docx",
+      "Year 8 (1)/Unit 8 (1)/Year 8 - Unit 8 Activities.docx",
+      "Year 8 (1)/Unit 8 (1)/Year 8 - Unit 8 Practice.docx",
+      "Year 8 (1)/Unit 8 (1)/Year 8 - Unit 8 Reference.docx"
+    ],
+    "sourceBlockCount": 468,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "This unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, redraw every diagram on paper for yourself, and try every worked example before you look at the solution. Your AI tutor is available day and night to give you extra practice, explain a step a different way, or quiz you on shape properties. Your teacher will also meet with you about twice a week to check your progress and stretch your thinking.",
+    "Why does this matter? Geometry is the mathematics of space, and space is where you live. Engineers use the strength of the triangle to build bridges and roof frames. Builders use the right angle of the rectangle to make walls that stand true. Designers use symmetry to make patterns pleasing to the eye, exactly as the craftsmen who made the geometric star patterns of Islamic art did for centuries. When you understand shapes and symmetry, you gain the power to describe, design and reason about the physical world.",
+    "As you work, keep a pencil, a ruler and some squared paper beside you. Geometry is a doing subject, not only a reading one. Fold paper to test lines of symmetry, turn a shape to test rotational symmetry, and build solids from their nets with card and glue. If you make a mistake, that is not failure – it is simply a sign of exactly what to practise next. Let us begin.",
+    "Identify lines of symmetry in shapes, letters and designs, and count them for regular polygons.",
+    "Describe rotational symmetry by its order and calculate the angle of rotation.",
+    "Classify triangles by their sides and angles, and quadrilaterals by their properties.",
+    "Explain the quadrilateral hierarchy and why a square is a special rectangle and a special rhombus.",
+    "Calculate interior and exterior angles of regular polygons.",
+    "Name the parts of a circle – radius, diameter, chord, tangent, arc, sector, segment – and use basic circle facts.",
+    "Count faces, edges and vertices of 3D solids and check answers with Euler's formula."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-lines-of-symmetry-reflection-symmetry",
+      "title": "Lines of Symmetry (Reflection Symmetry)",
+      "explanation": "A line of symmetry (also called a mirror line or line of reflection) is a line that divides a shape into two identical halves. If you fold the shape along this line, the two halves match exactly. You can also test with a small mirror: stand it on the line, and if the reflection completes the original shape, the line is a line of symmetry. Every point on one side has a matching point on the other side, the same distance from the line. The line acts like a mirror – one half is the exact reflection of the other. A…",
+      "example": "Lines of symmetry in regular polygons"
+    },
+    {
+      "id": "concept-2-rotational-symmetry",
+      "title": "Rotational Symmetry",
+      "explanation": "A shape has rotational symmetry if it looks exactly the same after being turned by less than a full 360° about a central point, called the centre of rotation. The order of rotational symmetry is the number of times the shape looks identical during one complete turn. The angle you turn through each time is easy to find: angle of rotation = 360° ÷ order. So a shape of order 4 matches itself every 360 ÷ 4 = 90°; a shape of order 3 matches every 120°; a shape of order 6 matches every 60°.",
+      "example": "Order 1 means no rotational symmetry – the shape only looks the same after a full 360° turn. Every shape has at least order 1, so when a shape has no special rotational symmetry we say it has order 1."
+    },
+    {
+      "id": "concept-3-properties-of-triangles",
+      "title": "Properties of Triangles",
+      "explanation": "A triangle is a polygon with three sides, three vertices and three angles. The three interior angles always add up to 180° – this is one of the most useful facts in all of geometry. We classify triangles in two ways: by their sides and by their angles. Equilateral triangle: all three sides equal, all three angles equal to 60°. It has 3 lines of symmetry and rotational symmetry of order 3.",
+      "example": "Isosceles triangle: two sides equal and the two base angles equal. It has 1 line of symmetry and no rotational symmetry."
+    },
+    {
+      "id": "concept-4-properties-of-quadrilaterals",
+      "title": "Properties of Quadrilaterals",
+      "explanation": "A quadrilateral is any four-sided polygon. Its four interior angles always add up to 360°. There are several important special quadrilaterals, and each is defined by its own properties. Learn them carefully. 2 pairs of parallel sides; opposite sides and angles equal; diagonals bisect each other",
+      "example": "Order 2 rotation; 0 lines of symmetry"
+    },
+    {
+      "id": "concept-5-the-quadrilateral-hierarchy",
+      "title": "The Quadrilateral Hierarchy",
+      "explanation": "The special quadrilaterals form a family tree, or hierarchy, where some shapes are special cases of others. The key principle is this: a shape lower in the tree has all the properties of the shapes above it, plus extra properties of its own. Understanding this saves you from learning long lists by rote, because properties are inherited down the tree. Reading down the main branch: a quadrilateral becomes a parallelogram when it gains a second pair of parallel sides. A parallelogram becomes a rectangle when its…",
+      "example": "This tree lets you judge statements about shapes. Some true statements: all squares are rectangles (a square meets every rectangle condition and adds more); all squares are rhombuses; all rectangles are parallelograms;…"
+    },
+    {
+      "id": "concept-6-polygons-and-their-angles",
+      "title": "Polygons and Their Angles",
+      "explanation": "A polygon is a closed shape made of straight sides. A regular polygon has all sides equal and all angles equal; an irregular polygon does not. For regular polygons there are two angle formulas you should know and be able to use. ⭐ Polygon Angle Formulas Each exterior angle of a regular n-sided polygon = 360 ÷ n. Each interior angle of a regular n-sided polygon = (n − 2) × 180 ÷ n. Interior angle + exterior angle = 180 (they lie on a straight line).",
+      "example": "Why does the exterior angle rule work? If you walk all the way around the outside of any polygon, turning at each corner, you make one full turn of 360° by the time you return to the start. For a regular polygon, that…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Lines of Symmetry (Reflection Symmetry)",
+      "context": "A line of symmetry (also called a mirror line or line of reflection) is a line that divides a shape into two identical halves. If you fold the shape along this line, the two halves match exactly. You can also test with a small mirror: stand it on the line,…",
+      "prompt": "How many lines of symmetry does each shape have? a) equilateral triangle b) square c) regular hexagon d) rectangle (not a square)",
+      "answer": "1) a) 3 b) 4 c) 6 d) 2.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 3 b) 4 c) 6 d) 2."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Rotational Symmetry",
+      "context": "A shape has rotational symmetry if it looks exactly the same after being turned by less than a full 360° about a central point, called the centre of rotation. The order of rotational symmetry is the number of times the shape looks identical during one…",
+      "prompt": "State the order of rotational symmetry of each: a) square b) equilateral triangle c) rectangle d) regular pentagon",
+      "answer": "a) 4 b) 3 c) 2 d) 5.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 4 b) 3 c) 2 d) 5."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Properties of Triangles",
+      "context": "A triangle is a polygon with three sides, three vertices and three angles. The three interior angles always add up to 180° – this is one of the most useful facts in all of geometry. We classify triangles in two ways: by their sides and by their angles.…",
+      "prompt": "Name the triangle described: a) all sides equal b) two sides equal c) all sides different",
+      "answer": "a) equilateral b) isosceles c) scalene.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) equilateral b) isosceles c) scalene."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Properties of Quadrilaterals",
+      "context": "A quadrilateral is any four-sided polygon. Its four interior angles always add up to 360°. There are several important special quadrilaterals, and each is defined by its own properties. Learn them carefully. 2 pairs of parallel sides; opposite sides and…",
+      "prompt": "How many faces, edges and vertices does each have? a) cube b) square pyramid",
+      "answer": "a) cube: 6 faces, 12 edges, 8 vertices b) square pyramid: 5 faces, 8 edges, 5 vertices.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) cube: 6 faces, 12 edges, 8 vertices b) square pyramid: 5 faces, 8 edges, 5 vertices."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "The Quadrilateral Hierarchy",
+      "context": "The special quadrilaterals form a family tree, or hierarchy, where some shapes are special cases of others. The key principle is this: a shape lower in the tree has all the properties of the shapes above it, plus extra properties of its own. Understanding…",
+      "prompt": "Fill in the circle words: the distance from the centre to the edge is the ___; a segment through the centre is the ___.",
+      "answer": "radius; diameter.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "radius; diameter."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Polygons and Their Angles",
+      "context": "A polygon is a closed shape made of straight sides. A regular polygon has all sides equal and all angles equal; an irregular polygon does not. For regular polygons there are two angle formulas you should know and be able to use. ⭐ Polygon Angle Formulas Each…",
+      "prompt": "A shape has rotational symmetry of order 8. What is its angle of rotation?",
+      "answer": "1) 360 ÷ 8 = 45°.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) 360 ÷ 8 = 45°."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Lines of Symmetry (Reflection Symmetry)",
+      "modelType": "concept-model-1",
+      "purpose": "A line of symmetry (also called a mirror line or line of reflection) is a line that divides a shape into two identical halves. If you fold the shape along this line, the two halves match exactly. You can also test with…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Rotational Symmetry",
+      "modelType": "concept-model-2",
+      "purpose": "A shape has rotational symmetry if it looks exactly the same after being turned by less than a full 360° about a central point, called the centre of rotation. The order of rotational symmetry is the number of times the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Properties of Triangles",
+      "modelType": "concept-model-3",
+      "purpose": "A triangle is a polygon with three sides, three vertices and three angles. The three interior angles always add up to 180° – this is one of the most useful facts in all of geometry. We classify triangles in two ways: by…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Properties of Quadrilaterals",
+      "modelType": "concept-model-4",
+      "purpose": "A quadrilateral is any four-sided polygon. Its four interior angles always add up to 360°. There are several important special quadrilaterals, and each is defined by its own properties. Learn them carefully. 2 pairs of…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "The Quadrilateral Hierarchy",
+      "modelType": "concept-model-5",
+      "purpose": "The special quadrilaterals form a family tree, or hierarchy, where some shapes are special cases of others. The key principle is this: a shape lower in the tree has all the properties of the shapes above it, plus extra…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Polygons and Their Angles",
+      "modelType": "concept-model-6",
+      "purpose": "A polygon is a closed shape made of straight sides. A regular polygon has all sides equal and all angles equal; an irregular polygon does not. For regular polygons there are two angle formulas you should know and be…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find the order of rotational symmetry",
+      "example": "How many lines of symmetry does a regular octagon have?",
+      "steps": [
+        "Place a point at the centre of the shape.",
+        "Turn the shape slowly through one full 360° rotation.",
+        "Count how many times it looks exactly the same during the turn.",
+        "That count is the order. The angle of rotation is 360 ÷ order."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to find angles of a regular polygon",
+      "example": "A shape has rotational symmetry of order 5. What is its angle of rotation?",
+      "steps": [
+        "Count the number of sides, n.",
+        "Exterior angle = 360 ÷ n.",
+        "Interior angle = 180 − exterior angle (or use (n − 2) × 180 ÷ n).",
+        "Check: interior + exterior should equal 180."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to count faces, edges and vertices",
+      "example": "Two angles of a triangle are 58° and 74°. Find the third angle, and classify the triangle by its angles.",
+      "steps": [
+        "Faces: count every flat surface.",
+        "Edges: count every line where two faces meet.",
+        "Vertices: count every corner point.",
+        "Check with Euler's formula: V − E + F should equal 2 for a polyhedron."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Naming a quadrilateral from clues",
+      "example": "A quadrilateral has four equal sides but its angles are not right angles. What is it?",
+      "steps": [
+        "Solution: Four equal sides is the defining property of a rhombus.",
+        "Because the angles are not right angles, it is not a square.",
+        "So the shape is a rhombus.",
+        "(If the angles were right angles too, it would be a square.)"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Interior angle of a regular polygon",
+      "example": "Find each interior angle of a regular decagon (10 sides).",
+      "steps": [
+        "Solution: Each interior angle = (n − 2) × 180 ÷ n = (10 − 2) × 180 ÷ 10 = 8 × 180 ÷ 10 = 1440 ÷ 10 = 144°.",
+        "Check: each exterior angle = 360 ÷ 10 = 36°, and 144 + 36 = 180.",
+        "Correct."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Faces, edges and vertices with Euler",
+      "example": "A pentagonal prism has how many faces, edges and vertices? Verify with Euler's formula.",
+      "steps": [
+        "Solution: For a prism with an s-sided base: faces = s + 2 = 5 + 2 = 7; edges = 3s = 3 × 5 = 15; vertices = 2s = 2 × 5 = 10.",
+        "Euler check: V − E + F = 10 − 15 + 7 = 2.",
+        "Correct."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Lines of symmetry of a regular polygon",
+      "prompt": "How many lines of symmetry does a regular octagon have?",
+      "solution": "Solution: A regular polygon with n sides has n lines of symmetry. An octagon has 8 sides, so it has 8 lines of symmetry. (It also has rotational symmetry of order 8.)"
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Order and angle of rotational symmetry",
+      "prompt": "A shape has rotational symmetry of order 5. What is its angle of rotation?",
+      "solution": "Solution: Angle of rotation = 360 ÷ order = 360 ÷ 5 = 72°. The shape matches itself every 72° as it turns."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Missing angle in a triangle",
+      "prompt": "Two angles of a triangle are 58° and 74°. Find the third angle, and classify the triangle by its angles.",
+      "solution": "Solution: The angles of a triangle sum to 180°. Third angle = 180 − 58 − 74 = 48°. All three angles (58°, 74°, 48°) are less than 90°, so it is an acute triangle. Since all three are different, it is also scalene."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Naming a quadrilateral from clues",
+      "prompt": "A quadrilateral has four equal sides but its angles are not right angles. What is it?",
+      "solution": "Solution: Four equal sides is the defining property of a rhombus. Because the angles are not right angles, it is not a square. So the shape is a rhombus. (If the angles were right angles too, it would be a square.)"
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Interior angle of a regular polygon",
+      "prompt": "Find each interior angle of a regular decagon (10 sides).",
+      "solution": "Solution: Each interior angle = (n − 2) × 180 ÷ n = (10 − 2) × 180 ÷ 10 = 8 × 180 ÷ 10 = 1440 ÷ 10 = 144°. Check: each exterior angle = 360 ÷ 10 = 36°, and 144 + 36 = 180. Correct."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Faces, edges and vertices with Euler",
+      "prompt": "A pentagonal prism has how many faces, edges and vertices? Verify with Euler's formula.",
+      "solution": "Solution: For a prism with an s-sided base: faces = s + 2 = 5 + 2 = 7; edges = 3s = 3 × 5 = 15; vertices = 2s = 2 × 5 = 10. Euler check: V − E + F = 10 − 15 + 7 = 2. Correct."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Circle vocabulary and diameter",
+      "prompt": "A circle has a radius of 7 cm. What is its diameter, and what is the name of the longest possible chord?",
+      "solution": "Solution: Diameter = 2 × radius = 2 × 7 = 14 cm. The longest chord in any circle is the diameter itself, because it passes through the centre."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Identifying a transformation",
+      "prompt": "Shape A is mapped onto shape B, which is the same size but flipped so that left and right are swapped. What single transformation is this, and are A and B congruent?",
+      "solution": "Solution: A flip that swaps left and right and reverses orientation is a reflection in a vertical mirror line. Because a reflection keeps the size and shape unchanged, A and B are congruent."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "For a hexagonal prism, work out the faces, edges and vertices, then verify with Euler's formula.",
+      "solution": "× 180 ÷ 8 = 1080 ÷ 8 = 135° b) pentagon (5 −"
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Copy and complete: a rhombus has ___ lines of symmetry and rotational symmetry of order ___.",
+      "solution": "× 180 ÷ 5 = 540 ÷ 5 = 108°."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Reflect the point (3, 5) in a) the y-axis b) the x-axis. Give the new coordinates.",
+      "solution": "Hexagonal prism: faces = 6 + 2 = 8, edges = 3 × 6 = 18, vertices = 2 × 6 = 12; Euler: 12 − 18 + 8 = 2, correct."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "True or false, with a reason: a) all parallelograms are rectangles b) all squares are parallelograms.",
+      "solution": "2 lines; order 2."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "How many lines of symmetry does each shape have? a) equilateral triangle b) square c) regular hexagon d) rectangle (not a square)",
+      "answer": "1) a) 3 b) 4 c) 6 d) 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "State the order of rotational symmetry of each: a) square b) equilateral triangle c) rectangle d) regular pentagon",
+      "answer": "a) 4 b) 3 c) 2 d) 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Name the triangle described: a) all sides equal b) two sides equal c) all sides different",
+      "answer": "a) equilateral b) isosceles c) scalene.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "How many faces, edges and vertices does each have? a) cube b) square pyramid",
+      "answer": "a) cube: 6 faces, 12 edges, 8 vertices b) square pyramid: 5 faces, 8 edges, 5 vertices.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Fill in the circle words: the distance from the centre to the edge is the ___; a segment through the centre is the ___.",
+      "answer": "radius; diameter.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "A shape has rotational symmetry of order 8. What is its angle of rotation?",
+      "answer": "1) 360 ÷ 8 = 45°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Two angles of a triangle are 35° and 90°. Find the third angle and classify the triangle by its angles and by its sides.",
+      "answer": "Third angle = 180 − 35 − 90 = 55°; it has a 90° angle so it is right-angled, and all sides differ so it is scalene.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Find each interior angle of: a) a regular octagon b) a regular pentagon.",
+      "answer": "a) octagon (8 −",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "For a hexagonal prism, work out the faces, edges and vertices, then verify with Euler's formula.",
+      "answer": "× 180 ÷ 8 = 1080 ÷ 8 = 135° b) pentagon (5 −",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Copy and complete: a rhombus has ___ lines of symmetry and rotational symmetry of order ___.",
+      "answer": "× 180 ÷ 5 = 540 ÷ 5 = 108°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Reflect the point (3, 5) in a) the y-axis b) the x-axis. Give the new coordinates.",
+      "answer": "Hexagonal prism: faces = 6 + 2 = 8, edges = 3 × 6 = 18, vertices = 2 × 6 = 12; Euler: 12 − 18 + 8 = 2, correct.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Core",
+      "prompt": "True or false, with a reason: a) all parallelograms are rectangles b) all squares are parallelograms.",
+      "answer": "2 lines; order 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Fold-and-Cut Symmetry Designs",
+      "materials": "paper, scissors.",
+      "steps": [
+        "Fold a sheet of paper once down the middle. The fold is your line of symmetry.",
+        "Cut a design into the folded edge, then open the paper to reveal a symmetrical shape.",
+        "Now fold a fresh sheet twice (in half, then in half again) and cut. How many lines of symmetry does the result have?",
+        "Challenge: fold to make a design with rotational symmetry, like a paper snowflake, and count its order.",
+        "Keep your best designs and label each with its number of lines of symmetry and its order of rotational symmetry."
+      ]
+    },
+    {
+      "title": "Build a Solid from a Net",
+      "materials": "card or stiff paper, a ruler, a pencil, scissors, glue or tape.",
+      "steps": [
+        "Draw the net of a cube: a cross of 6 equal squares (four in a row, one above and one below the second square).",
+        "Cut it out, fold along every line, and glue the edges to form the cube.",
+        "Count the faces, edges and vertices of your finished cube. Check with Euler's formula: V − E + F should equal 2.",
+        "Now design and build a triangular prism or a square pyramid the same way."
+      ]
+    },
+    {
+      "title": "The Quadrilateral Detective Game",
+      "materials": "paper cards, a pencil.",
+      "steps": [
+        "On separate cards write clues such as 'four equal sides', 'four right angles', 'one pair of parallel sides', 'diagonals perpendicular'.",
+        "A player draws two or three clue cards and must name a quadrilateral that fits all of them.",
+        "Discuss: is there more than one possible answer? Which clues force a single shape?",
+        "Take turns being the detective. Use the family tree to check every answer.",
+        "This game trains you to reason from properties to shapes – exactly what geometry proof requires."
+      ]
+    },
+    {
+      "title": "Symmetry Hunt (Investigation)",
+      "materials": "a notebook, and your eyes.",
+      "steps": [
+        "Walk around your home, street or masjid and find ten objects or patterns with symmetry.",
+        "For each one, record whether it has line symmetry, rotational symmetry, or both.",
+        "Sketch three of the most interesting patterns and mark their lines of symmetry.",
+        "Which was more common in what you found – line symmetry or rotational symmetry? Write down what you notice."
+      ]
+    },
+    {
+      "title": "Angle Explorer with Regular Polygons",
+      "materials": "paper, a ruler, a protractor if you have one.",
+      "steps": [
+        "Draw a regular triangle, square, pentagon and hexagon as neatly as you can.",
+        "For each, calculate the exterior angle (360 ÷ n) and the interior angle (180 − exterior).",
+        "Check which of your shapes could tile a floor with no gaps, and explain why using the interior angle.",
+        "Design a small tiling pattern using one of the shapes that works."
+      ]
+    },
+    {
+      "title": "Family Tiling Design (Group Task)",
+      "materials": "your family or friends, coloured paper, scissors.",
+      "steps": [
+        "Together, cut many identical regular hexagons (or squares, or triangles).",
+        "Arrange them to cover a sheet with no gaps and no overlaps – a tessellation.",
+        "Add colour to bring out lines of symmetry and rotational symmetry in the finished pattern.",
+        "Talk about where you have seen such patterns before – on rugs, walls, or tiled floors.",
+        "After your activities, talk or write about: Which activity helped you understand symmetry or 3D solids best? What was the trickiest part? Did building a net change how you see boxes and packaging around you? What would you like more practice with? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "Regular polygons follow a beautiful rule. Look carefully:"
+      },
+      {
+        "title": "Key idea 2",
+        "text": "The general rule: a regular polygon with n sides has exactly n lines of symmetry. So a regular octagon (8 sides) has 8 lines of symmetry, and a regular decagon (10 sides) has 10. A circle is the extreme case – any line through its centre is a line of symmetry, so it has infinitely many."
+      },
+      {
+        "title": "Key idea 3",
+        "text": "Just like lines of symmetry, regular polygons follow a clean rule: a regular polygon with n sides has rotational symmetry of order n."
+      },
+      {
+        "title": "Key idea 4",
+        "text": "This tree lets you judge statements about shapes. Some true statements: all squares are rectangles (a square meets every rectangle condition and adds more); all squares are rhombuses; all rectangles are parallelograms; all parallelograms are quadrilaterals. But the reverses are false: not all rectangles are squares, because a rectangle need not have equal sides; not all parallelograms are rectangles; not all quadrilaterals are parallelograms. The rule of thumb is that you can always travel up the tree (a square truly is a rectangle) but not always down it."
+      },
+      {
+        "title": "Key idea 5",
+        "text": "Why does the exterior angle rule work? If you walk all the way around the outside of any polygon, turning at each corner, you make one full turn of 360° by the time you return to the start. For a regular polygon, that 360° is shared equally among the n corners, so each exterior angle is 360 ÷ n. For a regular hexagon this gives 360 ÷ 6 = 60°, and so each interior angle is 180 − 60 = 120°."
+      }
+    ],
+    "terms": [
+      [
+        "Line of symmetry",
+        "A mirror line splitting a shape into matching halves"
+      ],
+      [
+        "Order of rotational symmetry",
+        "How many times a shape matches itself in one full turn"
+      ],
+      [
+        "Regular polygon",
+        "All sides and all angles equal"
+      ],
+      [
+        "Interior / exterior angle",
+        "Angle inside a polygon / angle to the extended side"
+      ],
+      [
+        "Vertex / edge / face",
+        "Corner / line where faces meet / flat surface"
+      ],
+      [
+        "Net",
+        "A flat pattern that folds into a solid"
+      ],
+      [
+        "Radius / diameter",
+        "Centre to edge / across through the centre (2 × radius)"
+      ],
+      [
+        "Chord / tangent",
+        "Segment joining two edge points / line touching at one point"
+      ],
+      [
+        "Congruent / similar",
+        "Same shape and size / same shape, different size"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Calling a rectangle's diagonals lines of symmetry",
+        "A non-square rectangle has only 2 lines of symmetry"
+      ],
+      [
+        "Using 'order 0' for no rotational symmetry",
+        "Every shape has at least order 1"
+      ],
+      [
+        "Mixing up radius and diameter",
+        "Diameter = 2 × radius"
+      ],
+      [
+        "Thinking all rhombuses are squares",
+        "A square is a special rhombus, not the reverse"
+      ],
+      [
+        "Applying Euler's formula to a cylinder",
+        "Euler works only for flat-faced solids"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "How many lines of symmetry does each shape have? a) equilateral triangle b) square c) regular hexagon d) rectangle (not a square)",
+      "answer": "1) a) 3 b) 4 c) 6 d) 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 3 b) 4 c) 6 d) 2."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "State the order of rotational symmetry of each: a) square b) equilateral triangle c) rectangle d) regular pentagon",
+      "answer": "a) 4 b) 3 c) 2 d) 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 4 b) 3 c) 2 d) 5."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Name the triangle described: a) all sides equal b) two sides equal c) all sides different",
+      "answer": "a) equilateral b) isosceles c) scalene.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) equilateral b) isosceles c) scalene."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "How many faces, edges and vertices does each have? a) cube b) square pyramid",
+      "answer": "a) cube: 6 faces, 12 edges, 8 vertices b) square pyramid: 5 faces, 8 edges, 5 vertices.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) cube: 6 faces, 12 edges, 8 vertices b) square pyramid: 5 faces, 8 edges, 5 vertices."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Fill in the circle words: the distance from the centre to the edge is the ___; a segment through the centre is the ___.",
+      "answer": "radius; diameter.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "radius; diameter."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "A shape has rotational symmetry of order 8. What is its angle of rotation?",
+      "answer": "1) 360 ÷ 8 = 45°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) 360 ÷ 8 = 45°."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Two angles of a triangle are 35° and 90°. Find the third angle and classify the triangle by its angles and by its sides.",
+      "answer": "Third angle = 180 − 35 − 90 = 55°; it has a 90° angle so it is right-angled, and all sides differ so it is scalene.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Third angle = 180 − 35 − 90 = 55°; it has a 90° angle so it is right-angled, and all sides differ so it is scalene."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Find each interior angle of: a) a regular octagon b) a regular pentagon.",
+      "answer": "a) octagon (8 −",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) octagon (8 −"
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "For a hexagonal prism, work out the faces, edges and vertices, then verify with Euler's formula.",
+      "answer": "× 180 ÷ 8 = 1080 ÷ 8 = 135° b) pentagon (5 −",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "× 180 ÷ 8 = 1080 ÷ 8 = 135° b) pentagon (5 −"
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Copy and complete: a rhombus has ___ lines of symmetry and rotational symmetry of order ___.",
+      "answer": "× 180 ÷ 5 = 540 ÷ 5 = 108°.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "× 180 ÷ 5 = 540 ÷ 5 = 108°."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Reflect the point (3, 5) in a) the y-axis b) the x-axis. Give the new coordinates.",
+      "answer": "Hexagonal prism: faces = 6 + 2 = 8, edges = 3 × 6 = 18, vertices = 2 × 6 = 12; Euler: 12 − 18 + 8 = 2, correct.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Hexagonal prism: faces = 6 + 2 = 8, edges = 3 × 6 = 18, vertices = 2 × 6 = 12; Euler: 12 − 18 + 8 = 2, correct."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "True or false, with a reason: a) all parallelograms are rectangles b) all squares are parallelograms.",
+      "answer": "2 lines; order 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "2 lines; order 2."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Ibrahim is cutting a geometric star pattern for a decoration. He wants a design with rotational symmetry of order 6 but NO lines of symmetry. Is this possible? Describe how such a design could look.",
+      "answer": "1) Yes – a design like a six-bladed fan or pinwheel with all blades curved the same way has rotational symmetry of order 6 but no mirror line, because reflecting it reverses the 'spin'.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Yes – a design like a six-bladed fan or pinwheel with all blades curved the same way has rotational symmetry of order 6 but no mirror line, because reflecting it reverses the 'spin'."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A water tank in Kismaayo is a cylinder. Describe its faces, edges and vertices. Then explain why Euler's formula does not apply to it.",
+      "answer": "A cylinder has 2 circular faces, 1 curved surface, 2 circular edges and 0 vertices; Euler's formula applies only to polyhedra (flat faces, straight edges), and a cylinder has a curved surface, so the formula does not apply.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "A cylinder has 2 circular faces, 1 curved surface, 2 circular edges and 0 vertices; Euler's formula applies only to polyhedra (flat faces, straight edges), and a cylinder has a curved surface, so the formula does not apply."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "Maryam designs a box net from 6 rectangles. What solid does it fold into, and how does she know every face is accounted for?",
+      "answer": "A cuboid (rectangular prism); a cuboid has exactly 6 faces, and her net has 6 rectangles, so every face is present.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "A cuboid (rectangular prism); a cuboid has exactly 6 faces, and her net has 6 rectangles, so every face is present."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A circular running track in Nairobi has a radius of 35 m. How far does a runner travel in one full lap? (Use π ≈ 3.14, and give your answer to the nearest metre.)",
+      "answer": "One lap = circumference = 2 × 3.14 × 35 = 219.8 ≈ 220 m.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "One lap = circumference = 2 × 3.14 × 35 = 219.8 ≈ 220 m."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Omar claims, 'Every shape with 4 equal sides is a square.' Give a counter-example that proves him wrong, and name the shape.",
+      "answer": "A rhombus with four equal sides but no right angles is not a square – for example a 'diamond' tilted shape; this disproves Omar's claim.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "A rhombus with four equal sides but no right angles is not a square – for example a 'diamond' tilted shape; this disproves Omar's claim."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "True or false, with a reason: a) all parallelograms are rectangles b) all squares are parallelograms.",
+      "answer": "2 lines; order 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "2 lines; order 2."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A regular polygon has an exterior angle of 24°. How many sides does it have, and what is each interior angle?",
+      "keyIdeas": [
+        "Line of symmetry",
+        "Order of rotational symmetry",
+        "Regular polygon"
+      ],
+      "modelAnswer": "1) Number of sides = 360 ÷ 24 = 15 sides; each interior angle = 180 − 24 = 156°."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A quadrilateral has exactly one pair of parallel sides and one line of symmetry. Name it.",
+      "keyIdeas": [
+        "Order of rotational symmetry",
+        "Regular polygon",
+        "Interior / exterior angle"
+      ],
+      "modelAnswer": "An isosceles trapezium (one pair of parallel sides, one line of symmetry)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A polyhedron has 12 edges and 6 faces. Use Euler's formula to find the number of vertices, and name a solid it could be.",
+      "keyIdeas": [
+        "Regular polygon",
+        "Interior / exterior angle",
+        "Vertex / edge / face"
+      ],
+      "modelAnswer": "V − E + F = 2, so V − 12 + 6 = 2, giving V = 8; a solid with 8 vertices, 12 edges and 6 faces is a cube (or cuboid)."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A parallelogram has perpendicular diagonals but its angles are not right angles. What special quadrilateral is it? Justify your answer using the hierarchy.",
+      "keyIdeas": [
+        "Interior / exterior angle",
+        "Vertex / edge / face",
+        "Net"
+      ],
+      "modelAnswer": "Perpendicular diagonals is the special property of a rhombus; since the angles are not right angles it is not a square, so it must be a rhombus."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain, using interior angles, why regular pentagons cannot tile a flat surface on their own.",
+      "keyIdeas": [
+        "Vertex / edge / face",
+        "Net",
+        "Radius / diameter"
+      ],
+      "modelAnswer": "A regular pentagon has interior angle 108°; 360 ÷ 108 is not a whole number (it is about 3.33), so pentagons cannot meet around a point without gaps or overlaps."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Polygons and Their Angles.",
+      "keyIdeas": [
+        "Line of symmetry",
+        "Order of rotational symmetry",
+        "Regular polygon"
+      ],
+      "modelAnswer": "A polygon is a closed shape made of straight sides. A regular polygon has all sides equal and all angles equal; an irregular polygon does not. For regular polygons there are two angle formulas you should know and be able to use. ⭐ Polygon Angle Formulas Each exterior angle of a regular n-sided polygon = 360 ÷ n. Each interior angle of a regular n-sided polygon = (n − 2) × 180 ÷ n. Interior angle + exterior angle = 180 (they lie on a straight line)."
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Line of symmetry” mean?",
+        "options": [
+          "A mirror line splitting a shape into matching halves",
+          "How many times a shape matches itself in one full turn",
+          "All sides and all angles equal",
+          "Angle inside a polygon / angle to the extended side"
+        ],
+        "answer": "A mirror line splitting a shape into matching halves",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Order of rotational symmetry” mean?",
+        "options": [
+          "How many times a shape matches itself in one full turn",
+          "All sides and all angles equal",
+          "Angle inside a polygon / angle to the extended side",
+          "Corner / line where faces meet / flat surface"
+        ],
+        "answer": "How many times a shape matches itself in one full turn",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Regular polygon” mean?",
+        "options": [
+          "All sides and all angles equal",
+          "Angle inside a polygon / angle to the extended side",
+          "Corner / line where faces meet / flat surface",
+          "A flat pattern that folds into a solid"
+        ],
+        "answer": "All sides and all angles equal",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Regular polygon means All sides and all angles equal."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Interior / exterior angle” mean?",
+        "options": [
+          "Angle inside a polygon / angle to the extended side",
+          "Corner / line where faces meet / flat surface",
+          "A flat pattern that folds into a solid",
+          "Centre to edge / across through the centre (2 × radius)"
+        ],
+        "answer": "Angle inside a polygon / angle to the extended side",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Interior / exterior angle means Angle inside a polygon / angle to the extended side."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Vertex / edge / face” mean?",
+        "options": [
+          "Corner / line where faces meet / flat surface",
+          "A flat pattern that folds into a solid",
+          "Centre to edge / across through the centre (2 × radius)",
+          "Segment joining two edge points / line touching at one point"
+        ],
+        "answer": "Corner / line where faces meet / flat surface",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Vertex / edge / face means Corner / line where faces meet / flat surface."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Net” mean?",
+        "options": [
+          "A flat pattern that folds into a solid",
+          "Centre to edge / across through the centre (2 × radius)",
+          "Segment joining two edge points / line touching at one point",
+          "Same shape and size / same shape, different size"
+        ],
+        "answer": "A flat pattern that folds into a solid",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Net means A flat pattern that folds into a solid."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Centre to edge / across through the centre (2 × radius)?",
+        "options": [
+          "Radius / diameter",
+          "Chord / tangent",
+          "Congruent / similar",
+          "Line of symmetry"
+        ],
+        "answer": "Radius / diameter",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Radius / diameter means Centre to edge / across through the centre (2 × radius)."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Segment joining two edge points / line touching at one point?",
+        "options": [
+          "Chord / tangent",
+          "Congruent / similar",
+          "Line of symmetry",
+          "Order of rotational symmetry"
+        ],
+        "answer": "Chord / tangent",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Chord / tangent means Segment joining two edge points / line touching at one point."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Same shape and size / same shape, different size?",
+        "options": [
+          "Congruent / similar",
+          "Line of symmetry",
+          "Order of rotational symmetry",
+          "Regular polygon"
+        ],
+        "answer": "Congruent / similar",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Congruent / similar means Same shape and size / same shape, different size."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A mirror line splitting a shape into matching halves?",
+        "options": [
+          "Line of symmetry",
+          "Regular polygon",
+          "Interior / exterior angle",
+          "Vertex / edge / face"
+        ],
+        "answer": "Line of symmetry",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: How many times a shape matches itself in one full turn?",
+        "options": [
+          "Order of rotational symmetry",
+          "Interior / exterior angle",
+          "Vertex / edge / face",
+          "Net"
+        ],
+        "answer": "Order of rotational symmetry",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: All sides and all angles equal?",
+        "options": [
+          "Regular polygon",
+          "Vertex / edge / face",
+          "Net",
+          "Radius / diameter"
+        ],
+        "answer": "Regular polygon",
+        "hint": "Use the Unit 8 Math Words & Symbols reference.",
+        "explanation": "Regular polygon means All sides and all angles equal."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u8-game-1",
+        "icon": "?",
+        "skill": "Line of symmetry",
+        "title": "Quick Match: Line of symmetry",
+        "description": "Practise line of symmetry through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Line of symmetry” mean?",
+            "choices": [
+              "A mirror line splitting a shape into matching halves",
+              "How many times a shape matches itself in one full turn",
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side"
+            ],
+            "answer": "A mirror line splitting a shape into matching halves",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+          },
+          {
+            "prompt": "What does “Interior / exterior angle” mean?",
+            "choices": [
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)"
+            ],
+            "answer": "Angle inside a polygon / angle to the extended side",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Interior / exterior angle means Angle inside a polygon / angle to the extended side."
+          },
+          {
+            "prompt": "Which term matches this meaning: Centre to edge / across through the centre (2 × radius)?",
+            "choices": [
+              "Radius / diameter",
+              "Chord / tangent",
+              "Congruent / similar",
+              "Line of symmetry"
+            ],
+            "answer": "Radius / diameter",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Radius / diameter means Centre to edge / across through the centre (2 × radius)."
+          },
+          {
+            "prompt": "Which term matches this meaning: A mirror line splitting a shape into matching halves?",
+            "choices": [
+              "Line of symmetry",
+              "Regular polygon",
+              "Interior / exterior angle",
+              "Vertex / edge / face"
+            ],
+            "answer": "Line of symmetry",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-2",
+        "icon": "★",
+        "skill": "Order of rotational symmetry",
+        "title": "Concept Quest: Order of rotational symmetry",
+        "description": "Practise order of rotational symmetry through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Order of rotational symmetry” mean?",
+            "choices": [
+              "How many times a shape matches itself in one full turn",
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface"
+            ],
+            "answer": "How many times a shape matches itself in one full turn",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+          },
+          {
+            "prompt": "What does “Vertex / edge / face” mean?",
+            "choices": [
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)",
+              "Segment joining two edge points / line touching at one point"
+            ],
+            "answer": "Corner / line where faces meet / flat surface",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Vertex / edge / face means Corner / line where faces meet / flat surface."
+          },
+          {
+            "prompt": "Which term matches this meaning: Segment joining two edge points / line touching at one point?",
+            "choices": [
+              "Chord / tangent",
+              "Congruent / similar",
+              "Line of symmetry",
+              "Order of rotational symmetry"
+            ],
+            "answer": "Chord / tangent",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Chord / tangent means Segment joining two edge points / line touching at one point."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times a shape matches itself in one full turn?",
+            "choices": [
+              "Order of rotational symmetry",
+              "Interior / exterior angle",
+              "Vertex / edge / face",
+              "Net"
+            ],
+            "answer": "Order of rotational symmetry",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-3",
+        "icon": "◫",
+        "skill": "Regular polygon",
+        "title": "Model Detective: Regular polygon",
+        "description": "Practise regular polygon through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Regular polygon” mean?",
+            "choices": [
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid"
+            ],
+            "answer": "All sides and all angles equal",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "What does “Net” mean?",
+            "choices": [
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)",
+              "Segment joining two edge points / line touching at one point",
+              "Same shape and size / same shape, different size"
+            ],
+            "answer": "A flat pattern that folds into a solid",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Net means A flat pattern that folds into a solid."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape and size / same shape, different size?",
+            "choices": [
+              "Congruent / similar",
+              "Line of symmetry",
+              "Order of rotational symmetry",
+              "Regular polygon"
+            ],
+            "answer": "Congruent / similar",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Congruent / similar means Same shape and size / same shape, different size."
+          },
+          {
+            "prompt": "Which term matches this meaning: All sides and all angles equal?",
+            "choices": [
+              "Regular polygon",
+              "Vertex / edge / face",
+              "Net",
+              "Radius / diameter"
+            ],
+            "answer": "Regular polygon",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-4",
+        "icon": "→",
+        "skill": "Interior / exterior angle",
+        "title": "Rule Runner: Interior / exterior angle",
+        "description": "Practise interior / exterior angle through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Interior / exterior angle” mean?",
+            "choices": [
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)"
+            ],
+            "answer": "Angle inside a polygon / angle to the extended side",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Interior / exterior angle means Angle inside a polygon / angle to the extended side."
+          },
+          {
+            "prompt": "Which term matches this meaning: Centre to edge / across through the centre (2 × radius)?",
+            "choices": [
+              "Radius / diameter",
+              "Chord / tangent",
+              "Congruent / similar",
+              "Line of symmetry"
+            ],
+            "answer": "Radius / diameter",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Radius / diameter means Centre to edge / across through the centre (2 × radius)."
+          },
+          {
+            "prompt": "Which term matches this meaning: A mirror line splitting a shape into matching halves?",
+            "choices": [
+              "Line of symmetry",
+              "Regular polygon",
+              "Interior / exterior angle",
+              "Vertex / edge / face"
+            ],
+            "answer": "Line of symmetry",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+          },
+          {
+            "prompt": "What does “Line of symmetry” mean?",
+            "choices": [
+              "A mirror line splitting a shape into matching halves",
+              "How many times a shape matches itself in one full turn",
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side"
+            ],
+            "answer": "A mirror line splitting a shape into matching halves",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-5",
+        "icon": "Σ",
+        "skill": "Vertex / edge / face",
+        "title": "Vocabulary Vault: Vertex / edge / face",
+        "description": "Practise vertex / edge / face through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Vertex / edge / face” mean?",
+            "choices": [
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)",
+              "Segment joining two edge points / line touching at one point"
+            ],
+            "answer": "Corner / line where faces meet / flat surface",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Vertex / edge / face means Corner / line where faces meet / flat surface."
+          },
+          {
+            "prompt": "Which term matches this meaning: Segment joining two edge points / line touching at one point?",
+            "choices": [
+              "Chord / tangent",
+              "Congruent / similar",
+              "Line of symmetry",
+              "Order of rotational symmetry"
+            ],
+            "answer": "Chord / tangent",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Chord / tangent means Segment joining two edge points / line touching at one point."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times a shape matches itself in one full turn?",
+            "choices": [
+              "Order of rotational symmetry",
+              "Interior / exterior angle",
+              "Vertex / edge / face",
+              "Net"
+            ],
+            "answer": "Order of rotational symmetry",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+          },
+          {
+            "prompt": "What does “Order of rotational symmetry” mean?",
+            "choices": [
+              "How many times a shape matches itself in one full turn",
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface"
+            ],
+            "answer": "How many times a shape matches itself in one full turn",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-6",
+        "icon": "◇",
+        "skill": "Net",
+        "title": "Challenge Cards: Net",
+        "description": "Practise net through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Net” mean?",
+            "choices": [
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)",
+              "Segment joining two edge points / line touching at one point",
+              "Same shape and size / same shape, different size"
+            ],
+            "answer": "A flat pattern that folds into a solid",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Net means A flat pattern that folds into a solid."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape and size / same shape, different size?",
+            "choices": [
+              "Congruent / similar",
+              "Line of symmetry",
+              "Order of rotational symmetry",
+              "Regular polygon"
+            ],
+            "answer": "Congruent / similar",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Congruent / similar means Same shape and size / same shape, different size."
+          },
+          {
+            "prompt": "Which term matches this meaning: All sides and all angles equal?",
+            "choices": [
+              "Regular polygon",
+              "Vertex / edge / face",
+              "Net",
+              "Radius / diameter"
+            ],
+            "answer": "Regular polygon",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "What does “Regular polygon” mean?",
+            "choices": [
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid"
+            ],
+            "answer": "All sides and all angles equal",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-7",
+        "icon": "⚡",
+        "skill": "Radius / diameter",
+        "title": "Think Fast: Radius / diameter",
+        "description": "Practise radius / diameter through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Centre to edge / across through the centre (2 × radius)?",
+            "choices": [
+              "Radius / diameter",
+              "Chord / tangent",
+              "Congruent / similar",
+              "Line of symmetry"
+            ],
+            "answer": "Radius / diameter",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Radius / diameter means Centre to edge / across through the centre (2 × radius)."
+          },
+          {
+            "prompt": "Which term matches this meaning: A mirror line splitting a shape into matching halves?",
+            "choices": [
+              "Line of symmetry",
+              "Regular polygon",
+              "Interior / exterior angle",
+              "Vertex / edge / face"
+            ],
+            "answer": "Line of symmetry",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+          },
+          {
+            "prompt": "What does “Line of symmetry” mean?",
+            "choices": [
+              "A mirror line splitting a shape into matching halves",
+              "How many times a shape matches itself in one full turn",
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side"
+            ],
+            "answer": "A mirror line splitting a shape into matching halves",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+          },
+          {
+            "prompt": "What does “Interior / exterior angle” mean?",
+            "choices": [
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)"
+            ],
+            "answer": "Angle inside a polygon / angle to the extended side",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Interior / exterior angle means Angle inside a polygon / angle to the extended side."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-8",
+        "icon": "☁",
+        "skill": "Chord / tangent",
+        "title": "Explain It: Chord / tangent",
+        "description": "Practise chord / tangent through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Segment joining two edge points / line touching at one point?",
+            "choices": [
+              "Chord / tangent",
+              "Congruent / similar",
+              "Line of symmetry",
+              "Order of rotational symmetry"
+            ],
+            "answer": "Chord / tangent",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Chord / tangent means Segment joining two edge points / line touching at one point."
+          },
+          {
+            "prompt": "Which term matches this meaning: How many times a shape matches itself in one full turn?",
+            "choices": [
+              "Order of rotational symmetry",
+              "Interior / exterior angle",
+              "Vertex / edge / face",
+              "Net"
+            ],
+            "answer": "Order of rotational symmetry",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+          },
+          {
+            "prompt": "What does “Order of rotational symmetry” mean?",
+            "choices": [
+              "How many times a shape matches itself in one full turn",
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface"
+            ],
+            "answer": "How many times a shape matches itself in one full turn",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+          },
+          {
+            "prompt": "What does “Vertex / edge / face” mean?",
+            "choices": [
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)",
+              "Segment joining two edge points / line touching at one point"
+            ],
+            "answer": "Corner / line where faces meet / flat surface",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Vertex / edge / face means Corner / line where faces meet / flat surface."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-9",
+        "icon": "⌂",
+        "skill": "Congruent / similar",
+        "title": "Real-Life Round: Congruent / similar",
+        "description": "Practise congruent / similar through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Same shape and size / same shape, different size?",
+            "choices": [
+              "Congruent / similar",
+              "Line of symmetry",
+              "Order of rotational symmetry",
+              "Regular polygon"
+            ],
+            "answer": "Congruent / similar",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Congruent / similar means Same shape and size / same shape, different size."
+          },
+          {
+            "prompt": "Which term matches this meaning: All sides and all angles equal?",
+            "choices": [
+              "Regular polygon",
+              "Vertex / edge / face",
+              "Net",
+              "Radius / diameter"
+            ],
+            "answer": "Regular polygon",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "What does “Regular polygon” mean?",
+            "choices": [
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid"
+            ],
+            "answer": "All sides and all angles equal",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "What does “Net” mean?",
+            "choices": [
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)",
+              "Segment joining two edge points / line touching at one point",
+              "Same shape and size / same shape, different size"
+            ],
+            "answer": "A flat pattern that folds into a solid",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Net means A flat pattern that folds into a solid."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-10",
+        "icon": "!",
+        "skill": "Line of symmetry",
+        "title": "Spot the Error: Line of symmetry",
+        "description": "Practise line of symmetry through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A mirror line splitting a shape into matching halves?",
+            "choices": [
+              "Line of symmetry",
+              "Regular polygon",
+              "Interior / exterior angle",
+              "Vertex / edge / face"
+            ],
+            "answer": "Line of symmetry",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+          },
+          {
+            "prompt": "What does “Line of symmetry” mean?",
+            "choices": [
+              "A mirror line splitting a shape into matching halves",
+              "How many times a shape matches itself in one full turn",
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side"
+            ],
+            "answer": "A mirror line splitting a shape into matching halves",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Line of symmetry means A mirror line splitting a shape into matching halves."
+          },
+          {
+            "prompt": "What does “Interior / exterior angle” mean?",
+            "choices": [
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)"
+            ],
+            "answer": "Angle inside a polygon / angle to the extended side",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Interior / exterior angle means Angle inside a polygon / angle to the extended side."
+          },
+          {
+            "prompt": "Which term matches this meaning: Centre to edge / across through the centre (2 × radius)?",
+            "choices": [
+              "Radius / diameter",
+              "Chord / tangent",
+              "Congruent / similar",
+              "Line of symmetry"
+            ],
+            "answer": "Radius / diameter",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Radius / diameter means Centre to edge / across through the centre (2 × radius)."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-11",
+        "icon": "≡",
+        "skill": "Order of rotational symmetry",
+        "title": "Mastery Mix: Order of rotational symmetry",
+        "description": "Practise order of rotational symmetry through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: How many times a shape matches itself in one full turn?",
+            "choices": [
+              "Order of rotational symmetry",
+              "Interior / exterior angle",
+              "Vertex / edge / face",
+              "Net"
+            ],
+            "answer": "Order of rotational symmetry",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+          },
+          {
+            "prompt": "What does “Order of rotational symmetry” mean?",
+            "choices": [
+              "How many times a shape matches itself in one full turn",
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface"
+            ],
+            "answer": "How many times a shape matches itself in one full turn",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Order of rotational symmetry means How many times a shape matches itself in one full turn."
+          },
+          {
+            "prompt": "What does “Vertex / edge / face” mean?",
+            "choices": [
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)",
+              "Segment joining two edge points / line touching at one point"
+            ],
+            "answer": "Corner / line where faces meet / flat surface",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Vertex / edge / face means Corner / line where faces meet / flat surface."
+          },
+          {
+            "prompt": "Which term matches this meaning: Segment joining two edge points / line touching at one point?",
+            "choices": [
+              "Chord / tangent",
+              "Congruent / similar",
+              "Line of symmetry",
+              "Order of rotational symmetry"
+            ],
+            "answer": "Chord / tangent",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Chord / tangent means Segment joining two edge points / line touching at one point."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-12",
+        "icon": "T",
+        "skill": "Regular polygon",
+        "title": "Unit Champion: Regular polygon",
+        "description": "Practise regular polygon through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: All sides and all angles equal?",
+            "choices": [
+              "Regular polygon",
+              "Vertex / edge / face",
+              "Net",
+              "Radius / diameter"
+            ],
+            "answer": "Regular polygon",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "What does “Regular polygon” mean?",
+            "choices": [
+              "All sides and all angles equal",
+              "Angle inside a polygon / angle to the extended side",
+              "Corner / line where faces meet / flat surface",
+              "A flat pattern that folds into a solid"
+            ],
+            "answer": "All sides and all angles equal",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Regular polygon means All sides and all angles equal."
+          },
+          {
+            "prompt": "What does “Net” mean?",
+            "choices": [
+              "A flat pattern that folds into a solid",
+              "Centre to edge / across through the centre (2 × radius)",
+              "Segment joining two edge points / line touching at one point",
+              "Same shape and size / same shape, different size"
+            ],
+            "answer": "A flat pattern that folds into a solid",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Net means A flat pattern that folds into a solid."
+          },
+          {
+            "prompt": "Which term matches this meaning: Same shape and size / same shape, different size?",
+            "choices": [
+              "Congruent / similar",
+              "Line of symmetry",
+              "Order of rotational symmetry",
+              "Regular polygon"
+            ],
+            "answer": "Congruent / similar",
+            "clue": "Use the Unit 8 Math Words & Symbols reference.",
+            "explanation": "Congruent / similar means Same shape and size / same shape, different size."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can this unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, redraw every diagram on paper for yourself, and try every worked example before you look at the solution. Your AI tutor is available day and night to give you extra practice, explain a step a different way, or quiz you on shape properties. Your teacher will also meet with you about twice a week to check your progress and stretch your thinking.",
+    "I can why does this matter? Geometry is the mathematics of space, and space is where you live. Engineers use the strength of the triangle to build bridges and roof frames. Builders use the right angle of the rectangle to make walls that stand true. Designers use symmetry to make patterns pleasing to the eye, exactly as the craftsmen who made the geometric star patterns of Islamic art did for centuries. When you understand shapes and symmetry, you gain the power to describe, design and reason about the physical world.",
+    "I can as you work, keep a pencil, a ruler and some squared paper beside you. Geometry is a doing subject, not only a reading one. Fold paper to test lines of symmetry, turn a shape to test rotational symmetry, and build solids from their nets with card and glue. If you make a mistake, that is not failure – it is simply a sign of exactly what to practise next. Let us begin.",
+    "I can identify lines of symmetry in shapes, letters and designs, and count them for regular polygons.",
+    "I can describe rotational symmetry by its order and calculate the angle of rotation.",
+    "I can classify triangles by their sides and angles, and quadrilaterals by their properties.",
+    "I can explain the quadrilateral hierarchy and why a square is a special rectangle and a special rhombus.",
+    "I can calculate interior and exterior angles of regular polygons."
+  ]
+}

@@ -381,7 +381,7 @@ function renderOverview() {
         <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome, index) => `<div class="outcome"><span>${index + 1}</span><p>${escapeHtml(outcome)}</p></div>`).join("")}</div></section>
       </div>
       <div class="section-stack">
-        <section class="panel approval-banner"><span class="eyebrow">Standardized Cambridge content package</span><h3>Approved for Stage 2 Mathematics</h3><p>Unit ${course.unit.unitNo} has been transformed from the Stage 2 Excel content package and approved for use.</p></section>
+        <section class="panel approval-banner"><span class="eyebrow">Standardized Cambridge content package</span><h3>Approved for ${course.stage.label} Mathematics</h3><p>Unit ${course.unit.unitNo} has been transformed from the ${course.stage.label} Excel content package and approved for use.</p></section>
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.concepts.length}</strong><small>concepts</small></div><div class="stat"><strong>${course.practice.length}</strong><small>practice items</small></div><div class="stat"><strong>${course.activities.length}</strong><small>activities</small></div></div></section>
         <section class="panel"><h3>Recommended path</h3><ol class="path-list"><li><span>1</span><span>Discover and model the concept.</span></li><li><span>2</span><span>Learn the method and study examples.</span></li><li><span>3</span><span>Practise with hints, games and fluency.</span></li><li><span>4</span><span>Solve real problems and explain your reasoning.</span></li><li><span>5</span><span>Complete the Unit Challenge and reflect.</span></li></ol></section>
         <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning steps on this device.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lesson") ? "ai" : "lesson"}" type="button">Continue →</button></section>
@@ -867,7 +867,7 @@ function renderGradeCapstone() {
   const project = gradeCapstone.project;
   const savedStages = Object.keys(gradeProgress.capstoneResponses).filter((id) => gradeProgress.capstoneResponses[id]?.trim().length >= 20).length;
   const savedEvidence = Object.values(gradeProgress.capstoneEvidence).filter(Boolean).length;
-  $("#app").innerHTML = `${pageHeader("All 15 units · authentic application", "Stage 2 Mathematics Capstone", gradeCapstone.overview)}
+  $("#app").innerHTML = `${pageHeader(`All ${manifest.units.length} units · authentic application`, `${course.stage.label} Mathematics Capstone`, gradeCapstone.overview)}
     <section class="capstone-hero"><div><span class="eyebrow">Driving question</span><h2>${escapeHtml(project.drivingQuestion)}</h2><p>${escapeHtml(project.finalProduct)}</p>${voiceButton(`${project.drivingQuestion} ${project.finalProduct}`, "Listen to the capstone")}</div><div class="capstone-score"><strong>${savedStages}/${project.stages.length}</strong><span>stages documented</span><small>${savedEvidence}/${project.evidenceChecklist.length} evidence items ready</small></div></section>
     <div class="capstone-stage-grid">${project.stages.map((stage) => `<article class="panel capstone-stage ${gradeProgress.capstoneResponses[stage.id]?.trim().length >= 20 ? "complete" : ""}"><span class="eyebrow">Units ${stage.units.join(", ")}</span><h2>${escapeHtml(stage.title)}</h2><p>${escapeHtml(stage.prompt)}</p>${voiceButton(stage.prompt, `Listen to ${stage.title}`)}<label for="capstone-${stage.id}">Record your plan or evidence</label><textarea id="capstone-${stage.id}" data-capstone-response="${stage.id}" rows="5" placeholder="Write what you made, calculated or discovered…">${escapeHtml(gradeProgress.capstoneResponses[stage.id] || "")}</textarea><small><strong>Evidence:</strong> ${escapeHtml(stage.evidence)}</small></article>`).join("")}</div>
     <div class="capstone-review-grid"><section class="panel"><h2>Evidence checklist</h2><div class="capstone-checklist">${project.evidenceChecklist.map((item, index) => `<label><input type="checkbox" data-capstone-evidence="${index}" ${gradeProgress.capstoneEvidence[index] ? "checked" : ""}> <span>${escapeHtml(item)}</span></label>`).join("")}</div><button class="button primary" id="save-capstone" type="button">Save capstone progress</button></section><section class="panel"><h2>Success rubric</h2><div class="rubric-list">${project.rubric.map((item) => `<article><strong>${escapeHtml(item.criterion)}</strong><p>${escapeHtml(item.secure)}</p></article>`).join("")}</div></section></div>`;
@@ -877,7 +877,7 @@ function renderGradeCapstone() {
     const stagesDone = project.stages.every((stage) => (gradeProgress.capstoneResponses[stage.id] || "").length >= 20);
     const evidenceDone = project.evidenceChecklist.every((_, index) => gradeProgress.capstoneEvidence[index]);
     saveGradeProgress();
-    if (stagesDone && evidenceDone) completeGradeSection("capstone", "Stage 2 Mathematics Capstone completed.");
+    if (stagesDone && evidenceDone) completeGradeSection("capstone", `${course.stage.label} Mathematics Capstone completed.`);
     else toast("Progress saved. Complete every stage and evidence item to finish the capstone.");
     renderGradeCapstone();
   });
@@ -888,7 +888,7 @@ function renderCapstoneQuiz() {
   capstoneQuizScore = 0;
   capstoneQuizLocked = false;
   const quiz = gradeCapstone.quiz;
-  $("#app").innerHTML = `${pageHeader("30 questions · all 15 units", "Stage 2 Capstone Quiz", `Show what you know across the complete Stage 2 course. The mastery target is ${quiz.passPercent}%.`)}<section class="panel quiz-shell" id="capstone-quiz-shell"></section>`;
+  $("#app").innerHTML = `${pageHeader(`${quiz.questions.length} questions · all ${manifest.units.length} units`, `${course.stage.label} Capstone Quiz`, `Show what you know across the complete ${course.stage.label} course. The mastery target is ${quiz.passPercent}%.`)}<section class="panel quiz-shell" id="capstone-quiz-shell"></section>`;
   drawCapstoneQuizQuestion();
 }
 
@@ -899,8 +899,8 @@ function drawCapstoneQuizQuestion() {
     const percent = Math.round(capstoneQuizScore / quiz.questions.length * 100);
     gradeProgress.quizBest = Math.max(gradeProgress.quizBest || 0, percent);
     saveGradeProgress();
-    if (percent >= quiz.passPercent) completeGradeSection("capstonequiz", "Stage 2 Capstone Quiz mastery recorded.");
-    shell.innerHTML = `<div class="quiz-result"><div class="score-ring">${capstoneQuizScore}/${quiz.questions.length}</div><span class="eyebrow">Stage capstone quiz complete</span><h2>${percent >= quiz.passPercent ? "Stage 2 mastery target reached" : "Review the highlighted units and try again"}</h2><p>You scored ${percent}%. Your best score on this device is ${gradeProgress.quizBest}%.</p><div class="audio-actions" style="justify-content:center"><button class="button secondary" id="retry-capstone-quiz" type="button">Try again</button><button class="button primary" id="open-grade-capstone" type="button">Open Stage Capstone →</button></div></div>`;
+    if (percent >= quiz.passPercent) completeGradeSection("capstonequiz", `${course.stage.label} Capstone Quiz mastery recorded.`);
+    shell.innerHTML = `<div class="quiz-result"><div class="score-ring">${capstoneQuizScore}/${quiz.questions.length}</div><span class="eyebrow">Stage capstone quiz complete</span><h2>${percent >= quiz.passPercent ? `${course.stage.label} mastery target reached` : "Review the highlighted units and try again"}</h2><p>You scored ${percent}%. Your best score on this device is ${gradeProgress.quizBest}%.</p><div class="audio-actions" style="justify-content:center"><button class="button secondary" id="retry-capstone-quiz" type="button">Try again</button><button class="button primary" id="open-grade-capstone" type="button">Open Stage Capstone →</button></div></div>`;
     $("#retry-capstone-quiz").addEventListener("click", renderCapstoneQuiz);
     $("#open-grade-capstone").addEventListener("click", () => navigate("capstone"));
     return;
@@ -974,7 +974,7 @@ function renderReflect() {
 function renderTeacher() {
   $("#app").innerHTML = `${pageHeader("Planning · evidence · intervention", "Teacher Resources", "Inspect source provenance, approved content coverage and learner evidence.")}
     <div class="section-stack">
-      <section class="panel approval-banner"><h2>Curriculum status</h2><p><strong>Approved.</strong> Cambridge Stage 2 Mathematics content, progression, answer guidance and the 80% mastery threshold are approved for use.</p></section>
+      <section class="panel approval-banner"><h2>Curriculum status</h2><p><strong>Approved.</strong> Cambridge ${course.stage.label} Mathematics content, progression, answer guidance and the 80% mastery threshold are approved for use.</p></section>
       <section class="panel"><h2>Workbook provenance</h2><table class="term-table"><tbody><tr><th>Package</th><td>${escapeHtml(course.provenance.contentPackage)}</td></tr><tr><th>Archive</th><td>${escapeHtml(course.provenance.sourceArchive)}</td></tr><tr><th>Documents</th><td>${course.provenance.sourceDocuments.map(escapeHtml).join("; ")}</td></tr><tr><th>Imported blocks</th><td>${course.provenance.sourceBlockCount}</td></tr><tr><th>Transformation</th><td>${escapeHtml(course.provenance.transformation)}</td></tr></tbody></table></section>
       <section class="panel"><h2>Coverage</h2><div class="stat-row"><div class="stat"><strong>${course.outcomes.length}</strong><small>outcomes</small></div><div class="stat"><strong>${course.workedExamples.length}</strong><small>worked examples</small></div><div class="stat"><strong>${course.assessment.questions.length}</strong><small>checkpoint items</small></div></div></section>
       <section class="panel"><h2>Suggested teaching resources</h2><div class="reference-grid"><div><h3>Manipulatives</h3><p>${escapeHtml(course.activities.map((item)=>item.materials).slice(0,3).join('; '))}.</p></div><div><h3>Evidence to collect</h3><p>Model-building accuracy, Guided Practice responses, activity notes, game mastery, real-problem calculations and reasoning explanations.</p></div></div></section>
@@ -984,7 +984,7 @@ function renderTeacher() {
 
 async function init() {
   try {
-    if (stageNumber !== 2 || unitNumber < 1 || unitNumber > 15) throw new Error("The requested Stage 2 Mathematics unit is unavailable.");
+    if (stageNumber < 1 || stageNumber > 8 || unitNumber < 1 || unitNumber > 18) throw new Error(`The requested Stage ${stageNumber} Mathematics unit is unavailable.`);
     const [manifestResponse, courseResponse, capstoneResponse] = await Promise.all([
       fetch(new URL("data/course-manifest.json", stageRootUrl)),
       fetch(new URL(`data/units/unit-${unitNumber}.json`, stageRootUrl)),
@@ -996,10 +996,11 @@ async function init() {
     document.title = `${stage.label} Mathematics | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     $("#course-label").textContent = `${stage.label} · ${course.subject} · ${course.term.label}`;
     $("#unit-title").textContent = course.unit.unitTitle;
-    $("#stage-select").innerHTML = Array.from({ length: 8 }, (_, index) => index + 1).map((stage) => `<option value="${stage}" ${stage === 2 ? "selected" : ""} ${stage === 2 ? "" : "disabled"}>Stage ${stage}${stage === 2 ? "" : " · package only"}</option>`).join("");
+    $("#stage-select").innerHTML = Array.from({ length: 8 }, (_, index) => index + 1).map((stage) => `<option value="${stage}" ${stage === stageNumber ? "selected" : ""}>Stage ${stage}</option>`).join("");
+    $("#stage-select").addEventListener("change", () => { location.href = `?stage=${Number($("#stage-select").value)}&unit=1#overview`; });
     const unitOptions = manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""}>Unit ${unit.number}: ${escapeHtml(unit.title)}</option>`).join("");
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) picker.innerHTML = unitOptions;
-    for (const picker of [$("#unit-select"), $("#top-unit-select")]) picker.addEventListener("change", () => { const next=Number(picker.value); location.href=`?stage=2&unit=${next}#overview`; });
+    for (const picker of [$("#unit-select"), $("#top-unit-select")]) picker.addEventListener("change", () => { const next=Number(picker.value); location.href=`?stage=${stageNumber}&unit=${next}#overview`; });
     $("#loading").remove();
     $("#app").hidden = false;
     renderNav();

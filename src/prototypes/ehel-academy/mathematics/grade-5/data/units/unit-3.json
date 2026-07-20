@@ -1,0 +1,1794 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:11.903Z",
+  "stage": {
+    "id": "s05",
+    "label": "Stage 5"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "math-g05-u03",
+    "unitNo": 3,
+    "unitTitle": "Numbers and Sequences",
+    "unitOverview": "Welcome to Unit 3! In this unit you will become a pattern detective. Numbers are not just scattered about at random – very often they follow a rule, marching one after another like camels walking home in a line. When you learn to read the rule, you can predict the next number, jump far ahead to the hundredth number, and even recognise famous families of numbers that mathematicians have studied for thousands of years.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-5-Content-Package.xlsx",
+    "sourceArchive": "Year 5 (1)-20260714T220911Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 5 (1)/Unit 3 (1)/Year 5 - Unit 3 Lesson.docx",
+      "Year 5 (1)/Unit 3 (1)/Year 5 - Unit 3 Activities.docx",
+      "Year 5 (1)/Unit 3 (1)/Year 5 - Unit 3 Practice.docx",
+      "Year 5 (1)/Unit 3 (1)/Year 5 - Unit 3 Reference.docx"
+    ],
+    "sourceBlockCount": 403,
+    "transformation": "Structured directly from the standardized Cambridge Stage 5 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Recognise a sequence and describe its pattern in words.",
+    "Find and use a term-to-term rule to continue a linear sequence forwards and backwards.",
+    "Continue sequences that pass through zero and into negative numbers.",
+    "Find missing terms in the middle of a sequence.",
+    "Use a position-to-term rule (the nth term) to jump straight to any term.",
+    "Recognise and generate square numbers up to 12² and picture why they are 'square'.",
+    "Recognise and generate triangular numbers and see how they are built.",
+    "Sort numbers into prime and composite by finding their factors.",
+    "Recognise the Fibonacci sequence and other special patterns.",
+    "Use sequences and number patterns to solve real-world problems."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-a-sequence",
+      "title": "What Is a Sequence?",
+      "explanation": "A sequence is a list of numbers that follow a pattern or rule. Each number in the list is called a term. Think of a sequence like a flight of steps on a staircase – each step follows the same rule to reach the next one. If you know the rule, you always know where the next step will be. Look at these three sequences and say the rule out loud:",
+      "example": "2, 4, 6, 8, 10 … the rule is add 2 each time."
+    },
+    {
+      "id": "concept-2-continuing-sequences-and-finding-missing-terms",
+      "title": "Continuing Sequences and Finding Missing Terms",
+      "explanation": "Once you know the rule, you can continue a sequence as far as you like. The method is always the same: find the rule, check it, then apply it again and again. Take the sequence 7, 12, 17, 22 … The gap is 5, so the rule is 'add 5'. To find the next three terms, keep adding 5: 22 + 5 = 27, then 27 + 5 = 32, then 32 + 5 = 37. So the sequence continues 27, 32, 37.",
+      "example": "You can also continue a sequence backwards. If the rule going forwards is 'add 5', then going backwards you do the opposite and subtract 5. Starting at 7 and going back: 7 − 5 = 2, then 2 − 5 = −3. Notice how the…"
+    },
+    {
+      "id": "concept-3-the-position-to-term-rule-the-nth-term",
+      "title": "The Position-to-Term Rule (the nth Term)",
+      "explanation": "The term-to-term rule is handy, but it has a weakness. To find the 100th term of 4, 8, 12, 16 … you would have to add 4 ninety-nine times – slow and easy to get wrong. A position-to-term rule solves this. It lets you jump straight to any term using only its position number (whether it is the 1st, 2nd, 3rd … or 100th term). Look at the sequence 4, 8, 12, 16, 20. Make a small table of position and term:",
+      "example": "Do you see it? Each term is its position multiplied by 4. So the position-to-term rule is term = position × 4. Now the 100th term is easy: 100 × 4 = 400. No adding ninety-nine times. Mathematicians often call the…"
+    },
+    {
+      "id": "concept-4-square-numbers",
+      "title": "Square Numbers",
+      "explanation": "Square numbers are made when you multiply a whole number by itself. They are called 'square' because you can arrange exactly that many dots or stones into a perfect square shape, with equal rows and columns. Picture Ibrahim laying out stones. One stone is a 1 × 1 square (1 stone). A 2 × 2 square needs 4 stones. A 3 × 3 square needs 9 stones. A 4 × 4 square needs 16 stones. The number of stones is always the side length multiplied by itself.",
+      "example": "We write '5 × 5' in a short way as 5², said 'five squared'. The small raised 2 means 'multiply the number by itself once'. So 6² = 6 × 6 = 36, and 10² = 10 × 10 = 100."
+    },
+    {
+      "id": "concept-5-triangular-numbers",
+      "title": "Triangular Numbers",
+      "explanation": "Triangular numbers can be arranged into a neat triangle shape, like oranges stacked at the market or people sitting in rows for a photograph. Each triangular number is made by adding the counting numbers one after another, starting from 1. 3rd triangular number: 1 + 2 + 3 = 6",
+      "example": "4th triangular number: 1 + 2 + 3 + 4 = 10"
+    },
+    {
+      "id": "concept-6-prime-and-composite-numbers",
+      "title": "Prime and Composite Numbers",
+      "explanation": "To understand prime numbers, you first need the word factor. A factor is a whole number that divides into another number exactly, leaving no remainder. For example, the factors of 12 are 1, 2, 3, 4, 6 and 12, because each of these divides 12 with nothing left over. A prime number is a number with exactly two factors: 1 and the number itself, and nothing else. It cannot be divided evenly by any other number. The prime numbers begin: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 … Notice that 2 is the only even prime number –…",
+      "example": "A composite number has more than two factors. It can be divided evenly by numbers other than 1 and itself. Examples of composite numbers are 4, 6, 8, 9, 10, 12, 14 and 15. For instance, 15 is composite because its…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "What Is a Sequence?",
+      "context": "A sequence is a list of numbers that follow a pattern or rule. Each number in the list is called a term. Think of a sequence like a flight of steps on a staircase – each step follows the same rule to reach the next one. If you know the rule, you always know…",
+      "prompt": "Write the term-to-term rule and the next two terms: a) 5, 8, 11, 14 b) 40, 33, 26, 19.",
+      "answer": "1) a) rule 'add 3', next 17, 20; b) rule 'subtract 7', next 12, 5.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) rule 'add 3', next 17, 20; b) rule 'subtract 7', next 12, 5."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Continuing Sequences and Finding Missing Terms",
+      "context": "Once you know the rule, you can continue a sequence as far as you like. The method is always the same: find the rule, check it, then apply it again and again. Take the sequence 7, 12, 17, 22 … The gap is 5, so the rule is 'add 5'. To find the next three…",
+      "prompt": "Fill the gaps: a) 6, 12, ___, 24, ___ b) 3, ___, 15, ___, 27.",
+      "answer": "a) 18, 30 (rule +6); b) 9, 21 (rule +6).",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 18, 30 (rule +6); b) 9, 21 (rule +6)."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "The Position-to-Term Rule (the nth Term)",
+      "context": "The term-to-term rule is handy, but it has a weakness. To find the 100th term of 4, 8, 12, 16 … you would have to add 4 ninety-nine times – slow and easy to get wrong. A position-to-term rule solves this. It lets you jump straight to any term using only its…",
+      "prompt": "Work out these square numbers: a) 5² b) 7² c) 11².",
+      "answer": "a) 25, b) 49, c) 121.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 25, b) 49, c) 121."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Square Numbers",
+      "context": "Square numbers are made when you multiply a whole number by itself. They are called 'square' because you can arrange exactly that many dots or stones into a perfect square shape, with equal rows and columns. Picture Ibrahim laying out stones. One stone is a 1…",
+      "prompt": "Write the first six triangular numbers.",
+      "answer": "1, 3, 6, 10, 15, 21.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1, 3, 6, 10, 15, 21."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Triangular Numbers",
+      "context": "Triangular numbers can be arranged into a neat triangle shape, like oranges stacked at the market or people sitting in rows for a photograph. Each triangular number is made by adding the counting numbers one after another, starting from 1. 3rd triangular…",
+      "prompt": "Sort into prime (P) and composite (C): 11, 14, 19, 21.",
+      "answer": "11 P, 14 C, 19 P, 21 C.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "11 P, 14 C, 19 P, 21 C."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Prime and Composite Numbers",
+      "context": "To understand prime numbers, you first need the word factor. A factor is a whole number that divides into another number exactly, leaving no remainder. For example, the factors of 12 are 1, 2, 3, 4, 6 and 12, because each of these divides 12 with nothing left…",
+      "prompt": "A sequence starts at 7 and the rule is 'subtract 4'. Write the first six terms, including any negative ones.",
+      "answer": "1) 7, 3, −1, −5, −9, −13.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) 7, 3, −1, −5, −9, −13."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What Is a Sequence?",
+      "modelType": "concept-model-1",
+      "purpose": "A sequence is a list of numbers that follow a pattern or rule. Each number in the list is called a term. Think of a sequence like a flight of steps on a staircase – each step follows the same rule to reach the next one.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Continuing Sequences and Finding Missing Terms",
+      "modelType": "concept-model-2",
+      "purpose": "Once you know the rule, you can continue a sequence as far as you like. The method is always the same: find the rule, check it, then apply it again and again. Take the sequence 7, 12, 17, 22 … The gap is 5, so the rule…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "The Position-to-Term Rule (the nth Term)",
+      "modelType": "concept-model-3",
+      "purpose": "The term-to-term rule is handy, but it has a weakness. To find the 100th term of 4, 8, 12, 16 … you would have to add 4 ninety-nine times – slow and easy to get wrong. A position-to-term rule solves this. It lets you…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Square Numbers",
+      "modelType": "concept-model-4",
+      "purpose": "Square numbers are made when you multiply a whole number by itself. They are called 'square' because you can arrange exactly that many dots or stones into a perfect square shape, with equal rows and columns. Picture…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Triangular Numbers",
+      "modelType": "concept-model-5",
+      "purpose": "Triangular numbers can be arranged into a neat triangle shape, like oranges stacked at the market or people sitting in rows for a photograph. Each triangular number is made by adding the counting numbers one after…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Prime and Composite Numbers",
+      "modelType": "concept-model-6",
+      "purpose": "To understand prime numbers, you first need the word factor. A factor is a whole number that divides into another number exactly, leaving no remainder. For example, the factors of 12 are 1, 2, 3, 4, 6 and 12, because…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find and continue a sequence",
+      "example": "Continue the sequence: 6, 11, 16, 21, ___, ___.",
+      "steps": [
+        "Find the gap between neighbouring terms.",
+        "Check the same gap works for at least three pairs.",
+        "Apply the rule again and again to continue (or reverse it to go backwards)."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to find the nth term of a linear sequence",
+      "example": "A sequence starts at 12 and the rule is 'subtract 5'. Write the first six terms.",
+      "steps": [
+        "Find the common difference – this is the multiplier of the position n.",
+        "Write out the multiples of that difference.",
+        "Compare to the sequence and add or subtract to make them match.",
+        "Check your rule on the 1st, 2nd and 3rd terms."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to test if a number is prime",
+      "example": "Fill in: 14, ___, 28, ___, 42.",
+      "steps": [
+        "Try dividing by 2, then 3, then 5, then 7.",
+        "If none divides it exactly, the number is prime.",
+        "If any divides it, it is composite – list all its factors."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Find the nth term",
+      "example": "Find the position-to-term rule for 7, 10, 13, 16, 19.",
+      "steps": [
+        "Solution: The common difference is 3, so start with 3n (the multiples of 3: 3, 6, 9, 12, 15).",
+        "Compare to the sequence 7, 10, 13, 16, 19: each term is 4 more than the matching multiple of 3.",
+        "So the rule is 3n + 4.",
+        "Check for position 5: 3 × 5 + 4 = 19."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Square numbers",
+      "example": "Work out 9² and explain what it means.",
+      "steps": [
+        "Solution: 9² means 9 × 9 = 81.",
+        "It is the 9th square number, and you could arrange 81 stones into a perfect 9-by-9 square with 9 equal rows and 9 equal columns.",
+        "Check the square numbers result carefully."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Triangular numbers",
+      "example": "Find the 6th triangular number.",
+      "steps": [
+        "Solution: Add the counting numbers up to 6: 1 + 2 + 3 + 4 + 5 + 6 = 21.",
+        "A quick check: the 5th triangular number is 15, and adding the next counting number, 6, gives 15 + 6 = 21.",
+        "Both methods agree.",
+        "Worked Example 7: Prime or composite?"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Find the rule and continue",
+      "prompt": "Continue the sequence: 6, 11, 16, 21, ___, ___.",
+      "solution": "Solution: Find the gap: 11 − 6 = 5, and 16 − 11 = 5, so the rule is 'add 5'. Apply it: 21 + 5 = 26, then 26 + 5 = 31. The sequence continues 26, 31."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "A sequence that goes negative",
+      "prompt": "A sequence starts at 12 and the rule is 'subtract 5'. Write the first six terms.",
+      "solution": "Solution: Keep subtracting 5: 12, then 7, then 2, then 2 − 5 = −3, then −3 − 5 = −8, then −8 − 5 = −13. So the terms are 12, 7, 2, −3, −8, −13. Notice the sequence steps neatly over zero into the negatives."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Fill the middle gaps",
+      "prompt": "Fill in: 14, ___, 28, ___, 42.",
+      "solution": "Solution: Two steps take us from 14 to 28, a rise of 14, so each step is 14 ÷ 2 = 7. The rule is 'add 7'. So 14 + 7 = 21, and 28 + 7 = 35. The full sequence is 14, 21, 28, 35, 42. These are also the 2nd through 6th triangular-number-times … no, they are simply multiples of 7 – a linear sequence."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Find the nth term",
+      "prompt": "Find the position-to-term rule for 7, 10, 13, 16, 19.",
+      "solution": "Solution: The common difference is 3, so start with 3n (the multiples of 3: 3, 6, 9, 12, 15). Compare to the sequence 7, 10, 13, 16, 19: each term is 4 more than the matching multiple of 3. So the rule is 3n + 4. Check for position 5: 3 × 5 + 4 = 19. Correct! The 20th term is 3 × 20 + 4 = 64."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Square numbers",
+      "prompt": "Work out 9² and explain what it means.",
+      "solution": "Solution: 9² means 9 × 9 = 81. It is the 9th square number, and you could arrange 81 stones into a perfect 9-by-9 square with 9 equal rows and 9 equal columns."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Triangular numbers",
+      "prompt": "Find the 6th triangular number.",
+      "solution": "Solution: Add the counting numbers up to 6: 1 + 2 + 3 + 4 + 5 + 6 = 21. A quick check: the 5th triangular number is 15, and adding the next counting number, 6, gives 15 + 6 = 21. Both methods agree. Worked Example 7: Prime or composite? Is 27 prime or composite? Explain. Solution: Test small primes. 27 is odd, so not divisible by 2. Its digits 2 + 7 = 9, which is a multiple of 3, and indeed 27 ÷ 3 = 9. So 27 has factors 1, 3, 9 and 27 – more than two factors – which makes it composite."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Prime or composite?",
+      "prompt": "Find the 6th triangular number.",
+      "solution": "Solution: Add the counting numbers up to 6: 1 + 2 + 3 + 4 + 5 + 6 = 21. A quick check: the 5th triangular number is 15, and adding the next counting number, 6, gives 15 + 6 = 21. Both methods agree. Worked Example 7: Prime or composite? Is 27 prime or composite? Explain. Solution: Test small primes. 27 is odd, so not divisible by 2. Its digits 2 + 7 = 9, which is a multiple of 3, and indeed 27 ÷ 3 = 9. So 27 has factors 1, 3, 9 and 27 – more than two factors – which makes it composite."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "A Fibonacci-style sequence",
+      "prompt": "Continue: 2, 3, 5, 8, 13, ___, ___.",
+      "solution": "Solution: Each term is the sum of the two before it: 5 + 8 = 13 (this checks out), so continue 8 + 13 = 21, then 13 + 21 = 34. The sequence continues 21, 34."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "List all the factors of a) 18 b) 20 c) 23.",
+      "solution": "a) 1, 2, 3, 6, 9, 18; b) 1, 2, 4, 5, 10, 20; c) 1, 23."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Find the position-to-term rule (nth term) for 4, 7, 10, 13, 16, then find the 12th term.",
+      "solution": "nth term = 3n + 1; 12th term = 3×12 + 1 = 37."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Continue this Fibonacci-style sequence: 3, 4, 7, 11, 18, ___, ___.",
+      "solution": "29, 47 (each term is the sum of the two before: 11 + 18 = 29, 18 + 29 ="
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Find the nth term of 6, 11, 16, 21, 26, then use it to find the 30th term.",
+      "solution": "1) nth term = 5n + 1; 30th term = 5×30 + 1 = 151."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Write the term-to-term rule and the next two terms: a) 5, 8, 11, 14 b) 40, 33, 26, 19.",
+      "answer": "1) a) rule 'add 3', next 17, 20; b) rule 'subtract 7', next 12, 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Fill the gaps: a) 6, 12, ___, 24, ___ b) 3, ___, 15, ___, 27.",
+      "answer": "a) 18, 30 (rule +6); b) 9, 21 (rule +6).",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Work out these square numbers: a) 5² b) 7² c) 11².",
+      "answer": "a) 25, b) 49, c) 121.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Write the first six triangular numbers.",
+      "answer": "1, 3, 6, 10, 15, 21.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Sort into prime (P) and composite (C): 11, 14, 19, 21.",
+      "answer": "11 P, 14 C, 19 P, 21 C.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "A sequence starts at 7 and the rule is 'subtract 4'. Write the first six terms, including any negative ones.",
+      "answer": "1) 7, 3, −1, −5, −9, −13.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Which of these are square numbers? 20, 25, 36, 40, 64, 81, 90.",
+      "answer": "Square: 25, 36, 64, 81.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Find the 8th triangular number by adding the counting numbers.",
+      "answer": "1+2+3+4+5+6+7+8 = 36.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "List all the factors of a) 18 b) 20 c) 23.",
+      "answer": "a) 1, 2, 3, 6, 9, 18; b) 1, 2, 4, 5, 10, 20; c) 1, 23.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Find the position-to-term rule (nth term) for 4, 7, 10, 13, 16, then find the 12th term.",
+      "answer": "nth term = 3n + 1; 12th term = 3×12 + 1 = 37.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Continue this Fibonacci-style sequence: 3, 4, 7, 11, 18, ___, ___.",
+      "answer": "29, 47 (each term is the sum of the two before: 11 + 18 = 29, 18 + 29 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Find the nth term of 6, 11, 16, 21, 26, then use it to find the 30th term.",
+      "answer": "1) nth term = 5n + 1; 30th term = 5×30 + 1 = 151.",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Number Detective",
+      "materials": "a notebook and pencil, and your eyes open to the world.",
+      "steps": [
+        "Look for sequences in daily life: house numbers on your street, prices at the market, the number of dates in bags.",
+        "Write down three different sequences you find.",
+        "For each one, work out the term-to-term rule (add 2, subtract 5, and so on).",
+        "Challenge: can you find one sequence that is not linear, where the gaps change?",
+        "Share your best sequence with your teacher at your next session."
+      ]
+    },
+    {
+      "title": "Build the Square Numbers",
+      "materials": "small square objects – tiles, folded paper squares, or stones laid in a grid.",
+      "steps": [
+        "Make a 1 × 1 square (1 object) – this is 1².",
+        "Make a 2 × 2 square (4 objects) – this is 2². Then 3 × 3, then 4 × 4, up to 5 × 5 if you can.",
+        "Write the sequence you build: 1, 4, 9, 16, 25.",
+        "Look at the gaps between them (3, 5, 7, 9). What do you notice about these numbers?",
+        "Now you can see with your own hands why they are called 'square' numbers."
+      ]
+    },
+    {
+      "title": "Triangle Towers",
+      "materials": "round objects – coins, buttons, bottle caps, or small stones.",
+      "steps": [
+        "Place 1 object at the top.",
+        "Add a row of 2 below it (total 3), then a row of 3 (total 6), then a row of 4 (total 10).",
+        "Continue up to 5 rows and write the sequence: 1, 3, 6, 10, 15.",
+        "Try this: put two triangle towers next to each other. Can you make them into a square? What does this show?"
+      ]
+    },
+    {
+      "title": "The Prime Number Sieve (Investigation)",
+      "materials": "paper with the numbers 1 to 50 written in rows of ten.",
+      "steps": [
+        "Cross out 1 – it is not prime.",
+        "Circle 2, then cross out every other multiple of 2 (4, 6, 8 …).",
+        "Circle 3, then cross out every other multiple of 3 (6, 9, 12 …).",
+        "Circle 5, then cross out its multiples. Do the same for 7.",
+        "The numbers still circled are all the prime numbers up to 50. Make a neat list of them."
+      ]
+    },
+    {
+      "title": "Sequence Guessing Game (Family or Group)",
+      "materials": "a friend or family member, paper and pencil.",
+      "steps": [
+        "Secretly choose a starting number and a rule (for example, 'start at 6, add 4').",
+        "Write only the first four terms of your sequence and show them to your partner.",
+        "Your partner must guess the rule and write the next two terms.",
+        "Swap roles. Make your rules trickier each round – try a 'subtract' rule that goes negative!"
+      ]
+    },
+    {
+      "title": "Fibonacci in Nature Hunt",
+      "materials": "flowers, leaves, pinecones, or fruit you can look at closely (and permission to pick them).",
+      "steps": [
+        "Write out the Fibonacci sequence: 1, 1, 2, 3, 5, 8, 13, 21.",
+        "Count the petals on different flowers. How many match a Fibonacci number?",
+        "Look at the spirals on a pinecone or a sunflower head and try to count them.",
+        "Draw or describe what you find, and share it at your next teacher session.",
+        "After your activities, talk or write about these questions: Which type of number pattern was easiest for you to understand, and why? Where did you find the most interesting patterns in real life? What was the hardest part about deciding whether a number is prime? How can spotting patterns help you in everyday life? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "Welcome to Unit 3! In this unit you will become a pattern detective. Numbers are not just scattered about at random – very often they follow a rule, marching one after another like camels walking home in a line. When you learn to read the rule, you can predict the next number, jump far ahead to the hundredth number, and even recognise famous families of numbers that mathematicians have studied for thousands of years."
+      },
+      {
+        "title": "Key idea 2",
+        "text": "Here is what you will master. You will find the rule of a linear sequence and continue it forwards and backwards, even past zero into negative numbers. You will learn the difference between a term-to-term rule (how to get from one number to the next) and a position-to-term rule (how to jump straight to any term you like). You will meet square numbers and triangular numbers, two beautiful families you can build with dots and stones. You will sort numbers into prime and composite, and you will even discover the famous Fibonacci sequence hiding in flowers and pinecones."
+      },
+      {
+        "title": "Key idea 3",
+        "text": "Find and use a term-to-term rule to continue a linear sequence forwards and backwards."
+      },
+      {
+        "title": "Key idea 4",
+        "text": "Use a position-to-term rule (the nth term) to jump straight to any term."
+      },
+      {
+        "title": "Key idea 5",
+        "text": "A list of numbers that follow a rule"
+      },
+      {
+        "title": "Key idea 6",
+        "text": "A rule to find any term from its position number"
+      }
+    ],
+    "terms": [
+      [
+        "Sequence",
+        "A list of numbers following a rule"
+      ],
+      [
+        "Term",
+        "One number in a sequence"
+      ],
+      [
+        "Term-to-term rule",
+        "How to get from one term to the next"
+      ],
+      [
+        "Position-to-term rule",
+        "How to find any term from its position (nth term)"
+      ],
+      [
+        "Common difference",
+        "The fixed step in a linear sequence"
+      ],
+      [
+        "Square number",
+        "A number times itself: 1, 4, 9, 16"
+      ],
+      [
+        "Triangular number",
+        "Sum of counting numbers: 1, 3, 6, 10"
+      ],
+      [
+        "Factor",
+        "A whole number that divides exactly"
+      ],
+      [
+        "Prime / Composite",
+        "Exactly two factors / more than two factors"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Checking only one gap",
+        "Check the rule on three pairs of terms"
+      ],
+      [
+        "Stopping at zero",
+        "Keep applying the rule: 3, −2, −7 …"
+      ],
+      [
+        "Calling 1 prime",
+        "1 is neither prime nor composite"
+      ],
+      [
+        "All odd numbers are prime",
+        "Check the factors, not just odd or even"
+      ],
+      [
+        "Mixing square and triangular",
+        "Square = n×n; triangular = 1+2+3+…"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Write the term-to-term rule and the next two terms: a) 5, 8, 11, 14 b) 40, 33, 26, 19.",
+      "answer": "1) a) rule 'add 3', next 17, 20; b) rule 'subtract 7', next 12, 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) rule 'add 3', next 17, 20; b) rule 'subtract 7', next 12, 5."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Fill the gaps: a) 6, 12, ___, 24, ___ b) 3, ___, 15, ___, 27.",
+      "answer": "a) 18, 30 (rule +6); b) 9, 21 (rule +6).",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 18, 30 (rule +6); b) 9, 21 (rule +6)."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Work out these square numbers: a) 5² b) 7² c) 11².",
+      "answer": "a) 25, b) 49, c) 121.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 25, b) 49, c) 121."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Write the first six triangular numbers.",
+      "answer": "1, 3, 6, 10, 15, 21.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1, 3, 6, 10, 15, 21."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Sort into prime (P) and composite (C): 11, 14, 19, 21.",
+      "answer": "11 P, 14 C, 19 P, 21 C.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "11 P, 14 C, 19 P, 21 C."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "A sequence starts at 7 and the rule is 'subtract 4'. Write the first six terms, including any negative ones.",
+      "answer": "1) 7, 3, −1, −5, −9, −13.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) 7, 3, −1, −5, −9, −13."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Which of these are square numbers? 20, 25, 36, 40, 64, 81, 90.",
+      "answer": "Square: 25, 36, 64, 81.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Square: 25, 36, 64, 81."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Find the 8th triangular number by adding the counting numbers.",
+      "answer": "1+2+3+4+5+6+7+8 = 36.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1+2+3+4+5+6+7+8 = 36."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "List all the factors of a) 18 b) 20 c) 23.",
+      "answer": "a) 1, 2, 3, 6, 9, 18; b) 1, 2, 4, 5, 10, 20; c) 1, 23.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 1, 2, 3, 6, 9, 18; b) 1, 2, 4, 5, 10, 20; c) 1, 23."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Find the position-to-term rule (nth term) for 4, 7, 10, 13, 16, then find the 12th term.",
+      "answer": "nth term = 3n + 1; 12th term = 3×12 + 1 = 37.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "nth term = 3n + 1; 12th term = 3×12 + 1 = 37."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Continue this Fibonacci-style sequence: 3, 4, 7, 11, 18, ___, ___.",
+      "answer": "29, 47 (each term is the sum of the two before: 11 + 18 = 29, 18 + 29 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "29, 47 (each term is the sum of the two before: 11 + 18 = 29, 18 + 29 ="
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Find the nth term of 6, 11, 16, 21, 26, then use it to find the 30th term.",
+      "answer": "1) nth term = 5n + 1; 30th term = 5×30 + 1 = 151.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) nth term = 5n + 1; 30th term = 5×30 + 1 = 151."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Omar plants trees in rows: 4 in the first row, 7 in the second, 10 in the third, following 'add 3'. How many trees are in the 12th row? Find a position-to-term rule to help.",
+      "answer": "1) nth term = 3n + 1, so 12th row = 3×12 + 1 = 37 trees.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) nth term = 3n + 1, so 12th row = 3×12 + 1 = 37 trees."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "At the Berbera port, crates are stacked in a triangle: 1 on top, then 2, then 3, and so on. How many crates are in a stack with 8 rows?",
+      "answer": "1+2+3+4+5+6+7+8 = 36 crates.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1+2+3+4+5+6+7+8 = 36 crates."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "Maryam arranges 100 tiles into a perfect square. How many tiles are on each side, and what is this called?",
+      "answer": "10 tiles on each side, because 10 × 10 = 100; this is a square number.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "10 tiles on each side, because 10 × 10 = 100; this is a square number."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A shopkeeper in Kismaayo groups oranges so each pile is a square number: 1, 4, 9, 16, 25. How many oranges are in the first five piles altogether?",
+      "answer": "1 + 4 + 9 + 16 + 25 = 55 oranges.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1 + 4 + 9 + 16 + 25 = 55 oranges."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Liban counts 23 goats and Hani counts 33 goats. Which count is prime and which is composite? Give the factors of the composite number.",
+      "answer": "23 is prime; 33 is composite with factors 1, 3, 11, 33.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "23 is prime; 33 is composite with factors 1, 3, 11, 33."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Find the nth term of 6, 11, 16, 21, 26, then use it to find the 30th term.",
+      "answer": "1) nth term = 5n + 1; 30th term = 5×30 + 1 = 151.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) nth term = 5n + 1; 30th term = 5×30 + 1 = 151."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Find the nth term of 6, 11, 16, 21, 26, then use it to find the 30th term.",
+      "keyIdeas": [
+        "Sequence",
+        "Term",
+        "Term-to-term rule"
+      ],
+      "modelAnswer": "1) nth term = 5n + 1; 30th term = 5×30 + 1 = 151."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Sahra says 'every number that ends in 5 is composite except 5 itself.' Is she right? Explain using factors.",
+      "keyIdeas": [
+        "Term",
+        "Term-to-term rule",
+        "Position-to-term rule"
+      ],
+      "modelAnswer": "Sahra is correct – any number ending in 5 (other than"
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Show that the 6th and 7th triangular numbers add to a square number. Which square is it?",
+      "keyIdeas": [
+        "Term-to-term rule",
+        "Position-to-term rule",
+        "Common difference"
+      ],
+      "modelAnswer": "is divisible by 5 as well as 1 and itself, so it has more than two factors and is composite."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A sequence has nth term 5n − 2. Write its first five terms and its 10th term.",
+      "keyIdeas": [
+        "Position-to-term rule",
+        "Common difference",
+        "Square number"
+      ],
+      "modelAnswer": "6th triangular = 21, 7th = 28; 21 + 28 = 49 = 7²."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Find two prime numbers that add up to 20. Is there more than one answer?",
+      "keyIdeas": [
+        "Common difference",
+        "Square number",
+        "Triangular number"
+      ],
+      "modelAnswer": "5n − 2 gives 3, 8, 13, 18, 23; 10th term = 5×10 − 2 = 48."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Prime and Composite Numbers.",
+      "keyIdeas": [
+        "Sequence",
+        "Term",
+        "Term-to-term rule"
+      ],
+      "modelAnswer": "To understand prime numbers, you first need the word factor. A factor is a whole number that divides into another number exactly, leaving no remainder. For example, the factors of 12 are 1, 2, 3, 4, 6 and 12, because each of these divides 12 with nothing left over. A prime number is a number with exactly two factors: 1 and the number itself, and nothing else. It cannot be divided evenly by any other number. The prime numbers begin: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 … Notice that 2 is the only even prime number –…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Sequence” mean?",
+        "options": [
+          "A list of numbers following a rule",
+          "One number in a sequence",
+          "How to get from one term to the next",
+          "How to find any term from its position (nth term)"
+        ],
+        "answer": "A list of numbers following a rule",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Sequence means A list of numbers following a rule."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Term” mean?",
+        "options": [
+          "One number in a sequence",
+          "How to get from one term to the next",
+          "How to find any term from its position (nth term)",
+          "The fixed step in a linear sequence"
+        ],
+        "answer": "One number in a sequence",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Term means One number in a sequence."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Term-to-term rule” mean?",
+        "options": [
+          "How to get from one term to the next",
+          "How to find any term from its position (nth term)",
+          "The fixed step in a linear sequence",
+          "A number times itself: 1, 4, 9, 16"
+        ],
+        "answer": "How to get from one term to the next",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Term-to-term rule means How to get from one term to the next."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Position-to-term rule” mean?",
+        "options": [
+          "How to find any term from its position (nth term)",
+          "The fixed step in a linear sequence",
+          "A number times itself: 1, 4, 9, 16",
+          "Sum of counting numbers: 1, 3, 6, 10"
+        ],
+        "answer": "How to find any term from its position (nth term)",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Position-to-term rule means How to find any term from its position (nth term)."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Common difference” mean?",
+        "options": [
+          "The fixed step in a linear sequence",
+          "A number times itself: 1, 4, 9, 16",
+          "Sum of counting numbers: 1, 3, 6, 10",
+          "A whole number that divides exactly"
+        ],
+        "answer": "The fixed step in a linear sequence",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Common difference means The fixed step in a linear sequence."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Square number” mean?",
+        "options": [
+          "A number times itself: 1, 4, 9, 16",
+          "Sum of counting numbers: 1, 3, 6, 10",
+          "A whole number that divides exactly",
+          "Exactly two factors / more than two factors"
+        ],
+        "answer": "A number times itself: 1, 4, 9, 16",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Square number means A number times itself: 1, 4, 9, 16."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Sum of counting numbers: 1, 3, 6, 10?",
+        "options": [
+          "Triangular number",
+          "Factor",
+          "Prime / Composite",
+          "Sequence"
+        ],
+        "answer": "Triangular number",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Triangular number means Sum of counting numbers: 1, 3, 6, 10."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A whole number that divides exactly?",
+        "options": [
+          "Factor",
+          "Prime / Composite",
+          "Sequence",
+          "Term"
+        ],
+        "answer": "Factor",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Factor means A whole number that divides exactly."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Exactly two factors / more than two factors?",
+        "options": [
+          "Prime / Composite",
+          "Sequence",
+          "Term",
+          "Term-to-term rule"
+        ],
+        "answer": "Prime / Composite",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Prime / Composite means Exactly two factors / more than two factors."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A list of numbers following a rule?",
+        "options": [
+          "Sequence",
+          "Term-to-term rule",
+          "Position-to-term rule",
+          "Common difference"
+        ],
+        "answer": "Sequence",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Sequence means A list of numbers following a rule."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: One number in a sequence?",
+        "options": [
+          "Term",
+          "Position-to-term rule",
+          "Common difference",
+          "Square number"
+        ],
+        "answer": "Term",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Term means One number in a sequence."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: How to get from one term to the next?",
+        "options": [
+          "Term-to-term rule",
+          "Common difference",
+          "Square number",
+          "Triangular number"
+        ],
+        "answer": "Term-to-term rule",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Term-to-term rule means How to get from one term to the next."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u3-game-1",
+        "icon": "?",
+        "skill": "Sequence",
+        "title": "Quick Match: Sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "A list of numbers following a rule",
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)"
+            ],
+            "answer": "A list of numbers following a rule",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Position-to-term rule” mean?",
+            "choices": [
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10"
+            ],
+            "answer": "How to find any term from its position (nth term)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Position-to-term rule means How to find any term from its position (nth term)."
+          },
+          {
+            "prompt": "Which term matches this meaning: Sum of counting numbers: 1, 3, 6, 10?",
+            "choices": [
+              "Triangular number",
+              "Factor",
+              "Prime / Composite",
+              "Sequence"
+            ],
+            "answer": "Triangular number",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Triangular number means Sum of counting numbers: 1, 3, 6, 10."
+          },
+          {
+            "prompt": "Which term matches this meaning: A list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Term-to-term rule",
+              "Position-to-term rule",
+              "Common difference"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-2",
+        "icon": "★",
+        "skill": "Term",
+        "title": "Concept Quest: Term",
+        "description": "Practise term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence"
+            ],
+            "answer": "One number in a sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Common difference” mean?",
+            "choices": [
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10",
+              "A whole number that divides exactly"
+            ],
+            "answer": "The fixed step in a linear sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "Which term matches this meaning: A whole number that divides exactly?",
+            "choices": [
+              "Factor",
+              "Prime / Composite",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Factor",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Factor means A whole number that divides exactly."
+          },
+          {
+            "prompt": "Which term matches this meaning: One number in a sequence?",
+            "choices": [
+              "Term",
+              "Position-to-term rule",
+              "Common difference",
+              "Square number"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-3",
+        "icon": "◫",
+        "skill": "Term-to-term rule",
+        "title": "Model Detective: Term-to-term rule",
+        "description": "Practise term-to-term rule through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Term-to-term rule” mean?",
+            "choices": [
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16"
+            ],
+            "answer": "How to get from one term to the next",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Square number” mean?",
+            "choices": [
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10",
+              "A whole number that divides exactly",
+              "Exactly two factors / more than two factors"
+            ],
+            "answer": "A number times itself: 1, 4, 9, 16",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Square number means A number times itself: 1, 4, 9, 16."
+          },
+          {
+            "prompt": "Which term matches this meaning: Exactly two factors / more than two factors?",
+            "choices": [
+              "Prime / Composite",
+              "Sequence",
+              "Term",
+              "Term-to-term rule"
+            ],
+            "answer": "Prime / Composite",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Prime / Composite means Exactly two factors / more than two factors."
+          },
+          {
+            "prompt": "Which term matches this meaning: How to get from one term to the next?",
+            "choices": [
+              "Term-to-term rule",
+              "Common difference",
+              "Square number",
+              "Triangular number"
+            ],
+            "answer": "Term-to-term rule",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-4",
+        "icon": "→",
+        "skill": "Position-to-term rule",
+        "title": "Rule Runner: Position-to-term rule",
+        "description": "Practise position-to-term rule through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Position-to-term rule” mean?",
+            "choices": [
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10"
+            ],
+            "answer": "How to find any term from its position (nth term)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Position-to-term rule means How to find any term from its position (nth term)."
+          },
+          {
+            "prompt": "Which term matches this meaning: Sum of counting numbers: 1, 3, 6, 10?",
+            "choices": [
+              "Triangular number",
+              "Factor",
+              "Prime / Composite",
+              "Sequence"
+            ],
+            "answer": "Triangular number",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Triangular number means Sum of counting numbers: 1, 3, 6, 10."
+          },
+          {
+            "prompt": "Which term matches this meaning: A list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Term-to-term rule",
+              "Position-to-term rule",
+              "Common difference"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "A list of numbers following a rule",
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)"
+            ],
+            "answer": "A list of numbers following a rule",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-5",
+        "icon": "Σ",
+        "skill": "Common difference",
+        "title": "Vocabulary Vault: Common difference",
+        "description": "Practise common difference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Common difference” mean?",
+            "choices": [
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10",
+              "A whole number that divides exactly"
+            ],
+            "answer": "The fixed step in a linear sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "Which term matches this meaning: A whole number that divides exactly?",
+            "choices": [
+              "Factor",
+              "Prime / Composite",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Factor",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Factor means A whole number that divides exactly."
+          },
+          {
+            "prompt": "Which term matches this meaning: One number in a sequence?",
+            "choices": [
+              "Term",
+              "Position-to-term rule",
+              "Common difference",
+              "Square number"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence"
+            ],
+            "answer": "One number in a sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-6",
+        "icon": "◇",
+        "skill": "Square number",
+        "title": "Challenge Cards: Square number",
+        "description": "Practise square number through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Square number” mean?",
+            "choices": [
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10",
+              "A whole number that divides exactly",
+              "Exactly two factors / more than two factors"
+            ],
+            "answer": "A number times itself: 1, 4, 9, 16",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Square number means A number times itself: 1, 4, 9, 16."
+          },
+          {
+            "prompt": "Which term matches this meaning: Exactly two factors / more than two factors?",
+            "choices": [
+              "Prime / Composite",
+              "Sequence",
+              "Term",
+              "Term-to-term rule"
+            ],
+            "answer": "Prime / Composite",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Prime / Composite means Exactly two factors / more than two factors."
+          },
+          {
+            "prompt": "Which term matches this meaning: How to get from one term to the next?",
+            "choices": [
+              "Term-to-term rule",
+              "Common difference",
+              "Square number",
+              "Triangular number"
+            ],
+            "answer": "Term-to-term rule",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Term-to-term rule” mean?",
+            "choices": [
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16"
+            ],
+            "answer": "How to get from one term to the next",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-7",
+        "icon": "⚡",
+        "skill": "Triangular number",
+        "title": "Think Fast: Triangular number",
+        "description": "Practise triangular number through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Sum of counting numbers: 1, 3, 6, 10?",
+            "choices": [
+              "Triangular number",
+              "Factor",
+              "Prime / Composite",
+              "Sequence"
+            ],
+            "answer": "Triangular number",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Triangular number means Sum of counting numbers: 1, 3, 6, 10."
+          },
+          {
+            "prompt": "Which term matches this meaning: A list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Term-to-term rule",
+              "Position-to-term rule",
+              "Common difference"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "A list of numbers following a rule",
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)"
+            ],
+            "answer": "A list of numbers following a rule",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Position-to-term rule” mean?",
+            "choices": [
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10"
+            ],
+            "answer": "How to find any term from its position (nth term)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Position-to-term rule means How to find any term from its position (nth term)."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-8",
+        "icon": "☁",
+        "skill": "Factor",
+        "title": "Explain It: Factor",
+        "description": "Practise factor through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A whole number that divides exactly?",
+            "choices": [
+              "Factor",
+              "Prime / Composite",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Factor",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Factor means A whole number that divides exactly."
+          },
+          {
+            "prompt": "Which term matches this meaning: One number in a sequence?",
+            "choices": [
+              "Term",
+              "Position-to-term rule",
+              "Common difference",
+              "Square number"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence"
+            ],
+            "answer": "One number in a sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Common difference” mean?",
+            "choices": [
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10",
+              "A whole number that divides exactly"
+            ],
+            "answer": "The fixed step in a linear sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-9",
+        "icon": "⌂",
+        "skill": "Prime / Composite",
+        "title": "Real-Life Round: Prime / Composite",
+        "description": "Practise prime / composite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Exactly two factors / more than two factors?",
+            "choices": [
+              "Prime / Composite",
+              "Sequence",
+              "Term",
+              "Term-to-term rule"
+            ],
+            "answer": "Prime / Composite",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Prime / Composite means Exactly two factors / more than two factors."
+          },
+          {
+            "prompt": "Which term matches this meaning: How to get from one term to the next?",
+            "choices": [
+              "Term-to-term rule",
+              "Common difference",
+              "Square number",
+              "Triangular number"
+            ],
+            "answer": "Term-to-term rule",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Term-to-term rule” mean?",
+            "choices": [
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16"
+            ],
+            "answer": "How to get from one term to the next",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Square number” mean?",
+            "choices": [
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10",
+              "A whole number that divides exactly",
+              "Exactly two factors / more than two factors"
+            ],
+            "answer": "A number times itself: 1, 4, 9, 16",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Square number means A number times itself: 1, 4, 9, 16."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-10",
+        "icon": "!",
+        "skill": "Sequence",
+        "title": "Spot the Error: Sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Term-to-term rule",
+              "Position-to-term rule",
+              "Common difference"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "A list of numbers following a rule",
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)"
+            ],
+            "answer": "A list of numbers following a rule",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sequence means A list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “Position-to-term rule” mean?",
+            "choices": [
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10"
+            ],
+            "answer": "How to find any term from its position (nth term)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Position-to-term rule means How to find any term from its position (nth term)."
+          },
+          {
+            "prompt": "Which term matches this meaning: Sum of counting numbers: 1, 3, 6, 10?",
+            "choices": [
+              "Triangular number",
+              "Factor",
+              "Prime / Composite",
+              "Sequence"
+            ],
+            "answer": "Triangular number",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Triangular number means Sum of counting numbers: 1, 3, 6, 10."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-11",
+        "icon": "≡",
+        "skill": "Term",
+        "title": "Mastery Mix: Term",
+        "description": "Practise term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One number in a sequence?",
+            "choices": [
+              "Term",
+              "Position-to-term rule",
+              "Common difference",
+              "Square number"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "One number in a sequence",
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence"
+            ],
+            "answer": "One number in a sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term means One number in a sequence."
+          },
+          {
+            "prompt": "What does “Common difference” mean?",
+            "choices": [
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10",
+              "A whole number that divides exactly"
+            ],
+            "answer": "The fixed step in a linear sequence",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "Which term matches this meaning: A whole number that divides exactly?",
+            "choices": [
+              "Factor",
+              "Prime / Composite",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Factor",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Factor means A whole number that divides exactly."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-12",
+        "icon": "T",
+        "skill": "Term-to-term rule",
+        "title": "Unit Champion: Term-to-term rule",
+        "description": "Practise term-to-term rule through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: How to get from one term to the next?",
+            "choices": [
+              "Term-to-term rule",
+              "Common difference",
+              "Square number",
+              "Triangular number"
+            ],
+            "answer": "Term-to-term rule",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Term-to-term rule” mean?",
+            "choices": [
+              "How to get from one term to the next",
+              "How to find any term from its position (nth term)",
+              "The fixed step in a linear sequence",
+              "A number times itself: 1, 4, 9, 16"
+            ],
+            "answer": "How to get from one term to the next",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "What does “Square number” mean?",
+            "choices": [
+              "A number times itself: 1, 4, 9, 16",
+              "Sum of counting numbers: 1, 3, 6, 10",
+              "A whole number that divides exactly",
+              "Exactly two factors / more than two factors"
+            ],
+            "answer": "A number times itself: 1, 4, 9, 16",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Square number means A number times itself: 1, 4, 9, 16."
+          },
+          {
+            "prompt": "Which term matches this meaning: Exactly two factors / more than two factors?",
+            "choices": [
+              "Prime / Composite",
+              "Sequence",
+              "Term",
+              "Term-to-term rule"
+            ],
+            "answer": "Prime / Composite",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Prime / Composite means Exactly two factors / more than two factors."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can recognise a sequence and describe its pattern in words.",
+    "I can find and use a term-to-term rule to continue a linear sequence forwards and backwards.",
+    "I can continue sequences that pass through zero and into negative numbers.",
+    "I can find missing terms in the middle of a sequence.",
+    "I can use a position-to-term rule (the nth term) to jump straight to any term.",
+    "I can recognise and generate square numbers up to 12² and picture why they are 'square'.",
+    "I can recognise and generate triangular numbers and see how they are built.",
+    "I can sort numbers into prime and composite by finding their factors."
+  ]
+}

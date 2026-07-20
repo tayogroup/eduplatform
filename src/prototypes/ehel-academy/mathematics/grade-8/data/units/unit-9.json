@@ -1,0 +1,1784 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.256Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "math-g08-u09",
+    "unitNo": 9,
+    "unitTitle": "Sequences and Functions",
+    "unitOverview": "Welcome to Unit 9. In this unit you will learn to see the hidden rules behind patterns of numbers, and to describe those rules with the powerful language of algebra. A pattern like 3, 7, 11, 15, 19 is called a sequence, and instead of adding four again and again to reach the hundredth term, you will learn a single formula that jumps straight to any term you want. This idea, the nth term, is one of the most useful tools in all of school mathematics.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 9 (1)/Year 8 - Unit 9 Lesson.docx",
+      "Year 8 (1)/Unit 9 (1)/Year 8 - Unit 9 Activities.docx",
+      "Year 8 (1)/Unit 9 (1)/Year 8 - Unit 9 Practice.docx",
+      "Year 8 (1)/Unit 9 (1)/Year 8 - Unit 9 Reference.docx"
+    ],
+    "sourceBlockCount": 345,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Identify and continue number sequences using term-to-term rules.",
+    "Find and use the nth term formula (of the form an + b) for linear sequences.",
+    "Generate sequences from a first term and a rule, including multi-step rules.",
+    "Connect visual patterns to numerical sequences and find their formulas.",
+    "Use function machines and write functions in the notation f(x) = ….",
+    "Build a table of values for a function and evaluate it for any input.",
+    "Draw and read the straight-line graph of a linear function.",
+    "Solve real-world problems, including finding when a sequence reaches a value or whether a number belongs to a sequence."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-sequences-and-term-to-term-rules",
+      "title": "Sequences and Term-to-Term Rules",
+      "explanation": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, … The first term is 2, the second term is 5, the third term is 8. The three dots at the end mean the sequence carries on forever, following the same rule. The term-to-term rule tells you how to move from one term to the next. For 2, 5, 8, 11, 14 the rule is “add 3”, because 2 + 3 = 5, then 5 + 3 = 8,…",
+      "example": "Sequences can also go down. Take 20, 17, 14, 11, 8, … Here the rule is “subtract 3”, so the common difference is −3. To find any common difference, subtract a term from the one after it: 17 − 20 = −3. If you always…"
+    },
+    {
+      "id": "concept-2-the-nth-term-formula",
+      "title": "The nth Term Formula",
+      "explanation": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this. It is a rule that connects the position of a term (called n) directly to its value, so you can leap to any term at once. This is sometimes called the position-to-term rule. For any linear sequence the nth term has the form an + b, where a is the common difference and b is a constant. The letter n stands for the position number: put n = 1…",
+      "example": "Step 1 — Find the common difference. 7 − 3 = 4, 11 − 7 = 4, so a = 4. The formula begins 4n."
+    },
+    {
+      "id": "concept-3-generating-sequences-and-multi-step-rules",
+      "title": "Generating Sequences and Multi-Step Rules",
+      "explanation": "You can also build a sequence forwards from a starting term and a rule. If you are told “first term = 5, rule = add 4”, you generate 5, 9, 13, 17, 21, … Generating a sequence from its nth term formula is just as easy: for nth term = 3n − 1, substitute n = 1, 2, 3, 4, 5 to get 2, 5, 8, 11, 14. Some rules use more than one operation, and the order matters. Take “first term = 3, rule = multiply by 2, then subtract 1.” Starting at 3: the 2nd term is 3 × 2 − 1 = 5; the 3rd term is 5 × 2 − 1 = 9; the 4th term is 9 × 2 −…",
+      "example": "Another example: “first term = 20, rule = divide by 2, then add 3.” We get 20, then 20 ÷ 2 + 3 = 13, then 13 ÷ 2 + 3 = 9.5, then 9.5 ÷ 2 + 3 = 7.75. The sequence is 20, 13, 9.5, 7.75, … Do not be alarmed by decimals;…"
+    },
+    {
+      "id": "concept-4-visual-patterns-and-sequences",
+      "title": "Visual Patterns and Sequences",
+      "explanation": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a classroom display. Consider an L-shaped tile pattern that grows: Pattern 1 uses 1 tile, Pattern 2 uses 3 tiles, Pattern 3 uses 5 tiles, Pattern 4 uses 7 tiles. The sequence is 1, 3, 5, 7, … — the odd numbers. The common difference is 2, so the formula begins 2n, and b = 1 − 2 = −1, giving nth term = 2n −…",
+      "example": "Square dot patterns give a different sequence. Pattern 1 is a single dot (1 = 1²), Pattern 2 is a 2-by-2 square (4 = 2²), Pattern 3 is a 3-by-3 square (9 = 3²). The nth pattern holds n² dots, so this is a square-number…"
+    },
+    {
+      "id": "concept-5-function-machines-and-function-notation",
+      "title": "Function Machines and Function Notation",
+      "explanation": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number comes out the other end. If the machine’s rule is “× 2 then + 3”, then an input of 5 becomes 5 × 2 = 10, then 10 + 3 = 13, so the output is 13. Mathematicians write functions with function notation. We might name the machine f and write f(x) = 2x + 3. Here x is the input variable, the expression 2x +…",
+      "example": "Let us evaluate f(x) = 2x + 3 for more inputs so the idea is firm. f(1) = 2(1) + 3 = 5; f(4) = 2(4) + 3 = 11; and for a negative input, f(−2) = 2(−2) + 3 = −4 + 3 = −1. Take great care with the signs when the input is…"
+    },
+    {
+      "id": "concept-6-tables-of-values-and-linear-graphs",
+      "title": "Tables of Values and Linear Graphs",
+      "explanation": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) = −1; when x = 1, f(x) = 2; when x = 2, f(x) = 5; when x = 3, f(x) = 8; when x = 4, f(x) = 11. Notice that each time x rises by 1, the output rises by 3 — the same as the coefficient of x. That steady step is the signature of a linear function. Because the output climbs by the same amount for each equal…",
+      "example": "Two features of the line are worth naming. The point where the line crosses the vertical axis is the output when x = 0; for y = 3x − 1 that is (0, −1), and the number −1 is the constant in the rule. The steepness of the…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Sequences and Term-to-Term Rules",
+      "context": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, … The first term is 2, the second term is…",
+      "prompt": "Find the next two terms: a) 5, 8, 11, 14, __, __ b) 20, 17, 14, 11, __, __.",
+      "answer": "1) a) 17, 20 b) 8, 5.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 17, 20 b) 8, 5."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "The nth Term Formula",
+      "context": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this. It is a rule that connects the position of a term (called n) directly to its…",
+      "prompt": "Write the term-to-term rule: a) 3, 7, 11, 15, … b) 50, 45, 40, 35, …",
+      "answer": "a) Add 4 b) Subtract 5.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) Add 4 b) Subtract 5."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Generating Sequences and Multi-Step Rules",
+      "context": "You can also build a sequence forwards from a starting term and a rule. If you are told “first term = 5, rule = add 4”, you generate 5, 9, 13, 17, 21, … Generating a sequence from its nth term formula is just as easy: for nth term = 3n − 1, substitute n = 1,…",
+      "prompt": "Find the common difference of 7, 10, 13, 16, 19, …",
+      "answer": "Common difference 3.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Common difference 3."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Visual Patterns and Sequences",
+      "context": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a classroom display. Consider an L-shaped tile…",
+      "prompt": "Generate the first five terms from nth term = 4n + 1.",
+      "answer": "5, 9, 13, 17, 21.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "5, 9, 13, 17, 21."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Function Machines and Function Notation",
+      "context": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number comes out the other end. If the machine’s…",
+      "prompt": "For f(x) = 3x + 5, find a) f(2) b) f(0) c) f(−1).",
+      "answer": "a) 11 b) 5 c) 2.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 11 b) 5 c) 2."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Tables of Values and Linear Graphs",
+      "context": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) = −1; when x = 1, f(x) = 2; when x = 2, f(x)…",
+      "prompt": "Find the nth term formula for each: a) 7, 10, 13, 16, … b) 25, 22, 19, 16, … c) 3, 8, 13, 18, …",
+      "answer": "1) a) 3n + 4 (a = 3, b = 7 − 3 =",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 3n + 4 (a = 3, b = 7 − 3 ="
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Sequences and Term-to-Term Rules",
+      "modelType": "concept-model-1",
+      "purpose": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, ……",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The nth Term Formula",
+      "modelType": "concept-model-2",
+      "purpose": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this. It is a rule that connects the position of…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Generating Sequences and Multi-Step Rules",
+      "modelType": "concept-model-3",
+      "purpose": "You can also build a sequence forwards from a starting term and a rule. If you are told “first term = 5, rule = add 4”, you generate 5, 9, 13, 17, 21, … Generating a sequence from its nth term formula is just as easy:…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Visual Patterns and Sequences",
+      "modelType": "concept-model-4",
+      "purpose": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Function Machines and Function Notation",
+      "modelType": "concept-model-5",
+      "purpose": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Tables of Values and Linear Graphs",
+      "modelType": "concept-model-6",
+      "purpose": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) =…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find an nth term formula",
+      "example": "Find the term-to-term rule and the next two terms of 6, 10, 14, 18, __, __.",
+      "steps": [
+        "Find the common difference a by subtracting one term from the next.",
+        "Write the formula as an, then work out b = first term − a.",
+        "Write the full formula an + b.",
+        "Check it gives the right value for two or three known terms."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to evaluate a function",
+      "example": "Find the nth term of 5, 9, 13, 17, 21, …",
+      "steps": [
+        "Write the rule with brackets where x appears.",
+        "Substitute the input in place of x.",
+        "Work out the arithmetic, taking care with negative inputs.",
+        "State the output clearly."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to draw a linear graph",
+      "example": "Using nth term = 4n + 1, find the 20th term.",
+      "steps": [
+        "Make a table of values for a few inputs.",
+        "Write each pair as a coordinate (x, y).",
+        "Plot the points on a grid.",
+        "Join them with a ruler and check they form a straight line."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Generate a sequence with a two-step rule",
+      "example": "First term = 2, rule = “multiply by 3, then add 1”. Write the first four terms.",
+      "steps": [
+        "Solution: Start at 2.",
+        "Next: 2 × 3 + 1 = 7.",
+        "Next: 7 × 3 + 1 = 22.",
+        "Next: 22 × 3 + 1 = 67."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Evaluate a function",
+      "example": "For f(x) = 3x + 7, find f(2), f(−1) and the value of x for which f(x) = 22.",
+      "steps": [
+        "Solution: f(2) = 3(2) + 7 = 13.",
+        "f(−1) = 3(−1) + 7 = −3 + 7 = 4.",
+        "To solve f(x) = 22: 3x + 7 = 22, so 3x = 15, so x = 5."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Complete a table of values",
+      "example": "Complete a table for g(x) = 2x − 5 using x = −2, −1, 0, 1, 2, 3.",
+      "steps": [
+        "Solution: g(−2) = −9, g(−1) = −7, g(0) = −5, g(1) = −3, g(2) = −1, g(3) = 1.",
+        "The outputs are −9, −7, −5, −3, −1, 1 — rising by 2 each step, so the graph would be a straight line.",
+        "Check the complete a table of values result carefully."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Continue a sequence and give the rule",
+      "prompt": "Find the term-to-term rule and the next two terms of 6, 10, 14, 18, __, __.",
+      "solution": "Solution: 10 − 6 = 4, so the rule is “add 4”. The next terms are 18 + 4 = 22 and 22 + 4 = 26. The sequence is 6, 10, 14, 18, 22, 26."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Find the nth term formula",
+      "prompt": "Find the nth term of 5, 9, 13, 17, 21, …",
+      "solution": "Solution: Common difference a = 9 − 5 = 4, so the formula begins 4n. Then b = first term − a = 5 − 4 = 1. So nth term = 4n + 1. Check: n = 3 gives 4(3) + 1 = 13 ✓."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Use the formula to find a large term",
+      "prompt": "Using nth term = 4n + 1, find the 20th term.",
+      "solution": "Solution: Substitute n = 20: 4(20) + 1 = 80 + 1 = 81. No need to list all the terms — the formula jumps straight there."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Generate a sequence with a two-step rule",
+      "prompt": "First term = 2, rule = “multiply by 3, then add 1”. Write the first four terms.",
+      "solution": "Solution: Start at 2. Next: 2 × 3 + 1 = 7. Next: 7 × 3 + 1 = 22. Next: 22 × 3 + 1 = 67. The sequence is 2, 7, 22, 67. The differences grow, so it is not linear."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Evaluate a function",
+      "prompt": "For f(x) = 3x + 7, find f(2), f(−1) and the value of x for which f(x) = 22.",
+      "solution": "Solution: f(2) = 3(2) + 7 = 13. f(−1) = 3(−1) + 7 = −3 + 7 = 4. To solve f(x) = 22: 3x + 7 = 22, so 3x = 15, so x = 5."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Complete a table of values",
+      "prompt": "Complete a table for g(x) = 2x − 5 using x = −2, −1, 0, 1, 2, 3.",
+      "solution": "Solution: g(−2) = −9, g(−1) = −7, g(0) = −5, g(1) = −3, g(2) = −1, g(3) = 1. The outputs are −9, −7, −5, −3, −1, 1 — rising by 2 each step, so the graph would be a straight line."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "First term over a target",
+      "prompt": "In the sequence 4, 9, 14, 19, …, find the first term greater than 200.",
+      "solution": "Solution: The formula is 5n − 1 (difference 5, b = 4 − 5 = −1). Set 5n − 1 > 200, so 5n > 201, so n > 40.2. Thus n = 41, and the 41st term is 5(41) − 1 = 204."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Model with a function",
+      "prompt": "A gym charges $50 to join plus $15 per month. Write a function for the total cost after m months, find the cost after 8 months, and find when the total reaches $200.",
+      "solution": "Solution: C(m) = 50 + 15m. After 8 months: C(8) = 50 + 15(8) = 50 + 120 = $170. For $200: 200 = 50 + 15m, so 15m = 150, so m = 10 months."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "Complete the table of values for f(x) = 4x − 3 using x = −2, −1, 0, 1, 2, 3.",
+      "solution": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives n = 11, the 11th term."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "A student claims 6, 11, 16, 21, 26 has nth term 5n + 1. Check by substituting n = 1, 2, 3, and say whether the formula is correct.",
+      "solution": "100, 60, 40, 30 (100÷2+10=60, 60÷2+10=40, 40÷2+10=30)."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "For g(x) = 2x − 7, find a) g(5) b) g(−3) c) the value of x for which g(x) = 3.",
+      "solution": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Find the nth term of 12, 17, 22, 27, 32, … and use it to find the 100th term.",
+      "solution": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Find the next two terms: a) 5, 8, 11, 14, __, __ b) 20, 17, 14, 11, __, __.",
+      "answer": "1) a) 17, 20 b) 8, 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write the term-to-term rule: a) 3, 7, 11, 15, … b) 50, 45, 40, 35, …",
+      "answer": "a) Add 4 b) Subtract 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Find the common difference of 7, 10, 13, 16, 19, …",
+      "answer": "Common difference 3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Generate the first five terms from nth term = 4n + 1.",
+      "answer": "5, 9, 13, 17, 21.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "For f(x) = 3x + 5, find a) f(2) b) f(0) c) f(−1).",
+      "answer": "a) 11 b) 5 c) 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Find the nth term formula for each: a) 7, 10, 13, 16, … b) 25, 22, 19, 16, … c) 3, 8, 13, 18, …",
+      "answer": "1) a) 3n + 4 (a = 3, b = 7 − 3 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Using nth term = 4n + 3: a) find the 1st term b) find the 25th term c) which term has value 47?",
+      "answer": "b) 28 − 3n (a = −3, b = 25 − (−3) =",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Generate four terms from “first term = 100, rule = divide by 2, then add 10”.",
+      "answer": "c) 5n − 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Complete the table of values for f(x) = 4x − 3 using x = −2, −1, 0, 1, 2, 3.",
+      "answer": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives n = 11, the 11th term.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "A student claims 6, 11, 16, 21, 26 has nth term 5n + 1. Check by substituting n = 1, 2, 3, and say whether the formula is correct.",
+      "answer": "100, 60, 40, 30 (100÷2+10=60, 60÷2+10=40, 40÷2+10=30).",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "For g(x) = 2x − 7, find a) g(5) b) g(−3) c) the value of x for which g(x) = 3.",
+      "answer": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Find the nth term of 12, 17, 22, 27, 32, … and use it to find the 100th term.",
+      "answer": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507.",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Build a Growing Pattern",
+      "materials": "stones, bottle caps, matchsticks, or dry beans.",
+      "steps": [
+        "Lay out an L-shape: 1 object, then 3, then 5, then 7, adding to the corner each time.",
+        "Write down the sequence of totals as you build each stage.",
+        "Find the common difference and write the nth term formula.",
+        "Predict the 10th stage with your formula, then build it to check you are right.",
+        "Try again with a square pattern (1, 4, 9, 16) and notice how the differences are not constant this time."
+      ]
+    },
+    {
+      "title": "The Function Machine Game",
+      "materials": "paper and a partner.",
+      "steps": [
+        "Secretly choose a rule, for example “multiply by 2, then add 1”.",
+        "Ask your partner for inputs and give back only the outputs.",
+        "Your partner keeps a table of inputs and outputs and tries to guess your rule.",
+        "Swap roles. Then write each rule using proper notation, such as f(x) = 2x + 1."
+      ]
+    },
+    {
+      "title": "Savings Sequence Investigation",
+      "materials": "a notebook and a moneybox (or a pretend one).",
+      "steps": [
+        "Choose a starting amount and a fixed amount to add each week, like start $5, add $3.",
+        "Write the balance for the first six weeks as a sequence.",
+        "Find the nth term formula for the balance after n weeks.",
+        "Use it to predict the balance after 20 weeks, then check by extending the sequence."
+      ]
+    },
+    {
+      "title": "Draw a Linear Graph",
+      "materials": "squared paper, a ruler, and a pencil.",
+      "steps": [
+        "Choose a linear function such as y = 2x + 1.",
+        "Make a table of values for x = 0, 1, 2, 3, 4.",
+        "Plot each (x, y) pair as a point on the grid.",
+        "Join the points with a ruler. Check that they all lie on one straight line.",
+        "Then try y = 3x − 2 on the same grid and compare which line is steeper."
+      ]
+    },
+    {
+      "title": "Real-World Rule Hunt (Family Task)",
+      "materials": "your family and everyday prices.",
+      "steps": [
+        "Find a real cost with a fixed part and a per-item part, like a taxi fare or a market stall rent.",
+        "Write it as a function, for example C(k) = 3 + 2k for a taxi in Mogadishu.",
+        "Ask a family member to name a number of kilometres and work out the cost together.",
+        "Then reverse it: given a total cost, work backwards to find the number of items."
+      ]
+    },
+    {
+      "title": "Sequence Detective Challenge",
+      "materials": "paper and pencil.",
+      "steps": [
+        "Write a sequence using a two-step rule, like “multiply by 2, then subtract 6”.",
+        "Show only the first four terms to a friend.",
+        "Challenge them to find your rule and the next term.",
+        "Reveal your rule and check whether it works for every term you wrote.",
+        "After your activities, talk or write about: Which activity made the nth term formula clearest? What was the trickiest part of drawing a graph or guessing a rule? What would you like more practice with? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "You will also meet functions. A function is a machine that takes an input, follows a fixed rule, and gives back exactly one output. When Amina works out the cost of a taxi ride across Mogadishu, or when Yusuf predicts how much water is left in the family tank after a number of days, they are using functions, whether they call them that or not. By the end of the unit you will write functions using proper notation such as f(x) = 2x + 3, build tables of values, and draw the straight-line graphs that linear functions produce."
+      },
+      {
+        "title": "Key idea 2",
+        "text": "Why does this matter? Sequences and functions are the bridge between the arithmetic you already know and the algebra that unlocks higher mathematics, science, and computing. Traders use sequences to plan savings that grow month by month. Farmers near Hargeisa use functions to estimate how a herd of goats grows over the years. Engineers use them to design staircases, and scientists use them to model how a population of bacteria multiplies. When you can spot a pattern, describe it with a rule, and use that rule to predict, you are thinking like a mathematician about the real world."
+      },
+      {
+        "title": "Key idea 3",
+        "text": "Generate sequences from a first term and a rule, including multi-step rules."
+      },
+      {
+        "title": "Key idea 4",
+        "text": "An ordered list of numbers following a rule"
+      },
+      {
+        "title": "Key idea 5",
+        "text": "A rule giving exactly one output for each input"
+      },
+      {
+        "title": "Key idea 6",
+        "text": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, … The first term is 2, the second term is 5, the third term is 8. The three dots at the end mean the sequence carries on forever, following the same rule."
+      }
+    ],
+    "terms": [
+      [
+        "Sequence",
+        "An ordered list of numbers following a rule"
+      ],
+      [
+        "Term",
+        "A single number in a sequence"
+      ],
+      [
+        "Common difference",
+        "The fixed step in a linear sequence"
+      ],
+      [
+        "nth term",
+        "A formula giving any term from its position n"
+      ],
+      [
+        "Function",
+        "A rule giving one output for each input"
+      ],
+      [
+        "Function notation",
+        "Writing a function as f(x) = …"
+      ],
+      [
+        "Gradient",
+        "The steepness of a line; coefficient of x"
+      ],
+      [
+        "Linear",
+        "Making a straight line; constant difference"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Using first term + difference for nth term",
+        "Use an + b; find a, then b = first term − a"
+      ],
+      [
+        "Reading f(3) as f × 3",
+        "It means the output when the input is 3"
+      ],
+      [
+        "f(−2) = 2(−2) + 3 = 7",
+        "−4 + 3 = −1; keep the brackets and signs"
+      ],
+      [
+        "Treating 1, 4, 9, 16 as linear",
+        "Check differences first; this one is square numbers"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Find the next two terms: a) 5, 8, 11, 14, __, __ b) 20, 17, 14, 11, __, __.",
+      "answer": "1) a) 17, 20 b) 8, 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 17, 20 b) 8, 5."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write the term-to-term rule: a) 3, 7, 11, 15, … b) 50, 45, 40, 35, …",
+      "answer": "a) Add 4 b) Subtract 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) Add 4 b) Subtract 5."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Find the common difference of 7, 10, 13, 16, 19, …",
+      "answer": "Common difference 3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Common difference 3."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Generate the first five terms from nth term = 4n + 1.",
+      "answer": "5, 9, 13, 17, 21.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "5, 9, 13, 17, 21."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "For f(x) = 3x + 5, find a) f(2) b) f(0) c) f(−1).",
+      "answer": "a) 11 b) 5 c) 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 11 b) 5 c) 2."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Find the nth term formula for each: a) 7, 10, 13, 16, … b) 25, 22, 19, 16, … c) 3, 8, 13, 18, …",
+      "answer": "1) a) 3n + 4 (a = 3, b = 7 − 3 =",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 3n + 4 (a = 3, b = 7 − 3 ="
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Using nth term = 4n + 3: a) find the 1st term b) find the 25th term c) which term has value 47?",
+      "answer": "b) 28 − 3n (a = −3, b = 25 − (−3) =",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "b) 28 − 3n (a = −3, b = 25 − (−3) ="
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Generate four terms from “first term = 100, rule = divide by 2, then add 10”.",
+      "answer": "c) 5n − 2.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "c) 5n − 2."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Complete the table of values for f(x) = 4x − 3 using x = −2, −1, 0, 1, 2, 3.",
+      "answer": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives n = 11, the 11th term.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives n = 11, the 11th term."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "A student claims 6, 11, 16, 21, 26 has nth term 5n + 1. Check by substituting n = 1, 2, 3, and say whether the formula is correct.",
+      "answer": "100, 60, 40, 30 (100÷2+10=60, 60÷2+10=40, 40÷2+10=30).",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "100, 60, 40, 30 (100÷2+10=60, 60÷2+10=40, 40÷2+10=30)."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "For g(x) = 2x − 7, find a) g(5) b) g(−3) c) the value of x for which g(x) = 3.",
+      "answer": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo04",
+      "difficulty": "Round 3",
+      "prompt": "Find the nth term of 12, 17, 22, 27, 32, … and use it to find the 100th term.",
+      "answer": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A car rental in Nairobi costs $40 per day plus $0.30 per kilometre. a) Write C(k) for one day. b) Find the cost of driving 200 km. c) How far can you drive for $100?",
+      "answer": "1) a) C(k) = 40 + 0.30k b) C(200) = 40 + 60 = $100 c) 40 + 0.30k = 100 gives 0.30k = 60, k = 200 km.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) a) C(k) = 40 + 0.30k b) C(200) = 40 + 60 = $100 c) 40 + 0.30k = 100 gives 0.30k = 60, k = 200 km."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A savings account starts at $500 and grows by $25 each month. a) Write A(n) for the amount after n months. b) Find the amount after 12 months. c) When does it first reach $1000?",
+      "answer": "a) A(n) = 500 + 25n b) A(12) = 500 + 300 = $800 c) 500 + 25n = 1000 gives 25n = 500, n = 20 months.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "a) A(n) = 500 + 25n b) A(12) = 500 + 300 = $800 c) 500 + 25n = 1000 gives 25n = 500, n = 20 months."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "A phone plan costs $30 per month plus $0.20 per text. a) Write C(t). b) Find the cost of 150 texts. c) How many texts give a bill of $50?",
+      "answer": "a) C(t) = 30 + 0.20t b) C(150) = 30 + 30 = $60 c) 30 + 0.20t = 50 gives 0.20t = 20, t = 100 texts.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "a) C(t) = 30 + 0.20t b) C(150) = 30 + 30 = $60 c) 30 + 0.20t = 50 gives 0.20t = 20, t = 100 texts."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A staircase has steps each 20 cm high, so height after n steps is H(n) = 20n. How many steps are needed to reach a 3-metre (300 cm) ceiling?",
+      "answer": "20n = 300 gives n = 15 steps.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "20n = 300 gives n = 15 steps."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A town’s population is modelled by P(t) = 50000 + 2000t, where t is years since 2020. a) Find the population in 2020. b) Find it in 2030. c) When will it reach 80,000?",
+      "answer": "a) P(0) = 50,000 b) P(10) = 50000 + 20000 = 70,000 c) 50000 + 2000t = 80000 gives 2000t = 30000, t = 15, so the year 2035.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "a) P(0) = 50,000 b) P(10) = 50000 + 20000 = 70,000 c) 50000 + 2000t = 80000 gives 2000t = 30000, t = 15, so the year 2035."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Find the nth term of 12, 17, 22, 27, 32, … and use it to find the 100th term.",
+      "answer": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Find the nth term of 12, 17, 22, 27, 32, … and use it to find the 100th term.",
+      "keyIdeas": [
+        "Sequence",
+        "Term",
+        "Common difference"
+      ],
+      "modelAnswer": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Is 100 a term of the sequence with nth term 3n − 1? Explain using working.",
+      "keyIdeas": [
+        "Term",
+        "Common difference",
+        "nth term"
+      ],
+      "modelAnswer": "3n − 1 = 100 gives 3n = 101, n = 33.67 — not a whole number, so 100 is not a term."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which sequence reaches 50 first: A: 2, 5, 8, 11, … or B: 1, 6, 11, 16, …? Justify with nth terms.",
+      "keyIdeas": [
+        "Common difference",
+        "nth term",
+        "Function"
+      ],
+      "modelAnswer": "A: 3n − 1 = 50 gives n = 17; B: 5n − 4 = 50 gives n = 10.8, so B first passes 50 at the 11th term. B reaches 50 first."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "For the sequence with nth term 5n − 1, find the first term greater than 200.",
+      "keyIdeas": [
+        "nth term",
+        "Function",
+        "Function notation"
+      ],
+      "modelAnswer": "5n − 1 > 200 gives 5n > 201, n > 40.2, so n = 41 and the 41st term = 204."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A quadratic function h(x) = x² − 4x + 3. Find h(0), h(3) and h(5).",
+      "keyIdeas": [
+        "Function",
+        "Function notation",
+        "Gradient"
+      ],
+      "modelAnswer": "h(0) = 3, h(3) = 9 − 12 + 3 = 0, h(5) = 25 − 20 + 3 = 8."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Tables of Values and Linear Graphs.",
+      "keyIdeas": [
+        "Sequence",
+        "Term",
+        "Common difference"
+      ],
+      "modelAnswer": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) = −1; when x = 1, f(x) = 2; when x = 2, f(x) = 5; when x = 3, f(x) = 8; when x = 4, f(x) = 11. Notice that each time x rises by 1, the output rises by 3 — the same as the coefficient of x. That steady step is the signature of a linear function. Because the output climbs by the same amount for each equal…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Sequence” mean?",
+        "options": [
+          "An ordered list of numbers following a rule",
+          "A single number in a sequence",
+          "The fixed step in a linear sequence",
+          "A formula giving any term from its position n"
+        ],
+        "answer": "An ordered list of numbers following a rule",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Sequence means An ordered list of numbers following a rule."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Term” mean?",
+        "options": [
+          "A single number in a sequence",
+          "The fixed step in a linear sequence",
+          "A formula giving any term from its position n",
+          "A rule giving one output for each input"
+        ],
+        "answer": "A single number in a sequence",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Term means A single number in a sequence."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Common difference” mean?",
+        "options": [
+          "The fixed step in a linear sequence",
+          "A formula giving any term from its position n",
+          "A rule giving one output for each input",
+          "Writing a function as f(x) = …"
+        ],
+        "answer": "The fixed step in a linear sequence",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Common difference means The fixed step in a linear sequence."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “nth term” mean?",
+        "options": [
+          "A formula giving any term from its position n",
+          "A rule giving one output for each input",
+          "Writing a function as f(x) = …",
+          "The steepness of a line; coefficient of x"
+        ],
+        "answer": "A formula giving any term from its position n",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "nth term means A formula giving any term from its position n."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Function” mean?",
+        "options": [
+          "A rule giving one output for each input",
+          "Writing a function as f(x) = …",
+          "The steepness of a line; coefficient of x",
+          "Making a straight line; constant difference"
+        ],
+        "answer": "A rule giving one output for each input",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Function means A rule giving one output for each input."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Function notation” mean?",
+        "options": [
+          "Writing a function as f(x) = …",
+          "The steepness of a line; coefficient of x",
+          "Making a straight line; constant difference",
+          "An ordered list of numbers following a rule"
+        ],
+        "answer": "Writing a function as f(x) = …",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Function notation means Writing a function as f(x) = …."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: The steepness of a line; coefficient of x?",
+        "options": [
+          "Gradient",
+          "Linear",
+          "Sequence",
+          "Term"
+        ],
+        "answer": "Gradient",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Gradient means The steepness of a line; coefficient of x."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Making a straight line; constant difference?",
+        "options": [
+          "Linear",
+          "Sequence",
+          "Term",
+          "Common difference"
+        ],
+        "answer": "Linear",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Linear means Making a straight line; constant difference."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: An ordered list of numbers following a rule?",
+        "options": [
+          "Sequence",
+          "Common difference",
+          "nth term",
+          "Function"
+        ],
+        "answer": "Sequence",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Sequence means An ordered list of numbers following a rule."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A single number in a sequence?",
+        "options": [
+          "Term",
+          "nth term",
+          "Function",
+          "Function notation"
+        ],
+        "answer": "Term",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Term means A single number in a sequence."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The fixed step in a linear sequence?",
+        "options": [
+          "Common difference",
+          "Function",
+          "Function notation",
+          "Gradient"
+        ],
+        "answer": "Common difference",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Common difference means The fixed step in a linear sequence."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A formula giving any term from its position n?",
+        "options": [
+          "nth term",
+          "Function notation",
+          "Gradient",
+          "Linear"
+        ],
+        "answer": "nth term",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "nth term means A formula giving any term from its position n."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u9-game-1",
+        "icon": "?",
+        "skill": "Sequence",
+        "title": "Quick Match: Sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "An ordered list of numbers following a rule",
+              "A single number in a sequence",
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n"
+            ],
+            "answer": "An ordered list of numbers following a rule",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Sequence means An ordered list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “nth term” mean?",
+            "choices": [
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x"
+            ],
+            "answer": "A formula giving any term from its position n",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "nth term means A formula giving any term from its position n."
+          },
+          {
+            "prompt": "Which term matches this meaning: The steepness of a line; coefficient of x?",
+            "choices": [
+              "Gradient",
+              "Linear",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Gradient",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Gradient means The steepness of a line; coefficient of x."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single number in a sequence?",
+            "choices": [
+              "Term",
+              "nth term",
+              "Function",
+              "Function notation"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Term means A single number in a sequence."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-2",
+        "icon": "★",
+        "skill": "Term",
+        "title": "Concept Quest: Term",
+        "description": "Practise term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "A single number in a sequence",
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input"
+            ],
+            "answer": "A single number in a sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Term means A single number in a sequence."
+          },
+          {
+            "prompt": "What does “Function” mean?",
+            "choices": [
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x",
+              "Making a straight line; constant difference"
+            ],
+            "answer": "A rule giving one output for each input",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Function means A rule giving one output for each input."
+          },
+          {
+            "prompt": "Which term matches this meaning: Making a straight line; constant difference?",
+            "choices": [
+              "Linear",
+              "Sequence",
+              "Term",
+              "Common difference"
+            ],
+            "answer": "Linear",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Linear means Making a straight line; constant difference."
+          },
+          {
+            "prompt": "Which term matches this meaning: The fixed step in a linear sequence?",
+            "choices": [
+              "Common difference",
+              "Function",
+              "Function notation",
+              "Gradient"
+            ],
+            "answer": "Common difference",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-3",
+        "icon": "◫",
+        "skill": "Common difference",
+        "title": "Model Detective: Common difference",
+        "description": "Practise common difference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Common difference” mean?",
+            "choices": [
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …"
+            ],
+            "answer": "The fixed step in a linear sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "What does “Function notation” mean?",
+            "choices": [
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x",
+              "Making a straight line; constant difference",
+              "An ordered list of numbers following a rule"
+            ],
+            "answer": "Writing a function as f(x) = …",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Function notation means Writing a function as f(x) = …."
+          },
+          {
+            "prompt": "Which term matches this meaning: An ordered list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Common difference",
+              "nth term",
+              "Function"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Sequence means An ordered list of numbers following a rule."
+          },
+          {
+            "prompt": "Which term matches this meaning: A formula giving any term from its position n?",
+            "choices": [
+              "nth term",
+              "Function notation",
+              "Gradient",
+              "Linear"
+            ],
+            "answer": "nth term",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "nth term means A formula giving any term from its position n."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-4",
+        "icon": "→",
+        "skill": "nth term",
+        "title": "Rule Runner: nth term",
+        "description": "Practise nth term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “nth term” mean?",
+            "choices": [
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x"
+            ],
+            "answer": "A formula giving any term from its position n",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "nth term means A formula giving any term from its position n."
+          },
+          {
+            "prompt": "Which term matches this meaning: The steepness of a line; coefficient of x?",
+            "choices": [
+              "Gradient",
+              "Linear",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Gradient",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Gradient means The steepness of a line; coefficient of x."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single number in a sequence?",
+            "choices": [
+              "Term",
+              "nth term",
+              "Function",
+              "Function notation"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Term means A single number in a sequence."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "An ordered list of numbers following a rule",
+              "A single number in a sequence",
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n"
+            ],
+            "answer": "An ordered list of numbers following a rule",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Sequence means An ordered list of numbers following a rule."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-5",
+        "icon": "Σ",
+        "skill": "Function",
+        "title": "Vocabulary Vault: Function",
+        "description": "Practise function through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Function” mean?",
+            "choices": [
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x",
+              "Making a straight line; constant difference"
+            ],
+            "answer": "A rule giving one output for each input",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Function means A rule giving one output for each input."
+          },
+          {
+            "prompt": "Which term matches this meaning: Making a straight line; constant difference?",
+            "choices": [
+              "Linear",
+              "Sequence",
+              "Term",
+              "Common difference"
+            ],
+            "answer": "Linear",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Linear means Making a straight line; constant difference."
+          },
+          {
+            "prompt": "Which term matches this meaning: The fixed step in a linear sequence?",
+            "choices": [
+              "Common difference",
+              "Function",
+              "Function notation",
+              "Gradient"
+            ],
+            "answer": "Common difference",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "A single number in a sequence",
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input"
+            ],
+            "answer": "A single number in a sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Term means A single number in a sequence."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-6",
+        "icon": "◇",
+        "skill": "Function notation",
+        "title": "Challenge Cards: Function notation",
+        "description": "Practise function notation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Function notation” mean?",
+            "choices": [
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x",
+              "Making a straight line; constant difference",
+              "An ordered list of numbers following a rule"
+            ],
+            "answer": "Writing a function as f(x) = …",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Function notation means Writing a function as f(x) = …."
+          },
+          {
+            "prompt": "Which term matches this meaning: An ordered list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Common difference",
+              "nth term",
+              "Function"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Sequence means An ordered list of numbers following a rule."
+          },
+          {
+            "prompt": "Which term matches this meaning: A formula giving any term from its position n?",
+            "choices": [
+              "nth term",
+              "Function notation",
+              "Gradient",
+              "Linear"
+            ],
+            "answer": "nth term",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "nth term means A formula giving any term from its position n."
+          },
+          {
+            "prompt": "What does “Common difference” mean?",
+            "choices": [
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …"
+            ],
+            "answer": "The fixed step in a linear sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-7",
+        "icon": "⚡",
+        "skill": "Gradient",
+        "title": "Think Fast: Gradient",
+        "description": "Practise gradient through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The steepness of a line; coefficient of x?",
+            "choices": [
+              "Gradient",
+              "Linear",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Gradient",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Gradient means The steepness of a line; coefficient of x."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single number in a sequence?",
+            "choices": [
+              "Term",
+              "nth term",
+              "Function",
+              "Function notation"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Term means A single number in a sequence."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "An ordered list of numbers following a rule",
+              "A single number in a sequence",
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n"
+            ],
+            "answer": "An ordered list of numbers following a rule",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Sequence means An ordered list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “nth term” mean?",
+            "choices": [
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x"
+            ],
+            "answer": "A formula giving any term from its position n",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "nth term means A formula giving any term from its position n."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-8",
+        "icon": "☁",
+        "skill": "Linear",
+        "title": "Explain It: Linear",
+        "description": "Practise linear through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Making a straight line; constant difference?",
+            "choices": [
+              "Linear",
+              "Sequence",
+              "Term",
+              "Common difference"
+            ],
+            "answer": "Linear",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Linear means Making a straight line; constant difference."
+          },
+          {
+            "prompt": "Which term matches this meaning: The fixed step in a linear sequence?",
+            "choices": [
+              "Common difference",
+              "Function",
+              "Function notation",
+              "Gradient"
+            ],
+            "answer": "Common difference",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "A single number in a sequence",
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input"
+            ],
+            "answer": "A single number in a sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Term means A single number in a sequence."
+          },
+          {
+            "prompt": "What does “Function” mean?",
+            "choices": [
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x",
+              "Making a straight line; constant difference"
+            ],
+            "answer": "A rule giving one output for each input",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Function means A rule giving one output for each input."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-9",
+        "icon": "⌂",
+        "skill": "Sequence",
+        "title": "Real-Life Round: Sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: An ordered list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Common difference",
+              "nth term",
+              "Function"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Sequence means An ordered list of numbers following a rule."
+          },
+          {
+            "prompt": "Which term matches this meaning: A formula giving any term from its position n?",
+            "choices": [
+              "nth term",
+              "Function notation",
+              "Gradient",
+              "Linear"
+            ],
+            "answer": "nth term",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "nth term means A formula giving any term from its position n."
+          },
+          {
+            "prompt": "What does “Common difference” mean?",
+            "choices": [
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …"
+            ],
+            "answer": "The fixed step in a linear sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "What does “Function notation” mean?",
+            "choices": [
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x",
+              "Making a straight line; constant difference",
+              "An ordered list of numbers following a rule"
+            ],
+            "answer": "Writing a function as f(x) = …",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Function notation means Writing a function as f(x) = …."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-10",
+        "icon": "!",
+        "skill": "Term",
+        "title": "Spot the Error: Term",
+        "description": "Practise term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A single number in a sequence?",
+            "choices": [
+              "Term",
+              "nth term",
+              "Function",
+              "Function notation"
+            ],
+            "answer": "Term",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Term means A single number in a sequence."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "An ordered list of numbers following a rule",
+              "A single number in a sequence",
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n"
+            ],
+            "answer": "An ordered list of numbers following a rule",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Sequence means An ordered list of numbers following a rule."
+          },
+          {
+            "prompt": "What does “nth term” mean?",
+            "choices": [
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x"
+            ],
+            "answer": "A formula giving any term from its position n",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "nth term means A formula giving any term from its position n."
+          },
+          {
+            "prompt": "Which term matches this meaning: The steepness of a line; coefficient of x?",
+            "choices": [
+              "Gradient",
+              "Linear",
+              "Sequence",
+              "Term"
+            ],
+            "answer": "Gradient",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Gradient means The steepness of a line; coefficient of x."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-11",
+        "icon": "≡",
+        "skill": "Common difference",
+        "title": "Mastery Mix: Common difference",
+        "description": "Practise common difference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The fixed step in a linear sequence?",
+            "choices": [
+              "Common difference",
+              "Function",
+              "Function notation",
+              "Gradient"
+            ],
+            "answer": "Common difference",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "What does “Term” mean?",
+            "choices": [
+              "A single number in a sequence",
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input"
+            ],
+            "answer": "A single number in a sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Term means A single number in a sequence."
+          },
+          {
+            "prompt": "What does “Function” mean?",
+            "choices": [
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x",
+              "Making a straight line; constant difference"
+            ],
+            "answer": "A rule giving one output for each input",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Function means A rule giving one output for each input."
+          },
+          {
+            "prompt": "Which term matches this meaning: Making a straight line; constant difference?",
+            "choices": [
+              "Linear",
+              "Sequence",
+              "Term",
+              "Common difference"
+            ],
+            "answer": "Linear",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Linear means Making a straight line; constant difference."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-12",
+        "icon": "T",
+        "skill": "nth term",
+        "title": "Unit Champion: nth term",
+        "description": "Practise nth term through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A formula giving any term from its position n?",
+            "choices": [
+              "nth term",
+              "Function notation",
+              "Gradient",
+              "Linear"
+            ],
+            "answer": "nth term",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "nth term means A formula giving any term from its position n."
+          },
+          {
+            "prompt": "What does “Common difference” mean?",
+            "choices": [
+              "The fixed step in a linear sequence",
+              "A formula giving any term from its position n",
+              "A rule giving one output for each input",
+              "Writing a function as f(x) = …"
+            ],
+            "answer": "The fixed step in a linear sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Common difference means The fixed step in a linear sequence."
+          },
+          {
+            "prompt": "What does “Function notation” mean?",
+            "choices": [
+              "Writing a function as f(x) = …",
+              "The steepness of a line; coefficient of x",
+              "Making a straight line; constant difference",
+              "An ordered list of numbers following a rule"
+            ],
+            "answer": "Writing a function as f(x) = …",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Function notation means Writing a function as f(x) = …."
+          },
+          {
+            "prompt": "Which term matches this meaning: An ordered list of numbers following a rule?",
+            "choices": [
+              "Sequence",
+              "Common difference",
+              "nth term",
+              "Function"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Sequence means An ordered list of numbers following a rule."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can identify and continue number sequences using term-to-term rules.",
+    "I can find and use the nth term formula (of the form an + b) for linear sequences.",
+    "I can generate sequences from a first term and a rule, including multi-step rules.",
+    "I can connect visual patterns to numerical sequences and find their formulas.",
+    "I can use function machines and write functions in the notation f(x) = ….",
+    "I can build a table of values for a function and evaluate it for any input.",
+    "I can draw and read the straight-line graph of a linear function.",
+    "I can solve real-world problems, including finding when a sequence reaches a value or whether a number belongs to a sequence."
+  ]
+}

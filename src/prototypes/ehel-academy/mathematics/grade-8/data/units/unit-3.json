@@ -1,0 +1,1776 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.228Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "math-g08-u03",
+    "unitNo": 3,
+    "unitTitle": "Place Value and Rounding",
+    "unitOverview": "Welcome to Unit 3. In this unit you will sharpen one of the most powerful ideas in all of mathematics: place value, the system that lets us write any number at all, from a single grain of sand to the distance between stars, using just ten digits and one decimal point. You already know that the position of a digit decides its value. This year you will push that idea much further, into very large numbers, very small decimals, standard form (also called scientific notation), and the careful art of rounding and estimating so your answers carry exactly the right amount of precision.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 3 (1)/Year 8 - Unit 3 Lesson (1).docx",
+      "Year 8 (1)/Unit 3 (1)/Year 8 - Unit 3 Activities.docx",
+      "Year 8 (1)/Unit 3 (1)/Year 8 - Unit 3 Practice.docx",
+      "Year 8 (1)/Unit 3 (1)/Year 8 - Unit 3 Reference.docx"
+    ],
+    "sourceBlockCount": 358,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Read, write and interpret large whole numbers up to millions and beyond, and understand each digit as a power of 10.",
+    "Understand decimal place value down to thousandths and smaller, including the tenths, hundredths and thousandths places.",
+    "Multiply and divide by powers of 10 (10, 100, 1000, and 0.1, 0.01) by shifting digits.",
+    "Compare and order both large numbers and decimals using place value.",
+    "Round numbers to a given number of decimal places.",
+    "Round numbers to a given number of significant figures.",
+    "Write and interpret numbers in standard form (scientific notation), a × 10ⁿ where 1 ≤ a < 10.",
+    "Use estimation and rounding to check whether an answer is reasonable.",
+    "Understand the difference between accuracy and precision in measurement."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-place-value-in-large-whole-numbers",
+      "title": "Place Value in Large Whole Numbers",
+      "explanation": "Place value extends as far to the left as we like, and each step to the left multiplies the value of a position by 10. Starting from the ones place (which is 10⁰ = 1), we move up through tens (10¹ = 10), hundreds (10² = 100), thousands (10³ = 1000), ten thousands (10⁴), hundred thousands (10⁵) and millions (10⁶ = 1,000,000). The pattern never stops, so we can write a number of any size using this one tidy system. Consider the number 3,456,789. Reading from the left, the 3 sits in the millions place, so it is worth…",
+      "example": "Notice the commas that group the digits in threes. These groups are not decoration; they mark off the ones, the thousands and the millions, and they make a long number far easier to read at a glance. When Yusuf reads a…"
+    },
+    {
+      "id": "concept-2-decimal-place-value-and-precision",
+      "title": "Decimal Place Value and Precision",
+      "explanation": "The decimal point is a doorway. To its left the places grow by 10 each step; to its right they shrink by 10 each step. The first place after the point is the tenths (10⁻¹ = 0.1), then the hundredths (10⁻² = 0.01), then the thousandths (10⁻³ = 0.001), and so on. This lets us describe quantities smaller than one to any level of detail we need. Take the decimal 0.456. The 4 is in the tenths place, worth 0.4. The 5 is in the hundredths place, worth 0.05. The 6 is in the thousandths place, worth 0.006. Together, 0.4 +…",
+      "example": "Comparing decimals trips up many students, so let us be careful. A common mistake is to think 0.5 is smaller than 0.47 because 47 looks bigger than 5. That is wrong. The safe method is to line up the decimal points and…"
+    },
+    {
+      "id": "concept-3-multiplying-and-dividing-by-powers-of-10",
+      "title": "Multiplying and Dividing by Powers of 10",
+      "explanation": "One of the great gifts of a place-value system is that multiplying or dividing by a power of 10 is almost effortless: the digits simply shift to a new place while the decimal point stays put in your mind. When you multiply by 10 the digits move one place to the left (the number grows); when you divide by 10 they move one place to the right (the number shrinks). Multiplying 456 × 100: because 100 = 10², every digit shifts two places to the left, giving 45,600. Multiplying 3.7 × 1000: each digit moves three places…",
+      "example": "You can also multiply and divide by decimal powers of 10 such as 0.1 and 0.01. Multiplying by 0.1 is the same as dividing by 10, so the digits move one place to the right: 82 × 0.1 = 8.2. Multiplying by 0.01 moves them…"
+    },
+    {
+      "id": "concept-4-rounding-to-decimal-places",
+      "title": "Rounding to Decimal Places",
+      "explanation": "Rounding replaces a number with a nearby simpler value that is easier to use, while staying close enough for the job at hand. The universal rounding rule looks at the digit immediately to the right of the place you are rounding to. If that digit is 5 or more, you round up (increase the rounding digit by one). If it is 4 or less, you round down (leave the rounding digit unchanged). Every digit after the rounding place is then dropped. To round to a number of decimal places, first find the correct place, then apply…",
+      "example": "Watch for the case where rounding up causes a carry. Rounding 2.798 to 2 decimal places: the third decimal digit is 8, so we round the hundredths digit up. But the hundredths digit is 9, so it becomes 10 – we write 0…"
+    },
+    {
+      "id": "concept-5-rounding-to-significant-figures",
+      "title": "Rounding to Significant Figures",
+      "explanation": "Significant figures (s.f.) measure the overall precision of a number rather than counting places after the point. The significant figures are all the digits that carry real information about the size of a number. We begin counting from the first non-zero digit and continue to the right. This idea is essential in science, where the number of significant figures tells the reader how reliably a quantity is known. The rules for which digits count are worth memorising: all non-zero digits are significant; any zeros…",
+      "example": "To round to a chosen number of significant figures, count that many figures from the first non-zero digit, then use the very next digit to decide whether to round up or down. To round 0.004567 to 3 s.f., the first three…"
+    },
+    {
+      "id": "concept-6-standard-form-scientific-notation",
+      "title": "Standard Form (Scientific Notation)",
+      "explanation": "Standard form, also called scientific notation, is a compact way to write very large or very small numbers using powers of 10. A number in standard form is written as a × 10ⁿ, where a is at least 1 but less than 10 (so it has exactly one non-zero digit before the decimal point), and n is a whole number that may be positive or negative. This format tames numbers that would otherwise sprawl across the page with zeros. To convert a large number to standard form, find where the decimal point must sit so that a is…",
+      "example": "To convert back to an ordinary number, do the reverse: a positive exponent means move the decimal point that many places to the right (making the number bigger), and a negative exponent means move it that many places to…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Place Value in Large Whole Numbers",
+      "context": "Place value extends as far to the left as we like, and each step to the left multiplies the value of a position by 10. Starting from the ones place (which is 10⁰ = 1), we move up through tens (10¹ = 10), hundreds (10² = 100), thousands (10³ = 1000), ten…",
+      "prompt": "State the value of the underlined digit: a) 4,5̈6,789 b) 3.2̈4 c) 0.00̈7.",
+      "answer": "1) a) 60,000 b) 0.2 c) 0.007.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 60,000 b) 0.2 c) 0.007."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Decimal Place Value and Precision",
+      "context": "The decimal point is a doorway. To its left the places grow by 10 each step; to its right they shrink by 10 each step. The first place after the point is the tenths (10⁻¹ = 0.1), then the hundredths (10⁻² = 0.01), then the thousandths (10⁻³ = 0.001), and so…",
+      "prompt": "Write in words: a) 2,450,000 b) 0.0306.",
+      "answer": "a) two million, four hundred and fifty thousand b) three hundred and six ten-thousandths (0.0306).",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) two million, four hundred and fifty thousand b) three hundred and six ten-thousandths (0.0306)."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Multiplying and Dividing by Powers of 10",
+      "context": "One of the great gifts of a place-value system is that multiplying or dividing by a power of 10 is almost effortless: the digits simply shift to a new place while the decimal point stays put in your mind. When you multiply by 10 the digits move one place to…",
+      "prompt": "Work out: a) 58 × 100 b) 4,600 ÷ 1000 c) 7.2 × 0.1.",
+      "answer": "a) 5,800 b) 4.6 c) 0.72.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 5,800 b) 4.6 c) 0.72."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Rounding to Decimal Places",
+      "context": "Rounding replaces a number with a nearby simpler value that is easier to use, while staying close enough for the job at hand. The universal rounding rule looks at the digit immediately to the right of the place you are rounding to. If that digit is 5 or more,…",
+      "prompt": "Compare using <, > or =: a) 0.7 ___ 0.68 b) 0.309 ___ 0.31 c) 1.5 ___ 1.50.",
+      "answer": "a) 0.7 > 0.68 b) 0.309 < 0.31 c) 1.5 = 1.50.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 0.7 > 0.68 b) 0.309 < 0.31 c) 1.5 = 1.50."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Rounding to Significant Figures",
+      "context": "Significant figures (s.f.) measure the overall precision of a number rather than counting places after the point. The significant figures are all the digits that carry real information about the size of a number. We begin counting from the first non-zero…",
+      "prompt": "How many significant figures? a) 0.00456 b) 5,607 c) 0.5670.",
+      "answer": "a) 3 b) 4 c) 4.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 3 b) 4 c) 4."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Standard Form (Scientific Notation)",
+      "context": "Standard form, also called scientific notation, is a compact way to write very large or very small numbers using powers of 10. A number in standard form is written as a × 10ⁿ, where a is at least 1 but less than 10 (so it has exactly one non-zero digit before…",
+      "prompt": "Round 3.14159 to: a) 1 d.p. b) 2 d.p. c) 3 d.p. d) 4 d.p.",
+      "answer": "1) a) 3.1 b) 3.14 c) 3.142 d) 3.1416.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) a) 3.1 b) 3.14 c) 3.142 d) 3.1416."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Place Value in Large Whole Numbers",
+      "modelType": "concept-model-1",
+      "purpose": "Place value extends as far to the left as we like, and each step to the left multiplies the value of a position by 10. Starting from the ones place (which is 10⁰ = 1), we move up through tens (10¹ = 10), hundreds (10² =…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Decimal Place Value and Precision",
+      "modelType": "concept-model-2",
+      "purpose": "The decimal point is a doorway. To its left the places grow by 10 each step; to its right they shrink by 10 each step. The first place after the point is the tenths (10⁻¹ = 0.1), then the hundredths (10⁻² = 0.01), then…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Multiplying and Dividing by Powers of 10",
+      "modelType": "concept-model-3",
+      "purpose": "One of the great gifts of a place-value system is that multiplying or dividing by a power of 10 is almost effortless: the digits simply shift to a new place while the decimal point stays put in your mind. When you…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Rounding to Decimal Places",
+      "modelType": "concept-model-4",
+      "purpose": "Rounding replaces a number with a nearby simpler value that is easier to use, while staying close enough for the job at hand. The universal rounding rule looks at the digit immediately to the right of the place you are…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Rounding to Significant Figures",
+      "modelType": "concept-model-5",
+      "purpose": "Significant figures (s.f.) measure the overall precision of a number rather than counting places after the point. The significant figures are all the digits that carry real information about the size of a number. We…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Standard Form (Scientific Notation)",
+      "modelType": "concept-model-6",
+      "purpose": "Standard form, also called scientific notation, is a compact way to write very large or very small numbers using powers of 10. A number in standard form is written as a × 10ⁿ, where a is at least 1 but less than 10 (so…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to round to a number of decimal places",
+      "example": "In the number 4,567.238, what is the value of the digit 6?",
+      "steps": [
+        "Find the digit in the last decimal place you want to keep.",
+        "Look at the very next digit to its right.",
+        "If it is 5 or more, add one to your kept digit; if 4 or less, leave it.",
+        "Drop all digits after the rounding place, keeping any trailing zeros needed."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to round to a number of significant figures",
+      "example": "Which is greater, 0.567 or 0.57?",
+      "steps": [
+        "Find the first non-zero digit – this is the first significant figure.",
+        "Count on to the right until you have the number of figures you need.",
+        "Use the next digit to decide up (5 or more) or down (4 or less).",
+        "Replace any dropped digits before the point with zeros as place holders."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to write a number in standard form",
+      "example": "Work out 3.7 × 1000.",
+      "steps": [
+        "Place the decimal point so there is one non-zero digit in front of it (this is a).",
+        "Count how many places the point moved.",
+        "Use a positive power for large numbers, a negative power for small numbers.",
+        "Check that a is at least 1 and less than 10."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Round to 2 decimal places",
+      "example": "Round 45.6789 to 2 decimal places.",
+      "steps": [
+        "Solution: The second decimal place is the 7 (in 45.67...).",
+        "Look at the next digit, the third decimal place, which is 8.",
+        "Since 8 is 5-or-more, round the 7 up to 8.",
+        "Answer: 45.68."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Round to 3 significant figures",
+      "example": "Round 0.008765 to 3 significant figures.",
+      "steps": [
+        "Solution: The leading zeros do not count.",
+        "The first three significant figures are 8, 7 and 6.",
+        "The next digit is 5, which is 5-or-more, so round the 6 up to 7.",
+        "Answer: 0.00877."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Convert to and from standard form",
+      "example": "(a) Write 0.00067 in standard form. (b) Write 4.5 × 10⁶ as an ordinary number.",
+      "steps": [
+        "Solution: (a) Move the decimal point to just after the first non-zero digit to get 6.7; the point moved 4 places to the right, so the power is negative: 6.7 × 10⁻⁴.",
+        "(b) A power of 6 (positive) means move the point 6 places right: 4.5 becomes 4,500,000.",
+        "Check the convert to and from standard form result carefully."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Value of a digit in a large number",
+      "prompt": "In the number 4,567.238, what is the value of the digit 6?",
+      "solution": "Solution: The 6 sits in the tens place, so its value is 6 × 10 = 60. Reading around it: the 5 is worth 500, the 7 is worth 7, the 2 is 0.2, the 3 is 0.03 and the 8 is 0.008."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Compare two decimals",
+      "prompt": "Which is greater, 0.567 or 0.57?",
+      "solution": "Solution: Pad the shorter number so both have the same length: 0.567 and 0.570. The tenths (5) and hundredths (6 vs 7) – at the hundredths place, 6 is less than 7, so 0.567 < 0.57. Lining up the decimal points prevents the classic error of thinking 567 beats 57."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Multiply by a power of 10",
+      "prompt": "Work out 3.7 × 1000.",
+      "solution": "Solution: 1000 = 10³, so shift every digit three places to the left. 3.7 becomes 3700. Answer: 3700. Notice we did not just add three zeros to 3.7 – we shifted digits, which correctly turns 3.7 into 3700."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Round to 2 decimal places",
+      "prompt": "Round 45.6789 to 2 decimal places.",
+      "solution": "Solution: The second decimal place is the 7 (in 45.67...). Look at the next digit, the third decimal place, which is 8. Since 8 is 5-or-more, round the 7 up to 8. Answer: 45.68."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Round to 3 significant figures",
+      "prompt": "Round 0.008765 to 3 significant figures.",
+      "solution": "Solution: The leading zeros do not count. The first three significant figures are 8, 7 and 6. The next digit is 5, which is 5-or-more, so round the 6 up to 7. Answer: 0.00877."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Convert to and from standard form",
+      "prompt": "(a) Write 0.00067 in standard form. (b) Write 4.5 × 10⁶ as an ordinary number.",
+      "solution": "Solution: (a) Move the decimal point to just after the first non-zero digit to get 6.7; the point moved 4 places to the right, so the power is negative: 6.7 × 10⁻⁴. (b) A power of 6 (positive) means move the point 6 places right: 4.5 becomes 4,500,000."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Estimate a calculation",
+      "prompt": "Estimate 398 ÷ 49 by rounding to 1 significant figure.",
+      "solution": "Solution: Round 398 to 400 and 49 to 50 – these are compatible because they divide neatly. 400 ÷ 50 = 8. (The exact answer is about 8.1, so the estimate is very close.)"
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Precision and range",
+      "prompt": "A thermometer reads to the nearest 0.2°C and shows 37.4°C. What is the range of possible true temperatures?",
+      "solution": "Solution: The reading is to the nearest 0.2°C, so the true value lies within half a step, that is ±0.1°C, of 37.4. The range is from 37.3°C to 37.5°C."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "Write in standard form: a) 3,400,000 b) 0.00089 c) 61,700.",
+      "solution": "a) 3.4 × 10⁶ b) 8.9 × 10⁻⁴ c) 6.17 × 10⁴."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Write as ordinary numbers: a) 5.2 × 10⁴ b) 9.06 × 10⁻³.",
+      "solution": "a) 52,000 b) 0.00906."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "Estimate by rounding to 1 s.f.: a) 612 × 38 b) 8,140 ÷ 39.",
+      "solution": "a) 600 × 40 = 24,000 b) 8,000 ÷ 40 = 200."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Round 2.798 to 2 decimal places and explain the carry that happens.",
+      "solution": "1) 2.80. The third decimal digit is 8, so the hundredths digit 9 rounds up to 10; write 0 and carry into the tenths, giving 2.80."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "State the value of the underlined digit: a) 4,5̈6,789 b) 3.2̈4 c) 0.00̈7.",
+      "answer": "1) a) 60,000 b) 0.2 c) 0.007.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write in words: a) 2,450,000 b) 0.0306.",
+      "answer": "a) two million, four hundred and fifty thousand b) three hundred and six ten-thousandths (0.0306).",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Work out: a) 58 × 100 b) 4,600 ÷ 1000 c) 7.2 × 0.1.",
+      "answer": "a) 5,800 b) 4.6 c) 0.72.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Compare using <, > or =: a) 0.7 ___ 0.68 b) 0.309 ___ 0.31 c) 1.5 ___ 1.50.",
+      "answer": "a) 0.7 > 0.68 b) 0.309 < 0.31 c) 1.5 = 1.50.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "How many significant figures? a) 0.00456 b) 5,607 c) 0.5670.",
+      "answer": "a) 3 b) 4 c) 4.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Round 3.14159 to: a) 1 d.p. b) 2 d.p. c) 3 d.p. d) 4 d.p.",
+      "answer": "1) a) 3.1 b) 3.14 c) 3.142 d) 3.1416.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Round 0.006789 to: a) 1 s.f. b) 2 s.f. c) 3 s.f.",
+      "answer": "a) 0.007 b) 0.0068 c) 0.00679.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Round 47,382 to: a) the nearest hundred b) the nearest thousand c) 2 s.f.",
+      "answer": "a) 47,400 b) 47,000 c) 47,000.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Write in standard form: a) 3,400,000 b) 0.00089 c) 61,700.",
+      "answer": "a) 3.4 × 10⁶ b) 8.9 × 10⁻⁴ c) 6.17 × 10⁴.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Write as ordinary numbers: a) 5.2 × 10⁴ b) 9.06 × 10⁻³.",
+      "answer": "a) 52,000 b) 0.00906.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "Estimate by rounding to 1 s.f.: a) 612 × 38 b) 8,140 ÷ 39.",
+      "answer": "a) 600 × 40 = 24,000 b) 8,000 ÷ 40 = 200.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Round 2.798 to 2 decimal places and explain the carry that happens.",
+      "answer": "1) 2.80. The third decimal digit is 8, so the hundredths digit 9 rounds up to 10; write 0 and carry into the tenths, giving 2.80.",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "The Place-Value Newspaper Hunt",
+      "materials": "a newspaper, a magazine, or any printed page with numbers.",
+      "steps": [
+        "Find five large numbers (populations, prices, distances) and write each one in words.",
+        "For each number, state the value of its leading digit (for example, in 2,450,000 the 2 means two million).",
+        "Round each number to 1 significant figure and to 2 significant figures.",
+        "Order your five numbers from smallest to largest using place value.",
+        "Keep your list – reading big numbers aloud daily makes millions feel ordinary."
+      ]
+    },
+    {
+      "title": "Rounding Dice Game",
+      "materials": "Roll the die several times to build a number with a decimal point, for example 4.3627.",
+      "steps": [
+        "Round your number to 1, 2 and 3 decimal places, writing each answer down.",
+        "Now round the same number to 1 and 2 significant figures.",
+        "Play with a partner and check each other's rounding – one point for each correct answer."
+      ]
+    },
+    {
+      "title": "Estimation Challenge in the Market",
+      "materials": "a real or pretend shopping list with prices (use shillings).",
+      "steps": [
+        "Write down six items with prices, for example 1,950, 320, 47, 2,410 shillings and so on.",
+        "Estimate the total by rounding each price to 1 significant figure and adding in your head.",
+        "Now add the exact prices with a pencil.",
+        "Compare: how close was your estimate? Was it higher or lower, and can you explain why?"
+      ]
+    },
+    {
+      "title": "Standard Form Scavenger Hunt",
+      "materials": "a science book, an encyclopaedia, or your AI tutor for facts.",
+      "steps": [
+        "Collect five very large or very small real quantities (the speed of light, the width of a hair, the population of a country, the mass of an atom).",
+        "Write each ordinary number, then convert it to standard form a × 10ⁿ.",
+        "Check that your value of a is between 1 and 10 every time.",
+        "Order your five quantities from smallest to largest just by looking at the powers of 10."
+      ]
+    },
+    {
+      "title": "Accuracy vs Precision Investigation",
+      "materials": "a ruler, a piece of string, and something to measure (a book, a table edge).",
+      "steps": [
+        "Measure the same length five times, recording each result carefully.",
+        "Look at how close your five measurements are to each other – this shows your precision.",
+        "Compare your average to a careful, agreed measurement – this shows your accuracy.",
+        "Write one sentence explaining whether you were precise, accurate, both or neither."
+      ]
+    },
+    {
+      "title": "The Powers-of-Ten Family Challenge",
+      "materials": "your family or friends, and paper cards.",
+      "steps": [
+        "Write cards showing × 10, × 100, × 1000, × 0.1 and × 0.01.",
+        "One person says a starting number, for example 3.7.",
+        "Draw a card and everyone races to apply it correctly (3.7 × 100 = 370).",
+        "Discuss any disagreements by talking about shifting digits between places, not adding zeros.",
+        "After your activities, talk or write about these questions: Which activity made place value or rounding clearer for you? What was the trickiest part – significant figures, standard form, or comparing decimals? What would you like more practice with before your next teacher session? Share your answers with your teacher when you next meet."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "Multiplying 456 × 100: because 100 = 10², every digit shifts two places to the left, giving 45,600. Multiplying 3.7 × 1000: each digit moves three places left, giving 3,700. Dividing 58 ÷ 100: each digit moves two places right, giving 0.58. Dividing 9 ÷ 1000: three places right gives 0.009. The single rule – count the zeros in the power of 10, and shift that many places – handles every case."
+      },
+      {
+        "title": "Key idea 2",
+        "text": "Rounding replaces a number with a nearby simpler value that is easier to use, while staying close enough for the job at hand. The universal rounding rule looks at the digit immediately to the right of the place you are rounding to. If that digit is 5 or more, you round up (increase the rounding digit by one). If it is 4 or less, you round down (leave the rounding digit unchanged). Every digit after the rounding place is then dropped."
+      },
+      {
+        "title": "Key idea 3",
+        "text": "To round to a number of decimal places, first find the correct place, then apply the rule. To round 3.14159 to 2 decimal places, look at the third decimal digit, which is 1. Since 1 is less than 5, we round down and keep the hundredths digit as it is: 3.14. To round the same number to 3 decimal places, look at the fourth decimal digit, which is 5. Since 5 is 5-or-more, we round up the thousandths digit from 1 to 2: 3.142."
+      }
+    ],
+    "terms": [
+      [
+        "Place value",
+        "The value a digit has from its position"
+      ],
+      [
+        "Power of 10",
+        "10 raised to a whole-number exponent, such as 10³ = 1000"
+      ],
+      [
+        "Decimal place (d.p.)",
+        "A position to the right of the decimal point"
+      ],
+      [
+        "Significant figure (s.f.)",
+        "A digit counted from the first non-zero digit"
+      ],
+      [
+        "Standard form",
+        "a × 10ⁿ with 1 ≤ a < 10"
+      ],
+      [
+        "Estimate",
+        "A quick approximation, usually by rounding to 1 s.f."
+      ],
+      [
+        "Accuracy",
+        "How close a value is to the true value"
+      ],
+      [
+        "Precision",
+        "The level of detail, shown by the number of figures"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Thinking 0.5 < 0.47",
+        "Pad to 0.50 vs 0.47; compare tenths first"
+      ],
+      [
+        "Mixing up d.p. and s.f.",
+        "0.0721 has 4 d.p. but 3 s.f."
+      ],
+      [
+        "Dropping place holders",
+        "3,456 to 1 s.f. is 3,000, not 3"
+      ],
+      [
+        "Improper standard form",
+        "Write 3.2 × 10⁴, not 32 × 10³"
+      ],
+      [
+        "Adding a zero to a decimal",
+        "4.6 × 10 = 46, by shifting digits"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "State the value of the underlined digit: a) 4,5̈6,789 b) 3.2̈4 c) 0.00̈7.",
+      "answer": "1) a) 60,000 b) 0.2 c) 0.007.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 60,000 b) 0.2 c) 0.007."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write in words: a) 2,450,000 b) 0.0306.",
+      "answer": "a) two million, four hundred and fifty thousand b) three hundred and six ten-thousandths (0.0306).",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) two million, four hundred and fifty thousand b) three hundred and six ten-thousandths (0.0306)."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Work out: a) 58 × 100 b) 4,600 ÷ 1000 c) 7.2 × 0.1.",
+      "answer": "a) 5,800 b) 4.6 c) 0.72.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 5,800 b) 4.6 c) 0.72."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Compare using <, > or =: a) 0.7 ___ 0.68 b) 0.309 ___ 0.31 c) 1.5 ___ 1.50.",
+      "answer": "a) 0.7 > 0.68 b) 0.309 < 0.31 c) 1.5 = 1.50.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 0.7 > 0.68 b) 0.309 < 0.31 c) 1.5 = 1.50."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "How many significant figures? a) 0.00456 b) 5,607 c) 0.5670.",
+      "answer": "a) 3 b) 4 c) 4.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 3 b) 4 c) 4."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Round 3.14159 to: a) 1 d.p. b) 2 d.p. c) 3 d.p. d) 4 d.p.",
+      "answer": "1) a) 3.1 b) 3.14 c) 3.142 d) 3.1416.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 3.1 b) 3.14 c) 3.142 d) 3.1416."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Round 0.006789 to: a) 1 s.f. b) 2 s.f. c) 3 s.f.",
+      "answer": "a) 0.007 b) 0.0068 c) 0.00679.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 0.007 b) 0.0068 c) 0.00679."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Round 47,382 to: a) the nearest hundred b) the nearest thousand c) 2 s.f.",
+      "answer": "a) 47,400 b) 47,000 c) 47,000.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 47,400 b) 47,000 c) 47,000."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "Write in standard form: a) 3,400,000 b) 0.00089 c) 61,700.",
+      "answer": "a) 3.4 × 10⁶ b) 8.9 × 10⁻⁴ c) 6.17 × 10⁴.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 3.4 × 10⁶ b) 8.9 × 10⁻⁴ c) 6.17 × 10⁴."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Write as ordinary numbers: a) 5.2 × 10⁴ b) 9.06 × 10⁻³.",
+      "answer": "a) 52,000 b) 0.00906.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 52,000 b) 0.00906."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Estimate by rounding to 1 s.f.: a) 612 × 38 b) 8,140 ÷ 39.",
+      "answer": "a) 600 × 40 = 24,000 b) 8,000 ÷ 40 = 200.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 600 × 40 = 24,000 b) 8,000 ÷ 40 = 200."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "Round 2.798 to 2 decimal places and explain the carry that happens.",
+      "answer": "1) 2.80. The third decimal digit is 8, so the hundredths digit 9 rounds up to 10; write 0 and carry into the tenths, giving 2.80.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 2.80. The third decimal digit is 8, so the hundredths digit 9 rounds up to 10; write 0 and carry into the tenths, giving 2.80."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A water tank near Kismaayo holds 47,850 litres. Round this to a) the nearest thousand b) 2 significant figures, and say which rounding a report to a village committee should use, and why.",
+      "answer": "1) a) 48,000 b) 48,000; both give 48,000 here, and a village report should use the nearest thousand as it is clear and precise enough.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) a) 48,000 b) 48,000; both give 48,000 here, and a village report should use the nearest thousand as it is clear and precise enough."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Ibrahim buys 19 sacks of maize at 2,050 shillings each. Estimate his total cost by rounding to 1 s.f., then calculate the exact cost and compare.",
+      "answer": "Estimate 20 × 2,000 = 40,000 shillings; exact 19 × 2,050 = 38,950 shillings, a little below the estimate because we rounded both numbers up.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Estimate 20 × 2,000 = 40,000 shillings; exact 19 × 2,050 = 38,950 shillings, a little below the estimate because we rounded both numbers up."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "The distance light travels in one year is about 9,460,000,000,000 km. Write this in standard form, and explain why standard form is helpful here.",
+      "answer": "9.46 × 10¹² km; standard form avoids writing twelve zeros and makes the size easy to read and compare.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "9.46 × 10¹² km; standard form avoids writing twelve zeros and makes the size easy to read and compare."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A recipe for 240 people at a large iftar needs 3.6 kg of dates per 40 people. Estimate the total dates needed by rounding sensibly, then find the exact amount.",
+      "answer": "240 ÷ 40 = 6 groups; estimate 6 × 4 = 24 kg; exact 6 × 3.6 = 21.6 kg.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "240 ÷ 40 = 6 groups; estimate 6 × 4 = 24 kg; exact 6 × 3.6 = 21.6 kg."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "A scientist measures a sample four times and records 5.62 g, 5.61 g, 5.63 g and 5.62 g. The true mass is known to be 5.90 g. Are the measurements precise, accurate, both, or neither? Explain.",
+      "answer": "Precise but not accurate: the four readings cluster tightly together (precise) but all sit well below the true 5.90 g (not accurate), suggesting the scale has a systematic error.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Precise but not accurate: the four readings cluster tightly together (precise) but all sit well below the true 5.90 g (not accurate), suggesting the scale has a systematic error."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Round 2.798 to 2 decimal places and explain the carry that happens.",
+      "answer": "1) 2.80. The third decimal digit is 8, so the hundredths digit 9 rounds up to 10; write 0 and carry into the tenths, giving 2.80.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 2.80. The third decimal digit is 8, so the hundredths digit 9 rounds up to 10; write 0 and carry into the tenths, giving 2.80."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Round 2.798 to 2 decimal places and explain the carry that happens.",
+      "keyIdeas": [
+        "Place value",
+        "Power of 10",
+        "Decimal place (d.p.)"
+      ],
+      "modelAnswer": "1) 2.80. The third decimal digit is 8, so the hundredths digit 9 rounds up to 10; write 0 and carry into the tenths, giving 2.80."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A number rounds to 4.60 when written to 2 decimal places. What is the smallest and largest it could have been?",
+      "keyIdeas": [
+        "Power of 10",
+        "Decimal place (d.p.)",
+        "Significant figure (s.f.)"
+      ],
+      "modelAnswer": "Smallest 4.595, largest 4.605 (anything from 4.595 up to but not including 4.605 rounds to 4.60)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "The mass of a proton is about 1.673 × 10⁻²⁷ kg and the mass of an electron is about 9.11 × 10⁻³¹ kg. Which is heavier, and roughly how many times heavier? Estimate using standard form.",
+      "keyIdeas": [
+        "Decimal place (d.p.)",
+        "Significant figure (s.f.)",
+        "Standard form"
+      ],
+      "modelAnswer": "The proton is heavier. Estimating, 1.673 × 10⁻²⁷ ÷ 9.11 × 10⁻³¹ ≈ (1.7 ÷"
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A length is given as 6.0 m to 2 significant figures. State the range of possible true lengths.",
+      "keyIdeas": [
+        "Significant figure (s.f.)",
+        "Standard form",
+        "Estimate"
+      ],
+      "modelAnswer": "× 10³⁴⁻³¹... using 10⁻²⁷ ÷ 10⁻³¹ = 10⁴, so about 0.18 × 10⁴ ≈ 1,800 times heavier."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain, with an example, why 0.0721 has 3 significant figures but 4 decimal places.",
+      "keyIdeas": [
+        "Standard form",
+        "Estimate",
+        "Accuracy"
+      ],
+      "modelAnswer": "6.0 m to 2 s.f. is given to the nearest 0.1 m, so the range is 5.95 m to 6.05 m."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Standard Form (Scientific Notation).",
+      "keyIdeas": [
+        "Place value",
+        "Power of 10",
+        "Decimal place (d.p.)"
+      ],
+      "modelAnswer": "Standard form, also called scientific notation, is a compact way to write very large or very small numbers using powers of 10. A number in standard form is written as a × 10ⁿ, where a is at least 1 but less than 10 (so it has exactly one non-zero digit before the decimal point), and n is a whole number that may be positive or negative. This format tames numbers that would otherwise sprawl across the page with zeros. To convert a large number to standard form, find where the decimal point must sit so that a is…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Place value” mean?",
+        "options": [
+          "The value a digit has from its position",
+          "10 raised to a whole-number exponent, such as 10³ = 1000",
+          "A position to the right of the decimal point",
+          "A digit counted from the first non-zero digit"
+        ],
+        "answer": "The value a digit has from its position",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Place value means The value a digit has from its position."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Power of 10” mean?",
+        "options": [
+          "10 raised to a whole-number exponent, such as 10³ = 1000",
+          "A position to the right of the decimal point",
+          "A digit counted from the first non-zero digit",
+          "a × 10ⁿ with 1 ≤ a < 10"
+        ],
+        "answer": "10 raised to a whole-number exponent, such as 10³ = 1000",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Decimal place (d.p.)” mean?",
+        "options": [
+          "A position to the right of the decimal point",
+          "A digit counted from the first non-zero digit",
+          "a × 10ⁿ with 1 ≤ a < 10",
+          "A quick approximation, usually by rounding to 1 s.f."
+        ],
+        "answer": "A position to the right of the decimal point",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Significant figure (s.f.)” mean?",
+        "options": [
+          "A digit counted from the first non-zero digit",
+          "a × 10ⁿ with 1 ≤ a < 10",
+          "A quick approximation, usually by rounding to 1 s.f.",
+          "How close a value is to the true value"
+        ],
+        "answer": "A digit counted from the first non-zero digit",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Standard form” mean?",
+        "options": [
+          "a × 10ⁿ with 1 ≤ a < 10",
+          "A quick approximation, usually by rounding to 1 s.f.",
+          "How close a value is to the true value",
+          "The level of detail, shown by the number of figures"
+        ],
+        "answer": "a × 10ⁿ with 1 ≤ a < 10",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Standard form means a × 10ⁿ with 1 ≤ a < 10."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Estimate” mean?",
+        "options": [
+          "A quick approximation, usually by rounding to 1 s.f.",
+          "How close a value is to the true value",
+          "The level of detail, shown by the number of figures",
+          "The value a digit has from its position"
+        ],
+        "answer": "A quick approximation, usually by rounding to 1 s.f.",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Estimate means A quick approximation, usually by rounding to 1 s.f.."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: How close a value is to the true value?",
+        "options": [
+          "Accuracy",
+          "Precision",
+          "Place value",
+          "Power of 10"
+        ],
+        "answer": "Accuracy",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Accuracy means How close a value is to the true value."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: The level of detail, shown by the number of figures?",
+        "options": [
+          "Precision",
+          "Place value",
+          "Power of 10",
+          "Decimal place (d.p.)"
+        ],
+        "answer": "Precision",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Precision means The level of detail, shown by the number of figures."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: The value a digit has from its position?",
+        "options": [
+          "Place value",
+          "Decimal place (d.p.)",
+          "Significant figure (s.f.)",
+          "Standard form"
+        ],
+        "answer": "Place value",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Place value means The value a digit has from its position."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: 10 raised to a whole-number exponent, such as 10³ = 1000?",
+        "options": [
+          "Power of 10",
+          "Significant figure (s.f.)",
+          "Standard form",
+          "Estimate"
+        ],
+        "answer": "Power of 10",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A position to the right of the decimal point?",
+        "options": [
+          "Decimal place (d.p.)",
+          "Standard form",
+          "Estimate",
+          "Accuracy"
+        ],
+        "answer": "Decimal place (d.p.)",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A digit counted from the first non-zero digit?",
+        "options": [
+          "Significant figure (s.f.)",
+          "Estimate",
+          "Accuracy",
+          "Precision"
+        ],
+        "answer": "Significant figure (s.f.)",
+        "hint": "Use the Unit 3 Math Words & Symbols reference.",
+        "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u3-game-1",
+        "icon": "?",
+        "skill": "Place value",
+        "title": "Quick Match: Place value",
+        "description": "Practise place value through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "The value a digit has from its position",
+              "10 raised to a whole-number exponent, such as 10³ = 1000",
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit"
+            ],
+            "answer": "The value a digit has from its position",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Place value means The value a digit has from its position."
+          },
+          {
+            "prompt": "What does “Significant figure (s.f.)” mean?",
+            "choices": [
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value"
+            ],
+            "answer": "A digit counted from the first non-zero digit",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+          },
+          {
+            "prompt": "Which term matches this meaning: How close a value is to the true value?",
+            "choices": [
+              "Accuracy",
+              "Precision",
+              "Place value",
+              "Power of 10"
+            ],
+            "answer": "Accuracy",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Accuracy means How close a value is to the true value."
+          },
+          {
+            "prompt": "Which term matches this meaning: 10 raised to a whole-number exponent, such as 10³ = 1000?",
+            "choices": [
+              "Power of 10",
+              "Significant figure (s.f.)",
+              "Standard form",
+              "Estimate"
+            ],
+            "answer": "Power of 10",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-2",
+        "icon": "★",
+        "skill": "Power of 10",
+        "title": "Concept Quest: Power of 10",
+        "description": "Practise power of 10 through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Power of 10” mean?",
+            "choices": [
+              "10 raised to a whole-number exponent, such as 10³ = 1000",
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10"
+            ],
+            "answer": "10 raised to a whole-number exponent, such as 10³ = 1000",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+          },
+          {
+            "prompt": "What does “Standard form” mean?",
+            "choices": [
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value",
+              "The level of detail, shown by the number of figures"
+            ],
+            "answer": "a × 10ⁿ with 1 ≤ a < 10",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Standard form means a × 10ⁿ with 1 ≤ a < 10."
+          },
+          {
+            "prompt": "Which term matches this meaning: The level of detail, shown by the number of figures?",
+            "choices": [
+              "Precision",
+              "Place value",
+              "Power of 10",
+              "Decimal place (d.p.)"
+            ],
+            "answer": "Precision",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Precision means The level of detail, shown by the number of figures."
+          },
+          {
+            "prompt": "Which term matches this meaning: A position to the right of the decimal point?",
+            "choices": [
+              "Decimal place (d.p.)",
+              "Standard form",
+              "Estimate",
+              "Accuracy"
+            ],
+            "answer": "Decimal place (d.p.)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-3",
+        "icon": "◫",
+        "skill": "Decimal place (d.p.)",
+        "title": "Model Detective: Decimal place (d.p.)",
+        "description": "Practise decimal place (d.p.) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Decimal place (d.p.)” mean?",
+            "choices": [
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f."
+            ],
+            "answer": "A position to the right of the decimal point",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value",
+              "The level of detail, shown by the number of figures",
+              "The value a digit has from its position"
+            ],
+            "answer": "A quick approximation, usually by rounding to 1 s.f.",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Estimate means A quick approximation, usually by rounding to 1 s.f.."
+          },
+          {
+            "prompt": "Which term matches this meaning: The value a digit has from its position?",
+            "choices": [
+              "Place value",
+              "Decimal place (d.p.)",
+              "Significant figure (s.f.)",
+              "Standard form"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Place value means The value a digit has from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A digit counted from the first non-zero digit?",
+            "choices": [
+              "Significant figure (s.f.)",
+              "Estimate",
+              "Accuracy",
+              "Precision"
+            ],
+            "answer": "Significant figure (s.f.)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-4",
+        "icon": "→",
+        "skill": "Significant figure (s.f.)",
+        "title": "Rule Runner: Significant figure (s.f.)",
+        "description": "Practise significant figure (s.f.) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Significant figure (s.f.)” mean?",
+            "choices": [
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value"
+            ],
+            "answer": "A digit counted from the first non-zero digit",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+          },
+          {
+            "prompt": "Which term matches this meaning: How close a value is to the true value?",
+            "choices": [
+              "Accuracy",
+              "Precision",
+              "Place value",
+              "Power of 10"
+            ],
+            "answer": "Accuracy",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Accuracy means How close a value is to the true value."
+          },
+          {
+            "prompt": "Which term matches this meaning: 10 raised to a whole-number exponent, such as 10³ = 1000?",
+            "choices": [
+              "Power of 10",
+              "Significant figure (s.f.)",
+              "Standard form",
+              "Estimate"
+            ],
+            "answer": "Power of 10",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+          },
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "The value a digit has from its position",
+              "10 raised to a whole-number exponent, such as 10³ = 1000",
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit"
+            ],
+            "answer": "The value a digit has from its position",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Place value means The value a digit has from its position."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-5",
+        "icon": "Σ",
+        "skill": "Standard form",
+        "title": "Vocabulary Vault: Standard form",
+        "description": "Practise standard form through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Standard form” mean?",
+            "choices": [
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value",
+              "The level of detail, shown by the number of figures"
+            ],
+            "answer": "a × 10ⁿ with 1 ≤ a < 10",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Standard form means a × 10ⁿ with 1 ≤ a < 10."
+          },
+          {
+            "prompt": "Which term matches this meaning: The level of detail, shown by the number of figures?",
+            "choices": [
+              "Precision",
+              "Place value",
+              "Power of 10",
+              "Decimal place (d.p.)"
+            ],
+            "answer": "Precision",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Precision means The level of detail, shown by the number of figures."
+          },
+          {
+            "prompt": "Which term matches this meaning: A position to the right of the decimal point?",
+            "choices": [
+              "Decimal place (d.p.)",
+              "Standard form",
+              "Estimate",
+              "Accuracy"
+            ],
+            "answer": "Decimal place (d.p.)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+          },
+          {
+            "prompt": "What does “Power of 10” mean?",
+            "choices": [
+              "10 raised to a whole-number exponent, such as 10³ = 1000",
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10"
+            ],
+            "answer": "10 raised to a whole-number exponent, such as 10³ = 1000",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-6",
+        "icon": "◇",
+        "skill": "Estimate",
+        "title": "Challenge Cards: Estimate",
+        "description": "Practise estimate through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value",
+              "The level of detail, shown by the number of figures",
+              "The value a digit has from its position"
+            ],
+            "answer": "A quick approximation, usually by rounding to 1 s.f.",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Estimate means A quick approximation, usually by rounding to 1 s.f.."
+          },
+          {
+            "prompt": "Which term matches this meaning: The value a digit has from its position?",
+            "choices": [
+              "Place value",
+              "Decimal place (d.p.)",
+              "Significant figure (s.f.)",
+              "Standard form"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Place value means The value a digit has from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A digit counted from the first non-zero digit?",
+            "choices": [
+              "Significant figure (s.f.)",
+              "Estimate",
+              "Accuracy",
+              "Precision"
+            ],
+            "answer": "Significant figure (s.f.)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+          },
+          {
+            "prompt": "What does “Decimal place (d.p.)” mean?",
+            "choices": [
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f."
+            ],
+            "answer": "A position to the right of the decimal point",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-7",
+        "icon": "⚡",
+        "skill": "Accuracy",
+        "title": "Think Fast: Accuracy",
+        "description": "Practise accuracy through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: How close a value is to the true value?",
+            "choices": [
+              "Accuracy",
+              "Precision",
+              "Place value",
+              "Power of 10"
+            ],
+            "answer": "Accuracy",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Accuracy means How close a value is to the true value."
+          },
+          {
+            "prompt": "Which term matches this meaning: 10 raised to a whole-number exponent, such as 10³ = 1000?",
+            "choices": [
+              "Power of 10",
+              "Significant figure (s.f.)",
+              "Standard form",
+              "Estimate"
+            ],
+            "answer": "Power of 10",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+          },
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "The value a digit has from its position",
+              "10 raised to a whole-number exponent, such as 10³ = 1000",
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit"
+            ],
+            "answer": "The value a digit has from its position",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Place value means The value a digit has from its position."
+          },
+          {
+            "prompt": "What does “Significant figure (s.f.)” mean?",
+            "choices": [
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value"
+            ],
+            "answer": "A digit counted from the first non-zero digit",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-8",
+        "icon": "☁",
+        "skill": "Precision",
+        "title": "Explain It: Precision",
+        "description": "Practise precision through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The level of detail, shown by the number of figures?",
+            "choices": [
+              "Precision",
+              "Place value",
+              "Power of 10",
+              "Decimal place (d.p.)"
+            ],
+            "answer": "Precision",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Precision means The level of detail, shown by the number of figures."
+          },
+          {
+            "prompt": "Which term matches this meaning: A position to the right of the decimal point?",
+            "choices": [
+              "Decimal place (d.p.)",
+              "Standard form",
+              "Estimate",
+              "Accuracy"
+            ],
+            "answer": "Decimal place (d.p.)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+          },
+          {
+            "prompt": "What does “Power of 10” mean?",
+            "choices": [
+              "10 raised to a whole-number exponent, such as 10³ = 1000",
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10"
+            ],
+            "answer": "10 raised to a whole-number exponent, such as 10³ = 1000",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+          },
+          {
+            "prompt": "What does “Standard form” mean?",
+            "choices": [
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value",
+              "The level of detail, shown by the number of figures"
+            ],
+            "answer": "a × 10ⁿ with 1 ≤ a < 10",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Standard form means a × 10ⁿ with 1 ≤ a < 10."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-9",
+        "icon": "⌂",
+        "skill": "Place value",
+        "title": "Real-Life Round: Place value",
+        "description": "Practise place value through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The value a digit has from its position?",
+            "choices": [
+              "Place value",
+              "Decimal place (d.p.)",
+              "Significant figure (s.f.)",
+              "Standard form"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Place value means The value a digit has from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: A digit counted from the first non-zero digit?",
+            "choices": [
+              "Significant figure (s.f.)",
+              "Estimate",
+              "Accuracy",
+              "Precision"
+            ],
+            "answer": "Significant figure (s.f.)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+          },
+          {
+            "prompt": "What does “Decimal place (d.p.)” mean?",
+            "choices": [
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f."
+            ],
+            "answer": "A position to the right of the decimal point",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value",
+              "The level of detail, shown by the number of figures",
+              "The value a digit has from its position"
+            ],
+            "answer": "A quick approximation, usually by rounding to 1 s.f.",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Estimate means A quick approximation, usually by rounding to 1 s.f.."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-10",
+        "icon": "!",
+        "skill": "Power of 10",
+        "title": "Spot the Error: Power of 10",
+        "description": "Practise power of 10 through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: 10 raised to a whole-number exponent, such as 10³ = 1000?",
+            "choices": [
+              "Power of 10",
+              "Significant figure (s.f.)",
+              "Standard form",
+              "Estimate"
+            ],
+            "answer": "Power of 10",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+          },
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "The value a digit has from its position",
+              "10 raised to a whole-number exponent, such as 10³ = 1000",
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit"
+            ],
+            "answer": "The value a digit has from its position",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Place value means The value a digit has from its position."
+          },
+          {
+            "prompt": "What does “Significant figure (s.f.)” mean?",
+            "choices": [
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value"
+            ],
+            "answer": "A digit counted from the first non-zero digit",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+          },
+          {
+            "prompt": "Which term matches this meaning: How close a value is to the true value?",
+            "choices": [
+              "Accuracy",
+              "Precision",
+              "Place value",
+              "Power of 10"
+            ],
+            "answer": "Accuracy",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Accuracy means How close a value is to the true value."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-11",
+        "icon": "≡",
+        "skill": "Decimal place (d.p.)",
+        "title": "Mastery Mix: Decimal place (d.p.)",
+        "description": "Practise decimal place (d.p.) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A position to the right of the decimal point?",
+            "choices": [
+              "Decimal place (d.p.)",
+              "Standard form",
+              "Estimate",
+              "Accuracy"
+            ],
+            "answer": "Decimal place (d.p.)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+          },
+          {
+            "prompt": "What does “Power of 10” mean?",
+            "choices": [
+              "10 raised to a whole-number exponent, such as 10³ = 1000",
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10"
+            ],
+            "answer": "10 raised to a whole-number exponent, such as 10³ = 1000",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Power of 10 means 10 raised to a whole-number exponent, such as 10³ = 1000."
+          },
+          {
+            "prompt": "What does “Standard form” mean?",
+            "choices": [
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value",
+              "The level of detail, shown by the number of figures"
+            ],
+            "answer": "a × 10ⁿ with 1 ≤ a < 10",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Standard form means a × 10ⁿ with 1 ≤ a < 10."
+          },
+          {
+            "prompt": "Which term matches this meaning: The level of detail, shown by the number of figures?",
+            "choices": [
+              "Precision",
+              "Place value",
+              "Power of 10",
+              "Decimal place (d.p.)"
+            ],
+            "answer": "Precision",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Precision means The level of detail, shown by the number of figures."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-12",
+        "icon": "T",
+        "skill": "Significant figure (s.f.)",
+        "title": "Unit Champion: Significant figure (s.f.)",
+        "description": "Practise significant figure (s.f.) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A digit counted from the first non-zero digit?",
+            "choices": [
+              "Significant figure (s.f.)",
+              "Estimate",
+              "Accuracy",
+              "Precision"
+            ],
+            "answer": "Significant figure (s.f.)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Significant figure (s.f.) means A digit counted from the first non-zero digit."
+          },
+          {
+            "prompt": "What does “Decimal place (d.p.)” mean?",
+            "choices": [
+              "A position to the right of the decimal point",
+              "A digit counted from the first non-zero digit",
+              "a × 10ⁿ with 1 ≤ a < 10",
+              "A quick approximation, usually by rounding to 1 s.f."
+            ],
+            "answer": "A position to the right of the decimal point",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal place (d.p.) means A position to the right of the decimal point."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A quick approximation, usually by rounding to 1 s.f.",
+              "How close a value is to the true value",
+              "The level of detail, shown by the number of figures",
+              "The value a digit has from its position"
+            ],
+            "answer": "A quick approximation, usually by rounding to 1 s.f.",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Estimate means A quick approximation, usually by rounding to 1 s.f.."
+          },
+          {
+            "prompt": "Which term matches this meaning: The value a digit has from its position?",
+            "choices": [
+              "Place value",
+              "Decimal place (d.p.)",
+              "Significant figure (s.f.)",
+              "Standard form"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Place value means The value a digit has from its position."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can read, write and interpret large whole numbers up to millions and beyond, and understand each digit as a power of 10.",
+    "I can understand decimal place value down to thousandths and smaller, including the tenths, hundredths and thousandths places.",
+    "I can multiply and divide by powers of 10 (10, 100, 1000, and 0.1, 0.01) by shifting digits.",
+    "I can compare and order both large numbers and decimals using place value.",
+    "I can round numbers to a given number of decimal places.",
+    "I can round numbers to a given number of significant figures.",
+    "I can write and interpret numbers in standard form (scientific notation), a × 10ⁿ where 1 ≤ a < 10.",
+    "I can use estimation and rounding to check whether an answer is reasonable."
+  ]
+}

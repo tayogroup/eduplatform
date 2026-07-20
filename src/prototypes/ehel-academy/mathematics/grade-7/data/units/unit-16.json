@@ -1,0 +1,1772 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.182Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g07-u16",
+    "unitNo": 16,
+    "unitTitle": "Interpreting Results",
+    "unitOverview": "Welcome to Unit 16. In this unit you will learn to interpret results – to take data that has already been collected and displayed, and work out what it actually means. This is one of the most useful skills in the whole of mathematics, because we live in a world flooded with numbers. Every day you meet data in news reports, on social media, in adverts, in weather forecasts, in football league tables and in the prices at the Hargeisa market. The people who can read that data carefully, and spot when it is being used to mislead them, are the people who make good decisions.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-7-Content-Package.xlsx",
+    "sourceArchive": "Year 7 (1)-20260714T221013Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 7 (1)/Unit 16/Year 7 - Unit 16 Lesson.docx",
+      "Year 7 (1)/Unit 16/Year 7 - Unit 16 Activities.docx",
+      "Year 7 (1)/Unit 16/Year 7 - Unit 16 Practice.docx",
+      "Year 7 (1)/Unit 16/Year 7 - Unit 16 Reference.docx"
+    ],
+    "sourceBlockCount": 364,
+    "transformation": "Structured directly from the standardized Cambridge Stage 7 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Read and interpret bar charts, line graphs, pie charts and frequency tables, and know which display suits which kind of data.",
+    "Calculate the mean, median, mode and range of a data set and explain what each one tells you.",
+    "Choose the most appropriate average for a given situation and justify your choice.",
+    "Compare two data sets using an average and a measure of spread together.",
+    "Describe trends, patterns and outliers in data, and interpret what they mean in context.",
+    "Distinguish between correlation and causation and avoid the classic trap of confusing them.",
+    "Judge whether a sample is fair and identify common types of bias.",
+    "Recognise misleading graphs and statistical claims, and explain why they mislead."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-types-of-data-and-ways-to-show-it",
+      "title": "Types of Data and Ways to Show It",
+      "explanation": "Before you can interpret results, you must know what kind of data you are looking at, because the kind of data decides which display and which calculations make sense. Data falls into two big families. Categorical data describes qualities that fall into named groups – favourite fruit, type of transport, or which football team someone supports. You cannot find the average of categories; there is no such thing as an ‘average favourite fruit’. Numerical data consists of measurements or counts – heights, temperatures,…",
+      "example": "Here is a quick guide to the four displays you will meet most often in this unit:"
+    },
+    {
+      "id": "concept-2-the-mean-median-and-mode",
+      "title": "The Mean, Median and Mode",
+      "explanation": "When we describe a set of numbers, we often want a single value that stands for the whole set – a typical value, or average. In everyday speech people say ‘average’ as if there is only one, but in mathematics there are three different averages, and each has its own strengths. Choosing the right one is a real skill. The mean is what most people picture. You add up all the values and divide by how many there are. Suppose Amina records how many goats five families own: 8, 12, 10, 6, 14. The total is 8 + 12 + 10 + 6 +…",
+      "example": "The median is the middle value when the data is placed in order. Put the goat counts in order: 6, 8, 10, 12, 14. The value in the middle is 10. When there is an even number of values there is no single middle, so you…"
+    },
+    {
+      "id": "concept-3-the-range-and-the-spread-of-data",
+      "title": "The Range and the Spread of Data",
+      "explanation": "An average tells you where the middle of the data sits, but it says nothing about how spread out the values are. Two data sets can share the same mean yet look completely different. Consider the test marks of two pupils out of 10 across five tests. Hassan scores 6, 6, 7, 6, 5 and Yusuf scores 1, 10, 2, 9, 8. Both have a total of 30 and so a mean of 6, but Hassan is steady and reliable while Yusuf is wildly up and down. The average alone hides this. To describe spread, we need another number. The simplest measure…",
+      "example": "The range is quick and easy, but it has one weakness you must always keep in mind: it uses only the two most extreme values, so a single unusual value can make it misleading. If Yusuf had scored 1, 6, 6, 6, 6 his range…"
+    },
+    {
+      "id": "concept-4-quartiles-and-the-interquartile-range",
+      "title": "Quartiles and the Interquartile Range",
+      "explanation": "To describe spread more fairly, we split ordered data into four equal parts using quartiles. Imagine lining up all the values from smallest to largest. The median cuts the line in half. The lower quartile (Q1) sits a quarter of the way along, and the upper quartile (Q3) sits three-quarters of the way along. One quarter of the data lies below Q1, and one quarter lies above Q3. The interquartile range (IQR) is Q3 − Q1. It measures the spread of the middle half of the data, which is why it is so useful: it ignores…",
+      "example": "Let us work one carefully. Here are the number of press-ups nine pupils could do: 5, 8, 9, 11, 12, 14, 15, 18, 40. There are 9 values, already in order. The median is the 5th value, 12. The lower half is 5, 8, 9, 11,…"
+    },
+    {
+      "id": "concept-5-trends-patterns-and-outliers",
+      "title": "Trends, Patterns and Outliers",
+      "explanation": "Once data is displayed, one of your main jobs is to describe its overall shape rather than getting lost in single points. On a line graph, look first for the trend – the general direction of travel. An upward trend shows something growing, a downward trend shows decline, and a flat trend shows little change. When Farah plots the monthly rainfall in Mogadishu and sees the line climbing from March to May, she can report an upward trend even though one or two months dipped slightly. Beyond the overall trend, look for…",
+      "example": "A word of caution about trends: never assume a trend will simply continue. If a plant’s height has doubled every week for three weeks, it will not keep doubling forever – it would soon be taller than a house. Extending…"
+    },
+    {
+      "id": "concept-6-correlation-and-causation",
+      "title": "Correlation and Causation",
+      "explanation": "When we plot two things against each other, we often find a correlation – a relationship where they tend to change together. In positive correlation, as one goes up the other tends to go up too; taller people tend to have larger shoe sizes. In negative correlation, as one goes up the other tends to go down; the more time a phone spends switched on, the lower its battery. Some pairs show no correlation at all; a person’s shoe size has nothing to do with their favourite colour. Here is the single most important idea…",
+      "example": "Consider a real-sounding claim: “Pupils who own more books get higher marks, so buying books makes you cleverer.” The correlation may well be real, but the conclusion is a trap. Families who own many books often also…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Types of Data and Ways to Show It",
+      "context": "Before you can interpret results, you must know what kind of data you are looking at, because the kind of data decides which display and which calculations make sense. Data falls into two big families. Categorical data describes qualities that fall into named…",
+      "prompt": "Find the mean of 3, 6, 9, 12.",
+      "answer": "1) Mean = 30 ÷ 4 = 7.5.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) Mean = 30 ÷ 4 = 7.5."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "The Mean, Median and Mode",
+      "context": "When we describe a set of numbers, we often want a single value that stands for the whole set – a typical value, or average. In everyday speech people say ‘average’ as if there is only one, but in mathematics there are three different averages, and each has…",
+      "prompt": "Put in order and find the median: 8, 3, 11, 5, 7.",
+      "answer": "Ordered 3,5,7,8,11 → median = 7.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Ordered 3,5,7,8,11 → median = 7."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "The Range and the Spread of Data",
+      "context": "An average tells you where the middle of the data sits, but it says nothing about how spread out the values are. Two data sets can share the same mean yet look completely different. Consider the test marks of two pupils out of 10 across five tests. Hassan…",
+      "prompt": "Find the mode of 2, 3, 3, 5, 5, 5, 7.",
+      "answer": "Mode = 5.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Mode = 5."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Quartiles and the Interquartile Range",
+      "context": "To describe spread more fairly, we split ordered data into four equal parts using quartiles. Imagine lining up all the values from smallest to largest. The median cuts the line in half. The lower quartile (Q1) sits a quarter of the way along, and the upper…",
+      "prompt": "Find the range of 14, 6, 22, 9, 30.",
+      "answer": "Range = 30 − 6 = 24.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Range = 30 − 6 = 24."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Trends, Patterns and Outliers",
+      "context": "Once data is displayed, one of your main jobs is to describe its overall shape rather than getting lost in single points. On a line graph, look first for the trend – the general direction of travel. An upward trend shows something growing, a downward trend…",
+      "prompt": "State whether each is categorical or numerical: a) favourite colour b) number of siblings c) height in cm.",
+      "answer": "a) categorical, b) numerical (discrete), c) numerical (continuous).",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) categorical, b) numerical (discrete), c) numerical (continuous)."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Correlation and Causation",
+      "context": "When we plot two things against each other, we often find a correlation – a relationship where they tend to change together. In positive correlation, as one goes up the other tends to go up too; taller people tend to have larger shoe sizes. In negative…",
+      "prompt": "For the data 4, 7, 7, 8, 9, 10, 11, find the mean, median, mode and range.",
+      "answer": "1) Mean = 56 ÷ 7 = 8; median = 8; mode = 7; range = 11 − 4 = 7.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) Mean = 56 ÷ 7 = 8; median = 8; mode = 7; range = 11 − 4 = 7."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Types of Data and Ways to Show It",
+      "modelType": "concept-model-1",
+      "purpose": "Before you can interpret results, you must know what kind of data you are looking at, because the kind of data decides which display and which calculations make sense. Data falls into two big families. Categorical data…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The Mean, Median and Mode",
+      "modelType": "concept-model-2",
+      "purpose": "When we describe a set of numbers, we often want a single value that stands for the whole set – a typical value, or average. In everyday speech people say ‘average’ as if there is only one, but in mathematics there are…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "The Range and the Spread of Data",
+      "modelType": "concept-model-3",
+      "purpose": "An average tells you where the middle of the data sits, but it says nothing about how spread out the values are. Two data sets can share the same mean yet look completely different. Consider the test marks of two pupils…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Quartiles and the Interquartile Range",
+      "modelType": "concept-model-4",
+      "purpose": "To describe spread more fairly, we split ordered data into four equal parts using quartiles. Imagine lining up all the values from smallest to largest. The median cuts the line in half. The lower quartile (Q1) sits a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Trends, Patterns and Outliers",
+      "modelType": "concept-model-5",
+      "purpose": "Once data is displayed, one of your main jobs is to describe its overall shape rather than getting lost in single points. On a line graph, look first for the trend – the general direction of travel. An upward trend…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Correlation and Causation",
+      "modelType": "concept-model-6",
+      "purpose": "When we plot two things against each other, we often find a correlation – a relationship where they tend to change together. In positive correlation, as one goes up the other tends to go up too; taller people tend to…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find the median",
+      "example": "Seven families own these numbers of goats: 12, 9, 15, 9, 20, 11, 9. Find the mean, median, mode and range.",
+      "steps": [
+        "Put all the values in order from smallest to largest.",
+        "If there is an odd number of values, the median is the single middle one.",
+        "If there is an even number, the median is the mean of the two middle values."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to find the interquartile range",
+      "example": "A shop’s daily sales for a week are 40, 42, 41, 43, 40, 42 and 200 (the last was a special festival day). Which average best describes a typical day, and why?",
+      "steps": [
+        "Put the data in order and find the median.",
+        "Find Q1, the median of the lower half of the data.",
+        "Find Q3, the median of the upper half of the data.",
+        "Subtract: IQR = Q3 − Q1."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to check whether a graph is misleading",
+      "example": "Two classes sit the same test out of 20. Class A scores have mean 14 and range 4. Class B scores have mean 14 and range 15. Compare the two classes.",
+      "steps": [
+        "Check whether the vertical axis starts at zero.",
+        "Check that the scale is even and every axis is clearly labelled.",
+        "Ask what data might be missing or hidden.",
+        "Ask who made the graph and what they want you to believe."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Interquartile range",
+      "example": "Find the median, quartiles and interquartile range of: 4, 6, 7, 9, 10, 12, 13, 15.",
+      "steps": [
+        "Solution: There are 8 values, already in order.",
+        "The two middle values are 9 and 10, so the median = (9 + 10) ÷ 2 = 9.5.",
+        "The lower half is 4, 6, 7, 9, whose middle pair is 6 and 7, giving Q1 = 6.5.",
+        "The upper half is 10, 12, 13, 15, whose middle pair is 12 and 13, giving Q3 = 12.5."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Correlation and causation",
+      "example": "A report finds that villages with more mobile phones also have higher exam results, and concludes that giving pupils phones raises exam results. What is wrong with this conclusion?",
+      "steps": [
+        "Solution: The report has confused correlation with causation.",
+        "The two things rise together, but that does not prove one causes the other.",
+        "A hidden third factor – such as villages being wealthier, with better schools, more electricity and more educated parents – could cause both the higher phone ownership and the higher results.",
+        "To claim that phones *cause* better results you would need a controlled comparison, not just a correlation."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Spot the misleading graph",
+      "example": "A bar chart of a shop’s profit shows two bars, one clearly twice as tall as the other, and the headline reads ‘Profit doubles!’. On closer look, the vertical axis runs from 90 to 100, and the bars represent 94 and 98. Is the headline fair?",
+      "steps": [
+        "Solution: No.",
+        "Because the axis starts at 90 instead of 0, a small rise from 94 to 98 – an increase of just 4 units, or about 4% – is stretched to look like a doubling.",
+        "If the axis started at zero, the two bars would look almost the same height.",
+        "The graph is misleading; profit rose only slightly, not by anything like double."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Find the mean, median, mode and range",
+      "prompt": "Seven families own these numbers of goats: 12, 9, 15, 9, 20, 11, 9. Find the mean, median, mode and range.",
+      "solution": "Solution: Total = 12 + 9 + 15 + 9 + 20 + 11 + 9 = 85. There are 7 values, so the mean = 85 ÷ 7 = 12.1 (to 1 decimal place). Put them in order: 9, 9, 9, 11, 12, 15, 20. The middle (4th) value is the median = 11. The value 9 appears most often, so the mode = 9. The range = 20 − 9 = 11."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Choose the best average",
+      "prompt": "A shop’s daily sales for a week are 40, 42, 41, 43, 40, 42 and 200 (the last was a special festival day). Which average best describes a typical day, and why?",
+      "solution": "Solution: The mean = (40+42+41+43+40+42+200) ÷ 7 = 448 ÷ 7 = 64, but no ordinary day is anywhere near 64 – the festival day of 200 is an outlier that has dragged the mean up. Ordered: 40, 40, 41, 42, 42, 43, 200, so the median = 42, which describes a typical day honestly. The median is the better average here because it resists the outlier."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Compare two data sets",
+      "prompt": "Two classes sit the same test out of 20. Class A scores have mean 14 and range 4. Class B scores have mean 14 and range 15. Compare the two classes.",
+      "solution": "Solution: Both classes have the same mean of 14, so on average they performed equally well. But Class A has a much smaller range (4), meaning its marks are consistent and clustered together, while Class B has a large range (15), meaning its marks are very spread out – some pupils did very well and others struggled. So although the averages match, Class A is far more consistent, and Class B contains both stronger and weaker pupils."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Interquartile range",
+      "prompt": "Find the median, quartiles and interquartile range of: 4, 6, 7, 9, 10, 12, 13, 15.",
+      "solution": "Solution: There are 8 values, already in order. The two middle values are 9 and 10, so the median = (9 + 10) ÷ 2 = 9.5. The lower half is 4, 6, 7, 9, whose middle pair is 6 and 7, giving Q1 = 6.5. The upper half is 10, 12, 13, 15, whose middle pair is 12 and 13, giving Q3 = 12.5. The IQR = 12.5 − 6.5 = 6."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Correlation and causation",
+      "prompt": "A report finds that villages with more mobile phones also have higher exam results, and concludes that giving pupils phones raises exam results. What is wrong with this conclusion?",
+      "solution": "Solution: The report has confused correlation with causation. The two things rise together, but that does not prove one causes the other. A hidden third factor – such as villages being wealthier, with better schools, more electricity and more educated parents – could cause both the higher phone ownership and the higher results. To claim that phones *cause* better results you would need a controlled comparison, not just a correlation."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Spot the misleading graph",
+      "prompt": "A bar chart of a shop’s profit shows two bars, one clearly twice as tall as the other, and the headline reads ‘Profit doubles!’. On closer look, the vertical axis runs from 90 to 100, and the bars represent 94 and 98. Is the headline fair?",
+      "solution": "Solution: No. Because the axis starts at 90 instead of 0, a small rise from 94 to 98 – an increase of just 4 units, or about 4% – is stretched to look like a doubling. If the axis started at zero, the two bars would look almost the same height. The graph is misleading; profit rose only slightly, not by anything like double."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Judge a sample",
+      "prompt": "Sahra wants to know the favourite subject of all 500 pupils in her school. She asks 15 pupils in the library after school. Explain two problems with her method and suggest a better one.",
+      "solution": "Solution: First, the sample is too small – 15 out of 500 is unlikely to reflect everyone. Second, pupils in the library after school are not representative: they are probably keen readers, so subjects like reading may be over-chosen (selection bias). A better method is random sampling: number all 500 pupils and use a random list to pick, say, 50 of them, so every pupil has an equal chance and the sample fairly reflects the whole school."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Find a missing value from the mean",
+      "prompt": "Four pupils have a mean height of 150 cm. Three of them are 148 cm, 152 cm and 149 cm. How tall is the fourth pupil?",
+      "solution": "Solution: If the mean of 4 values is 150, the total must be 4 × 150 = 600 cm. The three known heights add to 148 + 152 + 149 = 449 cm. So the fourth pupil is 600 − 449 = 151 cm. Working backwards from the mean to a total is a powerful trick worth remembering."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "Two classes take a spelling test. Class A: mean 8, range 3. Class B: mean 8, range 9. Write one sentence comparing them.",
+      "solution": "Both classes averaged 8, but Class A (range"
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Describe the type of correlation you would expect between: a) hours of study and test score b) outdoor temperature and hot-drink sales.",
+      "solution": "was far more consistent than Class B (range"
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "A pie chart shows how Hani’s family spends its monthly income: food 40%, rent 25%, transport 15%, savings 10%, other 10%. On what does the family spend the most, and what fraction goes on rent?",
+      "solution": "."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Six numbers have a mean of 15. Five of them are 12, 18, 14, 16 and 11. Find the sixth number.",
+      "solution": "1) Total = 6 × 15 = 90; five known add to 71; sixth number = 90 − 71 = 19."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Find the mean of 3, 6, 9, 12.",
+      "answer": "1) Mean = 30 ÷ 4 = 7.5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Put in order and find the median: 8, 3, 11, 5, 7.",
+      "answer": "Ordered 3,5,7,8,11 → median = 7.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Find the mode of 2, 3, 3, 5, 5, 5, 7.",
+      "answer": "Mode = 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Find the range of 14, 6, 22, 9, 30.",
+      "answer": "Range = 30 − 6 = 24.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "State whether each is categorical or numerical: a) favourite colour b) number of siblings c) height in cm.",
+      "answer": "a) categorical, b) numerical (discrete), c) numerical (continuous).",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "For the data 4, 7, 7, 8, 9, 10, 11, find the mean, median, mode and range.",
+      "answer": "1) Mean = 56 ÷ 7 = 8; median = 8; mode = 7; range = 11 − 4 = 7.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "A set is 6, 7, 8, 9, 60. Find the mean and the median, and state which better describes a typical value.",
+      "answer": "Mean = 90 ÷ 5 = 18; median = 8; the median (8) is better because the outlier 60 has pulled the mean up.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Find the median, lower quartile, upper quartile and interquartile range of: 2, 4, 5, 7, 8, 10, 12, 13, 15.",
+      "answer": "Nine values: median = 8; lower half 2,4,5,7 → Q1 = 4.5; upper half 10,12,13,15 → Q3 = 12.5; IQR = 12.5 − 4.5 = 8.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Two classes take a spelling test. Class A: mean 8, range 3. Class B: mean 8, range 9. Write one sentence comparing them.",
+      "answer": "Both classes averaged 8, but Class A (range",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Describe the type of correlation you would expect between: a) hours of study and test score b) outdoor temperature and hot-drink sales.",
+      "answer": "was far more consistent than Class B (range",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "A pie chart shows how Hani’s family spends its monthly income: food 40%, rent 25%, transport 15%, savings 10%, other 10%. On what does the family spend the most, and what fraction goes on rent?",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Six numbers have a mean of 15. Five of them are 12, 18, 14, 16 and 11. Find the sixth number.",
+      "answer": "1) Total = 6 × 15 = 90; five known add to 71; sixth number = 90 − 71 = 19.",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Household Data Hunt",
+      "materials": "paper, a pencil, and things around your home to count or measure.",
+      "steps": [
+        "Choose something you can collect ten values of – shoe sizes of family members, the mass of ten mangoes, or the number of pages in ten books.",
+        "Write your data in a list, then put it in order.",
+        "Calculate the mean, median, mode and range.",
+        "Write one sentence describing your data using an average and the range together.",
+        "Keep your data – you will use it again in Activity 4."
+      ]
+    },
+    {
+      "title": "The Averages Card Game",
+      "materials": "paper cards numbered 1 to 20 (make two of each), and a friend.",
+      "steps": [
+        "Shuffle the cards and deal five to each player.",
+        "Each player finds the mean, median, mode and range of their hand.",
+        "Score a point for the higher median, and a point for the smaller range (most consistent hand).",
+        "Reshuffle and play five rounds. Talk about how one big card changes the mean but not the median."
+      ]
+    },
+    {
+      "title": "Misleading Graph Detective",
+      "materials": "newspapers, magazines, or adverts with graphs and numbers (or ones your AI tutor describes).",
+      "steps": [
+        "Find a graph or a statistical claim in an advert or a report.",
+        "Check three things: Does the axis start at zero? Are the labels clear? Is any data missing?",
+        "Decide whether the graph is honest or misleading, and write down why.",
+        "Redraw one misleading graph honestly, with the axis starting at zero, and compare how different it looks.",
+        "Being a graph detective trains your eye to spot tricks that fool most people."
+      ]
+    },
+    {
+      "title": "Family Survey Investigation",
+      "materials": "a question to ask, and several people to ask (family, neighbours, classmates).",
+      "steps": [
+        "Write a clear, fair question – for example, ‘What is your favourite fruit?’ Avoid leading questions.",
+        "Ask at least fifteen people and record the answers in a frequency table.",
+        "Draw a bar chart of your results and state the mode.",
+        "Write down one way your sample might be biased and how you could make it fairer next time."
+      ]
+    },
+    {
+      "title": "Correlation Hunt",
+      "materials": "paper and a pencil, and a little imagination.",
+      "steps": [
+        "List five pairs of things you think might be linked, such as height and shoe size, or hours of sleep and mood.",
+        "For each pair, decide whether you expect positive, negative, or no correlation.",
+        "For any pair you think is correlated, ask: could a hidden third factor explain it?",
+        "Find one funny ‘correlation’ that is clearly not causation – such as ice-cream sales and swimming – and explain the real cause."
+      ]
+    },
+    {
+      "title": "Two-Town Data Comparison",
+      "materials": "paper, a pencil, and invented or looked-up data for two places.",
+      "steps": [
+        "Imagine daily temperatures for a week in two towns, such as Hargeisa and Mombasa (make up sensible numbers).",
+        "Calculate the mean and range for each town.",
+        "Write two sentences comparing them, using both the average and the spread.",
+        "Decide which town has the more consistent weather, and explain how the range tells you.",
+        "After your activities, talk or write about these questions: Which activity helped you understand averages best? When did an outlier surprise you? What is one misleading trick you can now spot that you could not before? How will you question the next graph or advert you see? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [],
+    "terms": [
+      [
+        "Mean",
+        "Total of values divided by how many there are"
+      ],
+      [
+        "Median",
+        "The middle value of ordered data"
+      ],
+      [
+        "Mode",
+        "The most frequently occurring value"
+      ],
+      [
+        "Range",
+        "Highest value minus lowest value"
+      ],
+      [
+        "Quartiles",
+        "Values splitting ordered data into four equal parts"
+      ],
+      [
+        "Outlier",
+        "A value far from the rest of the data"
+      ],
+      [
+        "Correlation",
+        "A relationship between two variables"
+      ],
+      [
+        "Causation",
+        "One thing actually causing another"
+      ],
+      [
+        "Sample",
+        "A smaller group chosen from a whole population"
+      ],
+      [
+        "Bias",
+        "Anything that makes data unfair or unrepresentative"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Finding the median without ordering",
+        "Always put the data in order before taking the middle"
+      ],
+      [
+        "Letting an outlier distort the mean",
+        "Use the median when there is an outlier"
+      ],
+      [
+        "Confusing correlation and causation",
+        "Look for a hidden third factor"
+      ],
+      [
+        "Trusting a graph blindly",
+        "Check the axis before believing the size of a change"
+      ],
+      [
+        "Judging a survey by size alone",
+        "Check how the sample was chosen, not just how large it is"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Find the mean of 3, 6, 9, 12.",
+      "answer": "1) Mean = 30 ÷ 4 = 7.5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) Mean = 30 ÷ 4 = 7.5."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Put in order and find the median: 8, 3, 11, 5, 7.",
+      "answer": "Ordered 3,5,7,8,11 → median = 7.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Ordered 3,5,7,8,11 → median = 7."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Find the mode of 2, 3, 3, 5, 5, 5, 7.",
+      "answer": "Mode = 5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Mode = 5."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Find the range of 14, 6, 22, 9, 30.",
+      "answer": "Range = 30 − 6 = 24.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Range = 30 − 6 = 24."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "State whether each is categorical or numerical: a) favourite colour b) number of siblings c) height in cm.",
+      "answer": "a) categorical, b) numerical (discrete), c) numerical (continuous).",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) categorical, b) numerical (discrete), c) numerical (continuous)."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "For the data 4, 7, 7, 8, 9, 10, 11, find the mean, median, mode and range.",
+      "answer": "1) Mean = 56 ÷ 7 = 8; median = 8; mode = 7; range = 11 − 4 = 7.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) Mean = 56 ÷ 7 = 8; median = 8; mode = 7; range = 11 − 4 = 7."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "A set is 6, 7, 8, 9, 60. Find the mean and the median, and state which better describes a typical value.",
+      "answer": "Mean = 90 ÷ 5 = 18; median = 8; the median (8) is better because the outlier 60 has pulled the mean up.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Mean = 90 ÷ 5 = 18; median = 8; the median (8) is better because the outlier 60 has pulled the mean up."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Find the median, lower quartile, upper quartile and interquartile range of: 2, 4, 5, 7, 8, 10, 12, 13, 15.",
+      "answer": "Nine values: median = 8; lower half 2,4,5,7 → Q1 = 4.5; upper half 10,12,13,15 → Q3 = 12.5; IQR = 12.5 − 4.5 = 8.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Nine values: median = 8; lower half 2,4,5,7 → Q1 = 4.5; upper half 10,12,13,15 → Q3 = 12.5; IQR = 12.5 − 4.5 = 8."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Two classes take a spelling test. Class A: mean 8, range 3. Class B: mean 8, range 9. Write one sentence comparing them.",
+      "answer": "Both classes averaged 8, but Class A (range",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Both classes averaged 8, but Class A (range"
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Describe the type of correlation you would expect between: a) hours of study and test score b) outdoor temperature and hot-drink sales.",
+      "answer": "was far more consistent than Class B (range",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "was far more consistent than Class B (range"
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "A pie chart shows how Hani’s family spends its monthly income: food 40%, rent 25%, transport 15%, savings 10%, other 10%. On what does the family spend the most, and what fraction goes on rent?",
+      "answer": ".",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo04",
+      "difficulty": "Round 3",
+      "prompt": "Six numbers have a mean of 15. Five of them are 12, 18, 14, 16 and 11. Find the sixth number.",
+      "answer": "1) Total = 6 × 15 = 90; five known add to 71; sixth number = 90 − 71 = 19.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Total = 6 × 15 = 90; five known add to 71; sixth number = 90 − 71 = 19."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "During Eid, Aisha counts the guests arriving each hour: 8, 10, 9, 11, 40. Find the mean and median, identify the outlier, and say which average best describes a typical hour.",
+      "answer": "1) Mean = 78 ÷ 5 = 15.6; ordered 8,9,10,11,40 → median = 10; outlier is 40; the median (10) best describes a typical hour because the outlier inflates the mean.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Mean = 78 ÷ 5 = 15.6; ordered 8,9,10,11,40 → median = 10; outlier is 40; the median (10) best describes a typical hour because the outlier inflates the mean."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Two shops in Kismaayo record daily sales for a week. Shop A has mean 50, range 6. Shop B has mean 50, range 28. A trader wants a steady, predictable income – which shop’s pattern should he prefer, and why?",
+      "answer": "Shop A – the same mean but a much smaller range (6) means steadier, more predictable daily sales, which suits a trader wanting reliable income.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Shop A – the same mean but a much smaller range (6) means steadier, more predictable daily sales, which suits a trader wanting reliable income."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "A study finds children who eat breakfast score higher in tests, and a headline reads ‘Breakfast makes you clever’. Discuss whether this is fair, naming a possible hidden factor.",
+      "answer": "It is unfair – correlation is not causation; a hidden factor such as families who provide breakfast may also provide more support with schoolwork, which could be the true cause.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "It is unfair – correlation is not causation; a hidden factor such as families who provide breakfast may also provide more support with schoolwork, which could be the true cause."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "Noor plots the temperature in Berbera every hour and sees it rise all morning, peak at midday, then fall. Describe this pattern and explain why she should not use it to predict the temperature at midnight.",
+      "answer": "The pattern is a daily cycle: rising through the morning, peaking at midday, then falling; she should not predict midnight from it because the cycle continues to fall and the pattern beyond her data is uncertain (extrapolation).",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "The pattern is a daily cycle: rising through the morning, peaking at midday, then falling; she should not predict midnight from it because the cycle continues to fall and the pattern beyond her data is uncertain (extrapolation)."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Omar surveys pupils about screen time. He asks: ‘Don’t you agree that too much screen time is harmful?’ Explain what is wrong with his question and rewrite it fairly.",
+      "answer": "It is a leading question that pushes people to agree; a fairer version is: ‘Do you think screen time has any effect on health? If so, what?’",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "It is a leading question that pushes people to agree; a fairer version is: ‘Do you think screen time has any effect on health? If so, what?’"
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Six numbers have a mean of 15. Five of them are 12, 18, 14, 16 and 11. Find the sixth number.",
+      "answer": "1) Total = 6 × 15 = 90; five known add to 71; sixth number = 90 − 71 = 19.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Total = 6 × 15 = 90; five known add to 71; sixth number = 90 − 71 = 19."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Six numbers have a mean of 15. Five of them are 12, 18, 14, 16 and 11. Find the sixth number.",
+      "keyIdeas": [
+        "Mean",
+        "Median",
+        "Mode"
+      ],
+      "modelAnswer": "1) Total = 6 × 15 = 90; five known add to 71; sixth number = 90 − 71 = 19."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A data set is 10, 12, 13, 14, 15, 16, 90. Explain which average (mean or median) you would use to describe it and why, then calculate that average.",
+      "keyIdeas": [
+        "Median",
+        "Mode",
+        "Range"
+      ],
+      "modelAnswer": "The value 90 is an outlier, so use the median; ordered already, median = 14 (the mean would be 24.3, far above every ordinary value)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A graph claims sales have ‘soared’, but its vertical axis runs from 500 to 520 and the values are 505 and 512. Explain the trick and state the real increase.",
+      "keyIdeas": [
+        "Mode",
+        "Range",
+        "Quartiles"
+      ],
+      "modelAnswer": "Because the axis starts at 500 not 0, a small rise of 512 − 505 = 7 is stretched to look huge; the real increase is only 7 units."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Yusuf asks 10 people leaving the football stadium what their favourite sport is and concludes football is the nation’s favourite. Give two reasons this is biased and suggest a fairer method.",
+      "keyIdeas": [
+        "Range",
+        "Quartiles",
+        "Outlier"
+      ],
+      "modelAnswer": "People at a football stadium are football fans, so the sample is not representative (selection bias), and 10 people is too small; a fairer method is random sampling across the whole population."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Trends, Patterns and Outliers.",
+      "keyIdeas": [
+        "Mean",
+        "Median",
+        "Mode"
+      ],
+      "modelAnswer": "Once data is displayed, one of your main jobs is to describe its overall shape rather than getting lost in single points. On a line graph, look first for the trend – the general direction of travel. An upward trend shows something growing, a downward trend shows decline, and a flat trend shows little change. When Farah plots the monthly rainfall in Mogadishu and sees the line climbing from March to May, she can report an upward trend even though one or two months dipped slightly. Beyond the overall trend, look for…"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Correlation and Causation.",
+      "keyIdeas": [
+        "Mean",
+        "Median",
+        "Mode"
+      ],
+      "modelAnswer": "When we plot two things against each other, we often find a correlation – a relationship where they tend to change together. In positive correlation, as one goes up the other tends to go up too; taller people tend to have larger shoe sizes. In negative correlation, as one goes up the other tends to go down; the more time a phone spends switched on, the lower its battery. Some pairs show no correlation at all; a person’s shoe size has nothing to do with their favourite colour. Here is the single most important idea…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Mean” mean?",
+        "options": [
+          "Total of values divided by how many there are",
+          "The middle value of ordered data",
+          "The most frequently occurring value",
+          "Highest value minus lowest value"
+        ],
+        "answer": "Total of values divided by how many there are",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Mean means Total of values divided by how many there are."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Median” mean?",
+        "options": [
+          "The middle value of ordered data",
+          "The most frequently occurring value",
+          "Highest value minus lowest value",
+          "Values splitting ordered data into four equal parts"
+        ],
+        "answer": "The middle value of ordered data",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Median means The middle value of ordered data."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Mode” mean?",
+        "options": [
+          "The most frequently occurring value",
+          "Highest value minus lowest value",
+          "Values splitting ordered data into four equal parts",
+          "A value far from the rest of the data"
+        ],
+        "answer": "The most frequently occurring value",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Mode means The most frequently occurring value."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Range” mean?",
+        "options": [
+          "Highest value minus lowest value",
+          "Values splitting ordered data into four equal parts",
+          "A value far from the rest of the data",
+          "A relationship between two variables"
+        ],
+        "answer": "Highest value minus lowest value",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Range means Highest value minus lowest value."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Quartiles” mean?",
+        "options": [
+          "Values splitting ordered data into four equal parts",
+          "A value far from the rest of the data",
+          "A relationship between two variables",
+          "One thing actually causing another"
+        ],
+        "answer": "Values splitting ordered data into four equal parts",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Quartiles means Values splitting ordered data into four equal parts."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Outlier” mean?",
+        "options": [
+          "A value far from the rest of the data",
+          "A relationship between two variables",
+          "One thing actually causing another",
+          "A smaller group chosen from a whole population"
+        ],
+        "answer": "A value far from the rest of the data",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Outlier means A value far from the rest of the data."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A relationship between two variables?",
+        "options": [
+          "Correlation",
+          "Causation",
+          "Sample",
+          "Bias"
+        ],
+        "answer": "Correlation",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Correlation means A relationship between two variables."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: One thing actually causing another?",
+        "options": [
+          "Causation",
+          "Sample",
+          "Bias",
+          "Mean"
+        ],
+        "answer": "Causation",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Causation means One thing actually causing another."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A smaller group chosen from a whole population?",
+        "options": [
+          "Sample",
+          "Bias",
+          "Mean",
+          "Median"
+        ],
+        "answer": "Sample",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Sample means A smaller group chosen from a whole population."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: Anything that makes data unfair or unrepresentative?",
+        "options": [
+          "Bias",
+          "Mean",
+          "Median",
+          "Mode"
+        ],
+        "answer": "Bias",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Bias means Anything that makes data unfair or unrepresentative."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: Total of values divided by how many there are?",
+        "options": [
+          "Mean",
+          "Mode",
+          "Range",
+          "Quartiles"
+        ],
+        "answer": "Mean",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Mean means Total of values divided by how many there are."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The middle value of ordered data?",
+        "options": [
+          "Median",
+          "Range",
+          "Quartiles",
+          "Outlier"
+        ],
+        "answer": "Median",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Median means The middle value of ordered data."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u16-game-1",
+        "icon": "?",
+        "skill": "Mean",
+        "title": "Quick Match: Mean",
+        "description": "Practise mean through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Mean” mean?",
+            "choices": [
+              "Total of values divided by how many there are",
+              "The middle value of ordered data",
+              "The most frequently occurring value",
+              "Highest value minus lowest value"
+            ],
+            "answer": "Total of values divided by how many there are",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean means Total of values divided by how many there are."
+          },
+          {
+            "prompt": "What does “Range” mean?",
+            "choices": [
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data",
+              "A relationship between two variables"
+            ],
+            "answer": "Highest value minus lowest value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Range means Highest value minus lowest value."
+          },
+          {
+            "prompt": "Which term matches this meaning: A relationship between two variables?",
+            "choices": [
+              "Correlation",
+              "Causation",
+              "Sample",
+              "Bias"
+            ],
+            "answer": "Correlation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Correlation means A relationship between two variables."
+          },
+          {
+            "prompt": "Which term matches this meaning: Anything that makes data unfair or unrepresentative?",
+            "choices": [
+              "Bias",
+              "Mean",
+              "Median",
+              "Mode"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Bias means Anything that makes data unfair or unrepresentative."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-2",
+        "icon": "★",
+        "skill": "Median",
+        "title": "Concept Quest: Median",
+        "description": "Practise median through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Median” mean?",
+            "choices": [
+              "The middle value of ordered data",
+              "The most frequently occurring value",
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts"
+            ],
+            "answer": "The middle value of ordered data",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Median means The middle value of ordered data."
+          },
+          {
+            "prompt": "What does “Quartiles” mean?",
+            "choices": [
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data",
+              "A relationship between two variables",
+              "One thing actually causing another"
+            ],
+            "answer": "Values splitting ordered data into four equal parts",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Quartiles means Values splitting ordered data into four equal parts."
+          },
+          {
+            "prompt": "Which term matches this meaning: One thing actually causing another?",
+            "choices": [
+              "Causation",
+              "Sample",
+              "Bias",
+              "Mean"
+            ],
+            "answer": "Causation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Causation means One thing actually causing another."
+          },
+          {
+            "prompt": "Which term matches this meaning: Total of values divided by how many there are?",
+            "choices": [
+              "Mean",
+              "Mode",
+              "Range",
+              "Quartiles"
+            ],
+            "answer": "Mean",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean means Total of values divided by how many there are."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-3",
+        "icon": "◫",
+        "skill": "Mode",
+        "title": "Model Detective: Mode",
+        "description": "Practise mode through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Mode” mean?",
+            "choices": [
+              "The most frequently occurring value",
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data"
+            ],
+            "answer": "The most frequently occurring value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mode means The most frequently occurring value."
+          },
+          {
+            "prompt": "What does “Outlier” mean?",
+            "choices": [
+              "A value far from the rest of the data",
+              "A relationship between two variables",
+              "One thing actually causing another",
+              "A smaller group chosen from a whole population"
+            ],
+            "answer": "A value far from the rest of the data",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Outlier means A value far from the rest of the data."
+          },
+          {
+            "prompt": "Which term matches this meaning: A smaller group chosen from a whole population?",
+            "choices": [
+              "Sample",
+              "Bias",
+              "Mean",
+              "Median"
+            ],
+            "answer": "Sample",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Sample means A smaller group chosen from a whole population."
+          },
+          {
+            "prompt": "Which term matches this meaning: The middle value of ordered data?",
+            "choices": [
+              "Median",
+              "Range",
+              "Quartiles",
+              "Outlier"
+            ],
+            "answer": "Median",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Median means The middle value of ordered data."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-4",
+        "icon": "→",
+        "skill": "Range",
+        "title": "Rule Runner: Range",
+        "description": "Practise range through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Range” mean?",
+            "choices": [
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data",
+              "A relationship between two variables"
+            ],
+            "answer": "Highest value minus lowest value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Range means Highest value minus lowest value."
+          },
+          {
+            "prompt": "Which term matches this meaning: A relationship between two variables?",
+            "choices": [
+              "Correlation",
+              "Causation",
+              "Sample",
+              "Bias"
+            ],
+            "answer": "Correlation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Correlation means A relationship between two variables."
+          },
+          {
+            "prompt": "Which term matches this meaning: Anything that makes data unfair or unrepresentative?",
+            "choices": [
+              "Bias",
+              "Mean",
+              "Median",
+              "Mode"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Bias means Anything that makes data unfair or unrepresentative."
+          },
+          {
+            "prompt": "What does “Mean” mean?",
+            "choices": [
+              "Total of values divided by how many there are",
+              "The middle value of ordered data",
+              "The most frequently occurring value",
+              "Highest value minus lowest value"
+            ],
+            "answer": "Total of values divided by how many there are",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean means Total of values divided by how many there are."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-5",
+        "icon": "Σ",
+        "skill": "Quartiles",
+        "title": "Vocabulary Vault: Quartiles",
+        "description": "Practise quartiles through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Quartiles” mean?",
+            "choices": [
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data",
+              "A relationship between two variables",
+              "One thing actually causing another"
+            ],
+            "answer": "Values splitting ordered data into four equal parts",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Quartiles means Values splitting ordered data into four equal parts."
+          },
+          {
+            "prompt": "Which term matches this meaning: One thing actually causing another?",
+            "choices": [
+              "Causation",
+              "Sample",
+              "Bias",
+              "Mean"
+            ],
+            "answer": "Causation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Causation means One thing actually causing another."
+          },
+          {
+            "prompt": "Which term matches this meaning: Total of values divided by how many there are?",
+            "choices": [
+              "Mean",
+              "Mode",
+              "Range",
+              "Quartiles"
+            ],
+            "answer": "Mean",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean means Total of values divided by how many there are."
+          },
+          {
+            "prompt": "What does “Median” mean?",
+            "choices": [
+              "The middle value of ordered data",
+              "The most frequently occurring value",
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts"
+            ],
+            "answer": "The middle value of ordered data",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Median means The middle value of ordered data."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-6",
+        "icon": "◇",
+        "skill": "Outlier",
+        "title": "Challenge Cards: Outlier",
+        "description": "Practise outlier through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Outlier” mean?",
+            "choices": [
+              "A value far from the rest of the data",
+              "A relationship between two variables",
+              "One thing actually causing another",
+              "A smaller group chosen from a whole population"
+            ],
+            "answer": "A value far from the rest of the data",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Outlier means A value far from the rest of the data."
+          },
+          {
+            "prompt": "Which term matches this meaning: A smaller group chosen from a whole population?",
+            "choices": [
+              "Sample",
+              "Bias",
+              "Mean",
+              "Median"
+            ],
+            "answer": "Sample",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Sample means A smaller group chosen from a whole population."
+          },
+          {
+            "prompt": "Which term matches this meaning: The middle value of ordered data?",
+            "choices": [
+              "Median",
+              "Range",
+              "Quartiles",
+              "Outlier"
+            ],
+            "answer": "Median",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Median means The middle value of ordered data."
+          },
+          {
+            "prompt": "What does “Mode” mean?",
+            "choices": [
+              "The most frequently occurring value",
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data"
+            ],
+            "answer": "The most frequently occurring value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mode means The most frequently occurring value."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-7",
+        "icon": "⚡",
+        "skill": "Correlation",
+        "title": "Think Fast: Correlation",
+        "description": "Practise correlation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A relationship between two variables?",
+            "choices": [
+              "Correlation",
+              "Causation",
+              "Sample",
+              "Bias"
+            ],
+            "answer": "Correlation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Correlation means A relationship between two variables."
+          },
+          {
+            "prompt": "Which term matches this meaning: Anything that makes data unfair or unrepresentative?",
+            "choices": [
+              "Bias",
+              "Mean",
+              "Median",
+              "Mode"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Bias means Anything that makes data unfair or unrepresentative."
+          },
+          {
+            "prompt": "What does “Mean” mean?",
+            "choices": [
+              "Total of values divided by how many there are",
+              "The middle value of ordered data",
+              "The most frequently occurring value",
+              "Highest value minus lowest value"
+            ],
+            "answer": "Total of values divided by how many there are",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean means Total of values divided by how many there are."
+          },
+          {
+            "prompt": "What does “Range” mean?",
+            "choices": [
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data",
+              "A relationship between two variables"
+            ],
+            "answer": "Highest value minus lowest value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Range means Highest value minus lowest value."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-8",
+        "icon": "☁",
+        "skill": "Causation",
+        "title": "Explain It: Causation",
+        "description": "Practise causation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One thing actually causing another?",
+            "choices": [
+              "Causation",
+              "Sample",
+              "Bias",
+              "Mean"
+            ],
+            "answer": "Causation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Causation means One thing actually causing another."
+          },
+          {
+            "prompt": "Which term matches this meaning: Total of values divided by how many there are?",
+            "choices": [
+              "Mean",
+              "Mode",
+              "Range",
+              "Quartiles"
+            ],
+            "answer": "Mean",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean means Total of values divided by how many there are."
+          },
+          {
+            "prompt": "What does “Median” mean?",
+            "choices": [
+              "The middle value of ordered data",
+              "The most frequently occurring value",
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts"
+            ],
+            "answer": "The middle value of ordered data",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Median means The middle value of ordered data."
+          },
+          {
+            "prompt": "What does “Quartiles” mean?",
+            "choices": [
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data",
+              "A relationship between two variables",
+              "One thing actually causing another"
+            ],
+            "answer": "Values splitting ordered data into four equal parts",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Quartiles means Values splitting ordered data into four equal parts."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-9",
+        "icon": "⌂",
+        "skill": "Sample",
+        "title": "Real-Life Round: Sample",
+        "description": "Practise sample through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A smaller group chosen from a whole population?",
+            "choices": [
+              "Sample",
+              "Bias",
+              "Mean",
+              "Median"
+            ],
+            "answer": "Sample",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Sample means A smaller group chosen from a whole population."
+          },
+          {
+            "prompt": "Which term matches this meaning: The middle value of ordered data?",
+            "choices": [
+              "Median",
+              "Range",
+              "Quartiles",
+              "Outlier"
+            ],
+            "answer": "Median",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Median means The middle value of ordered data."
+          },
+          {
+            "prompt": "What does “Mode” mean?",
+            "choices": [
+              "The most frequently occurring value",
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data"
+            ],
+            "answer": "The most frequently occurring value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mode means The most frequently occurring value."
+          },
+          {
+            "prompt": "What does “Outlier” mean?",
+            "choices": [
+              "A value far from the rest of the data",
+              "A relationship between two variables",
+              "One thing actually causing another",
+              "A smaller group chosen from a whole population"
+            ],
+            "answer": "A value far from the rest of the data",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Outlier means A value far from the rest of the data."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-10",
+        "icon": "!",
+        "skill": "Bias",
+        "title": "Spot the Error: Bias",
+        "description": "Practise bias through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Anything that makes data unfair or unrepresentative?",
+            "choices": [
+              "Bias",
+              "Mean",
+              "Median",
+              "Mode"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Bias means Anything that makes data unfair or unrepresentative."
+          },
+          {
+            "prompt": "What does “Mean” mean?",
+            "choices": [
+              "Total of values divided by how many there are",
+              "The middle value of ordered data",
+              "The most frequently occurring value",
+              "Highest value minus lowest value"
+            ],
+            "answer": "Total of values divided by how many there are",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean means Total of values divided by how many there are."
+          },
+          {
+            "prompt": "What does “Range” mean?",
+            "choices": [
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data",
+              "A relationship between two variables"
+            ],
+            "answer": "Highest value minus lowest value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Range means Highest value minus lowest value."
+          },
+          {
+            "prompt": "Which term matches this meaning: A relationship between two variables?",
+            "choices": [
+              "Correlation",
+              "Causation",
+              "Sample",
+              "Bias"
+            ],
+            "answer": "Correlation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Correlation means A relationship between two variables."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-11",
+        "icon": "≡",
+        "skill": "Mean",
+        "title": "Mastery Mix: Mean",
+        "description": "Practise mean through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Total of values divided by how many there are?",
+            "choices": [
+              "Mean",
+              "Mode",
+              "Range",
+              "Quartiles"
+            ],
+            "answer": "Mean",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean means Total of values divided by how many there are."
+          },
+          {
+            "prompt": "What does “Median” mean?",
+            "choices": [
+              "The middle value of ordered data",
+              "The most frequently occurring value",
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts"
+            ],
+            "answer": "The middle value of ordered data",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Median means The middle value of ordered data."
+          },
+          {
+            "prompt": "What does “Quartiles” mean?",
+            "choices": [
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data",
+              "A relationship between two variables",
+              "One thing actually causing another"
+            ],
+            "answer": "Values splitting ordered data into four equal parts",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Quartiles means Values splitting ordered data into four equal parts."
+          },
+          {
+            "prompt": "Which term matches this meaning: One thing actually causing another?",
+            "choices": [
+              "Causation",
+              "Sample",
+              "Bias",
+              "Mean"
+            ],
+            "answer": "Causation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Causation means One thing actually causing another."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-12",
+        "icon": "T",
+        "skill": "Median",
+        "title": "Unit Champion: Median",
+        "description": "Practise median through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The middle value of ordered data?",
+            "choices": [
+              "Median",
+              "Range",
+              "Quartiles",
+              "Outlier"
+            ],
+            "answer": "Median",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Median means The middle value of ordered data."
+          },
+          {
+            "prompt": "What does “Mode” mean?",
+            "choices": [
+              "The most frequently occurring value",
+              "Highest value minus lowest value",
+              "Values splitting ordered data into four equal parts",
+              "A value far from the rest of the data"
+            ],
+            "answer": "The most frequently occurring value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mode means The most frequently occurring value."
+          },
+          {
+            "prompt": "What does “Outlier” mean?",
+            "choices": [
+              "A value far from the rest of the data",
+              "A relationship between two variables",
+              "One thing actually causing another",
+              "A smaller group chosen from a whole population"
+            ],
+            "answer": "A value far from the rest of the data",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Outlier means A value far from the rest of the data."
+          },
+          {
+            "prompt": "Which term matches this meaning: A smaller group chosen from a whole population?",
+            "choices": [
+              "Sample",
+              "Bias",
+              "Mean",
+              "Median"
+            ],
+            "answer": "Sample",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Sample means A smaller group chosen from a whole population."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can read and interpret bar charts, line graphs, pie charts and frequency tables, and know which display suits which kind of data.",
+    "I can calculate the mean, median, mode and range of a data set and explain what each one tells you.",
+    "I can choose the most appropriate average for a given situation and justify your choice.",
+    "I can compare two data sets using an average and a measure of spread together.",
+    "I can describe trends, patterns and outliers in data, and interpret what they mean in context.",
+    "I can distinguish between correlation and causation and avoid the classic trap of confusing them.",
+    "I can judge whether a sample is fair and identify common types of bias.",
+    "I can recognise misleading graphs and statistical claims, and explain why they mislead."
+  ]
+}

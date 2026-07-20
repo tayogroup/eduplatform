@@ -1,0 +1,1783 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.048Z",
+  "stage": {
+    "id": "s06",
+    "label": "Stage 6"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "math-g06-u09",
+    "unitNo": 9,
+    "unitTitle": "Probability",
+    "unitOverview": "Welcome to Unit 9! In this unit you will learn about probability – the branch of mathematics that measures how likely things are to happen. Probability is all around you, every single day. When you glance at the sky before walking to the masjid and judge whether it might rain, when Hassan wonders whether his football team will win on Friday, or when Amina flips a bottle cap to decide who goes first in a game, you are all thinking about chance. This unit gives you the mathematical tools to describe that chance precisely, instead of only guessing.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-6-Content-Package.xlsx",
+    "sourceArchive": "Year 6 (1)-20260714T220913Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 6 (1)/Unit 9 (1)/Year 6 - Unit 9 Lesson.docx",
+      "Year 6 (1)/Unit 9 (1)/Year 6 - Unit 9 Activities.docx",
+      "Year 6 (1)/Unit 9 (1)/Year 6 - Unit 9 Practice.docx",
+      "Year 6 (1)/Unit 9 (1)/Year 6 - Unit 9 Reference.docx"
+    ],
+    "sourceBlockCount": 362,
+    "transformation": "Structured directly from the standardized Cambridge Stage 6 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "This unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work through every example yourself on paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain a step in a fresh way, or check your answers whenever you get stuck. Your teacher will also meet with you about twice a week to help with anything that feels tricky and to look over your written work.",
+    "Why does probability matter so much? Because we live in a world full of uncertainty, and good decisions depend on understanding chance. A farmer near Hargeisa studies the probability of rain before deciding when to plant. A shopkeeper in Eastleigh works out how many crates of mango are likely to sell so none are wasted. Doctors weigh the probability that a treatment will help a patient. Even games are built on probability – a game is only fair if every player has an equal chance of winning. Learning to reason about chance will help you make wiser choices for the rest of your life, and it lays the foundation for the statistics you will meet in secondary school.",
+    "As you work, keep a pencil, some paper and a few everyday objects beside you – a coin, a dice if you have one, or some coloured beans in a cup will do. Probability is a subject you must do, not only read. Flip the coin, tally the results, and see the mathematics come alive in your own hands. If an experiment does not match your prediction exactly, that is not a mistake – it is one of the most important lessons in the whole unit, and we will explain exactly why it happens.",
+    "Describe the likelihood of events using words such as impossible, unlikely, even chance, likely and certain.",
+    "Place events on a probability scale from 0 (impossible) to 1 (certain).",
+    "Calculate the probability of an event using the formula favourable outcomes ÷ total outcomes.",
+    "Express any probability as a fraction, a decimal and a percentage, and convert between them.",
+    "List all the possible outcomes of a situation in an organised way.",
+    "Use the idea of complementary events – that P(event) + P(not event) = 1.",
+    "Run probability experiments, record results in tally and frequency tables, and find experimental probability."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-the-language-of-likelihood",
+      "title": "The Language of Likelihood",
+      "explanation": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen. Most events fall somewhere in between, and we describe them with words such as unlikely, even chance and likely. Think about these everyday situations. It is certain that the sun will set this evening and certain that you will breathe in the next minute. It is impossible to roll an 8 on an ordinary…",
+      "example": "We can arrange these words on a likelihood scale that runs from left to right, from impossible to certain:"
+    },
+    {
+      "id": "concept-2-the-probability-scale-from-0-to-1",
+      "title": "The Probability Scale from 0 to 1",
+      "explanation": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number. Every probability is a number between 0 and 1: A probability of 0 means the event is impossible – it never happens.",
+      "example": "A probability of 1 means the event is certain – it always happens."
+    },
+    {
+      "id": "concept-3-calculating-probability",
+      "title": "Calculating Probability",
+      "explanation": "Now we come to the heart of the unit: how to *work out* a probability. When every outcome is equally likely, we use one simple formula: Probability = number of favourable outcomes ÷ total number of possible outcomes",
+      "example": "A favourable outcome is simply an outcome that counts as the event we want – the word does not mean 'good', it just means 'the ones we are counting'. Let us see the formula in action with a fair coin. A coin has 2…"
+    },
+    {
+      "id": "concept-4-listing-outcomes-and-complementary-events",
+      "title": "Listing Outcomes and Complementary Events",
+      "explanation": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way. The outcomes of tossing a coin are just {heads, tails}. The outcomes of rolling a dice are {1, 2, 3, 4, 5, 6}. Writing them out, especially in order, makes sure none are forgotten and none are counted twice. When two things happen together, we list every combination. Suppose Omar tosses a coin and rolls a dice at…",
+      "example": "A second powerful idea is the complement. The complement of an event is the event not happening. Because something either happens or it does not, these two probabilities must always add up to 1:"
+    },
+    {
+      "id": "concept-5-theoretical-and-experimental-probability",
+      "title": "Theoretical and Experimental Probability",
+      "explanation": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real experiment and count the results. For a fair coin the theoretical probability of heads is 1/2, so we expect heads about half the time. But suppose Amina actually flips a coin 20 times and records the outcomes. She counts 12 heads and 8 tails. Her experimental…",
+      "example": "Why do the two differ? Because of random variation. In a small number of trials, chance naturally causes the results to wobble above and below the predicted value. If you flip a coin only ten times you might easily get…"
+    },
+    {
+      "id": "concept-6-fairness-games-and-real-world-probability",
+      "title": "Fairness, Games and Real-World Probability",
+      "explanation": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number, the game is fair, because P(even) = 3/6 = 1/2 and P(odd) = 3/6 = 1/2 – both have an equal chance. But if Farah won on 'a number greater than 2' (that is 3, 4, 5 or 6, a probability of 4/6) while Idris won on '1 or 2' (a probability of only 2/6), the game…",
+      "example": "Probability also shapes sport. If a footballer scores from 7 of her last 10 penalty kicks, her experimental probability of scoring is 7/10 = 70%, and we might predict she will score about 70% of her future penalties. It…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "The Language of Likelihood",
+      "context": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen. Most events fall somewhere in between,…",
+      "prompt": "Which word best fits a probability of 0: likely, unlikely, impossible or certain?",
+      "answer": "1) Impossible.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) Impossible."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "The Probability Scale from 0 to 1",
+      "context": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number. Every probability is a number between 0 and 1: A probability of 0 means…",
+      "prompt": "Write the probability of rolling a 3 on an ordinary dice as a fraction.",
+      "answer": "1/6.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1/6."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Calculating Probability",
+      "context": "Now we come to the heart of the unit: how to *work out* a probability. When every outcome is equally likely, we use one simple formula: Probability = number of favourable outcomes ÷ total number of possible outcomes",
+      "prompt": "Convert to a percentage: a) 1/4 b) 3/5 c) 0.35",
+      "answer": "a) 25%, b) 60%, c) 35%.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 25%, b) 60%, c) 35%."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Listing Outcomes and Complementary Events",
+      "context": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way. The outcomes of tossing a coin are just {heads,…",
+      "prompt": "A bag has 5 red balls and 3 blue balls. Write P(red) as a fraction.",
+      "answer": "5/8.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "5/8."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Theoretical and Experimental Probability",
+      "context": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real…",
+      "prompt": "True or false: every probability is between 0 and 1.",
+      "answer": "True.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "True."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Fairness, Games and Real-World Probability",
+      "context": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number,…",
+      "prompt": "If P(winning) = 0.7, what is P(losing)?",
+      "answer": "1 − 0.7 = 0.3.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1 − 0.7 = 0.3."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "The Language of Likelihood",
+      "modelType": "concept-model-1",
+      "purpose": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The Probability Scale from 0 to 1",
+      "modelType": "concept-model-2",
+      "purpose": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number. Every probability is a number…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Calculating Probability",
+      "modelType": "concept-model-3",
+      "purpose": "Now we come to the heart of the unit: how to *work out* a probability. When every outcome is equally likely, we use one simple formula: Probability = number of favourable outcomes ÷ total number of possible outcomes",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Listing Outcomes and Complementary Events",
+      "modelType": "concept-model-4",
+      "purpose": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way. The outcomes…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Theoretical and Experimental Probability",
+      "modelType": "concept-model-5",
+      "purpose": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Fairness, Games and Real-World Probability",
+      "modelType": "concept-model-6",
+      "purpose": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to calculate a probability",
+      "example": "A bag contains 5 red beads, 3 blue beads and 2 green beads. One bead is drawn at random. Find P(red), P(blue) and P(not green).",
+      "steps": [
+        "Count the total number of equally likely outcomes.",
+        "Count how many outcomes are favourable (count as your event).",
+        "Write favourable over total as a fraction.",
+        "Simplify the fraction, and convert to a decimal or percentage if asked."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to find experimental probability",
+      "example": "What is the probability of rolling an even number on an ordinary dice? Give your answer as a fraction, a decimal and a percentage.",
+      "steps": [
+        "Run the experiment many times and tally the results.",
+        "Count how many times your event happened.",
+        "Divide by the total number of trials.",
+        "Compare with the theoretical probability – more trials means closer agreement."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to check a game is fair",
+      "example": "The probability that Zahra's team wins is 3/4. Write this as a decimal and a percentage, and find the probability that they do not win.",
+      "steps": [
+        "List each player's winning outcomes.",
+        "Work out each player's probability of winning.",
+        "If the probabilities are equal, the game is fair.",
+        "If not, change the rules until each player's probability is equal."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Listing outcomes for two events",
+      "example": "A coin is tossed and a dice is rolled. List all the outcomes, then find P(heads and an even number).",
+      "steps": [
+        "Solution: Pair each coin result with each dice result: (H,1), (H,2), (H,3), (H,4), (H,5), (H,6), (T,1), (T,2), (T,3), (T,4), (T,5), (T,6) – that is 12 outcomes.",
+        "'Heads and even' means (H,2), (H,4), (H,6), which is 3 outcomes.",
+        "So P = 3/12 = 1/4."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Experimental probability",
+      "example": "Maryam rolls a dice 60 times. The number 2 comes up 12 times. Compare the experimental probability of rolling a 2 with the theoretical probability.",
+      "steps": [
+        "Solution: Experimental probability = 12/60 = 1/5 = 20%.",
+        "Theoretical probability = 1/6 ≈ 16.7%.",
+        "They are close but not equal.",
+        "The difference is due to random variation, and with more rolls the experimental value would drift nearer to 1/6."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Expected number from a percentage",
+      "example": "A quality check shows 3 out of every 100 lamps are faulty. A shop in Mombasa receives 500 lamps. How many would you expect to be faulty, and what is the probability a lamp works?",
+      "steps": [
+        "Solution: Expected faulty = 500 × 3/100 = 15 lamps.",
+        "The probability a lamp works is the complement: 1 − 3/100 = 97/100 = 97%.",
+        "So about 485 lamps should work properly.",
+        "Worked Example 7: Is the game fair?"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "A probability from a bag",
+      "prompt": "A bag contains 5 red beads, 3 blue beads and 2 green beads. One bead is drawn at random. Find P(red), P(blue) and P(not green).",
+      "solution": "Solution: First find the total: 5 + 3 + 2 = 10 beads. P(red) = 5/10 = 1/2. P(blue) = 3/10. For P(not green), use the complement: P(green) = 2/10 = 1/5, so P(not green) = 1 − 1/5 = 4/5. Notice we could also add red and blue directly: 5/10 + 3/10 = 8/10 = 4/5, which agrees – a good check."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Even number on a dice",
+      "prompt": "What is the probability of rolling an even number on an ordinary dice? Give your answer as a fraction, a decimal and a percentage.",
+      "solution": "Solution: The even outcomes are 2, 4 and 6, so there are 3 favourable outcomes out of 6 total. P(even) = 3/6 = 1/2. As a decimal, 1 ÷ 2 = 0.5. As a percentage, 0.5 × 100 = 50%. All three forms describe the same even chance."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Converting between forms",
+      "prompt": "The probability that Zahra's team wins is 3/4. Write this as a decimal and a percentage, and find the probability that they do not win.",
+      "solution": "Solution: 3 ÷ 4 = 0.75, and 0.75 × 100 = 75%. The probability they do not win is the complement: 1 − 3/4 = 1/4 = 0.25 = 25%. Winning is 'likely'; not winning is 'unlikely'."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Listing outcomes for two events",
+      "prompt": "A coin is tossed and a dice is rolled. List all the outcomes, then find P(heads and an even number).",
+      "solution": "Solution: Pair each coin result with each dice result: (H,1), (H,2), (H,3), (H,4), (H,5), (H,6), (T,1), (T,2), (T,3), (T,4), (T,5), (T,6) – that is 12 outcomes. 'Heads and even' means (H,2), (H,4), (H,6), which is 3 outcomes. So P = 3/12 = 1/4."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Experimental probability",
+      "prompt": "Maryam rolls a dice 60 times. The number 2 comes up 12 times. Compare the experimental probability of rolling a 2 with the theoretical probability.",
+      "solution": "Solution: Experimental probability = 12/60 = 1/5 = 20%. Theoretical probability = 1/6 ≈ 16.7%. They are close but not equal. The difference is due to random variation, and with more rolls the experimental value would drift nearer to 1/6."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Expected number from a percentage",
+      "prompt": "A quality check shows 3 out of every 100 lamps are faulty. A shop in Mombasa receives 500 lamps. How many would you expect to be faulty, and what is the probability a lamp works?",
+      "solution": "Solution: Expected faulty = 500 × 3/100 = 15 lamps. The probability a lamp works is the complement: 1 − 3/100 = 97/100 = 97%. So about 485 lamps should work properly. Worked Example 7: Is the game fair? In a spinner game, Aisha wins on red and Ibrahim wins on blue. The spinner has 8 equal sections: 3 red, 3 blue and 2 yellow (yellow means no one wins). Is the game fair? Solution: P(red) = 3/8 and P(blue) = 3/8. Because both players have the same probability of 3/8, the game is fair, even though yellow sometimes…"
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Is the game fair?",
+      "prompt": "A quality check shows 3 out of every 100 lamps are faulty. A shop in Mombasa receives 500 lamps. How many would you expect to be faulty, and what is the probability a lamp works?",
+      "solution": "Solution: Expected faulty = 500 × 3/100 = 15 lamps. The probability a lamp works is the complement: 1 − 3/100 = 97/100 = 97%. So about 485 lamps should work properly. Worked Example 7: Is the game fair? In a spinner game, Aisha wins on red and Ibrahim wins on blue. The spinner has 8 equal sections: 3 red, 3 blue and 2 yellow (yellow means no one wins). Is the game fair? Solution: P(red) = 3/8 and P(blue) = 3/8. Because both players have the same probability of 3/8, the game is fair, even though yellow sometimes…"
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Choosing from survey data",
+      "prompt": "In a survey of 200 students, 60 chose science and 40 chose English as their favourite subject. What is the probability a randomly chosen student prefers science or English?",
+      "solution": "Solution: Favourable = 60 + 40 = 100 students out of 200. P(science or English) = 100/200 = 1/2 = 50%. Because these choices cannot both be a single student's favourite, we simply add them."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "Convert these percentages to fractions in simplest form: a) 25% b) 60% c) 80%.",
+      "solution": "a) 1/4, b) 3/5, c) 4/5."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "A standard deck has 52 cards with 13 hearts. Find P(drawing a heart) as a fraction and a percentage.",
+      "solution": "13/52 = 1/4 = 25%."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "A box contains 12 chocolates: 5 dark, 4 milk, 3 white. Find a) P(dark) b) P(milk) c) P(not white).",
+      "solution": "a) 5/12, b) 4/12 = 1/3, c) 9/12 = 3/4."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "A coin is tossed and a dice rolled. List all 12 outcomes, then find P(heads and a 6).",
+      "solution": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Which word best fits a probability of 0: likely, unlikely, impossible or certain?",
+      "answer": "1) Impossible.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write the probability of rolling a 3 on an ordinary dice as a fraction.",
+      "answer": "1/6.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Convert to a percentage: a) 1/4 b) 3/5 c) 0.35",
+      "answer": "a) 25%, b) 60%, c) 35%.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "A bag has 5 red balls and 3 blue balls. Write P(red) as a fraction.",
+      "answer": "5/8.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "True or false: every probability is between 0 and 1.",
+      "answer": "True.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "If P(winning) = 0.7, what is P(losing)?",
+      "answer": "1 − 0.7 = 0.3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "A jar holds 20 jellybeans: 8 red, 5 green, 4 yellow and 3 purple. Find a) P(red) b) P(green or yellow) c) P(not purple).",
+      "answer": "1) a) 8/20 = 2/5, b) 9/20, c) 17/20.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "A spinner has 6 equal sections numbered 1 to 6. Find a) P(even) b) P(a number greater than 4) c) P(the number 3).",
+      "answer": "a) 3/6 = 1/2, b) 2/6 = 1/3, c) 1/6.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Convert these percentages to fractions in simplest form: a) 25% b) 60% c) 80%.",
+      "answer": "a) 1/4, b) 3/5, c) 4/5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "A standard deck has 52 cards with 13 hearts. Find P(drawing a heart) as a fraction and a percentage.",
+      "answer": "13/52 = 1/4 = 25%.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "A box contains 12 chocolates: 5 dark, 4 milk, 3 white. Find a) P(dark) b) P(milk) c) P(not white).",
+      "answer": "a) 5/12, b) 4/12 = 1/3, c) 9/12 = 3/4.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Core",
+      "prompt": "A coin is tossed and a dice rolled. List all 12 outcomes, then find P(heads and a 6).",
+      "answer": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    }
+  ],
+  "activities": [
+    {
+      "title": "The 50-Flip Coin Experiment",
+      "materials": "a coin or a bottle cap, paper, a pencil.",
+      "steps": [
+        "Predict: how many heads do you expect in 50 flips? (Use the theoretical probability of 1/2.)",
+        "Flip the coin 50 times, marking a tally for heads and tails as you go.",
+        "Count your tallies and write the experimental probability of heads as a fraction and a percentage.",
+        "Compare your result with your prediction of 25 heads. How close were you? Why is it rarely exactly 25?",
+        "Keep your tally chart – it shows the Law of Large Numbers in action."
+      ]
+    },
+    {
+      "title": "Bag of Beans Probability",
+      "materials": "a cup or bag, and beans, stones or beads in two colours (for example 6 dark and 4 light).",
+      "steps": [
+        "Count your beans and write the theoretical probability of drawing each colour.",
+        "Without looking, draw one bean, record its colour, then put it back and shake.",
+        "Repeat 30 times, keeping a tally for each colour.",
+        "Work out the experimental probability of each colour and compare it with your prediction."
+      ]
+    },
+    {
+      "title": "Design a Fair Spinner (Maths Game)",
+      "materials": "paper, a pencil, a ruler, and a paper clip to spin around a pencil point.",
+      "steps": [
+        "Draw a circle and divide it into equal sections – try 4, 6 or 8.",
+        "Colour the sections so a two-player game is fair (each player wins on an equal number of sections).",
+        "Write each player's probability of winning to prove the game is fair.",
+        "Now redesign it to be deliberately UNFAIR, and calculate how unfair it is.",
+        "This activity shows how probability decides fairness in every game you play."
+      ]
+    },
+    {
+      "title": "The Two-Dice Investigation",
+      "materials": "two dice (or number cards 1–6 drawn twice), paper, a pencil.",
+      "steps": [
+        "List every possible total when two dice are added (the smallest is 2, the largest is 12).",
+        "Predict which total you think will come up most often, and why.",
+        "Roll the two dice 40 times and tally each total.",
+        "Which total appeared most? Investigate why 7 has more ways of being made than 2 or 12."
+      ]
+    },
+    {
+      "title": "Family Weather Forecast Tracker",
+      "materials": "paper, a pencil, and one week of patience.",
+      "steps": [
+        "Each morning, ask your family to predict the chance of rain as a percentage.",
+        "Write down everyone's prediction and note whether it actually rains.",
+        "After a week, work out how often the family predictions matched reality.",
+        "Discuss: does a 30% chance of rain mean it will not rain? Talk about what the percentage really means."
+      ]
+    },
+    {
+      "title": "Probability Word Wall (Group Task)",
+      "materials": "paper cards, a pencil, and one or more friends or family members.",
+      "steps": [
+        "On each card write one probability word: impossible, unlikely, even chance, likely, certain.",
+        "Take turns calling out an everyday event (for example, 'the sun rises tomorrow').",
+        "Everyone holds up the card they think fits, then discuss any disagreements.",
+        "Keep score of who reasons most clearly – explaining WHY matters more than being fast.",
+        "After your activities, talk or write about these questions: Which activity helped you understand chance best? Did any experiment surprise you by not matching the theoretical probability? What would you like more practice with? Share your answers with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key rule 1",
+        "text": "The Probability Formula Probability = favourable outcomes ÷ total outcomes. Every probability is between 0 and 1 (or 0% and 100%). 0 = impossible, one half = even chance, 1 = certain."
+      },
+      {
+        "title": "Complement Rule",
+        "text": "P(event) + P(not event) = 1. So P(not event) = 1 − P(event). Use it whenever a question asks for the chance something does NOT happen."
+      },
+      {
+        "title": "Three Forms Rule",
+        "text": "The same probability can be a fraction, a decimal or a percentage. Fraction to decimal: divide top by bottom. Decimal to percentage: multiply by 100."
+      }
+    ],
+    "terms": [
+      [
+        "Probability",
+        "A number from 0 to 1 showing how likely an event is"
+      ],
+      [
+        "Outcome",
+        "One possible single result of a trial"
+      ],
+      [
+        "Favourable outcome",
+        "An outcome that counts as your event"
+      ],
+      [
+        "Certain / Impossible",
+        "Probability 1 / probability 0"
+      ],
+      [
+        "Even chance",
+        "Probability of one half"
+      ],
+      [
+        "Theoretical probability",
+        "What the maths predicts"
+      ],
+      [
+        "Experimental probability",
+        "What actually happens when tested"
+      ],
+      [
+        "Complement",
+        "The event not happening; 1 − P(event)"
+      ],
+      [
+        "Fair",
+        "Every player has an equal chance of winning"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Probability bigger than 1",
+        "Check your division; the answer must be 0 to 1"
+      ],
+      [
+        "Not simplifying",
+        "Write it in lowest terms as 1/2"
+      ],
+      [
+        "Miscounting outcomes",
+        "List every outcome in order first"
+      ],
+      [
+        "Expecting an exact match",
+        "Experimental ≈ theoretical only over many trials"
+      ],
+      [
+        "Gambler's fallacy",
+        "Each flip is still 1/2; the coin has no memory"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Which word best fits a probability of 0: likely, unlikely, impossible or certain?",
+      "answer": "1) Impossible.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) Impossible."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write the probability of rolling a 3 on an ordinary dice as a fraction.",
+      "answer": "1/6.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1/6."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Convert to a percentage: a) 1/4 b) 3/5 c) 0.35",
+      "answer": "a) 25%, b) 60%, c) 35%.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 25%, b) 60%, c) 35%."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "A bag has 5 red balls and 3 blue balls. Write P(red) as a fraction.",
+      "answer": "5/8.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "5/8."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "True or false: every probability is between 0 and 1.",
+      "answer": "True.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "True."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "If P(winning) = 0.7, what is P(losing)?",
+      "answer": "1 − 0.7 = 0.3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1 − 0.7 = 0.3."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "A jar holds 20 jellybeans: 8 red, 5 green, 4 yellow and 3 purple. Find a) P(red) b) P(green or yellow) c) P(not purple).",
+      "answer": "1) a) 8/20 = 2/5, b) 9/20, c) 17/20.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) a) 8/20 = 2/5, b) 9/20, c) 17/20."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "A spinner has 6 equal sections numbered 1 to 6. Find a) P(even) b) P(a number greater than 4) c) P(the number 3).",
+      "answer": "a) 3/6 = 1/2, b) 2/6 = 1/3, c) 1/6.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 3/6 = 1/2, b) 2/6 = 1/3, c) 1/6."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "Convert these percentages to fractions in simplest form: a) 25% b) 60% c) 80%.",
+      "answer": "a) 1/4, b) 3/5, c) 4/5.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 1/4, b) 3/5, c) 4/5."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "A standard deck has 52 cards with 13 hearts. Find P(drawing a heart) as a fraction and a percentage.",
+      "answer": "13/52 = 1/4 = 25%.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "13/52 = 1/4 = 25%."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "A box contains 12 chocolates: 5 dark, 4 milk, 3 white. Find a) P(dark) b) P(milk) c) P(not white).",
+      "answer": "a) 5/12, b) 4/12 = 1/3, c) 9/12 = 3/4.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 5/12, b) 4/12 = 1/3, c) 9/12 = 3/4."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "A coin is tossed and a dice rolled. List all 12 outcomes, then find P(heads and a 6).",
+      "answer": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Restaurant orders: A cafe in Nairobi tracks a week of orders: pizza 120, pasta 80, salad 60, soup 40. For the next customer, find a) P(pizza) b) P(pasta or salad) c) P(not soup).",
+      "answer": "1) Total = 300. a) 120/300 = 2/5 = 40%, b) 140/300 = 7/15, c) 260/300 = 13/15.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Total = 300. a) 120/300 = 2/5 = 40%, b) 140/300 = 7/15, c) 260/300 = 13/15."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Library: A children's section has 1000 books: 400 fiction, 250 science, 200 history, 150 art. For a random book, find a) P(fiction) b) P(science or history) c) P(not art).",
+      "answer": "a) 400/1000 = 2/5, b) 450/1000 = 9/20, c) 850/1000 = 17/20.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "a) 400/1000 = 2/5, b) 450/1000 = 9/20, c) 850/1000 = 17/20."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "Weather run: It rains on 2 days in every 10 on average. a) Find P(rain tomorrow). b) Find P(no rain for the next 3 days in a row). (Hint: multiply the daily 'no rain' probabilities.)",
+      "answer": "a) 2/10 = 1/5 = 20%, b) (8/10)³ = 512/1000 = 0.512 = 51.2%.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "a) 2/10 = 1/5 = 20%, b) (8/10)³ = 512/1000 = 0.512 = 51.2%."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "Pet clinic: A vet's records show dogs 45%, cats 30%, birds 15%, other 10%. For the next pet, find a) P(dog or cat) b) P(not a bird) c) P(other).",
+      "answer": "a) 45% + 30% = 75%, b) 100% − 15% = 85%, c) 10%.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "a) 45% + 30% = 75%, b) 100% − 15% = 85%, c) 10%."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Fair game design: Design a spinner game for two players that is fair. Describe the sections and give each player's probability of winning to prove it is fair.",
+      "answer": "Sample answer: a spinner with 4 equal sections, 2 marked 'Player A' and 2 marked 'Player B'. Each player has P = 2/4 = 1/2, so the game is fair.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Sample answer: a spinner with 4 equal sections, 2 marked 'Player A' and 2 marked 'Player B'. Each player has P = 2/4 = 1/2, so the game is fair."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "A coin is tossed and a dice rolled. List all 12 outcomes, then find P(heads and a 6).",
+      "answer": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A bag has letter tiles A, A, B, B, B, C, C, D. Find a) P(B) b) P(a vowel) c) P(a consonant).",
+      "keyIdeas": [
+        "Probability",
+        "Outcome",
+        "Favourable outcome"
+      ],
+      "modelAnswer": "1) Total = 8. a) P(B) = 3/8, b) P(vowel A) = 2/8 = 1/4, c) P(consonant) = 6/8 = 3/4."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Maria flips a coin 50 times and gets 32 heads and 18 tails. a) State the theoretical probability of heads. b) Find the experimental probability. c) Explain why they differ.",
+      "keyIdeas": [
+        "Outcome",
+        "Favourable outcome",
+        "Certain / Impossible"
+      ],
+      "modelAnswer": "a) 1/2 = 50%, b) 32/50 = 16/25 = 64%, c) difference is random variation in a small sample of 50 flips."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A spinner has 4 equal sections: red, blue, green, yellow. You spin it twice. a) Find P(red both times). b) Find P(the same colour both times).",
+      "keyIdeas": [
+        "Favourable outcome",
+        "Certain / Impossible",
+        "Even chance"
+      ],
+      "modelAnswer": "a) 1/4 × 1/4 = 1/16, b) same colour = 4 × (1/4 × 1/4) = 4/16 = 1/4."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A factory sample of 500 bulbs has 475 working, 20 dim and 5 dead. Find a) P(works perfectly) b) P(some problem: dim or dead).",
+      "keyIdeas": [
+        "Certain / Impossible",
+        "Even chance",
+        "Theoretical probability"
+      ],
+      "modelAnswer": "a) 475/500 = 19/20 = 95%, b) 25/500 = 1/20 = 5%."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Theoretical and Experimental Probability.",
+      "keyIdeas": [
+        "Probability",
+        "Outcome",
+        "Favourable outcome"
+      ],
+      "modelAnswer": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real experiment and count the results. For a fair coin the theoretical probability of heads is 1/2, so we expect heads about half the time. But suppose Amina actually flips a coin 20 times and records the outcomes. She counts 12 heads and 8 tails. Her experimental…"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Fairness, Games and Real-World Probability.",
+      "keyIdeas": [
+        "Probability",
+        "Outcome",
+        "Favourable outcome"
+      ],
+      "modelAnswer": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number, the game is fair, because P(even) = 3/6 = 1/2 and P(odd) = 3/6 = 1/2 – both have an equal chance. But if Farah won on 'a number greater than 2' (that is 3, 4, 5 or 6, a probability of 4/6) while Idris won on '1 or 2' (a probability of only 2/6), the game…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Probability” mean?",
+        "options": [
+          "A number from 0 to 1 showing how likely an event is",
+          "One possible single result of a trial",
+          "An outcome that counts as your event",
+          "Probability 1 / probability 0"
+        ],
+        "answer": "A number from 0 to 1 showing how likely an event is",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Outcome” mean?",
+        "options": [
+          "One possible single result of a trial",
+          "An outcome that counts as your event",
+          "Probability 1 / probability 0",
+          "Probability of one half"
+        ],
+        "answer": "One possible single result of a trial",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Outcome means One possible single result of a trial."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Favourable outcome” mean?",
+        "options": [
+          "An outcome that counts as your event",
+          "Probability 1 / probability 0",
+          "Probability of one half",
+          "What the maths predicts"
+        ],
+        "answer": "An outcome that counts as your event",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Favourable outcome means An outcome that counts as your event."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Certain / Impossible” mean?",
+        "options": [
+          "Probability 1 / probability 0",
+          "Probability of one half",
+          "What the maths predicts",
+          "What actually happens when tested"
+        ],
+        "answer": "Probability 1 / probability 0",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Certain / Impossible means Probability 1 / probability 0."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Even chance” mean?",
+        "options": [
+          "Probability of one half",
+          "What the maths predicts",
+          "What actually happens when tested",
+          "The event not happening; 1 − P(event)"
+        ],
+        "answer": "Probability of one half",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Even chance means Probability of one half."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Theoretical probability” mean?",
+        "options": [
+          "What the maths predicts",
+          "What actually happens when tested",
+          "The event not happening; 1 − P(event)",
+          "Every player has an equal chance of winning"
+        ],
+        "answer": "What the maths predicts",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Theoretical probability means What the maths predicts."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: What actually happens when tested?",
+        "options": [
+          "Experimental probability",
+          "Complement",
+          "Fair",
+          "Probability"
+        ],
+        "answer": "Experimental probability",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Experimental probability means What actually happens when tested."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: The event not happening; 1 − P(event)?",
+        "options": [
+          "Complement",
+          "Fair",
+          "Probability",
+          "Outcome"
+        ],
+        "answer": "Complement",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Complement means The event not happening; 1 − P(event)."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Every player has an equal chance of winning?",
+        "options": [
+          "Fair",
+          "Probability",
+          "Outcome",
+          "Favourable outcome"
+        ],
+        "answer": "Fair",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Fair means Every player has an equal chance of winning."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
+        "options": [
+          "Probability",
+          "Favourable outcome",
+          "Certain / Impossible",
+          "Even chance"
+        ],
+        "answer": "Probability",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: One possible single result of a trial?",
+        "options": [
+          "Outcome",
+          "Certain / Impossible",
+          "Even chance",
+          "Theoretical probability"
+        ],
+        "answer": "Outcome",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Outcome means One possible single result of a trial."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: An outcome that counts as your event?",
+        "options": [
+          "Favourable outcome",
+          "Even chance",
+          "Theoretical probability",
+          "Experimental probability"
+        ],
+        "answer": "Favourable outcome",
+        "hint": "Use the Unit 9 Math Words & Symbols reference.",
+        "explanation": "Favourable outcome means An outcome that counts as your event."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u9-game-1",
+        "icon": "?",
+        "skill": "Probability",
+        "title": "Quick Match: Probability",
+        "description": "Practise probability through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Probability” mean?",
+            "choices": [
+              "A number from 0 to 1 showing how likely an event is",
+              "One possible single result of a trial",
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0"
+            ],
+            "answer": "A number from 0 to 1 showing how likely an event is",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          },
+          {
+            "prompt": "What does “Certain / Impossible” mean?",
+            "choices": [
+              "Probability 1 / probability 0",
+              "Probability of one half",
+              "What the maths predicts",
+              "What actually happens when tested"
+            ],
+            "answer": "Probability 1 / probability 0",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Certain / Impossible means Probability 1 / probability 0."
+          },
+          {
+            "prompt": "Which term matches this meaning: What actually happens when tested?",
+            "choices": [
+              "Experimental probability",
+              "Complement",
+              "Fair",
+              "Probability"
+            ],
+            "answer": "Experimental probability",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Experimental probability means What actually happens when tested."
+          },
+          {
+            "prompt": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
+            "choices": [
+              "Probability",
+              "Favourable outcome",
+              "Certain / Impossible",
+              "Even chance"
+            ],
+            "answer": "Probability",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-2",
+        "icon": "★",
+        "skill": "Outcome",
+        "title": "Concept Quest: Outcome",
+        "description": "Practise outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible single result of a trial",
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0",
+              "Probability of one half"
+            ],
+            "answer": "One possible single result of a trial",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible single result of a trial."
+          },
+          {
+            "prompt": "What does “Even chance” mean?",
+            "choices": [
+              "Probability of one half",
+              "What the maths predicts",
+              "What actually happens when tested",
+              "The event not happening; 1 − P(event)"
+            ],
+            "answer": "Probability of one half",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Even chance means Probability of one half."
+          },
+          {
+            "prompt": "Which term matches this meaning: The event not happening; 1 − P(event)?",
+            "choices": [
+              "Complement",
+              "Fair",
+              "Probability",
+              "Outcome"
+            ],
+            "answer": "Complement",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Complement means The event not happening; 1 − P(event)."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible single result of a trial?",
+            "choices": [
+              "Outcome",
+              "Certain / Impossible",
+              "Even chance",
+              "Theoretical probability"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible single result of a trial."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-3",
+        "icon": "◫",
+        "skill": "Favourable outcome",
+        "title": "Model Detective: Favourable outcome",
+        "description": "Practise favourable outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Favourable outcome” mean?",
+            "choices": [
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0",
+              "Probability of one half",
+              "What the maths predicts"
+            ],
+            "answer": "An outcome that counts as your event",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome that counts as your event."
+          },
+          {
+            "prompt": "What does “Theoretical probability” mean?",
+            "choices": [
+              "What the maths predicts",
+              "What actually happens when tested",
+              "The event not happening; 1 − P(event)",
+              "Every player has an equal chance of winning"
+            ],
+            "answer": "What the maths predicts",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Theoretical probability means What the maths predicts."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every player has an equal chance of winning?",
+            "choices": [
+              "Fair",
+              "Probability",
+              "Outcome",
+              "Favourable outcome"
+            ],
+            "answer": "Fair",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Fair means Every player has an equal chance of winning."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome that counts as your event?",
+            "choices": [
+              "Favourable outcome",
+              "Even chance",
+              "Theoretical probability",
+              "Experimental probability"
+            ],
+            "answer": "Favourable outcome",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome that counts as your event."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-4",
+        "icon": "→",
+        "skill": "Certain / Impossible",
+        "title": "Rule Runner: Certain / Impossible",
+        "description": "Practise certain / impossible through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Certain / Impossible” mean?",
+            "choices": [
+              "Probability 1 / probability 0",
+              "Probability of one half",
+              "What the maths predicts",
+              "What actually happens when tested"
+            ],
+            "answer": "Probability 1 / probability 0",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Certain / Impossible means Probability 1 / probability 0."
+          },
+          {
+            "prompt": "Which term matches this meaning: What actually happens when tested?",
+            "choices": [
+              "Experimental probability",
+              "Complement",
+              "Fair",
+              "Probability"
+            ],
+            "answer": "Experimental probability",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Experimental probability means What actually happens when tested."
+          },
+          {
+            "prompt": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
+            "choices": [
+              "Probability",
+              "Favourable outcome",
+              "Certain / Impossible",
+              "Even chance"
+            ],
+            "answer": "Probability",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          },
+          {
+            "prompt": "What does “Probability” mean?",
+            "choices": [
+              "A number from 0 to 1 showing how likely an event is",
+              "One possible single result of a trial",
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0"
+            ],
+            "answer": "A number from 0 to 1 showing how likely an event is",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-5",
+        "icon": "Σ",
+        "skill": "Even chance",
+        "title": "Vocabulary Vault: Even chance",
+        "description": "Practise even chance through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Even chance” mean?",
+            "choices": [
+              "Probability of one half",
+              "What the maths predicts",
+              "What actually happens when tested",
+              "The event not happening; 1 − P(event)"
+            ],
+            "answer": "Probability of one half",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Even chance means Probability of one half."
+          },
+          {
+            "prompt": "Which term matches this meaning: The event not happening; 1 − P(event)?",
+            "choices": [
+              "Complement",
+              "Fair",
+              "Probability",
+              "Outcome"
+            ],
+            "answer": "Complement",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Complement means The event not happening; 1 − P(event)."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible single result of a trial?",
+            "choices": [
+              "Outcome",
+              "Certain / Impossible",
+              "Even chance",
+              "Theoretical probability"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible single result of a trial."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible single result of a trial",
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0",
+              "Probability of one half"
+            ],
+            "answer": "One possible single result of a trial",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible single result of a trial."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-6",
+        "icon": "◇",
+        "skill": "Theoretical probability",
+        "title": "Challenge Cards: Theoretical probability",
+        "description": "Practise theoretical probability through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Theoretical probability” mean?",
+            "choices": [
+              "What the maths predicts",
+              "What actually happens when tested",
+              "The event not happening; 1 − P(event)",
+              "Every player has an equal chance of winning"
+            ],
+            "answer": "What the maths predicts",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Theoretical probability means What the maths predicts."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every player has an equal chance of winning?",
+            "choices": [
+              "Fair",
+              "Probability",
+              "Outcome",
+              "Favourable outcome"
+            ],
+            "answer": "Fair",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Fair means Every player has an equal chance of winning."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome that counts as your event?",
+            "choices": [
+              "Favourable outcome",
+              "Even chance",
+              "Theoretical probability",
+              "Experimental probability"
+            ],
+            "answer": "Favourable outcome",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome that counts as your event."
+          },
+          {
+            "prompt": "What does “Favourable outcome” mean?",
+            "choices": [
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0",
+              "Probability of one half",
+              "What the maths predicts"
+            ],
+            "answer": "An outcome that counts as your event",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome that counts as your event."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-7",
+        "icon": "⚡",
+        "skill": "Experimental probability",
+        "title": "Think Fast: Experimental probability",
+        "description": "Practise experimental probability through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: What actually happens when tested?",
+            "choices": [
+              "Experimental probability",
+              "Complement",
+              "Fair",
+              "Probability"
+            ],
+            "answer": "Experimental probability",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Experimental probability means What actually happens when tested."
+          },
+          {
+            "prompt": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
+            "choices": [
+              "Probability",
+              "Favourable outcome",
+              "Certain / Impossible",
+              "Even chance"
+            ],
+            "answer": "Probability",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          },
+          {
+            "prompt": "What does “Probability” mean?",
+            "choices": [
+              "A number from 0 to 1 showing how likely an event is",
+              "One possible single result of a trial",
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0"
+            ],
+            "answer": "A number from 0 to 1 showing how likely an event is",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          },
+          {
+            "prompt": "What does “Certain / Impossible” mean?",
+            "choices": [
+              "Probability 1 / probability 0",
+              "Probability of one half",
+              "What the maths predicts",
+              "What actually happens when tested"
+            ],
+            "answer": "Probability 1 / probability 0",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Certain / Impossible means Probability 1 / probability 0."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-8",
+        "icon": "☁",
+        "skill": "Complement",
+        "title": "Explain It: Complement",
+        "description": "Practise complement through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The event not happening; 1 − P(event)?",
+            "choices": [
+              "Complement",
+              "Fair",
+              "Probability",
+              "Outcome"
+            ],
+            "answer": "Complement",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Complement means The event not happening; 1 − P(event)."
+          },
+          {
+            "prompt": "Which term matches this meaning: One possible single result of a trial?",
+            "choices": [
+              "Outcome",
+              "Certain / Impossible",
+              "Even chance",
+              "Theoretical probability"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible single result of a trial."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible single result of a trial",
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0",
+              "Probability of one half"
+            ],
+            "answer": "One possible single result of a trial",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible single result of a trial."
+          },
+          {
+            "prompt": "What does “Even chance” mean?",
+            "choices": [
+              "Probability of one half",
+              "What the maths predicts",
+              "What actually happens when tested",
+              "The event not happening; 1 − P(event)"
+            ],
+            "answer": "Probability of one half",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Even chance means Probability of one half."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-9",
+        "icon": "⌂",
+        "skill": "Fair",
+        "title": "Real-Life Round: Fair",
+        "description": "Practise fair through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Every player has an equal chance of winning?",
+            "choices": [
+              "Fair",
+              "Probability",
+              "Outcome",
+              "Favourable outcome"
+            ],
+            "answer": "Fair",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Fair means Every player has an equal chance of winning."
+          },
+          {
+            "prompt": "Which term matches this meaning: An outcome that counts as your event?",
+            "choices": [
+              "Favourable outcome",
+              "Even chance",
+              "Theoretical probability",
+              "Experimental probability"
+            ],
+            "answer": "Favourable outcome",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome that counts as your event."
+          },
+          {
+            "prompt": "What does “Favourable outcome” mean?",
+            "choices": [
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0",
+              "Probability of one half",
+              "What the maths predicts"
+            ],
+            "answer": "An outcome that counts as your event",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome that counts as your event."
+          },
+          {
+            "prompt": "What does “Theoretical probability” mean?",
+            "choices": [
+              "What the maths predicts",
+              "What actually happens when tested",
+              "The event not happening; 1 − P(event)",
+              "Every player has an equal chance of winning"
+            ],
+            "answer": "What the maths predicts",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Theoretical probability means What the maths predicts."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-10",
+        "icon": "!",
+        "skill": "Probability",
+        "title": "Spot the Error: Probability",
+        "description": "Practise probability through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
+            "choices": [
+              "Probability",
+              "Favourable outcome",
+              "Certain / Impossible",
+              "Even chance"
+            ],
+            "answer": "Probability",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          },
+          {
+            "prompt": "What does “Probability” mean?",
+            "choices": [
+              "A number from 0 to 1 showing how likely an event is",
+              "One possible single result of a trial",
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0"
+            ],
+            "answer": "A number from 0 to 1 showing how likely an event is",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          },
+          {
+            "prompt": "What does “Certain / Impossible” mean?",
+            "choices": [
+              "Probability 1 / probability 0",
+              "Probability of one half",
+              "What the maths predicts",
+              "What actually happens when tested"
+            ],
+            "answer": "Probability 1 / probability 0",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Certain / Impossible means Probability 1 / probability 0."
+          },
+          {
+            "prompt": "Which term matches this meaning: What actually happens when tested?",
+            "choices": [
+              "Experimental probability",
+              "Complement",
+              "Fair",
+              "Probability"
+            ],
+            "answer": "Experimental probability",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Experimental probability means What actually happens when tested."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-11",
+        "icon": "≡",
+        "skill": "Outcome",
+        "title": "Mastery Mix: Outcome",
+        "description": "Practise outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One possible single result of a trial?",
+            "choices": [
+              "Outcome",
+              "Certain / Impossible",
+              "Even chance",
+              "Theoretical probability"
+            ],
+            "answer": "Outcome",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible single result of a trial."
+          },
+          {
+            "prompt": "What does “Outcome” mean?",
+            "choices": [
+              "One possible single result of a trial",
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0",
+              "Probability of one half"
+            ],
+            "answer": "One possible single result of a trial",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Outcome means One possible single result of a trial."
+          },
+          {
+            "prompt": "What does “Even chance” mean?",
+            "choices": [
+              "Probability of one half",
+              "What the maths predicts",
+              "What actually happens when tested",
+              "The event not happening; 1 − P(event)"
+            ],
+            "answer": "Probability of one half",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Even chance means Probability of one half."
+          },
+          {
+            "prompt": "Which term matches this meaning: The event not happening; 1 − P(event)?",
+            "choices": [
+              "Complement",
+              "Fair",
+              "Probability",
+              "Outcome"
+            ],
+            "answer": "Complement",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Complement means The event not happening; 1 − P(event)."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-12",
+        "icon": "T",
+        "skill": "Favourable outcome",
+        "title": "Unit Champion: Favourable outcome",
+        "description": "Practise favourable outcome through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: An outcome that counts as your event?",
+            "choices": [
+              "Favourable outcome",
+              "Even chance",
+              "Theoretical probability",
+              "Experimental probability"
+            ],
+            "answer": "Favourable outcome",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome that counts as your event."
+          },
+          {
+            "prompt": "What does “Favourable outcome” mean?",
+            "choices": [
+              "An outcome that counts as your event",
+              "Probability 1 / probability 0",
+              "Probability of one half",
+              "What the maths predicts"
+            ],
+            "answer": "An outcome that counts as your event",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Favourable outcome means An outcome that counts as your event."
+          },
+          {
+            "prompt": "What does “Theoretical probability” mean?",
+            "choices": [
+              "What the maths predicts",
+              "What actually happens when tested",
+              "The event not happening; 1 − P(event)",
+              "Every player has an equal chance of winning"
+            ],
+            "answer": "What the maths predicts",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Theoretical probability means What the maths predicts."
+          },
+          {
+            "prompt": "Which term matches this meaning: Every player has an equal chance of winning?",
+            "choices": [
+              "Fair",
+              "Probability",
+              "Outcome",
+              "Favourable outcome"
+            ],
+            "answer": "Fair",
+            "clue": "Use the Unit 9 Math Words & Symbols reference.",
+            "explanation": "Fair means Every player has an equal chance of winning."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can this unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work through every example yourself on paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain a step in a fresh way, or check your answers whenever you get stuck. Your teacher will also meet with you about twice a week to help with anything that feels tricky and to look over your written work.",
+    "I can why does probability matter so much? Because we live in a world full of uncertainty, and good decisions depend on understanding chance. A farmer near Hargeisa studies the probability of rain before deciding when to plant. A shopkeeper in Eastleigh works out how many crates of mango are likely to sell so none are wasted. Doctors weigh the probability that a treatment will help a patient. Even games are built on probability – a game is only fair if every player has an equal chance of winning. Learning to reason about chance will help you make wiser choices for the rest of your life, and it lays the foundation for the statistics you will meet in secondary school.",
+    "I can as you work, keep a pencil, some paper and a few everyday objects beside you – a coin, a dice if you have one, or some coloured beans in a cup will do. Probability is a subject you must do, not only read. Flip the coin, tally the results, and see the mathematics come alive in your own hands. If an experiment does not match your prediction exactly, that is not a mistake – it is one of the most important lessons in the whole unit, and we will explain exactly why it happens.",
+    "I can describe the likelihood of events using words such as impossible, unlikely, even chance, likely and certain.",
+    "I can place events on a probability scale from 0 (impossible) to 1 (certain).",
+    "I can calculate the probability of an event using the formula favourable outcomes ÷ total outcomes.",
+    "I can express any probability as a fraction, a decimal and a percentage, and convert between them.",
+    "I can list all the possible outcomes of a situation in an organised way."
+  ]
+}

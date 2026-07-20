@@ -1,0 +1,1787 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-20T09:09:12.297Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g08-u16",
+    "unitNo": 16,
+    "unitTitle": "Interpreting and Discussing Results",
+    "unitOverview": "Welcome to Unit 16. In this unit you move beyond simply collecting numbers and drawing graphs. You will learn to interpret data – to say what it actually means – and to discuss results the way a real statistician does: carefully, honestly, and with a critical eye. Every day, people around you are handed statistics. A shopkeeper in Mogadishu hears that prices rose “on average” last month. A football fan reads that one striker “scores more consistently” than another. A news report claims that “9 out of 10 people prefer” a certain brand. Behind every one of those claims sits data that someone chose to summarise in a particular way. Your job this unit is to look behind the claim.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-8-Content-Package.xlsx",
+    "sourceArchive": "Year 8 (1)-20260714T220916Z-1-001.zip",
+    "sourceDocuments": [
+      "Year 8 (1)/Unit 16/Year 8 - Unit 16 Lesson.docx",
+      "Year 8 (1)/Unit 16/Year 8 - Unit 16 Activities.docx",
+      "Year 8 (1)/Unit 16/Year 8 - Unit 16 Practice.docx",
+      "Year 8 (1)/Unit 16/Year 8 - Unit 16 Reference.docx"
+    ],
+    "sourceBlockCount": 382,
+    "transformation": "Structured directly from the standardized Cambridge Stage 8 workbook source rows for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Calculate and interpret the mean, median and mode, and choose the most suitable average for a data set.",
+    "Measure the spread of data using the range and the interquartile range (IQR).",
+    "Compare two distributions by referring to an average and a measure of spread, in a written sentence.",
+    "Draw and interpret a scatter graph, and describe the correlation as positive, negative or none, and as strong or weak.",
+    "Draw a sensible line of best fit and use it to make predictions by interpolation and extrapolation.",
+    "Explain the difference between correlation and causation, and identify confounding factors.",
+    "Recognise misleading graphs, biased samples and unfair averages, and critique statistical claims.",
+    "Write a clear, evidence-based conclusion that answers a question and states its own limitations."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-averages-choosing-the-right-one",
+      "title": "Averages – Choosing the Right One",
+      "explanation": "An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes the data most fairly. The mean is the total of all the values divided by how many values there are. Suppose seven students at Nuur Academy score 78, 82, 85, 79, 91, 88, 76 on a test. The mean is (78 + 82 + 85 + 79 + 91 + 88 + 76) ÷ 7 = 579 ÷ 7 = 82.7. The mean uses every single value, which is its…",
+      "example": "The median is the middle value once the data is placed in order. Ordering the same scores gives 76, 78, 79, 82, 85, 88, 91, so the median is 82. When there is an even number of values, the median is the mean of the two…"
+    },
+    {
+      "id": "concept-2-spread-range-and-the-interquartile-range",
+      "title": "Spread – Range and the Interquartile Range",
+      "explanation": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the other swings wildly between 2 and 25. To capture this, you need a measure of spread. The simplest measure of spread is the range: the highest value minus the lowest. For the scores 76 to 91, the range is 91 − 76 = 15. The range is quick to find, but it has a serious flaw: it depends only on the two most…",
+      "example": "The interquartile range (IQR) fixes this. First you find the quartiles, which split the ordered data into four equal parts. Q1 (the lower quartile) has one quarter of the data below it; Q2 is the median; Q3 (the upper…"
+    },
+    {
+      "id": "concept-3-comparing-two-distributions",
+      "title": "Comparing Two Distributions",
+      "explanation": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ. The golden rule is this: always compare an average AND a measure of spread, and always write your comparison in context. One number is never enough. Why both? Imagine two Year 8 classes sit the same maths test. Class A has a median of 62 and an IQR of 8. Class B has a median…",
+      "example": "Now the other case: same spread, different centre. Suppose Hassan and Yusuf both play in the school football team. Over ten matches Hassan’s pass-completion has a median of 70% with an IQR of 6, and Yusuf’s has a median…"
+    },
+    {
+      "id": "concept-4-scatter-graphs-and-correlation",
+      "title": "Scatter Graphs and Correlation",
+      "explanation": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related. You collect pairs of measurements – for each person, or day, or animal, you record two things – and plot each pair as a single point, with one variable on the x-axis and the other on the y-axis. For example, suppose you record the height and shoe size of six people: heights 155, 160, 165, 170, 175, 180 cm and shoe sizes 6, 7, 8, 9, 10, 11. Plotting the points (155, 6), (160, 7), (165, 8) and so on,…",
+      "example": "The pattern the points make is called correlation. There are three basic kinds:"
+    },
+    {
+      "id": "concept-5-correlation-is-not-causation",
+      "title": "Correlation Is Not Causation",
+      "explanation": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a proof. Here is the classic example. Across the year, ice-cream sales and cases of sunburn both go up and down together – a strong positive correlation. But ice cream does not cause sunburn, and sunburn does not cause people to buy ice cream. A third factor – hot,…",
+      "example": "Consider a real-feeling case. A study finds that children who eat breakfast tend to score higher on tests – a positive correlation. It is tempting to conclude ‘breakfast causes higher marks’. But think of the…"
+    },
+    {
+      "id": "concept-6-misleading-statistics-and-unfair-samples",
+      "title": "Misleading Statistics and Unfair Samples",
+      "explanation": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose y-axis does not start at zero. Suppose a company’s sales rose from £100 million to £110 million – a modest 10% rise. If the y-axis starts at £95 million, the bar for £110 looks about three times taller than the bar for £100, making a small change appear dramatic. Always check where the axis starts…",
+      "example": "Cherry-picking. Someone shows only the time period that flatters their case – ‘sales have risen every month since June’ – while hiding that sales fell sharply from January to June. Choosing a convenient start point, or…"
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Averages – Choosing the Right One",
+      "context": "An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes the data most fairly. The mean is the…",
+      "prompt": "Find the mean, median, mode and range of: 6, 9, 6, 12, 15, 6, 10.",
+      "answer": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Spread – Range and the Interquartile Range",
+      "context": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the other swings wildly between 2 and 25. To…",
+      "prompt": "Find the range of: 55, 48, 61, 39, 72, 50.",
+      "answer": "Range = 72 − 39 = 33.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Range = 72 − 39 = 33."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Comparing Two Distributions",
+      "context": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ. The golden rule…",
+      "prompt": "Order and find the median of: 14, 8, 22, 11, 19, 6, 17.",
+      "answer": "Ordered 6,8,11,14,17,19,22, median = 14.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Ordered 6,8,11,14,17,19,22, median = 14."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Scatter Graphs and Correlation",
+      "context": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related. You collect pairs of measurements – for each person, or day, or animal, you record two things – and plot each pair as a single point, with…",
+      "prompt": "What is the mode of: 3, 7, 3, 9, 3, 5, 7?",
+      "answer": "Mode = 3.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Mode = 3."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Correlation Is Not Causation",
+      "context": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a…",
+      "prompt": "A scatter graph’s points slope upward from left to right. Name the type of correlation.",
+      "answer": "Positive correlation.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Positive correlation."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Misleading Statistics and Unfair Samples",
+      "context": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose y-axis does not start at zero. Suppose a…",
+      "prompt": "If the mean of 5 numbers is 20, what is their total?",
+      "answer": "Total = 20 × 5 = 100.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Total = 20 × 5 = 100."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Averages – Choosing the Right One",
+      "modelType": "concept-model-1",
+      "purpose": "An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Spread – Range and the Interquartile Range",
+      "modelType": "concept-model-2",
+      "purpose": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Comparing Two Distributions",
+      "modelType": "concept-model-3",
+      "purpose": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Scatter Graphs and Correlation",
+      "modelType": "concept-model-4",
+      "purpose": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related. You collect pairs of measurements – for each person, or day, or animal, you record two things – and…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Correlation Is Not Causation",
+      "modelType": "concept-model-5",
+      "purpose": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Misleading Statistics and Unfair Samples",
+      "modelType": "concept-model-6",
+      "purpose": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to find the interquartile range",
+      "example": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
+      "steps": [
+        "Put all the data in order from smallest to largest.",
+        "Find the median (Q2) – the middle value.",
+        "Find Q1, the median of the lower half, and Q3, the median of the upper half.",
+        "Calculate IQR = Q3 − Q1."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to compare two distributions",
+      "example": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
+      "steps": [
+        "Find an average (usually the median) for each set.",
+        "Find a measure of spread (usually the IQR) for each set.",
+        "Check the how to compare two distributions result carefully."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "Compare the spreads: which is more consistent, and what does that mean?",
+      "example": "Find Q1, Q3 and the IQR of: 12, 15, 18, 20, 22, 25, 28, 30, 35, 38, 42.",
+      "steps": [
+        "Write one sentence covering both, in context.",
+        "Check the compare the spreads: which is more consistent, and what does that mean? result carefully.",
+        "Check the compare the spreads: which is more consistent, and what does that mean? result carefully."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "title": "How to use a scatter graph",
+      "example": "Class A: median 64, IQR 6. Class B: median 58, IQR 15. Compare the two classes’ test performance.",
+      "steps": [
+        "Plot each pair of values as a point.",
+        "Describe the correlation: direction (positive/negative/none) and strength (strong/weak).",
+        "Draw a line of best fit balancing points above and below.",
+        "Predict by interpolation (inside the data – reliable) or note extrapolation (outside – risky)."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Describing correlation",
+      "example": "On a scatter graph of ‘hours of revision’ against ‘test score’, the points rise from bottom-left to top-right and lie fairly close to a straight line. Describe the correlation and what it means.",
+      "steps": [
+        "Solution: The points slope upward and lie close to a line, so there is a strong positive correlation between revision time and test score.",
+        "In context: students who revised for longer tended to score higher marks.",
+        "(Remember: this is a link, not proof that revision alone causes the higher score.)"
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Interpolation vs extrapolation",
+      "example": "Farah’s scatter graph covers revision times from 1 to 5 hours. She uses her line of best fit to predict the score for (a) 3 hours and (b) 12 hours. Which prediction is reliable?",
+      "steps": [
+        "Solution: Prediction (a) at 3 hours is inside the data range (1 to 5 hours), so it is interpolation and is reliable.",
+        "Prediction (b) at 12 hours is outside the range, so it is extrapolation – unreliable, because there is no evidence the trend continues that far, and the score cannot exceed 100% anyway.",
+        "Check the interpolation vs extrapolation result carefully."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Mean, median, mode and range",
+      "prompt": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
+      "solution": "Solution: There are 8 values. Mean = (15 + 18 + 22 + 18 + 25 + 30 + 18 + 27) ÷ 8 = 173 ÷ 8 = 21.625. To find the median, order them: 15, 18, 18, 18, 22, 25, 27, 30. With 8 values the median is the mean of the 4th and 5th: (18 + 22) ÷ 2 = 20. The mode is 18 (it appears three times). The range is 30 − 15 = 15. Worked Example 2: Which average is fairest? A small workshop pays five workers 200, 220, 210, 230 and 900 shillings a day. Which average best describes a typical wage? Solution: The mean is (200 + 220 + 210 +…"
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Which average is fairest?",
+      "prompt": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
+      "solution": "Solution: There are 8 values. Mean = (15 + 18 + 22 + 18 + 25 + 30 + 18 + 27) ÷ 8 = 173 ÷ 8 = 21.625. To find the median, order them: 15, 18, 18, 18, 22, 25, 27, 30. With 8 values the median is the mean of the 4th and 5th: (18 + 22) ÷ 2 = 20. The mode is 18 (it appears three times). The range is 30 − 15 = 15. Worked Example 2: Which average is fairest? A small workshop pays five workers 200, 220, 210, 230 and 900 shillings a day. Which average best describes a typical wage? Solution: The mean is (200 + 220 + 210 +…"
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Interquartile range",
+      "prompt": "Find Q1, Q3 and the IQR of: 12, 15, 18, 20, 22, 25, 28, 30, 35, 38, 42.",
+      "solution": "Solution: There are 11 values in order. The median (Q2) is the 6th value, 25. The lower half (below the median) is 12, 15, 18, 20, 22, so Q1 = 18. The upper half is 28, 30, 35, 38, 42, so Q3 = 35. Therefore IQR = 35 − 18 = 17. This is smaller than the range (30), showing the middle half of the data is more tightly packed than the extremes suggest."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Comparing two distributions",
+      "prompt": "Class A: median 64, IQR 6. Class B: median 58, IQR 15. Compare the two classes’ test performance.",
+      "solution": "Solution: ‘Class A has a higher median (64 vs 58), so Class A performed better on average. Class A also has a smaller IQR (6 vs 15), so Class A’s marks are more consistent, while Class B’s marks are much more spread out.’ A full comparison names the average and the spread, both in context – that is what earns full marks."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Describing correlation",
+      "prompt": "On a scatter graph of ‘hours of revision’ against ‘test score’, the points rise from bottom-left to top-right and lie fairly close to a straight line. Describe the correlation and what it means.",
+      "solution": "Solution: The points slope upward and lie close to a line, so there is a strong positive correlation between revision time and test score. In context: students who revised for longer tended to score higher marks. (Remember: this is a link, not proof that revision alone causes the higher score.)"
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Interpolation vs extrapolation",
+      "prompt": "Farah’s scatter graph covers revision times from 1 to 5 hours. She uses her line of best fit to predict the score for (a) 3 hours and (b) 12 hours. Which prediction is reliable?",
+      "solution": "Solution: Prediction (a) at 3 hours is inside the data range (1 to 5 hours), so it is interpolation and is reliable. Prediction (b) at 12 hours is outside the range, so it is extrapolation – unreliable, because there is no evidence the trend continues that far, and the score cannot exceed 100% anyway."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Correlation vs causation",
+      "prompt": "A newspaper reports: ‘Towns with more mobile phones have more cases of illness – phones are making people sick.’ Critique this conclusion.",
+      "solution": "Solution: The conclusion mistakes correlation for causation. A likely confounding variable is population size: bigger towns have more of *everything* – more phones and more illness cases – without one causing the other. A fair comparison would use rates (cases per 1000 people), not raw totals. So the newspaper’s claim is not supported by the evidence given."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Critiquing a claim",
+      "prompt": "‘A survey outside the Hargeisa sports stadium found that 95% of people exercise daily, so most people in the city are very active.’ What is wrong with this conclusion?",
+      "solution": "Solution: The sample is biased. People outside a sports stadium are far more likely to exercise than the general public, so this is selection bias – the sample is not representative of the whole city. The 95% figure describes stadium-goers, not everyone. A fair study would sample people from many different places across the city, chosen at random."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Guided example 9",
+      "prompt": "Class P: median 48, IQR 6. Class Q: median 60, IQR 6. Write a full sentence comparing the two classes.",
+      "solution": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs"
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Guided example 10",
+      "prompt": "Class R: median 50, IQR 4. Class S: median 50, IQR 18. Write a full sentence comparing them.",
+      "solution": ", so Class Q performed better on average."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "Guided example 11",
+      "prompt": "For a scatter graph of ‘age of car’ against ‘resale value’, describe the type of correlation you would expect and explain why.",
+      "solution": "Both have the same median (50), but Class S has a much larger IQR (18 vs"
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Guided example 12",
+      "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
+      "solution": ", so Class R is far more consistent while Class S is very spread out."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Find the mean, median, mode and range of: 6, 9, 6, 12, 15, 6, 10.",
+      "answer": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Find the range of: 55, 48, 61, 39, 72, 50.",
+      "answer": "Range = 72 − 39 = 33.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Order and find the median of: 14, 8, 22, 11, 19, 6, 17.",
+      "answer": "Ordered 6,8,11,14,17,19,22, median = 14.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "What is the mode of: 3, 7, 3, 9, 3, 5, 7?",
+      "answer": "Mode = 3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "A scatter graph’s points slope upward from left to right. Name the type of correlation.",
+      "answer": "Positive correlation.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "If the mean of 5 numbers is 20, what is their total?",
+      "answer": "Total = 20 × 5 = 100.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "For the data 10, 12, 14, 15, 18, 21, 24, 28, 30 find the median, Q1, Q3 and the IQR.",
+      "answer": "1) 9 values in order; median (5th) = 18; lower half 10,12,14,15 → Q1 = (12+14)÷2 = 13; upper half 21,24,28,30 → Q3 = (24+28)÷2 = 26; IQR = 26 − 13 = 13.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "A data set has an outlier of 500 among values near 20. Explain whether the mean or median is the fairer average, and why.",
+      "answer": "The median is fairer because the outlier 500 hugely inflates the mean while the median stays among the typical values.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Class P: median 48, IQR 6. Class Q: median 60, IQR 6. Write a full sentence comparing the two classes.",
+      "answer": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Class R: median 50, IQR 4. Class S: median 50, IQR 18. Write a full sentence comparing them.",
+      "answer": ", so Class Q performed better on average.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "For a scatter graph of ‘age of car’ against ‘resale value’, describe the type of correlation you would expect and explain why.",
+      "answer": "Both have the same median (50), but Class S has a much larger IQR (18 vs",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Core",
+      "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
+      "answer": ", so Class R is far more consistent while Class S is very spread out.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Your Own Data Investigation",
+      "materials": "paper, a pencil, and about 15 people to ask (family, friends, classmates).",
+      "steps": [
+        "Choose a question with a number answer, e.g. ‘How many minutes do you walk to the masjid or school?’",
+        "Collect the data from at least 15 people and write it in a list.",
+        "Calculate the mean, median, mode and range.",
+        "Find Q1, Q3 and the IQR. Which measure of spread do you trust more, and why?",
+        "Write two sentences: one describing a typical value, one describing the spread – both in context."
+      ]
+    },
+    {
+      "title": "The Scatter-Graph Hunt",
+      "materials": "paper, ruler, and pairs of measurements you can collect.",
+      "steps": [
+        "Pick two things you think might be related, e.g. a person’s height and their arm span, or hours slept and mood score out of 10.",
+        "Measure both for at least 10 people and record the pairs.",
+        "Plot the pairs as points on a scatter graph.",
+        "Describe the correlation (type and strength) and draw a sensible line of best fit.",
+        "Use your line to predict one value by interpolation – then discuss whether extrapolating far beyond your data would be safe."
+      ]
+    },
+    {
+      "title": "Spot the Misleading Graph (Media Game)",
+      "materials": "newspapers, adverts, or online articles with graphs and statistics.",
+      "steps": [
+        "Collect three graphs or statistical claims from any source.",
+        "For each, check: does the y-axis start at zero? Which average is quoted? How big was the sample?",
+        "Decide whether each is fair or misleading, and explain how you could fix a misleading one.",
+        "Make a ‘Statistics Hall of Fame and Shame’ poster with your best and worst examples.",
+        "This trains the single most useful habit in the unit: never believing a graph until you have read its scale."
+      ]
+    },
+    {
+      "title": "The Correlation-or-Cause Debate",
+      "materials": "a partner or family member to debate with.",
+      "steps": [
+        "Write five ‘A goes with B’ statements, e.g. ‘towns with more phones have more illness’.",
+        "For each, one person argues ‘A causes B’ and the other must find a confounding variable.",
+        "Award a point every time someone names a believable hidden third factor.",
+        "Discuss: which of your five statements might actually be causal, and how could you test it fairly?"
+      ]
+    },
+    {
+      "title": "Compare Two Distributions (Group Task)",
+      "materials": "your data from Activity 1 and a classmate’s data on the same question.",
+      "steps": [
+        "Put both data sets side by side. Calculate the median and IQR for each.",
+        "Write a full comparison sentence using both an average and a spread, in context.",
+        "If you can, sketch two box plots on the same scale and check they agree with your sentence.",
+        "Discuss whether your two samples are big enough and fair enough to draw any real conclusion."
+      ]
+    },
+    {
+      "title": "Design a Fair Survey (Investigation)",
+      "materials": "paper and pencil.",
+      "steps": [
+        "Choose a question people disagree about, e.g. ‘Should the school day start later?’",
+        "Write a leading version of the question, then rewrite it as a neutral one.",
+        "Decide who you would ask and how, to avoid selection bias – explain your sampling choice.",
+        "Predict how a biased sample might change your result, then (if you can) test it on two different groups.",
+        "After your activities, talk or write about: Which activity best showed you why spread matters as much as the average? When was it hardest to tell correlation from cause? Which misleading trick would fool most people you know? Share your thoughts with your teacher at your next session."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Key idea 1",
+        "text": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ. The golden rule is this: always compare an average AND a measure of spread, and always write your comparison in context. One number is never enough."
+      }
+    ],
+    "terms": [
+      [
+        "Mean / Median / Mode",
+        "The three averages: total÷n / middle / most frequent"
+      ],
+      [
+        "Range",
+        "Highest minus lowest value"
+      ],
+      [
+        "Quartiles (Q1, Q3)",
+        "Values splitting ordered data into quarters"
+      ],
+      [
+        "IQR",
+        "Q3 − Q1; spread of the middle 50%"
+      ],
+      [
+        "Distribution",
+        "How a set of values is spread out"
+      ],
+      [
+        "Correlation",
+        "A relationship between two variables"
+      ],
+      [
+        "Line of best fit",
+        "A straight line through the trend of a scatter graph"
+      ],
+      [
+        "Interpolation / Extrapolation",
+        "Predicting inside / outside the data range"
+      ],
+      [
+        "Causation",
+        "One thing actually making another happen"
+      ],
+      [
+        "Confounding variable",
+        "A hidden factor affecting both variables"
+      ],
+      [
+        "Bias",
+        "A systematic error that skews results one way"
+      ],
+      [
+        "Outlier",
+        "A value far from the rest of the data"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Comparing with only an average",
+        "Give an average AND a spread, in context"
+      ],
+      [
+        "Assuming correlation = causation",
+        "Look for a confounding variable"
+      ],
+      [
+        "Finding the median unordered",
+        "Always order the data first"
+      ],
+      [
+        "Trusting a truncated axis",
+        "Check the y-axis starts at 0"
+      ],
+      [
+        "Extrapolating too far",
+        "Predict only near the measured range"
+      ],
+      [
+        "Ignoring an outlier",
+        "Investigate it before deciding"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Find the mean, median, mode and range of: 6, 9, 6, 12, 15, 6, 10.",
+      "answer": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Find the range of: 55, 48, 61, 39, 72, 50.",
+      "answer": "Range = 72 − 39 = 33.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Range = 72 − 39 = 33."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Order and find the median of: 14, 8, 22, 11, 19, 6, 17.",
+      "answer": "Ordered 6,8,11,14,17,19,22, median = 14.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Ordered 6,8,11,14,17,19,22, median = 14."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "What is the mode of: 3, 7, 3, 9, 3, 5, 7?",
+      "answer": "Mode = 3.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Mode = 3."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "A scatter graph’s points slope upward from left to right. Name the type of correlation.",
+      "answer": "Positive correlation.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Positive correlation."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "If the mean of 5 numbers is 20, what is their total?",
+      "answer": "Total = 20 × 5 = 100.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Total = 20 × 5 = 100."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "For the data 10, 12, 14, 15, 18, 21, 24, 28, 30 find the median, Q1, Q3 and the IQR.",
+      "answer": "1) 9 values in order; median (5th) = 18; lower half 10,12,14,15 → Q1 = (12+14)÷2 = 13; upper half 21,24,28,30 → Q3 = (24+28)÷2 = 26; IQR = 26 − 13 = 13.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) 9 values in order; median (5th) = 18; lower half 10,12,14,15 → Q1 = (12+14)÷2 = 13; upper half 21,24,28,30 → Q3 = (24+28)÷2 = 26; IQR = 26 − 13 = 13."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "A data set has an outlier of 500 among values near 20. Explain whether the mean or median is the fairer average, and why.",
+      "answer": "The median is fairer because the outlier 500 hugely inflates the mean while the median stays among the typical values.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "The median is fairer because the outlier 500 hugely inflates the mean while the median stays among the typical values."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Class P: median 48, IQR 6. Class Q: median 60, IQR 6. Write a full sentence comparing the two classes.",
+      "answer": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs"
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Class R: median 50, IQR 4. Class S: median 50, IQR 18. Write a full sentence comparing them.",
+      "answer": ", so Class Q performed better on average.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", so Class Q performed better on average."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "For a scatter graph of ‘age of car’ against ‘resale value’, describe the type of correlation you would expect and explain why.",
+      "answer": "Both have the same median (50), but Class S has a much larger IQR (18 vs",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Both have the same median (50), but Class S has a much larger IQR (18 vs"
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo04",
+      "difficulty": "Round 3",
+      "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
+      "answer": ", so Class R is far more consistent while Class S is very spread out.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", so Class R is far more consistent while Class S is very spread out."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "The daily numbers of customers at Hassan’s Eastleigh shop over a week were 40, 44, 41, 43, 120, 42, 45. Find the mean and median. Explain which is the fairer typical value and why the other is misleading.",
+      "answer": "1) Mean = 475÷7 ≈ 67.9; ordered 40,41,42,43,44,45,120, median = 43. The median (43) is fairer; the mean is misleading because the outlier 120 (an unusually busy day) pulls it far above every other day.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Mean = 475÷7 ≈ 67.9; ordered 40,41,42,43,44,45,120, median = 43. The median (43) is fairer; the mean is misleading because the outlier 120 (an unusually busy day) pulls it far above every other day."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Over 10 matches, two strikers both average 2 goals. Striker A: range 1. Striker B: range 6. Compare their consistency and say what extra information you would want before choosing one for a cup final.",
+      "answer": "Both average 2 goals, but Striker A (range",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Both average 2 goals, but Striker A (range"
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "Yusuf plots ‘hours of football training per week’ against ‘number of goals scored’ and finds a moderate positive correlation. Write a careful conclusion that does NOT claim causation, and name a confounding factor.",
+      "answer": "is far more consistent and Striker B (range",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "is far more consistent and Striker B (range"
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "A drinks company advertises: ‘70% of people preferred our juice’. The survey was 20 people at the company’s own stall. Write a short paragraph critiquing this claim, mentioning sample size and bias.",
+      "answer": "is more variable; before choosing, you might want the medians, recent form, and the strength of the opposition faced.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "is more variable; before choosing, you might want the medians, recent form, and the strength of the opposition faced."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Temperature (°C) and ice-cream sales at a Kismaayo beach stall over six days: (24, 30), (26, 38), (28, 45), (30, 52), (32, 60), (34, 66). Describe the correlation, and use the trend to estimate sales at 29°C (interpolation). Then explain why estimating sales at 45°C would be unreliable.",
+      "answer": "Example: ‘There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals – a confounding factor such as natural ability or match time could affect both.’",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Example: ‘There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals – a confounding factor such as natural ability or match time could affect both.’"
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
+      "answer": ", so Class R is far more consistent while Class S is very spread out.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": ", so Class R is far more consistent while Class S is very spread out."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A report says: ‘Villages with more storks have more babies born, so storks bring babies.’ Identify the confounding variable and explain the real reason for the correlation.",
+      "keyIdeas": [
+        "Mean / Median / Mode",
+        "Range",
+        "Quartiles (Q1, Q3)"
+      ],
+      "modelAnswer": "1) The confounding variable is town/village size: larger settlements have more buildings (more stork nests) and more people (more babies). Storks do not cause births; population size drives both."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A company’s sales bar chart has a y-axis starting at 980 instead of 0, making a rise from 1000 to 1010 look enormous. Explain two things wrong with this and how to fix them.",
+      "keyIdeas": [
+        "Range",
+        "Quartiles (Q1, Q3)",
+        "IQR"
+      ],
+      "modelAnswer": "Problems: the truncated y-axis exaggerates a tiny 1% rise, and a reader is misled into seeing a dramatic increase. Fix: start the axis at 0, or clearly mark an axis break, and label the true values."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Two goalkeepers each concede a mean of 1 goal per match. Keeper A has an IQR of 0; Keeper B has an IQR of 3. Which would you sign, and why? Justify your choice – there is no single correct answer.",
+      "keyIdeas": [
+        "Quartiles (Q1, Q3)",
+        "IQR",
+        "Distribution"
+      ],
+      "modelAnswer": "Either answer is acceptable with justification: Keeper A (IQR"
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Amina surveys people leaving the library and concludes ‘most young people love reading’. Explain the bias in her sample and describe a fairer method.",
+      "keyIdeas": [
+        "IQR",
+        "Distribution",
+        "Correlation"
+      ],
+      "modelAnswer": "is perfectly consistent/predictable; Keeper B (IQR"
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Correlation Is Not Causation.",
+      "keyIdeas": [
+        "Mean / Median / Mode",
+        "Range",
+        "Quartiles (Q1, Q3)"
+      ],
+      "modelAnswer": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a proof. Here is the classic example. Across the year, ice-cream sales and cases of sunburn both go up and down together – a strong positive correlation. But ice cream does not cause sunburn, and sunburn does not cause people to buy ice cream. A third factor – hot,…"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Misleading Statistics and Unfair Samples.",
+      "keyIdeas": [
+        "Mean / Median / Mode",
+        "Range",
+        "Quartiles (Q1, Q3)"
+      ],
+      "modelAnswer": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose y-axis does not start at zero. Suppose a company’s sales rose from £100 million to £110 million – a modest 10% rise. If the y-axis starts at £95 million, the bar for £110 looks about three times taller than the bar for £100, making a small change appear dramatic. Always check where the axis starts…"
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Mean / Median / Mode” mean?",
+        "options": [
+          "The three averages: total÷n / middle / most frequent",
+          "Highest minus lowest value",
+          "Values splitting ordered data into quarters",
+          "Q3 − Q1; spread of the middle 50%"
+        ],
+        "answer": "The three averages: total÷n / middle / most frequent",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Range” mean?",
+        "options": [
+          "Highest minus lowest value",
+          "Values splitting ordered data into quarters",
+          "Q3 − Q1; spread of the middle 50%",
+          "How a set of values is spread out"
+        ],
+        "answer": "Highest minus lowest value",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Range means Highest minus lowest value."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Quartiles (Q1, Q3)” mean?",
+        "options": [
+          "Values splitting ordered data into quarters",
+          "Q3 − Q1; spread of the middle 50%",
+          "How a set of values is spread out",
+          "A relationship between two variables"
+        ],
+        "answer": "Values splitting ordered data into quarters",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “IQR” mean?",
+        "options": [
+          "Q3 − Q1; spread of the middle 50%",
+          "How a set of values is spread out",
+          "A relationship between two variables",
+          "A straight line through the trend of a scatter graph"
+        ],
+        "answer": "Q3 − Q1; spread of the middle 50%",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Distribution” mean?",
+        "options": [
+          "How a set of values is spread out",
+          "A relationship between two variables",
+          "A straight line through the trend of a scatter graph",
+          "Predicting inside / outside the data range"
+        ],
+        "answer": "How a set of values is spread out",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Distribution means How a set of values is spread out."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Correlation” mean?",
+        "options": [
+          "A relationship between two variables",
+          "A straight line through the trend of a scatter graph",
+          "Predicting inside / outside the data range",
+          "One thing actually making another happen"
+        ],
+        "answer": "A relationship between two variables",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Correlation means A relationship between two variables."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
+        "options": [
+          "Line of best fit",
+          "Interpolation / Extrapolation",
+          "Causation",
+          "Confounding variable"
+        ],
+        "answer": "Line of best fit",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Predicting inside / outside the data range?",
+        "options": [
+          "Interpolation / Extrapolation",
+          "Causation",
+          "Confounding variable",
+          "Bias"
+        ],
+        "answer": "Interpolation / Extrapolation",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: One thing actually making another happen?",
+        "options": [
+          "Causation",
+          "Confounding variable",
+          "Bias",
+          "Outlier"
+        ],
+        "answer": "Causation",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Causation means One thing actually making another happen."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A hidden factor affecting both variables?",
+        "options": [
+          "Confounding variable",
+          "Bias",
+          "Outlier",
+          "Mean / Median / Mode"
+        ],
+        "answer": "Confounding variable",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Confounding variable means A hidden factor affecting both variables."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A systematic error that skews results one way?",
+        "options": [
+          "Bias",
+          "Outlier",
+          "Mean / Median / Mode",
+          "Range"
+        ],
+        "answer": "Bias",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Bias means A systematic error that skews results one way."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A value far from the rest of the data?",
+        "options": [
+          "Outlier",
+          "Mean / Median / Mode",
+          "Range",
+          "Quartiles (Q1, Q3)"
+        ],
+        "answer": "Outlier",
+        "hint": "Use the Unit 16 Math Words & Symbols reference.",
+        "explanation": "Outlier means A value far from the rest of the data."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u16-game-1",
+        "icon": "?",
+        "skill": "Mean / Median / Mode",
+        "title": "Quick Match: Mean / Median / Mode",
+        "description": "Practise mean / median / mode through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Mean / Median / Mode” mean?",
+            "choices": [
+              "The three averages: total÷n / middle / most frequent",
+              "Highest minus lowest value",
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%"
+            ],
+            "answer": "The three averages: total÷n / middle / most frequent",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+          },
+          {
+            "prompt": "What does “IQR” mean?",
+            "choices": [
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph"
+            ],
+            "answer": "Q3 − Q1; spread of the middle 50%",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
+          },
+          {
+            "prompt": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
+            "choices": [
+              "Line of best fit",
+              "Interpolation / Extrapolation",
+              "Causation",
+              "Confounding variable"
+            ],
+            "answer": "Line of best fit",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
+          },
+          {
+            "prompt": "Which term matches this meaning: A hidden factor affecting both variables?",
+            "choices": [
+              "Confounding variable",
+              "Bias",
+              "Outlier",
+              "Mean / Median / Mode"
+            ],
+            "answer": "Confounding variable",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Confounding variable means A hidden factor affecting both variables."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-2",
+        "icon": "★",
+        "skill": "Range",
+        "title": "Concept Quest: Range",
+        "description": "Practise range through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Range” mean?",
+            "choices": [
+              "Highest minus lowest value",
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out"
+            ],
+            "answer": "Highest minus lowest value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Range means Highest minus lowest value."
+          },
+          {
+            "prompt": "What does “Distribution” mean?",
+            "choices": [
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range"
+            ],
+            "answer": "How a set of values is spread out",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Distribution means How a set of values is spread out."
+          },
+          {
+            "prompt": "Which term matches this meaning: Predicting inside / outside the data range?",
+            "choices": [
+              "Interpolation / Extrapolation",
+              "Causation",
+              "Confounding variable",
+              "Bias"
+            ],
+            "answer": "Interpolation / Extrapolation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
+          },
+          {
+            "prompt": "Which term matches this meaning: A systematic error that skews results one way?",
+            "choices": [
+              "Bias",
+              "Outlier",
+              "Mean / Median / Mode",
+              "Range"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Bias means A systematic error that skews results one way."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-3",
+        "icon": "◫",
+        "skill": "Quartiles (Q1, Q3)",
+        "title": "Model Detective: Quartiles (Q1, Q3)",
+        "description": "Practise quartiles (q1, q3) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Quartiles (Q1, Q3)” mean?",
+            "choices": [
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out",
+              "A relationship between two variables"
+            ],
+            "answer": "Values splitting ordered data into quarters",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+          },
+          {
+            "prompt": "What does “Correlation” mean?",
+            "choices": [
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range",
+              "One thing actually making another happen"
+            ],
+            "answer": "A relationship between two variables",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Correlation means A relationship between two variables."
+          },
+          {
+            "prompt": "Which term matches this meaning: One thing actually making another happen?",
+            "choices": [
+              "Causation",
+              "Confounding variable",
+              "Bias",
+              "Outlier"
+            ],
+            "answer": "Causation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Causation means One thing actually making another happen."
+          },
+          {
+            "prompt": "Which term matches this meaning: A value far from the rest of the data?",
+            "choices": [
+              "Outlier",
+              "Mean / Median / Mode",
+              "Range",
+              "Quartiles (Q1, Q3)"
+            ],
+            "answer": "Outlier",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Outlier means A value far from the rest of the data."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-4",
+        "icon": "→",
+        "skill": "IQR",
+        "title": "Rule Runner: IQR",
+        "description": "Practise iqr through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “IQR” mean?",
+            "choices": [
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph"
+            ],
+            "answer": "Q3 − Q1; spread of the middle 50%",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
+          },
+          {
+            "prompt": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
+            "choices": [
+              "Line of best fit",
+              "Interpolation / Extrapolation",
+              "Causation",
+              "Confounding variable"
+            ],
+            "answer": "Line of best fit",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
+          },
+          {
+            "prompt": "Which term matches this meaning: A hidden factor affecting both variables?",
+            "choices": [
+              "Confounding variable",
+              "Bias",
+              "Outlier",
+              "Mean / Median / Mode"
+            ],
+            "answer": "Confounding variable",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Confounding variable means A hidden factor affecting both variables."
+          },
+          {
+            "prompt": "What does “Mean / Median / Mode” mean?",
+            "choices": [
+              "The three averages: total÷n / middle / most frequent",
+              "Highest minus lowest value",
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%"
+            ],
+            "answer": "The three averages: total÷n / middle / most frequent",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-5",
+        "icon": "Σ",
+        "skill": "Distribution",
+        "title": "Vocabulary Vault: Distribution",
+        "description": "Practise distribution through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Distribution” mean?",
+            "choices": [
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range"
+            ],
+            "answer": "How a set of values is spread out",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Distribution means How a set of values is spread out."
+          },
+          {
+            "prompt": "Which term matches this meaning: Predicting inside / outside the data range?",
+            "choices": [
+              "Interpolation / Extrapolation",
+              "Causation",
+              "Confounding variable",
+              "Bias"
+            ],
+            "answer": "Interpolation / Extrapolation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
+          },
+          {
+            "prompt": "Which term matches this meaning: A systematic error that skews results one way?",
+            "choices": [
+              "Bias",
+              "Outlier",
+              "Mean / Median / Mode",
+              "Range"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Bias means A systematic error that skews results one way."
+          },
+          {
+            "prompt": "What does “Range” mean?",
+            "choices": [
+              "Highest minus lowest value",
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out"
+            ],
+            "answer": "Highest minus lowest value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Range means Highest minus lowest value."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-6",
+        "icon": "◇",
+        "skill": "Correlation",
+        "title": "Challenge Cards: Correlation",
+        "description": "Practise correlation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Correlation” mean?",
+            "choices": [
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range",
+              "One thing actually making another happen"
+            ],
+            "answer": "A relationship between two variables",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Correlation means A relationship between two variables."
+          },
+          {
+            "prompt": "Which term matches this meaning: One thing actually making another happen?",
+            "choices": [
+              "Causation",
+              "Confounding variable",
+              "Bias",
+              "Outlier"
+            ],
+            "answer": "Causation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Causation means One thing actually making another happen."
+          },
+          {
+            "prompt": "Which term matches this meaning: A value far from the rest of the data?",
+            "choices": [
+              "Outlier",
+              "Mean / Median / Mode",
+              "Range",
+              "Quartiles (Q1, Q3)"
+            ],
+            "answer": "Outlier",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Outlier means A value far from the rest of the data."
+          },
+          {
+            "prompt": "What does “Quartiles (Q1, Q3)” mean?",
+            "choices": [
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out",
+              "A relationship between two variables"
+            ],
+            "answer": "Values splitting ordered data into quarters",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-7",
+        "icon": "⚡",
+        "skill": "Line of best fit",
+        "title": "Think Fast: Line of best fit",
+        "description": "Practise line of best fit through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
+            "choices": [
+              "Line of best fit",
+              "Interpolation / Extrapolation",
+              "Causation",
+              "Confounding variable"
+            ],
+            "answer": "Line of best fit",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
+          },
+          {
+            "prompt": "Which term matches this meaning: A hidden factor affecting both variables?",
+            "choices": [
+              "Confounding variable",
+              "Bias",
+              "Outlier",
+              "Mean / Median / Mode"
+            ],
+            "answer": "Confounding variable",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Confounding variable means A hidden factor affecting both variables."
+          },
+          {
+            "prompt": "What does “Mean / Median / Mode” mean?",
+            "choices": [
+              "The three averages: total÷n / middle / most frequent",
+              "Highest minus lowest value",
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%"
+            ],
+            "answer": "The three averages: total÷n / middle / most frequent",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+          },
+          {
+            "prompt": "What does “IQR” mean?",
+            "choices": [
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph"
+            ],
+            "answer": "Q3 − Q1; spread of the middle 50%",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-8",
+        "icon": "☁",
+        "skill": "Interpolation / Extrapolation",
+        "title": "Explain It: Interpolation / Extrapolation",
+        "description": "Practise interpolation / extrapolation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Predicting inside / outside the data range?",
+            "choices": [
+              "Interpolation / Extrapolation",
+              "Causation",
+              "Confounding variable",
+              "Bias"
+            ],
+            "answer": "Interpolation / Extrapolation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
+          },
+          {
+            "prompt": "Which term matches this meaning: A systematic error that skews results one way?",
+            "choices": [
+              "Bias",
+              "Outlier",
+              "Mean / Median / Mode",
+              "Range"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Bias means A systematic error that skews results one way."
+          },
+          {
+            "prompt": "What does “Range” mean?",
+            "choices": [
+              "Highest minus lowest value",
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out"
+            ],
+            "answer": "Highest minus lowest value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Range means Highest minus lowest value."
+          },
+          {
+            "prompt": "What does “Distribution” mean?",
+            "choices": [
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range"
+            ],
+            "answer": "How a set of values is spread out",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Distribution means How a set of values is spread out."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-9",
+        "icon": "⌂",
+        "skill": "Causation",
+        "title": "Real-Life Round: Causation",
+        "description": "Practise causation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: One thing actually making another happen?",
+            "choices": [
+              "Causation",
+              "Confounding variable",
+              "Bias",
+              "Outlier"
+            ],
+            "answer": "Causation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Causation means One thing actually making another happen."
+          },
+          {
+            "prompt": "Which term matches this meaning: A value far from the rest of the data?",
+            "choices": [
+              "Outlier",
+              "Mean / Median / Mode",
+              "Range",
+              "Quartiles (Q1, Q3)"
+            ],
+            "answer": "Outlier",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Outlier means A value far from the rest of the data."
+          },
+          {
+            "prompt": "What does “Quartiles (Q1, Q3)” mean?",
+            "choices": [
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out",
+              "A relationship between two variables"
+            ],
+            "answer": "Values splitting ordered data into quarters",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+          },
+          {
+            "prompt": "What does “Correlation” mean?",
+            "choices": [
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range",
+              "One thing actually making another happen"
+            ],
+            "answer": "A relationship between two variables",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Correlation means A relationship between two variables."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-10",
+        "icon": "!",
+        "skill": "Confounding variable",
+        "title": "Spot the Error: Confounding variable",
+        "description": "Practise confounding variable through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A hidden factor affecting both variables?",
+            "choices": [
+              "Confounding variable",
+              "Bias",
+              "Outlier",
+              "Mean / Median / Mode"
+            ],
+            "answer": "Confounding variable",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Confounding variable means A hidden factor affecting both variables."
+          },
+          {
+            "prompt": "What does “Mean / Median / Mode” mean?",
+            "choices": [
+              "The three averages: total÷n / middle / most frequent",
+              "Highest minus lowest value",
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%"
+            ],
+            "answer": "The three averages: total÷n / middle / most frequent",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+          },
+          {
+            "prompt": "What does “IQR” mean?",
+            "choices": [
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph"
+            ],
+            "answer": "Q3 − Q1; spread of the middle 50%",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
+          },
+          {
+            "prompt": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
+            "choices": [
+              "Line of best fit",
+              "Interpolation / Extrapolation",
+              "Causation",
+              "Confounding variable"
+            ],
+            "answer": "Line of best fit",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-11",
+        "icon": "≡",
+        "skill": "Bias",
+        "title": "Mastery Mix: Bias",
+        "description": "Practise bias through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A systematic error that skews results one way?",
+            "choices": [
+              "Bias",
+              "Outlier",
+              "Mean / Median / Mode",
+              "Range"
+            ],
+            "answer": "Bias",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Bias means A systematic error that skews results one way."
+          },
+          {
+            "prompt": "What does “Range” mean?",
+            "choices": [
+              "Highest minus lowest value",
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out"
+            ],
+            "answer": "Highest minus lowest value",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Range means Highest minus lowest value."
+          },
+          {
+            "prompt": "What does “Distribution” mean?",
+            "choices": [
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range"
+            ],
+            "answer": "How a set of values is spread out",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Distribution means How a set of values is spread out."
+          },
+          {
+            "prompt": "Which term matches this meaning: Predicting inside / outside the data range?",
+            "choices": [
+              "Interpolation / Extrapolation",
+              "Causation",
+              "Confounding variable",
+              "Bias"
+            ],
+            "answer": "Interpolation / Extrapolation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-12",
+        "icon": "T",
+        "skill": "Outlier",
+        "title": "Unit Champion: Outlier",
+        "description": "Practise outlier through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A value far from the rest of the data?",
+            "choices": [
+              "Outlier",
+              "Mean / Median / Mode",
+              "Range",
+              "Quartiles (Q1, Q3)"
+            ],
+            "answer": "Outlier",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Outlier means A value far from the rest of the data."
+          },
+          {
+            "prompt": "What does “Quartiles (Q1, Q3)” mean?",
+            "choices": [
+              "Values splitting ordered data into quarters",
+              "Q3 − Q1; spread of the middle 50%",
+              "How a set of values is spread out",
+              "A relationship between two variables"
+            ],
+            "answer": "Values splitting ordered data into quarters",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+          },
+          {
+            "prompt": "What does “Correlation” mean?",
+            "choices": [
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range",
+              "One thing actually making another happen"
+            ],
+            "answer": "A relationship between two variables",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Correlation means A relationship between two variables."
+          },
+          {
+            "prompt": "Which term matches this meaning: One thing actually making another happen?",
+            "choices": [
+              "Causation",
+              "Confounding variable",
+              "Bias",
+              "Outlier"
+            ],
+            "answer": "Causation",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Causation means One thing actually making another happen."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can calculate and interpret the mean, median and mode, and choose the most suitable average for a data set.",
+    "I can measure the spread of data using the range and the interquartile range (IQR).",
+    "I can compare two distributions by referring to an average and a measure of spread, in a written sentence.",
+    "I can draw and interpret a scatter graph, and describe the correlation as positive, negative or none, and as strong or weak.",
+    "I can draw a sensible line of best fit and use it to make predictions by interpolation and extrapolation.",
+    "I can explain the difference between correlation and causation, and identify confounding factors.",
+    "I can recognise misleading graphs, biased samples and unfair averages, and critique statistical claims.",
+    "I can write a clear, evidence-based conclusion that answers a question and states its own limitations."
+  ]
+}

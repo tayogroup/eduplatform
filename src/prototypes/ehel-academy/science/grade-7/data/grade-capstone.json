@@ -1,0 +1,421 @@
+{
+  "schemaVersion": "Ehel Science Stage Capstone v1.0",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "title": "Run a Stage 7 Science Fair",
+  "overview": "Bring together everything from Stage 7 Science to run a science fair that teaches visitors the most important ideas from this stage through real investigations.",
+  "project": {
+    "drivingQuestion": "How can we use the science from Stage 7 to run an accurate, safe and exciting science fair for our school or community?",
+    "finalProduct": "Create a science-fair plan with a live investigation, labelled displays, a safety checklist, a visitor survey with a data display, and a short explanation of your scientific decisions.",
+    "stages": [
+      {
+        "id": "foundations",
+        "title": "1. Foundations display",
+        "units": [
+          1,
+          2,
+          3
+        ],
+        "prompt": "Choose the two most important ideas from Units 1, 2, 3. Build a display that teaches each idea with a model or diagram, an example and a check question.",
+        "evidence": "Two labelled displays with models, examples and check questions"
+      },
+      {
+        "id": "investigation",
+        "title": "2. Live investigation",
+        "units": [
+          4,
+          5,
+          6
+        ],
+        "prompt": "Pick one investigation from Units 4, 5, 6 and run it live: state your hypothesis, follow the method, record results and explain your conclusion.",
+        "evidence": "A completed investigation with hypothesis, method, results and conclusion"
+      },
+      {
+        "id": "connections",
+        "title": "3. Connections wall",
+        "units": [
+          7,
+          8,
+          9
+        ],
+        "prompt": "Create a connections wall that links ideas from Units 7, 8, 9 to everyday life, with at least three labelled connections.",
+        "evidence": "A connections wall with three labelled links to daily life"
+      },
+      {
+        "id": "present",
+        "title": "4. Present and explain",
+        "units": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "prompt": "Present your science fair. Explain at least three scientific choices, check that your conclusions match your evidence and identify one improvement you would make.",
+        "evidence": "Spoken, written or recorded scientific explanation"
+      }
+    ],
+    "evidenceChecklist": [
+      "Two foundation displays with models",
+      "A completed live investigation",
+      "A safety checklist for every activity",
+      "A connections wall with three links",
+      "A survey with organised data display",
+      "A scientific explanation and reflection"
+    ],
+    "rubric": [
+      {
+        "criterion": "Scientific accuracy",
+        "secure": "Observations, measurements, models and conclusions are accurate and checked."
+      },
+      {
+        "criterion": "Investigation skills",
+        "secure": "Hypotheses, fair testing, recording and conclusions follow the scientific method."
+      },
+      {
+        "criterion": "Models and representations",
+        "secure": "Labels, diagrams, tables or charts make the science visible."
+      },
+      {
+        "criterion": "Reasoning and communication",
+        "secure": "Decisions are explained using appropriate science words and evidence."
+      }
+    ]
+  },
+  "quiz": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "cap-u01-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "The smallest unit of a living thing that is still alive is called:",
+        "options": [
+          "an organ",
+          "a cell",
+          "a tissue",
+          "a molecule"
+        ],
+        "answer": "a cell",
+        "hint": "Use the Unit 1 Science Words reference.",
+        "explanation": "a cell A cell is the smallest unit that is still alive; organs and tissues are made OF cells.",
+        "unitNo": 1,
+        "unitTitle": "Cells"
+      },
+      {
+        "id": "cap-u01-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which part controls what enters and leaves the cell?",
+        "options": [
+          "nucleus",
+          "cytoplasm",
+          "cell membrane",
+          "mitochondrion"
+        ],
+        "answer": "cell membrane",
+        "hint": "Use the Unit 1 Science Words reference.",
+        "explanation": "cell membrane The membrane is selectively permeable, choosing what passes in and out.",
+        "unitNo": 1,
+        "unitTitle": "Cells"
+      },
+      {
+        "id": "cap-u02-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "In which state of matter are the particles held in a fixed, regular pattern and only able to vibrate?",
+        "options": [
+          "solid",
+          "liquid",
+          "gas",
+          "none of these"
+        ],
+        "answer": "solid",
+        "hint": "Use the Unit 2 Science Words reference.",
+        "explanation": "solid. In a solid, particles are locked in a regular pattern and can only vibrate on the spot.",
+        "unitNo": 2,
+        "unitTitle": "Materials and their Structure"
+      },
+      {
+        "id": "cap-u02-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What happens to particles when a substance is heated?",
+        "options": [
+          "they gain energy and move faster",
+          "they lose energy",
+          "they stop moving",
+          "they disappear"
+        ],
+        "answer": "they gain energy and move faster",
+        "hint": "Use the Unit 2 Science Words reference.",
+        "explanation": "they gain energy and move faster. Heating always gives particles more energy, increasing their movement.",
+        "unitNo": 2,
+        "unitTitle": "Materials and their Structure"
+      },
+      {
+        "id": "cap-u03-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Gravity is best described as:",
+        "options": [
+          "a contact force,",
+          "a non-contact force of attraction,",
+          "a push,",
+          "a form of energy."
+        ],
+        "answer": "a non-contact force of attraction,",
+        "hint": "Use the Unit 3 Science Words reference.",
+        "explanation": "a non-contact force of attraction Gravity acts across a gap, with no touching, and always pulls objects together.",
+        "unitNo": 3,
+        "unitTitle": "Forces and Energy"
+      },
+      {
+        "id": "cap-u03-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "The unit of mass is:",
+        "options": [
+          "newton,",
+          "joule,",
+          "kilogram,",
+          "watt."
+        ],
+        "answer": "kilogram,",
+        "hint": "Use the Unit 3 Science Words reference.",
+        "explanation": "kilogram Mass is the quantity of matter, measured in kilograms.",
+        "unitNo": 3,
+        "unitTitle": "Forces and Energy"
+      },
+      {
+        "id": "cap-u04-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "How many characteristics of life do all living organisms share?",
+        "options": [
+          "three",
+          "five",
+          "seven",
+          "ten"
+        ],
+        "answer": "seven",
+        "hint": "Use the Unit 4 Science Words reference.",
+        "explanation": "seven. All living things share the seven MRS GREN characteristics.",
+        "unitNo": 4,
+        "unitTitle": "Grouping and Identifying Organisms"
+      },
+      {
+        "id": "cap-u04-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Breaking down food inside cells to release energy is called:",
+        "options": [
+          "excretion",
+          "respiration",
+          "nutrition",
+          "growth"
+        ],
+        "answer": "respiration",
+        "hint": "Use the Unit 4 Science Words reference.",
+        "explanation": "respiration. Respiration releases energy from food inside every cell.",
+        "unitNo": 4,
+        "unitTitle": "Grouping and Identifying Organisms"
+      },
+      {
+        "id": "cap-u05-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Which of these is a property of a typical metal?",
+        "options": [
+          "dull",
+          "brittle",
+          "conducts electricity",
+          "a gas at room temperature"
+        ],
+        "answer": "conducts electricity",
+        "hint": "Use the Unit 5 Science Words reference.",
+        "explanation": "conducts electricity - conducting electricity is a key metal property; dull, brittle and being a gas describe non-metals.",
+        "unitNo": 5,
+        "unitTitle": "Properties of Materials"
+      },
+      {
+        "id": "cap-u05-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which property means 'can be drawn out into wires'?",
+        "options": [
+          "malleable",
+          "ductile",
+          "sonorous",
+          "magnetic"
+        ],
+        "answer": "ductile",
+        "hint": "Use the Unit 5 Science Words reference.",
+        "explanation": "ductile - ductile means drawn into wires; malleable means hammered into shape.",
+        "unitNo": 5,
+        "unitTitle": "Properties of Materials"
+      },
+      {
+        "id": "cap-u06-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What is needed for a sound to be made?",
+        "options": [
+          "heat",
+          "light",
+          "a vibration",
+          "a magnet"
+        ],
+        "answer": "a vibration",
+        "hint": "Use the Unit 6 Science Words reference.",
+        "explanation": "A vibration is always needed to make a sound; heat, light and magnets do not make sound by themselves.",
+        "unitNo": 6,
+        "unitTitle": "Earth Physics"
+      },
+      {
+        "id": "cap-u06-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "A guitar makes a sound mainly because:",
+        "options": [
+          "it is made of wood",
+          "its strings vibrate",
+          "there is air inside",
+          "it has metal parts"
+        ],
+        "answer": "its strings vibrate",
+        "hint": "Use the Unit 6 Science Words reference.",
+        "explanation": "It is the vibrating strings that make the note, not the wood or the metal parts.",
+        "unitNo": 6,
+        "unitTitle": "Earth Physics"
+      },
+      {
+        "id": "cap-u07-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "A microorganism is best described as:",
+        "options": [
+          "any small animal;",
+          "a living thing too small to see without a microscope;",
+          "a type of insect;",
+          "a non-living particle."
+        ],
+        "answer": "a living thing too small to see without a microscope;",
+        "hint": "Use the Unit 7 Science Words reference.",
+        "explanation": "A microorganism is a living thing too small to see clearly without a microscope.",
+        "unitNo": 7,
+        "unitTitle": "Microorganisms in the Environment"
+      },
+      {
+        "id": "cap-u07-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which of these is a single-celled fungus?",
+        "options": [
+          "a mushroom;",
+          "a bacterium;",
+          "yeast;",
+          "a virus."
+        ],
+        "answer": "yeast;",
+        "hint": "Use the Unit 7 Science Words reference.",
+        "explanation": "Yeast is a single-celled fungus. A mushroom is a large fungus, not single-celled.",
+        "unitNo": 7,
+        "unitTitle": "Microorganisms in the Environment"
+      },
+      {
+        "id": "cap-u08-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Which of these is a physical change?",
+        "options": [
+          "burning charcoal",
+          "melting butter",
+          "a nail rusting",
+          "milk turning to yoghurt"
+        ],
+        "answer": "melting butter",
+        "hint": "Use the Unit 8 Science Words reference.",
+        "explanation": "melting butter Melting changes state only; no new substance is made, so it is physical.",
+        "unitNo": 8,
+        "unitTitle": "Changes to Materials"
+      },
+      {
+        "id": "cap-u08-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "In a chemical reaction, the new substances made are called the:",
+        "options": [
+          "reactants",
+          "products",
+          "mixtures",
+          "elements"
+        ],
+        "answer": "products",
+        "hint": "Use the Unit 8 Science Words reference.",
+        "explanation": "products Products are the new substances made; reactants are what you start with.",
+        "unitNo": 8,
+        "unitTitle": "Changes to Materials"
+      },
+      {
+        "id": "cap-u09-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Electric current is the flow of:",
+        "options": [
+          "water",
+          "electrons",
+          "heat",
+          "light"
+        ],
+        "answer": "electrons",
+        "hint": "Use the Unit 9 Science Words reference.",
+        "explanation": "electrons Current is the flow of electrons around the circuit.",
+        "unitNo": 9,
+        "unitTitle": "Electricity"
+      },
+      {
+        "id": "cap-u09-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which of these must be present for current to flow in a circuit?",
+        "options": [
+          "a complete loop",
+          "a break in the wire",
+          "an open switch",
+          "an insulator gap"
+        ],
+        "answer": "a complete loop",
+        "hint": "Use the Unit 9 Science Words reference.",
+        "explanation": "a complete loop Electrons can only flow in an unbroken, complete circuit.",
+        "unitNo": 9,
+        "unitTitle": "Electricity"
+      }
+    ]
+  },
+  "reviewStatus": "Curriculum review required"
+}

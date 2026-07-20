@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "Ehel Science Stage Capstone v1.0",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "title": "Run a Stage 3 Science Fair",
+  "overview": "Bring together everything from Stage 3 Science to run a science fair that teaches visitors the most important ideas from this stage through real investigations.",
+  "project": {
+    "drivingQuestion": "How can we use the science from Stage 3 to run an accurate, safe and exciting science fair for our school or community?",
+    "finalProduct": "Create a science-fair plan with a live investigation, labelled displays, a safety checklist, a visitor survey with a data display, and a short explanation of your scientific decisions.",
+    "stages": [
+      {
+        "id": "foundations",
+        "title": "1. Foundations display",
+        "units": [
+          1,
+          2
+        ],
+        "prompt": "Choose the two most important ideas from Units 1, 2. Build a display that teaches each idea with a model or diagram, an example and a check question.",
+        "evidence": "Two labelled displays with models, examples and check questions"
+      },
+      {
+        "id": "investigation",
+        "title": "2. Live investigation",
+        "units": [
+          3,
+          4
+        ],
+        "prompt": "Pick one investigation from Units 3, 4 and run it live: state your hypothesis, follow the method, record results and explain your conclusion.",
+        "evidence": "A completed investigation with hypothesis, method, results and conclusion"
+      },
+      {
+        "id": "connections",
+        "title": "3. Connections wall",
+        "units": [
+          5,
+          6
+        ],
+        "prompt": "Create a connections wall that links ideas from Units 5, 6 to everyday life, with at least three labelled connections.",
+        "evidence": "A connections wall with three labelled links to daily life"
+      },
+      {
+        "id": "present",
+        "title": "4. Present and explain",
+        "units": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "prompt": "Present your science fair. Explain at least three scientific choices, check that your conclusions match your evidence and identify one improvement you would make.",
+        "evidence": "Spoken, written or recorded scientific explanation"
+      }
+    ],
+    "evidenceChecklist": [
+      "Two foundation displays with models",
+      "A completed live investigation",
+      "A safety checklist for every activity",
+      "A connections wall with three links",
+      "A survey with organised data display",
+      "A scientific explanation and reflection"
+    ],
+    "rubric": [
+      {
+        "criterion": "Scientific accuracy",
+        "secure": "Observations, measurements, models and conclusions are accurate and checked."
+      },
+      {
+        "criterion": "Investigation skills",
+        "secure": "Hypotheses, fair testing, recording and conclusions follow the scientific method."
+      },
+      {
+        "criterion": "Models and representations",
+        "secure": "Labels, diagrams, tables or charts make the science visible."
+      },
+      {
+        "criterion": "Reasoning and communication",
+        "secure": "Decisions are explained using appropriate science words and evidence."
+      }
+    ]
+  },
+  "quiz": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "cap-u01-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Which of these is a living thing?",
+        "options": [
+          "a rock",
+          "a camel",
+          "a metal spoon",
+          "a plastic bucket"
+        ],
+        "answer": "a camel",
+        "hint": "Use the Unit 1 Science Words reference.",
+        "explanation": "a camel. A camel does all seven life processes, so it is living. The others never lived.",
+        "unitNo": 1,
+        "unitTitle": "Alive or Not Alive?"
+      },
+      {
+        "id": "cap-u01-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which word list names the seven life processes?",
+        "options": [
+          "big, small, hot, cold, wet, dry, hard",
+          "movement, respiration, sensitivity, growth, reproduction, excretion, nutrition",
+          "red, blue, green, tall, short, round, flat",
+          "happy, sad, tired, hungry, cold, warm, sleepy"
+        ],
+        "answer": "movement, respiration, sensitivity, growth, reproduction, excretion, nutrition",
+        "hint": "Use the Unit 1 Science Words reference.",
+        "explanation": "movement, respiration, sensitivity, growth, reproduction, excretion, nutrition. These are the seven life processes, remembered as MRS GREN.",
+        "unitNo": 1,
+        "unitTitle": "Alive or Not Alive?"
+      },
+      {
+        "id": "cap-u02-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What is a mixture?",
+        "options": [
+          "One material alone",
+          "Two or more materials together, each keeping its properties",
+          "A brand-new material",
+          "Only liquids"
+        ],
+        "answer": "Two or more materials together, each keeping its properties",
+        "hint": "Use the Unit 2 Science Words reference.",
+        "explanation": "A mixture is two or more materials together, and each one keeps its own properties.",
+        "unitNo": 2,
+        "unitTitle": "Mixing Materials"
+      },
+      {
+        "id": "cap-u02-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "When sugar dissolves in tea, the sugar:",
+        "options": [
+          "disappears forever",
+          "turns into water",
+          "breaks into tiny pieces spread through the tea",
+          "sinks and stays at the bottom"
+        ],
+        "answer": "breaks into tiny pieces spread through the tea",
+        "hint": "Use the Unit 2 Science Words reference.",
+        "explanation": "The sugar breaks into pieces too small to see and spreads through the tea; it is not destroyed.",
+        "unitNo": 2,
+        "unitTitle": "Mixing Materials"
+      },
+      {
+        "id": "cap-u03-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Which of these is a natural light source?",
+        "options": [
+          "a torch",
+          "the sun",
+          "a lamp",
+          "a phone screen"
+        ],
+        "answer": "the sun",
+        "hint": "Use the Unit 3 Science Words reference.",
+        "explanation": "the sun — it is not made by people.",
+        "unitNo": 3,
+        "unitTitle": "Light and Shadows"
+      },
+      {
+        "id": "cap-u03-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "We can see objects because light ______.",
+        "options": [
+          "disappears",
+          "bounces off them into our eyes",
+          "turns into shadow",
+          "stays still"
+        ],
+        "answer": "bounces off them into our eyes",
+        "hint": "Use the Unit 3 Science Words reference.",
+        "explanation": "light bounces off them into our eyes — we see reflected light.",
+        "unitNo": 3,
+        "unitTitle": "Light and Shadows"
+      },
+      {
+        "id": "cap-u04-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Which organ controls your thinking and memory?",
+        "options": [
+          "Heart",
+          "Brain",
+          "Lungs",
+          "Stomach"
+        ],
+        "answer": "Brain",
+        "hint": "Use the Unit 4 Science Words reference.",
+        "explanation": "Brain The brain is the control center for thinking and memory.",
+        "unitNo": 4,
+        "unitTitle": "Human Organs"
+      },
+      {
+        "id": "cap-u04-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What is the main job of your heart?",
+        "options": [
+          "To help you breathe",
+          "To break down food",
+          "To pump blood around your body",
+          "To help you think"
+        ],
+        "answer": "To pump blood around your body",
+        "hint": "Use the Unit 4 Science Words reference.",
+        "explanation": "Pump blood around your body The heart is a muscle that pushes blood everywhere.",
+        "unitNo": 4,
+        "unitTitle": "Human Organs"
+      },
+      {
+        "id": "cap-u05-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "A force is best described as:",
+        "options": [
+          "a colour",
+          "a push or a pull",
+          "a kind of metal",
+          "a sound"
+        ],
+        "answer": "a push or a pull",
+        "hint": "Use the Unit 5 Science Words reference.",
+        "explanation": "a force is a push or a pull.",
+        "unitNo": 5,
+        "unitTitle": "Forces and Magnets"
+      },
+      {
+        "id": "cap-u05-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which of these is NOT a force?",
+        "options": [
+          "pushing a door",
+          "the colour blue",
+          "gravity pulling down",
+          "a magnet attracting iron"
+        ],
+        "answer": "the colour blue",
+        "hint": "Use the Unit 5 Science Words reference.",
+        "explanation": "the colour blue is not a force; it does not push or pull anything.",
+        "unitNo": 5,
+        "unitTitle": "Forces and Magnets"
+      },
+      {
+        "id": "cap-u06-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What shape are the Earth, the Sun, and the Moon?",
+        "options": [
+          "flat like a plate",
+          "square like a box",
+          "spherical like a ball",
+          "triangular"
+        ],
+        "answer": "spherical like a ball",
+        "hint": "Use the Unit 6 Science Words reference.",
+        "explanation": "spherical All three are round balls, not flat. Photos from space and everyday observation show this.",
+        "unitNo": 6,
+        "unitTitle": "The Earth and Moon"
+      },
+      {
+        "id": "cap-u06-q2",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which of these is the biggest?",
+        "options": [
+          "the Earth",
+          "the Sun",
+          "the Moon",
+          "they are all the same"
+        ],
+        "answer": "the Sun",
+        "hint": "Use the Unit 6 Science Words reference.",
+        "explanation": "the Sun The Sun is by far the biggest; over a million Earths could fit inside it.",
+        "unitNo": 6,
+        "unitTitle": "The Earth and Moon"
+      }
+    ]
+  },
+  "reviewStatus": "Curriculum review required"
+}

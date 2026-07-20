@@ -21,30 +21,24 @@ header('Content-Type: application/json');
 header('Cache-Control: no-store');
 
 global $DB, $CFG;
-$out = ['marker' => 'domain-setup-v89', 'wwwroot' => (string)$CFG->wwwroot];
+$out = ['marker' => 'domain-setup-v90', 'wwwroot' => (string)$CFG->wwwroot];
 
 try {
-    $out['domains'] = array_values(array_map(static function($r) {
-        return [
-            'id' => (int)$r->id,
-            'consumerid' => (int)$r->consumerid,
-            'slug' => (string)$r->slug,
-            'consumer_type' => (string)$r->consumer_type,
-            'domain' => (string)$r->domain,
-            'domain_type' => (string)$r->domain_type,
-            'isprimarydomain' => (int)$r->isprimarydomain,
-            'trusted_domain' => (int)$r->trusted_domain,
-            'workspaceid' => (int)($r->workspaceid ?? 0),
-        ];
-    }, $DB->get_records_sql(
-        "SELECT d.id, d.consumerid, d.domain, d.domain_type, d.isprimarydomain,
-                d.trusted_domain, d.workspaceid, c.slug, c.consumer_type
-           FROM {local_prequran_consumer_domain} d
-           JOIN {local_prequran_consumer} c ON c.id = d.consumerid
-       ORDER BY c.slug, d.domain"
-    )));
+    $out['domain_columns'] = array_keys($DB->get_columns('local_prequran_consumer_domain'));
+} catch (Throwable $e) {
+    $out['domain_columns_error'] = $e->getMessage();
+}
+try {
+    $out['domains'] = array_values(array_map(static fn($r) => (array)$r,
+        $DB->get_records('local_prequran_consumer_domain')));
 } catch (Throwable $e) {
     $out['domains_error'] = $e->getMessage();
+}
+try {
+    $out['consumers'] = array_values(array_map(static fn($r) => (array)$r,
+        $DB->get_records('local_prequran_consumer', null, 'id ASC', 'id, slug, name, consumer_type')));
+} catch (Throwable $e) {
+    $out['consumers_error'] = $e->getMessage();
 }
 
 $platform = null;
@@ -64,40 +58,48 @@ if (isset($_GET['apply']) && $_GET['apply'] === '1') {
         $out['apply'] = 'no platform_foundation consumer found - nothing changed';
     } else {
         try {
+            $columns = $DB->get_columns('local_prequran_consumer_domain');
+            $flags = [
+                'domain_type' => 'public',
+                'isprimarydomain' => 1,
+                'is_primary' => 1,
+                'trusted_domain' => 1,
+                'istrusted' => 1,
+                'trusted' => 1,
+                'status' => 'active',
+                'workspaceid' => 0,
+            ];
             $existing = $DB->get_record('local_prequran_consumer_domain', ['domain' => 'eduplatform.ai']);
             if ($existing) {
                 $existing->consumerid = (int)$platform->id;
-                $existing->domain_type = 'public';
-                $existing->isprimarydomain = 1;
-                $existing->trusted_domain = 1;
-                if (property_exists($existing, 'timemodified')) {
+                foreach ($flags as $field => $value) {
+                    if (isset($columns[$field])) {
+                        $existing->{$field} = $value;
+                    }
+                }
+                if (isset($columns['timemodified'])) {
                     $existing->timemodified = time();
                 }
                 $DB->update_record('local_prequran_consumer_domain', $existing);
                 $out['apply'] = 'updated existing eduplatform.ai row (id ' . (int)$existing->id . ')';
             } else {
-                $columns = $DB->get_columns('local_prequran_consumer_domain');
                 $record = new stdClass();
                 $record->consumerid = (int)$platform->id;
                 $record->domain = 'eduplatform.ai';
-                $record->domain_type = 'public';
-                $record->isprimarydomain = 1;
-                $record->trusted_domain = 1;
-                if (isset($columns['workspaceid'])) {
-                    $record->workspaceid = 0;
+                foreach ($flags as $field => $value) {
+                    if (isset($columns[$field])) {
+                        $record->{$field} = $value;
+                    }
                 }
-                if (isset($columns['status'])) {
-                    $record->status = 'active';
-                }
-                if (isset($columns['timecreated'])) {
-                    $record->timecreated = time();
-                }
-                if (isset($columns['timemodified'])) {
-                    $record->timemodified = time();
+                foreach (['timecreated', 'timemodified'] as $field) {
+                    if (isset($columns[$field])) {
+                        $record->{$field} = time();
+                    }
                 }
                 $newid = $DB->insert_record('local_prequran_consumer_domain', $record);
-                $out['apply'] = 'inserted eduplatform.ai as trusted primary domain (id ' . (int)$newid . ')';
+                $out['apply'] = 'inserted eduplatform.ai row (id ' . (int)$newid . ')';
             }
+            $out['applied_row'] = (array)$DB->get_record('local_prequran_consumer_domain', ['domain' => 'eduplatform.ai']);
         } catch (Throwable $e) {
             $out['apply_error'] = $e->getMessage();
         }

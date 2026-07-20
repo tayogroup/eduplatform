@@ -43,11 +43,14 @@ Guidance:
 
 ## Chosen providers (decided 2026-07-20)
 
-- **dns1 (primary)** — Hetzner Cloud **CX23** (2 vCPU / 4 GB / 40 GB NVMe,
-  €5.49/mo excl. VAT + 20% backups add-on), region Falkenstein or Helsinki,
-  Ubuntu 24.04, SSH key at creation, IPv4 + IPv6 enabled. Port/AUP posture
-  verified: only outbound mail ports blocked; service agreement prohibits only
-  crypto-mining/scanning/spoofing.
+- **dns1 (primary)** — Hetzner Cloud **CPX22** (2 vCPU AMD / 4 GB / 80 GB NVMe,
+  ~$22.99/mo + 20% backups + IPv4 ≈ $27/mo; chosen 2026-07-20 because the whole
+  Cost-Optimized line — CX23/CAX11 — was out of stock and the account was
+  already funded), region Helsinki or Falkenstein, Ubuntu 24.04, SSH key at
+  creation, IPv4 + IPv6 enabled. Port/AUP posture verified: only outbound mail
+  ports blocked; service agreement prohibits only crypto-mining/scanning/
+  spoofing. Cost note: if CX23 (~$6) or CAX11 restocks, migrating dns1 is
+  trivial (state = one YAML) and saves ~$20/mo.
 - **dns2 (secondary)** — DigitalOcean **Basic Regular Droplet**, region NYC3 or
   ATL1 (US East), Ubuntu 24.04, SSH key at creation, backups add-on. Start at
   **1 vCPU / 2 GB / 50 GB ($12/mo)** and resize **CPU/RAM-only** to

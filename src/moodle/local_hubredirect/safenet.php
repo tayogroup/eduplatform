@@ -58,6 +58,19 @@ if ($mobiledevice > 0) {
     redirect($pageurl);
 }
 
+// Windows one-click setup script download runs before any output.
+$windevice = optional_param('winsetup', 0, PARAM_INT);
+if ($windevice > 0) {
+    $device = pqsn_load_device($windevice);
+    if ($device && pqsn_user_may_touch($device, $isstaff, $children) && (string)$device->status === 'active') {
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="ehel-safe-internet-' . $device->clientid . '.bat"');
+        echo pqsn_windows_setup_bat($device);
+        exit;
+    }
+    redirect($pageurl);
+}
+
 $notice = '';
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -292,6 +305,16 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
             <?php else: ?>
               <p class="pqsn-note">The filtering address appears once the service is configured.</p>
             <?php endif; ?>
+            <?php if ($hosts && (string)$device->platform === 'windows'): ?>
+              <div class="pqsn-actions" style="margin-top:12px">
+                <a class="pqsn-btn pqsn-btn--primary" href="<?php echo (new moodle_url('/local/hubredirect/safenet.php', $urlparams + ['winsetup' => (int)$device->id]))->out(false); ?>">Download one-click setup (.bat)</a>
+              </div>
+              <p class="pqsn-note" style="margin-top:6px">Run it once on the PC (double-click, approve the prompt). It protects every app and locks all browsers — no per-browser steps. Then put the child on a standard (non-admin) account.</p>
+            <?php elseif ($hosts && ((string)$device->platform === 'ios' || (string)$device->platform === 'macos')): ?>
+              <div class="pqsn-actions" style="margin-top:12px">
+                <a class="pqsn-btn pqsn-btn--primary" href="<?php echo (new moodle_url('/local/hubredirect/safenet.php', $urlparams + ['mobileconfig' => (int)$device->id]))->out(false); ?>">Download Apple profile</a>
+              </div>
+            <?php endif; ?>
             <details class="pqsn-steps">
               <summary>Setup steps for this device</summary>
               <?php if ((string)$device->platform === 'android'): ?>
@@ -309,9 +332,9 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
                 </ol>
               <?php elseif ((string)$device->platform === 'windows'): ?>
                 <ol>
-                  <li>Make sure the child signs in with a <strong>standard (non-administrator)</strong> account; the parent keeps the admin password.</li>
-                  <li>As administrator: Settings → Network &amp; internet → your connection → DNS server assignment → <strong>Edit</strong>.</li>
-                  <li>Choose Manual, enable IPv4, and enter the filtering server addresses with <strong>DNS over HTTPS: On</strong>, using the personal address above as the DoH template host.</li>
+                  <li><strong>Easiest:</strong> download the one-click setup (button above), double-click it on the child's PC, and approve the prompt. It sets encrypted DNS for the whole PC and locks Chrome, Edge and Firefox — done.</li>
+                  <li>Put the child on a <strong>standard (non-administrator)</strong> Windows account; the parent keeps the admin password so it can't be switched off.</li>
+                  <li><em>Manual alternative:</em> Settings → Network &amp; internet → your connection → DNS server assignment → Edit → Manual, IPv4 On, servers <code>178.105.54.190</code> and <code>159.89.55.155</code>, encryption <strong>DNS over HTTPS</strong>, template = the personal address above.</li>
                 </ol>
               <?php else: ?>
                 <ol>

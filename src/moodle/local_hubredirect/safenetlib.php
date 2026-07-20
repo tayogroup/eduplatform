@@ -298,3 +298,45 @@ function pqsn_mobileconfig_xml(stdClass $device): string {
 </plist>
 XML;
 }
+
+/**
+ * One-click Windows setup script (.bat). Self-elevates, then runs an embedded
+ * (base64-encoded, so no cmd-escaping pitfalls) PowerShell block that: registers
+ * the device's DoH template for each resolver IP, points every active adapter's
+ * DNS at the resolvers (encrypted), and locks Chrome/Edge/Firefox to the same
+ * DoH so no browser can bypass the system filter. The parent just double-clicks
+ * and approves the elevation prompt.
+ */
+function pqsn_windows_setup_bat(stdClass $device): string {
+    $cfg = pqsn_config();
+    $shared = $cfg->dnsdomain !== '' ? $cfg->dnsdomain : 'dns.safe.eduplatform.ai';
+    $t = 'https://' . $device->clientid . '.' . $shared . '/dns-query';
+    $ps = implode("\n", [
+        "\$ErrorActionPreference='Stop'",
+        "\$t='{$t}'",
+        "\$shared='{$shared}'",
+        "\$ips=@((Resolve-DnsName \$shared -Type A).IPAddress)",
+        "foreach(\$ip in \$ips){ netsh dns add encryption server=\$ip dohtemplate=\$t autoupgrade=yes | Out-Null }",
+        "Get-NetAdapter -Physical | Where-Object {\$_.Status -eq 'Up'} | ForEach-Object { Set-DnsClientServerAddress -InterfaceIndex \$_.ifIndex -ServerAddresses \$ips }",
+        "\$c='HKLM:\\SOFTWARE\\Policies\\Google\\Chrome'; New-Item \$c -Force | Out-Null; Set-ItemProperty \$c DnsOverHttpsMode 'secure'; Set-ItemProperty \$c DnsOverHttpsTemplates \$t",
+        "\$e='HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge'; New-Item \$e -Force | Out-Null; Set-ItemProperty \$e DnsOverHttpsMode 'secure'; Set-ItemProperty \$e DnsOverHttpsTemplates \$t",
+        "\$f='HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\DNSOverHTTPS'; New-Item \$f -Force | Out-Null; Set-ItemProperty \$f Enabled 1 -Type DWord; Set-ItemProperty \$f ProviderURL \$t; Set-ItemProperty \$f Locked 1 -Type DWord",
+        "Clear-DnsClientCache",
+        "Write-Host ''; Write-Host '  Done - Safe Internet now protects every app on this PC.' -ForegroundColor Green",
+        "Write-Host '  Keep the child on a standard (non-admin) Windows account.' -ForegroundColor Yellow",
+    ]);
+    $encoded = base64_encode(mb_convert_encoding($ps, 'UTF-16LE', 'UTF-8'));
+    $lines = [
+        '@echo off',
+        'title Ehel Safe Internet Setup',
+        'net session >nul 2>&1',
+        'if %errorlevel% neq 0 (',
+        '  powershell -NoProfile -Command "Start-Process -FilePath \'%~f0\' -Verb RunAs"',
+        '  exit /b',
+        ')',
+        'echo Applying Safe Internet to this PC (all apps)...',
+        'powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand ' . $encoded,
+        'pause',
+    ];
+    return implode("\r\n", $lines) . "\r\n";
+}

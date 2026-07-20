@@ -71,6 +71,19 @@ if ($windevice > 0) {
     redirect($pageurl);
 }
 
+// Windows removal script download runs before any output.
+$winremovedevice = optional_param('winremove', 0, PARAM_INT);
+if ($winremovedevice > 0) {
+    $device = pqsn_load_device($winremovedevice);
+    if ($device && pqsn_user_may_touch($device, $isstaff, $children)) {
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="ehel-safe-internet-remove.bat"');
+        echo pqsn_windows_uninstall_bat($device);
+        exit;
+    }
+    redirect($pageurl);
+}
+
 $notice = '';
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -308,8 +321,9 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
             <?php if ($hosts && (string)$device->platform === 'windows'): ?>
               <div class="pqsn-actions" style="margin-top:12px">
                 <a class="pqsn-btn pqsn-btn--primary" href="<?php echo (new moodle_url('/local/hubredirect/safenet.php', $urlparams + ['winsetup' => (int)$device->id]))->out(false); ?>">Download one-click setup (.bat)</a>
+                <a class="pqsn-btn" href="<?php echo (new moodle_url('/local/hubredirect/safenet.php', $urlparams + ['winremove' => (int)$device->id]))->out(false); ?>">Removal script (.bat)</a>
               </div>
-              <p class="pqsn-note" style="margin-top:6px">Run it once on the PC (double-click, approve the prompt). It protects every app and locks all browsers — no per-browser steps. Then put the child on a standard (non-admin) account.</p>
+              <p class="pqsn-note" style="margin-top:6px">Run the setup once on the PC (double-click, approve the prompt). It protects every app and locks all browsers — no per-browser steps. Then put the child on a standard (non-admin) account. The removal script undoes it all.</p>
             <?php elseif ($hosts && ((string)$device->platform === 'ios' || (string)$device->platform === 'macos')): ?>
               <div class="pqsn-actions" style="margin-top:12px">
                 <a class="pqsn-btn pqsn-btn--primary" href="<?php echo (new moodle_url('/local/hubredirect/safenet.php', $urlparams + ['mobileconfig' => (int)$device->id]))->out(false); ?>">Download Apple profile</a>
@@ -318,12 +332,14 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
             <details class="pqsn-steps">
               <summary>Setup steps for this device</summary>
               <?php if ((string)$device->platform === 'android'): ?>
+                <p class="pqsn-note"><strong>Android is the quickest — one setting, no download.</strong></p>
                 <ol>
-                  <li>Set up <strong>Google Family Link</strong> for the child's account if not already done.</li>
-                  <li>On the device: Settings → Network &amp; internet → <strong>Private DNS</strong> → "Private DNS provider hostname".</li>
-                  <li>Enter the personal filtering address above and save.</li>
-                  <li>In Family Link, block changes to device settings so the child cannot switch it off.</li>
+                  <li>Open <strong>Settings → Network &amp; internet → Private DNS</strong>.<br><span class="pqsn-note">On Samsung: Settings → Connections → More connection settings → Private DNS.</span></li>
+                  <li>Choose <strong>"Private DNS provider hostname"</strong> and paste this exact address:<br><span class="pqsn-host"><?php echo s($hosts[0] ?? ''); ?></span></li>
+                  <li>Tap <strong>Save</strong>. Every app is now filtered — on Wi-Fi and mobile data, anywhere.</li>
+                  <li><strong>Lock it so the child can't turn it off:</strong> set up <strong>Google Family Link</strong> (free) on the parent's phone and block changes to the child device's settings.</li>
                 </ol>
+                <p class="pqsn-note">Tip: to check it's working, open a browser on the phone and try an adult site — it should fail to load.</p>
               <?php elseif ((string)$device->platform === 'ios' || (string)$device->platform === 'macos'): ?>
                 <ol>
                   <li>Download the profile: <a href="<?php echo (new moodle_url('/local/hubredirect/safenet.php', $urlparams + ['mobileconfig' => (int)$device->id]))->out(false); ?>">Ehel Safe Internet profile</a> (open on the child's device).</li>

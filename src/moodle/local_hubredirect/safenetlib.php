@@ -340,3 +340,38 @@ function pqsn_windows_setup_bat(stdClass $device): string {
     ];
     return implode("\r\n", $lines) . "\r\n";
 }
+
+/**
+ * Matching removal script (.bat). Self-elevates, resets every adapter's DNS to
+ * automatic, deletes the DoH encryption templates, and removes the browser DoH
+ * locks — fully undoing pqsn_windows_setup_bat().
+ */
+function pqsn_windows_uninstall_bat(stdClass $device): string {
+    $cfg = pqsn_config();
+    $shared = $cfg->dnsdomain !== '' ? $cfg->dnsdomain : 'dns.safe.eduplatform.ai';
+    $ps = implode("\n", [
+        "\$ErrorActionPreference='SilentlyContinue'",
+        "\$shared='{$shared}'",
+        "Get-NetAdapter -Physical | Where-Object {\$_.Status -eq 'Up'} | ForEach-Object { Set-DnsClientServerAddress -InterfaceIndex \$_.ifIndex -ResetServerAddresses }",
+        "try { \$ips=@((Resolve-DnsName \$shared -Type A -ErrorAction Stop).IPAddress); foreach(\$ip in \$ips){ netsh dns delete encryption server=\$ip | Out-Null } } catch {}",
+        "Remove-ItemProperty 'HKLM:\\SOFTWARE\\Policies\\Google\\Chrome' -Name DnsOverHttpsMode,DnsOverHttpsTemplates -ErrorAction SilentlyContinue",
+        "Remove-ItemProperty 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge' -Name DnsOverHttpsMode,DnsOverHttpsTemplates -ErrorAction SilentlyContinue",
+        "Remove-Item 'HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\DNSOverHTTPS' -Recurse -Force -ErrorAction SilentlyContinue",
+        "Clear-DnsClientCache",
+        "Write-Host ''; Write-Host '  Safe Internet has been removed from this PC.' -ForegroundColor Green",
+    ]);
+    $encoded = base64_encode(mb_convert_encoding($ps, 'UTF-16LE', 'UTF-8'));
+    $lines = [
+        '@echo off',
+        'title Ehel Safe Internet - Remove',
+        'net session >nul 2>&1',
+        'if %errorlevel% neq 0 (',
+        '  powershell -NoProfile -Command "Start-Process -FilePath \'%~f0\' -Verb RunAs"',
+        '  exit /b',
+        ')',
+        'echo Removing Safe Internet from this PC...',
+        'powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand ' . $encoded,
+        'pause',
+    ];
+    return implode("\r\n", $lines) . "\r\n";
+}

@@ -5,6 +5,7 @@ require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/office_materials_lib.php');
+require_once(__DIR__ . '/seb_lib.php');
 
 $consumercontext = pqh_requested_consumer_context();
 $requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
@@ -181,6 +182,20 @@ echo pqh_design_shell_html('pqhsw-shell', 'workspace', [
           <a class="pqhsw-btn pqhsw-btn--light" href="<?php echo $studenttools['Quiz report']->out(false); ?>">Quiz work</a>
         </div>
       </article>
+      <?php $pqhswexams = pqh_seb_exams_for_student((int)$USER->id); ?>
+      <?php if ($pqhswexams): ?>
+      <article class="pqhsw-card pqhsw-card--primary">
+        <h2>Exams</h2>
+        <p>Assigned exams open in Safe Exam Browser at their scheduled time.</p>
+        <div class="pqhsw-card-actions">
+          <?php foreach ($pqhswexams as $pqhswexam): ?>
+            <a class="pqhsw-btn" href="<?php echo pqh_seb_exam_url((int)$pqhswexam->id)->out(false); ?>">
+              <?php echo s((string)$pqhswexam->title); ?><?php echo (int)$pqhswexam->window_start > 0 ? ' - ' . userdate((int)$pqhswexam->window_start, get_string('strftimedatetimeshort')) : ''; ?>
+            </a>
+          <?php endforeach; ?>
+        </div>
+      </article>
+      <?php endif; ?>
       <article class="pqhsw-card">
         <h2>Reviews</h2>
         <p>Check transcripts, reports, and teacher feedback after work is submitted.</p>

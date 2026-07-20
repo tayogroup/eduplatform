@@ -3,41 +3,52 @@ declare(strict_types=1);
 
 // SEB-gated exam page. Outside Safe Exam Browser this renders a launch page
 // (install links + config download); inside a verified SEB session it embeds
-// the exam content in kiosk mode with a countdown and a finish/unlock flow.
+// the exam content in kiosk mode with a countdown, one tracked attempt per
+// student, and a finish/unlock flow.
 require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/seb_lib.php');
 
-$examid = required_param('examid', PARAM_ALPHANUMEXT);
-$exam = pqh_seb_exam($examid);
+$examid = required_param('examid', PARAM_INT);
 $dashboardurl = new moodle_url('/local/hubredirect/dashboard.php');
+
+if (!pqh_seb_tables_ready()) {
+    pqh_access_denied('The exam tables are not installed yet. Please ask support to run the SEB exam SQL.', $dashboardurl, 'Exams not ready');
+}
+$exam = pqh_seb_exam_record($examid);
 if (!$exam) {
     pqh_access_denied('This exam does not exist.', $dashboardurl, 'Exam unavailable');
+}
+
+$ismanager = pqh_seb_can_manage($exam, (int)$USER->id);
+if (!$ismanager) {
+    [$allowed, $reason] = pqh_seb_student_gate($exam, (int)$USER->id);
+    if (!$allowed) {
+        pqh_seb_audit('seb_exam_blocked', $examid, ['reason' => $reason]);
+        pqh_access_denied($reason, $dashboardurl, 'Exam not available');
+    }
 }
 
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(pqh_seb_exam_url($examid));
 $PAGE->set_pagelayout('embedded');
-$PAGE->set_title((string)$exam['title']);
-$PAGE->set_heading((string)$exam['title']);
+$PAGE->set_title((string)$exam->title);
+$PAGE->set_heading((string)$exam->title);
 $PAGE->add_body_class('pqsx-page');
 
-$verified = pqh_seb_request_verified($examid);
-$durationsecs = max(5, (int)$exam['duration']) * 60;
-$startpref = 'pqh_seb_start_' . $examid;
-$donepref = 'pqh_seb_done_' . $examid;
+$verified = pqh_seb_request_verified($exam);
+$durationsecs = max(5, (int)$exam->duration_minutes) * 60;
 
 if ($verified && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'finish') {
     if (!confirm_sesskey()) {
         pqh_access_denied('Please reload the exam page and try again.', pqh_seb_exam_url($examid), 'Exam action expired');
     }
-    $started = (int)get_user_preferences($startpref, 0);
-    set_user_preference($donepref, (string)time());
-    pqh_seb_audit('seb_exam_finished', $examid, [
-        'elapsed_seconds' => $started > 0 ? time() - $started : null,
-    ]);
+    $attempt = pqh_seb_attempt($examid, (int)$USER->id);
+    if ($attempt && (string)$attempt->status === 'in_progress') {
+        pqh_seb_attempt_finish($attempt);
+    }
     redirect(pqh_seb_exam_url($examid));
 }
 
@@ -46,6 +57,13 @@ echo $OUTPUT->header();
 if (!$verified) {
     // ---- Launch page (normal browser) ----
     pqh_seb_audit('seb_exam_launchpage', $examid, ['engine_ready' => pqh_seb_engine_ready()]);
+    $windowline = '';
+    if ((int)$exam->window_start > 0) {
+        $windowline = userdate((int)$exam->window_start, get_string('strftimedatetimeshort'));
+        if ((int)$exam->window_end > 0) {
+            $windowline .= ' - ' . userdate((int)$exam->window_end, get_string('strftimedatetimeshort'));
+        }
+    }
     ?>
 <style>
 <?php echo pqh_design_system_css('.pqsx-shell'); ?>
@@ -72,17 +90,18 @@ if (!$verified) {
 <?php echo pqh_design_shell_html('pqsx-shell', '', ['title' => 'Exam']); ?>
   <div class="pqsx-wrap">
     <div class="pqsx-card">
-      <h1><?php echo s((string)$exam['title']); ?></h1>
-      <p><?php echo s((string)$exam['description']); ?></p>
+      <h1><?php echo s((string)$exam->title); ?></h1>
+      <p><?php echo s((string)$exam->description); ?></p>
       <div class="pqsx-meta">
-        <span class="pqsx-pill"><?php echo (int)$exam['duration']; ?> minutes</span>
+        <span class="pqsx-pill"><?php echo (int)$exam->duration_minutes; ?> minutes</span>
+        <?php if ($windowline !== ''): ?><span class="pqsx-pill"><?php echo s($windowline); ?></span><?php endif; ?>
         <span class="pqsx-pill">Requires Safe Exam Browser</span>
       </div>
       <?php if (!pqh_seb_engine_ready()): ?>
         <div class="pqsx-warn">The Moodle SEB engine (quizaccess_seb) is not available on this installation, so exam verification cannot run. Please ask support to restore the core plugin.</div>
       <?php endif; ?>
-      <?php if (trim((string)$exam['embedurl']) === ''): ?>
-        <div class="pqsx-warn">This exam's content location has not been configured yet (registry entry has no embed URL). An administrator must set it in seb_lib.php before students can take this exam.</div>
+      <?php if (trim((string)$exam->embedurl) === '' && $ismanager): ?>
+        <div class="pqsx-warn">This exam has no content URL yet. Edit it in the exam manager before students take it.</div>
       <?php endif; ?>
       <ol class="pqsx-steps">
         <li><span class="pqsx-num">1</span><div><strong>Install Safe Exam Browser (one time)</strong><span>Free for Windows, macOS, and iPad. Not available on Android devices.</span></div></li>
@@ -93,6 +112,12 @@ if (!$verified) {
       <div class="pqsx-actions">
         <a class="pqsx-btn" href="<?php echo pqh_seb_config_download_url($examid)->out(false); ?>">Download exam file (.seb)</a>
         <a class="pqsx-btn pqsx-btn--light" target="_blank" rel="noopener" href="https://safeexambrowser.org/download_en.html">Get Safe Exam Browser</a>
+        <?php if ($ismanager): ?>
+          <a class="pqsx-btn pqsx-btn--light" href="<?php echo pqh_seb_manage_url((int)$exam->workspaceid)->out(false); ?>">Exam manager</a>
+          <?php if (trim((string)$exam->embedurl) !== ''): ?>
+            <a class="pqsx-btn pqsx-btn--light" target="_blank" rel="noopener" href="<?php echo s((new moodle_url(trim((string)$exam->embedurl)))->out(false)); ?>">Preview content</a>
+          <?php endif; ?>
+        <?php endif; ?>
         <a class="pqsx-btn pqsx-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Back to dashboard</a>
       </div>
       <div class="pqsx-note">This page cannot display the exam in a normal browser. The exam only opens inside Safe Exam Browser, which proves itself to the server with a cryptographic key on every request.</div>
@@ -105,16 +130,14 @@ if (!$verified) {
 }
 
 // ---- Verified SEB session: exam mode ----
-$started = (int)get_user_preferences($startpref, 0);
-if ($started <= 0) {
-    $started = time();
-    set_user_preference($startpref, (string)$started);
-    pqh_seb_audit('seb_exam_started', $examid, ['duration_minutes' => (int)$exam['duration']]);
+$attempt = pqh_seb_attempt_start($examid, (int)$USER->id);
+$finished = (string)$attempt->status === 'finished';
+$remaining = max(0, ((int)$attempt->timestarted + $durationsecs) - time());
+$timeup = !$finished && $remaining <= 0;
+if ($timeup) {
+    pqh_seb_attempt_finish($attempt, 'expired');
 }
-$finished = (int)get_user_preferences($donepref, 0) > 0;
-$remaining = max(0, ($started + $durationsecs) - time());
-$timeup = $remaining <= 0;
-$embedurl = trim((string)$exam['embedurl']);
+$embedurl = trim((string)$exam->embedurl);
 $quiturl = pqh_seb_quit_url($examid);
 ?>
 <style>
@@ -135,12 +158,12 @@ body.pqsx-page{margin:0;background:#f4f6f9}
 <?php if ($finished || $timeup): ?>
   <div class="pqsx-panel">
     <h1><?php echo $finished ? 'Exam submitted' : 'Time is up'; ?></h1>
-    <p><?php echo $finished ? 'Well done. Your work has been recorded.' : 'The exam time has ended.'; ?> Click below to unlock this computer.</p>
+    <p><?php echo $finished ? 'Well done. Your work has been recorded.' : 'The exam time has ended and your attempt was closed.'; ?> Click below to unlock this computer.</p>
     <a class="pqsx-unlock" href="<?php echo s($quiturl); ?>">Finish &amp; unlock</a>
   </div>
 <?php else: ?>
   <div class="pqsx-exambar">
-    <strong><?php echo s((string)$exam['title']); ?></strong>
+    <strong><?php echo s((string)$exam->title); ?></strong>
     <span class="pqsx-clock" id="pqsx-clock">--:--</span>
     <form method="post" style="margin:0" onsubmit="return confirm('Submit and finish this exam?');">
       <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
@@ -152,7 +175,7 @@ body.pqsx-page{margin:0;background:#f4f6f9}
     <?php if ($embedurl !== ''): ?>
       <iframe src="<?php echo s((new moodle_url($embedurl))->out(false)); ?>" allow="autoplay; fullscreen" title="Exam content"></iframe>
     <?php else: ?>
-      <div class="pqsx-panel"><h1>Exam content not configured</h1><p>An administrator must set this exam's embed URL in seb_lib.php.</p></div>
+      <div class="pqsx-panel"><h1>Exam content not configured</h1><p>Your teacher has not set this exam's content yet.</p></div>
     <?php endif; ?>
   </div>
   <script>

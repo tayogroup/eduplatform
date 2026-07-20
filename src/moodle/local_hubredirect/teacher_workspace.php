@@ -813,6 +813,7 @@ echo pqh_design_shell_html('pqltch-shell', 'workspace', [
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_followups.php', $teacherbaseurlparams))->out(false); ?>">Follow-ups</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php', $teacherbaseurlparams))->out(false); ?>">Class series</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_availability.php', $teacherbaseurlparams))->out(false); ?>">Availability</a>
+            <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/seb_exams.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : []))->out(false); ?>">Exams</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', $teacherbaseurlparams))->out(false); ?>">Live schedule</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $teacherbaseurlparams))->out(false); ?>">Calendar</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', $teacherbaseurlparams))->out(false); ?>">Live summaries</a>

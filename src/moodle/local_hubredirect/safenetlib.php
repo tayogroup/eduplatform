@@ -63,8 +63,16 @@ function pqsn_consumer_record(int $consumerid): ?stdClass {
 
 function pqsn_generate_clientid(): string {
     global $DB;
+    // A bare 12- or 16-hex-char string is parsed by AdGuard as a MAC address
+    // (e.g. d12feaf72d4c -> d1:2f:ea:f7:2d:4c), which breaks ClientID matching.
+    // Use a 14-char mixed lowercase alphanumeric label: DNS-safe, never a MAC/IP.
+    $alphabet = 'abcdefghjkmnpqrstuvwxyz23456789';
+    $len = strlen($alphabet);
     for ($i = 0; $i < 20; $i++) {
-        $candidate = 'd' . substr(bin2hex(random_bytes(8)), 0, 11);
+        $candidate = 'd';
+        for ($j = 0; $j < 13; $j++) {
+            $candidate .= $alphabet[random_int(0, $len - 1)];
+        }
         if (!$DB->record_exists('local_prequran_safenet_dev', ['clientid' => $candidate])) {
             return $candidate;
         }

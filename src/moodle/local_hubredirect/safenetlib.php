@@ -9,13 +9,35 @@ defined('MOODLE_INTERNAL') || die();
 
 function pqsn_config(): stdClass {
     $cfg = new stdClass();
+    // dnsdomain is the SHARED device hostname base (e.g. dns.safe.eduplatform.ai)
+    // that resolves to every resolver IP, giving single-hostname OSes automatic
+    // failover. dnsdomain2 stays supported for legacy per-server setups.
     $cfg->dnsdomain = trim((string)get_config('local_prequran', 'safenet_dns_domain'));
     $cfg->dnsdomain2 = trim((string)get_config('local_prequran', 'safenet_dns_domain2'));
-    $cfg->apiurl = rtrim(trim((string)get_config('local_prequran', 'safenet_api_url')), '/');
-    $cfg->apiuser = trim((string)get_config('local_prequran', 'safenet_api_user'));
-    $cfg->apipass = (string)get_config('local_prequran', 'safenet_api_pass');
+    // One or more AdGuard control endpoints. A device client is pushed to ALL of
+    // them so its per-device policy applies whichever resolver it reaches.
+    $cfg->endpoints = [];
+    foreach ([
+        ['safenet_api_url', 'safenet_api_user', 'safenet_api_pass'],
+        ['safenet_api_url2', 'safenet_api_user2', 'safenet_api_pass2'],
+    ] as $keys) {
+        $url = rtrim(trim((string)get_config('local_prequran', $keys[0])), '/');
+        $user = trim((string)get_config('local_prequran', $keys[1]));
+        $pass = (string)get_config('local_prequran', $keys[2]);
+        if ($url !== '' && $user !== '') {
+            $ep = new stdClass();
+            $ep->url = $url;
+            $ep->user = $user;
+            $ep->pass = $pass;
+            $cfg->endpoints[] = $ep;
+        }
+    }
+    // Back-compat single-endpoint accessors (first endpoint).
+    $cfg->apiurl = $cfg->endpoints[0]->url ?? '';
+    $cfg->apiuser = $cfg->endpoints[0]->user ?? '';
+    $cfg->apipass = $cfg->endpoints[0]->pass ?? '';
     $cfg->configured = $cfg->dnsdomain !== '';
-    $cfg->apiready = $cfg->apiurl !== '' && $cfg->apiuser !== '';
+    $cfg->apiready = count($cfg->endpoints) > 0;
     return $cfg;
 }
 
@@ -136,18 +158,14 @@ function pqsn_audit(int $consumerid, int $workspaceid, int $deviceid, string $ac
     $DB->insert_record('local_prequran_safenet_evt', $event);
 }
 
-/** Basic-auth JSON call to the AdGuard Home control API. Returns [ok, payload|errorstring]. */
-function pqsn_api_request(string $method, string $path, ?array $body = null): array {
-    $cfg = pqsn_config();
-    if (!$cfg->apiready) {
-        return [false, 'AdGuard API is not configured'];
-    }
-    $ch = curl_init($cfg->apiurl . $path);
+/** Basic-auth JSON call to one AdGuard Home control endpoint. Returns [ok, payload|errorstring]. */
+function pqsn_api_request_ep(stdClass $ep, string $method, string $path, ?array $body = null): array {
+    $ch = curl_init($ep->url . $path);
     $headers = ['Content-Type: application/json'];
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CUSTOMREQUEST => $method,
-        CURLOPT_USERPWD => $cfg->apiuser . ':' . $cfg->apipass,
+        CURLOPT_USERPWD => $ep->user . ':' . $ep->pass,
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_CONNECTTIMEOUT => 5,
         CURLOPT_TIMEOUT => 10,
@@ -169,6 +187,15 @@ function pqsn_api_request(string $method, string $path, ?array $body = null): ar
     return [true, is_array($decoded) ? $decoded : []];
 }
 
+/** Convenience call against the first configured endpoint (e.g. a status probe). */
+function pqsn_api_request(string $method, string $path, ?array $body = null): array {
+    $cfg = pqsn_config();
+    if (!$cfg->apiready) {
+        return [false, 'AdGuard API is not configured'];
+    }
+    return pqsn_api_request_ep($cfg->endpoints[0], $method, $path, $body);
+}
+
 function pqsn_api_client_payload(stdClass $device): array {
     return [
         'name' => trim((string)$device->label) !== '' ? (string)$device->label : ('Device ' . $device->clientid),
@@ -185,26 +212,42 @@ function pqsn_api_client_payload(stdClass $device): array {
     ];
 }
 
-/** Push one device to AdGuard (create, falling back to update). Updates syncstatus. */
+/**
+ * Push one device to EVERY configured resolver (create, falling back to update),
+ * so the per-device policy applies whichever server the device reaches. syncstatus
+ * becomes 'synced' only when all endpoints accepted it, else 'pending' for retry.
+ */
 function pqsn_sync_device(stdClass $device): array {
     global $DB;
+    $cfg = pqsn_config();
     $payload = pqsn_api_client_payload($device);
-    [$ok, $result] = pqsn_api_request('POST', '/control/clients/add', $payload);
-    if (!$ok && is_string($result) && strpos($result, 'already exists') !== false) {
-        [$ok, $result] = pqsn_api_request('POST', '/control/clients/update', [
-            'name' => $payload['name'],
-            'data' => $payload,
-        ]);
+    $allok = count($cfg->endpoints) > 0;
+    $lasterr = '';
+    foreach ($cfg->endpoints as $ep) {
+        [$ok, $result] = pqsn_api_request_ep($ep, 'POST', '/control/clients/add', $payload);
+        if (!$ok && is_string($result) && strpos($result, 'already exists') !== false) {
+            [$ok, $result] = pqsn_api_request_ep($ep, 'POST', '/control/clients/update', [
+                'name' => $payload['name'],
+                'data' => $payload,
+            ]);
+        }
+        if (!$ok) {
+            $allok = false;
+            $lasterr = is_string($result) ? $result : '';
+        }
     }
-    $device->syncstatus = $ok ? 'synced' : 'pending';
+    $device->syncstatus = $allok ? 'synced' : 'pending';
     $device->timemodified = time();
     $DB->update_record('local_prequran_safenet_dev', $device);
-    return [$ok, is_string($result) ? $result : ''];
+    return [$allok, $lasterr];
 }
 
 function pqsn_remove_device_from_server(stdClass $device): void {
+    $cfg = pqsn_config();
     $payload = pqsn_api_client_payload($device);
-    pqsn_api_request('POST', '/control/clients/delete', ['name' => $payload['name']]);
+    foreach ($cfg->endpoints as $ep) {
+        pqsn_api_request_ep($ep, 'POST', '/control/clients/delete', ['name' => $payload['name']]);
+    }
 }
 
 /** Unsigned Apple configuration profile pinning encrypted DNS to this device's hostname. */

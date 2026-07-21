@@ -51,8 +51,8 @@ Local/unit runs from the dev machine against the nonprod zone (or a local copy).
 │   │              audio/grammar/    <grammarId>.mp3
 │   │              audio/speaking/   <speakingId>.mp3
 │   │              img/              <hash>.webp        # unit covers, vocab art
-│   ├── mathematics/audio/tts/  <cyrb53>.mp3            # FLAT hash cache (shared across grades)
-│   ├── science/audio/tts/      <cyrb53>.mp3            # FLAT hash cache
+│   ├── mathematics/g03/audio/tts/   <cyrb53>.mp3       # per-grade tts hash cache
+│   ├── science/g03/audio/tts/       <cyrb53>.mp3       # per-grade tts hash cache
 │   └── shared/
 │       ├── img/    <sha1>.webp
 │       └── video/  <streamId>                          # Bunny Stream ids (lectures, recordings)
@@ -65,11 +65,12 @@ Local/unit runs from the dev machine against the nonprod zone (or a local copy).
 - **`app/` vs `content/` vs `media/` are three lifecycles.** Code ships versioned
   (`app/<subject>/v3/`, released by flipping `current.json`); unit data edits without
   a code deploy (`content/`); heavy media is immutable and never re-uploaded.
-- **English audio stays per-grade/per-category** with its stable ids (`readings/…`,
-  `grammar/…`, `speaking/…`) — matches how it was generated.
-- **Math & Science audio is a *flat* hash cache** (`audio/tts/<cyrb53>.mp3`) — the
-  hash is globally unique, so no per-grade nesting, and identical narration text
-  across units de-duplicates to one file automatically.
+- **Everything is per-grade** (`g01…g12`) for consistency and per-grade deploy /
+  purge: English audio by category (`readings/`, `grammar/`, `speaking/`), Math &
+  Science by their `audio/tts/<cyrb53>.mp3` hash cache. The tts filename is a
+  content hash (globally unique, self-de-duplicating within a grade); it just lives
+  under its grade so the tree is browsable and a grade can be shipped or purged on
+  its own. *(Requires the small code change noted below.)*
 - **Video → Bunny Stream** (`media/shared/video/<streamId>`), not raw files.
 - **`content/g01…g12`** already accommodates all 12 grades; today only g01–g08 × 3
   subjects exist.
@@ -99,9 +100,15 @@ https://ehelacademy.org/app/science/v3/index.html?course=ehel-sci-g03&unit=1
 | `…/english/grade-N/index.html` + `shared/` | `app/english/v3/` |
 | `…/english/grade-N/data/units/*.json`, `course-manifest.json`, `grade-capstone.json` | `content/english/gNN/` |
 | `…/english/media/audio/grade-N/{cat}/*.mp3` | `media/english/gNN/audio/{cat}/` |
-| `…/mathematics/media/audio/tts/*.mp3` | `media/mathematics/audio/tts/` |
-| `…/science/media/audio/tts/*.mp3` | `media/science/audio/tts/` |
+| `…/mathematics/media/audio/tts/*.mp3` | `media/mathematics/gNN/audio/tts/` * |
+| `…/science/media/audio/tts/*.mp3` | `media/science/gNN/audio/tts/` * |
 | `local_ehelhome/*` (static landing) | `site/` |
+
+\* **Per-grade tts change:** today the Math/Science generator writes a flat
+`media/audio/tts/` and the UI resolves `./media/audio/tts/<hash>.mp3`. To nest by
+grade, the generator writes `…/g{NN}/audio/tts/` and `staticVoiceUrl()` builds
+`…/g{stage}/audio/tts/<hash>.mp3` (the app already has `stageNumber`). English needs
+no change — its paths already carry the grade.
 
 ## Pilot vs target
 

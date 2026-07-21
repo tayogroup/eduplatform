@@ -1,6 +1,6 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260715k";
-import { initScienceWebGL } from "./science-webgl.js?v=science-20260721d";
-import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721d";
+import { initScienceWebGL } from "./science-webgl.js?v=science-20260721e";
+import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721e";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -351,7 +351,7 @@ function renderRoute() {
     overview: renderOverview,
     lesson: renderLesson,
     ai: renderAI,
-    words: renderMathWords,
+    words: renderScienceWords,
     explore: renderExploreConcept,
     visuals: renderVisualModels,
     method: renderLearnMethod,
@@ -391,12 +391,59 @@ function renderOverview() {
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
 }
 
-function renderMathWords() {
-  const symbols = [["+", "combine or add", "Use when quantities join"], ["−", "find a difference", "Use when quantities separate"], ["=", "has the same value", "Both sides balance"], ["<", "is less than", "The smaller value"], [">", "is greater than", "The larger value"]];
-  const terms = course.reference.terms.map(([term, meaning]) => `<article class="word-tile"><span>${escapeHtml(term.slice(0, 1))}</span><div><h3>${escapeHtml(term)}</h3><p>${escapeHtml(meaning)}</p></div></article>`).join("");
-  $("#app").innerHTML = `${pageHeader("Language for science", "Science Words", `Learn the words and signs needed to discuss and explain ${escapeHtml(course.unit.unitTitle)}.`)}
-    <div class="words-layout"><section class="panel"><h2>Key words</h2><div class="word-tile-grid">${terms}</div></section><section class="panel"><h2>Symbols in this unit</h2><div class="symbol-list">${symbols.map(([symbol, meaning, example]) => `<article><span>${symbol}</span><div><strong>${meaning}</strong><small>${example}</small></div></article>`).join("")}</div><button class="button primary" id="words-done" type="button">I know these words and symbols ✓</button></section></div>`;
-  $("#words-done").addEventListener("click", () => { complete("words", "Science words step complete."); navigate("explore"); });
+function renderScienceWords() {
+  // Rich vocabulary lab: searchable word list + a detail card with meaning,
+  // a source example sentence, audio and a learned toggle.
+  const vocab = (course.reference.vocabulary && course.reference.vocabulary.length)
+    ? course.reference.vocabulary
+    : (course.reference.terms || []).map(([term, meaning]) => ({ term, meaning, example: "", letter: (term[0] || "?").toUpperCase() }));
+  if (!vocab.length) { $("#app").innerHTML = `${pageHeader("Language for science", "Science Words", "No key words were provided for this unit.")}`; return; }
+  const known = new Set(progress.knownWords || []);
+  let query = "";
+  let activeIndex = 0;
+  const idFor = (index) => `w${index}`;
+
+  const draw = () => {
+    const filtered = vocab.map((entry, index) => ({ entry, index }))
+      .filter(({ entry }) => !query || `${entry.term} ${entry.meaning}`.toLowerCase().includes(query));
+    if (!filtered.some(({ index }) => index === activeIndex) && filtered.length) activeIndex = filtered[0].index;
+    const current = vocab[activeIndex];
+    $("#app").innerHTML = `${pageHeader("Language for science", "Science Words", `Learn and explore the key words for ${escapeHtml(course.unit.unitTitle)}. ${known.size} of ${vocab.length} marked learned.`)}
+      <div class="dictionary-layout">
+        <section class="panel word-list">
+          <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search science words" value="${escapeHtml(query)}"></label>
+          <div id="word-rows">${filtered.length ? filtered.map(({ entry, index }) => `<button class="word-row ${index === activeIndex ? "active" : ""}" data-word="${index}" type="button"><span><strong>${escapeHtml(entry.term)}</strong><small>${escapeHtml(entry.meaning.slice(0, 46))}${entry.meaning.length > 46 ? "…" : ""}</small></span>${known.has(idFor(index)) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`}</div>
+        </section>
+        <section class="panel word-card" id="word-card">
+          <div class="word-card-head"><div><span class="word-type">Science word</span><h2>${escapeHtml(current.term)}</h2></div><button class="icon-button" id="listen-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(current.term)}">♪</button></div>
+          <p class="meaning"><strong>Meaning:</strong> ${escapeHtml(current.meaning)}</p>
+          ${current.example ? `<div class="sentence-card"><small>Used in the lesson</small><p>“${escapeHtml(current.example)}”</p>${voiceButton(current.example, "Hear the example")}</div>` : ""}
+          <div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="Write your own sentence using ${escapeHtml(current.term.toLowerCase())}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div>
+          <div id="word-feedback"></div>
+          <button class="button secondary" id="know-word" type="button">${known.has(idFor(activeIndex)) ? "✓ Learned" : "＋ I know this word"}</button>
+        </section>
+      </div>
+      <p style="margin-top:16px"><button class="button primary" id="words-done" type="button">I explored the science words ✓</button></p>`;
+    const search = $("#word-search");
+    search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); const pos = search.selectionStart; draw(); const s = $("#word-search"); s.focus(); s.setSelectionRange(pos, pos); });
+    $$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeIndex = Number(button.dataset.word); draw(); }));
+    $("#listen-word").addEventListener("click", (event) => speakText(`${current.term}. ${current.meaning}`, event.currentTarget));
+    $("#check-word-sentence").addEventListener("click", () => {
+      const written = $("#word-sentence").value.trim().toLowerCase();
+      const head = current.term.toLowerCase().split(/[\/,]/)[0].trim();
+      const ok = written.length > 10 && written.includes(head.split(" ")[0]);
+      $("#word-feedback").innerHTML = `<p class="feedback ${ok ? "good" : "try"}"><strong>${ok ? "Great sentence!" : "Try again."}</strong> ${ok ? "You used the word in a full idea." : `Write a full sentence that uses “${escapeHtml(current.term)}”.`}</p>`;
+    });
+    $("#know-word").addEventListener("click", () => {
+      const id = idFor(activeIndex);
+      if (known.has(id)) known.delete(id); else known.add(id);
+      progress.knownWords = [...known]; saveProgress();
+      if (known.size === vocab.length) complete("words", "All science words learned.");
+      draw();
+    });
+    $("#words-done").addEventListener("click", () => { complete("words", "Science words explored."); navigate("explore"); });
+  };
+  draw();
 }
 
 function renderExploreConcept() {

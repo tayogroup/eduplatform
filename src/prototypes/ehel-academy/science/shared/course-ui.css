@@ -247,3 +247,12 @@
 .sci-diagram .sci-bulb { stroke: #b9821f; stroke-width: 2; }
 .sci-diagram .sci-bulb.on { fill: #ffdf6b; }
 .sci-diagram .sci-bulb.off { fill: #dfe6ea; }
+
+/* ===== Tab rows must never overflow the page (long titles scroll in place) ===== */
+.model-tabs, .exploration-tabs, .method-selector { display: flex; flex-wrap: wrap; gap: 8px; max-width: 100%; }
+.model-tabs { overflow-x: auto; flex-wrap: nowrap; }
+.model-tabs .subtab { flex: 0 0 auto; min-width: auto; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.exploration-tabs .exploration-tab, .method-selector button { max-width: 100%; }
+.exploration-tabs .exploration-tab span:last-child, .method-selector button span:last-child { overflow: hidden; text-overflow: ellipsis; }
+#app { max-width: 100%; overflow-x: hidden; }
+.story-layout, .words-layout, .concept-grid, .task-grid { max-width: 100%; }

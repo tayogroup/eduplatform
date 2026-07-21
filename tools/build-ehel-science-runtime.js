@@ -83,10 +83,16 @@ function buildGrade(grade) {
       };
     });
     if (!concepts.length) {
+      // Look for genuine topic sub-headings; reject workbook scaffolding.
+      const BLOCK = /^(example|step by step|worked example|answer|recording|analysis|going further|remember|key|assessment|about this unit|learning objectives|unit overview|welcome|materials|method|aim|hypothesis|conclusion|lesson\s*\d|part\s*\d\b|section|introduction|summary|glossary|vocabulary|self[- ]|checklist|what you will|how to use|ask your ai)/i;
+      const topicHeadings = lesson.blocks
+        .filter((block) => block.content_kind === "Heading")
+        .map((block) => tidy(block.text).replace(/^(Part|Lesson)\s*\d+\s*[—:\-]\s*/i, ""))
+        .filter((text) => text.length >= 6 && text.length <= 52 && !/[.!?]$/.test(text) && !BLOCK.test(text));
       const paragraphs = lesson.blocks.map((block) => tidy(block.text)).filter((text) => text.length > 90).slice(0, 6);
       concepts = paragraphs.map((text, index) => ({
         id: `concept-${index + 1}-${slug(title)}-${index + 1}`,
-        title: sentence(text, 60),
+        title: topicHeadings[index] || `${title} — part ${index + 1}`,
         explanation: sentence(text, 520),
         example: sentence(paragraphs[(index + 1) % paragraphs.length] || text, 220),
       }));
@@ -109,7 +115,20 @@ function buildGrade(grade) {
     return pairs;
   }
 
-  function referenceData(reference, lesson) {
+  function sentencesFrom(...docs) {
+    const out = [];
+    for (const doc of docs) for (const block of doc.blocks) {
+      const text = tidy(block.text);
+      if (text.length < 40) continue;
+      for (const part of text.split(/(?<=[.!?])\s+(?=[A-Z“"])/)) {
+        const s = tidy(part);
+        if (s.length >= 40 && s.length <= 240) out.push(s);
+      }
+    }
+    return out;
+  }
+
+  function referenceData(reference, lesson, experimentsDoc) {
     let terms = termPairsFromTables(reference, /glossary|key words/i);
     if (!terms.length) terms = termPairsFromTables(lesson, /key science words|glossary|key words/i);
     if (!terms.length) terms = termPairsFromTables(lesson, /./);
@@ -130,7 +149,19 @@ function buildGrade(grade) {
       const lines = sectionBlocks(reference, /common mistakes/i).map((block) => tidy(block.text)).filter((text) => text.length > 15);
       for (let index = 0; index + 1 < lines.length; index += 2) commonMistakes.push([lines[index], lines[index + 1]]);
     }
-    return { rules: rules.slice(0, 6), terms: terms.slice(0, 12), commonMistakes: commonMistakes.slice(0, 6) };
+    terms = terms.slice(0, 12);
+
+    // Rich vocabulary: pair each term with an example sentence from the
+    // source that actually uses the word, plus a short category.
+    const corpus = sentencesFrom(lesson, reference, experimentsDoc || EMPTY_DOC);
+    const vocabulary = terms.map(([term, meaning]) => {
+      const head = tidy(term).replace(/\s*\(.*?\)\s*/g, " ").trim();
+      const key = head.split(/[\/,]/)[0].trim();
+      const wordRe = new RegExp(`\\b${key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      const example = corpus.find((s) => wordRe.test(s) && s.toLowerCase() !== tidy(meaning).toLowerCase() && !/^[a-z ]+:/i.test(s)) || "";
+      return { term: head, meaning: tidy(meaning), example: sentence(example, 220), letter: (head[0] || "?").toUpperCase() };
+    });
+    return { rules: rules.slice(0, 6), terms, vocabulary, commonMistakes: commonMistakes.slice(0, 6) };
   }
 
   function experimentsData(experiments) {
@@ -320,7 +351,7 @@ function buildGrade(grade) {
     const activitiesDoc = docFor(unitNo, "Activities");
     const referenceDoc = docFor(unitNo, "Reference");
     const title = unitTitle(lesson, unitMeta.title, unitNo);
-    const reference = referenceData(referenceDoc, lesson);
+    const reference = referenceData(referenceDoc, lesson, experimentsDoc);
     const experiments = experimentsData(experimentsDoc.blocks.length ? experimentsDoc : activitiesDoc);
     const { items: practice, mcqs } = practiceData(practiceDoc, activitiesDoc);
     const concepts = conceptList(lesson, title);
@@ -354,7 +385,32 @@ function buildGrade(grade) {
     }
 
     const activities = experiments.slice(0, 6).map((experiment) => ({ title: experiment.title, materials: experiment.materials, steps: experiment.steps.length ? experiment.steps.slice(0, 5) : ["Follow the investigation plan in your experiments book."] }));
-    if (!activities.length) activities.push({ title: "Observe and record", materials: "Notebook, pencil and your senses", steps: ["Choose one idea from this unit.", "Observe an example of it at home.", "Record what you see with a drawing and labels.", "Share your recording with your family."] });
+    // Every unit shows six investigations. When the source has fewer, add
+    // concept-grounded "explore at home" investigations to reach six.
+    const investigationIdeas = [
+      { verb: "Observe", tail: "Watch it closely for a few minutes and note three things you notice." },
+      { verb: "Sort", tail: "Find examples at home and sort them into groups, then explain your rule." },
+      { verb: "Test", tail: "Change one thing, keep everything else the same, and record what happens." },
+      { verb: "Compare", tail: "Look at two examples side by side and list how they are the same and different." },
+      { verb: "Model", tail: "Build or draw a model of it and label the important parts." },
+      { verb: "Record", tail: "Make a simple chart or drawing to show what you found and share it." },
+    ];
+    let ideaCursor = 0;
+    while (activities.length < 6) {
+      const concept = concepts[activities.length % Math.max(1, concepts.length)] || { title, example: overview };
+      const idea = investigationIdeas[ideaCursor % investigationIdeas.length];
+      ideaCursor += 1;
+      activities.push({
+        title: `${idea.verb}: ${concept.title}`,
+        materials: "Notebook, pencil and safe things you can find at home",
+        steps: [
+          `Look for an example of ${concept.title.toLowerCase()} around your home or outside.`,
+          idea.tail,
+          "Write or draw what you observed, using the unit's science words.",
+          "Explain your finding to a family member or your teacher.",
+        ],
+      });
+    }
 
     const explorations = experiments.slice(0, 6).map((experiment, index) => ({
       id: `explore-${index + 1}`,

@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS mdlgx_local_prequran_seb_exam (
     description TEXT NULL,
     embedurl TEXT NULL,
     mode VARCHAR(20) NOT NULL DEFAULT 'seb',
+    proctoring TINYINT(1) NOT NULL DEFAULT 0,
     duration_minutes BIGINT(10) NOT NULL DEFAULT 30,
     quitpassword VARCHAR(100) NOT NULL DEFAULT '',
     window_start BIGINT(10) NOT NULL DEFAULT 0,
@@ -48,6 +49,24 @@ CREATE TABLE IF NOT EXISTS mdlgx_local_prequran_seb_attempt (
     PRIMARY KEY (id),
     UNIQUE KEY uq_seb_attempt (examid, userid),
     KEY idx_seb_attempt_user (userid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Adults-only webcam-snapshot and audio voice-activity proctoring events for
+-- focus-mode exams. imagedata holds a small base64 JPEG for snapshots; voice
+-- events store only a level, never audio. Purged after the retention window.
+CREATE TABLE IF NOT EXISTS mdlgx_local_prequran_seb_proctor (
+    id BIGINT(10) NOT NULL AUTO_INCREMENT,
+    examid BIGINT(10) NOT NULL,
+    userid BIGINT(10) NOT NULL,
+    attemptid BIGINT(10) NOT NULL DEFAULT 0,
+    type VARCHAR(20) NOT NULL DEFAULT '',
+    detail TEXT NULL,
+    imagedata LONGTEXT NULL,
+    level BIGINT(10) NOT NULL DEFAULT 0,
+    timecreated BIGINT(10) NOT NULL DEFAULT 0,
+    PRIMARY KEY (id),
+    KEY idx_seb_proctor_examuser (examid, userid),
+    KEY idx_seb_proctor_time (timecreated)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SELECT 'seb exam tables ready' AS result;

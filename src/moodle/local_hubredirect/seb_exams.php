@@ -56,6 +56,7 @@ if ($tablesready && data_submitted() && optional_param('action', '', PARAM_ALPHA
     $customurl = trim(optional_param('embedurl', '', PARAM_RAW));
     $embedurl = $customurl !== '' ? $customurl : $knowncontent;
     $mode = optional_param('mode', 'seb', PARAM_ALPHANUMEXT) === 'focus' ? 'focus' : 'seb';
+    $proctoring = ($mode === 'focus' && optional_param('proctoring', 0, PARAM_BOOL)) ? 1 : 0;
     $duration = max(5, min(240, optional_param('duration', 30, PARAM_INT)));
     $quitpassword = trim(optional_param('quitpassword', '', PARAM_TEXT));
     $windowstartraw = trim(optional_param('window_start', '', PARAM_RAW));
@@ -96,6 +97,7 @@ if ($tablesready && data_submitted() && optional_param('action', '', PARAM_ALPHA
             'description' => $description,
             'embedurl' => $embedurl,
             'mode' => $mode,
+            'proctoring' => $proctoring,
             'duration_minutes' => $duration,
             'quitpassword' => $quitpassword !== '' ? $quitpassword : 'ehel-unlock',
             'window_start' => $windowstart,
@@ -232,6 +234,9 @@ echo $OUTPUT->header();
           <div class="pqsm-field"><label for="pqsm-wstart">Window opens</label><input class="pqsm-input" id="pqsm-wstart" name="window_start" type="datetime-local"></div>
           <div class="pqsm-field"><label for="pqsm-wend">Window closes</label><input class="pqsm-input" id="pqsm-wend" name="window_end" type="datetime-local"></div>
           <div class="pqsm-field" id="pqsm-quit-field"><label for="pqsm-quit">Emergency exit password (Safe Exam Browser only)</label><input class="pqsm-input" id="pqsm-quit" name="quitpassword" type="text" placeholder="ehel-unlock"></div>
+          <div class="pqsm-field" id="pqsm-proctor-field" style="display:none">
+            <label class="pqsm-check" style="align-items:flex-start"><input type="checkbox" name="proctoring" value="1" style="margin-top:3px"> <span>Camera + audio proctoring <em style="color:var(--pqh-faint);font-style:normal;display:block;font-weight:500;font-size:11.5px">Adults only. Takes webcam snapshots and flags voices for staff review, with student consent. Never applies to managed child accounts.</em></span></label>
+          </div>
           <div class="pqsm-field">
             <label>Students</label>
             <?php if ($students): ?>
@@ -250,8 +255,13 @@ echo $OUTPUT->header();
         (function(){
           var mode = document.getElementById('pqsm-mode');
           var quit = document.getElementById('pqsm-quit-field');
-          function sync(){ quit.style.display = mode.value === 'focus' ? 'none' : ''; }
-          if (mode && quit) { mode.addEventListener('change', sync); sync(); }
+          var proctor = document.getElementById('pqsm-proctor-field');
+          function sync(){
+            var focus = mode.value === 'focus';
+            if (quit) { quit.style.display = focus ? 'none' : ''; }
+            if (proctor) { proctor.style.display = focus ? '' : 'none'; }
+          }
+          if (mode) { mode.addEventListener('change', sync); sync(); }
         })();
         </script>
       </section>
@@ -272,6 +282,7 @@ echo $OUTPUT->header();
             <h3><?php echo s((string)$exam->title); ?></h3>
             <p class="pqsm-meta">
               <span class="pqsm-pill"><?php echo pqh_seb_exam_mode($exam) === 'focus' ? 'Focus mode' : 'SEB locked'; ?></span>
+              <?php if (pqh_seb_exam_proctoring($exam)): ?><span class="pqsm-pill">Proctored</span><?php endif; ?>
               <span class="pqsm-pill"><?php echo (int)$exam->duration_minutes; ?> min</span>
               <span class="pqsm-pill"><?php echo s($windowline); ?></span>
               <span class="pqsm-pill"><?php echo (int)$counts['finished']; ?>/<?php echo (int)$counts['assigned']; ?> submitted</span>

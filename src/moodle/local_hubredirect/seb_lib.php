@@ -73,6 +73,111 @@ function pqh_seb_mode_label(string $mode): string {
     return $mode === 'focus' ? 'Browser focus mode' : 'Safe Exam Browser (locked)';
 }
 
+// ---------------------------------------------------------------------------
+// Proctoring (adults only): webcam snapshots + audio voice-activity flagging
+// on focus-mode exams. Snapshots are stored small and purged after the
+// retention window; audio is never recorded - only a voice-detected flag with
+// a level is kept. Never applies to a managed child account, regardless of
+// the exam setting.
+// ---------------------------------------------------------------------------
+
+function pqh_seb_proctor_retention_days(): int {
+    return 30;
+}
+
+function pqh_seb_proctor_table_ready(): bool {
+    return pqh_table_exists_safe('local_prequran_seb_proctor');
+}
+
+// Self-contained managed-child check (the dashboard's version is not loaded on
+// exam pages): a child account never gets camera/mic proctoring.
+function pqh_seb_is_managed_child(int $userid): bool {
+    global $CFG;
+    require_once($CFG->dirroot . '/user/profile/lib.php');
+    try {
+        $profile = profile_user_record($userid, false);
+    } catch (Throwable $e) {
+        return false;
+    }
+    foreach (['managed_student', 'managedstudent', 'managed'] as $field) {
+        if (isset($profile->{$field})) {
+            return in_array(strtolower(trim((string)$profile->{$field})), ['1', 'yes', 'true', 'on'], true);
+        }
+    }
+    return false;
+}
+
+// Whether the exam is configured for proctoring (setting only).
+function pqh_seb_exam_proctoring(stdClass $exam): bool {
+    return (int)($exam->proctoring ?? 0) === 1 && pqh_seb_exam_mode($exam) === 'focus';
+}
+
+// Whether proctoring actually runs for THIS student: configured, tables
+// present, and the student is not a managed child.
+function pqh_seb_proctor_effective(stdClass $exam, int $userid): bool {
+    return pqh_seb_exam_proctoring($exam)
+        && pqh_seb_proctor_table_ready()
+        && !pqh_seb_is_managed_child($userid);
+}
+
+function pqh_seb_proctor_review_url(int $examid, int $studentid): moodle_url {
+    return new moodle_url('/local/hubredirect/seb_proctor_review.php', ['examid' => $examid, 'studentid' => $studentid]);
+}
+
+// Insert a proctoring row (snapshot, voice, or consent). Rejects oversized
+// snapshot payloads defensively.
+function pqh_seb_proctor_record(int $examid, int $userid, int $attemptid, string $type, ?string $detail, ?string $imagedata, int $level): bool {
+    global $DB;
+    if (!pqh_seb_proctor_table_ready()) {
+        return false;
+    }
+    if ($imagedata !== null && strlen($imagedata) > 260000) {
+        return false;
+    }
+    $DB->insert_record('local_prequran_seb_proctor', (object)[
+        'examid' => $examid,
+        'userid' => $userid,
+        'attemptid' => $attemptid,
+        'type' => $type,
+        'detail' => $detail,
+        'imagedata' => $imagedata,
+        'level' => $level,
+        'timecreated' => time(),
+    ]);
+    return true;
+}
+
+// Opportunistic retention purge, called when staff open results/review pages.
+function pqh_seb_proctor_purge(): void {
+    global $DB;
+    if (!pqh_seb_proctor_table_ready()) {
+        return;
+    }
+    $cutoff = time() - pqh_seb_proctor_retention_days() * DAYSECS;
+    $DB->delete_records_select('local_prequran_seb_proctor', 'timecreated < ?', [$cutoff]);
+}
+
+function pqh_seb_proctor_summary(int $examid, int $userid): array {
+    global $DB;
+    if (!pqh_seb_proctor_table_ready()) {
+        return ['snapshots' => 0, 'voice' => 0, 'consent' => false];
+    }
+    return [
+        'snapshots' => (int)$DB->count_records('local_prequran_seb_proctor', ['examid' => $examid, 'userid' => $userid, 'type' => 'snapshot']),
+        'voice' => (int)$DB->count_records('local_prequran_seb_proctor', ['examid' => $examid, 'userid' => $userid, 'type' => 'voice']),
+        'consent' => $DB->record_exists('local_prequran_seb_proctor', ['examid' => $examid, 'userid' => $userid, 'type' => 'consent']),
+    ];
+}
+
+function pqh_seb_proctor_items(int $examid, int $userid, string $type): array {
+    global $DB;
+    if (!pqh_seb_proctor_table_ready()) {
+        return [];
+    }
+    return array_values($DB->get_records('local_prequran_seb_proctor',
+        ['examid' => $examid, 'userid' => $userid, 'type' => $type], 'timecreated ASC', '*', 0, 500));
+}
+
 function pqh_seb_exam_url(int $examid): moodle_url {
     return new moodle_url('/local/hubredirect/seb_exam.php', ['examid' => $examid]);
 }

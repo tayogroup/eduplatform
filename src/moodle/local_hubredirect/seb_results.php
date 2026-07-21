@@ -36,6 +36,10 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'res
 
 $results = pqh_seb_exam_results($exam);
 $exammode = pqh_seb_exam_mode($exam);
+$examproctored = pqh_seb_exam_proctoring($exam);
+if ($examproctored) {
+    pqh_seb_proctor_purge();
+}
 
 $statuslabel = static function(?stdClass $attempt): string {
     if (!$attempt) {
@@ -203,6 +207,10 @@ echo $OUTPUT->header();
               ?>
             </td>
             <td>
+              <?php if ($examproctored && $attempt): ?>
+                <?php $psum = pqh_seb_proctor_summary($examid, (int)$row->studentid); ?>
+                <a class="pqsr-btn pqsr-btn--light" href="<?php echo pqh_seb_proctor_review_url($examid, (int)$row->studentid)->out(false); ?>">Proctoring<?php echo (int)$psum['voice'] > 0 ? ' (' . (int)$psum['voice'] . ' voice)' : ''; ?></a>
+              <?php endif; ?>
               <?php if ($reporturl && $attempt): ?><a class="pqsr-btn pqsr-btn--light" href="<?php echo $reporturl->out(false); ?>">Quiz report</a><?php endif; ?>
               <?php if ($attempt): ?>
                 <form method="post" style="display:inline" onsubmit="return confirm('Reset this attempt so the student can start again? The current attempt record is removed (the action is audited).');">

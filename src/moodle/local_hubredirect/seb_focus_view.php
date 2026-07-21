@@ -16,6 +16,9 @@ $finished = $attempt && (string)$attempt->status === 'finished';
 $embedurl = trim((string)$exam->embedurl);
 $dashboardurl = new moodle_url('/local/hubredirect/dashboard.php');
 $eventurl = new moodle_url('/local/hubredirect/seb_focus_event.php');
+$proctorurl = new moodle_url('/local/hubredirect/seb_proctor_event.php');
+$proctored = pqh_seb_proctor_effective($exam, (int)$USER->id);
+$retentiondays = pqh_seb_proctor_retention_days();
 
 echo $OUTPUT->header();
 ?>
@@ -68,8 +71,15 @@ body.pqsx-page{margin:0;background:#f4f6f9}
       <li>You have <?php echo (int)$exam->duration_minutes; ?> minutes once you begin.</li>
       <li>Stay in full screen until you finish.</li>
       <li>Do not switch tabs or open other apps.</li>
+      <?php if ($proctored): ?><li>Your camera takes periodic snapshots and your microphone is checked for voices.</li><?php endif; ?>
       <li>Press <strong>Finish</strong> when you are done.</li>
     </ul>
+    <?php if ($proctored): ?>
+    <div class="pqfx-note" style="background:#fdf6e9;border-color:#f0e0bd;color:#8a6a1f">
+      This exam is proctored. When you begin, your browser will ask to use your <strong>camera and microphone</strong>. Snapshots are taken at intervals and reviewed by staff; audio is only checked for voices and is never recorded. This data is deleted after <?php echo (int)$retentiondays; ?> days. If you do not consent, close this page and ask your teacher for a supervised alternative.
+      <label style="display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:600"><input type="checkbox" id="pqfx-consent"> I understand and consent to camera and microphone proctoring.</label>
+    </div>
+    <?php endif; ?>
     <button class="pqfx-btn" id="pqfx-begin" type="button">Begin exam in full screen</button>
     <a class="pqfx-btn pqfx-btn--light" style="margin-left:8px" href="<?php echo $dashboardurl->out(false); ?>">Cancel</a>
   </div>
@@ -98,6 +108,8 @@ body.pqsx-page{margin:0;background:#f4f6f9}
     var examId = <?php echo (int)$examid; ?>;
     var sesskey = '<?php echo sesskey(); ?>';
     var eventUrl = '<?php echo $eventurl->out(false); ?>';
+    var proctored = <?php echo $proctored ? 'true' : 'false'; ?>;
+    var proctorUrl = '<?php echo $proctorurl->out(false); ?>';
     var intro = document.getElementById('pqfx-intro');
     var exam = document.getElementById('pqfx-exam');
     var frame = document.getElementById('pqfx-frame');
@@ -112,6 +124,66 @@ body.pqsx-page{margin:0;background:#f4f6f9}
         method: 'POST', credentials: 'same-origin',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: body
       }).then(function(r){ return r.json(); });
+    }
+
+    // ---- Proctoring (adults only): webcam snapshots + audio voice flags ----
+    var mediaStream = null, snapTimer = null, voiceTimer = null;
+    var video = null, canvas = null, lastVoicePost = 0;
+
+    function proctorPost(type, extra) {
+      var body = 'type=' + type + '&examid=' + examId + '&sesskey=' + encodeURIComponent(sesskey);
+      if (extra) { body += extra; }
+      return fetch(proctorUrl, {
+        method: 'POST', credentials: 'same-origin',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: body
+      }).then(function(r){ return r.json(); }).catch(function(){ return {ok:false}; });
+    }
+    function takeSnapshot() {
+      if (!video || !video.videoWidth) { return; }
+      var w = 320, h = Math.round(video.videoHeight * (w / video.videoWidth)) || 240;
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(video, 0, 0, w, h);
+      var data = canvas.toDataURL('image/jpeg', 0.5);
+      proctorPost('snapshot', '&image=' + encodeURIComponent(data));
+    }
+    function startProctoring() {
+      return navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream){
+        mediaStream = stream;
+        proctorPost('consent');
+        video = document.createElement('video');
+        video.autoplay = true; video.muted = true; video.playsInline = true;
+        video.srcObject = stream;
+        canvas = document.createElement('canvas');
+        window.setTimeout(takeSnapshot, 2500);
+        snapTimer = window.setInterval(takeSnapshot, 20000);
+        // Audio voice-activity: flag sustained sound, never record.
+        try {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          var ctx = new AC();
+          var src = ctx.createMediaStreamSource(stream);
+          var analyser = ctx.createAnalyser();
+          analyser.fftSize = 512; src.connect(analyser);
+          var buf = new Uint8Array(analyser.frequencyBinCount);
+          var loud = 0;
+          voiceTimer = window.setInterval(function(){
+            analyser.getByteFrequencyData(buf);
+            var sum = 0; for (var i = 0; i < buf.length; i++) { sum += buf[i]; }
+            var avg = sum / buf.length;
+            if (avg > 28) { loud += 1; } else { loud = 0; }
+            // ~1.5s sustained sound, throttled to one flag per 8s.
+            if (loud >= 3 && (Date.now() - lastVoicePost) > 8000) {
+              lastVoicePost = Date.now();
+              proctorPost('voice', '&level=' + Math.round(avg));
+            }
+          }, 500);
+        } catch (e) {}
+        return true;
+      });
+    }
+    function stopProctoring() {
+      if (snapTimer) { window.clearInterval(snapTimer); }
+      if (voiceTimer) { window.clearInterval(voiceTimer); }
+      if (mediaStream) { mediaStream.getTracks().forEach(function(t){ t.stop(); }); }
     }
     function enterFullscreen() {
       var el = document.documentElement;
@@ -133,13 +205,14 @@ body.pqsx-page{margin:0;background:#f4f6f9}
     }
     function finish(){
       live = false;
+      stopProctoring();
       post('finish').then(function(res){
         if (document.exitFullscreen && document.fullscreenElement) { document.exitFullscreen(); }
         window.location.href = (res && res.redirect) ? res.redirect : '<?php echo $dashboardurl->out(false); ?>';
       });
     }
 
-    document.getElementById('pqfx-begin').addEventListener('click', function(){
+    function beginExam(){
       enterFullscreen();
       post('start').then(function(res){
         if (!res || !res.ok) { alert((res && res.error) || 'Could not start the exam.'); return; }
@@ -150,6 +223,18 @@ body.pqsx-page{margin:0;background:#f4f6f9}
         live = true;
         if (!ticking) { ticking = true; tick(); }
       });
+    }
+
+    document.getElementById('pqfx-begin').addEventListener('click', function(){
+      if (proctored) {
+        var consent = document.getElementById('pqfx-consent');
+        if (!consent || !consent.checked) { alert('Please tick the consent box to begin this proctored exam.'); return; }
+        startProctoring().then(function(){ beginExam(); }).catch(function(){
+          alert('This exam needs camera and microphone access. Please allow access, or ask your teacher for a supervised alternative.');
+        });
+        return;
+      }
+      beginExam();
     });
     document.getElementById('pqfx-finish').addEventListener('click', function(){
       if (window.confirm('Submit and finish this exam?')) { finish(); }

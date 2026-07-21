@@ -402,6 +402,35 @@ function buildGrade(grade) {
     return { rules: rules.slice(0, 6), terms, vocabulary, commonMistakes: commonMistakes.slice(0, 6), connections };
   }
 
+  // Safety review (pilot, 2026-07): every home experiment gets targeted
+  // safety guidance appended as a final step when its materials or steps
+  // involve a hazard and no equivalent warning is already present.
+  const SAFETY_RULES = [
+    { match: /\bmagnets?\b/i, dedupe: /magnet.{0,60}(mouth|swallow)/i, maxGrade: 8, note: "Magnets must never go in or near your mouth — swallowing magnets is a medical emergency. Keep them away from babies and young children." },
+    { match: /small (?:objects?|stones|beads|seeds|beans|buttons)|bottle cap|marble|\bcoin\b|date stone|small item/i, dedupe: /(mouth|nose|swallow)/i, maxGrade: 4, note: "Small objects must never go in your mouth, nose or ears. Keep them away from babies and toddlers." },
+    { match: /plastic bag|cling ?film/i, dedupe: /plastic bag.{0,60}(face|head|toy)/i, maxGrade: 5, note: "Plastic bags are not toys — never put them over or near your face." },
+    { match: /balloon/i, dedupe: /balloon.{0,60}(adult|chew|suck)/i, maxGrade: 4, note: "Ask an adult to blow up the balloon, and never chew or suck on it." },
+    { match: /\b(nails?|pins?|drawing pins?|needle|tack)\b/i, dedupe: /(adult|grown[- ]?up).{0,60}(nail|pin|sharp)|sharp point|no needle/i, maxGrade: 8, note: "Pins and nails have sharp points — ask an adult to help, and store them safely afterwards." },
+    { match: /syringe/i, dedupe: /never point.{0,40}(face|eye)|no needle.{0,80}(adult|careful|point)/i, maxGrade: 8, note: "Use a syringe with NO needle. Never point it at anyone's face or eyes." },
+    { match: /hot water|boiling|kettle|warm water from|heat(?:ed)? water/i, dedupe: /(adult|grown[- ]?up).{0,60}(hot|boil|kettle)/i, maxGrade: 8, note: "Hot water must be poured and carried by an adult only." },
+    { match: /glass (?:jar|bottle|cup|container)|\bmirror\b/i, dedupe: /glass.{0,60}(break|adult|careful|two hands)/i, maxGrade: 5, note: "Glass breaks — carry jars and mirrors with two hands, and tell an adult straight away if anything chips or cracks." },
+    { match: /\bbattery\b|\bcircuit\b|\bbulb\b.*\bwire|wire.*\bbulb\b/i, dedupe: /(mains|socket|plug)/i, maxGrade: 8, note: "Use only a small 1.5 V battery. Never use plug sockets or mains electricity, and disconnect the battery when you finish." },
+    { match: /acid|alkali|indicator|vinegar.*(?:test|liquid)|household liquids/i, dedupe: /(bleach|never taste|cleaning product)/i, maxGrade: 8, note: "Only test safe kitchen liquids such as lemon juice and vinegar. Never touch or mix cleaning products like bleach, and never taste anything you are testing." },
+    { match: /sundial|sun shadow|shadow.*sun|sunny patch/i, dedupe: /never look.{0,30}sun/i, maxGrade: 8, note: "Never look directly at the sun — it can damage your eyes." },
+    { match: /\bmould\b|\bbacteria\b|\bmicroorganism/i, dedupe: /(never open|do not open|sealed.{0,40}(closed|shut|throw))/i, maxGrade: 8, note: "Keep the sealed bags closed at all times — never open or smell the mould. Throw the sealed bags away, unopened, when the investigation ends, and wash your hands." },
+  ];
+  function appendSafety(activity, grade) {
+    const text = `${activity.title} ${activity.materials || ""} ${(activity.steps || []).join(" ")}`;
+    const notes = [];
+    for (const rule of SAFETY_RULES) {
+      if (grade > rule.maxGrade) continue;
+      if (!rule.match.test(text)) continue;
+      if (rule.dedupe.test(text)) continue; // an equivalent warning already exists
+      notes.push(rule.note);
+    }
+    if (notes.length) activity.steps = [...(activity.steps || []), `Safety: ${notes.join(" ")}`];
+  }
+
   function experimentsData(experiments) {
     const starts = experiments.blocks
       .map((block, index) => ({ block, index }))
@@ -656,6 +685,7 @@ function buildGrade(grade) {
     }
 
     const activities = experiments.slice(0, 6).map((experiment) => ({ title: experiment.title, materials: experiment.materials, steps: experiment.steps.length ? experiment.steps.slice(0, 5) : ["Follow the investigation plan in your experiments book."] }));
+    activities.forEach((activity) => appendSafety(activity, grade));
     // Every unit shows six investigations. When the source has fewer, add
     // concept-grounded "explore at home" investigations to reach six.
     const investigationIdeas = [

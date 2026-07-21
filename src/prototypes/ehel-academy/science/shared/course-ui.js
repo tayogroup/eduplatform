@@ -1,5 +1,6 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260715k";
-import { initGeometryWebGL } from "./geometry-webgl.js?v=20260715q";
+import { initScienceWebGL } from "./science-webgl.js?v=science-20260721d";
+import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721d";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -403,9 +404,10 @@ function renderExploreConcept() {
   const completed = new Set(progress.explorations || []);
   const draw = () => {
     const item = course.explorations[active];
-    $("#app").innerHTML = `${pageHeader("Six familiar discoveries", "Explore the Concept", "Discover each idea through market, street, school, water, transport and family situations.")}
+    $("#app").innerHTML = `${pageHeader("Familiar discoveries", "Explore the Concept", "Discover each idea through a labelled model and a real investigation you can try.")}
       <div class="exploration-tabs">${course.explorations.map((entry,index)=>`<button class="exploration-tab ${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-exploration="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.title)}</button>`).join("")}</div>
-      <div class="story-layout"><section class="panel story-scene"><span class="eyebrow">Discovery ${active+1} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.context)}</p>${voiceButton(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}<div class="discovery-model ${escapeHtml(item.modelType)}"><strong>${escapeHtml(item.modelType.replaceAll('-',' '))}</strong><span>${escapeHtml(item.explanation)}</span></div></section><aside class="section-stack"><section class="panel"><h3>Discovery question</h3><p>${escapeHtml(item.prompt)}</p>${voiceButton(item.prompt, "Listen to question")}<input id="discovery-answer" class="math-input" aria-label="Discovery answer"><div class="question-actions"><button class="button primary" id="check-discovery" type="button">Check my idea</button><button class="button secondary" id="hint-discovery" type="button">Hint</button></div><div id="discovery-feedback"></div></section><section class="panel"><h3>Progress</h3><p><strong>${completed.size} of ${course.explorations.length}</strong> discoveries complete.</p><div class="progress-track"><span style="width:${completed.size/course.explorations.length*100}%"></span></div></section></aside></div>`;
+      <div class="story-layout"><section class="panel story-scene"><span class="eyebrow">Discovery ${active+1} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.title)}</h2>${scienceDiagram(courseTopic(), active)}<p>${escapeHtml(item.context)}</p>${voiceButton(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}<div class="discovery-model ${escapeHtml(item.modelType)}"><strong>${escapeHtml(item.modelType.replaceAll('-',' '))}</strong><span>${escapeHtml(item.explanation)}</span></div></section><aside class="section-stack"><section class="panel"><h3>Discovery question</h3><p>${escapeHtml(item.prompt)}</p>${voiceButton(item.prompt, "Listen to question")}<input id="discovery-answer" class="math-input" aria-label="Discovery answer"><div class="question-actions"><button class="button primary" id="check-discovery" type="button">Check my idea</button><button class="button secondary" id="hint-discovery" type="button">Hint</button></div><div id="discovery-feedback"></div></section><section class="panel"><h3>Progress</h3><p><strong>${completed.size} of ${course.explorations.length}</strong> discoveries complete.</p><div class="progress-track"><span style="width:${completed.size/course.explorations.length*100}%"></span></div></section></aside></div>`;
+    initScienceWebGL($("#app"));
     $$('[data-exploration]').forEach(button=>button.addEventListener("click",()=>{active=Number(button.dataset.exploration);draw();}));
     $("#hint-discovery").addEventListener("click",()=>{$("#discovery-feedback").innerHTML=`<p class="feedback try"><strong>Hint:</strong> ${escapeHtml(item.hint)}</p>`;});
     $("#check-discovery").addEventListener("click",()=>{
@@ -423,7 +425,8 @@ function renderVisualModels() {
   let active = 0;
   const draw = () => {
     const model = course.visualModels[active];
-    $("#app").innerHTML = `${pageHeader("Six ways to see the science", "Visual Models", `Explore representations that make ${escapeHtml(course.unit.unitTitle)} visible and easier to explain.`)}<div class="model-tabs">${course.visualModels.map((item,index)=>`<button class="subtab ${index===active?'active':''}" data-model-index="${index}" type="button">${escapeHtml(item.title)}</button>`).join('')}</div><section class="panel model-stage generic-model-stage"><div class="math-symbol">${active+1}</div><span class="eyebrow">${escapeHtml(model.outcomeId || `Model ${active+1}`)}</span><h2>${escapeHtml(model.title)}</h2><p>${escapeHtml(model.purpose)}</p>${voiceButton(`${model.title}. ${model.purpose}`, "Listen to model")}<div class="model-concept-cards">${course.concepts.slice(0,3).map((concept)=>`<article><strong>${escapeHtml(concept.title)}</strong><span>${escapeHtml(concept.example)}</span></article>`).join('')}</div></section><p><button class="button primary" id="visuals-done" type="button">I explored the models ✓</button></p>`;
+    $("#app").innerHTML = `${pageHeader("Ways to see the science", "Visual Models", `Explore labelled models that make ${escapeHtml(course.unit.unitTitle)} visible and easier to explain.`)}<div class="model-tabs">${course.visualModels.map((item,index)=>`<button class="subtab ${index===active?'active':''}" data-model-index="${index}" type="button">${escapeHtml(item.title)}</button>`).join('')}</div><section class="panel model-stage generic-model-stage"><span class="eyebrow">${escapeHtml(model.outcomeId || `Model ${active+1}`)}</span><h2>${escapeHtml(model.title)}</h2>${scienceDiagram(courseTopic(), active)}<p>${escapeHtml(model.purpose)}</p>${voiceButton(`${model.title}. ${model.purpose}`, "Listen to model")}<div class="model-concept-cards">${course.concepts.slice(0,3).map((concept)=>`<article><strong>${escapeHtml(concept.title)}</strong><span>${escapeHtml(concept.example)}</span></article>`).join('')}</div></section><p><button class="button primary" id="visuals-done" type="button">I explored the models ✓</button></p>`;
+    initScienceWebGL($("#app"));
     $$('[data-model-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.modelIndex);draw();}));
     $("#visuals-done").addEventListener("click", () => { complete("visuals", "Visual models explored."); navigate("method"); });
   };
@@ -445,70 +448,15 @@ function renderLearnMethod() {
   draw();
 }
 
-function legacyGeometryConceptVisual(concept, index) {
-  const unit2 = [
-    { caption: "Compare a sphere, cube, cylinder and cone as solid 3D shapes.", art: `<circle cx="56" cy="78" r="31" class="shape-fill"/><path d="M32 63c15 8 32 8 48 0M34 91c14-7 30-7 44 0" class="detail"/><path d="M116 53l34-18 34 18v43l-34 19-34-19zM116 53l34 19 34-19M150 72v43" class="shape-fill detail"/><ellipse cx="238" cy="50" rx="30" ry="12" class="shape-fill detail"/><path d="M208 50v58c0 7 13 12 30 12s30-5 30-12V50" class="shape-fill detail"/><path d="M302 111L331 43l29 68z" class="shape-fill detail"/><ellipse cx="331" cy="111" rx="29" ry="9" class="shape-fill detail"/><text x="56" y="145">sphere</text><text x="150" y="145">cube</text><text x="238" y="145">cylinder</text><text x="331" y="145">cone</text>` },
-    { caption: "A cube has flat faces, straight edges and corner points called vertices.", art: `<path d="M112 54l74-32 74 32v76l-74 32-74-32zM112 54l74 34 74-34M186 88v74" class="shape-fill detail"/><path d="M186 88l74-34" class="edge-focus"/><circle cx="260" cy="54" r="7" class="vertex-focus"/><path d="M62 58h44M54 58l-20 0M55 58l30 28" class="callout"/><text x="12" y="52">face</text><path d="M278 50h60" class="callout"/><text x="300" y="42">vertex</text><path d="M225 82l75 46" class="callout"/><text x="298" y="145">edge</text>` },
-    { caption: "Match everyday objects to their scientific solids: ball–sphere, dice–cube, tin–cylinder, tent–pyramid.", art: `<circle cx="53" cy="73" r="30" class="shape-fill detail"/><path d="M32 55l42 35M28 78l47-22" class="detail"/><rect x="112" y="43" width="55" height="55" rx="7" class="shape-fill detail"/><circle cx="127" cy="59" r="4"/><circle cx="152" cy="59" r="4"/><circle cx="139" cy="71" r="4"/><circle cx="127" cy="84" r="4"/><circle cx="152" cy="84" r="4"/><ellipse cx="227" cy="47" rx="29" ry="10" class="shape-fill detail"/><path d="M198 47v54c0 6 13 10 29 10s29-4 29-10V47" class="shape-fill detail"/><path d="M290 104l34-65 34 65zM324 39v65" class="shape-fill detail"/><text x="53" y="135">ball</text><text x="139" y="135">dice</text><text x="227" y="135">tin</text><text x="324" y="135">tent</text>` },
-    { caption: "Count straight sides and vertices to name polygons.", art: `<path d="M51 42l37 68H14z" class="shape-flat"/><rect x="110" y="43" width="65" height="65" class="shape-flat"/><path d="M232 36l34 25-13 41h-42l-13-41z" class="shape-flat"/><path d="M307 38h35l18 31-18 31h-35l-18-31z" class="shape-flat"/><text x="51" y="135">3 sides</text><text x="142" y="135">4 sides</text><text x="232" y="135">5 sides</text><text x="324" y="135">6 sides</text>` },
-    { caption: "A line of symmetry divides a shape into two matching mirror halves.", art: `<path d="M78 36c-44-24-62 28-26 52-31 26-7 70 28 33 20 27 42-6 22-32 35-25 17-76-24-53z" class="shape-fill detail"/><path d="M80 25v112" class="symmetry-line"/><path d="M215 38h88v82h-88z" class="shape-flat"/><path d="M259 25v110M202 79h114" class="symmetry-line"/><text x="80" y="156">1 matching fold</text><text x="259" y="156">2 matching folds</text>` },
-    { caption: "Turning changes orientation; flipping creates a mirror image. The shape itself stays the same.", art: `<rect x="40" y="51" width="56" height="56" class="shape-flat"/><path d="M110 78h47m-11-12l13 12-13 12" class="turn-arrow"/><rect x="178" y="51" width="56" height="56" transform="rotate(45 206 79)" class="shape-flat"/><path d="M253 79h48m-12-12l13 12-13 12" class="turn-arrow"/><path d="M322 46l29 64h-58z" class="shape-flat"/><path d="M322 35v90" class="symmetry-line"/><text x="68" y="145">start</text><text x="206" y="145">turn</text><text x="322" y="145">flip</text>` },
-  ];
-  const unit11 = [
-    { caption: "Directions depend on the way you face: left, straight ahead and right.", art: `<circle cx="180" cy="87" r="24" class="shape-fill detail"/><path d="M180 61V22m-10 13l10-14 10 14M156 87h-68m13-10L87 87l14 10M204 87h68m-13-10l14 10-14 10" class="turn-arrow"/><text x="180" y="145">straight</text><text x="79" y="116">left</text><text x="281" y="116">right</text>` },
-    { caption: "Clockwise follows the hands of a clock; anticlockwise travels the opposite way.", art: `<circle cx="180" cy="82" r="57" class="shape-flat"/><path d="M180 82V39M180 82l32 20" class="detail"/><circle cx="180" cy="82" r="5"/><path d="M103 63a82 82 0 0 1 154-3m-8-12l10 13-16 5" class="turn-arrow"/><path d="M111 119a82 82 0 0 0 138 0m-2 17l4-17-17-1" class="turn-arrow alt"/><text x="180" y="15">clockwise</text><text x="180" y="164">anticlockwise</text>` },
-    { caption: "A quarter turn is one of four equal turns and makes a right angle.", art: `<path d="M85 126V46h80" class="angle-line"/><rect x="85" y="46" width="18" height="18" class="right-angle"/><path d="M103 112a65 65 0 0 0 48-48m-1 17l2-18-18 3" class="turn-arrow"/><circle cx="265" cy="86" r="52" class="shape-flat faint"/><path d="M265 86V34M265 86h52" class="angle-line"/><path d="M265 34a52 52 0 0 1 52 52" class="quarter-fill"/><text x="125" y="151">right angle</text><text x="265" y="151">¼ turn</text>` },
-    { caption: "A half turn is two quarter turns and points in the opposite direction.", art: `<path d="M91 118V39m-12 14l12-15 12 15M269 39v79m-12-14l12 15 12-15" class="turn-arrow"/><path d="M91 72a89 89 0 0 1 178 0m-12-12l13 13 10-15" class="turn-arrow"/><text x="91" y="145">start: up</text><text x="269" y="145">after ½ turn: down</text>` },
-    { caption: "Compare a quarter, half, three-quarter and full turn around one centre.", art: `<circle cx="180" cy="83" r="59" class="shape-flat faint"/><path d="M180 83V24M180 83h59M180 83v59M180 83h-59" class="detail"/><path d="M180 24a59 59 0 0 1 59 59" class="turn-arc one"/><path d="M239 83a59 59 0 0 1-59 59" class="turn-arc two"/><path d="M180 142a59 59 0 0 1-59-59" class="turn-arc three"/><path d="M121 83a59 59 0 0 1 59-59" class="turn-arc four"/><text x="180" y="167">4 quarter turns = 1 full turn</text>` },
-    { caption: "Every radius reaches from the centre to the circle; a diameter and symmetry line pass through the centre.", art: `<circle cx="180" cy="82" r="60" class="shape-flat"/><path d="M120 82h120" class="symmetry-line"/><path d="M180 82l42-42" class="edge-focus"/><circle cx="180" cy="82" r="6" class="vertex-focus"/><text x="180" y="108">centre</text><text x="211" y="51">radius</text><text x="180" y="151">diameter / symmetry line</text>` },
-  ];
-  const visual = course.unit.unitNo === 2 ? unit2[index] : course.unit.unitNo === 11 ? unit11[index] : null;
-  if (!visual) return "";
-  return `<figure class="geometry-visual"><svg viewBox="0 0 380 180" aria-hidden="true" focusable="false">${visual.art}</svg><figcaption><strong>Visual example:</strong> ${escapeHtml(visual.caption)}</figcaption></figure>`;
-}
-
-function geometryConceptVisual(concept, index) {
-  const unit2 = [
-    { caption: "Compare a sphere, cube, cylinder and cone as solid 3D shapes.", labels: ["sphere", "cube", "cylinder", "cone"] },
-    { caption: "A cube has flat faces, straight edges and corner points called vertices.", labels: ["6 faces", "12 edges", "8 vertices"] },
-    { caption: "Match everyday objects to their scientific solids: ball–sphere, dice–cube, tin–cylinder, tent–pyramid.", labels: ["ball", "dice", "tin", "tent"] },
-    { caption: "Count straight sides and vertices to name polygons.", labels: ["triangle · 3", "square · 4", "pentagon · 5", "hexagon · 6"] },
-    { caption: "A line of symmetry divides a shape into two matching mirror halves.", labels: ["matching half", "line of symmetry", "matching half"] },
-    { caption: "Turning changes orientation; flipping creates a mirror image. The shape itself stays the same.", labels: ["start", "turn", "flip"] },
-  ];
-  const unit11 = [
-    { caption: "Directions depend on the way you face: left, straight ahead and right.", labels: ["left", "straight", "right"] },
-    { caption: "Clockwise follows the hands of a clock; anticlockwise travels the opposite way.", labels: ["clockwise ↻", "anticlockwise ↺"] },
-    { caption: "A quarter turn is one of four equal turns and makes a right angle.", labels: ["right angle", "¼ turn · 90°"] },
-    { caption: "A half turn is two quarter turns and points in the opposite direction.", labels: ["start · up", "½ turn", "finish · down"] },
-    { caption: "Compare a quarter, half, three-quarter and full turn around one centre.", labels: ["¼", "½", "¾", "1 full turn"] },
-    { caption: "Every radius reaches from the centre to the circle; a diameter and symmetry line pass through the centre.", labels: ["centre", "radius", "diameter"] },
-  ];
-  const unit15 = [
-    { caption: "Matching halves make a symmetrical whole around a centre line.", labels: ["left half", "mirror line", "right half"] },
-    { caption: "Test vertical and horizontal lines to find where a shape folds exactly onto itself.", labels: ["vertical fold", "horizontal fold"] },
-    { caption: "A reflection flips a shape across the mirror line without changing its size.", labels: ["shape", "mirror line", "reflection"] },
-    { caption: "Build a symmetrical pattern by matching every coloured tile across the line.", labels: ["same colour", "same distance", "opposite side"] },
-    { caption: "Use forwards, backwards, left and right from the direction you are facing.", labels: ["left", "forwards", "right", "backwards"] },
-    { caption: "Clockwise turns right around a centre; anticlockwise turns left.", labels: ["clockwise ↻", "anticlockwise ↺"] },
-  ];
-  const visual = course.unit.unitNo === 2 ? unit2[index] : course.unit.unitNo === 11 ? unit11[index] : course.unit.unitNo === 15 ? unit15[index] : null;
-  if (!visual) return "";
-  const sceneId = `${course.unit.unitNo}-${index}`;
-  return `<figure class="geometry-visual" data-geometry-figure="${sceneId}">
-    <div class="geometry-stage"><canvas class="geometry-webgl" data-geometry-scene="${sceneId}" role="img" aria-label="Interactive model. ${escapeHtml(visual.caption)}"></canvas><p class="geometry-fallback" hidden>This device cannot display the interactive WebGL model. Use the labels and explanation below.</p></div>
-    <div class="geometry-labels" aria-hidden="true">${visual.labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>
-    <div class="geometry-controls"><button type="button" data-geometry-toggle>Pause animation</button><button type="button" data-geometry-reset>Reset view</button><span>Drag the model to turn it</span></div>
-    <figcaption><strong>Interactive example:</strong> ${escapeHtml(visual.caption)}</figcaption>
-  </figure>`;
-}
+const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
 function renderLesson() {
-  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${geometryConceptVisual(concept, index)}<p>${escapeHtml(concept.explanation)}</p><p class="example"><strong>Example:</strong> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${concept.explanation}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
-  $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the six source-grounded concepts and follow the complete ElevenLabs narration for this lesson.")}
+  const topic = courseTopic();
+  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${scienceDiagram(topic, index)}<p>${escapeHtml(concept.explanation)}</p><p class="example"><strong>Example:</strong> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${concept.explanation}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
+  $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;
-  initGeometryWebGL($("#app"));
+  initScienceWebGL($("#app"));
   $("#lesson-done").addEventListener("click", () => { complete("lesson", "Teacher lesson marked studied."); navigate("ai"); });
 }
 
@@ -555,9 +503,11 @@ function renderPractice() {
 }
 
 function renderActivities() {
-  $("#app").innerHTML = `${pageHeader("Learn by doing", "Experiments", `Complete six practical ${escapeHtml(course.unit.unitTitle)} investigations using familiar materials.`)}
-    <div class="task-grid">${course.activities.map((activity, index) => `<article class="panel task-card"><span class="eyebrow">Activity ${index + 1} · Hands-on investigation</span><h2>${escapeHtml(activity.title)}</h2><p class="rule-box"><strong>You need:</strong> ${escapeHtml(activity.materials)}</p><ol class="agenda">${activity.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${index}" type="button">✓ Mark complete</button></article>`).join("")}</div>
+  const topic = courseTopic();
+  $("#app").innerHTML = `${pageHeader("Learn by doing", "Experiments", `Complete practical ${escapeHtml(course.unit.unitTitle)} investigations using familiar materials.`)}
+    <div class="task-grid">${course.activities.map((activity, index) => `<article class="panel task-card"><span class="eyebrow">Investigation ${index + 1} · Hands-on</span><h2>${escapeHtml(activity.title)}</h2>${scienceDiagram(topic, index)}<p class="rule-box"><strong>You need:</strong> ${escapeHtml(activity.materials)}</p><ol class="agenda">${activity.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${index}" type="button">✓ Mark complete</button></article>`).join("")}</div>
     <p><button class="button primary" id="activities-done" type="button">Finish activities ✓</button></p>`;
+  initScienceWebGL($("#app"));
   $$('[data-activity-done]').forEach((button) => button.addEventListener("click", () => { button.disabled = true; button.textContent = "✓ Complete"; }));
   $("#activities-done").addEventListener("click", () => {
     if (!$$('[data-activity-done]').every((button) => button.disabled)) return toast("Mark each activity complete first.");

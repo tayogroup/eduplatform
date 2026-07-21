@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" data-stage="2">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17324d">
+  <title>Ehel Academy Science — shell test</title>
+  <link rel="stylesheet" href="./shared/course-ui.css?v=math-20260721e">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to lesson</a>
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Ehel Academy Science">
+      <span class="brand-mark">E</span>
+      <span><strong>Ehel Academy</strong><small>Primary Science</small></span>
+    </a>
+    <div class="unit-progress">
+      <span><strong id="progress-value">0%</strong> Unit progress</span>
+      <div class="progress-track" role="progressbar" aria-label="Unit progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div>
+    </div>
+    <div class="top-actions">
+      <select id="stage-select" class="top-grade-picker" aria-label="Choose Science stage"></select>
+      <select id="top-unit-select" class="top-unit-picker" aria-label="Choose Science unit"></select>
+      <button class="icon-button voice-toggle" id="voice-toggle" type="button" aria-label="Sound settings" title="Sound settings"><span aria-hidden="true">♪</span></button>
+      <button class="profile-button" type="button" aria-label="Learner profile"><span>AM</span><small>Science lab</small></button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="course-context">
+        <span id="course-label">Preparing Science</span>
+        <label class="unit-picker-label" for="unit-select">Choose unit</label>
+        <select id="unit-select" class="unit-picker" aria-label="Choose Science unit"></select>
+        <p id="unit-title">Preparing course…</p>
+      </div>
+      <nav id="section-nav" aria-label="Unit sections"></nav>
+      <button class="teacher-switch" id="teacher-switch" type="button"><span aria-hidden="true">T</span><span>Teacher resources</span></button>
+    </aside>
+
+    <main id="content" class="content" tabindex="-1">
+      <div id="loading" class="loading"><span></span><p>Preparing your Science lesson…</p></div>
+      <div id="app" hidden></div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="../shell/subjects/science.js?v=t2"></script>
+</body>
+</html>

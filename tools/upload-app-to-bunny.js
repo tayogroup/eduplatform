@@ -3,19 +3,20 @@
 // per-unit assets) to the Bunny Storage zone under "Ehel Primary/app/…".
 //
 // The bulk file/tts AUDIO is NOT uploaded here — it lives in the separate
-// "Ehel Primary/media/…" tree (see upload-media-to-bunny.js) and the apps reach
-// it with hostname-independent relative paths. So each subject's top-level
-// media/ directory is excluded; everything else the app requests at runtime
-// (grade data, per-grade images/video/vocab-audio, ebooks, vocabulary/, shared/)
-// is co-located under app/.
+// "Ehel Primary/media/…" tree (see upload-media-to-bunny.js). Likewise the
+// per-unit JSON DATA lives in "Ehel Primary/content/…" (see
+// upload-content-to-bunny.js). The apps reach both with hostname-independent
+// relative paths. So this excludes each subject's top-level media/ dir AND every
+// grade-N/data/ dir; everything else the app requests at runtime (per-grade
+// images/video/vocab-audio, ebooks, vocabulary/, shared/) is co-located under app/.
 //
-// Idempotent & resumable via a local manifest. Access key from env (BUNNY_KEY),
-// never hard-coded.
+// Re-deploy safe: a content-hash manifest means only changed files are sent.
+// Access key from env (BUNNY_KEY), never hard-coded.
 //
 // Usage: BUNNY_KEY=… node tools/upload-app-to-bunny.js [english|mathematics|science|vocabulary|shared]…
 //   (no args = everything)
 
-const fs = require("fs"), path = require("path");
+const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
@@ -52,7 +53,9 @@ const CT = {
 const ctFor = (f) => CT[path.extname(f).toLowerCase()] || "application/octet-stream";
 
 // Recursively list files under `dir`, skipping any path segment named in `skip`
-// (applied only at the tree root via relative depth-0 check).
+// (top-level names in `skipTop`), and skips per-grade data/ dirs anywhere
+// (grade-N/data/ — that JSON is the content tier, uploaded separately).
+const DATA_DIR_RE = /(^|\/)grade-\d+\/data$/;
 function walk(root, rel = "", skipTop = []) {
   const out = [];
   const abs = path.join(root, rel);
@@ -60,18 +63,23 @@ function walk(root, rel = "", skipTop = []) {
     const childRel = rel ? `${rel}/${name}` : name;
     if (!rel && skipTop.includes(name)) continue;
     const st = fs.statSync(path.join(abs, name));
-    if (st.isDirectory()) out.push(...walk(root, childRel, skipTop));
-    else if (st.isFile()) out.push(childRel);
+    if (st.isDirectory()) {
+      if (DATA_DIR_RE.test(childRel)) continue;
+      out.push(...walk(root, childRel, skipTop));
+    } else if (st.isFile()) out.push(childRel);
   }
   return out;
 }
+
+const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 
 function buildList() {
   const list = [];
   for (const t of trees) {
     if (!fs.existsSync(t.src)) { console.log(`  (skip ${t.name}: ${t.src} missing)`); continue; }
     for (const rel of walk(t.src, "", t.excludeTop)) {
-      list.push({ local: path.join(t.src, rel), remote: `${t.dest}/${rel}` });
+      const local = path.join(t.src, rel);
+      list.push({ local, remote: `${t.dest}/${rel}`, hash: sha1(fs.readFileSync(local)) });
     }
   }
   return list;
@@ -84,13 +92,16 @@ async function put(remote, buf, ct) {
 }
 
 (async () => {
-  const manifest = fs.existsSync(MANIFEST) ? new Set(JSON.parse(fs.readFileSync(MANIFEST, "utf8"))) : new Set();
+  // Hash-based manifest {remote: sha1}: re-deploys send only changed files.
+  // (Legacy array-format manifests are ignored → a one-time full re-upload.)
+  const raw = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
+  const manifest = Array.isArray(raw) ? {} : raw;
   const all = buildList();
-  const todo = all.filter((x) => !manifest.has(x.remote));
+  const todo = all.filter((x) => manifest[x.remote] !== x.hash);
   const bytes = todo.reduce((s, x) => s + fs.statSync(x.local).size, 0);
-  console.log(`trees: ${trees.map((t) => t.name).join(",")} | total: ${all.length} | uploaded: ${all.length - todo.length} | to upload: ${todo.length} (${(bytes / 1048576).toFixed(0)} MB)`);
+  console.log(`trees: ${trees.map((t) => t.name).join(",")} | total: ${all.length} | unchanged: ${all.length - todo.length} | to upload: ${todo.length} (${(bytes / 1048576).toFixed(0)} MB)`);
   let done = 0, failed = 0, since = 0, idx = 0;
-  const save = () => fs.writeFileSync(MANIFEST, JSON.stringify([...manifest]));
+  const save = () => fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 0));
   async function worker() {
     while (idx < todo.length) {
       const item = todo[idx++];
@@ -99,11 +110,11 @@ async function put(remote, buf, ct) {
         try { await put(item.remote, fs.readFileSync(item.local), ctFor(item.local)); ok = true; }
         catch (e) { if (a === 4) { failed += 1; console.log(`FAIL ${item.remote}: ${e.message}`); } else await new Promise((r) => setTimeout(r, 800 * a)); }
       }
-      if (ok) { manifest.add(item.remote); done += 1; since += 1; }
+      if (ok) { manifest[item.remote] = item.hash; done += 1; since += 1; }
       if (since >= 100) { since = 0; save(); process.stdout.write(`  …${done}/${todo.length} uploaded\n`); }
     }
   }
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   save();
-  console.log(`\n──────── done ──────── uploaded: ${done} | failed: ${failed} | manifest: ${manifest.size}`);
+  console.log(`\n──────── done ──────── uploaded: ${done} | failed: ${failed} | manifest: ${Object.keys(manifest).length}`);
 })();

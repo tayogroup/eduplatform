@@ -33,6 +33,13 @@ function resolveMediaUrl(source) {
   }
   return new URL(s, document.baseURI).href;
 }
+// Deployed (Bunny): per-unit data lives in a separate content tree
+// (…/content/english/gNN/), edited and cached independently of the app code.
+// Locally it sits beside the app under grade-N/data/. Asset paths still rebase
+// against gradeRootUrl (app tree).
+const dataRootUrl = AUDIO_IS_DEV
+  ? new URL("data/", gradeRootUrl)
+  : new URL(`../../content/english/g${String(gradeNumber).padStart(2, "0")}/`, document.baseURI);
 const defaultUnit = gradeNumber === 1 ? 0 : 1;
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
 const unitNumber = requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit;
@@ -2369,16 +2376,16 @@ function renderTeacher() {
 async function init() {
   try {
     const [manifestResponse, courseResponse, dictionaryResponse, finalAssessmentResponse, lectureMediaResponse] = await Promise.all([
-      fetch(new URL("data/course-manifest.json", gradeRootUrl)),
-      fetch(new URL(`data/units/unit-${unitNumber}.json`, gradeRootUrl)),
-      fetch(new URL(`data/master-dictionary.grade${gradeNumber}.json`, gradeRootUrl)),
-      fetch(new URL("data/course-final-quiz.json", gradeRootUrl)),
-      fetch(new URL("data/lecture-media.json", gradeRootUrl)),
+      fetch(new URL("course-manifest.json", dataRootUrl)),
+      fetch(new URL(`units/unit-${unitNumber}.json`, dataRootUrl)),
+      fetch(new URL(`master-dictionary.grade${gradeNumber}.json`, dataRootUrl)),
+      fetch(new URL("course-final-quiz.json", dataRootUrl)),
+      fetch(new URL("lecture-media.json", dataRootUrl)),
     ]);
     const failedResponse = [manifestResponse, courseResponse, dictionaryResponse, finalAssessmentResponse].find((response) => !response.ok);
     if (failedResponse) throw new Error(`Course data could not be loaded (${failedResponse.status} ${failedResponse.url}).`);
     [manifest, course, dictionary, finalAssessment] = await Promise.all([manifestResponse.json(), courseResponse.json(), dictionaryResponse.json(), finalAssessmentResponse.json()]);
-    const gameResponse = await fetch(new URL(`data/games/unit-${unitNumber}.json`, gradeRootUrl));
+    const gameResponse = await fetch(new URL(`games/unit-${unitNumber}.json`, dataRootUrl));
     if (!gameResponse.ok) throw new Error(`Game data could not be loaded (${gameResponse.status}).`);
     gamePack = await gameResponse.json();
     if (lectureMediaResponse.ok) {

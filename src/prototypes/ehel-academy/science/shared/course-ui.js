@@ -8,6 +8,14 @@ const params = new URLSearchParams(location.search);
 const stageNumber = Number(params.get("stage") || params.get("grade") || document.documentElement.dataset.stage || 2);
 const unitNumber = Number(params.get("unit") || 1);
 const stageRootUrl = new URL(`./grade-${stageNumber}/`, location.href);
+// Deployed (Bunny): per-unit data lives in a separate content tree
+// (…/content/science/gNN/), edited and cached on its own cadence, independent
+// of the versioned app code. Locally it sits beside the app under grade-N/data/.
+// Asset paths still rebase against stageRootUrl (app tree).
+const IS_LOCAL_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
+const dataRootUrl = IS_LOCAL_DEV
+  ? new URL("data/", stageRootUrl)
+  : new URL(`../../content/science/g${String(stageNumber).padStart(2, "0")}/`, document.baseURI);
 const STORAGE_KEY = `ehel-sci-s${stageNumber}-u${unitNumber}-progress-v1`;
 const STAGE_STORAGE_KEY = `ehel-sci-s${stageNumber}-capstone-progress-v1`;
 const LEGACY_STORAGE_KEY = `ehel-sci-g${stageNumber}-u${unitNumber}-progress-v1`;
@@ -147,7 +155,7 @@ const staticVoiceMisses = new Set();
 // Local dev keeps the flat co-located cache; deployed (Bunny) reads the
 // per-grade tree two levels up under the product root — relative, so it works
 // on any hostname (ehelacademy.b-cdn.net or app.ehelacademy.org).
-const STATIC_AUDIO_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
+const STATIC_AUDIO_DEV = IS_LOCAL_DEV;
 function staticVoicePath(key) {
   if (STATIC_AUDIO_DEV) return new URL(`./media/audio/tts/${key}.mp3`, document.baseURI).href;
   const g = String(stageNumber).padStart(2, "0");
@@ -1056,9 +1064,9 @@ async function init() {
   try {
     if (stageNumber < 1 || stageNumber > 8 || unitNumber < 1 || unitNumber > 18) throw new Error(`The requested Stage ${stageNumber} Science unit is unavailable.`);
     const [manifestResponse, courseResponse, capstoneResponse] = await Promise.all([
-      fetch(new URL("data/course-manifest.json", stageRootUrl)),
-      fetch(new URL(`data/units/unit-${unitNumber}.json`, stageRootUrl)),
-      fetch(new URL("data/grade-capstone.json", stageRootUrl))
+      fetch(new URL("course-manifest.json", dataRootUrl)),
+      fetch(new URL(`units/unit-${unitNumber}.json`, dataRootUrl)),
+      fetch(new URL("grade-capstone.json", dataRootUrl))
     ]);
     if (!manifestResponse.ok || !courseResponse.ok || !capstoneResponse.ok) throw new Error("The Science course package could not be loaded.");
     [manifest, course, gradeCapstone] = await Promise.all([manifestResponse.json(), courseResponse.json(), capstoneResponse.json()]);

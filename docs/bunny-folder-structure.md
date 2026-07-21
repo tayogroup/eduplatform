@@ -5,6 +5,15 @@ courses, grounded in what the three prototypes actually build. Separates the
 three lifecycles (code · content · media) so each deploys and caches on its own
 cadence, and isolates production writes from the test tiers.
 
+> **Status 2026-07-22 — content/app split shipped.** The `media/` and `content/`
+> separations are live under `Ehel Primary/`: apps fetch unit JSON from
+> `../../content/{subject}/gNN/` and audio from `../../media/{subject}/gNN/…`
+> (relative → hostname-independent), branching to co-located paths only on
+> localhost. Uploaders: `tools/upload-{app,content,media}-to-bunny.js` (hash
+> manifests → changed-file-only re-deploys). App-code **path versioning**
+> (`app/vN/` + `current.json`) is still deferred. Cache tiers + the mandatory
+> pull-zone purge are in [bunny-cache-config.md](bunny-cache-config.md).
+
 ## Zones, hostnames, environments
 
 Two **Storage Zones** (separate access keys → a test deploy physically cannot

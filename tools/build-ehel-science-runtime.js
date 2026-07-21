@@ -33,6 +33,14 @@ const EMPTY_DOC = { blocks: [], source_file: "(not provided)" };
 const q = (question, options, answer, explanation) => ({ question, options, answer, explanation });
 const GRADE1 = {
   1: {
+    outcomes: [
+      "Sort things into living and non-living, and say why.",
+      "Say that living things move, feed, grow and can have young.",
+      "Name some animals and say that they are living.",
+      "Name some plants and say that they are living.",
+      "Say what living things need to stay alive: food, water and air.",
+      "Show care and kindness towards a living animal or plant.",
+    ],
     conceptTitles: ["Living Things", "Non-Living Things", "Animals Are Alive", "Plants Are Alive", "What Living Things Need", "Caring for Living Things"],
     experimentTitles: ["Watch a Seed Grow", "Living or Not-Living Hunt", "Does a Plant Need Water?", "Sort Living and Non-Living Things", "Find the Baby Animals", "Draw a Living Thing You Care For"],
     quiz: [
@@ -45,6 +53,14 @@ const GRADE1 = {
     ],
   },
   2: {
+    outcomes: [
+      "Name the main parts of a plant: roots, stem, leaves and flower.",
+      "Say what each part of a plant does.",
+      "Say what a plant needs to grow: water, light and warmth.",
+      "Describe how a seed grows into a new plant.",
+      "Observe and record how a plant changes as it grows.",
+      "Care for a growing plant over time.",
+    ],
     conceptTitles: ["The Parts of a Plant", "Roots Hold and Drink", "The Stem Carries Water", "Leaves and Flowers", "What Plants Need to Grow", "Looking After a Plant"],
     experimentTitles: ["Grow a Bean in a Jar", "Plant a Seed and Watch", "Does a Plant Reach for Light?", "Look Inside a Flower", "Water One, Not the Other", "Make a Plant Diary"],
     quiz: [
@@ -57,6 +73,14 @@ const GRADE1 = {
     ],
   },
   3: {
+    outcomes: [
+      "Point to and name parts of the body: head, arms, legs, hands and feet.",
+      "Point to and name parts of the face: eyes, ears, nose and mouth.",
+      "Name the five senses and the body part used for each.",
+      "Say one way a sense helps to keep us safe.",
+      "Sort objects using touch, such as soft and hard or rough and smooth.",
+      "Say ways to keep our bodies clean and healthy.",
+    ],
     conceptTitles: ["Parts of My Body", "My Face", "My Five Senses", "Same and Different", "Keeping Clean and Healthy", "Staying Safe"],
     experimentTitles: ["Point and Name Body Parts", "Feely Bag: Soft or Hard?", "Listen and Point to the Sound", "Taste Test: Sweet or Sour", "Which Nose Knows? Smell Test", "Draw Myself and Label"],
     vocabulary: [
@@ -76,6 +100,14 @@ const GRADE1 = {
     ],
   },
   4: {
+    outcomes: [
+      "Name the material an everyday object is made from.",
+      "Describe materials using words like hard, soft, rough, smooth, bendy and stiff.",
+      "Sort objects by their material or by a property.",
+      "Say why a material is chosen for a particular job.",
+      "Test and compare how different materials feel and behave.",
+      "Observe and record the properties of materials.",
+    ],
     conceptTitles: ["What Things Are Made Of", "Hard and Soft", "Rough and Smooth", "Bendy and Stiff", "Sorting Materials", "Choosing the Right Material"],
     experimentTitles: ["Feel and Sort: Hard or Soft", "Rough or Smooth Hunt", "Bendy or Stiff Test", "Will It Float or Sink?", "Build the Strongest Tower", "Sort Toys by Material"],
     quiz: [
@@ -88,6 +120,14 @@ const GRADE1 = {
     ],
   },
   5: {
+    outcomes: [
+      "Recognise a push and a pull as forces.",
+      "Make an object move by pushing or pulling it.",
+      "Make a moving object slow down or stop.",
+      "Change how fast an object moves.",
+      "Change the direction in which an object moves.",
+      "Observe and describe pushes and pulls in play and at home.",
+    ],
     conceptTitles: ["Pushes", "Pulls", "Making Things Move", "Making Things Stop", "Fast and Slow", "Changing Direction"],
     experimentTitles: ["Push a Toy Car", "Pull a Toy on a String", "Ramp Race: Fast or Slow", "Make a Ball Stop", "Push Hard, Push Gently", "Change the Way It Goes"],
     quiz: [
@@ -100,6 +140,14 @@ const GRADE1 = {
     ],
   },
   6: {
+    outcomes: [
+      "Say that sounds are made when things shake or vibrate.",
+      "Name the ear as the body part we use to hear.",
+      "Sort sounds into loud and quiet.",
+      "Make sounds in different ways.",
+      "Describe the sounds we hear around us.",
+      "Listen carefully and identify different sounds.",
+    ],
     conceptTitles: ["What Is Sound?", "How We Hear", "Loud Sounds", "Quiet Sounds", "Making Sounds", "Sounds Around Us"],
     experimentTitles: ["Listen for One Minute", "Shake a Sound Maker", "Loud and Quiet Sorting", "Feel a Drum Vibrate", "Make a String Buzz", "Guess That Sound"],
     quiz: [
@@ -482,7 +530,7 @@ function buildGrade(grade) {
         example: concepts[index]?.example || ctitle,
       }));
     }
-    let outcomes = outcomeList(lesson);
+    let outcomes = (override && override.outcomes) ? override.outcomes.slice() : outcomeList(lesson);
     if (!outcomes.length) outcomes = concepts.map((concept) => `Explore and talk about ${concept.title.toLowerCase()}.`).slice(0, 6);
     const assessment = assessmentData(mcqs, reference, unitNo);
     const overview = lesson.blocks.map((block) => tidy(block.text)).find((text, index) => index > 2 && text.length > 180) || `Explore ${title} through concepts, investigations, methods and real-life practice.`;

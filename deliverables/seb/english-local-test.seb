@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>originatorVersion</key><string>EduPlatform_SEB_LocalTest</string>
+<key>startURL</key><string>http://127.0.0.1:5173/src/prototypes/ehel-academy/english/?grade=1&amp;unit=0#quiz</string>
+<key>allowQuit</key><true/>
+<key>quitURLConfirm</key><true/>
+<key>URLFilterEnable</key><true/>
+<key>URLFilterEnableContentFilter</key><false/>
+<key>URLFilterRules</key>
+<array>
+<dict><key>action</key><integer>1</integer><key>active</key><true/><key>expression</key><string>127.0.0.1:5173/*</string></dict>
+<dict><key>action</key><integer>1</integer><key>active</key><true/><key>expression</key><string>localhost:5173/*</string></dict>
+<dict><key>action</key><integer>1</integer><key>active</key><true/><key>expression</key><string>127.0.0.1/*</string></dict>
+</array>
+<key>browserWindowAllowReload</key><true/>
+<key>showReloadButton</key><true/>
+<key>showTime</key><true/>
+</dict>
+</plist>

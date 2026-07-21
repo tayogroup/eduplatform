@@ -134,6 +134,66 @@ function pqsn_schedule_summary(?string $json): string {
     return implode(' ', $days) . ' · ' . (string)$sch['start'] . '–' . (string)$sch['end'];
 }
 
+/**
+ * Latest query time (unix) per ClientID seen across all resolvers' recent logs.
+ * Used to keep each device's lastseen fresh and to detect silence (bypass/off).
+ */
+function pqsn_recent_client_activity(int $limit = 800): array {
+    $cfg = pqsn_config();
+    $seen = [];
+    foreach ($cfg->endpoints as $ep) {
+        [$ok, $res] = pqsn_api_request_ep($ep, 'GET', '/control/querylog?limit=' . (int)$limit, null);
+        if (!$ok || !is_array($res) || empty($res['data'])) {
+            continue;
+        }
+        foreach ($res['data'] as $entry) {
+            $cid = (string)($entry['client_id'] ?? '');
+            if ($cid === '') {
+                continue;
+            }
+            $t = strtotime((string)($entry['time'] ?? ''));
+            if ($t === false) {
+                continue;
+            }
+            if (!isset($seen[$cid]) || $t > $seen[$cid]) {
+                $seen[$cid] = $t;
+            }
+        }
+    }
+    return $seen;
+}
+
+/**
+ * Email the device's parent (or enroller) that it stopped reporting while it was
+ * expected to be online and filtered — the fingerprint of a VPN, a changed/removed
+ * DNS setting, or a switch to another device.
+ */
+function pqsn_notify_silent_device(stdClass $device): bool {
+    $parentid = (int)$device->parentid > 0 ? (int)$device->parentid : (int)$device->enrolledby;
+    if ($parentid <= 0) {
+        return false;
+    }
+    $parent = core_user::get_user($parentid, '*', IGNORE_MISSING);
+    if (!$parent || !empty($parent->deleted) || empty($parent->email)) {
+        return false;
+    }
+    $childname = 'the student';
+    $child = core_user::get_user((int)$device->childid, '*', IGNORE_MISSING);
+    if ($child && empty($child->deleted)) {
+        $childname = fullname($child);
+    }
+    $label = trim((string)$device->label) !== '' ? (string)$device->label : 'A device';
+    $from = core_user::get_support_user();
+    $subject = 'Safe Internet: "' . $label . '" stopped reporting';
+    $body = $label . " (" . $childname . ") is expected to be online and filtered right now, but it has stopped sending requests to Safe Internet.\n\n"
+        . "This usually means one of:\n"
+        . " - a VPN was switched on,\n"
+        . " - the DNS/Private DNS setting was changed or removed,\n"
+        . " - or the child is using a different device.\n\n"
+        . "Please check the device. If you use Family Link / Screen Time / a standard (non-admin) account, confirm those are still in place.";
+    return email_to_user($parent, $from, $subject, $body);
+}
+
 /** Push the base+learning ruleset to every resolver (idempotent). */
 function pqsn_ensure_learning_rules(): void {
     $cfg = pqsn_config();

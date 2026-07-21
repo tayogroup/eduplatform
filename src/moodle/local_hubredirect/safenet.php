@@ -361,6 +361,16 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
                 ?>
                 <span class="pqsn-pill"><?php echo s($policylabel); ?></span>
                 <span class="pqsn-pill"><?php echo (string)$device->syncstatus === 'synced' ? 'On servers' : 'Pending sync'; ?></span>
+                <?php
+                $lastseen = (int)($device->lastseen ?? 0);
+                $stale = $lastseen > 0 && (time() - $lastseen > 30 * 60);
+                if ($lastseen === 0): ?>
+                  <span class="pqsn-pill" style="background:#fdeaea;color:#8a2626">Not seen yet</span>
+                <?php elseif ($stale): ?>
+                  <span class="pqsn-pill" style="background:#fdeaea;color:#8a2626" title="Last activity <?php echo s(userdate($lastseen, '%d %b %H:%M')); ?>">Not reporting</span>
+                <?php else: ?>
+                  <span class="pqsn-pill" style="background:#eaf6ec;color:#2e7d4f">Active</span>
+                <?php endif; ?>
               </div>
             </div>
             <?php if ($hosts): ?>
@@ -471,6 +481,18 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
       </div>
     </section>
   </div>
+  <details class="pqsn-steps" style="margin-top:16px">
+    <summary><strong>Keep it tamper-resistant — stop VPNs, hotspots and workarounds</strong></summary>
+    <p class="pqsn-note" style="margin:8px 0">Safe Internet filters every enrolled device on any network — including a phone hotspot, because the device keeps using our encrypted DNS wherever it goes. To keep a child from switching it off, lock the device with its built-in parental controls:</p>
+    <ul style="margin:0 0 8px 18px;font-size:13px;line-height:1.6">
+      <li><strong>Windows:</strong> put the child on a <strong>standard (non-administrator)</strong> account and keep the admin password. They can't change DNS or install a VPN without it.</li>
+      <li><strong>Android:</strong> use <strong>Google Family Link</strong> to lock device settings and block app installs — that stops both Private-DNS changes and VPN apps.</li>
+      <li><strong>iPhone / iPad:</strong> set a <strong>Screen Time</strong> passcode and disallow profile removal (Content &amp; Privacy Restrictions). For the strongest lock, enroll the iPad in <strong>MDM</strong>, which can hard-block VPNs.</li>
+      <li><strong>Enroll every device</strong> the child uses — phone, tablet, laptop. An un-enrolled device isn't filtered.</li>
+    </ul>
+    <p class="pqsn-note" style="margin:0 0 8px">The service also <strong>blocks VPN, proxy and alternative-DNS bypass domains</strong>, so the easy in-device escapes don't work, and it <strong>emails you if an enrolled device stops reporting</strong> during class or homework hours (the sign of a VPN, a removed setting, or a switch to another device).</p>
+    <p class="pqsn-note" style="margin:0"><em>Honest limit:</em> a device you don't manage, on mobile data, can't be filtered by any DNS service — that case comes down to the parental controls above and supervision.</p>
+  </details>
   <p class="pqsn-note" style="margin:16px 0 0"><strong>Learning Mode</strong> restricts a device to approved educational sites only (everything else is blocked) — useful for homework or focused study. Toggle it any time; it switches back to normal child-safe browsing with one tap. Ehel keeps device browsing summaries for 30 days so parents can review activity; only you and designated school staff can see your child's data. Removing a device deletes it from the filtering servers.</p>
 </div>
 </main>

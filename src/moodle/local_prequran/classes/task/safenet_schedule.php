@@ -49,9 +49,31 @@ class safenet_schedule extends \core\task\scheduled_task {
             // Live-session tables not present on this install; sessions just don't drive.
         }
 
+        // Latest activity per ClientID across resolvers (for lastseen + silence).
+        $activity = [];
+        try {
+            $activity = pqsn_recent_client_activity();
+        } catch (\Throwable $e) {
+            $activity = [];
+        }
+
+        $silencethreshold = 15 * 60;   // silent this long while expected online -> alert
+        $realertafter = 6 * 60 * 60;   // don't re-alert the same device more often than this
+
         $devices = $DB->get_records('local_prequran_safenet_dev', ['status' => 'active']);
         foreach ($devices as $device) {
+            // Keep lastseen fresh from the resolvers' query logs.
+            $cid = (string)$device->clientid;
+            $dirty = false;
+            if (isset($activity[$cid]) && (int)$activity[$cid] > (int)$device->lastseen) {
+                $device->lastseen = (int)$activity[$cid];
+                $dirty = true;
+            }
+
             if ((string)$device->policy === 'paused') {
+                if ($dirty) {
+                    $DB->update_record('local_prequran_safenet_dev', $device);
+                }
                 continue;
             }
 
@@ -64,16 +86,39 @@ class safenet_schedule extends \core\task\scheduled_task {
                 $auto = null;                                // no automation driving this device
             }
 
+            // Silence detection: only when we EXPECT the device online and filtered
+            // (in a session or an active scheduled window) to avoid false positives.
+            $expectedonline = ($auto === 'learning');
+            $silent = $expectedonline && ((int)$device->lastseen > 0)
+                && ($now - (int)$device->lastseen > $silencethreshold);
+            if ($silent) {
+                if ((int)$device->alerted_at === 0 || ($now - (int)$device->alerted_at > $realertafter)) {
+                    if (pqsn_notify_silent_device($device)) {
+                        $device->alerted_at = $now;
+                        pqsn_audit((int)$device->consumerid, (int)$device->workspaceid, (int)$device->id, 'device_silent', []);
+                        $dirty = true;
+                    }
+                }
+            } else if ((int)$device->alerted_at !== 0 && $expectedonline) {
+                // Reporting again — clear the alert so a future silence re-alerts.
+                $device->alerted_at = 0;
+                $dirty = true;
+            }
+
             if ($auto === null) {
-                // Automation just released the device — return it to child-safe once.
                 if ((string)$device->sched_applied !== '') {
                     $this->apply_policy($device, 'childsafe', '', $now);
+                    $dirty = false; // apply_policy already saved.
+                } else if ($dirty) {
+                    $DB->update_record('local_prequran_safenet_dev', $device);
                 }
                 continue;
             }
 
             if ((string)$device->sched_applied !== $auto) {
                 $this->apply_policy($device, $auto, $auto, $now);
+            } else if ($dirty) {
+                $DB->update_record('local_prequran_safenet_dev', $device);
             }
         }
     }

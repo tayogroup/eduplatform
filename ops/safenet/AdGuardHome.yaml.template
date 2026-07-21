@@ -68,6 +68,10 @@ filters:
     url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_30.txt  # Phishing URL blocklist
     name: Phishing URL Blocklist
     id: 30
+  - enabled: true
+    url: https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/doh-vpn-proxy-bypass.txt
+    name: HaGeZi DoH/VPN/Proxy/TOR Bypass   # blocks alt-DoH, VPN and proxy escape domains
+    id: 60
 
 # Platform allowlist baseline — never let a blocklist break the classroom.
 # (AdGuard custom rules; @@ = allow, important overrides everything.)

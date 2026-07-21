@@ -5543,4 +5543,8 @@ function xmldb_local_prequran_ensure_safenet_schedule_fields(): void {
     if (!$dbman->field_exists($table, $schedapplied)) {
         $dbman->add_field($table, $schedapplied);
     }
+    $alertedat = new xmldb_field('alerted_at', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'sched_applied');
+    if (!$dbman->field_exists($table, $alertedat)) {
+        $dbman->add_field($table, $alertedat);
+    }
 }

@@ -1,5 +1,5 @@
-import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260715k";
-import { grammarDiagram } from "./grammar-visuals.js?v=english-20260721c";
+import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260721a";
+import { grammarDiagram } from "./grammar-visuals.js?v=english-20260721d";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

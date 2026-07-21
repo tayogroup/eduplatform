@@ -1,6 +1,6 @@
-import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260715k";
-import { initScienceWebGL } from "./science-webgl.js?v=science-20260721j";
-import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721j";
+import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260721a";
+import { initScienceWebGL } from "./science-webgl.js?v=science-20260721k";
+import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721k";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

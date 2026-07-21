@@ -8,7 +8,7 @@ export function icon(name, label = "") {
 }
 
 export function pageHeader({ kicker, title, description, status = "Approved content" }) {
-  return `<header class="page-header"><div><span class="eyebrow">${kicker}</span><h1>${title}</h1><p>${description}</p></div><div class="page-actions"><button class="button secondary page-voice" data-page-voice type="button" aria-label="Listen to this page" title="ElevenLabs complete-page narration">${icon("volume-2")} <span>Listen to this page</span></button><small class="audio-source">ElevenLabs complete-page narration</small><span class="status-chip">${icon("shield-check")} ${status}</span></div></header>`;
+  return `<header class="page-header"><div><span class="eyebrow">${kicker}</span><h1>${title}</h1><p>${description}</p></div><div class="page-actions"><span class="status-chip">${icon("shield-check")} ${status}</span></div></header>`;
 }
 
 export function sectionNavigation(items) {

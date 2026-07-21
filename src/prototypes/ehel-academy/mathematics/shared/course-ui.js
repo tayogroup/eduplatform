@@ -1,7 +1,7 @@
-import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260715k";
+import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260721a";
 import { initGeometryWebGL } from "./geometry-webgl.js?v=20260715q";
-import { initMathWebGL } from "./math-webgl.js?v=math-20260721c";
-import { unitTopic, mathDiagram } from "./math-visuals.js?v=math-20260721c";
+import { initMathWebGL } from "./math-webgl.js?v=math-20260721d";
+import { unitTopic, mathDiagram } from "./math-visuals.js?v=math-20260721d";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

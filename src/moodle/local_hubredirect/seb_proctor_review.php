@@ -60,8 +60,12 @@ echo $OUTPUT->header();
 .pqpr-card h2{margin:0 0 12px;color:var(--pqh-ink);font-size:16px;font-weight:750}
 .pqpr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
 .pqpr-shot{border:1px solid var(--pqh-line);border-radius:10px;overflow:hidden;background:#000}
+.pqpr-shot--flag{border-color:#e0776e;box-shadow:0 0 0 2px #f3d2d0}
 .pqpr-shot img{display:block;width:100%;height:auto}
-.pqpr-shot span{display:block;padding:5px 8px;background:var(--pqh-surface);color:var(--pqh-muted);font-size:11px;font-weight:600}
+.pqpr-shot span{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:5px 8px;background:var(--pqh-surface);color:var(--pqh-muted);font-size:11px;font-weight:600}
+.pqpr-face{display:inline-flex;align-items:center;min-height:18px;padding:0 6px;border-radius:6px;font-size:10.5px;font-weight:700}
+.pqpr-face--ok{background:var(--pqh-tint);color:var(--pqh-primary-ink)}
+.pqpr-face--flag{background:#fdeeee;color:#b3453e}
 .pqpr-voice{display:flex;flex-wrap:wrap;gap:7px}
 .pqpr-vchip{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:8px;background:#fdeeee;color:#b3453e;font-size:12px;font-weight:650}
 .pqpr-empty{border:1px dashed var(--pqh-line);border-radius:12px;padding:20px;text-align:center;color:var(--pqh-muted);font-weight:550}
@@ -81,6 +85,7 @@ echo $OUTPUT->header();
     <div class="pqpr-stats">
       <div class="pqpr-stat"><strong><?php echo (int)$summary['snapshots']; ?></strong><span>snapshots</span></div>
       <div class="pqpr-stat"><strong><?php echo (int)$summary['voice']; ?></strong><span>voice flags</span></div>
+      <div class="pqpr-stat"><strong><?php echo (int)($summary['faceflags'] ?? 0); ?></strong><span>face flags</span></div>
       <div class="pqpr-stat"><strong><?php echo $summary['consent'] ? 'Yes' : 'No'; ?></strong><span>consent recorded</span></div>
     </div>
 
@@ -99,14 +104,35 @@ echo $OUTPUT->header();
 
     <div class="pqpr-card">
       <h2>Webcam snapshots</h2>
+      <?php
+        $anyfacedata = false;
+        foreach ($snapshots as $shot) {
+            $d = json_decode((string)$shot->detail, true);
+            if (is_array($d) && array_key_exists('faces', $d)) { $anyfacedata = true; break; }
+        }
+      ?>
+      <?php if ($snapshots && !$anyfacedata): ?>
+        <div class="pqpr-note" style="background:#fdf6e9;border-color:#f0e0bd;color:#8a6a1f">Automatic face flagging was not available in this student's browser, so frames are not marked. Review the snapshots manually.</div>
+      <?php endif; ?>
       <?php if (!$snapshots): ?>
         <div class="pqpr-empty">No snapshots were captured for this attempt.</div>
       <?php else: ?>
         <div class="pqpr-grid">
           <?php foreach ($snapshots as $shot): ?>
-            <div class="pqpr-shot">
+            <?php
+              $d = json_decode((string)$shot->detail, true);
+              $hasfaces = is_array($d) && array_key_exists('faces', $d);
+              $faces = $hasfaces ? (int)$d['faces'] : -1;
+              $flag = $hasfaces && $faces !== 1;
+            ?>
+            <div class="pqpr-shot <?php echo $flag ? 'pqpr-shot--flag' : ''; ?>">
               <img src="<?php echo s((string)$shot->imagedata); ?>" alt="Snapshot" loading="lazy">
-              <span><?php echo userdate((int)$shot->timecreated, get_string('strftimetime')); ?></span>
+              <span>
+                <?php echo userdate((int)$shot->timecreated, get_string('strftimetime')); ?>
+                <?php if ($hasfaces): ?>
+                  <span class="pqpr-face <?php echo $flag ? 'pqpr-face--flag' : 'pqpr-face--ok'; ?>"><?php echo $faces === 0 ? 'No face' : ($faces === 1 ? '1 face' : $faces . ' faces'); ?></span>
+                <?php endif; ?>
+              </span>
             </div>
           <?php endforeach; ?>
         </div>

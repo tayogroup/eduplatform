@@ -60,7 +60,19 @@ if ($type === 'snapshot') {
     if (strpos($image, 'data:image/jpeg;base64,') !== 0 || strlen($image) > 260000) {
         pqh_proctor_fail('Invalid snapshot.', 400);
     }
-    $stored = pqh_seb_proctor_record($examid, (int)$USER->id, $attemptid, 'snapshot', null, $image, 0);
+    // Optional client-side face count (-1 = detection unavailable in browser).
+    $faces = optional_param('faces', -1, PARAM_INT);
+    $detail = null;
+    if ($faces >= 0) {
+        $faces = min(10, $faces);
+        $detail = json_encode(['faces' => $faces]);
+    }
+    $stored = pqh_seb_proctor_record($examid, (int)$USER->id, $attemptid, 'snapshot', $detail, $image, 0);
+    // Flag abnormal frames (no face, or more than one) for quick review.
+    if ($stored && $faces >= 0 && $faces !== 1) {
+        pqh_seb_proctor_record($examid, (int)$USER->id, $attemptid, 'face', json_encode(['faces' => $faces]), null, $faces);
+        pqh_seb_audit('seb_proctor_face', $examid, ['userid' => (int)$USER->id, 'faces' => $faces]);
+    }
     echo json_encode(['ok' => $stored]);
     exit;
 }

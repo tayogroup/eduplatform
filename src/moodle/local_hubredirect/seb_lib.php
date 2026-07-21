@@ -165,6 +165,7 @@ function pqh_seb_proctor_summary(int $examid, int $userid): array {
     return [
         'snapshots' => (int)$DB->count_records('local_prequran_seb_proctor', ['examid' => $examid, 'userid' => $userid, 'type' => 'snapshot']),
         'voice' => (int)$DB->count_records('local_prequran_seb_proctor', ['examid' => $examid, 'userid' => $userid, 'type' => 'voice']),
+        'faceflags' => (int)$DB->count_records('local_prequran_seb_proctor', ['examid' => $examid, 'userid' => $userid, 'type' => 'face']),
         'consent' => $DB->record_exists('local_prequran_seb_proctor', ['examid' => $examid, 'userid' => $userid, 'type' => 'consent']),
     ];
 }

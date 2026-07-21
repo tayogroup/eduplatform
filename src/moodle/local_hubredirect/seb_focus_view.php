@@ -129,6 +129,10 @@ body.pqsx-page{margin:0;background:#f4f6f9}
     // ---- Proctoring (adults only): webcam snapshots + audio voice flags ----
     var mediaStream = null, snapTimer = null, voiceTimer = null;
     var video = null, canvas = null, lastVoicePost = 0;
+    // Best-effort face flagging with the browser's built-in FaceDetector.
+    // Absent on most desktop browsers - snapshots still go for human review.
+    var faceDetector = null;
+    try { if (window.FaceDetector) { faceDetector = new window.FaceDetector({fastMode: true, maxDetectedFaces: 5}); } } catch (e) { faceDetector = null; }
 
     function proctorPost(type, extra) {
       var body = 'type=' + type + '&examid=' + examId + '&sesskey=' + encodeURIComponent(sesskey);
@@ -138,13 +142,27 @@ body.pqsx-page{margin:0;background:#f4f6f9}
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: body
       }).then(function(r){ return r.json(); }).catch(function(){ return {ok:false}; });
     }
+    function sendSnapshot(data, faces) {
+      var extra = '&image=' + encodeURIComponent(data);
+      if (faces >= 0) { extra += '&faces=' + faces; }
+      proctorPost('snapshot', extra);
+    }
     function takeSnapshot() {
       if (!video || !video.videoWidth) { return; }
       var w = 320, h = Math.round(video.videoHeight * (w / video.videoWidth)) || 240;
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(video, 0, 0, w, h);
       var data = canvas.toDataURL('image/jpeg', 0.5);
-      proctorPost('snapshot', '&image=' + encodeURIComponent(data));
+      if (faceDetector) {
+        faceDetector.detect(canvas).then(function(faces){
+          sendSnapshot(data, faces.length);
+        }).catch(function(){
+          faceDetector = null; // stop trying if detection errors
+          sendSnapshot(data, -1);
+        });
+      } else {
+        sendSnapshot(data, -1);
+      }
     }
     function startProctoring() {
       return navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream){

@@ -208,8 +208,13 @@ echo $OUTPUT->header();
             </td>
             <td>
               <?php if ($examproctored && $attempt): ?>
-                <?php $psum = pqh_seb_proctor_summary($examid, (int)$row->studentid); ?>
-                <a class="pqsr-btn pqsr-btn--light" href="<?php echo pqh_seb_proctor_review_url($examid, (int)$row->studentid)->out(false); ?>">Proctoring<?php echo (int)$psum['voice'] > 0 ? ' (' . (int)$psum['voice'] . ' voice)' : ''; ?></a>
+                <?php
+                  $psum = pqh_seb_proctor_summary($examid, (int)$row->studentid);
+                  $flags = [];
+                  if ((int)$psum['voice'] > 0) { $flags[] = (int)$psum['voice'] . ' voice'; }
+                  if ((int)($psum['faceflags'] ?? 0) > 0) { $flags[] = (int)$psum['faceflags'] . ' face'; }
+                ?>
+                <a class="pqsr-btn pqsr-btn--light" href="<?php echo pqh_seb_proctor_review_url($examid, (int)$row->studentid)->out(false); ?>">Proctoring<?php echo $flags ? ' (' . implode(', ', $flags) . ')' : ''; ?></a>
               <?php endif; ?>
               <?php if ($reporturl && $attempt): ?><a class="pqsr-btn pqsr-btn--light" href="<?php echo $reporturl->out(false); ?>">Quiz report</a><?php endif; ?>
               <?php if ($attempt): ?>

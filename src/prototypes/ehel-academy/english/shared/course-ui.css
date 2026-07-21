@@ -681,3 +681,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .g-diagram .g-bar { fill: #9cc0ee; stroke: #2f6cdf; stroke-width: 2; }
 .g-diagram .g-bar.mid { fill: #5f93e8; }
 .g-diagram .g-bar.top { fill: #2f6cdf; }
+
+/* ===== Writing studio: a real writing space on every grade ===== */
+#writing-draft { display: block; width: 100%; min-height: 340px; margin-top: 12px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; background: repeating-linear-gradient(#ffffff 0 34px, #eef3fb 34px 35px); font-size: 16px; line-height: 35px; resize: vertical; color: #17324d; }
+#writing-draft:focus { outline: 3px solid rgba(45,108,223,.18); border-color: #2f6cdf; background-color: #fdfeff; }
+#writing-draft::placeholder { color: #93a7b8; font-style: italic; }
+@media (max-width: 720px) { #writing-draft { min-height: 260px; } }

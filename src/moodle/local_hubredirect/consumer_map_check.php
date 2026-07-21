@@ -18,7 +18,28 @@ header('Content-Type: application/json');
 header('Cache-Control: no-store');
 
 global $DB;
-$out = ['marker' => 'consumer-map-v91'];
+$out = ['marker' => 'consumer-map-v92'];
+
+// Targeted repair: EduForTomorrow (marketplace) was stamped with Ehel
+// Academy's workspace id by a mis-resolved settings save. Restore it to 0
+// so workspace 16 resolves uniquely to the Ehel Academy consumer.
+if (isset($_GET['fix_eft']) && $_GET['fix_eft'] === '1') {
+    try {
+        $eft = $DB->get_record('local_prequran_consumer', ['slug' => 'edu-for-tomorrow']);
+        if (!$eft) {
+            $out['fix'] = 'edu-for-tomorrow consumer not found - nothing changed';
+        } else if ((int)$eft->primaryworkspaceid !== 16) {
+            $out['fix'] = 'primaryworkspaceid is ' . (int)$eft->primaryworkspaceid . ', not 16 - nothing changed';
+        } else {
+            $eft->primaryworkspaceid = 0;
+            $eft->timemodified = time();
+            $DB->update_record('local_prequran_consumer', $eft);
+            $out['fix'] = 'edu-for-tomorrow primaryworkspaceid reset 16 -> 0';
+        }
+    } catch (Throwable $e) {
+        $out['fix_error'] = $e->getMessage();
+    }
+}
 
 try {
     $out['consumer_columns'] = array_keys($DB->get_columns('local_prequran_consumer'));

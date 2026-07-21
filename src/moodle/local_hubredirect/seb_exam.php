@@ -111,7 +111,8 @@ if (!$verified) {
       </ol>
       <div class="pqsx-actions">
         <a class="pqsx-btn" href="<?php echo pqh_seb_config_download_url($examid)->out(false); ?>">Download exam file (.seb)</a>
-        <a class="pqsx-btn pqsx-btn--light" target="_blank" rel="noopener" href="https://safeexambrowser.org/download_en.html">Get Safe Exam Browser</a>
+        <a class="pqsx-btn pqsx-btn--light" target="_blank" rel="noopener" href="https://github.com/SafeExamBrowser/seb-win-refactoring/releases/latest">Get SEB for Windows</a>
+        <a class="pqsx-btn pqsx-btn--light" target="_blank" rel="noopener" href="https://apps.apple.com/app/safe-exam-browser/id1114881064">Get SEB for iPad/Mac</a>
         <?php if ($ismanager): ?>
           <a class="pqsx-btn pqsx-btn--light" href="<?php echo pqh_seb_manage_url((int)$exam->workspaceid)->out(false); ?>">Exam manager</a>
           <?php if (trim((string)$exam->embedurl) !== ''): ?>

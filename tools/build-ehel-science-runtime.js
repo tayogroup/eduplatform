@@ -167,6 +167,12 @@ function buildGrade(grade) {
   const stageId = `s${String(grade).padStart(2, "0")}`;
   const stageLabel = `Stage ${grade}`;
   const contentPackage = `Ehel-Academy-Science-Grade-${grade}-Content-Package`;
+  // Official Cambridge framework: Primary Science 0097 (Stages 1-6),
+  // Lower Secondary Science 0893 (Stages 7-9).
+  const cambridge = grade <= 6
+    ? { level: "Cambridge Primary Science", code: "0097", stage: grade }
+    : { level: "Cambridge Lower Secondary Science", code: "0893", stage: grade };
+  const cambridgeLabel = `${cambridge.level} ${cambridge.code} — Stage ${grade}`;
   const gradeDir = path.join(sciRoot, `grade-${grade}`);
   const unitDir = path.join(gradeDir, "data", "units");
 
@@ -629,7 +635,8 @@ function buildGrade(grade) {
       stage: { id: stageId, label: stageLabel }, subject: "Science",
       term: { id: `t0${term}`, label: `Term ${term}` },
       unit: { unitId: unitMeta.unit_id, unitNo, unitTitle: title, unitOverview: sentence(overview, 760), learningPath: ["Preview the goals and core ideas", "Explore concepts and investigations", "Learn methods and study worked examples", "Complete guided practice, experiments and games", "Apply, explain and complete the Unit Challenge"], reviewStatus: "Curriculum review required" },
-      provenance: { contentPackage, sourceArchive: source.metadata.source_archive, sourceDocuments: [lesson, experimentsDoc, activitiesDoc, practiceDoc, referenceDoc].filter((doc) => doc !== EMPTY_DOC).map((doc) => doc.source_file), sourceBlockCount: unitMeta.source_block_count, transformation: `Structured directly from the ${stageLabel} science workbook source documents for screen presentation.`, reviewStatus: unitMeta.review_status },
+      cambridge,
+      provenance: { contentPackage, framework: cambridgeLabel, sourceArchive: source.metadata.source_archive, sourceDocuments: [lesson, experimentsDoc, activitiesDoc, practiceDoc, referenceDoc].filter((doc) => doc !== EMPTY_DOC).map((doc) => doc.source_file), sourceBlockCount: unitMeta.source_block_count, transformation: `Structured from the ${cambridgeLabel} workbook source documents for screen presentation.`, reviewStatus: unitMeta.review_status },
       media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
       outcomes, concepts, explorations, visualModels, methods, workedExamples,
       practice: practice.slice(0, 12), activities, reference,

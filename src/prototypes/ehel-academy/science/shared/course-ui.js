@@ -1,6 +1,6 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260715k";
-import { initScienceWebGL } from "./science-webgl.js?v=science-20260721h";
-import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721h";
+import { initScienceWebGL } from "./science-webgl.js?v=science-20260721i";
+import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721i";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -39,6 +39,19 @@ const sections = [
   ["live", "video", "Live Science Class"],
   ["progress", "badge-check", "My Science Progress"]
 ];
+
+// Official Cambridge framework for Science: Primary (0097) covers Stages 1-6,
+// Lower Secondary (0893) covers Stages 7-9. The stage number carries the
+// grade level; there is no separate per-grade code.
+function cambridgeFramework(stage) {
+  return Number(stage) <= 6
+    ? { level: "Cambridge Primary Science", code: "0097" }
+    : { level: "Cambridge Lower Secondary Science", code: "0893" };
+}
+function cambridgeLabel(stage) {
+  const fw = cambridgeFramework(stage);
+  return `${fw.level} ${fw.code} — Stage ${stage}`;
+}
 
 let manifest;
 let course;
@@ -384,7 +397,7 @@ function renderOverview() {
         <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome, index) => `<div class="outcome"><span>${index + 1}</span><p>${escapeHtml(outcome)}</p></div>`).join("")}</div></section>
       </div>
       <div class="section-stack">
-        <section class="panel approval-banner"><span class="eyebrow">Standardized Cambridge content package</span><h3>Approved for ${course.stage.label} Science</h3><p>Unit ${course.unit.unitNo} has been transformed from the ${course.stage.label} Excel content package and approved for use.</p></section>
+        <section class="panel approval-banner"><span class="eyebrow">${escapeHtml(cambridgeFramework(stageNumber).level)} ${cambridgeFramework(stageNumber).code}</span><h3>Aligned to ${escapeHtml(cambridgeLabel(stageNumber))}</h3><p>Unit ${course.unit.unitNo} is structured from the ${escapeHtml(cambridgeLabel(stageNumber))} content package. Curriculum review required before classroom use.</p></section>
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.concepts.length}</strong><small>concepts</small></div><div class="stat"><strong>${course.practice.length}</strong><small>practice items</small></div><div class="stat"><strong>${course.activities.length}</strong><small>activities</small></div></div></section>
         <section class="panel"><h3>Recommended path</h3><ol class="path-list"><li><span>1</span><span>Discover and model the concept.</span></li><li><span>2</span><span>Learn the method and study examples.</span></li><li><span>3</span><span>Practise with hints, games and fluency.</span></li><li><span>4</span><span>Solve real problems and explain your reasoning.</span></li><li><span>5</span><span>Complete the Unit Challenge and reflect.</span></li></ol></section>
         <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning steps on this device.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lesson") ? "ai" : "lesson"}" type="button">Continue →</button></section>
@@ -984,8 +997,8 @@ function renderReflect() {
 function renderTeacher() {
   $("#app").innerHTML = `${pageHeader("Planning · evidence · intervention", "Teacher Resources", "Inspect source provenance, approved content coverage and learner evidence.")}
     <div class="section-stack">
-      <section class="panel approval-banner"><h2>Curriculum status</h2><p><strong>Approved.</strong> Cambridge ${course.stage.label} Science content, progression, answer guidance and the 80% mastery threshold are approved for use.</p></section>
-      <section class="panel"><h2>Workbook provenance</h2><table class="term-table"><tbody><tr><th>Package</th><td>${escapeHtml(course.provenance.contentPackage)}</td></tr><tr><th>Archive</th><td>${escapeHtml(course.provenance.sourceArchive)}</td></tr><tr><th>Documents</th><td>${course.provenance.sourceDocuments.map(escapeHtml).join("; ")}</td></tr><tr><th>Imported blocks</th><td>${course.provenance.sourceBlockCount}</td></tr><tr><th>Transformation</th><td>${escapeHtml(course.provenance.transformation)}</td></tr></tbody></table></section>
+      <section class="panel approval-banner"><h2>Curriculum status</h2><p><strong>${escapeHtml(cambridgeLabel(stageNumber))}.</strong> Content, progression, answer guidance and the 80% mastery threshold follow this framework. Curriculum review required before classroom use.</p></section>
+      <section class="panel"><h2>Workbook provenance</h2><table class="term-table"><tbody><tr><th>Framework</th><td>${escapeHtml(course.provenance.framework || cambridgeLabel(stageNumber))}</td></tr><tr><th>Package</th><td>${escapeHtml(course.provenance.contentPackage)}</td></tr><tr><th>Archive</th><td>${escapeHtml(course.provenance.sourceArchive)}</td></tr><tr><th>Documents</th><td>${course.provenance.sourceDocuments.map(escapeHtml).join("; ")}</td></tr><tr><th>Imported blocks</th><td>${course.provenance.sourceBlockCount}</td></tr><tr><th>Transformation</th><td>${escapeHtml(course.provenance.transformation)}</td></tr></tbody></table></section>
       <section class="panel"><h2>Coverage</h2><div class="stat-row"><div class="stat"><strong>${course.outcomes.length}</strong><small>outcomes</small></div><div class="stat"><strong>${course.workedExamples.length}</strong><small>worked examples</small></div><div class="stat"><strong>${course.assessment.questions.length}</strong><small>checkpoint items</small></div></div></section>
       <section class="panel"><h2>Suggested teaching resources</h2><div class="reference-grid"><div><h3>Manipulatives</h3><p>${escapeHtml(course.activities.map((item)=>item.materials).slice(0,3).join('; '))}.</p></div><div><h3>Evidence to collect</h3><p>Model-building accuracy, Guided Practice responses, activity notes, game mastery, real-problem calculations and reasoning explanations.</p></div></div></section>
       <section class="panel"><h2>Lesson delivery</h2><p><strong>ElevenLabs narration is active.</strong> Learners can listen to the complete structured concept lesson or read it independently.</p></section>

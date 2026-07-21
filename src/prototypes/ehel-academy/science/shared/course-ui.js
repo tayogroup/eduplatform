@@ -967,7 +967,7 @@ function renderReflect() {
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
   $("#save-reflection").addEventListener("click", () => {
     if (Object.keys(progress.reflection).length < course.selfAssessment.length) return toast("Choose one response for every statement.");
-    complete("progress", "Math progress reflection saved on this device.");
+    complete("progress", "Science progress reflection saved on this device.");
   });
 }
 

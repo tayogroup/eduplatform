@@ -41,6 +41,16 @@ function inferBloom(outcomeText) {
   return "Remember and understand";
 }
 
+// The word a dictionary link teaches. Grade 1-2 links carry masterWord;
+// grades 3-8 encode it in dictionaryEntryId ("ehel-dict-en-coal-noun-01").
+function wordOf(link) {
+  if (link.masterWord) return String(link.masterWord);
+  const m = String(link.dictionaryEntryId || "").match(/^ehel-dict-en-(.+?)-(?:noun|verb|adjective|adverb|preposition|pronoun|conjunction|interjection|determiner|phrase|expression)-\d+/);
+  if (m) return m[1].replace(/-/g, " ");
+  const v = String(link.vocabularyId || "").match(/^u\d+-g\d+-\d+-(.+)$/);
+  return v ? v[1].replace(/-/g, " ") : "";
+}
+
 // Split a passage into clean sentences.
 function sentencesOf(passage) {
   return String(passage)
@@ -51,13 +61,17 @@ function sentencesOf(passage) {
 }
 
 function buildCloze(unit, rng) {
-  // The unit's taught words, exactly as spelled, from the vocab questions.
-  // Some units number the word inside the quotes ("1. benign") — strip that.
-  const words = unit.quizzes
+  // The unit's taught words: from the vocab questions plus the dictionary
+  // links (so repair runs still have the full word pool after six vocab
+  // questions were replaced). Some units number the word inside the quotes
+  // ("1. benign") — strip that.
+  const fromQuizzes = unit.quizzes
     .map((q) => (q.question.match(/^What does '([^']{2,40})' mean\?$/) || [])[1])
-    .filter(Boolean)
-    .map((w) => w.replace(/^\d+\.\s*/, "").trim())
-    .filter((w) => !w.includes(" ") && w.length >= 3);
+    .filter(Boolean);
+  const fromDictionary = (unit.dictionaryLinks || []).map(wordOf).filter(Boolean);
+  const words = [...new Set([...fromQuizzes, ...fromDictionary]
+    .map((w) => String(w).replace(/^\d+\.\s*/, "").trim())
+    .filter((w) => !w.includes(" ") && w.length >= 3))];
   if (words.length < 4) return [];
   const sentences = (unit.readings || []).flatMap((r) => sentencesOf(r.passageScript || "").map((s) => ({ s, title: r.title })));
   const cloze = [];
@@ -69,7 +83,14 @@ function buildCloze(unit, rng) {
     // always blank the form that actually appears and use it as the answer.
     const base = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const re = new RegExp(`\\b${base}(?:s|es|ed|ing)?\\b`, "i");
-    const hit = sentences.find(({ s }) => re.test(s) && !usedSentences.has(s));
+    const stemRe = new RegExp(`\\b${base}`, "ig");
+    const hit = sentences.find(({ s, title }) =>
+      re.test(s)
+      && !usedSentences.has(s)
+      // the answer must appear exactly once in the sentence (no un-blanked copy)
+      && (s.match(stemRe) || []).length === 1
+      // and the reading title must not reveal it ("My Family" → "family")
+      && !new RegExp(`\\b${base}`, "i").test(title));
     if (!hit) continue;
     const match = hit.s.match(re)[0]; // preserve the casing used in the text
     const blanked = hit.s.replace(re, "_____");
@@ -98,7 +119,7 @@ function buildCloze(unit, rng) {
   return cloze;
 }
 
-let unitsTouched = 0, clozeAdded = 0, bloomFixed = 0, dupFixed = 0;
+let unitsTouched = 0, clozeAdded = 0, bloomFixed = 0, dupFixed = 0, clozeRepaired = 0, writingFixed = 0, grammarFixed = 0;
 for (const grade of grades) {
   const dir = path.join(englishRoot, `grade-${grade}`, "data", "units");
   if (!fs.existsSync(dir)) continue;
@@ -144,6 +165,69 @@ for (const grade of grades) {
       }
     }
 
+    // 1b) Repair flawed cloze questions: a question is flawed when the
+    // reading title or the visible stem reveals the answer. Replace it with
+    // a clean passage sentence, or fall back to a dictionary-definition
+    // question built from authored content.
+    if (grade >= 3 && Array.isArray(unit.quizzes)) {
+      const flawed = []; const keptQuestions = new Set(); const keptAnswers = new Set();
+      for (const q of unit.quizzes) {
+        if (q.questionType !== "Cloze in context") continue;
+        const ans = String(q.correctAnswer);
+        const base = ans.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const title = (q.question.match(/from '([^']+)':/) || [])[1] || "";
+        const stem = q.question.split(": ").slice(1).join(": ");
+        const bad = new RegExp(`\\b${base}`, "i").test(title) || new RegExp(`\\b${base}\\b`, "i").test(stem);
+        if (bad) flawed.push(q); else { keptQuestions.add(q.question); keptAnswers.add(ans.toLowerCase()); }
+      }
+      if (flawed.length) {
+        const candidates = buildCloze(unit, rng)
+          .filter((c) => !keptQuestions.has(c.question) && !keptAnswers.has(String(c.correctAnswer).toLowerCase()));
+        for (const q of flawed) {
+          const item = candidates.shift();
+          if (item) {
+            q.question = item.question; q.options = item.options;
+            q.correctAnswer = item.correctAnswer; q.explanation = item.explanation;
+            keptAnswers.add(String(item.correctAnswer).toLowerCase());
+          } else {
+            const used = new Set(unit.quizzes.map((x) => x.question));
+            const links = (unit.dictionaryLinks || []).map((d) => ({ ...d, w: wordOf(d) })).filter((d) => d.childMeaning && d.w && !d.w.includes(" "));
+            const pickL = links.find((d) => !used.has(`What does '${d.w}' mean?`));
+            if (!pickL) continue;
+            const others = links.filter((d) => d.w !== pickL.w && d.childMeaning !== pickL.childMeaning).slice(0, 3).map((d) => d.childMeaning);
+            if (others.length < 3) continue;
+            q.questionType = "Multiple choice";
+            q.question = `What does '${pickL.w}' mean?`;
+            q.options = [pickL.childMeaning, ...others].join(" | ");
+            q.correctAnswer = pickL.childMeaning;
+            q.explanation = pickL.exampleSentence || `${pickL.w}: ${pickL.childMeaning}`;
+          }
+          clozeRepaired += 1;
+        }
+      }
+    }
+
+    // Writing hygiene: renumber duplicated sequences, backfill empty
+    // instructions and missing sentence starters.
+    (unit.writing || []).forEach((w, i) => {
+      if (w.sequence !== i + 1) { w.sequence = i + 1; writingFixed += 1; }
+      if (!w.promptAndInstructions) {
+        const goal = String(w.title || "this task").replace(/^Writing \d+:\s*/i, "");
+        w.promptAndInstructions = `Plan and write: ${goal}. Study the model text first, then draft your own version and check it against the writer's checklist. Aim for ${w.expectedLength || "a complete, well-organised response"}.`;
+        writingFixed += 1;
+      }
+      if (!w.sentenceStarter) { w.sentenceStarter = "Start your first sentence here…"; writingFixed += 1; }
+    });
+
+    // Grammar hygiene: backfill empty explanations from the rule text.
+    for (const gr of unit.grammar || []) {
+      if (!gr.explanation || gr.explanation.length < 10) {
+        const firstLine = String(gr.ruleAndExamples || "").split("\n").map((l) => l.trim()).find((l) => l.length > 20);
+        gr.explanation = firstLine || `${gr.title}: practise and apply the patterns shown below.`;
+        grammarFixed += 1;
+      }
+    }
+
     // Repair any quiz whose options contain duplicates (two Grade 2 spelling
     // questions shipped with a doubled misspelling): vary the duplicate by
     // swapping its final two letters so every option is distinct.
@@ -167,4 +251,4 @@ for (const grade of grades) {
     unitsTouched += 1;
   }
 }
-console.log(`Units updated: ${unitsTouched} | cloze questions written: ${clozeAdded} | bloom levels backfilled: ${bloomFixed} | duplicate options repaired: ${dupFixed}`);
+console.log(`Units updated: ${unitsTouched} | cloze questions written: ${clozeAdded} | bloom levels backfilled: ${bloomFixed} | duplicate options repaired: ${dupFixed} | cloze repaired: ${clozeRepaired} | writing fixes: ${writingFixed} | grammar fixes: ${grammarFixed}`);

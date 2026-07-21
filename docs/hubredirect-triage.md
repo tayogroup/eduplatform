@@ -1,4 +1,6 @@
-# local_hubredirect — File Triage (244 PHP files)
+# Moodle Plugin Triage — local_hubredirect & local_prequran
+
+## local_hubredirect — File Triage (244 PHP files)
 
 **Draft 2026-07-21 · heuristic first pass, borderline cases flagged for review.**
 
@@ -287,3 +289,41 @@ Moodle remains the multi-consumer backend (independent teachers, marketplaces, f
 
 ---
 ⚠️ = flagged for human verification before action.
+
+---
+
+## local_prequran — Verdict: stays in Moodle (it *is* the backend core)
+
+**~27 PHP files, 2.2 MB. A clean, well-formed Moodle plugin — the opposite of
+hubredirect. Essentially all of it stays; nothing meaningful moves to Bunny; no
+cruft to delete.** Zero HTML rendering across the plugin (the front end was never
+here). This is precisely the "must-keep core" the allocation table describes.
+
+| Group | Files | Disposition |
+|---|---|---|
+| **Web services** — `externallib_v4.php` (501 KB, 508 fns, 1,211 external_* defs) | 1 | **Stay** — this *is* the API the Bunny SPA calls |
+| **DB schema & lifecycle** — `db/` (install, upgrade, upgradelib 281 KB, services, access, tasks, events, messages) | 8 | **Stay** — the plugin's spine |
+| **Scheduled tasks** — `classes/task/*` (live reminders, recording automation, weekly digest, finance refresh, SLA monitor, maintenance…) | ~12 | **Stay** — Moodle cron (already off the request path) |
+| **Libraries** — `locallib.php`, `lib.php`, `notificationlib.php`, `classes/observer.php` | 4 | **Stay** — server-side logic, data access, event handling |
+| **Config / settings / lang / version** | ~4 | **Stay** — incl. the Bunny + TTS admin settings |
+
+**The real finding here is refactoring, not relocation:**
+
+1. **`externallib_v4.php` is a 501 KB / 508-function monolith.** It stays, but as the
+   UI moves to Bunny this file becomes **THE API contract** for the whole product —
+   so it should be **split into domain modules** (identity, enrolment, progress,
+   live, finance, …) for maintainability. Refactor within Moodle, not a move.
+2. **As hubredirect's UI moves to Bunny, its data needs are served by these web
+   services** — expect to *add* endpoints here (e.g. the progress save/get, roster,
+   catalog-personalisation calls from the allocation table), so prequran grows more
+   central even as hubredirect shrinks.
+3. **Heavy scheduled tasks** (live-session reminders, digests, finance refresh) run
+   on the Moodle server. They're already off the request path (cron), but if they
+   strain prod at scale they're the candidate for a **separate worker/queue tier** —
+   an optimisation, not a Bunny move (Bunny runs no cron).
+4. **i18n split:** prequran's `lang/` stays for Moodle admin/settings; the SPA needs
+   its **own user-facing string bundle on Bunny** (separate concern).
+
+**Net across both plugins:** hubredirect is where the migration work is (~122 files
+move, 15 deleted); prequran is the destination-side backend that stays and gets
+*tidied and extended*, not moved.

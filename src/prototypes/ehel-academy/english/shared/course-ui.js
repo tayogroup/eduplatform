@@ -20,6 +20,19 @@ function cambridgeLabel(stage) {
   return `${fw.level} ${fw.code} — Stage ${stage}`;
 }
 const gradeRootUrl = new URL(`./grade-${gradeNumber}/`, location.href);
+// Deployed (Bunny): file-based reading/grammar/speaking audio lives in a
+// separate media tree under the product root (…/media/english/gNN/audio/{cat}/),
+// reached with a relative path so it is hostname-independent. In local dev the
+// audio sits beside the app, so paths are used as-authored.
+const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
+function resolveMediaUrl(source) {
+  let s = String(source);
+  if (!AUDIO_IS_DEV) {
+    const m = s.match(/media\/audio\/grade-(\d+)\/([a-z]+)\/(.+)$/i);
+    if (m) s = `../../media/english/g${String(m[1]).padStart(2, "0")}/audio/${m[2]}/${m[3]}`;
+  }
+  return new URL(s, document.baseURI).href;
+}
 const defaultUnit = gradeNumber === 1 ? 0 : 1;
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
 const unitNumber = requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit;
@@ -1009,7 +1022,7 @@ function playAudio(source, { rate = AI_NARRATION_RATE, start = 0, end = null, bu
   activeAudioEnd = Number.isFinite(end) ? end : null;
   activeAudioButton = button;
   setAudioButton(button, true);
-  const absoluteSource = new URL(source, document.baseURI).href;
+  const absoluteSource = resolveMediaUrl(source);
   const begin = () => {
     if (requestId !== audioRequestId) return;
     player.currentTime = Number.isFinite(start) ? start : 0;
@@ -1150,7 +1163,7 @@ function mountReadingAudioPlayer(reading) {
   const player = $("#ebook-reading-audio");
   if (!player) return;
   const sources = reading.audio?.available
-    ? [new URL(reading.audio.source, document.baseURI).href]
+    ? [resolveMediaUrl(reading.audio.source)]
     : readingVoiceSources.get(reading.readingId) || [];
   if (!sources.length) {
     player.hidden = true;

@@ -144,12 +144,21 @@ function cyrb53(str, seed = 0) {
 }
 const staticVoiceKey = (text) => cyrb53(String(text || "").replace(/\s+/g, " ").trim());
 const staticVoiceMisses = new Set();
+// Local dev keeps the flat co-located cache; deployed (Bunny) reads the
+// per-grade tree two levels up under the product root — relative, so it works
+// on any hostname (ehelacademy.b-cdn.net or app.ehelacademy.org).
+const STATIC_AUDIO_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
+function staticVoicePath(key) {
+  if (STATIC_AUDIO_DEV) return new URL(`./media/audio/tts/${key}.mp3`, document.baseURI).href;
+  const g = String(stageNumber).padStart(2, "0");
+  return new URL(`../../media/science/g${g}/audio/tts/${key}.mp3`, document.baseURI).href;
+}
 async function staticVoiceUrl(text) {
   const clean = String(text || "").replace(/\s+/g, " ").trim();
   if (!clean) return null;
   const key = staticVoiceKey(clean);
   if (staticVoiceMisses.has(key)) return null;
-  const url = new URL(`./media/audio/tts/${key}.mp3`, document.baseURI).href;
+  const url = staticVoicePath(key);
   try {
     const r = await fetch(url, { method: "HEAD" });
     if (r.ok) return url;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T06:33:39.922Z",
+  "generatedAt": "2026-07-21T08:52:33.651Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -487,10 +487,6 @@
     ],
     "terms": [
       [
-        "Quantity",
-        "Rule"
-      ],
-      [
         "Weight",
         "Weight = mass x gravity (W = m x g)"
       ],
@@ -533,15 +529,13 @@
       [
         "Net force",
         "The single overall force left after all forces are added or subtracted."
+      ],
+      [
+        "Speed",
+        "How fast an object moves: distance divided by time."
       ]
     ],
     "vocabulary": [
-      {
-        "term": "Quantity",
-        "meaning": "Rule",
-        "example": "",
-        "letter": "Q"
-      },
       {
         "term": "Weight",
         "meaning": "Weight = mass x gravity (W = m x g)",
@@ -607,6 +601,12 @@
         "meaning": "The single overall force left after all forces are added or subtracted.",
         "example": "When forces are unbalanced, there is an overall force - scientists call it a net force - pushing one way, and this net force changes the object's motion.",
         "letter": "N"
+      },
+      {
+        "term": "Speed",
+        "meaning": "How fast an object moves: distance divided by time.",
+        "example": "By the end you will be able to measure forces, calculate weight and speed, and predict how objects will move.",
+        "letter": "S"
       }
     ],
     "commonMistakes": [
@@ -838,9 +838,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between mass and weight. Give the correct unit for each.",
       "keyIdeas": [
-        "Quantity",
         "Weight",
-        "Mass (from weight)"
+        "Mass (from weight)",
+        "Speed"
       ],
       "modelAnswer": "1 Mass is the amount of matter in an object, measured in kilograms (kg), and it never changes. Weight is the force of gravity on that mass, measured in newtons (N), and it changes with gravity."
     },
@@ -851,9 +851,9 @@
       "responseMode": "text",
       "prompt": "Name two forces that can slow a moving object down.",
       "keyIdeas": [
-        "Weight",
         "Mass (from weight)",
-        "Speed"
+        "Speed",
+        "Net force (same direction)"
       ],
       "modelAnswer": "2 Friction and air resistance (or water resistance) both slow a moving object down. Any two of these are correct."
     },
@@ -864,9 +864,9 @@
       "responseMode": "text",
       "prompt": "Why is friction greater on a sandy road than on a paved road?",
       "keyIdeas": [
-        "Mass (from weight)",
         "Speed",
-        "Net force (same direction)"
+        "Net force (same direction)",
+        "Net force (opposite directions)"
       ],
       "modelAnswer": "3 Sand is loose and rough, so the wheels press into it and rub against many grains, creating more friction. A paved road is smooth and hard, so there is less friction."
     },
@@ -877,9 +877,9 @@
       "responseMode": "text",
       "prompt": "Give one example where friction is helpful and one example where friction is a nuisance.",
       "keyIdeas": [
-        "Speed",
         "Net force (same direction)",
-        "Net force (opposite directions)"
+        "Net force (opposite directions)",
+        "Friction"
       ],
       "modelAnswer": "4 Helpful: friction between sandals and the ground lets you walk without slipping. Nuisance: friction between machine parts makes them wear out (other sensible examples are fine)."
     },
@@ -890,9 +890,9 @@
       "responseMode": "text",
       "prompt": "What does it mean when we say the forces on a resting book are balanced?",
       "keyIdeas": [
-        "Net force (same direction)",
         "Net force (opposite directions)",
-        "Friction"
+        "Friction",
+        "Air resistance"
       ],
       "modelAnswer": "5 It means the downward pull of gravity and the upward push of the table are equal in size and opposite in direction, so there is no overall force and the book stays still."
     },
@@ -903,9 +903,9 @@
       "responseMode": "text",
       "prompt": "Describe one way a force can change the shape of an object.",
       "keyIdeas": [
-        "Net force (opposite directions)",
         "Friction",
-        "Air resistance"
+        "Air resistance",
+        "Water resistance"
       ],
       "modelAnswer": "6 A force can squeeze (compress), stretch, bend, or twist an object. For example, squeezing dough or stretching a rubber band changes its shape."
     }
@@ -1113,9 +1113,9 @@
       {
         "id": "u4-game-1",
         "icon": "?",
-        "skill": "Quantity",
-        "title": "Quick Match: Quantity",
-        "description": "Practise quantity through four short challenges.",
+        "skill": "Weight",
+        "title": "Quick Match: Weight",
+        "description": "Practise weight through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1171,9 +1171,9 @@
       {
         "id": "u4-game-2",
         "icon": "★",
-        "skill": "Weight",
-        "title": "Concept Quest: Weight",
-        "description": "Practise weight through four short challenges.",
+        "skill": "Mass (from weight)",
+        "title": "Concept Quest: Mass (from weight)",
+        "description": "Practise mass (from weight) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1229,9 +1229,9 @@
       {
         "id": "u4-game-3",
         "icon": "◫",
-        "skill": "Mass (from weight)",
-        "title": "Lab Detective: Mass (from weight)",
-        "description": "Practise mass (from weight) through four short challenges.",
+        "skill": "Speed",
+        "title": "Lab Detective: Speed",
+        "description": "Practise speed through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1287,9 +1287,9 @@
       {
         "id": "u4-game-4",
         "icon": "→",
-        "skill": "Speed",
-        "title": "Fact Runner: Speed",
-        "description": "Practise speed through four short challenges.",
+        "skill": "Net force (same direction)",
+        "title": "Fact Runner: Net force (same direction)",
+        "description": "Practise net force (same direction) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1345,9 +1345,9 @@
       {
         "id": "u4-game-5",
         "icon": "Σ",
-        "skill": "Net force (same direction)",
-        "title": "Vocabulary Vault: Net force (same direction)",
-        "description": "Practise net force (same direction) through four short challenges.",
+        "skill": "Net force (opposite directions)",
+        "title": "Vocabulary Vault: Net force (opposite directions)",
+        "description": "Practise net force (opposite directions) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1403,9 +1403,9 @@
       {
         "id": "u4-game-6",
         "icon": "◇",
-        "skill": "Net force (opposite directions)",
-        "title": "Challenge Cards: Net force (opposite directions)",
-        "description": "Practise net force (opposite directions) through four short challenges.",
+        "skill": "Friction",
+        "title": "Challenge Cards: Friction",
+        "description": "Practise friction through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1461,9 +1461,9 @@
       {
         "id": "u4-game-7",
         "icon": "⚡",
-        "skill": "Friction",
-        "title": "Think Fast: Friction",
-        "description": "Practise friction through four short challenges.",
+        "skill": "Air resistance",
+        "title": "Think Fast: Air resistance",
+        "description": "Practise air resistance through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1519,9 +1519,9 @@
       {
         "id": "u4-game-8",
         "icon": "☁",
-        "skill": "Air resistance",
-        "title": "Explain It: Air resistance",
-        "description": "Practise air resistance through four short challenges.",
+        "skill": "Water resistance",
+        "title": "Explain It: Water resistance",
+        "description": "Practise water resistance through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1577,9 +1577,9 @@
       {
         "id": "u4-game-9",
         "icon": "⌂",
-        "skill": "Water resistance",
-        "title": "Real-Life Round: Water resistance",
-        "description": "Practise water resistance through four short challenges.",
+        "skill": "Balanced forces",
+        "title": "Real-Life Round: Balanced forces",
+        "description": "Practise balanced forces through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1635,9 +1635,9 @@
       {
         "id": "u4-game-10",
         "icon": "!",
-        "skill": "Balanced forces",
-        "title": "Spot the Error: Balanced forces",
-        "description": "Practise balanced forces through four short challenges.",
+        "skill": "Unbalanced forces",
+        "title": "Spot the Error: Unbalanced forces",
+        "description": "Practise unbalanced forces through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1693,9 +1693,9 @@
       {
         "id": "u4-game-11",
         "icon": "≡",
-        "skill": "Unbalanced forces",
-        "title": "Mastery Mix: Unbalanced forces",
-        "description": "Practise unbalanced forces through four short challenges.",
+        "skill": "Net force",
+        "title": "Mastery Mix: Net force",
+        "description": "Practise net force through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1751,9 +1751,9 @@
       {
         "id": "u4-game-12",
         "icon": "T",
-        "skill": "Net force",
-        "title": "Unit Champion: Net force",
-        "description": "Practise net force through four short challenges.",
+        "skill": "Speed",
+        "title": "Unit Champion: Speed",
+        "description": "Practise speed through four short challenges.",
         "type": "choice",
         "rounds": [
           {

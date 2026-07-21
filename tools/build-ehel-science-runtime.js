@@ -42,6 +42,14 @@ const GRADE1 = {
       "Show care and kindness towards a living animal or plant.",
     ],
     conceptTitles: ["Living Things", "Non-Living Things", "Animals Are Alive", "Plants Are Alive", "What Living Things Need", "Caring for Living Things"],
+    misconceptions: [
+      ["If it moves, it is alive.", "Cars, clouds and rivers move but are not alive. Living things grow, eat, drink and have young."],
+      ["Plants are not alive because they do not walk.", "Plants are alive — they grow, drink water and make new seeds."],
+    ],
+    connections: [
+      { area: "Unit 2 (Plants)", text: "Plants are living things too — next you will watch how they grow from seeds." },
+      { area: "At home", text: "Caring for a pet or a plant uses everything you learned about what living things need." },
+    ],
     experimentTitles: ["Watch a Seed Grow", "Living or Not-Living Hunt", "Does a Plant Need Water?", "Sort Living and Non-Living Things", "Find the Baby Animals", "Draw a Living Thing You Care For"],
     quiz: [
       q("Which one is alive?", ["a camel", "a rock", "a metal spoon", "a plastic cup"], "a camel", "A camel moves, eats and grows, so it is alive."),
@@ -62,6 +70,14 @@ const GRADE1 = {
       "Care for a growing plant over time.",
     ],
     conceptTitles: ["The Parts of a Plant", "Roots Hold and Drink", "The Stem Carries Water", "Leaves and Flowers", "What Plants Need to Grow", "Looking After a Plant"],
+    misconceptions: [
+      ["Plants eat food from the soil.", "Plants make their own food in their leaves using sunlight. Soil gives them water and a place to hold on."],
+      ["Seeds need light to start growing.", "Most seeds wake up in the dark under the soil — they need water and warmth first."],
+    ],
+    connections: [
+      { area: "Unit 1 (Being Alive)", text: "Plants do everything living things do: grow, feed and make new plants." },
+      { area: "Mathematics", text: "Measuring how tall your plant grows each week is real measuring, just like in maths." },
+    ],
     experimentTitles: ["Grow a Bean in a Jar", "Plant a Seed and Watch", "Does a Plant Reach for Light?", "Look Inside a Flower", "Water One, Not the Other", "Make a Plant Diary"],
     quiz: [
       q("Which part holds the plant in the soil?", ["roots", "flower", "leaf", "petal"], "roots", "Roots hold the plant firm and drink water from the soil."),
@@ -82,6 +98,14 @@ const GRADE1 = {
       "Say ways to keep our bodies clean and healthy.",
     ],
     conceptTitles: ["Parts of My Body", "My Face", "My Five Senses", "Same and Different", "Keeping Clean and Healthy", "Staying Safe"],
+    misconceptions: [
+      ["We taste food only with our tongue.", "Smell helps us taste too — hold your nose and food tastes different."],
+      ["Only eyes tell us about the world.", "All five senses work together: seeing, hearing, smelling, tasting and touching."],
+    ],
+    connections: [
+      { area: "Unit 6 (Sound)", text: "Your ears are the sense organ for hearing — you will explore sound soon." },
+      { area: "Staying healthy", text: "Washing your hands and eating good food keeps your body and senses working well." },
+    ],
     experimentTitles: ["Point and Name Body Parts", "Feely Bag: Soft or Hard?", "Listen and Point to the Sound", "Taste Test: Sweet or Sour", "Which Nose Knows? Smell Test", "Draw Myself and Label"],
     vocabulary: [
       ["Head", "The top part of your body, above your neck."], ["Arms", "The two long parts joined to your shoulders."],
@@ -109,6 +133,14 @@ const GRADE1 = {
       "Observe and record the properties of materials.",
     ],
     conceptTitles: ["What Things Are Made Of", "Hard and Soft", "Rough and Smooth", "Bendy and Stiff", "Sorting Materials", "Choosing the Right Material"],
+    misconceptions: [
+      ["Hard things are always strong.", "Some hard things snap easily — glass is hard but it breaks."],
+      ["All metal things are heavy.", "Some metal things, like kitchen foil, are very light."],
+    ],
+    connections: [
+      { area: "Unit 5 (Pushes and Pulls)", text: "Bendy and stiff materials behave differently when you push and pull them." },
+      { area: "At home", text: "Look around the kitchen: every object's material was chosen to do its job well." },
+    ],
     experimentTitles: ["Feel and Sort: Hard or Soft", "Rough or Smooth Hunt", "Bendy or Stiff Test", "Will It Float or Sink?", "Build the Strongest Tower", "Sort Toys by Material"],
     quiz: [
       q("A pillow feels...", ["soft", "hard", "rough", "stiff"], "soft", "A pillow is soft, so it is nice to rest on."),
@@ -129,6 +161,14 @@ const GRADE1 = {
       "Observe and describe pushes and pulls in play and at home.",
     ],
     conceptTitles: ["Pushes", "Pulls", "Making Things Move", "Making Things Stop", "Fast and Slow", "Changing Direction"],
+    misconceptions: [
+      ["Only people can push and pull things.", "Wind and water push things too — a breeze can push a boat along."],
+      ["Big things always move slowly.", "How fast something moves depends on how hard it is pushed or pulled."],
+    ],
+    connections: [
+      { area: "Unit 4 (Materials)", text: "Pushing and pulling shows which materials bend, stretch or stay stiff." },
+      { area: "Playtime", text: "Swings, slides and balls all move because of pushes and pulls." },
+    ],
     experimentTitles: ["Push a Toy Car", "Pull a Toy on a String", "Ramp Race: Fast or Slow", "Make a Ball Stop", "Push Hard, Push Gently", "Change the Way It Goes"],
     quiz: [
       q("Opening a door by pulling it is a...", ["pull", "push", "lift", "drop"], "pull", "Pulling the door towards you is a pull."),
@@ -149,6 +189,24 @@ const GRADE1 = {
       "Listen carefully and identify different sounds.",
     ],
     conceptTitles: ["What Is Sound?", "How We Hear", "Loud Sounds", "Quiet Sounds", "Making Sounds", "Sounds Around Us"],
+    vocabulary: [
+      ["Sound", "What we hear when something shakes the air"],
+      ["Vibration", "A fast shaking that makes sound"],
+      ["Ear", "The body part we hear with"],
+      ["Loud", "A big, strong sound"],
+      ["Quiet", "A small, soft sound"],
+      ["Volume", "How loud or quiet a sound is"],
+      ["Listen", "To pay attention with your ears"],
+      ["Echo", "A sound that bounces back to you"],
+    ],
+    misconceptions: [
+      ["Sound happens by itself.", "Every sound is made by something shaking or vibrating — a drum skin, a string, or your voice."],
+      ["Loud sounds always come from near by.", "Far-away thunder can still be loud; sounds get quieter as they travel further."],
+    ],
+    connections: [
+      { area: "Unit 3 (Ourselves)", text: "You hear with your ears — one of the five senses you learned about." },
+      { area: "Music", text: "Drums, strings and your own voice all make sound by shaking." },
+    ],
     experimentTitles: ["Listen for One Minute", "Shake a Sound Maker", "Loud and Quiet Sorting", "Feel a Drum Vibrate", "Make a String Buzz", "Guess That Sound"],
     quiz: [
       q("We hear with our...", ["ears", "eyes", "nose", "hands"], "ears", "We use our ears to hear sounds."),
@@ -266,6 +324,7 @@ function buildGrade(grade) {
     for (const doc of docs) for (const block of doc.blocks) {
       const text = tidy(block.text);
       if (text.length < 40) continue;
+      if (/Ask Your AI Tutor|🤖/i.test(text)) continue; // boilerplate, not example material
       for (const part of text.split(/(?<=[.!?])\s+(?=[A-Z“"])/)) {
         const s = tidy(part);
         if (s.length >= 40 && s.length <= 240) out.push(s);
@@ -313,6 +372,21 @@ function buildGrade(grade) {
         return m ? { area: tidy(m[1]), text: sentence(m[2], 240) } : { area: "Links", text: sentence(text, 240) };
       }).slice(0, 6);
 
+    // Drop non-vocabulary rows that leak in from source tables: bare header
+    // words ("Fact | Value"), fact-figure rows whose meaning is just a number
+    // ("Number of planets | 8"), and checklist rows ("Knows that... | Can
+    // do / Getting there"). Chemical formulas like "Water | H2O" stay.
+    const HEADER_WORD = /^(fact|value|quantity|factor|amount|number|item|word|term|meaning|name|formula|symbol|example|definition)$/i;
+    terms = terms.filter(([term, meaning]) => {
+      const t = tidy(term), m = tidy(meaning);
+      if (HEADER_WORD.test(t) && (HEADER_WORD.test(m) || m.length < 8)) return false; // "Formula | Name" header rows
+      if (/^what it (finds|does|shows|means|tells)/i.test(t)) return false;
+      if (/^(number|how many|amount) of\b/i.test(t)) return false; // fact rows, not vocabulary
+      if (/^\d+([.,]\d+)?$/.test(m) || (/^(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)$/i.test(m) && t.split(" ").length > 2)) return false;
+      if (/^(knows?|tells?|can\b|names?|says?|shows?|uses?|identifies)\b/i.test(t) && t.split(" ").length > 3) return false;
+      if (/can do|getting there|needs (help|support)|not yet/i.test(m)) return false;
+      return true;
+    });
     terms = terms.slice(0, 12);
 
     // Rich vocabulary: pair each term with an example sentence from the
@@ -468,7 +542,10 @@ function buildGrade(grade) {
     }));
     const terms = reference.terms.length >= 4 ? reference.terms : [["Science", "Studying the world by observing and testing"], ["Observe", "Look carefully and notice details"], ["Predict", "Say what you think will happen"], ["Record", "Write or draw what you find"]];
     let index = questions.length;
-    while (questions.length < 12) {
+    const seenQuestions = new Set(questions.map((q) => q.question));
+    let attempts = 0;
+    while (questions.length < 12 && attempts < 60) {
+      attempts += 1;
       const entry = terms[index % terms.length];
       const reverse = index >= Math.min(terms.length, 6);
       const pool = terms.filter((item) => item !== entry).map((item) => reverse ? item[0] : item[1]);
@@ -480,8 +557,11 @@ function buildGrade(grade) {
       }
       const options = [answer, ...distractors];
       while (options.length < 4) options.push(`Not this ${reverse ? "term" : "meaning"}`);
-      questions.push({ id: `q${String(questions.length + 1).padStart(2, "0")}`, type: questions.length < 4 ? "Concept" : questions.length < 8 ? "Application" : "Reasoning", outcomeId: `lo${String(questions.length % 8 + 1).padStart(2, "0")}`, difficulty: questions.length < 4 ? "Basic" : questions.length < 9 ? "Core" : "Challenge", question: reverse ? `Which science word matches this meaning: ${entry[1]}?` : `What does “${entry[0]}” mean?`, options: [...new Set(options)].slice(0, 4), answer, hint: `Use the Unit ${unitNo} Science Words reference.`, explanation: `${entry[0]} means ${entry[1]}.` });
+      const questionText = reverse ? `Which science word matches this meaning: ${entry[1]}?` : `What does “${entry[0]}” mean?`;
       index += 1;
+      if (seenQuestions.has(questionText)) continue; // two terms sharing a meaning would repeat
+      seenQuestions.add(questionText);
+      questions.push({ id: `q${String(questions.length + 1).padStart(2, "0")}`, type: questions.length < 4 ? "Concept" : questions.length < 8 ? "Application" : "Reasoning", outcomeId: `lo${String(questions.length % 8 + 1).padStart(2, "0")}`, difficulty: questions.length < 4 ? "Basic" : questions.length < 9 ? "Core" : "Challenge", question: questionText, options: [...new Set(options)].slice(0, 4), answer, hint: `Use the Unit ${unitNo} Science Words reference.`, explanation: `${entry[0]} means ${entry[1]}.` });
     }
     return { passPercent: 80, questions };
   }
@@ -516,7 +596,17 @@ function buildGrade(grade) {
     const referenceDoc = docFor(unitNo, "Reference");
     const title = unitTitle(lesson, unitMeta.title, unitNo);
     const override = grade === 1 ? GRADE1[unitNo] : null;
+    // Targeted extras for units whose source lacks a connections section.
+    const EXTRA_CONNECTIONS = {
+      "2-3": [
+        { area: "Cooking at home", text: "Cooking changes materials: eggs set, bread toasts, and ice melts in a warm drink." },
+        { area: "Science skill", text: "Predict, test and record what happens when materials are heated or cooled." },
+      ],
+    };
     const reference = referenceData(referenceDoc, lesson, experimentsDoc);
+    if (override && override.misconceptions) reference.commonMistakes = override.misconceptions.map((pair) => pair.slice());
+    if (override && override.connections) reference.connections = override.connections.map((c) => ({ ...c }));
+    if (EXTRA_CONNECTIONS[`${grade}-${unitNo}`] && !reference.connections.length) reference.connections = EXTRA_CONNECTIONS[`${grade}-${unitNo}`];
     if (override && override.vocabulary) {
       // Replace weak checklist-derived vocabulary with authored terms.
       reference.vocabulary = override.vocabulary.map(([term, meaning]) => ({ term, meaning, example: "", letter: (term[0] || "?").toUpperCase() }));

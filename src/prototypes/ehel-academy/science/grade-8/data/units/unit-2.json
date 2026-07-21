@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T06:33:40.066Z",
+  "generatedAt": "2026-07-21T08:52:33.803Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -466,10 +466,6 @@
     "rules": [],
     "terms": [
       [
-        "Item",
-        "Value"
-      ],
-      [
         "Puberty age range",
         "About 11 to 16 years"
       ],
@@ -512,15 +508,13 @@
       [
         "Puberty",
         "The stage when a child's body matures into an adult body (about 11-16 years)."
+      ],
+      [
+        "Hormone",
+        "A chemical messenger; testosterone in boys, oestrogen in girls."
       ]
     ],
     "vocabulary": [
-      {
-        "term": "Item",
-        "meaning": "Value",
-        "example": "Keep this list close, and tick each item off when you are confident.",
-        "letter": "I"
-      },
       {
         "term": "Puberty age range",
         "meaning": "About 11 to 16 years",
@@ -586,6 +580,12 @@
         "meaning": "The stage when a child's body matures into an adult body (about 11-16 years).",
         "example": "Year 8 - Unit 2 | The Reproductive Systems, Puberty, the Menstrual Cycle, Fertilisation, Pregnancy and Birth",
         "letter": "P"
+      },
+      {
+        "term": "Hormone",
+        "meaning": "A chemical messenger; testosterone in boys, oestrogen in girls.",
+        "example": "The two male organs that make sperm cells and the hormone testosterone.",
+        "letter": "H"
       }
     ],
     "commonMistakes": [
@@ -821,9 +821,9 @@
       "responseMode": "text",
       "prompt": "Name the male and female sex cells, and state where each one is made.",
       "keyIdeas": [
-        "Item",
         "Puberty age range",
-        "Menstrual cycle length"
+        "Menstrual cycle length",
+        "Ovulation"
       ],
       "modelAnswer": "The male sex cell is the sperm cell, made in the testes. The female sex cell is the egg cell (ovum), made in (and released from) the ovaries."
     },
@@ -834,9 +834,9 @@
       "responseMode": "text",
       "prompt": "State two jobs of the ovaries.",
       "keyIdeas": [
-        "Puberty age range",
         "Menstrual cycle length",
-        "Ovulation"
+        "Ovulation",
+        "Embryo stage"
       ],
       "modelAnswer": "The ovaries (1) store and release egg cells, and (2) make the female hormone oestrogen. (Either two of these.)"
     },
@@ -847,9 +847,9 @@
       "responseMode": "text",
       "prompt": "Give two changes of puberty that happen to both boys and girls.",
       "keyIdeas": [
-        "Menstrual cycle length",
         "Ovulation",
-        "Embryo stage"
+        "Embryo stage",
+        "Fetus stage"
       ],
       "modelAnswer": "Accept any two shared changes, such as: a growth spurt, underarm hair, more sweat and body odour, oilier skin, or emotional changes."
     },
@@ -860,9 +860,9 @@
       "responseMode": "text",
       "prompt": "Explain what happens during menstruation and why it is a normal, healthy process.",
       "keyIdeas": [
-        "Ovulation",
         "Embryo stage",
-        "Fetus stage"
+        "Fetus stage",
+        "Gestation (pregnancy)"
       ],
       "modelAnswer": "During menstruation the thickened lining of the uterus, no longer needed because no baby is developing, breaks down and leaves the body through the vagina. It is a normal, healthy monthly sign that the female body is working well - not an illness."
     },
@@ -873,9 +873,9 @@
       "responseMode": "text",
       "prompt": "Define fertilisation precisely, using the word 'nucleus'.",
       "keyIdeas": [
-        "Embryo stage",
         "Fetus stage",
-        "Gestation (pregnancy)"
+        "Gestation (pregnancy)",
+        "Oviduct"
       ],
       "modelAnswer": "Fertilisation is the joining (fusion) of the nucleus of a sperm cell with the nucleus of an egg cell, forming a single new cell."
     },
@@ -886,9 +886,9 @@
       "responseMode": "text",
       "prompt": "Put these stages in the correct order and name what changes at each: fetus, zygote, embryo.",
       "keyIdeas": [
-        "Fetus stage",
         "Gestation (pregnancy)",
-        "Oviduct"
+        "Oviduct",
+        "Uterus (womb)"
       ],
       "modelAnswer": "Correct order: zygote (the single cell at fertilisation), then embryo (first eight weeks, main parts forming), then fetus (from eight weeks until birth, clearly human and growing)."
     }
@@ -1096,9 +1096,9 @@
       {
         "id": "u2-game-1",
         "icon": "?",
-        "skill": "Item",
-        "title": "Quick Match: Item",
-        "description": "Practise item through four short challenges.",
+        "skill": "Puberty age range",
+        "title": "Quick Match: Puberty age range",
+        "description": "Practise puberty age range through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1154,9 +1154,9 @@
       {
         "id": "u2-game-2",
         "icon": "★",
-        "skill": "Puberty age range",
-        "title": "Concept Quest: Puberty age range",
-        "description": "Practise puberty age range through four short challenges.",
+        "skill": "Menstrual cycle length",
+        "title": "Concept Quest: Menstrual cycle length",
+        "description": "Practise menstrual cycle length through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1212,9 +1212,9 @@
       {
         "id": "u2-game-3",
         "icon": "◫",
-        "skill": "Menstrual cycle length",
-        "title": "Lab Detective: Menstrual cycle length",
-        "description": "Practise menstrual cycle length through four short challenges.",
+        "skill": "Ovulation",
+        "title": "Lab Detective: Ovulation",
+        "description": "Practise ovulation through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1270,9 +1270,9 @@
       {
         "id": "u2-game-4",
         "icon": "→",
-        "skill": "Ovulation",
-        "title": "Fact Runner: Ovulation",
-        "description": "Practise ovulation through four short challenges.",
+        "skill": "Embryo stage",
+        "title": "Fact Runner: Embryo stage",
+        "description": "Practise embryo stage through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1328,9 +1328,9 @@
       {
         "id": "u2-game-5",
         "icon": "Σ",
-        "skill": "Embryo stage",
-        "title": "Vocabulary Vault: Embryo stage",
-        "description": "Practise embryo stage through four short challenges.",
+        "skill": "Fetus stage",
+        "title": "Vocabulary Vault: Fetus stage",
+        "description": "Practise fetus stage through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1386,9 +1386,9 @@
       {
         "id": "u2-game-6",
         "icon": "◇",
-        "skill": "Fetus stage",
-        "title": "Challenge Cards: Fetus stage",
-        "description": "Practise fetus stage through four short challenges.",
+        "skill": "Gestation (pregnancy)",
+        "title": "Challenge Cards: Gestation (pregnancy)",
+        "description": "Practise gestation (pregnancy) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1444,9 +1444,9 @@
       {
         "id": "u2-game-7",
         "icon": "⚡",
-        "skill": "Gestation (pregnancy)",
-        "title": "Think Fast: Gestation (pregnancy)",
-        "description": "Practise gestation (pregnancy) through four short challenges.",
+        "skill": "Oviduct",
+        "title": "Think Fast: Oviduct",
+        "description": "Practise oviduct through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1502,9 +1502,9 @@
       {
         "id": "u2-game-8",
         "icon": "☁",
-        "skill": "Oviduct",
-        "title": "Explain It: Oviduct",
-        "description": "Practise oviduct through four short challenges.",
+        "skill": "Uterus (womb)",
+        "title": "Explain It: Uterus (womb)",
+        "description": "Practise uterus (womb) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1560,9 +1560,9 @@
       {
         "id": "u2-game-9",
         "icon": "⌂",
-        "skill": "Uterus (womb)",
-        "title": "Real-Life Round: Uterus (womb)",
-        "description": "Practise uterus (womb) through four short challenges.",
+        "skill": "Cervix",
+        "title": "Real-Life Round: Cervix",
+        "description": "Practise cervix through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1618,9 +1618,9 @@
       {
         "id": "u2-game-10",
         "icon": "!",
-        "skill": "Cervix",
-        "title": "Spot the Error: Cervix",
-        "description": "Practise cervix through four short challenges.",
+        "skill": "Vagina",
+        "title": "Spot the Error: Vagina",
+        "description": "Practise vagina through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1676,9 +1676,9 @@
       {
         "id": "u2-game-11",
         "icon": "≡",
-        "skill": "Vagina",
-        "title": "Mastery Mix: Vagina",
-        "description": "Practise vagina through four short challenges.",
+        "skill": "Puberty",
+        "title": "Mastery Mix: Puberty",
+        "description": "Practise puberty through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1734,9 +1734,9 @@
       {
         "id": "u2-game-12",
         "icon": "T",
-        "skill": "Puberty",
-        "title": "Unit Champion: Puberty",
-        "description": "Practise puberty through four short challenges.",
+        "skill": "Hormone",
+        "title": "Unit Champion: Hormone",
+        "description": "Practise hormone through four short challenges.",
         "type": "choice",
         "rounds": [
           {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T06:33:39.972Z",
+  "generatedAt": "2026-07-21T08:52:33.704Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -478,10 +478,6 @@
     "rules": [],
     "terms": [
       [
-        "What it finds",
-        "Formula"
-      ],
-      [
         "Weight from mass",
         "W = m x g"
       ],
@@ -524,15 +520,13 @@
       [
         "Vacuum",
         "A region with no particles, such as the space between the planets."
+      ],
+      [
+        "Air resistance",
+        "A force that opposes motion through air; absent in a vacuum."
       ]
     ],
     "vocabulary": [
-      {
-        "term": "What it finds",
-        "meaning": "Formula",
-        "example": "",
-        "letter": "W"
-      },
       {
         "term": "Weight from mass",
         "meaning": "W = m x g",
@@ -598,6 +592,12 @@
         "meaning": "A region with no particles, such as the space between the planets.",
         "example": "Space is a vacuum, which means it is almost completely empty; there are no particles of air between the planets.",
         "letter": "V"
+      },
+      {
+        "term": "Air resistance",
+        "meaning": "A force that opposes motion through air; absent in a vacuum.",
+        "example": "On Earth the feather drifts down slowly only because of air resistance, not because gravity treats it differently.",
+        "letter": "A"
       }
     ],
     "commonMistakes": [
@@ -833,9 +833,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between mass and weight. Give the unit of each.",
       "keyIdeas": [
-        "What it finds",
         "Weight from mass",
-        "Mass from weight"
+        "Mass from weight",
+        "Gravity value on Earth"
       ],
       "modelAnswer": "Mass is the quantity of matter in an object, measured in kilograms (kg), and it never changes with location. Weight is the force of gravity acting on that mass, measured in newtons (N), and it changes if gravity changes."
     },
@@ -846,9 +846,9 @@
       "responseMode": "text",
       "prompt": "State the relationship (formula) that connects weight, mass and gravitational field strength.",
       "keyIdeas": [
-        "Weight from mass",
         "Mass from weight",
-        "Gravity value on Earth"
+        "Gravity value on Earth",
+        "Wasted energy"
       ],
       "modelAnswer": "Weight = mass x gravitational field strength, or W = m x g. Weight is in N, mass in kg, and g in N/kg."
     },
@@ -859,9 +859,9 @@
       "responseMode": "text",
       "prompt": "Why does your weight change on the Moon but your mass stay the same?",
       "keyIdeas": [
-        "Mass from weight",
         "Gravity value on Earth",
-        "Wasted energy"
+        "Wasted energy",
+        "Mass"
       ],
       "modelAnswer": "Your mass is the amount of matter you are made of, which does not change when you travel. Your weight depends on how strongly gravity pulls, and the Moon's gravity is weaker than Earth's, so you weigh less there while your mass stays the same."
     },
@@ -872,9 +872,9 @@
       "responseMode": "text",
       "prompt": "Name the force that holds the planets in their orbits around the Sun.",
       "keyIdeas": [
-        "Gravity value on Earth",
         "Wasted energy",
-        "Mass"
+        "Mass",
+        "Weight"
       ],
       "modelAnswer": "The force of gravity, coming from the Sun, holds the planets in their orbits."
     },
@@ -885,9 +885,9 @@
       "responseMode": "text",
       "prompt": "Explain, using the idea of the Earth's axis, why we have day and night.",
       "keyIdeas": [
-        "Wasted energy",
         "Mass",
-        "Weight"
+        "Weight",
+        "Gravitational field strength (g)"
       ],
       "modelAnswer": "The Earth spins on its axis roughly once every 24 hours. The side facing the Sun has day; the side turned away is in shadow and has night. As the Earth turns, each place passes from day into night and back."
     },
@@ -898,9 +898,9 @@
       "responseMode": "text",
       "prompt": "What causes the tides, and why are there very large tides at new Moon and full Moon?",
       "keyIdeas": [
-        "Mass",
         "Weight",
-        "Gravitational field strength (g)"
+        "Gravitational field strength (g)",
+        "Solar System"
       ],
       "modelAnswer": "The tides are caused mainly by the gravitational pull of the Moon (with a smaller pull from the Sun) drawing the ocean water into bulges. At new Moon and full Moon the Sun and Moon line up, so their pulls combine to give especially large spring tides."
     }
@@ -1108,9 +1108,9 @@
       {
         "id": "u3-game-1",
         "icon": "?",
-        "skill": "What it finds",
-        "title": "Quick Match: What it finds",
-        "description": "Practise what it finds through four short challenges.",
+        "skill": "Weight from mass",
+        "title": "Quick Match: Weight from mass",
+        "description": "Practise weight from mass through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1166,9 +1166,9 @@
       {
         "id": "u3-game-2",
         "icon": "★",
-        "skill": "Weight from mass",
-        "title": "Concept Quest: Weight from mass",
-        "description": "Practise weight from mass through four short challenges.",
+        "skill": "Mass from weight",
+        "title": "Concept Quest: Mass from weight",
+        "description": "Practise mass from weight through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1224,9 +1224,9 @@
       {
         "id": "u3-game-3",
         "icon": "◫",
-        "skill": "Mass from weight",
-        "title": "Lab Detective: Mass from weight",
-        "description": "Practise mass from weight through four short challenges.",
+        "skill": "Gravity value on Earth",
+        "title": "Lab Detective: Gravity value on Earth",
+        "description": "Practise gravity value on earth through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1282,9 +1282,9 @@
       {
         "id": "u3-game-4",
         "icon": "→",
-        "skill": "Gravity value on Earth",
-        "title": "Fact Runner: Gravity value on Earth",
-        "description": "Practise gravity value on earth through four short challenges.",
+        "skill": "Wasted energy",
+        "title": "Fact Runner: Wasted energy",
+        "description": "Practise wasted energy through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1340,9 +1340,9 @@
       {
         "id": "u3-game-5",
         "icon": "Σ",
-        "skill": "Wasted energy",
-        "title": "Vocabulary Vault: Wasted energy",
-        "description": "Practise wasted energy through four short challenges.",
+        "skill": "Mass",
+        "title": "Vocabulary Vault: Mass",
+        "description": "Practise mass through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1398,9 +1398,9 @@
       {
         "id": "u3-game-6",
         "icon": "◇",
-        "skill": "Mass",
-        "title": "Challenge Cards: Mass",
-        "description": "Practise mass through four short challenges.",
+        "skill": "Weight",
+        "title": "Challenge Cards: Weight",
+        "description": "Practise weight through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1456,9 +1456,9 @@
       {
         "id": "u3-game-7",
         "icon": "⚡",
-        "skill": "Weight",
-        "title": "Think Fast: Weight",
-        "description": "Practise weight through four short challenges.",
+        "skill": "Gravitational field strength (g)",
+        "title": "Think Fast: Gravitational field strength (g)",
+        "description": "Practise gravitational field strength (g) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1514,9 +1514,9 @@
       {
         "id": "u3-game-8",
         "icon": "☁",
-        "skill": "Gravitational field strength (g)",
-        "title": "Explain It: Gravitational field strength (g)",
-        "description": "Practise gravitational field strength (g) through four short challenges.",
+        "skill": "Solar System",
+        "title": "Explain It: Solar System",
+        "description": "Practise solar system through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1572,9 +1572,9 @@
       {
         "id": "u3-game-9",
         "icon": "⌂",
-        "skill": "Solar System",
-        "title": "Real-Life Round: Solar System",
-        "description": "Practise solar system through four short challenges.",
+        "skill": "Orbit",
+        "title": "Real-Life Round: Orbit",
+        "description": "Practise orbit through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1630,9 +1630,9 @@
       {
         "id": "u3-game-10",
         "icon": "!",
-        "skill": "Orbit",
-        "title": "Spot the Error: Orbit",
-        "description": "Practise orbit through four short challenges.",
+        "skill": "Axis",
+        "title": "Spot the Error: Axis",
+        "description": "Practise axis through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1688,9 +1688,9 @@
       {
         "id": "u3-game-11",
         "icon": "≡",
-        "skill": "Axis",
-        "title": "Mastery Mix: Axis",
-        "description": "Practise axis through four short challenges.",
+        "skill": "Vacuum",
+        "title": "Mastery Mix: Vacuum",
+        "description": "Practise vacuum through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1746,9 +1746,9 @@
       {
         "id": "u3-game-12",
         "icon": "T",
-        "skill": "Vacuum",
-        "title": "Unit Champion: Vacuum",
-        "description": "Practise vacuum through four short challenges.",
+        "skill": "Air resistance",
+        "title": "Unit Champion: Air resistance",
+        "description": "Practise air resistance through four short challenges.",
         "type": "choice",
         "rounds": [
           {

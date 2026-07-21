@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T06:33:40.091Z",
+  "generatedAt": "2026-07-21T08:52:33.831Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -478,10 +478,6 @@
     "rules": [],
     "terms": [
       [
-        "Formula",
-        "Name"
-      ],
-      [
         "H2O",
         "Water"
       ],
@@ -524,15 +520,13 @@
       [
         "Molecule",
         "Two or more atoms joined together."
+      ],
+      [
+        "Formula",
+        "Symbols and numbers showing the atoms in a compound."
       ]
     ],
     "vocabulary": [
-      {
-        "term": "Formula",
-        "meaning": "Name",
-        "example": "Scientists describe a compound using a formula - a short code made of chemical symbols and small numbers.",
-        "letter": "F"
-      },
       {
         "term": "H2O",
         "meaning": "Water",
@@ -598,6 +592,12 @@
         "meaning": "Two or more atoms joined together.",
         "example": "",
         "letter": "M"
+      },
+      {
+        "term": "Formula",
+        "meaning": "Symbols and numbers showing the atoms in a compound.",
+        "example": "Scientists describe a compound using a formula - a short code made of chemical symbols and small numbers.",
+        "letter": "F"
       }
     ],
     "commonMistakes": [
@@ -829,9 +829,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between an atom and an element.",
       "keyIdeas": [
-        "Formula",
         "H2O",
-        "CO2"
+        "CO2",
+        "NaCl"
       ],
       "modelAnswer": "An atom is the smallest single particle of an element. An element is a pure substance made of many atoms of the same kind. For example, iron is an element, and a single iron atom is an atom."
     },
@@ -842,9 +842,9 @@
       "responseMode": "text",
       "prompt": "State three properties of metals and three properties of non-metals.",
       "keyIdeas": [
-        "H2O",
         "CO2",
-        "NaCl"
+        "NaCl",
+        "CaCO3"
       ],
       "modelAnswer": "Oxygen = O; carbon = C; iron = Fe; gold = Au; sodium = Na."
     },
@@ -855,9 +855,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between a group and a period in the Periodic Table?",
       "keyIdeas": [
-        "CO2",
         "NaCl",
-        "CaCO3"
+        "CaCO3",
+        "Copper"
       ],
       "modelAnswer": "Metals: shiny, good conductors of heat and electricity, malleable (bendable), strong, high melting point (any three). Non-metals: dull, poor conductors (insulators), brittle, low melting point, often gases (any three)."
     },
@@ -868,9 +868,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between a compound and a mixture, giving one example of each.",
       "keyIdeas": [
-        "NaCl",
         "CaCO3",
-        "Copper"
+        "Copper",
+        "Aluminium"
       ],
       "modelAnswer": "A group is a vertical column of the Periodic Table, and elements in it behave alike. A period is a horizontal row, across which elements change from metal to non-metal."
     },
@@ -881,9 +881,9 @@
       "responseMode": "text",
       "prompt": "How many atoms of each element are in the formula CaCO3? How many atoms in total?",
       "keyIdeas": [
-        "CaCO3",
         "Copper",
-        "Aluminium"
+        "Aluminium",
+        "Metal"
       ],
       "modelAnswer": "In a compound the elements are chemically joined and make a new substance (e.g. water). In a mixture they are only mixed and keep their own properties (e.g. air)."
     },
@@ -894,9 +894,9 @@
       "responseMode": "text",
       "prompt": "Define the words reactant and product, using rusting as your example.",
       "keyIdeas": [
-        "Copper",
         "Aluminium",
-        "Metal"
+        "Metal",
+        "Non-metal"
       ],
       "modelAnswer": "CaCO3 has 1 calcium, 1 carbon and 3 oxygen atoms. That is 5 atoms in total."
     }
@@ -1104,9 +1104,9 @@
       {
         "id": "u4-game-1",
         "icon": "?",
-        "skill": "Formula",
-        "title": "Quick Match: Formula",
-        "description": "Practise formula through four short challenges.",
+        "skill": "H2O",
+        "title": "Quick Match: H2O",
+        "description": "Practise h2o through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1162,9 +1162,9 @@
       {
         "id": "u4-game-2",
         "icon": "★",
-        "skill": "H2O",
-        "title": "Concept Quest: H2O",
-        "description": "Practise h2o through four short challenges.",
+        "skill": "CO2",
+        "title": "Concept Quest: CO2",
+        "description": "Practise co2 through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1220,9 +1220,9 @@
       {
         "id": "u4-game-3",
         "icon": "◫",
-        "skill": "CO2",
-        "title": "Lab Detective: CO2",
-        "description": "Practise co2 through four short challenges.",
+        "skill": "NaCl",
+        "title": "Lab Detective: NaCl",
+        "description": "Practise nacl through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1278,9 +1278,9 @@
       {
         "id": "u4-game-4",
         "icon": "→",
-        "skill": "NaCl",
-        "title": "Fact Runner: NaCl",
-        "description": "Practise nacl through four short challenges.",
+        "skill": "CaCO3",
+        "title": "Fact Runner: CaCO3",
+        "description": "Practise caco3 through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1336,9 +1336,9 @@
       {
         "id": "u4-game-5",
         "icon": "Σ",
-        "skill": "CaCO3",
-        "title": "Vocabulary Vault: CaCO3",
-        "description": "Practise caco3 through four short challenges.",
+        "skill": "Copper",
+        "title": "Vocabulary Vault: Copper",
+        "description": "Practise copper through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1394,9 +1394,9 @@
       {
         "id": "u4-game-6",
         "icon": "◇",
-        "skill": "Copper",
-        "title": "Challenge Cards: Copper",
-        "description": "Practise copper through four short challenges.",
+        "skill": "Aluminium",
+        "title": "Challenge Cards: Aluminium",
+        "description": "Practise aluminium through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1452,9 +1452,9 @@
       {
         "id": "u4-game-7",
         "icon": "⚡",
-        "skill": "Aluminium",
-        "title": "Think Fast: Aluminium",
-        "description": "Practise aluminium through four short challenges.",
+        "skill": "Metal",
+        "title": "Think Fast: Metal",
+        "description": "Practise metal through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1510,9 +1510,9 @@
       {
         "id": "u4-game-8",
         "icon": "☁",
-        "skill": "Metal",
-        "title": "Explain It: Metal",
-        "description": "Practise metal through four short challenges.",
+        "skill": "Non-metal",
+        "title": "Explain It: Non-metal",
+        "description": "Practise non-metal through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1568,9 +1568,9 @@
       {
         "id": "u4-game-9",
         "icon": "⌂",
-        "skill": "Non-metal",
-        "title": "Real-Life Round: Non-metal",
-        "description": "Practise non-metal through four short challenges.",
+        "skill": "Compound",
+        "title": "Real-Life Round: Compound",
+        "description": "Practise compound through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1626,9 +1626,9 @@
       {
         "id": "u4-game-10",
         "icon": "!",
-        "skill": "Compound",
-        "title": "Spot the Error: Compound",
-        "description": "Practise compound through four short challenges.",
+        "skill": "Mixture",
+        "title": "Spot the Error: Mixture",
+        "description": "Practise mixture through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1684,9 +1684,9 @@
       {
         "id": "u4-game-11",
         "icon": "≡",
-        "skill": "Mixture",
-        "title": "Mastery Mix: Mixture",
-        "description": "Practise mixture through four short challenges.",
+        "skill": "Molecule",
+        "title": "Mastery Mix: Molecule",
+        "description": "Practise molecule through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1742,9 +1742,9 @@
       {
         "id": "u4-game-12",
         "icon": "T",
-        "skill": "Molecule",
-        "title": "Unit Champion: Molecule",
-        "description": "Practise molecule through four short challenges.",
+        "skill": "Formula",
+        "title": "Unit Champion: Formula",
+        "description": "Practise formula through four short challenges.",
         "type": "choice",
         "rounds": [
           {

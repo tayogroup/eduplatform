@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T06:33:39.734Z",
+  "generatedAt": "2026-07-21T08:52:33.465Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -478,10 +478,6 @@
     "rules": [],
     "terms": [
       [
-        "Fact",
-        "Value"
-      ],
-      [
         "Earth spins once (day and night)",
         "About 24 hours"
       ],
@@ -496,10 +492,6 @@
       [
         "New Moon to full Moon",
         "About 15 days (half a month)"
-      ],
-      [
-        "Number of planets in the solar system",
-        "Eight"
       ],
       [
         "Earth compared to the Moon",
@@ -524,15 +516,13 @@
       [
         "Gravity",
         "The invisible pull that holds objects together."
+      ],
+      [
+        "Solar System",
+        "The Sun and everything that orbits it."
       ]
     ],
     "vocabulary": [
-      {
-        "term": "Fact",
-        "meaning": "Value",
-        "example": "🤖 Ask Your AI Tutor Whenever you forget a fact from this card, just ask me.",
-        "letter": "F"
-      },
       {
         "term": "Earth spins once",
         "meaning": "About 24 hours",
@@ -555,12 +545,6 @@
         "term": "New Moon to full Moon",
         "meaning": "About 15 days (half a month)",
         "example": "Name and put in order the main phases of the Moon, from new Moon to full Moon and back.",
-        "letter": "N"
-      },
-      {
-        "term": "Number of planets in the solar system",
-        "meaning": "Eight",
-        "example": "",
         "letter": "N"
       },
       {
@@ -598,6 +582,12 @@
         "meaning": "The invisible pull that holds objects together.",
         "example": "Use science words such as orbit, rotate, phase, sphere, crescent, and gravity correctly.",
         "letter": "G"
+      },
+      {
+        "term": "Solar System",
+        "meaning": "The Sun and everything that orbits it.",
+        "example": "The huge, hot star at the centre of our solar system.",
+        "letter": "S"
       }
     ],
     "commonMistakes": [
@@ -829,9 +819,9 @@
       "responseMode": "text",
       "prompt": "Name the three spherical objects you have studied in this unit.",
       "keyIdeas": [
-        "Fact",
         "Earth spins once (day and night)",
-        "Earth orbits the Sun once (a year)"
+        "Earth orbits the Sun once (a year)",
+        "Moon orbits Earth once (a lunar month)"
       ],
       "modelAnswer": "1 Earth, the Sun, and the Moon. All three are the spherical objects studied in this unit."
     },
@@ -842,9 +832,9 @@
       "responseMode": "text",
       "prompt": "What is the axis of the Earth?",
       "keyIdeas": [
-        "Earth spins once (day and night)",
         "Earth orbits the Sun once (a year)",
-        "Moon orbits Earth once (a lunar month)"
+        "Moon orbits Earth once (a lunar month)",
+        "New Moon to full Moon"
       ],
       "modelAnswer": "2 An imaginary line through the middle of Earth, from top to bottom, that Earth spins around. Earth rotates around this line, causing day and night."
     },
@@ -855,9 +845,9 @@
       "responseMode": "text",
       "prompt": "Explain in your own words what causes day and night.",
       "keyIdeas": [
-        "Earth orbits the Sun once (a year)",
         "Moon orbits Earth once (a lunar month)",
-        "New Moon to full Moon"
+        "New Moon to full Moon",
+        "Earth compared to the Moon"
       ],
       "modelAnswer": "3 Earth spins on its axis. The half facing the Sun has day; the half turned away has night. As Earth turns, each place moves from light into shadow and back."
     },
@@ -868,9 +858,9 @@
       "responseMode": "text",
       "prompt": "Where does the Moon's light really come from?",
       "keyIdeas": [
-        "Moon orbits Earth once (a lunar month)",
         "New Moon to full Moon",
-        "Number of planets in the solar system"
+        "Earth compared to the Moon",
+        "Phase"
       ],
       "modelAnswer": "4 From the Sun. The Moon reflects the Sun's light toward Earth. The Moon makes no light of its own; it shines like a mirror."
     },
@@ -881,9 +871,9 @@
       "responseMode": "text",
       "prompt": "What is a lunar month, and about how many days does it last?",
       "keyIdeas": [
-        "New Moon to full Moon",
-        "Number of planets in the solar system",
-        "Earth compared to the Moon"
+        "Earth compared to the Moon",
+        "Phase",
+        "Crescent"
       ],
       "modelAnswer": "5 A lunar month is one full cycle of Moon phases, from new Moon to the next new Moon. It lasts about 29 to 30 days. This is the length of a month in the Islamic calendar."
     },
@@ -894,9 +884,9 @@
       "responseMode": "text",
       "prompt": "Why does the new crescent Moon matter for Ramadan and Eid?",
       "keyIdeas": [
-        "Number of planets in the solar system",
-        "Earth compared to the Moon",
-        "Phase"
+        "Phase",
+        "Crescent",
+        "New Moon"
       ],
       "modelAnswer": "6 The Islamic calendar follows the Moon, so a new month begins when the new crescent is sighted. This marks the start of Ramadan and, later, Eid. Families watch the evening sky for the thin crescent."
     }
@@ -1104,9 +1094,9 @@
       {
         "id": "u6-game-1",
         "icon": "?",
-        "skill": "Fact",
-        "title": "Quick Match: Fact",
-        "description": "Practise fact through four short challenges.",
+        "skill": "Earth spins once (day and night)",
+        "title": "Quick Match: Earth spins once (day and night)",
+        "description": "Practise earth spins once (day and night) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1162,9 +1152,9 @@
       {
         "id": "u6-game-2",
         "icon": "★",
-        "skill": "Earth spins once (day and night)",
-        "title": "Concept Quest: Earth spins once (day and night)",
-        "description": "Practise earth spins once (day and night) through four short challenges.",
+        "skill": "Earth orbits the Sun once (a year)",
+        "title": "Concept Quest: Earth orbits the Sun once (a year)",
+        "description": "Practise earth orbits the sun once (a year) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1220,9 +1210,9 @@
       {
         "id": "u6-game-3",
         "icon": "◫",
-        "skill": "Earth orbits the Sun once (a year)",
-        "title": "Lab Detective: Earth orbits the Sun once (a year)",
-        "description": "Practise earth orbits the sun once (a year) through four short challenges.",
+        "skill": "Moon orbits Earth once (a lunar month)",
+        "title": "Lab Detective: Moon orbits Earth once (a lunar month)",
+        "description": "Practise moon orbits earth once (a lunar month) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1278,9 +1268,9 @@
       {
         "id": "u6-game-4",
         "icon": "→",
-        "skill": "Moon orbits Earth once (a lunar month)",
-        "title": "Fact Runner: Moon orbits Earth once (a lunar month)",
-        "description": "Practise moon orbits earth once (a lunar month) through four short challenges.",
+        "skill": "New Moon to full Moon",
+        "title": "Fact Runner: New Moon to full Moon",
+        "description": "Practise new moon to full moon through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1336,9 +1326,9 @@
       {
         "id": "u6-game-5",
         "icon": "Σ",
-        "skill": "New Moon to full Moon",
-        "title": "Vocabulary Vault: New Moon to full Moon",
-        "description": "Practise new moon to full moon through four short challenges.",
+        "skill": "Earth compared to the Moon",
+        "title": "Vocabulary Vault: Earth compared to the Moon",
+        "description": "Practise earth compared to the moon through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1394,9 +1384,9 @@
       {
         "id": "u6-game-6",
         "icon": "◇",
-        "skill": "Number of planets in the solar system",
-        "title": "Challenge Cards: Number of planets in the solar system",
-        "description": "Practise number of planets in the solar system through four short challenges.",
+        "skill": "Phase",
+        "title": "Challenge Cards: Phase",
+        "description": "Practise phase through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1452,9 +1442,9 @@
       {
         "id": "u6-game-7",
         "icon": "⚡",
-        "skill": "Earth compared to the Moon",
-        "title": "Think Fast: Earth compared to the Moon",
-        "description": "Practise earth compared to the moon through four short challenges.",
+        "skill": "Crescent",
+        "title": "Think Fast: Crescent",
+        "description": "Practise crescent through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1510,9 +1500,9 @@
       {
         "id": "u6-game-8",
         "icon": "☁",
-        "skill": "Phase",
-        "title": "Explain It: Phase",
-        "description": "Practise phase through four short challenges.",
+        "skill": "New Moon",
+        "title": "Explain It: New Moon",
+        "description": "Practise new moon through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1568,9 +1558,9 @@
       {
         "id": "u6-game-9",
         "icon": "⌂",
-        "skill": "Crescent",
-        "title": "Real-Life Round: Crescent",
-        "description": "Practise crescent through four short challenges.",
+        "skill": "Full Moon",
+        "title": "Real-Life Round: Full Moon",
+        "description": "Practise full moon through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1626,9 +1616,9 @@
       {
         "id": "u6-game-10",
         "icon": "!",
-        "skill": "New Moon",
-        "title": "Spot the Error: New Moon",
-        "description": "Practise new moon through four short challenges.",
+        "skill": "Gravity",
+        "title": "Spot the Error: Gravity",
+        "description": "Practise gravity through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1684,9 +1674,9 @@
       {
         "id": "u6-game-11",
         "icon": "≡",
-        "skill": "Full Moon",
-        "title": "Mastery Mix: Full Moon",
-        "description": "Practise full moon through four short challenges.",
+        "skill": "Solar System",
+        "title": "Mastery Mix: Solar System",
+        "description": "Practise solar system through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1742,9 +1732,9 @@
       {
         "id": "u6-game-12",
         "icon": "T",
-        "skill": "Gravity",
-        "title": "Unit Champion: Gravity",
-        "description": "Practise gravity through four short challenges.",
+        "skill": "Earth spins once (day and night)",
+        "title": "Unit Champion: Earth spins once (day and night)",
+        "description": "Practise earth spins once (day and night) through four short challenges.",
         "type": "choice",
         "rounds": [
           {

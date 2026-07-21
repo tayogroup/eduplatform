@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T06:33:39.875Z",
+  "generatedAt": "2026-07-21T08:52:33.601Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -478,10 +478,6 @@
     "rules": [],
     "terms": [
       [
-        "Fact",
-        "Value"
-      ],
-      [
         "Earth's rotation (one spin)",
         "24 hours = 1 day"
       ],
@@ -502,14 +498,6 @@
         "about 15 days"
       ],
       [
-        "Number of planets",
-        "8"
-      ],
-      [
-        "Number of time zones",
-        "24"
-      ],
-      [
         "Moon",
         "Earth's natural satellite. It reflects sunlight and takes about 29.5 days to orbit Earth."
       ],
@@ -524,15 +512,21 @@
       [
         "Waxing / Waning",
         "Waxing means the lit part is growing; waning means it is shrinking."
+      ],
+      [
+        "Constellation",
+        "A named pattern of stars used to find direction and mark the seasons."
+      ],
+      [
+        "Satellite",
+        "An object that orbits a planet. Natural (the Moon) or built by people (weather satellites)."
+      ],
+      [
+        "Time zone",
+        "One of 24 regions of Earth, each about one hour apart, created by Earth's rotation."
       ]
     ],
     "vocabulary": [
-      {
-        "term": "Fact",
-        "meaning": "Value",
-        "example": "",
-        "letter": "F"
-      },
       {
         "term": "Earth's rotation",
         "meaning": "24 hours = 1 day",
@@ -564,18 +558,6 @@
         "letter": "N"
       },
       {
-        "term": "Number of planets",
-        "meaning": "8",
-        "example": "",
-        "letter": "N"
-      },
-      {
-        "term": "Number of time zones",
-        "meaning": "24",
-        "example": "",
-        "letter": "N"
-      },
-      {
         "term": "Moon",
         "meaning": "Earth's natural satellite. It reflects sunlight and takes about 29.5 days to orbit Earth.",
         "example": "Year 5 - Unit 6 - Lesson | The Sun, Earth, Moon and the Sky Above You",
@@ -598,6 +580,24 @@
         "meaning": "Waxing means the lit part is growing; waning means it is shrinking.",
         "example": "A day or two later, a thin bright curve appears - the waxing crescent.",
         "letter": "W"
+      },
+      {
+        "term": "Constellation",
+        "meaning": "A named pattern of stars used to find direction and mark the seasons.",
+        "example": "The stars in a constellation are not really close together - some are far behind others - but from where we stand on Earth they make a shape we can recognise.",
+        "letter": "C"
+      },
+      {
+        "term": "Satellite",
+        "meaning": "An object that orbits a planet. Natural (the Moon) or built by people (weather satellites).",
+        "example": "The Moon is a natural satellite, which means it travels around Earth, just as Earth travels around the Sun.",
+        "letter": "S"
+      },
+      {
+        "term": "Time zone",
+        "meaning": "One of 24 regions of Earth, each about one hour apart, created by Earth's rotation.",
+        "example": "This is the reason each time zone is about 15 degrees of longitude wide.",
+        "letter": "T"
       }
     ],
     "commonMistakes": [
@@ -829,9 +829,9 @@
       "responseMode": "text",
       "prompt": "Explain in your own words why the Sun appears to move across the sky, even though it is not really moving around us.",
       "keyIdeas": [
-        "Fact",
         "Earth's rotation (one spin)",
-        "Earth turning per hour"
+        "Earth turning per hour",
+        "Earth's orbit (one trip round the Sun)"
       ],
       "modelAnswer": "1. The Sun appears to move because Earth is spinning. As we ride on the turning Earth, the Sun seems to slide across the sky, just as trees seem to slide past a moving car."
     },
@@ -842,9 +842,9 @@
       "responseMode": "text",
       "prompt": "Name the eight planets in order, starting from the Sun.",
       "keyIdeas": [
-        "Earth's rotation (one spin)",
         "Earth turning per hour",
-        "Earth's orbit (one trip round the Sun)"
+        "Earth's orbit (one trip round the Sun)",
+        "Moon's cycle of phases"
       ],
       "modelAnswer": "2. Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."
     },
@@ -855,9 +855,9 @@
       "responseMode": "text",
       "prompt": "Why does the Moon appear to change shape through the month?",
       "keyIdeas": [
-        "Earth turning per hour",
         "Earth's orbit (one trip round the Sun)",
-        "Moon's cycle of phases"
+        "Moon's cycle of phases",
+        "New moon to full moon"
       ],
       "modelAnswer": "3. As the Moon orbits Earth, we see different amounts of its sunlit half, so it appears to change shape through its phases."
     },
@@ -868,9 +868,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between rotation and orbiting? Give an example of each.",
       "keyIdeas": [
-        "Earth's orbit (one trip round the Sun)",
         "Moon's cycle of phases",
-        "New moon to full moon"
+        "New moon to full moon",
+        "Moon"
       ],
       "modelAnswer": "4. Rotation is spinning around an axis (Earth rotating once a day). Orbiting is travelling around another object (Earth orbiting the Sun once a year)."
     },
@@ -881,9 +881,9 @@
       "responseMode": "text",
       "prompt": "Why do people watch for the new crescent moon rather than a full moon to know a new Hijri month has begun?",
       "keyIdeas": [
-        "Moon's cycle of phases",
         "New moon to full moon",
-        "Number of planets"
+        "Moon",
+        "Phase"
       ],
       "modelAnswer": "5. The new crescent is the first thin sliver of Moon seen just after sunset, which marks the true beginning of a new lunar month; the full moon comes in the middle of the month, not the start."
     },
@@ -894,9 +894,9 @@
       "responseMode": "text",
       "prompt": "Explain why the Moon does not make its own light.",
       "keyIdeas": [
-        "New moon to full moon",
-        "Number of planets",
-        "Number of time zones"
+        "Moon",
+        "Phase",
+        "Crescent"
       ],
       "modelAnswer": "6. The Moon has no light of its own; it is a ball of rock that reflects sunlight, like a stone lit by a lamp."
     }
@@ -1104,9 +1104,9 @@
       {
         "id": "u6-game-1",
         "icon": "?",
-        "skill": "Fact",
-        "title": "Quick Match: Fact",
-        "description": "Practise fact through four short challenges.",
+        "skill": "Earth's rotation (one spin)",
+        "title": "Quick Match: Earth's rotation (one spin)",
+        "description": "Practise earth's rotation (one spin) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1162,9 +1162,9 @@
       {
         "id": "u6-game-2",
         "icon": "★",
-        "skill": "Earth's rotation (one spin)",
-        "title": "Concept Quest: Earth's rotation (one spin)",
-        "description": "Practise earth's rotation (one spin) through four short challenges.",
+        "skill": "Earth turning per hour",
+        "title": "Concept Quest: Earth turning per hour",
+        "description": "Practise earth turning per hour through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1220,9 +1220,9 @@
       {
         "id": "u6-game-3",
         "icon": "◫",
-        "skill": "Earth turning per hour",
-        "title": "Lab Detective: Earth turning per hour",
-        "description": "Practise earth turning per hour through four short challenges.",
+        "skill": "Earth's orbit (one trip round the Sun)",
+        "title": "Lab Detective: Earth's orbit (one trip round the Sun)",
+        "description": "Practise earth's orbit (one trip round the sun) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1278,9 +1278,9 @@
       {
         "id": "u6-game-4",
         "icon": "→",
-        "skill": "Earth's orbit (one trip round the Sun)",
-        "title": "Fact Runner: Earth's orbit (one trip round the Sun)",
-        "description": "Practise earth's orbit (one trip round the sun) through four short challenges.",
+        "skill": "Moon's cycle of phases",
+        "title": "Fact Runner: Moon's cycle of phases",
+        "description": "Practise moon's cycle of phases through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1336,9 +1336,9 @@
       {
         "id": "u6-game-5",
         "icon": "Σ",
-        "skill": "Moon's cycle of phases",
-        "title": "Vocabulary Vault: Moon's cycle of phases",
-        "description": "Practise moon's cycle of phases through four short challenges.",
+        "skill": "New moon to full moon",
+        "title": "Vocabulary Vault: New moon to full moon",
+        "description": "Practise new moon to full moon through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1394,9 +1394,9 @@
       {
         "id": "u6-game-6",
         "icon": "◇",
-        "skill": "New moon to full moon",
-        "title": "Challenge Cards: New moon to full moon",
-        "description": "Practise new moon to full moon through four short challenges.",
+        "skill": "Moon",
+        "title": "Challenge Cards: Moon",
+        "description": "Practise moon through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1452,9 +1452,9 @@
       {
         "id": "u6-game-7",
         "icon": "⚡",
-        "skill": "Number of planets",
-        "title": "Think Fast: Number of planets",
-        "description": "Practise number of planets through four short challenges.",
+        "skill": "Phase",
+        "title": "Think Fast: Phase",
+        "description": "Practise phase through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1510,9 +1510,9 @@
       {
         "id": "u6-game-8",
         "icon": "☁",
-        "skill": "Number of time zones",
-        "title": "Explain It: Number of time zones",
-        "description": "Practise number of time zones through four short challenges.",
+        "skill": "Crescent",
+        "title": "Explain It: Crescent",
+        "description": "Practise crescent through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1568,9 +1568,9 @@
       {
         "id": "u6-game-9",
         "icon": "⌂",
-        "skill": "Moon",
-        "title": "Real-Life Round: Moon",
-        "description": "Practise moon through four short challenges.",
+        "skill": "Waxing / Waning",
+        "title": "Real-Life Round: Waxing / Waning",
+        "description": "Practise waxing / waning through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1626,9 +1626,9 @@
       {
         "id": "u6-game-10",
         "icon": "!",
-        "skill": "Phase",
-        "title": "Spot the Error: Phase",
-        "description": "Practise phase through four short challenges.",
+        "skill": "Constellation",
+        "title": "Spot the Error: Constellation",
+        "description": "Practise constellation through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1684,9 +1684,9 @@
       {
         "id": "u6-game-11",
         "icon": "≡",
-        "skill": "Crescent",
-        "title": "Mastery Mix: Crescent",
-        "description": "Practise crescent through four short challenges.",
+        "skill": "Satellite",
+        "title": "Mastery Mix: Satellite",
+        "description": "Practise satellite through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1742,9 +1742,9 @@
       {
         "id": "u6-game-12",
         "icon": "T",
-        "skill": "Waxing / Waning",
-        "title": "Unit Champion: Waxing / Waning",
-        "description": "Practise waxing / waning through four short challenges.",
+        "skill": "Time zone",
+        "title": "Unit Champion: Time zone",
+        "description": "Practise time zone through four short challenges.",
         "type": "choice",
         "rounds": [
           {

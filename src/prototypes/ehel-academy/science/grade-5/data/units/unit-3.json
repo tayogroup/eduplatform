@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T06:33:39.847Z",
+  "generatedAt": "2026-07-21T08:52:33.571Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -499,10 +499,6 @@
     "rules": [],
     "terms": [
       [
-        "Factor",
-        "Rule"
-      ],
-      [
         "Temperature",
         "Higher temperature = faster"
       ],
@@ -545,15 +541,13 @@
       [
         "Water vapour",
         "Water in its invisible gas form."
+      ],
+      [
+        "Precipitation",
+        "Water falling from clouds as rain, snow, or hail."
       ]
     ],
     "vocabulary": [
-      {
-        "term": "Factor",
-        "meaning": "Rule",
-        "example": "",
-        "letter": "F"
-      },
       {
         "term": "Temperature",
         "meaning": "Higher temperature = faster",
@@ -619,6 +613,12 @@
         "meaning": "Water in its invisible gas form.",
         "example": "Water is a solid when it is frozen as ice, a liquid when you drink it, and a gas when it becomes water vapour.",
         "letter": "W"
+      },
+      {
+        "term": "Precipitation",
+        "meaning": "Water falling from clouds as rain, snow, or hail.",
+        "example": "In colder parts of the world, precipitation can fall as snow.",
+        "letter": "P"
       }
     ],
     "commonMistakes": [
@@ -854,9 +854,9 @@
       "responseMode": "text",
       "prompt": "Describe how the particles are arranged in a solid.",
       "keyIdeas": [
-        "Factor",
         "Temperature",
-        "Surface area"
+        "Surface area",
+        "Air movement"
       ],
       "modelAnswer": "1. In a solid the particles are packed closely together in a fixed, regular pattern and only vibrate on the spot. This is why solids keep their shape."
     },
@@ -867,9 +867,9 @@
       "responseMode": "text",
       "prompt": "Explain why a liquid can be poured but a solid cannot.",
       "keyIdeas": [
-        "Temperature",
         "Surface area",
-        "Air movement"
+        "Air movement",
+        "Humidity"
       ],
       "modelAnswer": "2. In a liquid the particles can slide past one another, so a liquid flows and can be poured. In a solid the particles are locked in place, so it cannot flow."
     },
@@ -880,9 +880,9 @@
       "responseMode": "text",
       "prompt": "What happens to the particles of ice when it is heated until it melts?",
       "keyIdeas": [
-        "Surface area",
         "Air movement",
-        "Humidity"
+        "Humidity",
+        "Particles"
       ],
       "modelAnswer": "3. When ice is heated, its particles vibrate faster until they gain enough energy to break free and slide around each other. The solid ice becomes liquid water."
     },
@@ -893,9 +893,9 @@
       "responseMode": "text",
       "prompt": "Name the four factors that affect how fast a liquid evaporates.",
       "keyIdeas": [
-        "Air movement",
         "Humidity",
-        "Particles"
+        "Particles",
+        "Melting"
       ],
       "modelAnswer": "4. Temperature, surface area, air movement (wind), and humidity."
     },
@@ -906,9 +906,9 @@
       "responseMode": "text",
       "prompt": "Why do wet clothes dry faster on a hot, windy day than on a cool, still day?",
       "keyIdeas": [
-        "Humidity",
         "Particles",
-        "Melting"
+        "Melting",
+        "Freezing"
       ],
       "modelAnswer": "5. Heat gives the water particles more energy to escape, and wind carries the damp air away so more particles can leave. Both factors speed up evaporation."
     },
@@ -919,9 +919,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between evaporation and boiling?",
       "keyIdeas": [
-        "Particles",
         "Melting",
-        "Freezing"
+        "Freezing",
+        "Evaporation"
       ],
       "modelAnswer": "6. Evaporation is slow, happens only at the surface, and can occur at any temperature. Boiling is fast, happens throughout the liquid with bubbles, and occurs at the boiling point (100 degrees Celsius for water)."
     }
@@ -1129,9 +1129,9 @@
       {
         "id": "u3-game-1",
         "icon": "?",
-        "skill": "Factor",
-        "title": "Quick Match: Factor",
-        "description": "Practise factor through four short challenges.",
+        "skill": "Temperature",
+        "title": "Quick Match: Temperature",
+        "description": "Practise temperature through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1187,9 +1187,9 @@
       {
         "id": "u3-game-2",
         "icon": "★",
-        "skill": "Temperature",
-        "title": "Concept Quest: Temperature",
-        "description": "Practise temperature through four short challenges.",
+        "skill": "Surface area",
+        "title": "Concept Quest: Surface area",
+        "description": "Practise surface area through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1245,9 +1245,9 @@
       {
         "id": "u3-game-3",
         "icon": "◫",
-        "skill": "Surface area",
-        "title": "Lab Detective: Surface area",
-        "description": "Practise surface area through four short challenges.",
+        "skill": "Air movement",
+        "title": "Lab Detective: Air movement",
+        "description": "Practise air movement through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1303,9 +1303,9 @@
       {
         "id": "u3-game-4",
         "icon": "→",
-        "skill": "Air movement",
-        "title": "Fact Runner: Air movement",
-        "description": "Practise air movement through four short challenges.",
+        "skill": "Humidity",
+        "title": "Fact Runner: Humidity",
+        "description": "Practise humidity through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1361,9 +1361,9 @@
       {
         "id": "u3-game-5",
         "icon": "Σ",
-        "skill": "Humidity",
-        "title": "Vocabulary Vault: Humidity",
-        "description": "Practise humidity through four short challenges.",
+        "skill": "Particles",
+        "title": "Vocabulary Vault: Particles",
+        "description": "Practise particles through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1419,9 +1419,9 @@
       {
         "id": "u3-game-6",
         "icon": "◇",
-        "skill": "Particles",
-        "title": "Challenge Cards: Particles",
-        "description": "Practise particles through four short challenges.",
+        "skill": "Melting",
+        "title": "Challenge Cards: Melting",
+        "description": "Practise melting through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1477,9 +1477,9 @@
       {
         "id": "u3-game-7",
         "icon": "⚡",
-        "skill": "Melting",
-        "title": "Think Fast: Melting",
-        "description": "Practise melting through four short challenges.",
+        "skill": "Freezing",
+        "title": "Think Fast: Freezing",
+        "description": "Practise freezing through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1535,9 +1535,9 @@
       {
         "id": "u3-game-8",
         "icon": "☁",
-        "skill": "Freezing",
-        "title": "Explain It: Freezing",
-        "description": "Practise freezing through four short challenges.",
+        "skill": "Evaporation",
+        "title": "Explain It: Evaporation",
+        "description": "Practise evaporation through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1593,9 +1593,9 @@
       {
         "id": "u3-game-9",
         "icon": "⌂",
-        "skill": "Evaporation",
-        "title": "Real-Life Round: Evaporation",
-        "description": "Practise evaporation through four short challenges.",
+        "skill": "Boiling",
+        "title": "Real-Life Round: Boiling",
+        "description": "Practise boiling through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1651,9 +1651,9 @@
       {
         "id": "u3-game-10",
         "icon": "!",
-        "skill": "Boiling",
-        "title": "Spot the Error: Boiling",
-        "description": "Practise boiling through four short challenges.",
+        "skill": "Condensation",
+        "title": "Spot the Error: Condensation",
+        "description": "Practise condensation through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1709,9 +1709,9 @@
       {
         "id": "u3-game-11",
         "icon": "≡",
-        "skill": "Condensation",
-        "title": "Mastery Mix: Condensation",
-        "description": "Practise condensation through four short challenges.",
+        "skill": "Water vapour",
+        "title": "Mastery Mix: Water vapour",
+        "description": "Practise water vapour through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1767,9 +1767,9 @@
       {
         "id": "u3-game-12",
         "icon": "T",
-        "skill": "Water vapour",
-        "title": "Unit Champion: Water vapour",
-        "description": "Practise water vapour through four short challenges.",
+        "skill": "Precipitation",
+        "title": "Unit Champion: Precipitation",
+        "description": "Practise precipitation through four short challenges.",
         "type": "choice",
         "rounds": [
           {

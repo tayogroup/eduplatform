@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T06:33:40.080Z",
+  "generatedAt": "2026-07-21T08:52:33.818Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -510,10 +510,6 @@
     "rules": [],
     "terms": [
       [
-        "What it finds",
-        "Formula"
-      ],
-      [
         "Density from mass and volume",
         "D = m / V"
       ],
@@ -556,15 +552,13 @@
       [
         "Average speed",
         "Total distance divided by total time for a whole journey."
+      ],
+      [
+        "Distance-time graph",
+        "A graph of distance (up) against time (along); a steeper line means faster."
       ]
     ],
     "vocabulary": [
-      {
-        "term": "What it finds",
-        "meaning": "Formula",
-        "example": "",
-        "letter": "W"
-      },
       {
         "term": "Density from mass and volume",
         "meaning": "D = m / V",
@@ -630,6 +624,12 @@
         "meaning": "Total distance divided by total time for a whole journey.",
         "example": "A bus that covers 120 km in 2 hours has an average speed of 60 km/h.",
         "letter": "A"
+      },
+      {
+        "term": "Distance-time graph",
+        "meaning": "A graph of distance (up) against time (along); a steeper line means faster.",
+        "example": "A very powerful way to show a journey is a distance-time graph.",
+        "letter": "D"
       }
     ],
     "commonMistakes": [
@@ -865,9 +865,9 @@
       "responseMode": "text",
       "prompt": "Explain how you would find the volume of an irregular object such as a stone.",
       "keyIdeas": [
-        "What it finds",
         "Density from mass and volume",
-        "Mass from density and volume"
+        "Mass from density and volume",
+        "Volume from mass and density"
       ],
       "modelAnswer": "Density = mass / volume (D = m / V). The units are g/cm3 or kg/m3."
     },
@@ -878,9 +878,9 @@
       "responseMode": "text",
       "prompt": "State the rule that decides whether an object floats or sinks in a liquid.",
       "keyIdeas": [
-        "Density from mass and volume",
         "Mass from density and volume",
-        "Volume from mass and density"
+        "Volume from mass and density",
+        "Speed from distance and time"
       ],
       "modelAnswer": "Lower the object into a measuring jug of water and read the water level before and after. The rise in the water level equals the volume of the object (the displacement method)."
     },
@@ -891,9 +891,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between distance and speed.",
       "keyIdeas": [
-        "Mass from density and volume",
         "Volume from mass and density",
-        "Speed from distance and time"
+        "Speed from distance and time",
+        "Distance from speed and time"
       ],
       "modelAnswer": "An object floats if it is less dense than the liquid, and sinks if it is more dense than the liquid. In water (1 g/cm3), anything below 1 g/cm3 floats and anything above sinks."
     },
@@ -904,9 +904,9 @@
       "responseMode": "text",
       "prompt": "Describe what a flat (horizontal) line on a distance-time graph tells you about the motion.",
       "keyIdeas": [
-        "Volume from mass and density",
         "Speed from distance and time",
-        "Distance from speed and time"
+        "Distance from speed and time",
+        "Time from distance and speed"
       ],
       "modelAnswer": "Speed = distance / time (s = d / t). It can be measured in metres per second (m/s) or kilometres per hour (km/h)."
     },
@@ -917,9 +917,9 @@
       "responseMode": "text",
       "prompt": "Why is it important to write a unit next to every measurement?",
       "keyIdeas": [
-        "Speed from distance and time",
         "Distance from speed and time",
-        "Time from distance and speed"
+        "Time from distance and speed",
+        "Volume of a box"
       ],
       "modelAnswer": "Distance is how far an object travels; speed is how far it travels in each unit of time. A large distance can be covered at a low speed if it takes a long time."
     },
@@ -930,9 +930,9 @@
       "responseMode": "text",
       "prompt": "Explain why repeating a measurement and taking an average gives a more reliable result.",
       "keyIdeas": [
-        "Distance from speed and time",
         "Time from distance and speed",
-        "Volume of a box"
+        "Volume of a box",
+        "Distance"
       ],
       "modelAnswer": "A flat (horizontal) line means the distance is not changing while time goes on, so the object is stopped (not moving)."
     }
@@ -1140,9 +1140,9 @@
       {
         "id": "u3-game-1",
         "icon": "?",
-        "skill": "What it finds",
-        "title": "Quick Match: What it finds",
-        "description": "Practise what it finds through four short challenges.",
+        "skill": "Density from mass and volume",
+        "title": "Quick Match: Density from mass and volume",
+        "description": "Practise density from mass and volume through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1198,9 +1198,9 @@
       {
         "id": "u3-game-2",
         "icon": "★",
-        "skill": "Density from mass and volume",
-        "title": "Concept Quest: Density from mass and volume",
-        "description": "Practise density from mass and volume through four short challenges.",
+        "skill": "Mass from density and volume",
+        "title": "Concept Quest: Mass from density and volume",
+        "description": "Practise mass from density and volume through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1256,9 +1256,9 @@
       {
         "id": "u3-game-3",
         "icon": "◫",
-        "skill": "Mass from density and volume",
-        "title": "Lab Detective: Mass from density and volume",
-        "description": "Practise mass from density and volume through four short challenges.",
+        "skill": "Volume from mass and density",
+        "title": "Lab Detective: Volume from mass and density",
+        "description": "Practise volume from mass and density through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1314,9 +1314,9 @@
       {
         "id": "u3-game-4",
         "icon": "→",
-        "skill": "Volume from mass and density",
-        "title": "Fact Runner: Volume from mass and density",
-        "description": "Practise volume from mass and density through four short challenges.",
+        "skill": "Speed from distance and time",
+        "title": "Fact Runner: Speed from distance and time",
+        "description": "Practise speed from distance and time through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1372,9 +1372,9 @@
       {
         "id": "u3-game-5",
         "icon": "Σ",
-        "skill": "Speed from distance and time",
-        "title": "Vocabulary Vault: Speed from distance and time",
-        "description": "Practise speed from distance and time through four short challenges.",
+        "skill": "Distance from speed and time",
+        "title": "Vocabulary Vault: Distance from speed and time",
+        "description": "Practise distance from speed and time through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1430,9 +1430,9 @@
       {
         "id": "u3-game-6",
         "icon": "◇",
-        "skill": "Distance from speed and time",
-        "title": "Challenge Cards: Distance from speed and time",
-        "description": "Practise distance from speed and time through four short challenges.",
+        "skill": "Time from distance and speed",
+        "title": "Challenge Cards: Time from distance and speed",
+        "description": "Practise time from distance and speed through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1488,9 +1488,9 @@
       {
         "id": "u3-game-7",
         "icon": "⚡",
-        "skill": "Time from distance and speed",
-        "title": "Think Fast: Time from distance and speed",
-        "description": "Practise time from distance and speed through four short challenges.",
+        "skill": "Volume of a box",
+        "title": "Think Fast: Volume of a box",
+        "description": "Practise volume of a box through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1546,9 +1546,9 @@
       {
         "id": "u3-game-8",
         "icon": "☁",
-        "skill": "Volume of a box",
-        "title": "Explain It: Volume of a box",
-        "description": "Practise volume of a box through four short challenges.",
+        "skill": "Distance",
+        "title": "Explain It: Distance",
+        "description": "Practise distance through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1604,9 +1604,9 @@
       {
         "id": "u3-game-9",
         "icon": "⌂",
-        "skill": "Distance",
-        "title": "Real-Life Round: Distance",
-        "description": "Practise distance through four short challenges.",
+        "skill": "Time",
+        "title": "Real-Life Round: Time",
+        "description": "Practise time through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1662,9 +1662,9 @@
       {
         "id": "u3-game-10",
         "icon": "!",
-        "skill": "Time",
-        "title": "Spot the Error: Time",
-        "description": "Practise time through four short challenges.",
+        "skill": "Speed",
+        "title": "Spot the Error: Speed",
+        "description": "Practise speed through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1720,9 +1720,9 @@
       {
         "id": "u3-game-11",
         "icon": "≡",
-        "skill": "Speed",
-        "title": "Mastery Mix: Speed",
-        "description": "Practise speed through four short challenges.",
+        "skill": "Average speed",
+        "title": "Mastery Mix: Average speed",
+        "description": "Practise average speed through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1778,9 +1778,9 @@
       {
         "id": "u3-game-12",
         "icon": "T",
-        "skill": "Average speed",
-        "title": "Unit Champion: Average speed",
-        "description": "Practise average speed through four short challenges.",
+        "skill": "Distance-time graph",
+        "title": "Unit Champion: Distance-time graph",
+        "description": "Practise distance-time graph through four short challenges.",
         "type": "choice",
         "rounds": [
           {

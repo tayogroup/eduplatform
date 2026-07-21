@@ -22,6 +22,28 @@ What already exists and is reused verbatim:
 
 ---
 
+## 0) Environments (decided 2026-07-21)
+
+Four tiers, **one pinned Moodle version everywhere**, all deployed tiers on
+ScalaHosting + Bunny for full version-and-host parity. hosting.com (legacy
+`quraantest`, older Moodle) is **retired from the topology** — kept only as the
+live legacy site until production cutover, then decommissioned.
+
+| Tier | Moodle backend | Static/CDN | Bunny base path | Purpose |
+|---|---|---|---|---|
+| **local / unit** | Local Moodle (Docker/SPanel), pinned to ScalaHosting's version | Bunny | `ehel_unit/` | Dev + component QA on a machine matching prod's Moodle version |
+| **intg** | ScalaHosting | Bunny | `ehel_integration/` | Shared integration — first deployed ScalaHosting tier |
+| **staging** | ScalaHosting | Bunny | `ehel_staging/` | Prod dress rehearsal — identical host + version to prod |
+| **production** | ScalaHosting | Bunny | `ehel/` | Live |
+
+Rationale: a **Moodle version split across tiers is disqualifying** — lower tiers
+would test plugins against a Moodle you don't ship (changed APIs, schema, web-service
+signatures), so intg would give false green. Consolidating on ScalaHosting means every
+promotion tests exactly what ships; upgrades flow *through* the pipeline
+(local → unit → intg → staging → prod) rather than existing as a permanent split.
+`course_launch.php` already resolves integration/staging/production — add `unit` and
+swap the product prefix `pre_quraan` → `ehel`.
+
 ## 1) Static files — folder structure in Bunny
 
 Three independent lifecycles, kept in separate top-level trees so each can deploy,
@@ -166,6 +188,52 @@ to git, media to Bunny.)
 zip cadence.
 
 ---
+
+## 4b) What lives where — allocation
+
+**Rule: only the irreducible record-of-truth + credential auth + authoritative
+mutations stay in Moodle. Everything else moves to Bunny** (static file, Bunny
+Stream, edge cache, or edge compute).
+
+**Stays in Moodle — the must-keep core:**
+
+| Capability | Why it can't move |
+|---|---|
+| Authentication & credentials | Identity source of truth; the login itself |
+| User accounts & profiles (records) | Authoritative person records |
+| Roles & permissions | Authority definitions + assignments |
+| Enrolment records (the *write*) | Authoritative "who is registered in what" |
+| Gradebook & progress — *durable store* | System of record for results |
+| Guardian–student links & consent | Authoritative + legal |
+| Mutation web-services + launch-token *signing* | Enrol, commit grade/progress, teacher feedback, consent — thin write endpoints |
+| Notification dispatch (email/SMS) | Backend send job (not a file) |
+
+**Moves to Bunny — everything else:**
+
+| Capability | Bunny mode | Trigger |
+|---|---|---|
+| Course catalog / manifest | Static JSON | Changes on publish, not per user |
+| Course content (units) | Static JSON | Immutable per version |
+| App / UI shell | Static, versioned | Code, not data |
+| Audio narration | Static, content-hashed | Immutable |
+| Video — lectures, live recordings | **Bunny Stream** | Large; adaptive delivery |
+| TTS narration | Pre-generated static | Proxy only for the long tail |
+| Reference / worksheets / PDFs / rubrics | Static | Downloadable artifacts |
+| Games / interactive assets | Static | Client-side already |
+| i18n / translation bundles | Static JSON | Strings, not logic |
+| Live-session slides | Static | Materials |
+| Certificates / report **artifacts** | Static (Moodle *issues*, Bunny *delivers*) | Rendered file |
+| "My enrolments" / roster **reads** | Edge cache, token-authed | Read-mostly, personalised |
+| Gradebook / progress **reads** (display) | Edge cache | Read-mostly |
+| Launch-token verification + routing | Edge compute | Stateless verify of a Moodle-signed token |
+| Per-tenant rate limiting / throttling | Edge compute / rules | Contain noisy tenants |
+| Progress-beacon buffering | Edge compute | Batch writes before the backend |
+| Analytics / event ingestion | Edge → analytics store (**not Moodle**) | High-volume telemetry |
+| Public / marketing / course-description pages | Static | Fully static |
+
+**Net residual Moodle work per session:** authenticate → return a small enrolment
+list → accept a batched progress write → mint a launch token. Everything
+high-volume and tenant-count-sensitive is off Moodle.
 
 ## 5) Others
 

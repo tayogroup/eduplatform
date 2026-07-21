@@ -2294,6 +2294,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
                   <?php if ((int)$session->teacherid === (int)$USER->id || is_siteadmin($USER)): ?>
                     <a class="pql-btn pql-btn--light" href="<?php echo $monitorurl->out(false); ?>">Lesson monitor</a>
                     <a class="pql-btn pql-btn--light" href="<?php echo $reviewurl->out(false); ?>">Attendance &amp; notes</a>
+                    <a class="pql-btn pql-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_demo_participants.php', ['sessionid' => (int)$session->id]))->out(false); ?>">Demo joins</a>
                   <?php endif; ?>
                 </div>
               </article>

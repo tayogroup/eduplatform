@@ -1,165 +1,1775 @@
 {
-  "schemaVersion": "Ehel Mathematics Runtime v1.0",
-  "generatedAt": "2026-07-15T00:00:00.000Z",
-  "stage": { "id": "s02", "label": "Stage 2" },
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-07-21T07:03:33.824Z",
+  "stage": {
+    "id": "s02",
+    "label": "Stage 2"
+  },
   "subject": "Mathematics",
-  "term": { "id": "t01", "label": "Term 1" },
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
   "unit": {
     "unitId": "math-g02-u01",
     "unitNo": 1,
     "unitTitle": "Numbers to 100",
-    "unitOverview": "Become confident with every number from 0 to 100. Learn how tens and ones give a number its value, then use that understanding to count, compare, order and continue number sequences.",
-    "learningPath": ["Preview the goals and key idea", "Learn the six core concepts", "Study the worked examples", "Complete practice and hands-on activities", "Finish the checkpoint and reflect"],
+    "unitOverview": "Welcome to Unit 1! In this unit you will become an expert on all the numbers from 0 to 100. You use these numbers every single day, even when you do not notice. When Amina counts the goats coming home in the evening, when Yusuf checks that he has 64 pages left in his reading book, or when Halima counts out shillings at the Hargeisa market, they are all using numbers to 100.",
+    "learningPath": [
+      "Preview the goals and core ideas",
+      "Explore concepts and visual models",
+      "Learn methods and study worked examples",
+      "Complete guided practice, activities and games",
+      "Apply, explain and complete the Unit Challenge"
+    ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 2
+  },
   "provenance": {
-    "contentPackage": "Ehel-Academy-Mathematics-Stage-2-Content-Package.xlsx",
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-2-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 2",
     "sourceArchive": "Year 2 (1)-20260714T220953Z-1-001.zip",
-    "sourceDocuments": ["Unit 1 - Lesson.docx", "Unit 1 - Activities.docx", "Unit 1 - Practice.docx", "Unit 1 - Reference.docx"],
+    "sourceDocuments": [
+      "Year 2 (1)/Unit 1 (1)/Year 2 - Unit 1 Lesson.docx",
+      "Year 2 (1)/Unit 1 (1)/Year 2 - Unit 1 Activities.docx",
+      "Year 2 (1)/Unit 1 (1)/Year 2 - Unit 1 Practice.docx",
+      "Year 2 (1)/Unit 1 (1)/Year 2 - Unit 1 Reference.docx"
+    ],
     "sourceBlockCount": 355,
-    "transformation": "Selected and structured from standardized workbook rows; wording retained or shortened for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 2 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
-  "media": { "lectureStatus": "Video pending", "lectureVideo": null, "poster": null },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
   "outcomes": [
+    "This unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, try every worked example yourself on paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain a step in a new way, or check your answers. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
+    "Why does this matter so much? Numbers are the language of the world around you. Traders in the market use them to give the right change. Farmers use them to count livestock and know if any goat is missing. Families use them to share food fairly at iftar during Ramadan. Even the prayer times follow numbers. When you become confident with numbers to 100, you are gaining a skill you will use every day for the rest of your life – and you are building the strong foundation you need for adding, subtracting, multiplying and dividing in the units to come.",
+    "As you work, keep a pencil and some paper beside you. Mathematics is not a subject you can learn only by reading – you must do it. Draw the pictures, write the numbers, and say the answers out loud. If you get something wrong, that is not a failure; it is simply a sign of exactly what to practise next. Every mathematician you admire once sat where you sit now, learning these very same ideas.",
     "Read, write and represent numbers from 0 to 100.",
-    "Identify the tens and ones in a two-digit number.",
-    "Count forwards and backwards in ones, twos and tens.",
-    "Estimate a collection and count to check.",
-    "Compare numbers using >, < and =.",
-    "Order numbers from smallest to greatest.",
-    "Continue and describe number sequences.",
-    "Use ordinal numbers such as 1st, 2nd and 3rd."
+    "Say and show the value of each digit in a two-digit number (tens and ones).",
+    "Count on and back in ones, twos and tens from any number.",
+    "Estimate how many objects there are, then count carefully to check.",
+    "Compare two numbers and use the symbols >, < and =.",
+    "Put a set of numbers in order from smallest to greatest.",
+    "Make and describe number sequences and use ordinal numbers (1st, 2nd, 3rd)."
   ],
   "concepts": [
-    { "id": "hundred-square", "title": "The 100 square", "explanation": "A 100 square is a number map. Across a row the number increases by 1; down a column it increases by 10.", "example": "21, 22, 23, 24, 25, 26" },
-    { "id": "place-value", "title": "Tens and ones", "explanation": "In a two-digit number, the left digit tells the tens and the right digit tells the ones.", "example": "47 = 4 tens + 7 ones = 40 + 7" },
-    { "id": "represent", "title": "Represent a number", "explanation": "Show the same number with a numeral, words, tens and ones, or bundles and single objects.", "example": "46 = forty-six = 4 tens and 6 ones" },
-    { "id": "count", "title": "Count collections", "explanation": "Estimate first. Make groups of ten, count the tens, then add any leftover ones.", "example": "4 groups of ten + 6 ones = 46" },
-    { "id": "compare", "title": "Compare and order", "explanation": "Compare the tens first. If the tens match, compare the ones. The open side of > or < faces the greater number.", "example": "75 > 57 because 7 tens is greater than 5 tens" },
-    { "id": "sequences", "title": "Sequences and position", "explanation": "Find how each number changes, check the rule, and repeat it. Ordinal numbers describe position in a line.", "example": "37, 47, 57, 67, 77 adds 10 each time" }
+    {
+      "id": "concept-1-the-100-square-and-its-patterns",
+      "title": "The 100 Square and Its Patterns",
+      "explanation": "The 100 square is a grid that holds every number from 1 to 100. It has 10 rows and 10 columns, so there are 10 numbers in each row and 10 rows going down. Picture it like the shelves in Omar’s shop, with ten jars on every shelf and ten shelves altogether – one hundred jars in all. Look carefully and you will spot patterns that make numbers much easier to understand:",
+      "example": "Every row starts with a number ending in 1 (1, 11, 21, 31 …)."
+    },
+    {
+      "id": "concept-2-place-value-tens-and-ones",
+      "title": "Place Value – Tens and Ones",
+      "explanation": "This is the big idea of the whole unit. Every two-digit number is built from tens and ones. The digit on the left tells you how many tens. The digit on the right tells you how many ones. Let us look closely at the number 47:",
+      "example": "The 4 is in the tens place, so it stands for 4 tens = 40."
+    },
+    {
+      "id": "concept-3-different-ways-to-show-a-number",
+      "title": "Different Ways to Show a Number",
+      "explanation": "One number can wear many different clothes. Take the number 36. We can show it as: As a picture: | | | • • • • • • (3 sticks and 6 dots)",
+      "example": "On a number line: a point between 30 and 40, closer to 40"
+    },
+    {
+      "id": "concept-4-counting-in-ones-twos-and-tens",
+      "title": "Counting in Ones, Twos and Tens",
+      "explanation": "Counting one at a time is fine for small groups, but slow for large ones. Imagine Idris counting 60 dates one by one – he would soon lose his place. Smarter counting saves time. Counting in ones: 41, 42, 43, 44, 45 … The ones digit changes each time; the tens digit stays the same until you pass a ten.",
+      "example": "Counting in twos: 2, 4, 6, 8, 10, 12 … These are the even numbers. The numbers you skip (1, 3, 5, 7, 9) are the odd numbers."
+    },
+    {
+      "id": "concept-5-estimating-then-counting",
+      "title": "Estimating Then Counting",
+      "explanation": "An estimate is a sensible guess made before you count carefully. It is not a wild number pulled from the air – it is a thoughtful guess based on what you can see. Estimating first is a habit good mathematicians keep for the rest of their lives, because it warns you if your final count goes badly wrong. Suppose Omar tips a bag of dates onto a mat. Before counting, he glances and thinks, ‘That looks like about 30.’ Then he groups them into rings of ten and counts: 10, 20, 30, and 3 left over – 33 dates. His estimate…",
+      "example": "How do you make a good estimate? Look at a small group you can count quickly – say ten objects – and picture how many of those groups would fill the whole pile. If the pile looks like about four of those groups,…"
+    },
+    {
+      "id": "concept-6-comparing-and-ordering-numbers",
+      "title": "Comparing and Ordering Numbers",
+      "explanation": "To compare two numbers means to decide which is greater, which is smaller, or whether they are equal. The trick is to use place value: First look at the tens digit. The number with more tens is greater.",
+      "example": "If the tens are the same, then look at the ones digit to decide."
+    }
   ],
   "explorations": [
-    { "id": "explore-place-value", "outcomeId": "lo02", "difficulty": "Discover", "title": "Dates at the market", "context": "Halima groups 47 dates into bundles of ten so she can count quickly.", "prompt": "If she has 6 bundles and 3 loose dates, how many dates does she have?", "answer": "63", "modelType": "bundles", "hint": "Six bundles are 6 tens. Write the tens digit before the 3 ones.", "explanation": "6 tens are 60 and 3 ones make 63." },
-    { "id": "explore-hundred-square", "outcomeId": "lo01", "difficulty": "Discover", "title": "Find the hidden house", "context": "A house number is one step after 42 and one step before 44 on a street map.", "prompt": "What is the hidden house number?", "answer": "43", "modelType": "hundred-square", "hint": "Count one step forward from 42.", "explanation": "The number between 42 and 44 is 43." },
-    { "id": "explore-represent", "outcomeId": "lo01", "difficulty": "Discover", "title": "Pack reading cards", "context": "Yusuf packs 35 reading cards as complete packs of ten and loose cards.", "prompt": "How many complete packs and loose cards make 35?", "answer": "3 tens and 5 ones", "modelType": "counters", "hint": "The left digit gives the packs of ten.", "explanation": "35 contains 3 tens and 5 ones." },
-    { "id": "explore-estimate", "outcomeId": "lo04", "difficulty": "Discover", "title": "Estimate the bottle collection", "context": "Noor sees about five groups of ten bottles and two loose bottles.", "prompt": "What exact count should she expect after grouping?", "answer": "52", "modelType": "groups-of-ten", "hint": "Five groups of ten make 50.", "explanation": "50 and 2 more make 52 bottles." },
-    { "id": "explore-compare", "outcomeId": "lo05", "difficulty": "Discover", "title": "Choose the bus", "context": "One bus can carry 64 passengers and another can carry 46.", "prompt": "Which capacity is greater?", "answer": "64", "modelType": "number-line", "hint": "Compare the tens digits first.", "explanation": "64 is greater because 6 tens is more than 4 tens." },
-    { "id": "explore-sequence", "outcomeId": "lo07", "difficulty": "Discover", "title": "Water-container pattern", "context": "A family records 12, 22, 32 and 42 litres on four days.", "prompt": "If the pattern continues, what comes next?", "answer": "52", "modelType": "sequence", "hint": "Find how much is added each day.", "explanation": "The pattern adds 10, so 42 + 10 = 52." }
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "The 100 Square and Its Patterns",
+      "context": "The 100 square is a grid that holds every number from 1 to 100. It has 10 rows and 10 columns, so there are 10 numbers in each row and 10 rows going down. Picture it like the shelves in Omar’s shop, with ten jars on every shelf and ten shelves altogether –…",
+      "prompt": "Write the missing numbers: 41, 42, ___, 44, ___, 46, ___, 48.",
+      "answer": "1) 43, 45, 47.",
+      "modelType": "model-1",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) 43, 45, 47."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Place Value – Tens and Ones",
+      "context": "This is the big idea of the whole unit. Every two-digit number is built from tens and ones. The digit on the left tells you how many tens. The digit on the right tells you how many ones. Let us look closely at the number 47:",
+      "prompt": "How many tens and ones? a) 27 b) 53 c) 84",
+      "answer": "a) 2 tens 7 ones, b) 5 tens 3 ones, c) 8 tens 4 ones.",
+      "modelType": "model-2",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) 2 tens 7 ones, b) 5 tens 3 ones, c) 8 tens 4 ones."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Different Ways to Show a Number",
+      "context": "One number can wear many different clothes. Take the number 36. We can show it as: As a picture: | | | • • • • • • (3 sticks and 6 dots)",
+      "prompt": "Write in words: a) 30 b) 45 c) 99",
+      "answer": "a) thirty, b) forty-five, c) ninety-nine.",
+      "modelType": "model-3",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "a) thirty, b) forty-five, c) ninety-nine."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Counting in Ones, Twos and Tens",
+      "context": "Counting one at a time is fine for small groups, but slow for large ones. Imagine Idris counting 60 dates one by one – he would soon lose his place. Smarter counting saves time. Counting in ones: 41, 42, 43, 44, 45 … The ones digit changes each time; the tens…",
+      "prompt": "Count on in tens: 10, 20, ___, ___, ___, 60.",
+      "answer": "30, 40, 50.",
+      "modelType": "model-4",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "30, 40, 50."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Estimating Then Counting",
+      "context": "An estimate is a sensible guess made before you count carefully. It is not a wild number pulled from the air – it is a thoughtful guess based on what you can see. Estimating first is a habit good mathematicians keep for the rest of their lives, because it…",
+      "prompt": "Circle the even numbers: 12, 17, 24, 35, 40, 61.",
+      "answer": "Even: 12, 24, 40.",
+      "modelType": "model-5",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "Even: 12, 24, 40."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Comparing and Ordering Numbers",
+      "context": "To compare two numbers means to decide which is greater, which is smaller, or whether they are equal. The trick is to use place value: First look at the tens digit. The number with more tens is greater.",
+      "prompt": "Fill the column (counting in tens): 8, 18, ___, 38, ___, 58, ___, 78.",
+      "answer": "1) 28, 48, 68.",
+      "modelType": "model-6",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "explanation": "1) 28, 48, 68."
+    }
   ],
   "visualModels": [
-    { "id": "model-base-ten", "outcomeId": "lo02", "title": "Base-ten blocks", "modelType": "blocks", "purpose": "Build a number with tens rods and ones cubes.", "defaultNumber": 47 },
-    { "id": "model-number-line", "outcomeId": "lo03", "title": "Number line", "modelType": "line", "purpose": "Locate, count and compare numbers between 0 and 100.", "defaultNumber": 47 },
-    { "id": "model-ten-frames", "outcomeId": "lo02", "title": "Ten frames", "modelType": "frames", "purpose": "See complete groups of ten and leftover ones.", "defaultNumber": 47 },
-    { "id": "model-hundred-square", "outcomeId": "lo01", "title": "100 square", "modelType": "hundred-square", "purpose": "See one-more and ten-more patterns across rows and columns.", "defaultNumber": 47 },
-    { "id": "model-counters", "outcomeId": "lo04", "title": "Counters and groups", "modelType": "counters", "purpose": "Estimate and regroup loose objects into tens.", "defaultNumber": 47 },
-    { "id": "model-ordinal-line", "outcomeId": "lo08", "title": "Ordinal line", "modelType": "ordinal", "purpose": "Show how positions change when people join or leave a line.", "defaultNumber": 4 }
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "The 100 Square and Its Patterns",
+      "modelType": "concept-model-1",
+      "purpose": "The 100 square is a grid that holds every number from 1 to 100. It has 10 rows and 10 columns, so there are 10 numbers in each row and 10 rows going down. Picture it like the shelves in Omar’s shop, with ten jars on…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Place Value – Tens and Ones",
+      "modelType": "concept-model-2",
+      "purpose": "This is the big idea of the whole unit. Every two-digit number is built from tens and ones. The digit on the left tells you how many tens. The digit on the right tells you how many ones. Let us look closely at the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Different Ways to Show a Number",
+      "modelType": "concept-model-3",
+      "purpose": "One number can wear many different clothes. Take the number 36. We can show it as: As a picture: | | | • • • • • • (3 sticks and 6 dots)",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Counting in Ones, Twos and Tens",
+      "modelType": "concept-model-4",
+      "purpose": "Counting one at a time is fine for small groups, but slow for large ones. Imagine Idris counting 60 dates one by one – he would soon lose his place. Smarter counting saves time. Counting in ones: 41, 42, 43, 44, 45 ……",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Estimating Then Counting",
+      "modelType": "concept-model-5",
+      "purpose": "An estimate is a sensible guess made before you count carefully. It is not a wild number pulled from the air – it is a thoughtful guess based on what you can see. Estimating first is a habit good mathematicians keep for…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Comparing and Ordering Numbers",
+      "modelType": "concept-model-6",
+      "purpose": "To compare two numbers means to decide which is greater, which is smaller, or whether they are equal. The trick is to use place value: First look at the tens digit. The number with more tens is greater.",
+      "defaultNumber": null
+    }
   ],
   "methods": [
-    { "id": "method-read", "outcomeId": "lo01", "difficulty": "Core", "title": "Read a two-digit number", "example": "47", "steps": ["Name the tens digit: 4.", "Name the ones digit: 7.", "Say four tens and seven ones.", "Read the number as forty-seven."] },
-    { "id": "method-place-value", "outcomeId": "lo02", "difficulty": "Core", "title": "Find a digit's value", "example": "85", "steps": ["Locate the digit.", "Name its place.", "Multiply tens by 10.", "State: 8 tens = 80."] },
-    { "id": "method-count", "outcomeId": "lo04", "difficulty": "Core", "title": "Count a large collection", "example": "4 groups and 6 loose", "steps": ["Estimate first.", "Make groups of ten.", "Count the tens.", "Add the leftover ones."] },
-    { "id": "method-compare", "outcomeId": "lo05", "difficulty": "Core", "title": "Compare two numbers", "example": "75 and 57", "steps": ["Compare the tens.", "Stop if the tens differ.", "If equal, compare ones.", "Write >, < or =."] },
-    { "id": "method-order", "outcomeId": "lo06", "difficulty": "Core", "title": "Order several numbers", "example": "67, 42, 86, 34, 21", "steps": ["Find the smallest tens digit.", "Order numbers by tens.", "Compare ones when tens match.", "Read the list to check."] },
-    { "id": "method-sequence", "outcomeId": "lo07", "difficulty": "Core", "title": "Continue a sequence", "example": "37, 47, 57, …", "steps": ["Find the change.", "Check the rule twice.", "Repeat the same change.", "Describe the rule in words."] }
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to compare two numbers",
+      "example": "Fill in: 21, 22, ___, 24, ___, 26.",
+      "steps": [
+        "Look at the tens digit of each number.",
+        "If one has more tens, that number is greater – stop.",
+        "If the tens are the same, compare the ones digits.",
+        "Write the correct symbol: >, < or =."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to count a large collection",
+      "example": "In the number 85, what is the value of the 8?",
+      "steps": [
+        "Estimate first – make a sensible guess.",
+        "Group the objects into rings of ten.",
+        "Count the tens: 10, 20, 30 …",
+        "Count the leftover ones and add them on."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "Find the rule: how does each number change?",
+      "example": "Sagal has a basket of mangoes. She makes rings of ten and has 4 full rings and 6 left over. How many mangoes?",
+      "steps": [
+        "Check the rule works between two or three pairs.",
+        "Apply the rule again and again to fill the gaps.",
+        "Check the find the rule: how does each number change? result carefully."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Compare two numbers",
+      "example": "Which is greater, 75 or 57?",
+      "steps": [
+        "Solution: 75 has 7 tens; 57 has 5 tens.",
+        "Since 7 tens is more than 5 tens, 75 > 57.",
+        "The crocodile mouth opens towards 75."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "Continue a sequence",
+      "example": "A sequence starts at 37 and counts on in tens, stopping at 77. Write it out.",
+      "steps": [
+        "Solution: Add ten each time: 37, 47, 57, 67, 77.",
+        "Notice the ones digit stays 7 the whole way, and the tens digit climbs by one each step.",
+        "Check the continue a sequence result carefully."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "Order a set of numbers",
+      "example": "Put these camel counts in order from smallest to greatest: 67, 42, 86, 34, 21.",
+      "steps": [
+        "Solution: Compare the tens first.",
+        "The tens digits are 6, 4, 8, 3 and 2.",
+        "Order those from smallest: 21 (2 tens), 34 (3 tens), 42 (4 tens), 67 (6 tens), 86 (8 tens).",
+        "None of the tens are equal here, so we do not even need the ones."
+      ]
+    }
   ],
   "workedExamples": [
-    { "id": "we01", "outcomeId": "lo01", "difficulty": "Basic", "title": "Fill gaps in a row", "prompt": "21, 22, __, 24, __, 26", "solution": "The rule is add 1. The missing numbers are 23 and 25." },
-    { "id": "we02", "outcomeId": "lo02", "difficulty": "Basic", "title": "Find a digit's value", "prompt": "In 85, what is the value of 8?", "solution": "The 8 is in the tens place, so it is worth 80. Therefore 85 = 80 + 5." },
-    { "id": "we03", "outcomeId": "lo04", "difficulty": "Basic", "title": "Count a collection", "prompt": "Sagal makes 4 rings of ten mangoes and has 6 left. How many mangoes?", "solution": "4 tens = 40. Add 6 ones: 40 + 6 = 46 mangoes." },
-    { "id": "we04", "outcomeId": "lo05", "difficulty": "Basic", "title": "Compare two numbers", "prompt": "Which is greater: 75 or 57?", "solution": "Compare tens: 7 tens is greater than 5 tens, so 75 > 57." },
-    { "id": "we05", "outcomeId": "lo07", "difficulty": "Intermediate", "title": "Continue a sequence", "prompt": "Start at 37 and add ten until 77.", "solution": "37, 47, 57, 67, 77. The ones digit stays 7." },
-    { "id": "we06", "outcomeId": "lo06", "difficulty": "Intermediate", "title": "Order numbers", "prompt": "Order 67, 42, 86, 34, 21 from smallest to greatest.", "solution": "21, 34, 42, 67, 86. Compare the tens first." },
-    { "id": "we07", "outcomeId": "lo08", "difficulty": "Intermediate", "title": "Change an ordinal position", "prompt": "Abdi is 4th. Two people at the front leave. What position is Abdi now?", "solution": "Abdi moves forward two places, so he is now 2nd." },
-    { "id": "we08", "outcomeId": "lo05", "difficulty": "Intermediate", "title": "Make the smallest odd number", "prompt": "Use 3, 5, 7 and 9 to make the smallest odd two-digit number.", "solution": "35: put the smallest digit in the tens place, then the smallest remaining odd digit in the ones place." },
-    { "id": "we09", "outcomeId": "lo01", "difficulty": "Challenge", "title": "Represent one number four ways", "prompt": "Show 62 as a numeral, words, tens and ones, and expanded form.", "solution": "62; sixty-two; 6 tens and 2 ones; 60 + 2." },
-    { "id": "we10", "outcomeId": "lo05", "difficulty": "Challenge", "title": "Compare equal tens", "prompt": "Compare 63 and 68.", "solution": "The tens are equal, so compare ones. 3 < 8, therefore 63 < 68." },
-    { "id": "we11", "outcomeId": "lo07", "difficulty": "Challenge", "title": "Find a backward rule", "prompt": "93, 83, 73, __, __", "solution": "Subtract 10 each time: 63, 53." },
-    { "id": "we12", "outcomeId": "lo04", "difficulty": "Challenge", "title": "Estimate and check", "prompt": "A pile looks close to 50. Five groups of ten and 4 loose objects are counted. What is the exact total?", "solution": "5 tens are 50; 50 + 4 = 54. The estimate of about 50 was sensible." }
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Fill the gaps in a row",
+      "prompt": "Fill in: 21, 22, ___, 24, ___, 26.",
+      "solution": "Solution: This row counts on in ones. After 22 comes 23. After 24 comes 25. So the row is 21, 22, 23, 24, 25, 26. The ones digit goes up by one each step while the tens digit stays as 2."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Show the value of a digit",
+      "prompt": "In the number 85, what is the value of the 8?",
+      "solution": "Solution: The 8 sits in the tens place, so it is worth 8 tens = 80. The 5 is worth 5 ones. So 85 = 80 + 5."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Count a collection the smart way",
+      "prompt": "Sagal has a basket of mangoes. She makes rings of ten and has 4 full rings and 6 left over. How many mangoes?",
+      "solution": "Solution: 4 rings of ten = 40. Then add the 6 ones. 40 + 6 = 46 mangoes. Counting in tens first made this quick and safe."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Basic",
+      "title": "Compare two numbers",
+      "prompt": "Which is greater, 75 or 57?",
+      "solution": "Solution: 75 has 7 tens; 57 has 5 tens. Since 7 tens is more than 5 tens, 75 > 57. The crocodile mouth opens towards 75."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Continue a sequence",
+      "prompt": "A sequence starts at 37 and counts on in tens, stopping at 77. Write it out.",
+      "solution": "Solution: Add ten each time: 37, 47, 57, 67, 77. Notice the ones digit stays 7 the whole way, and the tens digit climbs by one each step."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Order a set of numbers",
+      "prompt": "Put these camel counts in order from smallest to greatest: 67, 42, 86, 34, 21.",
+      "solution": "Solution: Compare the tens first. The tens digits are 6, 4, 8, 3 and 2. Order those from smallest: 21 (2 tens), 34 (3 tens), 42 (4 tens), 67 (6 tens), 86 (8 tens). None of the tens are equal here, so we do not even need the ones. The order is 21, 34, 42, 67, 86."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "An ordinal problem",
+      "prompt": "Abdi is 4th in the line for water. The two people at the very front fill their buckets and leave. What position is Abdi in now?",
+      "solution": "Solution: Two people left from the front, so everyone behind them moves up by two places. Abdi was 4th, so he becomes 4 − 2 = 2nd. If those two people had joined the back of the line instead, Abdi would still be 4th."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Intermediate",
+      "title": "Make the smallest odd number",
+      "prompt": "Using the digit cards 3, 5, 7 and 9, make the smallest possible odd two-digit number.",
+      "solution": "Solution: To make a number small, put the smallest digit in the tens place, because tens count for the most. The smallest card is 3, so the tens digit is 3. To make it odd, the ones digit must be odd – and all the remaining cards (5, 7, 9) are odd, so choose the smallest of them, which is 5. The answer is 35."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Continue the sequences",
+      "prompt": "Continue the sequences: a) 45, 55, 65, ___, ___ b) 93, 83, 73, ___, ___.",
+      "solution": "a) 75, 85, b) 63, 53."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Practice 10",
+      "prompt": "Show 46 in three different ways (numeral, tens and ones, and a stick-and-dot picture).",
+      "solution": "46 = forty-six = 4 tens and 6 ones = | | | | ••••••."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "title": "What is the value of the underlined digit",
+      "prompt": "What is the value of the underlined digit? a) 7 in 7͟3 b) 5 in 5͟8.",
+      "solution": "a) 70, b) 50."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "Practice 12",
+      "prompt": "Using digit cards 2, 4, 6 and 8, make the largest possible even two-digit number and the smallest possible even two-digit number.",
+      "solution": "1) Largest even = 86; smallest even = 24 (0 is not among the cards, so use 2 in the tens and 4 in the ones)."
+    }
   ],
   "practice": [
-    { "id": "p01", "level": "Warm-up", "prompt": "Write the missing numbers: 41, 42, __, 44, __, 46, __, 48.", "answer": "43, 45, 47", "hint": "Count on by one." },
-    { "id": "p02", "level": "Warm-up", "prompt": "How many tens and ones are in 53?", "answer": "5 tens and 3 ones", "hint": "Read the left digit, then the right digit." },
-    { "id": "p03", "level": "Warm-up", "prompt": "Count on in tens: 10, 20, __, __, __, 60.", "answer": "30, 40, 50", "hint": "Add ten each time." },
-    { "id": "p04", "level": "Warm-up", "prompt": "Which numbers are even: 12, 17, 24, 35, 40, 61?", "answer": "12, 24, 40", "hint": "Even numbers end in 0, 2, 4, 6 or 8." },
-    { "id": "p05", "level": "Core", "prompt": "Fill the gaps: 8, 18, __, 38, __, 58, __, 78.", "answer": "28, 48, 68", "hint": "The sequence adds ten." },
-    { "id": "p06", "level": "Core", "prompt": "Compare 63 and 36 using >, < or =.", "answer": "63 > 36", "hint": "Compare the tens digits first." },
-    { "id": "p07", "level": "Core", "prompt": "Order 70, 17, 71, 7, 77 from smallest to greatest.", "answer": "7, 17, 70, 71, 77", "hint": "Start with the number with no tens, then compare tens and ones." },
-    { "id": "p08", "level": "Core", "prompt": "Continue: 93, 83, 73, __, __.", "answer": "63, 53", "hint": "Subtract ten each time." },
-    { "id": "p09", "level": "Challenge", "prompt": "Using 2, 4, 6 and 8, make the largest possible even two-digit number.", "answer": "86", "hint": "Use the largest digit in the tens place." },
-    { "id": "p10", "level": "Challenge", "prompt": "Waris is 2nd in line. Three people join behind her. What position is she in now?", "answer": "2nd", "hint": "People behind Waris do not change her place." },
-    { "id": "p11", "level": "Extension", "prompt": "Noor has 7 rings of ten bottles and 2 extra. How many bottles?", "answer": "72", "hint": "Write 7 tens, then add 2 ones." },
-    { "id": "p12", "level": "Extension", "prompt": "Ibrahim is the 9th child. How many children came before him?", "answer": "8", "hint": "Count the positions before ninth." }
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Write the missing numbers: 41, 42, ___, 44, ___, 46, ___, 48.",
+      "answer": "1) 43, 45, 47.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "How many tens and ones? a) 27 b) 53 c) 84",
+      "answer": "a) 2 tens 7 ones, b) 5 tens 3 ones, c) 8 tens 4 ones.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Write in words: a) 30 b) 45 c) 99",
+      "answer": "a) thirty, b) forty-five, c) ninety-nine.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Count on in tens: 10, 20, ___, ___, ___, 60.",
+      "answer": "30, 40, 50.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Circle the even numbers: 12, 17, 24, 35, 40, 61.",
+      "answer": "Even: 12, 24, 40.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Fill the column (counting in tens): 8, 18, ___, 38, ___, 58, ___, 78.",
+      "answer": "1) 28, 48, 68.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Compare with >, < or =: a) 63 ___ 36 b) 82 ___ 82 c) 59 ___ 95.",
+      "answer": "a) 63 > 36, b) 82 = 82, c) 59 < 95.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Order from smallest to greatest: 70, 17, 71, 7, 77.",
+      "answer": "7, 17, 70, 71, 77.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Continue the sequences: a) 45, 55, 65, ___, ___ b) 93, 83, 73, ___, ___.",
+      "answer": "a) 75, 85, b) 63, 53.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p10",
+      "level": "Core",
+      "prompt": "Show 46 in three different ways (numeral, tens and ones, and a stick-and-dot picture).",
+      "answer": "46 = forty-six = 4 tens and 6 ones = | | | | ••••••.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p11",
+      "level": "Core",
+      "prompt": "What is the value of the underlined digit? a) 7 in 7͟3 b) 5 in 5͟8.",
+      "answer": "a) 70, b) 50.",
+      "hint": "Represent the information, name the rule, then solve one step at a time."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Using digit cards 2, 4, 6 and 8, make the largest possible even two-digit number and the smallest possible even two-digit number.",
+      "answer": "1) Largest even = 86; smallest even = 24 (0 is not among the cards, so use 2 in the tens and 4 in the ones).",
+      "hint": "Identify the key mathematical idea before calculating or explaining."
+    }
   ],
   "activities": [
-    { "title": "Make Your Own 100 Square", "materials": "Paper, ruler and pencil", "steps": ["Draw a 10 by 10 grid.", "Write 1 to 100, ten numbers per row.", "Colour multiples of ten and then even numbers.", "Describe the patterns you see."] },
-    { "title": "Bundles of Ten", "materials": "47 sticks, stones or beans; string or bands", "steps": ["Make bundles of ten.", "Count full bundles and leftover ones.", "Say: __ tens and __ ones make __.", "Build other numbers called by a partner."] },
-    { "title": "The Crocodile Compare Game", "materials": "Paper number cards from 0 to 99", "steps": ["Turn over two cards.", "Draw > or < with the open side facing the greater number.", "Compare tens before ones."] },
-    { "title": "Market Counting Investigation", "materials": "Dates, stones or other countable objects", "steps": ["Estimate the collection.", "Group objects into tens.", "Count tens and ones.", "Compare the estimate with the exact count."] },
-    { "title": "Ordinal Line-Up", "materials": "Family or friends", "steps": ["Line up five or more people.", "Call an ordinal and an action.", "Let someone leave the front.", "Explain how positions change."] },
-    { "title": "Number Sequence Snake", "materials": "Paper and pencil", "steps": ["Draw a long snake divided into boxes.", "Choose a start and a counting rule.", "Fill the sequence.", "Leave gaps for a partner to solve."] }
+    {
+      "title": "Make Your Own 100 Square",
+      "materials": "paper, a ruler, a pencil.",
+      "steps": [
+        "Draw a grid with 10 boxes across and 10 boxes down.",
+        "Write the numbers 1 to 100, ten in each row.",
+        "Colour every number you say when counting in tens.",
+        "Colour the even numbers in a second colour. What pattern do you see?",
+        "Keep your 100 square – you can use it all through this unit as your number map."
+      ]
+    },
+    {
+      "title": "Bundles of Ten (Place-Value Sticks)",
+      "materials": "47 small sticks, stones, or dry beans, and some string or rubber bands.",
+      "steps": [
+        "Count out your objects and tie them into bundles of ten.",
+        "Count how many full bundles (tens) and how many are left over (ones).",
+        "Say the number: ‘___ tens and ___ ones make ___.’",
+        "Ask a family member to call out a number under 100 and build it with bundles and singles."
+      ]
+    },
+    {
+      "title": "The Crocodile Compare Game",
+      "materials": "paper number cards from 0 to 99 (write them yourself).",
+      "steps": [
+        "Shuffle the cards and place them face down.",
+        "Each player turns over one card.",
+        "Draw a crocodile mouth (> or <) pointing at the greater number.",
+        "The player with the greater number keeps both cards. Play until the cards run out.",
+        "This game trains you to compare tens first, then ones – fast!"
+      ]
+    },
+    {
+      "title": "Market Counting Investigation",
+      "materials": "a real or pretend market with items to count (dates, stones as ‘shillings’).",
+      "steps": [
+        "Set out a pile of ‘goods’ and estimate how many there are.",
+        "Count them by making rings of ten, then counting in tens and ones.",
+        "Compare your estimate to the real count. How close were you?",
+        "Do it three times and see if your estimates get better."
+      ]
+    },
+    {
+      "title": "Ordinal Line-Up (Family Game)",
+      "materials": "your family or friends.",
+      "steps": [
+        "Line up five or more people.",
+        "Call out ordinals: ‘The 3rd person, hop!’ ‘The 1st person, clap!’",
+        "Now have someone leave the front. Ask everyone their new position.",
+        "Talk about how positions change when people join or leave."
+      ]
+    },
+    {
+      "title": "Number Sequence Snake",
+      "materials": "paper and pencil.",
+      "steps": [
+        "Draw a long snake and divide its body into boxes.",
+        "Choose a starting number and a rule (for example, start at 20, count on in fives... or tens).",
+        "Fill the snake with your sequence.",
+        "Give a friend a snake with gaps and let them fill in the missing numbers.",
+        "After your activities, talk or write about: Which activity helped you understand tens and ones best? What was the trickiest part? What would you like more practice with? Share your answer with your teacher at your next session."
+      ]
+    }
   ],
   "reference": {
     "rules": [
-      { "title": "Place Value Rule", "text": "Left digit = tens. Right digit = ones. 47 = 4 tens + 7 ones = 40 + 7." },
-      { "title": "Comparing Rule", "text": "Compare tens first. If the tens are equal, compare ones. The open side of > or < faces the bigger number." },
-      { "title": "Odd and Even Rule", "text": "Even numbers end in 0, 2, 4, 6 or 8. Odd numbers end in 1, 3, 5, 7 or 9." }
+      {
+        "title": "Place Value Rule",
+        "text": "Left digit = tens. Right digit = ones. 47 = 4 tens + 7 ones = 40 + 7."
+      },
+      {
+        "title": "Comparing Rule",
+        "text": "Compare the tens first. More tens = greater number. If the tens are equal, compare the ones. The open mouth of > or < always points at the bigger number."
+      },
+      {
+        "title": "Odd and Even Rule",
+        "text": "Even numbers end in 0, 2, 4, 6 or 8. Odd numbers end in 1, 3, 5, 7 or 9."
+      }
     ],
     "terms": [
-      ["Digit", "A single symbol from 0 to 9"], ["Place value", "What a digit is worth because of its position"], ["Tens / Ones", "The two places in a two-digit number"], ["Estimate", "A sensible guess before counting"], ["Sequence", "Numbers following a pattern"], ["Ordinal number", "A number showing position: 1st, 2nd, 3rd"], ["Even / Odd", "Even ends in 0,2,4,6,8; odd ends in 1,3,5,7,9"]
+      [
+        "Digit",
+        "A single symbol from 0 to 9"
+      ],
+      [
+        "Place value",
+        "What a digit is worth from its position"
+      ],
+      [
+        "Tens / Ones",
+        "The two places in a two-digit number"
+      ],
+      [
+        "Estimate",
+        "A sensible guess before counting"
+      ],
+      [
+        "Sequence",
+        "Numbers following a pattern"
+      ],
+      [
+        "Ordinal number",
+        "Shows position: 1st, 2nd, 3rd"
+      ],
+      [
+        "Even / Odd",
+        "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9"
+      ]
     ],
     "commonMistakes": [
-      ["Writing 15 for 51", "Say the tens first: five tens and one one makes 51."], ["Treating 4 in 40 as four", "The 4 is in the tens place, so it means 40."], ["Pointing > the wrong way", "The open side faces the bigger number."], ["Comparing ones first", "Always compare the tens first."]
+      [
+        "Writing 15 for 51",
+        "Say the tens first: five tens, one one → 51"
+      ],
+      [
+        "Saying 4 means four in 40",
+        "The 4 is in the tens place, so it means 40"
+      ],
+      [
+        "Pointing > the wrong way",
+        "Open mouth faces the bigger number"
+      ],
+      [
+        "Comparing ones first",
+        "Always compare the tens first"
+      ]
     ]
   },
   "fluency": [
-    { "id": "fl01", "outcomeId": "lo02", "difficulty": "Round 1", "prompt": "4 tens + 3 ones", "answer": "43", "hint": "Write the tens digit before the ones digit.", "errorFeedback": "Four tens are 40, then add 3 ones." },
-    { "id": "fl02", "outcomeId": "lo02", "difficulty": "Round 1", "prompt": "70 + 6", "answer": "76", "hint": "Keep 7 in the tens place.", "errorFeedback": "Seven tens and six ones make 76." },
-    { "id": "fl03", "outcomeId": "lo03", "difficulty": "Round 1", "prompt": "10 more than 35", "answer": "45", "hint": "Increase the tens by one.", "errorFeedback": "Adding ten changes 3 tens to 4 tens." },
-    { "id": "fl04", "outcomeId": "lo03", "difficulty": "Round 1", "prompt": "10 less than 82", "answer": "72", "hint": "Decrease the tens by one.", "errorFeedback": "Subtracting ten changes 8 tens to 7 tens." },
-    { "id": "fl05", "outcomeId": "lo07", "difficulty": "Round 2", "prompt": "Next: 24, 26, 28, …", "answer": "30", "hint": "Add two.", "errorFeedback": "The sequence counts in twos." },
-    { "id": "fl06", "outcomeId": "lo05", "difficulty": "Round 2", "prompt": "Greater number: 67 or 76", "answer": "76", "hint": "Compare the tens.", "errorFeedback": "Seven tens is greater than six tens." },
-    { "id": "fl07", "outcomeId": "lo02", "difficulty": "Round 2", "prompt": "8 tens", "answer": "80", "hint": "Eight groups of ten.", "errorFeedback": "8 × 10 = 80." },
-    { "id": "fl08", "outcomeId": "lo03", "difficulty": "Round 2", "prompt": "Number before 50", "answer": "49", "hint": "Count back one.", "errorFeedback": "One less than 50 is 49." },
-    { "id": "fl09", "outcomeId": "lo07", "difficulty": "Round 3", "prompt": "Next: 42, 52, 62, …", "answer": "72", "hint": "Add ten.", "errorFeedback": "The ones stay 2 while the tens increase." },
-    { "id": "fl10", "outcomeId": "lo05", "difficulty": "Round 3", "prompt": "Smaller number: 59 or 95", "answer": "59", "hint": "Compare 5 tens and 9 tens.", "errorFeedback": "Five tens is less than nine tens." },
-    { "id": "fl11", "outcomeId": "lo01", "difficulty": "Round 3", "prompt": "Number after 99", "answer": "100", "hint": "Count forward one.", "errorFeedback": "One more than 99 is 100." },
-    { "id": "fl12", "outcomeId": "lo02", "difficulty": "Round 3", "prompt": "9 tens + 4 ones", "answer": "94", "hint": "Combine 90 and 4.", "errorFeedback": "Nine tens and four ones make 94." }
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Write the missing numbers: 41, 42, ___, 44, ___, 46, ___, 48.",
+      "answer": "1) 43, 45, 47.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) 43, 45, 47."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "How many tens and ones? a) 27 b) 53 c) 84",
+      "answer": "a) 2 tens 7 ones, b) 5 tens 3 ones, c) 8 tens 4 ones.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 2 tens 7 ones, b) 5 tens 3 ones, c) 8 tens 4 ones."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Write in words: a) 30 b) 45 c) 99",
+      "answer": "a) thirty, b) forty-five, c) ninety-nine.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) thirty, b) forty-five, c) ninety-nine."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Count on in tens: 10, 20, ___, ___, ___, 60.",
+      "answer": "30, 40, 50.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "30, 40, 50."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Circle the even numbers: 12, 17, 24, 35, 40, 61.",
+      "answer": "Even: 12, 24, 40.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "Even: 12, 24, 40."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Fill the column (counting in tens): 8, 18, ___, 38, ___, 58, ___, 78.",
+      "answer": "1) 28, 48, 68.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "1) 28, 48, 68."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Compare with >, < or =: a) 63 ___ 36 b) 82 ___ 82 c) 59 ___ 95.",
+      "answer": "a) 63 > 36, b) 82 = 82, c) 59 < 95.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 63 > 36, b) 82 = 82, c) 59 < 95."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Order from smallest to greatest: 70, 17, 71, 7, 77.",
+      "answer": "7, 17, 70, 71, 77.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "7, 17, 70, 71, 77."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "Continue the sequences: a) 45, 55, 65, ___, ___ b) 93, 83, 73, ___, ___.",
+      "answer": "a) 75, 85, b) 63, 53.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 75, 85, b) 63, 53."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Show 46 in three different ways (numeral, tens and ones, and a stick-and-dot picture).",
+      "answer": "46 = forty-six = 4 tens and 6 ones = | | | | ••••••.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "46 = forty-six = 4 tens and 6 ones = | | | | ••••••."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "What is the value of the underlined digit? a) 7 in 7͟3 b) 5 in 5͟8.",
+      "answer": "a) 70, b) 50.",
+      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "errorFeedback": "a) 70, b) 50."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Using digit cards 2, 4, 6 and 8, make the largest possible even two-digit number and the smallest possible even two-digit number.",
+      "answer": "1) Largest even = 86; smallest even = 24 (0 is not among the cards, so use 2 in the tens and 4 in the ones).",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Largest even = 86; smallest even = 24 (0 is not among the cards, so use 2 in the tens and 4 in the ones)."
+    }
   ],
   "realProblems": [
-    { "id": "rp01", "outcomeId": "lo02", "difficulty": "Core", "context": "Food", "prompt": "Sumaya prepares 3 trays of 10 sambusas and 5 loose sambusas. How many are there?", "answer": "35", "hint": "Three tens and five ones.", "errorFeedback": "30 + 5 = 35." },
-    { "id": "rp02", "outcomeId": "lo02", "difficulty": "Core", "context": "Water", "prompt": "Noor has 7 rings of ten bottles and 2 extra bottles. How many bottles?", "answer": "72", "hint": "Write 7 tens, then add 2 ones.", "errorFeedback": "70 + 2 = 72." },
-    { "id": "rp03", "outcomeId": "lo05", "difficulty": "Core", "context": "Transport", "prompt": "One minibus has 64 seats and another has 46. Which capacity is greater?", "answer": "64", "hint": "Compare the tens first.", "errorFeedback": "Six tens is greater than four tens." },
-    { "id": "rp04", "outcomeId": "lo06", "difficulty": "Intermediate", "context": "Shopping", "prompt": "Order these prices from cheapest to most expensive: 25, 52, 35, 53, 33.", "answer": "25, 33, 35, 52, 53", "hint": "Order by tens, then ones.", "errorFeedback": "Start with the two-tens number, then the three-tens numbers." },
-    { "id": "rp05", "outcomeId": "lo03", "difficulty": "Intermediate", "context": "Travel", "prompt": "A bus is at kilometre 75 and travels back 10 kilometres. At which kilometre is it now?", "answer": "65", "hint": "Count back one group of ten.", "errorFeedback": "75 − 10 = 65." },
-    { "id": "rp06", "outcomeId": "lo08", "difficulty": "Challenge", "context": "Queue", "prompt": "Ibrahim is the 9th child in line. How many children are before him?", "answer": "8", "hint": "Count the positions before ninth.", "errorFeedback": "Eight positions come before 9th." }
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "At Eastleigh market, Sumaya buys 3 bags of 10 sambusas and 5 loose sambusas for the family iftar. How many sambusas in total?",
+      "answer": "1) 3 tens + 5 = 35 sambusas.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) 3 tens + 5 = 35 sambusas."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Liban counts 64 camels at the well. His cousin counts 46 at another well. Which well has more camels, and by how do you know?",
+      "answer": "Liban’s well (64 > 46, because 6 tens beats 4 tens).",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "Liban’s well (64 > 46, because 6 tens beats 4 tens)."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Travel",
+      "prompt": "A shopkeeper in Kismaayo lines up prices: 25, 52, 35, 53, 33 shillings. Put them in order from cheapest to most expensive.",
+      "answer": "25, 33, 35, 52, 53.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "25, 33, 35, 52, 53."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "School",
+      "prompt": "Noor collects water bottles in rings of ten. She has 7 full rings and 2 extra bottles. How many bottles altogether?",
+      "answer": "7 tens + 2 = 72 bottles.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "7 tens + 2 = 72 bottles."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "During Eid, Aisha gives sweets to children who arrive. She counts them with ordinal numbers. If Ibrahim is the 9th child, how many children came before him?",
+      "answer": "8 children came before Ibrahim.",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "8 children came before Ibrahim."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Daily life",
+      "prompt": "Using digit cards 2, 4, 6 and 8, make the largest possible even two-digit number and the smallest possible even two-digit number.",
+      "answer": "1) Largest even = 86; smallest even = 24 (0 is not among the cards, so use 2 in the tens and 4 in the ones).",
+      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "errorFeedback": "1) Largest even = 86; smallest even = 24 (0 is not among the cards, so use 2 in the tens and 4 in the ones)."
+    }
   ],
   "reasoningPrompts": [
-    { "id": "reason01", "outcomeId": "lo05", "difficulty": "Core", "responseMode": "order", "prompt": "Explain why 75 > 57.", "keyIdeas": ["compare tens", "7 tens", "5 tens", "greater", "75"], "modelAnswer": "Compare tens first. Seven tens is greater than five tens, so 75 is greater than 57." },
-    { "id": "reason02", "outcomeId": "lo02", "difficulty": "Core", "responseMode": "text", "prompt": "Explain why the 8 in 85 is worth 80, not 8.", "keyIdeas": ["tens place", "8 tens", "80"], "modelAnswer": "The 8 is in the tens place, so it represents 8 tens, which equals 80." },
-    { "id": "reason03", "outcomeId": "lo07", "difficulty": "Core", "responseMode": "text", "prompt": "Explain the rule in 37, 47, 57, 67, 77.", "keyIdeas": ["add 10", "ones stay 7", "tens increase"], "modelAnswer": "Add 10 each time. The ones digit stays 7 and the tens digit increases by one." },
-    { "id": "reason04", "outcomeId": "lo04", "difficulty": "Intermediate", "responseMode": "model", "prompt": "Why is grouping 46 objects into tens safer than counting every object one by one?", "keyIdeas": ["groups of ten", "4 tens", "6 ones", "check"], "modelAnswer": "Groups of ten are easier to count and check: four groups and six ones make 46." },
-    { "id": "reason05", "outcomeId": "lo06", "difficulty": "Intermediate", "responseMode": "text", "prompt": "Explain how you know 63 comes before 68 when ordering numbers.", "keyIdeas": ["same tens", "compare ones", "3 less than 8"], "modelAnswer": "Both numbers have 6 tens, so compare the ones. Three ones is less than eight ones." },
-    { "id": "reason06", "outcomeId": "lo08", "difficulty": "Challenge", "responseMode": "text", "prompt": "Waris is 2nd and three people join behind her. Explain why her position does not change.", "keyIdeas": ["behind", "still 2nd", "no one joined before"], "modelAnswer": "The new people joined behind Waris, so nobody moved in front of her. She remains 2nd." }
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Using digit cards 2, 4, 6 and 8, make the largest possible even two-digit number and the smallest possible even two-digit number.",
+      "keyIdeas": [
+        "Digit",
+        "Place value",
+        "Tens / Ones"
+      ],
+      "modelAnswer": "1) Largest even = 86; smallest even = 24 (0 is not among the cards, so use 2 in the tens and 4 in the ones)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A sequence starts at 42, counts on in tens, and stops at 92. Write every number.",
+      "keyIdeas": [
+        "Place value",
+        "Tens / Ones",
+        "Estimate"
+      ],
+      "modelAnswer": "42, 52, 62, 72, 82, 92."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Zara says, ‘You only need to look at the tens to order numbers.’ Is this always, sometimes, or never true? Explain with an example.",
+      "keyIdeas": [
+        "Tens / Ones",
+        "Estimate",
+        "Sequence"
+      ],
+      "modelAnswer": "Sometimes true – it works when the tens differ (72 and"
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Waris is 2nd in line and 3 people join behind her. What position is she in now? Why?",
+      "keyIdeas": [
+        "Estimate",
+        "Sequence",
+        "Ordinal number"
+      ],
+      "modelAnswer": ", but when the tens are equal you must check the ones (63 and"
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Estimating Then Counting.",
+      "keyIdeas": [
+        "Digit",
+        "Place value",
+        "Tens / Ones"
+      ],
+      "modelAnswer": "An estimate is a sensible guess made before you count carefully. It is not a wild number pulled from the air – it is a thoughtful guess based on what you can see. Estimating first is a habit good mathematicians keep for the rest of their lives, because it warns you if your final count goes badly wrong. Suppose Omar tips a bag of dates onto a mat. Before counting, he glances and thinks, ‘That looks like about 30.’ Then he groups them into rings of ten and counts: 10, 20, 30, and 3 left over – 33 dates. His estimate…"
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Comparing and Ordering Numbers.",
+      "keyIdeas": [
+        "Digit",
+        "Place value",
+        "Tens / Ones"
+      ],
+      "modelAnswer": "To compare two numbers means to decide which is greater, which is smaller, or whether they are equal. The trick is to use place value: First look at the tens digit. The number with more tens is greater."
+    }
   ],
   "assessment": {
     "passPercent": 80,
     "questions": [
-      { "id": "q01", "type": "Concept", "outcomeId": "lo02", "difficulty": "Basic", "question": "What number has 4 tens and 7 ones?", "options": ["47", "74", "40", "11"], "answer": "47", "hint": "Build four tens first.", "explanation": "4 tens are 40; add 7 ones to make 47." },
-      { "id": "q02", "type": "Concept", "outcomeId": "lo02", "difficulty": "Basic", "question": "What is the value of 8 in 85?", "options": ["8", "5", "80", "85"], "answer": "80", "hint": "Name the place of the 8.", "explanation": "The 8 is in the tens place." },
-      { "id": "q03", "type": "Concept", "outcomeId": "lo05", "difficulty": "Core", "question": "Which comparison is correct?", "options": ["63 < 36", "63 > 36", "63 = 36", "36 > 63"], "answer": "63 > 36", "hint": "Compare tens first.", "explanation": "Six tens is greater than three tens." },
-      { "id": "q04", "type": "Visual Model", "outcomeId": "lo07", "difficulty": "Core", "question": "A number line jumps +10 from 37 three times. Where does it land?", "options": ["40", "57", "67", "77"], "answer": "67", "hint": "Count 47, 57, then one more jump.", "explanation": "37 + 10 + 10 + 10 = 67." },
-      { "id": "q05", "type": "Visual Model", "outcomeId": "lo02", "difficulty": "Core", "question": "Five complete ten frames and two filled spaces represent…", "options": ["25", "50", "52", "7"], "answer": "52", "hint": "Each complete frame is ten.", "explanation": "Five tens and two ones make 52." },
-      { "id": "q06", "type": "Visual Model", "outcomeId": "lo01", "difficulty": "Core", "question": "On a 100 square, what number is directly below 46?", "options": ["45", "47", "56", "36"], "answer": "56", "hint": "Moving down adds ten.", "explanation": "46 + 10 = 56." },
-      { "id": "q07", "type": "Fluency", "outcomeId": "lo03", "difficulty": "Core", "question": "What is 10 less than 82?", "options": ["81", "72", "92", "62"], "answer": "72", "hint": "Decrease the tens digit by one.", "explanation": "82 − 10 = 72." },
-      { "id": "q08", "type": "Fluency", "outcomeId": "lo07", "difficulty": "Core", "question": "What comes next: 24, 26, 28, __?", "options": ["29", "30", "32", "38"], "answer": "30", "hint": "Count in twos.", "explanation": "The sequence adds 2 each time." },
-      { "id": "q09", "type": "Application", "outcomeId": "lo02", "difficulty": "Core", "question": "Noor has 7 rings of ten bottles and 2 extra. How many bottles?", "options": ["27", "70", "72", "9"], "answer": "72", "hint": "Combine seven tens and two ones.", "explanation": "70 + 2 = 72." },
-      { "id": "q10", "type": "Application", "outcomeId": "lo08", "difficulty": "Challenge", "question": "Ibrahim is 9th in line. How many children are before him?", "options": ["7", "8", "9", "10"], "answer": "8", "hint": "Count positions before ninth.", "explanation": "Eight children occupy positions 1st through 8th." },
-      { "id": "q11", "type": "Reasoning", "outcomeId": "lo05", "difficulty": "Challenge", "question": "Why is 75 greater than 57?", "options": ["5 ones is more than 7 ones", "7 tens is more than 5 tens", "75 comes first", "The numbers are equal"], "answer": "7 tens is more than 5 tens", "hint": "State the place-value evidence.", "explanation": "Compare tens before ones: seven tens is greater than five tens." },
-      { "id": "q12", "type": "Reasoning", "outcomeId": "lo07", "difficulty": "Challenge", "question": "Which statement best explains 42, 52, 62, 72?", "options": ["The ones increase", "Add 2 each time", "Add 10 and keep 2 ones", "Subtract 10"], "answer": "Add 10 and keep 2 ones", "hint": "Notice which digit stays the same.", "explanation": "The sequence adds ten; the ones digit remains 2." }
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Digit” mean?",
+        "options": [
+          "A single symbol from 0 to 9",
+          "What a digit is worth from its position",
+          "The two places in a two-digit number",
+          "A sensible guess before counting"
+        ],
+        "answer": "A single symbol from 0 to 9",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Digit means A single symbol from 0 to 9."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Place value” mean?",
+        "options": [
+          "What a digit is worth from its position",
+          "The two places in a two-digit number",
+          "A sensible guess before counting",
+          "Numbers following a pattern"
+        ],
+        "answer": "What a digit is worth from its position",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Place value means What a digit is worth from its position."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Tens / Ones” mean?",
+        "options": [
+          "The two places in a two-digit number",
+          "A sensible guess before counting",
+          "Numbers following a pattern",
+          "Shows position: 1st, 2nd, 3rd"
+        ],
+        "answer": "The two places in a two-digit number",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Tens / Ones means The two places in a two-digit number."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Estimate” mean?",
+        "options": [
+          "A sensible guess before counting",
+          "Numbers following a pattern",
+          "Shows position: 1st, 2nd, 3rd",
+          "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9"
+        ],
+        "answer": "A sensible guess before counting",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Estimate means A sensible guess before counting."
+      },
+      {
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Sequence” mean?",
+        "options": [
+          "Numbers following a pattern",
+          "Shows position: 1st, 2nd, 3rd",
+          "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+          "A single symbol from 0 to 9"
+        ],
+        "answer": "Numbers following a pattern",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Sequence means Numbers following a pattern."
+      },
+      {
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Ordinal number” mean?",
+        "options": [
+          "Shows position: 1st, 2nd, 3rd",
+          "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+          "A single symbol from 0 to 9",
+          "What a digit is worth from its position"
+        ],
+        "answer": "Shows position: 1st, 2nd, 3rd",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Ordinal number means Shows position: 1st, 2nd, 3rd."
+      },
+      {
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: Ends in 0,2,4,6,8 / ends in 1,3,5,7,9?",
+        "options": [
+          "Even / Odd",
+          "Digit",
+          "Place value",
+          "Tens / Ones"
+        ],
+        "answer": "Even / Odd",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Even / Odd means Ends in 0,2,4,6,8 / ends in 1,3,5,7,9."
+      },
+      {
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: A single symbol from 0 to 9?",
+        "options": [
+          "Digit",
+          "Tens / Ones",
+          "Estimate",
+          "Sequence"
+        ],
+        "answer": "Digit",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Digit means A single symbol from 0 to 9."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which term matches this meaning: What a digit is worth from its position?",
+        "options": [
+          "Place value",
+          "Estimate",
+          "Sequence",
+          "Ordinal number"
+        ],
+        "answer": "Place value",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Place value means What a digit is worth from its position."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: The two places in a two-digit number?",
+        "options": [
+          "Tens / Ones",
+          "Sequence",
+          "Ordinal number",
+          "Even / Odd"
+        ],
+        "answer": "Tens / Ones",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Tens / Ones means The two places in a two-digit number."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: A sensible guess before counting?",
+        "options": [
+          "Estimate",
+          "Ordinal number",
+          "Even / Odd",
+          "Digit"
+        ],
+        "answer": "Estimate",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Estimate means A sensible guess before counting."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which term matches this meaning: Numbers following a pattern?",
+        "options": [
+          "Sequence",
+          "Even / Odd",
+          "Digit",
+          "Place value"
+        ],
+        "answer": "Sequence",
+        "hint": "Use the Unit 1 Math Words & Symbols reference.",
+        "explanation": "Sequence means Numbers following a pattern."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u1-game-1",
+        "icon": "?",
+        "skill": "Digit",
+        "title": "Quick Match: Digit",
+        "description": "Practise digit through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Digit” mean?",
+            "choices": [
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position",
+              "The two places in a two-digit number",
+              "A sensible guess before counting"
+            ],
+            "answer": "A single symbol from 0 to 9",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A sensible guess before counting",
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9"
+            ],
+            "answer": "A sensible guess before counting",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting."
+          },
+          {
+            "prompt": "Which term matches this meaning: Ends in 0,2,4,6,8 / ends in 1,3,5,7,9?",
+            "choices": [
+              "Even / Odd",
+              "Digit",
+              "Place value",
+              "Tens / Ones"
+            ],
+            "answer": "Even / Odd",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Even / Odd means Ends in 0,2,4,6,8 / ends in 1,3,5,7,9."
+          },
+          {
+            "prompt": "Which term matches this meaning: The two places in a two-digit number?",
+            "choices": [
+              "Tens / Ones",
+              "Sequence",
+              "Ordinal number",
+              "Even / Odd"
+            ],
+            "answer": "Tens / Ones",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Tens / Ones means The two places in a two-digit number."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-2",
+        "icon": "★",
+        "skill": "Place value",
+        "title": "Concept Quest: Place value",
+        "description": "Practise place value through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "What a digit is worth from its position",
+              "The two places in a two-digit number",
+              "A sensible guess before counting",
+              "Numbers following a pattern"
+            ],
+            "answer": "What a digit is worth from its position",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+              "A single symbol from 0 to 9"
+            ],
+            "answer": "Numbers following a pattern",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means Numbers following a pattern."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
+            "choices": [
+              "Digit",
+              "Tens / Ones",
+              "Estimate",
+              "Sequence"
+            ],
+            "answer": "Digit",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess before counting?",
+            "choices": [
+              "Estimate",
+              "Ordinal number",
+              "Even / Odd",
+              "Digit"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-3",
+        "icon": "◫",
+        "skill": "Tens / Ones",
+        "title": "Model Detective: Tens / Ones",
+        "description": "Practise tens / ones through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Tens / Ones” mean?",
+            "choices": [
+              "The two places in a two-digit number",
+              "A sensible guess before counting",
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd"
+            ],
+            "answer": "The two places in a two-digit number",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Tens / Ones means The two places in a two-digit number."
+          },
+          {
+            "prompt": "What does “Ordinal number” mean?",
+            "choices": [
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position"
+            ],
+            "answer": "Shows position: 1st, 2nd, 3rd",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Ordinal number means Shows position: 1st, 2nd, 3rd."
+          },
+          {
+            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "choices": [
+              "Place value",
+              "Estimate",
+              "Sequence",
+              "Ordinal number"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: Numbers following a pattern?",
+            "choices": [
+              "Sequence",
+              "Even / Odd",
+              "Digit",
+              "Place value"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means Numbers following a pattern."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-4",
+        "icon": "→",
+        "skill": "Estimate",
+        "title": "Rule Runner: Estimate",
+        "description": "Practise estimate through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A sensible guess before counting",
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9"
+            ],
+            "answer": "A sensible guess before counting",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting."
+          },
+          {
+            "prompt": "Which term matches this meaning: Ends in 0,2,4,6,8 / ends in 1,3,5,7,9?",
+            "choices": [
+              "Even / Odd",
+              "Digit",
+              "Place value",
+              "Tens / Ones"
+            ],
+            "answer": "Even / Odd",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Even / Odd means Ends in 0,2,4,6,8 / ends in 1,3,5,7,9."
+          },
+          {
+            "prompt": "Which term matches this meaning: The two places in a two-digit number?",
+            "choices": [
+              "Tens / Ones",
+              "Sequence",
+              "Ordinal number",
+              "Even / Odd"
+            ],
+            "answer": "Tens / Ones",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Tens / Ones means The two places in a two-digit number."
+          },
+          {
+            "prompt": "What does “Digit” mean?",
+            "choices": [
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position",
+              "The two places in a two-digit number",
+              "A sensible guess before counting"
+            ],
+            "answer": "A single symbol from 0 to 9",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-5",
+        "icon": "Σ",
+        "skill": "Sequence",
+        "title": "Vocabulary Vault: Sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+              "A single symbol from 0 to 9"
+            ],
+            "answer": "Numbers following a pattern",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means Numbers following a pattern."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
+            "choices": [
+              "Digit",
+              "Tens / Ones",
+              "Estimate",
+              "Sequence"
+            ],
+            "answer": "Digit",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess before counting?",
+            "choices": [
+              "Estimate",
+              "Ordinal number",
+              "Even / Odd",
+              "Digit"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting."
+          },
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "What a digit is worth from its position",
+              "The two places in a two-digit number",
+              "A sensible guess before counting",
+              "Numbers following a pattern"
+            ],
+            "answer": "What a digit is worth from its position",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-6",
+        "icon": "◇",
+        "skill": "Ordinal number",
+        "title": "Challenge Cards: Ordinal number",
+        "description": "Practise ordinal number through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Ordinal number” mean?",
+            "choices": [
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position"
+            ],
+            "answer": "Shows position: 1st, 2nd, 3rd",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Ordinal number means Shows position: 1st, 2nd, 3rd."
+          },
+          {
+            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "choices": [
+              "Place value",
+              "Estimate",
+              "Sequence",
+              "Ordinal number"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: Numbers following a pattern?",
+            "choices": [
+              "Sequence",
+              "Even / Odd",
+              "Digit",
+              "Place value"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means Numbers following a pattern."
+          },
+          {
+            "prompt": "What does “Tens / Ones” mean?",
+            "choices": [
+              "The two places in a two-digit number",
+              "A sensible guess before counting",
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd"
+            ],
+            "answer": "The two places in a two-digit number",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Tens / Ones means The two places in a two-digit number."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-7",
+        "icon": "⚡",
+        "skill": "Even / Odd",
+        "title": "Think Fast: Even / Odd",
+        "description": "Practise even / odd through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Ends in 0,2,4,6,8 / ends in 1,3,5,7,9?",
+            "choices": [
+              "Even / Odd",
+              "Digit",
+              "Place value",
+              "Tens / Ones"
+            ],
+            "answer": "Even / Odd",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Even / Odd means Ends in 0,2,4,6,8 / ends in 1,3,5,7,9."
+          },
+          {
+            "prompt": "Which term matches this meaning: The two places in a two-digit number?",
+            "choices": [
+              "Tens / Ones",
+              "Sequence",
+              "Ordinal number",
+              "Even / Odd"
+            ],
+            "answer": "Tens / Ones",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Tens / Ones means The two places in a two-digit number."
+          },
+          {
+            "prompt": "What does “Digit” mean?",
+            "choices": [
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position",
+              "The two places in a two-digit number",
+              "A sensible guess before counting"
+            ],
+            "answer": "A single symbol from 0 to 9",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A sensible guess before counting",
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9"
+            ],
+            "answer": "A sensible guess before counting",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-8",
+        "icon": "☁",
+        "skill": "Digit",
+        "title": "Explain It: Digit",
+        "description": "Practise digit through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
+            "choices": [
+              "Digit",
+              "Tens / Ones",
+              "Estimate",
+              "Sequence"
+            ],
+            "answer": "Digit",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess before counting?",
+            "choices": [
+              "Estimate",
+              "Ordinal number",
+              "Even / Odd",
+              "Digit"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting."
+          },
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "What a digit is worth from its position",
+              "The two places in a two-digit number",
+              "A sensible guess before counting",
+              "Numbers following a pattern"
+            ],
+            "answer": "What a digit is worth from its position",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+              "A single symbol from 0 to 9"
+            ],
+            "answer": "Numbers following a pattern",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means Numbers following a pattern."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-9",
+        "icon": "⌂",
+        "skill": "Place value",
+        "title": "Real-Life Round: Place value",
+        "description": "Practise place value through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "choices": [
+              "Place value",
+              "Estimate",
+              "Sequence",
+              "Ordinal number"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "Which term matches this meaning: Numbers following a pattern?",
+            "choices": [
+              "Sequence",
+              "Even / Odd",
+              "Digit",
+              "Place value"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means Numbers following a pattern."
+          },
+          {
+            "prompt": "What does “Tens / Ones” mean?",
+            "choices": [
+              "The two places in a two-digit number",
+              "A sensible guess before counting",
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd"
+            ],
+            "answer": "The two places in a two-digit number",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Tens / Ones means The two places in a two-digit number."
+          },
+          {
+            "prompt": "What does “Ordinal number” mean?",
+            "choices": [
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position"
+            ],
+            "answer": "Shows position: 1st, 2nd, 3rd",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Ordinal number means Shows position: 1st, 2nd, 3rd."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-10",
+        "icon": "!",
+        "skill": "Tens / Ones",
+        "title": "Spot the Error: Tens / Ones",
+        "description": "Practise tens / ones through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: The two places in a two-digit number?",
+            "choices": [
+              "Tens / Ones",
+              "Sequence",
+              "Ordinal number",
+              "Even / Odd"
+            ],
+            "answer": "Tens / Ones",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Tens / Ones means The two places in a two-digit number."
+          },
+          {
+            "prompt": "What does “Digit” mean?",
+            "choices": [
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position",
+              "The two places in a two-digit number",
+              "A sensible guess before counting"
+            ],
+            "answer": "A single symbol from 0 to 9",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A sensible guess before counting",
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9"
+            ],
+            "answer": "A sensible guess before counting",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting."
+          },
+          {
+            "prompt": "Which term matches this meaning: Ends in 0,2,4,6,8 / ends in 1,3,5,7,9?",
+            "choices": [
+              "Even / Odd",
+              "Digit",
+              "Place value",
+              "Tens / Ones"
+            ],
+            "answer": "Even / Odd",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Even / Odd means Ends in 0,2,4,6,8 / ends in 1,3,5,7,9."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-11",
+        "icon": "≡",
+        "skill": "Estimate",
+        "title": "Mastery Mix: Estimate",
+        "description": "Practise estimate through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A sensible guess before counting?",
+            "choices": [
+              "Estimate",
+              "Ordinal number",
+              "Even / Odd",
+              "Digit"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting."
+          },
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "What a digit is worth from its position",
+              "The two places in a two-digit number",
+              "A sensible guess before counting",
+              "Numbers following a pattern"
+            ],
+            "answer": "What a digit is worth from its position",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "What does “Sequence” mean?",
+            "choices": [
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+              "A single symbol from 0 to 9"
+            ],
+            "answer": "Numbers following a pattern",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means Numbers following a pattern."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
+            "choices": [
+              "Digit",
+              "Tens / Ones",
+              "Estimate",
+              "Sequence"
+            ],
+            "answer": "Digit",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-12",
+        "icon": "T",
+        "skill": "Sequence",
+        "title": "Unit Champion: Sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Numbers following a pattern?",
+            "choices": [
+              "Sequence",
+              "Even / Odd",
+              "Digit",
+              "Place value"
+            ],
+            "answer": "Sequence",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Sequence means Numbers following a pattern."
+          },
+          {
+            "prompt": "What does “Tens / Ones” mean?",
+            "choices": [
+              "The two places in a two-digit number",
+              "A sensible guess before counting",
+              "Numbers following a pattern",
+              "Shows position: 1st, 2nd, 3rd"
+            ],
+            "answer": "The two places in a two-digit number",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Tens / Ones means The two places in a two-digit number."
+          },
+          {
+            "prompt": "What does “Ordinal number” mean?",
+            "choices": [
+              "Shows position: 1st, 2nd, 3rd",
+              "Ends in 0,2,4,6,8 / ends in 1,3,5,7,9",
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position"
+            ],
+            "answer": "Shows position: 1st, 2nd, 3rd",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Ordinal number means Shows position: 1st, 2nd, 3rd."
+          },
+          {
+            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "choices": [
+              "Place value",
+              "Estimate",
+              "Sequence",
+              "Ordinal number"
+            ],
+            "answer": "Place value",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
+          }
+        ]
+      }
     ]
   },
   "selfAssessment": [
-    "I can read, write and picture any number from 0 to 100.", "I can say how many tens and ones are in a two-digit number.", "I can count on and back in ones, twos and tens.", "I can estimate and count to check.", "I can compare and order numbers.", "I can continue a number sequence.", "I can use ordinal numbers."
+    "I can this unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, try every worked example yourself on paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain a step in a new way, or check your answers. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
+    "I can why does this matter so much? Numbers are the language of the world around you. Traders in the market use them to give the right change. Farmers use them to count livestock and know if any goat is missing. Families use them to share food fairly at iftar during Ramadan. Even the prayer times follow numbers. When you become confident with numbers to 100, you are gaining a skill you will use every day for the rest of your life – and you are building the strong foundation you need for adding, subtracting, multiplying and dividing in the units to come.",
+    "I can as you work, keep a pencil and some paper beside you. Mathematics is not a subject you can learn only by reading – you must do it. Draw the pictures, write the numbers, and say the answers out loud. If you get something wrong, that is not a failure; it is simply a sign of exactly what to practise next. Every mathematician you admire once sat where you sit now, learning these very same ideas.",
+    "I can read, write and represent numbers from 0 to 100.",
+    "I can say and show the value of each digit in a two-digit number (tens and ones).",
+    "I can count on and back in ones, twos and tens from any number.",
+    "I can estimate how many objects there are, then count carefully to check.",
+    "I can compare two numbers and use the symbols >, < and =."
   ]
 }

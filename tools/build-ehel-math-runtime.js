@@ -30,6 +30,12 @@ function buildGrade(grade) {
   const stageId = `s${String(grade).padStart(2, "0")}`;
   const stageLabel = `Stage ${grade}`;
   const contentPackage = `Ehel-Academy-Mathematics-Grade-${grade}-Content-Package.xlsx`;
+  // Official Cambridge framework: Primary Mathematics 0096 (Stages 1-6),
+  // Lower Secondary Mathematics 0862 (Stages 7-9).
+  const cambridge = grade <= 6
+    ? { level: "Cambridge Primary Mathematics", code: "0096", stage: grade }
+    : { level: "Cambridge Lower Secondary Mathematics", code: "0862", stage: grade };
+  const cambridgeLabel = `${cambridge.level} ${cambridge.code} — Stage ${grade}`;
   const gradeDir = path.join(mathRoot, `grade-${grade}`);
   const unitDir = path.join(gradeDir, "data", "units");
 
@@ -198,7 +204,11 @@ function buildGrade(grade) {
     });
     while (examples.length < 12 && practiceItems.length) {
       const item = practiceItems[examples.length % practiceItems.length];
-      examples.push({ id: `we${String(examples.length + 1).padStart(2, "0")}`, outcomeId: `lo${String(examples.length % 8 + 1).padStart(2, "0")}`, difficulty: "Basic", title: `Guided example ${examples.length + 1}`, prompt: item.prompt, solution: item.answer });
+      // Derive a short readable title from the question instead of "Guided
+      // example N" (helps Grade 1, whose source has no worked-example headings).
+      const label = tidy(item.prompt).replace(/\s*\(?[a-e]\)\s.*$/i, "").replace(/[?:.]+$/, "");
+      const title = label.length >= 8 && label.length <= 48 ? label : `Practice ${examples.length + 1}`;
+      examples.push({ id: `we${String(examples.length + 1).padStart(2, "0")}`, outcomeId: `lo${String(examples.length % 8 + 1).padStart(2, "0")}`, difficulty: "Basic", title, prompt: item.prompt, solution: item.answer });
     }
     return examples.slice(0, 12).map((item, index) => ({ ...item, difficulty: index < 4 ? "Basic" : index < 8 ? "Intermediate" : "Challenge" }));
   }
@@ -213,10 +223,110 @@ function buildGrade(grade) {
     return list;
   }
 
-  function assessmentData(reference, unitNo) {
+  // Pull a short final answer out of a worked-example solution: a number
+  // after "=" or "is", the last standalone number, or a very short phrase.
+  function extractAnswer(solution) {
+    const text = tidy(solution).replace(/^Solution:?\s*/i, "");
+    // Prefer an explicit final result phrase near the end of the solution.
+    const finals = [...text.matchAll(/(?:=\s*|answer(?:\s+is)?\s*:?\s*|so\s+(?:it\s+is|the\s+answer\s+is)\s+|equals\s+|gives\s+|makes\s+|total(?:\s+is)?\s*:?\s*)(-?\d[\d,]*(?:\.\d+)?)/gi)];
+    if (finals.length) {
+      const last = finals[finals.length - 1];
+      // The result should sit in the final third of the solution text.
+      if (last.index >= text.length * 0.35) return { value: last[1].replace(/,/g, ""), numeric: true };
+    }
+    return null;
+  }
+  function numericDistractors(answer) {
+    const n = Number(answer);
+    if (!Number.isFinite(n)) return [];
+    const step = Math.max(1, Math.round(Math.abs(n) * 0.1) || 1);
+    const candidates = [n + step, n - step, n + step * 2, n + 1, n - 1, n * 10, Math.round(n / 10)];
+    const out = [];
+    for (const c of candidates) { const s = String(Number.isInteger(n) ? Math.round(c) : c); if (c !== n && c >= 0 && !out.includes(s) && s !== String(answer)) out.push(s); if (out.length >= 3) break; }
+    return out;
+  }
+  // Compute a definite answer from an arithmetic stem (100% accurate),
+  // handling +, −, ×, ÷ on two integers.
+  // Compute an EXACT integer answer from the stem. Only high-confidence
+  // patterns; anything else returns null (kept out of the quiz rather than
+  // risk a wrong answer). Decimals are skipped (float-rounding risk).
+  function computeFromStem(stem) {
+    const s = stem.replace(/,/g, "");
+    if (/\d\.\d/.test(s)) return null;
+    const hasAdd = /\d\s*[+\-−]\s*\d/.test(s), hasMul = /\d\s*[×x*÷\/]\s*\d/.test(s);
+    const mixedOrParens = (hasAdd && hasMul) || /\([^)]*\d[^)]*\)/.test(s);
+    // Addition/subtraction chain: N ± N (± N)* — evaluate left to right.
+    let chain = mixedOrParens ? null : s.match(/-?\d+(?:\s*[+\-−]\s*\d+)+/);
+    if (chain && !/[×x*÷\/]/.test(chain[0])) {
+      const parts = chain[0].match(/[+\-−]?\s*\d+/g);
+      let r = 0, ok = true;
+      parts.forEach((p, i) => { const t = p.replace(/−/g, "-").replace(/\s/g, ""); if (i === 0) r = Number(t.replace(/^\+/, "")); else if (t.startsWith("-")) r -= Number(t.slice(1)); else r += Number(t.replace(/^\+/, "")); if (!Number.isFinite(r)) ok = false; });
+      return ok && r >= 0 && Number.isInteger(r) ? String(r) : null;
+    }
+    // Single × or ÷ on exactly two operands (no other operators present).
+    let m = mixedOrParens || /\d\s*[×x*÷\/]\s*\d\s*[×x*÷\/+\-−]/.test(s) ? null : s.match(/(-?\d+)\s*([×x*÷\/])\s*(-?\d+)/);
+    if (m) {
+      const a = +m[1], b = +m[3], op = m[2];
+      let r;
+      if (/[×x*]/.test(op)) r = a * b; else { if (!b || a % b) return null; r = a / b; }
+      return r >= 0 && Number.isInteger(r) ? String(r) : null;
+    }
+    // double / half
+    m = s.match(/\bdouble\s+(\d+)/i); if (m) return String(+m[1] * 2);
+    m = s.match(/\bhalf\s+of\s+(\d+)|\bhalve\s+(\d+)/i); if (m) { const n = +(m[1] || m[2]); return n % 2 === 0 ? String(n / 2) : null; }
+    // place value: "value of the D in NUMBER" (single occurrence only)
+    m = s.match(/value of the (\d)\b[^0-9]*?\b(\d{2,})/i);
+    if (m) { const d = m[1], num = m[2]; const pos = num.indexOf(d); if (pos >= 0 && num.indexOf(d, pos + 1) < 0) return String(+d * 10 ** (num.length - 1 - pos)); return null; }
+    // ruler / number-line: "from the X mark to the Y mark"
+    m = s.match(/from (?:the )?(\d+)\s*mark to (?:the )?(\d+)\s*mark/i);
+    if (m) return String(Math.abs(+m[2] - +m[1]));
+    // Two-number word problems with an unambiguous operation keyword. Require
+    // EXACTLY two whole numbers so the operands are certain.
+    const nums = (s.match(/\b\d+\b/g) || []).map(Number);
+    if (nums.length === 2) {
+      const [a, b] = nums;
+      if (/\b(left|remain|remaining|cuts? off|cut off|takes? away|took away|gives? away|gave away|how much (?:is )?left|how many (?:are )?left|spends?|spent|minus|less than|fewer)\b/i.test(s) && a >= b) return String(a - b);
+      if (/\b(altogether|in total|the total|in all|combined|sum of|add(?:ed|s)?\b|plus)\b/i.test(s)) return String(a + b);
+      if (/\bshared? (?:equally )?(?:in)?to \d+ (?:equal )?groups?\b|how many \d+s? (?:are )?in\b|÷|divided? by\b/i.test(s) && b !== 0 && a % b === 0) return String(a / b);
+      if (/\b(\d+ (?:groups?|rows?|lots|sets|bags|boxes|packs) of \d+)\b|\btimes\b|multiplied by\b/i.test(s)) return String(a * b);
+    }
+    return null;
+  }
+  function applicationQuestions(workedExamples) {
+    const items = [];
+    for (const we of workedExamples) {
+      if (/^Guided example/i.test(we.title)) continue;
+      const stem = tidy(we.prompt);
+      if (stem.length < 8 || /[a-e]\)\s/i.test(stem)) continue; // skip multi-part options
+      if (/\band\b.*\?|calculate .+ and | and .+=|both/i.test(stem)) continue; // skip two-answer questions
+      // Only questions whose answer is a single number.
+      if (!/how many|how much|what is|calculate|value of|the total|sum of|the product|the difference|work out|round|how long|how far|nearest|what number|write .* in digits/i.test(stem)) continue;
+      // Exclude non-numeric answer types that may still contain stray numbers.
+      if (/pattern|\bturn\b|clockwise|direction|create|design|colou?r|\bred\b|\bblue\b|\bgreen\b|symmetr|reflect|expanded form|in words|work through|cover the solution|which shape|name the|true or false|draw/i.test(stem)) continue;
+      // Only exact computed answers — no prose extraction (unreliable).
+      const answer = computeFromStem(stem);
+      if (!answer) continue;
+      const distractors = numericDistractors(answer);
+      if (distractors.length < 2) continue;
+      const options = [String(answer), ...distractors].slice(0, 4);
+      const rot = stem.length % options.length;
+      const rotated = options.slice(rot).concat(options.slice(0, rot));
+      items.push({ stem, answer: String(answer), options: [...new Set(rotated)], explanation: sentence(we.solution.replace(/^Solution:?\s*/i, ""), 240) });
+      if (items.length >= 6) break;
+    }
+    return items;
+  }
+
+  function assessmentData(reference, unitNo, workedExamples = []) {
     const terms = reference.terms.length >= 4 ? reference.terms : [["Mathematics", "Using numbers, shapes, measures and patterns"], ["Model", "A way to show an idea"], ["Rule", "A mathematical relationship"], ["Check", "Confirm that an answer makes sense"]];
     const questions = [];
-    for (let index = 0; index < 12; index += 1) {
+    // Real application questions from worked examples first.
+    for (const [i, app] of applicationQuestions(workedExamples).entries()) {
+      if (app.options.length < 3) continue;
+      questions.push({ id: `q${String(questions.length + 1).padStart(2, "0")}`, type: "Application", outcomeId: `lo${String(i % 8 + 1).padStart(2, "0")}`, difficulty: i < 3 ? "Core" : "Challenge", question: app.stem, options: app.options, answer: app.answer, hint: `Work it out step by step, using the Unit ${unitNo} methods.`, explanation: app.explanation });
+    }
+    const startVocab = questions.length;
+    for (let index = 0; questions.length < 12; index += 1) {
       const entry = terms[index % terms.length];
       const reverse = index >= Math.min(terms.length, 6);
       const pool = terms.filter((item) => item !== entry).map((item) => reverse ? item[0] : item[1]);
@@ -228,7 +338,8 @@ function buildGrade(grade) {
       }
       const options = [answer, ...distractors];
       while (options.length < 4) options.push(`Not this ${reverse ? "term" : "meaning"}`);
-      questions.push({ id: `q${String(index + 1).padStart(2, "0")}`, type: index < 4 ? "Concept" : index < 8 ? "Application" : "Reasoning", outcomeId: `lo${String(index % 8 + 1).padStart(2, "0")}`, difficulty: index < 4 ? "Basic" : index < 9 ? "Core" : "Challenge", question: reverse ? `Which term matches this meaning: ${entry[1]}?` : `What does “${entry[0]}” mean?`, options: [...new Set(options)].slice(0, 4), answer, hint: `Use the Unit ${unitNo} Math Words & Symbols reference.`, explanation: `${entry[0]} means ${entry[1]}.` });
+      const qn = questions.length;
+      questions.push({ id: `q${String(qn + 1).padStart(2, "0")}`, type: qn < 4 ? "Concept" : "Reasoning", outcomeId: `lo${String(qn % 8 + 1).padStart(2, "0")}`, difficulty: qn < 4 ? "Basic" : qn < 9 ? "Core" : "Challenge", question: reverse ? `Which term matches this meaning: ${entry[1]}?` : `What does “${entry[0]}” mean?`, options: [...new Set(options)].slice(0, 4), answer, hint: `Use the Unit ${unitNo} Math Words & Symbols reference.`, explanation: `${entry[0]} means ${entry[1]}.` });
     }
     return { passPercent: 80, questions };
   }
@@ -261,7 +372,7 @@ function buildGrade(grade) {
     const concepts = conceptList(lesson, reference.rules, unitMeta.title);
     const outcomes = objectiveList(lesson);
     const methods = methodList(referenceDoc, workedExamples);
-    const assessment = assessmentData(reference, unitNo);
+    const assessment = assessmentData(reference, unitNo, workedExamples);
     const overview = lesson.blocks.map((block) => tidy(block.text)).find((text, index) => index > 2 && text.length > 180 && !/self-paced/i.test(text)) || `Explore ${unitMeta.title} through concepts, models, methods and real-life practice.`;
     const explorations = practice.slice(0, 6).map((item, index) => ({ id: `explore-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Discover" : "Explore", title: concepts[index % Math.max(1, concepts.length)]?.title || `Unit investigation ${index + 1}`, context: sentence(concepts[index % Math.max(1, concepts.length)]?.explanation || overview, 260), prompt: item.prompt, answer: item.answer, modelType: `model-${index + 1}`, hint: item.hint, explanation: item.answer }));
     const visualModels = concepts.map((concept, index) => ({ id: `model-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, title: concept.title, modelType: `concept-model-${index + 1}`, purpose: sentence(concept.explanation, 220), defaultNumber: null }));
@@ -281,7 +392,8 @@ function buildGrade(grade) {
       stage: { id: stageId, label: stageLabel }, subject: "Mathematics",
       term: { id: `t0${unitMeta.term}`, label: `Term ${unitMeta.term}` },
       unit: { unitId: unitMeta.unit_id, unitNo, unitTitle: unitMeta.title, unitOverview: sentence(overview, 760), learningPath: ["Preview the goals and core ideas", "Explore concepts and visual models", "Learn methods and study worked examples", "Complete guided practice, activities and games", "Apply, explain and complete the Unit Challenge"], reviewStatus: "Curriculum review required" },
-      provenance: { contentPackage, sourceArchive: source.metadata.source_archive, sourceDocuments: [lesson, activitiesDoc, practiceDoc, referenceDoc].filter((doc) => doc !== EMPTY_DOC).map((doc) => doc.source_file), sourceBlockCount: unitMeta.source_block_count, transformation: `Structured directly from the standardized Cambridge ${stageLabel} workbook source rows for screen presentation.`, reviewStatus: unitMeta.review_status },
+      cambridge,
+      provenance: { contentPackage, framework: cambridgeLabel, sourceArchive: source.metadata.source_archive, sourceDocuments: [lesson, activitiesDoc, practiceDoc, referenceDoc].filter((doc) => doc !== EMPTY_DOC).map((doc) => doc.source_file), sourceBlockCount: unitMeta.source_block_count, transformation: `Structured from the ${cambridgeLabel} workbook source documents for screen presentation.`, reviewStatus: unitMeta.review_status },
       media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
       outcomes, concepts, explorations, visualModels, methods, workedExamples,
       practice: practice.slice(0, 12), activities: activityData(activitiesDoc), reference,

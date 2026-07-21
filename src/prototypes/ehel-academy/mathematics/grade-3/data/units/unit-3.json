@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.690Z",
+  "generatedAt": "2026-07-21T07:03:32.674Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 3
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-3-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 3",
     "sourceArchive": "Year 3 (1)-20260714T220920Z-1-001.zip",
     "sourceDocuments": [
       "Year 3 (1)/Unit 3 (1)/Year 3 - Unit 3 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 3 (1)/Unit 3 (1)/Year 3 - Unit 3 Reference.docx"
     ],
     "sourceBlockCount": 414,
-    "transformation": "Structured directly from the standardized Cambridge Stage 3 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 3 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -363,7 +369,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Add money",
       "prompt": "Add money: a) Sh 3.25 + Sh 1.50 b) Sh 6.75 + Sh 2.35 c) Sh 5.99 + Sh 4.99.",
       "solution": "a) Sh 4.75, b) Sh 9.10, c) Sh 10.98."
     },
@@ -371,7 +377,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Subtract money",
       "prompt": "Subtract money: a) Sh 10.00 − Sh 3.50 b) Sh 20.00 − Sh 7.25 c) Sh 5.75 − Sh 2.80.",
       "solution": "a) Sh 6.50, b) Sh 12.75, c) Sh 2.95."
     },
@@ -379,7 +385,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Subtract across zeros",
       "prompt": "Subtract across zeros: a) 300 − 5 b) 700 − 24 c) 800 − 356 d) 400 − 256.",
       "solution": "1) a) 295, b) 676, c) 444, d) 144."
     },
@@ -387,7 +393,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Practice 12",
       "prompt": "Add these larger sums, watching for a carry into the thousands: a) 725 + 275 b) 583 + 419.",
       "solution": "a) 1,000, b) 1,002."
     }
@@ -879,9 +885,89 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
-        "difficulty": "Basic",
+        "difficulty": "Core",
+        "question": "Calculate 583 + 19.",
+        "options": [
+          "722",
+          "602",
+          "662",
+          "542"
+        ],
+        "answer": "602",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "Ones: 3 + 9 = 12, write 2, carry 1. Tens: 8 + 1 + 1 (carried) = 10, write 0, carry 1. Hundreds: 5 + 1 (carried) = 6. The answer is 602. Two carries in one sum – handled calmly, one column at a time."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Calculate 725 + 275.",
+        "options": [
+          "1000",
+          "1100",
+          "900",
+          "1200"
+        ],
+        "answer": "1000",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "Ones: 5 + 5 = 10, write 0, carry 1. Tens: 2 + 7 + 1 = 10, write 0, carry 1. Hundreds: 7 + 2 + 1 = 10, write 0, carry 1 into a new thousands place. The answer is 1,000."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Calculate 632 − 457.",
+        "options": [
+          "175",
+          "193",
+          "157",
+          "211"
+        ],
+        "answer": "175",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "Ones: 2 − 7 needs a borrow → 12 − 7 = 5 (tens drop from 3 to 2). Tens: 2 − 5 needs a borrow → 12 − 5 = 7 (hundreds drop from 6 to 5). Hundreds: 5 − 4 = 1. The answer is 175. Check: 175 + 457 = 632. Correct!"
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Calculate 800 − 356.",
+        "options": [
+          "444",
+          "488",
+          "400",
+          "532"
+        ],
+        "answer": "444",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "Borrow across the zeros. 800 becomes 7 hundreds, 9 tens and 10 ones. Ones: 10 − 6 = 4. Tens: 9 − 5 = 4. Hundreds: 7 − 3 = 4. The answer is 444."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Estimate and then calculate 489 + 325.",
+        "options": [
+          "733",
+          "976",
+          "814",
+          "895"
+        ],
+        "answer": "814",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "Estimate: 490 + 330 = 820. Exact: ones 9 + 5 = 14, write 4 carry 1; tens 8 + 2 + 1 = 11, write 1 carry 1; hundreds 4 + 3 + 1 = 8. The answer is 814, close to the estimate of 820. It checks out."
+      },
+      {
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Sum” mean?",
         "options": [
           "The answer to an addition",
@@ -894,10 +980,10 @@
         "explanation": "Sum means The answer to an addition."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Difference” mean?",
         "options": [
           "The answer to a subtraction",
@@ -910,10 +996,10 @@
         "explanation": "Difference means The answer to a subtraction."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
         "question": "What does “Regroup / Carry / Borrow” mean?",
         "options": [
           "Trade ten of one place for one of the next",
@@ -926,10 +1012,10 @@
         "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
         "question": "What does “Estimate” mean?",
         "options": [
           "A rough answer found by rounding first",
@@ -942,10 +1028,10 @@
         "explanation": "Estimate means A rough answer found by rounding first."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Round” mean?",
         "options": [
           "Change a number to the nearest 10 or 100",
@@ -958,10 +1044,10 @@
         "explanation": "Round means Change a number to the nearest 10 or 100."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Decimal point” mean?",
         "options": [
           "Separates shillings from cents",
@@ -974,10 +1060,10 @@
         "explanation": "Decimal point means Separates shillings from cents."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: Money returned after paying too much?",
         "options": [
           "Change",
@@ -988,86 +1074,6 @@
         "answer": "Change",
         "hint": "Use the Unit 3 Math Words & Symbols reference.",
         "explanation": "Change means Money returned after paying too much."
-      },
-      {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: The opposite operation, used to check?",
-        "options": [
-          "Inverse",
-          "Sum",
-          "Difference",
-          "Regroup / Carry / Borrow"
-        ],
-        "answer": "Inverse",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Inverse means The opposite operation, used to check."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: The answer to an addition?",
-        "options": [
-          "Sum",
-          "Regroup / Carry / Borrow",
-          "Estimate",
-          "Round"
-        ],
-        "answer": "Sum",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Sum means The answer to an addition."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The answer to a subtraction?",
-        "options": [
-          "Difference",
-          "Estimate",
-          "Round",
-          "Decimal point"
-        ],
-        "answer": "Difference",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Difference means The answer to a subtraction."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Trade ten of one place for one of the next?",
-        "options": [
-          "Regroup / Carry / Borrow",
-          "Round",
-          "Decimal point",
-          "Change"
-        ],
-        "answer": "Regroup / Carry / Borrow",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A rough answer found by rounding first?",
-        "options": [
-          "Estimate",
-          "Decimal point",
-          "Change",
-          "Inverse"
-        ],
-        "answer": "Estimate",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Estimate means A rough answer found by rounding first."
       }
     ]
   },
@@ -1083,52 +1089,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Sum” mean?",
+            "prompt": "Calculate 583 + 19.",
             "choices": [
-              "The answer to an addition",
+              "722",
+              "602",
+              "662",
+              "542"
+            ],
+            "answer": "602",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 3 + 9 = 12, write 2, carry 1. Tens: 8 + 1 + 1 (carried) = 10, write 0, carry 1. Hundreds: 5 + 1 (carried) = 6. The answer is 602. Two carries in one sum – handled calmly, one column at a time."
+          },
+          {
+            "prompt": "Calculate 800 − 356.",
+            "choices": [
+              "444",
+              "488",
+              "400",
+              "532"
+            ],
+            "answer": "444",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Borrow across the zeros. 800 becomes 7 hundreds, 9 tens and 10 ones. Ones: 10 − 6 = 4. Tens: 9 − 5 = 4. Hundreds: 7 − 3 = 4. The answer is 444."
+          },
+          {
+            "prompt": "What does “Difference” mean?",
+            "choices": [
               "The answer to a subtraction",
               "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first"
-            ],
-            "answer": "The answer to an addition",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
-          },
-          {
-            "prompt": "What does “Estimate” mean?",
-            "choices": [
               "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much"
+              "Change a number to the nearest 10 or 100"
             ],
-            "answer": "A rough answer found by rounding first",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
-          },
-          {
-            "prompt": "Which term matches this meaning: Money returned after paying too much?",
-            "choices": [
-              "Change",
-              "Inverse",
-              "Sum",
-              "Difference"
-            ],
-            "answer": "Change",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Change means Money returned after paying too much."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
-            "choices": [
-              "Difference",
-              "Estimate",
-              "Round",
-              "Decimal point"
-            ],
-            "answer": "Difference",
+            "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Difference means The answer to a subtraction."
+          },
+          {
+            "prompt": "What does “Round” mean?",
+            "choices": [
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents",
+              "Money returned after paying too much",
+              "The opposite operation, used to check"
+            ],
+            "answer": "Change a number to the nearest 10 or 100",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Round means Change a number to the nearest 10 or 100."
           }
         ]
       },
@@ -1141,52 +1147,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "Calculate 725 + 275.",
             "choices": [
-              "The answer to a subtraction",
+              "1000",
+              "1100",
+              "900",
+              "1200"
+            ],
+            "answer": "1000",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 5 + 5 = 10, write 0, carry 1. Tens: 2 + 7 + 1 = 10, write 0, carry 1. Hundreds: 7 + 2 + 1 = 10, write 0, carry 1 into a new thousands place. The answer is 1,000."
+          },
+          {
+            "prompt": "Estimate and then calculate 489 + 325.",
+            "choices": [
+              "733",
+              "976",
+              "814",
+              "895"
+            ],
+            "answer": "814",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Estimate: 490 + 330 = 820. Exact: ones 9 + 5 = 14, write 4 carry 1; tens 8 + 2 + 1 = 11, write 1 carry 1; hundreds 4 + 3 + 1 = 8. The answer is 814, close to the estimate of 820. It checks out."
+          },
+          {
+            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "choices": [
               "Trade ten of one place for one of the next",
               "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100"
-            ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
-          },
-          {
-            "prompt": "What does “Round” mean?",
-            "choices": [
               "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check"
+              "Separates shillings from cents"
             ],
-            "answer": "Change a number to the nearest 10 or 100",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Round means Change a number to the nearest 10 or 100."
-          },
-          {
-            "prompt": "Which term matches this meaning: The opposite operation, used to check?",
-            "choices": [
-              "Inverse",
-              "Sum",
-              "Difference",
-              "Regroup / Carry / Borrow"
-            ],
-            "answer": "Inverse",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation, used to check."
-          },
-          {
-            "prompt": "Which term matches this meaning: Trade ten of one place for one of the next?",
-            "choices": [
-              "Regroup / Carry / Borrow",
-              "Round",
-              "Decimal point",
-              "Change"
-            ],
-            "answer": "Regroup / Carry / Borrow",
+            "answer": "Trade ten of one place for one of the next",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
+          },
+          {
+            "prompt": "What does “Decimal point” mean?",
+            "choices": [
+              "Separates shillings from cents",
+              "Money returned after paying too much",
+              "The opposite operation, used to check",
+              "The answer to an addition"
+            ],
+            "answer": "Separates shillings from cents",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal point means Separates shillings from cents."
           }
         ]
       },
@@ -1199,52 +1205,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "prompt": "Calculate 632 − 457.",
             "choices": [
+              "175",
+              "193",
+              "157",
+              "211"
+            ],
+            "answer": "175",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 2 − 7 needs a borrow → 12 − 7 = 5 (tens drop from 3 to 2). Tens: 2 − 5 needs a borrow → 12 − 5 = 7 (hundreds drop from 6 to 5). Hundreds: 5 − 4 = 1. The answer is 175. Check: 175 + 457 = 632. Correct!"
+          },
+          {
+            "prompt": "What does “Sum” mean?",
+            "choices": [
+              "The answer to an addition",
+              "The answer to a subtraction",
               "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents"
+              "A rough answer found by rounding first"
             ],
-            "answer": "Trade ten of one place for one of the next",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
-          },
-          {
-            "prompt": "What does “Decimal point” mean?",
-            "choices": [
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check",
-              "The answer to an addition"
-            ],
-            "answer": "Separates shillings from cents",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Decimal point means Separates shillings from cents."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to an addition?",
-            "choices": [
-              "Sum",
-              "Regroup / Carry / Borrow",
-              "Estimate",
-              "Round"
-            ],
-            "answer": "Sum",
+            "answer": "The answer to an addition",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Sum means The answer to an addition."
           },
           {
-            "prompt": "Which term matches this meaning: A rough answer found by rounding first?",
+            "prompt": "What does “Estimate” mean?",
             "choices": [
-              "Estimate",
-              "Decimal point",
-              "Change",
-              "Inverse"
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents",
+              "Money returned after paying too much"
             ],
-            "answer": "Estimate",
+            "answer": "A rough answer found by rounding first",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Estimate means A rough answer found by rounding first."
+          },
+          {
+            "prompt": "Which term matches this meaning: Money returned after paying too much?",
+            "choices": [
+              "Change",
+              "Inverse",
+              "Sum",
+              "Difference"
+            ],
+            "answer": "Change",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Change means Money returned after paying too much."
           }
         ]
       },
@@ -1257,52 +1263,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "Calculate 800 − 356.",
             "choices": [
+              "444",
+              "488",
+              "400",
+              "532"
+            ],
+            "answer": "444",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Borrow across the zeros. 800 becomes 7 hundreds, 9 tens and 10 ones. Ones: 10 − 6 = 4. Tens: 9 − 5 = 4. Hundreds: 7 − 3 = 4. The answer is 444."
+          },
+          {
+            "prompt": "What does “Difference” mean?",
+            "choices": [
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
               "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much"
+              "Change a number to the nearest 10 or 100"
             ],
-            "answer": "A rough answer found by rounding first",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
-          },
-          {
-            "prompt": "Which term matches this meaning: Money returned after paying too much?",
-            "choices": [
-              "Change",
-              "Inverse",
-              "Sum",
-              "Difference"
-            ],
-            "answer": "Change",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Change means Money returned after paying too much."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
-            "choices": [
-              "Difference",
-              "Estimate",
-              "Round",
-              "Decimal point"
-            ],
-            "answer": "Difference",
+            "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Difference means The answer to a subtraction."
           },
           {
-            "prompt": "What does “Sum” mean?",
+            "prompt": "What does “Round” mean?",
             "choices": [
-              "The answer to an addition",
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first"
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents",
+              "Money returned after paying too much",
+              "The opposite operation, used to check"
             ],
-            "answer": "The answer to an addition",
+            "answer": "Change a number to the nearest 10 or 100",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
+            "explanation": "Round means Change a number to the nearest 10 or 100."
+          },
+          {
+            "prompt": "Calculate 583 + 19.",
+            "choices": [
+              "722",
+              "602",
+              "662",
+              "542"
+            ],
+            "answer": "602",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 3 + 9 = 12, write 2, carry 1. Tens: 8 + 1 + 1 (carried) = 10, write 0, carry 1. Hundreds: 5 + 1 (carried) = 6. The answer is 602. Two carries in one sum – handled calmly, one column at a time."
           }
         ]
       },
@@ -1315,52 +1321,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Round” mean?",
+            "prompt": "Estimate and then calculate 489 + 325.",
             "choices": [
+              "733",
+              "976",
+              "814",
+              "895"
+            ],
+            "answer": "814",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Estimate: 490 + 330 = 820. Exact: ones 9 + 5 = 14, write 4 carry 1; tens 8 + 2 + 1 = 11, write 1 carry 1; hundreds 4 + 3 + 1 = 8. The answer is 814, close to the estimate of 820. It checks out."
+          },
+          {
+            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "choices": [
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
               "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check"
+              "Separates shillings from cents"
             ],
-            "answer": "Change a number to the nearest 10 or 100",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Round means Change a number to the nearest 10 or 100."
-          },
-          {
-            "prompt": "Which term matches this meaning: The opposite operation, used to check?",
-            "choices": [
-              "Inverse",
-              "Sum",
-              "Difference",
-              "Regroup / Carry / Borrow"
-            ],
-            "answer": "Inverse",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation, used to check."
-          },
-          {
-            "prompt": "Which term matches this meaning: Trade ten of one place for one of the next?",
-            "choices": [
-              "Regroup / Carry / Borrow",
-              "Round",
-              "Decimal point",
-              "Change"
-            ],
-            "answer": "Regroup / Carry / Borrow",
+            "answer": "Trade ten of one place for one of the next",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
           },
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "What does “Decimal point” mean?",
             "choices": [
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100"
+              "Separates shillings from cents",
+              "Money returned after paying too much",
+              "The opposite operation, used to check",
+              "The answer to an addition"
             ],
-            "answer": "The answer to a subtraction",
+            "answer": "Separates shillings from cents",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "explanation": "Decimal point means Separates shillings from cents."
+          },
+          {
+            "prompt": "Calculate 725 + 275.",
+            "choices": [
+              "1000",
+              "1100",
+              "900",
+              "1200"
+            ],
+            "answer": "1000",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 5 + 5 = 10, write 0, carry 1. Tens: 2 + 7 + 1 = 10, write 0, carry 1. Hundreds: 7 + 2 + 1 = 10, write 0, carry 1 into a new thousands place. The answer is 1,000."
           }
         ]
       },
@@ -1373,52 +1379,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Decimal point” mean?",
+            "prompt": "What does “Sum” mean?",
             "choices": [
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check",
-              "The answer to an addition"
+              "The answer to an addition",
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first"
             ],
-            "answer": "Separates shillings from cents",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Decimal point means Separates shillings from cents."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to an addition?",
-            "choices": [
-              "Sum",
-              "Regroup / Carry / Borrow",
-              "Estimate",
-              "Round"
-            ],
-            "answer": "Sum",
+            "answer": "The answer to an addition",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Sum means The answer to an addition."
           },
           {
-            "prompt": "Which term matches this meaning: A rough answer found by rounding first?",
+            "prompt": "What does “Estimate” mean?",
             "choices": [
-              "Estimate",
-              "Decimal point",
-              "Change",
-              "Inverse"
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents",
+              "Money returned after paying too much"
             ],
-            "answer": "Estimate",
+            "answer": "A rough answer found by rounding first",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Estimate means A rough answer found by rounding first."
           },
           {
-            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "prompt": "Which term matches this meaning: Money returned after paying too much?",
             "choices": [
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents"
+              "Change",
+              "Inverse",
+              "Sum",
+              "Difference"
             ],
-            "answer": "Trade ten of one place for one of the next",
+            "answer": "Change",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
+            "explanation": "Change means Money returned after paying too much."
+          },
+          {
+            "prompt": "Calculate 632 − 457.",
+            "choices": [
+              "175",
+              "193",
+              "157",
+              "211"
+            ],
+            "answer": "175",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 2 − 7 needs a borrow → 12 − 7 = 5 (tens drop from 3 to 2). Tens: 2 − 5 needs a borrow → 12 − 5 = 7 (hundreds drop from 6 to 5). Hundreds: 5 − 4 = 1. The answer is 175. Check: 175 + 457 = 632. Correct!"
           }
         ]
       },
@@ -1431,52 +1437,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Money returned after paying too much?",
+            "prompt": "What does “Difference” mean?",
             "choices": [
-              "Change",
-              "Inverse",
-              "Sum",
-              "Difference"
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100"
             ],
-            "answer": "Change",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Change means Money returned after paying too much."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
-            "choices": [
-              "Difference",
-              "Estimate",
-              "Round",
-              "Decimal point"
-            ],
-            "answer": "Difference",
+            "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Difference means The answer to a subtraction."
           },
           {
-            "prompt": "What does “Sum” mean?",
+            "prompt": "What does “Round” mean?",
             "choices": [
-              "The answer to an addition",
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first"
-            ],
-            "answer": "The answer to an addition",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
-          },
-          {
-            "prompt": "What does “Estimate” mean?",
-            "choices": [
-              "A rough answer found by rounding first",
               "Change a number to the nearest 10 or 100",
               "Separates shillings from cents",
-              "Money returned after paying too much"
+              "Money returned after paying too much",
+              "The opposite operation, used to check"
             ],
-            "answer": "A rough answer found by rounding first",
+            "answer": "Change a number to the nearest 10 or 100",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
+            "explanation": "Round means Change a number to the nearest 10 or 100."
+          },
+          {
+            "prompt": "Calculate 583 + 19.",
+            "choices": [
+              "722",
+              "602",
+              "662",
+              "542"
+            ],
+            "answer": "602",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 3 + 9 = 12, write 2, carry 1. Tens: 8 + 1 + 1 (carried) = 10, write 0, carry 1. Hundreds: 5 + 1 (carried) = 6. The answer is 602. Two carries in one sum – handled calmly, one column at a time."
+          },
+          {
+            "prompt": "Calculate 800 − 356.",
+            "choices": [
+              "444",
+              "488",
+              "400",
+              "532"
+            ],
+            "answer": "444",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Borrow across the zeros. 800 becomes 7 hundreds, 9 tens and 10 ones. Ones: 10 − 6 = 4. Tens: 9 − 5 = 4. Hundreds: 7 − 3 = 4. The answer is 444."
           }
         ]
       },
@@ -1489,88 +1495,6 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The opposite operation, used to check?",
-            "choices": [
-              "Inverse",
-              "Sum",
-              "Difference",
-              "Regroup / Carry / Borrow"
-            ],
-            "answer": "Inverse",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation, used to check."
-          },
-          {
-            "prompt": "Which term matches this meaning: Trade ten of one place for one of the next?",
-            "choices": [
-              "Regroup / Carry / Borrow",
-              "Round",
-              "Decimal point",
-              "Change"
-            ],
-            "answer": "Regroup / Carry / Borrow",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
-          },
-          {
-            "prompt": "What does “Difference” mean?",
-            "choices": [
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100"
-            ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
-          },
-          {
-            "prompt": "What does “Round” mean?",
-            "choices": [
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check"
-            ],
-            "answer": "Change a number to the nearest 10 or 100",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Round means Change a number to the nearest 10 or 100."
-          }
-        ]
-      },
-      {
-        "id": "u3-game-9",
-        "icon": "⌂",
-        "skill": "Sum",
-        "title": "Real-Life Round: Sum",
-        "description": "Practise sum through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The answer to an addition?",
-            "choices": [
-              "Sum",
-              "Regroup / Carry / Borrow",
-              "Estimate",
-              "Round"
-            ],
-            "answer": "Sum",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
-          },
-          {
-            "prompt": "Which term matches this meaning: A rough answer found by rounding first?",
-            "choices": [
-              "Estimate",
-              "Decimal point",
-              "Change",
-              "Inverse"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
-          },
-          {
             "prompt": "What does “Regroup / Carry / Borrow” mean?",
             "choices": [
               "Trade ten of one place for one of the next",
@@ -1593,6 +1517,88 @@
             "answer": "Separates shillings from cents",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Decimal point means Separates shillings from cents."
+          },
+          {
+            "prompt": "Calculate 725 + 275.",
+            "choices": [
+              "1000",
+              "1100",
+              "900",
+              "1200"
+            ],
+            "answer": "1000",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 5 + 5 = 10, write 0, carry 1. Tens: 2 + 7 + 1 = 10, write 0, carry 1. Hundreds: 7 + 2 + 1 = 10, write 0, carry 1 into a new thousands place. The answer is 1,000."
+          },
+          {
+            "prompt": "Estimate and then calculate 489 + 325.",
+            "choices": [
+              "733",
+              "976",
+              "814",
+              "895"
+            ],
+            "answer": "814",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Estimate: 490 + 330 = 820. Exact: ones 9 + 5 = 14, write 4 carry 1; tens 8 + 2 + 1 = 11, write 1 carry 1; hundreds 4 + 3 + 1 = 8. The answer is 814, close to the estimate of 820. It checks out."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-9",
+        "icon": "⌂",
+        "skill": "Sum",
+        "title": "Real-Life Round: Sum",
+        "description": "Practise sum through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents",
+              "Money returned after paying too much"
+            ],
+            "answer": "A rough answer found by rounding first",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Estimate means A rough answer found by rounding first."
+          },
+          {
+            "prompt": "Which term matches this meaning: Money returned after paying too much?",
+            "choices": [
+              "Change",
+              "Inverse",
+              "Sum",
+              "Difference"
+            ],
+            "answer": "Change",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Change means Money returned after paying too much."
+          },
+          {
+            "prompt": "Calculate 632 − 457.",
+            "choices": [
+              "175",
+              "193",
+              "157",
+              "211"
+            ],
+            "answer": "175",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 2 − 7 needs a borrow → 12 − 7 = 5 (tens drop from 3 to 2). Tens: 2 − 5 needs a borrow → 12 − 5 = 7 (hundreds drop from 6 to 5). Hundreds: 5 − 4 = 1. The answer is 175. Check: 175 + 457 = 632. Correct!"
+          },
+          {
+            "prompt": "What does “Sum” mean?",
+            "choices": [
+              "The answer to an addition",
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first"
+            ],
+            "answer": "The answer to an addition",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sum means The answer to an addition."
           }
         ]
       },
@@ -1605,16 +1611,144 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
+            "prompt": "What does “Round” mean?",
             "choices": [
-              "Difference",
-              "Estimate",
-              "Round",
-              "Decimal point"
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents",
+              "Money returned after paying too much",
+              "The opposite operation, used to check"
             ],
-            "answer": "Difference",
+            "answer": "Change a number to the nearest 10 or 100",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Round means Change a number to the nearest 10 or 100."
+          },
+          {
+            "prompt": "Calculate 583 + 19.",
+            "choices": [
+              "722",
+              "602",
+              "662",
+              "542"
+            ],
+            "answer": "602",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 3 + 9 = 12, write 2, carry 1. Tens: 8 + 1 + 1 (carried) = 10, write 0, carry 1. Hundreds: 5 + 1 (carried) = 6. The answer is 602. Two carries in one sum – handled calmly, one column at a time."
+          },
+          {
+            "prompt": "Calculate 800 − 356.",
+            "choices": [
+              "444",
+              "488",
+              "400",
+              "532"
+            ],
+            "answer": "444",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Borrow across the zeros. 800 becomes 7 hundreds, 9 tens and 10 ones. Ones: 10 − 6 = 4. Tens: 9 − 5 = 4. Hundreds: 7 − 3 = 4. The answer is 444."
+          },
+          {
+            "prompt": "What does “Difference” mean?",
+            "choices": [
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100"
+            ],
+            "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Difference means The answer to a subtraction."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-11",
+        "icon": "≡",
+        "skill": "Regroup / Carry / Borrow",
+        "title": "Mastery Mix: Regroup / Carry / Borrow",
+        "description": "Practise regroup / carry / borrow through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Decimal point” mean?",
+            "choices": [
+              "Separates shillings from cents",
+              "Money returned after paying too much",
+              "The opposite operation, used to check",
+              "The answer to an addition"
+            ],
+            "answer": "Separates shillings from cents",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Decimal point means Separates shillings from cents."
+          },
+          {
+            "prompt": "Calculate 725 + 275.",
+            "choices": [
+              "1000",
+              "1100",
+              "900",
+              "1200"
+            ],
+            "answer": "1000",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 5 + 5 = 10, write 0, carry 1. Tens: 2 + 7 + 1 = 10, write 0, carry 1. Hundreds: 7 + 2 + 1 = 10, write 0, carry 1 into a new thousands place. The answer is 1,000."
+          },
+          {
+            "prompt": "Estimate and then calculate 489 + 325.",
+            "choices": [
+              "733",
+              "976",
+              "814",
+              "895"
+            ],
+            "answer": "814",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Estimate: 490 + 330 = 820. Exact: ones 9 + 5 = 14, write 4 carry 1; tens 8 + 2 + 1 = 11, write 1 carry 1; hundreds 4 + 3 + 1 = 8. The answer is 814, close to the estimate of 820. It checks out."
+          },
+          {
+            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "choices": [
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents"
+            ],
+            "answer": "Trade ten of one place for one of the next",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-12",
+        "icon": "T",
+        "skill": "Estimate",
+        "title": "Unit Champion: Estimate",
+        "description": "Practise estimate through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Money returned after paying too much?",
+            "choices": [
+              "Change",
+              "Inverse",
+              "Sum",
+              "Difference"
+            ],
+            "answer": "Change",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Change means Money returned after paying too much."
+          },
+          {
+            "prompt": "Calculate 632 − 457.",
+            "choices": [
+              "175",
+              "193",
+              "157",
+              "211"
+            ],
+            "answer": "175",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 2 − 7 needs a borrow → 12 − 7 = 5 (tens drop from 3 to 2). Tens: 2 − 5 needs a borrow → 12 − 5 = 7 (hundreds drop from 6 to 5). Hundreds: 5 − 4 = 1. The answer is 175. Check: 175 + 457 = 632. Correct!"
           },
           {
             "prompt": "What does “Sum” mean?",
@@ -1639,134 +1773,6 @@
             "answer": "A rough answer found by rounding first",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Estimate means A rough answer found by rounding first."
-          },
-          {
-            "prompt": "Which term matches this meaning: Money returned after paying too much?",
-            "choices": [
-              "Change",
-              "Inverse",
-              "Sum",
-              "Difference"
-            ],
-            "answer": "Change",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Change means Money returned after paying too much."
-          }
-        ]
-      },
-      {
-        "id": "u3-game-11",
-        "icon": "≡",
-        "skill": "Regroup / Carry / Borrow",
-        "title": "Mastery Mix: Regroup / Carry / Borrow",
-        "description": "Practise regroup / carry / borrow through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Trade ten of one place for one of the next?",
-            "choices": [
-              "Regroup / Carry / Borrow",
-              "Round",
-              "Decimal point",
-              "Change"
-            ],
-            "answer": "Regroup / Carry / Borrow",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
-          },
-          {
-            "prompt": "What does “Difference” mean?",
-            "choices": [
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100"
-            ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
-          },
-          {
-            "prompt": "What does “Round” mean?",
-            "choices": [
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check"
-            ],
-            "answer": "Change a number to the nearest 10 or 100",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Round means Change a number to the nearest 10 or 100."
-          },
-          {
-            "prompt": "Which term matches this meaning: The opposite operation, used to check?",
-            "choices": [
-              "Inverse",
-              "Sum",
-              "Difference",
-              "Regroup / Carry / Borrow"
-            ],
-            "answer": "Inverse",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation, used to check."
-          }
-        ]
-      },
-      {
-        "id": "u3-game-12",
-        "icon": "T",
-        "skill": "Estimate",
-        "title": "Unit Champion: Estimate",
-        "description": "Practise estimate through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A rough answer found by rounding first?",
-            "choices": [
-              "Estimate",
-              "Decimal point",
-              "Change",
-              "Inverse"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
-          },
-          {
-            "prompt": "What does “Regroup / Carry / Borrow” mean?",
-            "choices": [
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents"
-            ],
-            "answer": "Trade ten of one place for one of the next",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
-          },
-          {
-            "prompt": "What does “Decimal point” mean?",
-            "choices": [
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check",
-              "The answer to an addition"
-            ],
-            "answer": "Separates shillings from cents",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Decimal point means Separates shillings from cents."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to an addition?",
-            "choices": [
-              "Sum",
-              "Regroup / Carry / Borrow",
-              "Estimate",
-              "Round"
-            ],
-            "answer": "Sum",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-15T08:45:29.695Z",
+  "generatedAt": "2026-07-21T07:03:33.858Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 2
+  },
   "provenance": {
-    "contentPackage": "Ehel-Academy-Mathematics-Stage-2-Content-Package.xlsx",
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-2-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 2",
     "sourceArchive": "Year 2 (1)-20260714T220953Z-1-001.zip",
     "sourceDocuments": [
       "Year 2 (1)/Unit 3 (1)/Year 2 - Unit 3 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 2 (1)/Unit 3 (1)/Year 2 - Unit 3 Reference.docx"
     ],
     "sourceBlockCount": 375,
-    "transformation": "Structured directly from the standardized Cambridge Stage 2 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 2 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -362,7 +368,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Fill in: 1 m = ___ cm, and 2 m = ___ cm",
       "prompt": "Fill in: 1 m = ___ cm, and 2 m = ___ cm.",
       "solution": "."
     },
@@ -370,7 +376,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Practice 10",
       "prompt": "Halima's ribbon is 30 cm. She cuts off 12 cm. How much is left?",
       "solution": "1 m = 100 cm, 2 m = 200 cm."
     },
@@ -378,7 +384,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Is 1 metre longer or shorter than 70 centimetres",
       "prompt": "Is 1 metre longer or shorter than 70 centimetres?",
       "solution": "30 − 12 = 18 cm."
     },
@@ -386,7 +392,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Practice 12",
       "prompt": "A line runs from the 6 mark to the 20 mark on a ruler. How long is it?",
       "solution": "1) 20 − 6 = 14 cm."
     }
@@ -865,9 +871,73 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
-        "difficulty": "Basic",
+        "difficulty": "Core",
+        "question": "A line on Farah's page runs from the 2 mark to the 10 mark on her ruler. How long is the line?",
+        "options": [
+          "7",
+          "10",
+          "8",
+          "9"
+        ],
+        "answer": "8",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "The line does not start at 0, so we find the difference. Take the start away from the end: 10 − 2 = 8 centimetres. The line is 8 cm long, not 10 cm."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "A rope is 24 metres long. Yusuf cuts off 14 metres. How much rope is left?",
+        "options": [
+          "9",
+          "12",
+          "10",
+          "11"
+        ],
+        "answer": "10",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "The rope that is left is the difference between what he started with and what he cut off. 24 − 14 = 10 metres. There are 10 metres of rope left."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Halima's ribbon is 30 cm. She cuts off 12 cm. How much is left?",
+        "options": [
+          "22",
+          "18",
+          "20",
+          "16"
+        ],
+        "answer": "18",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "1 m = 100 cm, 2 m = 200 cm."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "A line runs from the 6 mark to the 20 mark on a ruler. How long is it?",
+        "options": [
+          "13",
+          "16",
+          "14",
+          "15"
+        ],
+        "answer": "14",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "1) 20 − 6 = 14 cm."
+      },
+      {
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Length” mean?",
         "options": [
           "How long something is (longest side)",
@@ -880,10 +950,10 @@
         "explanation": "Length means How long something is (longest side)."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Width” mean?",
         "options": [
           "How wide something is (shorter side)",
@@ -896,10 +966,10 @@
         "explanation": "Width means How wide something is (shorter side)."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Height” mean?",
         "options": [
           "How tall or high something is",
@@ -912,10 +982,10 @@
         "explanation": "Height means How tall or high something is."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
         "question": "What does “Centimetre (cm)” mean?",
         "options": [
           "A small unit, about a little-finger width",
@@ -928,9 +998,9 @@
         "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What does “Metre (m)” mean?",
         "options": [
@@ -944,10 +1014,10 @@
         "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Estimate” mean?",
         "options": [
           "A sensible guess before measuring",
@@ -960,10 +1030,10 @@
         "explanation": "Estimate means A sensible guess before measuring."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: How much longer one length is than another?",
         "options": [
           "Difference",
@@ -976,10 +1046,10 @@
         "explanation": "Difference means How much longer one length is than another."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: How long something is (longest side)?",
         "options": [
           "Length",
@@ -990,70 +1060,6 @@
         "answer": "Length",
         "hint": "Use the Unit 3 Math Words & Symbols reference.",
         "explanation": "Length means How long something is (longest side)."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: How wide something is (shorter side)?",
-        "options": [
-          "Width",
-          "Centimetre (cm)",
-          "Metre (m)",
-          "Estimate"
-        ],
-        "answer": "Width",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Width means How wide something is (shorter side)."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: How tall or high something is?",
-        "options": [
-          "Height",
-          "Metre (m)",
-          "Estimate",
-          "Difference"
-        ],
-        "answer": "Height",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Height means How tall or high something is."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A small unit, about a little-finger width?",
-        "options": [
-          "Centimetre (cm)",
-          "Estimate",
-          "Difference",
-          "Length"
-        ],
-        "answer": "Centimetre (cm)",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A large unit, about one big step; 100 cm?",
-        "options": [
-          "Metre (m)",
-          "Difference",
-          "Length",
-          "Width"
-        ],
-        "answer": "Metre (m)",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
       }
     ]
   },
@@ -1069,52 +1075,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Length” mean?",
+            "prompt": "A line on Farah's page runs from the 2 mark to the 10 mark on her ruler. How long is the line?",
             "choices": [
-              "How long something is (longest side)",
-              "How wide something is (shorter side)",
-              "How tall or high something is",
-              "A small unit, about a little-finger width"
+              "7",
+              "10",
+              "8",
+              "9"
             ],
-            "answer": "How long something is (longest side)",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is (longest side)."
+            "answer": "8",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "The line does not start at 0, so we find the difference. Take the start away from the end: 10 − 2 = 8 centimetres. The line is 8 cm long, not 10 cm."
           },
           {
-            "prompt": "What does “Centimetre (cm)” mean?",
+            "prompt": "A line runs from the 6 mark to the 20 mark on a ruler. How long is it?",
             "choices": [
+              "13",
+              "16",
+              "14",
+              "15"
+            ],
+            "answer": "14",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "1) 20 − 6 = 14 cm."
+          },
+          {
+            "prompt": "What does “Height” mean?",
+            "choices": [
+              "How tall or high something is",
               "A small unit, about a little-finger width",
               "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring",
-              "How much longer one length is than another"
+              "A sensible guess before measuring"
             ],
-            "answer": "A small unit, about a little-finger width",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
-          },
-          {
-            "prompt": "Which term matches this meaning: How much longer one length is than another?",
-            "choices": [
-              "Difference",
-              "Length",
-              "Width",
-              "Height"
-            ],
-            "answer": "Difference",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means How much longer one length is than another."
-          },
-          {
-            "prompt": "Which term matches this meaning: How tall or high something is?",
-            "choices": [
-              "Height",
-              "Metre (m)",
-              "Estimate",
-              "Difference"
-            ],
-            "answer": "Height",
+            "answer": "How tall or high something is",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Height means How tall or high something is."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A sensible guess before measuring",
+              "How much longer one length is than another",
+              "How long something is (longest side)",
+              "How wide something is (shorter side)"
+            ],
+            "answer": "A sensible guess before measuring",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before measuring."
           }
         ]
       },
@@ -1127,52 +1133,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Width” mean?",
+            "prompt": "A rope is 24 metres long. Yusuf cuts off 14 metres. How much rope is left?",
             "choices": [
+              "9",
+              "12",
+              "10",
+              "11"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "The rope that is left is the difference between what he started with and what he cut off. 24 − 14 = 10 metres. There are 10 metres of rope left."
+          },
+          {
+            "prompt": "What does “Length” mean?",
+            "choices": [
+              "How long something is (longest side)",
               "How wide something is (shorter side)",
               "How tall or high something is",
-              "A small unit, about a little-finger width",
-              "A large unit, about one big step; 100 cm"
+              "A small unit, about a little-finger width"
             ],
-            "answer": "How wide something is (shorter side)",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Width means How wide something is (shorter side)."
-          },
-          {
-            "prompt": "What does “Metre (m)” mean?",
-            "choices": [
-              "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring",
-              "How much longer one length is than another",
-              "How long something is (longest side)"
-            ],
-            "answer": "A large unit, about one big step; 100 cm",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
-          },
-          {
-            "prompt": "Which term matches this meaning: How long something is (longest side)?",
-            "choices": [
-              "Length",
-              "Height",
-              "Centimetre (cm)",
-              "Metre (m)"
-            ],
-            "answer": "Length",
+            "answer": "How long something is (longest side)",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Length means How long something is (longest side)."
           },
           {
-            "prompt": "Which term matches this meaning: A small unit, about a little-finger width?",
+            "prompt": "What does “Centimetre (cm)” mean?",
             "choices": [
-              "Centimetre (cm)",
-              "Estimate",
-              "Difference",
-              "Length"
+              "A small unit, about a little-finger width",
+              "A large unit, about one big step; 100 cm",
+              "A sensible guess before measuring",
+              "How much longer one length is than another"
             ],
-            "answer": "Centimetre (cm)",
+            "answer": "A small unit, about a little-finger width",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
+          },
+          {
+            "prompt": "Which term matches this meaning: How much longer one length is than another?",
+            "choices": [
+              "Difference",
+              "Length",
+              "Width",
+              "Height"
+            ],
+            "answer": "Difference",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Difference means How much longer one length is than another."
           }
         ]
       },
@@ -1185,52 +1191,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Height” mean?",
+            "prompt": "Halima's ribbon is 30 cm. She cuts off 12 cm. How much is left?",
             "choices": [
+              "22",
+              "18",
+              "20",
+              "16"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "1 m = 100 cm, 2 m = 200 cm."
+          },
+          {
+            "prompt": "What does “Width” mean?",
+            "choices": [
+              "How wide something is (shorter side)",
               "How tall or high something is",
               "A small unit, about a little-finger width",
-              "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring"
+              "A large unit, about one big step; 100 cm"
             ],
-            "answer": "How tall or high something is",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Height means How tall or high something is."
-          },
-          {
-            "prompt": "What does “Estimate” mean?",
-            "choices": [
-              "A sensible guess before measuring",
-              "How much longer one length is than another",
-              "How long something is (longest side)",
-              "How wide something is (shorter side)"
-            ],
-            "answer": "A sensible guess before measuring",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before measuring."
-          },
-          {
-            "prompt": "Which term matches this meaning: How wide something is (shorter side)?",
-            "choices": [
-              "Width",
-              "Centimetre (cm)",
-              "Metre (m)",
-              "Estimate"
-            ],
-            "answer": "Width",
+            "answer": "How wide something is (shorter side)",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Width means How wide something is (shorter side)."
           },
           {
-            "prompt": "Which term matches this meaning: A large unit, about one big step; 100 cm?",
+            "prompt": "What does “Metre (m)” mean?",
             "choices": [
-              "Metre (m)",
-              "Difference",
-              "Length",
-              "Width"
+              "A large unit, about one big step; 100 cm",
+              "A sensible guess before measuring",
+              "How much longer one length is than another",
+              "How long something is (longest side)"
             ],
-            "answer": "Metre (m)",
+            "answer": "A large unit, about one big step; 100 cm",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
+          },
+          {
+            "prompt": "Which term matches this meaning: How long something is (longest side)?",
+            "choices": [
+              "Length",
+              "Height",
+              "Centimetre (cm)",
+              "Metre (m)"
+            ],
+            "answer": "Length",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Length means How long something is (longest side)."
           }
         ]
       },
@@ -1243,52 +1249,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Centimetre (cm)” mean?",
+            "prompt": "A line runs from the 6 mark to the 20 mark on a ruler. How long is it?",
             "choices": [
+              "13",
+              "16",
+              "14",
+              "15"
+            ],
+            "answer": "14",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "1) 20 − 6 = 14 cm."
+          },
+          {
+            "prompt": "What does “Height” mean?",
+            "choices": [
+              "How tall or high something is",
               "A small unit, about a little-finger width",
               "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring",
-              "How much longer one length is than another"
+              "A sensible guess before measuring"
             ],
-            "answer": "A small unit, about a little-finger width",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
-          },
-          {
-            "prompt": "Which term matches this meaning: How much longer one length is than another?",
-            "choices": [
-              "Difference",
-              "Length",
-              "Width",
-              "Height"
-            ],
-            "answer": "Difference",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means How much longer one length is than another."
-          },
-          {
-            "prompt": "Which term matches this meaning: How tall or high something is?",
-            "choices": [
-              "Height",
-              "Metre (m)",
-              "Estimate",
-              "Difference"
-            ],
-            "answer": "Height",
+            "answer": "How tall or high something is",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Height means How tall or high something is."
           },
           {
-            "prompt": "What does “Length” mean?",
+            "prompt": "What does “Estimate” mean?",
             "choices": [
+              "A sensible guess before measuring",
+              "How much longer one length is than another",
               "How long something is (longest side)",
-              "How wide something is (shorter side)",
-              "How tall or high something is",
-              "A small unit, about a little-finger width"
+              "How wide something is (shorter side)"
             ],
-            "answer": "How long something is (longest side)",
+            "answer": "A sensible guess before measuring",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is (longest side)."
+            "explanation": "Estimate means A sensible guess before measuring."
+          },
+          {
+            "prompt": "A line on Farah's page runs from the 2 mark to the 10 mark on her ruler. How long is the line?",
+            "choices": [
+              "7",
+              "10",
+              "8",
+              "9"
+            ],
+            "answer": "8",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "The line does not start at 0, so we find the difference. Take the start away from the end: 10 − 2 = 8 centimetres. The line is 8 cm long, not 10 cm."
           }
         ]
       },
@@ -1301,52 +1307,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Metre (m)” mean?",
+            "prompt": "What does “Length” mean?",
             "choices": [
-              "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring",
-              "How much longer one length is than another",
-              "How long something is (longest side)"
+              "How long something is (longest side)",
+              "How wide something is (shorter side)",
+              "How tall or high something is",
+              "A small unit, about a little-finger width"
             ],
-            "answer": "A large unit, about one big step; 100 cm",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
-          },
-          {
-            "prompt": "Which term matches this meaning: How long something is (longest side)?",
-            "choices": [
-              "Length",
-              "Height",
-              "Centimetre (cm)",
-              "Metre (m)"
-            ],
-            "answer": "Length",
+            "answer": "How long something is (longest side)",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Length means How long something is (longest side)."
           },
           {
-            "prompt": "Which term matches this meaning: A small unit, about a little-finger width?",
+            "prompt": "What does “Centimetre (cm)” mean?",
             "choices": [
-              "Centimetre (cm)",
-              "Estimate",
-              "Difference",
-              "Length"
+              "A small unit, about a little-finger width",
+              "A large unit, about one big step; 100 cm",
+              "A sensible guess before measuring",
+              "How much longer one length is than another"
             ],
-            "answer": "Centimetre (cm)",
+            "answer": "A small unit, about a little-finger width",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
           },
           {
-            "prompt": "What does “Width” mean?",
+            "prompt": "Which term matches this meaning: How much longer one length is than another?",
             "choices": [
-              "How wide something is (shorter side)",
-              "How tall or high something is",
-              "A small unit, about a little-finger width",
-              "A large unit, about one big step; 100 cm"
+              "Difference",
+              "Length",
+              "Width",
+              "Height"
             ],
-            "answer": "How wide something is (shorter side)",
+            "answer": "Difference",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Width means How wide something is (shorter side)."
+            "explanation": "Difference means How much longer one length is than another."
+          },
+          {
+            "prompt": "A rope is 24 metres long. Yusuf cuts off 14 metres. How much rope is left?",
+            "choices": [
+              "9",
+              "12",
+              "10",
+              "11"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "The rope that is left is the difference between what he started with and what he cut off. 24 − 14 = 10 metres. There are 10 metres of rope left."
           }
         ]
       },
@@ -1359,52 +1365,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "What does “Width” mean?",
             "choices": [
-              "A sensible guess before measuring",
-              "How much longer one length is than another",
-              "How long something is (longest side)",
-              "How wide something is (shorter side)"
+              "How wide something is (shorter side)",
+              "How tall or high something is",
+              "A small unit, about a little-finger width",
+              "A large unit, about one big step; 100 cm"
             ],
-            "answer": "A sensible guess before measuring",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before measuring."
-          },
-          {
-            "prompt": "Which term matches this meaning: How wide something is (shorter side)?",
-            "choices": [
-              "Width",
-              "Centimetre (cm)",
-              "Metre (m)",
-              "Estimate"
-            ],
-            "answer": "Width",
+            "answer": "How wide something is (shorter side)",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Width means How wide something is (shorter side)."
           },
           {
-            "prompt": "Which term matches this meaning: A large unit, about one big step; 100 cm?",
+            "prompt": "What does “Metre (m)” mean?",
             "choices": [
-              "Metre (m)",
-              "Difference",
-              "Length",
-              "Width"
+              "A large unit, about one big step; 100 cm",
+              "A sensible guess before measuring",
+              "How much longer one length is than another",
+              "How long something is (longest side)"
             ],
-            "answer": "Metre (m)",
+            "answer": "A large unit, about one big step; 100 cm",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
           },
           {
-            "prompt": "What does “Height” mean?",
+            "prompt": "Which term matches this meaning: How long something is (longest side)?",
             "choices": [
-              "How tall or high something is",
-              "A small unit, about a little-finger width",
-              "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring"
+              "Length",
+              "Height",
+              "Centimetre (cm)",
+              "Metre (m)"
             ],
-            "answer": "How tall or high something is",
+            "answer": "Length",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Height means How tall or high something is."
+            "explanation": "Length means How long something is (longest side)."
+          },
+          {
+            "prompt": "Halima's ribbon is 30 cm. She cuts off 12 cm. How much is left?",
+            "choices": [
+              "22",
+              "18",
+              "20",
+              "16"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "1 m = 100 cm, 2 m = 200 cm."
           }
         ]
       },
@@ -1417,52 +1423,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: How much longer one length is than another?",
+            "prompt": "What does “Height” mean?",
             "choices": [
-              "Difference",
-              "Length",
-              "Width",
-              "Height"
+              "How tall or high something is",
+              "A small unit, about a little-finger width",
+              "A large unit, about one big step; 100 cm",
+              "A sensible guess before measuring"
             ],
-            "answer": "Difference",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means How much longer one length is than another."
-          },
-          {
-            "prompt": "Which term matches this meaning: How tall or high something is?",
-            "choices": [
-              "Height",
-              "Metre (m)",
-              "Estimate",
-              "Difference"
-            ],
-            "answer": "Height",
+            "answer": "How tall or high something is",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Height means How tall or high something is."
           },
           {
-            "prompt": "What does “Length” mean?",
+            "prompt": "What does “Estimate” mean?",
             "choices": [
+              "A sensible guess before measuring",
+              "How much longer one length is than another",
               "How long something is (longest side)",
-              "How wide something is (shorter side)",
-              "How tall or high something is",
-              "A small unit, about a little-finger width"
+              "How wide something is (shorter side)"
             ],
-            "answer": "How long something is (longest side)",
+            "answer": "A sensible guess before measuring",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is (longest side)."
+            "explanation": "Estimate means A sensible guess before measuring."
           },
           {
-            "prompt": "What does “Centimetre (cm)” mean?",
+            "prompt": "A line on Farah's page runs from the 2 mark to the 10 mark on her ruler. How long is the line?",
             "choices": [
-              "A small unit, about a little-finger width",
-              "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring",
-              "How much longer one length is than another"
+              "7",
+              "10",
+              "8",
+              "9"
             ],
-            "answer": "A small unit, about a little-finger width",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
+            "answer": "8",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "The line does not start at 0, so we find the difference. Take the start away from the end: 10 − 2 = 8 centimetres. The line is 8 cm long, not 10 cm."
+          },
+          {
+            "prompt": "A line runs from the 6 mark to the 20 mark on a ruler. How long is it?",
+            "choices": [
+              "13",
+              "16",
+              "14",
+              "15"
+            ],
+            "answer": "14",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "1) 20 − 6 = 14 cm."
           }
         ]
       },
@@ -1475,52 +1481,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: How long something is (longest side)?",
+            "prompt": "What does “Centimetre (cm)” mean?",
             "choices": [
-              "Length",
-              "Height",
-              "Centimetre (cm)",
-              "Metre (m)"
+              "A small unit, about a little-finger width",
+              "A large unit, about one big step; 100 cm",
+              "A sensible guess before measuring",
+              "How much longer one length is than another"
             ],
-            "answer": "Length",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is (longest side)."
-          },
-          {
-            "prompt": "Which term matches this meaning: A small unit, about a little-finger width?",
-            "choices": [
-              "Centimetre (cm)",
-              "Estimate",
-              "Difference",
-              "Length"
-            ],
-            "answer": "Centimetre (cm)",
+            "answer": "A small unit, about a little-finger width",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
           },
           {
-            "prompt": "What does “Width” mean?",
+            "prompt": "Which term matches this meaning: How much longer one length is than another?",
             "choices": [
-              "How wide something is (shorter side)",
-              "How tall or high something is",
-              "A small unit, about a little-finger width",
-              "A large unit, about one big step; 100 cm"
+              "Difference",
+              "Length",
+              "Width",
+              "Height"
             ],
-            "answer": "How wide something is (shorter side)",
+            "answer": "Difference",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Width means How wide something is (shorter side)."
+            "explanation": "Difference means How much longer one length is than another."
           },
           {
-            "prompt": "What does “Metre (m)” mean?",
+            "prompt": "A rope is 24 metres long. Yusuf cuts off 14 metres. How much rope is left?",
             "choices": [
-              "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring",
-              "How much longer one length is than another",
-              "How long something is (longest side)"
+              "9",
+              "12",
+              "10",
+              "11"
             ],
-            "answer": "A large unit, about one big step; 100 cm",
+            "answer": "10",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "The rope that is left is the difference between what he started with and what he cut off. 24 − 14 = 10 metres. There are 10 metres of rope left."
+          },
+          {
+            "prompt": "What does “Length” mean?",
+            "choices": [
+              "How long something is (longest side)",
+              "How wide something is (shorter side)",
+              "How tall or high something is",
+              "A small unit, about a little-finger width"
+            ],
+            "answer": "How long something is (longest side)",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
+            "explanation": "Length means How long something is (longest side)."
           }
         ]
       },
@@ -1533,52 +1539,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: How wide something is (shorter side)?",
+            "prompt": "What does “Metre (m)” mean?",
             "choices": [
-              "Width",
-              "Centimetre (cm)",
-              "Metre (m)",
-              "Estimate"
+              "A large unit, about one big step; 100 cm",
+              "A sensible guess before measuring",
+              "How much longer one length is than another",
+              "How long something is (longest side)"
             ],
-            "answer": "Width",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Width means How wide something is (shorter side)."
-          },
-          {
-            "prompt": "Which term matches this meaning: A large unit, about one big step; 100 cm?",
-            "choices": [
-              "Metre (m)",
-              "Difference",
-              "Length",
-              "Width"
-            ],
-            "answer": "Metre (m)",
+            "answer": "A large unit, about one big step; 100 cm",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
           },
           {
-            "prompt": "What does “Height” mean?",
+            "prompt": "Which term matches this meaning: How long something is (longest side)?",
             "choices": [
-              "How tall or high something is",
-              "A small unit, about a little-finger width",
-              "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring"
+              "Length",
+              "Height",
+              "Centimetre (cm)",
+              "Metre (m)"
             ],
-            "answer": "How tall or high something is",
+            "answer": "Length",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Height means How tall or high something is."
+            "explanation": "Length means How long something is (longest side)."
           },
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "Halima's ribbon is 30 cm. She cuts off 12 cm. How much is left?",
             "choices": [
-              "A sensible guess before measuring",
-              "How much longer one length is than another",
-              "How long something is (longest side)",
-              "How wide something is (shorter side)"
+              "22",
+              "18",
+              "20",
+              "16"
             ],
-            "answer": "A sensible guess before measuring",
+            "answer": "18",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "1 m = 100 cm, 2 m = 200 cm."
+          },
+          {
+            "prompt": "What does “Width” mean?",
+            "choices": [
+              "How wide something is (shorter side)",
+              "How tall or high something is",
+              "A small unit, about a little-finger width",
+              "A large unit, about one big step; 100 cm"
+            ],
+            "answer": "How wide something is (shorter side)",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before measuring."
+            "explanation": "Width means How wide something is (shorter side)."
           }
         ]
       },
@@ -1591,16 +1597,86 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: How tall or high something is?",
+            "prompt": "What does “Estimate” mean?",
             "choices": [
-              "Height",
-              "Metre (m)",
-              "Estimate",
-              "Difference"
+              "A sensible guess before measuring",
+              "How much longer one length is than another",
+              "How long something is (longest side)",
+              "How wide something is (shorter side)"
             ],
-            "answer": "Height",
+            "answer": "A sensible guess before measuring",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before measuring."
+          },
+          {
+            "prompt": "A line on Farah's page runs from the 2 mark to the 10 mark on her ruler. How long is the line?",
+            "choices": [
+              "7",
+              "10",
+              "8",
+              "9"
+            ],
+            "answer": "8",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "The line does not start at 0, so we find the difference. Take the start away from the end: 10 − 2 = 8 centimetres. The line is 8 cm long, not 10 cm."
+          },
+          {
+            "prompt": "A line runs from the 6 mark to the 20 mark on a ruler. How long is it?",
+            "choices": [
+              "13",
+              "16",
+              "14",
+              "15"
+            ],
+            "answer": "14",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "1) 20 − 6 = 14 cm."
+          },
+          {
+            "prompt": "What does “Height” mean?",
+            "choices": [
+              "How tall or high something is",
+              "A small unit, about a little-finger width",
+              "A large unit, about one big step; 100 cm",
+              "A sensible guess before measuring"
+            ],
+            "answer": "How tall or high something is",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Height means How tall or high something is."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-11",
+        "icon": "≡",
+        "skill": "Centimetre (cm)",
+        "title": "Mastery Mix: Centimetre (cm)",
+        "description": "Practise centimetre (cm) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: How much longer one length is than another?",
+            "choices": [
+              "Difference",
+              "Length",
+              "Width",
+              "Height"
+            ],
+            "answer": "Difference",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Difference means How much longer one length is than another."
+          },
+          {
+            "prompt": "A rope is 24 metres long. Yusuf cuts off 14 metres. How much rope is left?",
+            "choices": [
+              "9",
+              "12",
+              "10",
+              "11"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "The rope that is left is the difference between what he started with and what he cut off. 24 − 14 = 10 metres. There are 10 metres of rope left."
           },
           {
             "prompt": "What does “Length” mean?",
@@ -1625,40 +1701,40 @@
             "answer": "A small unit, about a little-finger width",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
-          },
-          {
-            "prompt": "Which term matches this meaning: How much longer one length is than another?",
-            "choices": [
-              "Difference",
-              "Length",
-              "Width",
-              "Height"
-            ],
-            "answer": "Difference",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means How much longer one length is than another."
           }
         ]
       },
       {
-        "id": "u3-game-11",
-        "icon": "≡",
-        "skill": "Centimetre (cm)",
-        "title": "Mastery Mix: Centimetre (cm)",
-        "description": "Practise centimetre (cm) through four short challenges.",
+        "id": "u3-game-12",
+        "icon": "T",
+        "skill": "Metre (m)",
+        "title": "Unit Champion: Metre (m)",
+        "description": "Practise metre (m) through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A small unit, about a little-finger width?",
+            "prompt": "Which term matches this meaning: How long something is (longest side)?",
             "choices": [
+              "Length",
+              "Height",
               "Centimetre (cm)",
-              "Estimate",
-              "Difference",
-              "Length"
+              "Metre (m)"
             ],
-            "answer": "Centimetre (cm)",
+            "answer": "Length",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Centimetre (cm) means A small unit, about a little-finger width."
+            "explanation": "Length means How long something is (longest side)."
+          },
+          {
+            "prompt": "Halima's ribbon is 30 cm. She cuts off 12 cm. How much is left?",
+            "choices": [
+              "22",
+              "18",
+              "20",
+              "16"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "1 m = 100 cm, 2 m = 200 cm."
           },
           {
             "prompt": "What does “Width” mean?",
@@ -1683,76 +1759,6 @@
             "answer": "A large unit, about one big step; 100 cm",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
-          },
-          {
-            "prompt": "Which term matches this meaning: How long something is (longest side)?",
-            "choices": [
-              "Length",
-              "Height",
-              "Centimetre (cm)",
-              "Metre (m)"
-            ],
-            "answer": "Length",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is (longest side)."
-          }
-        ]
-      },
-      {
-        "id": "u3-game-12",
-        "icon": "T",
-        "skill": "Metre (m)",
-        "title": "Unit Champion: Metre (m)",
-        "description": "Practise metre (m) through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A large unit, about one big step; 100 cm?",
-            "choices": [
-              "Metre (m)",
-              "Difference",
-              "Length",
-              "Width"
-            ],
-            "answer": "Metre (m)",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Metre (m) means A large unit, about one big step; 100 cm."
-          },
-          {
-            "prompt": "What does “Height” mean?",
-            "choices": [
-              "How tall or high something is",
-              "A small unit, about a little-finger width",
-              "A large unit, about one big step; 100 cm",
-              "A sensible guess before measuring"
-            ],
-            "answer": "How tall or high something is",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Height means How tall or high something is."
-          },
-          {
-            "prompt": "What does “Estimate” mean?",
-            "choices": [
-              "A sensible guess before measuring",
-              "How much longer one length is than another",
-              "How long something is (longest side)",
-              "How wide something is (shorter side)"
-            ],
-            "answer": "A sensible guess before measuring",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before measuring."
-          },
-          {
-            "prompt": "Which term matches this meaning: How wide something is (shorter side)?",
-            "choices": [
-              "Width",
-              "Centimetre (cm)",
-              "Metre (m)",
-              "Estimate"
-            ],
-            "answer": "Width",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Width means How wide something is (shorter side)."
           }
         ]
       }

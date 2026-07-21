@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:12.052Z",
+  "generatedAt": "2026-07-21T07:03:33.103Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 6
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-6-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 6",
     "sourceArchive": "Year 6 (1)-20260714T220913Z-1-001.zip",
     "sourceDocuments": [
       "Year 6 (1)/Unit 10/Year 6 - Unit 10 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 6 (1)/Unit 10/Year 6 - Unit 10 Reference.docx"
     ],
     "sourceBlockCount": 377,
-    "transformation": "Structured directly from the standardized Cambridge Stage 6 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 6 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -366,7 +372,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Multiply the decimals",
       "prompt": "Multiply the decimals: a) 3.6 × 7 b) 4.5 × 8 c) 2.4 × 6.",
       "solution": "a) 25.2, b) 36.0, c) 14.4."
     },
@@ -374,7 +380,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Divide the decimals",
       "prompt": "Divide the decimals: a) 25.2 ÷ 7 b) 8.4 × ... no, 8.4 ÷ 4 c) 14.4 ÷ 6.",
       "solution": "a) 3.6, b) 2.1, c) 2.4."
     },
@@ -382,7 +388,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Order of operations",
       "prompt": "Order of operations: a) 20 − 12 ÷ 4 b) 5 + 6 × (8 − 3) c) 30 ÷ 5 + 2 × 3.",
       "solution": "a) 17, b) 35, c) 12."
     },
@@ -390,7 +396,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Calculate 678 × 94, then verify with an estimate",
       "prompt": "Calculate 678 × 94, then verify with an estimate.",
       "solution": "1) 63,732 (estimate 700 × 90 = 63,000)."
     }
@@ -866,9 +872,89 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
-        "difficulty": "Basic",
+        "difficulty": "Core",
+        "question": "Calculate 2456 × 7.",
+        "options": [
+          "20630",
+          "17192",
+          "18911",
+          "15473"
+        ],
+        "answer": "17192",
+        "hint": "Work it out step by step, using the Unit 10 methods.",
+        "explanation": "Estimate 2500 × 7 = 17,500. Ones: 6×7 = 42, write 2 carry 4. Tens: 5×7 = 35, +4 = 39, write 9 carry 3. Hundreds: 4×7 = 28, +3 = 31, write 1 carry 3. Thousands: 2×7 = 14, +3 = 17, write 17. Answer 17,192, close to the estimate. ✓"
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Calculate 1234 × 30.",
+        "options": [
+          "37020",
+          "40722",
+          "33318",
+          "44424"
+        ],
+        "answer": "37020",
+        "hint": "Work it out step by step, using the Unit 10 methods.",
+        "explanation": "1234 × 3 = 3702, then × 10 gives 37,020. Estimate 1000 × 30 = 30,000, so 37,020 is a sensible size. ✓"
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Calculate 234 × 56.",
+        "options": [
+          "15724",
+          "13104",
+          "14414",
+          "11794"
+        ],
+        "answer": "13104",
+        "hint": "Work it out step by step, using the Unit 10 methods.",
+        "explanation": "234 × 6 = 1404 (first partial product). 234 × 50 = 11,700 (second partial product, ending in 0). Add: 1404 + 11,700 = 13,104. Estimate 200 × 60 = 12,000, so 13,104 is reasonable. ✓"
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Calculate 1456 ÷ 16.",
+        "options": [
+          "91",
+          "100",
+          "82",
+          "109"
+        ],
+        "answer": "91",
+        "hint": "Work it out step by step, using the Unit 10 methods.",
+        "explanation": "16 into 14 will not go, so use 145. 145 ÷ 16 = 9 (9×16 = 144), remainder 1. Bring down 6 to make 16. 16 ÷ 16 = 1 exactly. Quotient 91. Check: 91 × 16 = 1456. ✓"
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Calculate 678 × 94, then verify with an estimate.",
+        "options": [
+          "70105",
+          "57359",
+          "76478",
+          "63732"
+        ],
+        "answer": "63732",
+        "hint": "Work it out step by step, using the Unit 10 methods.",
+        "explanation": "1) 63,732 (estimate 700 × 90 = 63,000)."
+      },
+      {
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Product” mean?",
         "options": [
           "The answer to a multiplication",
@@ -881,10 +967,10 @@
         "explanation": "Product means The answer to a multiplication."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Factor” mean?",
         "options": [
           "A number being multiplied",
@@ -897,10 +983,10 @@
         "explanation": "Factor means A number being multiplied."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
         "question": "What does “Quotient” mean?",
         "options": [
           "The answer to a division",
@@ -913,10 +999,10 @@
         "explanation": "Quotient means The answer to a division."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
         "question": "What does “Dividend / Divisor” mean?",
         "options": [
           "The number divided / the number you divide by",
@@ -929,10 +1015,10 @@
         "explanation": "Dividend / Divisor means The number divided / the number you divide by."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Remainder” mean?",
         "options": [
           "What is left over after dividing",
@@ -945,10 +1031,10 @@
         "explanation": "Remainder means What is left over after dividing."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Partial product” mean?",
         "options": [
           "One part of a long multiplication",
@@ -961,10 +1047,10 @@
         "explanation": "Partial product means One part of a long multiplication."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: A sensible approximate answer used to check?",
         "options": [
           "Estimate",
@@ -975,86 +1061,6 @@
         "answer": "Estimate",
         "hint": "Use the Unit 10 Math Words & Symbols reference.",
         "explanation": "Estimate means A sensible approximate answer used to check."
-      },
-      {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Brackets, then × ÷, then + − (BIDMAS)?",
-        "options": [
-          "Order of operations",
-          "Product",
-          "Factor",
-          "Quotient"
-        ],
-        "answer": "Order of operations",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Order of operations means Brackets, then × ÷, then + − (BIDMAS)."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: The answer to a multiplication?",
-        "options": [
-          "Product",
-          "Quotient",
-          "Dividend / Divisor",
-          "Remainder"
-        ],
-        "answer": "Product",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Product means The answer to a multiplication."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A number being multiplied?",
-        "options": [
-          "Factor",
-          "Dividend / Divisor",
-          "Remainder",
-          "Partial product"
-        ],
-        "answer": "Factor",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Factor means A number being multiplied."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The answer to a division?",
-        "options": [
-          "Quotient",
-          "Remainder",
-          "Partial product",
-          "Estimate"
-        ],
-        "answer": "Quotient",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Quotient means The answer to a division."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The number divided / the number you divide by?",
-        "options": [
-          "Dividend / Divisor",
-          "Partial product",
-          "Estimate",
-          "Order of operations"
-        ],
-        "answer": "Dividend / Divisor",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Dividend / Divisor means The number divided / the number you divide by."
       }
     ]
   },
@@ -1070,52 +1076,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Product” mean?",
+            "prompt": "Calculate 2456 × 7.",
             "choices": [
-              "The answer to a multiplication",
+              "20630",
+              "17192",
+              "18911",
+              "15473"
+            ],
+            "answer": "17192",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "Estimate 2500 × 7 = 17,500. Ones: 6×7 = 42, write 2 carry 4. Tens: 5×7 = 35, +4 = 39, write 9 carry 3. Hundreds: 4×7 = 28, +3 = 31, write 1 carry 3. Thousands: 2×7 = 14, +3 = 17, write 17. Answer 17,192, close to the estimate. ✓"
+          },
+          {
+            "prompt": "Calculate 1456 ÷ 16.",
+            "choices": [
+              "91",
+              "100",
+              "82",
+              "109"
+            ],
+            "answer": "91",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "16 into 14 will not go, so use 145. 145 ÷ 16 = 9 (9×16 = 144), remainder 1. Bring down 6 to make 16. 16 ÷ 16 = 1 exactly. Quotient 91. Check: 91 × 16 = 1456. ✓"
+          },
+          {
+            "prompt": "What does “Factor” mean?",
+            "choices": [
               "A number being multiplied",
               "The answer to a division",
-              "The number divided / the number you divide by"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Dividend / Divisor” mean?",
-            "choices": [
               "The number divided / the number you divide by",
-              "What is left over after dividing",
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check"
+              "What is left over after dividing"
             ],
-            "answer": "The number divided / the number you divide by",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Dividend / Divisor means The number divided / the number you divide by."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible approximate answer used to check?",
-            "choices": [
-              "Estimate",
-              "Order of operations",
-              "Product",
-              "Factor"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible approximate answer used to check."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number being multiplied?",
-            "choices": [
-              "Factor",
-              "Dividend / Divisor",
-              "Remainder",
-              "Partial product"
-            ],
-            "answer": "Factor",
+            "answer": "A number being multiplied",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Factor means A number being multiplied."
+          },
+          {
+            "prompt": "What does “Remainder” mean?",
+            "choices": [
+              "What is left over after dividing",
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check",
+              "Brackets, then × ÷, then + − (BIDMAS)"
+            ],
+            "answer": "What is left over after dividing",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Remainder means What is left over after dividing."
           }
         ]
       },
@@ -1128,52 +1134,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "Calculate 1234 × 30.",
             "choices": [
-              "A number being multiplied",
+              "37020",
+              "40722",
+              "33318",
+              "44424"
+            ],
+            "answer": "37020",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "1234 × 3 = 3702, then × 10 gives 37,020. Estimate 1000 × 30 = 30,000, so 37,020 is a sensible size. ✓"
+          },
+          {
+            "prompt": "Calculate 678 × 94, then verify with an estimate.",
+            "choices": [
+              "70105",
+              "57359",
+              "76478",
+              "63732"
+            ],
+            "answer": "63732",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "1) 63,732 (estimate 700 × 90 = 63,000)."
+          },
+          {
+            "prompt": "What does “Quotient” mean?",
+            "choices": [
               "The answer to a division",
               "The number divided / the number you divide by",
-              "What is left over after dividing"
-            ],
-            "answer": "A number being multiplied",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Factor means A number being multiplied."
-          },
-          {
-            "prompt": "What does “Remainder” mean?",
-            "choices": [
               "What is left over after dividing",
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check",
-              "Brackets, then × ÷, then + − (BIDMAS)"
+              "One part of a long multiplication"
             ],
-            "answer": "What is left over after dividing",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Remainder means What is left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: Brackets, then × ÷, then + − (BIDMAS)?",
-            "choices": [
-              "Order of operations",
-              "Product",
-              "Factor",
-              "Quotient"
-            ],
-            "answer": "Order of operations",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Order of operations means Brackets, then × ÷, then + − (BIDMAS)."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Remainder",
-              "Partial product",
-              "Estimate"
-            ],
-            "answer": "Quotient",
+            "answer": "The answer to a division",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Quotient means The answer to a division."
+          },
+          {
+            "prompt": "What does “Partial product” mean?",
+            "choices": [
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check",
+              "Brackets, then × ÷, then + − (BIDMAS)",
+              "The answer to a multiplication"
+            ],
+            "answer": "One part of a long multiplication",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Partial product means One part of a long multiplication."
           }
         ]
       },
@@ -1186,52 +1192,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Quotient” mean?",
+            "prompt": "Calculate 234 × 56.",
             "choices": [
+              "15724",
+              "13104",
+              "14414",
+              "11794"
+            ],
+            "answer": "13104",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "234 × 6 = 1404 (first partial product). 234 × 50 = 11,700 (second partial product, ending in 0). Add: 1404 + 11,700 = 13,104. Estimate 200 × 60 = 12,000, so 13,104 is reasonable. ✓"
+          },
+          {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The answer to a multiplication",
+              "A number being multiplied",
               "The answer to a division",
-              "The number divided / the number you divide by",
-              "What is left over after dividing",
-              "One part of a long multiplication"
+              "The number divided / the number you divide by"
             ],
-            "answer": "The answer to a division",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Partial product” mean?",
-            "choices": [
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check",
-              "Brackets, then × ÷, then + − (BIDMAS)",
-              "The answer to a multiplication"
-            ],
-            "answer": "One part of a long multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Partial product means One part of a long multiplication."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Quotient",
-              "Dividend / Divisor",
-              "Remainder"
-            ],
-            "answer": "Product",
+            "answer": "The answer to a multiplication",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Product means The answer to a multiplication."
           },
           {
-            "prompt": "Which term matches this meaning: The number divided / the number you divide by?",
+            "prompt": "What does “Dividend / Divisor” mean?",
             "choices": [
-              "Dividend / Divisor",
-              "Partial product",
-              "Estimate",
-              "Order of operations"
+              "The number divided / the number you divide by",
+              "What is left over after dividing",
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check"
             ],
-            "answer": "Dividend / Divisor",
+            "answer": "The number divided / the number you divide by",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Dividend / Divisor means The number divided / the number you divide by."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible approximate answer used to check?",
+            "choices": [
+              "Estimate",
+              "Order of operations",
+              "Product",
+              "Factor"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible approximate answer used to check."
           }
         ]
       },
@@ -1244,52 +1250,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Dividend / Divisor” mean?",
+            "prompt": "Calculate 1456 ÷ 16.",
             "choices": [
+              "91",
+              "100",
+              "82",
+              "109"
+            ],
+            "answer": "91",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "16 into 14 will not go, so use 145. 145 ÷ 16 = 9 (9×16 = 144), remainder 1. Bring down 6 to make 16. 16 ÷ 16 = 1 exactly. Quotient 91. Check: 91 × 16 = 1456. ✓"
+          },
+          {
+            "prompt": "What does “Factor” mean?",
+            "choices": [
+              "A number being multiplied",
+              "The answer to a division",
               "The number divided / the number you divide by",
-              "What is left over after dividing",
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check"
+              "What is left over after dividing"
             ],
-            "answer": "The number divided / the number you divide by",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Dividend / Divisor means The number divided / the number you divide by."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible approximate answer used to check?",
-            "choices": [
-              "Estimate",
-              "Order of operations",
-              "Product",
-              "Factor"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible approximate answer used to check."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number being multiplied?",
-            "choices": [
-              "Factor",
-              "Dividend / Divisor",
-              "Remainder",
-              "Partial product"
-            ],
-            "answer": "Factor",
+            "answer": "A number being multiplied",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Factor means A number being multiplied."
           },
           {
-            "prompt": "What does “Product” mean?",
+            "prompt": "What does “Remainder” mean?",
             "choices": [
-              "The answer to a multiplication",
-              "A number being multiplied",
-              "The answer to a division",
-              "The number divided / the number you divide by"
+              "What is left over after dividing",
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check",
+              "Brackets, then × ÷, then + − (BIDMAS)"
             ],
-            "answer": "The answer to a multiplication",
+            "answer": "What is left over after dividing",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "explanation": "Remainder means What is left over after dividing."
+          },
+          {
+            "prompt": "Calculate 2456 × 7.",
+            "choices": [
+              "20630",
+              "17192",
+              "18911",
+              "15473"
+            ],
+            "answer": "17192",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "Estimate 2500 × 7 = 17,500. Ones: 6×7 = 42, write 2 carry 4. Tens: 5×7 = 35, +4 = 39, write 9 carry 3. Hundreds: 4×7 = 28, +3 = 31, write 1 carry 3. Thousands: 2×7 = 14, +3 = 17, write 17. Answer 17,192, close to the estimate. ✓"
           }
         ]
       },
@@ -1302,52 +1308,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Remainder” mean?",
+            "prompt": "Calculate 678 × 94, then verify with an estimate.",
             "choices": [
+              "70105",
+              "57359",
+              "76478",
+              "63732"
+            ],
+            "answer": "63732",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "1) 63,732 (estimate 700 × 90 = 63,000)."
+          },
+          {
+            "prompt": "What does “Quotient” mean?",
+            "choices": [
+              "The answer to a division",
+              "The number divided / the number you divide by",
               "What is left over after dividing",
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check",
-              "Brackets, then × ÷, then + − (BIDMAS)"
+              "One part of a long multiplication"
             ],
-            "answer": "What is left over after dividing",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Remainder means What is left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: Brackets, then × ÷, then + − (BIDMAS)?",
-            "choices": [
-              "Order of operations",
-              "Product",
-              "Factor",
-              "Quotient"
-            ],
-            "answer": "Order of operations",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Order of operations means Brackets, then × ÷, then + − (BIDMAS)."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Remainder",
-              "Partial product",
-              "Estimate"
-            ],
-            "answer": "Quotient",
+            "answer": "The answer to a division",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Quotient means The answer to a division."
           },
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "What does “Partial product” mean?",
             "choices": [
-              "A number being multiplied",
-              "The answer to a division",
-              "The number divided / the number you divide by",
-              "What is left over after dividing"
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check",
+              "Brackets, then × ÷, then + − (BIDMAS)",
+              "The answer to a multiplication"
             ],
-            "answer": "A number being multiplied",
+            "answer": "One part of a long multiplication",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Factor means A number being multiplied."
+            "explanation": "Partial product means One part of a long multiplication."
+          },
+          {
+            "prompt": "Calculate 1234 × 30.",
+            "choices": [
+              "37020",
+              "40722",
+              "33318",
+              "44424"
+            ],
+            "answer": "37020",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "1234 × 3 = 3702, then × 10 gives 37,020. Estimate 1000 × 30 = 30,000, so 37,020 is a sensible size. ✓"
           }
         ]
       },
@@ -1360,52 +1366,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Partial product” mean?",
+            "prompt": "What does “Product” mean?",
             "choices": [
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check",
-              "Brackets, then × ÷, then + − (BIDMAS)",
-              "The answer to a multiplication"
+              "The answer to a multiplication",
+              "A number being multiplied",
+              "The answer to a division",
+              "The number divided / the number you divide by"
             ],
-            "answer": "One part of a long multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Partial product means One part of a long multiplication."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Quotient",
-              "Dividend / Divisor",
-              "Remainder"
-            ],
-            "answer": "Product",
+            "answer": "The answer to a multiplication",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Product means The answer to a multiplication."
           },
           {
-            "prompt": "Which term matches this meaning: The number divided / the number you divide by?",
+            "prompt": "What does “Dividend / Divisor” mean?",
             "choices": [
-              "Dividend / Divisor",
-              "Partial product",
-              "Estimate",
-              "Order of operations"
+              "The number divided / the number you divide by",
+              "What is left over after dividing",
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check"
             ],
-            "answer": "Dividend / Divisor",
+            "answer": "The number divided / the number you divide by",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Dividend / Divisor means The number divided / the number you divide by."
           },
           {
-            "prompt": "What does “Quotient” mean?",
+            "prompt": "Which term matches this meaning: A sensible approximate answer used to check?",
             "choices": [
-              "The answer to a division",
-              "The number divided / the number you divide by",
-              "What is left over after dividing",
-              "One part of a long multiplication"
+              "Estimate",
+              "Order of operations",
+              "Product",
+              "Factor"
             ],
-            "answer": "The answer to a division",
+            "answer": "Estimate",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "explanation": "Estimate means A sensible approximate answer used to check."
+          },
+          {
+            "prompt": "Calculate 234 × 56.",
+            "choices": [
+              "15724",
+              "13104",
+              "14414",
+              "11794"
+            ],
+            "answer": "13104",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "234 × 6 = 1404 (first partial product). 234 × 50 = 11,700 (second partial product, ending in 0). Add: 1404 + 11,700 = 13,104. Estimate 200 × 60 = 12,000, so 13,104 is reasonable. ✓"
           }
         ]
       },
@@ -1418,52 +1424,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A sensible approximate answer used to check?",
+            "prompt": "What does “Factor” mean?",
             "choices": [
-              "Estimate",
-              "Order of operations",
-              "Product",
-              "Factor"
+              "A number being multiplied",
+              "The answer to a division",
+              "The number divided / the number you divide by",
+              "What is left over after dividing"
             ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible approximate answer used to check."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number being multiplied?",
-            "choices": [
-              "Factor",
-              "Dividend / Divisor",
-              "Remainder",
-              "Partial product"
-            ],
-            "answer": "Factor",
+            "answer": "A number being multiplied",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Factor means A number being multiplied."
           },
           {
-            "prompt": "What does “Product” mean?",
+            "prompt": "What does “Remainder” mean?",
             "choices": [
-              "The answer to a multiplication",
-              "A number being multiplied",
-              "The answer to a division",
-              "The number divided / the number you divide by"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Dividend / Divisor” mean?",
-            "choices": [
-              "The number divided / the number you divide by",
               "What is left over after dividing",
               "One part of a long multiplication",
-              "A sensible approximate answer used to check"
+              "A sensible approximate answer used to check",
+              "Brackets, then × ÷, then + − (BIDMAS)"
             ],
-            "answer": "The number divided / the number you divide by",
+            "answer": "What is left over after dividing",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Dividend / Divisor means The number divided / the number you divide by."
+            "explanation": "Remainder means What is left over after dividing."
+          },
+          {
+            "prompt": "Calculate 2456 × 7.",
+            "choices": [
+              "20630",
+              "17192",
+              "18911",
+              "15473"
+            ],
+            "answer": "17192",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "Estimate 2500 × 7 = 17,500. Ones: 6×7 = 42, write 2 carry 4. Tens: 5×7 = 35, +4 = 39, write 9 carry 3. Hundreds: 4×7 = 28, +3 = 31, write 1 carry 3. Thousands: 2×7 = 14, +3 = 17, write 17. Answer 17,192, close to the estimate. ✓"
+          },
+          {
+            "prompt": "Calculate 1456 ÷ 16.",
+            "choices": [
+              "91",
+              "100",
+              "82",
+              "109"
+            ],
+            "answer": "91",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "16 into 14 will not go, so use 145. 145 ÷ 16 = 9 (9×16 = 144), remainder 1. Bring down 6 to make 16. 16 ÷ 16 = 1 exactly. Quotient 91. Check: 91 × 16 = 1456. ✓"
           }
         ]
       },
@@ -1476,88 +1482,6 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Brackets, then × ÷, then + − (BIDMAS)?",
-            "choices": [
-              "Order of operations",
-              "Product",
-              "Factor",
-              "Quotient"
-            ],
-            "answer": "Order of operations",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Order of operations means Brackets, then × ÷, then + − (BIDMAS)."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Remainder",
-              "Partial product",
-              "Estimate"
-            ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number being multiplied",
-              "The answer to a division",
-              "The number divided / the number you divide by",
-              "What is left over after dividing"
-            ],
-            "answer": "A number being multiplied",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Factor means A number being multiplied."
-          },
-          {
-            "prompt": "What does “Remainder” mean?",
-            "choices": [
-              "What is left over after dividing",
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check",
-              "Brackets, then × ÷, then + − (BIDMAS)"
-            ],
-            "answer": "What is left over after dividing",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Remainder means What is left over after dividing."
-          }
-        ]
-      },
-      {
-        "id": "u10-game-9",
-        "icon": "⌂",
-        "skill": "Product",
-        "title": "Real-Life Round: Product",
-        "description": "Practise product through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Quotient",
-              "Dividend / Divisor",
-              "Remainder"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number divided / the number you divide by?",
-            "choices": [
-              "Dividend / Divisor",
-              "Partial product",
-              "Estimate",
-              "Order of operations"
-            ],
-            "answer": "Dividend / Divisor",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Dividend / Divisor means The number divided / the number you divide by."
-          },
-          {
             "prompt": "What does “Quotient” mean?",
             "choices": [
               "The answer to a division",
@@ -1580,6 +1504,88 @@
             "answer": "One part of a long multiplication",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Partial product means One part of a long multiplication."
+          },
+          {
+            "prompt": "Calculate 1234 × 30.",
+            "choices": [
+              "37020",
+              "40722",
+              "33318",
+              "44424"
+            ],
+            "answer": "37020",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "1234 × 3 = 3702, then × 10 gives 37,020. Estimate 1000 × 30 = 30,000, so 37,020 is a sensible size. ✓"
+          },
+          {
+            "prompt": "Calculate 678 × 94, then verify with an estimate.",
+            "choices": [
+              "70105",
+              "57359",
+              "76478",
+              "63732"
+            ],
+            "answer": "63732",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "1) 63,732 (estimate 700 × 90 = 63,000)."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-9",
+        "icon": "⌂",
+        "skill": "Product",
+        "title": "Real-Life Round: Product",
+        "description": "Practise product through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Dividend / Divisor” mean?",
+            "choices": [
+              "The number divided / the number you divide by",
+              "What is left over after dividing",
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check"
+            ],
+            "answer": "The number divided / the number you divide by",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Dividend / Divisor means The number divided / the number you divide by."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible approximate answer used to check?",
+            "choices": [
+              "Estimate",
+              "Order of operations",
+              "Product",
+              "Factor"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible approximate answer used to check."
+          },
+          {
+            "prompt": "Calculate 234 × 56.",
+            "choices": [
+              "15724",
+              "13104",
+              "14414",
+              "11794"
+            ],
+            "answer": "13104",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "234 × 6 = 1404 (first partial product). 234 × 50 = 11,700 (second partial product, ending in 0). Add: 1404 + 11,700 = 13,104. Estimate 200 × 60 = 12,000, so 13,104 is reasonable. ✓"
+          },
+          {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The answer to a multiplication",
+              "A number being multiplied",
+              "The answer to a division",
+              "The number divided / the number you divide by"
+            ],
+            "answer": "The answer to a multiplication",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Product means The answer to a multiplication."
           }
         ]
       },
@@ -1592,16 +1598,144 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A number being multiplied?",
+            "prompt": "What does “Remainder” mean?",
             "choices": [
-              "Factor",
-              "Dividend / Divisor",
-              "Remainder",
-              "Partial product"
+              "What is left over after dividing",
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check",
+              "Brackets, then × ÷, then + − (BIDMAS)"
             ],
-            "answer": "Factor",
+            "answer": "What is left over after dividing",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Remainder means What is left over after dividing."
+          },
+          {
+            "prompt": "Calculate 2456 × 7.",
+            "choices": [
+              "20630",
+              "17192",
+              "18911",
+              "15473"
+            ],
+            "answer": "17192",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "Estimate 2500 × 7 = 17,500. Ones: 6×7 = 42, write 2 carry 4. Tens: 5×7 = 35, +4 = 39, write 9 carry 3. Hundreds: 4×7 = 28, +3 = 31, write 1 carry 3. Thousands: 2×7 = 14, +3 = 17, write 17. Answer 17,192, close to the estimate. ✓"
+          },
+          {
+            "prompt": "Calculate 1456 ÷ 16.",
+            "choices": [
+              "91",
+              "100",
+              "82",
+              "109"
+            ],
+            "answer": "91",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "16 into 14 will not go, so use 145. 145 ÷ 16 = 9 (9×16 = 144), remainder 1. Bring down 6 to make 16. 16 ÷ 16 = 1 exactly. Quotient 91. Check: 91 × 16 = 1456. ✓"
+          },
+          {
+            "prompt": "What does “Factor” mean?",
+            "choices": [
+              "A number being multiplied",
+              "The answer to a division",
+              "The number divided / the number you divide by",
+              "What is left over after dividing"
+            ],
+            "answer": "A number being multiplied",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Factor means A number being multiplied."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-11",
+        "icon": "≡",
+        "skill": "Quotient",
+        "title": "Mastery Mix: Quotient",
+        "description": "Practise quotient through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Partial product” mean?",
+            "choices": [
+              "One part of a long multiplication",
+              "A sensible approximate answer used to check",
+              "Brackets, then × ÷, then + − (BIDMAS)",
+              "The answer to a multiplication"
+            ],
+            "answer": "One part of a long multiplication",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Partial product means One part of a long multiplication."
+          },
+          {
+            "prompt": "Calculate 1234 × 30.",
+            "choices": [
+              "37020",
+              "40722",
+              "33318",
+              "44424"
+            ],
+            "answer": "37020",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "1234 × 3 = 3702, then × 10 gives 37,020. Estimate 1000 × 30 = 30,000, so 37,020 is a sensible size. ✓"
+          },
+          {
+            "prompt": "Calculate 678 × 94, then verify with an estimate.",
+            "choices": [
+              "70105",
+              "57359",
+              "76478",
+              "63732"
+            ],
+            "answer": "63732",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "1) 63,732 (estimate 700 × 90 = 63,000)."
+          },
+          {
+            "prompt": "What does “Quotient” mean?",
+            "choices": [
+              "The answer to a division",
+              "The number divided / the number you divide by",
+              "What is left over after dividing",
+              "One part of a long multiplication"
+            ],
+            "answer": "The answer to a division",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Quotient means The answer to a division."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-12",
+        "icon": "T",
+        "skill": "Dividend / Divisor",
+        "title": "Unit Champion: Dividend / Divisor",
+        "description": "Practise dividend / divisor through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A sensible approximate answer used to check?",
+            "choices": [
+              "Estimate",
+              "Order of operations",
+              "Product",
+              "Factor"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 10 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible approximate answer used to check."
+          },
+          {
+            "prompt": "Calculate 234 × 56.",
+            "choices": [
+              "15724",
+              "13104",
+              "14414",
+              "11794"
+            ],
+            "answer": "13104",
+            "clue": "Work it out step by step, using the Unit 10 methods.",
+            "explanation": "234 × 6 = 1404 (first partial product). 234 × 50 = 11,700 (second partial product, ending in 0). Add: 1404 + 11,700 = 13,104. Estimate 200 × 60 = 12,000, so 13,104 is reasonable. ✓"
           },
           {
             "prompt": "What does “Product” mean?",
@@ -1626,134 +1760,6 @@
             "answer": "The number divided / the number you divide by",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Dividend / Divisor means The number divided / the number you divide by."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible approximate answer used to check?",
-            "choices": [
-              "Estimate",
-              "Order of operations",
-              "Product",
-              "Factor"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible approximate answer used to check."
-          }
-        ]
-      },
-      {
-        "id": "u10-game-11",
-        "icon": "≡",
-        "skill": "Quotient",
-        "title": "Mastery Mix: Quotient",
-        "description": "Practise quotient through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Remainder",
-              "Partial product",
-              "Estimate"
-            ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number being multiplied",
-              "The answer to a division",
-              "The number divided / the number you divide by",
-              "What is left over after dividing"
-            ],
-            "answer": "A number being multiplied",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Factor means A number being multiplied."
-          },
-          {
-            "prompt": "What does “Remainder” mean?",
-            "choices": [
-              "What is left over after dividing",
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check",
-              "Brackets, then × ÷, then + − (BIDMAS)"
-            ],
-            "answer": "What is left over after dividing",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Remainder means What is left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: Brackets, then × ÷, then + − (BIDMAS)?",
-            "choices": [
-              "Order of operations",
-              "Product",
-              "Factor",
-              "Quotient"
-            ],
-            "answer": "Order of operations",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Order of operations means Brackets, then × ÷, then + − (BIDMAS)."
-          }
-        ]
-      },
-      {
-        "id": "u10-game-12",
-        "icon": "T",
-        "skill": "Dividend / Divisor",
-        "title": "Unit Champion: Dividend / Divisor",
-        "description": "Practise dividend / divisor through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The number divided / the number you divide by?",
-            "choices": [
-              "Dividend / Divisor",
-              "Partial product",
-              "Estimate",
-              "Order of operations"
-            ],
-            "answer": "Dividend / Divisor",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Dividend / Divisor means The number divided / the number you divide by."
-          },
-          {
-            "prompt": "What does “Quotient” mean?",
-            "choices": [
-              "The answer to a division",
-              "The number divided / the number you divide by",
-              "What is left over after dividing",
-              "One part of a long multiplication"
-            ],
-            "answer": "The answer to a division",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Partial product” mean?",
-            "choices": [
-              "One part of a long multiplication",
-              "A sensible approximate answer used to check",
-              "Brackets, then × ÷, then + − (BIDMAS)",
-              "The answer to a multiplication"
-            ],
-            "answer": "One part of a long multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Partial product means One part of a long multiplication."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Quotient",
-              "Dividend / Divisor",
-              "Remainder"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
           }
         ]
       }

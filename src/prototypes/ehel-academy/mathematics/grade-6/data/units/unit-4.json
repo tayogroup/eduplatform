@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:12.025Z",
+  "generatedAt": "2026-07-21T07:03:33.071Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 6
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-6-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 6",
     "sourceArchive": "Year 6 (1)-20260714T220913Z-1-001.zip",
     "sourceDocuments": [
       "Year 6 (1)/Unit 4 (1)/Year 6 - Unit 4 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 6 (1)/Unit 4 (1)/Year 6 - Unit 4 Reference.docx"
     ],
     "sourceBlockCount": 347,
-    "transformation": "Structured directly from the standardized Cambridge Stage 6 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 6 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -362,7 +368,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Evaluate n + 8 when",
       "prompt": "Evaluate n + 8 when: a) n = 5 b) n = 0 c) n = −3.",
       "solution": "a) 13, b) 8, c) 5."
     },
@@ -370,7 +376,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Practice 10",
       "prompt": "Solve: a) x + 9 = 17 b) y − 6 = 12 c) z + (−4) = 8.",
       "solution": "a) x = 8, b) y = 18, c) z = 12."
     },
@@ -378,7 +384,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Find the difference between",
       "prompt": "Find the difference between: a) 8 and −3 b) −5 and −12.",
       "solution": "a) 11, b) 7."
     },
@@ -386,7 +392,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Practice 12",
       "prompt": "A company's quarter results are: profit 234,567; loss 123,456; profit 345,678; loss 89,234. Writing losses as negatives, find the year's total and say if it is a profit or loss.",
       "solution": "1) 234,567 − 123,456 + 345,678 − 89,234 = 367,555 – a profit."
     }
@@ -867,8 +873,24 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Work out 56,789 + 23,456, using estimation to check.",
+        "options": [
+          "80245",
+          "88270",
+          "72220",
+          "96295"
+        ],
+        "answer": "80245",
+        "hint": "Work it out step by step, using the Unit 4 methods.",
+        "explanation": "Estimate first: round to 57,000 + 23,000 = 80,000. Now add exactly in columns: 56,789 + 23,456 = 80,245. The exact answer is very close to the estimate of 80,000, so it is reasonable. ✓"
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
         "difficulty": "Basic",
         "question": "What does “Estimate” mean?",
         "options": [
@@ -882,9 +904,9 @@
         "explanation": "Estimate means An approximate answer found by rounding first."
       },
       {
-        "id": "q02",
+        "id": "q03",
         "type": "Concept",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Basic",
         "question": "What does “Integer” mean?",
         "options": [
@@ -898,9 +920,9 @@
         "explanation": "Integer means A whole number: positive, negative or zero."
       },
       {
-        "id": "q03",
+        "id": "q04",
         "type": "Concept",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Basic",
         "question": "What does “Negative number” mean?",
         "options": [
@@ -914,10 +936,10 @@
         "explanation": "Negative number means A number less than zero, with a minus sign."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Difference” mean?",
         "options": [
           "How far apart two numbers are (always positive)",
@@ -930,9 +952,9 @@
         "explanation": "Difference means How far apart two numbers are (always positive)."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
         "difficulty": "Core",
         "question": "What does “Inverse operation” mean?",
         "options": [
@@ -946,9 +968,9 @@
         "explanation": "Inverse operation means The operation that undoes another."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
         "difficulty": "Core",
         "question": "What does “Variable” mean?",
         "options": [
@@ -962,9 +984,9 @@
         "explanation": "Variable means A letter standing for an unknown number."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
         "difficulty": "Core",
         "question": "Which term matches this meaning: Numbers and letters joined / a number sentence with =?",
         "options": [
@@ -978,9 +1000,9 @@
         "explanation": "Expression / Equation means Numbers and letters joined / a number sentence with =."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "Which term matches this meaning: An approximate answer found by rounding first?",
         "options": [
@@ -994,10 +1016,10 @@
         "explanation": "Estimate means An approximate answer found by rounding first."
       },
       {
-        "id": "q09",
+        "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: A whole number: positive, negative or zero?",
         "options": [
           "Integer",
@@ -1010,9 +1032,9 @@
         "explanation": "Integer means A whole number: positive, negative or zero."
       },
       {
-        "id": "q10",
+        "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which term matches this meaning: A number less than zero, with a minus sign?",
         "options": [
@@ -1026,9 +1048,9 @@
         "explanation": "Negative number means A number less than zero, with a minus sign."
       },
       {
-        "id": "q11",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which term matches this meaning: How far apart two numbers are (always positive)?",
         "options": [
@@ -1040,22 +1062,6 @@
         "answer": "Difference",
         "hint": "Use the Unit 4 Math Words & Symbols reference.",
         "explanation": "Difference means How far apart two numbers are (always positive)."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The operation that undoes another?",
-        "options": [
-          "Inverse operation",
-          "Expression / Equation",
-          "Estimate",
-          "Integer"
-        ],
-        "answer": "Inverse operation",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Inverse operation means The operation that undoes another."
       }
     ]
   },
@@ -1071,52 +1077,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "Work out 56,789 + 23,456, using estimation to check.",
             "choices": [
-              "An approximate answer found by rounding first",
-              "A whole number: positive, negative or zero",
-              "A number less than zero, with a minus sign",
-              "How far apart two numbers are (always positive)"
+              "80245",
+              "88270",
+              "72220",
+              "96295"
             ],
-            "answer": "An approximate answer found by rounding first",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding first."
+            "answer": "80245",
+            "clue": "Work it out step by step, using the Unit 4 methods.",
+            "explanation": "Estimate first: round to 57,000 + 23,000 = 80,000. Now add exactly in columns: 56,789 + 23,456 = 80,245. The exact answer is very close to the estimate of 80,000, so it is reasonable. ✓"
           },
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "What does “Negative number” mean?",
             "choices": [
+              "A number less than zero, with a minus sign",
               "How far apart two numbers are (always positive)",
               "The operation that undoes another",
-              "A letter standing for an unknown number",
-              "Numbers and letters joined / a number sentence with ="
+              "A letter standing for an unknown number"
             ],
-            "answer": "How far apart two numbers are (always positive)",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Difference means How far apart two numbers are (always positive)."
-          },
-          {
-            "prompt": "Which term matches this meaning: Numbers and letters joined / a number sentence with =?",
-            "choices": [
-              "Expression / Equation",
-              "Estimate",
-              "Integer",
-              "Negative number"
-            ],
-            "answer": "Expression / Equation",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Expression / Equation means Numbers and letters joined / a number sentence with =."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number less than zero, with a minus sign?",
-            "choices": [
-              "Negative number",
-              "Inverse operation",
-              "Variable",
-              "Expression / Equation"
-            ],
-            "answer": "Negative number",
+            "answer": "A number less than zero, with a minus sign",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Negative number means A number less than zero, with a minus sign."
+          },
+          {
+            "prompt": "What does “Variable” mean?",
+            "choices": [
+              "A letter standing for an unknown number",
+              "Numbers and letters joined / a number sentence with =",
+              "An approximate answer found by rounding first",
+              "A whole number: positive, negative or zero"
+            ],
+            "answer": "A letter standing for an unknown number",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Variable means A letter standing for an unknown number."
+          },
+          {
+            "prompt": "Which term matches this meaning: A whole number: positive, negative or zero?",
+            "choices": [
+              "Integer",
+              "Difference",
+              "Inverse operation",
+              "Variable"
+            ],
+            "answer": "Integer",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Integer means A whole number: positive, negative or zero."
           }
         ]
       },
@@ -1129,52 +1135,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Integer” mean?",
+            "prompt": "What does “Estimate” mean?",
             "choices": [
+              "An approximate answer found by rounding first",
               "A whole number: positive, negative or zero",
               "A number less than zero, with a minus sign",
-              "How far apart two numbers are (always positive)",
-              "The operation that undoes another"
+              "How far apart two numbers are (always positive)"
             ],
-            "answer": "A whole number: positive, negative or zero",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Integer means A whole number: positive, negative or zero."
-          },
-          {
-            "prompt": "What does “Inverse operation” mean?",
-            "choices": [
-              "The operation that undoes another",
-              "A letter standing for an unknown number",
-              "Numbers and letters joined / a number sentence with =",
-              "An approximate answer found by rounding first"
-            ],
-            "answer": "The operation that undoes another",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The operation that undoes another."
-          },
-          {
-            "prompt": "Which term matches this meaning: An approximate answer found by rounding first?",
-            "choices": [
-              "Estimate",
-              "Negative number",
-              "Difference",
-              "Inverse operation"
-            ],
-            "answer": "Estimate",
+            "answer": "An approximate answer found by rounding first",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Estimate means An approximate answer found by rounding first."
           },
           {
-            "prompt": "Which term matches this meaning: How far apart two numbers are (always positive)?",
+            "prompt": "What does “Difference” mean?",
             "choices": [
-              "Difference",
-              "Variable",
-              "Expression / Equation",
-              "Estimate"
+              "How far apart two numbers are (always positive)",
+              "The operation that undoes another",
+              "A letter standing for an unknown number",
+              "Numbers and letters joined / a number sentence with ="
             ],
-            "answer": "Difference",
+            "answer": "How far apart two numbers are (always positive)",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Difference means How far apart two numbers are (always positive)."
+          },
+          {
+            "prompt": "Which term matches this meaning: Numbers and letters joined / a number sentence with =?",
+            "choices": [
+              "Expression / Equation",
+              "Estimate",
+              "Integer",
+              "Negative number"
+            ],
+            "answer": "Expression / Equation",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Expression / Equation means Numbers and letters joined / a number sentence with =."
+          },
+          {
+            "prompt": "Which term matches this meaning: A number less than zero, with a minus sign?",
+            "choices": [
+              "Negative number",
+              "Inverse operation",
+              "Variable",
+              "Expression / Equation"
+            ],
+            "answer": "Negative number",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Negative number means A number less than zero, with a minus sign."
           }
         ]
       },
@@ -1187,52 +1193,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Negative number” mean?",
+            "prompt": "What does “Integer” mean?",
             "choices": [
+              "A whole number: positive, negative or zero",
               "A number less than zero, with a minus sign",
               "How far apart two numbers are (always positive)",
-              "The operation that undoes another",
-              "A letter standing for an unknown number"
+              "The operation that undoes another"
             ],
-            "answer": "A number less than zero, with a minus sign",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Negative number means A number less than zero, with a minus sign."
-          },
-          {
-            "prompt": "What does “Variable” mean?",
-            "choices": [
-              "A letter standing for an unknown number",
-              "Numbers and letters joined / a number sentence with =",
-              "An approximate answer found by rounding first",
-              "A whole number: positive, negative or zero"
-            ],
-            "answer": "A letter standing for an unknown number",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Variable means A letter standing for an unknown number."
-          },
-          {
-            "prompt": "Which term matches this meaning: A whole number: positive, negative or zero?",
-            "choices": [
-              "Integer",
-              "Difference",
-              "Inverse operation",
-              "Variable"
-            ],
-            "answer": "Integer",
+            "answer": "A whole number: positive, negative or zero",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Integer means A whole number: positive, negative or zero."
           },
           {
-            "prompt": "Which term matches this meaning: The operation that undoes another?",
+            "prompt": "What does “Inverse operation” mean?",
             "choices": [
-              "Inverse operation",
-              "Expression / Equation",
-              "Estimate",
-              "Integer"
+              "The operation that undoes another",
+              "A letter standing for an unknown number",
+              "Numbers and letters joined / a number sentence with =",
+              "An approximate answer found by rounding first"
             ],
-            "answer": "Inverse operation",
+            "answer": "The operation that undoes another",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Inverse operation means The operation that undoes another."
+          },
+          {
+            "prompt": "Which term matches this meaning: An approximate answer found by rounding first?",
+            "choices": [
+              "Estimate",
+              "Negative number",
+              "Difference",
+              "Inverse operation"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Estimate means An approximate answer found by rounding first."
+          },
+          {
+            "prompt": "Which term matches this meaning: How far apart two numbers are (always positive)?",
+            "choices": [
+              "Difference",
+              "Variable",
+              "Expression / Equation",
+              "Estimate"
+            ],
+            "answer": "Difference",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Difference means How far apart two numbers are (always positive)."
           }
         ]
       },
@@ -1245,52 +1251,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "What does “Negative number” mean?",
             "choices": [
+              "A number less than zero, with a minus sign",
               "How far apart two numbers are (always positive)",
               "The operation that undoes another",
-              "A letter standing for an unknown number",
-              "Numbers and letters joined / a number sentence with ="
+              "A letter standing for an unknown number"
             ],
-            "answer": "How far apart two numbers are (always positive)",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Difference means How far apart two numbers are (always positive)."
-          },
-          {
-            "prompt": "Which term matches this meaning: Numbers and letters joined / a number sentence with =?",
-            "choices": [
-              "Expression / Equation",
-              "Estimate",
-              "Integer",
-              "Negative number"
-            ],
-            "answer": "Expression / Equation",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Expression / Equation means Numbers and letters joined / a number sentence with =."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number less than zero, with a minus sign?",
-            "choices": [
-              "Negative number",
-              "Inverse operation",
-              "Variable",
-              "Expression / Equation"
-            ],
-            "answer": "Negative number",
+            "answer": "A number less than zero, with a minus sign",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Negative number means A number less than zero, with a minus sign."
           },
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "What does “Variable” mean?",
             "choices": [
+              "A letter standing for an unknown number",
+              "Numbers and letters joined / a number sentence with =",
               "An approximate answer found by rounding first",
-              "A whole number: positive, negative or zero",
-              "A number less than zero, with a minus sign",
-              "How far apart two numbers are (always positive)"
+              "A whole number: positive, negative or zero"
             ],
-            "answer": "An approximate answer found by rounding first",
+            "answer": "A letter standing for an unknown number",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding first."
+            "explanation": "Variable means A letter standing for an unknown number."
+          },
+          {
+            "prompt": "Which term matches this meaning: A whole number: positive, negative or zero?",
+            "choices": [
+              "Integer",
+              "Difference",
+              "Inverse operation",
+              "Variable"
+            ],
+            "answer": "Integer",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Integer means A whole number: positive, negative or zero."
+          },
+          {
+            "prompt": "Work out 56,789 + 23,456, using estimation to check.",
+            "choices": [
+              "80245",
+              "88270",
+              "72220",
+              "96295"
+            ],
+            "answer": "80245",
+            "clue": "Work it out step by step, using the Unit 4 methods.",
+            "explanation": "Estimate first: round to 57,000 + 23,000 = 80,000. Now add exactly in columns: 56,789 + 23,456 = 80,245. The exact answer is very close to the estimate of 80,000, so it is reasonable. ✓"
           }
         ]
       },
@@ -1303,52 +1309,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Inverse operation” mean?",
+            "prompt": "What does “Difference” mean?",
             "choices": [
+              "How far apart two numbers are (always positive)",
               "The operation that undoes another",
               "A letter standing for an unknown number",
-              "Numbers and letters joined / a number sentence with =",
-              "An approximate answer found by rounding first"
+              "Numbers and letters joined / a number sentence with ="
             ],
-            "answer": "The operation that undoes another",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The operation that undoes another."
-          },
-          {
-            "prompt": "Which term matches this meaning: An approximate answer found by rounding first?",
-            "choices": [
-              "Estimate",
-              "Negative number",
-              "Difference",
-              "Inverse operation"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding first."
-          },
-          {
-            "prompt": "Which term matches this meaning: How far apart two numbers are (always positive)?",
-            "choices": [
-              "Difference",
-              "Variable",
-              "Expression / Equation",
-              "Estimate"
-            ],
-            "answer": "Difference",
+            "answer": "How far apart two numbers are (always positive)",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Difference means How far apart two numbers are (always positive)."
           },
           {
-            "prompt": "What does “Integer” mean?",
+            "prompt": "Which term matches this meaning: Numbers and letters joined / a number sentence with =?",
             "choices": [
+              "Expression / Equation",
+              "Estimate",
+              "Integer",
+              "Negative number"
+            ],
+            "answer": "Expression / Equation",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Expression / Equation means Numbers and letters joined / a number sentence with =."
+          },
+          {
+            "prompt": "Which term matches this meaning: A number less than zero, with a minus sign?",
+            "choices": [
+              "Negative number",
+              "Inverse operation",
+              "Variable",
+              "Expression / Equation"
+            ],
+            "answer": "Negative number",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Negative number means A number less than zero, with a minus sign."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "An approximate answer found by rounding first",
               "A whole number: positive, negative or zero",
               "A number less than zero, with a minus sign",
-              "How far apart two numbers are (always positive)",
-              "The operation that undoes another"
+              "How far apart two numbers are (always positive)"
             ],
-            "answer": "A whole number: positive, negative or zero",
+            "answer": "An approximate answer found by rounding first",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Integer means A whole number: positive, negative or zero."
+            "explanation": "Estimate means An approximate answer found by rounding first."
           }
         ]
       },
@@ -1361,52 +1367,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Variable” mean?",
+            "prompt": "What does “Inverse operation” mean?",
             "choices": [
+              "The operation that undoes another",
               "A letter standing for an unknown number",
               "Numbers and letters joined / a number sentence with =",
-              "An approximate answer found by rounding first",
-              "A whole number: positive, negative or zero"
+              "An approximate answer found by rounding first"
             ],
-            "answer": "A letter standing for an unknown number",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Variable means A letter standing for an unknown number."
-          },
-          {
-            "prompt": "Which term matches this meaning: A whole number: positive, negative or zero?",
-            "choices": [
-              "Integer",
-              "Difference",
-              "Inverse operation",
-              "Variable"
-            ],
-            "answer": "Integer",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Integer means A whole number: positive, negative or zero."
-          },
-          {
-            "prompt": "Which term matches this meaning: The operation that undoes another?",
-            "choices": [
-              "Inverse operation",
-              "Expression / Equation",
-              "Estimate",
-              "Integer"
-            ],
-            "answer": "Inverse operation",
+            "answer": "The operation that undoes another",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Inverse operation means The operation that undoes another."
           },
           {
-            "prompt": "What does “Negative number” mean?",
+            "prompt": "Which term matches this meaning: An approximate answer found by rounding first?",
             "choices": [
+              "Estimate",
+              "Negative number",
+              "Difference",
+              "Inverse operation"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Estimate means An approximate answer found by rounding first."
+          },
+          {
+            "prompt": "Which term matches this meaning: How far apart two numbers are (always positive)?",
+            "choices": [
+              "Difference",
+              "Variable",
+              "Expression / Equation",
+              "Estimate"
+            ],
+            "answer": "Difference",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Difference means How far apart two numbers are (always positive)."
+          },
+          {
+            "prompt": "What does “Integer” mean?",
+            "choices": [
+              "A whole number: positive, negative or zero",
               "A number less than zero, with a minus sign",
               "How far apart two numbers are (always positive)",
-              "The operation that undoes another",
-              "A letter standing for an unknown number"
+              "The operation that undoes another"
             ],
-            "answer": "A number less than zero, with a minus sign",
+            "answer": "A whole number: positive, negative or zero",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Negative number means A number less than zero, with a minus sign."
+            "explanation": "Integer means A whole number: positive, negative or zero."
           }
         ]
       },
@@ -1419,52 +1425,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Numbers and letters joined / a number sentence with =?",
+            "prompt": "What does “Variable” mean?",
             "choices": [
-              "Expression / Equation",
-              "Estimate",
-              "Integer",
-              "Negative number"
-            ],
-            "answer": "Expression / Equation",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Expression / Equation means Numbers and letters joined / a number sentence with =."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number less than zero, with a minus sign?",
-            "choices": [
-              "Negative number",
-              "Inverse operation",
-              "Variable",
-              "Expression / Equation"
-            ],
-            "answer": "Negative number",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Negative number means A number less than zero, with a minus sign."
-          },
-          {
-            "prompt": "What does “Estimate” mean?",
-            "choices": [
+              "A letter standing for an unknown number",
+              "Numbers and letters joined / a number sentence with =",
               "An approximate answer found by rounding first",
-              "A whole number: positive, negative or zero",
-              "A number less than zero, with a minus sign",
-              "How far apart two numbers are (always positive)"
+              "A whole number: positive, negative or zero"
             ],
-            "answer": "An approximate answer found by rounding first",
+            "answer": "A letter standing for an unknown number",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding first."
+            "explanation": "Variable means A letter standing for an unknown number."
           },
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "Which term matches this meaning: A whole number: positive, negative or zero?",
             "choices": [
+              "Integer",
+              "Difference",
+              "Inverse operation",
+              "Variable"
+            ],
+            "answer": "Integer",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Integer means A whole number: positive, negative or zero."
+          },
+          {
+            "prompt": "Work out 56,789 + 23,456, using estimation to check.",
+            "choices": [
+              "80245",
+              "88270",
+              "72220",
+              "96295"
+            ],
+            "answer": "80245",
+            "clue": "Work it out step by step, using the Unit 4 methods.",
+            "explanation": "Estimate first: round to 57,000 + 23,000 = 80,000. Now add exactly in columns: 56,789 + 23,456 = 80,245. The exact answer is very close to the estimate of 80,000, so it is reasonable. ✓"
+          },
+          {
+            "prompt": "What does “Negative number” mean?",
+            "choices": [
+              "A number less than zero, with a minus sign",
               "How far apart two numbers are (always positive)",
               "The operation that undoes another",
-              "A letter standing for an unknown number",
-              "Numbers and letters joined / a number sentence with ="
+              "A letter standing for an unknown number"
             ],
-            "answer": "How far apart two numbers are (always positive)",
+            "answer": "A number less than zero, with a minus sign",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Difference means How far apart two numbers are (always positive)."
+            "explanation": "Negative number means A number less than zero, with a minus sign."
           }
         ]
       },
@@ -1477,6 +1483,64 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Which term matches this meaning: Numbers and letters joined / a number sentence with =?",
+            "choices": [
+              "Expression / Equation",
+              "Estimate",
+              "Integer",
+              "Negative number"
+            ],
+            "answer": "Expression / Equation",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Expression / Equation means Numbers and letters joined / a number sentence with =."
+          },
+          {
+            "prompt": "Which term matches this meaning: A number less than zero, with a minus sign?",
+            "choices": [
+              "Negative number",
+              "Inverse operation",
+              "Variable",
+              "Expression / Equation"
+            ],
+            "answer": "Negative number",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Negative number means A number less than zero, with a minus sign."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "An approximate answer found by rounding first",
+              "A whole number: positive, negative or zero",
+              "A number less than zero, with a minus sign",
+              "How far apart two numbers are (always positive)"
+            ],
+            "answer": "An approximate answer found by rounding first",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Estimate means An approximate answer found by rounding first."
+          },
+          {
+            "prompt": "What does “Difference” mean?",
+            "choices": [
+              "How far apart two numbers are (always positive)",
+              "The operation that undoes another",
+              "A letter standing for an unknown number",
+              "Numbers and letters joined / a number sentence with ="
+            ],
+            "answer": "How far apart two numbers are (always positive)",
+            "clue": "Use the Unit 4 Math Words & Symbols reference.",
+            "explanation": "Difference means How far apart two numbers are (always positive)."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-9",
+        "icon": "⌂",
+        "skill": "Integer",
+        "title": "Real-Life Round: Integer",
+        "description": "Practise integer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
             "prompt": "Which term matches this meaning: An approximate answer found by rounding first?",
             "choices": [
               "Estimate",
@@ -1527,11 +1591,11 @@
         ]
       },
       {
-        "id": "u4-game-9",
-        "icon": "⌂",
-        "skill": "Integer",
-        "title": "Real-Life Round: Integer",
-        "description": "Practise integer through four short challenges.",
+        "id": "u4-game-10",
+        "icon": "!",
+        "skill": "Negative number",
+        "title": "Spot the Error: Negative number",
+        "description": "Practise negative number through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1547,16 +1611,16 @@
             "explanation": "Integer means A whole number: positive, negative or zero."
           },
           {
-            "prompt": "Which term matches this meaning: The operation that undoes another?",
+            "prompt": "Work out 56,789 + 23,456, using estimation to check.",
             "choices": [
-              "Inverse operation",
-              "Expression / Equation",
-              "Estimate",
-              "Integer"
+              "80245",
+              "88270",
+              "72220",
+              "96295"
             ],
-            "answer": "Inverse operation",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The operation that undoes another."
+            "answer": "80245",
+            "clue": "Work it out step by step, using the Unit 4 methods.",
+            "explanation": "Estimate first: round to 57,000 + 23,000 = 80,000. Now add exactly in columns: 56,789 + 23,456 = 80,245. The exact answer is very close to the estimate of 80,000, so it is reasonable. ✓"
           },
           {
             "prompt": "What does “Negative number” mean?",
@@ -1585,11 +1649,11 @@
         ]
       },
       {
-        "id": "u4-game-10",
-        "icon": "!",
-        "skill": "Negative number",
-        "title": "Spot the Error: Negative number",
-        "description": "Practise negative number through four short challenges.",
+        "id": "u4-game-11",
+        "icon": "≡",
+        "skill": "Difference",
+        "title": "Mastery Mix: Difference",
+        "description": "Practise difference through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1643,11 +1707,11 @@
         ]
       },
       {
-        "id": "u4-game-11",
-        "icon": "≡",
-        "skill": "Difference",
-        "title": "Mastery Mix: Difference",
-        "description": "Practise difference through four short challenges.",
+        "id": "u4-game-12",
+        "icon": "T",
+        "skill": "Inverse operation",
+        "title": "Unit Champion: Inverse operation",
+        "description": "Practise inverse operation through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1697,64 +1761,6 @@
             "answer": "Estimate",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Estimate means An approximate answer found by rounding first."
-          }
-        ]
-      },
-      {
-        "id": "u4-game-12",
-        "icon": "T",
-        "skill": "Inverse operation",
-        "title": "Unit Champion: Inverse operation",
-        "description": "Practise inverse operation through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The operation that undoes another?",
-            "choices": [
-              "Inverse operation",
-              "Expression / Equation",
-              "Estimate",
-              "Integer"
-            ],
-            "answer": "Inverse operation",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The operation that undoes another."
-          },
-          {
-            "prompt": "What does “Negative number” mean?",
-            "choices": [
-              "A number less than zero, with a minus sign",
-              "How far apart two numbers are (always positive)",
-              "The operation that undoes another",
-              "A letter standing for an unknown number"
-            ],
-            "answer": "A number less than zero, with a minus sign",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Negative number means A number less than zero, with a minus sign."
-          },
-          {
-            "prompt": "What does “Variable” mean?",
-            "choices": [
-              "A letter standing for an unknown number",
-              "Numbers and letters joined / a number sentence with =",
-              "An approximate answer found by rounding first",
-              "A whole number: positive, negative or zero"
-            ],
-            "answer": "A letter standing for an unknown number",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Variable means A letter standing for an unknown number."
-          },
-          {
-            "prompt": "Which term matches this meaning: A whole number: positive, negative or zero?",
-            "choices": [
-              "Integer",
-              "Difference",
-              "Inverse operation",
-              "Variable"
-            ],
-            "answer": "Integer",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Integer means A whole number: positive, negative or zero."
           }
         ]
       }

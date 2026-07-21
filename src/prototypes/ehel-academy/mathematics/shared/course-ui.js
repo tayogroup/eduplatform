@@ -1,5 +1,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260715k";
 import { initGeometryWebGL } from "./geometry-webgl.js?v=20260715q";
+import { initMathWebGL } from "./math-webgl.js?v=math-20260721b";
+import { unitTopic, mathDiagram } from "./math-visuals.js?v=math-20260721b";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -37,6 +39,19 @@ const sections = [
   ["live", "video", "Live Math Class"],
   ["progress", "badge-check", "My Math Progress"]
 ];
+
+// Official Cambridge framework for Mathematics: Primary (0096) covers
+// Stages 1-6, Lower Secondary (0862) covers Stages 7-9. The stage number
+// carries the grade level; there is no separate per-grade code.
+function cambridgeFramework(stage) {
+  return Number(stage) <= 6
+    ? { level: "Cambridge Primary Mathematics", code: "0096" }
+    : { level: "Cambridge Lower Secondary Mathematics", code: "0862" };
+}
+function cambridgeLabel(stage) {
+  const fw = cambridgeFramework(stage);
+  return `${fw.level} ${fw.code} — Stage ${stage}`;
+}
 
 let manifest;
 let course;
@@ -381,7 +396,7 @@ function renderOverview() {
         <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome, index) => `<div class="outcome"><span>${index + 1}</span><p>${escapeHtml(outcome)}</p></div>`).join("")}</div></section>
       </div>
       <div class="section-stack">
-        <section class="panel approval-banner"><span class="eyebrow">Standardized Cambridge content package</span><h3>Approved for ${course.stage.label} Mathematics</h3><p>Unit ${course.unit.unitNo} has been transformed from the ${course.stage.label} Excel content package and approved for use.</p></section>
+        <section class="panel approval-banner"><span class="eyebrow">${escapeHtml(cambridgeFramework(stageNumber).level)} ${cambridgeFramework(stageNumber).code}</span><h3>Aligned to ${escapeHtml(cambridgeLabel(stageNumber))}</h3><p>Unit ${course.unit.unitNo} is structured from the ${escapeHtml(cambridgeLabel(stageNumber))} content package. Curriculum review required before classroom use.</p></section>
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.concepts.length}</strong><small>concepts</small></div><div class="stat"><strong>${course.practice.length}</strong><small>practice items</small></div><div class="stat"><strong>${course.activities.length}</strong><small>activities</small></div></div></section>
         <section class="panel"><h3>Recommended path</h3><ol class="path-list"><li><span>1</span><span>Discover and model the concept.</span></li><li><span>2</span><span>Learn the method and study examples.</span></li><li><span>3</span><span>Practise with hints, games and fluency.</span></li><li><span>4</span><span>Solve real problems and explain your reasoning.</span></li><li><span>5</span><span>Complete the Unit Challenge and reflect.</span></li></ol></section>
         <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning steps on this device.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lesson") ? "ai" : "lesson"}" type="button">Continue →</button></section>
@@ -405,7 +420,8 @@ function renderExploreConcept() {
     const item = course.explorations[active];
     $("#app").innerHTML = `${pageHeader("Six familiar discoveries", "Explore the Concept", "Discover each idea through market, street, school, water, transport and family situations.")}
       <div class="exploration-tabs">${course.explorations.map((entry,index)=>`<button class="exploration-tab ${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-exploration="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.title)}</button>`).join("")}</div>
-      <div class="story-layout"><section class="panel story-scene"><span class="eyebrow">Discovery ${active+1} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.context)}</p>${voiceButton(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}<div class="discovery-model ${escapeHtml(item.modelType)}"><strong>${escapeHtml(item.modelType.replaceAll('-',' '))}</strong><span>${escapeHtml(item.explanation)}</span></div></section><aside class="section-stack"><section class="panel"><h3>Discovery question</h3><p>${escapeHtml(item.prompt)}</p>${voiceButton(item.prompt, "Listen to question")}<input id="discovery-answer" class="math-input" aria-label="Discovery answer"><div class="question-actions"><button class="button primary" id="check-discovery" type="button">Check my idea</button><button class="button secondary" id="hint-discovery" type="button">Hint</button></div><div id="discovery-feedback"></div></section><section class="panel"><h3>Progress</h3><p><strong>${completed.size} of ${course.explorations.length}</strong> discoveries complete.</p><div class="progress-track"><span style="width:${completed.size/course.explorations.length*100}%"></span></div></section></aside></div>`;
+      <div class="story-layout"><section class="panel story-scene"><span class="eyebrow">Discovery ${active+1} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.title)}</h2>${mathDiagram(courseTopic(), active)}<p>${escapeHtml(item.context)}</p>${voiceButton(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}<div class="discovery-model ${escapeHtml(item.modelType)}"><strong>${escapeHtml(item.modelType.replaceAll('-',' '))}</strong><span>${escapeHtml(item.explanation)}</span></div></section><aside class="section-stack"><section class="panel"><h3>Discovery question</h3><p>${escapeHtml(item.prompt)}</p>${voiceButton(item.prompt, "Listen to question")}<input id="discovery-answer" class="math-input" aria-label="Discovery answer"><div class="question-actions"><button class="button primary" id="check-discovery" type="button">Check my idea</button><button class="button secondary" id="hint-discovery" type="button">Hint</button></div><div id="discovery-feedback"></div></section><section class="panel"><h3>Progress</h3><p><strong>${completed.size} of ${course.explorations.length}</strong> discoveries complete.</p><div class="progress-track"><span style="width:${completed.size/course.explorations.length*100}%"></span></div></section></aside></div>`;
+    initMathWebGL($("#app"));
     $$('[data-exploration]').forEach(button=>button.addEventListener("click",()=>{active=Number(button.dataset.exploration);draw();}));
     $("#hint-discovery").addEventListener("click",()=>{$("#discovery-feedback").innerHTML=`<p class="feedback try"><strong>Hint:</strong> ${escapeHtml(item.hint)}</p>`;});
     $("#check-discovery").addEventListener("click",()=>{
@@ -423,7 +439,8 @@ function renderVisualModels() {
   let active = 0;
   const draw = () => {
     const model = course.visualModels[active];
-    $("#app").innerHTML = `${pageHeader("Six ways to see the mathematics", "Visual Models", `Explore representations that make ${escapeHtml(course.unit.unitTitle)} visible and easier to explain.`)}<div class="model-tabs">${course.visualModels.map((item,index)=>`<button class="subtab ${index===active?'active':''}" data-model-index="${index}" type="button">${escapeHtml(item.title)}</button>`).join('')}</div><section class="panel model-stage generic-model-stage"><div class="math-symbol">${active+1}</div><span class="eyebrow">${escapeHtml(model.outcomeId || `Model ${active+1}`)}</span><h2>${escapeHtml(model.title)}</h2><p>${escapeHtml(model.purpose)}</p>${voiceButton(`${model.title}. ${model.purpose}`, "Listen to model")}<div class="model-concept-cards">${course.concepts.slice(0,3).map((concept)=>`<article><strong>${escapeHtml(concept.title)}</strong><span>${escapeHtml(concept.example)}</span></article>`).join('')}</div></section><p><button class="button primary" id="visuals-done" type="button">I explored the models ✓</button></p>`;
+    $("#app").innerHTML = `${pageHeader("Ways to see the mathematics", "Visual Models", `Explore labelled models that make ${escapeHtml(course.unit.unitTitle)} visible and easier to explain.`)}<div class="model-tabs">${course.visualModels.map((item,index)=>`<button class="subtab ${index===active?'active':''}" data-model-index="${index}" type="button">${escapeHtml(item.title)}</button>`).join('')}</div><section class="panel model-stage generic-model-stage"><span class="eyebrow">${escapeHtml(model.outcomeId || `Model ${active+1}`)}</span><h2>${escapeHtml(model.title)}</h2>${mathDiagram(courseTopic(), active)}<p>${escapeHtml(model.purpose)}</p>${voiceButton(`${model.title}. ${model.purpose}`, "Listen to model")}<div class="model-concept-cards">${course.concepts.slice(0,3).map((concept)=>`<article><strong>${escapeHtml(concept.title)}</strong><span>${escapeHtml(concept.example)}</span></article>`).join('')}</div></section><p><button class="button primary" id="visuals-done" type="button">I explored the models ✓</button></p>`;
+    initMathWebGL($("#app"));
     $$('[data-model-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.modelIndex);draw();}));
     $("#visuals-done").addEventListener("click", () => { complete("visuals", "Visual models explored."); navigate("method"); });
   };
@@ -503,12 +520,16 @@ function geometryConceptVisual(concept, index) {
   </figure>`;
 }
 
+const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
+
 function renderLesson() {
-  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${geometryConceptVisual(concept, index)}<p>${escapeHtml(concept.explanation)}</p><p class="example"><strong>Example:</strong> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${concept.explanation}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
-  $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the six source-grounded concepts and follow the complete ElevenLabs narration for this lesson.")}
+  const topic = courseTopic();
+  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${mathDiagram(topic, index)}<p>${escapeHtml(concept.explanation)}</p><p class="example"><strong>Example:</strong> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${concept.explanation}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
+  $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;
   initGeometryWebGL($("#app"));
+  initMathWebGL($("#app"));
   $("#lesson-done").addEventListener("click", () => { complete("lesson", "Teacher lesson marked studied."); navigate("ai"); });
 }
 
@@ -974,7 +995,7 @@ function renderReflect() {
 function renderTeacher() {
   $("#app").innerHTML = `${pageHeader("Planning · evidence · intervention", "Teacher Resources", "Inspect source provenance, approved content coverage and learner evidence.")}
     <div class="section-stack">
-      <section class="panel approval-banner"><h2>Curriculum status</h2><p><strong>Approved.</strong> Cambridge ${course.stage.label} Mathematics content, progression, answer guidance and the 80% mastery threshold are approved for use.</p></section>
+      <section class="panel approval-banner"><h2>Curriculum status</h2><p><strong>${escapeHtml(cambridgeLabel(stageNumber))}.</strong> Content, progression, answer guidance and the 80% mastery threshold follow this framework. Curriculum review required before classroom use.</p></section>
       <section class="panel"><h2>Workbook provenance</h2><table class="term-table"><tbody><tr><th>Package</th><td>${escapeHtml(course.provenance.contentPackage)}</td></tr><tr><th>Archive</th><td>${escapeHtml(course.provenance.sourceArchive)}</td></tr><tr><th>Documents</th><td>${course.provenance.sourceDocuments.map(escapeHtml).join("; ")}</td></tr><tr><th>Imported blocks</th><td>${course.provenance.sourceBlockCount}</td></tr><tr><th>Transformation</th><td>${escapeHtml(course.provenance.transformation)}</td></tr></tbody></table></section>
       <section class="panel"><h2>Coverage</h2><div class="stat-row"><div class="stat"><strong>${course.outcomes.length}</strong><small>outcomes</small></div><div class="stat"><strong>${course.workedExamples.length}</strong><small>worked examples</small></div><div class="stat"><strong>${course.assessment.questions.length}</strong><small>checkpoint items</small></div></div></section>
       <section class="panel"><h2>Suggested teaching resources</h2><div class="reference-grid"><div><h3>Manipulatives</h3><p>${escapeHtml(course.activities.map((item)=>item.materials).slice(0,3).join('; '))}.</p></div><div><h3>Evidence to collect</h3><p>Model-building accuracy, Guided Practice responses, activity notes, game mastery, real-problem calculations and reasoning explanations.</p></div></div></section>

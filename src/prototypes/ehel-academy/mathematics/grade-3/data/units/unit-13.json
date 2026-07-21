@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.739Z",
+  "generatedAt": "2026-07-21T07:03:32.731Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 3
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-3-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 3",
     "sourceArchive": "Year 3 (1)-20260714T220920Z-1-001.zip",
     "sourceDocuments": [
       "Year 3 (1)/Unit 13/Year 3 - Unit 13 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 3 (1)/Unit 13/Year 3 - Unit 13 Reference.docx"
     ],
     "sourceBlockCount": 386,
-    "transformation": "Structured directly from the standardized Cambridge Stage 3 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 3 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -368,7 +374,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Practice 10",
       "prompt": "A ribbon is 45 cm long. A second ribbon is 30 cm long. What is the total length in millimetres?",
       "solution": "45 + 30 = 75 cm = 750 mm."
     },
@@ -376,7 +382,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Practice 11",
       "prompt": "Order from shortest to longest: 0.5 m, 40 cm, 600 mm.",
       "solution": "40 cm (0.4 m), then 0.5 m (50 cm), then 600 mm (60 cm), so order: 40 cm, 0.5 m, 600 mm."
     },
@@ -384,7 +390,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Practice 12",
       "prompt": "Sarah measured her bedroom as 4 m 25 cm. Write this length in centimetres only.",
       "solution": "1) 4 × 100 + 25 = 425 cm."
     }
@@ -872,8 +878,24 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "A ribbon is 45 cm long. A second ribbon is 30 cm long. What is the total length in millimetres?",
+        "options": [
+          "91",
+          "75",
+          "83",
+          "67"
+        ],
+        "answer": "75",
+        "hint": "Work it out step by step, using the Unit 13 methods.",
+        "explanation": "45 + 30 = 75 cm = 750 mm."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
         "difficulty": "Basic",
         "question": "What does “Length” mean?",
         "options": [
@@ -887,9 +909,9 @@
         "explanation": "Length means How long, tall or far something is."
       },
       {
-        "id": "q02",
+        "id": "q03",
         "type": "Concept",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Basic",
         "question": "What does “Mass” mean?",
         "options": [
@@ -903,9 +925,9 @@
         "explanation": "Mass means How heavy something is."
       },
       {
-        "id": "q03",
+        "id": "q04",
         "type": "Concept",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Basic",
         "question": "What does “Capacity” mean?",
         "options": [
@@ -919,10 +941,10 @@
         "explanation": "Capacity means How much liquid a container holds."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Estimate” mean?",
         "options": [
           "A sensible guess before measuring",
@@ -935,9 +957,9 @@
         "explanation": "Estimate means A sensible guess before measuring."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
         "difficulty": "Core",
         "question": "What does “Convert” mean?",
         "options": [
@@ -951,9 +973,9 @@
         "explanation": "Convert means Change from one unit to another."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
         "difficulty": "Core",
         "question": "What does “Meniscus” mean?",
         "options": [
@@ -967,9 +989,9 @@
         "explanation": "Meniscus means The curved top of a liquid in a jug."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
         "difficulty": "Core",
         "question": "Which term matches this meaning: A known size used to help estimate?",
         "options": [
@@ -983,9 +1005,9 @@
         "explanation": "Benchmark means A known size used to help estimate."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "Which term matches this meaning: How long, tall or far something is?",
         "options": [
@@ -999,10 +1021,10 @@
         "explanation": "Length means How long, tall or far something is."
       },
       {
-        "id": "q09",
+        "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: How heavy something is?",
         "options": [
           "Mass",
@@ -1015,9 +1037,9 @@
         "explanation": "Mass means How heavy something is."
       },
       {
-        "id": "q10",
+        "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which term matches this meaning: How much liquid a container holds?",
         "options": [
@@ -1031,9 +1053,9 @@
         "explanation": "Capacity means How much liquid a container holds."
       },
       {
-        "id": "q11",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which term matches this meaning: A sensible guess before measuring?",
         "options": [
@@ -1045,22 +1067,6 @@
         "answer": "Estimate",
         "hint": "Use the Unit 13 Math Words & Symbols reference.",
         "explanation": "Estimate means A sensible guess before measuring."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Change from one unit to another?",
-        "options": [
-          "Convert",
-          "Benchmark",
-          "Length",
-          "Mass"
-        ],
-        "answer": "Convert",
-        "hint": "Use the Unit 13 Math Words & Symbols reference.",
-        "explanation": "Convert means Change from one unit to another."
       }
     ]
   },
@@ -1076,52 +1082,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Length” mean?",
+            "prompt": "A ribbon is 45 cm long. A second ribbon is 30 cm long. What is the total length in millimetres?",
             "choices": [
-              "How long, tall or far something is",
-              "How heavy something is",
-              "How much liquid a container holds",
-              "A sensible guess before measuring"
+              "91",
+              "75",
+              "83",
+              "67"
             ],
-            "answer": "How long, tall or far something is",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Length means How long, tall or far something is."
+            "answer": "75",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "45 + 30 = 75 cm = 750 mm."
           },
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "What does “Capacity” mean?",
             "choices": [
+              "How much liquid a container holds",
               "A sensible guess before measuring",
               "Change from one unit to another",
-              "The curved top of a liquid in a jug",
-              "A known size used to help estimate"
+              "The curved top of a liquid in a jug"
             ],
-            "answer": "A sensible guess before measuring",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before measuring."
-          },
-          {
-            "prompt": "Which term matches this meaning: A known size used to help estimate?",
-            "choices": [
-              "Benchmark",
-              "Length",
-              "Mass",
-              "Capacity"
-            ],
-            "answer": "Benchmark",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Benchmark means A known size used to help estimate."
-          },
-          {
-            "prompt": "Which term matches this meaning: How much liquid a container holds?",
-            "choices": [
-              "Capacity",
-              "Convert",
-              "Meniscus",
-              "Benchmark"
-            ],
-            "answer": "Capacity",
+            "answer": "How much liquid a container holds",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Capacity means How much liquid a container holds."
+          },
+          {
+            "prompt": "What does “Meniscus” mean?",
+            "choices": [
+              "The curved top of a liquid in a jug",
+              "A known size used to help estimate",
+              "How long, tall or far something is",
+              "How heavy something is"
+            ],
+            "answer": "The curved top of a liquid in a jug",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Meniscus means The curved top of a liquid in a jug."
+          },
+          {
+            "prompt": "Which term matches this meaning: How heavy something is?",
+            "choices": [
+              "Mass",
+              "Estimate",
+              "Convert",
+              "Meniscus"
+            ],
+            "answer": "Mass",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mass means How heavy something is."
           }
         ]
       },
@@ -1134,52 +1140,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Mass” mean?",
+            "prompt": "What does “Length” mean?",
             "choices": [
+              "How long, tall or far something is",
               "How heavy something is",
               "How much liquid a container holds",
-              "A sensible guess before measuring",
-              "Change from one unit to another"
+              "A sensible guess before measuring"
             ],
-            "answer": "How heavy something is",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Mass means How heavy something is."
-          },
-          {
-            "prompt": "What does “Convert” mean?",
-            "choices": [
-              "Change from one unit to another",
-              "The curved top of a liquid in a jug",
-              "A known size used to help estimate",
-              "How long, tall or far something is"
-            ],
-            "answer": "Change from one unit to another",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Convert means Change from one unit to another."
-          },
-          {
-            "prompt": "Which term matches this meaning: How long, tall or far something is?",
-            "choices": [
-              "Length",
-              "Capacity",
-              "Estimate",
-              "Convert"
-            ],
-            "answer": "Length",
+            "answer": "How long, tall or far something is",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Length means How long, tall or far something is."
           },
           {
-            "prompt": "Which term matches this meaning: A sensible guess before measuring?",
+            "prompt": "What does “Estimate” mean?",
             "choices": [
-              "Estimate",
-              "Meniscus",
-              "Benchmark",
-              "Length"
+              "A sensible guess before measuring",
+              "Change from one unit to another",
+              "The curved top of a liquid in a jug",
+              "A known size used to help estimate"
             ],
-            "answer": "Estimate",
+            "answer": "A sensible guess before measuring",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Estimate means A sensible guess before measuring."
+          },
+          {
+            "prompt": "Which term matches this meaning: A known size used to help estimate?",
+            "choices": [
+              "Benchmark",
+              "Length",
+              "Mass",
+              "Capacity"
+            ],
+            "answer": "Benchmark",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Benchmark means A known size used to help estimate."
+          },
+          {
+            "prompt": "Which term matches this meaning: How much liquid a container holds?",
+            "choices": [
+              "Capacity",
+              "Convert",
+              "Meniscus",
+              "Benchmark"
+            ],
+            "answer": "Capacity",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Capacity means How much liquid a container holds."
           }
         ]
       },
@@ -1192,52 +1198,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Capacity” mean?",
+            "prompt": "What does “Mass” mean?",
             "choices": [
+              "How heavy something is",
               "How much liquid a container holds",
               "A sensible guess before measuring",
-              "Change from one unit to another",
-              "The curved top of a liquid in a jug"
+              "Change from one unit to another"
             ],
-            "answer": "How much liquid a container holds",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Capacity means How much liquid a container holds."
-          },
-          {
-            "prompt": "What does “Meniscus” mean?",
-            "choices": [
-              "The curved top of a liquid in a jug",
-              "A known size used to help estimate",
-              "How long, tall or far something is",
-              "How heavy something is"
-            ],
-            "answer": "The curved top of a liquid in a jug",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Meniscus means The curved top of a liquid in a jug."
-          },
-          {
-            "prompt": "Which term matches this meaning: How heavy something is?",
-            "choices": [
-              "Mass",
-              "Estimate",
-              "Convert",
-              "Meniscus"
-            ],
-            "answer": "Mass",
+            "answer": "How heavy something is",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Mass means How heavy something is."
           },
           {
-            "prompt": "Which term matches this meaning: Change from one unit to another?",
+            "prompt": "What does “Convert” mean?",
             "choices": [
-              "Convert",
-              "Benchmark",
-              "Length",
-              "Mass"
+              "Change from one unit to another",
+              "The curved top of a liquid in a jug",
+              "A known size used to help estimate",
+              "How long, tall or far something is"
             ],
-            "answer": "Convert",
+            "answer": "Change from one unit to another",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Convert means Change from one unit to another."
+          },
+          {
+            "prompt": "Which term matches this meaning: How long, tall or far something is?",
+            "choices": [
+              "Length",
+              "Capacity",
+              "Estimate",
+              "Convert"
+            ],
+            "answer": "Length",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Length means How long, tall or far something is."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess before measuring?",
+            "choices": [
+              "Estimate",
+              "Meniscus",
+              "Benchmark",
+              "Length"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before measuring."
           }
         ]
       },
@@ -1250,52 +1256,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "What does “Capacity” mean?",
             "choices": [
+              "How much liquid a container holds",
               "A sensible guess before measuring",
               "Change from one unit to another",
-              "The curved top of a liquid in a jug",
-              "A known size used to help estimate"
+              "The curved top of a liquid in a jug"
             ],
-            "answer": "A sensible guess before measuring",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before measuring."
-          },
-          {
-            "prompt": "Which term matches this meaning: A known size used to help estimate?",
-            "choices": [
-              "Benchmark",
-              "Length",
-              "Mass",
-              "Capacity"
-            ],
-            "answer": "Benchmark",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Benchmark means A known size used to help estimate."
-          },
-          {
-            "prompt": "Which term matches this meaning: How much liquid a container holds?",
-            "choices": [
-              "Capacity",
-              "Convert",
-              "Meniscus",
-              "Benchmark"
-            ],
-            "answer": "Capacity",
+            "answer": "How much liquid a container holds",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Capacity means How much liquid a container holds."
           },
           {
-            "prompt": "What does “Length” mean?",
+            "prompt": "What does “Meniscus” mean?",
             "choices": [
+              "The curved top of a liquid in a jug",
+              "A known size used to help estimate",
               "How long, tall or far something is",
-              "How heavy something is",
-              "How much liquid a container holds",
-              "A sensible guess before measuring"
+              "How heavy something is"
             ],
-            "answer": "How long, tall or far something is",
+            "answer": "The curved top of a liquid in a jug",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Length means How long, tall or far something is."
+            "explanation": "Meniscus means The curved top of a liquid in a jug."
+          },
+          {
+            "prompt": "Which term matches this meaning: How heavy something is?",
+            "choices": [
+              "Mass",
+              "Estimate",
+              "Convert",
+              "Meniscus"
+            ],
+            "answer": "Mass",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mass means How heavy something is."
+          },
+          {
+            "prompt": "A ribbon is 45 cm long. A second ribbon is 30 cm long. What is the total length in millimetres?",
+            "choices": [
+              "91",
+              "75",
+              "83",
+              "67"
+            ],
+            "answer": "75",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "45 + 30 = 75 cm = 750 mm."
           }
         ]
       },
@@ -1308,52 +1314,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Convert” mean?",
+            "prompt": "What does “Estimate” mean?",
             "choices": [
+              "A sensible guess before measuring",
               "Change from one unit to another",
               "The curved top of a liquid in a jug",
-              "A known size used to help estimate",
-              "How long, tall or far something is"
+              "A known size used to help estimate"
             ],
-            "answer": "Change from one unit to another",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Convert means Change from one unit to another."
-          },
-          {
-            "prompt": "Which term matches this meaning: How long, tall or far something is?",
-            "choices": [
-              "Length",
-              "Capacity",
-              "Estimate",
-              "Convert"
-            ],
-            "answer": "Length",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Length means How long, tall or far something is."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible guess before measuring?",
-            "choices": [
-              "Estimate",
-              "Meniscus",
-              "Benchmark",
-              "Length"
-            ],
-            "answer": "Estimate",
+            "answer": "A sensible guess before measuring",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Estimate means A sensible guess before measuring."
           },
           {
-            "prompt": "What does “Mass” mean?",
+            "prompt": "Which term matches this meaning: A known size used to help estimate?",
             "choices": [
+              "Benchmark",
+              "Length",
+              "Mass",
+              "Capacity"
+            ],
+            "answer": "Benchmark",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Benchmark means A known size used to help estimate."
+          },
+          {
+            "prompt": "Which term matches this meaning: How much liquid a container holds?",
+            "choices": [
+              "Capacity",
+              "Convert",
+              "Meniscus",
+              "Benchmark"
+            ],
+            "answer": "Capacity",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Capacity means How much liquid a container holds."
+          },
+          {
+            "prompt": "What does “Length” mean?",
+            "choices": [
+              "How long, tall or far something is",
               "How heavy something is",
               "How much liquid a container holds",
-              "A sensible guess before measuring",
-              "Change from one unit to another"
+              "A sensible guess before measuring"
             ],
-            "answer": "How heavy something is",
+            "answer": "How long, tall or far something is",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Mass means How heavy something is."
+            "explanation": "Length means How long, tall or far something is."
           }
         ]
       },
@@ -1366,52 +1372,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Meniscus” mean?",
+            "prompt": "What does “Convert” mean?",
             "choices": [
+              "Change from one unit to another",
               "The curved top of a liquid in a jug",
               "A known size used to help estimate",
-              "How long, tall or far something is",
-              "How heavy something is"
+              "How long, tall or far something is"
             ],
-            "answer": "The curved top of a liquid in a jug",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Meniscus means The curved top of a liquid in a jug."
-          },
-          {
-            "prompt": "Which term matches this meaning: How heavy something is?",
-            "choices": [
-              "Mass",
-              "Estimate",
-              "Convert",
-              "Meniscus"
-            ],
-            "answer": "Mass",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Mass means How heavy something is."
-          },
-          {
-            "prompt": "Which term matches this meaning: Change from one unit to another?",
-            "choices": [
-              "Convert",
-              "Benchmark",
-              "Length",
-              "Mass"
-            ],
-            "answer": "Convert",
+            "answer": "Change from one unit to another",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Convert means Change from one unit to another."
           },
           {
-            "prompt": "What does “Capacity” mean?",
+            "prompt": "Which term matches this meaning: How long, tall or far something is?",
             "choices": [
+              "Length",
+              "Capacity",
+              "Estimate",
+              "Convert"
+            ],
+            "answer": "Length",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Length means How long, tall or far something is."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess before measuring?",
+            "choices": [
+              "Estimate",
+              "Meniscus",
+              "Benchmark",
+              "Length"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before measuring."
+          },
+          {
+            "prompt": "What does “Mass” mean?",
+            "choices": [
+              "How heavy something is",
               "How much liquid a container holds",
               "A sensible guess before measuring",
-              "Change from one unit to another",
-              "The curved top of a liquid in a jug"
+              "Change from one unit to another"
             ],
-            "answer": "How much liquid a container holds",
+            "answer": "How heavy something is",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Capacity means How much liquid a container holds."
+            "explanation": "Mass means How heavy something is."
           }
         ]
       },
@@ -1424,52 +1430,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A known size used to help estimate?",
+            "prompt": "What does “Meniscus” mean?",
             "choices": [
-              "Benchmark",
-              "Length",
-              "Mass",
-              "Capacity"
-            ],
-            "answer": "Benchmark",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Benchmark means A known size used to help estimate."
-          },
-          {
-            "prompt": "Which term matches this meaning: How much liquid a container holds?",
-            "choices": [
-              "Capacity",
-              "Convert",
-              "Meniscus",
-              "Benchmark"
-            ],
-            "answer": "Capacity",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Capacity means How much liquid a container holds."
-          },
-          {
-            "prompt": "What does “Length” mean?",
-            "choices": [
+              "The curved top of a liquid in a jug",
+              "A known size used to help estimate",
               "How long, tall or far something is",
-              "How heavy something is",
-              "How much liquid a container holds",
-              "A sensible guess before measuring"
+              "How heavy something is"
             ],
-            "answer": "How long, tall or far something is",
+            "answer": "The curved top of a liquid in a jug",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Length means How long, tall or far something is."
+            "explanation": "Meniscus means The curved top of a liquid in a jug."
           },
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "Which term matches this meaning: How heavy something is?",
             "choices": [
+              "Mass",
+              "Estimate",
+              "Convert",
+              "Meniscus"
+            ],
+            "answer": "Mass",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Mass means How heavy something is."
+          },
+          {
+            "prompt": "A ribbon is 45 cm long. A second ribbon is 30 cm long. What is the total length in millimetres?",
+            "choices": [
+              "91",
+              "75",
+              "83",
+              "67"
+            ],
+            "answer": "75",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "45 + 30 = 75 cm = 750 mm."
+          },
+          {
+            "prompt": "What does “Capacity” mean?",
+            "choices": [
+              "How much liquid a container holds",
               "A sensible guess before measuring",
               "Change from one unit to another",
-              "The curved top of a liquid in a jug",
-              "A known size used to help estimate"
+              "The curved top of a liquid in a jug"
             ],
-            "answer": "A sensible guess before measuring",
+            "answer": "How much liquid a container holds",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before measuring."
+            "explanation": "Capacity means How much liquid a container holds."
           }
         ]
       },
@@ -1482,6 +1488,64 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Which term matches this meaning: A known size used to help estimate?",
+            "choices": [
+              "Benchmark",
+              "Length",
+              "Mass",
+              "Capacity"
+            ],
+            "answer": "Benchmark",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Benchmark means A known size used to help estimate."
+          },
+          {
+            "prompt": "Which term matches this meaning: How much liquid a container holds?",
+            "choices": [
+              "Capacity",
+              "Convert",
+              "Meniscus",
+              "Benchmark"
+            ],
+            "answer": "Capacity",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Capacity means How much liquid a container holds."
+          },
+          {
+            "prompt": "What does “Length” mean?",
+            "choices": [
+              "How long, tall or far something is",
+              "How heavy something is",
+              "How much liquid a container holds",
+              "A sensible guess before measuring"
+            ],
+            "answer": "How long, tall or far something is",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Length means How long, tall or far something is."
+          },
+          {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A sensible guess before measuring",
+              "Change from one unit to another",
+              "The curved top of a liquid in a jug",
+              "A known size used to help estimate"
+            ],
+            "answer": "A sensible guess before measuring",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before measuring."
+          }
+        ]
+      },
+      {
+        "id": "u13-game-9",
+        "icon": "⌂",
+        "skill": "Mass",
+        "title": "Real-Life Round: Mass",
+        "description": "Practise mass through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
             "prompt": "Which term matches this meaning: How long, tall or far something is?",
             "choices": [
               "Length",
@@ -1532,11 +1596,11 @@
         ]
       },
       {
-        "id": "u13-game-9",
-        "icon": "⌂",
-        "skill": "Mass",
-        "title": "Real-Life Round: Mass",
-        "description": "Practise mass through four short challenges.",
+        "id": "u13-game-10",
+        "icon": "!",
+        "skill": "Capacity",
+        "title": "Spot the Error: Capacity",
+        "description": "Practise capacity through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1552,16 +1616,16 @@
             "explanation": "Mass means How heavy something is."
           },
           {
-            "prompt": "Which term matches this meaning: Change from one unit to another?",
+            "prompt": "A ribbon is 45 cm long. A second ribbon is 30 cm long. What is the total length in millimetres?",
             "choices": [
-              "Convert",
-              "Benchmark",
-              "Length",
-              "Mass"
+              "91",
+              "75",
+              "83",
+              "67"
             ],
-            "answer": "Convert",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Convert means Change from one unit to another."
+            "answer": "75",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "45 + 30 = 75 cm = 750 mm."
           },
           {
             "prompt": "What does “Capacity” mean?",
@@ -1590,11 +1654,11 @@
         ]
       },
       {
-        "id": "u13-game-10",
-        "icon": "!",
-        "skill": "Capacity",
-        "title": "Spot the Error: Capacity",
-        "description": "Practise capacity through four short challenges.",
+        "id": "u13-game-11",
+        "icon": "≡",
+        "skill": "Estimate",
+        "title": "Mastery Mix: Estimate",
+        "description": "Practise estimate through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1648,11 +1712,11 @@
         ]
       },
       {
-        "id": "u13-game-11",
-        "icon": "≡",
-        "skill": "Estimate",
-        "title": "Mastery Mix: Estimate",
-        "description": "Practise estimate through four short challenges.",
+        "id": "u13-game-12",
+        "icon": "T",
+        "skill": "Convert",
+        "title": "Unit Champion: Convert",
+        "description": "Practise convert through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1702,64 +1766,6 @@
             "answer": "Length",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Length means How long, tall or far something is."
-          }
-        ]
-      },
-      {
-        "id": "u13-game-12",
-        "icon": "T",
-        "skill": "Convert",
-        "title": "Unit Champion: Convert",
-        "description": "Practise convert through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Change from one unit to another?",
-            "choices": [
-              "Convert",
-              "Benchmark",
-              "Length",
-              "Mass"
-            ],
-            "answer": "Convert",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Convert means Change from one unit to another."
-          },
-          {
-            "prompt": "What does “Capacity” mean?",
-            "choices": [
-              "How much liquid a container holds",
-              "A sensible guess before measuring",
-              "Change from one unit to another",
-              "The curved top of a liquid in a jug"
-            ],
-            "answer": "How much liquid a container holds",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Capacity means How much liquid a container holds."
-          },
-          {
-            "prompt": "What does “Meniscus” mean?",
-            "choices": [
-              "The curved top of a liquid in a jug",
-              "A known size used to help estimate",
-              "How long, tall or far something is",
-              "How heavy something is"
-            ],
-            "answer": "The curved top of a liquid in a jug",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Meniscus means The curved top of a liquid in a jug."
-          },
-          {
-            "prompt": "Which term matches this meaning: How heavy something is?",
-            "choices": [
-              "Mass",
-              "Estimate",
-              "Convert",
-              "Meniscus"
-            ],
-            "answer": "Mass",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Mass means How heavy something is."
           }
         ]
       }

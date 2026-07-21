@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-15T08:45:29.720Z",
+  "generatedAt": "2026-07-21T07:03:33.884Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 2
+  },
   "provenance": {
-    "contentPackage": "Ehel-Academy-Mathematics-Stage-2-Content-Package.xlsx",
+    "contentPackage": "Ehel-Academy-Mathematics-Grade-2-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 2",
     "sourceArchive": "Year 2 (1)-20260714T220953Z-1-001.zip",
     "sourceDocuments": [
       "Year 2 (1)/Unit 5 (1)/Year 2 - Unit 5 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 2 (1)/Unit 5 (1)/Year 2 - Unit 5 Reference.docx"
     ],
     "sourceBlockCount": 387,
-    "transformation": "Structured directly from the standardized Cambridge Stage 2 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 2 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -362,7 +368,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Add three numbers by finding a ten",
       "prompt": "Add three numbers by finding a ten: a) 4 + 8 + 6 b) 7 + 3 + 5 c) 8 + 5 + 5.",
       "solution": "a) 18, b) 15, c) 18."
     },
@@ -370,7 +376,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Complete the times tables",
       "prompt": "Complete the times tables: a) 2 × 8 b) 5 × 6 c) 10 × 4.",
       "solution": "a) 16, b) 30, c) 40."
     },
@@ -378,7 +384,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Write each as a multiplication",
       "prompt": "Write each as a multiplication: a) 5 + 5 + 5 b) 10 + 10 + 10.",
       "solution": "a) 3 × 5 = 15, b) 3 × 10 = 30."
     },
@@ -386,7 +392,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Division as grouping",
       "prompt": "Division as grouping: a) 15 ÷ 5 b) 14 ÷ 2 c) 40 ÷ 10.",
       "solution": "1) a) 3, b) 7, c) 4."
     }
@@ -862,9 +868,89 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
-        "difficulty": "Basic",
+        "difficulty": "Core",
+        "question": "Work out 56 + 7.",
+        "options": [
+          "63",
+          "69",
+          "57",
+          "75"
+        ],
+        "answer": "63",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "Start at 56. To reach the next ten, 60, we need 4. Split the 7 into 4 and 3. Add the 4 first: 56 + 4 = 60. Then add the remaining 3: 60 + 3 = 63. So 56 + 7 = 63."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Work out 38 + 30.",
+        "options": [
+          "75",
+          "61",
+          "82",
+          "68"
+        ],
+        "answer": "68",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "Adding tens leaves the ones alone. The ones digit stays 8. Add the tens: 3 tens + 3 tens = 6 tens. So the answer is 6 tens and 8 ones, which is 68. So 38 + 30 = 68."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Work out 6 + 7 + 4.",
+        "options": [
+          "21",
+          "17",
+          "19",
+          "15"
+        ],
+        "answer": "17",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "Look for a pair that makes ten. Here 6 + 4 = 10. Add those first, then add the 7: 10 + 7 = 17. So 6 + 7 + 4 = 17."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Work out 62 − 9, then check your answer.",
+        "options": [
+          "53",
+          "58",
+          "48",
+          "63"
+        ],
+        "answer": "53",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "Use number bonds: 12 − 9 = 3, and there are 5 tens carried along, so 62 − 9 = 53. Check by adding back: 53 + 9 = 62. It matches, so the answer is correct."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Write 5 + 5 + 5 + 5 as a multiplication and find the total.",
+        "options": [
+          "24",
+          "20",
+          "22",
+          "18"
+        ],
+        "answer": "20",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "There are 4 groups of 5, so it is 4 × 5. Counting in fives: 5, 10, 15, 20. So 5 + 5 + 5 + 5 = 4 × 5 = 20."
+      },
+      {
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Add / Total” mean?",
         "options": [
           "Put groups together to find how many altogether",
@@ -877,10 +963,10 @@
         "explanation": "Add / Total means Put groups together to find how many altogether."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Subtract / Difference” mean?",
         "options": [
           "Take away, or find how many more",
@@ -893,10 +979,10 @@
         "explanation": "Subtract / Difference means Take away, or find how many more."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
         "question": "What does “Complement” mean?",
         "options": [
           "The missing part that completes a target",
@@ -909,10 +995,10 @@
         "explanation": "Complement means The missing part that completes a target."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
         "question": "What does “Multiply / Product” mean?",
         "options": [
           "Repeated addition of equal groups",
@@ -925,10 +1011,10 @@
         "explanation": "Multiply / Product means Repeated addition of equal groups."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Array” mean?",
         "options": [
           "Equal rows and columns of objects",
@@ -941,10 +1027,10 @@
         "explanation": "Array means Equal rows and columns of objects."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Divide” mean?",
         "options": [
           "Share equally or make equal groups",
@@ -957,10 +1043,10 @@
         "explanation": "Divide means Share equally or make equal groups."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: Two ways to think about division?",
         "options": [
           "Grouping / Sharing",
@@ -971,86 +1057,6 @@
         "answer": "Grouping / Sharing",
         "hint": "Use the Unit 5 Math Words & Symbols reference.",
         "explanation": "Grouping / Sharing means Two ways to think about division."
-      },
-      {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Put groups together to find how many altogether?",
-        "options": [
-          "Add / Total",
-          "Complement",
-          "Multiply / Product",
-          "Array"
-        ],
-        "answer": "Add / Total",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "Add / Total means Put groups together to find how many altogether."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Take away, or find how many more?",
-        "options": [
-          "Subtract / Difference",
-          "Multiply / Product",
-          "Array",
-          "Divide"
-        ],
-        "answer": "Subtract / Difference",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "Subtract / Difference means Take away, or find how many more."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The missing part that completes a target?",
-        "options": [
-          "Complement",
-          "Array",
-          "Divide",
-          "Grouping / Sharing"
-        ],
-        "answer": "Complement",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "Complement means The missing part that completes a target."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Repeated addition of equal groups?",
-        "options": [
-          "Multiply / Product",
-          "Divide",
-          "Grouping / Sharing",
-          "Add / Total"
-        ],
-        "answer": "Multiply / Product",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "Multiply / Product means Repeated addition of equal groups."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Equal rows and columns of objects?",
-        "options": [
-          "Array",
-          "Grouping / Sharing",
-          "Add / Total",
-          "Subtract / Difference"
-        ],
-        "answer": "Array",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "Array means Equal rows and columns of objects."
       }
     ]
   },
@@ -1066,52 +1072,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Add / Total” mean?",
+            "prompt": "Work out 56 + 7.",
             "choices": [
-              "Put groups together to find how many altogether",
+              "63",
+              "69",
+              "57",
+              "75"
+            ],
+            "answer": "63",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Start at 56. To reach the next ten, 60, we need 4. Split the 7 into 4 and 3. Add the 4 first: 56 + 4 = 60. Then add the remaining 3: 60 + 3 = 63. So 56 + 7 = 63."
+          },
+          {
+            "prompt": "Work out 62 − 9, then check your answer.",
+            "choices": [
+              "53",
+              "58",
+              "48",
+              "63"
+            ],
+            "answer": "53",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Use number bonds: 12 − 9 = 3, and there are 5 tens carried along, so 62 − 9 = 53. Check by adding back: 53 + 9 = 62. It matches, so the answer is correct."
+          },
+          {
+            "prompt": "What does “Subtract / Difference” mean?",
+            "choices": [
               "Take away, or find how many more",
               "The missing part that completes a target",
-              "Repeated addition of equal groups"
+              "Repeated addition of equal groups",
+              "Equal rows and columns of objects"
             ],
-            "answer": "Put groups together to find how many altogether",
+            "answer": "Take away, or find how many more",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Add / Total means Put groups together to find how many altogether."
+            "explanation": "Subtract / Difference means Take away, or find how many more."
           },
           {
-            "prompt": "What does “Multiply / Product” mean?",
+            "prompt": "What does “Array” mean?",
             "choices": [
-              "Repeated addition of equal groups",
               "Equal rows and columns of objects",
               "Share equally or make equal groups",
-              "Two ways to think about division"
+              "Two ways to think about division",
+              "Put groups together to find how many altogether"
             ],
-            "answer": "Repeated addition of equal groups",
+            "answer": "Equal rows and columns of objects",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiply / Product means Repeated addition of equal groups."
-          },
-          {
-            "prompt": "Which term matches this meaning: Two ways to think about division?",
-            "choices": [
-              "Grouping / Sharing",
-              "Add / Total",
-              "Subtract / Difference",
-              "Complement"
-            ],
-            "answer": "Grouping / Sharing",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Grouping / Sharing means Two ways to think about division."
-          },
-          {
-            "prompt": "Which term matches this meaning: The missing part that completes a target?",
-            "choices": [
-              "Complement",
-              "Array",
-              "Divide",
-              "Grouping / Sharing"
-            ],
-            "answer": "Complement",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Complement means The missing part that completes a target."
+            "explanation": "Array means Equal rows and columns of objects."
           }
         ]
       },
@@ -1124,52 +1130,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Subtract / Difference” mean?",
+            "prompt": "Work out 38 + 30.",
             "choices": [
-              "Take away, or find how many more",
+              "75",
+              "61",
+              "82",
+              "68"
+            ],
+            "answer": "68",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Adding tens leaves the ones alone. The ones digit stays 8. Add the tens: 3 tens + 3 tens = 6 tens. So the answer is 6 tens and 8 ones, which is 68. So 38 + 30 = 68."
+          },
+          {
+            "prompt": "Write 5 + 5 + 5 + 5 as a multiplication and find the total.",
+            "choices": [
+              "24",
+              "20",
+              "22",
+              "18"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "There are 4 groups of 5, so it is 4 × 5. Counting in fives: 5, 10, 15, 20. So 5 + 5 + 5 + 5 = 4 × 5 = 20."
+          },
+          {
+            "prompt": "What does “Complement” mean?",
+            "choices": [
               "The missing part that completes a target",
               "Repeated addition of equal groups",
-              "Equal rows and columns of objects"
+              "Equal rows and columns of objects",
+              "Share equally or make equal groups"
             ],
-            "answer": "Take away, or find how many more",
+            "answer": "The missing part that completes a target",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Subtract / Difference means Take away, or find how many more."
+            "explanation": "Complement means The missing part that completes a target."
           },
           {
-            "prompt": "What does “Array” mean?",
+            "prompt": "What does “Divide” mean?",
             "choices": [
-              "Equal rows and columns of objects",
               "Share equally or make equal groups",
               "Two ways to think about division",
-              "Put groups together to find how many altogether"
+              "Put groups together to find how many altogether",
+              "Take away, or find how many more"
             ],
-            "answer": "Equal rows and columns of objects",
+            "answer": "Share equally or make equal groups",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Equal rows and columns of objects."
-          },
-          {
-            "prompt": "Which term matches this meaning: Put groups together to find how many altogether?",
-            "choices": [
-              "Add / Total",
-              "Complement",
-              "Multiply / Product",
-              "Array"
-            ],
-            "answer": "Add / Total",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Add / Total means Put groups together to find how many altogether."
-          },
-          {
-            "prompt": "Which term matches this meaning: Repeated addition of equal groups?",
-            "choices": [
-              "Multiply / Product",
-              "Divide",
-              "Grouping / Sharing",
-              "Add / Total"
-            ],
-            "answer": "Multiply / Product",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiply / Product means Repeated addition of equal groups."
+            "explanation": "Divide means Share equally or make equal groups."
           }
         ]
       },
@@ -1182,52 +1188,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Complement” mean?",
+            "prompt": "Work out 6 + 7 + 4.",
             "choices": [
+              "21",
+              "17",
+              "19",
+              "15"
+            ],
+            "answer": "17",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Look for a pair that makes ten. Here 6 + 4 = 10. Add those first, then add the 7: 10 + 7 = 17. So 6 + 7 + 4 = 17."
+          },
+          {
+            "prompt": "What does “Add / Total” mean?",
+            "choices": [
+              "Put groups together to find how many altogether",
+              "Take away, or find how many more",
               "The missing part that completes a target",
+              "Repeated addition of equal groups"
+            ],
+            "answer": "Put groups together to find how many altogether",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Add / Total means Put groups together to find how many altogether."
+          },
+          {
+            "prompt": "What does “Multiply / Product” mean?",
+            "choices": [
               "Repeated addition of equal groups",
               "Equal rows and columns of objects",
-              "Share equally or make equal groups"
-            ],
-            "answer": "The missing part that completes a target",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Complement means The missing part that completes a target."
-          },
-          {
-            "prompt": "What does “Divide” mean?",
-            "choices": [
               "Share equally or make equal groups",
-              "Two ways to think about division",
-              "Put groups together to find how many altogether",
-              "Take away, or find how many more"
+              "Two ways to think about division"
             ],
-            "answer": "Share equally or make equal groups",
+            "answer": "Repeated addition of equal groups",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Divide means Share equally or make equal groups."
+            "explanation": "Multiply / Product means Repeated addition of equal groups."
           },
           {
-            "prompt": "Which term matches this meaning: Take away, or find how many more?",
+            "prompt": "Which term matches this meaning: Two ways to think about division?",
             "choices": [
-              "Subtract / Difference",
-              "Multiply / Product",
-              "Array",
-              "Divide"
-            ],
-            "answer": "Subtract / Difference",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Subtract / Difference means Take away, or find how many more."
-          },
-          {
-            "prompt": "Which term matches this meaning: Equal rows and columns of objects?",
-            "choices": [
-              "Array",
               "Grouping / Sharing",
               "Add / Total",
-              "Subtract / Difference"
+              "Subtract / Difference",
+              "Complement"
             ],
-            "answer": "Array",
+            "answer": "Grouping / Sharing",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Equal rows and columns of objects."
+            "explanation": "Grouping / Sharing means Two ways to think about division."
           }
         ]
       },
@@ -1240,52 +1246,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Multiply / Product” mean?",
+            "prompt": "Work out 62 − 9, then check your answer.",
             "choices": [
-              "Repeated addition of equal groups",
-              "Equal rows and columns of objects",
-              "Share equally or make equal groups",
-              "Two ways to think about division"
+              "53",
+              "58",
+              "48",
+              "63"
             ],
-            "answer": "Repeated addition of equal groups",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiply / Product means Repeated addition of equal groups."
+            "answer": "53",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Use number bonds: 12 − 9 = 3, and there are 5 tens carried along, so 62 − 9 = 53. Check by adding back: 53 + 9 = 62. It matches, so the answer is correct."
           },
           {
-            "prompt": "Which term matches this meaning: Two ways to think about division?",
+            "prompt": "What does “Subtract / Difference” mean?",
             "choices": [
-              "Grouping / Sharing",
-              "Add / Total",
-              "Subtract / Difference",
-              "Complement"
-            ],
-            "answer": "Grouping / Sharing",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Grouping / Sharing means Two ways to think about division."
-          },
-          {
-            "prompt": "Which term matches this meaning: The missing part that completes a target?",
-            "choices": [
-              "Complement",
-              "Array",
-              "Divide",
-              "Grouping / Sharing"
-            ],
-            "answer": "Complement",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Complement means The missing part that completes a target."
-          },
-          {
-            "prompt": "What does “Add / Total” mean?",
-            "choices": [
-              "Put groups together to find how many altogether",
               "Take away, or find how many more",
               "The missing part that completes a target",
-              "Repeated addition of equal groups"
+              "Repeated addition of equal groups",
+              "Equal rows and columns of objects"
             ],
-            "answer": "Put groups together to find how many altogether",
+            "answer": "Take away, or find how many more",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Add / Total means Put groups together to find how many altogether."
+            "explanation": "Subtract / Difference means Take away, or find how many more."
+          },
+          {
+            "prompt": "What does “Array” mean?",
+            "choices": [
+              "Equal rows and columns of objects",
+              "Share equally or make equal groups",
+              "Two ways to think about division",
+              "Put groups together to find how many altogether"
+            ],
+            "answer": "Equal rows and columns of objects",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Array means Equal rows and columns of objects."
+          },
+          {
+            "prompt": "Work out 56 + 7.",
+            "choices": [
+              "63",
+              "69",
+              "57",
+              "75"
+            ],
+            "answer": "63",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Start at 56. To reach the next ten, 60, we need 4. Split the 7 into 4 and 3. Add the 4 first: 56 + 4 = 60. Then add the remaining 3: 60 + 3 = 63. So 56 + 7 = 63."
           }
         ]
       },
@@ -1298,52 +1304,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Array” mean?",
+            "prompt": "Write 5 + 5 + 5 + 5 as a multiplication and find the total.",
             "choices": [
-              "Equal rows and columns of objects",
-              "Share equally or make equal groups",
-              "Two ways to think about division",
-              "Put groups together to find how many altogether"
+              "24",
+              "20",
+              "22",
+              "18"
             ],
-            "answer": "Equal rows and columns of objects",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Equal rows and columns of objects."
+            "answer": "20",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "There are 4 groups of 5, so it is 4 × 5. Counting in fives: 5, 10, 15, 20. So 5 + 5 + 5 + 5 = 4 × 5 = 20."
           },
           {
-            "prompt": "Which term matches this meaning: Put groups together to find how many altogether?",
+            "prompt": "What does “Complement” mean?",
             "choices": [
-              "Add / Total",
-              "Complement",
-              "Multiply / Product",
-              "Array"
-            ],
-            "answer": "Add / Total",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Add / Total means Put groups together to find how many altogether."
-          },
-          {
-            "prompt": "Which term matches this meaning: Repeated addition of equal groups?",
-            "choices": [
-              "Multiply / Product",
-              "Divide",
-              "Grouping / Sharing",
-              "Add / Total"
-            ],
-            "answer": "Multiply / Product",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiply / Product means Repeated addition of equal groups."
-          },
-          {
-            "prompt": "What does “Subtract / Difference” mean?",
-            "choices": [
-              "Take away, or find how many more",
               "The missing part that completes a target",
               "Repeated addition of equal groups",
-              "Equal rows and columns of objects"
+              "Equal rows and columns of objects",
+              "Share equally or make equal groups"
             ],
-            "answer": "Take away, or find how many more",
+            "answer": "The missing part that completes a target",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Subtract / Difference means Take away, or find how many more."
+            "explanation": "Complement means The missing part that completes a target."
+          },
+          {
+            "prompt": "What does “Divide” mean?",
+            "choices": [
+              "Share equally or make equal groups",
+              "Two ways to think about division",
+              "Put groups together to find how many altogether",
+              "Take away, or find how many more"
+            ],
+            "answer": "Share equally or make equal groups",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Divide means Share equally or make equal groups."
+          },
+          {
+            "prompt": "Work out 38 + 30.",
+            "choices": [
+              "75",
+              "61",
+              "82",
+              "68"
+            ],
+            "answer": "68",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Adding tens leaves the ones alone. The ones digit stays 8. Add the tens: 3 tens + 3 tens = 6 tens. So the answer is 6 tens and 8 ones, which is 68. So 38 + 30 = 68."
           }
         ]
       },
@@ -1356,52 +1362,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Divide” mean?",
+            "prompt": "What does “Add / Total” mean?",
             "choices": [
-              "Share equally or make equal groups",
-              "Two ways to think about division",
               "Put groups together to find how many altogether",
-              "Take away, or find how many more"
-            ],
-            "answer": "Share equally or make equal groups",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Divide means Share equally or make equal groups."
-          },
-          {
-            "prompt": "Which term matches this meaning: Take away, or find how many more?",
-            "choices": [
-              "Subtract / Difference",
-              "Multiply / Product",
-              "Array",
-              "Divide"
-            ],
-            "answer": "Subtract / Difference",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Subtract / Difference means Take away, or find how many more."
-          },
-          {
-            "prompt": "Which term matches this meaning: Equal rows and columns of objects?",
-            "choices": [
-              "Array",
-              "Grouping / Sharing",
-              "Add / Total",
-              "Subtract / Difference"
-            ],
-            "answer": "Array",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Equal rows and columns of objects."
-          },
-          {
-            "prompt": "What does “Complement” mean?",
-            "choices": [
+              "Take away, or find how many more",
               "The missing part that completes a target",
+              "Repeated addition of equal groups"
+            ],
+            "answer": "Put groups together to find how many altogether",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Add / Total means Put groups together to find how many altogether."
+          },
+          {
+            "prompt": "What does “Multiply / Product” mean?",
+            "choices": [
               "Repeated addition of equal groups",
               "Equal rows and columns of objects",
-              "Share equally or make equal groups"
+              "Share equally or make equal groups",
+              "Two ways to think about division"
             ],
-            "answer": "The missing part that completes a target",
+            "answer": "Repeated addition of equal groups",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Complement means The missing part that completes a target."
+            "explanation": "Multiply / Product means Repeated addition of equal groups."
+          },
+          {
+            "prompt": "Which term matches this meaning: Two ways to think about division?",
+            "choices": [
+              "Grouping / Sharing",
+              "Add / Total",
+              "Subtract / Difference",
+              "Complement"
+            ],
+            "answer": "Grouping / Sharing",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Grouping / Sharing means Two ways to think about division."
+          },
+          {
+            "prompt": "Work out 6 + 7 + 4.",
+            "choices": [
+              "21",
+              "17",
+              "19",
+              "15"
+            ],
+            "answer": "17",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Look for a pair that makes ten. Here 6 + 4 = 10. Add those first, then add the 7: 10 + 7 = 17. So 6 + 7 + 4 = 17."
           }
         ]
       },
@@ -1414,52 +1420,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Two ways to think about division?",
+            "prompt": "What does “Subtract / Difference” mean?",
             "choices": [
-              "Grouping / Sharing",
-              "Add / Total",
-              "Subtract / Difference",
-              "Complement"
-            ],
-            "answer": "Grouping / Sharing",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Grouping / Sharing means Two ways to think about division."
-          },
-          {
-            "prompt": "Which term matches this meaning: The missing part that completes a target?",
-            "choices": [
-              "Complement",
-              "Array",
-              "Divide",
-              "Grouping / Sharing"
-            ],
-            "answer": "Complement",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Complement means The missing part that completes a target."
-          },
-          {
-            "prompt": "What does “Add / Total” mean?",
-            "choices": [
-              "Put groups together to find how many altogether",
               "Take away, or find how many more",
               "The missing part that completes a target",
-              "Repeated addition of equal groups"
+              "Repeated addition of equal groups",
+              "Equal rows and columns of objects"
             ],
-            "answer": "Put groups together to find how many altogether",
+            "answer": "Take away, or find how many more",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Add / Total means Put groups together to find how many altogether."
+            "explanation": "Subtract / Difference means Take away, or find how many more."
           },
           {
-            "prompt": "What does “Multiply / Product” mean?",
+            "prompt": "What does “Array” mean?",
             "choices": [
-              "Repeated addition of equal groups",
               "Equal rows and columns of objects",
               "Share equally or make equal groups",
-              "Two ways to think about division"
+              "Two ways to think about division",
+              "Put groups together to find how many altogether"
             ],
-            "answer": "Repeated addition of equal groups",
+            "answer": "Equal rows and columns of objects",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiply / Product means Repeated addition of equal groups."
+            "explanation": "Array means Equal rows and columns of objects."
+          },
+          {
+            "prompt": "Work out 56 + 7.",
+            "choices": [
+              "63",
+              "69",
+              "57",
+              "75"
+            ],
+            "answer": "63",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Start at 56. To reach the next ten, 60, we need 4. Split the 7 into 4 and 3. Add the 4 first: 56 + 4 = 60. Then add the remaining 3: 60 + 3 = 63. So 56 + 7 = 63."
+          },
+          {
+            "prompt": "Work out 62 − 9, then check your answer.",
+            "choices": [
+              "53",
+              "58",
+              "48",
+              "63"
+            ],
+            "answer": "53",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Use number bonds: 12 − 9 = 3, and there are 5 tens carried along, so 62 − 9 = 53. Check by adding back: 53 + 9 = 62. It matches, so the answer is correct."
           }
         ]
       },
@@ -1472,88 +1478,6 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Put groups together to find how many altogether?",
-            "choices": [
-              "Add / Total",
-              "Complement",
-              "Multiply / Product",
-              "Array"
-            ],
-            "answer": "Add / Total",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Add / Total means Put groups together to find how many altogether."
-          },
-          {
-            "prompt": "Which term matches this meaning: Repeated addition of equal groups?",
-            "choices": [
-              "Multiply / Product",
-              "Divide",
-              "Grouping / Sharing",
-              "Add / Total"
-            ],
-            "answer": "Multiply / Product",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiply / Product means Repeated addition of equal groups."
-          },
-          {
-            "prompt": "What does “Subtract / Difference” mean?",
-            "choices": [
-              "Take away, or find how many more",
-              "The missing part that completes a target",
-              "Repeated addition of equal groups",
-              "Equal rows and columns of objects"
-            ],
-            "answer": "Take away, or find how many more",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Subtract / Difference means Take away, or find how many more."
-          },
-          {
-            "prompt": "What does “Array” mean?",
-            "choices": [
-              "Equal rows and columns of objects",
-              "Share equally or make equal groups",
-              "Two ways to think about division",
-              "Put groups together to find how many altogether"
-            ],
-            "answer": "Equal rows and columns of objects",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Equal rows and columns of objects."
-          }
-        ]
-      },
-      {
-        "id": "u5-game-9",
-        "icon": "⌂",
-        "skill": "Subtract / Difference",
-        "title": "Real-Life Round: Subtract / Difference",
-        "description": "Practise subtract / difference through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Take away, or find how many more?",
-            "choices": [
-              "Subtract / Difference",
-              "Multiply / Product",
-              "Array",
-              "Divide"
-            ],
-            "answer": "Subtract / Difference",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Subtract / Difference means Take away, or find how many more."
-          },
-          {
-            "prompt": "Which term matches this meaning: Equal rows and columns of objects?",
-            "choices": [
-              "Array",
-              "Grouping / Sharing",
-              "Add / Total",
-              "Subtract / Difference"
-            ],
-            "answer": "Array",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Equal rows and columns of objects."
-          },
-          {
             "prompt": "What does “Complement” mean?",
             "choices": [
               "The missing part that completes a target",
@@ -1576,6 +1500,88 @@
             "answer": "Share equally or make equal groups",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
             "explanation": "Divide means Share equally or make equal groups."
+          },
+          {
+            "prompt": "Work out 38 + 30.",
+            "choices": [
+              "75",
+              "61",
+              "82",
+              "68"
+            ],
+            "answer": "68",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Adding tens leaves the ones alone. The ones digit stays 8. Add the tens: 3 tens + 3 tens = 6 tens. So the answer is 6 tens and 8 ones, which is 68. So 38 + 30 = 68."
+          },
+          {
+            "prompt": "Write 5 + 5 + 5 + 5 as a multiplication and find the total.",
+            "choices": [
+              "24",
+              "20",
+              "22",
+              "18"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "There are 4 groups of 5, so it is 4 × 5. Counting in fives: 5, 10, 15, 20. So 5 + 5 + 5 + 5 = 4 × 5 = 20."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-9",
+        "icon": "⌂",
+        "skill": "Subtract / Difference",
+        "title": "Real-Life Round: Subtract / Difference",
+        "description": "Practise subtract / difference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Multiply / Product” mean?",
+            "choices": [
+              "Repeated addition of equal groups",
+              "Equal rows and columns of objects",
+              "Share equally or make equal groups",
+              "Two ways to think about division"
+            ],
+            "answer": "Repeated addition of equal groups",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Multiply / Product means Repeated addition of equal groups."
+          },
+          {
+            "prompt": "Which term matches this meaning: Two ways to think about division?",
+            "choices": [
+              "Grouping / Sharing",
+              "Add / Total",
+              "Subtract / Difference",
+              "Complement"
+            ],
+            "answer": "Grouping / Sharing",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Grouping / Sharing means Two ways to think about division."
+          },
+          {
+            "prompt": "Work out 6 + 7 + 4.",
+            "choices": [
+              "21",
+              "17",
+              "19",
+              "15"
+            ],
+            "answer": "17",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Look for a pair that makes ten. Here 6 + 4 = 10. Add those first, then add the 7: 10 + 7 = 17. So 6 + 7 + 4 = 17."
+          },
+          {
+            "prompt": "What does “Add / Total” mean?",
+            "choices": [
+              "Put groups together to find how many altogether",
+              "Take away, or find how many more",
+              "The missing part that completes a target",
+              "Repeated addition of equal groups"
+            ],
+            "answer": "Put groups together to find how many altogether",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Add / Total means Put groups together to find how many altogether."
           }
         ]
       },
@@ -1588,16 +1594,144 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The missing part that completes a target?",
+            "prompt": "What does “Array” mean?",
             "choices": [
-              "Complement",
-              "Array",
-              "Divide",
-              "Grouping / Sharing"
+              "Equal rows and columns of objects",
+              "Share equally or make equal groups",
+              "Two ways to think about division",
+              "Put groups together to find how many altogether"
             ],
-            "answer": "Complement",
+            "answer": "Equal rows and columns of objects",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Array means Equal rows and columns of objects."
+          },
+          {
+            "prompt": "Work out 56 + 7.",
+            "choices": [
+              "63",
+              "69",
+              "57",
+              "75"
+            ],
+            "answer": "63",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Start at 56. To reach the next ten, 60, we need 4. Split the 7 into 4 and 3. Add the 4 first: 56 + 4 = 60. Then add the remaining 3: 60 + 3 = 63. So 56 + 7 = 63."
+          },
+          {
+            "prompt": "Work out 62 − 9, then check your answer.",
+            "choices": [
+              "53",
+              "58",
+              "48",
+              "63"
+            ],
+            "answer": "53",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Use number bonds: 12 − 9 = 3, and there are 5 tens carried along, so 62 − 9 = 53. Check by adding back: 53 + 9 = 62. It matches, so the answer is correct."
+          },
+          {
+            "prompt": "What does “Subtract / Difference” mean?",
+            "choices": [
+              "Take away, or find how many more",
+              "The missing part that completes a target",
+              "Repeated addition of equal groups",
+              "Equal rows and columns of objects"
+            ],
+            "answer": "Take away, or find how many more",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Subtract / Difference means Take away, or find how many more."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-11",
+        "icon": "≡",
+        "skill": "Multiply / Product",
+        "title": "Mastery Mix: Multiply / Product",
+        "description": "Practise multiply / product through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Divide” mean?",
+            "choices": [
+              "Share equally or make equal groups",
+              "Two ways to think about division",
+              "Put groups together to find how many altogether",
+              "Take away, or find how many more"
+            ],
+            "answer": "Share equally or make equal groups",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Divide means Share equally or make equal groups."
+          },
+          {
+            "prompt": "Work out 38 + 30.",
+            "choices": [
+              "75",
+              "61",
+              "82",
+              "68"
+            ],
+            "answer": "68",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Adding tens leaves the ones alone. The ones digit stays 8. Add the tens: 3 tens + 3 tens = 6 tens. So the answer is 6 tens and 8 ones, which is 68. So 38 + 30 = 68."
+          },
+          {
+            "prompt": "Write 5 + 5 + 5 + 5 as a multiplication and find the total.",
+            "choices": [
+              "24",
+              "20",
+              "22",
+              "18"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "There are 4 groups of 5, so it is 4 × 5. Counting in fives: 5, 10, 15, 20. So 5 + 5 + 5 + 5 = 4 × 5 = 20."
+          },
+          {
+            "prompt": "What does “Complement” mean?",
+            "choices": [
+              "The missing part that completes a target",
+              "Repeated addition of equal groups",
+              "Equal rows and columns of objects",
+              "Share equally or make equal groups"
+            ],
+            "answer": "The missing part that completes a target",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
             "explanation": "Complement means The missing part that completes a target."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-12",
+        "icon": "T",
+        "skill": "Array",
+        "title": "Unit Champion: Array",
+        "description": "Practise array through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: Two ways to think about division?",
+            "choices": [
+              "Grouping / Sharing",
+              "Add / Total",
+              "Subtract / Difference",
+              "Complement"
+            ],
+            "answer": "Grouping / Sharing",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Grouping / Sharing means Two ways to think about division."
+          },
+          {
+            "prompt": "Work out 6 + 7 + 4.",
+            "choices": [
+              "21",
+              "17",
+              "19",
+              "15"
+            ],
+            "answer": "17",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Look for a pair that makes ten. Here 6 + 4 = 10. Add those first, then add the 7: 10 + 7 = 17. So 6 + 7 + 4 = 17."
           },
           {
             "prompt": "What does “Add / Total” mean?",
@@ -1622,134 +1756,6 @@
             "answer": "Repeated addition of equal groups",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
             "explanation": "Multiply / Product means Repeated addition of equal groups."
-          },
-          {
-            "prompt": "Which term matches this meaning: Two ways to think about division?",
-            "choices": [
-              "Grouping / Sharing",
-              "Add / Total",
-              "Subtract / Difference",
-              "Complement"
-            ],
-            "answer": "Grouping / Sharing",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Grouping / Sharing means Two ways to think about division."
-          }
-        ]
-      },
-      {
-        "id": "u5-game-11",
-        "icon": "≡",
-        "skill": "Multiply / Product",
-        "title": "Mastery Mix: Multiply / Product",
-        "description": "Practise multiply / product through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Repeated addition of equal groups?",
-            "choices": [
-              "Multiply / Product",
-              "Divide",
-              "Grouping / Sharing",
-              "Add / Total"
-            ],
-            "answer": "Multiply / Product",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiply / Product means Repeated addition of equal groups."
-          },
-          {
-            "prompt": "What does “Subtract / Difference” mean?",
-            "choices": [
-              "Take away, or find how many more",
-              "The missing part that completes a target",
-              "Repeated addition of equal groups",
-              "Equal rows and columns of objects"
-            ],
-            "answer": "Take away, or find how many more",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Subtract / Difference means Take away, or find how many more."
-          },
-          {
-            "prompt": "What does “Array” mean?",
-            "choices": [
-              "Equal rows and columns of objects",
-              "Share equally or make equal groups",
-              "Two ways to think about division",
-              "Put groups together to find how many altogether"
-            ],
-            "answer": "Equal rows and columns of objects",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Equal rows and columns of objects."
-          },
-          {
-            "prompt": "Which term matches this meaning: Put groups together to find how many altogether?",
-            "choices": [
-              "Add / Total",
-              "Complement",
-              "Multiply / Product",
-              "Array"
-            ],
-            "answer": "Add / Total",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Add / Total means Put groups together to find how many altogether."
-          }
-        ]
-      },
-      {
-        "id": "u5-game-12",
-        "icon": "T",
-        "skill": "Array",
-        "title": "Unit Champion: Array",
-        "description": "Practise array through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Equal rows and columns of objects?",
-            "choices": [
-              "Array",
-              "Grouping / Sharing",
-              "Add / Total",
-              "Subtract / Difference"
-            ],
-            "answer": "Array",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Equal rows and columns of objects."
-          },
-          {
-            "prompt": "What does “Complement” mean?",
-            "choices": [
-              "The missing part that completes a target",
-              "Repeated addition of equal groups",
-              "Equal rows and columns of objects",
-              "Share equally or make equal groups"
-            ],
-            "answer": "The missing part that completes a target",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Complement means The missing part that completes a target."
-          },
-          {
-            "prompt": "What does “Divide” mean?",
-            "choices": [
-              "Share equally or make equal groups",
-              "Two ways to think about division",
-              "Put groups together to find how many altogether",
-              "Take away, or find how many more"
-            ],
-            "answer": "Share equally or make equal groups",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Divide means Share equally or make equal groups."
-          },
-          {
-            "prompt": "Which term matches this meaning: Take away, or find how many more?",
-            "choices": [
-              "Subtract / Difference",
-              "Multiply / Product",
-              "Array",
-              "Divide"
-            ],
-            "answer": "Subtract / Difference",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Subtract / Difference means Take away, or find how many more."
           }
         ]
       }

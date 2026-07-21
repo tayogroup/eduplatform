@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.848Z",
+  "generatedAt": "2026-07-21T07:03:32.858Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 4
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-4-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 4",
     "sourceArchive": "Year 4 (1)-20260714T220930Z-1-001.zip",
     "sourceDocuments": [
       "Year 4 (1)/Unit 13/Year 4 - Unit 13 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 4 (1)/Unit 13/Year 4 - Unit 13 Reference.docx"
     ],
     "sourceBlockCount": 358,
-    "transformation": "Structured directly from the standardized Cambridge Stage 4 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 4 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -360,7 +366,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Subtract the fractions and simplify",
       "prompt": "Subtract the fractions and simplify: a) 7/8 − 3/8 b) 11/12 − 5/12 c) 8/9 − 5/9.",
       "solution": ", b) 680 (mental – subtract from 1,000), c) 5,000 (mental – add"
     },
@@ -368,7 +374,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Practice 10",
       "prompt": "Money: work out the change from 100.00 shillings after spending 63.40 shillings.",
       "solution": ", d) 346 (mental – compensation: 2,345 − 2,000 +"
     },
@@ -376,7 +382,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Practice 11",
       "prompt": "Check each calculation with the inverse operation: a) 347 + 258 = 605 b) 625 − 189 = 436.",
       "solution": "."
     },
@@ -384,7 +390,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Practice 12",
       "prompt": "Mixed fraction operations – give improper answers as mixed numbers: a) 5/6 + 4/6 b) 5/12 + 9/12 c) 13/8 − 5/8.",
       "solution": "1) a) 9/6 = 1 1/2, b) 14/12 = 1 2/12 = 1 1/6, c) 8/8 = 1."
     }
@@ -872,8 +878,56 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Calculate 734 + 567.",
+        "options": [
+          "1301",
+          "1431",
+          "1171",
+          "1561"
+        ],
+        "answer": "1301",
+        "hint": "Work it out step by step, using the Unit 13 methods.",
+        "explanation": "Ones: 4 + 7 = 11, write 1 carry 1. Tens: 3 + 6 + 1 = 10, write 0 carry 1. Hundreds: 7 + 5 + 1 = 13, write 13. The answer is 1,301. Estimate check: 700 + 600 = 1,300, which is very close, so 1,301 is sensible."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Calculate 904 − 657.",
+        "options": [
+          "247",
+          "272",
+          "222",
+          "297"
+        ],
+        "answer": "247",
+        "hint": "Work it out step by step, using the Unit 13 methods.",
+        "explanation": "Ones: 4 − 7 is not possible, so regroup. There are no tens to take from, so first regroup a hundred into tens (9 hundreds become 8 hundreds and 10 tens), then regroup one of those tens into ones (10 tens become 9 tens and 14 ones). Now…"
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Calculate 2,345 − 1,999 in your head.",
+        "options": [
+          "381",
+          "311",
+          "416",
+          "346"
+        ],
+        "answer": "346",
+        "hint": "Work it out step by step, using the Unit 13 methods.",
+        "explanation": "1,999 is very close to 2,000, so use compensation. Subtract 2,000: 2,345 − 2,000 = 345. You took away 1 too many, so add it back: 345 + 1 = 346. No columns needed – the friendly number made this quick."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
         "difficulty": "Basic",
         "question": "What does “Sum” mean?",
         "options": [
@@ -887,10 +941,10 @@
         "explanation": "Sum means The answer to an addition."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Difference” mean?",
         "options": [
           "The answer to a subtraction",
@@ -903,10 +957,10 @@
         "explanation": "Difference means The answer to a subtraction."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Regrouping” mean?",
         "options": [
           "Exchanging between place values (carry / borrow)",
@@ -919,10 +973,10 @@
         "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Estimate” mean?",
         "options": [
           "An approximate answer found by rounding",
@@ -935,9 +989,9 @@
         "explanation": "Estimate means An approximate answer found by rounding."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
         "difficulty": "Core",
         "question": "What does “Inverse operation” mean?",
         "options": [
@@ -951,9 +1005,9 @@
         "explanation": "Inverse operation means The opposite operation, used to check."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What does “Numerator / Denominator” mean?",
         "options": [
@@ -967,10 +1021,10 @@
         "explanation": "Numerator / Denominator means Top number / bottom number of a fraction."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: Numerator equal to or larger than denominator?",
         "options": [
           "Improper fraction",
@@ -983,10 +1037,10 @@
         "explanation": "Improper fraction means Numerator equal to or larger than denominator."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: A whole number and a proper fraction together?",
         "options": [
           "Mixed number",
@@ -999,10 +1053,10 @@
         "explanation": "Mixed number means A whole number and a proper fraction together."
       },
       {
-        "id": "q09",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: The answer to an addition?",
         "options": [
           "Sum",
@@ -1013,54 +1067,6 @@
         "answer": "Sum",
         "hint": "Use the Unit 13 Math Words & Symbols reference.",
         "explanation": "Sum means The answer to an addition."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The answer to a subtraction?",
-        "options": [
-          "Difference",
-          "Estimate",
-          "Inverse operation",
-          "Numerator / Denominator"
-        ],
-        "answer": "Difference",
-        "hint": "Use the Unit 13 Math Words & Symbols reference.",
-        "explanation": "Difference means The answer to a subtraction."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Exchanging between place values (carry / borrow)?",
-        "options": [
-          "Regrouping",
-          "Inverse operation",
-          "Numerator / Denominator",
-          "Improper fraction"
-        ],
-        "answer": "Regrouping",
-        "hint": "Use the Unit 13 Math Words & Symbols reference.",
-        "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: An approximate answer found by rounding?",
-        "options": [
-          "Estimate",
-          "Numerator / Denominator",
-          "Improper fraction",
-          "Mixed number"
-        ],
-        "answer": "Estimate",
-        "hint": "Use the Unit 13 Math Words & Symbols reference.",
-        "explanation": "Estimate means An approximate answer found by rounding."
       }
     ]
   },
@@ -1076,6 +1082,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Calculate 734 + 567.",
+            "choices": [
+              "1301",
+              "1431",
+              "1171",
+              "1561"
+            ],
+            "answer": "1301",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "Ones: 4 + 7 = 11, write 1 carry 1. Tens: 3 + 6 + 1 = 10, write 0 carry 1. Hundreds: 7 + 5 + 1 = 13, write 13. The answer is 1,301. Estimate check: 700 + 600 = 1,300, which is very close, so 1,301 is sensible."
+          },
+          {
             "prompt": "What does “Sum” mean?",
             "choices": [
               "The answer to an addition",
@@ -1110,18 +1128,6 @@
             "answer": "Improper fraction",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Improper fraction means Numerator equal to or larger than denominator."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
-            "choices": [
-              "Difference",
-              "Estimate",
-              "Inverse operation",
-              "Numerator / Denominator"
-            ],
-            "answer": "Difference",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
           }
         ]
       },
@@ -1134,6 +1140,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Calculate 904 − 657.",
+            "choices": [
+              "247",
+              "272",
+              "222",
+              "297"
+            ],
+            "answer": "247",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "Ones: 4 − 7 is not possible, so regroup. There are no tens to take from, so first regroup a hundred into tens (9 hundreds become 8 hundreds and 10 tens), then regroup one of those tens into ones (10 tens become 9 tens and 14 ones). Now…"
+          },
+          {
             "prompt": "What does “Difference” mean?",
             "choices": [
               "The answer to a subtraction",
@@ -1168,18 +1186,6 @@
             "answer": "Mixed number",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Mixed number means A whole number and a proper fraction together."
-          },
-          {
-            "prompt": "Which term matches this meaning: Exchanging between place values (carry / borrow)?",
-            "choices": [
-              "Regrouping",
-              "Inverse operation",
-              "Numerator / Denominator",
-              "Improper fraction"
-            ],
-            "answer": "Regrouping",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
           }
         ]
       },
@@ -1192,6 +1198,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Calculate 2,345 − 1,999 in your head.",
+            "choices": [
+              "381",
+              "311",
+              "416",
+              "346"
+            ],
+            "answer": "346",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "1,999 is very close to 2,000, so use compensation. Subtract 2,000: 2,345 − 2,000 = 345. You took away 1 too many, so add it back: 345 + 1 = 346. No columns needed – the friendly number made this quick."
+          },
+          {
             "prompt": "What does “Regrouping” mean?",
             "choices": [
               "Exchanging between place values (carry / borrow)",
@@ -1226,18 +1244,6 @@
             "answer": "Sum",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Sum means The answer to an addition."
-          },
-          {
-            "prompt": "Which term matches this meaning: An approximate answer found by rounding?",
-            "choices": [
-              "Estimate",
-              "Numerator / Denominator",
-              "Improper fraction",
-              "Mixed number"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding."
           }
         ]
       },
@@ -1250,6 +1256,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Sum” mean?",
+            "choices": [
+              "The answer to an addition",
+              "The answer to a subtraction",
+              "Exchanging between place values (carry / borrow)",
+              "An approximate answer found by rounding"
+            ],
+            "answer": "The answer to an addition",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Sum means The answer to an addition."
+          },
+          {
             "prompt": "What does “Estimate” mean?",
             "choices": [
               "An approximate answer found by rounding",
@@ -1274,28 +1292,16 @@
             "explanation": "Improper fraction means Numerator equal to or larger than denominator."
           },
           {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
+            "prompt": "Calculate 734 + 567.",
             "choices": [
-              "Difference",
-              "Estimate",
-              "Inverse operation",
-              "Numerator / Denominator"
+              "1301",
+              "1431",
+              "1171",
+              "1561"
             ],
-            "answer": "Difference",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
-          },
-          {
-            "prompt": "What does “Sum” mean?",
-            "choices": [
-              "The answer to an addition",
-              "The answer to a subtraction",
-              "Exchanging between place values (carry / borrow)",
-              "An approximate answer found by rounding"
-            ],
-            "answer": "The answer to an addition",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
+            "answer": "1301",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "Ones: 4 + 7 = 11, write 1 carry 1. Tens: 3 + 6 + 1 = 10, write 0 carry 1. Hundreds: 7 + 5 + 1 = 13, write 13. The answer is 1,301. Estimate check: 700 + 600 = 1,300, which is very close, so 1,301 is sensible."
           }
         ]
       },
@@ -1308,6 +1314,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Difference” mean?",
+            "choices": [
+              "The answer to a subtraction",
+              "Exchanging between place values (carry / borrow)",
+              "An approximate answer found by rounding",
+              "The opposite operation, used to check"
+            ],
+            "answer": "The answer to a subtraction",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Difference means The answer to a subtraction."
+          },
+          {
             "prompt": "What does “Inverse operation” mean?",
             "choices": [
               "The opposite operation, used to check",
@@ -1332,28 +1350,16 @@
             "explanation": "Mixed number means A whole number and a proper fraction together."
           },
           {
-            "prompt": "Which term matches this meaning: Exchanging between place values (carry / borrow)?",
+            "prompt": "Calculate 904 − 657.",
             "choices": [
-              "Regrouping",
-              "Inverse operation",
-              "Numerator / Denominator",
-              "Improper fraction"
+              "247",
+              "272",
+              "222",
+              "297"
             ],
-            "answer": "Regrouping",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
-          },
-          {
-            "prompt": "What does “Difference” mean?",
-            "choices": [
-              "The answer to a subtraction",
-              "Exchanging between place values (carry / borrow)",
-              "An approximate answer found by rounding",
-              "The opposite operation, used to check"
-            ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "answer": "247",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "Ones: 4 − 7 is not possible, so regroup. There are no tens to take from, so first regroup a hundred into tens (9 hundreds become 8 hundreds and 10 tens), then regroup one of those tens into ones (10 tens become 9 tens and 14 ones). Now…"
           }
         ]
       },
@@ -1366,6 +1372,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Regrouping” mean?",
+            "choices": [
+              "Exchanging between place values (carry / borrow)",
+              "An approximate answer found by rounding",
+              "The opposite operation, used to check",
+              "Top number / bottom number of a fraction"
+            ],
+            "answer": "Exchanging between place values (carry / borrow)",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
+          },
+          {
             "prompt": "What does “Numerator / Denominator” mean?",
             "choices": [
               "Top number / bottom number of a fraction",
@@ -1390,28 +1408,16 @@
             "explanation": "Sum means The answer to an addition."
           },
           {
-            "prompt": "Which term matches this meaning: An approximate answer found by rounding?",
+            "prompt": "Calculate 2,345 − 1,999 in your head.",
             "choices": [
-              "Estimate",
-              "Numerator / Denominator",
-              "Improper fraction",
-              "Mixed number"
+              "381",
+              "311",
+              "416",
+              "346"
             ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding."
-          },
-          {
-            "prompt": "What does “Regrouping” mean?",
-            "choices": [
-              "Exchanging between place values (carry / borrow)",
-              "An approximate answer found by rounding",
-              "The opposite operation, used to check",
-              "Top number / bottom number of a fraction"
-            ],
-            "answer": "Exchanging between place values (carry / borrow)",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
+            "answer": "346",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "1,999 is very close to 2,000, so use compensation. Subtract 2,000: 2,345 − 2,000 = 345. You took away 1 too many, so add it back: 345 + 1 = 346. No columns needed – the friendly number made this quick."
           }
         ]
       },
@@ -1424,6 +1430,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "An approximate answer found by rounding",
+              "The opposite operation, used to check",
+              "Top number / bottom number of a fraction",
+              "Numerator equal to or larger than denominator"
+            ],
+            "answer": "An approximate answer found by rounding",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Estimate means An approximate answer found by rounding."
+          },
+          {
             "prompt": "Which term matches this meaning: Numerator equal to or larger than denominator?",
             "choices": [
               "Improper fraction",
@@ -1436,16 +1454,16 @@
             "explanation": "Improper fraction means Numerator equal to or larger than denominator."
           },
           {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
+            "prompt": "Calculate 734 + 567.",
             "choices": [
-              "Difference",
-              "Estimate",
-              "Inverse operation",
-              "Numerator / Denominator"
+              "1301",
+              "1431",
+              "1171",
+              "1561"
             ],
-            "answer": "Difference",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "answer": "1301",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "Ones: 4 + 7 = 11, write 1 carry 1. Tens: 3 + 6 + 1 = 10, write 0 carry 1. Hundreds: 7 + 5 + 1 = 13, write 13. The answer is 1,301. Estimate check: 700 + 600 = 1,300, which is very close, so 1,301 is sensible."
           },
           {
             "prompt": "What does “Sum” mean?",
@@ -1458,18 +1476,6 @@
             "answer": "The answer to an addition",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Sum means The answer to an addition."
-          },
-          {
-            "prompt": "What does “Estimate” mean?",
-            "choices": [
-              "An approximate answer found by rounding",
-              "The opposite operation, used to check",
-              "Top number / bottom number of a fraction",
-              "Numerator equal to or larger than denominator"
-            ],
-            "answer": "An approximate answer found by rounding",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding."
           }
         ]
       },
@@ -1482,6 +1488,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Inverse operation” mean?",
+            "choices": [
+              "The opposite operation, used to check",
+              "Top number / bottom number of a fraction",
+              "Numerator equal to or larger than denominator",
+              "A whole number and a proper fraction together"
+            ],
+            "answer": "The opposite operation, used to check",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Inverse operation means The opposite operation, used to check."
+          },
+          {
             "prompt": "Which term matches this meaning: A whole number and a proper fraction together?",
             "choices": [
               "Mixed number",
@@ -1494,16 +1512,16 @@
             "explanation": "Mixed number means A whole number and a proper fraction together."
           },
           {
-            "prompt": "Which term matches this meaning: Exchanging between place values (carry / borrow)?",
+            "prompt": "Calculate 904 − 657.",
             "choices": [
-              "Regrouping",
-              "Inverse operation",
-              "Numerator / Denominator",
-              "Improper fraction"
+              "247",
+              "272",
+              "222",
+              "297"
             ],
-            "answer": "Regrouping",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
+            "answer": "247",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "Ones: 4 − 7 is not possible, so regroup. There are no tens to take from, so first regroup a hundred into tens (9 hundreds become 8 hundreds and 10 tens), then regroup one of those tens into ones (10 tens become 9 tens and 14 ones). Now…"
           },
           {
             "prompt": "What does “Difference” mean?",
@@ -1516,18 +1534,6 @@
             "answer": "The answer to a subtraction",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Difference means The answer to a subtraction."
-          },
-          {
-            "prompt": "What does “Inverse operation” mean?",
-            "choices": [
-              "The opposite operation, used to check",
-              "Top number / bottom number of a fraction",
-              "Numerator equal to or larger than denominator",
-              "A whole number and a proper fraction together"
-            ],
-            "answer": "The opposite operation, used to check",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The opposite operation, used to check."
           }
         ]
       },
@@ -1539,6 +1545,18 @@
         "description": "Practise sum through four short challenges.",
         "type": "choice",
         "rounds": [
+          {
+            "prompt": "What does “Numerator / Denominator” mean?",
+            "choices": [
+              "Top number / bottom number of a fraction",
+              "Numerator equal to or larger than denominator",
+              "A whole number and a proper fraction together",
+              "The answer to an addition"
+            ],
+            "answer": "Top number / bottom number of a fraction",
+            "clue": "Use the Unit 13 Math Words & Symbols reference.",
+            "explanation": "Numerator / Denominator means Top number / bottom number of a fraction."
+          },
           {
             "prompt": "Which term matches this meaning: The answer to an addition?",
             "choices": [
@@ -1552,16 +1570,16 @@
             "explanation": "Sum means The answer to an addition."
           },
           {
-            "prompt": "Which term matches this meaning: An approximate answer found by rounding?",
+            "prompt": "Calculate 2,345 − 1,999 in your head.",
             "choices": [
-              "Estimate",
-              "Numerator / Denominator",
-              "Improper fraction",
-              "Mixed number"
+              "381",
+              "311",
+              "416",
+              "346"
             ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding."
+            "answer": "346",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "1,999 is very close to 2,000, so use compensation. Subtract 2,000: 2,345 − 2,000 = 345. You took away 1 too many, so add it back: 345 + 1 = 346. No columns needed – the friendly number made this quick."
           },
           {
             "prompt": "What does “Regrouping” mean?",
@@ -1574,18 +1592,6 @@
             "answer": "Exchanging between place values (carry / borrow)",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
-          },
-          {
-            "prompt": "What does “Numerator / Denominator” mean?",
-            "choices": [
-              "Top number / bottom number of a fraction",
-              "Numerator equal to or larger than denominator",
-              "A whole number and a proper fraction together",
-              "The answer to an addition"
-            ],
-            "answer": "Top number / bottom number of a fraction",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Numerator / Denominator means Top number / bottom number of a fraction."
           }
         ]
       },
@@ -1598,16 +1604,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
+            "prompt": "Which term matches this meaning: Numerator equal to or larger than denominator?",
             "choices": [
-              "Difference",
-              "Estimate",
-              "Inverse operation",
-              "Numerator / Denominator"
+              "Improper fraction",
+              "Mixed number",
+              "Sum",
+              "Difference"
             ],
-            "answer": "Difference",
+            "answer": "Improper fraction",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "explanation": "Improper fraction means Numerator equal to or larger than denominator."
+          },
+          {
+            "prompt": "Calculate 734 + 567.",
+            "choices": [
+              "1301",
+              "1431",
+              "1171",
+              "1561"
+            ],
+            "answer": "1301",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "Ones: 4 + 7 = 11, write 1 carry 1. Tens: 3 + 6 + 1 = 10, write 0 carry 1. Hundreds: 7 + 5 + 1 = 13, write 13. The answer is 1,301. Estimate check: 700 + 600 = 1,300, which is very close, so 1,301 is sensible."
           },
           {
             "prompt": "What does “Sum” mean?",
@@ -1632,18 +1650,6 @@
             "answer": "An approximate answer found by rounding",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Estimate means An approximate answer found by rounding."
-          },
-          {
-            "prompt": "Which term matches this meaning: Numerator equal to or larger than denominator?",
-            "choices": [
-              "Improper fraction",
-              "Mixed number",
-              "Sum",
-              "Difference"
-            ],
-            "answer": "Improper fraction",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Improper fraction means Numerator equal to or larger than denominator."
           }
         ]
       },
@@ -1656,16 +1662,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Exchanging between place values (carry / borrow)?",
+            "prompt": "Which term matches this meaning: A whole number and a proper fraction together?",
             "choices": [
-              "Regrouping",
-              "Inverse operation",
-              "Numerator / Denominator",
-              "Improper fraction"
+              "Mixed number",
+              "Sum",
+              "Difference",
+              "Regrouping"
             ],
-            "answer": "Regrouping",
+            "answer": "Mixed number",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place values (carry / borrow)."
+            "explanation": "Mixed number means A whole number and a proper fraction together."
+          },
+          {
+            "prompt": "Calculate 904 − 657.",
+            "choices": [
+              "247",
+              "272",
+              "222",
+              "297"
+            ],
+            "answer": "247",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "Ones: 4 − 7 is not possible, so regroup. There are no tens to take from, so first regroup a hundred into tens (9 hundreds become 8 hundreds and 10 tens), then regroup one of those tens into ones (10 tens become 9 tens and 14 ones). Now…"
           },
           {
             "prompt": "What does “Difference” mean?",
@@ -1690,18 +1708,6 @@
             "answer": "The opposite operation, used to check",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Inverse operation means The opposite operation, used to check."
-          },
-          {
-            "prompt": "Which term matches this meaning: A whole number and a proper fraction together?",
-            "choices": [
-              "Mixed number",
-              "Sum",
-              "Difference",
-              "Regrouping"
-            ],
-            "answer": "Mixed number",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Mixed number means A whole number and a proper fraction together."
           }
         ]
       },
@@ -1714,16 +1720,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: An approximate answer found by rounding?",
+            "prompt": "Which term matches this meaning: The answer to an addition?",
             "choices": [
+              "Sum",
+              "Regrouping",
               "Estimate",
-              "Numerator / Denominator",
-              "Improper fraction",
-              "Mixed number"
+              "Inverse operation"
             ],
-            "answer": "Estimate",
+            "answer": "Sum",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Estimate means An approximate answer found by rounding."
+            "explanation": "Sum means The answer to an addition."
+          },
+          {
+            "prompt": "Calculate 2,345 − 1,999 in your head.",
+            "choices": [
+              "381",
+              "311",
+              "416",
+              "346"
+            ],
+            "answer": "346",
+            "clue": "Work it out step by step, using the Unit 13 methods.",
+            "explanation": "1,999 is very close to 2,000, so use compensation. Subtract 2,000: 2,345 − 2,000 = 345. You took away 1 too many, so add it back: 345 + 1 = 346. No columns needed – the friendly number made this quick."
           },
           {
             "prompt": "What does “Regrouping” mean?",
@@ -1748,18 +1766,6 @@
             "answer": "Top number / bottom number of a fraction",
             "clue": "Use the Unit 13 Math Words & Symbols reference.",
             "explanation": "Numerator / Denominator means Top number / bottom number of a fraction."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to an addition?",
-            "choices": [
-              "Sum",
-              "Regrouping",
-              "Estimate",
-              "Inverse operation"
-            ],
-            "answer": "Sum",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
           }
         ]
       }

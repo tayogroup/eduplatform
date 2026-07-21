@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.865Z",
+  "generatedAt": "2026-07-21T07:03:32.880Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 4
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-4-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 4",
     "sourceArchive": "Year 4 (1)-20260714T220930Z-1-001.zip",
     "sourceDocuments": [
       "Year 4 (1)/Unit 17/Year 4 - Unit 17 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 4 (1)/Unit 17/Year 4 - Unit 17 Reference.docx"
     ],
     "sourceBlockCount": 357,
-    "transformation": "Structured directly from the standardized Cambridge Stage 4 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 4 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -382,7 +388,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Find the missing number",
       "prompt": "Find the missing number: a) □ × 7 = 56 b) 81 ÷ □ = 9.",
       "solution": "a) 8, b) 9."
     },
@@ -390,7 +396,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Find the missing digits",
       "prompt": "Find the missing digits: a) 2□5 ÷ 5 = 43 b) 3□ × 4 = 124.",
       "solution": "1) a) 215 ÷ 5 = 43, missing digit 1; b) 31 × 4 = 124, missing digit 1."
     }
@@ -872,9 +878,73 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
-        "difficulty": "Basic",
+        "difficulty": "Core",
+        "question": "Calculate 78 × 6.",
+        "options": [
+          "515",
+          "421",
+          "562",
+          "468"
+        ],
+        "answer": "468",
+        "hint": "Work it out step by step, using the Unit 17 methods.",
+        "explanation": "Estimate first: 80 × 6 = 480. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 7 × 6 = 42, add the carried 4 to get 46, write 46. Answer: 468, close to the estimate of 480."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Calculate 462 × 7.",
+        "options": [
+          "2911",
+          "3880",
+          "3234",
+          "3557"
+        ],
+        "answer": "3234",
+        "hint": "Work it out step by step, using the Unit 17 methods.",
+        "explanation": "Estimate: 500 × 7 = 3,500. Ones: 2 × 7 = 14, write 4, carry 1. Tens: 6 × 7 = 42, add 1 to get 43, write 3, carry 4. Hundreds: 4 × 7 = 28, add 4 to get 32, write 32. Answer: 3,234, near the estimate."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Calculate 503 × 7.",
+        "options": [
+          "3169",
+          "4225",
+          "3521",
+          "3873"
+        ],
+        "answer": "3521",
+        "hint": "Work it out step by step, using the Unit 17 methods.",
+        "explanation": "Ones: 3 × 7 = 21, write 1, carry 2. Tens: 0 × 7 = 0, add the carried 2 to get 2, write 2. Hundreds: 5 × 7 = 35, write 35. Answer: 3,521. The middle zero still needs its own column."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "A cinema has 28 rows with 6 seats in each row. How many seats are there in total?",
+        "options": [
+          "37",
+          "31",
+          "40",
+          "34"
+        ],
+        "answer": "34",
+        "hint": "Work it out step by step, using the Unit 17 methods.",
+        "explanation": "Equal groups, so multiply: 28 × 6. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 2 × 6 = 12, add 4 to get 16, write 16. Answer: 168 seats."
+      },
+      {
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Factor” mean?",
         "options": [
           "A number that is multiplied by another",
@@ -887,10 +957,10 @@
         "explanation": "Factor means A number that is multiplied by another."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Product” mean?",
         "options": [
           "The result of a multiplication",
@@ -903,10 +973,10 @@
         "explanation": "Product means The result of a multiplication."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Dividend” mean?",
         "options": [
           "The number being divided",
@@ -919,10 +989,10 @@
         "explanation": "Dividend means The number being divided."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
         "question": "What does “Divisor” mean?",
         "options": [
           "The number you divide by",
@@ -935,9 +1005,9 @@
         "explanation": "Divisor means The number you divide by."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What does “Quotient” mean?",
         "options": [
@@ -951,10 +1021,10 @@
         "explanation": "Quotient means The result of a division (not the remainder)."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Remainder” mean?",
         "options": [
           "The amount left over after dividing",
@@ -967,10 +1037,10 @@
         "explanation": "Remainder means The amount left over after dividing."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: A sensible guess to check reasonableness?",
         "options": [
           "Estimate",
@@ -983,10 +1053,10 @@
         "explanation": "Estimate means A sensible guess to check reasonableness."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: An operation that undoes another?",
         "options": [
           "Inverse",
@@ -997,70 +1067,6 @@
         "answer": "Inverse",
         "hint": "Use the Unit 17 Math Words & Symbols reference.",
         "explanation": "Inverse means An operation that undoes another."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: A number that is multiplied by another?",
-        "options": [
-          "Factor",
-          "Dividend",
-          "Divisor",
-          "Quotient"
-        ],
-        "answer": "Factor",
-        "hint": "Use the Unit 17 Math Words & Symbols reference.",
-        "explanation": "Factor means A number that is multiplied by another."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The result of a multiplication?",
-        "options": [
-          "Product",
-          "Divisor",
-          "Quotient",
-          "Remainder"
-        ],
-        "answer": "Product",
-        "hint": "Use the Unit 17 Math Words & Symbols reference.",
-        "explanation": "Product means The result of a multiplication."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The number being divided?",
-        "options": [
-          "Dividend",
-          "Quotient",
-          "Remainder",
-          "Estimate"
-        ],
-        "answer": "Dividend",
-        "hint": "Use the Unit 17 Math Words & Symbols reference.",
-        "explanation": "Dividend means The number being divided."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The number you divide by?",
-        "options": [
-          "Divisor",
-          "Remainder",
-          "Estimate",
-          "Inverse"
-        ],
-        "answer": "Divisor",
-        "hint": "Use the Unit 17 Math Words & Symbols reference.",
-        "explanation": "Divisor means The number you divide by."
       }
     ]
   },
@@ -1076,52 +1082,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "Calculate 78 × 6.",
             "choices": [
-              "A number that is multiplied by another",
-              "The result of a multiplication",
-              "The number being divided",
-              "The number you divide by"
+              "515",
+              "421",
+              "562",
+              "468"
             ],
-            "answer": "A number that is multiplied by another",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that is multiplied by another."
+            "answer": "468",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Estimate first: 80 × 6 = 480. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 7 × 6 = 42, add the carried 4 to get 46, write 46. Answer: 468, close to the estimate of 480."
           },
           {
-            "prompt": "What does “Divisor” mean?",
+            "prompt": "A cinema has 28 rows with 6 seats in each row. How many seats are there in total?",
             "choices": [
+              "37",
+              "31",
+              "40",
+              "34"
+            ],
+            "answer": "34",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Equal groups, so multiply: 28 × 6. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 2 × 6 = 12, add 4 to get 16, write 16. Answer: 168 seats."
+          },
+          {
+            "prompt": "What does “Dividend” mean?",
+            "choices": [
+              "The number being divided",
               "The number you divide by",
               "The result of a division (not the remainder)",
+              "The amount left over after dividing"
+            ],
+            "answer": "The number being divided",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Dividend means The number being divided."
+          },
+          {
+            "prompt": "What does “Remainder” mean?",
+            "choices": [
               "The amount left over after dividing",
-              "A sensible guess to check reasonableness"
+              "A sensible guess to check reasonableness",
+              "An operation that undoes another",
+              "A number that is multiplied by another"
             ],
-            "answer": "The number you divide by",
+            "answer": "The amount left over after dividing",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible guess to check reasonableness?",
-            "choices": [
-              "Estimate",
-              "Inverse",
-              "Factor",
-              "Product"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess to check reasonableness."
-          },
-          {
-            "prompt": "Which term matches this meaning: The result of a multiplication?",
-            "choices": [
-              "Product",
-              "Divisor",
-              "Quotient",
-              "Remainder"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The result of a multiplication."
+            "explanation": "Remainder means The amount left over after dividing."
           }
         ]
       },
@@ -1134,52 +1140,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Product” mean?",
+            "prompt": "Calculate 462 × 7.",
             "choices": [
+              "2911",
+              "3880",
+              "3234",
+              "3557"
+            ],
+            "answer": "3234",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Estimate: 500 × 7 = 3,500. Ones: 2 × 7 = 14, write 4, carry 1. Tens: 6 × 7 = 42, add 1 to get 43, write 3, carry 4. Hundreds: 4 × 7 = 28, add 4 to get 32, write 32. Answer: 3,234, near the estimate."
+          },
+          {
+            "prompt": "What does “Factor” mean?",
+            "choices": [
+              "A number that is multiplied by another",
               "The result of a multiplication",
               "The number being divided",
-              "The number you divide by",
-              "The result of a division (not the remainder)"
+              "The number you divide by"
             ],
-            "answer": "The result of a multiplication",
+            "answer": "A number that is multiplied by another",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The result of a multiplication."
+            "explanation": "Factor means A number that is multiplied by another."
           },
           {
-            "prompt": "What does “Quotient” mean?",
+            "prompt": "What does “Divisor” mean?",
             "choices": [
+              "The number you divide by",
               "The result of a division (not the remainder)",
               "The amount left over after dividing",
-              "A sensible guess to check reasonableness",
-              "An operation that undoes another"
+              "A sensible guess to check reasonableness"
             ],
-            "answer": "The result of a division (not the remainder)",
+            "answer": "The number you divide by",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Quotient means The result of a division (not the remainder)."
+            "explanation": "Divisor means The number you divide by."
           },
           {
-            "prompt": "Which term matches this meaning: An operation that undoes another?",
+            "prompt": "Which term matches this meaning: A sensible guess to check reasonableness?",
             "choices": [
+              "Estimate",
               "Inverse",
               "Factor",
-              "Product",
-              "Dividend"
+              "Product"
             ],
-            "answer": "Inverse",
+            "answer": "Estimate",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Inverse means An operation that undoes another."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number being divided?",
-            "choices": [
-              "Dividend",
-              "Quotient",
-              "Remainder",
-              "Estimate"
-            ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "explanation": "Estimate means A sensible guess to check reasonableness."
           }
         ]
       },
@@ -1192,52 +1198,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Dividend” mean?",
+            "prompt": "Calculate 503 × 7.",
             "choices": [
+              "3169",
+              "4225",
+              "3521",
+              "3873"
+            ],
+            "answer": "3521",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Ones: 3 × 7 = 21, write 1, carry 2. Tens: 0 × 7 = 0, add the carried 2 to get 2, write 2. Hundreds: 5 × 7 = 35, write 35. Answer: 3,521. The middle zero still needs its own column."
+          },
+          {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The result of a multiplication",
               "The number being divided",
               "The number you divide by",
-              "The result of a division (not the remainder)",
-              "The amount left over after dividing"
+              "The result of a division (not the remainder)"
             ],
-            "answer": "The number being divided",
+            "answer": "The result of a multiplication",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "explanation": "Product means The result of a multiplication."
           },
           {
-            "prompt": "What does “Remainder” mean?",
+            "prompt": "What does “Quotient” mean?",
             "choices": [
+              "The result of a division (not the remainder)",
               "The amount left over after dividing",
               "A sensible guess to check reasonableness",
-              "An operation that undoes another",
-              "A number that is multiplied by another"
+              "An operation that undoes another"
             ],
-            "answer": "The amount left over after dividing",
+            "answer": "The result of a division (not the remainder)",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
+            "explanation": "Quotient means The result of a division (not the remainder)."
           },
           {
-            "prompt": "Which term matches this meaning: A number that is multiplied by another?",
+            "prompt": "Which term matches this meaning: An operation that undoes another?",
             "choices": [
+              "Inverse",
               "Factor",
-              "Dividend",
-              "Divisor",
-              "Quotient"
+              "Product",
+              "Dividend"
             ],
-            "answer": "Factor",
+            "answer": "Inverse",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that is multiplied by another."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number you divide by?",
-            "choices": [
-              "Divisor",
-              "Remainder",
-              "Estimate",
-              "Inverse"
-            ],
-            "answer": "Divisor",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
+            "explanation": "Inverse means An operation that undoes another."
           }
         ]
       },
@@ -1250,52 +1256,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Divisor” mean?",
+            "prompt": "A cinema has 28 rows with 6 seats in each row. How many seats are there in total?",
             "choices": [
+              "37",
+              "31",
+              "40",
+              "34"
+            ],
+            "answer": "34",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Equal groups, so multiply: 28 × 6. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 2 × 6 = 12, add 4 to get 16, write 16. Answer: 168 seats."
+          },
+          {
+            "prompt": "What does “Dividend” mean?",
+            "choices": [
+              "The number being divided",
               "The number you divide by",
               "The result of a division (not the remainder)",
+              "The amount left over after dividing"
+            ],
+            "answer": "The number being divided",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Dividend means The number being divided."
+          },
+          {
+            "prompt": "What does “Remainder” mean?",
+            "choices": [
               "The amount left over after dividing",
-              "A sensible guess to check reasonableness"
+              "A sensible guess to check reasonableness",
+              "An operation that undoes another",
+              "A number that is multiplied by another"
             ],
-            "answer": "The number you divide by",
+            "answer": "The amount left over after dividing",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
+            "explanation": "Remainder means The amount left over after dividing."
           },
           {
-            "prompt": "Which term matches this meaning: A sensible guess to check reasonableness?",
+            "prompt": "Calculate 78 × 6.",
             "choices": [
-              "Estimate",
-              "Inverse",
-              "Factor",
-              "Product"
+              "515",
+              "421",
+              "562",
+              "468"
             ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess to check reasonableness."
-          },
-          {
-            "prompt": "Which term matches this meaning: The result of a multiplication?",
-            "choices": [
-              "Product",
-              "Divisor",
-              "Quotient",
-              "Remainder"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The result of a multiplication."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number that is multiplied by another",
-              "The result of a multiplication",
-              "The number being divided",
-              "The number you divide by"
-            ],
-            "answer": "A number that is multiplied by another",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that is multiplied by another."
+            "answer": "468",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Estimate first: 80 × 6 = 480. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 7 × 6 = 42, add the carried 4 to get 46, write 46. Answer: 468, close to the estimate of 480."
           }
         ]
       },
@@ -1308,52 +1314,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Quotient” mean?",
+            "prompt": "What does “Factor” mean?",
             "choices": [
-              "The result of a division (not the remainder)",
-              "The amount left over after dividing",
-              "A sensible guess to check reasonableness",
-              "An operation that undoes another"
-            ],
-            "answer": "The result of a division (not the remainder)",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Quotient means The result of a division (not the remainder)."
-          },
-          {
-            "prompt": "Which term matches this meaning: An operation that undoes another?",
-            "choices": [
-              "Inverse",
-              "Factor",
-              "Product",
-              "Dividend"
-            ],
-            "answer": "Inverse",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Inverse means An operation that undoes another."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number being divided?",
-            "choices": [
-              "Dividend",
-              "Quotient",
-              "Remainder",
-              "Estimate"
-            ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
+              "A number that is multiplied by another",
               "The result of a multiplication",
               "The number being divided",
-              "The number you divide by",
-              "The result of a division (not the remainder)"
+              "The number you divide by"
             ],
-            "answer": "The result of a multiplication",
+            "answer": "A number that is multiplied by another",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The result of a multiplication."
+            "explanation": "Factor means A number that is multiplied by another."
+          },
+          {
+            "prompt": "What does “Divisor” mean?",
+            "choices": [
+              "The number you divide by",
+              "The result of a division (not the remainder)",
+              "The amount left over after dividing",
+              "A sensible guess to check reasonableness"
+            ],
+            "answer": "The number you divide by",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Divisor means The number you divide by."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess to check reasonableness?",
+            "choices": [
+              "Estimate",
+              "Inverse",
+              "Factor",
+              "Product"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess to check reasonableness."
+          },
+          {
+            "prompt": "Calculate 462 × 7.",
+            "choices": [
+              "2911",
+              "3880",
+              "3234",
+              "3557"
+            ],
+            "answer": "3234",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Estimate: 500 × 7 = 3,500. Ones: 2 × 7 = 14, write 4, carry 1. Tens: 6 × 7 = 42, add 1 to get 43, write 3, carry 4. Hundreds: 4 × 7 = 28, add 4 to get 32, write 32. Answer: 3,234, near the estimate."
           }
         ]
       },
@@ -1366,52 +1372,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Remainder” mean?",
+            "prompt": "What does “Product” mean?",
             "choices": [
-              "The amount left over after dividing",
-              "A sensible guess to check reasonableness",
-              "An operation that undoes another",
-              "A number that is multiplied by another"
-            ],
-            "answer": "The amount left over after dividing",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number that is multiplied by another?",
-            "choices": [
-              "Factor",
-              "Dividend",
-              "Divisor",
-              "Quotient"
-            ],
-            "answer": "Factor",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that is multiplied by another."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number you divide by?",
-            "choices": [
-              "Divisor",
-              "Remainder",
-              "Estimate",
-              "Inverse"
-            ],
-            "answer": "Divisor",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "What does “Dividend” mean?",
-            "choices": [
+              "The result of a multiplication",
               "The number being divided",
               "The number you divide by",
-              "The result of a division (not the remainder)",
-              "The amount left over after dividing"
+              "The result of a division (not the remainder)"
             ],
-            "answer": "The number being divided",
+            "answer": "The result of a multiplication",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "explanation": "Product means The result of a multiplication."
+          },
+          {
+            "prompt": "What does “Quotient” mean?",
+            "choices": [
+              "The result of a division (not the remainder)",
+              "The amount left over after dividing",
+              "A sensible guess to check reasonableness",
+              "An operation that undoes another"
+            ],
+            "answer": "The result of a division (not the remainder)",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Quotient means The result of a division (not the remainder)."
+          },
+          {
+            "prompt": "Which term matches this meaning: An operation that undoes another?",
+            "choices": [
+              "Inverse",
+              "Factor",
+              "Product",
+              "Dividend"
+            ],
+            "answer": "Inverse",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Inverse means An operation that undoes another."
+          },
+          {
+            "prompt": "Calculate 503 × 7.",
+            "choices": [
+              "3169",
+              "4225",
+              "3521",
+              "3873"
+            ],
+            "answer": "3521",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Ones: 3 × 7 = 21, write 1, carry 2. Tens: 0 × 7 = 0, add the carried 2 to get 2, write 2. Hundreds: 5 × 7 = 35, write 35. Answer: 3,521. The middle zero still needs its own column."
           }
         ]
       },
@@ -1424,52 +1430,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A sensible guess to check reasonableness?",
+            "prompt": "What does “Dividend” mean?",
             "choices": [
-              "Estimate",
-              "Inverse",
-              "Factor",
-              "Product"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess to check reasonableness."
-          },
-          {
-            "prompt": "Which term matches this meaning: The result of a multiplication?",
-            "choices": [
-              "Product",
-              "Divisor",
-              "Quotient",
-              "Remainder"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The result of a multiplication."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number that is multiplied by another",
-              "The result of a multiplication",
               "The number being divided",
-              "The number you divide by"
-            ],
-            "answer": "A number that is multiplied by another",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that is multiplied by another."
-          },
-          {
-            "prompt": "What does “Divisor” mean?",
-            "choices": [
               "The number you divide by",
               "The result of a division (not the remainder)",
-              "The amount left over after dividing",
-              "A sensible guess to check reasonableness"
+              "The amount left over after dividing"
             ],
-            "answer": "The number you divide by",
+            "answer": "The number being divided",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
+            "explanation": "Dividend means The number being divided."
+          },
+          {
+            "prompt": "What does “Remainder” mean?",
+            "choices": [
+              "The amount left over after dividing",
+              "A sensible guess to check reasonableness",
+              "An operation that undoes another",
+              "A number that is multiplied by another"
+            ],
+            "answer": "The amount left over after dividing",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Remainder means The amount left over after dividing."
+          },
+          {
+            "prompt": "Calculate 78 × 6.",
+            "choices": [
+              "515",
+              "421",
+              "562",
+              "468"
+            ],
+            "answer": "468",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Estimate first: 80 × 6 = 480. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 7 × 6 = 42, add the carried 4 to get 46, write 46. Answer: 468, close to the estimate of 480."
+          },
+          {
+            "prompt": "A cinema has 28 rows with 6 seats in each row. How many seats are there in total?",
+            "choices": [
+              "37",
+              "31",
+              "40",
+              "34"
+            ],
+            "answer": "34",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Equal groups, so multiply: 28 × 6. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 2 × 6 = 12, add 4 to get 16, write 16. Answer: 168 seats."
           }
         ]
       },
@@ -1482,52 +1488,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: An operation that undoes another?",
+            "prompt": "What does “Divisor” mean?",
             "choices": [
-              "Inverse",
-              "Factor",
-              "Product",
-              "Dividend"
-            ],
-            "answer": "Inverse",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Inverse means An operation that undoes another."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number being divided?",
-            "choices": [
-              "Dividend",
-              "Quotient",
-              "Remainder",
-              "Estimate"
-            ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
-              "The result of a multiplication",
-              "The number being divided",
               "The number you divide by",
-              "The result of a division (not the remainder)"
-            ],
-            "answer": "The result of a multiplication",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The result of a multiplication."
-          },
-          {
-            "prompt": "What does “Quotient” mean?",
-            "choices": [
               "The result of a division (not the remainder)",
               "The amount left over after dividing",
-              "A sensible guess to check reasonableness",
-              "An operation that undoes another"
+              "A sensible guess to check reasonableness"
             ],
-            "answer": "The result of a division (not the remainder)",
+            "answer": "The number you divide by",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Quotient means The result of a division (not the remainder)."
+            "explanation": "Divisor means The number you divide by."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess to check reasonableness?",
+            "choices": [
+              "Estimate",
+              "Inverse",
+              "Factor",
+              "Product"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess to check reasonableness."
+          },
+          {
+            "prompt": "Calculate 462 × 7.",
+            "choices": [
+              "2911",
+              "3880",
+              "3234",
+              "3557"
+            ],
+            "answer": "3234",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Estimate: 500 × 7 = 3,500. Ones: 2 × 7 = 14, write 4, carry 1. Tens: 6 × 7 = 42, add 1 to get 43, write 3, carry 4. Hundreds: 4 × 7 = 28, add 4 to get 32, write 32. Answer: 3,234, near the estimate."
+          },
+          {
+            "prompt": "What does “Factor” mean?",
+            "choices": [
+              "A number that is multiplied by another",
+              "The result of a multiplication",
+              "The number being divided",
+              "The number you divide by"
+            ],
+            "answer": "A number that is multiplied by another",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Factor means A number that is multiplied by another."
           }
         ]
       },
@@ -1540,52 +1546,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A number that is multiplied by another?",
+            "prompt": "What does “Quotient” mean?",
             "choices": [
-              "Factor",
-              "Dividend",
-              "Divisor",
-              "Quotient"
-            ],
-            "answer": "Factor",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that is multiplied by another."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number you divide by?",
-            "choices": [
-              "Divisor",
-              "Remainder",
-              "Estimate",
-              "Inverse"
-            ],
-            "answer": "Divisor",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "What does “Dividend” mean?",
-            "choices": [
-              "The number being divided",
-              "The number you divide by",
               "The result of a division (not the remainder)",
-              "The amount left over after dividing"
-            ],
-            "answer": "The number being divided",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Remainder” mean?",
-            "choices": [
               "The amount left over after dividing",
               "A sensible guess to check reasonableness",
-              "An operation that undoes another",
-              "A number that is multiplied by another"
+              "An operation that undoes another"
             ],
-            "answer": "The amount left over after dividing",
+            "answer": "The result of a division (not the remainder)",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
+            "explanation": "Quotient means The result of a division (not the remainder)."
+          },
+          {
+            "prompt": "Which term matches this meaning: An operation that undoes another?",
+            "choices": [
+              "Inverse",
+              "Factor",
+              "Product",
+              "Dividend"
+            ],
+            "answer": "Inverse",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Inverse means An operation that undoes another."
+          },
+          {
+            "prompt": "Calculate 503 × 7.",
+            "choices": [
+              "3169",
+              "4225",
+              "3521",
+              "3873"
+            ],
+            "answer": "3521",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Ones: 3 × 7 = 21, write 1, carry 2. Tens: 0 × 7 = 0, add the carried 2 to get 2, write 2. Hundreds: 5 × 7 = 35, write 35. Answer: 3,521. The middle zero still needs its own column."
+          },
+          {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The result of a multiplication",
+              "The number being divided",
+              "The number you divide by",
+              "The result of a division (not the remainder)"
+            ],
+            "answer": "The result of a multiplication",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Product means The result of a multiplication."
           }
         ]
       },
@@ -1598,16 +1604,86 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The result of a multiplication?",
+            "prompt": "What does “Remainder” mean?",
             "choices": [
-              "Product",
-              "Divisor",
-              "Quotient",
-              "Remainder"
+              "The amount left over after dividing",
+              "A sensible guess to check reasonableness",
+              "An operation that undoes another",
+              "A number that is multiplied by another"
             ],
-            "answer": "Product",
+            "answer": "The amount left over after dividing",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The result of a multiplication."
+            "explanation": "Remainder means The amount left over after dividing."
+          },
+          {
+            "prompt": "Calculate 78 × 6.",
+            "choices": [
+              "515",
+              "421",
+              "562",
+              "468"
+            ],
+            "answer": "468",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Estimate first: 80 × 6 = 480. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 7 × 6 = 42, add the carried 4 to get 46, write 46. Answer: 468, close to the estimate of 480."
+          },
+          {
+            "prompt": "A cinema has 28 rows with 6 seats in each row. How many seats are there in total?",
+            "choices": [
+              "37",
+              "31",
+              "40",
+              "34"
+            ],
+            "answer": "34",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Equal groups, so multiply: 28 × 6. Ones: 8 × 6 = 48, write 8, carry 4. Tens: 2 × 6 = 12, add 4 to get 16, write 16. Answer: 168 seats."
+          },
+          {
+            "prompt": "What does “Dividend” mean?",
+            "choices": [
+              "The number being divided",
+              "The number you divide by",
+              "The result of a division (not the remainder)",
+              "The amount left over after dividing"
+            ],
+            "answer": "The number being divided",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Dividend means The number being divided."
+          }
+        ]
+      },
+      {
+        "id": "u17-game-11",
+        "icon": "≡",
+        "skill": "Dividend",
+        "title": "Mastery Mix: Dividend",
+        "description": "Practise dividend through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A sensible guess to check reasonableness?",
+            "choices": [
+              "Estimate",
+              "Inverse",
+              "Factor",
+              "Product"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 17 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess to check reasonableness."
+          },
+          {
+            "prompt": "Calculate 462 × 7.",
+            "choices": [
+              "2911",
+              "3880",
+              "3234",
+              "3557"
+            ],
+            "answer": "3234",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Estimate: 500 × 7 = 3,500. Ones: 2 × 7 = 14, write 4, carry 1. Tens: 6 × 7 = 42, add 1 to get 43, write 3, carry 4. Hundreds: 4 × 7 = 28, add 4 to get 32, write 32. Answer: 3,234, near the estimate."
           },
           {
             "prompt": "What does “Factor” mean?",
@@ -1632,40 +1708,40 @@
             "answer": "The number you divide by",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible guess to check reasonableness?",
-            "choices": [
-              "Estimate",
-              "Inverse",
-              "Factor",
-              "Product"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess to check reasonableness."
           }
         ]
       },
       {
-        "id": "u17-game-11",
-        "icon": "≡",
-        "skill": "Dividend",
-        "title": "Mastery Mix: Dividend",
-        "description": "Practise dividend through four short challenges.",
+        "id": "u17-game-12",
+        "icon": "T",
+        "skill": "Divisor",
+        "title": "Unit Champion: Divisor",
+        "description": "Practise divisor through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The number being divided?",
+            "prompt": "Which term matches this meaning: An operation that undoes another?",
             "choices": [
-              "Dividend",
-              "Quotient",
-              "Remainder",
-              "Estimate"
+              "Inverse",
+              "Factor",
+              "Product",
+              "Dividend"
             ],
-            "answer": "Dividend",
+            "answer": "Inverse",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "explanation": "Inverse means An operation that undoes another."
+          },
+          {
+            "prompt": "Calculate 503 × 7.",
+            "choices": [
+              "3169",
+              "4225",
+              "3521",
+              "3873"
+            ],
+            "answer": "3521",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Ones: 3 × 7 = 21, write 1, carry 2. Tens: 0 × 7 = 0, add the carried 2 to get 2, write 2. Hundreds: 5 × 7 = 35, write 35. Answer: 3,521. The middle zero still needs its own column."
           },
           {
             "prompt": "What does “Product” mean?",
@@ -1690,76 +1766,6 @@
             "answer": "The result of a division (not the remainder)",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Quotient means The result of a division (not the remainder)."
-          },
-          {
-            "prompt": "Which term matches this meaning: An operation that undoes another?",
-            "choices": [
-              "Inverse",
-              "Factor",
-              "Product",
-              "Dividend"
-            ],
-            "answer": "Inverse",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Inverse means An operation that undoes another."
-          }
-        ]
-      },
-      {
-        "id": "u17-game-12",
-        "icon": "T",
-        "skill": "Divisor",
-        "title": "Unit Champion: Divisor",
-        "description": "Practise divisor through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The number you divide by?",
-            "choices": [
-              "Divisor",
-              "Remainder",
-              "Estimate",
-              "Inverse"
-            ],
-            "answer": "Divisor",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "What does “Dividend” mean?",
-            "choices": [
-              "The number being divided",
-              "The number you divide by",
-              "The result of a division (not the remainder)",
-              "The amount left over after dividing"
-            ],
-            "answer": "The number being divided",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Remainder” mean?",
-            "choices": [
-              "The amount left over after dividing",
-              "A sensible guess to check reasonableness",
-              "An operation that undoes another",
-              "A number that is multiplied by another"
-            ],
-            "answer": "The amount left over after dividing",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number that is multiplied by another?",
-            "choices": [
-              "Factor",
-              "Dividend",
-              "Divisor",
-              "Quotient"
-            ],
-            "answer": "Factor",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that is multiplied by another."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.729Z",
+  "generatedAt": "2026-07-21T07:03:32.721Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 3
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-3-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 3",
     "sourceArchive": "Year 3 (1)-20260714T220920Z-1-001.zip",
     "sourceDocuments": [
       "Year 3 (1)/Unit 11/Year 3 - Unit 11 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 3 (1)/Unit 11/Year 3 - Unit 11 Reference.docx"
     ],
     "sourceBlockCount": 369,
-    "transformation": "Structured directly from the standardized Cambridge Stage 3 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 3 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -361,7 +367,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Practice 9",
       "prompt": "A teacher shares 96 pencils equally among 8 students. How many pencils each?",
       "solution": "+ (8 ×"
     },
@@ -369,7 +375,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Practice 10",
       "prompt": "Use a related multiplication fact to work out 63 ÷ 7, and check it by multiplying back.",
       "solution": "= 210 + 56 = 266."
     },
@@ -377,7 +383,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Use the grid method: 27 × 15",
       "prompt": "Use the grid method: 27 × 15.",
       "solution": "a) 1,800, b) 32, c) 450, d) 56."
     },
@@ -385,7 +391,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Use the grid method",
       "prompt": "Use the grid method: a) 46 × 23 b) 54 × 32.",
       "solution": "1) a) 46 × 23 = (40 ×"
     }
@@ -868,8 +874,56 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Use the grid method to calculate 27 × 5.",
+        "options": [
+          "135",
+          "149",
+          "121",
+          "163"
+        ],
+        "answer": "135",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "Split 27 into 20 and 7. Then 20 × 5 = 100 and 7 × 5 = 35. Add the partial products: 100 + 35 = 135. So 27 × 5 = 135."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Use the grid method to calculate 32 × 24.",
+        "options": [
+          "845",
+          "691",
+          "922",
+          "768"
+        ],
+        "answer": "768",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "Split 32 into 30 and 2, and 24 into 20 and 4. The four partial products are: 30 × 20 = 600, 2 × 20 = 40, 30 × 4 = 120, and 2 × 4 = 8. Add them: 600 + 40 + 120 + 8 = 768. So 32 × 24 = 768."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Use a related multiplication fact to work out 63 ÷ 7, and check it by multiplying back.",
+        "options": [
+          "11",
+          "9",
+          "10",
+          "8"
+        ],
+        "answer": "9",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "= 210 + 56 = 266."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
         "difficulty": "Basic",
         "question": "What does “Product” mean?",
         "options": [
@@ -883,10 +937,10 @@
         "explanation": "Product means The answer to a multiplication."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Quotient” mean?",
         "options": [
           "The answer to a division",
@@ -899,10 +953,10 @@
         "explanation": "Quotient means The answer to a division."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Dividend” mean?",
         "options": [
           "The number being divided",
@@ -915,10 +969,10 @@
         "explanation": "Dividend means The number being divided."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Divisor” mean?",
         "options": [
           "The number you divide by",
@@ -931,9 +985,9 @@
         "explanation": "Divisor means The number you divide by."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
         "difficulty": "Core",
         "question": "What does “Remainder” mean?",
         "options": [
@@ -947,9 +1001,9 @@
         "explanation": "Remainder means The amount left over after dividing."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What does “Partial product” mean?",
         "options": [
@@ -963,10 +1017,10 @@
         "explanation": "Partial product means One part of a grid-method answer."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: The four related × and ÷ facts from three numbers?",
         "options": [
           "Fact family",
@@ -979,10 +1033,10 @@
         "explanation": "Fact family means The four related × and ÷ facts from three numbers."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: The opposite operation that undoes another?",
         "options": [
           "Inverse",
@@ -995,10 +1049,10 @@
         "explanation": "Inverse means The opposite operation that undoes another."
       },
       {
-        "id": "q09",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: The answer to a multiplication?",
         "options": [
           "Product",
@@ -1009,54 +1063,6 @@
         "answer": "Product",
         "hint": "Use the Unit 11 Math Words & Symbols reference.",
         "explanation": "Product means The answer to a multiplication."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The answer to a division?",
-        "options": [
-          "Quotient",
-          "Divisor",
-          "Remainder",
-          "Partial product"
-        ],
-        "answer": "Quotient",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Quotient means The answer to a division."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The number being divided?",
-        "options": [
-          "Dividend",
-          "Remainder",
-          "Partial product",
-          "Fact family"
-        ],
-        "answer": "Dividend",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Dividend means The number being divided."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The number you divide by?",
-        "options": [
-          "Divisor",
-          "Partial product",
-          "Fact family",
-          "Inverse"
-        ],
-        "answer": "Divisor",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Divisor means The number you divide by."
       }
     ]
   },
@@ -1072,6 +1078,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Use the grid method to calculate 27 × 5.",
+            "choices": [
+              "135",
+              "149",
+              "121",
+              "163"
+            ],
+            "answer": "135",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Split 27 into 20 and 7. Then 20 × 5 = 100 and 7 × 5 = 35. Add the partial products: 100 + 35 = 135. So 27 × 5 = 135."
+          },
+          {
             "prompt": "What does “Product” mean?",
             "choices": [
               "The answer to a multiplication",
@@ -1106,18 +1124,6 @@
             "answer": "Fact family",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Fact family means The four related × and ÷ facts from three numbers."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Divisor",
-              "Remainder",
-              "Partial product"
-            ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
           }
         ]
       },
@@ -1130,6 +1136,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Use the grid method to calculate 32 × 24.",
+            "choices": [
+              "845",
+              "691",
+              "922",
+              "768"
+            ],
+            "answer": "768",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Split 32 into 30 and 2, and 24 into 20 and 4. The four partial products are: 30 × 20 = 600, 2 × 20 = 40, 30 × 4 = 120, and 2 × 4 = 8. Add them: 600 + 40 + 120 + 8 = 768. So 32 × 24 = 768."
+          },
+          {
             "prompt": "What does “Quotient” mean?",
             "choices": [
               "The answer to a division",
@@ -1164,18 +1182,6 @@
             "answer": "Inverse",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Inverse means The opposite operation that undoes another."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number being divided?",
-            "choices": [
-              "Dividend",
-              "Remainder",
-              "Partial product",
-              "Fact family"
-            ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
           }
         ]
       },
@@ -1188,6 +1194,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Use a related multiplication fact to work out 63 ÷ 7, and check it by multiplying back.",
+            "choices": [
+              "11",
+              "9",
+              "10",
+              "8"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "= 210 + 56 = 266."
+          },
+          {
             "prompt": "What does “Dividend” mean?",
             "choices": [
               "The number being divided",
@@ -1222,18 +1240,6 @@
             "answer": "Product",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number you divide by?",
-            "choices": [
-              "Divisor",
-              "Partial product",
-              "Fact family",
-              "Inverse"
-            ],
-            "answer": "Divisor",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
           }
         ]
       },
@@ -1246,6 +1252,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The answer to a multiplication",
+              "The answer to a division",
+              "The number being divided",
+              "The number you divide by"
+            ],
+            "answer": "The answer to a multiplication",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Product means The answer to a multiplication."
+          },
+          {
             "prompt": "What does “Divisor” mean?",
             "choices": [
               "The number you divide by",
@@ -1270,28 +1288,16 @@
             "explanation": "Fact family means The four related × and ÷ facts from three numbers."
           },
           {
-            "prompt": "Which term matches this meaning: The answer to a division?",
+            "prompt": "Use the grid method to calculate 27 × 5.",
             "choices": [
-              "Quotient",
-              "Divisor",
-              "Remainder",
-              "Partial product"
+              "135",
+              "149",
+              "121",
+              "163"
             ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
-              "The answer to a multiplication",
-              "The answer to a division",
-              "The number being divided",
-              "The number you divide by"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "answer": "135",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Split 27 into 20 and 7. Then 20 × 5 = 100 and 7 × 5 = 35. Add the partial products: 100 + 35 = 135. So 27 × 5 = 135."
           }
         ]
       },
@@ -1304,6 +1310,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Quotient” mean?",
+            "choices": [
+              "The answer to a division",
+              "The number being divided",
+              "The number you divide by",
+              "The amount left over after dividing"
+            ],
+            "answer": "The answer to a division",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Quotient means The answer to a division."
+          },
+          {
             "prompt": "What does “Remainder” mean?",
             "choices": [
               "The amount left over after dividing",
@@ -1328,28 +1346,16 @@
             "explanation": "Inverse means The opposite operation that undoes another."
           },
           {
-            "prompt": "Which term matches this meaning: The number being divided?",
+            "prompt": "Use the grid method to calculate 32 × 24.",
             "choices": [
-              "Dividend",
-              "Remainder",
-              "Partial product",
-              "Fact family"
+              "845",
+              "691",
+              "922",
+              "768"
             ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Quotient” mean?",
-            "choices": [
-              "The answer to a division",
-              "The number being divided",
-              "The number you divide by",
-              "The amount left over after dividing"
-            ],
-            "answer": "The answer to a division",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "answer": "768",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Split 32 into 30 and 2, and 24 into 20 and 4. The four partial products are: 30 × 20 = 600, 2 × 20 = 40, 30 × 4 = 120, and 2 × 4 = 8. Add them: 600 + 40 + 120 + 8 = 768. So 32 × 24 = 768."
           }
         ]
       },
@@ -1362,6 +1368,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Dividend” mean?",
+            "choices": [
+              "The number being divided",
+              "The number you divide by",
+              "The amount left over after dividing",
+              "One part of a grid-method answer"
+            ],
+            "answer": "The number being divided",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Dividend means The number being divided."
+          },
+          {
             "prompt": "What does “Partial product” mean?",
             "choices": [
               "One part of a grid-method answer",
@@ -1386,28 +1404,16 @@
             "explanation": "Product means The answer to a multiplication."
           },
           {
-            "prompt": "Which term matches this meaning: The number you divide by?",
+            "prompt": "Use a related multiplication fact to work out 63 ÷ 7, and check it by multiplying back.",
             "choices": [
-              "Divisor",
-              "Partial product",
-              "Fact family",
-              "Inverse"
+              "11",
+              "9",
+              "10",
+              "8"
             ],
-            "answer": "Divisor",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "What does “Dividend” mean?",
-            "choices": [
-              "The number being divided",
-              "The number you divide by",
-              "The amount left over after dividing",
-              "One part of a grid-method answer"
-            ],
-            "answer": "The number being divided",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "answer": "9",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "= 210 + 56 = 266."
           }
         ]
       },
@@ -1420,6 +1426,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Divisor” mean?",
+            "choices": [
+              "The number you divide by",
+              "The amount left over after dividing",
+              "One part of a grid-method answer",
+              "The four related × and ÷ facts from three numbers"
+            ],
+            "answer": "The number you divide by",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Divisor means The number you divide by."
+          },
+          {
             "prompt": "Which term matches this meaning: The four related × and ÷ facts from three numbers?",
             "choices": [
               "Fact family",
@@ -1432,16 +1450,16 @@
             "explanation": "Fact family means The four related × and ÷ facts from three numbers."
           },
           {
-            "prompt": "Which term matches this meaning: The answer to a division?",
+            "prompt": "Use the grid method to calculate 27 × 5.",
             "choices": [
-              "Quotient",
-              "Divisor",
-              "Remainder",
-              "Partial product"
+              "135",
+              "149",
+              "121",
+              "163"
             ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "answer": "135",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Split 27 into 20 and 7. Then 20 × 5 = 100 and 7 × 5 = 35. Add the partial products: 100 + 35 = 135. So 27 × 5 = 135."
           },
           {
             "prompt": "What does “Product” mean?",
@@ -1454,18 +1472,6 @@
             "answer": "The answer to a multiplication",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Divisor” mean?",
-            "choices": [
-              "The number you divide by",
-              "The amount left over after dividing",
-              "One part of a grid-method answer",
-              "The four related × and ÷ facts from three numbers"
-            ],
-            "answer": "The number you divide by",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
           }
         ]
       },
@@ -1478,6 +1484,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Remainder” mean?",
+            "choices": [
+              "The amount left over after dividing",
+              "One part of a grid-method answer",
+              "The four related × and ÷ facts from three numbers",
+              "The opposite operation that undoes another"
+            ],
+            "answer": "The amount left over after dividing",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Remainder means The amount left over after dividing."
+          },
+          {
             "prompt": "Which term matches this meaning: The opposite operation that undoes another?",
             "choices": [
               "Inverse",
@@ -1490,16 +1508,16 @@
             "explanation": "Inverse means The opposite operation that undoes another."
           },
           {
-            "prompt": "Which term matches this meaning: The number being divided?",
+            "prompt": "Use the grid method to calculate 32 × 24.",
             "choices": [
-              "Dividend",
-              "Remainder",
-              "Partial product",
-              "Fact family"
+              "845",
+              "691",
+              "922",
+              "768"
             ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "answer": "768",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Split 32 into 30 and 2, and 24 into 20 and 4. The four partial products are: 30 × 20 = 600, 2 × 20 = 40, 30 × 4 = 120, and 2 × 4 = 8. Add them: 600 + 40 + 120 + 8 = 768. So 32 × 24 = 768."
           },
           {
             "prompt": "What does “Quotient” mean?",
@@ -1512,18 +1530,6 @@
             "answer": "The answer to a division",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Remainder” mean?",
-            "choices": [
-              "The amount left over after dividing",
-              "One part of a grid-method answer",
-              "The four related × and ÷ facts from three numbers",
-              "The opposite operation that undoes another"
-            ],
-            "answer": "The amount left over after dividing",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
           }
         ]
       },
@@ -1535,6 +1541,18 @@
         "description": "Practise product through four short challenges.",
         "type": "choice",
         "rounds": [
+          {
+            "prompt": "What does “Partial product” mean?",
+            "choices": [
+              "One part of a grid-method answer",
+              "The four related × and ÷ facts from three numbers",
+              "The opposite operation that undoes another",
+              "The answer to a multiplication"
+            ],
+            "answer": "One part of a grid-method answer",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Partial product means One part of a grid-method answer."
+          },
           {
             "prompt": "Which term matches this meaning: The answer to a multiplication?",
             "choices": [
@@ -1548,16 +1566,16 @@
             "explanation": "Product means The answer to a multiplication."
           },
           {
-            "prompt": "Which term matches this meaning: The number you divide by?",
+            "prompt": "Use a related multiplication fact to work out 63 ÷ 7, and check it by multiplying back.",
             "choices": [
-              "Divisor",
-              "Partial product",
-              "Fact family",
-              "Inverse"
+              "11",
+              "9",
+              "10",
+              "8"
             ],
-            "answer": "Divisor",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
+            "answer": "9",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "= 210 + 56 = 266."
           },
           {
             "prompt": "What does “Dividend” mean?",
@@ -1570,18 +1588,6 @@
             "answer": "The number being divided",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Partial product” mean?",
-            "choices": [
-              "One part of a grid-method answer",
-              "The four related × and ÷ facts from three numbers",
-              "The opposite operation that undoes another",
-              "The answer to a multiplication"
-            ],
-            "answer": "One part of a grid-method answer",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Partial product means One part of a grid-method answer."
           }
         ]
       },
@@ -1594,16 +1600,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The answer to a division?",
+            "prompt": "Which term matches this meaning: The four related × and ÷ facts from three numbers?",
             "choices": [
-              "Quotient",
-              "Divisor",
-              "Remainder",
-              "Partial product"
+              "Fact family",
+              "Inverse",
+              "Product",
+              "Quotient"
             ],
-            "answer": "Quotient",
+            "answer": "Fact family",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "explanation": "Fact family means The four related × and ÷ facts from three numbers."
+          },
+          {
+            "prompt": "Use the grid method to calculate 27 × 5.",
+            "choices": [
+              "135",
+              "149",
+              "121",
+              "163"
+            ],
+            "answer": "135",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Split 27 into 20 and 7. Then 20 × 5 = 100 and 7 × 5 = 35. Add the partial products: 100 + 35 = 135. So 27 × 5 = 135."
           },
           {
             "prompt": "What does “Product” mean?",
@@ -1628,18 +1646,6 @@
             "answer": "The number you divide by",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "Which term matches this meaning: The four related × and ÷ facts from three numbers?",
-            "choices": [
-              "Fact family",
-              "Inverse",
-              "Product",
-              "Quotient"
-            ],
-            "answer": "Fact family",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Fact family means The four related × and ÷ facts from three numbers."
           }
         ]
       },
@@ -1652,16 +1658,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The number being divided?",
+            "prompt": "Which term matches this meaning: The opposite operation that undoes another?",
             "choices": [
-              "Dividend",
-              "Remainder",
-              "Partial product",
-              "Fact family"
+              "Inverse",
+              "Product",
+              "Quotient",
+              "Dividend"
             ],
-            "answer": "Dividend",
+            "answer": "Inverse",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "explanation": "Inverse means The opposite operation that undoes another."
+          },
+          {
+            "prompt": "Use the grid method to calculate 32 × 24.",
+            "choices": [
+              "845",
+              "691",
+              "922",
+              "768"
+            ],
+            "answer": "768",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Split 32 into 30 and 2, and 24 into 20 and 4. The four partial products are: 30 × 20 = 600, 2 × 20 = 40, 30 × 4 = 120, and 2 × 4 = 8. Add them: 600 + 40 + 120 + 8 = 768. So 32 × 24 = 768."
           },
           {
             "prompt": "What does “Quotient” mean?",
@@ -1686,18 +1704,6 @@
             "answer": "The amount left over after dividing",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Remainder means The amount left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: The opposite operation that undoes another?",
-            "choices": [
-              "Inverse",
-              "Product",
-              "Quotient",
-              "Dividend"
-            ],
-            "answer": "Inverse",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation that undoes another."
           }
         ]
       },
@@ -1710,16 +1716,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The number you divide by?",
+            "prompt": "Which term matches this meaning: The answer to a multiplication?",
             "choices": [
+              "Product",
+              "Dividend",
               "Divisor",
-              "Partial product",
-              "Fact family",
-              "Inverse"
+              "Remainder"
             ],
-            "answer": "Divisor",
+            "answer": "Product",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
+            "explanation": "Product means The answer to a multiplication."
+          },
+          {
+            "prompt": "Use a related multiplication fact to work out 63 ÷ 7, and check it by multiplying back.",
+            "choices": [
+              "11",
+              "9",
+              "10",
+              "8"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "= 210 + 56 = 266."
           },
           {
             "prompt": "What does “Dividend” mean?",
@@ -1744,18 +1762,6 @@
             "answer": "One part of a grid-method answer",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Partial product means One part of a grid-method answer."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Dividend",
-              "Divisor",
-              "Remainder"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
           }
         ]
       }

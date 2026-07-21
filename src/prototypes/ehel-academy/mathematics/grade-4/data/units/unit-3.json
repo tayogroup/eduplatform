@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.793Z",
+  "generatedAt": "2026-07-21T07:03:32.791Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 4
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-4-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 4",
     "sourceArchive": "Year 4 (1)-20260714T220930Z-1-001.zip",
     "sourceDocuments": [
       "Year 4 (1)/Unit 3 (1)/Year 4 - Unit 3 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 4 (1)/Unit 3 (1)/Year 4 - Unit 3 Reference.docx"
     ],
     "sourceBlockCount": 370,
-    "transformation": "Structured directly from the standardized Cambridge Stage 4 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 4 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -362,7 +368,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Column addition with regrouping",
       "prompt": "Column addition with regrouping: a) 347 + 285 b) 729 + 456 c) 845 + 397.",
       "solution": "a) 632, b) 1185, c) 1242."
     },
@@ -370,7 +376,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Column subtraction with regrouping",
       "prompt": "Column subtraction with regrouping: a) 523 − 248 b) 915 − 467 c) 634 − 278.",
       "solution": "a) 275, b) 448, c) 356."
     },
@@ -378,7 +384,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Solve the missing numbers",
       "prompt": "Solve the missing numbers: a) □ − 27 = 53 b) 200 − □ = 125 c) □ + 145 = 300.",
       "solution": "a) 80, b) 75, c) 155."
     },
@@ -386,7 +392,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Four-digit column addition",
       "prompt": "Four-digit column addition: a) 2374 + 1968 b) 5432 + 3789 c) 7845 + 6398.",
       "solution": "1) a) 4342, b) 9221, c) 14243."
     }
@@ -868,8 +874,56 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Work out 487 + 299 in your head.",
+        "options": [
+          "786",
+          "865",
+          "707",
+          "944"
+        ],
+        "answer": "786",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "Round 299 up to 300 (that is 1 too many). 487 + 300 = 787. Give back the extra 1: 787 − 1 = 786."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Calculate 2374 + 1968 using the column method.",
+        "options": [
+          "3908",
+          "5210",
+          "4342",
+          "4776"
+        ],
+        "answer": "4342",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "Ones: 4 + 8 = 12, write 2 carry 1. Tens: 1 + 7 + 6 = 14, write 4 carry 1. Hundreds: 1 + 3 + 9 = 13, write 3 carry 1. Thousands: 1 + 2 + 1 = 4. The answer is 4342."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Calculate 1000 − 675 using the column method.",
+        "options": [
+          "358",
+          "292",
+          "391",
+          "325"
+        ],
+        "answer": "325",
+        "hint": "Work it out step by step, using the Unit 3 methods.",
+        "explanation": "Ones: 0 − 5 needs borrowing, but the tens and hundreds are also 0, so borrow from the thousand. This makes the number 0 hundreds, 10 tens … step by step it becomes 9 hundreds, 9 tens, 10 ones. Now 10 − 5 = 5, then 9 − 7 = 2, then 9 − 6 =…"
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
         "difficulty": "Basic",
         "question": "What does “Sum” mean?",
         "options": [
@@ -883,10 +937,10 @@
         "explanation": "Sum means The answer to an addition."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Difference” mean?",
         "options": [
           "The answer to a subtraction",
@@ -899,10 +953,10 @@
         "explanation": "Difference means The answer to a subtraction."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Inverse operation” mean?",
         "options": [
           "An operation that undoes another",
@@ -915,10 +969,10 @@
         "explanation": "Inverse operation means An operation that undoes another."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Regrouping” mean?",
         "options": [
           "Exchanging between place-value columns (carry / borrow)",
@@ -931,9 +985,9 @@
         "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
         "difficulty": "Core",
         "question": "What does “Estimate” mean?",
         "options": [
@@ -947,9 +1001,9 @@
         "explanation": "Estimate means A sensible answer found by rounding."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What does “Number bond” mean?",
         "options": [
@@ -963,10 +1017,10 @@
         "explanation": "Number bond means A pair of numbers with a fixed total."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: A problem needing more than one calculation?",
         "options": [
           "Multi-step problem",
@@ -979,10 +1033,10 @@
         "explanation": "Multi-step problem means A problem needing more than one calculation."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: The answer to an addition?",
         "options": [
           "Sum",
@@ -995,10 +1049,10 @@
         "explanation": "Sum means The answer to an addition."
       },
       {
-        "id": "q09",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: The answer to a subtraction?",
         "options": [
           "Difference",
@@ -1009,54 +1063,6 @@
         "answer": "Difference",
         "hint": "Use the Unit 3 Math Words & Symbols reference.",
         "explanation": "Difference means The answer to a subtraction."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: An operation that undoes another?",
-        "options": [
-          "Inverse operation",
-          "Estimate",
-          "Number bond",
-          "Multi-step problem"
-        ],
-        "answer": "Inverse operation",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Inverse operation means An operation that undoes another."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Exchanging between place-value columns (carry / borrow)?",
-        "options": [
-          "Regrouping",
-          "Number bond",
-          "Multi-step problem",
-          "Sum"
-        ],
-        "answer": "Regrouping",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A sensible answer found by rounding?",
-        "options": [
-          "Estimate",
-          "Multi-step problem",
-          "Sum",
-          "Difference"
-        ],
-        "answer": "Estimate",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Estimate means A sensible answer found by rounding."
       }
     ]
   },
@@ -1072,6 +1078,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 487 + 299 in your head.",
+            "choices": [
+              "786",
+              "865",
+              "707",
+              "944"
+            ],
+            "answer": "786",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Round 299 up to 300 (that is 1 too many). 487 + 300 = 787. Give back the extra 1: 787 − 1 = 786."
+          },
+          {
             "prompt": "What does “Sum” mean?",
             "choices": [
               "The answer to an addition",
@@ -1106,18 +1124,6 @@
             "answer": "Multi-step problem",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Multi-step problem means A problem needing more than one calculation."
-          },
-          {
-            "prompt": "Which term matches this meaning: An operation that undoes another?",
-            "choices": [
-              "Inverse operation",
-              "Estimate",
-              "Number bond",
-              "Multi-step problem"
-            ],
-            "answer": "Inverse operation",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means An operation that undoes another."
           }
         ]
       },
@@ -1130,6 +1136,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Calculate 2374 + 1968 using the column method.",
+            "choices": [
+              "3908",
+              "5210",
+              "4342",
+              "4776"
+            ],
+            "answer": "4342",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 4 + 8 = 12, write 2 carry 1. Tens: 1 + 7 + 6 = 14, write 4 carry 1. Hundreds: 1 + 3 + 9 = 13, write 3 carry 1. Thousands: 1 + 2 + 1 = 4. The answer is 4342."
+          },
+          {
             "prompt": "What does “Difference” mean?",
             "choices": [
               "The answer to a subtraction",
@@ -1164,18 +1182,6 @@
             "answer": "Sum",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Sum means The answer to an addition."
-          },
-          {
-            "prompt": "Which term matches this meaning: Exchanging between place-value columns (carry / borrow)?",
-            "choices": [
-              "Regrouping",
-              "Number bond",
-              "Multi-step problem",
-              "Sum"
-            ],
-            "answer": "Regrouping",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
           }
         ]
       },
@@ -1188,6 +1194,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Calculate 1000 − 675 using the column method.",
+            "choices": [
+              "358",
+              "292",
+              "391",
+              "325"
+            ],
+            "answer": "325",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 0 − 5 needs borrowing, but the tens and hundreds are also 0, so borrow from the thousand. This makes the number 0 hundreds, 10 tens … step by step it becomes 9 hundreds, 9 tens, 10 ones. Now 10 − 5 = 5, then 9 − 7 = 2, then 9 − 6 =…"
+          },
+          {
             "prompt": "What does “Inverse operation” mean?",
             "choices": [
               "An operation that undoes another",
@@ -1222,18 +1240,6 @@
             "answer": "Difference",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Difference means The answer to a subtraction."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible answer found by rounding?",
-            "choices": [
-              "Estimate",
-              "Multi-step problem",
-              "Sum",
-              "Difference"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible answer found by rounding."
           }
         ]
       },
@@ -1246,6 +1252,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Sum” mean?",
+            "choices": [
+              "The answer to an addition",
+              "The answer to a subtraction",
+              "An operation that undoes another",
+              "Exchanging between place-value columns (carry / borrow)"
+            ],
+            "answer": "The answer to an addition",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Sum means The answer to an addition."
+          },
+          {
             "prompt": "What does “Regrouping” mean?",
             "choices": [
               "Exchanging between place-value columns (carry / borrow)",
@@ -1270,28 +1288,16 @@
             "explanation": "Multi-step problem means A problem needing more than one calculation."
           },
           {
-            "prompt": "Which term matches this meaning: An operation that undoes another?",
+            "prompt": "Work out 487 + 299 in your head.",
             "choices": [
-              "Inverse operation",
-              "Estimate",
-              "Number bond",
-              "Multi-step problem"
+              "786",
+              "865",
+              "707",
+              "944"
             ],
-            "answer": "Inverse operation",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means An operation that undoes another."
-          },
-          {
-            "prompt": "What does “Sum” mean?",
-            "choices": [
-              "The answer to an addition",
-              "The answer to a subtraction",
-              "An operation that undoes another",
-              "Exchanging between place-value columns (carry / borrow)"
-            ],
-            "answer": "The answer to an addition",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
+            "answer": "786",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Round 299 up to 300 (that is 1 too many). 487 + 300 = 787. Give back the extra 1: 787 − 1 = 786."
           }
         ]
       },
@@ -1304,6 +1310,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Difference” mean?",
+            "choices": [
+              "The answer to a subtraction",
+              "An operation that undoes another",
+              "Exchanging between place-value columns (carry / borrow)",
+              "A sensible answer found by rounding"
+            ],
+            "answer": "The answer to a subtraction",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Difference means The answer to a subtraction."
+          },
+          {
             "prompt": "What does “Estimate” mean?",
             "choices": [
               "A sensible answer found by rounding",
@@ -1328,28 +1346,16 @@
             "explanation": "Sum means The answer to an addition."
           },
           {
-            "prompt": "Which term matches this meaning: Exchanging between place-value columns (carry / borrow)?",
+            "prompt": "Calculate 2374 + 1968 using the column method.",
             "choices": [
-              "Regrouping",
-              "Number bond",
-              "Multi-step problem",
-              "Sum"
+              "3908",
+              "5210",
+              "4342",
+              "4776"
             ],
-            "answer": "Regrouping",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
-          },
-          {
-            "prompt": "What does “Difference” mean?",
-            "choices": [
-              "The answer to a subtraction",
-              "An operation that undoes another",
-              "Exchanging between place-value columns (carry / borrow)",
-              "A sensible answer found by rounding"
-            ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "answer": "4342",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 4 + 8 = 12, write 2 carry 1. Tens: 1 + 7 + 6 = 14, write 4 carry 1. Hundreds: 1 + 3 + 9 = 13, write 3 carry 1. Thousands: 1 + 2 + 1 = 4. The answer is 4342."
           }
         ]
       },
@@ -1362,6 +1368,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Inverse operation” mean?",
+            "choices": [
+              "An operation that undoes another",
+              "Exchanging between place-value columns (carry / borrow)",
+              "A sensible answer found by rounding",
+              "A pair of numbers with a fixed total"
+            ],
+            "answer": "An operation that undoes another",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Inverse operation means An operation that undoes another."
+          },
+          {
             "prompt": "What does “Number bond” mean?",
             "choices": [
               "A pair of numbers with a fixed total",
@@ -1386,28 +1404,16 @@
             "explanation": "Difference means The answer to a subtraction."
           },
           {
-            "prompt": "Which term matches this meaning: A sensible answer found by rounding?",
+            "prompt": "Calculate 1000 − 675 using the column method.",
             "choices": [
-              "Estimate",
-              "Multi-step problem",
-              "Sum",
-              "Difference"
+              "358",
+              "292",
+              "391",
+              "325"
             ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible answer found by rounding."
-          },
-          {
-            "prompt": "What does “Inverse operation” mean?",
-            "choices": [
-              "An operation that undoes another",
-              "Exchanging between place-value columns (carry / borrow)",
-              "A sensible answer found by rounding",
-              "A pair of numbers with a fixed total"
-            ],
-            "answer": "An operation that undoes another",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means An operation that undoes another."
+            "answer": "325",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 0 − 5 needs borrowing, but the tens and hundreds are also 0, so borrow from the thousand. This makes the number 0 hundreds, 10 tens … step by step it becomes 9 hundreds, 9 tens, 10 ones. Now 10 − 5 = 5, then 9 − 7 = 2, then 9 − 6 =…"
           }
         ]
       },
@@ -1420,6 +1426,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Regrouping” mean?",
+            "choices": [
+              "Exchanging between place-value columns (carry / borrow)",
+              "A sensible answer found by rounding",
+              "A pair of numbers with a fixed total",
+              "A problem needing more than one calculation"
+            ],
+            "answer": "Exchanging between place-value columns (carry / borrow)",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
+          },
+          {
             "prompt": "Which term matches this meaning: A problem needing more than one calculation?",
             "choices": [
               "Multi-step problem",
@@ -1432,16 +1450,16 @@
             "explanation": "Multi-step problem means A problem needing more than one calculation."
           },
           {
-            "prompt": "Which term matches this meaning: An operation that undoes another?",
+            "prompt": "Work out 487 + 299 in your head.",
             "choices": [
-              "Inverse operation",
-              "Estimate",
-              "Number bond",
-              "Multi-step problem"
+              "786",
+              "865",
+              "707",
+              "944"
             ],
-            "answer": "Inverse operation",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means An operation that undoes another."
+            "answer": "786",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Round 299 up to 300 (that is 1 too many). 487 + 300 = 787. Give back the extra 1: 787 − 1 = 786."
           },
           {
             "prompt": "What does “Sum” mean?",
@@ -1454,18 +1472,6 @@
             "answer": "The answer to an addition",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Sum means The answer to an addition."
-          },
-          {
-            "prompt": "What does “Regrouping” mean?",
-            "choices": [
-              "Exchanging between place-value columns (carry / borrow)",
-              "A sensible answer found by rounding",
-              "A pair of numbers with a fixed total",
-              "A problem needing more than one calculation"
-            ],
-            "answer": "Exchanging between place-value columns (carry / borrow)",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
           }
         ]
       },
@@ -1478,6 +1484,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Estimate” mean?",
+            "choices": [
+              "A sensible answer found by rounding",
+              "A pair of numbers with a fixed total",
+              "A problem needing more than one calculation",
+              "The answer to an addition"
+            ],
+            "answer": "A sensible answer found by rounding",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible answer found by rounding."
+          },
+          {
             "prompt": "Which term matches this meaning: The answer to an addition?",
             "choices": [
               "Sum",
@@ -1490,16 +1508,16 @@
             "explanation": "Sum means The answer to an addition."
           },
           {
-            "prompt": "Which term matches this meaning: Exchanging between place-value columns (carry / borrow)?",
+            "prompt": "Calculate 2374 + 1968 using the column method.",
             "choices": [
-              "Regrouping",
-              "Number bond",
-              "Multi-step problem",
-              "Sum"
+              "3908",
+              "5210",
+              "4342",
+              "4776"
             ],
-            "answer": "Regrouping",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
+            "answer": "4342",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 4 + 8 = 12, write 2 carry 1. Tens: 1 + 7 + 6 = 14, write 4 carry 1. Hundreds: 1 + 3 + 9 = 13, write 3 carry 1. Thousands: 1 + 2 + 1 = 4. The answer is 4342."
           },
           {
             "prompt": "What does “Difference” mean?",
@@ -1512,18 +1530,6 @@
             "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Difference means The answer to a subtraction."
-          },
-          {
-            "prompt": "What does “Estimate” mean?",
-            "choices": [
-              "A sensible answer found by rounding",
-              "A pair of numbers with a fixed total",
-              "A problem needing more than one calculation",
-              "The answer to an addition"
-            ],
-            "answer": "A sensible answer found by rounding",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible answer found by rounding."
           }
         ]
       },
@@ -1535,6 +1541,18 @@
         "description": "Practise difference through four short challenges.",
         "type": "choice",
         "rounds": [
+          {
+            "prompt": "What does “Number bond” mean?",
+            "choices": [
+              "A pair of numbers with a fixed total",
+              "A problem needing more than one calculation",
+              "The answer to an addition",
+              "The answer to a subtraction"
+            ],
+            "answer": "A pair of numbers with a fixed total",
+            "clue": "Use the Unit 3 Math Words & Symbols reference.",
+            "explanation": "Number bond means A pair of numbers with a fixed total."
+          },
           {
             "prompt": "Which term matches this meaning: The answer to a subtraction?",
             "choices": [
@@ -1548,16 +1566,16 @@
             "explanation": "Difference means The answer to a subtraction."
           },
           {
-            "prompt": "Which term matches this meaning: A sensible answer found by rounding?",
+            "prompt": "Calculate 1000 − 675 using the column method.",
             "choices": [
-              "Estimate",
-              "Multi-step problem",
-              "Sum",
-              "Difference"
+              "358",
+              "292",
+              "391",
+              "325"
             ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible answer found by rounding."
+            "answer": "325",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 0 − 5 needs borrowing, but the tens and hundreds are also 0, so borrow from the thousand. This makes the number 0 hundreds, 10 tens … step by step it becomes 9 hundreds, 9 tens, 10 ones. Now 10 − 5 = 5, then 9 − 7 = 2, then 9 − 6 =…"
           },
           {
             "prompt": "What does “Inverse operation” mean?",
@@ -1570,18 +1588,6 @@
             "answer": "An operation that undoes another",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Inverse operation means An operation that undoes another."
-          },
-          {
-            "prompt": "What does “Number bond” mean?",
-            "choices": [
-              "A pair of numbers with a fixed total",
-              "A problem needing more than one calculation",
-              "The answer to an addition",
-              "The answer to a subtraction"
-            ],
-            "answer": "A pair of numbers with a fixed total",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Number bond means A pair of numbers with a fixed total."
           }
         ]
       },
@@ -1594,16 +1600,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: An operation that undoes another?",
+            "prompt": "Which term matches this meaning: A problem needing more than one calculation?",
             "choices": [
-              "Inverse operation",
-              "Estimate",
-              "Number bond",
-              "Multi-step problem"
+              "Multi-step problem",
+              "Sum",
+              "Difference",
+              "Inverse operation"
             ],
-            "answer": "Inverse operation",
+            "answer": "Multi-step problem",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means An operation that undoes another."
+            "explanation": "Multi-step problem means A problem needing more than one calculation."
+          },
+          {
+            "prompt": "Work out 487 + 299 in your head.",
+            "choices": [
+              "786",
+              "865",
+              "707",
+              "944"
+            ],
+            "answer": "786",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Round 299 up to 300 (that is 1 too many). 487 + 300 = 787. Give back the extra 1: 787 − 1 = 786."
           },
           {
             "prompt": "What does “Sum” mean?",
@@ -1628,18 +1646,6 @@
             "answer": "Exchanging between place-value columns (carry / borrow)",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
-          },
-          {
-            "prompt": "Which term matches this meaning: A problem needing more than one calculation?",
-            "choices": [
-              "Multi-step problem",
-              "Sum",
-              "Difference",
-              "Inverse operation"
-            ],
-            "answer": "Multi-step problem",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Multi-step problem means A problem needing more than one calculation."
           }
         ]
       },
@@ -1652,16 +1658,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Exchanging between place-value columns (carry / borrow)?",
+            "prompt": "Which term matches this meaning: The answer to an addition?",
             "choices": [
+              "Sum",
+              "Inverse operation",
               "Regrouping",
-              "Number bond",
-              "Multi-step problem",
-              "Sum"
+              "Estimate"
             ],
-            "answer": "Regrouping",
+            "answer": "Sum",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regrouping means Exchanging between place-value columns (carry / borrow)."
+            "explanation": "Sum means The answer to an addition."
+          },
+          {
+            "prompt": "Calculate 2374 + 1968 using the column method.",
+            "choices": [
+              "3908",
+              "5210",
+              "4342",
+              "4776"
+            ],
+            "answer": "4342",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 4 + 8 = 12, write 2 carry 1. Tens: 1 + 7 + 6 = 14, write 4 carry 1. Hundreds: 1 + 3 + 9 = 13, write 3 carry 1. Thousands: 1 + 2 + 1 = 4. The answer is 4342."
           },
           {
             "prompt": "What does “Difference” mean?",
@@ -1686,18 +1704,6 @@
             "answer": "A sensible answer found by rounding",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Estimate means A sensible answer found by rounding."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to an addition?",
-            "choices": [
-              "Sum",
-              "Inverse operation",
-              "Regrouping",
-              "Estimate"
-            ],
-            "answer": "Sum",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
           }
         ]
       },
@@ -1710,16 +1716,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A sensible answer found by rounding?",
+            "prompt": "Which term matches this meaning: The answer to a subtraction?",
             "choices": [
+              "Difference",
+              "Regrouping",
               "Estimate",
-              "Multi-step problem",
-              "Sum",
-              "Difference"
+              "Number bond"
             ],
-            "answer": "Estimate",
+            "answer": "Difference",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible answer found by rounding."
+            "explanation": "Difference means The answer to a subtraction."
+          },
+          {
+            "prompt": "Calculate 1000 − 675 using the column method.",
+            "choices": [
+              "358",
+              "292",
+              "391",
+              "325"
+            ],
+            "answer": "325",
+            "clue": "Work it out step by step, using the Unit 3 methods.",
+            "explanation": "Ones: 0 − 5 needs borrowing, but the tens and hundreds are also 0, so borrow from the thousand. This makes the number 0 hundreds, 10 tens … step by step it becomes 9 hundreds, 9 tens, 10 ones. Now 10 − 5 = 5, then 9 − 7 = 2, then 9 − 6 =…"
           },
           {
             "prompt": "What does “Inverse operation” mean?",
@@ -1744,18 +1762,6 @@
             "answer": "A pair of numbers with a fixed total",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
             "explanation": "Number bond means A pair of numbers with a fixed total."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a subtraction?",
-            "choices": [
-              "Difference",
-              "Regrouping",
-              "Estimate",
-              "Number bond"
-            ],
-            "answer": "Difference",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.805Z",
+  "generatedAt": "2026-07-21T07:03:32.802Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 4
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-4-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 4",
     "sourceArchive": "Year 4 (1)-20260714T220930Z-1-001.zip",
     "sourceDocuments": [
       "Year 4 (1)/Unit 5 (1)/Year 4 - Unit 5 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 4 (1)/Unit 5 (1)/Year 4 - Unit 5 Reference.docx"
     ],
     "sourceBlockCount": 437,
-    "transformation": "Structured directly from the standardized Cambridge Stage 4 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 4 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -360,7 +366,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Use a strategy to work out",
       "prompt": "Use a strategy to work out: a) 7 × 9 (round and adjust) b) 4 × 15 (double and halve) c) 8 × 7 (known facts).",
       "solution": "a) 7 × 10 − 7 = 63; b) 2 × 30 = 60; c) 5×7 + 3×7 = 35 + 21 = 56."
     },
@@ -368,7 +374,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Use factors to solve",
       "prompt": "Use factors to solve: a) 63 ÷ 7 b) 48 ÷ 6 c) 72 ÷ 8.",
       "solution": "a) 9, b) 8, c) 9."
     },
@@ -376,7 +382,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Find the common factors of 20 and 30",
       "prompt": "Find the common factors of 20 and 30.",
       "solution": "Common factors of 20 and 30: 1, 2, 5, 10."
     },
@@ -384,7 +390,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Practice 12",
       "prompt": "Find the HCF of 24 and 36. Show the factor lists you used.",
       "solution": "1) Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24; factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36; HCF = 12."
     }
@@ -855,9 +861,73 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
-        "difficulty": "Basic",
+        "difficulty": "Core",
+        "question": "Work out 8 × 7.",
+        "options": [
+          "68",
+          "56",
+          "62",
+          "50"
+        ],
+        "answer": "56",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "If you do not recall it instantly, use known facts. 5 × 7 = 35 and 3 × 7 = 21, and 5 + 3 = 8, so 8 × 7 = 35 + 21 = 56. You can check with commutativity: 7 × 8 is the same, and 7 × 8 = 56. Both agree."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Work out 7 × 28.",
+        "options": [
+          "196",
+          "216",
+          "176",
+          "236"
+        ],
+        "answer": "196",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "Partition 28 into 20 + 8. Then 7 × 20 = 140 and 7 × 8 = 56. Add them: 140 + 56 = 196. This is the distributive property doing the hard work for you."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Use factors to work out 63 ÷ 7.",
+        "options": [
+          "11",
+          "9",
+          "10",
+          "8"
+        ],
+        "answer": "9",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "Ask, what times 7 makes 63? From the sevens table, 9 × 7 = 63. So 7 is a factor of 63 and 63 ÷ 7 = 9. Division and multiplication are inverse operations."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "A school has 8 classes with 26 pupils in each class. How many pupils are there in total?",
+        "options": [
+          "34",
+          "37",
+          "31",
+          "40"
+        ],
+        "answer": "34",
+        "hint": "Work it out step by step, using the Unit 5 methods.",
+        "explanation": "Total = 8 × 26. Partition 26 into 20 + 6: 8 × 20 = 160 and 8 × 6 = 48. Add: 160 + 48 = 208 pupils. Always show the strategy so a marker can follow your thinking."
+      },
+      {
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Factor” mean?",
         "options": [
           "A number that divides another exactly",
@@ -870,10 +940,10 @@
         "explanation": "Factor means A number that divides another exactly."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Multiple” mean?",
         "options": [
           "The result of a times-table step",
@@ -886,10 +956,10 @@
         "explanation": "Multiple means The result of a times-table step."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Product” mean?",
         "options": [
           "The answer to a multiplication",
@@ -902,10 +972,10 @@
         "explanation": "Product means The answer to a multiplication."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
         "question": "What does “Factor pair” mean?",
         "options": [
           "Two factors that multiply to the number",
@@ -918,9 +988,9 @@
         "explanation": "Factor pair means Two factors that multiply to the number."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What does “Array” mean?",
         "options": [
@@ -934,10 +1004,10 @@
         "explanation": "Array means Objects in equal rows and columns."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Common factor” mean?",
         "options": [
           "A factor shared by two numbers",
@@ -950,10 +1020,10 @@
         "explanation": "Common factor means A factor shared by two numbers."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: A multiple shared by two numbers?",
         "options": [
           "Common multiple",
@@ -966,10 +1036,10 @@
         "explanation": "Common multiple means A multiple shared by two numbers."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: The lowest common multiple?",
         "options": [
           "LCM",
@@ -980,70 +1050,6 @@
         "answer": "LCM",
         "hint": "Use the Unit 5 Math Words & Symbols reference.",
         "explanation": "LCM means The lowest common multiple."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: The highest common factor?",
-        "options": [
-          "HCF",
-          "Factor",
-          "Multiple",
-          "Product"
-        ],
-        "answer": "HCF",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "HCF means The highest common factor."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A number that divides another exactly?",
-        "options": [
-          "Factor",
-          "Product",
-          "Factor pair",
-          "Array"
-        ],
-        "answer": "Factor",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "Factor means A number that divides another exactly."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The result of a times-table step?",
-        "options": [
-          "Multiple",
-          "Factor pair",
-          "Array",
-          "Common factor"
-        ],
-        "answer": "Multiple",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "Multiple means The result of a times-table step."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The answer to a multiplication?",
-        "options": [
-          "Product",
-          "Array",
-          "Common factor",
-          "Common multiple"
-        ],
-        "answer": "Product",
-        "hint": "Use the Unit 5 Math Words & Symbols reference.",
-        "explanation": "Product means The answer to a multiplication."
       }
     ]
   },
@@ -1059,52 +1065,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "Work out 8 × 7.",
             "choices": [
-              "A number that divides another exactly",
-              "The result of a times-table step",
-              "The answer to a multiplication",
-              "Two factors that multiply to the number"
+              "68",
+              "56",
+              "62",
+              "50"
             ],
-            "answer": "A number that divides another exactly",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides another exactly."
+            "answer": "56",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "If you do not recall it instantly, use known facts. 5 × 7 = 35 and 3 × 7 = 21, and 5 + 3 = 8, so 8 × 7 = 35 + 21 = 56. You can check with commutativity: 7 × 8 is the same, and 7 × 8 = 56. Both agree."
           },
           {
-            "prompt": "What does “Factor pair” mean?",
+            "prompt": "A school has 8 classes with 26 pupils in each class. How many pupils are there in total?",
             "choices": [
+              "34",
+              "37",
+              "31",
+              "40"
+            ],
+            "answer": "34",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Total = 8 × 26. Partition 26 into 20 + 6: 8 × 20 = 160 and 8 × 6 = 48. Add: 160 + 48 = 208 pupils. Always show the strategy so a marker can follow your thinking."
+          },
+          {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The answer to a multiplication",
               "Two factors that multiply to the number",
               "Objects in equal rows and columns",
+              "A factor shared by two numbers"
+            ],
+            "answer": "The answer to a multiplication",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Product means The answer to a multiplication."
+          },
+          {
+            "prompt": "What does “Common factor” mean?",
+            "choices": [
               "A factor shared by two numbers",
-              "A multiple shared by two numbers"
+              "A multiple shared by two numbers",
+              "The lowest common multiple",
+              "The highest common factor"
             ],
-            "answer": "Two factors that multiply to the number",
+            "answer": "A factor shared by two numbers",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor pair means Two factors that multiply to the number."
-          },
-          {
-            "prompt": "Which term matches this meaning: A multiple shared by two numbers?",
-            "choices": [
-              "Common multiple",
-              "LCM",
-              "HCF",
-              "Factor"
-            ],
-            "answer": "Common multiple",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Common multiple means A multiple shared by two numbers."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number that divides another exactly?",
-            "choices": [
-              "Factor",
-              "Product",
-              "Factor pair",
-              "Array"
-            ],
-            "answer": "Factor",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides another exactly."
+            "explanation": "Common factor means A factor shared by two numbers."
           }
         ]
       },
@@ -1117,52 +1123,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Multiple” mean?",
+            "prompt": "Work out 7 × 28.",
             "choices": [
+              "196",
+              "216",
+              "176",
+              "236"
+            ],
+            "answer": "196",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Partition 28 into 20 + 8. Then 7 × 20 = 140 and 7 × 8 = 56. Add them: 140 + 56 = 196. This is the distributive property doing the hard work for you."
+          },
+          {
+            "prompt": "What does “Factor” mean?",
+            "choices": [
+              "A number that divides another exactly",
               "The result of a times-table step",
               "The answer to a multiplication",
-              "Two factors that multiply to the number",
-              "Objects in equal rows and columns"
+              "Two factors that multiply to the number"
             ],
-            "answer": "The result of a times-table step",
+            "answer": "A number that divides another exactly",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of a times-table step."
+            "explanation": "Factor means A number that divides another exactly."
           },
           {
-            "prompt": "What does “Array” mean?",
+            "prompt": "What does “Factor pair” mean?",
             "choices": [
+              "Two factors that multiply to the number",
               "Objects in equal rows and columns",
               "A factor shared by two numbers",
-              "A multiple shared by two numbers",
-              "The lowest common multiple"
+              "A multiple shared by two numbers"
             ],
-            "answer": "Objects in equal rows and columns",
+            "answer": "Two factors that multiply to the number",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Objects in equal rows and columns."
+            "explanation": "Factor pair means Two factors that multiply to the number."
           },
           {
-            "prompt": "Which term matches this meaning: The lowest common multiple?",
+            "prompt": "Which term matches this meaning: A multiple shared by two numbers?",
             "choices": [
+              "Common multiple",
               "LCM",
               "HCF",
-              "Factor",
-              "Multiple"
+              "Factor"
             ],
-            "answer": "LCM",
+            "answer": "Common multiple",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "LCM means The lowest common multiple."
-          },
-          {
-            "prompt": "Which term matches this meaning: The result of a times-table step?",
-            "choices": [
-              "Multiple",
-              "Factor pair",
-              "Array",
-              "Common factor"
-            ],
-            "answer": "Multiple",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of a times-table step."
+            "explanation": "Common multiple means A multiple shared by two numbers."
           }
         ]
       },
@@ -1175,52 +1181,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Product” mean?",
+            "prompt": "Use factors to work out 63 ÷ 7.",
             "choices": [
+              "11",
+              "9",
+              "10",
+              "8"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Ask, what times 7 makes 63? From the sevens table, 9 × 7 = 63. So 7 is a factor of 63 and 63 ÷ 7 = 9. Division and multiplication are inverse operations."
+          },
+          {
+            "prompt": "What does “Multiple” mean?",
+            "choices": [
+              "The result of a times-table step",
               "The answer to a multiplication",
               "Two factors that multiply to the number",
-              "Objects in equal rows and columns",
-              "A factor shared by two numbers"
+              "Objects in equal rows and columns"
             ],
-            "answer": "The answer to a multiplication",
+            "answer": "The result of a times-table step",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "explanation": "Multiple means The result of a times-table step."
           },
           {
-            "prompt": "What does “Common factor” mean?",
+            "prompt": "What does “Array” mean?",
             "choices": [
+              "Objects in equal rows and columns",
               "A factor shared by two numbers",
               "A multiple shared by two numbers",
-              "The lowest common multiple",
-              "The highest common factor"
+              "The lowest common multiple"
             ],
-            "answer": "A factor shared by two numbers",
+            "answer": "Objects in equal rows and columns",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Common factor means A factor shared by two numbers."
+            "explanation": "Array means Objects in equal rows and columns."
           },
           {
-            "prompt": "Which term matches this meaning: The highest common factor?",
+            "prompt": "Which term matches this meaning: The lowest common multiple?",
             "choices": [
+              "LCM",
               "HCF",
               "Factor",
-              "Multiple",
-              "Product"
+              "Multiple"
             ],
-            "answer": "HCF",
+            "answer": "LCM",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "HCF means The highest common factor."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Array",
-              "Common factor",
-              "Common multiple"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "explanation": "LCM means The lowest common multiple."
           }
         ]
       },
@@ -1233,52 +1239,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Factor pair” mean?",
+            "prompt": "A school has 8 classes with 26 pupils in each class. How many pupils are there in total?",
             "choices": [
+              "34",
+              "37",
+              "31",
+              "40"
+            ],
+            "answer": "34",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Total = 8 × 26. Partition 26 into 20 + 6: 8 × 20 = 160 and 8 × 6 = 48. Add: 160 + 48 = 208 pupils. Always show the strategy so a marker can follow your thinking."
+          },
+          {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The answer to a multiplication",
               "Two factors that multiply to the number",
               "Objects in equal rows and columns",
+              "A factor shared by two numbers"
+            ],
+            "answer": "The answer to a multiplication",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Product means The answer to a multiplication."
+          },
+          {
+            "prompt": "What does “Common factor” mean?",
+            "choices": [
               "A factor shared by two numbers",
-              "A multiple shared by two numbers"
+              "A multiple shared by two numbers",
+              "The lowest common multiple",
+              "The highest common factor"
             ],
-            "answer": "Two factors that multiply to the number",
+            "answer": "A factor shared by two numbers",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor pair means Two factors that multiply to the number."
+            "explanation": "Common factor means A factor shared by two numbers."
           },
           {
-            "prompt": "Which term matches this meaning: A multiple shared by two numbers?",
+            "prompt": "Work out 8 × 7.",
             "choices": [
-              "Common multiple",
-              "LCM",
-              "HCF",
-              "Factor"
+              "68",
+              "56",
+              "62",
+              "50"
             ],
-            "answer": "Common multiple",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Common multiple means A multiple shared by two numbers."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number that divides another exactly?",
-            "choices": [
-              "Factor",
-              "Product",
-              "Factor pair",
-              "Array"
-            ],
-            "answer": "Factor",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides another exactly."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number that divides another exactly",
-              "The result of a times-table step",
-              "The answer to a multiplication",
-              "Two factors that multiply to the number"
-            ],
-            "answer": "A number that divides another exactly",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides another exactly."
+            "answer": "56",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "If you do not recall it instantly, use known facts. 5 × 7 = 35 and 3 × 7 = 21, and 5 + 3 = 8, so 8 × 7 = 35 + 21 = 56. You can check with commutativity: 7 × 8 is the same, and 7 × 8 = 56. Both agree."
           }
         ]
       },
@@ -1291,52 +1297,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Array” mean?",
+            "prompt": "What does “Factor” mean?",
             "choices": [
-              "Objects in equal rows and columns",
-              "A factor shared by two numbers",
-              "A multiple shared by two numbers",
-              "The lowest common multiple"
-            ],
-            "answer": "Objects in equal rows and columns",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Objects in equal rows and columns."
-          },
-          {
-            "prompt": "Which term matches this meaning: The lowest common multiple?",
-            "choices": [
-              "LCM",
-              "HCF",
-              "Factor",
-              "Multiple"
-            ],
-            "answer": "LCM",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "LCM means The lowest common multiple."
-          },
-          {
-            "prompt": "Which term matches this meaning: The result of a times-table step?",
-            "choices": [
-              "Multiple",
-              "Factor pair",
-              "Array",
-              "Common factor"
-            ],
-            "answer": "Multiple",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of a times-table step."
-          },
-          {
-            "prompt": "What does “Multiple” mean?",
-            "choices": [
+              "A number that divides another exactly",
               "The result of a times-table step",
               "The answer to a multiplication",
-              "Two factors that multiply to the number",
-              "Objects in equal rows and columns"
+              "Two factors that multiply to the number"
             ],
-            "answer": "The result of a times-table step",
+            "answer": "A number that divides another exactly",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of a times-table step."
+            "explanation": "Factor means A number that divides another exactly."
+          },
+          {
+            "prompt": "What does “Factor pair” mean?",
+            "choices": [
+              "Two factors that multiply to the number",
+              "Objects in equal rows and columns",
+              "A factor shared by two numbers",
+              "A multiple shared by two numbers"
+            ],
+            "answer": "Two factors that multiply to the number",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Factor pair means Two factors that multiply to the number."
+          },
+          {
+            "prompt": "Which term matches this meaning: A multiple shared by two numbers?",
+            "choices": [
+              "Common multiple",
+              "LCM",
+              "HCF",
+              "Factor"
+            ],
+            "answer": "Common multiple",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Common multiple means A multiple shared by two numbers."
+          },
+          {
+            "prompt": "Work out 7 × 28.",
+            "choices": [
+              "196",
+              "216",
+              "176",
+              "236"
+            ],
+            "answer": "196",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Partition 28 into 20 + 8. Then 7 × 20 = 140 and 7 × 8 = 56. Add them: 140 + 56 = 196. This is the distributive property doing the hard work for you."
           }
         ]
       },
@@ -1349,52 +1355,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Common factor” mean?",
+            "prompt": "What does “Multiple” mean?",
             "choices": [
-              "A factor shared by two numbers",
-              "A multiple shared by two numbers",
-              "The lowest common multiple",
-              "The highest common factor"
-            ],
-            "answer": "A factor shared by two numbers",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Common factor means A factor shared by two numbers."
-          },
-          {
-            "prompt": "Which term matches this meaning: The highest common factor?",
-            "choices": [
-              "HCF",
-              "Factor",
-              "Multiple",
-              "Product"
-            ],
-            "answer": "HCF",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "HCF means The highest common factor."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Array",
-              "Common factor",
-              "Common multiple"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
+              "The result of a times-table step",
               "The answer to a multiplication",
               "Two factors that multiply to the number",
-              "Objects in equal rows and columns",
-              "A factor shared by two numbers"
+              "Objects in equal rows and columns"
             ],
-            "answer": "The answer to a multiplication",
+            "answer": "The result of a times-table step",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "explanation": "Multiple means The result of a times-table step."
+          },
+          {
+            "prompt": "What does “Array” mean?",
+            "choices": [
+              "Objects in equal rows and columns",
+              "A factor shared by two numbers",
+              "A multiple shared by two numbers",
+              "The lowest common multiple"
+            ],
+            "answer": "Objects in equal rows and columns",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Array means Objects in equal rows and columns."
+          },
+          {
+            "prompt": "Which term matches this meaning: The lowest common multiple?",
+            "choices": [
+              "LCM",
+              "HCF",
+              "Factor",
+              "Multiple"
+            ],
+            "answer": "LCM",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "LCM means The lowest common multiple."
+          },
+          {
+            "prompt": "Use factors to work out 63 ÷ 7.",
+            "choices": [
+              "11",
+              "9",
+              "10",
+              "8"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Ask, what times 7 makes 63? From the sevens table, 9 × 7 = 63. So 7 is a factor of 63 and 63 ÷ 7 = 9. Division and multiplication are inverse operations."
           }
         ]
       },
@@ -1407,52 +1413,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A multiple shared by two numbers?",
+            "prompt": "What does “Product” mean?",
             "choices": [
-              "Common multiple",
-              "LCM",
-              "HCF",
-              "Factor"
-            ],
-            "answer": "Common multiple",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Common multiple means A multiple shared by two numbers."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number that divides another exactly?",
-            "choices": [
-              "Factor",
-              "Product",
-              "Factor pair",
-              "Array"
-            ],
-            "answer": "Factor",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides another exactly."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number that divides another exactly",
-              "The result of a times-table step",
               "The answer to a multiplication",
-              "Two factors that multiply to the number"
-            ],
-            "answer": "A number that divides another exactly",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides another exactly."
-          },
-          {
-            "prompt": "What does “Factor pair” mean?",
-            "choices": [
               "Two factors that multiply to the number",
               "Objects in equal rows and columns",
-              "A factor shared by two numbers",
-              "A multiple shared by two numbers"
+              "A factor shared by two numbers"
             ],
-            "answer": "Two factors that multiply to the number",
+            "answer": "The answer to a multiplication",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor pair means Two factors that multiply to the number."
+            "explanation": "Product means The answer to a multiplication."
+          },
+          {
+            "prompt": "What does “Common factor” mean?",
+            "choices": [
+              "A factor shared by two numbers",
+              "A multiple shared by two numbers",
+              "The lowest common multiple",
+              "The highest common factor"
+            ],
+            "answer": "A factor shared by two numbers",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Common factor means A factor shared by two numbers."
+          },
+          {
+            "prompt": "Work out 8 × 7.",
+            "choices": [
+              "68",
+              "56",
+              "62",
+              "50"
+            ],
+            "answer": "56",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "If you do not recall it instantly, use known facts. 5 × 7 = 35 and 3 × 7 = 21, and 5 + 3 = 8, so 8 × 7 = 35 + 21 = 56. You can check with commutativity: 7 × 8 is the same, and 7 × 8 = 56. Both agree."
+          },
+          {
+            "prompt": "A school has 8 classes with 26 pupils in each class. How many pupils are there in total?",
+            "choices": [
+              "34",
+              "37",
+              "31",
+              "40"
+            ],
+            "answer": "34",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Total = 8 × 26. Partition 26 into 20 + 6: 8 × 20 = 160 and 8 × 6 = 48. Add: 160 + 48 = 208 pupils. Always show the strategy so a marker can follow your thinking."
           }
         ]
       },
@@ -1465,52 +1471,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The lowest common multiple?",
+            "prompt": "What does “Factor pair” mean?",
             "choices": [
-              "LCM",
-              "HCF",
-              "Factor",
-              "Multiple"
-            ],
-            "answer": "LCM",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "LCM means The lowest common multiple."
-          },
-          {
-            "prompt": "Which term matches this meaning: The result of a times-table step?",
-            "choices": [
-              "Multiple",
-              "Factor pair",
-              "Array",
-              "Common factor"
-            ],
-            "answer": "Multiple",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of a times-table step."
-          },
-          {
-            "prompt": "What does “Multiple” mean?",
-            "choices": [
-              "The result of a times-table step",
-              "The answer to a multiplication",
               "Two factors that multiply to the number",
-              "Objects in equal rows and columns"
-            ],
-            "answer": "The result of a times-table step",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of a times-table step."
-          },
-          {
-            "prompt": "What does “Array” mean?",
-            "choices": [
               "Objects in equal rows and columns",
               "A factor shared by two numbers",
-              "A multiple shared by two numbers",
-              "The lowest common multiple"
+              "A multiple shared by two numbers"
             ],
-            "answer": "Objects in equal rows and columns",
+            "answer": "Two factors that multiply to the number",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Array means Objects in equal rows and columns."
+            "explanation": "Factor pair means Two factors that multiply to the number."
+          },
+          {
+            "prompt": "Which term matches this meaning: A multiple shared by two numbers?",
+            "choices": [
+              "Common multiple",
+              "LCM",
+              "HCF",
+              "Factor"
+            ],
+            "answer": "Common multiple",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Common multiple means A multiple shared by two numbers."
+          },
+          {
+            "prompt": "Work out 7 × 28.",
+            "choices": [
+              "196",
+              "216",
+              "176",
+              "236"
+            ],
+            "answer": "196",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Partition 28 into 20 + 8. Then 7 × 20 = 140 and 7 × 8 = 56. Add them: 140 + 56 = 196. This is the distributive property doing the hard work for you."
+          },
+          {
+            "prompt": "What does “Factor” mean?",
+            "choices": [
+              "A number that divides another exactly",
+              "The result of a times-table step",
+              "The answer to a multiplication",
+              "Two factors that multiply to the number"
+            ],
+            "answer": "A number that divides another exactly",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Factor means A number that divides another exactly."
           }
         ]
       },
@@ -1523,52 +1529,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The highest common factor?",
+            "prompt": "What does “Array” mean?",
             "choices": [
-              "HCF",
-              "Factor",
-              "Multiple",
-              "Product"
-            ],
-            "answer": "HCF",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "HCF means The highest common factor."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Array",
-              "Common factor",
-              "Common multiple"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
-              "The answer to a multiplication",
-              "Two factors that multiply to the number",
               "Objects in equal rows and columns",
-              "A factor shared by two numbers"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Common factor” mean?",
-            "choices": [
               "A factor shared by two numbers",
               "A multiple shared by two numbers",
-              "The lowest common multiple",
-              "The highest common factor"
+              "The lowest common multiple"
             ],
-            "answer": "A factor shared by two numbers",
+            "answer": "Objects in equal rows and columns",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Common factor means A factor shared by two numbers."
+            "explanation": "Array means Objects in equal rows and columns."
+          },
+          {
+            "prompt": "Which term matches this meaning: The lowest common multiple?",
+            "choices": [
+              "LCM",
+              "HCF",
+              "Factor",
+              "Multiple"
+            ],
+            "answer": "LCM",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "LCM means The lowest common multiple."
+          },
+          {
+            "prompt": "Use factors to work out 63 ÷ 7.",
+            "choices": [
+              "11",
+              "9",
+              "10",
+              "8"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Ask, what times 7 makes 63? From the sevens table, 9 × 7 = 63. So 7 is a factor of 63 and 63 ÷ 7 = 9. Division and multiplication are inverse operations."
+          },
+          {
+            "prompt": "What does “Multiple” mean?",
+            "choices": [
+              "The result of a times-table step",
+              "The answer to a multiplication",
+              "Two factors that multiply to the number",
+              "Objects in equal rows and columns"
+            ],
+            "answer": "The result of a times-table step",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Multiple means The result of a times-table step."
           }
         ]
       },
@@ -1581,16 +1587,86 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A number that divides another exactly?",
+            "prompt": "What does “Common factor” mean?",
             "choices": [
-              "Factor",
-              "Product",
-              "Factor pair",
-              "Array"
+              "A factor shared by two numbers",
+              "A multiple shared by two numbers",
+              "The lowest common multiple",
+              "The highest common factor"
             ],
-            "answer": "Factor",
+            "answer": "A factor shared by two numbers",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides another exactly."
+            "explanation": "Common factor means A factor shared by two numbers."
+          },
+          {
+            "prompt": "Work out 8 × 7.",
+            "choices": [
+              "68",
+              "56",
+              "62",
+              "50"
+            ],
+            "answer": "56",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "If you do not recall it instantly, use known facts. 5 × 7 = 35 and 3 × 7 = 21, and 5 + 3 = 8, so 8 × 7 = 35 + 21 = 56. You can check with commutativity: 7 × 8 is the same, and 7 × 8 = 56. Both agree."
+          },
+          {
+            "prompt": "A school has 8 classes with 26 pupils in each class. How many pupils are there in total?",
+            "choices": [
+              "34",
+              "37",
+              "31",
+              "40"
+            ],
+            "answer": "34",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Total = 8 × 26. Partition 26 into 20 + 6: 8 × 20 = 160 and 8 × 6 = 48. Add: 160 + 48 = 208 pupils. Always show the strategy so a marker can follow your thinking."
+          },
+          {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The answer to a multiplication",
+              "Two factors that multiply to the number",
+              "Objects in equal rows and columns",
+              "A factor shared by two numbers"
+            ],
+            "answer": "The answer to a multiplication",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Product means The answer to a multiplication."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-11",
+        "icon": "≡",
+        "skill": "Multiple",
+        "title": "Mastery Mix: Multiple",
+        "description": "Practise multiple through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: A multiple shared by two numbers?",
+            "choices": [
+              "Common multiple",
+              "LCM",
+              "HCF",
+              "Factor"
+            ],
+            "answer": "Common multiple",
+            "clue": "Use the Unit 5 Math Words & Symbols reference.",
+            "explanation": "Common multiple means A multiple shared by two numbers."
+          },
+          {
+            "prompt": "Work out 7 × 28.",
+            "choices": [
+              "196",
+              "216",
+              "176",
+              "236"
+            ],
+            "answer": "196",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Partition 28 into 20 + 8. Then 7 × 20 = 140 and 7 × 8 = 56. Add them: 140 + 56 = 196. This is the distributive property doing the hard work for you."
           },
           {
             "prompt": "What does “Factor” mean?",
@@ -1615,40 +1691,40 @@
             "answer": "Two factors that multiply to the number",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
             "explanation": "Factor pair means Two factors that multiply to the number."
-          },
-          {
-            "prompt": "Which term matches this meaning: A multiple shared by two numbers?",
-            "choices": [
-              "Common multiple",
-              "LCM",
-              "HCF",
-              "Factor"
-            ],
-            "answer": "Common multiple",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Common multiple means A multiple shared by two numbers."
           }
         ]
       },
       {
-        "id": "u5-game-11",
-        "icon": "≡",
-        "skill": "Multiple",
-        "title": "Mastery Mix: Multiple",
-        "description": "Practise multiple through four short challenges.",
+        "id": "u5-game-12",
+        "icon": "T",
+        "skill": "Product",
+        "title": "Unit Champion: Product",
+        "description": "Practise product through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The result of a times-table step?",
+            "prompt": "Which term matches this meaning: The lowest common multiple?",
             "choices": [
-              "Multiple",
-              "Factor pair",
-              "Array",
-              "Common factor"
+              "LCM",
+              "HCF",
+              "Factor",
+              "Multiple"
             ],
-            "answer": "Multiple",
+            "answer": "LCM",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of a times-table step."
+            "explanation": "LCM means The lowest common multiple."
+          },
+          {
+            "prompt": "Use factors to work out 63 ÷ 7.",
+            "choices": [
+              "11",
+              "9",
+              "10",
+              "8"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, using the Unit 5 methods.",
+            "explanation": "Ask, what times 7 makes 63? From the sevens table, 9 × 7 = 63. So 7 is a factor of 63 and 63 ÷ 7 = 9. Division and multiplication are inverse operations."
           },
           {
             "prompt": "What does “Multiple” mean?",
@@ -1673,76 +1749,6 @@
             "answer": "Objects in equal rows and columns",
             "clue": "Use the Unit 5 Math Words & Symbols reference.",
             "explanation": "Array means Objects in equal rows and columns."
-          },
-          {
-            "prompt": "Which term matches this meaning: The lowest common multiple?",
-            "choices": [
-              "LCM",
-              "HCF",
-              "Factor",
-              "Multiple"
-            ],
-            "answer": "LCM",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "LCM means The lowest common multiple."
-          }
-        ]
-      },
-      {
-        "id": "u5-game-12",
-        "icon": "T",
-        "skill": "Product",
-        "title": "Unit Champion: Product",
-        "description": "Practise product through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Array",
-              "Common factor",
-              "Common multiple"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
-              "The answer to a multiplication",
-              "Two factors that multiply to the number",
-              "Objects in equal rows and columns",
-              "A factor shared by two numbers"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Common factor” mean?",
-            "choices": [
-              "A factor shared by two numbers",
-              "A multiple shared by two numbers",
-              "The lowest common multiple",
-              "The highest common factor"
-            ],
-            "answer": "A factor shared by two numbers",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "Common factor means A factor shared by two numbers."
-          },
-          {
-            "prompt": "Which term matches this meaning: The highest common factor?",
-            "choices": [
-              "HCF",
-              "Factor",
-              "Multiple",
-              "Product"
-            ],
-            "answer": "HCF",
-            "clue": "Use the Unit 5 Math Words & Symbols reference.",
-            "explanation": "HCF means The highest common factor."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.957Z",
+  "generatedAt": "2026-07-21T07:03:32.983Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 5
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-5-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 5",
     "sourceArchive": "Year 5 (1)-20260714T220911Z-1-001.zip",
     "sourceDocuments": [
       "Year 5 (1)/Unit 11/Year 5 - Unit 11 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 5 (1)/Unit 11/Year 5 - Unit 11 Reference.docx"
     ],
     "sourceBlockCount": 427,
-    "transformation": "Structured directly from the standardized Cambridge Stage 5 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 5 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -380,7 +386,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Find all the factor pairs of 36",
       "prompt": "Find all the factor pairs of 36.",
       "solution": "Prime: 17, 23, 29; Composite: 21, 27, 33."
     },
@@ -388,7 +394,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Practice 12",
       "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
       "solution": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
     }
@@ -872,9 +878,105 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
-        "difficulty": "Basic",
+        "difficulty": "Core",
+        "question": "Calculate 274 × 6.",
+        "options": [
+          "1480",
+          "1972",
+          "1644",
+          "1808"
+        ],
+        "answer": "1644",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "Estimate: 274 rounds to 270, and 270 × 6 = 1620. Now work through the columns. Ones: 4 × 6 = 24, write 4, carry 2. Tens: 7 × 6 = 42, plus the carried 2 = 44, write 4, carry 4. Hundreds: 2 × 6 = 12, plus the carried 4 = 16. The answer is…"
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Calculate 67 × 24.",
+        "options": [
+          "1447",
+          "1930",
+          "1608",
+          "1769"
+        ],
+        "answer": "1608",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "Estimate: 70 × 24 = 1680. Multiply by the ones: 67 × 4 = 268. Multiply by the tens: 67 × 20 = 1340 (write the place-holding zero, then 67 × 2 = 134). Add the partial products: 268 + 1340 = 1608. This is close to 1680, so we are confident."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Calculate 238 × 15.",
+        "options": [
+          "4284",
+          "3570",
+          "3927",
+          "3213"
+        ],
+        "answer": "3570",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "Estimate: 240 × 15 = 3600. Multiply by the ones: 238 × 5 = 1190. Multiply by the tens: 238 × 10 = 2380. Add: 1190 + 2380 = 3570. Close to 3600 – correct."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Calculate 156 ÷ 13 using division, then check.",
+        "options": [
+          "11",
+          "14",
+          "12",
+          "13"
+        ],
+        "answer": "12",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "Estimate: 156 is close to 150, and 150 ÷ 13 is about 11 to 12. Working: 13 into 15 goes 1 remainder 2 (carry the 2 to make 26); 13 into 26 goes 2 exactly. So 156 ÷ 13 = 12. Check with the inverse: 12 × 13 = 156. It matches."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Calculate 432 ÷ 18.",
+        "options": [
+          "28",
+          "24",
+          "26",
+          "22"
+        ],
+        "answer": "24",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "Divide: 18 into 43 goes 2 (18 × 2 = 36), remainder 7. Bring down the 2 to make 72. Divide: 18 into 72 goes 4 exactly (18 × 4 = 72), remainder 0. So 432 ÷ 18 = 24. Check: 24 × 18 = 432."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Challenge",
+        "question": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+        "options": [
+          "605",
+          "806",
+          "672",
+          "739"
+        ],
+        "answer": "672",
+        "hint": "Work it out step by step, using the Unit 11 methods.",
+        "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
+      },
+      {
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
         "question": "What does “Product” mean?",
         "options": [
           "The answer to a multiplication",
@@ -887,10 +989,10 @@
         "explanation": "Product means The answer to a multiplication."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
         "question": "What does “Quotient” mean?",
         "options": [
           "The answer to a division",
@@ -903,10 +1005,10 @@
         "explanation": "Quotient means The answer to a division."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
         "question": "What does “Dividend” mean?",
         "options": [
           "The number being divided",
@@ -919,10 +1021,10 @@
         "explanation": "Dividend means The number being divided."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Divisor” mean?",
         "options": [
           "The number you divide by",
@@ -935,10 +1037,10 @@
         "explanation": "Divisor means The number you divide by."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Factor” mean?",
         "options": [
           "A number that divides exactly into another",
@@ -951,10 +1053,10 @@
         "explanation": "Factor means A number that divides exactly into another."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Multiple” mean?",
         "options": [
           "The result of multiplying by a whole number",
@@ -965,102 +1067,6 @@
         "answer": "The result of multiplying by a whole number",
         "hint": "Use the Unit 11 Math Words & Symbols reference.",
         "explanation": "Multiple means The result of multiplying by a whole number."
-      },
-      {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: The amount left over after dividing?",
-        "options": [
-          "Remainder",
-          "Prime / Composite",
-          "Inverse operation",
-          "Product"
-        ],
-        "answer": "Remainder",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Remainder means The amount left over after dividing."
-      },
-      {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Two factors / more than two factors?",
-        "options": [
-          "Prime / Composite",
-          "Inverse operation",
-          "Product",
-          "Quotient"
-        ],
-        "answer": "Prime / Composite",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Prime / Composite means Two factors / more than two factors."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: The operation that undoes another (× and ÷)?",
-        "options": [
-          "Inverse operation",
-          "Product",
-          "Quotient",
-          "Dividend"
-        ],
-        "answer": "Inverse operation",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Inverse operation means The operation that undoes another (× and ÷)."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The answer to a multiplication?",
-        "options": [
-          "Product",
-          "Dividend",
-          "Divisor",
-          "Factor"
-        ],
-        "answer": "Product",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Product means The answer to a multiplication."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The answer to a division?",
-        "options": [
-          "Quotient",
-          "Divisor",
-          "Factor",
-          "Multiple"
-        ],
-        "answer": "Quotient",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Quotient means The answer to a division."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The number being divided?",
-        "options": [
-          "Dividend",
-          "Factor",
-          "Multiple",
-          "Remainder"
-        ],
-        "answer": "Dividend",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Dividend means The number being divided."
       }
     ]
   },
@@ -1076,6 +1082,30 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Calculate 274 × 6.",
+            "choices": [
+              "1480",
+              "1972",
+              "1644",
+              "1808"
+            ],
+            "answer": "1644",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 274 rounds to 270, and 270 × 6 = 1620. Now work through the columns. Ones: 4 × 6 = 24, write 4, carry 2. Tens: 7 × 6 = 42, plus the carried 2 = 44, write 4, carry 4. Hundreds: 2 × 6 = 12, plus the carried 4 = 16. The answer is…"
+          },
+          {
+            "prompt": "Calculate 156 ÷ 13 using division, then check.",
+            "choices": [
+              "11",
+              "14",
+              "12",
+              "13"
+            ],
+            "answer": "12",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 156 is close to 150, and 150 ÷ 13 is about 11 to 12. Working: 13 into 15 goes 1 remainder 2 (carry the 2 to make 26); 13 into 26 goes 2 exactly. So 156 ÷ 13 = 12. Check with the inverse: 12 × 13 = 156. It matches."
+          },
+          {
             "prompt": "What does “Product” mean?",
             "choices": [
               "The answer to a multiplication",
@@ -1098,30 +1128,6 @@
             "answer": "The number you divide by",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "Which term matches this meaning: The amount left over after dividing?",
-            "choices": [
-              "Remainder",
-              "Prime / Composite",
-              "Inverse operation",
-              "Product"
-            ],
-            "answer": "Remainder",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Dividend",
-              "Divisor",
-              "Factor"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
           }
         ]
       },
@@ -1134,6 +1140,30 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Calculate 67 × 24.",
+            "choices": [
+              "1447",
+              "1930",
+              "1608",
+              "1769"
+            ],
+            "answer": "1608",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 70 × 24 = 1680. Multiply by the ones: 67 × 4 = 268. Multiply by the tens: 67 × 20 = 1340 (write the place-holding zero, then 67 × 2 = 134). Add the partial products: 268 + 1340 = 1608. This is close to 1680, so we are confident."
+          },
+          {
+            "prompt": "Calculate 432 ÷ 18.",
+            "choices": [
+              "28",
+              "24",
+              "26",
+              "22"
+            ],
+            "answer": "24",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Divide: 18 into 43 goes 2 (18 × 2 = 36), remainder 7. Bring down the 2 to make 72. Divide: 18 into 72 goes 4 exactly (18 × 4 = 72), remainder 0. So 432 ÷ 18 = 24. Check: 24 × 18 = 432."
+          },
+          {
             "prompt": "What does “Quotient” mean?",
             "choices": [
               "The answer to a division",
@@ -1156,30 +1186,6 @@
             "answer": "A number that divides exactly into another",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Factor means A number that divides exactly into another."
-          },
-          {
-            "prompt": "Which term matches this meaning: Two factors / more than two factors?",
-            "choices": [
-              "Prime / Composite",
-              "Inverse operation",
-              "Product",
-              "Quotient"
-            ],
-            "answer": "Prime / Composite",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Prime / Composite means Two factors / more than two factors."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Divisor",
-              "Factor",
-              "Multiple"
-            ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
           }
         ]
       },
@@ -1192,6 +1198,30 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Calculate 238 × 15.",
+            "choices": [
+              "4284",
+              "3570",
+              "3927",
+              "3213"
+            ],
+            "answer": "3570",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 240 × 15 = 3600. Multiply by the ones: 238 × 5 = 1190. Multiply by the tens: 238 × 10 = 2380. Add: 1190 + 2380 = 3570. Close to 3600 – correct."
+          },
+          {
+            "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+            "choices": [
+              "605",
+              "806",
+              "672",
+              "739"
+            ],
+            "answer": "672",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
+          },
+          {
             "prompt": "What does “Dividend” mean?",
             "choices": [
               "The number being divided",
@@ -1214,30 +1244,6 @@
             "answer": "The result of multiplying by a whole number",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Multiple means The result of multiplying by a whole number."
-          },
-          {
-            "prompt": "Which term matches this meaning: The operation that undoes another (× and ÷)?",
-            "choices": [
-              "Inverse operation",
-              "Product",
-              "Quotient",
-              "Dividend"
-            ],
-            "answer": "Inverse operation",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The operation that undoes another (× and ÷)."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number being divided?",
-            "choices": [
-              "Dividend",
-              "Factor",
-              "Multiple",
-              "Remainder"
-            ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
           }
         ]
       },
@@ -1250,40 +1256,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Divisor” mean?",
+            "prompt": "Calculate 156 ÷ 13 using division, then check.",
             "choices": [
-              "The number you divide by",
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing"
+              "11",
+              "14",
+              "12",
+              "13"
             ],
-            "answer": "The number you divide by",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
-          },
-          {
-            "prompt": "Which term matches this meaning: The amount left over after dividing?",
-            "choices": [
-              "Remainder",
-              "Prime / Composite",
-              "Inverse operation",
-              "Product"
-            ],
-            "answer": "Remainder",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Dividend",
-              "Divisor",
-              "Factor"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "answer": "12",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 156 is close to 150, and 150 ÷ 13 is about 11 to 12. Working: 13 into 15 goes 1 remainder 2 (carry the 2 to make 26); 13 into 26 goes 2 exactly. So 156 ÷ 13 = 12. Check with the inverse: 12 × 13 = 156. It matches."
           },
           {
             "prompt": "What does “Product” mean?",
@@ -1296,6 +1278,30 @@
             "answer": "The answer to a multiplication",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Product means The answer to a multiplication."
+          },
+          {
+            "prompt": "What does “Divisor” mean?",
+            "choices": [
+              "The number you divide by",
+              "A number that divides exactly into another",
+              "The result of multiplying by a whole number",
+              "The amount left over after dividing"
+            ],
+            "answer": "The number you divide by",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Divisor means The number you divide by."
+          },
+          {
+            "prompt": "Calculate 274 × 6.",
+            "choices": [
+              "1480",
+              "1972",
+              "1644",
+              "1808"
+            ],
+            "answer": "1644",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 274 rounds to 270, and 270 × 6 = 1620. Now work through the columns. Ones: 4 × 6 = 24, write 4, carry 2. Tens: 7 × 6 = 42, plus the carried 2 = 44, write 4, carry 4. Hundreds: 2 × 6 = 12, plus the carried 4 = 16. The answer is…"
           }
         ]
       },
@@ -1308,40 +1314,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "Calculate 432 ÷ 18.",
             "choices": [
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors"
+              "28",
+              "24",
+              "26",
+              "22"
             ],
-            "answer": "A number that divides exactly into another",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
-          },
-          {
-            "prompt": "Which term matches this meaning: Two factors / more than two factors?",
-            "choices": [
-              "Prime / Composite",
-              "Inverse operation",
-              "Product",
-              "Quotient"
-            ],
-            "answer": "Prime / Composite",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Prime / Composite means Two factors / more than two factors."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Divisor",
-              "Factor",
-              "Multiple"
-            ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "answer": "24",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Divide: 18 into 43 goes 2 (18 × 2 = 36), remainder 7. Bring down the 2 to make 72. Divide: 18 into 72 goes 4 exactly (18 × 4 = 72), remainder 0. So 432 ÷ 18 = 24. Check: 24 × 18 = 432."
           },
           {
             "prompt": "What does “Quotient” mean?",
@@ -1354,6 +1336,30 @@
             "answer": "The answer to a division",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Quotient means The answer to a division."
+          },
+          {
+            "prompt": "What does “Factor” mean?",
+            "choices": [
+              "A number that divides exactly into another",
+              "The result of multiplying by a whole number",
+              "The amount left over after dividing",
+              "Two factors / more than two factors"
+            ],
+            "answer": "A number that divides exactly into another",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Factor means A number that divides exactly into another."
+          },
+          {
+            "prompt": "Calculate 67 × 24.",
+            "choices": [
+              "1447",
+              "1930",
+              "1608",
+              "1769"
+            ],
+            "answer": "1608",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 70 × 24 = 1680. Multiply by the ones: 67 × 4 = 268. Multiply by the tens: 67 × 20 = 1340 (write the place-holding zero, then 67 × 2 = 134). Add the partial products: 268 + 1340 = 1608. This is close to 1680, so we are confident."
           }
         ]
       },
@@ -1366,40 +1372,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Multiple” mean?",
+            "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
             "choices": [
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors",
-              "The operation that undoes another (× and ÷)"
+              "605",
+              "806",
+              "672",
+              "739"
             ],
-            "answer": "The result of multiplying by a whole number",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying by a whole number."
-          },
-          {
-            "prompt": "Which term matches this meaning: The operation that undoes another (× and ÷)?",
-            "choices": [
-              "Inverse operation",
-              "Product",
-              "Quotient",
-              "Dividend"
-            ],
-            "answer": "Inverse operation",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The operation that undoes another (× and ÷)."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number being divided?",
-            "choices": [
-              "Dividend",
-              "Factor",
-              "Multiple",
-              "Remainder"
-            ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "answer": "672",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
           },
           {
             "prompt": "What does “Dividend” mean?",
@@ -1412,6 +1394,30 @@
             "answer": "The number being divided",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Dividend means The number being divided."
+          },
+          {
+            "prompt": "What does “Multiple” mean?",
+            "choices": [
+              "The result of multiplying by a whole number",
+              "The amount left over after dividing",
+              "Two factors / more than two factors",
+              "The operation that undoes another (× and ÷)"
+            ],
+            "answer": "The result of multiplying by a whole number",
+            "clue": "Use the Unit 11 Math Words & Symbols reference.",
+            "explanation": "Multiple means The result of multiplying by a whole number."
+          },
+          {
+            "prompt": "Calculate 238 × 15.",
+            "choices": [
+              "4284",
+              "3570",
+              "3927",
+              "3213"
+            ],
+            "answer": "3570",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 240 × 15 = 3600. Multiply by the ones: 238 × 5 = 1190. Multiply by the tens: 238 × 10 = 2380. Add: 1190 + 2380 = 3570. Close to 3600 – correct."
           }
         ]
       },
@@ -1424,30 +1430,6 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The amount left over after dividing?",
-            "choices": [
-              "Remainder",
-              "Prime / Composite",
-              "Inverse operation",
-              "Product"
-            ],
-            "answer": "Remainder",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Dividend",
-              "Divisor",
-              "Factor"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
             "prompt": "What does “Product” mean?",
             "choices": [
               "The answer to a multiplication",
@@ -1470,6 +1452,30 @@
             "answer": "The number you divide by",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Divisor means The number you divide by."
+          },
+          {
+            "prompt": "Calculate 274 × 6.",
+            "choices": [
+              "1480",
+              "1972",
+              "1644",
+              "1808"
+            ],
+            "answer": "1644",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 274 rounds to 270, and 270 × 6 = 1620. Now work through the columns. Ones: 4 × 6 = 24, write 4, carry 2. Tens: 7 × 6 = 42, plus the carried 2 = 44, write 4, carry 4. Hundreds: 2 × 6 = 12, plus the carried 4 = 16. The answer is…"
+          },
+          {
+            "prompt": "Calculate 156 ÷ 13 using division, then check.",
+            "choices": [
+              "11",
+              "14",
+              "12",
+              "13"
+            ],
+            "answer": "12",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 156 is close to 150, and 150 ÷ 13 is about 11 to 12. Working: 13 into 15 goes 1 remainder 2 (carry the 2 to make 26); 13 into 26 goes 2 exactly. So 156 ÷ 13 = 12. Check with the inverse: 12 × 13 = 156. It matches."
           }
         ]
       },
@@ -1482,30 +1488,6 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Two factors / more than two factors?",
-            "choices": [
-              "Prime / Composite",
-              "Inverse operation",
-              "Product",
-              "Quotient"
-            ],
-            "answer": "Prime / Composite",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Prime / Composite means Two factors / more than two factors."
-          },
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Divisor",
-              "Factor",
-              "Multiple"
-            ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
-          },
-          {
             "prompt": "What does “Quotient” mean?",
             "choices": [
               "The answer to a division",
@@ -1528,6 +1510,30 @@
             "answer": "A number that divides exactly into another",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Factor means A number that divides exactly into another."
+          },
+          {
+            "prompt": "Calculate 67 × 24.",
+            "choices": [
+              "1447",
+              "1930",
+              "1608",
+              "1769"
+            ],
+            "answer": "1608",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 70 × 24 = 1680. Multiply by the ones: 67 × 4 = 268. Multiply by the tens: 67 × 20 = 1340 (write the place-holding zero, then 67 × 2 = 134). Add the partial products: 268 + 1340 = 1608. This is close to 1680, so we are confident."
+          },
+          {
+            "prompt": "Calculate 432 ÷ 18.",
+            "choices": [
+              "28",
+              "24",
+              "26",
+              "22"
+            ],
+            "answer": "24",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Divide: 18 into 43 goes 2 (18 × 2 = 36), remainder 7. Bring down the 2 to make 72. Divide: 18 into 72 goes 4 exactly (18 × 4 = 72), remainder 0. So 432 ÷ 18 = 24. Check: 24 × 18 = 432."
           }
         ]
       },
@@ -1539,30 +1545,6 @@
         "description": "Practise inverse operation through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The operation that undoes another (× and ÷)?",
-            "choices": [
-              "Inverse operation",
-              "Product",
-              "Quotient",
-              "Dividend"
-            ],
-            "answer": "Inverse operation",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The operation that undoes another (× and ÷)."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number being divided?",
-            "choices": [
-              "Dividend",
-              "Factor",
-              "Multiple",
-              "Remainder"
-            ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
-          },
           {
             "prompt": "What does “Dividend” mean?",
             "choices": [
@@ -1586,6 +1568,30 @@
             "answer": "The result of multiplying by a whole number",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Multiple means The result of multiplying by a whole number."
+          },
+          {
+            "prompt": "Calculate 238 × 15.",
+            "choices": [
+              "4284",
+              "3570",
+              "3927",
+              "3213"
+            ],
+            "answer": "3570",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 240 × 15 = 3600. Multiply by the ones: 238 × 5 = 1190. Multiply by the tens: 238 × 10 = 2380. Add: 1190 + 2380 = 3570. Close to 3600 – correct."
+          },
+          {
+            "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+            "choices": [
+              "605",
+              "806",
+              "672",
+              "739"
+            ],
+            "answer": "672",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
           }
         ]
       },
@@ -1597,30 +1603,6 @@
         "description": "Practise product through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The answer to a multiplication?",
-            "choices": [
-              "Product",
-              "Dividend",
-              "Divisor",
-              "Factor"
-            ],
-            "answer": "Product",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
-              "The answer to a multiplication",
-              "The answer to a division",
-              "The number being divided",
-              "The number you divide by"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
-          },
           {
             "prompt": "What does “Divisor” mean?",
             "choices": [
@@ -1634,16 +1616,40 @@
             "explanation": "Divisor means The number you divide by."
           },
           {
-            "prompt": "Which term matches this meaning: The amount left over after dividing?",
+            "prompt": "Calculate 274 × 6.",
             "choices": [
-              "Remainder",
-              "Prime / Composite",
-              "Inverse operation",
-              "Product"
+              "1480",
+              "1972",
+              "1644",
+              "1808"
             ],
-            "answer": "Remainder",
+            "answer": "1644",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 274 rounds to 270, and 270 × 6 = 1620. Now work through the columns. Ones: 4 × 6 = 24, write 4, carry 2. Tens: 7 × 6 = 42, plus the carried 2 = 44, write 4, carry 4. Hundreds: 2 × 6 = 12, plus the carried 4 = 16. The answer is…"
+          },
+          {
+            "prompt": "Calculate 156 ÷ 13 using division, then check.",
+            "choices": [
+              "11",
+              "14",
+              "12",
+              "13"
+            ],
+            "answer": "12",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 156 is close to 150, and 150 ÷ 13 is about 11 to 12. Working: 13 into 15 goes 1 remainder 2 (carry the 2 to make 26); 13 into 26 goes 2 exactly. So 156 ÷ 13 = 12. Check with the inverse: 12 × 13 = 156. It matches."
+          },
+          {
+            "prompt": "What does “Product” mean?",
+            "choices": [
+              "The answer to a multiplication",
+              "The answer to a division",
+              "The number being divided",
+              "The number you divide by"
+            ],
+            "answer": "The answer to a multiplication",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Remainder means The amount left over after dividing."
+            "explanation": "Product means The answer to a multiplication."
           }
         ]
       },
@@ -1655,30 +1661,6 @@
         "description": "Practise quotient through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The answer to a division?",
-            "choices": [
-              "Quotient",
-              "Divisor",
-              "Factor",
-              "Multiple"
-            ],
-            "answer": "Quotient",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Quotient” mean?",
-            "choices": [
-              "The answer to a division",
-              "The number being divided",
-              "The number you divide by",
-              "A number that divides exactly into another"
-            ],
-            "answer": "The answer to a division",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
-          },
           {
             "prompt": "What does “Factor” mean?",
             "choices": [
@@ -1692,16 +1674,40 @@
             "explanation": "Factor means A number that divides exactly into another."
           },
           {
-            "prompt": "Which term matches this meaning: Two factors / more than two factors?",
+            "prompt": "Calculate 67 × 24.",
             "choices": [
-              "Prime / Composite",
-              "Inverse operation",
-              "Product",
-              "Quotient"
+              "1447",
+              "1930",
+              "1608",
+              "1769"
             ],
-            "answer": "Prime / Composite",
+            "answer": "1608",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 70 × 24 = 1680. Multiply by the ones: 67 × 4 = 268. Multiply by the tens: 67 × 20 = 1340 (write the place-holding zero, then 67 × 2 = 134). Add the partial products: 268 + 1340 = 1608. This is close to 1680, so we are confident."
+          },
+          {
+            "prompt": "Calculate 432 ÷ 18.",
+            "choices": [
+              "28",
+              "24",
+              "26",
+              "22"
+            ],
+            "answer": "24",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Divide: 18 into 43 goes 2 (18 × 2 = 36), remainder 7. Bring down the 2 to make 72. Divide: 18 into 72 goes 4 exactly (18 × 4 = 72), remainder 0. So 432 ÷ 18 = 24. Check: 24 × 18 = 432."
+          },
+          {
+            "prompt": "What does “Quotient” mean?",
+            "choices": [
+              "The answer to a division",
+              "The number being divided",
+              "The number you divide by",
+              "A number that divides exactly into another"
+            ],
+            "answer": "The answer to a division",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Prime / Composite means Two factors / more than two factors."
+            "explanation": "Quotient means The answer to a division."
           }
         ]
       },
@@ -1713,30 +1719,6 @@
         "description": "Practise dividend through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The number being divided?",
-            "choices": [
-              "Dividend",
-              "Factor",
-              "Multiple",
-              "Remainder"
-            ],
-            "answer": "Dividend",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Dividend” mean?",
-            "choices": [
-              "The number being divided",
-              "The number you divide by",
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number"
-            ],
-            "answer": "The number being divided",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
-          },
           {
             "prompt": "What does “Multiple” mean?",
             "choices": [
@@ -1750,16 +1732,40 @@
             "explanation": "Multiple means The result of multiplying by a whole number."
           },
           {
-            "prompt": "Which term matches this meaning: The operation that undoes another (× and ÷)?",
+            "prompt": "Calculate 238 × 15.",
             "choices": [
-              "Inverse operation",
-              "Product",
-              "Quotient",
-              "Dividend"
+              "4284",
+              "3570",
+              "3927",
+              "3213"
             ],
-            "answer": "Inverse operation",
+            "answer": "3570",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "Estimate: 240 × 15 = 3600. Multiply by the ones: 238 × 5 = 1190. Multiply by the tens: 238 × 10 = 2380. Add: 1190 + 2380 = 3570. Close to 3600 – correct."
+          },
+          {
+            "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+            "choices": [
+              "605",
+              "806",
+              "672",
+              "739"
+            ],
+            "answer": "672",
+            "clue": "Work it out step by step, using the Unit 11 methods.",
+            "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
+          },
+          {
+            "prompt": "What does “Dividend” mean?",
+            "choices": [
+              "The number being divided",
+              "The number you divide by",
+              "A number that divides exactly into another",
+              "The result of multiplying by a whole number"
+            ],
+            "answer": "The number being divided",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Inverse operation means The operation that undoes another (× and ÷)."
+            "explanation": "Dividend means The number being divided."
           }
         ]
       }

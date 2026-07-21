@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-20T09:09:11.676Z",
+  "generatedAt": "2026-07-21T07:03:32.653Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -24,8 +24,14 @@
     ],
     "reviewStatus": "Curriculum review required"
   },
+  "cambridge": {
+    "level": "Cambridge Primary Mathematics",
+    "code": "0096",
+    "stage": 3
+  },
   "provenance": {
     "contentPackage": "Ehel-Academy-Mathematics-Grade-3-Content-Package.xlsx",
+    "framework": "Cambridge Primary Mathematics 0096 — Stage 3",
     "sourceArchive": "Year 3 (1)-20260714T220920Z-1-001.zip",
     "sourceDocuments": [
       "Year 3 (1)/Unit 1 (1)/Year 3 - Unit 1 Lesson.docx",
@@ -34,7 +40,7 @@
       "Year 3 (1)/Unit 1 (1)/Year 3 - Unit 1 Reference.docx"
     ],
     "sourceBlockCount": 419,
-    "transformation": "Structured directly from the standardized Cambridge Stage 3 workbook source rows for screen presentation.",
+    "transformation": "Structured from the Cambridge Primary Mathematics 0096 — Stage 3 workbook source documents for screen presentation.",
     "reviewStatus": "Imported - curriculum review required"
   },
   "media": {
@@ -363,7 +369,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Guided example 9",
+      "title": "Practice 9",
       "prompt": "Order from greatest to smallest: 456, 465, 546, 564, 645.",
       "solution": "645, 564, 546, 465, 456."
     },
@@ -371,7 +377,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Guided example 10",
+      "title": "Round each to the nearest 10",
       "prompt": "Round each to the nearest 10: a) 23 b) 385 c) 599 d) 740.",
       "solution": "a) 20, b) 390, c) 600, d) 740."
     },
@@ -379,7 +385,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Guided example 11",
+      "title": "Round each to the nearest 100",
       "prompt": "Round each to the nearest 100: a) 123 b) 678 c) 950.",
       "solution": "a) 100, b) 700, c) 1000."
     },
@@ -387,7 +393,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Guided example 12",
+      "title": "Which number is",
       "prompt": "Which number is: a) 10 more than 495 b) 100 more than 275 c) 100 less than 756?",
       "solution": "a) 505, b) 375, c) 656."
     }
@@ -879,8 +885,40 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "What is the value of the 6 in the number 462?",
+        "options": [
+          "66",
+          "54",
+          "72",
+          "60"
+        ],
+        "answer": "60",
+        "hint": "Work it out step by step, using the Unit 1 methods.",
+        "explanation": "Name the place first. The 6 sits in the tens place. So its value is 6 tens = 60. (The 4 is worth 400 and the 2 is worth 2, and indeed 400 + 60 + 2 = 462.)"
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Estimate 328 + 271 by rounding each number to the nearest 10.",
+        "options": [
+          "659",
+          "539",
+          "719",
+          "599"
+        ],
+        "answer": "599",
+        "hint": "Work it out step by step, using the Unit 1 methods.",
+        "explanation": "328 rounds to 330 (ones digit 8, round up). 271 rounds to 270 (ones digit 1, round down). So the estimate is 330 + 270 = 600. The real answer is 599, so our estimate is excellent – that is how we know it makes sense."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
         "difficulty": "Basic",
         "question": "What does “Digit” mean?",
         "options": [
@@ -894,9 +932,9 @@
         "explanation": "Digit means A single symbol from 0 to 9."
       },
       {
-        "id": "q02",
+        "id": "q04",
         "type": "Concept",
-        "outcomeId": "lo02",
+        "outcomeId": "lo04",
         "difficulty": "Basic",
         "question": "What does “Place value” mean?",
         "options": [
@@ -910,10 +948,10 @@
         "explanation": "Place value means What a digit is worth from its position."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q05",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
         "question": "What does “Hundreds / Tens / Ones” mean?",
         "options": [
           "The three places in a three-digit number",
@@ -926,10 +964,10 @@
         "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
         "question": "What does “Expanded form” mean?",
         "options": [
           "A number written as the sum of its parts, like 300 + 20 + 7",
@@ -942,9 +980,9 @@
         "explanation": "Expanded form means A number written as the sum of its parts, like 300 + 20 + 7."
       },
       {
-        "id": "q05",
-        "type": "Application",
-        "outcomeId": "lo05",
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
         "difficulty": "Core",
         "question": "What does “Place holder” mean?",
         "options": [
@@ -958,9 +996,9 @@
         "explanation": "Place holder means A zero that keeps a place empty, like the 0 in 504."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
         "difficulty": "Core",
         "question": "What does “Compare” mean?",
         "options": [
@@ -974,9 +1012,9 @@
         "explanation": "Compare means To decide which number is greater, smaller or equal."
       },
       {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "Which term matches this meaning: To arrange numbers by size?",
         "options": [
@@ -990,10 +1028,10 @@
         "explanation": "Order means To arrange numbers by size."
       },
       {
-        "id": "q08",
-        "type": "Application",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: A sensible guess before counting exactly?",
         "options": [
           "Estimate",
@@ -1006,10 +1044,10 @@
         "explanation": "Estimate means A sensible guess before counting exactly."
       },
       {
-        "id": "q09",
+        "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "Which term matches this meaning: To change a number to a nearby tidy ten or hundred?",
         "options": [
           "Round",
@@ -1022,9 +1060,9 @@
         "explanation": "Round means To change a number to a nearby tidy ten or hundred."
       },
       {
-        "id": "q10",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which term matches this meaning: A single symbol from 0 to 9?",
         "options": [
@@ -1036,38 +1074,6 @@
         "answer": "Digit",
         "hint": "Use the Unit 1 Math Words & Symbols reference.",
         "explanation": "Digit means A single symbol from 0 to 9."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: What a digit is worth from its position?",
-        "options": [
-          "Place value",
-          "Expanded form",
-          "Place holder",
-          "Compare"
-        ],
-        "answer": "Place value",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Place value means What a digit is worth from its position."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The three places in a three-digit number?",
-        "options": [
-          "Hundreds / Tens / Ones",
-          "Place holder",
-          "Compare",
-          "Order"
-        ],
-        "answer": "Hundreds / Tens / Ones",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
       }
     ]
   },
@@ -1083,52 +1089,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Digit” mean?",
+            "prompt": "What is the value of the 6 in the number 462?",
             "choices": [
-              "A single symbol from 0 to 9",
+              "66",
+              "54",
+              "72",
+              "60"
+            ],
+            "answer": "60",
+            "clue": "Work it out step by step, using the Unit 1 methods.",
+            "explanation": "Name the place first. The 6 sits in the tens place. So its value is 6 tens = 60. (The 4 is worth 400 and the 2 is worth 2, and indeed 400 + 60 + 2 = 462.)"
+          },
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
               "What a digit is worth from its position",
               "The three places in a three-digit number",
-              "A number written as the sum of its parts, like 300 + 20 + 7"
+              "A number written as the sum of its parts, like 300 + 20 + 7",
+              "A zero that keeps a place empty, like the 0 in 504"
             ],
-            "answer": "A single symbol from 0 to 9",
+            "answer": "What a digit is worth from its position",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Digit means A single symbol from 0 to 9."
+            "explanation": "Place value means What a digit is worth from its position."
           },
           {
-            "prompt": "What does “Expanded form” mean?",
+            "prompt": "What does “Place holder” mean?",
             "choices": [
-              "A number written as the sum of its parts, like 300 + 20 + 7",
               "A zero that keeps a place empty, like the 0 in 504",
               "To decide which number is greater, smaller or equal",
-              "To arrange numbers by size"
+              "To arrange numbers by size",
+              "A sensible guess before counting exactly"
             ],
-            "answer": "A number written as the sum of its parts, like 300 + 20 + 7",
+            "answer": "A zero that keeps a place empty, like the 0 in 504",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Expanded form means A number written as the sum of its parts, like 300 + 20 + 7."
+            "explanation": "Place holder means A zero that keeps a place empty, like the 0 in 504."
           },
           {
-            "prompt": "Which term matches this meaning: To arrange numbers by size?",
+            "prompt": "Which term matches this meaning: A sensible guess before counting exactly?",
             "choices": [
-              "Order",
               "Estimate",
               "Round",
-              "Digit"
-            ],
-            "answer": "Order",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Order means To arrange numbers by size."
-          },
-          {
-            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
-            "choices": [
               "Digit",
-              "Hundreds / Tens / Ones",
-              "Expanded form",
-              "Place holder"
+              "Place value"
             ],
-            "answer": "Digit",
+            "answer": "Estimate",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Digit means A single symbol from 0 to 9."
+            "explanation": "Estimate means A sensible guess before counting exactly."
           }
         ]
       },
@@ -1141,52 +1147,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Place value” mean?",
+            "prompt": "Estimate 328 + 271 by rounding each number to the nearest 10.",
             "choices": [
-              "What a digit is worth from its position",
+              "659",
+              "539",
+              "719",
+              "599"
+            ],
+            "answer": "599",
+            "clue": "Work it out step by step, using the Unit 1 methods.",
+            "explanation": "328 rounds to 330 (ones digit 8, round up). 271 rounds to 270 (ones digit 1, round down). So the estimate is 330 + 270 = 600. The real answer is 599, so our estimate is excellent – that is how we know it makes sense."
+          },
+          {
+            "prompt": "What does “Hundreds / Tens / Ones” mean?",
+            "choices": [
               "The three places in a three-digit number",
               "A number written as the sum of its parts, like 300 + 20 + 7",
-              "A zero that keeps a place empty, like the 0 in 504"
+              "A zero that keeps a place empty, like the 0 in 504",
+              "To decide which number is greater, smaller or equal"
             ],
-            "answer": "What a digit is worth from its position",
+            "answer": "The three places in a three-digit number",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place value means What a digit is worth from its position."
+            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
           },
           {
-            "prompt": "What does “Place holder” mean?",
+            "prompt": "What does “Compare” mean?",
             "choices": [
-              "A zero that keeps a place empty, like the 0 in 504",
               "To decide which number is greater, smaller or equal",
               "To arrange numbers by size",
-              "A sensible guess before counting exactly"
+              "A sensible guess before counting exactly",
+              "To change a number to a nearby tidy ten or hundred"
             ],
-            "answer": "A zero that keeps a place empty, like the 0 in 504",
+            "answer": "To decide which number is greater, smaller or equal",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place holder means A zero that keeps a place empty, like the 0 in 504."
+            "explanation": "Compare means To decide which number is greater, smaller or equal."
           },
           {
-            "prompt": "Which term matches this meaning: A sensible guess before counting exactly?",
+            "prompt": "Which term matches this meaning: To change a number to a nearby tidy ten or hundred?",
             "choices": [
-              "Estimate",
               "Round",
               "Digit",
-              "Place value"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before counting exactly."
-          },
-          {
-            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
-            "choices": [
               "Place value",
-              "Expanded form",
-              "Place holder",
-              "Compare"
+              "Hundreds / Tens / Ones"
             ],
-            "answer": "Place value",
+            "answer": "Round",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place value means What a digit is worth from its position."
+            "explanation": "Round means To change a number to a nearby tidy ten or hundred."
           }
         ]
       },
@@ -1199,52 +1205,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Hundreds / Tens / Ones” mean?",
+            "prompt": "What does “Digit” mean?",
             "choices": [
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position",
               "The three places in a three-digit number",
+              "A number written as the sum of its parts, like 300 + 20 + 7"
+            ],
+            "answer": "A single symbol from 0 to 9",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "What does “Expanded form” mean?",
+            "choices": [
               "A number written as the sum of its parts, like 300 + 20 + 7",
               "A zero that keeps a place empty, like the 0 in 504",
-              "To decide which number is greater, smaller or equal"
-            ],
-            "answer": "The three places in a three-digit number",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
-          },
-          {
-            "prompt": "What does “Compare” mean?",
-            "choices": [
               "To decide which number is greater, smaller or equal",
-              "To arrange numbers by size",
-              "A sensible guess before counting exactly",
-              "To change a number to a nearby tidy ten or hundred"
+              "To arrange numbers by size"
             ],
-            "answer": "To decide which number is greater, smaller or equal",
+            "answer": "A number written as the sum of its parts, like 300 + 20 + 7",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Compare means To decide which number is greater, smaller or equal."
+            "explanation": "Expanded form means A number written as the sum of its parts, like 300 + 20 + 7."
           },
           {
-            "prompt": "Which term matches this meaning: To change a number to a nearby tidy ten or hundred?",
+            "prompt": "Which term matches this meaning: To arrange numbers by size?",
             "choices": [
+              "Order",
+              "Estimate",
               "Round",
-              "Digit",
-              "Place value",
-              "Hundreds / Tens / Ones"
+              "Digit"
             ],
-            "answer": "Round",
+            "answer": "Order",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Round means To change a number to a nearby tidy ten or hundred."
+            "explanation": "Order means To arrange numbers by size."
           },
           {
-            "prompt": "Which term matches this meaning: The three places in a three-digit number?",
+            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
             "choices": [
+              "Digit",
               "Hundreds / Tens / Ones",
-              "Place holder",
-              "Compare",
-              "Order"
+              "Expanded form",
+              "Place holder"
             ],
-            "answer": "Hundreds / Tens / Ones",
+            "answer": "Digit",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
+            "explanation": "Digit means A single symbol from 0 to 9."
           }
         ]
       },
@@ -1257,52 +1263,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Expanded form” mean?",
+            "prompt": "What does “Place value” mean?",
             "choices": [
-              "A number written as the sum of its parts, like 300 + 20 + 7",
-              "A zero that keeps a place empty, like the 0 in 504",
-              "To decide which number is greater, smaller or equal",
-              "To arrange numbers by size"
-            ],
-            "answer": "A number written as the sum of its parts, like 300 + 20 + 7",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Expanded form means A number written as the sum of its parts, like 300 + 20 + 7."
-          },
-          {
-            "prompt": "Which term matches this meaning: To arrange numbers by size?",
-            "choices": [
-              "Order",
-              "Estimate",
-              "Round",
-              "Digit"
-            ],
-            "answer": "Order",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Order means To arrange numbers by size."
-          },
-          {
-            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
-            "choices": [
-              "Digit",
-              "Hundreds / Tens / Ones",
-              "Expanded form",
-              "Place holder"
-            ],
-            "answer": "Digit",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Digit means A single symbol from 0 to 9."
-          },
-          {
-            "prompt": "What does “Digit” mean?",
-            "choices": [
-              "A single symbol from 0 to 9",
               "What a digit is worth from its position",
               "The three places in a three-digit number",
-              "A number written as the sum of its parts, like 300 + 20 + 7"
+              "A number written as the sum of its parts, like 300 + 20 + 7",
+              "A zero that keeps a place empty, like the 0 in 504"
             ],
-            "answer": "A single symbol from 0 to 9",
+            "answer": "What a digit is worth from its position",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Digit means A single symbol from 0 to 9."
+            "explanation": "Place value means What a digit is worth from its position."
+          },
+          {
+            "prompt": "What does “Place holder” mean?",
+            "choices": [
+              "A zero that keeps a place empty, like the 0 in 504",
+              "To decide which number is greater, smaller or equal",
+              "To arrange numbers by size",
+              "A sensible guess before counting exactly"
+            ],
+            "answer": "A zero that keeps a place empty, like the 0 in 504",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place holder means A zero that keeps a place empty, like the 0 in 504."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess before counting exactly?",
+            "choices": [
+              "Estimate",
+              "Round",
+              "Digit",
+              "Place value"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting exactly."
+          },
+          {
+            "prompt": "What is the value of the 6 in the number 462?",
+            "choices": [
+              "66",
+              "54",
+              "72",
+              "60"
+            ],
+            "answer": "60",
+            "clue": "Work it out step by step, using the Unit 1 methods.",
+            "explanation": "Name the place first. The 6 sits in the tens place. So its value is 6 tens = 60. (The 4 is worth 400 and the 2 is worth 2, and indeed 400 + 60 + 2 = 462.)"
           }
         ]
       },
@@ -1315,52 +1321,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Place holder” mean?",
+            "prompt": "What does “Hundreds / Tens / Ones” mean?",
             "choices": [
-              "A zero that keeps a place empty, like the 0 in 504",
-              "To decide which number is greater, smaller or equal",
-              "To arrange numbers by size",
-              "A sensible guess before counting exactly"
-            ],
-            "answer": "A zero that keeps a place empty, like the 0 in 504",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place holder means A zero that keeps a place empty, like the 0 in 504."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible guess before counting exactly?",
-            "choices": [
-              "Estimate",
-              "Round",
-              "Digit",
-              "Place value"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before counting exactly."
-          },
-          {
-            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
-            "choices": [
-              "Place value",
-              "Expanded form",
-              "Place holder",
-              "Compare"
-            ],
-            "answer": "Place value",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place value means What a digit is worth from its position."
-          },
-          {
-            "prompt": "What does “Place value” mean?",
-            "choices": [
-              "What a digit is worth from its position",
               "The three places in a three-digit number",
               "A number written as the sum of its parts, like 300 + 20 + 7",
-              "A zero that keeps a place empty, like the 0 in 504"
+              "A zero that keeps a place empty, like the 0 in 504",
+              "To decide which number is greater, smaller or equal"
             ],
-            "answer": "What a digit is worth from its position",
+            "answer": "The three places in a three-digit number",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place value means What a digit is worth from its position."
+            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
+          },
+          {
+            "prompt": "What does “Compare” mean?",
+            "choices": [
+              "To decide which number is greater, smaller or equal",
+              "To arrange numbers by size",
+              "A sensible guess before counting exactly",
+              "To change a number to a nearby tidy ten or hundred"
+            ],
+            "answer": "To decide which number is greater, smaller or equal",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Compare means To decide which number is greater, smaller or equal."
+          },
+          {
+            "prompt": "Which term matches this meaning: To change a number to a nearby tidy ten or hundred?",
+            "choices": [
+              "Round",
+              "Digit",
+              "Place value",
+              "Hundreds / Tens / Ones"
+            ],
+            "answer": "Round",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Round means To change a number to a nearby tidy ten or hundred."
+          },
+          {
+            "prompt": "Estimate 328 + 271 by rounding each number to the nearest 10.",
+            "choices": [
+              "659",
+              "539",
+              "719",
+              "599"
+            ],
+            "answer": "599",
+            "clue": "Work it out step by step, using the Unit 1 methods.",
+            "explanation": "328 rounds to 330 (ones digit 8, round up). 271 rounds to 270 (ones digit 1, round down). So the estimate is 330 + 270 = 600. The real answer is 599, so our estimate is excellent – that is how we know it makes sense."
           }
         ]
       },
@@ -1373,52 +1379,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Compare” mean?",
+            "prompt": "What does “Expanded form” mean?",
             "choices": [
-              "To decide which number is greater, smaller or equal",
-              "To arrange numbers by size",
-              "A sensible guess before counting exactly",
-              "To change a number to a nearby tidy ten or hundred"
-            ],
-            "answer": "To decide which number is greater, smaller or equal",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Compare means To decide which number is greater, smaller or equal."
-          },
-          {
-            "prompt": "Which term matches this meaning: To change a number to a nearby tidy ten or hundred?",
-            "choices": [
-              "Round",
-              "Digit",
-              "Place value",
-              "Hundreds / Tens / Ones"
-            ],
-            "answer": "Round",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Round means To change a number to a nearby tidy ten or hundred."
-          },
-          {
-            "prompt": "Which term matches this meaning: The three places in a three-digit number?",
-            "choices": [
-              "Hundreds / Tens / Ones",
-              "Place holder",
-              "Compare",
-              "Order"
-            ],
-            "answer": "Hundreds / Tens / Ones",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
-          },
-          {
-            "prompt": "What does “Hundreds / Tens / Ones” mean?",
-            "choices": [
-              "The three places in a three-digit number",
               "A number written as the sum of its parts, like 300 + 20 + 7",
               "A zero that keeps a place empty, like the 0 in 504",
-              "To decide which number is greater, smaller or equal"
+              "To decide which number is greater, smaller or equal",
+              "To arrange numbers by size"
             ],
-            "answer": "The three places in a three-digit number",
+            "answer": "A number written as the sum of its parts, like 300 + 20 + 7",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
+            "explanation": "Expanded form means A number written as the sum of its parts, like 300 + 20 + 7."
+          },
+          {
+            "prompt": "Which term matches this meaning: To arrange numbers by size?",
+            "choices": [
+              "Order",
+              "Estimate",
+              "Round",
+              "Digit"
+            ],
+            "answer": "Order",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Order means To arrange numbers by size."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
+            "choices": [
+              "Digit",
+              "Hundreds / Tens / Ones",
+              "Expanded form",
+              "Place holder"
+            ],
+            "answer": "Digit",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "What does “Digit” mean?",
+            "choices": [
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position",
+              "The three places in a three-digit number",
+              "A number written as the sum of its parts, like 300 + 20 + 7"
+            ],
+            "answer": "A single symbol from 0 to 9",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
           }
         ]
       },
@@ -1431,52 +1437,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: To arrange numbers by size?",
+            "prompt": "What does “Place holder” mean?",
             "choices": [
-              "Order",
-              "Estimate",
-              "Round",
-              "Digit"
-            ],
-            "answer": "Order",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Order means To arrange numbers by size."
-          },
-          {
-            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
-            "choices": [
-              "Digit",
-              "Hundreds / Tens / Ones",
-              "Expanded form",
-              "Place holder"
-            ],
-            "answer": "Digit",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Digit means A single symbol from 0 to 9."
-          },
-          {
-            "prompt": "What does “Digit” mean?",
-            "choices": [
-              "A single symbol from 0 to 9",
-              "What a digit is worth from its position",
-              "The three places in a three-digit number",
-              "A number written as the sum of its parts, like 300 + 20 + 7"
-            ],
-            "answer": "A single symbol from 0 to 9",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Digit means A single symbol from 0 to 9."
-          },
-          {
-            "prompt": "What does “Expanded form” mean?",
-            "choices": [
-              "A number written as the sum of its parts, like 300 + 20 + 7",
               "A zero that keeps a place empty, like the 0 in 504",
               "To decide which number is greater, smaller or equal",
-              "To arrange numbers by size"
+              "To arrange numbers by size",
+              "A sensible guess before counting exactly"
             ],
-            "answer": "A number written as the sum of its parts, like 300 + 20 + 7",
+            "answer": "A zero that keeps a place empty, like the 0 in 504",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Expanded form means A number written as the sum of its parts, like 300 + 20 + 7."
+            "explanation": "Place holder means A zero that keeps a place empty, like the 0 in 504."
+          },
+          {
+            "prompt": "Which term matches this meaning: A sensible guess before counting exactly?",
+            "choices": [
+              "Estimate",
+              "Round",
+              "Digit",
+              "Place value"
+            ],
+            "answer": "Estimate",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Estimate means A sensible guess before counting exactly."
+          },
+          {
+            "prompt": "What is the value of the 6 in the number 462?",
+            "choices": [
+              "66",
+              "54",
+              "72",
+              "60"
+            ],
+            "answer": "60",
+            "clue": "Work it out step by step, using the Unit 1 methods.",
+            "explanation": "Name the place first. The 6 sits in the tens place. So its value is 6 tens = 60. (The 4 is worth 400 and the 2 is worth 2, and indeed 400 + 60 + 2 = 462.)"
+          },
+          {
+            "prompt": "What does “Place value” mean?",
+            "choices": [
+              "What a digit is worth from its position",
+              "The three places in a three-digit number",
+              "A number written as the sum of its parts, like 300 + 20 + 7",
+              "A zero that keeps a place empty, like the 0 in 504"
+            ],
+            "answer": "What a digit is worth from its position",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Place value means What a digit is worth from its position."
           }
         ]
       },
@@ -1489,6 +1495,122 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "What does “Compare” mean?",
+            "choices": [
+              "To decide which number is greater, smaller or equal",
+              "To arrange numbers by size",
+              "A sensible guess before counting exactly",
+              "To change a number to a nearby tidy ten or hundred"
+            ],
+            "answer": "To decide which number is greater, smaller or equal",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Compare means To decide which number is greater, smaller or equal."
+          },
+          {
+            "prompt": "Which term matches this meaning: To change a number to a nearby tidy ten or hundred?",
+            "choices": [
+              "Round",
+              "Digit",
+              "Place value",
+              "Hundreds / Tens / Ones"
+            ],
+            "answer": "Round",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Round means To change a number to a nearby tidy ten or hundred."
+          },
+          {
+            "prompt": "Estimate 328 + 271 by rounding each number to the nearest 10.",
+            "choices": [
+              "659",
+              "539",
+              "719",
+              "599"
+            ],
+            "answer": "599",
+            "clue": "Work it out step by step, using the Unit 1 methods.",
+            "explanation": "328 rounds to 330 (ones digit 8, round up). 271 rounds to 270 (ones digit 1, round down). So the estimate is 330 + 270 = 600. The real answer is 599, so our estimate is excellent – that is how we know it makes sense."
+          },
+          {
+            "prompt": "What does “Hundreds / Tens / Ones” mean?",
+            "choices": [
+              "The three places in a three-digit number",
+              "A number written as the sum of its parts, like 300 + 20 + 7",
+              "A zero that keeps a place empty, like the 0 in 504",
+              "To decide which number is greater, smaller or equal"
+            ],
+            "answer": "The three places in a three-digit number",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-9",
+        "icon": "⌂",
+        "skill": "Round",
+        "title": "Real-Life Round: Round",
+        "description": "Practise round through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which term matches this meaning: To arrange numbers by size?",
+            "choices": [
+              "Order",
+              "Estimate",
+              "Round",
+              "Digit"
+            ],
+            "answer": "Order",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Order means To arrange numbers by size."
+          },
+          {
+            "prompt": "Which term matches this meaning: A single symbol from 0 to 9?",
+            "choices": [
+              "Digit",
+              "Hundreds / Tens / Ones",
+              "Expanded form",
+              "Place holder"
+            ],
+            "answer": "Digit",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "What does “Digit” mean?",
+            "choices": [
+              "A single symbol from 0 to 9",
+              "What a digit is worth from its position",
+              "The three places in a three-digit number",
+              "A number written as the sum of its parts, like 300 + 20 + 7"
+            ],
+            "answer": "A single symbol from 0 to 9",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Digit means A single symbol from 0 to 9."
+          },
+          {
+            "prompt": "What does “Expanded form” mean?",
+            "choices": [
+              "A number written as the sum of its parts, like 300 + 20 + 7",
+              "A zero that keeps a place empty, like the 0 in 504",
+              "To decide which number is greater, smaller or equal",
+              "To arrange numbers by size"
+            ],
+            "answer": "A number written as the sum of its parts, like 300 + 20 + 7",
+            "clue": "Use the Unit 1 Math Words & Symbols reference.",
+            "explanation": "Expanded form means A number written as the sum of its parts, like 300 + 20 + 7."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-10",
+        "icon": "!",
+        "skill": "Digit",
+        "title": "Spot the Error: Digit",
+        "description": "Practise digit through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
             "prompt": "Which term matches this meaning: A sensible guess before counting exactly?",
             "choices": [
               "Estimate",
@@ -1501,16 +1623,16 @@
             "explanation": "Estimate means A sensible guess before counting exactly."
           },
           {
-            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
+            "prompt": "What is the value of the 6 in the number 462?",
             "choices": [
-              "Place value",
-              "Expanded form",
-              "Place holder",
-              "Compare"
+              "66",
+              "54",
+              "72",
+              "60"
             ],
-            "answer": "Place value",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place value means What a digit is worth from its position."
+            "answer": "60",
+            "clue": "Work it out step by step, using the Unit 1 methods.",
+            "explanation": "Name the place first. The 6 sits in the tens place. So its value is 6 tens = 60. (The 4 is worth 400 and the 2 is worth 2, and indeed 400 + 60 + 2 = 462.)"
           },
           {
             "prompt": "What does “Place value” mean?",
@@ -1539,11 +1661,11 @@
         ]
       },
       {
-        "id": "u1-game-9",
-        "icon": "⌂",
-        "skill": "Round",
-        "title": "Real-Life Round: Round",
-        "description": "Practise round through four short challenges.",
+        "id": "u1-game-11",
+        "icon": "≡",
+        "skill": "Place value",
+        "title": "Mastery Mix: Place value",
+        "description": "Practise place value through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1559,16 +1681,16 @@
             "explanation": "Round means To change a number to a nearby tidy ten or hundred."
           },
           {
-            "prompt": "Which term matches this meaning: The three places in a three-digit number?",
+            "prompt": "Estimate 328 + 271 by rounding each number to the nearest 10.",
             "choices": [
-              "Hundreds / Tens / Ones",
-              "Place holder",
-              "Compare",
-              "Order"
+              "659",
+              "539",
+              "719",
+              "599"
             ],
-            "answer": "Hundreds / Tens / Ones",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
+            "answer": "599",
+            "clue": "Work it out step by step, using the Unit 1 methods.",
+            "explanation": "328 rounds to 330 (ones digit 8, round up). 271 rounds to 270 (ones digit 1, round down). So the estimate is 330 + 270 = 600. The real answer is 599, so our estimate is excellent – that is how we know it makes sense."
           },
           {
             "prompt": "What does “Hundreds / Tens / Ones” mean?",
@@ -1597,11 +1719,11 @@
         ]
       },
       {
-        "id": "u1-game-10",
-        "icon": "!",
-        "skill": "Digit",
-        "title": "Spot the Error: Digit",
-        "description": "Practise digit through four short challenges.",
+        "id": "u1-game-12",
+        "icon": "T",
+        "skill": "Hundreds / Tens / Ones",
+        "title": "Unit Champion: Hundreds / Tens / Ones",
+        "description": "Practise hundreds / tens / ones through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1651,122 +1773,6 @@
             "answer": "Order",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
             "explanation": "Order means To arrange numbers by size."
-          }
-        ]
-      },
-      {
-        "id": "u1-game-11",
-        "icon": "≡",
-        "skill": "Place value",
-        "title": "Mastery Mix: Place value",
-        "description": "Practise place value through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: What a digit is worth from its position?",
-            "choices": [
-              "Place value",
-              "Expanded form",
-              "Place holder",
-              "Compare"
-            ],
-            "answer": "Place value",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place value means What a digit is worth from its position."
-          },
-          {
-            "prompt": "What does “Place value” mean?",
-            "choices": [
-              "What a digit is worth from its position",
-              "The three places in a three-digit number",
-              "A number written as the sum of its parts, like 300 + 20 + 7",
-              "A zero that keeps a place empty, like the 0 in 504"
-            ],
-            "answer": "What a digit is worth from its position",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place value means What a digit is worth from its position."
-          },
-          {
-            "prompt": "What does “Place holder” mean?",
-            "choices": [
-              "A zero that keeps a place empty, like the 0 in 504",
-              "To decide which number is greater, smaller or equal",
-              "To arrange numbers by size",
-              "A sensible guess before counting exactly"
-            ],
-            "answer": "A zero that keeps a place empty, like the 0 in 504",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Place holder means A zero that keeps a place empty, like the 0 in 504."
-          },
-          {
-            "prompt": "Which term matches this meaning: A sensible guess before counting exactly?",
-            "choices": [
-              "Estimate",
-              "Round",
-              "Digit",
-              "Place value"
-            ],
-            "answer": "Estimate",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Estimate means A sensible guess before counting exactly."
-          }
-        ]
-      },
-      {
-        "id": "u1-game-12",
-        "icon": "T",
-        "skill": "Hundreds / Tens / Ones",
-        "title": "Unit Champion: Hundreds / Tens / Ones",
-        "description": "Practise hundreds / tens / ones through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The three places in a three-digit number?",
-            "choices": [
-              "Hundreds / Tens / Ones",
-              "Place holder",
-              "Compare",
-              "Order"
-            ],
-            "answer": "Hundreds / Tens / Ones",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
-          },
-          {
-            "prompt": "What does “Hundreds / Tens / Ones” mean?",
-            "choices": [
-              "The three places in a three-digit number",
-              "A number written as the sum of its parts, like 300 + 20 + 7",
-              "A zero that keeps a place empty, like the 0 in 504",
-              "To decide which number is greater, smaller or equal"
-            ],
-            "answer": "The three places in a three-digit number",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Hundreds / Tens / Ones means The three places in a three-digit number."
-          },
-          {
-            "prompt": "What does “Compare” mean?",
-            "choices": [
-              "To decide which number is greater, smaller or equal",
-              "To arrange numbers by size",
-              "A sensible guess before counting exactly",
-              "To change a number to a nearby tidy ten or hundred"
-            ],
-            "answer": "To decide which number is greater, smaller or equal",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Compare means To decide which number is greater, smaller or equal."
-          },
-          {
-            "prompt": "Which term matches this meaning: To change a number to a nearby tidy ten or hundred?",
-            "choices": [
-              "Round",
-              "Digit",
-              "Place value",
-              "Hundreds / Tens / Ones"
-            ],
-            "answer": "Round",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Round means To change a number to a nearby tidy ten or hundred."
           }
         ]
       }

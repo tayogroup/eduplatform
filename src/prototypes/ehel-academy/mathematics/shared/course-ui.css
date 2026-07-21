@@ -203,3 +203,54 @@
   .model-tabs .subtab { min-width: max-content; }
   .fluency-answer, .progress-summary { grid-template-columns: 1fr; }
 }
+
+/* ===== Math visuals: labelled SVG diagrams + WebGL scenes ===== */
+.math-visual { margin: 14px 0 18px; overflow: hidden; border: 1px solid #d9e3ec; border-radius: 10px; background: linear-gradient(145deg,#f8fbff,#eef3fb); color: #17324d; }
+.math-visual .geometry-stage { position: relative; min-height: 210px; background: radial-gradient(circle at 50% 32%, #ffffff, #e8eef8); }
+.math-visual .math-webgl { display: block; width: 100%; height: 210px; touch-action: none; cursor: grab; }
+.math-visual .math-webgl:active { cursor: grabbing; }
+.math-visual figcaption { padding: 10px 13px; border-top: 1px solid #d9e3ec; background: #ffffff; font-size: 13px; }
+.math-visual figcaption strong { color: #1d5b8c; }
+.m-diagram { display: block; width: 100%; height: auto; max-height: 220px; background: radial-gradient(circle at 50% 30%, #ffffff, #eef3fb); }
+.m-diagram text { font: 700 12px system-ui,"Segoe UI",sans-serif; fill: #45606f; text-anchor: middle; }
+.m-diagram text.m-tiny { font-size: 11px; }
+.m-diagram text.m-tiny.light { fill: #fff; }
+.m-diagram text.m-mid { font-size: 15px; font-weight: 800; fill: #17324d; }
+.m-diagram text.m-mid.light { fill: #fff; }
+.m-diagram text.m-mid.dark { fill: #17324d; }
+.m-diagram text.m-big { font-size: 30px; font-weight: 800; fill: #fff; }
+.m-diagram text.m-huge { font-size: 34px; font-weight: 800; fill: #17324d; }
+.m-diagram text.m-num { font: 800 22px "Courier New",monospace; fill: #17324d; letter-spacing: 3px; text-anchor: start; }
+.m-diagram text.m-sym { font-size: 34px; font-weight: 800; fill: #1d5b8c; }
+.m-diagram text.m-sym.small { font-size: 15px; }
+.m-diagram text.m-tally { font: 800 30px "Courier New",monospace; fill: #0f766e; text-anchor: start; letter-spacing: 3px; }
+.m-diagram .m-fill-blue { fill: #2f6cdf; stroke: #1b3f87; stroke-width: 2; }
+.m-diagram .m-fill-green { fill: #3aa06a; stroke: #24623f; stroke-width: 2; }
+.m-diagram .m-fill-gold { fill: #f2b234; stroke: #b9821f; stroke-width: 2; }
+.m-diagram .m-fill-orange { fill: #ef6c1f; stroke: #b04c12; stroke-width: 2; }
+.m-diagram .m-fill-teal { fill: #0f9e8e; stroke: #0a6d62; stroke-width: 2; }
+.m-diagram .m-fill-gray { fill: #9aa6ad; stroke: #5b6b73; stroke-width: 2; }
+.m-diagram .m-fill-navy { fill: #16344d; }
+.m-diagram .m-fill-red { fill: #e5493f; }
+.m-diagram .m-flat { fill: #cfe0f6; stroke: #2f6cdf; stroke-width: 2.5; }
+.m-diagram .m-outline { fill: none; stroke: #2f6cdf; stroke-width: 2; }
+.m-diagram .m-outline.thick { stroke-width: 3; }
+.m-diagram .m-grid { fill: #eaf2fd; stroke: #9cc0ee; stroke-width: 1; }
+.m-diagram .m-line { fill: none; stroke: #17324d; stroke-width: 2.5; stroke-linecap: round; }
+.m-diagram .m-tick { stroke: #17324d; stroke-width: 2; }
+.m-diagram .m-needle { stroke: #e5493f; stroke-width: 3; stroke-linecap: round; }
+.m-diagram .m-hand { stroke: #16344d; stroke-width: 3; stroke-linecap: round; }
+.m-diagram .m-hand.short { stroke: #ef6c1f; stroke-width: 4; }
+.m-diagram .m-symm { stroke: #ef6c1f; stroke-width: 2; stroke-dasharray: 5 4; }
+.m-diagram .m-right { fill: none; stroke: #ef6c1f; stroke-width: 2; }
+.m-diagram .m-arc { fill: none; stroke: #0f766e; stroke-width: 2; }
+.m-diagram .m-coin { fill: #f2b234; stroke: #b9821f; stroke-width: 2.5; }
+.m-diagram .m-venn { fill: rgba(47,108,223,.22); stroke: #2f6cdf; stroke-width: 2; }
+.m-diagram .m-graphline { fill: none; stroke: #ef6c1f; stroke-width: 3; }
+
+/* ===== Tab rows contain their own overflow (long titles scroll in place) ===== */
+.model-tabs, .exploration-tabs, .method-selector { display: flex; flex-wrap: wrap; gap: 8px; max-width: 100%; }
+.model-tabs { overflow-x: auto; flex-wrap: nowrap; }
+.model-tabs .subtab { flex: 0 0 auto; min-width: auto; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#app { max-width: 100%; overflow-x: hidden; }
+@media (max-width: 720px) { .math-visual .geometry-labels { gap: 5px; } }

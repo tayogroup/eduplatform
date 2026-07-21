@@ -1,5 +1,6 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260721a";
 import { grammarDiagram } from "./grammar-visuals.js?v=english-20260721d";
+import { createProgressClient } from "../../shared/progress-client.js?v=20260722a";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -606,6 +607,31 @@ const progress = loadProgress();
 const finalQuizProgress = loadFinalQuizProgress();
 const aiState = loadAIState();
 
+// --- Progress web service (P1.4) --------------------------------------------
+// Emit contract events (docs/progress-event-contract.md) alongside the local
+// resume above. Pilot: local backend (per-device). Flip to remote with zero app
+// changes by launching with ?pwsEndpoint=… (and ?pwsToken=…). Every emit is
+// wrapped so a progress-WS hiccup can never break the lesson.
+const PROGRESS_COURSE = `ehel-eng-g${String(gradeNumber).padStart(2, "0")}`;
+const PROGRESS_STUDENT = routeParams.get("studentid") || "local";
+const PROGRESS_UNIT = `u${String(unitNumber).padStart(2, "0")}`;
+const progressWS = createProgressClient({
+  course: PROGRESS_COURSE,
+  student: PROGRESS_STUDENT,
+  backend: routeParams.get("pwsEndpoint") ? "remote" : "local",
+  endpoint: routeParams.get("pwsEndpoint") || undefined,
+  token: routeParams.get("pwsToken") || undefined,
+});
+let unitCompletedSent = false;
+const emitProgress = (event) => { try { progressWS.emit(event); } catch { /* never break the lesson */ } };
+const emitProgressSummary = () => emitProgress({
+  type: "progress.summary",
+  unit: PROGRESS_UNIT,
+  sectionsDone: [...(progress.completed || [])],
+  knownWords: progress.knownWords ? [...progress.knownWords] : undefined,
+  xp: Object.values(progress.games || {}).reduce((s, g) => s + (g.xp || 0), 0) || undefined,
+});
+
 function loadAIState() {
   try {
     return { mode: "teach", messages: [], interactions: 0, practiceWords: [], needs: [], ...JSON.parse(localStorage.getItem(AI_STORAGE_KEY) || "{}") };
@@ -630,6 +656,7 @@ function loadProgress() {
 function saveProgress() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   updateProgress();
+  emitProgressSummary();
 }
 
 function loadFinalQuizProgress() {
@@ -652,6 +679,7 @@ function visibleSections() {
 
 function complete(section, message) {
   if (!progress.completed.includes(section)) progress.completed.push(section);
+  emitProgress({ type: "section.completed", unit: PROGRESS_UNIT, section });
   saveProgress();
   renderNav();
   if (message) toast(message);
@@ -659,11 +687,16 @@ function complete(section, message) {
 
 function updateProgress() {
   const countable = visibleSections().map(([id]) => id).filter((id) => !["overview", "live", "final-quiz"].includes(id));
-  const value = Math.round((countable.filter((id) => progress.completed.includes(id)).length / countable.length) * 100);
+  const done = countable.filter((id) => progress.completed.includes(id)).length;
+  const value = Math.round((done / countable.length) * 100);
   $("#progress-value").textContent = `${value}%`;
   $("#progress-fill").style.width = `${value}%`;
   $(".progress-track").setAttribute("aria-valuenow", value);
   $(".progress-track").setAttribute("aria-valuetext", `${value} percent of this unit complete`);
+  if (value >= 100 && !unitCompletedSent) {
+    unitCompletedSent = true;
+    emitProgress({ type: "unit.completed", unit: PROGRESS_UNIT, sectionsDone: done, total: countable.length });
+  }
 }
 
 function icon(name, label = "") {
@@ -1361,7 +1394,7 @@ function renderWriting() {
     $("#app").innerHTML = `${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p><details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><strong>Expected:</strong> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`;
     $$('[data-writing]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.writing; draw(); }));
     let saveTimer;
-    $("#writing-draft").addEventListener("input", (event) => { clearTimeout(saveTimer); $("#save-status").innerHTML = "<small>Saving…</small>"; saveTimer = setTimeout(() => { progress.writing[active] = event.target.value; saveProgress(); $("#save-status").innerHTML = "<small>Draft saved</small>"; }, 350); });
+    $("#writing-draft").addEventListener("input", (event) => { clearTimeout(saveTimer); $("#save-status").innerHTML = "<small>Saving…</small>"; saveTimer = setTimeout(() => { progress.writing[active] = event.target.value; saveProgress(); emitProgress({ type: "draft.saved", unit: PROGRESS_UNIT, section: `writing:${active}`, text: event.target.value, words: event.target.value.trim().split(/\s+/).filter(Boolean).length }); $("#save-status").innerHTML = "<small>Draft saved</small>"; }, 350); });
     $("#writing-done").addEventListener("click", () => {
       const draft = $("#writing-draft").value.trim();
       if (draft.split(/\s+/).length < 8) return toast("Add a little more to your draft before submitting.");
@@ -1609,6 +1642,7 @@ function drawQuizQuestion(shouldFocus = false) {
   const shell = $("#quiz-shell");
   if (quizIndex >= course.quizzes.length) {
     const percent = Math.round((quizScore / course.quizzes.length) * 100);
+    emitProgress({ type: "checkpoint.result", unit: PROGRESS_UNIT, section: "quiz", score: percent, passed: percent >= 60, attempt: 1 });
     shell.innerHTML = `<div class="quiz-result"><div class="score-ring">${quizScore}/${course.quizzes.length}</div><span class="eyebrow">Checkpoint complete</span><h2>${percent >= 80 ? "Excellent word power!" : "Good effort. Review and try again."}</h2><p>You scored ${percent}% and earned ${quizScore * 10} XP.</p><div class="audio-actions" style="justify-content:center"><button class="button secondary" id="retry-quiz" type="button">${icon("rotate-ccw")} Try again</button><button class="button primary" id="quiz-done" type="button">Continue ${icon("arrow-right")}</button></div></div>`;
     $("#retry-quiz").addEventListener("click", renderQuiz);
     $("#quiz-done").addEventListener("click", () => { if (percent >= 60) complete("quiz"); navigate("reflect"); });
@@ -1674,6 +1708,7 @@ function finalizeFinalQuiz() {
   finalQuizProgress.passed = results.passed;
   finalQuizProgress.submitted = true;
   saveFinalQuizProgress();
+  emitProgress({ type: "checkpoint.result", unit: "final", section: "course-quiz", score: results.percent, passed: results.passed, attempt: finalQuizProgress.attempts.length });
   renderFinalQuizResults(results);
 }
 

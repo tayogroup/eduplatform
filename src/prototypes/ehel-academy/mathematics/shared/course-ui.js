@@ -2,6 +2,7 @@ import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as share
 import { initGeometryWebGL } from "./geometry-webgl.js?v=20260715q";
 import { initMathWebGL } from "./math-webgl.js?v=math-20260721e";
 import { unitTopic, mathDiagram } from "./math-visuals.js?v=math-20260721e";
+import { createProgressClient } from "../../shared/progress-client.js?v=20260722a";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -87,6 +88,30 @@ let voiceEnabled = localStorage.getItem(`${STORAGE_KEY}-voice-enabled`) !== "fal
 const progress = loadProgress();
 const gradeProgress = loadGradeProgress();
 
+// --- Progress web service (P1.4) --------------------------------------------
+// Emit contract events (docs/progress-event-contract.md) alongside the local
+// resume above. Pilot: local backend (per-device). Flip to remote with zero app
+// changes by launching with ?pwsEndpoint=… (and ?pwsToken=…). Every emit is
+// wrapped so a progress-WS hiccup can never break the lesson.
+const PROGRESS_COURSE = `ehel-math-g${String(stageNumber).padStart(2, "0")}`;
+const PROGRESS_STUDENT = params.get("studentid") || "local";
+const PROGRESS_UNIT = `u${String(unitNumber).padStart(2, "0")}`;
+const progressWS = createProgressClient({
+  course: PROGRESS_COURSE,
+  student: PROGRESS_STUDENT,
+  backend: params.get("pwsEndpoint") ? "remote" : "local",
+  endpoint: params.get("pwsEndpoint") || undefined,
+  token: params.get("pwsToken") || undefined,
+});
+let unitCompletedSent = false;
+const emitProgress = (event) => { try { progressWS.emit(event); } catch { /* never break the lesson */ } };
+const emitProgressSummary = () => emitProgress({
+  type: "progress.summary",
+  unit: PROGRESS_UNIT,
+  sectionsDone: [...(progress.completed || [])],
+  xp: Object.values(progress.games || {}).reduce((s, g) => s + (g.xp || 0), 0) || undefined,
+});
+
 function loadGradeProgress() {
   try {
     return { completed: [], capstoneResponses: {}, capstoneEvidence: {}, quizBest: 0, ...JSON.parse(localStorage.getItem(STAGE_STORAGE_KEY) || localStorage.getItem(LEGACY_STAGE_STORAGE_KEY) || "{}") };
@@ -121,6 +146,7 @@ function loadProgress() {
 function saveProgress() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   updateProgress();
+  emitProgressSummary();
 }
 
 function escapeHtml(value = "") {
@@ -376,6 +402,7 @@ function toast(message) {
 
 function complete(section, message) {
   if (!progress.completed.includes(section)) progress.completed.push(section);
+  emitProgress({ type: "section.completed", unit: PROGRESS_UNIT, section });
   saveProgress();
   renderNav();
   if (message) toast(message);
@@ -383,10 +410,15 @@ function complete(section, message) {
 
 function updateProgress() {
   const countable = unitSectionIds();
-  const value = Math.round(countable.filter((id) => progress.completed.includes(id)).length / countable.length * 100);
+  const done = countable.filter((id) => progress.completed.includes(id)).length;
+  const value = Math.round(done / countable.length * 100);
   $("#progress-value").textContent = `${value}%`;
   $("#progress-fill").style.width = `${value}%`;
   $(".progress-track").setAttribute("aria-valuenow", value);
+  if (value >= 100 && !unitCompletedSent) {
+    unitCompletedSent = true;
+    emitProgress({ type: "unit.completed", unit: PROGRESS_UNIT, sectionsDone: done, total: countable.length });
+  }
 }
 
 function renderNav() {
@@ -953,8 +985,10 @@ function renderGradeCapstone() {
     const stagesDone = project.stages.every((stage) => (gradeProgress.capstoneResponses[stage.id] || "").length >= 20);
     const evidenceDone = project.evidenceChecklist.every((_, index) => gradeProgress.capstoneEvidence[index]);
     saveGradeProgress();
-    if (stagesDone && evidenceDone) completeGradeSection("capstone", `${course.stage.label} Mathematics Capstone completed.`);
-    else toast("Progress saved. Complete every stage and evidence item to finish the capstone.");
+    if (stagesDone && evidenceDone) {
+      emitProgress({ type: "capstone.submitted", unit: "capstone", artifactRef: `local:${STAGE_STORAGE_KEY}` });
+      completeGradeSection("capstone", `${course.stage.label} Mathematics Capstone completed.`);
+    } else toast("Progress saved. Complete every stage and evidence item to finish the capstone.");
     renderGradeCapstone();
   });
 }
@@ -975,6 +1009,7 @@ function drawCapstoneQuizQuestion() {
     const percent = Math.round(capstoneQuizScore / quiz.questions.length * 100);
     gradeProgress.quizBest = Math.max(gradeProgress.quizBest || 0, percent);
     saveGradeProgress();
+    emitProgress({ type: "checkpoint.result", unit: "capstone", section: "quiz", score: percent, passed: percent >= quiz.passPercent, attempt: 1 });
     if (percent >= quiz.passPercent) completeGradeSection("capstonequiz", `${course.stage.label} Capstone Quiz mastery recorded.`);
     shell.innerHTML = `<div class="quiz-result"><div class="score-ring">${capstoneQuizScore}/${quiz.questions.length}</div><span class="eyebrow">Stage capstone quiz complete</span><h2>${percent >= quiz.passPercent ? `${course.stage.label} mastery target reached` : "Review the highlighted units and try again"}</h2><p>You scored ${percent}%. Your best score on this device is ${gradeProgress.quizBest}%.</p><div class="audio-actions" style="justify-content:center"><button class="button secondary" id="retry-capstone-quiz" type="button">Try again</button><button class="button primary" id="open-grade-capstone" type="button">Open Stage Capstone →</button></div></div>`;
     $("#retry-capstone-quiz").addEventListener("click", renderCapstoneQuiz);

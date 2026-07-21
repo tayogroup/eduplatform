@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:33.203Z",
+  "generatedAt": "2026-07-21T07:21:49.967Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -886,9 +886,153 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
+        "question": "Find the next term: 4, 12, 20, 28, ___",
+        "options": [
+          "29",
+          "36",
+          "44",
+          "28"
+        ],
+        "answer": "36",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Solve for x: x + 11 = 21.",
+        "options": [
+          "10",
+          "21",
+          "32",
+          "11"
+        ],
+        "answer": "10",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "If x = 7, what is the value of 2x + 7?",
+        "options": [
+          "23",
+          "21",
+          "16",
+          "14"
+        ],
+        "answer": "21",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "2 × 7 + 7 = 14 + 7 = 21."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "If x = 6, what is the value of 9x + 5?",
+        "options": [
+          "20",
+          "54",
+          "68",
+          "59"
+        ],
+        "answer": "59",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "9 × 6 + 5 = 54 + 5 = 59."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Find the next term: 9, 17, 25, 33, ___",
+        "options": [
+          "49",
+          "33",
+          "34",
+          "41"
+        ],
+        "answer": "41",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Solve for x: x + 3 = 8.",
+        "options": [
+          "3",
+          "5",
+          "8",
+          "11"
+        ],
+        "answer": "5",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Solve for x: x + 6 = 11.",
+        "options": [
+          "6",
+          "5",
+          "11",
+          "17"
+        ],
+        "answer": "5",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Find the next term: 1, 3, 5, 7, ___",
+        "options": [
+          "8",
+          "9",
+          "11",
+          "7"
+        ],
+        "answer": "9",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "If x = 8, what is the value of 3x + 9?",
+        "options": [
+          "33",
+          "20",
+          "24",
+          "36"
+        ],
+        "answer": "33",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "3 × 8 + 9 = 24 + 9 = 33."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Sequence” mean?",
         "options": [
           "An ordered list of numbers following a rule",
@@ -901,10 +1045,10 @@
         "explanation": "Sequence means An ordered list of numbers following a rule."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Term / Position” mean?",
         "options": [
           "A number in the sequence / where it sits (n)",
@@ -917,10 +1061,10 @@
         "explanation": "Term / Position means A number in the sequence / where it sits (n)."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Term-to-term rule” mean?",
         "options": [
           "How to get from one term to the next",
@@ -931,150 +1075,6 @@
         "answer": "How to get from one term to the next",
         "hint": "Use the Unit 9 Math Words & Symbols reference.",
         "explanation": "Term-to-term rule means How to get from one term to the next."
-      },
-      {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
-        "question": "What does “Position-to-term rule” mean?",
-        "options": [
-          "How to find a term from its position",
-          "The constant step in an arithmetic sequence",
-          "A formula for the term in position n",
-          "A rule giving one output for each input"
-        ],
-        "answer": "How to find a term from its position",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Position-to-term rule means How to find a term from its position."
-      },
-      {
-        "id": "q05",
-        "type": "Reasoning",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
-        "question": "What does “Common difference” mean?",
-        "options": [
-          "The constant step in an arithmetic sequence",
-          "A formula for the term in position n",
-          "A rule giving one output for each input",
-          "A function whose graph is a straight line"
-        ],
-        "answer": "The constant step in an arithmetic sequence",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Common difference means The constant step in an arithmetic sequence."
-      },
-      {
-        "id": "q06",
-        "type": "Reasoning",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What does “nth term” mean?",
-        "options": [
-          "A formula for the term in position n",
-          "A rule giving one output for each input",
-          "A function whose graph is a straight line",
-          "An ordered list of numbers following a rule"
-        ],
-        "answer": "A formula for the term in position n",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "nth term means A formula for the term in position n."
-      },
-      {
-        "id": "q07",
-        "type": "Reasoning",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: A rule giving one output for each input?",
-        "options": [
-          "Function",
-          "Linear function",
-          "Sequence",
-          "Term / Position"
-        ],
-        "answer": "Function",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Function means A rule giving one output for each input."
-      },
-      {
-        "id": "q08",
-        "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: A function whose graph is a straight line?",
-        "options": [
-          "Linear function",
-          "Sequence",
-          "Term / Position",
-          "Term-to-term rule"
-        ],
-        "answer": "Linear function",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Linear function means A function whose graph is a straight line."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: An ordered list of numbers following a rule?",
-        "options": [
-          "Sequence",
-          "Term-to-term rule",
-          "Position-to-term rule",
-          "Common difference"
-        ],
-        "answer": "Sequence",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Sequence means An ordered list of numbers following a rule."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A number in the sequence / where it sits (n)?",
-        "options": [
-          "Term / Position",
-          "Position-to-term rule",
-          "Common difference",
-          "nth term"
-        ],
-        "answer": "Term / Position",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Term / Position means A number in the sequence / where it sits (n)."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: How to get from one term to the next?",
-        "options": [
-          "Term-to-term rule",
-          "Common difference",
-          "nth term",
-          "Function"
-        ],
-        "answer": "Term-to-term rule",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Term-to-term rule means How to get from one term to the next."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: How to find a term from its position?",
-        "options": [
-          "Position-to-term rule",
-          "nth term",
-          "Function",
-          "Linear function"
-        ],
-        "answer": "Position-to-term rule",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Position-to-term rule means How to find a term from its position."
       }
     ]
   },
@@ -1090,6 +1090,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Find the next term: 4, 12, 20, 28, ___",
+            "choices": [
+              "29",
+              "36",
+              "44",
+              "28"
+            ],
+            "answer": "36",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
+          },
+          {
+            "prompt": "If x = 6, what is the value of 9x + 5?",
+            "choices": [
+              "20",
+              "54",
+              "68",
+              "59"
+            ],
+            "answer": "59",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 × 6 + 5 = 54 + 5 = 59."
+          },
+          {
+            "prompt": "Solve for x: x + 6 = 11.",
+            "choices": [
+              "6",
+              "5",
+              "11",
+              "17"
+            ],
+            "answer": "5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
+          },
+          {
             "prompt": "What does “Sequence” mean?",
             "choices": [
               "An ordered list of numbers following a rule",
@@ -1100,42 +1136,6 @@
             "answer": "An ordered list of numbers following a rule",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Sequence means An ordered list of numbers following a rule."
-          },
-          {
-            "prompt": "What does “Position-to-term rule” mean?",
-            "choices": [
-              "How to find a term from its position",
-              "The constant step in an arithmetic sequence",
-              "A formula for the term in position n",
-              "A rule giving one output for each input"
-            ],
-            "answer": "How to find a term from its position",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Position-to-term rule means How to find a term from its position."
-          },
-          {
-            "prompt": "Which term matches this meaning: A rule giving one output for each input?",
-            "choices": [
-              "Function",
-              "Linear function",
-              "Sequence",
-              "Term / Position"
-            ],
-            "answer": "Function",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Function means A rule giving one output for each input."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number in the sequence / where it sits (n)?",
-            "choices": [
-              "Term / Position",
-              "Position-to-term rule",
-              "Common difference",
-              "nth term"
-            ],
-            "answer": "Term / Position",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term / Position means A number in the sequence / where it sits (n)."
           }
         ]
       },
@@ -1148,6 +1148,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Solve for x: x + 11 = 21.",
+            "choices": [
+              "10",
+              "21",
+              "32",
+              "11"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
+          },
+          {
+            "prompt": "Find the next term: 9, 17, 25, 33, ___",
+            "choices": [
+              "49",
+              "33",
+              "34",
+              "41"
+            ],
+            "answer": "41",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
+          },
+          {
+            "prompt": "Find the next term: 1, 3, 5, 7, ___",
+            "choices": [
+              "8",
+              "9",
+              "11",
+              "7"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
+          },
+          {
             "prompt": "What does “Term / Position” mean?",
             "choices": [
               "A number in the sequence / where it sits (n)",
@@ -1158,42 +1194,6 @@
             "answer": "A number in the sequence / where it sits (n)",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Term / Position means A number in the sequence / where it sits (n)."
-          },
-          {
-            "prompt": "What does “Common difference” mean?",
-            "choices": [
-              "The constant step in an arithmetic sequence",
-              "A formula for the term in position n",
-              "A rule giving one output for each input",
-              "A function whose graph is a straight line"
-            ],
-            "answer": "The constant step in an arithmetic sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Common difference means The constant step in an arithmetic sequence."
-          },
-          {
-            "prompt": "Which term matches this meaning: A function whose graph is a straight line?",
-            "choices": [
-              "Linear function",
-              "Sequence",
-              "Term / Position",
-              "Term-to-term rule"
-            ],
-            "answer": "Linear function",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Linear function means A function whose graph is a straight line."
-          },
-          {
-            "prompt": "Which term matches this meaning: How to get from one term to the next?",
-            "choices": [
-              "Term-to-term rule",
-              "Common difference",
-              "nth term",
-              "Function"
-            ],
-            "answer": "Term-to-term rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term-to-term rule means How to get from one term to the next."
           }
         ]
       },
@@ -1206,6 +1206,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "If x = 7, what is the value of 2x + 7?",
+            "choices": [
+              "23",
+              "21",
+              "16",
+              "14"
+            ],
+            "answer": "21",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 × 7 + 7 = 14 + 7 = 21."
+          },
+          {
+            "prompt": "Solve for x: x + 3 = 8.",
+            "choices": [
+              "3",
+              "5",
+              "8",
+              "11"
+            ],
+            "answer": "5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
+          },
+          {
+            "prompt": "If x = 8, what is the value of 3x + 9?",
+            "choices": [
+              "33",
+              "20",
+              "24",
+              "36"
+            ],
+            "answer": "33",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "3 × 8 + 9 = 24 + 9 = 33."
+          },
+          {
             "prompt": "What does “Term-to-term rule” mean?",
             "choices": [
               "How to get from one term to the next",
@@ -1216,42 +1252,6 @@
             "answer": "How to get from one term to the next",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Term-to-term rule means How to get from one term to the next."
-          },
-          {
-            "prompt": "What does “nth term” mean?",
-            "choices": [
-              "A formula for the term in position n",
-              "A rule giving one output for each input",
-              "A function whose graph is a straight line",
-              "An ordered list of numbers following a rule"
-            ],
-            "answer": "A formula for the term in position n",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "nth term means A formula for the term in position n."
-          },
-          {
-            "prompt": "Which term matches this meaning: An ordered list of numbers following a rule?",
-            "choices": [
-              "Sequence",
-              "Term-to-term rule",
-              "Position-to-term rule",
-              "Common difference"
-            ],
-            "answer": "Sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
-          },
-          {
-            "prompt": "Which term matches this meaning: How to find a term from its position?",
-            "choices": [
-              "Position-to-term rule",
-              "nth term",
-              "Function",
-              "Linear function"
-            ],
-            "answer": "Position-to-term rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Position-to-term rule means How to find a term from its position."
           }
         ]
       },
@@ -1264,40 +1264,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Position-to-term rule” mean?",
+            "prompt": "If x = 6, what is the value of 9x + 5?",
             "choices": [
-              "How to find a term from its position",
-              "The constant step in an arithmetic sequence",
-              "A formula for the term in position n",
-              "A rule giving one output for each input"
+              "20",
+              "54",
+              "68",
+              "59"
             ],
-            "answer": "How to find a term from its position",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Position-to-term rule means How to find a term from its position."
+            "answer": "59",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 × 6 + 5 = 54 + 5 = 59."
           },
           {
-            "prompt": "Which term matches this meaning: A rule giving one output for each input?",
+            "prompt": "Solve for x: x + 6 = 11.",
             "choices": [
-              "Function",
-              "Linear function",
-              "Sequence",
-              "Term / Position"
+              "6",
+              "5",
+              "11",
+              "17"
             ],
-            "answer": "Function",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Function means A rule giving one output for each input."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number in the sequence / where it sits (n)?",
-            "choices": [
-              "Term / Position",
-              "Position-to-term rule",
-              "Common difference",
-              "nth term"
-            ],
-            "answer": "Term / Position",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term / Position means A number in the sequence / where it sits (n)."
+            "answer": "5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
           },
           {
             "prompt": "What does “Sequence” mean?",
@@ -1310,6 +1298,18 @@
             "answer": "An ordered list of numbers following a rule",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Sequence means An ordered list of numbers following a rule."
+          },
+          {
+            "prompt": "Find the next term: 4, 12, 20, 28, ___",
+            "choices": [
+              "29",
+              "36",
+              "44",
+              "28"
+            ],
+            "answer": "36",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
           }
         ]
       },
@@ -1322,40 +1322,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Common difference” mean?",
+            "prompt": "Find the next term: 9, 17, 25, 33, ___",
             "choices": [
-              "The constant step in an arithmetic sequence",
-              "A formula for the term in position n",
-              "A rule giving one output for each input",
-              "A function whose graph is a straight line"
+              "49",
+              "33",
+              "34",
+              "41"
             ],
-            "answer": "The constant step in an arithmetic sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Common difference means The constant step in an arithmetic sequence."
+            "answer": "41",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
           },
           {
-            "prompt": "Which term matches this meaning: A function whose graph is a straight line?",
+            "prompt": "Find the next term: 1, 3, 5, 7, ___",
             "choices": [
-              "Linear function",
-              "Sequence",
-              "Term / Position",
-              "Term-to-term rule"
+              "8",
+              "9",
+              "11",
+              "7"
             ],
-            "answer": "Linear function",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Linear function means A function whose graph is a straight line."
-          },
-          {
-            "prompt": "Which term matches this meaning: How to get from one term to the next?",
-            "choices": [
-              "Term-to-term rule",
-              "Common difference",
-              "nth term",
-              "Function"
-            ],
-            "answer": "Term-to-term rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term-to-term rule means How to get from one term to the next."
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
           },
           {
             "prompt": "What does “Term / Position” mean?",
@@ -1368,6 +1356,18 @@
             "answer": "A number in the sequence / where it sits (n)",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Term / Position means A number in the sequence / where it sits (n)."
+          },
+          {
+            "prompt": "Solve for x: x + 11 = 21.",
+            "choices": [
+              "10",
+              "21",
+              "32",
+              "11"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
           }
         ]
       },
@@ -1380,40 +1380,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “nth term” mean?",
+            "prompt": "Solve for x: x + 3 = 8.",
             "choices": [
-              "A formula for the term in position n",
-              "A rule giving one output for each input",
-              "A function whose graph is a straight line",
-              "An ordered list of numbers following a rule"
+              "3",
+              "5",
+              "8",
+              "11"
             ],
-            "answer": "A formula for the term in position n",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "nth term means A formula for the term in position n."
+            "answer": "5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
           },
           {
-            "prompt": "Which term matches this meaning: An ordered list of numbers following a rule?",
+            "prompt": "If x = 8, what is the value of 3x + 9?",
             "choices": [
-              "Sequence",
-              "Term-to-term rule",
-              "Position-to-term rule",
-              "Common difference"
+              "33",
+              "20",
+              "24",
+              "36"
             ],
-            "answer": "Sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
-          },
-          {
-            "prompt": "Which term matches this meaning: How to find a term from its position?",
-            "choices": [
-              "Position-to-term rule",
-              "nth term",
-              "Function",
-              "Linear function"
-            ],
-            "answer": "Position-to-term rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Position-to-term rule means How to find a term from its position."
+            "answer": "33",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "3 × 8 + 9 = 24 + 9 = 33."
           },
           {
             "prompt": "What does “Term-to-term rule” mean?",
@@ -1426,6 +1414,18 @@
             "answer": "How to get from one term to the next",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Term-to-term rule means How to get from one term to the next."
+          },
+          {
+            "prompt": "If x = 7, what is the value of 2x + 7?",
+            "choices": [
+              "23",
+              "21",
+              "16",
+              "14"
+            ],
+            "answer": "21",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 × 7 + 7 = 14 + 7 = 21."
           }
         ]
       },
@@ -1438,28 +1438,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A rule giving one output for each input?",
+            "prompt": "Solve for x: x + 6 = 11.",
             "choices": [
-              "Function",
-              "Linear function",
-              "Sequence",
-              "Term / Position"
+              "6",
+              "5",
+              "11",
+              "17"
             ],
-            "answer": "Function",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Function means A rule giving one output for each input."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number in the sequence / where it sits (n)?",
-            "choices": [
-              "Term / Position",
-              "Position-to-term rule",
-              "Common difference",
-              "nth term"
-            ],
-            "answer": "Term / Position",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term / Position means A number in the sequence / where it sits (n)."
+            "answer": "5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
           },
           {
             "prompt": "What does “Sequence” mean?",
@@ -1474,16 +1462,28 @@
             "explanation": "Sequence means An ordered list of numbers following a rule."
           },
           {
-            "prompt": "What does “Position-to-term rule” mean?",
+            "prompt": "Find the next term: 4, 12, 20, 28, ___",
             "choices": [
-              "How to find a term from its position",
-              "The constant step in an arithmetic sequence",
-              "A formula for the term in position n",
-              "A rule giving one output for each input"
+              "29",
+              "36",
+              "44",
+              "28"
             ],
-            "answer": "How to find a term from its position",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Position-to-term rule means How to find a term from its position."
+            "answer": "36",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
+          },
+          {
+            "prompt": "If x = 6, what is the value of 9x + 5?",
+            "choices": [
+              "20",
+              "54",
+              "68",
+              "59"
+            ],
+            "answer": "59",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 × 6 + 5 = 54 + 5 = 59."
           }
         ]
       },
@@ -1496,28 +1496,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A function whose graph is a straight line?",
+            "prompt": "Find the next term: 1, 3, 5, 7, ___",
             "choices": [
-              "Linear function",
-              "Sequence",
-              "Term / Position",
-              "Term-to-term rule"
+              "8",
+              "9",
+              "11",
+              "7"
             ],
-            "answer": "Linear function",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Linear function means A function whose graph is a straight line."
-          },
-          {
-            "prompt": "Which term matches this meaning: How to get from one term to the next?",
-            "choices": [
-              "Term-to-term rule",
-              "Common difference",
-              "nth term",
-              "Function"
-            ],
-            "answer": "Term-to-term rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term-to-term rule means How to get from one term to the next."
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
           },
           {
             "prompt": "What does “Term / Position” mean?",
@@ -1532,16 +1520,28 @@
             "explanation": "Term / Position means A number in the sequence / where it sits (n)."
           },
           {
-            "prompt": "What does “Common difference” mean?",
+            "prompt": "Solve for x: x + 11 = 21.",
             "choices": [
-              "The constant step in an arithmetic sequence",
-              "A formula for the term in position n",
-              "A rule giving one output for each input",
-              "A function whose graph is a straight line"
+              "10",
+              "21",
+              "32",
+              "11"
             ],
-            "answer": "The constant step in an arithmetic sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Common difference means The constant step in an arithmetic sequence."
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
+          },
+          {
+            "prompt": "Find the next term: 9, 17, 25, 33, ___",
+            "choices": [
+              "49",
+              "33",
+              "34",
+              "41"
+            ],
+            "answer": "41",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
           }
         ]
       },
@@ -1554,28 +1554,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: An ordered list of numbers following a rule?",
+            "prompt": "If x = 8, what is the value of 3x + 9?",
             "choices": [
-              "Sequence",
-              "Term-to-term rule",
-              "Position-to-term rule",
-              "Common difference"
+              "33",
+              "20",
+              "24",
+              "36"
             ],
-            "answer": "Sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
-          },
-          {
-            "prompt": "Which term matches this meaning: How to find a term from its position?",
-            "choices": [
-              "Position-to-term rule",
-              "nth term",
-              "Function",
-              "Linear function"
-            ],
-            "answer": "Position-to-term rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Position-to-term rule means How to find a term from its position."
+            "answer": "33",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "3 × 8 + 9 = 24 + 9 = 33."
           },
           {
             "prompt": "What does “Term-to-term rule” mean?",
@@ -1590,16 +1578,28 @@
             "explanation": "Term-to-term rule means How to get from one term to the next."
           },
           {
-            "prompt": "What does “nth term” mean?",
+            "prompt": "If x = 7, what is the value of 2x + 7?",
             "choices": [
-              "A formula for the term in position n",
-              "A rule giving one output for each input",
-              "A function whose graph is a straight line",
-              "An ordered list of numbers following a rule"
+              "23",
+              "21",
+              "16",
+              "14"
             ],
-            "answer": "A formula for the term in position n",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "nth term means A formula for the term in position n."
+            "answer": "21",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 × 7 + 7 = 14 + 7 = 21."
+          },
+          {
+            "prompt": "Solve for x: x + 3 = 8.",
+            "choices": [
+              "3",
+              "5",
+              "8",
+              "11"
+            ],
+            "answer": "5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
           }
         ]
       },
@@ -1611,18 +1611,6 @@
         "description": "Practise term / position through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A number in the sequence / where it sits (n)?",
-            "choices": [
-              "Term / Position",
-              "Position-to-term rule",
-              "Common difference",
-              "nth term"
-            ],
-            "answer": "Term / Position",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term / Position means A number in the sequence / where it sits (n)."
-          },
           {
             "prompt": "What does “Sequence” mean?",
             "choices": [
@@ -1636,28 +1624,40 @@
             "explanation": "Sequence means An ordered list of numbers following a rule."
           },
           {
-            "prompt": "What does “Position-to-term rule” mean?",
+            "prompt": "Find the next term: 4, 12, 20, 28, ___",
             "choices": [
-              "How to find a term from its position",
-              "The constant step in an arithmetic sequence",
-              "A formula for the term in position n",
-              "A rule giving one output for each input"
+              "29",
+              "36",
+              "44",
+              "28"
             ],
-            "answer": "How to find a term from its position",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Position-to-term rule means How to find a term from its position."
+            "answer": "36",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
           },
           {
-            "prompt": "Which term matches this meaning: A rule giving one output for each input?",
+            "prompt": "If x = 6, what is the value of 9x + 5?",
             "choices": [
-              "Function",
-              "Linear function",
-              "Sequence",
-              "Term / Position"
+              "20",
+              "54",
+              "68",
+              "59"
             ],
-            "answer": "Function",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Function means A rule giving one output for each input."
+            "answer": "59",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 × 6 + 5 = 54 + 5 = 59."
+          },
+          {
+            "prompt": "Solve for x: x + 6 = 11.",
+            "choices": [
+              "6",
+              "5",
+              "11",
+              "17"
+            ],
+            "answer": "5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
           }
         ]
       },
@@ -1669,18 +1669,6 @@
         "description": "Practise term-to-term rule through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: How to get from one term to the next?",
-            "choices": [
-              "Term-to-term rule",
-              "Common difference",
-              "nth term",
-              "Function"
-            ],
-            "answer": "Term-to-term rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term-to-term rule means How to get from one term to the next."
-          },
           {
             "prompt": "What does “Term / Position” mean?",
             "choices": [
@@ -1694,28 +1682,40 @@
             "explanation": "Term / Position means A number in the sequence / where it sits (n)."
           },
           {
-            "prompt": "What does “Common difference” mean?",
+            "prompt": "Solve for x: x + 11 = 21.",
             "choices": [
-              "The constant step in an arithmetic sequence",
-              "A formula for the term in position n",
-              "A rule giving one output for each input",
-              "A function whose graph is a straight line"
+              "10",
+              "21",
+              "32",
+              "11"
             ],
-            "answer": "The constant step in an arithmetic sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Common difference means The constant step in an arithmetic sequence."
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
           },
           {
-            "prompt": "Which term matches this meaning: A function whose graph is a straight line?",
+            "prompt": "Find the next term: 9, 17, 25, 33, ___",
             "choices": [
-              "Linear function",
-              "Sequence",
-              "Term / Position",
-              "Term-to-term rule"
+              "49",
+              "33",
+              "34",
+              "41"
             ],
-            "answer": "Linear function",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Linear function means A function whose graph is a straight line."
+            "answer": "41",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
+          },
+          {
+            "prompt": "Find the next term: 1, 3, 5, 7, ___",
+            "choices": [
+              "8",
+              "9",
+              "11",
+              "7"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
           }
         ]
       },
@@ -1727,18 +1727,6 @@
         "description": "Practise position-to-term rule through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: How to find a term from its position?",
-            "choices": [
-              "Position-to-term rule",
-              "nth term",
-              "Function",
-              "Linear function"
-            ],
-            "answer": "Position-to-term rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Position-to-term rule means How to find a term from its position."
-          },
           {
             "prompt": "What does “Term-to-term rule” mean?",
             "choices": [
@@ -1752,28 +1740,40 @@
             "explanation": "Term-to-term rule means How to get from one term to the next."
           },
           {
-            "prompt": "What does “nth term” mean?",
+            "prompt": "If x = 7, what is the value of 2x + 7?",
             "choices": [
-              "A formula for the term in position n",
-              "A rule giving one output for each input",
-              "A function whose graph is a straight line",
-              "An ordered list of numbers following a rule"
+              "23",
+              "21",
+              "16",
+              "14"
             ],
-            "answer": "A formula for the term in position n",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "nth term means A formula for the term in position n."
+            "answer": "21",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 × 7 + 7 = 14 + 7 = 21."
           },
           {
-            "prompt": "Which term matches this meaning: An ordered list of numbers following a rule?",
+            "prompt": "Solve for x: x + 3 = 8.",
             "choices": [
-              "Sequence",
-              "Term-to-term rule",
-              "Position-to-term rule",
-              "Common difference"
+              "3",
+              "5",
+              "8",
+              "11"
             ],
-            "answer": "Sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
+            "answer": "5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
+          },
+          {
+            "prompt": "If x = 8, what is the value of 3x + 9?",
+            "choices": [
+              "33",
+              "20",
+              "24",
+              "36"
+            ],
+            "answer": "33",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "3 × 8 + 9 = 24 + 9 = 33."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:33.099Z",
+  "generatedAt": "2026-07-21T07:21:49.867Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -883,9 +883,153 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
+        "question": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
+        "options": [
+          "1",
+          "17",
+          "18",
+          "19"
+        ],
+        "answer": "18",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 19 − 1 = 18."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
+        "options": [
+          "16",
+          "20",
+          "4",
+          "17"
+        ],
+        "answer": "16",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 20 − 4 = 16."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
+        "options": [
+          "15",
+          "17",
+          "16",
+          "3"
+        ],
+        "answer": "16",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Look for the biggest number: 16."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
+        "options": [
+          "2",
+          "10",
+          "8",
+          "3"
+        ],
+        "answer": "2",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "2 appears more than any other value, so it is the mode."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
+        "options": [
+          "19",
+          "62",
+          "63",
+          "61"
+        ],
+        "answer": "62",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
+        "options": [
+          "7",
+          "12",
+          "21",
+          "20"
+        ],
+        "answer": "20",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "20 appears more than any other value, so it is the mode."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
+        "options": [
+          "16",
+          "41",
+          "42",
+          "40"
+        ],
+        "answer": "41",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
+        "options": [
+          "55",
+          "56",
+          "54",
+          "18"
+        ],
+        "answer": "55",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
+        "options": [
+          "16",
+          "49",
+          "50",
+          "48"
+        ],
+        "answer": "49",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Probability” mean?",
         "options": [
           "A number from 0 to 1 showing how likely an event is",
@@ -898,10 +1042,10 @@
         "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Outcome” mean?",
         "options": [
           "One possible single result of a trial",
@@ -914,10 +1058,10 @@
         "explanation": "Outcome means One possible single result of a trial."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Favourable outcome” mean?",
         "options": [
           "An outcome that counts as your event",
@@ -926,150 +1070,6 @@
           "What the maths predicts"
         ],
         "answer": "An outcome that counts as your event",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Favourable outcome means An outcome that counts as your event."
-      },
-      {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
-        "question": "What does “Certain / Impossible” mean?",
-        "options": [
-          "Probability 1 / probability 0",
-          "Probability of one half",
-          "What the maths predicts",
-          "What actually happens when tested"
-        ],
-        "answer": "Probability 1 / probability 0",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Certain / Impossible means Probability 1 / probability 0."
-      },
-      {
-        "id": "q05",
-        "type": "Reasoning",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
-        "question": "What does “Even chance” mean?",
-        "options": [
-          "Probability of one half",
-          "What the maths predicts",
-          "What actually happens when tested",
-          "The event not happening; 1 − P(event)"
-        ],
-        "answer": "Probability of one half",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Even chance means Probability of one half."
-      },
-      {
-        "id": "q06",
-        "type": "Reasoning",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What does “Theoretical probability” mean?",
-        "options": [
-          "What the maths predicts",
-          "What actually happens when tested",
-          "The event not happening; 1 − P(event)",
-          "Every player has an equal chance of winning"
-        ],
-        "answer": "What the maths predicts",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Theoretical probability means What the maths predicts."
-      },
-      {
-        "id": "q07",
-        "type": "Reasoning",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: What actually happens when tested?",
-        "options": [
-          "Experimental probability",
-          "Complement",
-          "Fair",
-          "Probability"
-        ],
-        "answer": "Experimental probability",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Experimental probability means What actually happens when tested."
-      },
-      {
-        "id": "q08",
-        "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: The event not happening; 1 − P(event)?",
-        "options": [
-          "Complement",
-          "Fair",
-          "Probability",
-          "Outcome"
-        ],
-        "answer": "Complement",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Complement means The event not happening; 1 − P(event)."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Every player has an equal chance of winning?",
-        "options": [
-          "Fair",
-          "Probability",
-          "Outcome",
-          "Favourable outcome"
-        ],
-        "answer": "Fair",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Fair means Every player has an equal chance of winning."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
-        "options": [
-          "Probability",
-          "Favourable outcome",
-          "Certain / Impossible",
-          "Even chance"
-        ],
-        "answer": "Probability",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: One possible single result of a trial?",
-        "options": [
-          "Outcome",
-          "Certain / Impossible",
-          "Even chance",
-          "Theoretical probability"
-        ],
-        "answer": "Outcome",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Outcome means One possible single result of a trial."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: An outcome that counts as your event?",
-        "options": [
-          "Favourable outcome",
-          "Even chance",
-          "Theoretical probability",
-          "Experimental probability"
-        ],
-        "answer": "Favourable outcome",
         "hint": "Use the Unit 9 Math Words & Symbols reference.",
         "explanation": "Favourable outcome means An outcome that counts as your event."
       }
@@ -1087,6 +1087,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
+            "choices": [
+              "1",
+              "17",
+              "18",
+              "19"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+          },
+          {
+            "prompt": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
+            "choices": [
+              "2",
+              "10",
+              "8",
+              "3"
+            ],
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 appears more than any other value, so it is the mode."
+          },
+          {
+            "prompt": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
+            "choices": [
+              "16",
+              "41",
+              "42",
+              "40"
+            ],
+            "answer": "41",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
+          },
+          {
             "prompt": "What does “Probability” mean?",
             "choices": [
               "A number from 0 to 1 showing how likely an event is",
@@ -1095,42 +1131,6 @@
               "Probability 1 / probability 0"
             ],
             "answer": "A number from 0 to 1 showing how likely an event is",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
-          },
-          {
-            "prompt": "What does “Certain / Impossible” mean?",
-            "choices": [
-              "Probability 1 / probability 0",
-              "Probability of one half",
-              "What the maths predicts",
-              "What actually happens when tested"
-            ],
-            "answer": "Probability 1 / probability 0",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Certain / Impossible means Probability 1 / probability 0."
-          },
-          {
-            "prompt": "Which term matches this meaning: What actually happens when tested?",
-            "choices": [
-              "Experimental probability",
-              "Complement",
-              "Fair",
-              "Probability"
-            ],
-            "answer": "Experimental probability",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Experimental probability means What actually happens when tested."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
-            "choices": [
-              "Probability",
-              "Favourable outcome",
-              "Certain / Impossible",
-              "Even chance"
-            ],
-            "answer": "Probability",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
           }
@@ -1145,6 +1145,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
+            "choices": [
+              "16",
+              "20",
+              "4",
+              "17"
+            ],
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 4 = 16."
+          },
+          {
+            "prompt": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
+            "choices": [
+              "19",
+              "62",
+              "63",
+              "61"
+            ],
+            "answer": "62",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
+          },
+          {
+            "prompt": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
+            "choices": [
+              "55",
+              "56",
+              "54",
+              "18"
+            ],
+            "answer": "55",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
+          },
+          {
             "prompt": "What does “Outcome” mean?",
             "choices": [
               "One possible single result of a trial",
@@ -1153,42 +1189,6 @@
               "Probability of one half"
             ],
             "answer": "One possible single result of a trial",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Outcome means One possible single result of a trial."
-          },
-          {
-            "prompt": "What does “Even chance” mean?",
-            "choices": [
-              "Probability of one half",
-              "What the maths predicts",
-              "What actually happens when tested",
-              "The event not happening; 1 − P(event)"
-            ],
-            "answer": "Probability of one half",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Even chance means Probability of one half."
-          },
-          {
-            "prompt": "Which term matches this meaning: The event not happening; 1 − P(event)?",
-            "choices": [
-              "Complement",
-              "Fair",
-              "Probability",
-              "Outcome"
-            ],
-            "answer": "Complement",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Complement means The event not happening; 1 − P(event)."
-          },
-          {
-            "prompt": "Which term matches this meaning: One possible single result of a trial?",
-            "choices": [
-              "Outcome",
-              "Certain / Impossible",
-              "Even chance",
-              "Theoretical probability"
-            ],
-            "answer": "Outcome",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Outcome means One possible single result of a trial."
           }
@@ -1203,6 +1203,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
+            "choices": [
+              "15",
+              "17",
+              "16",
+              "3"
+            ],
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 16."
+          },
+          {
+            "prompt": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
+            "choices": [
+              "7",
+              "12",
+              "21",
+              "20"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 appears more than any other value, so it is the mode."
+          },
+          {
+            "prompt": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
+            "choices": [
+              "16",
+              "49",
+              "50",
+              "48"
+            ],
+            "answer": "49",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
+          },
+          {
             "prompt": "What does “Favourable outcome” mean?",
             "choices": [
               "An outcome that counts as your event",
@@ -1211,42 +1247,6 @@
               "What the maths predicts"
             ],
             "answer": "An outcome that counts as your event",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Favourable outcome means An outcome that counts as your event."
-          },
-          {
-            "prompt": "What does “Theoretical probability” mean?",
-            "choices": [
-              "What the maths predicts",
-              "What actually happens when tested",
-              "The event not happening; 1 − P(event)",
-              "Every player has an equal chance of winning"
-            ],
-            "answer": "What the maths predicts",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Theoretical probability means What the maths predicts."
-          },
-          {
-            "prompt": "Which term matches this meaning: Every player has an equal chance of winning?",
-            "choices": [
-              "Fair",
-              "Probability",
-              "Outcome",
-              "Favourable outcome"
-            ],
-            "answer": "Fair",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Fair means Every player has an equal chance of winning."
-          },
-          {
-            "prompt": "Which term matches this meaning: An outcome that counts as your event?",
-            "choices": [
-              "Favourable outcome",
-              "Even chance",
-              "Theoretical probability",
-              "Experimental probability"
-            ],
-            "answer": "Favourable outcome",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Favourable outcome means An outcome that counts as your event."
           }
@@ -1261,40 +1261,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Certain / Impossible” mean?",
+            "prompt": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
             "choices": [
-              "Probability 1 / probability 0",
-              "Probability of one half",
-              "What the maths predicts",
-              "What actually happens when tested"
+              "2",
+              "10",
+              "8",
+              "3"
             ],
-            "answer": "Probability 1 / probability 0",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Certain / Impossible means Probability 1 / probability 0."
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "Which term matches this meaning: What actually happens when tested?",
+            "prompt": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
             "choices": [
-              "Experimental probability",
-              "Complement",
-              "Fair",
-              "Probability"
+              "16",
+              "41",
+              "42",
+              "40"
             ],
-            "answer": "Experimental probability",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Experimental probability means What actually happens when tested."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
-            "choices": [
-              "Probability",
-              "Favourable outcome",
-              "Certain / Impossible",
-              "Even chance"
-            ],
-            "answer": "Probability",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+            "answer": "41",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
           },
           {
             "prompt": "What does “Probability” mean?",
@@ -1307,6 +1295,18 @@
             "answer": "A number from 0 to 1 showing how likely an event is",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+          },
+          {
+            "prompt": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
+            "choices": [
+              "1",
+              "17",
+              "18",
+              "19"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
           }
         ]
       },
@@ -1319,40 +1319,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Even chance” mean?",
+            "prompt": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
             "choices": [
-              "Probability of one half",
-              "What the maths predicts",
-              "What actually happens when tested",
-              "The event not happening; 1 − P(event)"
+              "19",
+              "62",
+              "63",
+              "61"
             ],
-            "answer": "Probability of one half",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Even chance means Probability of one half."
+            "answer": "62",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
           },
           {
-            "prompt": "Which term matches this meaning: The event not happening; 1 − P(event)?",
+            "prompt": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
             "choices": [
-              "Complement",
-              "Fair",
-              "Probability",
-              "Outcome"
+              "55",
+              "56",
+              "54",
+              "18"
             ],
-            "answer": "Complement",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Complement means The event not happening; 1 − P(event)."
-          },
-          {
-            "prompt": "Which term matches this meaning: One possible single result of a trial?",
-            "choices": [
-              "Outcome",
-              "Certain / Impossible",
-              "Even chance",
-              "Theoretical probability"
-            ],
-            "answer": "Outcome",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Outcome means One possible single result of a trial."
+            "answer": "55",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
           },
           {
             "prompt": "What does “Outcome” mean?",
@@ -1365,6 +1353,18 @@
             "answer": "One possible single result of a trial",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Outcome means One possible single result of a trial."
+          },
+          {
+            "prompt": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
+            "choices": [
+              "16",
+              "20",
+              "4",
+              "17"
+            ],
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 4 = 16."
           }
         ]
       },
@@ -1377,40 +1377,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Theoretical probability” mean?",
+            "prompt": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
             "choices": [
-              "What the maths predicts",
-              "What actually happens when tested",
-              "The event not happening; 1 − P(event)",
-              "Every player has an equal chance of winning"
+              "7",
+              "12",
+              "21",
+              "20"
             ],
-            "answer": "What the maths predicts",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Theoretical probability means What the maths predicts."
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "Which term matches this meaning: Every player has an equal chance of winning?",
+            "prompt": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
             "choices": [
-              "Fair",
-              "Probability",
-              "Outcome",
-              "Favourable outcome"
+              "16",
+              "49",
+              "50",
+              "48"
             ],
-            "answer": "Fair",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Fair means Every player has an equal chance of winning."
-          },
-          {
-            "prompt": "Which term matches this meaning: An outcome that counts as your event?",
-            "choices": [
-              "Favourable outcome",
-              "Even chance",
-              "Theoretical probability",
-              "Experimental probability"
-            ],
-            "answer": "Favourable outcome",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Favourable outcome means An outcome that counts as your event."
+            "answer": "49",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
           },
           {
             "prompt": "What does “Favourable outcome” mean?",
@@ -1423,6 +1411,18 @@
             "answer": "An outcome that counts as your event",
             "clue": "Use the Unit 9 Math Words & Symbols reference.",
             "explanation": "Favourable outcome means An outcome that counts as your event."
+          },
+          {
+            "prompt": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
+            "choices": [
+              "15",
+              "17",
+              "16",
+              "3"
+            ],
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 16."
           }
         ]
       },
@@ -1435,28 +1435,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: What actually happens when tested?",
+            "prompt": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
             "choices": [
-              "Experimental probability",
-              "Complement",
-              "Fair",
-              "Probability"
+              "16",
+              "41",
+              "42",
+              "40"
             ],
-            "answer": "Experimental probability",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Experimental probability means What actually happens when tested."
-          },
-          {
-            "prompt": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
-            "choices": [
-              "Probability",
-              "Favourable outcome",
-              "Certain / Impossible",
-              "Even chance"
-            ],
-            "answer": "Probability",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
+            "answer": "41",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
           },
           {
             "prompt": "What does “Probability” mean?",
@@ -1471,16 +1459,28 @@
             "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
           },
           {
-            "prompt": "What does “Certain / Impossible” mean?",
+            "prompt": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
             "choices": [
-              "Probability 1 / probability 0",
-              "Probability of one half",
-              "What the maths predicts",
-              "What actually happens when tested"
+              "1",
+              "17",
+              "18",
+              "19"
             ],
-            "answer": "Probability 1 / probability 0",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Certain / Impossible means Probability 1 / probability 0."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+          },
+          {
+            "prompt": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
+            "choices": [
+              "2",
+              "10",
+              "8",
+              "3"
+            ],
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 appears more than any other value, so it is the mode."
           }
         ]
       },
@@ -1493,28 +1493,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The event not happening; 1 − P(event)?",
+            "prompt": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
             "choices": [
-              "Complement",
-              "Fair",
-              "Probability",
-              "Outcome"
+              "55",
+              "56",
+              "54",
+              "18"
             ],
-            "answer": "Complement",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Complement means The event not happening; 1 − P(event)."
-          },
-          {
-            "prompt": "Which term matches this meaning: One possible single result of a trial?",
-            "choices": [
-              "Outcome",
-              "Certain / Impossible",
-              "Even chance",
-              "Theoretical probability"
-            ],
-            "answer": "Outcome",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Outcome means One possible single result of a trial."
+            "answer": "55",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
           },
           {
             "prompt": "What does “Outcome” mean?",
@@ -1529,16 +1517,28 @@
             "explanation": "Outcome means One possible single result of a trial."
           },
           {
-            "prompt": "What does “Even chance” mean?",
+            "prompt": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
             "choices": [
-              "Probability of one half",
-              "What the maths predicts",
-              "What actually happens when tested",
-              "The event not happening; 1 − P(event)"
+              "16",
+              "20",
+              "4",
+              "17"
             ],
-            "answer": "Probability of one half",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Even chance means Probability of one half."
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 4 = 16."
+          },
+          {
+            "prompt": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
+            "choices": [
+              "19",
+              "62",
+              "63",
+              "61"
+            ],
+            "answer": "62",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
           }
         ]
       },
@@ -1551,28 +1551,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Every player has an equal chance of winning?",
+            "prompt": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
             "choices": [
-              "Fair",
-              "Probability",
-              "Outcome",
-              "Favourable outcome"
+              "16",
+              "49",
+              "50",
+              "48"
             ],
-            "answer": "Fair",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Fair means Every player has an equal chance of winning."
-          },
-          {
-            "prompt": "Which term matches this meaning: An outcome that counts as your event?",
-            "choices": [
-              "Favourable outcome",
-              "Even chance",
-              "Theoretical probability",
-              "Experimental probability"
-            ],
-            "answer": "Favourable outcome",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Favourable outcome means An outcome that counts as your event."
+            "answer": "49",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
           },
           {
             "prompt": "What does “Favourable outcome” mean?",
@@ -1587,16 +1575,28 @@
             "explanation": "Favourable outcome means An outcome that counts as your event."
           },
           {
-            "prompt": "What does “Theoretical probability” mean?",
+            "prompt": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
             "choices": [
-              "What the maths predicts",
-              "What actually happens when tested",
-              "The event not happening; 1 − P(event)",
-              "Every player has an equal chance of winning"
+              "15",
+              "17",
+              "16",
+              "3"
             ],
-            "answer": "What the maths predicts",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Theoretical probability means What the maths predicts."
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 16."
+          },
+          {
+            "prompt": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
+            "choices": [
+              "7",
+              "12",
+              "21",
+              "20"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 appears more than any other value, so it is the mode."
           }
         ]
       },
@@ -1608,18 +1608,6 @@
         "description": "Practise probability through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A number from 0 to 1 showing how likely an event is?",
-            "choices": [
-              "Probability",
-              "Favourable outcome",
-              "Certain / Impossible",
-              "Even chance"
-            ],
-            "answer": "Probability",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
-          },
           {
             "prompt": "What does “Probability” mean?",
             "choices": [
@@ -1633,28 +1621,40 @@
             "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
           },
           {
-            "prompt": "What does “Certain / Impossible” mean?",
+            "prompt": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
             "choices": [
-              "Probability 1 / probability 0",
-              "Probability of one half",
-              "What the maths predicts",
-              "What actually happens when tested"
+              "1",
+              "17",
+              "18",
+              "19"
             ],
-            "answer": "Probability 1 / probability 0",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Certain / Impossible means Probability 1 / probability 0."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
           },
           {
-            "prompt": "Which term matches this meaning: What actually happens when tested?",
+            "prompt": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
             "choices": [
-              "Experimental probability",
-              "Complement",
-              "Fair",
-              "Probability"
+              "2",
+              "10",
+              "8",
+              "3"
             ],
-            "answer": "Experimental probability",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Experimental probability means What actually happens when tested."
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 appears more than any other value, so it is the mode."
+          },
+          {
+            "prompt": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
+            "choices": [
+              "16",
+              "41",
+              "42",
+              "40"
+            ],
+            "answer": "41",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
           }
         ]
       },
@@ -1666,18 +1666,6 @@
         "description": "Practise outcome through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: One possible single result of a trial?",
-            "choices": [
-              "Outcome",
-              "Certain / Impossible",
-              "Even chance",
-              "Theoretical probability"
-            ],
-            "answer": "Outcome",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Outcome means One possible single result of a trial."
-          },
           {
             "prompt": "What does “Outcome” mean?",
             "choices": [
@@ -1691,28 +1679,40 @@
             "explanation": "Outcome means One possible single result of a trial."
           },
           {
-            "prompt": "What does “Even chance” mean?",
+            "prompt": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
             "choices": [
-              "Probability of one half",
-              "What the maths predicts",
-              "What actually happens when tested",
-              "The event not happening; 1 − P(event)"
+              "16",
+              "20",
+              "4",
+              "17"
             ],
-            "answer": "Probability of one half",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Even chance means Probability of one half."
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 4 = 16."
           },
           {
-            "prompt": "Which term matches this meaning: The event not happening; 1 − P(event)?",
+            "prompt": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
             "choices": [
-              "Complement",
-              "Fair",
-              "Probability",
-              "Outcome"
+              "19",
+              "62",
+              "63",
+              "61"
             ],
-            "answer": "Complement",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Complement means The event not happening; 1 − P(event)."
+            "answer": "62",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
+          },
+          {
+            "prompt": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
+            "choices": [
+              "55",
+              "56",
+              "54",
+              "18"
+            ],
+            "answer": "55",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
           }
         ]
       },
@@ -1724,18 +1724,6 @@
         "description": "Practise favourable outcome through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: An outcome that counts as your event?",
-            "choices": [
-              "Favourable outcome",
-              "Even chance",
-              "Theoretical probability",
-              "Experimental probability"
-            ],
-            "answer": "Favourable outcome",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Favourable outcome means An outcome that counts as your event."
-          },
           {
             "prompt": "What does “Favourable outcome” mean?",
             "choices": [
@@ -1749,28 +1737,40 @@
             "explanation": "Favourable outcome means An outcome that counts as your event."
           },
           {
-            "prompt": "What does “Theoretical probability” mean?",
+            "prompt": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
             "choices": [
-              "What the maths predicts",
-              "What actually happens when tested",
-              "The event not happening; 1 − P(event)",
-              "Every player has an equal chance of winning"
+              "15",
+              "17",
+              "16",
+              "3"
             ],
-            "answer": "What the maths predicts",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Theoretical probability means What the maths predicts."
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 16."
           },
           {
-            "prompt": "Which term matches this meaning: Every player has an equal chance of winning?",
+            "prompt": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
             "choices": [
-              "Fair",
-              "Probability",
-              "Outcome",
-              "Favourable outcome"
+              "7",
+              "12",
+              "21",
+              "20"
             ],
-            "answer": "Fair",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Fair means Every player has an equal chance of winning."
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 appears more than any other value, so it is the mode."
+          },
+          {
+            "prompt": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
+            "choices": [
+              "16",
+              "49",
+              "50",
+              "48"
+            ],
+            "answer": "49",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:33.869Z",
+  "generatedAt": "2026-07-21T07:21:50.678Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -879,9 +879,153 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
+        "question": "Here is some data: 16, 15, 4, 20, 2. What is the largest value?",
+        "options": [
+          "2",
+          "19",
+          "16",
+          "20"
+        ],
+        "answer": "20",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Look for the biggest number: 20."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "A tally shows these counts: 5, 1, 11, 16, 14. What is the total?",
+        "options": [
+          "16",
+          "47",
+          "48",
+          "46"
+        ],
+        "answer": "47",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 5 + 1 + 11 + 16 + 14 = 47."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "Here is some data: 6, 14, 10, 17, 3. What is the range?",
+        "options": [
+          "14",
+          "17",
+          "3",
+          "15"
+        ],
+        "answer": "14",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 17 − 3 = 14."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "A tally shows these counts: 20, 9, 7, 1, 8. What is the total?",
+        "options": [
+          "45",
+          "46",
+          "44",
+          "20"
+        ],
+        "answer": "45",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 20 + 9 + 7 + 1 + 8 = 45."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Here is some data: 6, 17, 5, 4, 20, 6. Which value appears most often (the mode)?",
+        "options": [
+          "4",
+          "17",
+          "6",
+          "20"
+        ],
+        "answer": "6",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "6 appears more than any other value, so it is the mode."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Here is some data: 2, 10, 9, 20, 8. What is the range?",
+        "options": [
+          "2",
+          "19",
+          "18",
+          "20"
+        ],
+        "answer": "18",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 20 − 2 = 18."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Here is some data: 7, 11, 8, 15, 2. What is the range?",
+        "options": [
+          "14",
+          "13",
+          "15",
+          "2"
+        ],
+        "answer": "13",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 15 − 2 = 13."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Here is some data: 6, 11, 7, 18, 10, 6. Which value appears most often (the mode)?",
+        "options": [
+          "7",
+          "6",
+          "18",
+          "11"
+        ],
+        "answer": "6",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "6 appears more than any other value, so it is the mode."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Here is some data: 6, 9, 4, 14, 8. What is the largest value?",
+        "options": [
+          "14",
+          "4",
+          "13",
+          "6"
+        ],
+        "answer": "14",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Look for the biggest number: 14."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Data” mean?",
         "options": [
           "Information we collect",
@@ -894,10 +1038,10 @@
         "explanation": "Data means Information we collect."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Sort” mean?",
         "options": [
           "To put things into groups by a rule",
@@ -910,10 +1054,10 @@
         "explanation": "Sort means To put things into groups by a rule."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Carroll diagram” mean?",
         "options": [
           "A grid that sorts by whether items have features",
@@ -922,150 +1066,6 @@
           "A table of items, tallies and totals"
         ],
         "answer": "A grid that sorts by whether items have features",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Carroll diagram means A grid that sorts by whether items have features."
-      },
-      {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
-        "question": "What does “Criteria” mean?",
-        "options": [
-          "The rules used to sort (one or two at a time)",
-          "A single line standing for one thing",
-          "A table of items, tallies and totals",
-          "The biggest / smallest total"
-        ],
-        "answer": "The rules used to sort (one or two at a time)",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Criteria means The rules used to sort (one or two at a time)."
-      },
-      {
-        "id": "q05",
-        "type": "Reasoning",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
-        "question": "What does “Tally mark” mean?",
-        "options": [
-          "A single line standing for one thing",
-          "A table of items, tallies and totals",
-          "The biggest / smallest total",
-          "Asking many people the same question"
-        ],
-        "answer": "A single line standing for one thing",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Tally mark means A single line standing for one thing."
-      },
-      {
-        "id": "q06",
-        "type": "Reasoning",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What does “Tally chart” mean?",
-        "options": [
-          "A table of items, tallies and totals",
-          "The biggest / smallest total",
-          "Asking many people the same question",
-          "A question you answer by collecting data"
-        ],
-        "answer": "A table of items, tallies and totals",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Tally chart means A table of items, tallies and totals."
-      },
-      {
-        "id": "q07",
-        "type": "Reasoning",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: The biggest / smallest total?",
-        "options": [
-          "Most / least popular",
-          "Survey",
-          "Statistical question",
-          "Data"
-        ],
-        "answer": "Most / least popular",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Most / least popular means The biggest / smallest total."
-      },
-      {
-        "id": "q08",
-        "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Asking many people the same question?",
-        "options": [
-          "Survey",
-          "Statistical question",
-          "Data",
-          "Sort"
-        ],
-        "answer": "Survey",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Survey means Asking many people the same question."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: A question you answer by collecting data?",
-        "options": [
-          "Statistical question",
-          "Data",
-          "Sort",
-          "Carroll diagram"
-        ],
-        "answer": "Statistical question",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Statistical question means A question you answer by collecting data."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Information we collect?",
-        "options": [
-          "Data",
-          "Carroll diagram",
-          "Criteria",
-          "Tally mark"
-        ],
-        "answer": "Data",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Data means Information we collect."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: To put things into groups by a rule?",
-        "options": [
-          "Sort",
-          "Criteria",
-          "Tally mark",
-          "Tally chart"
-        ],
-        "answer": "Sort",
-        "hint": "Use the Unit 4 Math Words & Symbols reference.",
-        "explanation": "Sort means To put things into groups by a rule."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A grid that sorts by whether items have features?",
-        "options": [
-          "Carroll diagram",
-          "Tally mark",
-          "Tally chart",
-          "Most / least popular"
-        ],
-        "answer": "Carroll diagram",
         "hint": "Use the Unit 4 Math Words & Symbols reference.",
         "explanation": "Carroll diagram means A grid that sorts by whether items have features."
       }
@@ -1083,6 +1083,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 16, 15, 4, 20, 2. What is the largest value?",
+            "choices": [
+              "2",
+              "19",
+              "16",
+              "20"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 20."
+          },
+          {
+            "prompt": "A tally shows these counts: 20, 9, 7, 1, 8. What is the total?",
+            "choices": [
+              "45",
+              "46",
+              "44",
+              "20"
+            ],
+            "answer": "45",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 20 + 9 + 7 + 1 + 8 = 45."
+          },
+          {
+            "prompt": "Here is some data: 7, 11, 8, 15, 2. What is the range?",
+            "choices": [
+              "14",
+              "13",
+              "15",
+              "2"
+            ],
+            "answer": "13",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 15 − 2 = 13."
+          },
+          {
             "prompt": "What does “Data” mean?",
             "choices": [
               "Information we collect",
@@ -1091,42 +1127,6 @@
               "The rules used to sort (one or two at a time)"
             ],
             "answer": "Information we collect",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Data means Information we collect."
-          },
-          {
-            "prompt": "What does “Criteria” mean?",
-            "choices": [
-              "The rules used to sort (one or two at a time)",
-              "A single line standing for one thing",
-              "A table of items, tallies and totals",
-              "The biggest / smallest total"
-            ],
-            "answer": "The rules used to sort (one or two at a time)",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Criteria means The rules used to sort (one or two at a time)."
-          },
-          {
-            "prompt": "Which term matches this meaning: The biggest / smallest total?",
-            "choices": [
-              "Most / least popular",
-              "Survey",
-              "Statistical question",
-              "Data"
-            ],
-            "answer": "Most / least popular",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Most / least popular means The biggest / smallest total."
-          },
-          {
-            "prompt": "Which term matches this meaning: Information we collect?",
-            "choices": [
-              "Data",
-              "Carroll diagram",
-              "Criteria",
-              "Tally mark"
-            ],
-            "answer": "Data",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Data means Information we collect."
           }
@@ -1141,6 +1141,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "A tally shows these counts: 5, 1, 11, 16, 14. What is the total?",
+            "choices": [
+              "16",
+              "47",
+              "48",
+              "46"
+            ],
+            "answer": "47",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 5 + 1 + 11 + 16 + 14 = 47."
+          },
+          {
+            "prompt": "Here is some data: 6, 17, 5, 4, 20, 6. Which value appears most often (the mode)?",
+            "choices": [
+              "4",
+              "17",
+              "6",
+              "20"
+            ],
+            "answer": "6",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "6 appears more than any other value, so it is the mode."
+          },
+          {
+            "prompt": "Here is some data: 6, 11, 7, 18, 10, 6. Which value appears most often (the mode)?",
+            "choices": [
+              "7",
+              "6",
+              "18",
+              "11"
+            ],
+            "answer": "6",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "6 appears more than any other value, so it is the mode."
+          },
+          {
             "prompt": "What does “Sort” mean?",
             "choices": [
               "To put things into groups by a rule",
@@ -1149,42 +1185,6 @@
               "A single line standing for one thing"
             ],
             "answer": "To put things into groups by a rule",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Sort means To put things into groups by a rule."
-          },
-          {
-            "prompt": "What does “Tally mark” mean?",
-            "choices": [
-              "A single line standing for one thing",
-              "A table of items, tallies and totals",
-              "The biggest / smallest total",
-              "Asking many people the same question"
-            ],
-            "answer": "A single line standing for one thing",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Tally mark means A single line standing for one thing."
-          },
-          {
-            "prompt": "Which term matches this meaning: Asking many people the same question?",
-            "choices": [
-              "Survey",
-              "Statistical question",
-              "Data",
-              "Sort"
-            ],
-            "answer": "Survey",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Survey means Asking many people the same question."
-          },
-          {
-            "prompt": "Which term matches this meaning: To put things into groups by a rule?",
-            "choices": [
-              "Sort",
-              "Criteria",
-              "Tally mark",
-              "Tally chart"
-            ],
-            "answer": "Sort",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Sort means To put things into groups by a rule."
           }
@@ -1199,6 +1199,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 6, 14, 10, 17, 3. What is the range?",
+            "choices": [
+              "14",
+              "17",
+              "3",
+              "15"
+            ],
+            "answer": "14",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 17 − 3 = 14."
+          },
+          {
+            "prompt": "Here is some data: 2, 10, 9, 20, 8. What is the range?",
+            "choices": [
+              "2",
+              "19",
+              "18",
+              "20"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 2 = 18."
+          },
+          {
+            "prompt": "Here is some data: 6, 9, 4, 14, 8. What is the largest value?",
+            "choices": [
+              "14",
+              "4",
+              "13",
+              "6"
+            ],
+            "answer": "14",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 14."
+          },
+          {
             "prompt": "What does “Carroll diagram” mean?",
             "choices": [
               "A grid that sorts by whether items have features",
@@ -1207,42 +1243,6 @@
               "A table of items, tallies and totals"
             ],
             "answer": "A grid that sorts by whether items have features",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Carroll diagram means A grid that sorts by whether items have features."
-          },
-          {
-            "prompt": "What does “Tally chart” mean?",
-            "choices": [
-              "A table of items, tallies and totals",
-              "The biggest / smallest total",
-              "Asking many people the same question",
-              "A question you answer by collecting data"
-            ],
-            "answer": "A table of items, tallies and totals",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Tally chart means A table of items, tallies and totals."
-          },
-          {
-            "prompt": "Which term matches this meaning: A question you answer by collecting data?",
-            "choices": [
-              "Statistical question",
-              "Data",
-              "Sort",
-              "Carroll diagram"
-            ],
-            "answer": "Statistical question",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Statistical question means A question you answer by collecting data."
-          },
-          {
-            "prompt": "Which term matches this meaning: A grid that sorts by whether items have features?",
-            "choices": [
-              "Carroll diagram",
-              "Tally mark",
-              "Tally chart",
-              "Most / least popular"
-            ],
-            "answer": "Carroll diagram",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Carroll diagram means A grid that sorts by whether items have features."
           }
@@ -1257,40 +1257,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Criteria” mean?",
+            "prompt": "A tally shows these counts: 20, 9, 7, 1, 8. What is the total?",
             "choices": [
-              "The rules used to sort (one or two at a time)",
-              "A single line standing for one thing",
-              "A table of items, tallies and totals",
-              "The biggest / smallest total"
+              "45",
+              "46",
+              "44",
+              "20"
             ],
-            "answer": "The rules used to sort (one or two at a time)",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Criteria means The rules used to sort (one or two at a time)."
+            "answer": "45",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 20 + 9 + 7 + 1 + 8 = 45."
           },
           {
-            "prompt": "Which term matches this meaning: The biggest / smallest total?",
+            "prompt": "Here is some data: 7, 11, 8, 15, 2. What is the range?",
             "choices": [
-              "Most / least popular",
-              "Survey",
-              "Statistical question",
-              "Data"
+              "14",
+              "13",
+              "15",
+              "2"
             ],
-            "answer": "Most / least popular",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Most / least popular means The biggest / smallest total."
-          },
-          {
-            "prompt": "Which term matches this meaning: Information we collect?",
-            "choices": [
-              "Data",
-              "Carroll diagram",
-              "Criteria",
-              "Tally mark"
-            ],
-            "answer": "Data",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Data means Information we collect."
+            "answer": "13",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 15 − 2 = 13."
           },
           {
             "prompt": "What does “Data” mean?",
@@ -1303,6 +1291,18 @@
             "answer": "Information we collect",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Data means Information we collect."
+          },
+          {
+            "prompt": "Here is some data: 16, 15, 4, 20, 2. What is the largest value?",
+            "choices": [
+              "2",
+              "19",
+              "16",
+              "20"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 20."
           }
         ]
       },
@@ -1315,40 +1315,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Tally mark” mean?",
+            "prompt": "Here is some data: 6, 17, 5, 4, 20, 6. Which value appears most often (the mode)?",
             "choices": [
-              "A single line standing for one thing",
-              "A table of items, tallies and totals",
-              "The biggest / smallest total",
-              "Asking many people the same question"
+              "4",
+              "17",
+              "6",
+              "20"
             ],
-            "answer": "A single line standing for one thing",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Tally mark means A single line standing for one thing."
+            "answer": "6",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "6 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "Which term matches this meaning: Asking many people the same question?",
+            "prompt": "Here is some data: 6, 11, 7, 18, 10, 6. Which value appears most often (the mode)?",
             "choices": [
-              "Survey",
-              "Statistical question",
-              "Data",
-              "Sort"
+              "7",
+              "6",
+              "18",
+              "11"
             ],
-            "answer": "Survey",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Survey means Asking many people the same question."
-          },
-          {
-            "prompt": "Which term matches this meaning: To put things into groups by a rule?",
-            "choices": [
-              "Sort",
-              "Criteria",
-              "Tally mark",
-              "Tally chart"
-            ],
-            "answer": "Sort",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Sort means To put things into groups by a rule."
+            "answer": "6",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "6 appears more than any other value, so it is the mode."
           },
           {
             "prompt": "What does “Sort” mean?",
@@ -1361,6 +1349,18 @@
             "answer": "To put things into groups by a rule",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Sort means To put things into groups by a rule."
+          },
+          {
+            "prompt": "A tally shows these counts: 5, 1, 11, 16, 14. What is the total?",
+            "choices": [
+              "16",
+              "47",
+              "48",
+              "46"
+            ],
+            "answer": "47",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 5 + 1 + 11 + 16 + 14 = 47."
           }
         ]
       },
@@ -1373,40 +1373,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Tally chart” mean?",
+            "prompt": "Here is some data: 2, 10, 9, 20, 8. What is the range?",
             "choices": [
-              "A table of items, tallies and totals",
-              "The biggest / smallest total",
-              "Asking many people the same question",
-              "A question you answer by collecting data"
+              "2",
+              "19",
+              "18",
+              "20"
             ],
-            "answer": "A table of items, tallies and totals",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Tally chart means A table of items, tallies and totals."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 2 = 18."
           },
           {
-            "prompt": "Which term matches this meaning: A question you answer by collecting data?",
+            "prompt": "Here is some data: 6, 9, 4, 14, 8. What is the largest value?",
             "choices": [
-              "Statistical question",
-              "Data",
-              "Sort",
-              "Carroll diagram"
+              "14",
+              "4",
+              "13",
+              "6"
             ],
-            "answer": "Statistical question",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Statistical question means A question you answer by collecting data."
-          },
-          {
-            "prompt": "Which term matches this meaning: A grid that sorts by whether items have features?",
-            "choices": [
-              "Carroll diagram",
-              "Tally mark",
-              "Tally chart",
-              "Most / least popular"
-            ],
-            "answer": "Carroll diagram",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Carroll diagram means A grid that sorts by whether items have features."
+            "answer": "14",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 14."
           },
           {
             "prompt": "What does “Carroll diagram” mean?",
@@ -1419,6 +1407,18 @@
             "answer": "A grid that sorts by whether items have features",
             "clue": "Use the Unit 4 Math Words & Symbols reference.",
             "explanation": "Carroll diagram means A grid that sorts by whether items have features."
+          },
+          {
+            "prompt": "Here is some data: 6, 14, 10, 17, 3. What is the range?",
+            "choices": [
+              "14",
+              "17",
+              "3",
+              "15"
+            ],
+            "answer": "14",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 17 − 3 = 14."
           }
         ]
       },
@@ -1431,28 +1431,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: The biggest / smallest total?",
+            "prompt": "Here is some data: 7, 11, 8, 15, 2. What is the range?",
             "choices": [
-              "Most / least popular",
-              "Survey",
-              "Statistical question",
-              "Data"
+              "14",
+              "13",
+              "15",
+              "2"
             ],
-            "answer": "Most / least popular",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Most / least popular means The biggest / smallest total."
-          },
-          {
-            "prompt": "Which term matches this meaning: Information we collect?",
-            "choices": [
-              "Data",
-              "Carroll diagram",
-              "Criteria",
-              "Tally mark"
-            ],
-            "answer": "Data",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Data means Information we collect."
+            "answer": "13",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 15 − 2 = 13."
           },
           {
             "prompt": "What does “Data” mean?",
@@ -1467,16 +1455,28 @@
             "explanation": "Data means Information we collect."
           },
           {
-            "prompt": "What does “Criteria” mean?",
+            "prompt": "Here is some data: 16, 15, 4, 20, 2. What is the largest value?",
             "choices": [
-              "The rules used to sort (one or two at a time)",
-              "A single line standing for one thing",
-              "A table of items, tallies and totals",
-              "The biggest / smallest total"
+              "2",
+              "19",
+              "16",
+              "20"
             ],
-            "answer": "The rules used to sort (one or two at a time)",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Criteria means The rules used to sort (one or two at a time)."
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 20."
+          },
+          {
+            "prompt": "A tally shows these counts: 20, 9, 7, 1, 8. What is the total?",
+            "choices": [
+              "45",
+              "46",
+              "44",
+              "20"
+            ],
+            "answer": "45",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 20 + 9 + 7 + 1 + 8 = 45."
           }
         ]
       },
@@ -1489,28 +1489,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Asking many people the same question?",
+            "prompt": "Here is some data: 6, 11, 7, 18, 10, 6. Which value appears most often (the mode)?",
             "choices": [
-              "Survey",
-              "Statistical question",
-              "Data",
-              "Sort"
+              "7",
+              "6",
+              "18",
+              "11"
             ],
-            "answer": "Survey",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Survey means Asking many people the same question."
-          },
-          {
-            "prompt": "Which term matches this meaning: To put things into groups by a rule?",
-            "choices": [
-              "Sort",
-              "Criteria",
-              "Tally mark",
-              "Tally chart"
-            ],
-            "answer": "Sort",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Sort means To put things into groups by a rule."
+            "answer": "6",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "6 appears more than any other value, so it is the mode."
           },
           {
             "prompt": "What does “Sort” mean?",
@@ -1525,16 +1513,28 @@
             "explanation": "Sort means To put things into groups by a rule."
           },
           {
-            "prompt": "What does “Tally mark” mean?",
+            "prompt": "A tally shows these counts: 5, 1, 11, 16, 14. What is the total?",
             "choices": [
-              "A single line standing for one thing",
-              "A table of items, tallies and totals",
-              "The biggest / smallest total",
-              "Asking many people the same question"
+              "16",
+              "47",
+              "48",
+              "46"
             ],
-            "answer": "A single line standing for one thing",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Tally mark means A single line standing for one thing."
+            "answer": "47",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 5 + 1 + 11 + 16 + 14 = 47."
+          },
+          {
+            "prompt": "Here is some data: 6, 17, 5, 4, 20, 6. Which value appears most often (the mode)?",
+            "choices": [
+              "4",
+              "17",
+              "6",
+              "20"
+            ],
+            "answer": "6",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "6 appears more than any other value, so it is the mode."
           }
         ]
       },
@@ -1547,28 +1547,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A question you answer by collecting data?",
+            "prompt": "Here is some data: 6, 9, 4, 14, 8. What is the largest value?",
             "choices": [
-              "Statistical question",
-              "Data",
-              "Sort",
-              "Carroll diagram"
+              "14",
+              "4",
+              "13",
+              "6"
             ],
-            "answer": "Statistical question",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Statistical question means A question you answer by collecting data."
-          },
-          {
-            "prompt": "Which term matches this meaning: A grid that sorts by whether items have features?",
-            "choices": [
-              "Carroll diagram",
-              "Tally mark",
-              "Tally chart",
-              "Most / least popular"
-            ],
-            "answer": "Carroll diagram",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Carroll diagram means A grid that sorts by whether items have features."
+            "answer": "14",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 14."
           },
           {
             "prompt": "What does “Carroll diagram” mean?",
@@ -1583,16 +1571,28 @@
             "explanation": "Carroll diagram means A grid that sorts by whether items have features."
           },
           {
-            "prompt": "What does “Tally chart” mean?",
+            "prompt": "Here is some data: 6, 14, 10, 17, 3. What is the range?",
             "choices": [
-              "A table of items, tallies and totals",
-              "The biggest / smallest total",
-              "Asking many people the same question",
-              "A question you answer by collecting data"
+              "14",
+              "17",
+              "3",
+              "15"
             ],
-            "answer": "A table of items, tallies and totals",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Tally chart means A table of items, tallies and totals."
+            "answer": "14",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 17 − 3 = 14."
+          },
+          {
+            "prompt": "Here is some data: 2, 10, 9, 20, 8. What is the range?",
+            "choices": [
+              "2",
+              "19",
+              "18",
+              "20"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 2 = 18."
           }
         ]
       },
@@ -1604,18 +1604,6 @@
         "description": "Practise data through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Information we collect?",
-            "choices": [
-              "Data",
-              "Carroll diagram",
-              "Criteria",
-              "Tally mark"
-            ],
-            "answer": "Data",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Data means Information we collect."
-          },
           {
             "prompt": "What does “Data” mean?",
             "choices": [
@@ -1629,28 +1617,40 @@
             "explanation": "Data means Information we collect."
           },
           {
-            "prompt": "What does “Criteria” mean?",
+            "prompt": "Here is some data: 16, 15, 4, 20, 2. What is the largest value?",
             "choices": [
-              "The rules used to sort (one or two at a time)",
-              "A single line standing for one thing",
-              "A table of items, tallies and totals",
-              "The biggest / smallest total"
+              "2",
+              "19",
+              "16",
+              "20"
             ],
-            "answer": "The rules used to sort (one or two at a time)",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Criteria means The rules used to sort (one or two at a time)."
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 20."
           },
           {
-            "prompt": "Which term matches this meaning: The biggest / smallest total?",
+            "prompt": "A tally shows these counts: 20, 9, 7, 1, 8. What is the total?",
             "choices": [
-              "Most / least popular",
-              "Survey",
-              "Statistical question",
-              "Data"
+              "45",
+              "46",
+              "44",
+              "20"
             ],
-            "answer": "Most / least popular",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Most / least popular means The biggest / smallest total."
+            "answer": "45",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 20 + 9 + 7 + 1 + 8 = 45."
+          },
+          {
+            "prompt": "Here is some data: 7, 11, 8, 15, 2. What is the range?",
+            "choices": [
+              "14",
+              "13",
+              "15",
+              "2"
+            ],
+            "answer": "13",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 15 − 2 = 13."
           }
         ]
       },
@@ -1662,18 +1662,6 @@
         "description": "Practise sort through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: To put things into groups by a rule?",
-            "choices": [
-              "Sort",
-              "Criteria",
-              "Tally mark",
-              "Tally chart"
-            ],
-            "answer": "Sort",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Sort means To put things into groups by a rule."
-          },
           {
             "prompt": "What does “Sort” mean?",
             "choices": [
@@ -1687,28 +1675,40 @@
             "explanation": "Sort means To put things into groups by a rule."
           },
           {
-            "prompt": "What does “Tally mark” mean?",
+            "prompt": "A tally shows these counts: 5, 1, 11, 16, 14. What is the total?",
             "choices": [
-              "A single line standing for one thing",
-              "A table of items, tallies and totals",
-              "The biggest / smallest total",
-              "Asking many people the same question"
+              "16",
+              "47",
+              "48",
+              "46"
             ],
-            "answer": "A single line standing for one thing",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Tally mark means A single line standing for one thing."
+            "answer": "47",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 5 + 1 + 11 + 16 + 14 = 47."
           },
           {
-            "prompt": "Which term matches this meaning: Asking many people the same question?",
+            "prompt": "Here is some data: 6, 17, 5, 4, 20, 6. Which value appears most often (the mode)?",
             "choices": [
-              "Survey",
-              "Statistical question",
-              "Data",
-              "Sort"
+              "4",
+              "17",
+              "6",
+              "20"
             ],
-            "answer": "Survey",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Survey means Asking many people the same question."
+            "answer": "6",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "6 appears more than any other value, so it is the mode."
+          },
+          {
+            "prompt": "Here is some data: 6, 11, 7, 18, 10, 6. Which value appears most often (the mode)?",
+            "choices": [
+              "7",
+              "6",
+              "18",
+              "11"
+            ],
+            "answer": "6",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "6 appears more than any other value, so it is the mode."
           }
         ]
       },
@@ -1720,18 +1720,6 @@
         "description": "Practise carroll diagram through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A grid that sorts by whether items have features?",
-            "choices": [
-              "Carroll diagram",
-              "Tally mark",
-              "Tally chart",
-              "Most / least popular"
-            ],
-            "answer": "Carroll diagram",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Carroll diagram means A grid that sorts by whether items have features."
-          },
           {
             "prompt": "What does “Carroll diagram” mean?",
             "choices": [
@@ -1745,28 +1733,40 @@
             "explanation": "Carroll diagram means A grid that sorts by whether items have features."
           },
           {
-            "prompt": "What does “Tally chart” mean?",
+            "prompt": "Here is some data: 6, 14, 10, 17, 3. What is the range?",
             "choices": [
-              "A table of items, tallies and totals",
-              "The biggest / smallest total",
-              "Asking many people the same question",
-              "A question you answer by collecting data"
+              "14",
+              "17",
+              "3",
+              "15"
             ],
-            "answer": "A table of items, tallies and totals",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Tally chart means A table of items, tallies and totals."
+            "answer": "14",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 17 − 3 = 14."
           },
           {
-            "prompt": "Which term matches this meaning: A question you answer by collecting data?",
+            "prompt": "Here is some data: 2, 10, 9, 20, 8. What is the range?",
             "choices": [
-              "Statistical question",
-              "Data",
-              "Sort",
-              "Carroll diagram"
+              "2",
+              "19",
+              "18",
+              "20"
             ],
-            "answer": "Statistical question",
-            "clue": "Use the Unit 4 Math Words & Symbols reference.",
-            "explanation": "Statistical question means A question you answer by collecting data."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 2 = 18."
+          },
+          {
+            "prompt": "Here is some data: 6, 9, 4, 14, 8. What is the largest value?",
+            "choices": [
+              "14",
+              "4",
+              "13",
+              "6"
+            ],
+            "answer": "14",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 14."
           }
         ]
       }

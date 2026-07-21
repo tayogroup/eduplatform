@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:32.560Z",
+  "generatedAt": "2026-07-21T07:21:49.330Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -811,9 +811,153 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
+        "question": "A tally shows these counts: 3, 13, 1, 10, 5. What is the total?",
+        "options": [
+          "31",
+          "13",
+          "32",
+          "33"
+        ],
+        "answer": "32",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 3 + 13 + 1 + 10 + 5 = 32."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Here is some data: 3, 10, 4, 2, 13. What is the largest value?",
+        "options": [
+          "12",
+          "3",
+          "13",
+          "2"
+        ],
+        "answer": "13",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Look for the biggest number: 13."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "Here is some data: 20, 7, 3, 18, 9. What is the range?",
+        "options": [
+          "3",
+          "18",
+          "17",
+          "20"
+        ],
+        "answer": "17",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 20 − 3 = 17."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "A tally shows these counts: 14, 3, 9, 12, 5. What is the total?",
+        "options": [
+          "14",
+          "43",
+          "44",
+          "42"
+        ],
+        "answer": "43",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 14 + 3 + 9 + 12 + 5 = 43."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Here is some data: 18, 16, 4, 8, 12. What is the largest value?",
+        "options": [
+          "4",
+          "17",
+          "19",
+          "18"
+        ],
+        "answer": "18",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Look for the biggest number: 18."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Here is some data: 6, 8, 5, 1, 11. What is the range?",
+        "options": [
+          "9",
+          "10",
+          "11",
+          "1"
+        ],
+        "answer": "10",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 11 − 1 = 10."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Here is some data: 1, 18, 17, 13, 11. What is the range?",
+        "options": [
+          "16",
+          "17",
+          "18",
+          "1"
+        ],
+        "answer": "17",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 18 − 1 = 17."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Here is some data: 2, 10, 13, 11, 18, 2. Which value appears most often (the mode)?",
+        "options": [
+          "3",
+          "2",
+          "18",
+          "10"
+        ],
+        "answer": "2",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "2 appears more than any other value, so it is the mode."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Here is some data: 4, 11, 1, 19, 13. What is the range?",
+        "options": [
+          "1",
+          "17",
+          "18",
+          "19"
+        ],
+        "answer": "18",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 19 − 1 = 18."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Sort” mean?",
         "options": [
           "Put objects into groups by a rule",
@@ -826,10 +970,10 @@
         "explanation": "Sort means Put objects into groups by a rule."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Group / set” mean?",
         "options": [
           "Things that belong together",
@@ -842,10 +986,10 @@
         "explanation": "Group / set means Things that belong together."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Same / different” mean?",
         "options": [
           "How we decide what belongs",
@@ -856,150 +1000,6 @@
         "answer": "How we decide what belongs",
         "hint": "Use the Unit 7 Math Words & Symbols reference.",
         "explanation": "Same / different means How we decide what belongs."
-      },
-      {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
-        "question": "What does “More / fewer” mean?",
-        "options": [
-          "Words to compare two sets",
-          "Look at two sets side by side",
-          "Sorting circles that show sets",
-          "Fits the rule / does not fit"
-        ],
-        "answer": "Words to compare two sets",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "More / fewer means Words to compare two sets."
-      },
-      {
-        "id": "q05",
-        "type": "Reasoning",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
-        "question": "What does “Compare” mean?",
-        "options": [
-          "Look at two sets side by side",
-          "Sorting circles that show sets",
-          "Fits the rule / does not fit",
-          "Fits two rules at once (the middle)"
-        ],
-        "answer": "Look at two sets side by side",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Compare means Look at two sets side by side."
-      },
-      {
-        "id": "q06",
-        "type": "Reasoning",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What does “Venn diagram” mean?",
-        "options": [
-          "Sorting circles that show sets",
-          "Fits the rule / does not fit",
-          "Fits two rules at once (the middle)",
-          "Put objects into groups by a rule"
-        ],
-        "answer": "Sorting circles that show sets",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Venn diagram means Sorting circles that show sets."
-      },
-      {
-        "id": "q07",
-        "type": "Reasoning",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Fits the rule / does not fit?",
-        "options": [
-          "Inside / outside",
-          "Both",
-          "Sort",
-          "Group / set"
-        ],
-        "answer": "Inside / outside",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Inside / outside means Fits the rule / does not fit."
-      },
-      {
-        "id": "q08",
-        "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Fits two rules at once (the middle)?",
-        "options": [
-          "Both",
-          "Sort",
-          "Group / set",
-          "Same / different"
-        ],
-        "answer": "Both",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Both means Fits two rules at once (the middle)."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Put objects into groups by a rule?",
-        "options": [
-          "Sort",
-          "Same / different",
-          "More / fewer",
-          "Compare"
-        ],
-        "answer": "Sort",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Sort means Put objects into groups by a rule."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Things that belong together?",
-        "options": [
-          "Group / set",
-          "More / fewer",
-          "Compare",
-          "Venn diagram"
-        ],
-        "answer": "Group / set",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Group / set means Things that belong together."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: How we decide what belongs?",
-        "options": [
-          "Same / different",
-          "Compare",
-          "Venn diagram",
-          "Inside / outside"
-        ],
-        "answer": "Same / different",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Same / different means How we decide what belongs."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Words to compare two sets?",
-        "options": [
-          "More / fewer",
-          "Venn diagram",
-          "Inside / outside",
-          "Both"
-        ],
-        "answer": "More / fewer",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "More / fewer means Words to compare two sets."
       }
     ]
   },
@@ -1015,6 +1015,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "A tally shows these counts: 3, 13, 1, 10, 5. What is the total?",
+            "choices": [
+              "31",
+              "13",
+              "32",
+              "33"
+            ],
+            "answer": "32",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 3 + 13 + 1 + 10 + 5 = 32."
+          },
+          {
+            "prompt": "A tally shows these counts: 14, 3, 9, 12, 5. What is the total?",
+            "choices": [
+              "14",
+              "43",
+              "44",
+              "42"
+            ],
+            "answer": "43",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 14 + 3 + 9 + 12 + 5 = 43."
+          },
+          {
+            "prompt": "Here is some data: 1, 18, 17, 13, 11. What is the range?",
+            "choices": [
+              "16",
+              "17",
+              "18",
+              "1"
+            ],
+            "answer": "17",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 18 − 1 = 17."
+          },
+          {
             "prompt": "What does “Sort” mean?",
             "choices": [
               "Put objects into groups by a rule",
@@ -1025,42 +1061,6 @@
             "answer": "Put objects into groups by a rule",
             "clue": "Use the Unit 7 Math Words & Symbols reference.",
             "explanation": "Sort means Put objects into groups by a rule."
-          },
-          {
-            "prompt": "What does “More / fewer” mean?",
-            "choices": [
-              "Words to compare two sets",
-              "Look at two sets side by side",
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit"
-            ],
-            "answer": "Words to compare two sets",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "More / fewer means Words to compare two sets."
-          },
-          {
-            "prompt": "Which term matches this meaning: Fits the rule / does not fit?",
-            "choices": [
-              "Inside / outside",
-              "Both",
-              "Sort",
-              "Group / set"
-            ],
-            "answer": "Inside / outside",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Inside / outside means Fits the rule / does not fit."
-          },
-          {
-            "prompt": "Which term matches this meaning: Things that belong together?",
-            "choices": [
-              "Group / set",
-              "More / fewer",
-              "Compare",
-              "Venn diagram"
-            ],
-            "answer": "Group / set",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Group / set means Things that belong together."
           }
         ]
       },
@@ -1073,6 +1073,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 3, 10, 4, 2, 13. What is the largest value?",
+            "choices": [
+              "12",
+              "3",
+              "13",
+              "2"
+            ],
+            "answer": "13",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 13."
+          },
+          {
+            "prompt": "Here is some data: 18, 16, 4, 8, 12. What is the largest value?",
+            "choices": [
+              "4",
+              "17",
+              "19",
+              "18"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 18."
+          },
+          {
+            "prompt": "Here is some data: 2, 10, 13, 11, 18, 2. Which value appears most often (the mode)?",
+            "choices": [
+              "3",
+              "2",
+              "18",
+              "10"
+            ],
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 appears more than any other value, so it is the mode."
+          },
+          {
             "prompt": "What does “Group / set” mean?",
             "choices": [
               "Things that belong together",
@@ -1083,42 +1119,6 @@
             "answer": "Things that belong together",
             "clue": "Use the Unit 7 Math Words & Symbols reference.",
             "explanation": "Group / set means Things that belong together."
-          },
-          {
-            "prompt": "What does “Compare” mean?",
-            "choices": [
-              "Look at two sets side by side",
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit",
-              "Fits two rules at once (the middle)"
-            ],
-            "answer": "Look at two sets side by side",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Compare means Look at two sets side by side."
-          },
-          {
-            "prompt": "Which term matches this meaning: Fits two rules at once (the middle)?",
-            "choices": [
-              "Both",
-              "Sort",
-              "Group / set",
-              "Same / different"
-            ],
-            "answer": "Both",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Both means Fits two rules at once (the middle)."
-          },
-          {
-            "prompt": "Which term matches this meaning: How we decide what belongs?",
-            "choices": [
-              "Same / different",
-              "Compare",
-              "Venn diagram",
-              "Inside / outside"
-            ],
-            "answer": "Same / different",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Same / different means How we decide what belongs."
           }
         ]
       },
@@ -1131,6 +1131,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 20, 7, 3, 18, 9. What is the range?",
+            "choices": [
+              "3",
+              "18",
+              "17",
+              "20"
+            ],
+            "answer": "17",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 3 = 17."
+          },
+          {
+            "prompt": "Here is some data: 6, 8, 5, 1, 11. What is the range?",
+            "choices": [
+              "9",
+              "10",
+              "11",
+              "1"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 11 − 1 = 10."
+          },
+          {
+            "prompt": "Here is some data: 4, 11, 1, 19, 13. What is the range?",
+            "choices": [
+              "1",
+              "17",
+              "18",
+              "19"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+          },
+          {
             "prompt": "What does “Same / different” mean?",
             "choices": [
               "How we decide what belongs",
@@ -1141,42 +1177,6 @@
             "answer": "How we decide what belongs",
             "clue": "Use the Unit 7 Math Words & Symbols reference.",
             "explanation": "Same / different means How we decide what belongs."
-          },
-          {
-            "prompt": "What does “Venn diagram” mean?",
-            "choices": [
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit",
-              "Fits two rules at once (the middle)",
-              "Put objects into groups by a rule"
-            ],
-            "answer": "Sorting circles that show sets",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Venn diagram means Sorting circles that show sets."
-          },
-          {
-            "prompt": "Which term matches this meaning: Put objects into groups by a rule?",
-            "choices": [
-              "Sort",
-              "Same / different",
-              "More / fewer",
-              "Compare"
-            ],
-            "answer": "Sort",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Sort means Put objects into groups by a rule."
-          },
-          {
-            "prompt": "Which term matches this meaning: Words to compare two sets?",
-            "choices": [
-              "More / fewer",
-              "Venn diagram",
-              "Inside / outside",
-              "Both"
-            ],
-            "answer": "More / fewer",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "More / fewer means Words to compare two sets."
           }
         ]
       },
@@ -1189,40 +1189,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “More / fewer” mean?",
+            "prompt": "A tally shows these counts: 14, 3, 9, 12, 5. What is the total?",
             "choices": [
-              "Words to compare two sets",
-              "Look at two sets side by side",
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit"
+              "14",
+              "43",
+              "44",
+              "42"
             ],
-            "answer": "Words to compare two sets",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "More / fewer means Words to compare two sets."
+            "answer": "43",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 14 + 3 + 9 + 12 + 5 = 43."
           },
           {
-            "prompt": "Which term matches this meaning: Fits the rule / does not fit?",
+            "prompt": "Here is some data: 1, 18, 17, 13, 11. What is the range?",
             "choices": [
-              "Inside / outside",
-              "Both",
-              "Sort",
-              "Group / set"
+              "16",
+              "17",
+              "18",
+              "1"
             ],
-            "answer": "Inside / outside",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Inside / outside means Fits the rule / does not fit."
-          },
-          {
-            "prompt": "Which term matches this meaning: Things that belong together?",
-            "choices": [
-              "Group / set",
-              "More / fewer",
-              "Compare",
-              "Venn diagram"
-            ],
-            "answer": "Group / set",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Group / set means Things that belong together."
+            "answer": "17",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 18 − 1 = 17."
           },
           {
             "prompt": "What does “Sort” mean?",
@@ -1235,6 +1223,18 @@
             "answer": "Put objects into groups by a rule",
             "clue": "Use the Unit 7 Math Words & Symbols reference.",
             "explanation": "Sort means Put objects into groups by a rule."
+          },
+          {
+            "prompt": "A tally shows these counts: 3, 13, 1, 10, 5. What is the total?",
+            "choices": [
+              "31",
+              "13",
+              "32",
+              "33"
+            ],
+            "answer": "32",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 3 + 13 + 1 + 10 + 5 = 32."
           }
         ]
       },
@@ -1247,40 +1247,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Compare” mean?",
+            "prompt": "Here is some data: 18, 16, 4, 8, 12. What is the largest value?",
             "choices": [
-              "Look at two sets side by side",
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit",
-              "Fits two rules at once (the middle)"
+              "4",
+              "17",
+              "19",
+              "18"
             ],
-            "answer": "Look at two sets side by side",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Compare means Look at two sets side by side."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 18."
           },
           {
-            "prompt": "Which term matches this meaning: Fits two rules at once (the middle)?",
+            "prompt": "Here is some data: 2, 10, 13, 11, 18, 2. Which value appears most often (the mode)?",
             "choices": [
-              "Both",
-              "Sort",
-              "Group / set",
-              "Same / different"
+              "3",
+              "2",
+              "18",
+              "10"
             ],
-            "answer": "Both",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Both means Fits two rules at once (the middle)."
-          },
-          {
-            "prompt": "Which term matches this meaning: How we decide what belongs?",
-            "choices": [
-              "Same / different",
-              "Compare",
-              "Venn diagram",
-              "Inside / outside"
-            ],
-            "answer": "Same / different",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Same / different means How we decide what belongs."
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 appears more than any other value, so it is the mode."
           },
           {
             "prompt": "What does “Group / set” mean?",
@@ -1293,6 +1281,18 @@
             "answer": "Things that belong together",
             "clue": "Use the Unit 7 Math Words & Symbols reference.",
             "explanation": "Group / set means Things that belong together."
+          },
+          {
+            "prompt": "Here is some data: 3, 10, 4, 2, 13. What is the largest value?",
+            "choices": [
+              "12",
+              "3",
+              "13",
+              "2"
+            ],
+            "answer": "13",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 13."
           }
         ]
       },
@@ -1305,40 +1305,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Venn diagram” mean?",
+            "prompt": "Here is some data: 6, 8, 5, 1, 11. What is the range?",
             "choices": [
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit",
-              "Fits two rules at once (the middle)",
-              "Put objects into groups by a rule"
+              "9",
+              "10",
+              "11",
+              "1"
             ],
-            "answer": "Sorting circles that show sets",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Venn diagram means Sorting circles that show sets."
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 11 − 1 = 10."
           },
           {
-            "prompt": "Which term matches this meaning: Put objects into groups by a rule?",
+            "prompt": "Here is some data: 4, 11, 1, 19, 13. What is the range?",
             "choices": [
-              "Sort",
-              "Same / different",
-              "More / fewer",
-              "Compare"
+              "1",
+              "17",
+              "18",
+              "19"
             ],
-            "answer": "Sort",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Sort means Put objects into groups by a rule."
-          },
-          {
-            "prompt": "Which term matches this meaning: Words to compare two sets?",
-            "choices": [
-              "More / fewer",
-              "Venn diagram",
-              "Inside / outside",
-              "Both"
-            ],
-            "answer": "More / fewer",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "More / fewer means Words to compare two sets."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
           },
           {
             "prompt": "What does “Same / different” mean?",
@@ -1351,6 +1339,18 @@
             "answer": "How we decide what belongs",
             "clue": "Use the Unit 7 Math Words & Symbols reference.",
             "explanation": "Same / different means How we decide what belongs."
+          },
+          {
+            "prompt": "Here is some data: 20, 7, 3, 18, 9. What is the range?",
+            "choices": [
+              "3",
+              "18",
+              "17",
+              "20"
+            ],
+            "answer": "17",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 3 = 17."
           }
         ]
       },
@@ -1363,28 +1363,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Fits the rule / does not fit?",
+            "prompt": "Here is some data: 1, 18, 17, 13, 11. What is the range?",
             "choices": [
-              "Inside / outside",
-              "Both",
-              "Sort",
-              "Group / set"
+              "16",
+              "17",
+              "18",
+              "1"
             ],
-            "answer": "Inside / outside",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Inside / outside means Fits the rule / does not fit."
-          },
-          {
-            "prompt": "Which term matches this meaning: Things that belong together?",
-            "choices": [
-              "Group / set",
-              "More / fewer",
-              "Compare",
-              "Venn diagram"
-            ],
-            "answer": "Group / set",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Group / set means Things that belong together."
+            "answer": "17",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 18 − 1 = 17."
           },
           {
             "prompt": "What does “Sort” mean?",
@@ -1399,16 +1387,28 @@
             "explanation": "Sort means Put objects into groups by a rule."
           },
           {
-            "prompt": "What does “More / fewer” mean?",
+            "prompt": "A tally shows these counts: 3, 13, 1, 10, 5. What is the total?",
             "choices": [
-              "Words to compare two sets",
-              "Look at two sets side by side",
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit"
+              "31",
+              "13",
+              "32",
+              "33"
             ],
-            "answer": "Words to compare two sets",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "More / fewer means Words to compare two sets."
+            "answer": "32",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 3 + 13 + 1 + 10 + 5 = 32."
+          },
+          {
+            "prompt": "A tally shows these counts: 14, 3, 9, 12, 5. What is the total?",
+            "choices": [
+              "14",
+              "43",
+              "44",
+              "42"
+            ],
+            "answer": "43",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 14 + 3 + 9 + 12 + 5 = 43."
           }
         ]
       },
@@ -1421,28 +1421,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Fits two rules at once (the middle)?",
+            "prompt": "Here is some data: 2, 10, 13, 11, 18, 2. Which value appears most often (the mode)?",
             "choices": [
-              "Both",
-              "Sort",
-              "Group / set",
-              "Same / different"
+              "3",
+              "2",
+              "18",
+              "10"
             ],
-            "answer": "Both",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Both means Fits two rules at once (the middle)."
-          },
-          {
-            "prompt": "Which term matches this meaning: How we decide what belongs?",
-            "choices": [
-              "Same / different",
-              "Compare",
-              "Venn diagram",
-              "Inside / outside"
-            ],
-            "answer": "Same / different",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Same / different means How we decide what belongs."
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 appears more than any other value, so it is the mode."
           },
           {
             "prompt": "What does “Group / set” mean?",
@@ -1457,16 +1445,28 @@
             "explanation": "Group / set means Things that belong together."
           },
           {
-            "prompt": "What does “Compare” mean?",
+            "prompt": "Here is some data: 3, 10, 4, 2, 13. What is the largest value?",
             "choices": [
-              "Look at two sets side by side",
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit",
-              "Fits two rules at once (the middle)"
+              "12",
+              "3",
+              "13",
+              "2"
             ],
-            "answer": "Look at two sets side by side",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Compare means Look at two sets side by side."
+            "answer": "13",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 13."
+          },
+          {
+            "prompt": "Here is some data: 18, 16, 4, 8, 12. What is the largest value?",
+            "choices": [
+              "4",
+              "17",
+              "19",
+              "18"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 18."
           }
         ]
       },
@@ -1479,28 +1479,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Put objects into groups by a rule?",
+            "prompt": "Here is some data: 4, 11, 1, 19, 13. What is the range?",
             "choices": [
-              "Sort",
-              "Same / different",
-              "More / fewer",
-              "Compare"
+              "1",
+              "17",
+              "18",
+              "19"
             ],
-            "answer": "Sort",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Sort means Put objects into groups by a rule."
-          },
-          {
-            "prompt": "Which term matches this meaning: Words to compare two sets?",
-            "choices": [
-              "More / fewer",
-              "Venn diagram",
-              "Inside / outside",
-              "Both"
-            ],
-            "answer": "More / fewer",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "More / fewer means Words to compare two sets."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
           },
           {
             "prompt": "What does “Same / different” mean?",
@@ -1515,16 +1503,28 @@
             "explanation": "Same / different means How we decide what belongs."
           },
           {
-            "prompt": "What does “Venn diagram” mean?",
+            "prompt": "Here is some data: 20, 7, 3, 18, 9. What is the range?",
             "choices": [
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit",
-              "Fits two rules at once (the middle)",
-              "Put objects into groups by a rule"
+              "3",
+              "18",
+              "17",
+              "20"
             ],
-            "answer": "Sorting circles that show sets",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Venn diagram means Sorting circles that show sets."
+            "answer": "17",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 3 = 17."
+          },
+          {
+            "prompt": "Here is some data: 6, 8, 5, 1, 11. What is the range?",
+            "choices": [
+              "9",
+              "10",
+              "11",
+              "1"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 11 − 1 = 10."
           }
         ]
       },
@@ -1536,18 +1536,6 @@
         "description": "Practise group / set through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Things that belong together?",
-            "choices": [
-              "Group / set",
-              "More / fewer",
-              "Compare",
-              "Venn diagram"
-            ],
-            "answer": "Group / set",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Group / set means Things that belong together."
-          },
           {
             "prompt": "What does “Sort” mean?",
             "choices": [
@@ -1561,28 +1549,40 @@
             "explanation": "Sort means Put objects into groups by a rule."
           },
           {
-            "prompt": "What does “More / fewer” mean?",
+            "prompt": "A tally shows these counts: 3, 13, 1, 10, 5. What is the total?",
             "choices": [
-              "Words to compare two sets",
-              "Look at two sets side by side",
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit"
+              "31",
+              "13",
+              "32",
+              "33"
             ],
-            "answer": "Words to compare two sets",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "More / fewer means Words to compare two sets."
+            "answer": "32",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 3 + 13 + 1 + 10 + 5 = 32."
           },
           {
-            "prompt": "Which term matches this meaning: Fits the rule / does not fit?",
+            "prompt": "A tally shows these counts: 14, 3, 9, 12, 5. What is the total?",
             "choices": [
-              "Inside / outside",
-              "Both",
-              "Sort",
-              "Group / set"
+              "14",
+              "43",
+              "44",
+              "42"
             ],
-            "answer": "Inside / outside",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Inside / outside means Fits the rule / does not fit."
+            "answer": "43",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 14 + 3 + 9 + 12 + 5 = 43."
+          },
+          {
+            "prompt": "Here is some data: 1, 18, 17, 13, 11. What is the range?",
+            "choices": [
+              "16",
+              "17",
+              "18",
+              "1"
+            ],
+            "answer": "17",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 18 − 1 = 17."
           }
         ]
       },
@@ -1594,18 +1594,6 @@
         "description": "Practise same / different through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: How we decide what belongs?",
-            "choices": [
-              "Same / different",
-              "Compare",
-              "Venn diagram",
-              "Inside / outside"
-            ],
-            "answer": "Same / different",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Same / different means How we decide what belongs."
-          },
           {
             "prompt": "What does “Group / set” mean?",
             "choices": [
@@ -1619,28 +1607,40 @@
             "explanation": "Group / set means Things that belong together."
           },
           {
-            "prompt": "What does “Compare” mean?",
+            "prompt": "Here is some data: 3, 10, 4, 2, 13. What is the largest value?",
             "choices": [
-              "Look at two sets side by side",
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit",
-              "Fits two rules at once (the middle)"
+              "12",
+              "3",
+              "13",
+              "2"
             ],
-            "answer": "Look at two sets side by side",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Compare means Look at two sets side by side."
+            "answer": "13",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 13."
           },
           {
-            "prompt": "Which term matches this meaning: Fits two rules at once (the middle)?",
+            "prompt": "Here is some data: 18, 16, 4, 8, 12. What is the largest value?",
             "choices": [
-              "Both",
-              "Sort",
-              "Group / set",
-              "Same / different"
+              "4",
+              "17",
+              "19",
+              "18"
             ],
-            "answer": "Both",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Both means Fits two rules at once (the middle)."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 18."
+          },
+          {
+            "prompt": "Here is some data: 2, 10, 13, 11, 18, 2. Which value appears most often (the mode)?",
+            "choices": [
+              "3",
+              "2",
+              "18",
+              "10"
+            ],
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 appears more than any other value, so it is the mode."
           }
         ]
       },
@@ -1652,18 +1652,6 @@
         "description": "Practise more / fewer through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Words to compare two sets?",
-            "choices": [
-              "More / fewer",
-              "Venn diagram",
-              "Inside / outside",
-              "Both"
-            ],
-            "answer": "More / fewer",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "More / fewer means Words to compare two sets."
-          },
           {
             "prompt": "What does “Same / different” mean?",
             "choices": [
@@ -1677,28 +1665,40 @@
             "explanation": "Same / different means How we decide what belongs."
           },
           {
-            "prompt": "What does “Venn diagram” mean?",
+            "prompt": "Here is some data: 20, 7, 3, 18, 9. What is the range?",
             "choices": [
-              "Sorting circles that show sets",
-              "Fits the rule / does not fit",
-              "Fits two rules at once (the middle)",
-              "Put objects into groups by a rule"
+              "3",
+              "18",
+              "17",
+              "20"
             ],
-            "answer": "Sorting circles that show sets",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Venn diagram means Sorting circles that show sets."
+            "answer": "17",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 20 − 3 = 17."
           },
           {
-            "prompt": "Which term matches this meaning: Put objects into groups by a rule?",
+            "prompt": "Here is some data: 6, 8, 5, 1, 11. What is the range?",
             "choices": [
-              "Sort",
-              "Same / different",
-              "More / fewer",
-              "Compare"
+              "9",
+              "10",
+              "11",
+              "1"
             ],
-            "answer": "Sort",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Sort means Put objects into groups by a rule."
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 11 − 1 = 10."
+          },
+          {
+            "prompt": "Here is some data: 4, 11, 1, 19, 13. What is the range?",
+            "choices": [
+              "1",
+              "17",
+              "18",
+              "19"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
           }
         ]
       }

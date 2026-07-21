@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:33.134Z",
+  "generatedAt": "2026-07-21T07:21:49.902Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -875,12 +875,12 @@
         "difficulty": "Core",
         "question": "Calculate 2 × 39 × 5 the smart way.",
         "options": [
-          "94",
-          "78",
-          "86",
-          "70"
+          "468",
+          "390",
+          "429",
+          "351"
         ],
-        "answer": "78",
+        "answer": "390",
         "hint": "Work it out step by step, using the Unit 16 methods.",
         "explanation": "Rearrange the order (commutative) and regroup (associative) to make a round number: 2 × 5 × 39 = (2 × 5) × 39 = 10 × 39 = 390. Multiplying by 10 is far easier than multiplying by 39 directly."
       },
@@ -902,9 +902,121 @@
       },
       {
         "id": "q03",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
+        "question": "Work out 545 + 1,903.",
+        "options": [
+          "2449",
+          "2447",
+          "2458",
+          "2448"
+        ],
+        "answer": "2448",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "545 + 1,903 = 2,448."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "Work out 7,532 − 5,111.",
+        "options": [
+          "12643",
+          "2421",
+          "2422",
+          "2420"
+        ],
+        "answer": "2421",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "7,532 − 5,111 = 2,421."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Work out 176 ÷ 4.",
+        "options": [
+          "43",
+          "172",
+          "44",
+          "45"
+        ],
+        "answer": "44",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "176 ÷ 4 = 44 because 4 × 44 = 176."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Work out 1,081 + 2,690.",
+        "options": [
+          "3781",
+          "3771",
+          "3772",
+          "3770"
+        ],
+        "answer": "3771",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "1,081 + 2,690 = 3,771."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Work out 7,222 − 420.",
+        "options": [
+          "6803",
+          "6801",
+          "7642",
+          "6802"
+        ],
+        "answer": "6802",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "7,222 − 420 = 6,802."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Work out 15 × 74.",
+        "options": [
+          "89",
+          "1110",
+          "1125",
+          "1095"
+        ],
+        "answer": "1110",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "15 × 74 = 1110."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Work out 9,987 − 7,260.",
+        "options": [
+          "17247",
+          "2727",
+          "2728",
+          "2726"
+        ],
+        "answer": "2727",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "9,987 − 7,260 = 2,727."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Order of operations” mean?",
         "options": [
           "The agreed sequence for calculating (BODMAS)",
@@ -917,10 +1029,10 @@
         "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
       },
       {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Brackets” mean?",
         "options": [
           "Symbols ( ) that are worked out first",
@@ -933,10 +1045,10 @@
         "explanation": "Brackets means Symbols ( ) that are worked out first."
       },
       {
-        "id": "q05",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Commutative” mean?",
         "options": [
           "Order does not matter (+ and × only)",
@@ -945,118 +1057,6 @@
           "The distributive law used in reverse"
         ],
         "answer": "Order does not matter (+ and × only)",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Commutative means Order does not matter (+ and × only)."
-      },
-      {
-        "id": "q06",
-        "type": "Reasoning",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What does “Associative” mean?",
-        "options": [
-          "Grouping does not matter (+ and × only)",
-          "a × (b + c) = a × b + a × c",
-          "The distributive law used in reverse",
-          "A single number or product in an expression"
-        ],
-        "answer": "Grouping does not matter (+ and × only)",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Associative means Grouping does not matter (+ and × only)."
-      },
-      {
-        "id": "q07",
-        "type": "Reasoning",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
-        "question": "What does “Distributive” mean?",
-        "options": [
-          "a × (b + c) = a × b + a × c",
-          "The distributive law used in reverse",
-          "A single number or product in an expression",
-          "The agreed sequence for calculating (BODMAS)"
-        ],
-        "answer": "a × (b + c) = a × b + a × c",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Distributive means a × (b + c) = a × b + a × c."
-      },
-      {
-        "id": "q08",
-        "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "What does “Factor out” mean?",
-        "options": [
-          "The distributive law used in reverse",
-          "A single number or product in an expression",
-          "The agreed sequence for calculating (BODMAS)",
-          "Symbols ( ) that are worked out first"
-        ],
-        "answer": "The distributive law used in reverse",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Factor out means The distributive law used in reverse."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: A single number or product in an expression?",
-        "options": [
-          "Term",
-          "Order of operations",
-          "Brackets",
-          "Commutative"
-        ],
-        "answer": "Term",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Term means A single number or product in an expression."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The agreed sequence for calculating (BODMAS)?",
-        "options": [
-          "Order of operations",
-          "Commutative",
-          "Associative",
-          "Distributive"
-        ],
-        "answer": "Order of operations",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Symbols ( ) that are worked out first?",
-        "options": [
-          "Brackets",
-          "Associative",
-          "Distributive",
-          "Factor out"
-        ],
-        "answer": "Brackets",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Brackets means Symbols ( ) that are worked out first."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Order does not matter (+ and × only)?",
-        "options": [
-          "Commutative",
-          "Distributive",
-          "Factor out",
-          "Term"
-        ],
-        "answer": "Commutative",
         "hint": "Use the Unit 16 Math Words & Symbols reference.",
         "explanation": "Commutative means Order does not matter (+ and × only)."
       }
@@ -1076,48 +1076,48 @@
           {
             "prompt": "Calculate 2 × 39 × 5 the smart way.",
             "choices": [
-              "94",
-              "78",
-              "86",
-              "70"
+              "468",
+              "390",
+              "429",
+              "351"
             ],
-            "answer": "78",
+            "answer": "390",
             "clue": "Work it out step by step, using the Unit 16 methods.",
             "explanation": "Rearrange the order (commutative) and regroup (associative) to make a round number: 2 × 5 × 39 = (2 × 5) × 39 = 10 × 39 = 390. Multiplying by 10 is far easier than multiplying by 39 directly."
           },
           {
-            "prompt": "What does “Brackets” mean?",
+            "prompt": "Work out 7,532 − 5,111.",
             "choices": [
+              "12643",
+              "2421",
+              "2422",
+              "2420"
+            ],
+            "answer": "2421",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "7,532 − 5,111 = 2,421."
+          },
+          {
+            "prompt": "Work out 7,222 − 420.",
+            "choices": [
+              "6803",
+              "6801",
+              "7642",
+              "6802"
+            ],
+            "answer": "6802",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "7,222 − 420 = 6,802."
+          },
+          {
+            "prompt": "What does “Order of operations” mean?",
+            "choices": [
+              "The agreed sequence for calculating (BODMAS)",
               "Symbols ( ) that are worked out first",
               "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c"
+              "Grouping does not matter (+ and × only)"
             ],
-            "answer": "Symbols ( ) that are worked out first",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Brackets means Symbols ( ) that are worked out first."
-          },
-          {
-            "prompt": "What does “Distributive” mean?",
-            "choices": [
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse",
-              "A single number or product in an expression",
-              "The agreed sequence for calculating (BODMAS)"
-            ],
-            "answer": "a × (b + c) = a × b + a × c",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Distributive means a × (b + c) = a × b + a × c."
-          },
-          {
-            "prompt": "Which term matches this meaning: The agreed sequence for calculating (BODMAS)?",
-            "choices": [
-              "Order of operations",
-              "Commutative",
-              "Associative",
-              "Distributive"
-            ],
-            "answer": "Order of operations",
+            "answer": "The agreed sequence for calculating (BODMAS)",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
           }
@@ -1144,38 +1144,38 @@
             "explanation": "Split 34 into 30 + 4 and distribute: 8 × 34 = 8 × 30 + 8 × 4 = 240 + 32 = 272."
           },
           {
-            "prompt": "What does “Commutative” mean?",
+            "prompt": "Work out 176 ÷ 4.",
             "choices": [
+              "43",
+              "172",
+              "44",
+              "45"
+            ],
+            "answer": "44",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "176 ÷ 4 = 44 because 4 × 44 = 176."
+          },
+          {
+            "prompt": "Work out 15 × 74.",
+            "choices": [
+              "89",
+              "1110",
+              "1125",
+              "1095"
+            ],
+            "answer": "1110",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "15 × 74 = 1110."
+          },
+          {
+            "prompt": "What does “Brackets” mean?",
+            "choices": [
+              "Symbols ( ) that are worked out first",
               "Order does not matter (+ and × only)",
               "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse"
+              "a × (b + c) = a × b + a × c"
             ],
-            "answer": "Order does not matter (+ and × only)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Commutative means Order does not matter (+ and × only)."
-          },
-          {
-            "prompt": "What does “Factor out” mean?",
-            "choices": [
-              "The distributive law used in reverse",
-              "A single number or product in an expression",
-              "The agreed sequence for calculating (BODMAS)",
-              "Symbols ( ) that are worked out first"
-            ],
-            "answer": "The distributive law used in reverse",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Factor out means The distributive law used in reverse."
-          },
-          {
-            "prompt": "Which term matches this meaning: Symbols ( ) that are worked out first?",
-            "choices": [
-              "Brackets",
-              "Associative",
-              "Distributive",
-              "Factor out"
-            ],
-            "answer": "Brackets",
+            "answer": "Symbols ( ) that are worked out first",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Brackets means Symbols ( ) that are worked out first."
           }
@@ -1190,50 +1190,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Order of operations” mean?",
+            "prompt": "Work out 545 + 1,903.",
             "choices": [
-              "The agreed sequence for calculating (BODMAS)",
-              "Symbols ( ) that are worked out first",
-              "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)"
+              "2449",
+              "2447",
+              "2458",
+              "2448"
             ],
-            "answer": "The agreed sequence for calculating (BODMAS)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
+            "answer": "2448",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "545 + 1,903 = 2,448."
           },
           {
-            "prompt": "What does “Associative” mean?",
+            "prompt": "Work out 1,081 + 2,690.",
             "choices": [
+              "3781",
+              "3771",
+              "3772",
+              "3770"
+            ],
+            "answer": "3771",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1,081 + 2,690 = 3,771."
+          },
+          {
+            "prompt": "Work out 9,987 − 7,260.",
+            "choices": [
+              "17247",
+              "2727",
+              "2728",
+              "2726"
+            ],
+            "answer": "2727",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9,987 − 7,260 = 2,727."
+          },
+          {
+            "prompt": "What does “Commutative” mean?",
+            "choices": [
+              "Order does not matter (+ and × only)",
               "Grouping does not matter (+ and × only)",
               "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse",
-              "A single number or product in an expression"
+              "The distributive law used in reverse"
             ],
-            "answer": "Grouping does not matter (+ and × only)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Associative means Grouping does not matter (+ and × only)."
-          },
-          {
-            "prompt": "Which term matches this meaning: A single number or product in an expression?",
-            "choices": [
-              "Term",
-              "Order of operations",
-              "Brackets",
-              "Commutative"
-            ],
-            "answer": "Term",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Term means A single number or product in an expression."
-          },
-          {
-            "prompt": "Which term matches this meaning: Order does not matter (+ and × only)?",
-            "choices": [
-              "Commutative",
-              "Distributive",
-              "Factor out",
-              "Term"
-            ],
-            "answer": "Commutative",
+            "answer": "Order does not matter (+ and × only)",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Commutative means Order does not matter (+ and × only)."
           }
@@ -1248,50 +1248,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Brackets” mean?",
+            "prompt": "Work out 7,532 − 5,111.",
             "choices": [
+              "12643",
+              "2421",
+              "2422",
+              "2420"
+            ],
+            "answer": "2421",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "7,532 − 5,111 = 2,421."
+          },
+          {
+            "prompt": "Work out 7,222 − 420.",
+            "choices": [
+              "6803",
+              "6801",
+              "7642",
+              "6802"
+            ],
+            "answer": "6802",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "7,222 − 420 = 6,802."
+          },
+          {
+            "prompt": "What does “Order of operations” mean?",
+            "choices": [
+              "The agreed sequence for calculating (BODMAS)",
               "Symbols ( ) that are worked out first",
               "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c"
+              "Grouping does not matter (+ and × only)"
             ],
-            "answer": "Symbols ( ) that are worked out first",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Brackets means Symbols ( ) that are worked out first."
-          },
-          {
-            "prompt": "What does “Distributive” mean?",
-            "choices": [
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse",
-              "A single number or product in an expression",
-              "The agreed sequence for calculating (BODMAS)"
-            ],
-            "answer": "a × (b + c) = a × b + a × c",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Distributive means a × (b + c) = a × b + a × c."
-          },
-          {
-            "prompt": "Which term matches this meaning: The agreed sequence for calculating (BODMAS)?",
-            "choices": [
-              "Order of operations",
-              "Commutative",
-              "Associative",
-              "Distributive"
-            ],
-            "answer": "Order of operations",
+            "answer": "The agreed sequence for calculating (BODMAS)",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
           },
           {
             "prompt": "Calculate 2 × 39 × 5 the smart way.",
             "choices": [
-              "94",
-              "78",
-              "86",
-              "70"
+              "468",
+              "390",
+              "429",
+              "351"
             ],
-            "answer": "78",
+            "answer": "390",
             "clue": "Work it out step by step, using the Unit 16 methods.",
             "explanation": "Rearrange the order (commutative) and regroup (associative) to make a round number: 2 × 5 × 39 = (2 × 5) × 39 = 10 × 39 = 390. Multiplying by 10 is far easier than multiplying by 39 directly."
           }
@@ -1306,38 +1306,38 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Commutative” mean?",
+            "prompt": "Work out 176 ÷ 4.",
             "choices": [
+              "43",
+              "172",
+              "44",
+              "45"
+            ],
+            "answer": "44",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "176 ÷ 4 = 44 because 4 × 44 = 176."
+          },
+          {
+            "prompt": "Work out 15 × 74.",
+            "choices": [
+              "89",
+              "1110",
+              "1125",
+              "1095"
+            ],
+            "answer": "1110",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "15 × 74 = 1110."
+          },
+          {
+            "prompt": "What does “Brackets” mean?",
+            "choices": [
+              "Symbols ( ) that are worked out first",
               "Order does not matter (+ and × only)",
               "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse"
+              "a × (b + c) = a × b + a × c"
             ],
-            "answer": "Order does not matter (+ and × only)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Commutative means Order does not matter (+ and × only)."
-          },
-          {
-            "prompt": "What does “Factor out” mean?",
-            "choices": [
-              "The distributive law used in reverse",
-              "A single number or product in an expression",
-              "The agreed sequence for calculating (BODMAS)",
-              "Symbols ( ) that are worked out first"
-            ],
-            "answer": "The distributive law used in reverse",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Factor out means The distributive law used in reverse."
-          },
-          {
-            "prompt": "Which term matches this meaning: Symbols ( ) that are worked out first?",
-            "choices": [
-              "Brackets",
-              "Associative",
-              "Distributive",
-              "Factor out"
-            ],
-            "answer": "Brackets",
+            "answer": "Symbols ( ) that are worked out first",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Brackets means Symbols ( ) that are worked out first."
           },
@@ -1364,52 +1364,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Associative” mean?",
+            "prompt": "Work out 1,081 + 2,690.",
             "choices": [
+              "3781",
+              "3771",
+              "3772",
+              "3770"
+            ],
+            "answer": "3771",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1,081 + 2,690 = 3,771."
+          },
+          {
+            "prompt": "Work out 9,987 − 7,260.",
+            "choices": [
+              "17247",
+              "2727",
+              "2728",
+              "2726"
+            ],
+            "answer": "2727",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9,987 − 7,260 = 2,727."
+          },
+          {
+            "prompt": "What does “Commutative” mean?",
+            "choices": [
+              "Order does not matter (+ and × only)",
               "Grouping does not matter (+ and × only)",
               "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse",
-              "A single number or product in an expression"
+              "The distributive law used in reverse"
             ],
-            "answer": "Grouping does not matter (+ and × only)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Associative means Grouping does not matter (+ and × only)."
-          },
-          {
-            "prompt": "Which term matches this meaning: A single number or product in an expression?",
-            "choices": [
-              "Term",
-              "Order of operations",
-              "Brackets",
-              "Commutative"
-            ],
-            "answer": "Term",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Term means A single number or product in an expression."
-          },
-          {
-            "prompt": "Which term matches this meaning: Order does not matter (+ and × only)?",
-            "choices": [
-              "Commutative",
-              "Distributive",
-              "Factor out",
-              "Term"
-            ],
-            "answer": "Commutative",
+            "answer": "Order does not matter (+ and × only)",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Commutative means Order does not matter (+ and × only)."
           },
           {
-            "prompt": "What does “Order of operations” mean?",
+            "prompt": "Work out 545 + 1,903.",
             "choices": [
-              "The agreed sequence for calculating (BODMAS)",
-              "Symbols ( ) that are worked out first",
-              "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)"
+              "2449",
+              "2447",
+              "2458",
+              "2448"
             ],
-            "answer": "The agreed sequence for calculating (BODMAS)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
+            "answer": "2448",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "545 + 1,903 = 2,448."
           }
         ]
       },
@@ -1422,52 +1422,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Distributive” mean?",
+            "prompt": "Work out 7,222 − 420.",
             "choices": [
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse",
-              "A single number or product in an expression",
-              "The agreed sequence for calculating (BODMAS)"
+              "6803",
+              "6801",
+              "7642",
+              "6802"
             ],
-            "answer": "a × (b + c) = a × b + a × c",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Distributive means a × (b + c) = a × b + a × c."
+            "answer": "6802",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "7,222 − 420 = 6,802."
           },
           {
-            "prompt": "Which term matches this meaning: The agreed sequence for calculating (BODMAS)?",
+            "prompt": "What does “Order of operations” mean?",
             "choices": [
-              "Order of operations",
-              "Commutative",
-              "Associative",
-              "Distributive"
+              "The agreed sequence for calculating (BODMAS)",
+              "Symbols ( ) that are worked out first",
+              "Order does not matter (+ and × only)",
+              "Grouping does not matter (+ and × only)"
             ],
-            "answer": "Order of operations",
+            "answer": "The agreed sequence for calculating (BODMAS)",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
           },
           {
             "prompt": "Calculate 2 × 39 × 5 the smart way.",
             "choices": [
-              "94",
-              "78",
-              "86",
-              "70"
+              "468",
+              "390",
+              "429",
+              "351"
             ],
-            "answer": "78",
+            "answer": "390",
             "clue": "Work it out step by step, using the Unit 16 methods.",
             "explanation": "Rearrange the order (commutative) and regroup (associative) to make a round number: 2 × 5 × 39 = (2 × 5) × 39 = 10 × 39 = 390. Multiplying by 10 is far easier than multiplying by 39 directly."
           },
           {
-            "prompt": "What does “Brackets” mean?",
+            "prompt": "Work out 7,532 − 5,111.",
             "choices": [
-              "Symbols ( ) that are worked out first",
-              "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c"
+              "12643",
+              "2421",
+              "2422",
+              "2420"
             ],
-            "answer": "Symbols ( ) that are worked out first",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Brackets means Symbols ( ) that are worked out first."
+            "answer": "2421",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "7,532 − 5,111 = 2,421."
           }
         ]
       },
@@ -1480,144 +1480,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Factor out” mean?",
+            "prompt": "Work out 15 × 74.",
             "choices": [
-              "The distributive law used in reverse",
-              "A single number or product in an expression",
-              "The agreed sequence for calculating (BODMAS)",
-              "Symbols ( ) that are worked out first"
+              "89",
+              "1110",
+              "1125",
+              "1095"
             ],
-            "answer": "The distributive law used in reverse",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Factor out means The distributive law used in reverse."
-          },
-          {
-            "prompt": "Which term matches this meaning: Symbols ( ) that are worked out first?",
-            "choices": [
-              "Brackets",
-              "Associative",
-              "Distributive",
-              "Factor out"
-            ],
-            "answer": "Brackets",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Brackets means Symbols ( ) that are worked out first."
-          },
-          {
-            "prompt": "Work out 8 × 34 without a written algorithm.",
-            "choices": [
-              "272",
-              "299",
-              "245",
-              "326"
-            ],
-            "answer": "272",
-            "clue": "Work it out step by step, using the Unit 16 methods.",
-            "explanation": "Split 34 into 30 + 4 and distribute: 8 × 34 = 8 × 30 + 8 × 4 = 240 + 32 = 272."
-          },
-          {
-            "prompt": "What does “Commutative” mean?",
-            "choices": [
-              "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse"
-            ],
-            "answer": "Order does not matter (+ and × only)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Commutative means Order does not matter (+ and × only)."
-          }
-        ]
-      },
-      {
-        "id": "u16-game-9",
-        "icon": "⌂",
-        "skill": "Brackets",
-        "title": "Real-Life Round: Brackets",
-        "description": "Practise brackets through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A single number or product in an expression?",
-            "choices": [
-              "Term",
-              "Order of operations",
-              "Brackets",
-              "Commutative"
-            ],
-            "answer": "Term",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Term means A single number or product in an expression."
-          },
-          {
-            "prompt": "Which term matches this meaning: Order does not matter (+ and × only)?",
-            "choices": [
-              "Commutative",
-              "Distributive",
-              "Factor out",
-              "Term"
-            ],
-            "answer": "Commutative",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Commutative means Order does not matter (+ and × only)."
-          },
-          {
-            "prompt": "What does “Order of operations” mean?",
-            "choices": [
-              "The agreed sequence for calculating (BODMAS)",
-              "Symbols ( ) that are worked out first",
-              "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)"
-            ],
-            "answer": "The agreed sequence for calculating (BODMAS)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
-          },
-          {
-            "prompt": "What does “Associative” mean?",
-            "choices": [
-              "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse",
-              "A single number or product in an expression"
-            ],
-            "answer": "Grouping does not matter (+ and × only)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Associative means Grouping does not matter (+ and × only)."
-          }
-        ]
-      },
-      {
-        "id": "u16-game-10",
-        "icon": "!",
-        "skill": "Commutative",
-        "title": "Spot the Error: Commutative",
-        "description": "Practise commutative through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The agreed sequence for calculating (BODMAS)?",
-            "choices": [
-              "Order of operations",
-              "Commutative",
-              "Associative",
-              "Distributive"
-            ],
-            "answer": "Order of operations",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
-          },
-          {
-            "prompt": "Calculate 2 × 39 × 5 the smart way.",
-            "choices": [
-              "94",
-              "78",
-              "86",
-              "70"
-            ],
-            "answer": "78",
-            "clue": "Work it out step by step, using the Unit 16 methods.",
-            "explanation": "Rearrange the order (commutative) and regroup (associative) to make a round number: 2 × 5 × 39 = (2 × 5) × 39 = 10 × 39 = 390. Multiplying by 10 is far easier than multiplying by 39 directly."
+            "answer": "1110",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "15 × 74 = 1110."
           },
           {
             "prompt": "What does “Brackets” mean?",
@@ -1632,16 +1504,144 @@
             "explanation": "Brackets means Symbols ( ) that are worked out first."
           },
           {
-            "prompt": "What does “Distributive” mean?",
+            "prompt": "Work out 8 × 34 without a written algorithm.",
             "choices": [
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse",
-              "A single number or product in an expression",
-              "The agreed sequence for calculating (BODMAS)"
+              "272",
+              "299",
+              "245",
+              "326"
             ],
-            "answer": "a × (b + c) = a × b + a × c",
+            "answer": "272",
+            "clue": "Work it out step by step, using the Unit 16 methods.",
+            "explanation": "Split 34 into 30 + 4 and distribute: 8 × 34 = 8 × 30 + 8 × 4 = 240 + 32 = 272."
+          },
+          {
+            "prompt": "Work out 176 ÷ 4.",
+            "choices": [
+              "43",
+              "172",
+              "44",
+              "45"
+            ],
+            "answer": "44",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "176 ÷ 4 = 44 because 4 × 44 = 176."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-9",
+        "icon": "⌂",
+        "skill": "Brackets",
+        "title": "Real-Life Round: Brackets",
+        "description": "Practise brackets through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Work out 9,987 − 7,260.",
+            "choices": [
+              "17247",
+              "2727",
+              "2728",
+              "2726"
+            ],
+            "answer": "2727",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9,987 − 7,260 = 2,727."
+          },
+          {
+            "prompt": "What does “Commutative” mean?",
+            "choices": [
+              "Order does not matter (+ and × only)",
+              "Grouping does not matter (+ and × only)",
+              "a × (b + c) = a × b + a × c",
+              "The distributive law used in reverse"
+            ],
+            "answer": "Order does not matter (+ and × only)",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Distributive means a × (b + c) = a × b + a × c."
+            "explanation": "Commutative means Order does not matter (+ and × only)."
+          },
+          {
+            "prompt": "Work out 545 + 1,903.",
+            "choices": [
+              "2449",
+              "2447",
+              "2458",
+              "2448"
+            ],
+            "answer": "2448",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "545 + 1,903 = 2,448."
+          },
+          {
+            "prompt": "Work out 1,081 + 2,690.",
+            "choices": [
+              "3781",
+              "3771",
+              "3772",
+              "3770"
+            ],
+            "answer": "3771",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1,081 + 2,690 = 3,771."
+          }
+        ]
+      },
+      {
+        "id": "u16-game-10",
+        "icon": "!",
+        "skill": "Commutative",
+        "title": "Spot the Error: Commutative",
+        "description": "Practise commutative through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Order of operations” mean?",
+            "choices": [
+              "The agreed sequence for calculating (BODMAS)",
+              "Symbols ( ) that are worked out first",
+              "Order does not matter (+ and × only)",
+              "Grouping does not matter (+ and × only)"
+            ],
+            "answer": "The agreed sequence for calculating (BODMAS)",
+            "clue": "Use the Unit 16 Math Words & Symbols reference.",
+            "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
+          },
+          {
+            "prompt": "Calculate 2 × 39 × 5 the smart way.",
+            "choices": [
+              "468",
+              "390",
+              "429",
+              "351"
+            ],
+            "answer": "390",
+            "clue": "Work it out step by step, using the Unit 16 methods.",
+            "explanation": "Rearrange the order (commutative) and regroup (associative) to make a round number: 2 × 5 × 39 = (2 × 5) × 39 = 10 × 39 = 390. Multiplying by 10 is far easier than multiplying by 39 directly."
+          },
+          {
+            "prompt": "Work out 7,532 − 5,111.",
+            "choices": [
+              "12643",
+              "2421",
+              "2422",
+              "2420"
+            ],
+            "answer": "2421",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "7,532 − 5,111 = 2,421."
+          },
+          {
+            "prompt": "Work out 7,222 − 420.",
+            "choices": [
+              "6803",
+              "6801",
+              "7642",
+              "6802"
+            ],
+            "answer": "6802",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "7,222 − 420 = 6,802."
           }
         ]
       },
@@ -1654,14 +1654,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Symbols ( ) that are worked out first?",
+            "prompt": "What does “Brackets” mean?",
             "choices": [
-              "Brackets",
-              "Associative",
-              "Distributive",
-              "Factor out"
+              "Symbols ( ) that are worked out first",
+              "Order does not matter (+ and × only)",
+              "Grouping does not matter (+ and × only)",
+              "a × (b + c) = a × b + a × c"
             ],
-            "answer": "Brackets",
+            "answer": "Symbols ( ) that are worked out first",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Brackets means Symbols ( ) that are worked out first."
           },
@@ -1678,28 +1678,28 @@
             "explanation": "Split 34 into 30 + 4 and distribute: 8 × 34 = 8 × 30 + 8 × 4 = 240 + 32 = 272."
           },
           {
-            "prompt": "What does “Commutative” mean?",
+            "prompt": "Work out 176 ÷ 4.",
             "choices": [
-              "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse"
+              "43",
+              "172",
+              "44",
+              "45"
             ],
-            "answer": "Order does not matter (+ and × only)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Commutative means Order does not matter (+ and × only)."
+            "answer": "44",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "176 ÷ 4 = 44 because 4 × 44 = 176."
           },
           {
-            "prompt": "What does “Factor out” mean?",
+            "prompt": "Work out 15 × 74.",
             "choices": [
-              "The distributive law used in reverse",
-              "A single number or product in an expression",
-              "The agreed sequence for calculating (BODMAS)",
-              "Symbols ( ) that are worked out first"
+              "89",
+              "1110",
+              "1125",
+              "1095"
             ],
-            "answer": "The distributive law used in reverse",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Factor out means The distributive law used in reverse."
+            "answer": "1110",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "15 × 74 = 1110."
           }
         ]
       },
@@ -1712,52 +1712,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Order does not matter (+ and × only)?",
+            "prompt": "What does “Commutative” mean?",
             "choices": [
-              "Commutative",
-              "Distributive",
-              "Factor out",
-              "Term"
+              "Order does not matter (+ and × only)",
+              "Grouping does not matter (+ and × only)",
+              "a × (b + c) = a × b + a × c",
+              "The distributive law used in reverse"
             ],
-            "answer": "Commutative",
+            "answer": "Order does not matter (+ and × only)",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Commutative means Order does not matter (+ and × only)."
           },
           {
-            "prompt": "What does “Order of operations” mean?",
+            "prompt": "Work out 545 + 1,903.",
             "choices": [
-              "The agreed sequence for calculating (BODMAS)",
-              "Symbols ( ) that are worked out first",
-              "Order does not matter (+ and × only)",
-              "Grouping does not matter (+ and × only)"
+              "2449",
+              "2447",
+              "2458",
+              "2448"
             ],
-            "answer": "The agreed sequence for calculating (BODMAS)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Order of operations means The agreed sequence for calculating (BODMAS)."
+            "answer": "2448",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "545 + 1,903 = 2,448."
           },
           {
-            "prompt": "What does “Associative” mean?",
+            "prompt": "Work out 1,081 + 2,690.",
             "choices": [
-              "Grouping does not matter (+ and × only)",
-              "a × (b + c) = a × b + a × c",
-              "The distributive law used in reverse",
-              "A single number or product in an expression"
+              "3781",
+              "3771",
+              "3772",
+              "3770"
             ],
-            "answer": "Grouping does not matter (+ and × only)",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Associative means Grouping does not matter (+ and × only)."
+            "answer": "3771",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1,081 + 2,690 = 3,771."
           },
           {
-            "prompt": "Which term matches this meaning: A single number or product in an expression?",
+            "prompt": "Work out 9,987 − 7,260.",
             "choices": [
-              "Term",
-              "Order of operations",
-              "Brackets",
-              "Commutative"
+              "17247",
+              "2727",
+              "2728",
+              "2726"
             ],
-            "answer": "Term",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Term means A single number or product in an expression."
+            "answer": "2727",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9,987 − 7,260 = 2,727."
           }
         ]
       }

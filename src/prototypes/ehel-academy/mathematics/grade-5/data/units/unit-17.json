@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:33.019Z",
+  "generatedAt": "2026-07-21T07:21:49.800Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -899,12 +899,12 @@
         "difficulty": "Core",
         "question": "Work out 50 × 17 × 2.",
         "options": [
-          "935",
-          "765",
-          "1020",
-          "850"
+          "1870",
+          "1530",
+          "2040",
+          "1700"
         ],
-        "answer": "850",
+        "answer": "1700",
         "hint": "Work it out step by step, using the Unit 17 methods.",
         "explanation": "Look for a friendly pair. 50 × 2 = 100. Regroup as (50 × 2) × 17 = 100 × 17 = 1,700. Grouping the 50 and 2 first turned a hard sum into an easy one."
       },
@@ -947,12 +947,12 @@
         "difficulty": "Challenge",
         "question": "Work out 4 × 27 × 25 efficiently.",
         "options": [
-          "119",
-          "97",
-          "130",
-          "108"
+          "2970",
+          "2430",
+          "3240",
+          "2700"
         ],
-        "answer": "108",
+        "answer": "2700",
         "hint": "Work it out step by step, using the Unit 17 methods.",
         "explanation": "Spot the friendly pair 4 × 25 = 100. Reorder and regroup: (4 × 25) × 27 = 100 × 27 = 2,700. Here the commutative and associative laws worked together."
       },
@@ -974,9 +974,57 @@
       },
       {
         "id": "q07",
-        "type": "Reasoning",
+        "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
+        "question": "Work out 16 × 46.",
+        "options": [
+          "62",
+          "736",
+          "752",
+          "720"
+        ],
+        "answer": "736",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "16 × 46 = 736."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Work out 156 − 45.",
+        "options": [
+          "111",
+          "112",
+          "110",
+          "201"
+        ],
+        "answer": "111",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "156 − 45 = 111."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Work out 14 × 34.",
+        "options": [
+          "462",
+          "48",
+          "476",
+          "490"
+        ],
+        "answer": "476",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "14 × 34 = 476."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Commutative law” mean?",
         "options": [
           "Order does not matter for + and ×",
@@ -989,10 +1037,10 @@
         "explanation": "Commutative law means Order does not matter for + and ×."
       },
       {
-        "id": "q08",
+        "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Associative law” mean?",
         "options": [
           "Grouping does not matter for + and ×",
@@ -1005,10 +1053,10 @@
         "explanation": "Associative law means Grouping does not matter for + and ×."
       },
       {
-        "id": "q09",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Distributive law” mean?",
         "options": [
           "Spread a multiplication over a sum or difference",
@@ -1019,54 +1067,6 @@
         "answer": "Spread a multiplication over a sum or difference",
         "hint": "Use the Unit 17 Math Words & Symbols reference.",
         "explanation": "Distributive law means Spread a multiplication over a sum or difference."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "What does “BIDMAS” mean?",
-        "options": [
-          "Brackets, Indices, Div/Mult, Add/Sub",
-          "( ) meaning 'do this part first'",
-          "The answer to a multiplication",
-          "The answer to an addition"
-        ],
-        "answer": "Brackets, Indices, Div/Mult, Add/Sub",
-        "hint": "Use the Unit 17 Math Words & Symbols reference.",
-        "explanation": "BIDMAS means Brackets, Indices, Div/Mult, Add/Sub."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "What does “Brackets” mean?",
-        "options": [
-          "( ) meaning 'do this part first'",
-          "The answer to a multiplication",
-          "The answer to an addition",
-          "Order does not matter for + and ×"
-        ],
-        "answer": "( ) meaning 'do this part first'",
-        "hint": "Use the Unit 17 Math Words & Symbols reference.",
-        "explanation": "Brackets means ( ) meaning 'do this part first'."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "What does “Product” mean?",
-        "options": [
-          "The answer to a multiplication",
-          "The answer to an addition",
-          "Order does not matter for + and ×",
-          "Grouping does not matter for + and ×"
-        ],
-        "answer": "The answer to a multiplication",
-        "hint": "Use the Unit 17 Math Words & Symbols reference.",
-        "explanation": "Product means The answer to a multiplication."
       }
     ]
   },
@@ -1106,6 +1106,18 @@
             "explanation": "29 is close to 30, so split it as 30 − 1. Then 29 × 6 = (30 × 6) − (1 × 6) = 180 − 6 = 174. Rounding up to 30 made the first step very easy."
           },
           {
+            "prompt": "Work out 16 × 46.",
+            "choices": [
+              "62",
+              "736",
+              "752",
+              "720"
+            ],
+            "answer": "736",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "16 × 46 = 736."
+          },
+          {
             "prompt": "What does “Commutative law” mean?",
             "choices": [
               "Order does not matter for + and ×",
@@ -1116,18 +1128,6 @@
             "answer": "Order does not matter for + and ×",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Commutative law means Order does not matter for + and ×."
-          },
-          {
-            "prompt": "What does “BIDMAS” mean?",
-            "choices": [
-              "Brackets, Indices, Div/Mult, Add/Sub",
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication",
-              "The answer to an addition"
-            ],
-            "answer": "Brackets, Indices, Div/Mult, Add/Sub",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "BIDMAS means Brackets, Indices, Div/Mult, Add/Sub."
           }
         ]
       },
@@ -1142,26 +1142,38 @@
           {
             "prompt": "Work out 50 × 17 × 2.",
             "choices": [
-              "935",
-              "765",
-              "1020",
-              "850"
+              "1870",
+              "1530",
+              "2040",
+              "1700"
             ],
-            "answer": "850",
+            "answer": "1700",
             "clue": "Work it out step by step, using the Unit 17 methods.",
             "explanation": "Look for a friendly pair. 50 × 2 = 100. Regroup as (50 × 2) × 17 = 100 × 17 = 1,700. Grouping the 50 and 2 first turned a hard sum into an easy one."
           },
           {
             "prompt": "Work out 4 × 27 × 25 efficiently.",
             "choices": [
-              "119",
-              "97",
-              "130",
-              "108"
+              "2970",
+              "2430",
+              "3240",
+              "2700"
             ],
-            "answer": "108",
+            "answer": "2700",
             "clue": "Work it out step by step, using the Unit 17 methods.",
             "explanation": "Spot the friendly pair 4 × 25 = 100. Reorder and regroup: (4 × 25) × 27 = 100 × 27 = 2,700. Here the commutative and associative laws worked together."
+          },
+          {
+            "prompt": "Work out 156 − 45.",
+            "choices": [
+              "111",
+              "112",
+              "110",
+              "201"
+            ],
+            "answer": "111",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "156 − 45 = 111."
           },
           {
             "prompt": "What does “Associative law” mean?",
@@ -1174,18 +1186,6 @@
             "answer": "Grouping does not matter for + and ×",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Associative law means Grouping does not matter for + and ×."
-          },
-          {
-            "prompt": "What does “Brackets” mean?",
-            "choices": [
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication",
-              "The answer to an addition",
-              "Order does not matter for + and ×"
-            ],
-            "answer": "( ) meaning 'do this part first'",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Brackets means ( ) meaning 'do this part first'."
           }
         ]
       },
@@ -1222,6 +1222,18 @@
             "explanation": "(40 +"
           },
           {
+            "prompt": "Work out 14 × 34.",
+            "choices": [
+              "462",
+              "48",
+              "476",
+              "490"
+            ],
+            "answer": "476",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "14 × 34 = 476."
+          },
+          {
             "prompt": "What does “Distributive law” mean?",
             "choices": [
               "Spread a multiplication over a sum or difference",
@@ -1232,18 +1244,6 @@
             "answer": "Spread a multiplication over a sum or difference",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Distributive law means Spread a multiplication over a sum or difference."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
-              "The answer to a multiplication",
-              "The answer to an addition",
-              "Order does not matter for + and ×",
-              "Grouping does not matter for + and ×"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
           }
         ]
       },
@@ -1268,6 +1268,18 @@
             "explanation": "29 is close to 30, so split it as 30 − 1. Then 29 × 6 = (30 × 6) − (1 × 6) = 180 − 6 = 174. Rounding up to 30 made the first step very easy."
           },
           {
+            "prompt": "Work out 16 × 46.",
+            "choices": [
+              "62",
+              "736",
+              "752",
+              "720"
+            ],
+            "answer": "736",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "16 × 46 = 736."
+          },
+          {
             "prompt": "What does “Commutative law” mean?",
             "choices": [
               "Order does not matter for + and ×",
@@ -1278,18 +1290,6 @@
             "answer": "Order does not matter for + and ×",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Commutative law means Order does not matter for + and ×."
-          },
-          {
-            "prompt": "What does “BIDMAS” mean?",
-            "choices": [
-              "Brackets, Indices, Div/Mult, Add/Sub",
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication",
-              "The answer to an addition"
-            ],
-            "answer": "Brackets, Indices, Div/Mult, Add/Sub",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "BIDMAS means Brackets, Indices, Div/Mult, Add/Sub."
           },
           {
             "prompt": "Work out 6 + 79 the easy way.",
@@ -1316,14 +1316,26 @@
           {
             "prompt": "Work out 4 × 27 × 25 efficiently.",
             "choices": [
-              "119",
-              "97",
-              "130",
-              "108"
+              "2970",
+              "2430",
+              "3240",
+              "2700"
             ],
-            "answer": "108",
+            "answer": "2700",
             "clue": "Work it out step by step, using the Unit 17 methods.",
             "explanation": "Spot the friendly pair 4 × 25 = 100. Reorder and regroup: (4 × 25) × 27 = 100 × 27 = 2,700. Here the commutative and associative laws worked together."
+          },
+          {
+            "prompt": "Work out 156 − 45.",
+            "choices": [
+              "111",
+              "112",
+              "110",
+              "201"
+            ],
+            "answer": "111",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "156 − 45 = 111."
           },
           {
             "prompt": "What does “Associative law” mean?",
@@ -1338,26 +1350,14 @@
             "explanation": "Associative law means Grouping does not matter for + and ×."
           },
           {
-            "prompt": "What does “Brackets” mean?",
-            "choices": [
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication",
-              "The answer to an addition",
-              "Order does not matter for + and ×"
-            ],
-            "answer": "( ) meaning 'do this part first'",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Brackets means ( ) meaning 'do this part first'."
-          },
-          {
             "prompt": "Work out 50 × 17 × 2.",
             "choices": [
-              "935",
-              "765",
-              "1020",
-              "850"
+              "1870",
+              "1530",
+              "2040",
+              "1700"
             ],
-            "answer": "850",
+            "answer": "1700",
             "clue": "Work it out step by step, using the Unit 17 methods.",
             "explanation": "Look for a friendly pair. 50 × 2 = 100. Regroup as (50 × 2) × 17 = 100 × 17 = 1,700. Grouping the 50 and 2 first turned a hard sum into an easy one."
           }
@@ -1384,6 +1384,18 @@
             "explanation": "(40 +"
           },
           {
+            "prompt": "Work out 14 × 34.",
+            "choices": [
+              "462",
+              "48",
+              "476",
+              "490"
+            ],
+            "answer": "476",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "14 × 34 = 476."
+          },
+          {
             "prompt": "What does “Distributive law” mean?",
             "choices": [
               "Spread a multiplication over a sum or difference",
@@ -1394,18 +1406,6 @@
             "answer": "Spread a multiplication over a sum or difference",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Distributive law means Spread a multiplication over a sum or difference."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
-              "The answer to a multiplication",
-              "The answer to an addition",
-              "Order does not matter for + and ×",
-              "Grouping does not matter for + and ×"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
           },
           {
             "prompt": "Work out 47 × 8 using the distributive law.",
@@ -1430,6 +1430,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 16 × 46.",
+            "choices": [
+              "62",
+              "736",
+              "752",
+              "720"
+            ],
+            "answer": "736",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "16 × 46 = 736."
+          },
+          {
             "prompt": "What does “Commutative law” mean?",
             "choices": [
               "Order does not matter for + and ×",
@@ -1440,18 +1452,6 @@
             "answer": "Order does not matter for + and ×",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Commutative law means Order does not matter for + and ×."
-          },
-          {
-            "prompt": "What does “BIDMAS” mean?",
-            "choices": [
-              "Brackets, Indices, Div/Mult, Add/Sub",
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication",
-              "The answer to an addition"
-            ],
-            "answer": "Brackets, Indices, Div/Mult, Add/Sub",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "BIDMAS means Brackets, Indices, Div/Mult, Add/Sub."
           },
           {
             "prompt": "Work out 6 + 79 the easy way.",
@@ -1488,6 +1488,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 156 − 45.",
+            "choices": [
+              "111",
+              "112",
+              "110",
+              "201"
+            ],
+            "answer": "111",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "156 − 45 = 111."
+          },
+          {
             "prompt": "What does “Associative law” mean?",
             "choices": [
               "Grouping does not matter for + and ×",
@@ -1500,38 +1512,26 @@
             "explanation": "Associative law means Grouping does not matter for + and ×."
           },
           {
-            "prompt": "What does “Brackets” mean?",
-            "choices": [
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication",
-              "The answer to an addition",
-              "Order does not matter for + and ×"
-            ],
-            "answer": "( ) meaning 'do this part first'",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Brackets means ( ) meaning 'do this part first'."
-          },
-          {
             "prompt": "Work out 50 × 17 × 2.",
             "choices": [
-              "935",
-              "765",
-              "1020",
-              "850"
+              "1870",
+              "1530",
+              "2040",
+              "1700"
             ],
-            "answer": "850",
+            "answer": "1700",
             "clue": "Work it out step by step, using the Unit 17 methods.",
             "explanation": "Look for a friendly pair. 50 × 2 = 100. Regroup as (50 × 2) × 17 = 100 × 17 = 1,700. Grouping the 50 and 2 first turned a hard sum into an easy one."
           },
           {
             "prompt": "Work out 4 × 27 × 25 efficiently.",
             "choices": [
-              "119",
-              "97",
-              "130",
-              "108"
+              "2970",
+              "2430",
+              "3240",
+              "2700"
             ],
-            "answer": "108",
+            "answer": "2700",
             "clue": "Work it out step by step, using the Unit 17 methods.",
             "explanation": "Spot the friendly pair 4 × 25 = 100. Reorder and regroup: (4 × 25) × 27 = 100 × 27 = 2,700. Here the commutative and associative laws worked together."
           }
@@ -1546,6 +1546,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 14 × 34.",
+            "choices": [
+              "462",
+              "48",
+              "476",
+              "490"
+            ],
+            "answer": "476",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "14 × 34 = 476."
+          },
+          {
             "prompt": "What does “Distributive law” mean?",
             "choices": [
               "Spread a multiplication over a sum or difference",
@@ -1556,18 +1568,6 @@
             "answer": "Spread a multiplication over a sum or difference",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Distributive law means Spread a multiplication over a sum or difference."
-          },
-          {
-            "prompt": "What does “Product” mean?",
-            "choices": [
-              "The answer to a multiplication",
-              "The answer to an addition",
-              "Order does not matter for + and ×",
-              "Grouping does not matter for + and ×"
-            ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
           },
           {
             "prompt": "Work out 47 × 8 using the distributive law.",
@@ -1604,16 +1604,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “BIDMAS” mean?",
+            "prompt": "What does “Commutative law” mean?",
             "choices": [
-              "Brackets, Indices, Div/Mult, Add/Sub",
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication",
-              "The answer to an addition"
+              "Order does not matter for + and ×",
+              "Grouping does not matter for + and ×",
+              "Spread a multiplication over a sum or difference",
+              "Brackets, Indices, Div/Mult, Add/Sub"
             ],
-            "answer": "Brackets, Indices, Div/Mult, Add/Sub",
+            "answer": "Order does not matter for + and ×",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "BIDMAS means Brackets, Indices, Div/Mult, Add/Sub."
+            "explanation": "Commutative law means Order does not matter for + and ×."
           },
           {
             "prompt": "Work out 6 + 79 the easy way.",
@@ -1640,16 +1640,16 @@
             "explanation": "29 is close to 30, so split it as 30 − 1. Then 29 × 6 = (30 × 6) − (1 × 6) = 180 − 6 = 174. Rounding up to 30 made the first step very easy."
           },
           {
-            "prompt": "What does “Commutative law” mean?",
+            "prompt": "Work out 16 × 46.",
             "choices": [
-              "Order does not matter for + and ×",
-              "Grouping does not matter for + and ×",
-              "Spread a multiplication over a sum or difference",
-              "Brackets, Indices, Div/Mult, Add/Sub"
+              "62",
+              "736",
+              "752",
+              "720"
             ],
-            "answer": "Order does not matter for + and ×",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Commutative law means Order does not matter for + and ×."
+            "answer": "736",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "16 × 46 = 736."
           }
         ]
       },
@@ -1662,42 +1662,6 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Brackets” mean?",
-            "choices": [
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication",
-              "The answer to an addition",
-              "Order does not matter for + and ×"
-            ],
-            "answer": "( ) meaning 'do this part first'",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Brackets means ( ) meaning 'do this part first'."
-          },
-          {
-            "prompt": "Work out 50 × 17 × 2.",
-            "choices": [
-              "935",
-              "765",
-              "1020",
-              "850"
-            ],
-            "answer": "850",
-            "clue": "Work it out step by step, using the Unit 17 methods.",
-            "explanation": "Look for a friendly pair. 50 × 2 = 100. Regroup as (50 × 2) × 17 = 100 × 17 = 1,700. Grouping the 50 and 2 first turned a hard sum into an easy one."
-          },
-          {
-            "prompt": "Work out 4 × 27 × 25 efficiently.",
-            "choices": [
-              "119",
-              "97",
-              "130",
-              "108"
-            ],
-            "answer": "108",
-            "clue": "Work it out step by step, using the Unit 17 methods.",
-            "explanation": "Spot the friendly pair 4 × 25 = 100. Reorder and regroup: (4 × 25) × 27 = 100 × 27 = 2,700. Here the commutative and associative laws worked together."
-          },
-          {
             "prompt": "What does “Associative law” mean?",
             "choices": [
               "Grouping does not matter for + and ×",
@@ -1708,6 +1672,42 @@
             "answer": "Grouping does not matter for + and ×",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
             "explanation": "Associative law means Grouping does not matter for + and ×."
+          },
+          {
+            "prompt": "Work out 50 × 17 × 2.",
+            "choices": [
+              "1870",
+              "1530",
+              "2040",
+              "1700"
+            ],
+            "answer": "1700",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Look for a friendly pair. 50 × 2 = 100. Regroup as (50 × 2) × 17 = 100 × 17 = 1,700. Grouping the 50 and 2 first turned a hard sum into an easy one."
+          },
+          {
+            "prompt": "Work out 4 × 27 × 25 efficiently.",
+            "choices": [
+              "2970",
+              "2430",
+              "3240",
+              "2700"
+            ],
+            "answer": "2700",
+            "clue": "Work it out step by step, using the Unit 17 methods.",
+            "explanation": "Spot the friendly pair 4 × 25 = 100. Reorder and regroup: (4 × 25) × 27 = 100 × 27 = 2,700. Here the commutative and associative laws worked together."
+          },
+          {
+            "prompt": "Work out 156 − 45.",
+            "choices": [
+              "111",
+              "112",
+              "110",
+              "201"
+            ],
+            "answer": "111",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "156 − 45 = 111."
           }
         ]
       },
@@ -1720,16 +1720,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Product” mean?",
+            "prompt": "What does “Distributive law” mean?",
             "choices": [
-              "The answer to a multiplication",
-              "The answer to an addition",
-              "Order does not matter for + and ×",
-              "Grouping does not matter for + and ×"
+              "Spread a multiplication over a sum or difference",
+              "Brackets, Indices, Div/Mult, Add/Sub",
+              "( ) meaning 'do this part first'",
+              "The answer to a multiplication"
             ],
-            "answer": "The answer to a multiplication",
+            "answer": "Spread a multiplication over a sum or difference",
             "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "explanation": "Distributive law means Spread a multiplication over a sum or difference."
           },
           {
             "prompt": "Work out 47 × 8 using the distributive law.",
@@ -1756,16 +1756,16 @@
             "explanation": "(40 +"
           },
           {
-            "prompt": "What does “Distributive law” mean?",
+            "prompt": "Work out 14 × 34.",
             "choices": [
-              "Spread a multiplication over a sum or difference",
-              "Brackets, Indices, Div/Mult, Add/Sub",
-              "( ) meaning 'do this part first'",
-              "The answer to a multiplication"
+              "462",
+              "48",
+              "476",
+              "490"
             ],
-            "answer": "Spread a multiplication over a sum or difference",
-            "clue": "Use the Unit 17 Math Words & Symbols reference.",
-            "explanation": "Distributive law means Spread a multiplication over a sum or difference."
+            "answer": "476",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "14 × 34 = 476."
           }
         ]
       }

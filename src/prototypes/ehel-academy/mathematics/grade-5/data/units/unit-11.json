@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:32.983Z",
+  "generatedAt": "2026-07-21T07:21:49.767Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -960,23 +960,71 @@
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
-        "difficulty": "Challenge",
-        "question": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+        "difficulty": "Core",
+        "question": "Work out 8,338 − 5,666.",
         "options": [
-          "605",
-          "806",
-          "672",
-          "739"
+          "14004",
+          "2672",
+          "2673",
+          "2671"
         ],
-        "answer": "672",
-        "hint": "Work it out step by step, using the Unit 11 methods.",
-        "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
+        "answer": "2672",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "8,338 − 5,666 = 2,672."
       },
       {
         "id": "q07",
-        "type": "Reasoning",
+        "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
+        "question": "Work out 8 × 87.",
+        "options": [
+          "704",
+          "688",
+          "95",
+          "696"
+        ],
+        "answer": "696",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "8 × 87 = 696."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Work out 2,844 + 8,333.",
+        "options": [
+          "11176",
+          "11187",
+          "11177",
+          "11178"
+        ],
+        "answer": "11177",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "2,844 + 8,333 = 11,177."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Work out 20 × 42.",
+        "options": [
+          "860",
+          "820",
+          "62",
+          "840"
+        ],
+        "answer": "840",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "20 × 42 = 840."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Product” mean?",
         "options": [
           "The answer to a multiplication",
@@ -989,10 +1037,10 @@
         "explanation": "Product means The answer to a multiplication."
       },
       {
-        "id": "q08",
+        "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Quotient” mean?",
         "options": [
           "The answer to a division",
@@ -1005,10 +1053,10 @@
         "explanation": "Quotient means The answer to a division."
       },
       {
-        "id": "q09",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Dividend” mean?",
         "options": [
           "The number being divided",
@@ -1019,54 +1067,6 @@
         "answer": "The number being divided",
         "hint": "Use the Unit 11 Math Words & Symbols reference.",
         "explanation": "Dividend means The number being divided."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "What does “Divisor” mean?",
-        "options": [
-          "The number you divide by",
-          "A number that divides exactly into another",
-          "The result of multiplying by a whole number",
-          "The amount left over after dividing"
-        ],
-        "answer": "The number you divide by",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Divisor means The number you divide by."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "What does “Factor” mean?",
-        "options": [
-          "A number that divides exactly into another",
-          "The result of multiplying by a whole number",
-          "The amount left over after dividing",
-          "Two factors / more than two factors"
-        ],
-        "answer": "A number that divides exactly into another",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Factor means A number that divides exactly into another."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "What does “Multiple” mean?",
-        "options": [
-          "The result of multiplying by a whole number",
-          "The amount left over after dividing",
-          "Two factors / more than two factors",
-          "The operation that undoes another (× and ÷)"
-        ],
-        "answer": "The result of multiplying by a whole number",
-        "hint": "Use the Unit 11 Math Words & Symbols reference.",
-        "explanation": "Multiple means The result of multiplying by a whole number."
       }
     ]
   },
@@ -1106,6 +1106,18 @@
             "explanation": "Estimate: 156 is close to 150, and 150 ÷ 13 is about 11 to 12. Working: 13 into 15 goes 1 remainder 2 (carry the 2 to make 26); 13 into 26 goes 2 exactly. So 156 ÷ 13 = 12. Check with the inverse: 12 × 13 = 156. It matches."
           },
           {
+            "prompt": "Work out 8 × 87.",
+            "choices": [
+              "704",
+              "688",
+              "95",
+              "696"
+            ],
+            "answer": "696",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "8 × 87 = 696."
+          },
+          {
             "prompt": "What does “Product” mean?",
             "choices": [
               "The answer to a multiplication",
@@ -1116,18 +1128,6 @@
             "answer": "The answer to a multiplication",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Divisor” mean?",
-            "choices": [
-              "The number you divide by",
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing"
-            ],
-            "answer": "The number you divide by",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
           }
         ]
       },
@@ -1164,6 +1164,18 @@
             "explanation": "Divide: 18 into 43 goes 2 (18 × 2 = 36), remainder 7. Bring down the 2 to make 72. Divide: 18 into 72 goes 4 exactly (18 × 4 = 72), remainder 0. So 432 ÷ 18 = 24. Check: 24 × 18 = 432."
           },
           {
+            "prompt": "Work out 2,844 + 8,333.",
+            "choices": [
+              "11176",
+              "11187",
+              "11177",
+              "11178"
+            ],
+            "answer": "11177",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2,844 + 8,333 = 11,177."
+          },
+          {
             "prompt": "What does “Quotient” mean?",
             "choices": [
               "The answer to a division",
@@ -1174,18 +1186,6 @@
             "answer": "The answer to a division",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors"
-            ],
-            "answer": "A number that divides exactly into another",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
           }
         ]
       },
@@ -1210,16 +1210,28 @@
             "explanation": "Estimate: 240 × 15 = 3600. Multiply by the ones: 238 × 5 = 1190. Multiply by the tens: 238 × 10 = 2380. Add: 1190 + 2380 = 3570. Close to 3600 – correct."
           },
           {
-            "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+            "prompt": "Work out 8,338 − 5,666.",
             "choices": [
-              "605",
-              "806",
-              "672",
-              "739"
+              "14004",
+              "2672",
+              "2673",
+              "2671"
             ],
-            "answer": "672",
-            "clue": "Work it out step by step, using the Unit 11 methods.",
-            "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
+            "answer": "2672",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "8,338 − 5,666 = 2,672."
+          },
+          {
+            "prompt": "Work out 20 × 42.",
+            "choices": [
+              "860",
+              "820",
+              "62",
+              "840"
+            ],
+            "answer": "840",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 × 42 = 840."
           },
           {
             "prompt": "What does “Dividend” mean?",
@@ -1232,18 +1244,6 @@
             "answer": "The number being divided",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Multiple” mean?",
-            "choices": [
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors",
-              "The operation that undoes another (× and ÷)"
-            ],
-            "answer": "The result of multiplying by a whole number",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying by a whole number."
           }
         ]
       },
@@ -1268,6 +1268,18 @@
             "explanation": "Estimate: 156 is close to 150, and 150 ÷ 13 is about 11 to 12. Working: 13 into 15 goes 1 remainder 2 (carry the 2 to make 26); 13 into 26 goes 2 exactly. So 156 ÷ 13 = 12. Check with the inverse: 12 × 13 = 156. It matches."
           },
           {
+            "prompt": "Work out 8 × 87.",
+            "choices": [
+              "704",
+              "688",
+              "95",
+              "696"
+            ],
+            "answer": "696",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "8 × 87 = 696."
+          },
+          {
             "prompt": "What does “Product” mean?",
             "choices": [
               "The answer to a multiplication",
@@ -1278,18 +1290,6 @@
             "answer": "The answer to a multiplication",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Divisor” mean?",
-            "choices": [
-              "The number you divide by",
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing"
-            ],
-            "answer": "The number you divide by",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
           },
           {
             "prompt": "Calculate 274 × 6.",
@@ -1326,6 +1326,18 @@
             "explanation": "Divide: 18 into 43 goes 2 (18 × 2 = 36), remainder 7. Bring down the 2 to make 72. Divide: 18 into 72 goes 4 exactly (18 × 4 = 72), remainder 0. So 432 ÷ 18 = 24. Check: 24 × 18 = 432."
           },
           {
+            "prompt": "Work out 2,844 + 8,333.",
+            "choices": [
+              "11176",
+              "11187",
+              "11177",
+              "11178"
+            ],
+            "answer": "11177",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2,844 + 8,333 = 11,177."
+          },
+          {
             "prompt": "What does “Quotient” mean?",
             "choices": [
               "The answer to a division",
@@ -1336,18 +1348,6 @@
             "answer": "The answer to a division",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors"
-            ],
-            "answer": "A number that divides exactly into another",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
           },
           {
             "prompt": "Calculate 67 × 24.",
@@ -1372,16 +1372,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+            "prompt": "Work out 8,338 − 5,666.",
             "choices": [
-              "605",
-              "806",
-              "672",
-              "739"
+              "14004",
+              "2672",
+              "2673",
+              "2671"
             ],
-            "answer": "672",
-            "clue": "Work it out step by step, using the Unit 11 methods.",
-            "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
+            "answer": "2672",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "8,338 − 5,666 = 2,672."
+          },
+          {
+            "prompt": "Work out 20 × 42.",
+            "choices": [
+              "860",
+              "820",
+              "62",
+              "840"
+            ],
+            "answer": "840",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 × 42 = 840."
           },
           {
             "prompt": "What does “Dividend” mean?",
@@ -1394,18 +1406,6 @@
             "answer": "The number being divided",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Multiple” mean?",
-            "choices": [
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors",
-              "The operation that undoes another (× and ÷)"
-            ],
-            "answer": "The result of multiplying by a whole number",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying by a whole number."
           },
           {
             "prompt": "Calculate 238 × 15.",
@@ -1430,6 +1430,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 8 × 87.",
+            "choices": [
+              "704",
+              "688",
+              "95",
+              "696"
+            ],
+            "answer": "696",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "8 × 87 = 696."
+          },
+          {
             "prompt": "What does “Product” mean?",
             "choices": [
               "The answer to a multiplication",
@@ -1440,18 +1452,6 @@
             "answer": "The answer to a multiplication",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Product means The answer to a multiplication."
-          },
-          {
-            "prompt": "What does “Divisor” mean?",
-            "choices": [
-              "The number you divide by",
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing"
-            ],
-            "answer": "The number you divide by",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
           },
           {
             "prompt": "Calculate 274 × 6.",
@@ -1488,6 +1488,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 2,844 + 8,333.",
+            "choices": [
+              "11176",
+              "11187",
+              "11177",
+              "11178"
+            ],
+            "answer": "11177",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2,844 + 8,333 = 11,177."
+          },
+          {
             "prompt": "What does “Quotient” mean?",
             "choices": [
               "The answer to a division",
@@ -1498,18 +1510,6 @@
             "answer": "The answer to a division",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Quotient means The answer to a division."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors"
-            ],
-            "answer": "A number that divides exactly into another",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
           },
           {
             "prompt": "Calculate 67 × 24.",
@@ -1546,6 +1546,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 20 × 42.",
+            "choices": [
+              "860",
+              "820",
+              "62",
+              "840"
+            ],
+            "answer": "840",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 × 42 = 840."
+          },
+          {
             "prompt": "What does “Dividend” mean?",
             "choices": [
               "The number being divided",
@@ -1556,18 +1568,6 @@
             "answer": "The number being divided",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
             "explanation": "Dividend means The number being divided."
-          },
-          {
-            "prompt": "What does “Multiple” mean?",
-            "choices": [
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors",
-              "The operation that undoes another (× and ÷)"
-            ],
-            "answer": "The result of multiplying by a whole number",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying by a whole number."
           },
           {
             "prompt": "Calculate 238 × 15.",
@@ -1582,16 +1582,16 @@
             "explanation": "Estimate: 240 × 15 = 3600. Multiply by the ones: 238 × 5 = 1190. Multiply by the tens: 238 × 10 = 2380. Add: 1190 + 2380 = 3570. Close to 3600 – correct."
           },
           {
-            "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+            "prompt": "Work out 8,338 − 5,666.",
             "choices": [
-              "605",
-              "806",
-              "672",
-              "739"
+              "14004",
+              "2672",
+              "2673",
+              "2671"
             ],
-            "answer": "672",
-            "clue": "Work it out step by step, using the Unit 11 methods.",
-            "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
+            "answer": "2672",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "8,338 − 5,666 = 2,672."
           }
         ]
       },
@@ -1604,16 +1604,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Divisor” mean?",
+            "prompt": "What does “Product” mean?",
             "choices": [
-              "The number you divide by",
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing"
+              "The answer to a multiplication",
+              "The answer to a division",
+              "The number being divided",
+              "The number you divide by"
             ],
-            "answer": "The number you divide by",
+            "answer": "The answer to a multiplication",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Divisor means The number you divide by."
+            "explanation": "Product means The answer to a multiplication."
           },
           {
             "prompt": "Calculate 274 × 6.",
@@ -1640,16 +1640,16 @@
             "explanation": "Estimate: 156 is close to 150, and 150 ÷ 13 is about 11 to 12. Working: 13 into 15 goes 1 remainder 2 (carry the 2 to make 26); 13 into 26 goes 2 exactly. So 156 ÷ 13 = 12. Check with the inverse: 12 × 13 = 156. It matches."
           },
           {
-            "prompt": "What does “Product” mean?",
+            "prompt": "Work out 8 × 87.",
             "choices": [
-              "The answer to a multiplication",
-              "The answer to a division",
-              "The number being divided",
-              "The number you divide by"
+              "704",
+              "688",
+              "95",
+              "696"
             ],
-            "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "answer": "696",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "8 × 87 = 696."
           }
         ]
       },
@@ -1662,16 +1662,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "What does “Quotient” mean?",
             "choices": [
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors"
+              "The answer to a division",
+              "The number being divided",
+              "The number you divide by",
+              "A number that divides exactly into another"
             ],
-            "answer": "A number that divides exactly into another",
+            "answer": "The answer to a division",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
+            "explanation": "Quotient means The answer to a division."
           },
           {
             "prompt": "Calculate 67 × 24.",
@@ -1698,16 +1698,16 @@
             "explanation": "Divide: 18 into 43 goes 2 (18 × 2 = 36), remainder 7. Bring down the 2 to make 72. Divide: 18 into 72 goes 4 exactly (18 × 4 = 72), remainder 0. So 432 ÷ 18 = 24. Check: 24 × 18 = 432."
           },
           {
-            "prompt": "What does “Quotient” mean?",
+            "prompt": "Work out 2,844 + 8,333.",
             "choices": [
-              "The answer to a division",
-              "The number being divided",
-              "The number you divide by",
-              "A number that divides exactly into another"
+              "11176",
+              "11187",
+              "11177",
+              "11178"
             ],
-            "answer": "The answer to a division",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "answer": "11177",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2,844 + 8,333 = 11,177."
           }
         ]
       },
@@ -1720,16 +1720,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Multiple” mean?",
+            "prompt": "What does “Dividend” mean?",
             "choices": [
-              "The result of multiplying by a whole number",
-              "The amount left over after dividing",
-              "Two factors / more than two factors",
-              "The operation that undoes another (× and ÷)"
+              "The number being divided",
+              "The number you divide by",
+              "A number that divides exactly into another",
+              "The result of multiplying by a whole number"
             ],
-            "answer": "The result of multiplying by a whole number",
+            "answer": "The number being divided",
             "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying by a whole number."
+            "explanation": "Dividend means The number being divided."
           },
           {
             "prompt": "Calculate 238 × 15.",
@@ -1744,28 +1744,28 @@
             "explanation": "Estimate: 240 × 15 = 3600. Multiply by the ones: 238 × 5 = 1190. Multiply by the tens: 238 × 10 = 2380. Add: 1190 + 2380 = 3570. Close to 3600 – correct."
           },
           {
-            "prompt": "A number multiplied by 8 gives the same result as adding 84 to the number. What is the number?",
+            "prompt": "Work out 8,338 − 5,666.",
             "choices": [
-              "605",
-              "806",
-              "672",
-              "739"
+              "14004",
+              "2672",
+              "2673",
+              "2671"
             ],
-            "answer": "672",
-            "clue": "Work it out step by step, using the Unit 11 methods.",
-            "explanation": "1) Let the number be n. 8n = n + 84, so 7n = 84, n = 12. Check: 8 × 12 = 96 and 12 + 84 = 96."
+            "answer": "2672",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "8,338 − 5,666 = 2,672."
           },
           {
-            "prompt": "What does “Dividend” mean?",
+            "prompt": "Work out 20 × 42.",
             "choices": [
-              "The number being divided",
-              "The number you divide by",
-              "A number that divides exactly into another",
-              "The result of multiplying by a whole number"
+              "860",
+              "820",
+              "62",
+              "840"
             ],
-            "answer": "The number being divided",
-            "clue": "Use the Unit 11 Math Words & Symbols reference.",
-            "explanation": "Dividend means The number being divided."
+            "answer": "840",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 × 42 = 840."
           }
         ]
       }

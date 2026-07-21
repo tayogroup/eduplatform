@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:33.928Z",
+  "generatedAt": "2026-07-21T07:21:50.739Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -971,9 +971,57 @@
       },
       {
         "id": "q07",
-        "type": "Reasoning",
+        "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
+        "question": "Work out 22 ÷ 2.",
+        "options": [
+          "20",
+          "11",
+          "12",
+          "10"
+        ],
+        "answer": "11",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "22 ÷ 2 = 11 because 2 × 11 = 22."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Work out 32 ÷ 8.",
+        "options": [
+          "4",
+          "5",
+          "3",
+          "24"
+        ],
+        "answer": "4",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "32 ÷ 8 = 4 because 8 × 4 = 32."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Work out 19 + 42.",
+        "options": [
+          "60",
+          "71",
+          "61",
+          "62"
+        ],
+        "answer": "61",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "19 + 42 = 61."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Number bond” mean?",
         "options": [
           "Two numbers that join to make a total",
@@ -986,10 +1034,10 @@
         "explanation": "Number bond means Two numbers that join to make a total."
       },
       {
-        "id": "q08",
+        "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Partition” mean?",
         "options": [
           "Split a number into tens and ones",
@@ -1002,10 +1050,10 @@
         "explanation": "Partition means Split a number into tens and ones."
       },
       {
-        "id": "q09",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Sum / Difference” mean?",
         "options": [
           "The answer to an addition / a subtraction",
@@ -1016,54 +1064,6 @@
         "answer": "The answer to an addition / a subtraction",
         "hint": "Use the Unit 10 Math Words & Symbols reference.",
         "explanation": "Sum / Difference means The answer to an addition / a subtraction."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "What does “Inverse” mean?",
-        "options": [
-          "The opposite operation that undoes another",
-          "Round a number, then adjust the answer",
-          "Times two / split into two equal parts",
-          "Objects in equal rows and columns"
-        ],
-        "answer": "The opposite operation that undoes another",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Inverse means The opposite operation that undoes another."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "What does “Compensation” mean?",
-        "options": [
-          "Round a number, then adjust the answer",
-          "Times two / split into two equal parts",
-          "Objects in equal rows and columns",
-          "A sensible guess to check an answer"
-        ],
-        "answer": "Round a number, then adjust the answer",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Compensation means Round a number, then adjust the answer."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "What does “Double / Halve” mean?",
-        "options": [
-          "Times two / split into two equal parts",
-          "Objects in equal rows and columns",
-          "A sensible guess to check an answer",
-          "Two numbers that join to make a total"
-        ],
-        "answer": "Times two / split into two equal parts",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Double / Halve means Times two / split into two equal parts."
       }
     ]
   },
@@ -1103,6 +1103,18 @@
             "explanation": "The two numbers are close together, so count up from 58 to 63. From 58 to 60 is 2, and from 60 to 63 is 3. Add the jumps: 2 + 3 = 5. So 63 − 58 = 5."
           },
           {
+            "prompt": "Work out 22 ÷ 2.",
+            "choices": [
+              "20",
+              "11",
+              "12",
+              "10"
+            ],
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "22 ÷ 2 = 11 because 2 × 11 = 22."
+          },
+          {
             "prompt": "What does “Number bond” mean?",
             "choices": [
               "Two numbers that join to make a total",
@@ -1113,18 +1125,6 @@
             "answer": "Two numbers that join to make a total",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Number bond means Two numbers that join to make a total."
-          },
-          {
-            "prompt": "What does “Inverse” mean?",
-            "choices": [
-              "The opposite operation that undoes another",
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns"
-            ],
-            "answer": "The opposite operation that undoes another",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation that undoes another."
           }
         ]
       },
@@ -1161,6 +1161,18 @@
             "explanation": "Partition the 34 into 30 and 4. Take away the 30: 76 − 30 = 46. Take away the 4: 46 − 4 = 42. Now check using the inverse: 42 + 34 should give 76. 42 + 34 = 76. It matches, so the answer 42 is correct."
           },
           {
+            "prompt": "Work out 32 ÷ 8.",
+            "choices": [
+              "4",
+              "5",
+              "3",
+              "24"
+            ],
+            "answer": "4",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "32 ÷ 8 = 4 because 8 × 4 = 32."
+          },
+          {
             "prompt": "What does “Partition” mean?",
             "choices": [
               "Split a number into tens and ones",
@@ -1171,18 +1183,6 @@
             "answer": "Split a number into tens and ones",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Partition means Split a number into tens and ones."
-          },
-          {
-            "prompt": "What does “Compensation” mean?",
-            "choices": [
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns",
-              "A sensible guess to check an answer"
-            ],
-            "answer": "Round a number, then adjust the answer",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Compensation means Round a number, then adjust the answer."
           }
         ]
       },
@@ -1219,6 +1219,18 @@
             "explanation": "Partition 16 into 10 and 6. Double the 10 to get 20, and double the 6 to get 12. Join them: 20 + 12 = 32. So double 16 is 32. (Check by halving: half of 32 is 16.)"
           },
           {
+            "prompt": "Work out 19 + 42.",
+            "choices": [
+              "60",
+              "71",
+              "61",
+              "62"
+            ],
+            "answer": "61",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "19 + 42 = 61."
+          },
+          {
             "prompt": "What does “Sum / Difference” mean?",
             "choices": [
               "The answer to an addition / a subtraction",
@@ -1229,18 +1241,6 @@
             "answer": "The answer to an addition / a subtraction",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Sum / Difference means The answer to an addition / a subtraction."
-          },
-          {
-            "prompt": "What does “Double / Halve” mean?",
-            "choices": [
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns",
-              "A sensible guess to check an answer",
-              "Two numbers that join to make a total"
-            ],
-            "answer": "Times two / split into two equal parts",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Double / Halve means Times two / split into two equal parts."
           }
         ]
       },
@@ -1265,6 +1265,18 @@
             "explanation": "The two numbers are close together, so count up from 58 to 63. From 58 to 60 is 2, and from 60 to 63 is 3. Add the jumps: 2 + 3 = 5. So 63 − 58 = 5."
           },
           {
+            "prompt": "Work out 22 ÷ 2.",
+            "choices": [
+              "20",
+              "11",
+              "12",
+              "10"
+            ],
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "22 ÷ 2 = 11 because 2 × 11 = 22."
+          },
+          {
             "prompt": "What does “Number bond” mean?",
             "choices": [
               "Two numbers that join to make a total",
@@ -1275,18 +1287,6 @@
             "answer": "Two numbers that join to make a total",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Number bond means Two numbers that join to make a total."
-          },
-          {
-            "prompt": "What does “Inverse” mean?",
-            "choices": [
-              "The opposite operation that undoes another",
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns"
-            ],
-            "answer": "The opposite operation that undoes another",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation that undoes another."
           },
           {
             "prompt": "Work out 42 + 36.",
@@ -1323,6 +1323,18 @@
             "explanation": "Partition the 34 into 30 and 4. Take away the 30: 76 − 30 = 46. Take away the 4: 46 − 4 = 42. Now check using the inverse: 42 + 34 should give 76. 42 + 34 = 76. It matches, so the answer 42 is correct."
           },
           {
+            "prompt": "Work out 32 ÷ 8.",
+            "choices": [
+              "4",
+              "5",
+              "3",
+              "24"
+            ],
+            "answer": "4",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "32 ÷ 8 = 4 because 8 × 4 = 32."
+          },
+          {
             "prompt": "What does “Partition” mean?",
             "choices": [
               "Split a number into tens and ones",
@@ -1333,18 +1345,6 @@
             "answer": "Split a number into tens and ones",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Partition means Split a number into tens and ones."
-          },
-          {
-            "prompt": "What does “Compensation” mean?",
-            "choices": [
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns",
-              "A sensible guess to check an answer"
-            ],
-            "answer": "Round a number, then adjust the answer",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Compensation means Round a number, then adjust the answer."
           },
           {
             "prompt": "Work out 38 + 27.",
@@ -1381,6 +1381,18 @@
             "explanation": "Partition 16 into 10 and 6. Double the 10 to get 20, and double the 6 to get 12. Join them: 20 + 12 = 32. So double 16 is 32. (Check by halving: half of 32 is 16.)"
           },
           {
+            "prompt": "Work out 19 + 42.",
+            "choices": [
+              "60",
+              "71",
+              "61",
+              "62"
+            ],
+            "answer": "61",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "19 + 42 = 61."
+          },
+          {
             "prompt": "What does “Sum / Difference” mean?",
             "choices": [
               "The answer to an addition / a subtraction",
@@ -1391,18 +1403,6 @@
             "answer": "The answer to an addition / a subtraction",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Sum / Difference means The answer to an addition / a subtraction."
-          },
-          {
-            "prompt": "What does “Double / Halve” mean?",
-            "choices": [
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns",
-              "A sensible guess to check an answer",
-              "Two numbers that join to make a total"
-            ],
-            "answer": "Times two / split into two equal parts",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Double / Halve means Times two / split into two equal parts."
           },
           {
             "prompt": "Work out 54 + 19.",
@@ -1427,6 +1427,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 22 ÷ 2.",
+            "choices": [
+              "20",
+              "11",
+              "12",
+              "10"
+            ],
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "22 ÷ 2 = 11 because 2 × 11 = 22."
+          },
+          {
             "prompt": "What does “Number bond” mean?",
             "choices": [
               "Two numbers that join to make a total",
@@ -1437,18 +1449,6 @@
             "answer": "Two numbers that join to make a total",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Number bond means Two numbers that join to make a total."
-          },
-          {
-            "prompt": "What does “Inverse” mean?",
-            "choices": [
-              "The opposite operation that undoes another",
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns"
-            ],
-            "answer": "The opposite operation that undoes another",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation that undoes another."
           },
           {
             "prompt": "Work out 42 + 36.",
@@ -1485,6 +1485,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 32 ÷ 8.",
+            "choices": [
+              "4",
+              "5",
+              "3",
+              "24"
+            ],
+            "answer": "4",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "32 ÷ 8 = 4 because 8 × 4 = 32."
+          },
+          {
             "prompt": "What does “Partition” mean?",
             "choices": [
               "Split a number into tens and ones",
@@ -1495,18 +1507,6 @@
             "answer": "Split a number into tens and ones",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Partition means Split a number into tens and ones."
-          },
-          {
-            "prompt": "What does “Compensation” mean?",
-            "choices": [
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns",
-              "A sensible guess to check an answer"
-            ],
-            "answer": "Round a number, then adjust the answer",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Compensation means Round a number, then adjust the answer."
           },
           {
             "prompt": "Work out 38 + 27.",
@@ -1543,6 +1543,18 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Work out 19 + 42.",
+            "choices": [
+              "60",
+              "71",
+              "61",
+              "62"
+            ],
+            "answer": "61",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "19 + 42 = 61."
+          },
+          {
             "prompt": "What does “Sum / Difference” mean?",
             "choices": [
               "The answer to an addition / a subtraction",
@@ -1553,18 +1565,6 @@
             "answer": "The answer to an addition / a subtraction",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
             "explanation": "Sum / Difference means The answer to an addition / a subtraction."
-          },
-          {
-            "prompt": "What does “Double / Halve” mean?",
-            "choices": [
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns",
-              "A sensible guess to check an answer",
-              "Two numbers that join to make a total"
-            ],
-            "answer": "Times two / split into two equal parts",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Double / Halve means Times two / split into two equal parts."
           },
           {
             "prompt": "Work out 54 + 19.",
@@ -1601,16 +1601,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Inverse” mean?",
+            "prompt": "What does “Number bond” mean?",
             "choices": [
-              "The opposite operation that undoes another",
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns"
+              "Two numbers that join to make a total",
+              "Split a number into tens and ones",
+              "The answer to an addition / a subtraction",
+              "The opposite operation that undoes another"
             ],
-            "answer": "The opposite operation that undoes another",
+            "answer": "Two numbers that join to make a total",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Inverse means The opposite operation that undoes another."
+            "explanation": "Number bond means Two numbers that join to make a total."
           },
           {
             "prompt": "Work out 42 + 36.",
@@ -1637,16 +1637,16 @@
             "explanation": "The two numbers are close together, so count up from 58 to 63. From 58 to 60 is 2, and from 60 to 63 is 3. Add the jumps: 2 + 3 = 5. So 63 − 58 = 5."
           },
           {
-            "prompt": "What does “Number bond” mean?",
+            "prompt": "Work out 22 ÷ 2.",
             "choices": [
-              "Two numbers that join to make a total",
-              "Split a number into tens and ones",
-              "The answer to an addition / a subtraction",
-              "The opposite operation that undoes another"
+              "20",
+              "11",
+              "12",
+              "10"
             ],
-            "answer": "Two numbers that join to make a total",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Number bond means Two numbers that join to make a total."
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "22 ÷ 2 = 11 because 2 × 11 = 22."
           }
         ]
       },
@@ -1659,16 +1659,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Compensation” mean?",
+            "prompt": "What does “Partition” mean?",
             "choices": [
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns",
-              "A sensible guess to check an answer"
+              "Split a number into tens and ones",
+              "The answer to an addition / a subtraction",
+              "The opposite operation that undoes another",
+              "Round a number, then adjust the answer"
             ],
-            "answer": "Round a number, then adjust the answer",
+            "answer": "Split a number into tens and ones",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Compensation means Round a number, then adjust the answer."
+            "explanation": "Partition means Split a number into tens and ones."
           },
           {
             "prompt": "Work out 38 + 27.",
@@ -1695,16 +1695,16 @@
             "explanation": "Partition the 34 into 30 and 4. Take away the 30: 76 − 30 = 46. Take away the 4: 46 − 4 = 42. Now check using the inverse: 42 + 34 should give 76. 42 + 34 = 76. It matches, so the answer 42 is correct."
           },
           {
-            "prompt": "What does “Partition” mean?",
+            "prompt": "Work out 32 ÷ 8.",
             "choices": [
-              "Split a number into tens and ones",
-              "The answer to an addition / a subtraction",
-              "The opposite operation that undoes another",
-              "Round a number, then adjust the answer"
+              "4",
+              "5",
+              "3",
+              "24"
             ],
-            "answer": "Split a number into tens and ones",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Partition means Split a number into tens and ones."
+            "answer": "4",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "32 ÷ 8 = 4 because 8 × 4 = 32."
           }
         ]
       },
@@ -1717,16 +1717,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Double / Halve” mean?",
+            "prompt": "What does “Sum / Difference” mean?",
             "choices": [
-              "Times two / split into two equal parts",
-              "Objects in equal rows and columns",
-              "A sensible guess to check an answer",
-              "Two numbers that join to make a total"
+              "The answer to an addition / a subtraction",
+              "The opposite operation that undoes another",
+              "Round a number, then adjust the answer",
+              "Times two / split into two equal parts"
             ],
-            "answer": "Times two / split into two equal parts",
+            "answer": "The answer to an addition / a subtraction",
             "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Double / Halve means Times two / split into two equal parts."
+            "explanation": "Sum / Difference means The answer to an addition / a subtraction."
           },
           {
             "prompt": "Work out 54 + 19.",
@@ -1753,16 +1753,16 @@
             "explanation": "Partition 16 into 10 and 6. Double the 10 to get 20, and double the 6 to get 12. Join them: 20 + 12 = 32. So double 16 is 32. (Check by halving: half of 32 is 16.)"
           },
           {
-            "prompt": "What does “Sum / Difference” mean?",
+            "prompt": "Work out 19 + 42.",
             "choices": [
-              "The answer to an addition / a subtraction",
-              "The opposite operation that undoes another",
-              "Round a number, then adjust the answer",
-              "Times two / split into two equal parts"
+              "60",
+              "71",
+              "61",
+              "62"
             ],
-            "answer": "The answer to an addition / a subtraction",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Sum / Difference means The answer to an addition / a subtraction."
+            "answer": "61",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "19 + 42 = 61."
           }
         ]
       }

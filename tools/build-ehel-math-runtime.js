@@ -5,6 +5,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { generateQuestions, unitTopic } = require("./lib/math-question-gen.js");
 
 const root = path.resolve(__dirname, "..");
 const modelPath = path.join(root, "outputs", "019f6433-3b5b-7513-8de4-dfd68b782812", "math-content-model.json");
@@ -253,23 +254,32 @@ function buildGrade(grade) {
   function computeFromStem(stem) {
     const s = stem.replace(/,/g, "");
     if (/\d\.\d/.test(s)) return null;
+    if (/%|percent/i.test(s)) return null;
+    // Unary minus (negative numbers) — skip.
+    if (/(^|[\s(=])[−-]\s*\d/.test(s.replace(/(\d)\s*[−-]/g, "$1~"))) return null;
     const hasAdd = /\d\s*[+\-−]\s*\d/.test(s), hasMul = /\d\s*[×x*÷\/]\s*\d/.test(s);
     const mixedOrParens = (hasAdd && hasMul) || /\([^)]*\d[^)]*\)/.test(s);
     // Addition/subtraction chain: N ± N (± N)* — evaluate left to right.
-    let chain = mixedOrParens ? null : s.match(/-?\d+(?:\s*[+\-−]\s*\d+)+/);
+    let chain = mixedOrParens ? null : s.match(/\d+(?:\s*[+\-−]\s*\d+)+/);
     if (chain && !/[×x*÷\/]/.test(chain[0])) {
       const parts = chain[0].match(/[+\-−]?\s*\d+/g);
       let r = 0, ok = true;
       parts.forEach((p, i) => { const t = p.replace(/−/g, "-").replace(/\s/g, ""); if (i === 0) r = Number(t.replace(/^\+/, "")); else if (t.startsWith("-")) r -= Number(t.slice(1)); else r += Number(t.replace(/^\+/, "")); if (!Number.isFinite(r)) ok = false; });
       return ok && r >= 0 && Number.isInteger(r) ? String(r) : null;
     }
-    // Single × or ÷ on exactly two operands (no other operators present).
-    let m = mixedOrParens || /\d\s*[×x*÷\/]\s*\d\s*[×x*÷\/+\-−]/.test(s) ? null : s.match(/(-?\d+)\s*([×x*÷\/])\s*(-?\d+)/);
+    // Multiplication chain: N × N (× N)* — product of ALL operands.
+    let m = mixedOrParens ? null : s.match(/\d+(?:\s*[×x*]\s*\d+)+/);
+    if (m && !/[÷\/+\-−]/.test(m[0])) {
+      const operands = m[0].match(/\d+/g).map(Number);
+      const r = operands.reduce((p, n) => p * n, 1);
+      return Number.isSafeInteger(r) ? String(r) : null;
+    }
+    // Single ÷ on exactly two operands (no other operators in the stem).
+    m = mixedOrParens || (s.match(/\d\s*[×x*÷\/+\-−]\s*\d/g) || []).length !== 1 ? null : s.match(/(\d+)\s*[÷\/]\s*(\d+)/);
     if (m) {
-      const a = +m[1], b = +m[3], op = m[2];
-      let r;
-      if (/[×x*]/.test(op)) r = a * b; else { if (!b || a % b) return null; r = a / b; }
-      return r >= 0 && Number.isInteger(r) ? String(r) : null;
+      const a = +m[1], b = +m[2];
+      if (!b || a % b) return null;
+      return String(a / b);
     }
     // double / half
     m = s.match(/\bdouble\s+(\d+)/i); if (m) return String(+m[1] * 2);
@@ -280,15 +290,17 @@ function buildGrade(grade) {
     // ruler / number-line: "from the X mark to the Y mark"
     m = s.match(/from (?:the )?(\d+)\s*mark to (?:the )?(\d+)\s*mark/i);
     if (m) return String(Math.abs(+m[2] - +m[1]));
-    // Two-number word problems with an unambiguous operation keyword. Require
-    // EXACTLY two whole numbers so the operands are certain.
+    // Word problems: only two provably safe shapes, with operands taken from
+    // the matching phrase itself (never positional). Keyword branches like
+    // "altogether"/"multiplied by" were removed — they mis-fired on stems
+    // such as "8 classes with 26 pupils each. How many altogether?".
     const nums = (s.match(/\b\d+\b/g) || []).map(Number);
     if (nums.length === 2) {
-      const [a, b] = nums;
-      if (/\b(left|remain|remaining|cuts? off|cut off|takes? away|took away|gives? away|gave away|how much (?:is )?left|how many (?:are )?left|spends?|spent|minus|less than|fewer)\b/i.test(s) && a >= b) return String(a - b);
-      if (/\b(altogether|in total|the total|in all|combined|sum of|add(?:ed|s)?\b|plus)\b/i.test(s)) return String(a + b);
-      if (/\bshared? (?:equally )?(?:in)?to \d+ (?:equal )?groups?\b|how many \d+s? (?:are )?in\b|÷|divided? by\b/i.test(s) && b !== 0 && a % b === 0) return String(a / b);
-      if (/\b(\d+ (?:groups?|rows?|lots|sets|bags|boxes|packs) of \d+)\b|\btimes\b|multiplied by\b/i.test(s)) return String(a * b);
+      // remainder: "rope is 24 m, cuts off 14 m — how much is left?"
+      if (/\b(cuts? off|cut off|takes? away|took away|gives? away|gave away|how much (?:is )?left|how many (?:are )?left|change)\b/i.test(s) && nums[0] >= nums[1]) return String(nums[0] - nums[1]);
+      // grouping: "3 rows of 4"
+      m = s.match(/\b(\d+)\s+(?:groups?|rows?|lots|sets|bags|boxes|packs)\s+of\s+(\d+)\b/i);
+      if (m) return String(+m[1] * +m[2]);
     }
     return null;
   }
@@ -317,13 +329,20 @@ function buildGrade(grade) {
     return items;
   }
 
-  function assessmentData(reference, unitNo, workedExamples = []) {
+  function assessmentData(reference, unitNo, workedExamples = [], topic = "number", unitTitle = "") {
     const terms = reference.terms.length >= 4 ? reference.terms : [["Mathematics", "Using numbers, shapes, measures and patterns"], ["Model", "A way to show an idea"], ["Rule", "A mathematical relationship"], ["Check", "Confirm that an answer makes sense"]];
     const questions = [];
-    // Real application questions from worked examples first.
+    // 1) Source-authentic application questions from worked examples.
     for (const [i, app] of applicationQuestions(workedExamples).entries()) {
       if (app.options.length < 3) continue;
       questions.push({ id: `q${String(questions.length + 1).padStart(2, "0")}`, type: "Application", outcomeId: `lo${String(i % 8 + 1).padStart(2, "0")}`, difficulty: i < 3 ? "Core" : "Challenge", question: app.stem, options: app.options, answer: app.answer, hint: `Work it out step by step, using the Unit ${unitNo} methods.`, explanation: app.explanation });
+    }
+    // 2) Procedurally generated topic questions (answers computed, correct by
+    //    construction) fill up to nine real maths items.
+    const wanted = Math.max(0, 9 - questions.length);
+    for (const g of generateQuestions(topic, grade, `g${grade}u${unitNo}-${unitTitle}`, wanted)) {
+      const qn = questions.length;
+      questions.push({ id: `q${String(qn + 1).padStart(2, "0")}`, type: "Application", outcomeId: `lo${String(qn % 8 + 1).padStart(2, "0")}`, difficulty: qn < 4 ? "Basic" : qn < 7 ? "Core" : "Challenge", question: g.question, options: g.options, answer: g.answer, hint: `Work it out step by step, then check each option.`, explanation: g.explanation });
     }
     const startVocab = questions.length;
     for (let index = 0; questions.length < 12; index += 1) {
@@ -372,7 +391,7 @@ function buildGrade(grade) {
     const concepts = conceptList(lesson, reference.rules, unitMeta.title);
     const outcomes = objectiveList(lesson);
     const methods = methodList(referenceDoc, workedExamples);
-    const assessment = assessmentData(reference, unitNo, workedExamples);
+    const assessment = assessmentData(reference, unitNo, workedExamples, unitTopic(unitMeta.title, concepts), unitMeta.title);
     const overview = lesson.blocks.map((block) => tidy(block.text)).find((text, index) => index > 2 && text.length > 180 && !/self-paced/i.test(text)) || `Explore ${unitMeta.title} through concepts, models, methods and real-life practice.`;
     const explorations = practice.slice(0, 6).map((item, index) => ({ id: `explore-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Discover" : "Explore", title: concepts[index % Math.max(1, concepts.length)]?.title || `Unit investigation ${index + 1}`, context: sentence(concepts[index % Math.max(1, concepts.length)]?.explanation || overview, 260), prompt: item.prompt, answer: item.answer, modelType: `model-${index + 1}`, hint: item.hint, explanation: item.answer }));
     const visualModels = concepts.map((concept, index) => ({ id: `model-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, title: concept.title, modelType: `concept-model-${index + 1}`, purpose: sentence(concept.explanation, 220), defaultNumber: null }));

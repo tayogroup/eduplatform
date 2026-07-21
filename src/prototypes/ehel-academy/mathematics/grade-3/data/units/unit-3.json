@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:32.674Z",
+  "generatedAt": "2026-07-21T07:21:49.446Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -965,9 +965,73 @@
       },
       {
         "id": "q06",
-        "type": "Reasoning",
+        "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
+        "question": "Amina buys one item for 32 and another for 46. How much does she spend altogether?",
+        "options": [
+          "88",
+          "78",
+          "14",
+          "79"
+        ],
+        "answer": "78",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "32 + 46 = 78."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Amina buys one item for 33 and another for 44. How much does she spend altogether?",
+        "options": [
+          "11",
+          "78",
+          "87",
+          "77"
+        ],
+        "answer": "77",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "33 + 44 = 77."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Amina buys one item for 20 and another for 26. How much does she spend altogether?",
+        "options": [
+          "6",
+          "47",
+          "56",
+          "46"
+        ],
+        "answer": "46",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "20 + 26 = 46."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Yusuf pays 37 for something that costs 2. How much change does he get?",
+        "options": [
+          "39",
+          "36",
+          "2",
+          "35"
+        ],
+        "answer": "35",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Change = 37 − 2 = 35."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Sum” mean?",
         "options": [
           "The answer to an addition",
@@ -980,10 +1044,10 @@
         "explanation": "Sum means The answer to an addition."
       },
       {
-        "id": "q07",
+        "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Difference” mean?",
         "options": [
           "The answer to a subtraction",
@@ -996,10 +1060,10 @@
         "explanation": "Difference means The answer to a subtraction."
       },
       {
-        "id": "q08",
+        "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Regroup / Carry / Borrow” mean?",
         "options": [
           "Trade ten of one place for one of the next",
@@ -1010,70 +1074,6 @@
         "answer": "Trade ten of one place for one of the next",
         "hint": "Use the Unit 3 Math Words & Symbols reference.",
         "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "What does “Estimate” mean?",
-        "options": [
-          "A rough answer found by rounding first",
-          "Change a number to the nearest 10 or 100",
-          "Separates shillings from cents",
-          "Money returned after paying too much"
-        ],
-        "answer": "A rough answer found by rounding first",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Estimate means A rough answer found by rounding first."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "What does “Round” mean?",
-        "options": [
-          "Change a number to the nearest 10 or 100",
-          "Separates shillings from cents",
-          "Money returned after paying too much",
-          "The opposite operation, used to check"
-        ],
-        "answer": "Change a number to the nearest 10 or 100",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Round means Change a number to the nearest 10 or 100."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "What does “Decimal point” mean?",
-        "options": [
-          "Separates shillings from cents",
-          "Money returned after paying too much",
-          "The opposite operation, used to check",
-          "The answer to an addition"
-        ],
-        "answer": "Separates shillings from cents",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Decimal point means Separates shillings from cents."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Money returned after paying too much?",
-        "options": [
-          "Change",
-          "Inverse",
-          "Sum",
-          "Difference"
-        ],
-        "answer": "Change",
-        "hint": "Use the Unit 3 Math Words & Symbols reference.",
-        "explanation": "Change means Money returned after paying too much."
       }
     ]
   },
@@ -1113,28 +1113,28 @@
             "explanation": "Borrow across the zeros. 800 becomes 7 hundreds, 9 tens and 10 ones. Ones: 10 − 6 = 4. Tens: 9 − 5 = 4. Hundreds: 7 − 3 = 4. The answer is 444."
           },
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "Amina buys one item for 33 and another for 44. How much does she spend altogether?",
             "choices": [
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100"
+              "11",
+              "78",
+              "87",
+              "77"
             ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "answer": "77",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "33 + 44 = 77."
           },
           {
-            "prompt": "What does “Round” mean?",
+            "prompt": "What does “Sum” mean?",
             "choices": [
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check"
+              "The answer to an addition",
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first"
             ],
-            "answer": "Change a number to the nearest 10 or 100",
+            "answer": "The answer to an addition",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Round means Change a number to the nearest 10 or 100."
+            "explanation": "Sum means The answer to an addition."
           }
         ]
       },
@@ -1171,28 +1171,28 @@
             "explanation": "Estimate: 490 + 330 = 820. Exact: ones 9 + 5 = 14, write 4 carry 1; tens 8 + 2 + 1 = 11, write 1 carry 1; hundreds 4 + 3 + 1 = 8. The answer is 814, close to the estimate of 820. It checks out."
           },
           {
-            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "prompt": "Amina buys one item for 20 and another for 26. How much does she spend altogether?",
             "choices": [
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents"
+              "6",
+              "47",
+              "56",
+              "46"
             ],
-            "answer": "Trade ten of one place for one of the next",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
+            "answer": "46",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 + 26 = 46."
           },
           {
-            "prompt": "What does “Decimal point” mean?",
+            "prompt": "What does “Difference” mean?",
             "choices": [
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check",
-              "The answer to an addition"
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100"
             ],
-            "answer": "Separates shillings from cents",
+            "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Decimal point means Separates shillings from cents."
+            "explanation": "Difference means The answer to a subtraction."
           }
         ]
       },
@@ -1217,40 +1217,40 @@
             "explanation": "Ones: 2 − 7 needs a borrow → 12 − 7 = 5 (tens drop from 3 to 2). Tens: 2 − 5 needs a borrow → 12 − 5 = 7 (hundreds drop from 6 to 5). Hundreds: 5 − 4 = 1. The answer is 175. Check: 175 + 457 = 632. Correct!"
           },
           {
-            "prompt": "What does “Sum” mean?",
+            "prompt": "Amina buys one item for 32 and another for 46. How much does she spend altogether?",
             "choices": [
-              "The answer to an addition",
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first"
+              "88",
+              "78",
+              "14",
+              "79"
             ],
-            "answer": "The answer to an addition",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
+            "answer": "78",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "32 + 46 = 78."
           },
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "Yusuf pays 37 for something that costs 2. How much change does he get?",
             "choices": [
+              "39",
+              "36",
+              "2",
+              "35"
+            ],
+            "answer": "35",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Change = 37 − 2 = 35."
+          },
+          {
+            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "choices": [
+              "Trade ten of one place for one of the next",
               "A rough answer found by rounding first",
               "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much"
+              "Separates shillings from cents"
             ],
-            "answer": "A rough answer found by rounding first",
+            "answer": "Trade ten of one place for one of the next",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
-          },
-          {
-            "prompt": "Which term matches this meaning: Money returned after paying too much?",
-            "choices": [
-              "Change",
-              "Inverse",
-              "Sum",
-              "Difference"
-            ],
-            "answer": "Change",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Change means Money returned after paying too much."
+            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
           }
         ]
       },
@@ -1275,28 +1275,28 @@
             "explanation": "Borrow across the zeros. 800 becomes 7 hundreds, 9 tens and 10 ones. Ones: 10 − 6 = 4. Tens: 9 − 5 = 4. Hundreds: 7 − 3 = 4. The answer is 444."
           },
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "Amina buys one item for 33 and another for 44. How much does she spend altogether?",
             "choices": [
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100"
+              "11",
+              "78",
+              "87",
+              "77"
             ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "answer": "77",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "33 + 44 = 77."
           },
           {
-            "prompt": "What does “Round” mean?",
+            "prompt": "What does “Sum” mean?",
             "choices": [
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check"
+              "The answer to an addition",
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first"
             ],
-            "answer": "Change a number to the nearest 10 or 100",
+            "answer": "The answer to an addition",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Round means Change a number to the nearest 10 or 100."
+            "explanation": "Sum means The answer to an addition."
           },
           {
             "prompt": "Calculate 583 + 19.",
@@ -1333,28 +1333,28 @@
             "explanation": "Estimate: 490 + 330 = 820. Exact: ones 9 + 5 = 14, write 4 carry 1; tens 8 + 2 + 1 = 11, write 1 carry 1; hundreds 4 + 3 + 1 = 8. The answer is 814, close to the estimate of 820. It checks out."
           },
           {
-            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "prompt": "Amina buys one item for 20 and another for 26. How much does she spend altogether?",
             "choices": [
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents"
+              "6",
+              "47",
+              "56",
+              "46"
             ],
-            "answer": "Trade ten of one place for one of the next",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
+            "answer": "46",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 + 26 = 46."
           },
           {
-            "prompt": "What does “Decimal point” mean?",
+            "prompt": "What does “Difference” mean?",
             "choices": [
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check",
-              "The answer to an addition"
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100"
             ],
-            "answer": "Separates shillings from cents",
+            "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Decimal point means Separates shillings from cents."
+            "explanation": "Difference means The answer to a subtraction."
           },
           {
             "prompt": "Calculate 725 + 275.",
@@ -1379,40 +1379,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Sum” mean?",
+            "prompt": "Amina buys one item for 32 and another for 46. How much does she spend altogether?",
             "choices": [
-              "The answer to an addition",
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first"
+              "88",
+              "78",
+              "14",
+              "79"
             ],
-            "answer": "The answer to an addition",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
+            "answer": "78",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "32 + 46 = 78."
           },
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "Yusuf pays 37 for something that costs 2. How much change does he get?",
             "choices": [
+              "39",
+              "36",
+              "2",
+              "35"
+            ],
+            "answer": "35",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Change = 37 − 2 = 35."
+          },
+          {
+            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "choices": [
+              "Trade ten of one place for one of the next",
               "A rough answer found by rounding first",
               "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much"
+              "Separates shillings from cents"
             ],
-            "answer": "A rough answer found by rounding first",
+            "answer": "Trade ten of one place for one of the next",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
-          },
-          {
-            "prompt": "Which term matches this meaning: Money returned after paying too much?",
-            "choices": [
-              "Change",
-              "Inverse",
-              "Sum",
-              "Difference"
-            ],
-            "answer": "Change",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Change means Money returned after paying too much."
+            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
           },
           {
             "prompt": "Calculate 632 − 457.",
@@ -1437,28 +1437,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "Amina buys one item for 33 and another for 44. How much does she spend altogether?",
             "choices": [
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100"
+              "11",
+              "78",
+              "87",
+              "77"
             ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "answer": "77",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "33 + 44 = 77."
           },
           {
-            "prompt": "What does “Round” mean?",
+            "prompt": "What does “Sum” mean?",
             "choices": [
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check"
+              "The answer to an addition",
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first"
             ],
-            "answer": "Change a number to the nearest 10 or 100",
+            "answer": "The answer to an addition",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Round means Change a number to the nearest 10 or 100."
+            "explanation": "Sum means The answer to an addition."
           },
           {
             "prompt": "Calculate 583 + 19.",
@@ -1495,28 +1495,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "prompt": "Amina buys one item for 20 and another for 26. How much does she spend altogether?",
             "choices": [
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents"
+              "6",
+              "47",
+              "56",
+              "46"
             ],
-            "answer": "Trade ten of one place for one of the next",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
+            "answer": "46",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 + 26 = 46."
           },
           {
-            "prompt": "What does “Decimal point” mean?",
+            "prompt": "What does “Difference” mean?",
             "choices": [
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check",
-              "The answer to an addition"
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100"
             ],
-            "answer": "Separates shillings from cents",
+            "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Decimal point means Separates shillings from cents."
+            "explanation": "Difference means The answer to a subtraction."
           },
           {
             "prompt": "Calculate 725 + 275.",
@@ -1553,28 +1553,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "Yusuf pays 37 for something that costs 2. How much change does he get?",
             "choices": [
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much"
+              "39",
+              "36",
+              "2",
+              "35"
             ],
-            "answer": "A rough answer found by rounding first",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
+            "answer": "35",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Change = 37 − 2 = 35."
           },
           {
-            "prompt": "Which term matches this meaning: Money returned after paying too much?",
+            "prompt": "What does “Regroup / Carry / Borrow” mean?",
             "choices": [
-              "Change",
-              "Inverse",
-              "Sum",
-              "Difference"
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents"
             ],
-            "answer": "Change",
+            "answer": "Trade ten of one place for one of the next",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Change means Money returned after paying too much."
+            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
           },
           {
             "prompt": "Calculate 632 − 457.",
@@ -1589,16 +1589,16 @@
             "explanation": "Ones: 2 − 7 needs a borrow → 12 − 7 = 5 (tens drop from 3 to 2). Tens: 2 − 5 needs a borrow → 12 − 5 = 7 (hundreds drop from 6 to 5). Hundreds: 5 − 4 = 1. The answer is 175. Check: 175 + 457 = 632. Correct!"
           },
           {
-            "prompt": "What does “Sum” mean?",
+            "prompt": "Amina buys one item for 32 and another for 46. How much does she spend altogether?",
             "choices": [
-              "The answer to an addition",
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first"
+              "88",
+              "78",
+              "14",
+              "79"
             ],
-            "answer": "The answer to an addition",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
+            "answer": "78",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "32 + 46 = 78."
           }
         ]
       },
@@ -1611,16 +1611,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Round” mean?",
+            "prompt": "What does “Sum” mean?",
             "choices": [
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check"
+              "The answer to an addition",
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first"
             ],
-            "answer": "Change a number to the nearest 10 or 100",
+            "answer": "The answer to an addition",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Round means Change a number to the nearest 10 or 100."
+            "explanation": "Sum means The answer to an addition."
           },
           {
             "prompt": "Calculate 583 + 19.",
@@ -1647,16 +1647,16 @@
             "explanation": "Borrow across the zeros. 800 becomes 7 hundreds, 9 tens and 10 ones. Ones: 10 − 6 = 4. Tens: 9 − 5 = 4. Hundreds: 7 − 3 = 4. The answer is 444."
           },
           {
-            "prompt": "What does “Difference” mean?",
+            "prompt": "Amina buys one item for 33 and another for 44. How much does she spend altogether?",
             "choices": [
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100"
+              "11",
+              "78",
+              "87",
+              "77"
             ],
-            "answer": "The answer to a subtraction",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Difference means The answer to a subtraction."
+            "answer": "77",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "33 + 44 = 77."
           }
         ]
       },
@@ -1669,16 +1669,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Decimal point” mean?",
+            "prompt": "What does “Difference” mean?",
             "choices": [
-              "Separates shillings from cents",
-              "Money returned after paying too much",
-              "The opposite operation, used to check",
-              "The answer to an addition"
+              "The answer to a subtraction",
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100"
             ],
-            "answer": "Separates shillings from cents",
+            "answer": "The answer to a subtraction",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Decimal point means Separates shillings from cents."
+            "explanation": "Difference means The answer to a subtraction."
           },
           {
             "prompt": "Calculate 725 + 275.",
@@ -1705,16 +1705,16 @@
             "explanation": "Estimate: 490 + 330 = 820. Exact: ones 9 + 5 = 14, write 4 carry 1; tens 8 + 2 + 1 = 11, write 1 carry 1; hundreds 4 + 3 + 1 = 8. The answer is 814, close to the estimate of 820. It checks out."
           },
           {
-            "prompt": "What does “Regroup / Carry / Borrow” mean?",
+            "prompt": "Amina buys one item for 20 and another for 26. How much does she spend altogether?",
             "choices": [
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents"
+              "6",
+              "47",
+              "56",
+              "46"
             ],
-            "answer": "Trade ten of one place for one of the next",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
+            "answer": "46",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "20 + 26 = 46."
           }
         ]
       },
@@ -1727,16 +1727,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Money returned after paying too much?",
+            "prompt": "What does “Regroup / Carry / Borrow” mean?",
             "choices": [
-              "Change",
-              "Inverse",
-              "Sum",
-              "Difference"
+              "Trade ten of one place for one of the next",
+              "A rough answer found by rounding first",
+              "Change a number to the nearest 10 or 100",
+              "Separates shillings from cents"
             ],
-            "answer": "Change",
+            "answer": "Trade ten of one place for one of the next",
             "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Change means Money returned after paying too much."
+            "explanation": "Regroup / Carry / Borrow means Trade ten of one place for one of the next."
           },
           {
             "prompt": "Calculate 632 − 457.",
@@ -1751,28 +1751,28 @@
             "explanation": "Ones: 2 − 7 needs a borrow → 12 − 7 = 5 (tens drop from 3 to 2). Tens: 2 − 5 needs a borrow → 12 − 5 = 7 (hundreds drop from 6 to 5). Hundreds: 5 − 4 = 1. The answer is 175. Check: 175 + 457 = 632. Correct!"
           },
           {
-            "prompt": "What does “Sum” mean?",
+            "prompt": "Amina buys one item for 32 and another for 46. How much does she spend altogether?",
             "choices": [
-              "The answer to an addition",
-              "The answer to a subtraction",
-              "Trade ten of one place for one of the next",
-              "A rough answer found by rounding first"
+              "88",
+              "78",
+              "14",
+              "79"
             ],
-            "answer": "The answer to an addition",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Sum means The answer to an addition."
+            "answer": "78",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "32 + 46 = 78."
           },
           {
-            "prompt": "What does “Estimate” mean?",
+            "prompt": "Yusuf pays 37 for something that costs 2. How much change does he get?",
             "choices": [
-              "A rough answer found by rounding first",
-              "Change a number to the nearest 10 or 100",
-              "Separates shillings from cents",
-              "Money returned after paying too much"
+              "39",
+              "36",
+              "2",
+              "35"
             ],
-            "answer": "A rough answer found by rounding first",
-            "clue": "Use the Unit 3 Math Words & Symbols reference.",
-            "explanation": "Estimate means A rough answer found by rounding first."
+            "answer": "35",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Change = 37 − 2 = 35."
           }
         ]
       }

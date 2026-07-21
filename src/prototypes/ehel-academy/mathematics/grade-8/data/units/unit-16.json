@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:33.372Z",
+  "generatedAt": "2026-07-21T07:21:50.116Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -887,9 +887,153 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
+        "question": "Here is some data: 11, 6, 17, 1, 18, 11. Which value appears most often (the mode)?",
+        "options": [
+          "6",
+          "11",
+          "18",
+          "1"
+        ],
+        "answer": "11",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "11 appears more than any other value, so it is the mode."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Here is some data: 10, 8, 6, 17, 13. What is the range?",
+        "options": [
+          "6",
+          "12",
+          "11",
+          "17"
+        ],
+        "answer": "11",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 17 − 6 = 11."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
+        "options": [
+          "15",
+          "7",
+          "16",
+          "2"
+        ],
+        "answer": "16",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Look for the biggest number: 16."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
+        "options": [
+          "7",
+          "17",
+          "19",
+          "18"
+        ],
+        "answer": "18",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Look for the biggest number: 18."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
+        "options": [
+          "21",
+          "20",
+          "3",
+          "19"
+        ],
+        "answer": "20",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Look for the biggest number: 20."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
+        "options": [
+          "17",
+          "18",
+          "19",
+          "1"
+        ],
+        "answer": "18",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Range = largest − smallest = 19 − 1 = 18."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
+        "options": [
+          "40",
+          "38",
+          "16",
+          "39"
+        ],
+        "answer": "39",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
+        "options": [
+          "3",
+          "10",
+          "9",
+          "19"
+        ],
+        "answer": "9",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "9 appears more than any other value, so it is the mode."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Here is some data: 9, 1, 17, 11, 3, 9. Which value appears most often (the mode)?",
+        "options": [
+          "1",
+          "10",
+          "9",
+          "17"
+        ],
+        "answer": "9",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "9 appears more than any other value, so it is the mode."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Mean / Median / Mode” mean?",
         "options": [
           "The three averages: total÷n / middle / most frequent",
@@ -902,10 +1046,10 @@
         "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Range” mean?",
         "options": [
           "Highest minus lowest value",
@@ -918,10 +1062,10 @@
         "explanation": "Range means Highest minus lowest value."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Quartiles (Q1, Q3)” mean?",
         "options": [
           "Values splitting ordered data into quarters",
@@ -932,150 +1076,6 @@
         "answer": "Values splitting ordered data into quarters",
         "hint": "Use the Unit 16 Math Words & Symbols reference.",
         "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
-      },
-      {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
-        "question": "What does “IQR” mean?",
-        "options": [
-          "Q3 − Q1; spread of the middle 50%",
-          "How a set of values is spread out",
-          "A relationship between two variables",
-          "A straight line through the trend of a scatter graph"
-        ],
-        "answer": "Q3 − Q1; spread of the middle 50%",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
-      },
-      {
-        "id": "q05",
-        "type": "Reasoning",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
-        "question": "What does “Distribution” mean?",
-        "options": [
-          "How a set of values is spread out",
-          "A relationship between two variables",
-          "A straight line through the trend of a scatter graph",
-          "Predicting inside / outside the data range"
-        ],
-        "answer": "How a set of values is spread out",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Distribution means How a set of values is spread out."
-      },
-      {
-        "id": "q06",
-        "type": "Reasoning",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What does “Correlation” mean?",
-        "options": [
-          "A relationship between two variables",
-          "A straight line through the trend of a scatter graph",
-          "Predicting inside / outside the data range",
-          "One thing actually making another happen"
-        ],
-        "answer": "A relationship between two variables",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Correlation means A relationship between two variables."
-      },
-      {
-        "id": "q07",
-        "type": "Reasoning",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
-        "options": [
-          "Line of best fit",
-          "Interpolation / Extrapolation",
-          "Causation",
-          "Confounding variable"
-        ],
-        "answer": "Line of best fit",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
-      },
-      {
-        "id": "q08",
-        "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Predicting inside / outside the data range?",
-        "options": [
-          "Interpolation / Extrapolation",
-          "Causation",
-          "Confounding variable",
-          "Bias"
-        ],
-        "answer": "Interpolation / Extrapolation",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: One thing actually making another happen?",
-        "options": [
-          "Causation",
-          "Confounding variable",
-          "Bias",
-          "Outlier"
-        ],
-        "answer": "Causation",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Causation means One thing actually making another happen."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A hidden factor affecting both variables?",
-        "options": [
-          "Confounding variable",
-          "Bias",
-          "Outlier",
-          "Mean / Median / Mode"
-        ],
-        "answer": "Confounding variable",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Confounding variable means A hidden factor affecting both variables."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A systematic error that skews results one way?",
-        "options": [
-          "Bias",
-          "Outlier",
-          "Mean / Median / Mode",
-          "Range"
-        ],
-        "answer": "Bias",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Bias means A systematic error that skews results one way."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A value far from the rest of the data?",
-        "options": [
-          "Outlier",
-          "Mean / Median / Mode",
-          "Range",
-          "Quartiles (Q1, Q3)"
-        ],
-        "answer": "Outlier",
-        "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Outlier means A value far from the rest of the data."
       }
     ]
   },
@@ -1091,6 +1091,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 11, 6, 17, 1, 18, 11. Which value appears most often (the mode)?",
+            "choices": [
+              "6",
+              "11",
+              "18",
+              "1"
+            ],
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "11 appears more than any other value, so it is the mode."
+          },
+          {
+            "prompt": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
+            "choices": [
+              "7",
+              "17",
+              "19",
+              "18"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 18."
+          },
+          {
+            "prompt": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
+            "choices": [
+              "40",
+              "38",
+              "16",
+              "39"
+            ],
+            "answer": "39",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
+          },
+          {
             "prompt": "What does “Mean / Median / Mode” mean?",
             "choices": [
               "The three averages: total÷n / middle / most frequent",
@@ -1101,42 +1137,6 @@
             "answer": "The three averages: total÷n / middle / most frequent",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
-          },
-          {
-            "prompt": "What does “IQR” mean?",
-            "choices": [
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out",
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph"
-            ],
-            "answer": "Q3 − Q1; spread of the middle 50%",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
-          },
-          {
-            "prompt": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
-            "choices": [
-              "Line of best fit",
-              "Interpolation / Extrapolation",
-              "Causation",
-              "Confounding variable"
-            ],
-            "answer": "Line of best fit",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
-          },
-          {
-            "prompt": "Which term matches this meaning: A hidden factor affecting both variables?",
-            "choices": [
-              "Confounding variable",
-              "Bias",
-              "Outlier",
-              "Mean / Median / Mode"
-            ],
-            "answer": "Confounding variable",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Confounding variable means A hidden factor affecting both variables."
           }
         ]
       },
@@ -1149,6 +1149,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 10, 8, 6, 17, 13. What is the range?",
+            "choices": [
+              "6",
+              "12",
+              "11",
+              "17"
+            ],
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 17 − 6 = 11."
+          },
+          {
+            "prompt": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
+            "choices": [
+              "21",
+              "20",
+              "3",
+              "19"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 20."
+          },
+          {
+            "prompt": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
+            "choices": [
+              "3",
+              "10",
+              "9",
+              "19"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 appears more than any other value, so it is the mode."
+          },
+          {
             "prompt": "What does “Range” mean?",
             "choices": [
               "Highest minus lowest value",
@@ -1159,42 +1195,6 @@
             "answer": "Highest minus lowest value",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Range means Highest minus lowest value."
-          },
-          {
-            "prompt": "What does “Distribution” mean?",
-            "choices": [
-              "How a set of values is spread out",
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph",
-              "Predicting inside / outside the data range"
-            ],
-            "answer": "How a set of values is spread out",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Distribution means How a set of values is spread out."
-          },
-          {
-            "prompt": "Which term matches this meaning: Predicting inside / outside the data range?",
-            "choices": [
-              "Interpolation / Extrapolation",
-              "Causation",
-              "Confounding variable",
-              "Bias"
-            ],
-            "answer": "Interpolation / Extrapolation",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
-          },
-          {
-            "prompt": "Which term matches this meaning: A systematic error that skews results one way?",
-            "choices": [
-              "Bias",
-              "Outlier",
-              "Mean / Median / Mode",
-              "Range"
-            ],
-            "answer": "Bias",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Bias means A systematic error that skews results one way."
           }
         ]
       },
@@ -1207,6 +1207,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
+            "choices": [
+              "15",
+              "7",
+              "16",
+              "2"
+            ],
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 16."
+          },
+          {
+            "prompt": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
+            "choices": [
+              "17",
+              "18",
+              "19",
+              "1"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+          },
+          {
+            "prompt": "Here is some data: 9, 1, 17, 11, 3, 9. Which value appears most often (the mode)?",
+            "choices": [
+              "1",
+              "10",
+              "9",
+              "17"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 appears more than any other value, so it is the mode."
+          },
+          {
             "prompt": "What does “Quartiles (Q1, Q3)” mean?",
             "choices": [
               "Values splitting ordered data into quarters",
@@ -1217,42 +1253,6 @@
             "answer": "Values splitting ordered data into quarters",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
-          },
-          {
-            "prompt": "What does “Correlation” mean?",
-            "choices": [
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph",
-              "Predicting inside / outside the data range",
-              "One thing actually making another happen"
-            ],
-            "answer": "A relationship between two variables",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Correlation means A relationship between two variables."
-          },
-          {
-            "prompt": "Which term matches this meaning: One thing actually making another happen?",
-            "choices": [
-              "Causation",
-              "Confounding variable",
-              "Bias",
-              "Outlier"
-            ],
-            "answer": "Causation",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Causation means One thing actually making another happen."
-          },
-          {
-            "prompt": "Which term matches this meaning: A value far from the rest of the data?",
-            "choices": [
-              "Outlier",
-              "Mean / Median / Mode",
-              "Range",
-              "Quartiles (Q1, Q3)"
-            ],
-            "answer": "Outlier",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Outlier means A value far from the rest of the data."
           }
         ]
       },
@@ -1265,40 +1265,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “IQR” mean?",
+            "prompt": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
             "choices": [
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out",
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph"
+              "7",
+              "17",
+              "19",
+              "18"
             ],
-            "answer": "Q3 − Q1; spread of the middle 50%",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 18."
           },
           {
-            "prompt": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
+            "prompt": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
             "choices": [
-              "Line of best fit",
-              "Interpolation / Extrapolation",
-              "Causation",
-              "Confounding variable"
+              "40",
+              "38",
+              "16",
+              "39"
             ],
-            "answer": "Line of best fit",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
-          },
-          {
-            "prompt": "Which term matches this meaning: A hidden factor affecting both variables?",
-            "choices": [
-              "Confounding variable",
-              "Bias",
-              "Outlier",
-              "Mean / Median / Mode"
-            ],
-            "answer": "Confounding variable",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Confounding variable means A hidden factor affecting both variables."
+            "answer": "39",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
           },
           {
             "prompt": "What does “Mean / Median / Mode” mean?",
@@ -1311,6 +1299,18 @@
             "answer": "The three averages: total÷n / middle / most frequent",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+          },
+          {
+            "prompt": "Here is some data: 11, 6, 17, 1, 18, 11. Which value appears most often (the mode)?",
+            "choices": [
+              "6",
+              "11",
+              "18",
+              "1"
+            ],
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "11 appears more than any other value, so it is the mode."
           }
         ]
       },
@@ -1323,40 +1323,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Distribution” mean?",
+            "prompt": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
             "choices": [
-              "How a set of values is spread out",
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph",
-              "Predicting inside / outside the data range"
+              "21",
+              "20",
+              "3",
+              "19"
             ],
-            "answer": "How a set of values is spread out",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Distribution means How a set of values is spread out."
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 20."
           },
           {
-            "prompt": "Which term matches this meaning: Predicting inside / outside the data range?",
+            "prompt": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
             "choices": [
-              "Interpolation / Extrapolation",
-              "Causation",
-              "Confounding variable",
-              "Bias"
+              "3",
+              "10",
+              "9",
+              "19"
             ],
-            "answer": "Interpolation / Extrapolation",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
-          },
-          {
-            "prompt": "Which term matches this meaning: A systematic error that skews results one way?",
-            "choices": [
-              "Bias",
-              "Outlier",
-              "Mean / Median / Mode",
-              "Range"
-            ],
-            "answer": "Bias",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Bias means A systematic error that skews results one way."
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 appears more than any other value, so it is the mode."
           },
           {
             "prompt": "What does “Range” mean?",
@@ -1369,6 +1357,18 @@
             "answer": "Highest minus lowest value",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Range means Highest minus lowest value."
+          },
+          {
+            "prompt": "Here is some data: 10, 8, 6, 17, 13. What is the range?",
+            "choices": [
+              "6",
+              "12",
+              "11",
+              "17"
+            ],
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 17 − 6 = 11."
           }
         ]
       },
@@ -1381,40 +1381,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Correlation” mean?",
+            "prompt": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
             "choices": [
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph",
-              "Predicting inside / outside the data range",
-              "One thing actually making another happen"
+              "17",
+              "18",
+              "19",
+              "1"
             ],
-            "answer": "A relationship between two variables",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Correlation means A relationship between two variables."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
           },
           {
-            "prompt": "Which term matches this meaning: One thing actually making another happen?",
+            "prompt": "Here is some data: 9, 1, 17, 11, 3, 9. Which value appears most often (the mode)?",
             "choices": [
-              "Causation",
-              "Confounding variable",
-              "Bias",
-              "Outlier"
+              "1",
+              "10",
+              "9",
+              "17"
             ],
-            "answer": "Causation",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Causation means One thing actually making another happen."
-          },
-          {
-            "prompt": "Which term matches this meaning: A value far from the rest of the data?",
-            "choices": [
-              "Outlier",
-              "Mean / Median / Mode",
-              "Range",
-              "Quartiles (Q1, Q3)"
-            ],
-            "answer": "Outlier",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Outlier means A value far from the rest of the data."
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 appears more than any other value, so it is the mode."
           },
           {
             "prompt": "What does “Quartiles (Q1, Q3)” mean?",
@@ -1427,6 +1415,18 @@
             "answer": "Values splitting ordered data into quarters",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
             "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+          },
+          {
+            "prompt": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
+            "choices": [
+              "15",
+              "7",
+              "16",
+              "2"
+            ],
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 16."
           }
         ]
       },
@@ -1439,28 +1439,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
+            "prompt": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
             "choices": [
-              "Line of best fit",
-              "Interpolation / Extrapolation",
-              "Causation",
-              "Confounding variable"
+              "40",
+              "38",
+              "16",
+              "39"
             ],
-            "answer": "Line of best fit",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
-          },
-          {
-            "prompt": "Which term matches this meaning: A hidden factor affecting both variables?",
-            "choices": [
-              "Confounding variable",
-              "Bias",
-              "Outlier",
-              "Mean / Median / Mode"
-            ],
-            "answer": "Confounding variable",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Confounding variable means A hidden factor affecting both variables."
+            "answer": "39",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
           },
           {
             "prompt": "What does “Mean / Median / Mode” mean?",
@@ -1475,16 +1463,28 @@
             "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
           },
           {
-            "prompt": "What does “IQR” mean?",
+            "prompt": "Here is some data: 11, 6, 17, 1, 18, 11. Which value appears most often (the mode)?",
             "choices": [
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out",
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph"
+              "6",
+              "11",
+              "18",
+              "1"
             ],
-            "answer": "Q3 − Q1; spread of the middle 50%",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "11 appears more than any other value, so it is the mode."
+          },
+          {
+            "prompt": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
+            "choices": [
+              "7",
+              "17",
+              "19",
+              "18"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 18."
           }
         ]
       },
@@ -1497,28 +1497,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Predicting inside / outside the data range?",
+            "prompt": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
             "choices": [
-              "Interpolation / Extrapolation",
-              "Causation",
-              "Confounding variable",
-              "Bias"
+              "3",
+              "10",
+              "9",
+              "19"
             ],
-            "answer": "Interpolation / Extrapolation",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
-          },
-          {
-            "prompt": "Which term matches this meaning: A systematic error that skews results one way?",
-            "choices": [
-              "Bias",
-              "Outlier",
-              "Mean / Median / Mode",
-              "Range"
-            ],
-            "answer": "Bias",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Bias means A systematic error that skews results one way."
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 appears more than any other value, so it is the mode."
           },
           {
             "prompt": "What does “Range” mean?",
@@ -1533,16 +1521,28 @@
             "explanation": "Range means Highest minus lowest value."
           },
           {
-            "prompt": "What does “Distribution” mean?",
+            "prompt": "Here is some data: 10, 8, 6, 17, 13. What is the range?",
             "choices": [
-              "How a set of values is spread out",
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph",
-              "Predicting inside / outside the data range"
+              "6",
+              "12",
+              "11",
+              "17"
             ],
-            "answer": "How a set of values is spread out",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Distribution means How a set of values is spread out."
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 17 − 6 = 11."
+          },
+          {
+            "prompt": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
+            "choices": [
+              "21",
+              "20",
+              "3",
+              "19"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 20."
           }
         ]
       },
@@ -1555,28 +1555,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: One thing actually making another happen?",
+            "prompt": "Here is some data: 9, 1, 17, 11, 3, 9. Which value appears most often (the mode)?",
             "choices": [
-              "Causation",
-              "Confounding variable",
-              "Bias",
-              "Outlier"
+              "1",
+              "10",
+              "9",
+              "17"
             ],
-            "answer": "Causation",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Causation means One thing actually making another happen."
-          },
-          {
-            "prompt": "Which term matches this meaning: A value far from the rest of the data?",
-            "choices": [
-              "Outlier",
-              "Mean / Median / Mode",
-              "Range",
-              "Quartiles (Q1, Q3)"
-            ],
-            "answer": "Outlier",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Outlier means A value far from the rest of the data."
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 appears more than any other value, so it is the mode."
           },
           {
             "prompt": "What does “Quartiles (Q1, Q3)” mean?",
@@ -1591,16 +1579,28 @@
             "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
           },
           {
-            "prompt": "What does “Correlation” mean?",
+            "prompt": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
             "choices": [
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph",
-              "Predicting inside / outside the data range",
-              "One thing actually making another happen"
+              "15",
+              "7",
+              "16",
+              "2"
             ],
-            "answer": "A relationship between two variables",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Correlation means A relationship between two variables."
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 16."
+          },
+          {
+            "prompt": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
+            "choices": [
+              "17",
+              "18",
+              "19",
+              "1"
+            ],
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
           }
         ]
       },
@@ -1612,18 +1612,6 @@
         "description": "Practise confounding variable through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A hidden factor affecting both variables?",
-            "choices": [
-              "Confounding variable",
-              "Bias",
-              "Outlier",
-              "Mean / Median / Mode"
-            ],
-            "answer": "Confounding variable",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Confounding variable means A hidden factor affecting both variables."
-          },
           {
             "prompt": "What does “Mean / Median / Mode” mean?",
             "choices": [
@@ -1637,28 +1625,40 @@
             "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
           },
           {
-            "prompt": "What does “IQR” mean?",
+            "prompt": "Here is some data: 11, 6, 17, 1, 18, 11. Which value appears most often (the mode)?",
             "choices": [
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out",
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph"
+              "6",
+              "11",
+              "18",
+              "1"
             ],
-            "answer": "Q3 − Q1; spread of the middle 50%",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "11 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "Which term matches this meaning: A straight line through the trend of a scatter graph?",
+            "prompt": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
             "choices": [
-              "Line of best fit",
-              "Interpolation / Extrapolation",
-              "Causation",
-              "Confounding variable"
+              "7",
+              "17",
+              "19",
+              "18"
             ],
-            "answer": "Line of best fit",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Line of best fit means A straight line through the trend of a scatter graph."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 18."
+          },
+          {
+            "prompt": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
+            "choices": [
+              "40",
+              "38",
+              "16",
+              "39"
+            ],
+            "answer": "39",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
           }
         ]
       },
@@ -1670,18 +1670,6 @@
         "description": "Practise bias through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A systematic error that skews results one way?",
-            "choices": [
-              "Bias",
-              "Outlier",
-              "Mean / Median / Mode",
-              "Range"
-            ],
-            "answer": "Bias",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Bias means A systematic error that skews results one way."
-          },
           {
             "prompt": "What does “Range” mean?",
             "choices": [
@@ -1695,28 +1683,40 @@
             "explanation": "Range means Highest minus lowest value."
           },
           {
-            "prompt": "What does “Distribution” mean?",
+            "prompt": "Here is some data: 10, 8, 6, 17, 13. What is the range?",
             "choices": [
-              "How a set of values is spread out",
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph",
-              "Predicting inside / outside the data range"
+              "6",
+              "12",
+              "11",
+              "17"
             ],
-            "answer": "How a set of values is spread out",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Distribution means How a set of values is spread out."
+            "answer": "11",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 17 − 6 = 11."
           },
           {
-            "prompt": "Which term matches this meaning: Predicting inside / outside the data range?",
+            "prompt": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
             "choices": [
-              "Interpolation / Extrapolation",
-              "Causation",
-              "Confounding variable",
-              "Bias"
+              "21",
+              "20",
+              "3",
+              "19"
             ],
-            "answer": "Interpolation / Extrapolation",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Interpolation / Extrapolation means Predicting inside / outside the data range."
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 20."
+          },
+          {
+            "prompt": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
+            "choices": [
+              "3",
+              "10",
+              "9",
+              "19"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 appears more than any other value, so it is the mode."
           }
         ]
       },
@@ -1728,18 +1728,6 @@
         "description": "Practise outlier through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A value far from the rest of the data?",
-            "choices": [
-              "Outlier",
-              "Mean / Median / Mode",
-              "Range",
-              "Quartiles (Q1, Q3)"
-            ],
-            "answer": "Outlier",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Outlier means A value far from the rest of the data."
-          },
           {
             "prompt": "What does “Quartiles (Q1, Q3)” mean?",
             "choices": [
@@ -1753,28 +1741,40 @@
             "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
           },
           {
-            "prompt": "What does “Correlation” mean?",
+            "prompt": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
             "choices": [
-              "A relationship between two variables",
-              "A straight line through the trend of a scatter graph",
-              "Predicting inside / outside the data range",
-              "One thing actually making another happen"
+              "15",
+              "7",
+              "16",
+              "2"
             ],
-            "answer": "A relationship between two variables",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Correlation means A relationship between two variables."
+            "answer": "16",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Look for the biggest number: 16."
           },
           {
-            "prompt": "Which term matches this meaning: One thing actually making another happen?",
+            "prompt": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
             "choices": [
-              "Causation",
-              "Confounding variable",
-              "Bias",
-              "Outlier"
+              "17",
+              "18",
+              "19",
+              "1"
             ],
-            "answer": "Causation",
-            "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Causation means One thing actually making another happen."
+            "answer": "18",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+          },
+          {
+            "prompt": "Here is some data: 9, 1, 17, 11, 3, 9. Which value appears most often (the mode)?",
+            "choices": [
+              "1",
+              "10",
+              "9",
+              "17"
+            ],
+            "answer": "9",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 appears more than any other value, so it is the mode."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:03:33.161Z",
+  "generatedAt": "2026-07-21T07:21:49.926Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -885,9 +885,153 @@
     "questions": [
       {
         "id": "q01",
-        "type": "Concept",
+        "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
+        "question": "Round 888,153 to the nearest 10.",
+        "options": [
+          "888140",
+          "888151",
+          "888150",
+          "888160"
+        ],
+        "answer": "888150",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "888153 rounds to 888,150 — look at the ones digit."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "In the number 59,006, what is the value of the digit 9?",
+        "options": [
+          "9000",
+          "9",
+          "90000",
+          "900"
+        ],
+        "answer": "9000",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "9 is in the thousands place, so it is worth 9,000."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "Which number is greater: 667,945 or 281,326?",
+        "options": [
+          "667,945",
+          "281,326",
+          "They are equal",
+          "667,946"
+        ],
+        "answer": "667,945",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "667,945 is greater than 281,326."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "In the number 22,391, what is the value of the digit 3?",
+        "options": [
+          "30",
+          "300",
+          "3",
+          "3000"
+        ],
+        "answer": "300",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "3 is in the hundreds place, so it is worth 300."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Which number is greater: 998,629 or 271,639?",
+        "options": [
+          "998,630",
+          "998,629",
+          "271,639",
+          "They are equal"
+        ],
+        "answer": "998,629",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "998,629 is greater than 271,639."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "In the number 40,165, what is the value of the digit 4?",
+        "options": [
+          "40000",
+          "4",
+          "400000",
+          "4000"
+        ],
+        "answer": "40000",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "4 is in the ten thousands place, so it is worth 40,000."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which number is greater: 472,569 or 468,939?",
+        "options": [
+          "468,939",
+          "They are equal",
+          "472,570",
+          "472,569"
+        ],
+        "answer": "472,569",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "472,569 is greater than 468,939."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "In the number 35,021, what is the value of the digit 2?",
+        "options": [
+          "200",
+          "21",
+          "20",
+          "2"
+        ],
+        "answer": "20",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "2 is in the tens place, so it is worth 20."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "What number comes just after 909,141?",
+        "options": [
+          "909143",
+          "909151",
+          "909142",
+          "909140"
+        ],
+        "answer": "909142",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Counting on one from 909,141 gives 909,142."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
         "question": "What does “Integer” mean?",
         "options": [
           "A positive whole number, a negative whole number, or zero",
@@ -900,10 +1044,10 @@
         "explanation": "Integer means A positive whole number, a negative whole number, or zero."
       },
       {
-        "id": "q02",
-        "type": "Concept",
-        "outcomeId": "lo02",
-        "difficulty": "Basic",
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
         "question": "What does “Opposite” mean?",
         "options": [
           "The number the same distance from zero on the other side",
@@ -916,10 +1060,10 @@
         "explanation": "Opposite means The number the same distance from zero on the other side."
       },
       {
-        "id": "q03",
-        "type": "Concept",
-        "outcomeId": "lo03",
-        "difficulty": "Basic",
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
         "question": "What does “Absolute value” mean?",
         "options": [
           "Distance from zero; always positive or zero",
@@ -928,150 +1072,6 @@
           "Lowest common multiple – smallest shared multiple"
         ],
         "answer": "Distance from zero; always positive or zero",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Absolute value means Distance from zero; always positive or zero."
-      },
-      {
-        "id": "q04",
-        "type": "Concept",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
-        "question": "What does “Multiple” mean?",
-        "options": [
-          "The result of multiplying a number by an integer",
-          "A number that divides exactly into another",
-          "Lowest common multiple – smallest shared multiple",
-          "Highest common factor – largest shared factor"
-        ],
-        "answer": "The result of multiplying a number by an integer",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Multiple means The result of multiplying a number by an integer."
-      },
-      {
-        "id": "q05",
-        "type": "Reasoning",
-        "outcomeId": "lo05",
-        "difficulty": "Core",
-        "question": "What does “Factor” mean?",
-        "options": [
-          "A number that divides exactly into another",
-          "Lowest common multiple – smallest shared multiple",
-          "Highest common factor – largest shared factor",
-          "Reverses squaring: √25 = 5"
-        ],
-        "answer": "A number that divides exactly into another",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Factor means A number that divides exactly into another."
-      },
-      {
-        "id": "q06",
-        "type": "Reasoning",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What does “LCM” mean?",
-        "options": [
-          "Lowest common multiple – smallest shared multiple",
-          "Highest common factor – largest shared factor",
-          "Reverses squaring: √25 = 5",
-          "Reverses cubing: ∛27 = 3"
-        ],
-        "answer": "Lowest common multiple – smallest shared multiple",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "LCM means Lowest common multiple – smallest shared multiple."
-      },
-      {
-        "id": "q07",
-        "type": "Reasoning",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Highest common factor – largest shared factor?",
-        "options": [
-          "HCF",
-          "Square root",
-          "Cube root",
-          "Integer"
-        ],
-        "answer": "HCF",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "HCF means Highest common factor – largest shared factor."
-      },
-      {
-        "id": "q08",
-        "type": "Reasoning",
-        "outcomeId": "lo08",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Reverses squaring: √25 = 5?",
-        "options": [
-          "Square root",
-          "Cube root",
-          "Integer",
-          "Opposite"
-        ],
-        "answer": "Square root",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Square root means Reverses squaring: √25 = 5."
-      },
-      {
-        "id": "q09",
-        "type": "Reasoning",
-        "outcomeId": "lo01",
-        "difficulty": "Core",
-        "question": "Which term matches this meaning: Reverses cubing: ∛27 = 3?",
-        "options": [
-          "Cube root",
-          "Integer",
-          "Opposite",
-          "Absolute value"
-        ],
-        "answer": "Cube root",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Cube root means Reverses cubing: ∛27 = 3."
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo02",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: A positive whole number, a negative whole number, or zero?",
-        "options": [
-          "Integer",
-          "Absolute value",
-          "Multiple",
-          "Factor"
-        ],
-        "answer": "Integer",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Integer means A positive whole number, a negative whole number, or zero."
-      },
-      {
-        "id": "q11",
-        "type": "Reasoning",
-        "outcomeId": "lo03",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: The number the same distance from zero on the other side?",
-        "options": [
-          "Opposite",
-          "Multiple",
-          "Factor",
-          "LCM"
-        ],
-        "answer": "Opposite",
-        "hint": "Use the Unit 1 Math Words & Symbols reference.",
-        "explanation": "Opposite means The number the same distance from zero on the other side."
-      },
-      {
-        "id": "q12",
-        "type": "Reasoning",
-        "outcomeId": "lo04",
-        "difficulty": "Challenge",
-        "question": "Which term matches this meaning: Distance from zero; always positive or zero?",
-        "options": [
-          "Absolute value",
-          "Factor",
-          "LCM",
-          "HCF"
-        ],
-        "answer": "Absolute value",
         "hint": "Use the Unit 1 Math Words & Symbols reference.",
         "explanation": "Absolute value means Distance from zero; always positive or zero."
       }
@@ -1089,6 +1089,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Round 888,153 to the nearest 10.",
+            "choices": [
+              "888140",
+              "888151",
+              "888150",
+              "888160"
+            ],
+            "answer": "888150",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "888153 rounds to 888,150 — look at the ones digit."
+          },
+          {
+            "prompt": "In the number 22,391, what is the value of the digit 3?",
+            "choices": [
+              "30",
+              "300",
+              "3",
+              "3000"
+            ],
+            "answer": "300",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "3 is in the hundreds place, so it is worth 300."
+          },
+          {
+            "prompt": "Which number is greater: 472,569 or 468,939?",
+            "choices": [
+              "468,939",
+              "They are equal",
+              "472,570",
+              "472,569"
+            ],
+            "answer": "472,569",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "472,569 is greater than 468,939."
+          },
+          {
             "prompt": "What does “Integer” mean?",
             "choices": [
               "A positive whole number, a negative whole number, or zero",
@@ -1097,42 +1133,6 @@
               "The result of multiplying a number by an integer"
             ],
             "answer": "A positive whole number, a negative whole number, or zero",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Integer means A positive whole number, a negative whole number, or zero."
-          },
-          {
-            "prompt": "What does “Multiple” mean?",
-            "choices": [
-              "The result of multiplying a number by an integer",
-              "A number that divides exactly into another",
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor"
-            ],
-            "answer": "The result of multiplying a number by an integer",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying a number by an integer."
-          },
-          {
-            "prompt": "Which term matches this meaning: Highest common factor – largest shared factor?",
-            "choices": [
-              "HCF",
-              "Square root",
-              "Cube root",
-              "Integer"
-            ],
-            "answer": "HCF",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "HCF means Highest common factor – largest shared factor."
-          },
-          {
-            "prompt": "Which term matches this meaning: A positive whole number, a negative whole number, or zero?",
-            "choices": [
-              "Integer",
-              "Absolute value",
-              "Multiple",
-              "Factor"
-            ],
-            "answer": "Integer",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
             "explanation": "Integer means A positive whole number, a negative whole number, or zero."
           }
@@ -1147,6 +1147,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "In the number 59,006, what is the value of the digit 9?",
+            "choices": [
+              "9000",
+              "9",
+              "90000",
+              "900"
+            ],
+            "answer": "9000",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 is in the thousands place, so it is worth 9,000."
+          },
+          {
+            "prompt": "Which number is greater: 998,629 or 271,639?",
+            "choices": [
+              "998,630",
+              "998,629",
+              "271,639",
+              "They are equal"
+            ],
+            "answer": "998,629",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "998,629 is greater than 271,639."
+          },
+          {
+            "prompt": "In the number 35,021, what is the value of the digit 2?",
+            "choices": [
+              "200",
+              "21",
+              "20",
+              "2"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 is in the tens place, so it is worth 20."
+          },
+          {
             "prompt": "What does “Opposite” mean?",
             "choices": [
               "The number the same distance from zero on the other side",
@@ -1155,42 +1191,6 @@
               "A number that divides exactly into another"
             ],
             "answer": "The number the same distance from zero on the other side",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Opposite means The number the same distance from zero on the other side."
-          },
-          {
-            "prompt": "What does “Factor” mean?",
-            "choices": [
-              "A number that divides exactly into another",
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor",
-              "Reverses squaring: √25 = 5"
-            ],
-            "answer": "A number that divides exactly into another",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
-          },
-          {
-            "prompt": "Which term matches this meaning: Reverses squaring: √25 = 5?",
-            "choices": [
-              "Square root",
-              "Cube root",
-              "Integer",
-              "Opposite"
-            ],
-            "answer": "Square root",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Square root means Reverses squaring: √25 = 5."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number the same distance from zero on the other side?",
-            "choices": [
-              "Opposite",
-              "Multiple",
-              "Factor",
-              "LCM"
-            ],
-            "answer": "Opposite",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
             "explanation": "Opposite means The number the same distance from zero on the other side."
           }
@@ -1205,6 +1205,42 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Which number is greater: 667,945 or 281,326?",
+            "choices": [
+              "667,945",
+              "281,326",
+              "They are equal",
+              "667,946"
+            ],
+            "answer": "667,945",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "667,945 is greater than 281,326."
+          },
+          {
+            "prompt": "In the number 40,165, what is the value of the digit 4?",
+            "choices": [
+              "40000",
+              "4",
+              "400000",
+              "4000"
+            ],
+            "answer": "40000",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "4 is in the ten thousands place, so it is worth 40,000."
+          },
+          {
+            "prompt": "What number comes just after 909,141?",
+            "choices": [
+              "909143",
+              "909151",
+              "909142",
+              "909140"
+            ],
+            "answer": "909142",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Counting on one from 909,141 gives 909,142."
+          },
+          {
             "prompt": "What does “Absolute value” mean?",
             "choices": [
               "Distance from zero; always positive or zero",
@@ -1213,42 +1249,6 @@
               "Lowest common multiple – smallest shared multiple"
             ],
             "answer": "Distance from zero; always positive or zero",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Absolute value means Distance from zero; always positive or zero."
-          },
-          {
-            "prompt": "What does “LCM” mean?",
-            "choices": [
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor",
-              "Reverses squaring: √25 = 5",
-              "Reverses cubing: ∛27 = 3"
-            ],
-            "answer": "Lowest common multiple – smallest shared multiple",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "LCM means Lowest common multiple – smallest shared multiple."
-          },
-          {
-            "prompt": "Which term matches this meaning: Reverses cubing: ∛27 = 3?",
-            "choices": [
-              "Cube root",
-              "Integer",
-              "Opposite",
-              "Absolute value"
-            ],
-            "answer": "Cube root",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Cube root means Reverses cubing: ∛27 = 3."
-          },
-          {
-            "prompt": "Which term matches this meaning: Distance from zero; always positive or zero?",
-            "choices": [
-              "Absolute value",
-              "Factor",
-              "LCM",
-              "HCF"
-            ],
-            "answer": "Absolute value",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
             "explanation": "Absolute value means Distance from zero; always positive or zero."
           }
@@ -1263,40 +1263,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Multiple” mean?",
+            "prompt": "In the number 22,391, what is the value of the digit 3?",
             "choices": [
-              "The result of multiplying a number by an integer",
-              "A number that divides exactly into another",
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor"
+              "30",
+              "300",
+              "3",
+              "3000"
             ],
-            "answer": "The result of multiplying a number by an integer",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying a number by an integer."
+            "answer": "300",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "3 is in the hundreds place, so it is worth 300."
           },
           {
-            "prompt": "Which term matches this meaning: Highest common factor – largest shared factor?",
+            "prompt": "Which number is greater: 472,569 or 468,939?",
             "choices": [
-              "HCF",
-              "Square root",
-              "Cube root",
-              "Integer"
+              "468,939",
+              "They are equal",
+              "472,570",
+              "472,569"
             ],
-            "answer": "HCF",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "HCF means Highest common factor – largest shared factor."
-          },
-          {
-            "prompt": "Which term matches this meaning: A positive whole number, a negative whole number, or zero?",
-            "choices": [
-              "Integer",
-              "Absolute value",
-              "Multiple",
-              "Factor"
-            ],
-            "answer": "Integer",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Integer means A positive whole number, a negative whole number, or zero."
+            "answer": "472,569",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "472,569 is greater than 468,939."
           },
           {
             "prompt": "What does “Integer” mean?",
@@ -1309,6 +1297,18 @@
             "answer": "A positive whole number, a negative whole number, or zero",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
             "explanation": "Integer means A positive whole number, a negative whole number, or zero."
+          },
+          {
+            "prompt": "Round 888,153 to the nearest 10.",
+            "choices": [
+              "888140",
+              "888151",
+              "888150",
+              "888160"
+            ],
+            "answer": "888150",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "888153 rounds to 888,150 — look at the ones digit."
           }
         ]
       },
@@ -1321,40 +1321,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "Which number is greater: 998,629 or 271,639?",
             "choices": [
-              "A number that divides exactly into another",
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor",
-              "Reverses squaring: √25 = 5"
+              "998,630",
+              "998,629",
+              "271,639",
+              "They are equal"
             ],
-            "answer": "A number that divides exactly into another",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
+            "answer": "998,629",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "998,629 is greater than 271,639."
           },
           {
-            "prompt": "Which term matches this meaning: Reverses squaring: √25 = 5?",
+            "prompt": "In the number 35,021, what is the value of the digit 2?",
             "choices": [
-              "Square root",
-              "Cube root",
-              "Integer",
-              "Opposite"
+              "200",
+              "21",
+              "20",
+              "2"
             ],
-            "answer": "Square root",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Square root means Reverses squaring: √25 = 5."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number the same distance from zero on the other side?",
-            "choices": [
-              "Opposite",
-              "Multiple",
-              "Factor",
-              "LCM"
-            ],
-            "answer": "Opposite",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Opposite means The number the same distance from zero on the other side."
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 is in the tens place, so it is worth 20."
           },
           {
             "prompt": "What does “Opposite” mean?",
@@ -1367,6 +1355,18 @@
             "answer": "The number the same distance from zero on the other side",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
             "explanation": "Opposite means The number the same distance from zero on the other side."
+          },
+          {
+            "prompt": "In the number 59,006, what is the value of the digit 9?",
+            "choices": [
+              "9000",
+              "9",
+              "90000",
+              "900"
+            ],
+            "answer": "9000",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 is in the thousands place, so it is worth 9,000."
           }
         ]
       },
@@ -1379,40 +1379,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “LCM” mean?",
+            "prompt": "In the number 40,165, what is the value of the digit 4?",
             "choices": [
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor",
-              "Reverses squaring: √25 = 5",
-              "Reverses cubing: ∛27 = 3"
+              "40000",
+              "4",
+              "400000",
+              "4000"
             ],
-            "answer": "Lowest common multiple – smallest shared multiple",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "LCM means Lowest common multiple – smallest shared multiple."
+            "answer": "40000",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "4 is in the ten thousands place, so it is worth 40,000."
           },
           {
-            "prompt": "Which term matches this meaning: Reverses cubing: ∛27 = 3?",
+            "prompt": "What number comes just after 909,141?",
             "choices": [
-              "Cube root",
-              "Integer",
-              "Opposite",
-              "Absolute value"
+              "909143",
+              "909151",
+              "909142",
+              "909140"
             ],
-            "answer": "Cube root",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Cube root means Reverses cubing: ∛27 = 3."
-          },
-          {
-            "prompt": "Which term matches this meaning: Distance from zero; always positive or zero?",
-            "choices": [
-              "Absolute value",
-              "Factor",
-              "LCM",
-              "HCF"
-            ],
-            "answer": "Absolute value",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Absolute value means Distance from zero; always positive or zero."
+            "answer": "909142",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Counting on one from 909,141 gives 909,142."
           },
           {
             "prompt": "What does “Absolute value” mean?",
@@ -1425,6 +1413,18 @@
             "answer": "Distance from zero; always positive or zero",
             "clue": "Use the Unit 1 Math Words & Symbols reference.",
             "explanation": "Absolute value means Distance from zero; always positive or zero."
+          },
+          {
+            "prompt": "Which number is greater: 667,945 or 281,326?",
+            "choices": [
+              "667,945",
+              "281,326",
+              "They are equal",
+              "667,946"
+            ],
+            "answer": "667,945",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "667,945 is greater than 281,326."
           }
         ]
       },
@@ -1437,28 +1437,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Highest common factor – largest shared factor?",
+            "prompt": "Which number is greater: 472,569 or 468,939?",
             "choices": [
-              "HCF",
-              "Square root",
-              "Cube root",
-              "Integer"
+              "468,939",
+              "They are equal",
+              "472,570",
+              "472,569"
             ],
-            "answer": "HCF",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "HCF means Highest common factor – largest shared factor."
-          },
-          {
-            "prompt": "Which term matches this meaning: A positive whole number, a negative whole number, or zero?",
-            "choices": [
-              "Integer",
-              "Absolute value",
-              "Multiple",
-              "Factor"
-            ],
-            "answer": "Integer",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Integer means A positive whole number, a negative whole number, or zero."
+            "answer": "472,569",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "472,569 is greater than 468,939."
           },
           {
             "prompt": "What does “Integer” mean?",
@@ -1473,16 +1461,28 @@
             "explanation": "Integer means A positive whole number, a negative whole number, or zero."
           },
           {
-            "prompt": "What does “Multiple” mean?",
+            "prompt": "Round 888,153 to the nearest 10.",
             "choices": [
-              "The result of multiplying a number by an integer",
-              "A number that divides exactly into another",
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor"
+              "888140",
+              "888151",
+              "888150",
+              "888160"
             ],
-            "answer": "The result of multiplying a number by an integer",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying a number by an integer."
+            "answer": "888150",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "888153 rounds to 888,150 — look at the ones digit."
+          },
+          {
+            "prompt": "In the number 22,391, what is the value of the digit 3?",
+            "choices": [
+              "30",
+              "300",
+              "3",
+              "3000"
+            ],
+            "answer": "300",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "3 is in the hundreds place, so it is worth 300."
           }
         ]
       },
@@ -1495,28 +1495,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Reverses squaring: √25 = 5?",
+            "prompt": "In the number 35,021, what is the value of the digit 2?",
             "choices": [
-              "Square root",
-              "Cube root",
-              "Integer",
-              "Opposite"
+              "200",
+              "21",
+              "20",
+              "2"
             ],
-            "answer": "Square root",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Square root means Reverses squaring: √25 = 5."
-          },
-          {
-            "prompt": "Which term matches this meaning: The number the same distance from zero on the other side?",
-            "choices": [
-              "Opposite",
-              "Multiple",
-              "Factor",
-              "LCM"
-            ],
-            "answer": "Opposite",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Opposite means The number the same distance from zero on the other side."
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 is in the tens place, so it is worth 20."
           },
           {
             "prompt": "What does “Opposite” mean?",
@@ -1531,16 +1519,28 @@
             "explanation": "Opposite means The number the same distance from zero on the other side."
           },
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "In the number 59,006, what is the value of the digit 9?",
             "choices": [
-              "A number that divides exactly into another",
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor",
-              "Reverses squaring: √25 = 5"
+              "9000",
+              "9",
+              "90000",
+              "900"
             ],
-            "answer": "A number that divides exactly into another",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
+            "answer": "9000",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 is in the thousands place, so it is worth 9,000."
+          },
+          {
+            "prompt": "Which number is greater: 998,629 or 271,639?",
+            "choices": [
+              "998,630",
+              "998,629",
+              "271,639",
+              "They are equal"
+            ],
+            "answer": "998,629",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "998,629 is greater than 271,639."
           }
         ]
       },
@@ -1553,28 +1553,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which term matches this meaning: Reverses cubing: ∛27 = 3?",
+            "prompt": "What number comes just after 909,141?",
             "choices": [
-              "Cube root",
-              "Integer",
-              "Opposite",
-              "Absolute value"
+              "909143",
+              "909151",
+              "909142",
+              "909140"
             ],
-            "answer": "Cube root",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Cube root means Reverses cubing: ∛27 = 3."
-          },
-          {
-            "prompt": "Which term matches this meaning: Distance from zero; always positive or zero?",
-            "choices": [
-              "Absolute value",
-              "Factor",
-              "LCM",
-              "HCF"
-            ],
-            "answer": "Absolute value",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Absolute value means Distance from zero; always positive or zero."
+            "answer": "909142",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Counting on one from 909,141 gives 909,142."
           },
           {
             "prompt": "What does “Absolute value” mean?",
@@ -1589,16 +1577,28 @@
             "explanation": "Absolute value means Distance from zero; always positive or zero."
           },
           {
-            "prompt": "What does “LCM” mean?",
+            "prompt": "Which number is greater: 667,945 or 281,326?",
             "choices": [
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor",
-              "Reverses squaring: √25 = 5",
-              "Reverses cubing: ∛27 = 3"
+              "667,945",
+              "281,326",
+              "They are equal",
+              "667,946"
             ],
-            "answer": "Lowest common multiple – smallest shared multiple",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "LCM means Lowest common multiple – smallest shared multiple."
+            "answer": "667,945",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "667,945 is greater than 281,326."
+          },
+          {
+            "prompt": "In the number 40,165, what is the value of the digit 4?",
+            "choices": [
+              "40000",
+              "4",
+              "400000",
+              "4000"
+            ],
+            "answer": "40000",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "4 is in the ten thousands place, so it is worth 40,000."
           }
         ]
       },
@@ -1610,18 +1610,6 @@
         "description": "Practise integer through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: A positive whole number, a negative whole number, or zero?",
-            "choices": [
-              "Integer",
-              "Absolute value",
-              "Multiple",
-              "Factor"
-            ],
-            "answer": "Integer",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Integer means A positive whole number, a negative whole number, or zero."
-          },
           {
             "prompt": "What does “Integer” mean?",
             "choices": [
@@ -1635,28 +1623,40 @@
             "explanation": "Integer means A positive whole number, a negative whole number, or zero."
           },
           {
-            "prompt": "What does “Multiple” mean?",
+            "prompt": "Round 888,153 to the nearest 10.",
             "choices": [
-              "The result of multiplying a number by an integer",
-              "A number that divides exactly into another",
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor"
+              "888140",
+              "888151",
+              "888150",
+              "888160"
             ],
-            "answer": "The result of multiplying a number by an integer",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Multiple means The result of multiplying a number by an integer."
+            "answer": "888150",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "888153 rounds to 888,150 — look at the ones digit."
           },
           {
-            "prompt": "Which term matches this meaning: Highest common factor – largest shared factor?",
+            "prompt": "In the number 22,391, what is the value of the digit 3?",
             "choices": [
-              "HCF",
-              "Square root",
-              "Cube root",
-              "Integer"
+              "30",
+              "300",
+              "3",
+              "3000"
             ],
-            "answer": "HCF",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "HCF means Highest common factor – largest shared factor."
+            "answer": "300",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "3 is in the hundreds place, so it is worth 300."
+          },
+          {
+            "prompt": "Which number is greater: 472,569 or 468,939?",
+            "choices": [
+              "468,939",
+              "They are equal",
+              "472,570",
+              "472,569"
+            ],
+            "answer": "472,569",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "472,569 is greater than 468,939."
           }
         ]
       },
@@ -1668,18 +1668,6 @@
         "description": "Practise opposite through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: The number the same distance from zero on the other side?",
-            "choices": [
-              "Opposite",
-              "Multiple",
-              "Factor",
-              "LCM"
-            ],
-            "answer": "Opposite",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Opposite means The number the same distance from zero on the other side."
-          },
           {
             "prompt": "What does “Opposite” mean?",
             "choices": [
@@ -1693,28 +1681,40 @@
             "explanation": "Opposite means The number the same distance from zero on the other side."
           },
           {
-            "prompt": "What does “Factor” mean?",
+            "prompt": "In the number 59,006, what is the value of the digit 9?",
             "choices": [
-              "A number that divides exactly into another",
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor",
-              "Reverses squaring: √25 = 5"
+              "9000",
+              "9",
+              "90000",
+              "900"
             ],
-            "answer": "A number that divides exactly into another",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Factor means A number that divides exactly into another."
+            "answer": "9000",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "9 is in the thousands place, so it is worth 9,000."
           },
           {
-            "prompt": "Which term matches this meaning: Reverses squaring: √25 = 5?",
+            "prompt": "Which number is greater: 998,629 or 271,639?",
             "choices": [
-              "Square root",
-              "Cube root",
-              "Integer",
-              "Opposite"
+              "998,630",
+              "998,629",
+              "271,639",
+              "They are equal"
             ],
-            "answer": "Square root",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Square root means Reverses squaring: √25 = 5."
+            "answer": "998,629",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "998,629 is greater than 271,639."
+          },
+          {
+            "prompt": "In the number 35,021, what is the value of the digit 2?",
+            "choices": [
+              "200",
+              "21",
+              "20",
+              "2"
+            ],
+            "answer": "20",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2 is in the tens place, so it is worth 20."
           }
         ]
       },
@@ -1726,18 +1726,6 @@
         "description": "Practise absolute value through four short challenges.",
         "type": "choice",
         "rounds": [
-          {
-            "prompt": "Which term matches this meaning: Distance from zero; always positive or zero?",
-            "choices": [
-              "Absolute value",
-              "Factor",
-              "LCM",
-              "HCF"
-            ],
-            "answer": "Absolute value",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Absolute value means Distance from zero; always positive or zero."
-          },
           {
             "prompt": "What does “Absolute value” mean?",
             "choices": [
@@ -1751,28 +1739,40 @@
             "explanation": "Absolute value means Distance from zero; always positive or zero."
           },
           {
-            "prompt": "What does “LCM” mean?",
+            "prompt": "Which number is greater: 667,945 or 281,326?",
             "choices": [
-              "Lowest common multiple – smallest shared multiple",
-              "Highest common factor – largest shared factor",
-              "Reverses squaring: √25 = 5",
-              "Reverses cubing: ∛27 = 3"
+              "667,945",
+              "281,326",
+              "They are equal",
+              "667,946"
             ],
-            "answer": "Lowest common multiple – smallest shared multiple",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "LCM means Lowest common multiple – smallest shared multiple."
+            "answer": "667,945",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "667,945 is greater than 281,326."
           },
           {
-            "prompt": "Which term matches this meaning: Reverses cubing: ∛27 = 3?",
+            "prompt": "In the number 40,165, what is the value of the digit 4?",
             "choices": [
-              "Cube root",
-              "Integer",
-              "Opposite",
-              "Absolute value"
+              "40000",
+              "4",
+              "400000",
+              "4000"
             ],
-            "answer": "Cube root",
-            "clue": "Use the Unit 1 Math Words & Symbols reference.",
-            "explanation": "Cube root means Reverses cubing: ∛27 = 3."
+            "answer": "40000",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "4 is in the ten thousands place, so it is worth 40,000."
+          },
+          {
+            "prompt": "What number comes just after 909,141?",
+            "choices": [
+              "909143",
+              "909151",
+              "909142",
+              "909140"
+            ],
+            "answer": "909142",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Counting on one from 909,141 gives 909,142."
           }
         ]
       }

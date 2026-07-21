@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $notice = 'Device registered. Follow the setup steps under the new device card.';
         }
-    } else if (in_array($action, ['remove', 'pause', 'resume'], true)) {
+    } else if (in_array($action, ['remove', 'pause', 'resume', 'learn', 'unlearn'], true)) {
         $deviceid = required_param('deviceid', PARAM_INT);
         $device = pqsn_load_device($deviceid);
         if (!$device || !pqsn_user_may_touch($device, $isstaff, $children)) {
@@ -141,16 +141,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             pqsn_audit($consumerid, $workspaceid, (int)$device->id, 'device_removed', []);
             $notice = 'Device removed. Also delete the DNS setting or profile from the device itself.';
         } else {
-            $device->policy = $action === 'pause' ? 'paused' : 'childsafe';
+            $policies = [
+                'pause' => 'paused',
+                'resume' => 'childsafe',
+                'learn' => 'learning',
+                'unlearn' => 'childsafe',
+            ];
+            $device->policy = $policies[$action];
             $device->policy_until = 0;
             $device->syncstatus = 'pending';
             $device->timemodified = time();
             $DB->update_record('local_prequran_safenet_dev', $device);
             if ($cfg->apiready) {
+                if ($action === 'learn') {
+                    pqsn_ensure_learning_rules();
+                }
                 pqsn_sync_device($device);
             }
             pqsn_audit($consumerid, $workspaceid, (int)$device->id, 'policy_' . $device->policy, []);
-            $notice = $action === 'pause' ? 'Filtering paused for this device.' : 'Child-safe filtering restored.';
+            $messages = [
+                'pause' => 'Filtering paused for this device.',
+                'resume' => 'Child-safe filtering restored.',
+                'learn' => 'Learning Mode on — only approved educational sites work on this device.',
+                'unlearn' => 'Learning Mode off — back to normal child-safe browsing.',
+            ];
+            $notice = $messages[$action];
         }
     } else if ($action === 'syncall' && $isstaff) {
         $pending = $DB->get_records('local_prequran_safenet_dev', ['syncstatus' => 'pending', 'status' => 'active']);
@@ -308,7 +323,11 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
                 <p class="pqsn-meta"><?php echo s($childnames[(int)$device->childid] ?? ('Student ' . (int)$device->childid)); ?> · <?php echo s(ucfirst((string)$device->platform)); ?> · registered <?php echo s(userdate((int)$device->timecreated, '%d %b %Y')); ?></p>
               </div>
               <div>
-                <span class="pqsn-pill"><?php echo (string)$device->policy === 'paused' ? 'Paused' : 'Child-safe'; ?></span>
+                <?php
+                $policylabels = ['paused' => 'Paused', 'learning' => 'Learning Mode', 'childsafe' => 'Child-safe'];
+                $policylabel = $policylabels[(string)$device->policy] ?? 'Child-safe';
+                ?>
+                <span class="pqsn-pill"><?php echo s($policylabel); ?></span>
                 <span class="pqsn-pill"><?php echo (string)$device->syncstatus === 'synced' ? 'On servers' : 'Pending sync'; ?></span>
               </div>
             </div>
@@ -363,9 +382,20 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
               <form method="post">
                 <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
                 <input type="hidden" name="deviceid" value="<?php echo (int)$device->id; ?>">
+                <?php if ((string)$device->policy === 'learning'): ?>
+                  <input type="hidden" name="action" value="unlearn">
+                  <button class="pqsn-btn pqsn-btn--primary" type="submit">Exit Learning Mode</button>
+                <?php else: ?>
+                  <input type="hidden" name="action" value="learn">
+                  <button class="pqsn-btn" type="submit">Learning Mode</button>
+                <?php endif; ?>
+              </form>
+              <form method="post">
+                <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                <input type="hidden" name="deviceid" value="<?php echo (int)$device->id; ?>">
                 <?php if ((string)$device->policy === 'paused'): ?>
                   <input type="hidden" name="action" value="resume">
-                  <button class="pqsn-btn pqsn-btn--primary" type="submit">Resume filtering</button>
+                  <button class="pqsn-btn" type="submit">Resume filtering</button>
                 <?php else: ?>
                   <input type="hidden" name="action" value="pause">
                   <button class="pqsn-btn" type="submit">Pause filtering</button>
@@ -383,7 +413,7 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
       </div>
     </section>
   </div>
-  <p class="pqsn-note" style="margin:16px 0 0">Ehel keeps device browsing summaries for 30 days so parents can review activity; only you and designated school staff can see your child's data. Removing a device deletes it from the filtering servers.</p>
+  <p class="pqsn-note" style="margin:16px 0 0"><strong>Learning Mode</strong> restricts a device to approved educational sites only (everything else is blocked) — useful for homework or focused study. Toggle it any time; it switches back to normal child-safe browsing with one tap. Ehel keeps device browsing summaries for 30 days so parents can review activity; only you and designated school staff can see your child's data. Removing a device deletes it from the filtering servers.</p>
 </div>
 </main>
 <?php

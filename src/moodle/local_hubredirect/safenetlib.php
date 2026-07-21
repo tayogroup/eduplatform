@@ -7,6 +7,11 @@ defined('MOODLE_INTERNAL') || die();
 // the AdGuard Home bridge. The filtering service is offered per consumer via
 // the 'safe_internet' feature flag; all rows are scoped consumerid+workspaceid.
 
+// Learning Mode (allowlist-only) marker. AdGuard rejects custom client tags, so
+// we repurpose the predefined 'user_regular' tag purely as our Learning-Mode
+// flag: rules scoped $ctag=user_regular apply only to devices carrying it.
+const PQSN_LEARN_TAG = 'user_regular';
+
 function pqsn_config(): stdClass {
     $cfg = new stdClass();
     // dnsdomain is the SHARED device hostname base (e.g. dns.safe.eduplatform.ai)
@@ -39,6 +44,58 @@ function pqsn_config(): stdClass {
     $cfg->configured = $cfg->dnsdomain !== '';
     $cfg->apiready = count($cfg->endpoints) > 0;
     return $cfg;
+}
+
+/**
+ * Domains permitted in Learning Mode (allowlist-only). Platform + a curated
+ * educational set; extendable per install via the safenet_learn_extra config
+ * (comma/space separated). This is the school-owned list — parents only toggle.
+ */
+function pqsn_learning_allowlist(): array {
+    $base = [
+        'eduplatform.ai', 'edufortomorrow.com', 'uniso.site', 'quraantest.academy', 'b-cdn.net',
+        'wikipedia.org', 'wikimedia.org', 'wiktionary.org', 'khanacademy.org',
+    ];
+    $extra = trim((string)get_config('local_prequran', 'safenet_learn_extra'));
+    if ($extra !== '') {
+        foreach (preg_split('/[\s,]+/', $extra) as $d) {
+            $d = trim($d);
+            if ($d !== '') {
+                $base[] = $d;
+            }
+        }
+    }
+    return array_values(array_unique($base));
+}
+
+/**
+ * The full AdGuard user-rule set: the always-on platform allowlist, plus the
+ * Learning-Mode rules (dormant until a device carries PQSN_LEARN_TAG). Keeping
+ * the learning rules always present means toggling a device is just a tag change.
+ */
+function pqsn_base_user_rules(): array {
+    $rules = [
+        '@@||eduplatform.ai^$important',
+        '@@||edufortomorrow.com^$important',
+        '@@||uniso.site^$important',
+        '@@||quraantest.academy^$important',
+        '@@||b-cdn.net^$important',
+    ];
+    foreach (pqsn_learning_allowlist() as $d) {
+        $rules[] = '@@||' . $d . '^$ctag=' . PQSN_LEARN_TAG;
+    }
+    // Block everything else — but only for devices tagged as being in Learning Mode.
+    $rules[] = '*$ctag=' . PQSN_LEARN_TAG;
+    return $rules;
+}
+
+/** Push the base+learning ruleset to every resolver (idempotent). */
+function pqsn_ensure_learning_rules(): void {
+    $cfg = pqsn_config();
+    $body = ['rules' => pqsn_base_user_rules()];
+    foreach ($cfg->endpoints as $ep) {
+        pqsn_api_request_ep($ep, 'POST', '/control/filtering/set_rules', $body);
+    }
 }
 
 function pqsn_feature_enabled(?stdClass $consumer): bool {
@@ -205,15 +262,22 @@ function pqsn_api_request(string $method, string $path, ?array $body = null): ar
 }
 
 function pqsn_api_client_payload(stdClass $device): array {
+    $policy = (string)$device->policy;
+    $active = $policy !== 'paused';
+    $tags = ['user_child'];
+    if ($policy === 'learning') {
+        // The Learning-Mode tag activates the allowlist-only $ctag rules.
+        $tags[] = PQSN_LEARN_TAG;
+    }
     return [
         'name' => trim((string)$device->label) !== '' ? (string)$device->label : ('Device ' . $device->clientid),
         'ids' => [(string)$device->clientid],
-        'tags' => ['user_child'],
-        'use_global_settings' => (string)$device->policy !== 'paused',
-        'filtering_enabled' => (string)$device->policy !== 'paused',
-        'parental_enabled' => (string)$device->policy !== 'paused',
+        'tags' => $tags,
+        'use_global_settings' => $active,
+        'filtering_enabled' => $active,
+        'parental_enabled' => $active,
         'safebrowsing_enabled' => true,
-        'safe_search' => ['enabled' => (string)$device->policy !== 'paused'],
+        'safe_search' => ['enabled' => $active],
         'use_global_blocked_services' => true,
         'blocked_services' => [],
         'upstreams' => [],

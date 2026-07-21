@@ -5,7 +5,7 @@ $tasks = [
     [
         'classname' => 'local_prequran\task\safenet_schedule',
         'blocking' => 0,
-        'minute' => '*/5',
+        'minute' => '*/2',
         'hour' => '*',
         'day' => '*',
         'month' => '*',

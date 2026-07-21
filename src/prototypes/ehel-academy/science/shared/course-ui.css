@@ -218,6 +218,7 @@
 .sci-diagram text.sci-mid { font-size: 13px; font-weight: 800; fill: #ffffff; }
 .sci-diagram text.sci-tiny { font-size: 10px; fill: #45606f; }
 .sci-diagram .sci-fill-green { fill: #3aa06a; stroke: #24623f; stroke-width: 2; }
+.sci-diagram .sci-fill-teal { fill: #0f9e8e; stroke: #0a6d62; stroke-width: 2; }
 .sci-diagram .sci-fill-blue { fill: #2f6cdf; stroke: #1b3f87; stroke-width: 2; }
 .sci-diagram .sci-fill-gold { fill: #f2b234; stroke: #b9821f; stroke-width: 2; }
 .sci-diagram .sci-fill-orange { fill: #ef6c1f; stroke: #b04c12; stroke-width: 2; }
@@ -256,3 +257,21 @@
 .exploration-tabs .exploration-tab span:last-child, .method-selector button span:last-child { overflow: hidden; text-overflow: ellipsis; }
 #app { max-width: 100%; overflow-x: hidden; }
 .story-layout, .words-layout, .concept-grid, .task-grid { max-width: 100%; }
+
+/* ===== Misconceptions + connections panels ===== */
+.panel-sub { margin: -6px 0 14px; color: var(--muted); font-size: 13px; }
+.misconception-panel { border-left: 5px solid #e5493f; }
+.misconception { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+.misconception:last-child { border-bottom: 0; }
+.misc-wrong, .misc-right { padding: 12px; border-radius: 9px; }
+.misc-wrong { background: #fdeceb; }
+.misc-right { background: #e9f7ef; }
+.misc-wrong p, .misc-right p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.5; }
+.misc-tag { font-size: 11px; font-weight: 800; letter-spacing: .02em; color: #b3392f; }
+.misc-tag.ok { color: #1f7a4d; }
+.connection-panel { border-left: 5px solid var(--teal); }
+.connection-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.connection { padding: 13px 15px; border: 1px solid var(--line); border-radius: 9px; background: #f6fbfa; }
+.connection strong { display: block; color: var(--teal-dark); margin-bottom: 4px; font-size: 13.5px; }
+.connection span { color: #40616f; font-size: 13px; line-height: 1.5; }
+@media (max-width: 720px) { .misconception, .connection-list { grid-template-columns: 1fr; } }

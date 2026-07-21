@@ -1,6 +1,6 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260715k";
-import { initScienceWebGL } from "./science-webgl.js?v=science-20260721e";
-import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721e";
+import { initScienceWebGL } from "./science-webgl.js?v=science-20260721g";
+import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721g";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -27,6 +27,7 @@ const sections = [
   ["method", "list-checks", "Learn the Method"],
   ["examples", "copy-check", "Worked Examples"],
   ["guided", "lightbulb", "Guided Practice"],
+  ["reference", "book-a", "Quick Reference"],
   ["activities", "blocks", "Experiments"],
   ["games", "gamepad-2", "Games"],
   ["fluency", "star", "Science Fluency"],
@@ -357,6 +358,7 @@ function renderRoute() {
     method: renderLearnMethod,
     examples: renderExamples,
     guided: renderPractice,
+    reference: renderReference,
     activities: renderActivities,
     games: renderGames,
     fluency: renderFluency,
@@ -921,11 +923,22 @@ function drawCapstoneQuizQuestion() {
 }
 
 function renderReference() {
-  const terms = course.reference.terms.map(([term, meaning]) => `<tr><td><strong>${escapeHtml(term)}</strong></td><td>${escapeHtml(meaning)}</td></tr>`).join("");
-  const mistakes = course.reference.commonMistakes.map(([mistake, correction]) => `<tr><td>${escapeHtml(mistake)}</td><td>${escapeHtml(correction)}</td></tr>`).join("");
-  $("#app").innerHTML = `${pageHeader("Keep beside you", "Quick reference", `The key rules, words and corrections extracted from the Unit ${course.unit.unitNo} reference document.`)}
-    <div class="reference-grid">${course.reference.rules.map((rule) => `<article class="panel rule-card"><h2>${escapeHtml(rule.title)}</h2><p>${escapeHtml(rule.text)}</p></article>`).join("")}</div>
-    <div class="reference-grid" style="margin-top:18px"><section class="panel"><h2>Vocabulary</h2><table class="term-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>${terms}</tbody></table></section><section class="panel"><h2>Common mistakes</h2><table class="term-table"><thead><tr><th>Mistake</th><th>Correct approach</th></tr></thead><tbody>${mistakes}</tbody></table></section></div>
+  const ref = course.reference;
+  const terms = ref.terms.map(([term, meaning]) => `<tr><td><strong>${escapeHtml(term)}</strong></td><td>${escapeHtml(meaning)}</td></tr>`).join("");
+  const misconceptions = (ref.commonMistakes || []).length
+    ? `<section class="panel misconception-panel"><h2>Common misconceptions</h2><p class="panel-sub">What learners often think — and what is really true.</p>${ref.commonMistakes.map(([wrong, right]) => `<div class="misconception"><div class="misc-wrong"><span class="misc-tag">✗ Many think</span><p>${escapeHtml(wrong)}</p></div><div class="misc-right"><span class="misc-tag ok">✓ Actually</span><p>${escapeHtml(right)}</p></div></div>`).join("")}</section>`
+    : "";
+  const connections = (ref.connections || []).length
+    ? `<section class="panel connection-panel"><h2>How this connects</h2><p class="panel-sub">Where else you meet these ideas.</p><div class="connection-list">${ref.connections.map((c) => `<article class="connection"><strong>${escapeHtml(c.area)}</strong><span>${escapeHtml(c.text)}</span></article>`).join("")}</div></section>`
+    : "";
+  const rules = (ref.rules || []).length
+    ? `<div class="reference-grid">${ref.rules.map((rule) => `<article class="panel rule-card"><h2>${escapeHtml(rule.title)}</h2><p>${escapeHtml(rule.text)}</p></article>`).join("")}</div>`
+    : "";
+  $("#app").innerHTML = `${pageHeader("Keep beside you", "Quick reference", `Key words, common misconceptions and connections for Unit ${course.unit.unitNo}.`)}
+    ${rules}
+    ${misconceptions}
+    ${connections}
+    <section class="panel" style="margin-top:18px"><h2>Vocabulary</h2><table class="term-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>${terms}</tbody></table></section>
     <p><button class="button primary" id="reference-done" type="button">Reference reviewed ✓</button></p>`;
   $("#reference-done").addEventListener("click", () => complete("reference", "Reference reviewed."));
 }

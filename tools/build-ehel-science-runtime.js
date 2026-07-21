@@ -25,6 +25,94 @@ const sentence = (value = "", max = 250) => {
 
 const EMPTY_DOC = { blocks: [], source_file: "(not provided)" };
 
+// Hand-authored Grade 1 content. The Grade 1 source is a parent/teacher
+// guide, not a student workbook, so it lacks concept headings, named
+// experiments and multiple-choice questions. These age-5-6 overrides give
+// each unit clean concept titles, real investigation names, corrected
+// vocabulary and picture-friendly quiz questions.
+const q = (question, options, answer, explanation) => ({ question, options, answer, explanation });
+const GRADE1 = {
+  1: {
+    conceptTitles: ["Living Things", "Non-Living Things", "Animals Are Alive", "Plants Are Alive", "What Living Things Need", "Caring for Living Things"],
+    experimentTitles: ["Watch a Seed Grow", "Living or Not-Living Hunt", "Does a Plant Need Water?", "Sort Living and Non-Living Things", "Find the Baby Animals", "Draw a Living Thing You Care For"],
+    quiz: [
+      q("Which one is alive?", ["a camel", "a rock", "a metal spoon", "a plastic cup"], "a camel", "A camel moves, eats and grows, so it is alive."),
+      q("Which one is NOT alive?", ["a mango tree", "a goat", "a stone", "a bird"], "a stone", "A stone never eats, grows or moves by itself, so it is not alive."),
+      q("What do living things need to stay alive?", ["food and water", "toys", "a phone", "a car"], "food and water", "All living things need food and water."),
+      q("A baby goat grows into a...", ["big goat", "tree", "rock", "car"], "big goat", "Living things grow. A baby goat grows into a big goat."),
+      q("Which of these is a plant?", ["a mango tree", "a dog", "a fish", "a cat"], "a mango tree", "A mango tree is a plant. It is living."),
+      q("How do we care for a living plant?", ["give it water and light", "put it in a box", "hide it in the dark", "never touch it"], "give it water and light", "Plants need water and light to stay alive and grow."),
+    ],
+  },
+  2: {
+    conceptTitles: ["The Parts of a Plant", "Roots Hold and Drink", "The Stem Carries Water", "Leaves and Flowers", "What Plants Need to Grow", "Looking After a Plant"],
+    experimentTitles: ["Grow a Bean in a Jar", "Plant a Seed and Watch", "Does a Plant Reach for Light?", "Look Inside a Flower", "Water One, Not the Other", "Make a Plant Diary"],
+    quiz: [
+      q("Which part holds the plant in the soil?", ["roots", "flower", "leaf", "petal"], "roots", "Roots hold the plant firm and drink water from the soil."),
+      q("Which part makes food using sunlight?", ["leaves", "roots", "seed", "soil"], "leaves", "Green leaves catch sunlight to make food for the plant."),
+      q("A new plant grows from a...", ["seed", "stone", "spoon", "cup"], "seed", "A seed holds a tiny plant that grows when it gets water and warmth."),
+      q("What do plants need to grow?", ["water, light and air", "toys", "milk", "shoes"], "water, light and air", "Plants need water, light and air to grow well."),
+      q("Which part carries water up to the leaves?", ["the stem", "the flower", "the root hair", "the petal"], "the stem", "The stem holds the plant up and carries water to the leaves."),
+      q("To care for a plant we should...", ["water it and give it light", "keep it in the dark", "never water it", "put it in a bag"], "water it and give it light", "A plant stays healthy with water and light."),
+    ],
+  },
+  3: {
+    conceptTitles: ["Parts of My Body", "My Face", "My Five Senses", "Same and Different", "Keeping Clean and Healthy", "Staying Safe"],
+    experimentTitles: ["Point and Name Body Parts", "Feely Bag: Soft or Hard?", "Listen and Point to the Sound", "Taste Test: Sweet or Sour", "Which Nose Knows? Smell Test", "Draw Myself and Label"],
+    vocabulary: [
+      ["Head", "The top part of your body, above your neck."], ["Arms", "The two long parts joined to your shoulders."],
+      ["Legs", "The two long parts you stand and walk on."], ["Hands", "The parts at the end of your arms, used to hold things."],
+      ["Feet", "The parts at the end of your legs that you stand on."], ["Eyes", "The body part we use to see."],
+      ["Ears", "The body part we use to hear."], ["Nose", "The body part we use to smell."],
+      ["Mouth", "The body part we use to taste and to speak."], ["Senses", "The five ways we learn about the world: see, hear, smell, taste and touch."],
+    ],
+    quiz: [
+      q("Which body part do we use to see?", ["eyes", "ears", "nose", "hands"], "eyes", "We use our eyes to see."),
+      q("Which body part do we use to hear?", ["ears", "eyes", "feet", "mouth"], "ears", "We use our ears to hear sounds."),
+      q("We smell a flower with our...", ["nose", "eyes", "hands", "knees"], "nose", "We use our nose to smell."),
+      q("How many senses do we have?", ["five", "two", "ten", "one"], "five", "We have five senses: sight, hearing, smell, taste and touch."),
+      q("We taste food with our...", ["mouth", "ears", "eyes", "feet"], "mouth", "We taste food using our tongue in our mouth."),
+      q("Which keeps us clean and healthy?", ["washing our hands", "eating mud", "never sleeping", "skipping water"], "washing our hands", "Washing our hands keeps germs away and keeps us healthy."),
+    ],
+  },
+  4: {
+    conceptTitles: ["What Things Are Made Of", "Hard and Soft", "Rough and Smooth", "Bendy and Stiff", "Sorting Materials", "Choosing the Right Material"],
+    experimentTitles: ["Feel and Sort: Hard or Soft", "Rough or Smooth Hunt", "Bendy or Stiff Test", "Will It Float or Sink?", "Build the Strongest Tower", "Sort Toys by Material"],
+    quiz: [
+      q("A pillow feels...", ["soft", "hard", "rough", "stiff"], "soft", "A pillow is soft, so it is nice to rest on."),
+      q("A stone feels...", ["hard", "soft", "bendy", "fluffy"], "hard", "A stone is hard. It does not squash."),
+      q("Which material is bendy?", ["a rubber band", "a brick", "a glass", "a rock"], "a rubber band", "A rubber band bends easily, so it is bendy."),
+      q("Sandpaper feels...", ["rough", "smooth", "soft", "wet"], "rough", "Sandpaper is rough and scratchy to touch."),
+      q("Glass is usually...", ["smooth", "rough", "bendy", "furry"], "smooth", "Glass feels smooth and flat."),
+      q("Which is best for a warm blanket?", ["soft cloth", "hard metal", "sharp glass", "cold stone"], "soft cloth", "Soft cloth is warm and comfy, so it is best for a blanket."),
+    ],
+  },
+  5: {
+    conceptTitles: ["Pushes", "Pulls", "Making Things Move", "Making Things Stop", "Fast and Slow", "Changing Direction"],
+    experimentTitles: ["Push a Toy Car", "Pull a Toy on a String", "Ramp Race: Fast or Slow", "Make a Ball Stop", "Push Hard, Push Gently", "Change the Way It Goes"],
+    quiz: [
+      q("Opening a door by pulling it is a...", ["pull", "push", "lift", "drop"], "pull", "Pulling the door towards you is a pull."),
+      q("Kicking a ball away from you is a...", ["push", "pull", "twist", "stop"], "push", "Kicking pushes the ball away, so it is a push."),
+      q("A push or a pull is called a...", ["force", "colour", "shape", "sound"], "force", "A push or a pull is a force."),
+      q("To make a moving toy stop, you...", ["push against it", "sing to it", "close your eyes", "wait a year"], "push against it", "A force such as a push can make a moving thing stop."),
+      q("If you push a swing harder, it goes...", ["faster", "slower", "backwards only", "nowhere"], "faster", "A bigger push makes things move faster."),
+      q("A push on the side of a ball can...", ["change its direction", "change its colour", "make it sing", "make it vanish"], "change its direction", "A force can change the direction a thing moves in."),
+    ],
+  },
+  6: {
+    conceptTitles: ["What Is Sound?", "How We Hear", "Loud Sounds", "Quiet Sounds", "Making Sounds", "Sounds Around Us"],
+    experimentTitles: ["Listen for One Minute", "Shake a Sound Maker", "Loud and Quiet Sorting", "Feel a Drum Vibrate", "Make a String Buzz", "Guess That Sound"],
+    quiz: [
+      q("We hear with our...", ["ears", "eyes", "nose", "hands"], "ears", "We use our ears to hear sounds."),
+      q("A drum banged hard makes a...", ["loud sound", "quiet sound", "no sound", "cold sound"], "loud sound", "Banging a drum hard makes a loud sound."),
+      q("A whisper is a...", ["quiet sound", "loud sound", "bright light", "warm smell"], "quiet sound", "A whisper is a very quiet sound."),
+      q("Sounds are made when things...", ["shake or vibrate", "sit still", "go to sleep", "turn cold"], "shake or vibrate", "Sounds are made when things vibrate — they shake very fast."),
+      q("Which is a loud sound?", ["a shouting crowd", "a falling feather", "a sleeping cat", "a soft breath"], "a shouting crowd", "A shouting crowd makes a loud sound."),
+      q("To hear a soft sound better, we should...", ["listen quietly", "shout", "cover our ears", "run away"], "listen quietly", "Listening quietly helps us hear soft sounds."),
+    ],
+  },
+};
+
 function buildGrade(grade) {
   const source = model.grades[String(grade)];
   if (!source) throw new Error(`Grade ${grade} missing from the science content model.`);
@@ -66,15 +154,18 @@ function buildGrade(grade) {
   }
 
   function conceptList(lesson, title) {
+    // Source docs mark concepts as "Part N:", "Concept N:", "Topic N:" or
+    // "Section N:" — accept them all.
+    const CONCEPT_MARKER = /^(?:Part|Concept|Topic|Section|Idea)\s+\d+\s*[—:.\-]/i;
     const starts = lesson.blocks
       .map((block, index) => ({ block, index }))
-      .filter(({ block }) => /^Part\s+\d+\s*[—:\-]/i.test(tidy(block.text)));
+      .filter(({ block }) => CONCEPT_MARKER.test(tidy(block.text)));
     let concepts = starts.map(({ block, index }, position) => {
       const end = starts[position + 1]?.index ?? lesson.blocks.length;
       const body = lesson.blocks.slice(index + 1, Math.min(end, index + 10))
         .map((item) => tidy(item.text))
         .filter((text) => text.length > 40 && !/Ask Your AI Tutor|^Remember\b/i.test(text));
-      const heading = tidy(block.text).replace(/^Part\s+\d+\s*[—:\-]\s*/i, "");
+      const heading = tidy(block.text).replace(/^(?:Part|Concept|Topic|Section|Idea)\s+\d+\s*[—:.\-]\s*/i, "");
       return {
         id: `concept-${position + 1}-${slug(heading) || position + 1}`,
         title: heading,
@@ -110,7 +201,8 @@ function buildGrade(grade) {
     }
     const pairs = [];
     for (const row of byRow.values()) {
-      if (row[1] && row[2] && row[1].length < 80 && row[2].length < 240 && !/^(word|term|what it means|meaning)$/i.test(row[1])) pairs.push([row[1], row[2]]);
+      if (row[1] && row[2] && row[1].length < 100 && row[2].length < 260
+          && !/^(word|term|what it means|meaning|mistake|misconception|error|the truth|why it is wrong|correct( approach)?|q|question|answer|explanation|example)$/i.test(row[1])) pairs.push([row[1], row[2]]);
     }
     return pairs;
   }
@@ -147,8 +239,26 @@ function buildGrade(grade) {
     if (mistakeCells.length) commonMistakes = mistakeCells;
     else {
       const lines = sectionBlocks(reference, /common mistakes/i).map((block) => tidy(block.text)).filter((text) => text.length > 15);
-      for (let index = 0; index + 1 < lines.length; index += 2) commonMistakes.push([lines[index], lines[index + 1]]);
+      // Table-less mistakes often read "Mistake ... The truth is ..." — split on that.
+      for (const line of lines) {
+        const m = line.match(/^(.*?)(?:\bthe truth\b|\bactually\b|\bcorrect\b|\binstead\b|—|:)\s*(.+)$/i);
+        if (m && m[1].length > 8 && m[2].length > 8) commonMistakes.push([tidy(m[1]).replace(/[—:]$/, ""), tidy(m[2])]);
+        else if (commonMistakes.length && commonMistakes[commonMistakes.length - 1].length === 1) commonMistakes[commonMistakes.length - 1].push(line);
+        else commonMistakes.push([line]);
+      }
+      commonMistakes = commonMistakes.filter((pair) => pair.length === 2);
     }
+
+    // Cross-curricular / cross-unit connections: authored in almost every
+    // reference doc but previously unused.
+    const connections = sectionBlocks(reference, /connection/i)
+      .map((block) => tidy(block.text))
+      .filter((text) => text.length > 20 && !/^connections?\b/i.test(text))
+      .map((text) => {
+        const m = text.match(/^(Unit\s+\d+[^:—-]*|[A-Z][A-Za-z ]{2,30}?)\s*[:—-]\s*(.+)$/);
+        return m ? { area: tidy(m[1]), text: sentence(m[2], 240) } : { area: "Links", text: sentence(text, 240) };
+      }).slice(0, 6);
+
     terms = terms.slice(0, 12);
 
     // Rich vocabulary: pair each term with an example sentence from the
@@ -161,7 +271,7 @@ function buildGrade(grade) {
       const example = corpus.find((s) => wordRe.test(s) && s.toLowerCase() !== tidy(meaning).toLowerCase() && !/^[a-z ]+:/i.test(s)) || "";
       return { term: head, meaning: tidy(meaning), example: sentence(example, 220), letter: (head[0] || "?").toUpperCase() };
     });
-    return { rules: rules.slice(0, 6), terms, vocabulary, commonMistakes: commonMistakes.slice(0, 6) };
+    return { rules: rules.slice(0, 6), terms, vocabulary, commonMistakes: commonMistakes.slice(0, 6), connections };
   }
 
   function experimentsData(experiments) {
@@ -351,10 +461,27 @@ function buildGrade(grade) {
     const activitiesDoc = docFor(unitNo, "Activities");
     const referenceDoc = docFor(unitNo, "Reference");
     const title = unitTitle(lesson, unitMeta.title, unitNo);
+    const override = grade === 1 ? GRADE1[unitNo] : null;
     const reference = referenceData(referenceDoc, lesson, experimentsDoc);
+    if (override && override.vocabulary) {
+      // Replace weak checklist-derived vocabulary with authored terms.
+      reference.vocabulary = override.vocabulary.map(([term, meaning]) => ({ term, meaning, example: "", letter: (term[0] || "?").toUpperCase() }));
+      reference.terms = override.vocabulary;
+    }
     const experiments = experimentsData(experimentsDoc.blocks.length ? experimentsDoc : activitiesDoc);
-    const { items: practice, mcqs } = practiceData(practiceDoc, activitiesDoc);
-    const concepts = conceptList(lesson, title);
+    const { items: practice, mcqs: rawMcqs } = practiceData(practiceDoc, activitiesDoc);
+    const mcqs = override && override.quiz ? override.quiz.map((entry) => ({ ...entry })) : rawMcqs;
+    let concepts = conceptList(lesson, title);
+    if (override && override.conceptTitles) {
+      // Keep the source explanations but give each concept a clean, authored
+      // title (Grade 1's guide has no concept headings of its own).
+      concepts = override.conceptTitles.map((ctitle, index) => ({
+        id: `concept-${index + 1}-${slug(ctitle)}`,
+        title: ctitle,
+        explanation: concepts[index]?.explanation || `Learn about ${ctitle.toLowerCase()} by looking, listening and talking together.`,
+        example: concepts[index]?.example || ctitle,
+      }));
+    }
     let outcomes = outcomeList(lesson);
     if (!outcomes.length) outcomes = concepts.map((concept) => `Explore and talk about ${concept.title.toLowerCase()}.`).slice(0, 6);
     const assessment = assessmentData(mcqs, reference, unitNo);
@@ -410,6 +537,10 @@ function buildGrade(grade) {
           "Explain your finding to a family member or your teacher.",
         ],
       });
+    }
+    // Grade 1: give investigations clean authored names in order.
+    if (override && override.experimentTitles) {
+      activities.forEach((activity, index) => { if (override.experimentTitles[index]) activity.title = override.experimentTitles[index]; });
     }
 
     const explorations = experiments.slice(0, 6).map((experiment, index) => ({

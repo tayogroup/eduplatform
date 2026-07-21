@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-07-21T05:42:46.601Z",
+  "generatedAt": "2026-07-21T06:07:46.754Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -48,28 +48,40 @@
   ],
   "concepts": [
     {
-      "id": "concept-1-the-parts-of-our-body",
-      "title": "The Parts of Our Body",
+      "id": "concept-1-parts-of-my-body",
+      "title": "Parts of My Body",
       "explanation": "Start with the child's own body. This is the easiest and happiest way to begin, because the science is right there — the child IS the lesson. Stand up together in front of a mirror if you have one.",
       "example": "Touch the top of your head and say the word slowly. Then help the child touch their head."
     },
     {
-      "id": "concept-2-same-and-different",
-      "title": "Same and Different",
+      "id": "concept-2-my-face",
+      "title": "My Face",
       "explanation": "Now help the child see a big, kind idea: all people have the same body parts, and yet every person looks a little different. Both things are true, and both are wonderful. Look at family photos, or look at two or three people in the home.",
       "example": "Point out what is the same: everyone has a head, two eyes, a nose, two hands, and two feet."
     },
     {
-      "id": "concept-3-our-five-senses",
-      "title": "Our Five Senses",
+      "id": "concept-3-my-five-senses",
+      "title": "My Five Senses",
       "explanation": "The senses are the ways our body learns about the world. We have five senses. Teach one at a time. Let the child DO each one, not just hear about it. Before you begin, explain the big idea in a simple way. Say: \"Our body has special helpers called senses. They tell our brain about the world. We have five of them. Today we will meet each one and try it out.\" Then spend one short session on each sense, so the child is never rushed. The best way to teach a sense is to USE it — so gather your simple items and let the…",
       "example": "Our eyes let us see colours, shapes, people, and the bright sun. Ask the child to look around and name things they can see: a cup, the door, a green plant. Then ask them to gently close their eyes and try to point to…"
     },
     {
-      "id": "concept-4-staying-healthy-and-clean",
-      "title": "Staying Healthy and Clean",
+      "id": "concept-4-same-and-different",
+      "title": "Same and Different",
       "explanation": "Now teach the child how to take care of this wonderful body. In Islam, being clean is loved and important. The Prophet (peace be upon him) taught us that cleanliness is a beautiful part of our faith. So washing and keeping clean is both healthy AND a good deed. Go to the sink or a low bowl with a little water and soap.",
       "example": "Wet the hands. Rub in the soap. Make bubbles between the fingers."
+    },
+    {
+      "id": "concept-5-keeping-clean-and-healthy",
+      "title": "Keeping Clean and Healthy",
+      "explanation": "Learn about keeping clean and healthy by looking, listening and talking together.",
+      "example": "Keeping Clean and Healthy"
+    },
+    {
+      "id": "concept-6-staying-safe",
+      "title": "Staying Safe",
+      "explanation": "Learn about staying safe by looking, listening and talking together.",
+      "example": "Staying Safe"
     }
   ],
   "explorations": [
@@ -113,7 +125,7 @@
       "id": "explore-4",
       "outcomeId": "lo01",
       "difficulty": "Explore",
-      "title": "Staying Healthy and Clean",
+      "title": "Same and Different",
       "context": "This is a hybrid unit. That means you, the grown-up, lead the learning. The children are 5 to 6 years old. Most of them cannot read many words yet, so you read aloud, you show, and you play together. The child watches, touches, points, sings, and talks.…",
       "prompt": "Where is your head? Touch it!",
       "answer": "Talk through your answer with a teacher, parent or study partner.",
@@ -126,7 +138,7 @@
     {
       "id": "model-1",
       "outcomeId": "lo01",
-      "title": "The Parts of Our Body",
+      "title": "Parts of My Body",
       "modelType": "concept-model-1",
       "purpose": "Start with the child's own body. This is the easiest and happiest way to begin, because the science is right there — the child IS the lesson. Stand up together in front of a mirror if you have one.",
       "defaultNumber": null
@@ -134,7 +146,7 @@
     {
       "id": "model-2",
       "outcomeId": "lo02",
-      "title": "Same and Different",
+      "title": "My Face",
       "modelType": "concept-model-2",
       "purpose": "Now help the child see a big, kind idea: all people have the same body parts, and yet every person looks a little different. Both things are true, and both are wonderful. Look at family photos, or look at two or three…",
       "defaultNumber": null
@@ -142,7 +154,7 @@
     {
       "id": "model-3",
       "outcomeId": "lo03",
-      "title": "Our Five Senses",
+      "title": "My Five Senses",
       "modelType": "concept-model-3",
       "purpose": "The senses are the ways our body learns about the world. We have five senses. Teach one at a time. Let the child DO each one, not just hear about it. Before you begin, explain the big idea in a simple way. Say: \"Our…",
       "defaultNumber": null
@@ -150,9 +162,25 @@
     {
       "id": "model-4",
       "outcomeId": "lo01",
-      "title": "Staying Healthy and Clean",
+      "title": "Same and Different",
       "modelType": "concept-model-4",
       "purpose": "Now teach the child how to take care of this wonderful body. In Islam, being clean is loved and important. The Prophet (peace be upon him) taught us that cleanliness is a beautiful part of our faith. So washing and…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo02",
+      "title": "Keeping Clean and Healthy",
+      "modelType": "concept-model-5",
+      "purpose": "Learn about keeping clean and healthy by looking, listening and talking together.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo03",
+      "title": "Staying Safe",
+      "modelType": "concept-model-6",
+      "purpose": "Learn about staying safe by looking, listening and talking together.",
       "defaultNumber": null
     }
   ],
@@ -194,7 +222,7 @@
       "id": "method-4",
       "outcomeId": "lo01",
       "difficulty": "Core",
-      "title": "Staying Healthy and Clean",
+      "title": "Same and Different",
       "example": "Wet the hands. Rub in the soap. Make bubbles between the fingers.",
       "steps": [
         "Read the idea and put it in your own words.",
@@ -357,14 +385,7 @@
   ],
   "activities": [
     {
-      "title": "The Mystery Sound",
-      "materials": "Safe everyday materials from home",
-      "steps": [
-        "Follow the investigation plan in your experiments book."
-      ]
-    },
-    {
-      "title": "Smell and Taste Together",
+      "title": "Point and Name Body Parts",
       "materials": "Safe everyday materials from home",
       "steps": [
         "Follow the investigation plan in your experiments book."
@@ -378,30 +399,37 @@
       ]
     },
     {
-      "title": "Observe: Staying Healthy and Clean",
+      "title": "Listen and Point to the Sound",
+      "materials": "Safe everyday materials from home",
+      "steps": [
+        "Follow the investigation plan in your experiments book."
+      ]
+    },
+    {
+      "title": "Taste Test: Sweet or Sour",
       "materials": "Notebook, pencil and safe things you can find at home",
       "steps": [
-        "Look for an example of staying healthy and clean around your home or outside.",
+        "Look for an example of same and different around your home or outside.",
         "Watch it closely for a few minutes and note three things you notice.",
         "Write or draw what you observed, using the unit's science words.",
         "Explain your finding to a family member or your teacher."
       ]
     },
     {
-      "title": "Sort: The Parts of Our Body",
+      "title": "Which Nose Knows? Smell Test",
       "materials": "Notebook, pencil and safe things you can find at home",
       "steps": [
-        "Look for an example of the parts of our body around your home or outside.",
+        "Look for an example of keeping clean and healthy around your home or outside.",
         "Find examples at home and sort them into groups, then explain your rule.",
         "Write or draw what you observed, using the unit's science words.",
         "Explain your finding to a family member or your teacher."
       ]
     },
     {
-      "title": "Test: Same and Different",
+      "title": "Draw Myself and Label",
       "materials": "Notebook, pencil and safe things you can find at home",
       "steps": [
-        "Look for an example of same and different around your home or outside.",
+        "Look for an example of staying safe around your home or outside.",
         "Change one thing, keep everything else the same, and record what happens.",
         "Write or draw what you observed, using the unit's science words.",
         "Explain your finding to a family member or your teacher."
@@ -417,129 +445,110 @@
     ],
     "terms": [
       [
-        "Can-Do Statement",
-        "Seen?"
+        "Head",
+        "The top part of your body, above your neck."
       ],
       [
-        "Points to and names head, arms, legs, hands, feet",
-        "[ ]"
+        "Arms",
+        "The two long parts joined to your shoulders."
       ],
       [
-        "Points to eyes, ears, nose, mouth on the face",
-        "[ ]"
+        "Legs",
+        "The two long parts you stand and walk on."
       ],
       [
-        "Names the five senses and the body part for each",
-        "[ ]"
+        "Hands",
+        "The parts at the end of your arms, used to hold things."
       ],
       [
-        "Tells one way a sense keeps us safe",
-        "[ ]"
+        "Feet",
+        "The parts at the end of your legs that you stand on."
       ],
       [
-        "Sorts a soft thing and a hard thing by touch",
-        "[ ]"
+        "Eyes",
+        "The body part we use to see."
       ],
       [
-        "Washes hands with soap and water with little help",
-        "[ ]"
+        "Ears",
+        "The body part we use to hear."
       ],
       [
-        "Says people are the same and also different",
-        "[ ]"
+        "Nose",
+        "The body part we use to smell."
       ],
       [
-        "Thanks Allah for the body and the senses",
-        "[ ]"
+        "Mouth",
+        "The body part we use to taste and to speak."
       ],
       [
-        "body",
-        "all the parts of you together"
-      ],
-      [
-        "senses",
-        "the five ways we learn about the world"
-      ],
-      [
-        "sight",
-        "seeing with our eyes"
+        "Senses",
+        "The five ways we learn about the world: see, hear, smell, taste and touch."
       ]
     ],
     "vocabulary": [
       {
-        "term": "Can-Do Statement",
-        "meaning": "Seen?",
+        "term": "Head",
+        "meaning": "The top part of your body, above your neck.",
         "example": "",
-        "letter": "C"
+        "letter": "H"
       },
       {
-        "term": "Points to and names head, arms, legs, hands, feet",
-        "meaning": "[ ]",
-        "example": "Points to and names head, arms, legs, hands, feet",
-        "letter": "P"
+        "term": "Arms",
+        "meaning": "The two long parts joined to your shoulders.",
+        "example": "",
+        "letter": "A"
       },
       {
-        "term": "Points to eyes, ears, nose, mouth on the face",
-        "meaning": "[ ]",
-        "example": "Points to eyes, ears, nose, mouth on the face",
-        "letter": "P"
+        "term": "Legs",
+        "meaning": "The two long parts you stand and walk on.",
+        "example": "",
+        "letter": "L"
       },
       {
-        "term": "Names the five senses and the body part for each",
-        "meaning": "[ ]",
-        "example": "Names the five senses and the body part for each",
+        "term": "Hands",
+        "meaning": "The parts at the end of your arms, used to hold things.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "Feet",
+        "meaning": "The parts at the end of your legs that you stand on.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "Eyes",
+        "meaning": "The body part we use to see.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "Ears",
+        "meaning": "The body part we use to hear.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "Nose",
+        "meaning": "The body part we use to smell.",
+        "example": "",
         "letter": "N"
       },
       {
-        "term": "Tells one way a sense keeps us safe",
-        "meaning": "[ ]",
+        "term": "Mouth",
+        "meaning": "The body part we use to taste and to speak.",
         "example": "",
-        "letter": "T"
+        "letter": "M"
       },
       {
-        "term": "Sorts a soft thing and a hard thing by touch",
-        "meaning": "[ ]",
-        "example": "Sorts a soft thing and a hard thing by touch",
-        "letter": "S"
-      },
-      {
-        "term": "Washes hands with soap and water with little help",
-        "meaning": "[ ]",
-        "example": "Washes hands with soap and water with little help",
-        "letter": "W"
-      },
-      {
-        "term": "Says people are the same and also different",
-        "meaning": "[ ]",
-        "example": "Says people are the same and also different",
-        "letter": "S"
-      },
-      {
-        "term": "Thanks Allah for the body and the senses",
-        "meaning": "[ ]",
-        "example": "Thanks Allah for the body and the senses",
-        "letter": "T"
-      },
-      {
-        "term": "body",
-        "meaning": "all the parts of you together",
-        "example": "In this unit the children learn about their own body.",
-        "letter": "B"
-      },
-      {
-        "term": "senses",
-        "meaning": "the five ways we learn about the world",
-        "example": "They will learn about the five senses — sight, hearing, smell, taste, and touch.",
-        "letter": "S"
-      },
-      {
-        "term": "sight",
-        "meaning": "seeing with our eyes",
-        "example": "They will learn about the five senses — sight, hearing, smell, taste, and touch.",
+        "term": "Senses",
+        "meaning": "The five ways we learn about the world: see, hear, smell, taste and touch.",
+        "example": "",
         "letter": "S"
       }
     ],
-    "commonMistakes": []
+    "commonMistakes": [],
+    "connections": []
   },
   "fluency": [
     {
@@ -721,9 +730,9 @@
       "responseMode": "text",
       "prompt": "1. My Body Parts",
       "keyIdeas": [
-        "Can-Do Statement",
-        "Points to and names head, arms, legs, hands, feet",
-        "Points to eyes, ears, nose, mouth on the face"
+        "Head",
+        "Arms",
+        "Legs"
       ],
       "modelAnswer": "Talk through your answer with a teacher, parent or study partner."
     },
@@ -734,9 +743,9 @@
       "responseMode": "text",
       "prompt": "Point to each part on your own body. Then draw a line from the word to the picture.",
       "keyIdeas": [
-        "Points to and names head, arms, legs, hands, feet",
-        "Points to eyes, ears, nose, mouth on the face",
-        "Names the five senses and the body part for each"
+        "Arms",
+        "Legs",
+        "Hands"
       ],
       "modelAnswer": "Talk through your answer with a teacher, parent or study partner."
     },
@@ -747,9 +756,9 @@
       "responseMode": "text",
       "prompt": "[Picture: a happy child standing, with arrows to head, arm, hand, leg, foot]",
       "keyIdeas": [
-        "Points to eyes, ears, nose, mouth on the face",
-        "Names the five senses and the body part for each",
-        "Tells one way a sense keeps us safe"
+        "Legs",
+        "Hands",
+        "Feet"
       ],
       "modelAnswer": "Talk through your answer with a teacher, parent or study partner."
     },
@@ -758,11 +767,11 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in Staying Healthy and Clean.",
+      "prompt": "Explain the key idea in Same and Different.",
       "keyIdeas": [
-        "Can-Do Statement",
-        "Points to and names head, arms, legs, hands, feet",
-        "Points to eyes, ears, nose, mouth on the face"
+        "Head",
+        "Arms",
+        "Legs"
       ],
       "modelAnswer": "Now teach the child how to take care of this wonderful body. In Islam, being clean is loved and important. The Prophet (peace be upon him) taught us that cleanliness is a beautiful part of our faith. So washing and keeping clean is both healthy AND a good deed. Go to the sink or a low bowl with a little water and soap."
     }
@@ -775,192 +784,192 @@
         "type": "Concept",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What does “Can-Do Statement” mean?",
+        "question": "Which body part do we use to see?",
         "options": [
-          "Seen?",
-          "[ ]",
-          "all the parts of you together",
-          "the five ways we learn about the world"
+          "eyes",
+          "ears",
+          "nose",
+          "hands"
         ],
-        "answer": "Seen?",
+        "answer": "eyes",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Can-Do Statement means Seen?."
+        "explanation": "We use our eyes to see."
       },
       {
         "id": "q02",
         "type": "Concept",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What does “Points to and names head, arms, legs, hands, feet” mean?",
+        "question": "Which body part do we use to hear?",
         "options": [
-          "[ ]",
-          "all the parts of you together",
-          "the five ways we learn about the world",
-          "seeing with our eyes"
+          "ears",
+          "eyes",
+          "feet",
+          "mouth"
         ],
-        "answer": "[ ]",
+        "answer": "ears",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Points to and names head, arms, legs, hands, feet means [ ]."
+        "explanation": "We use our ears to hear sounds."
       },
       {
         "id": "q03",
         "type": "Concept",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "What does “Points to eyes, ears, nose, mouth on the face” mean?",
+        "question": "We smell a flower with our...",
         "options": [
-          "[ ]",
-          "all the parts of you together",
-          "the five ways we learn about the world",
-          "seeing with our eyes"
+          "nose",
+          "eyes",
+          "hands",
+          "knees"
         ],
-        "answer": "[ ]",
+        "answer": "nose",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Points to eyes, ears, nose, mouth on the face means [ ]."
+        "explanation": "We use our nose to smell."
       },
       {
         "id": "q04",
         "type": "Concept",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "What does “Names the five senses and the body part for each” mean?",
+        "question": "How many senses do we have?",
         "options": [
-          "[ ]",
-          "all the parts of you together",
-          "the five ways we learn about the world",
-          "seeing with our eyes"
+          "five",
+          "two",
+          "ten",
+          "one"
         ],
-        "answer": "[ ]",
+        "answer": "five",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Names the five senses and the body part for each means [ ]."
+        "explanation": "We have five senses: sight, hearing, smell, taste and touch."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What does “Tells one way a sense keeps us safe” mean?",
+        "question": "We taste food with our...",
         "options": [
-          "[ ]",
-          "all the parts of you together",
-          "the five ways we learn about the world",
-          "seeing with our eyes"
+          "mouth",
+          "ears",
+          "eyes",
+          "feet"
         ],
-        "answer": "[ ]",
+        "answer": "mouth",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Tells one way a sense keeps us safe means [ ]."
+        "explanation": "We taste food using our tongue in our mouth."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "What does “Sorts a soft thing and a hard thing by touch” mean?",
+        "question": "Which keeps us clean and healthy?",
         "options": [
-          "[ ]",
-          "all the parts of you together",
-          "the five ways we learn about the world",
-          "seeing with our eyes"
+          "washing our hands",
+          "eating mud",
+          "never sleeping",
+          "skipping water"
         ],
-        "answer": "[ ]",
+        "answer": "washing our hands",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Sorts a soft thing and a hard thing by touch means [ ]."
+        "explanation": "Washing our hands keeps germs away and keeps us healthy."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Which science word matches this meaning: [ ]?",
+        "question": "Which science word matches this meaning: The body part we use to hear.?",
         "options": [
-          "Washes hands with soap and water with little help",
-          "Says people are the same and also different",
-          "Thanks Allah for the body and the senses",
-          "body"
+          "Ears",
+          "Nose",
+          "Mouth",
+          "Senses"
         ],
-        "answer": "Washes hands with soap and water with little help",
+        "answer": "Ears",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Washes hands with soap and water with little help means [ ]."
+        "explanation": "Ears means The body part we use to hear.."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Core",
-        "question": "Which science word matches this meaning: [ ]?",
+        "question": "Which science word matches this meaning: The body part we use to smell.?",
         "options": [
-          "Says people are the same and also different",
-          "Thanks Allah for the body and the senses",
-          "body",
-          "senses"
+          "Nose",
+          "Mouth",
+          "Senses",
+          "Head"
         ],
-        "answer": "Says people are the same and also different",
+        "answer": "Nose",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Says people are the same and also different means [ ]."
+        "explanation": "Nose means The body part we use to smell.."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo01",
         "difficulty": "Core",
-        "question": "Which science word matches this meaning: [ ]?",
+        "question": "Which science word matches this meaning: The body part we use to taste and to speak.?",
         "options": [
-          "Thanks Allah for the body and the senses",
-          "body",
-          "senses",
-          "sight"
+          "Mouth",
+          "Senses",
+          "Head",
+          "Arms"
         ],
-        "answer": "Thanks Allah for the body and the senses",
+        "answer": "Mouth",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "Thanks Allah for the body and the senses means [ ]."
+        "explanation": "Mouth means The body part we use to taste and to speak.."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "Which science word matches this meaning: all the parts of you together?",
+        "question": "Which science word matches this meaning: The five ways we learn about the world: see, hear, smell, taste and touch.?",
         "options": [
-          "body",
-          "senses",
-          "sight",
-          "Can-Do Statement"
+          "Senses",
+          "Head",
+          "Arms",
+          "Legs"
         ],
-        "answer": "body",
+        "answer": "Senses",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "body means all the parts of you together."
+        "explanation": "Senses means The five ways we learn about the world: see, hear, smell, taste and touch.."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "Which science word matches this meaning: the five ways we learn about the world?",
+        "question": "Which science word matches this meaning: The top part of your body, above your neck.?",
         "options": [
-          "senses",
-          "sight",
-          "Can-Do Statement",
-          "Points to and names head, arms, legs, hands, feet"
+          "Head",
+          "Legs",
+          "Hands",
+          "Feet"
         ],
-        "answer": "senses",
+        "answer": "Head",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "senses means the five ways we learn about the world."
+        "explanation": "Head means The top part of your body, above your neck.."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "Which science word matches this meaning: seeing with our eyes?",
+        "question": "Which science word matches this meaning: The two long parts joined to your shoulders.?",
         "options": [
-          "sight",
-          "Can-Do Statement",
-          "Points to and names head, arms, legs, hands, feet",
-          "Points to eyes, ears, nose, mouth on the face"
+          "Arms",
+          "Hands",
+          "Feet",
+          "Eyes"
         ],
-        "answer": "sight",
+        "answer": "Arms",
         "hint": "Use the Unit 3 Science Words reference.",
-        "explanation": "sight means seeing with our eyes."
+        "explanation": "Arms means The two long parts joined to your shoulders.."
       }
     ]
   },
@@ -970,696 +979,696 @@
       {
         "id": "u3-game-1",
         "icon": "?",
-        "skill": "Can-Do Statement",
-        "title": "Quick Match: Can-Do Statement",
-        "description": "Practise can-do statement through four short challenges.",
+        "skill": "Head",
+        "title": "Quick Match: Head",
+        "description": "Practise head through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Can-Do Statement” mean?",
+            "prompt": "Which body part do we use to see?",
             "choices": [
-              "Seen?",
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world"
+              "eyes",
+              "ears",
+              "nose",
+              "hands"
             ],
-            "answer": "Seen?",
+            "answer": "eyes",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Can-Do Statement means Seen?."
+            "explanation": "We use our eyes to see."
           },
           {
-            "prompt": "What does “Names the five senses and the body part for each” mean?",
+            "prompt": "How many senses do we have?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "five",
+              "two",
+              "ten",
+              "one"
             ],
-            "answer": "[ ]",
+            "answer": "five",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Names the five senses and the body part for each means [ ]."
+            "explanation": "We have five senses: sight, hearing, smell, taste and touch."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to hear.?",
             "choices": [
-              "Washes hands with soap and water with little help",
-              "Says people are the same and also different",
-              "Thanks Allah for the body and the senses",
-              "body"
+              "Ears",
+              "Nose",
+              "Mouth",
+              "Senses"
             ],
-            "answer": "Washes hands with soap and water with little help",
+            "answer": "Ears",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Washes hands with soap and water with little help means [ ]."
+            "explanation": "Ears means The body part we use to hear.."
           },
           {
-            "prompt": "Which science word matches this meaning: all the parts of you together?",
+            "prompt": "Which science word matches this meaning: The five ways we learn about the world: see, hear, smell, taste and touch.?",
             "choices": [
-              "body",
-              "senses",
-              "sight",
-              "Can-Do Statement"
+              "Senses",
+              "Head",
+              "Arms",
+              "Legs"
             ],
-            "answer": "body",
+            "answer": "Senses",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "body means all the parts of you together."
+            "explanation": "Senses means The five ways we learn about the world: see, hear, smell, taste and touch.."
           }
         ]
       },
       {
         "id": "u3-game-2",
         "icon": "★",
-        "skill": "Points to and names head, arms, legs, hands, feet",
-        "title": "Concept Quest: Points to and names head, arms, legs, hands, feet",
-        "description": "Practise points to and names head, arms, legs, hands, feet through four short challenges.",
+        "skill": "Arms",
+        "title": "Concept Quest: Arms",
+        "description": "Practise arms through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Points to and names head, arms, legs, hands, feet” mean?",
+            "prompt": "Which body part do we use to hear?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "ears",
+              "eyes",
+              "feet",
+              "mouth"
             ],
-            "answer": "[ ]",
+            "answer": "ears",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Points to and names head, arms, legs, hands, feet means [ ]."
+            "explanation": "We use our ears to hear sounds."
           },
           {
-            "prompt": "What does “Tells one way a sense keeps us safe” mean?",
+            "prompt": "We taste food with our...",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "mouth",
+              "ears",
+              "eyes",
+              "feet"
             ],
-            "answer": "[ ]",
+            "answer": "mouth",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Tells one way a sense keeps us safe means [ ]."
+            "explanation": "We taste food using our tongue in our mouth."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to smell.?",
             "choices": [
-              "Says people are the same and also different",
-              "Thanks Allah for the body and the senses",
-              "body",
-              "senses"
+              "Nose",
+              "Mouth",
+              "Senses",
+              "Head"
             ],
-            "answer": "Says people are the same and also different",
+            "answer": "Nose",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Says people are the same and also different means [ ]."
+            "explanation": "Nose means The body part we use to smell.."
           },
           {
-            "prompt": "Which science word matches this meaning: the five ways we learn about the world?",
+            "prompt": "Which science word matches this meaning: The top part of your body, above your neck.?",
             "choices": [
-              "senses",
-              "sight",
-              "Can-Do Statement",
-              "Points to and names head, arms, legs, hands, feet"
+              "Head",
+              "Legs",
+              "Hands",
+              "Feet"
             ],
-            "answer": "senses",
+            "answer": "Head",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "senses means the five ways we learn about the world."
+            "explanation": "Head means The top part of your body, above your neck.."
           }
         ]
       },
       {
         "id": "u3-game-3",
         "icon": "◫",
-        "skill": "Points to eyes, ears, nose, mouth on the face",
-        "title": "Lab Detective: Points to eyes, ears, nose, mouth on the face",
-        "description": "Practise points to eyes, ears, nose, mouth on the face through four short challenges.",
+        "skill": "Legs",
+        "title": "Lab Detective: Legs",
+        "description": "Practise legs through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Points to eyes, ears, nose, mouth on the face” mean?",
+            "prompt": "We smell a flower with our...",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "nose",
+              "eyes",
+              "hands",
+              "knees"
             ],
-            "answer": "[ ]",
+            "answer": "nose",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Points to eyes, ears, nose, mouth on the face means [ ]."
+            "explanation": "We use our nose to smell."
           },
           {
-            "prompt": "What does “Sorts a soft thing and a hard thing by touch” mean?",
+            "prompt": "Which keeps us clean and healthy?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "washing our hands",
+              "eating mud",
+              "never sleeping",
+              "skipping water"
             ],
-            "answer": "[ ]",
+            "answer": "washing our hands",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Sorts a soft thing and a hard thing by touch means [ ]."
+            "explanation": "Washing our hands keeps germs away and keeps us healthy."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to taste and to speak.?",
             "choices": [
-              "Thanks Allah for the body and the senses",
-              "body",
-              "senses",
-              "sight"
+              "Mouth",
+              "Senses",
+              "Head",
+              "Arms"
             ],
-            "answer": "Thanks Allah for the body and the senses",
+            "answer": "Mouth",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Thanks Allah for the body and the senses means [ ]."
+            "explanation": "Mouth means The body part we use to taste and to speak.."
           },
           {
-            "prompt": "Which science word matches this meaning: seeing with our eyes?",
+            "prompt": "Which science word matches this meaning: The two long parts joined to your shoulders.?",
             "choices": [
-              "sight",
-              "Can-Do Statement",
-              "Points to and names head, arms, legs, hands, feet",
-              "Points to eyes, ears, nose, mouth on the face"
+              "Arms",
+              "Hands",
+              "Feet",
+              "Eyes"
             ],
-            "answer": "sight",
+            "answer": "Arms",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "sight means seeing with our eyes."
+            "explanation": "Arms means The two long parts joined to your shoulders.."
           }
         ]
       },
       {
         "id": "u3-game-4",
         "icon": "→",
-        "skill": "Names the five senses and the body part for each",
-        "title": "Fact Runner: Names the five senses and the body part for each",
-        "description": "Practise names the five senses and the body part for each through four short challenges.",
+        "skill": "Hands",
+        "title": "Fact Runner: Hands",
+        "description": "Practise hands through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Names the five senses and the body part for each” mean?",
+            "prompt": "How many senses do we have?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "five",
+              "two",
+              "ten",
+              "one"
             ],
-            "answer": "[ ]",
+            "answer": "five",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Names the five senses and the body part for each means [ ]."
+            "explanation": "We have five senses: sight, hearing, smell, taste and touch."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to hear.?",
             "choices": [
-              "Washes hands with soap and water with little help",
-              "Says people are the same and also different",
-              "Thanks Allah for the body and the senses",
-              "body"
+              "Ears",
+              "Nose",
+              "Mouth",
+              "Senses"
             ],
-            "answer": "Washes hands with soap and water with little help",
+            "answer": "Ears",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Washes hands with soap and water with little help means [ ]."
+            "explanation": "Ears means The body part we use to hear.."
           },
           {
-            "prompt": "Which science word matches this meaning: all the parts of you together?",
+            "prompt": "Which science word matches this meaning: The five ways we learn about the world: see, hear, smell, taste and touch.?",
             "choices": [
-              "body",
-              "senses",
-              "sight",
-              "Can-Do Statement"
+              "Senses",
+              "Head",
+              "Arms",
+              "Legs"
             ],
-            "answer": "body",
+            "answer": "Senses",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "body means all the parts of you together."
+            "explanation": "Senses means The five ways we learn about the world: see, hear, smell, taste and touch.."
           },
           {
-            "prompt": "What does “Can-Do Statement” mean?",
+            "prompt": "Which body part do we use to see?",
             "choices": [
-              "Seen?",
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world"
+              "eyes",
+              "ears",
+              "nose",
+              "hands"
             ],
-            "answer": "Seen?",
+            "answer": "eyes",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Can-Do Statement means Seen?."
+            "explanation": "We use our eyes to see."
           }
         ]
       },
       {
         "id": "u3-game-5",
         "icon": "Σ",
-        "skill": "Tells one way a sense keeps us safe",
-        "title": "Vocabulary Vault: Tells one way a sense keeps us safe",
-        "description": "Practise tells one way a sense keeps us safe through four short challenges.",
+        "skill": "Feet",
+        "title": "Vocabulary Vault: Feet",
+        "description": "Practise feet through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Tells one way a sense keeps us safe” mean?",
+            "prompt": "We taste food with our...",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "mouth",
+              "ears",
+              "eyes",
+              "feet"
             ],
-            "answer": "[ ]",
+            "answer": "mouth",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Tells one way a sense keeps us safe means [ ]."
+            "explanation": "We taste food using our tongue in our mouth."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to smell.?",
             "choices": [
-              "Says people are the same and also different",
-              "Thanks Allah for the body and the senses",
-              "body",
-              "senses"
+              "Nose",
+              "Mouth",
+              "Senses",
+              "Head"
             ],
-            "answer": "Says people are the same and also different",
+            "answer": "Nose",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Says people are the same and also different means [ ]."
+            "explanation": "Nose means The body part we use to smell.."
           },
           {
-            "prompt": "Which science word matches this meaning: the five ways we learn about the world?",
+            "prompt": "Which science word matches this meaning: The top part of your body, above your neck.?",
             "choices": [
-              "senses",
-              "sight",
-              "Can-Do Statement",
-              "Points to and names head, arms, legs, hands, feet"
+              "Head",
+              "Legs",
+              "Hands",
+              "Feet"
             ],
-            "answer": "senses",
+            "answer": "Head",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "senses means the five ways we learn about the world."
+            "explanation": "Head means The top part of your body, above your neck.."
           },
           {
-            "prompt": "What does “Points to and names head, arms, legs, hands, feet” mean?",
+            "prompt": "Which body part do we use to hear?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "ears",
+              "eyes",
+              "feet",
+              "mouth"
             ],
-            "answer": "[ ]",
+            "answer": "ears",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Points to and names head, arms, legs, hands, feet means [ ]."
+            "explanation": "We use our ears to hear sounds."
           }
         ]
       },
       {
         "id": "u3-game-6",
         "icon": "◇",
-        "skill": "Sorts a soft thing and a hard thing by touch",
-        "title": "Challenge Cards: Sorts a soft thing and a hard thing by touch",
-        "description": "Practise sorts a soft thing and a hard thing by touch through four short challenges.",
+        "skill": "Eyes",
+        "title": "Challenge Cards: Eyes",
+        "description": "Practise eyes through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Sorts a soft thing and a hard thing by touch” mean?",
+            "prompt": "Which keeps us clean and healthy?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "washing our hands",
+              "eating mud",
+              "never sleeping",
+              "skipping water"
             ],
-            "answer": "[ ]",
+            "answer": "washing our hands",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Sorts a soft thing and a hard thing by touch means [ ]."
+            "explanation": "Washing our hands keeps germs away and keeps us healthy."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to taste and to speak.?",
             "choices": [
-              "Thanks Allah for the body and the senses",
-              "body",
-              "senses",
-              "sight"
+              "Mouth",
+              "Senses",
+              "Head",
+              "Arms"
             ],
-            "answer": "Thanks Allah for the body and the senses",
+            "answer": "Mouth",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Thanks Allah for the body and the senses means [ ]."
+            "explanation": "Mouth means The body part we use to taste and to speak.."
           },
           {
-            "prompt": "Which science word matches this meaning: seeing with our eyes?",
+            "prompt": "Which science word matches this meaning: The two long parts joined to your shoulders.?",
             "choices": [
-              "sight",
-              "Can-Do Statement",
-              "Points to and names head, arms, legs, hands, feet",
-              "Points to eyes, ears, nose, mouth on the face"
+              "Arms",
+              "Hands",
+              "Feet",
+              "Eyes"
             ],
-            "answer": "sight",
+            "answer": "Arms",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "sight means seeing with our eyes."
+            "explanation": "Arms means The two long parts joined to your shoulders.."
           },
           {
-            "prompt": "What does “Points to eyes, ears, nose, mouth on the face” mean?",
+            "prompt": "We smell a flower with our...",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "nose",
+              "eyes",
+              "hands",
+              "knees"
             ],
-            "answer": "[ ]",
+            "answer": "nose",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Points to eyes, ears, nose, mouth on the face means [ ]."
+            "explanation": "We use our nose to smell."
           }
         ]
       },
       {
         "id": "u3-game-7",
         "icon": "⚡",
-        "skill": "Washes hands with soap and water with little help",
-        "title": "Think Fast: Washes hands with soap and water with little help",
-        "description": "Practise washes hands with soap and water with little help through four short challenges.",
+        "skill": "Ears",
+        "title": "Think Fast: Ears",
+        "description": "Practise ears through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to hear.?",
             "choices": [
-              "Washes hands with soap and water with little help",
-              "Says people are the same and also different",
-              "Thanks Allah for the body and the senses",
-              "body"
+              "Ears",
+              "Nose",
+              "Mouth",
+              "Senses"
             ],
-            "answer": "Washes hands with soap and water with little help",
+            "answer": "Ears",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Washes hands with soap and water with little help means [ ]."
+            "explanation": "Ears means The body part we use to hear.."
           },
           {
-            "prompt": "Which science word matches this meaning: all the parts of you together?",
+            "prompt": "Which science word matches this meaning: The five ways we learn about the world: see, hear, smell, taste and touch.?",
             "choices": [
-              "body",
-              "senses",
-              "sight",
-              "Can-Do Statement"
+              "Senses",
+              "Head",
+              "Arms",
+              "Legs"
             ],
-            "answer": "body",
+            "answer": "Senses",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "body means all the parts of you together."
+            "explanation": "Senses means The five ways we learn about the world: see, hear, smell, taste and touch.."
           },
           {
-            "prompt": "What does “Can-Do Statement” mean?",
+            "prompt": "Which body part do we use to see?",
             "choices": [
-              "Seen?",
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world"
+              "eyes",
+              "ears",
+              "nose",
+              "hands"
             ],
-            "answer": "Seen?",
+            "answer": "eyes",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Can-Do Statement means Seen?."
+            "explanation": "We use our eyes to see."
           },
           {
-            "prompt": "What does “Names the five senses and the body part for each” mean?",
+            "prompt": "How many senses do we have?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "five",
+              "two",
+              "ten",
+              "one"
             ],
-            "answer": "[ ]",
+            "answer": "five",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Names the five senses and the body part for each means [ ]."
+            "explanation": "We have five senses: sight, hearing, smell, taste and touch."
           }
         ]
       },
       {
         "id": "u3-game-8",
         "icon": "☁",
-        "skill": "Says people are the same and also different",
-        "title": "Explain It: Says people are the same and also different",
-        "description": "Practise says people are the same and also different through four short challenges.",
+        "skill": "Nose",
+        "title": "Explain It: Nose",
+        "description": "Practise nose through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to smell.?",
             "choices": [
-              "Says people are the same and also different",
-              "Thanks Allah for the body and the senses",
-              "body",
-              "senses"
+              "Nose",
+              "Mouth",
+              "Senses",
+              "Head"
             ],
-            "answer": "Says people are the same and also different",
+            "answer": "Nose",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Says people are the same and also different means [ ]."
+            "explanation": "Nose means The body part we use to smell.."
           },
           {
-            "prompt": "Which science word matches this meaning: the five ways we learn about the world?",
+            "prompt": "Which science word matches this meaning: The top part of your body, above your neck.?",
             "choices": [
-              "senses",
-              "sight",
-              "Can-Do Statement",
-              "Points to and names head, arms, legs, hands, feet"
+              "Head",
+              "Legs",
+              "Hands",
+              "Feet"
             ],
-            "answer": "senses",
+            "answer": "Head",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "senses means the five ways we learn about the world."
+            "explanation": "Head means The top part of your body, above your neck.."
           },
           {
-            "prompt": "What does “Points to and names head, arms, legs, hands, feet” mean?",
+            "prompt": "Which body part do we use to hear?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "ears",
+              "eyes",
+              "feet",
+              "mouth"
             ],
-            "answer": "[ ]",
+            "answer": "ears",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Points to and names head, arms, legs, hands, feet means [ ]."
+            "explanation": "We use our ears to hear sounds."
           },
           {
-            "prompt": "What does “Tells one way a sense keeps us safe” mean?",
+            "prompt": "We taste food with our...",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "mouth",
+              "ears",
+              "eyes",
+              "feet"
             ],
-            "answer": "[ ]",
+            "answer": "mouth",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Tells one way a sense keeps us safe means [ ]."
+            "explanation": "We taste food using our tongue in our mouth."
           }
         ]
       },
       {
         "id": "u3-game-9",
         "icon": "⌂",
-        "skill": "Thanks Allah for the body and the senses",
-        "title": "Real-Life Round: Thanks Allah for the body and the senses",
-        "description": "Practise thanks allah for the body and the senses through four short challenges.",
+        "skill": "Mouth",
+        "title": "Real-Life Round: Mouth",
+        "description": "Practise mouth through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to taste and to speak.?",
             "choices": [
-              "Thanks Allah for the body and the senses",
-              "body",
-              "senses",
-              "sight"
+              "Mouth",
+              "Senses",
+              "Head",
+              "Arms"
             ],
-            "answer": "Thanks Allah for the body and the senses",
+            "answer": "Mouth",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Thanks Allah for the body and the senses means [ ]."
+            "explanation": "Mouth means The body part we use to taste and to speak.."
           },
           {
-            "prompt": "Which science word matches this meaning: seeing with our eyes?",
+            "prompt": "Which science word matches this meaning: The two long parts joined to your shoulders.?",
             "choices": [
-              "sight",
-              "Can-Do Statement",
-              "Points to and names head, arms, legs, hands, feet",
-              "Points to eyes, ears, nose, mouth on the face"
+              "Arms",
+              "Hands",
+              "Feet",
+              "Eyes"
             ],
-            "answer": "sight",
+            "answer": "Arms",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "sight means seeing with our eyes."
+            "explanation": "Arms means The two long parts joined to your shoulders.."
           },
           {
-            "prompt": "What does “Points to eyes, ears, nose, mouth on the face” mean?",
+            "prompt": "We smell a flower with our...",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "nose",
+              "eyes",
+              "hands",
+              "knees"
             ],
-            "answer": "[ ]",
+            "answer": "nose",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Points to eyes, ears, nose, mouth on the face means [ ]."
+            "explanation": "We use our nose to smell."
           },
           {
-            "prompt": "What does “Sorts a soft thing and a hard thing by touch” mean?",
+            "prompt": "Which keeps us clean and healthy?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "washing our hands",
+              "eating mud",
+              "never sleeping",
+              "skipping water"
             ],
-            "answer": "[ ]",
+            "answer": "washing our hands",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Sorts a soft thing and a hard thing by touch means [ ]."
+            "explanation": "Washing our hands keeps germs away and keeps us healthy."
           }
         ]
       },
       {
         "id": "u3-game-10",
         "icon": "!",
-        "skill": "body",
-        "title": "Spot the Error: body",
-        "description": "Practise body through four short challenges.",
+        "skill": "Senses",
+        "title": "Spot the Error: Senses",
+        "description": "Practise senses through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which science word matches this meaning: all the parts of you together?",
+            "prompt": "Which science word matches this meaning: The five ways we learn about the world: see, hear, smell, taste and touch.?",
             "choices": [
-              "body",
-              "senses",
-              "sight",
-              "Can-Do Statement"
+              "Senses",
+              "Head",
+              "Arms",
+              "Legs"
             ],
-            "answer": "body",
+            "answer": "Senses",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "body means all the parts of you together."
+            "explanation": "Senses means The five ways we learn about the world: see, hear, smell, taste and touch.."
           },
           {
-            "prompt": "What does “Can-Do Statement” mean?",
+            "prompt": "Which body part do we use to see?",
             "choices": [
-              "Seen?",
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world"
+              "eyes",
+              "ears",
+              "nose",
+              "hands"
             ],
-            "answer": "Seen?",
+            "answer": "eyes",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Can-Do Statement means Seen?."
+            "explanation": "We use our eyes to see."
           },
           {
-            "prompt": "What does “Names the five senses and the body part for each” mean?",
+            "prompt": "How many senses do we have?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "five",
+              "two",
+              "ten",
+              "one"
             ],
-            "answer": "[ ]",
+            "answer": "five",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Names the five senses and the body part for each means [ ]."
+            "explanation": "We have five senses: sight, hearing, smell, taste and touch."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to hear.?",
             "choices": [
-              "Washes hands with soap and water with little help",
-              "Says people are the same and also different",
-              "Thanks Allah for the body and the senses",
-              "body"
+              "Ears",
+              "Nose",
+              "Mouth",
+              "Senses"
             ],
-            "answer": "Washes hands with soap and water with little help",
+            "answer": "Ears",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Washes hands with soap and water with little help means [ ]."
+            "explanation": "Ears means The body part we use to hear.."
           }
         ]
       },
       {
         "id": "u3-game-11",
         "icon": "≡",
-        "skill": "senses",
-        "title": "Mastery Mix: senses",
-        "description": "Practise senses through four short challenges.",
+        "skill": "Head",
+        "title": "Mastery Mix: Head",
+        "description": "Practise head through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which science word matches this meaning: the five ways we learn about the world?",
+            "prompt": "Which science word matches this meaning: The top part of your body, above your neck.?",
             "choices": [
-              "senses",
-              "sight",
-              "Can-Do Statement",
-              "Points to and names head, arms, legs, hands, feet"
+              "Head",
+              "Legs",
+              "Hands",
+              "Feet"
             ],
-            "answer": "senses",
+            "answer": "Head",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "senses means the five ways we learn about the world."
+            "explanation": "Head means The top part of your body, above your neck.."
           },
           {
-            "prompt": "What does “Points to and names head, arms, legs, hands, feet” mean?",
+            "prompt": "Which body part do we use to hear?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "ears",
+              "eyes",
+              "feet",
+              "mouth"
             ],
-            "answer": "[ ]",
+            "answer": "ears",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Points to and names head, arms, legs, hands, feet means [ ]."
+            "explanation": "We use our ears to hear sounds."
           },
           {
-            "prompt": "What does “Tells one way a sense keeps us safe” mean?",
+            "prompt": "We taste food with our...",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "mouth",
+              "ears",
+              "eyes",
+              "feet"
             ],
-            "answer": "[ ]",
+            "answer": "mouth",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Tells one way a sense keeps us safe means [ ]."
+            "explanation": "We taste food using our tongue in our mouth."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to smell.?",
             "choices": [
-              "Says people are the same and also different",
-              "Thanks Allah for the body and the senses",
-              "body",
-              "senses"
+              "Nose",
+              "Mouth",
+              "Senses",
+              "Head"
             ],
-            "answer": "Says people are the same and also different",
+            "answer": "Nose",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Says people are the same and also different means [ ]."
+            "explanation": "Nose means The body part we use to smell.."
           }
         ]
       },
       {
         "id": "u3-game-12",
         "icon": "T",
-        "skill": "sight",
-        "title": "Unit Champion: sight",
-        "description": "Practise sight through four short challenges.",
+        "skill": "Arms",
+        "title": "Unit Champion: Arms",
+        "description": "Practise arms through four short challenges.",
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which science word matches this meaning: seeing with our eyes?",
+            "prompt": "Which science word matches this meaning: The two long parts joined to your shoulders.?",
             "choices": [
-              "sight",
-              "Can-Do Statement",
-              "Points to and names head, arms, legs, hands, feet",
-              "Points to eyes, ears, nose, mouth on the face"
+              "Arms",
+              "Hands",
+              "Feet",
+              "Eyes"
             ],
-            "answer": "sight",
+            "answer": "Arms",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "sight means seeing with our eyes."
+            "explanation": "Arms means The two long parts joined to your shoulders.."
           },
           {
-            "prompt": "What does “Points to eyes, ears, nose, mouth on the face” mean?",
+            "prompt": "We smell a flower with our...",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "nose",
+              "eyes",
+              "hands",
+              "knees"
             ],
-            "answer": "[ ]",
+            "answer": "nose",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Points to eyes, ears, nose, mouth on the face means [ ]."
+            "explanation": "We use our nose to smell."
           },
           {
-            "prompt": "What does “Sorts a soft thing and a hard thing by touch” mean?",
+            "prompt": "Which keeps us clean and healthy?",
             "choices": [
-              "[ ]",
-              "all the parts of you together",
-              "the five ways we learn about the world",
-              "seeing with our eyes"
+              "washing our hands",
+              "eating mud",
+              "never sleeping",
+              "skipping water"
             ],
-            "answer": "[ ]",
+            "answer": "washing our hands",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Sorts a soft thing and a hard thing by touch means [ ]."
+            "explanation": "Washing our hands keeps germs away and keeps us healthy."
           },
           {
-            "prompt": "Which science word matches this meaning: [ ]?",
+            "prompt": "Which science word matches this meaning: The body part we use to taste and to speak.?",
             "choices": [
-              "Thanks Allah for the body and the senses",
-              "body",
-              "senses",
-              "sight"
+              "Mouth",
+              "Senses",
+              "Head",
+              "Arms"
             ],
-            "answer": "Thanks Allah for the body and the senses",
+            "answer": "Mouth",
             "clue": "Use the Unit 3 Science Words reference.",
-            "explanation": "Thanks Allah for the body and the senses means [ ]."
+            "explanation": "Mouth means The body part we use to taste and to speak.."
           }
         ]
       }

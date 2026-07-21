@@ -156,6 +156,42 @@ function sceneObjects(id, time) {
     objects.push(object("cube", [slide, -.55, 0], [.5, .42, .5], COLORS.blue, [0, .2, 0]));
     arrow(objects, slide - 1.15, -.55, -Math.PI / 2, COLORS.green, 1);
     arrow(objects, slide + 1.15, -.55, Math.PI / 2, COLORS.red, .7);
+  } else if (id === "atom") {
+    // Nucleus of protons and neutrons with electrons on tilted rings.
+    const nucleus = [[0, 0, 0], [.22, .1, .1], [-.2, .12, -.08], [.05, -.22, .12], [-.1, -.1, -.2]];
+    nucleus.forEach((p, i) => objects.push(object("sphere", p, .2, i % 2 ? COLORS.red : COLORS.blue)));
+    const rings = [[.25, time], [-.4, time * 1.3 + 1], [.7, time * .8 + 2]];
+    rings.forEach(([tilt, phase], r) => {
+      const radius = 1.3 + r * .45;
+      for (let i = 0; i < 20; i += 1) { const a = i / 20 * TAU; objects.push(object("sphere", [Math.cos(a) * radius, Math.sin(a) * radius * Math.cos(tilt), Math.sin(a) * radius * Math.sin(tilt)], .03, COLORS.gray)); }
+      const ea = phase; objects.push(object("sphere", [Math.cos(ea) * radius, Math.sin(ea) * radius * Math.cos(tilt), Math.sin(ea) * radius * Math.sin(tilt)], .13, COLORS.teal));
+    });
+  } else if (id === "foodchain") {
+    const links = [[COLORS.gold, "sun"], [COLORS.green, "plant"], [COLORS.blue, "animal"], [COLORS.orange, "predator"]];
+    links.forEach(([color], i) => {
+      const x = -2.55 + i * 1.7, bob = Math.sin(time * 1.5 + i) * .12;
+      objects.push(object(i === 0 ? "sphere" : "sphere", [x, bob, 0], i === 0 ? .5 : .38, color, [0, time * .5, 0]));
+      if (i < 3) { const flow = ((time * .5 + i * .25) % 1); arrow(objects, x + .5, bob, Math.PI / 2, COLORS.navy, .7); objects.push(object("sphere", [x + .5 + flow * .7, bob, 0], .07, COLORS.teal)); }
+    });
+  } else if (id === "circulation") {
+    // A beating heart pushing blood cells around a loop.
+    const beat = 1 + Math.sin(time * 3.2) * .16;
+    objects.push(object("sphere", [0, 0, 0], .62 * beat, COLORS.red, [0, 0, Math.PI]));
+    objects.push(object("cube", [-.28, .5, 0], [.14, .3, .14], COLORS.red));
+    objects.push(object("cube", [.28, .5, 0], [.14, .3, .14], COLORS.red));
+    const w = 3, h = 1.9;
+    for (let i = 0; i < 10; i += 1) {
+      const [px, py] = rectanglePoint(time * .13 + i / 10, w, h);
+      objects.push(object("sphere", [px, py, .1], .1, i % 3 === 0 ? COLORS.blue : COLORS.red));
+    }
+  } else if (id === "molecule") {
+    // Water-like molecule: one large atom bonded to two smaller ones, rotating.
+    objects.push(object("sphere", [0, 0, 0], .55, COLORS.blue, [0, time, 0]));
+    for (const ang of [-.9, .9]) {
+      const x = Math.sin(ang) * 1.1, y = Math.cos(ang) * 1.1;
+      objects.push(object("cylinder", [x * .5, y * .5, 0], [.08, .55, .08], COLORS.gray, [0, 0, ang]));
+      objects.push(object("sphere", [x, y, 0], .32, COLORS.teal));
+    }
   }
   return objects;
 }

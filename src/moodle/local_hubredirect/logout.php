@@ -22,6 +22,13 @@ if ($landingpath === '' || $landingpath === '/') {
 }
 $landingurl = new moodle_url($landingpath, $params);
 
+// Consumers with an external website (for example an institution keeping
+// its own public site) return there after logout, not the hosted landing.
+$externalwebsiteurl = trim((string)($consumercontext->externalwebsiteurl ?? ''));
+if ($externalwebsiteurl !== '' && (string)($consumercontext->website_mode ?? 'hosted') !== 'hosted') {
+    $landingurl = new moodle_url($externalwebsiteurl);
+}
+
 if (!isloggedin() || isguestuser()) {
     redirect($landingurl);
 }

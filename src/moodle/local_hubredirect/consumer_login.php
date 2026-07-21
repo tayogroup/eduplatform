@@ -111,7 +111,9 @@ body.pqh-consumer-login-page #page,
 body.pqh-consumer-login-page #page-content,
 body.pqh-consumer-login-page #region-main,
 body.pqh-consumer-login-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important;background:transparent!important}
-.pqhlogin-shell{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);background:#f4f8fb}
+.pqhlogin-shell{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f4f8fb}
+.pqhlogin-cardbrand{display:flex;align-items:center;gap:11px;margin-bottom:16px;color:#173044;font-weight:950;font-size:17px}
+.pqhlogin-cardbrand .pqhlogin-mark{width:42px;height:42px;border-radius:10px}
 .pqhlogin-hero{position:relative;overflow:hidden;display:flex;align-items:center;padding:52px;min-height:100vh;background:linear-gradient(90deg,rgba(9,37,32,.93),rgba(20,83,66,.78)),var(--pqh-hero-image) center/cover no-repeat;color:#fff}
 .pqhlogin-hero-inner{max-width:760px}
 .pqhlogin-brand{display:flex;align-items:center;gap:13px;margin-bottom:56px;font-weight:950;font-size:21px}
@@ -139,9 +141,9 @@ body.pqh-consumer-login-page .main-inner{margin:0!important;padding:0!important;
 @media(max-width:880px){.pqhlogin-shell{grid-template-columns:1fr}.pqhlogin-hero{min-height:auto;padding:34px 20px}.pqhlogin-title{font-size:38px}.pqhlogin-brand{margin-bottom:36px}.pqhlogin-panel-wrap{padding:22px 16px 40px}.pqhlogin-panel{padding:22px}}
 </style>
 <main class="pqhlogin-shell" style="--pqh-primary: <?php echo s($primarycolor); ?>; --pqh-accent: <?php echo s($accentcolor); ?>; --pqh-hero-image: url('<?php echo s($heroimage); ?>');">
-  <section class="pqhlogin-hero" aria-label="<?php echo s($brand); ?> login">
-    <div class="pqhlogin-hero-inner">
-      <div class="pqhlogin-brand">
+  <section class="pqhlogin-panel-wrap" aria-label="<?php echo s($brand); ?> login">
+    <div class="pqhlogin-panel">
+      <div class="pqhlogin-cardbrand">
         <span class="pqhlogin-mark">
           <?php if ($brandlogo !== ''): ?>
             <img src="<?php echo s($brandlogo); ?>" alt="<?php echo s($brand); ?>">
@@ -151,13 +153,6 @@ body.pqh-consumer-login-page .main-inner{margin:0!important;padding:0!important;
         </span>
         <span><?php echo s($brand); ?></span>
       </div>
-      <div class="pqhlogin-kicker"><?php echo s($kicker); ?></div>
-      <h1 class="pqhlogin-title"><?php echo s($herotitle); ?></h1>
-      <p class="pqhlogin-copy"><?php echo s($herocopy); ?></p>
-    </div>
-  </section>
-  <section class="pqhlogin-panel-wrap">
-    <div class="pqhlogin-panel">
       <h1>Log in</h1>
       <p><?php echo s($panelcopy); ?></p>
       <?php if ($sessionexpired): ?>

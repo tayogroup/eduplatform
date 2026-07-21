@@ -27,28 +27,36 @@ curl -s "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/mathematics/shared/cou
 Pull Zone → ehelacademy → **Edge Rules → Add Rule**. Each rule: action
 **"Override Cache Time"**, condition on **Request URL** matches the pattern.
 
-| Tier | URL pattern (contains) | Override cache time | Why |
-|---|---|---|---|
-| Content | `*/content/*` | **5 minutes** | Unit JSON is edited often — edits should appear fast |
-| App HTML/JS/CSS | `*/app/*` (see note) | **5 minutes** | App code isn't path-versioned yet; short TTL avoids a purge per fix |
-| Media | `*/media/*` | **1 year** | Audio/video/images are content-addressed & immutable — never re-fetched |
+Add these in order — Edge Rules match **top to bottom**, so the immutable
+`v{N}/` and media rules must come *before* the short-cache app rule.
 
-Media is ~99% of bytes and requests, so keeping it at 1 year holds the cache-hit
-ratio high while everything else stays fresh within 5 minutes.
+| # | Tier | URL pattern (contains) | Override cache time | Why |
+|---|---|---|---|---|
+| 1 | Versioned code | `*/app/*/v` *(matches `/v1/`, `/v2/`…)* | **1 year** | `app/{subject}/vN/…` is immutable — a new release is a new path, never re-fetched |
+| 2 | Media | `*/media/*` | **1 year** | Audio/video/images are content-addressed & immutable |
+| 3 | Content | `*/content/*` | **5 minutes** | Unit JSON is edited often — edits should appear fast |
+| 4 | App pointers + assets | `*/app/*` | **5 minutes** | `index.html` + `current.json` are the release pointers and must flip; per-grade images fall here too (small, rarely change) |
 
-> **Note (app tier):** `app/*` also matches the per-grade images/video under
-> `app/{subject}/grade-N/media/…`. Those are large and immutable, so ideally
-> exclude them: make the media rule pattern `*/media/*` **and** add a second
-> long-TTL rule for `*/app/*/grade-*/media/*`, or simply keep the whole `app/*`
-> short for the pilot (the per-grade media is already cached and rarely purged).
+Media + versioned code are ~99% of bytes and requests, so keeping them at 1 year
+holds the cache-hit ratio high while pointers and content stay fresh within 5 min.
 
-## 3. Post-pilot: make app code immutable (removes the app-tier compromise)
+## 3. Path versioning — app deploys are now purge-free ✅
 
-Move app code to versioned paths `app/{subject}/v{N}/…` released via a
-short-cached `current.json` pointer (deferred P1 item). Then `app/*/v*/*` becomes
-`max-age=1y immutable` like media, and a deploy = upload a new `vN` + flip
-`current.json` — no purge, no query strings. Until then, the 5-minute app TTL above
-is the interim.
+App code ships as immutable, version-pinned bundles: `tools/deploy-app-version.js`
+uploads `app/{subject}/v{N}/…` and rewrites `app/{subject}/index.html` to reference
+`v{N}/course-ui.{js,css}` directly (a `current.json` records the live version). With
+the rules above:
+
+- **A new release** (`node tools/deploy-app-version.js v2`) uploads `v2/` (a new
+  immutable path — instant cache miss, no purge) and re-uploads the short-cached
+  `index.html` pointer, which flips to `v2/` within the 5-minute TTL. **No purge.**
+- **Rollback** = re-deploy the previous `index.html` (old `vN/` is still on storage).
+- The `?v=…` query strings still inside the modules are now vestigial (harmless);
+  the path is the cache key.
+
+Until the app-tier Edge Rule (#4) is set, a first cutover to a new `vN` still needs
+one purge (the old `index.html` is 30-day cached). After it's set, deploys are
+purge-free.
 
 ## Orphaned app-tree data (cleanup, do AFTER the purge)
 

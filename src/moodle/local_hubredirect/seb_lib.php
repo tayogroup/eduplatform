@@ -61,6 +61,18 @@ function pqh_seb_exam_record(int $examid): ?stdClass {
     return $record ?: null;
 }
 
+// Exam mode: 'seb' (locked, Safe Exam Browser required) or 'focus' (install
+// free browser focus mode). Reads defensively so exams predating the column
+// behave as SEB exams.
+function pqh_seb_exam_mode(stdClass $exam): string {
+    $mode = strtolower(trim((string)($exam->mode ?? 'seb')));
+    return $mode === 'focus' ? 'focus' : 'seb';
+}
+
+function pqh_seb_mode_label(string $mode): string {
+    return $mode === 'focus' ? 'Browser focus mode' : 'Safe Exam Browser (locked)';
+}
+
 function pqh_seb_exam_url(int $examid): moodle_url {
     return new moodle_url('/local/hubredirect/seb_exam.php', ['examid' => $examid]);
 }
@@ -131,7 +143,7 @@ function pqh_seb_student_gate(stdClass $exam, int $userid): array {
     return [true, ''];
 }
 
-function pqh_seb_attempt_start(int $examid, int $userid): stdClass {
+function pqh_seb_attempt_start(int $examid, int $userid, bool $sebverified = true): stdClass {
     global $DB;
     $attempt = pqh_seb_attempt($examid, $userid);
     if ($attempt) {
@@ -143,14 +155,32 @@ function pqh_seb_attempt_start(int $examid, int $userid): stdClass {
         'userid' => $userid,
         'timestarted' => $now,
         'timefinished' => 0,
-        'sebverified' => 1,
+        'sebverified' => $sebverified ? 1 : 0,
+        'focus_breaks' => 0,
         'status' => 'in_progress',
         'timecreated' => $now,
         'timemodified' => $now,
     ];
     $record->id = (int)$DB->insert_record('local_prequran_seb_attempt', $record);
-    pqh_seb_audit('seb_exam_started', $examid, ['attemptid' => $record->id]);
+    pqh_seb_audit('seb_exam_started', $examid, ['attemptid' => $record->id, 'sebverified' => $sebverified]);
     return $record;
+}
+
+// Focus mode: record a focus break (tab switch, window blur, or leaving
+// fullscreen) against the in-progress attempt. Audited and throttled by the
+// caller. Returns the running count.
+function pqh_seb_attempt_focus_break(stdClass $attempt, string $kind): int {
+    global $DB;
+    $count = (int)($attempt->focus_breaks ?? 0) + 1;
+    $attempt->focus_breaks = $count;
+    $attempt->timemodified = time();
+    $DB->update_record('local_prequran_seb_attempt', $attempt);
+    pqh_seb_audit('seb_focus_break', (int)$attempt->examid, [
+        'attemptid' => (int)$attempt->id,
+        'kind' => $kind,
+        'count' => $count,
+    ]);
+    return $count;
 }
 
 function pqh_seb_attempt_finish(stdClass $attempt, string $status = 'finished'): void {

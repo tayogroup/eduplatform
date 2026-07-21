@@ -55,6 +55,7 @@ if ($tablesready && data_submitted() && optional_param('action', '', PARAM_ALPHA
     $knowncontent = trim(optional_param('knowncontent', '', PARAM_RAW));
     $customurl = trim(optional_param('embedurl', '', PARAM_RAW));
     $embedurl = $customurl !== '' ? $customurl : $knowncontent;
+    $mode = optional_param('mode', 'seb', PARAM_ALPHANUMEXT) === 'focus' ? 'focus' : 'seb';
     $duration = max(5, min(240, optional_param('duration', 30, PARAM_INT)));
     $quitpassword = trim(optional_param('quitpassword', '', PARAM_TEXT));
     $windowstartraw = trim(optional_param('window_start', '', PARAM_RAW));
@@ -94,6 +95,7 @@ if ($tablesready && data_submitted() && optional_param('action', '', PARAM_ALPHA
             'title' => $title,
             'description' => $description,
             'embedurl' => $embedurl,
+            'mode' => $mode,
             'duration_minutes' => $duration,
             'quitpassword' => $quitpassword !== '' ? $quitpassword : 'ehel-unlock',
             'window_start' => $windowstart,
@@ -113,6 +115,7 @@ if ($tablesready && data_submitted() && optional_param('action', '', PARAM_ALPHA
         }
         pqh_seb_audit('seb_exam_created', (int)$exam->id, [
             'students' => $studentids,
+            'mode' => $mode,
             'duration' => $duration,
             'window_start' => $windowstart,
             'window_end' => $windowend,
@@ -207,7 +210,14 @@ echo $OUTPUT->header();
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="create">
           <div class="pqsm-field"><label for="pqsm-title">Title</label><input class="pqsm-input" id="pqsm-title" name="title" type="text" required></div>
-          <div class="pqsm-field"><label for="pqsm-desc">Description</label><textarea id="pqsm-desc" name="description" placeholder="Shown to students on the launch page"></textarea></div>
+          <div class="pqsm-field"><label for="pqsm-desc">Description</label><textarea id="pqsm-desc" name="description" placeholder="Shown to students before they begin"></textarea></div>
+          <div class="pqsm-field">
+            <label for="pqsm-mode">Exam mode</label>
+            <select class="pqsm-select" id="pqsm-mode" name="mode">
+              <option value="seb">Safe Exam Browser (locked - needs install, ages 13+)</option>
+              <option value="focus">Browser focus mode (no install - monitors, best for young learners)</option>
+            </select>
+          </div>
           <div class="pqsm-field">
             <label for="pqsm-known">Exam content</label>
             <select class="pqsm-select" id="pqsm-known" name="knowncontent">
@@ -221,7 +231,7 @@ echo $OUTPUT->header();
           <div class="pqsm-field"><label for="pqsm-duration">Duration (minutes)</label><input class="pqsm-input" id="pqsm-duration" name="duration" type="number" min="5" max="240" value="30"></div>
           <div class="pqsm-field"><label for="pqsm-wstart">Window opens</label><input class="pqsm-input" id="pqsm-wstart" name="window_start" type="datetime-local"></div>
           <div class="pqsm-field"><label for="pqsm-wend">Window closes</label><input class="pqsm-input" id="pqsm-wend" name="window_end" type="datetime-local"></div>
-          <div class="pqsm-field"><label for="pqsm-quit">Emergency exit password</label><input class="pqsm-input" id="pqsm-quit" name="quitpassword" type="text" placeholder="ehel-unlock"></div>
+          <div class="pqsm-field" id="pqsm-quit-field"><label for="pqsm-quit">Emergency exit password (Safe Exam Browser only)</label><input class="pqsm-input" id="pqsm-quit" name="quitpassword" type="text" placeholder="ehel-unlock"></div>
           <div class="pqsm-field">
             <label>Students</label>
             <?php if ($students): ?>
@@ -236,6 +246,14 @@ echo $OUTPUT->header();
           </div>
           <button class="pqsm-btn" type="submit">Create exam</button>
         </form>
+        <script>
+        (function(){
+          var mode = document.getElementById('pqsm-mode');
+          var quit = document.getElementById('pqsm-quit-field');
+          function sync(){ quit.style.display = mode.value === 'focus' ? 'none' : ''; }
+          if (mode && quit) { mode.addEventListener('change', sync); sync(); }
+        })();
+        </script>
       </section>
       <section aria-label="Exams">
         <?php if (!$exams): ?>
@@ -253,6 +271,7 @@ echo $OUTPUT->header();
           <article class="pqsm-exam <?php echo (string)$exam->status === 'archived' ? 'pqsm-exam--archived' : ''; ?>">
             <h3><?php echo s((string)$exam->title); ?></h3>
             <p class="pqsm-meta">
+              <span class="pqsm-pill"><?php echo pqh_seb_exam_mode($exam) === 'focus' ? 'Focus mode' : 'SEB locked'; ?></span>
               <span class="pqsm-pill"><?php echo (int)$exam->duration_minutes; ?> min</span>
               <span class="pqsm-pill"><?php echo s($windowline); ?></span>
               <span class="pqsm-pill"><?php echo (int)$counts['finished']; ?>/<?php echo (int)$counts['assigned']; ?> submitted</span>
@@ -262,7 +281,7 @@ echo $OUTPUT->header();
             <div class="pqsm-rowactions">
               <a class="pqsm-btn pqsm-btn--light" href="<?php echo pqh_seb_results_url((int)$exam->id)->out(false); ?>">Results</a>
               <a class="pqsm-btn pqsm-btn--light" href="<?php echo pqh_seb_exam_url((int)$exam->id)->out(false); ?>">Open exam page</a>
-              <a class="pqsm-btn pqsm-btn--light" href="<?php echo pqh_seb_config_download_url((int)$exam->id)->out(false); ?>">Download config</a>
+              <?php if (pqh_seb_exam_mode($exam) === 'seb'): ?><a class="pqsm-btn pqsm-btn--light" href="<?php echo pqh_seb_config_download_url((int)$exam->id)->out(false); ?>">Download config</a><?php endif; ?>
               <?php if ((string)$exam->status === 'active'): ?>
                 <form method="post" style="display:inline" onsubmit="return confirm('Archive this exam? Students will no longer be able to take it.');">
                   <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">

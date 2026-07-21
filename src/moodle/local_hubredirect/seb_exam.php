@@ -38,8 +38,18 @@ $PAGE->set_title((string)$exam->title);
 $PAGE->set_heading((string)$exam->title);
 $PAGE->add_body_class('pqsx-page');
 
-$verified = pqh_seb_request_verified($exam);
+$mode = pqh_seb_exam_mode($exam);
 $durationsecs = max(5, (int)$exam->duration_minutes) * 60;
+
+// ---- Browser focus mode: no Safe Exam Browser, runs in a normal browser
+// with fullscreen + focus monitoring. Rendered as a single-page JS view so
+// the fullscreen request keeps its user gesture. ----
+if ($mode === 'focus') {
+    require_once(__DIR__ . '/seb_focus_view.php');
+    exit;
+}
+
+$verified = pqh_seb_request_verified($exam);
 
 if ($verified && data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'finish') {
     if (!confirm_sesskey()) {

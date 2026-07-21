@@ -35,6 +35,7 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'res
 }
 
 $results = pqh_seb_exam_results($exam);
+$exammode = pqh_seb_exam_mode($exam);
 
 $statuslabel = static function(?stdClass $attempt): string {
     if (!$attempt) {
@@ -64,16 +65,25 @@ if (optional_param('action', '', PARAM_ALPHANUMEXT) === 'export') {
     header('Content-Disposition: attachment; filename="exam-' . $examid . '-results.csv"');
     $out = fopen('php://output', 'w');
     fputcsv($out, ['Exam', (string)$exam->title]);
-    fputcsv($out, ['Student', 'Status', 'Started', 'Finished', 'Elapsed', 'SEB verified']);
+    fputcsv($out, ['Mode', pqh_seb_mode_label($exammode)]);
+    $integrityheader = $exammode === 'focus' ? 'Focus breaks' : 'SEB verified';
+    fputcsv($out, ['Student', 'Status', 'Started', 'Finished', 'Elapsed', $integrityheader]);
     foreach ($results as $row) {
         $attempt = $row->attempt;
+        if (!$attempt) {
+            $integrity = '';
+        } else if ($exammode === 'focus') {
+            $integrity = (string)(int)($attempt->focus_breaks ?? 0);
+        } else {
+            $integrity = (int)$attempt->sebverified === 1 ? 'yes' : 'no';
+        }
         fputcsv($out, [
             $row->name,
             $statuslabel($attempt),
             $attempt && (int)$attempt->timestarted > 0 ? userdate((int)$attempt->timestarted, get_string('strftimedatetimeshort')) : '',
             $attempt && (int)$attempt->timefinished > 0 ? userdate((int)$attempt->timefinished, get_string('strftimedatetimeshort')) : '',
             $elapsed($attempt),
-            $attempt ? ((int)$attempt->sebverified === 1 ? 'yes' : 'no') : '',
+            $integrity,
         ]);
     }
     fclose($out);
@@ -141,7 +151,7 @@ echo $OUTPUT->header();
     <div class="pqsr-head">
       <div>
         <h1><?php echo s((string)$exam->title); ?></h1>
-        <p><?php echo (int)$exam->duration_minutes; ?> minutes · <?php echo s($windowline); ?></p>
+        <p><?php echo s(pqh_seb_mode_label($exammode)); ?> · <?php echo (int)$exam->duration_minutes; ?> minutes · <?php echo s($windowline); ?></p>
       </div>
       <div class="pqsr-actions">
         <a class="pqsr-btn pqsr-btn--light" href="<?php echo $manageurl->out(false); ?>">Exam manager</a>
@@ -176,7 +186,22 @@ echo $OUTPUT->header();
             <td class="pqsr-muted"><?php echo $attempt && (int)$attempt->timestarted > 0 ? userdate((int)$attempt->timestarted, get_string('strftimedatetimeshort')) : '-'; ?></td>
             <td class="pqsr-muted"><?php echo $attempt && (int)$attempt->timefinished > 0 ? userdate((int)$attempt->timefinished, get_string('strftimedatetimeshort')) : '-'; ?></td>
             <td class="pqsr-muted"><?php echo s($elapsed($attempt)); ?></td>
-            <td><?php echo $attempt ? ((int)$attempt->sebverified === 1 ? '<span class="pqsr-pill pqsr-pill--seb">SEB verified</span>' : '<span class="pqsr-pill pqsr-pill--expired">Unverified</span>') : '-'; ?></td>
+            <td>
+              <?php
+                if (!$attempt) {
+                    echo '-';
+                } else if ($exammode === 'focus') {
+                    $breaks = (int)($attempt->focus_breaks ?? 0);
+                    echo $breaks === 0
+                        ? '<span class="pqsr-pill pqsr-pill--seb">No breaks</span>'
+                        : '<span class="pqsr-pill pqsr-pill--expired">' . $breaks . ' focus break' . ($breaks === 1 ? '' : 's') . '</span>';
+                } else {
+                    echo (int)$attempt->sebverified === 1
+                        ? '<span class="pqsr-pill pqsr-pill--seb">SEB verified</span>'
+                        : '<span class="pqsr-pill pqsr-pill--expired">Unverified</span>';
+                }
+              ?>
+            </td>
             <td>
               <?php if ($reporturl && $attempt): ?><a class="pqsr-btn pqsr-btn--light" href="<?php echo $reporturl->out(false); ?>">Quiz report</a><?php endif; ?>
               <?php if ($attempt): ?>

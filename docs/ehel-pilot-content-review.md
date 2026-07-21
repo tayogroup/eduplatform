@@ -38,6 +38,32 @@ whose source lacked six experiments) should get the closest human read — the
 source-derived experiments carry the workbook's own safety framing; the
 generated ones now carry rule-based framing that a human should confirm.
 
+### 1b. Science — concept titles and worked examples
+
+- **78 concept cards across 14 units** previously carried the meaningless title
+  "*Unit Title* — part N" (their source lessons have no per-concept headings, so
+  the builder fell back). Concepts are now built from each unit's learning
+  objectives (real teaching content), and all 14 units received **reviewer-authored
+  concept titles** in curriculum order (e.g. Elements → What Is an Atom / Elements
+  and Compounds / The Periodic Table / Groups and Their Properties / Metals and
+  Non-Metals / Chemical Reactions). Course-wide: **0 generic titles, 0 thin
+  explanations** remain (309 concepts).
+- **11 units had junk worked examples** (prompt = unit title or dashes, solution =
+  "Talk through your answer…"). Now: g5/g8 units draw authentic MCQ worked examples
+  from their source practice (e.g. "Which part of a seed is the tiny baby plant? →
+  embryo"); Grade 1 gets age-appropriate child-facing "Look around you, can you
+  find an example of…" prompts. **0 junk / 0 parent-facing solutions** across all
+  416 worked examples.
+- Reference gaps closed earlier in validation: all Grade 1 units now carry
+  authored misconceptions and connections; the Quick Reference page renders fully
+  for every unit.
+
+**Residual (verified acceptable):** 9 chemistry vocabulary entries with short
+symbol meanings (Water | H₂O, Copper | Cu — correct), and 3 physics questions
+whose stems necessarily name the answer term (law of reflection). Grade 1 concept
+explanations remain parent/teacher-facing in tone (they are guide text) — flagged
+for the human reviewer as a style item, not a correctness one.
+
 ---
 
 ## 2. Mathematics — question topic-fit and decimal coverage

@@ -31,6 +31,28 @@ const EMPTY_DOC = { blocks: [], source_file: "(not provided)" };
 // each unit clean concept titles, real investigation names, corrected
 // vocabulary and picture-friendly quiz questions.
 const q = (question, options, answer, explanation) => ({ question, options, answer, explanation });
+// Reviewer-authored concept titles (pilot 2026-07) for the 14 units whose
+// source lessons carry no per-concept headings, so the builder derived titles
+// from learning objectives. Titles are in curriculum order and align to each
+// unit's objective-derived concept explanations. Applied over the derived
+// titles in buildUnit; extra titles beyond a unit's concept count are ignored.
+const CONCEPT_TITLE_OVERRIDES = {
+  "2-1": ["What Animals Need to Live", "What Plants Need to Live", "Different Environments", "Protecting the Environment", "Weather and Seasons", "Science Words for Living Things"],
+  "2-3": ["Heating Melts Solids", "Cooling Freezes Liquids", "Melting and Freezing", "Reversible and Irreversible Changes", "Dissolving in Water", "Mixing Materials"],
+  "2-5": ["Devices That Use Electricity", "Sorting Electrical Devices", "Batteries and Cells", "Simple Circuits", "Switches", "Using Electricity Safely"],
+  "2-6": ["Earth Spins on Its Axis", "The Sun's Apparent Movement", "How Shadows Change", "How Shadows Form", "The Sun Is a Star", "Finding Direction by the Sun"],
+  "3-2": ["What Is a Mixture", "Testing What Dissolves", "Separating Mixtures", "Carrying Out a Fair Test", "Observing Carefully", "Mixtures in Daily Life"],
+  "3-3": ["Sources of Light", "Why We Need Light to See", "Light Travels in Straight Lines", "How Shadows Form", "Transparent, Translucent and Opaque", "Shadows Through the Day"],
+  "3-4": ["The Major Body Organs", "What Each Organ Does", "How Organs Work Together", "Exercise, Heart and Lungs", "Keeping Your Organs Healthy", "Science Words for the Body"],
+  "4-5": ["How We See Objects", "Sources of Light", "Light Travels in Straight Lines", "Reflection", "Transparent, Translucent and Opaque", "How the Eye Sees Light"],
+  "6-4": ["What Is a Force", "Types of Force", "Mass and Weight", "Friction", "Balanced and Unbalanced Forces", "Measuring Forces"],
+  "7-3": ["Gravity as a Non-Contact Force", "Weight on the Moon and Earth", "The Solar System", "Movement in Space", "Tides", "Forms of Energy"],
+  "7-4": ["The Seven Characteristics of Life", "The Five Kingdoms", "Vertebrates and Invertebrates", "The Structure of a Virus", "What Is a Species", "Using a Dichotomous Key"],
+  "8-3": ["Density", "Measuring Mass and Volume", "Floating and Sinking", "Speed", "Calculating Speed", "Distance-Time Graphs"],
+  "8-4": ["What Is an Atom", "Elements and Compounds", "The Periodic Table", "Groups and Their Properties", "Metals and Non-Metals", "Chemical Reactions"],
+  "8-6": ["Light as Energy", "Luminous and Non-Luminous Objects", "The Law of Reflection", "Angles of Incidence and Reflection", "Refraction", "Lenses"],
+};
+
 const GRADE1 = {
   1: {
     outcomes: [
@@ -265,6 +287,34 @@ function buildGrade(grade) {
     return list;
   }
 
+  // Turn a verb-led objective into a short noun-phrase concept title:
+  // "Explain that Earth spins on its axis, giving day and night" -> "Earth
+  // Spins On Its Axis". Strips the leading verb and filler, trims to ~6 words.
+  function titleFromObjective(objective) {
+    const VERB = "sort|name|describe|explain|identify|compare|classify|plan|record|measure|observe|predict|investigate|use|give|connect|state|label|list|recognise|recognize|discuss|show|define";
+    let s = tidy(objective)
+      .replace(new RegExp(`^(?:${VERB})\\b\\s*`, "i"), "")            // leading verb
+      .replace(new RegExp(`^and\\s+(?:${VERB})\\b\\s*`, "i"), "")     // "Observe and describe ..." -> after both verbs
+      .replace(/[,.;:].*$/, "")                                       // first clause only
+      .replace(new RegExp(`\\s+and\\s+(?:${VERB})\\b.*$`, "i"), "")   // drop a trailing second clause
+      .replace(/\s+(and give local examples|and use them|correctly|using science words)\b.*$/i, "")
+      .trim();
+    // "what an atom is" / "how X works" -> the noun phrase itself
+    const m = s.match(/^what\s+(?:an?\s+|the\s+)?(.+?)\s+(?:is|are|does|means?|works?)\b/i)
+      || s.match(/^how\s+(.+?)\s+(?:work|happens?|forms?|moves?)\b/i);
+    if (m) s = m[1];
+    else s = s.replace(/^(that|how|the difference between|why|what|to|a|an|the|its|and|when|as|is|are)\s+/i, "");
+    s = s.split(/\s+/).slice(0, 8).join(" ");
+    // Trim dangling connectives from the end, repeatedly.
+    let prev;
+    do { prev = s; s = s.replace(/\s+(of|in|on|to|the|a|an|and|with|by|for|as|into|from|when|that|through|such)$/i, "").trim(); } while (s !== prev);
+    // Reject only true junk; a single strong noun ("Density", "Reflection") is
+    // a fine title.
+    if (s.length < 5 || /^(and|when|that|as|is|are|the|a|an|this|these|each|some|both)$/i.test(s)) return null;
+    const small = new Set(["of", "in", "on", "to", "the", "a", "an", "and", "with", "by", "for", "its", "into", "from", "as", "when"]);
+    return s.split(/\s+/).map((w, i) => (i > 0 && small.has(w.toLowerCase())) ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  }
+
   function conceptList(lesson, title) {
     // Source docs mark concepts as "Part N:", "Concept N:", "Topic N:" or
     // "Section N:" — accept them all.
@@ -292,13 +342,45 @@ function buildGrade(grade) {
         .filter((block) => block.content_kind === "Heading")
         .map((block) => tidy(block.text).replace(/^(Part|Lesson)\s*\d+\s*[—:\-]\s*/i, ""))
         .filter((text) => text.length >= 6 && text.length <= 52 && !/[.!?]$/.test(text) && !BLOCK.test(text));
-      const paragraphs = lesson.blocks.map((block) => tidy(block.text)).filter((text) => text.length > 90).slice(0, 6);
-      concepts = paragraphs.map((text, index) => ({
-        id: `concept-${index + 1}-${slug(title)}-${index + 1}`,
-        title: topicHeadings[index] || `${title} — part ${index + 1}`,
-        explanation: sentence(text, 520),
-        example: sentence(paragraphs[(index + 1) % paragraphs.length] || text, 220),
-      }));
+      // Prefer the unit's own learning-objective statements as concepts —
+      // these are real teaching content, unlike the lesson's welcome/why-it-
+      // matters narrative. Each objective that yields a clean title becomes a
+      // concept; fall back to substantive paragraphs only if too few do.
+      const readablePhrase = (text) => {
+        const stripped = tidy(text).replace(/^(?:and\s+)?(?:sort|name|describe|explain|identify|compare|classify|plan|record|measure|observe|predict|investigate|use|give|connect|state|label|list|recognise|recognize|discuss|show|define)\b\s*/i, "");
+        const short = sentence(stripped.replace(/[,.;:].*$/, ""), 46).replace(/\s+(of|in|on|to|the|a|an|and|with|by|for|as|into|from|when|that)$/i, "");
+        return short.charAt(0).toUpperCase() + short.slice(1);
+      };
+      const VERB_LED = /^(?:and\s+)?(sort|name|describe|explain|identify|compare|classify|plan|record|measure|observe|predict|investigate|use|give|connect|state|label|list|recognise|recognize|discuss|show|define)\b/i;
+      const objectiveTexts = outcomeList(lesson).filter((text) => VERB_LED.test(text));
+      // If the objectives section captured fewer than six, top up from
+      // verb-led teaching lines elsewhere in the lesson (some units split
+      // their objectives across sub-headings).
+      if (objectiveTexts.length < 6) {
+        for (const line of lesson.blocks.map((b) => tidy(b.text))) {
+          if (objectiveTexts.length >= 6) break;
+          if (VERB_LED.test(line) && line.length > 25 && line.length < 240 && !objectiveTexts.includes(line)) objectiveTexts.push(line);
+        }
+      }
+      const objectiveConcepts = objectiveTexts.map((text) => ({ text, title: titleFromObjective(text) || readablePhrase(text) }));
+      if (objectiveConcepts.length >= 4) {
+        concepts = objectiveConcepts.slice(0, 6).map((o, index) => ({
+          id: `concept-${index + 1}-${slug(o.title) || index + 1}`,
+          title: o.title,
+          explanation: sentence(o.text, 520),
+          example: sentence(objectiveConcepts[(index + 1) % objectiveConcepts.length].text, 220),
+        }));
+      } else {
+        const paragraphs = lesson.blocks.map((block) => tidy(block.text))
+          .filter((text) => text.length > 90 && !/^(assalaam|welcome|young scientist|by the (end|time)|this is your lesson|read them (now|again)|ask your ai|in this unit you (are|will))/i.test(text))
+          .slice(0, 6);
+        concepts = paragraphs.map((text, index) => ({
+          id: `concept-${index + 1}-${slug(title)}-${index + 1}`,
+          title: topicHeadings[index] || `${title} — part ${index + 1}`,
+          explanation: sentence(text, 520),
+          example: sentence(paragraphs[(index + 1) % paragraphs.length] || text, 220),
+        }));
+      }
     }
     return concepts.slice(0, 6);
   }
@@ -648,12 +730,22 @@ function buildGrade(grade) {
     if (override && override.conceptTitles) {
       // Keep the source explanations but give each concept a clean, authored
       // title (Grade 1's guide has no concept headings of its own).
-      concepts = override.conceptTitles.map((ctitle, index) => ({
-        id: `concept-${index + 1}-${slug(ctitle)}`,
-        title: ctitle,
-        explanation: concepts[index]?.explanation || `Learn about ${ctitle.toLowerCase()} by looking, listening and talking together.`,
-        example: concepts[index]?.example || ctitle,
-      }));
+      concepts = override.conceptTitles.map((ctitle, index) => {
+        const srcExpl = concepts[index]?.explanation || "";
+        const explanation = srcExpl.length >= 60 ? srcExpl : `${ctitle}. ${srcExpl} Explore this idea together by looking, doing and talking about what you notice.`.replace(/\s+/g, " ").trim();
+        return {
+          id: `concept-${index + 1}-${slug(ctitle)}`,
+          title: ctitle,
+          explanation,
+          example: concepts[index]?.example || ctitle,
+        };
+      });
+    }
+    // Reviewer-authored titles for units whose source lacks concept headings
+    // (keeps the objective-derived explanations, replaces the derived title).
+    const titleOverride = CONCEPT_TITLE_OVERRIDES[`${grade}-${unitNo}`];
+    if (titleOverride) {
+      concepts = concepts.map((concept, index) => (titleOverride[index] ? { ...concept, id: `concept-${index + 1}-${slug(titleOverride[index])}`, title: titleOverride[index] } : concept));
     }
     let outcomes = (override && override.outcomes) ? override.outcomes.slice() : outcomeList(lesson);
     if (!outcomes.length) outcomes = concepts.map((concept) => `Explore and talk about ${concept.title.toLowerCase()}.`).slice(0, 6);
@@ -666,9 +758,30 @@ function buildGrade(grade) {
       const body = lesson.blocks.slice(index + 1, index + 6).map((item) => tidy(item.text)).filter((text) => text.length > 10);
       workedExamples.push({ id: `we${String(workedExamples.length + 1).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: "Intermediate", title: tidy(block.text).replace(/^Worked Examples?\s*[—:\-]?\s*/i, "") || `Worked example`, prompt: sentence(body[0] || title, 260), solution: sentence(body.slice(1).join(" ") || body[0] || title, 520) });
     }
-    while (workedExamples.length < 8 && practice.length) {
-      const item = practice[workedExamples.length % practice.length];
-      workedExamples.push({ id: `we${String(workedExamples.length + 1).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: workedExamples.length < 4 ? "Basic" : "Intermediate", title: `Guided example ${workedExamples.length + 1}`, prompt: item.prompt, solution: item.answer });
+    // Pad only with real practice items — skip source junk whose prompt is a
+    // unit title / page marker or whose answer is the generic placeholder.
+    const BOILERPLATE = /talk through your answer|my activity sheet|^[—\-\s]+$|^year \d|^unit \d|^being alive$/i;
+    const realPractice = practice.filter((item) => (item.prompt || "").length > 18 && !BOILERPLATE.test(item.prompt || "") && (item.answer || "").length > 8 && !BOILERPLATE.test(item.answer || ""));
+    let pi = 0;
+    while (workedExamples.length < 8 && pi < realPractice.length) {
+      const item = realPractice[pi]; pi += 1;
+      const n = workedExamples.length + 1;
+      workedExamples.push({ id: `we${String(n).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: workedExamples.length < 4 ? "Basic" : "Intermediate", title: `Guided example ${n}`, prompt: item.prompt, solution: item.answer });
+    }
+    // Still short? Build worked examples from the unit's own concepts — a real
+    // question and a worked answer drawn from the concept's teaching text.
+    // Skip parent-/teacher-facing prose (Grade 1 guides address the adult) and
+    // give young learners a simple, child-facing worked answer instead.
+    const PARENT_FACING = /\byour child\b|\bthis unit\b|you do not need|weeks?, doing|is 5 or 6|learning to read|as the adult|as a parent|teacher or parent/i;
+    let ci = 0;
+    while (workedExamples.length < 6 && ci < concepts.length) {
+      const c = concepts[ci]; ci += 1;
+      const n = workedExamples.length + 1;
+      const cleanExpl = !PARENT_FACING.test(c.explanation) ? c.explanation : "";
+      const solution = cleanExpl
+        ? sentence(`${cleanExpl} ${c.example && c.example !== c.title && !PARENT_FACING.test(c.example) ? `For example: ${c.example}` : ""}`.trim(), 480)
+        : `Look, point and talk about ${c.title.toLowerCase().replace(/\?$/, "")}. Say what you notice and give one example you can see around you.`;
+      workedExamples.push({ id: `we${String(n).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: workedExamples.length < 3 ? "Basic" : "Intermediate", title: c.title, prompt: grade <= 1 ? `Look around you. Can you find an example of: ${c.title.replace(/\?$/, "")}?` : `Explain in your own words: ${c.title.replace(/\?$/, "")}.`, solution });
     }
 
     const methods = experiments.slice(0, 6).map((experiment, index) => ({

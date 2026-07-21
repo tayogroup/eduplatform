@@ -89,6 +89,51 @@ function pqsn_base_user_rules(): array {
     return $rules;
 }
 
+/**
+ * Is the given weekly learning schedule active at $now? Schedule JSON:
+ * {"days":[1..7 ISO],"start":"HH:MM","end":"HH:MM","tz":"Area/City"}.
+ * Supports overnight windows (start > end).
+ */
+function pqsn_schedule_is_active(?string $json, ?int $now = null): bool {
+    $now = $now ?? time();
+    $sch = json_decode((string)$json, true);
+    if (!is_array($sch) || empty($sch['days']) || empty($sch['start']) || empty($sch['end'])) {
+        return false;
+    }
+    $tz = (string)($sch['tz'] ?? 'UTC');
+    try {
+        $dt = new DateTime('@' . $now);
+        $dt->setTimezone(new DateTimeZone($tz !== '' ? $tz : 'UTC'));
+    } catch (Throwable $e) {
+        return false;
+    }
+    $dow = (int)$dt->format('N');
+    if (!in_array($dow, array_map('intval', (array)$sch['days']), true)) {
+        return false;
+    }
+    $cur = $dt->format('H:i');
+    $start = (string)$sch['start'];
+    $end = (string)$sch['end'];
+    if ($start <= $end) {
+        return $cur >= $start && $cur < $end;
+    }
+    return $cur >= $start || $cur < $end; // overnight window
+}
+
+/** Short human summary of a schedule, or '' if none. */
+function pqsn_schedule_summary(?string $json): string {
+    $sch = json_decode((string)$json, true);
+    if (!is_array($sch) || empty($sch['days']) || empty($sch['start']) || empty($sch['end'])) {
+        return '';
+    }
+    $names = [1 => 'Mon', 2 => 'Tue', 3 => 'Wed', 4 => 'Thu', 5 => 'Fri', 6 => 'Sat', 7 => 'Sun'];
+    $days = array_map(static function ($d) use ($names) {
+        return $names[(int)$d] ?? '';
+    }, (array)$sch['days']);
+    $days = array_filter($days);
+    return implode(' ', $days) . ' · ' . (string)$sch['start'] . '–' . (string)$sch['end'];
+}
+
 /** Push the base+learning ruleset to every resolver (idempotent). */
 function pqsn_ensure_learning_rules(): void {
     $cfg = pqsn_config();

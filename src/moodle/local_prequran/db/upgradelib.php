@@ -5527,3 +5527,20 @@ function xmldb_local_prequran_ensure_safenet_schema(): void {
         new xmldb_index('preqsafeevt_cons_ix', XMLDB_INDEX_NOTUNIQUE, ['consumerid', 'workspaceid', 'timecreated']),
     ]);
 }
+
+function xmldb_local_prequran_ensure_safenet_schedule_fields(): void {
+    global $DB;
+    $dbman = $DB->get_manager();
+    $table = new xmldb_table('local_prequran_safenet_dev');
+    if (!$dbman->table_exists($table)) {
+        return;
+    }
+    $schedulejson = new xmldb_field('schedulejson', XMLDB_TYPE_TEXT, null, null, null, null, null, 'policy_until');
+    if (!$dbman->field_exists($table, $schedulejson)) {
+        $dbman->add_field($table, $schedulejson);
+    }
+    $schedapplied = new xmldb_field('sched_applied', XMLDB_TYPE_CHAR, '40', null, XMLDB_NOTNULL, null, '', 'schedulejson');
+    if (!$dbman->field_exists($table, $schedapplied)) {
+        $dbman->add_field($table, $schedapplied);
+    }
+}

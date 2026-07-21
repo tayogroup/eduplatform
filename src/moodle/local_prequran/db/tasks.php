@@ -3,6 +3,15 @@ defined('MOODLE_INTERNAL') || die();
 
 $tasks = [
     [
+        'classname' => 'local_prequran\task\safenet_schedule',
+        'blocking' => 0,
+        'minute' => '*/5',
+        'hour' => '*',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*',
+    ],
+    [
         'classname' => 'local_prequran\task\live_session_reminders',
         'blocking' => 0,
         'minute' => '*/15',

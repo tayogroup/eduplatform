@@ -167,6 +167,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
             $notice = $messages[$action];
         }
+    } else if ($action === 'setschedule') {
+        $deviceid = required_param('deviceid', PARAM_INT);
+        $device = pqsn_load_device($deviceid);
+        if (!$device || !pqsn_user_may_touch($device, $isstaff, $children)) {
+            $error = 'That device was not found.';
+        } else {
+            $days = optional_param_array('days', [], PARAM_INT);
+            $days = array_values(array_filter(array_map('intval', $days), static function ($d) {
+                return $d >= 1 && $d <= 7;
+            }));
+            $start = trim(optional_param('start', '', PARAM_TEXT));
+            $end = trim(optional_param('end', '', PARAM_TEXT));
+            $clear = optional_param('clearschedule', 0, PARAM_INT);
+            $valid = preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $start) && preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $end);
+            if ($clear || !$days || !$valid) {
+                $device->schedulejson = '';
+                $device->sched_applied = '';
+                $notice = 'Learning schedule cleared.';
+            } else {
+                $device->schedulejson = json_encode([
+                    'days' => $days,
+                    'start' => $start,
+                    'end' => $end,
+                    'tz' => \core_date::get_server_timezone(),
+                ]);
+                $device->sched_applied = '';
+                $notice = 'Learning schedule saved — it applies automatically each day.';
+            }
+            $device->timemodified = time();
+            $DB->update_record('local_prequran_safenet_dev', $device);
+            pqsn_audit($consumerid, $workspaceid, (int)$device->id, 'schedule_set', []);
+        }
     } else if ($action === 'syncall' && $isstaff) {
         $pending = $DB->get_records('local_prequran_safenet_dev', ['syncstatus' => 'pending', 'status' => 'active']);
         $done = 0;
@@ -377,6 +409,32 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
                   <li>Lock the device's settings with the platform's parental controls.</li>
                 </ol>
               <?php endif; ?>
+            </details>
+            <?php
+            $sched = json_decode((string)$device->schedulejson, true);
+            $schedsummary = pqsn_schedule_summary((string)$device->schedulejson);
+            $scheddays = is_array($sched) && !empty($sched['days']) ? array_map('intval', (array)$sched['days']) : [];
+            $daynames = [1 => 'Mon', 2 => 'Tue', 3 => 'Wed', 4 => 'Thu', 5 => 'Fri', 6 => 'Sat', 7 => 'Sun'];
+            ?>
+            <details class="pqsn-steps"<?php echo $schedsummary !== '' ? ' open' : ''; ?>>
+              <summary>Learning schedule<?php echo $schedsummary !== '' ? ' — ' . s($schedsummary) : ' (off)'; ?></summary>
+              <form method="post" style="margin-top:8px">
+                <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                <input type="hidden" name="deviceid" value="<?php echo (int)$device->id; ?>">
+                <input type="hidden" name="action" value="setschedule">
+                <p class="pqsn-note" style="margin:0 0 6px">Automatically switch this device to Learning Mode during these hours; normal child-safe browsing the rest of the time.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+                  <?php foreach ($daynames as $dnum => $dname): ?>
+                    <label style="font-size:13px"><input type="checkbox" name="days[]" value="<?php echo $dnum; ?>"<?php echo in_array($dnum, $scheddays, true) ? ' checked' : ''; ?>> <?php echo $dname; ?></label>
+                  <?php endforeach; ?>
+                </div>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+                  <label style="font-size:13px">From <input type="time" name="start" value="<?php echo s(is_array($sched) ? (string)($sched['start'] ?? '') : ''); ?>"></label>
+                  <label style="font-size:13px">to <input type="time" name="end" value="<?php echo s(is_array($sched) ? (string)($sched['end'] ?? '') : ''); ?>"></label>
+                </div>
+                <button class="pqsn-btn pqsn-btn--primary" type="submit">Save schedule</button>
+                <button class="pqsn-btn" type="submit" name="clearschedule" value="1">Clear</button>
+              </form>
             </details>
             <div class="pqsn-actions">
               <form method="post">

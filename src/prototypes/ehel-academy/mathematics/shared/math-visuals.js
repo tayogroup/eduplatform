@@ -9,7 +9,7 @@ const TOPIC_RULES = [
   ["fractions", /fraction|decimal|percentage|percent|tenths|hundredths|ratio|proportion/i],
   ["time", /\btime\b|clock|hour|minute|calendar|o.clock|duration|telling the time/i],
   ["money", /money|coin|cash|price|change|currency|shilling|dollar|cost|budget/i],
-  ["statistics", /statistic|data|chart|graph|pictogram|tally|table|probability|average|mean|median|mode|survey|frequenc/i],
+  ["statistics", /statistic|data|chart|graph|pictogram|tally|table|probability|chance|likel|certain|impossible|outcome|average|mean|median|mode|survey|frequenc/i],
   ["geometry", /geometr|shape|angle|symmetr|polygon|triangle|circle|square|quadrilat|3-?d|2-?d|solid|net\b|position|movement|turn|rotation|reflect|coordinate|transformation/i],
   ["measure", /measure|length|mass|weight|capacity|volume|area|perimeter|distance|metre|litre|gram|scale|temperature/i],
   ["algebra", /algebra|equation|expression|sequence|pattern|formula|variable|unknown|function|nth term|substitut/i],

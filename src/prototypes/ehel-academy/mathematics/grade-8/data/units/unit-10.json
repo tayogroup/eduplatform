@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T08:37:04.683Z",
+  "generatedAt": "2026-07-21T09:37:28.959Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -867,37 +867,53 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What is 1/4 of 52?",
+        "question": "Which fraction is larger: 1/2 or 1/4?",
         "options": [
-          "13",
-          "17",
-          "39",
-          "4"
+          "1/4",
+          "They are equal",
+          "1/8",
+          "1/2"
         ],
-        "answer": "13",
+        "answer": "1/2",
         "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 52 into 4 equal parts: 52 ÷ 4 = 13."
+        "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What is 1/5 of 65?",
+        "question": "Write 0.5 as a fraction.",
         "options": [
-          "18",
-          "52",
-          "5",
-          "13"
+          "1/3",
+          "2/3",
+          "1/8",
+          "1/2"
         ],
-        "answer": "13",
+        "answer": "1/2",
         "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 65 into 5 equal parts: 65 ÷ 5 = 13."
+        "explanation": "0.5 means 1/2."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "Write 1/10 as a decimal.",
+        "options": [
+          "0.3",
+          "0.15",
+          "0.05",
+          "0.1"
+        ],
+        "answer": "0.1",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "1/10 = 0.1."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
         "difficulty": "Basic",
         "question": "What is 1/5 of 50?",
         "options": [
@@ -911,100 +927,84 @@
         "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
       },
       {
-        "id": "q04",
-        "type": "Application",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
-        "question": "What is 1/3 of 21?",
-        "options": [
-          "7",
-          "10",
-          "14",
-          "3"
-        ],
-        "answer": "7",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 21 into 3 equal parts: 21 ÷ 3 = 7."
-      },
-      {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What is 1/10 of 180?",
-        "options": [
-          "162",
-          "10",
-          "18",
-          "28"
-        ],
-        "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 180 into 10 equal parts: 180 ÷ 10 = 18."
-      },
-      {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What is 1/3 of 24?",
-        "options": [
-          "11",
-          "16",
-          "3",
-          "8"
-        ],
-        "answer": "8",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 24 into 3 equal parts: 24 ÷ 3 = 8."
-      },
-      {
-        "id": "q07",
-        "type": "Application",
-        "outcomeId": "lo07",
-        "difficulty": "Core",
         "question": "Which fraction is equivalent to 1/2?",
         "options": [
-          "3/4",
-          "2/4",
           "1/4",
-          "2/3"
+          "2/3",
+          "3/4",
+          "2/4"
         ],
         "answer": "2/4",
         "hint": "Work it out step by step, then check each option.",
         "explanation": "2/4 simplifies to 1/2, so they are equivalent."
       },
       {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What is 25% of 50?",
+        "options": [
+          "37.5",
+          "25",
+          "13.5",
+          "12.5"
+        ],
+        "answer": "12.5",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "25% means 25 out of 100, so 25% of 50 = 12.5."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Write 0.2 as a fraction.",
+        "options": [
+          "1/8",
+          "1/5",
+          "1/3",
+          "2/3"
+        ],
+        "answer": "1/5",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "0.2 means 1/5."
+      },
+      {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "Which fraction is larger: 1/2 or 1/4?",
+        "question": "Write 0.1 as a fraction.",
         "options": [
-          "They are equal",
+          "2/3",
           "1/8",
-          "1/2",
-          "1/4"
+          "1/10",
+          "1/3"
         ],
-        "answer": "1/2",
+        "answer": "1/10",
         "hint": "Work it out step by step, then check each option.",
-        "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+        "explanation": "0.1 means 1/10."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "What is 1/5 of 90?",
+        "question": "What is 20% of 40?",
         "options": [
-          "23",
-          "72",
-          "5",
-          "18"
+          "16",
+          "32",
+          "8",
+          "28"
         ],
-        "answer": "18",
+        "answer": "8",
         "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 90 into 5 equal parts: 90 ÷ 5 = 18."
+        "explanation": "20% means 20 out of 100, so 20% of 40 = 8."
       },
       {
         "id": "q10",
@@ -1068,40 +1068,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/4 of 52?",
+            "prompt": "Which fraction is larger: 1/2 or 1/4?",
             "choices": [
-              "13",
-              "17",
-              "39",
-              "4"
-            ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 52 into 4 equal parts: 52 ÷ 4 = 13."
-          },
-          {
-            "prompt": "What is 1/3 of 21?",
-            "choices": [
-              "7",
-              "10",
-              "14",
-              "3"
-            ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 21 into 3 equal parts: 21 ÷ 3 = 7."
-          },
-          {
-            "prompt": "Which fraction is equivalent to 1/2?",
-            "choices": [
-              "3/4",
-              "2/4",
               "1/4",
+              "They are equal",
+              "1/8",
+              "1/2"
+            ],
+            "answer": "1/2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+          },
+          {
+            "prompt": "What is 1/5 of 50?",
+            "choices": [
+              "40",
+              "5",
+              "10",
+              "15"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
+          },
+          {
+            "prompt": "Write 0.2 as a fraction.",
+            "choices": [
+              "1/8",
+              "1/5",
+              "1/3",
               "2/3"
             ],
-            "answer": "2/4",
+            "answer": "1/5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+            "explanation": "0.2 means 1/5."
           },
           {
             "prompt": "What does “Percentage” mean?",
@@ -1126,40 +1126,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/5 of 65?",
+            "prompt": "Write 0.5 as a fraction.",
             "choices": [
-              "18",
-              "52",
-              "5",
-              "13"
-            ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 65 into 5 equal parts: 65 ÷ 5 = 13."
-          },
-          {
-            "prompt": "What is 1/10 of 180?",
-            "choices": [
-              "162",
-              "10",
-              "18",
-              "28"
-            ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 180 into 10 equal parts: 180 ÷ 10 = 18."
-          },
-          {
-            "prompt": "Which fraction is larger: 1/2 or 1/4?",
-            "choices": [
-              "They are equal",
+              "1/3",
+              "2/3",
               "1/8",
-              "1/2",
-              "1/4"
+              "1/2"
             ],
             "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+            "explanation": "0.5 means 1/2."
+          },
+          {
+            "prompt": "Which fraction is equivalent to 1/2?",
+            "choices": [
+              "1/4",
+              "2/3",
+              "3/4",
+              "2/4"
+            ],
+            "answer": "2/4",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+          },
+          {
+            "prompt": "Write 0.1 as a fraction.",
+            "choices": [
+              "2/3",
+              "1/8",
+              "1/10",
+              "1/3"
+            ],
+            "answer": "1/10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "0.1 means 1/10."
           },
           {
             "prompt": "What does “Multiplier” mean?",
@@ -1184,40 +1184,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/5 of 50?",
+            "prompt": "Write 1/10 as a decimal.",
             "choices": [
-              "40",
-              "5",
-              "10",
-              "15"
+              "0.3",
+              "0.15",
+              "0.05",
+              "0.1"
             ],
-            "answer": "10",
+            "answer": "0.1",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
+            "explanation": "1/10 = 0.1."
           },
           {
-            "prompt": "What is 1/3 of 24?",
+            "prompt": "What is 25% of 50?",
             "choices": [
-              "11",
+              "37.5",
+              "25",
+              "13.5",
+              "12.5"
+            ],
+            "answer": "12.5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "25% means 25 out of 100, so 25% of 50 = 12.5."
+          },
+          {
+            "prompt": "What is 20% of 40?",
+            "choices": [
               "16",
-              "3",
-              "8"
+              "32",
+              "8",
+              "28"
             ],
             "answer": "8",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 24 into 3 equal parts: 24 ÷ 3 = 8."
-          },
-          {
-            "prompt": "What is 1/5 of 90?",
-            "choices": [
-              "23",
-              "72",
-              "5",
-              "18"
-            ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 90 into 5 equal parts: 90 ÷ 5 = 18."
+            "explanation": "20% means 20 out of 100, so 20% of 40 = 8."
           },
           {
             "prompt": "What does “Original amount” mean?",
@@ -1242,28 +1242,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/3 of 21?",
+            "prompt": "What is 1/5 of 50?",
             "choices": [
-              "7",
+              "40",
+              "5",
               "10",
-              "14",
-              "3"
+              "15"
             ],
-            "answer": "7",
+            "answer": "10",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 21 into 3 equal parts: 21 ÷ 3 = 7."
+            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
           },
           {
-            "prompt": "Which fraction is equivalent to 1/2?",
+            "prompt": "Write 0.2 as a fraction.",
             "choices": [
-              "3/4",
-              "2/4",
-              "1/4",
+              "1/8",
+              "1/5",
+              "1/3",
               "2/3"
             ],
-            "answer": "2/4",
+            "answer": "1/5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+            "explanation": "0.2 means 1/5."
           },
           {
             "prompt": "What does “Percentage” mean?",
@@ -1278,16 +1278,16 @@
             "explanation": "Percentage means A part of something out of 100."
           },
           {
-            "prompt": "What is 1/4 of 52?",
+            "prompt": "Which fraction is larger: 1/2 or 1/4?",
             "choices": [
-              "13",
-              "17",
-              "39",
-              "4"
+              "1/4",
+              "They are equal",
+              "1/8",
+              "1/2"
             ],
-            "answer": "13",
+            "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 52 into 4 equal parts: 52 ÷ 4 = 13."
+            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
           }
         ]
       },
@@ -1300,28 +1300,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/10 of 180?",
+            "prompt": "Which fraction is equivalent to 1/2?",
             "choices": [
-              "162",
-              "10",
-              "18",
-              "28"
+              "1/4",
+              "2/3",
+              "3/4",
+              "2/4"
             ],
-            "answer": "18",
+            "answer": "2/4",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 180 into 10 equal parts: 180 ÷ 10 = 18."
+            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
           },
           {
-            "prompt": "Which fraction is larger: 1/2 or 1/4?",
+            "prompt": "Write 0.1 as a fraction.",
             "choices": [
-              "They are equal",
+              "2/3",
               "1/8",
-              "1/2",
-              "1/4"
+              "1/10",
+              "1/3"
             ],
-            "answer": "1/2",
+            "answer": "1/10",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+            "explanation": "0.1 means 1/10."
           },
           {
             "prompt": "What does “Multiplier” mean?",
@@ -1336,16 +1336,16 @@
             "explanation": "Multiplier means The decimal you multiply by to make a change."
           },
           {
-            "prompt": "What is 1/5 of 65?",
+            "prompt": "Write 0.5 as a fraction.",
             "choices": [
-              "18",
-              "52",
-              "5",
-              "13"
+              "1/3",
+              "2/3",
+              "1/8",
+              "1/2"
             ],
-            "answer": "13",
+            "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 65 into 5 equal parts: 65 ÷ 5 = 13."
+            "explanation": "0.5 means 1/2."
           }
         ]
       },
@@ -1358,28 +1358,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/3 of 24?",
+            "prompt": "What is 25% of 50?",
             "choices": [
-              "11",
+              "37.5",
+              "25",
+              "13.5",
+              "12.5"
+            ],
+            "answer": "12.5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "25% means 25 out of 100, so 25% of 50 = 12.5."
+          },
+          {
+            "prompt": "What is 20% of 40?",
+            "choices": [
               "16",
-              "3",
-              "8"
+              "32",
+              "8",
+              "28"
             ],
             "answer": "8",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 24 into 3 equal parts: 24 ÷ 3 = 8."
-          },
-          {
-            "prompt": "What is 1/5 of 90?",
-            "choices": [
-              "23",
-              "72",
-              "5",
-              "18"
-            ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 90 into 5 equal parts: 90 ÷ 5 = 18."
+            "explanation": "20% means 20 out of 100, so 20% of 40 = 8."
           },
           {
             "prompt": "What does “Original amount” mean?",
@@ -1394,16 +1394,16 @@
             "explanation": "Original amount means The value before any change."
           },
           {
-            "prompt": "What is 1/5 of 50?",
+            "prompt": "Write 1/10 as a decimal.",
             "choices": [
-              "40",
-              "5",
-              "10",
-              "15"
+              "0.3",
+              "0.15",
+              "0.05",
+              "0.1"
             ],
-            "answer": "10",
+            "answer": "0.1",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
+            "explanation": "1/10 = 0.1."
           }
         ]
       },
@@ -1416,16 +1416,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which fraction is equivalent to 1/2?",
+            "prompt": "Write 0.2 as a fraction.",
             "choices": [
-              "3/4",
-              "2/4",
-              "1/4",
+              "1/8",
+              "1/5",
+              "1/3",
               "2/3"
             ],
-            "answer": "2/4",
+            "answer": "1/5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+            "explanation": "0.2 means 1/5."
           },
           {
             "prompt": "What does “Percentage” mean?",
@@ -1440,28 +1440,28 @@
             "explanation": "Percentage means A part of something out of 100."
           },
           {
-            "prompt": "What is 1/4 of 52?",
+            "prompt": "Which fraction is larger: 1/2 or 1/4?",
             "choices": [
-              "13",
-              "17",
-              "39",
-              "4"
+              "1/4",
+              "They are equal",
+              "1/8",
+              "1/2"
             ],
-            "answer": "13",
+            "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 52 into 4 equal parts: 52 ÷ 4 = 13."
+            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
           },
           {
-            "prompt": "What is 1/3 of 21?",
+            "prompt": "What is 1/5 of 50?",
             "choices": [
-              "7",
+              "40",
+              "5",
               "10",
-              "14",
-              "3"
+              "15"
             ],
-            "answer": "7",
+            "answer": "10",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 21 into 3 equal parts: 21 ÷ 3 = 7."
+            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
           }
         ]
       },
@@ -1474,16 +1474,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which fraction is larger: 1/2 or 1/4?",
+            "prompt": "Write 0.1 as a fraction.",
             "choices": [
-              "They are equal",
+              "2/3",
               "1/8",
-              "1/2",
-              "1/4"
+              "1/10",
+              "1/3"
             ],
-            "answer": "1/2",
+            "answer": "1/10",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+            "explanation": "0.1 means 1/10."
           },
           {
             "prompt": "What does “Multiplier” mean?",
@@ -1498,28 +1498,28 @@
             "explanation": "Multiplier means The decimal you multiply by to make a change."
           },
           {
-            "prompt": "What is 1/5 of 65?",
+            "prompt": "Write 0.5 as a fraction.",
             "choices": [
-              "18",
-              "52",
-              "5",
-              "13"
+              "1/3",
+              "2/3",
+              "1/8",
+              "1/2"
             ],
-            "answer": "13",
+            "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 65 into 5 equal parts: 65 ÷ 5 = 13."
+            "explanation": "0.5 means 1/2."
           },
           {
-            "prompt": "What is 1/10 of 180?",
+            "prompt": "Which fraction is equivalent to 1/2?",
             "choices": [
-              "162",
-              "10",
-              "18",
-              "28"
+              "1/4",
+              "2/3",
+              "3/4",
+              "2/4"
             ],
-            "answer": "18",
+            "answer": "2/4",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 180 into 10 equal parts: 180 ÷ 10 = 18."
+            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
           }
         ]
       },
@@ -1532,16 +1532,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/5 of 90?",
+            "prompt": "What is 20% of 40?",
             "choices": [
-              "23",
-              "72",
-              "5",
-              "18"
+              "16",
+              "32",
+              "8",
+              "28"
             ],
-            "answer": "18",
+            "answer": "8",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 90 into 5 equal parts: 90 ÷ 5 = 18."
+            "explanation": "20% means 20 out of 100, so 20% of 40 = 8."
           },
           {
             "prompt": "What does “Original amount” mean?",
@@ -1556,28 +1556,28 @@
             "explanation": "Original amount means The value before any change."
           },
           {
-            "prompt": "What is 1/5 of 50?",
+            "prompt": "Write 1/10 as a decimal.",
             "choices": [
-              "40",
-              "5",
-              "10",
-              "15"
+              "0.3",
+              "0.15",
+              "0.05",
+              "0.1"
             ],
-            "answer": "10",
+            "answer": "0.1",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
+            "explanation": "1/10 = 0.1."
           },
           {
-            "prompt": "What is 1/3 of 24?",
+            "prompt": "What is 25% of 50?",
             "choices": [
-              "11",
-              "16",
-              "3",
-              "8"
+              "37.5",
+              "25",
+              "13.5",
+              "12.5"
             ],
-            "answer": "8",
+            "answer": "12.5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 24 into 3 equal parts: 24 ÷ 3 = 8."
+            "explanation": "25% means 25 out of 100, so 25% of 50 = 12.5."
           }
         ]
       },
@@ -1602,40 +1602,40 @@
             "explanation": "Percentage means A part of something out of 100."
           },
           {
-            "prompt": "What is 1/4 of 52?",
+            "prompt": "Which fraction is larger: 1/2 or 1/4?",
             "choices": [
-              "13",
-              "17",
-              "39",
-              "4"
-            ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 52 into 4 equal parts: 52 ÷ 4 = 13."
-          },
-          {
-            "prompt": "What is 1/3 of 21?",
-            "choices": [
-              "7",
-              "10",
-              "14",
-              "3"
-            ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 21 into 3 equal parts: 21 ÷ 3 = 7."
-          },
-          {
-            "prompt": "Which fraction is equivalent to 1/2?",
-            "choices": [
-              "3/4",
-              "2/4",
               "1/4",
+              "They are equal",
+              "1/8",
+              "1/2"
+            ],
+            "answer": "1/2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+          },
+          {
+            "prompt": "What is 1/5 of 50?",
+            "choices": [
+              "40",
+              "5",
+              "10",
+              "15"
+            ],
+            "answer": "10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
+          },
+          {
+            "prompt": "Write 0.2 as a fraction.",
+            "choices": [
+              "1/8",
+              "1/5",
+              "1/3",
               "2/3"
             ],
-            "answer": "2/4",
+            "answer": "1/5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+            "explanation": "0.2 means 1/5."
           }
         ]
       },
@@ -1660,40 +1660,40 @@
             "explanation": "Multiplier means The decimal you multiply by to make a change."
           },
           {
-            "prompt": "What is 1/5 of 65?",
+            "prompt": "Write 0.5 as a fraction.",
             "choices": [
-              "18",
-              "52",
-              "5",
-              "13"
-            ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 65 into 5 equal parts: 65 ÷ 5 = 13."
-          },
-          {
-            "prompt": "What is 1/10 of 180?",
-            "choices": [
-              "162",
-              "10",
-              "18",
-              "28"
-            ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 180 into 10 equal parts: 180 ÷ 10 = 18."
-          },
-          {
-            "prompt": "Which fraction is larger: 1/2 or 1/4?",
-            "choices": [
-              "They are equal",
+              "1/3",
+              "2/3",
               "1/8",
-              "1/2",
-              "1/4"
+              "1/2"
             ],
             "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+            "explanation": "0.5 means 1/2."
+          },
+          {
+            "prompt": "Which fraction is equivalent to 1/2?",
+            "choices": [
+              "1/4",
+              "2/3",
+              "3/4",
+              "2/4"
+            ],
+            "answer": "2/4",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+          },
+          {
+            "prompt": "Write 0.1 as a fraction.",
+            "choices": [
+              "2/3",
+              "1/8",
+              "1/10",
+              "1/3"
+            ],
+            "answer": "1/10",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "0.1 means 1/10."
           }
         ]
       },
@@ -1718,40 +1718,40 @@
             "explanation": "Original amount means The value before any change."
           },
           {
-            "prompt": "What is 1/5 of 50?",
+            "prompt": "Write 1/10 as a decimal.",
             "choices": [
-              "40",
-              "5",
-              "10",
-              "15"
+              "0.3",
+              "0.15",
+              "0.05",
+              "0.1"
             ],
-            "answer": "10",
+            "answer": "0.1",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
+            "explanation": "1/10 = 0.1."
           },
           {
-            "prompt": "What is 1/3 of 24?",
+            "prompt": "What is 25% of 50?",
             "choices": [
-              "11",
+              "37.5",
+              "25",
+              "13.5",
+              "12.5"
+            ],
+            "answer": "12.5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "25% means 25 out of 100, so 25% of 50 = 12.5."
+          },
+          {
+            "prompt": "What is 20% of 40?",
+            "choices": [
               "16",
-              "3",
-              "8"
+              "32",
+              "8",
+              "28"
             ],
             "answer": "8",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 24 into 3 equal parts: 24 ÷ 3 = 8."
-          },
-          {
-            "prompt": "What is 1/5 of 90?",
-            "choices": [
-              "23",
-              "72",
-              "5",
-              "18"
-            ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 90 into 5 equal parts: 90 ÷ 5 = 18."
+            "explanation": "20% means 20 out of 100, so 20% of 40 = 8."
           }
         ]
       }

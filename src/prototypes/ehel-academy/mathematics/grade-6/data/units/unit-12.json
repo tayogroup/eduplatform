@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T08:37:04.481Z",
+  "generatedAt": "2026-07-21T09:37:28.732Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -881,37 +881,53 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What is 1/4 of 64?",
+        "question": "Which fraction is larger: 1/2 or 1/4?",
         "options": [
-          "16",
-          "20",
-          "48",
-          "4"
+          "They are equal",
+          "1/8",
+          "1/2",
+          "1/4"
         ],
-        "answer": "16",
+        "answer": "1/2",
         "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 64 into 4 equal parts: 64 ÷ 4 = 16."
+        "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "Which fraction is equivalent to 1/2?",
+        "question": "Write 1/2 as a decimal.",
         "options": [
-          "2/3",
-          "3/4",
-          "2/4",
-          "1/4"
+          "0.05",
+          "0.5",
+          "0.3",
+          "0.15"
         ],
-        "answer": "2/4",
+        "answer": "0.5",
         "hint": "Work it out step by step, then check each option.",
-        "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+        "explanation": "1/2 = 0.5."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "Write 0.2 as a fraction.",
+        "options": [
+          "1/3",
+          "2/3",
+          "1/8",
+          "1/5"
+        ],
+        "answer": "1/5",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "0.2 means 1/5."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
         "difficulty": "Basic",
         "question": "What is 1/3 of 6?",
         "options": [
@@ -925,25 +941,25 @@
         "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
       },
       {
-        "id": "q04",
-        "type": "Application",
-        "outcomeId": "lo04",
-        "difficulty": "Basic",
-        "question": "Which fraction is larger: 1/2 or 1/4?",
-        "options": [
-          "1/2",
-          "1/4",
-          "They are equal",
-          "1/8"
-        ],
-        "answer": "1/2",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
-      },
-      {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Which fraction is equivalent to 1/2?",
+        "options": [
+          "2/4",
+          "1/4",
+          "2/3",
+          "3/4"
+        ],
+        "answer": "2/4",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
         "difficulty": "Core",
         "question": "What is 1/5 of 45?",
         "options": [
@@ -957,41 +973,41 @@
         "explanation": "Divide 45 into 5 equal parts: 45 ÷ 5 = 9."
       },
       {
-        "id": "q06",
-        "type": "Application",
-        "outcomeId": "lo06",
-        "difficulty": "Core",
-        "question": "What is 1/3 of 39?",
-        "options": [
-          "3",
-          "13",
-          "16",
-          "26"
-        ],
-        "answer": "13",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 39 into 3 equal parts: 39 ÷ 3 = 13."
-      },
-      {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "What is 1/2 of 24?",
+        "question": "Write 1/5 as a decimal.",
         "options": [
-          "12",
-          "14",
-          "2",
-          "24"
+          "0.15",
+          "0.05",
+          "0.2",
+          "0.3"
         ],
-        "answer": "12",
+        "answer": "0.2",
         "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 24 into 2 equal parts: 24 ÷ 2 = 12."
+        "explanation": "1/5 = 0.2."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
+        "difficulty": "Challenge",
+        "question": "Work out 0.2 + 0.6.",
+        "options": [
+          "0.7",
+          "0.8",
+          "0.9",
+          "1"
+        ],
+        "answer": "0.8",
+        "hint": "Work it out step by step, then check each option.",
+        "explanation": "Add the tenths: 2 tenths + 6 tenths = 8 tenths = 0.8."
+      },
+      {
+        "id": "q09",
+        "type": "Application",
+        "outcomeId": "lo01",
         "difficulty": "Challenge",
         "question": "What is 1/10 of 140?",
         "options": [
@@ -1003,22 +1019,6 @@
         "answer": "14",
         "hint": "Work it out step by step, then check each option.",
         "explanation": "Divide 140 into 10 equal parts: 140 ÷ 10 = 14."
-      },
-      {
-        "id": "q09",
-        "type": "Application",
-        "outcomeId": "lo01",
-        "difficulty": "Challenge",
-        "question": "What is 1/5 of 50?",
-        "options": [
-          "5",
-          "10",
-          "15",
-          "40"
-        ],
-        "answer": "10",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
       },
       {
         "id": "q10",
@@ -1082,40 +1082,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/4 of 64?",
-            "choices": [
-              "16",
-              "20",
-              "48",
-              "4"
-            ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 64 into 4 equal parts: 64 ÷ 4 = 16."
-          },
-          {
             "prompt": "Which fraction is larger: 1/2 or 1/4?",
             "choices": [
-              "1/2",
-              "1/4",
               "They are equal",
-              "1/8"
+              "1/8",
+              "1/2",
+              "1/4"
             ],
             "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
             "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
           },
           {
-            "prompt": "What is 1/2 of 24?",
+            "prompt": "What is 1/3 of 6?",
             "choices": [
-              "12",
-              "14",
+              "3",
               "2",
-              "24"
+              "5",
+              "4"
             ],
-            "answer": "12",
+            "answer": "2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 24 into 2 equal parts: 24 ÷ 2 = 12."
+            "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
+          },
+          {
+            "prompt": "Write 1/5 as a decimal.",
+            "choices": [
+              "0.15",
+              "0.05",
+              "0.2",
+              "0.3"
+            ],
+            "answer": "0.2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1/5 = 0.2."
           },
           {
             "prompt": "What does “Ratio” mean?",
@@ -1140,40 +1140,40 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Write 1/2 as a decimal.",
+            "choices": [
+              "0.05",
+              "0.5",
+              "0.3",
+              "0.15"
+            ],
+            "answer": "0.5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1/2 = 0.5."
+          },
+          {
             "prompt": "Which fraction is equivalent to 1/2?",
             "choices": [
-              "2/3",
-              "3/4",
               "2/4",
-              "1/4"
+              "1/4",
+              "2/3",
+              "3/4"
             ],
             "answer": "2/4",
             "clue": "Work it out step by step, then check each option.",
             "explanation": "2/4 simplifies to 1/2, so they are equivalent."
           },
           {
-            "prompt": "What is 1/5 of 45?",
+            "prompt": "Work out 0.2 + 0.6.",
             "choices": [
-              "14",
-              "36",
-              "5",
-              "9"
+              "0.7",
+              "0.8",
+              "0.9",
+              "1"
             ],
-            "answer": "9",
+            "answer": "0.8",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 45 into 5 equal parts: 45 ÷ 5 = 9."
-          },
-          {
-            "prompt": "What is 1/10 of 140?",
-            "choices": [
-              "126",
-              "10",
-              "14",
-              "24"
-            ],
-            "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 140 into 10 equal parts: 140 ÷ 10 = 14."
+            "explanation": "Add the tenths: 2 tenths + 6 tenths = 8 tenths = 0.8."
           },
           {
             "prompt": "What does “Equivalent ratios” mean?",
@@ -1198,40 +1198,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/3 of 6?",
+            "prompt": "Write 0.2 as a fraction.",
             "choices": [
-              "3",
-              "2",
-              "5",
-              "4"
+              "1/3",
+              "2/3",
+              "1/8",
+              "1/5"
             ],
-            "answer": "2",
+            "answer": "1/5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
+            "explanation": "0.2 means 1/5."
           },
           {
-            "prompt": "What is 1/3 of 39?",
+            "prompt": "What is 1/5 of 45?",
             "choices": [
-              "3",
-              "13",
-              "16",
-              "26"
+              "14",
+              "36",
+              "5",
+              "9"
             ],
-            "answer": "13",
+            "answer": "9",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 39 into 3 equal parts: 39 ÷ 3 = 13."
+            "explanation": "Divide 45 into 5 equal parts: 45 ÷ 5 = 9."
           },
           {
-            "prompt": "What is 1/5 of 50?",
+            "prompt": "What is 1/10 of 140?",
             "choices": [
-              "5",
+              "126",
               "10",
-              "15",
-              "40"
+              "14",
+              "24"
             ],
-            "answer": "10",
+            "answer": "14",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
+            "explanation": "Divide 140 into 10 equal parts: 140 ÷ 10 = 14."
           },
           {
             "prompt": "What does “Simplest form” mean?",
@@ -1256,28 +1256,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which fraction is larger: 1/2 or 1/4?",
+            "prompt": "What is 1/3 of 6?",
             "choices": [
-              "1/2",
-              "1/4",
-              "They are equal",
-              "1/8"
+              "3",
+              "2",
+              "5",
+              "4"
             ],
-            "answer": "1/2",
+            "answer": "2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+            "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
           },
           {
-            "prompt": "What is 1/2 of 24?",
+            "prompt": "Write 1/5 as a decimal.",
             "choices": [
-              "12",
-              "14",
-              "2",
-              "24"
+              "0.15",
+              "0.05",
+              "0.2",
+              "0.3"
             ],
-            "answer": "12",
+            "answer": "0.2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 24 into 2 equal parts: 24 ÷ 2 = 12."
+            "explanation": "1/5 = 0.2."
           },
           {
             "prompt": "What does “Ratio” mean?",
@@ -1292,16 +1292,16 @@
             "explanation": "Ratio means A comparison of two or more quantities of the same kind."
           },
           {
-            "prompt": "What is 1/4 of 64?",
+            "prompt": "Which fraction is larger: 1/2 or 1/4?",
             "choices": [
-              "16",
-              "20",
-              "48",
-              "4"
+              "They are equal",
+              "1/8",
+              "1/2",
+              "1/4"
             ],
-            "answer": "16",
+            "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 64 into 4 equal parts: 64 ÷ 4 = 16."
+            "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
           }
         ]
       },
@@ -1314,6 +1314,64 @@
         "type": "choice",
         "rounds": [
           {
+            "prompt": "Which fraction is equivalent to 1/2?",
+            "choices": [
+              "2/4",
+              "1/4",
+              "2/3",
+              "3/4"
+            ],
+            "answer": "2/4",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+          },
+          {
+            "prompt": "Work out 0.2 + 0.6.",
+            "choices": [
+              "0.7",
+              "0.8",
+              "0.9",
+              "1"
+            ],
+            "answer": "0.8",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add the tenths: 2 tenths + 6 tenths = 8 tenths = 0.8."
+          },
+          {
+            "prompt": "What does “Equivalent ratios” mean?",
+            "choices": [
+              "Different ratios showing the same relationship",
+              "A ratio using the smallest whole numbers",
+              "The greatest common factor of the parts",
+              "A statement that two ratios are equal"
+            ],
+            "answer": "Different ratios showing the same relationship",
+            "clue": "Use the Unit 12 Math Words & Symbols reference.",
+            "explanation": "Equivalent ratios means Different ratios showing the same relationship."
+          },
+          {
+            "prompt": "Write 1/2 as a decimal.",
+            "choices": [
+              "0.05",
+              "0.5",
+              "0.3",
+              "0.15"
+            ],
+            "answer": "0.5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1/2 = 0.5."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-6",
+        "icon": "◇",
+        "skill": "Direct proportion",
+        "title": "Challenge Cards: Direct proportion",
+        "description": "Practise direct proportion through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
             "prompt": "What is 1/5 of 45?",
             "choices": [
               "14",
@@ -1338,64 +1396,6 @@
             "explanation": "Divide 140 into 10 equal parts: 140 ÷ 10 = 14."
           },
           {
-            "prompt": "What does “Equivalent ratios” mean?",
-            "choices": [
-              "Different ratios showing the same relationship",
-              "A ratio using the smallest whole numbers",
-              "The greatest common factor of the parts",
-              "A statement that two ratios are equal"
-            ],
-            "answer": "Different ratios showing the same relationship",
-            "clue": "Use the Unit 12 Math Words & Symbols reference.",
-            "explanation": "Equivalent ratios means Different ratios showing the same relationship."
-          },
-          {
-            "prompt": "Which fraction is equivalent to 1/2?",
-            "choices": [
-              "2/3",
-              "3/4",
-              "2/4",
-              "1/4"
-            ],
-            "answer": "2/4",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
-          }
-        ]
-      },
-      {
-        "id": "u12-game-6",
-        "icon": "◇",
-        "skill": "Direct proportion",
-        "title": "Challenge Cards: Direct proportion",
-        "description": "Practise direct proportion through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "What is 1/3 of 39?",
-            "choices": [
-              "3",
-              "13",
-              "16",
-              "26"
-            ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 39 into 3 equal parts: 39 ÷ 3 = 13."
-          },
-          {
-            "prompt": "What is 1/5 of 50?",
-            "choices": [
-              "5",
-              "10",
-              "15",
-              "40"
-            ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
-          },
-          {
             "prompt": "What does “Simplest form” mean?",
             "choices": [
               "A ratio using the smallest whole numbers",
@@ -1408,16 +1408,16 @@
             "explanation": "Simplest form means A ratio using the smallest whole numbers."
           },
           {
-            "prompt": "What is 1/3 of 6?",
+            "prompt": "Write 0.2 as a fraction.",
             "choices": [
-              "3",
-              "2",
-              "5",
-              "4"
+              "1/3",
+              "2/3",
+              "1/8",
+              "1/5"
             ],
-            "answer": "2",
+            "answer": "1/5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
+            "explanation": "0.2 means 1/5."
           }
         ]
       },
@@ -1430,16 +1430,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What is 1/2 of 24?",
+            "prompt": "Write 1/5 as a decimal.",
             "choices": [
-              "12",
-              "14",
-              "2",
-              "24"
+              "0.15",
+              "0.05",
+              "0.2",
+              "0.3"
             ],
-            "answer": "12",
+            "answer": "0.2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 24 into 2 equal parts: 24 ÷ 2 = 12."
+            "explanation": "1/5 = 0.2."
           },
           {
             "prompt": "What does “Ratio” mean?",
@@ -1454,28 +1454,28 @@
             "explanation": "Ratio means A comparison of two or more quantities of the same kind."
           },
           {
-            "prompt": "What is 1/4 of 64?",
-            "choices": [
-              "16",
-              "20",
-              "48",
-              "4"
-            ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 64 into 4 equal parts: 64 ÷ 4 = 16."
-          },
-          {
             "prompt": "Which fraction is larger: 1/2 or 1/4?",
             "choices": [
-              "1/2",
-              "1/4",
               "They are equal",
-              "1/8"
+              "1/8",
+              "1/2",
+              "1/4"
             ],
             "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
             "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
+          },
+          {
+            "prompt": "What is 1/3 of 6?",
+            "choices": [
+              "3",
+              "2",
+              "5",
+              "4"
+            ],
+            "answer": "2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
           }
         ]
       },
@@ -1485,6 +1485,64 @@
         "skill": "Scale",
         "title": "Explain It: Scale",
         "description": "Practise scale through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Work out 0.2 + 0.6.",
+            "choices": [
+              "0.7",
+              "0.8",
+              "0.9",
+              "1"
+            ],
+            "answer": "0.8",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "Add the tenths: 2 tenths + 6 tenths = 8 tenths = 0.8."
+          },
+          {
+            "prompt": "What does “Equivalent ratios” mean?",
+            "choices": [
+              "Different ratios showing the same relationship",
+              "A ratio using the smallest whole numbers",
+              "The greatest common factor of the parts",
+              "A statement that two ratios are equal"
+            ],
+            "answer": "Different ratios showing the same relationship",
+            "clue": "Use the Unit 12 Math Words & Symbols reference.",
+            "explanation": "Equivalent ratios means Different ratios showing the same relationship."
+          },
+          {
+            "prompt": "Write 1/2 as a decimal.",
+            "choices": [
+              "0.05",
+              "0.5",
+              "0.3",
+              "0.15"
+            ],
+            "answer": "0.5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1/2 = 0.5."
+          },
+          {
+            "prompt": "Which fraction is equivalent to 1/2?",
+            "choices": [
+              "2/4",
+              "1/4",
+              "2/3",
+              "3/4"
+            ],
+            "answer": "2/4",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-9",
+        "icon": "⌂",
+        "skill": "Percentage",
+        "title": "Real-Life Round: Percentage",
+        "description": "Practise percentage through four short challenges.",
         "type": "choice",
         "rounds": [
           {
@@ -1500,64 +1558,6 @@
             "explanation": "Divide 140 into 10 equal parts: 140 ÷ 10 = 14."
           },
           {
-            "prompt": "What does “Equivalent ratios” mean?",
-            "choices": [
-              "Different ratios showing the same relationship",
-              "A ratio using the smallest whole numbers",
-              "The greatest common factor of the parts",
-              "A statement that two ratios are equal"
-            ],
-            "answer": "Different ratios showing the same relationship",
-            "clue": "Use the Unit 12 Math Words & Symbols reference.",
-            "explanation": "Equivalent ratios means Different ratios showing the same relationship."
-          },
-          {
-            "prompt": "Which fraction is equivalent to 1/2?",
-            "choices": [
-              "2/3",
-              "3/4",
-              "2/4",
-              "1/4"
-            ],
-            "answer": "2/4",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2/4 simplifies to 1/2, so they are equivalent."
-          },
-          {
-            "prompt": "What is 1/5 of 45?",
-            "choices": [
-              "14",
-              "36",
-              "5",
-              "9"
-            ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 45 into 5 equal parts: 45 ÷ 5 = 9."
-          }
-        ]
-      },
-      {
-        "id": "u12-game-9",
-        "icon": "⌂",
-        "skill": "Percentage",
-        "title": "Real-Life Round: Percentage",
-        "description": "Practise percentage through four short challenges.",
-        "type": "choice",
-        "rounds": [
-          {
-            "prompt": "What is 1/5 of 50?",
-            "choices": [
-              "5",
-              "10",
-              "15",
-              "40"
-            ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
-          },
-          {
             "prompt": "What does “Simplest form” mean?",
             "choices": [
               "A ratio using the smallest whole numbers",
@@ -1570,28 +1570,28 @@
             "explanation": "Simplest form means A ratio using the smallest whole numbers."
           },
           {
-            "prompt": "What is 1/3 of 6?",
+            "prompt": "Write 0.2 as a fraction.",
             "choices": [
-              "3",
-              "2",
-              "5",
-              "4"
+              "1/3",
+              "2/3",
+              "1/8",
+              "1/5"
             ],
-            "answer": "2",
+            "answer": "1/5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
+            "explanation": "0.2 means 1/5."
           },
           {
-            "prompt": "What is 1/3 of 39?",
+            "prompt": "What is 1/5 of 45?",
             "choices": [
-              "3",
-              "13",
-              "16",
-              "26"
+              "14",
+              "36",
+              "5",
+              "9"
             ],
-            "answer": "13",
+            "answer": "9",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 39 into 3 equal parts: 39 ÷ 3 = 13."
+            "explanation": "Divide 45 into 5 equal parts: 45 ÷ 5 = 9."
           }
         ]
       },
@@ -1616,40 +1616,40 @@
             "explanation": "Ratio means A comparison of two or more quantities of the same kind."
           },
           {
-            "prompt": "What is 1/4 of 64?",
-            "choices": [
-              "16",
-              "20",
-              "48",
-              "4"
-            ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 64 into 4 equal parts: 64 ÷ 4 = 16."
-          },
-          {
             "prompt": "Which fraction is larger: 1/2 or 1/4?",
             "choices": [
-              "1/2",
-              "1/4",
               "They are equal",
-              "1/8"
+              "1/8",
+              "1/2",
+              "1/4"
             ],
             "answer": "1/2",
             "clue": "Work it out step by step, then check each option.",
             "explanation": "Halves are bigger than quarters, so 1/2 is larger than 1/4."
           },
           {
-            "prompt": "What is 1/2 of 24?",
+            "prompt": "What is 1/3 of 6?",
             "choices": [
-              "12",
-              "14",
+              "3",
               "2",
-              "24"
+              "5",
+              "4"
             ],
-            "answer": "12",
+            "answer": "2",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 24 into 2 equal parts: 24 ÷ 2 = 12."
+            "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
+          },
+          {
+            "prompt": "Write 1/5 as a decimal.",
+            "choices": [
+              "0.15",
+              "0.05",
+              "0.2",
+              "0.3"
+            ],
+            "answer": "0.2",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1/5 = 0.2."
           }
         ]
       },
@@ -1674,40 +1674,40 @@
             "explanation": "Equivalent ratios means Different ratios showing the same relationship."
           },
           {
+            "prompt": "Write 1/2 as a decimal.",
+            "choices": [
+              "0.05",
+              "0.5",
+              "0.3",
+              "0.15"
+            ],
+            "answer": "0.5",
+            "clue": "Work it out step by step, then check each option.",
+            "explanation": "1/2 = 0.5."
+          },
+          {
             "prompt": "Which fraction is equivalent to 1/2?",
             "choices": [
-              "2/3",
-              "3/4",
               "2/4",
-              "1/4"
+              "1/4",
+              "2/3",
+              "3/4"
             ],
             "answer": "2/4",
             "clue": "Work it out step by step, then check each option.",
             "explanation": "2/4 simplifies to 1/2, so they are equivalent."
           },
           {
-            "prompt": "What is 1/5 of 45?",
+            "prompt": "Work out 0.2 + 0.6.",
             "choices": [
-              "14",
-              "36",
-              "5",
-              "9"
+              "0.7",
+              "0.8",
+              "0.9",
+              "1"
             ],
-            "answer": "9",
+            "answer": "0.8",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 45 into 5 equal parts: 45 ÷ 5 = 9."
-          },
-          {
-            "prompt": "What is 1/10 of 140?",
-            "choices": [
-              "126",
-              "10",
-              "14",
-              "24"
-            ],
-            "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 140 into 10 equal parts: 140 ÷ 10 = 14."
+            "explanation": "Add the tenths: 2 tenths + 6 tenths = 8 tenths = 0.8."
           }
         ]
       },
@@ -1732,40 +1732,40 @@
             "explanation": "Simplest form means A ratio using the smallest whole numbers."
           },
           {
-            "prompt": "What is 1/3 of 6?",
+            "prompt": "Write 0.2 as a fraction.",
             "choices": [
-              "3",
-              "2",
-              "5",
-              "4"
+              "1/3",
+              "2/3",
+              "1/8",
+              "1/5"
             ],
-            "answer": "2",
+            "answer": "1/5",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 6 into 3 equal parts: 6 ÷ 3 = 2."
+            "explanation": "0.2 means 1/5."
           },
           {
-            "prompt": "What is 1/3 of 39?",
+            "prompt": "What is 1/5 of 45?",
             "choices": [
-              "3",
-              "13",
-              "16",
-              "26"
+              "14",
+              "36",
+              "5",
+              "9"
             ],
-            "answer": "13",
+            "answer": "9",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 39 into 3 equal parts: 39 ÷ 3 = 13."
+            "explanation": "Divide 45 into 5 equal parts: 45 ÷ 5 = 9."
           },
           {
-            "prompt": "What is 1/5 of 50?",
+            "prompt": "What is 1/10 of 140?",
             "choices": [
-              "5",
+              "126",
               "10",
-              "15",
-              "40"
+              "14",
+              "24"
             ],
-            "answer": "10",
+            "answer": "14",
             "clue": "Work it out step by step, then check each option.",
-            "explanation": "Divide 50 into 5 equal parts: 50 ÷ 5 = 10."
+            "explanation": "Divide 140 into 10 equal parts: 140 ÷ 10 = 14."
           }
         ]
       }

@@ -32,7 +32,10 @@ function numericMcq(rng, question, answer, explanation, distractorSet) {
   return { question, options: arr.slice(rot).concat(arr.slice(0, rot)), answer: String(answer), explanation };
 }
 function choiceMcq(rng, question, answer, distractors, explanation) {
-  const opts = [String(answer), ...distractors.map(String).filter((d) => d !== String(answer))].slice(0, 4);
+  // De-duplicate: every option must be distinct from the answer and each other.
+  const seen = new Set([String(answer)]);
+  const opts = [String(answer)];
+  for (const d of distractors.map(String)) { if (opts.length >= 4) break; if (!seen.has(d)) { seen.add(d); opts.push(d); } }
   const rot = Math.floor(rng() * opts.length);
   return { question, options: opts.slice(rot).concat(opts.slice(0, rot)), answer: String(answer), explanation };
 }
@@ -87,9 +90,25 @@ const G = {
     return numericMcq(rng, `Work out ${a} ÷ ${b}.`, q, `${a} ÷ ${b} = ${q} because ${b} × ${q} = ${a}.`, [q + 1, q - 1, a - b, q + b]);
   },
   fractions(rng, stage) {
-    const kind = pick(rng, ["of", "compare", "equiv"]);
+    // From Stage 4 up, include decimal and percentage work; younger stages
+    // stay with simple fractions. All decimals are computed in integer tenths
+    // to stay exact (no floating-point rounding).
+    const kinds = stage >= 4 ? ["of", "compare", "equiv", "decAdd", "decToFrac", "fracToDec", "percentOf"] : ["of", "compare", "equiv"];
+    const kind = pick(rng, kinds);
     if (kind === "of") { const den = pick(rng, [2, 3, 4, 5, 10]); const mult = randInt(rng, 2, stage <= 3 ? 8 : 20); const whole = den * mult; const ans = whole / den; return numericMcq(rng, `What is 1/${den} of ${whole}?`, ans, `Divide ${whole} into ${den} equal parts: ${whole} ÷ ${den} = ${ans}.`, [ans + den, whole - ans, den, ans * 2]); }
     if (kind === "compare") { return choiceMcq(rng, `Which fraction is larger: 1/2 or 1/4?`, "1/2", ["1/4", "They are equal", "1/8"], `Halves are bigger than quarters, so 1/2 is larger than 1/4.`); }
+    if (kind === "decAdd") {
+      // a/10 + b/10, kept in tenths so the sum is exact.
+      const at = randInt(rng, 1, 9), bt = randInt(rng, 1, 9);
+      const fmt = (t) => (t % 10 === 0 ? String(t / 10) : `${Math.floor(t / 10)}.${t % 10}`);
+      const sum = at + bt;
+      // Distinct wrong tenths near the answer.
+      const wrong = [...new Set([sum + 1, sum + 2, Math.max(1, sum - 1), sum + 3])].filter((t) => t !== sum).slice(0, 3);
+      return choiceMcq(rng, `Work out ${fmt(at)} + ${fmt(bt)}.`, fmt(sum), wrong.map(fmt), `Add the tenths: ${at} tenths + ${bt} tenths = ${sum} tenths = ${fmt(sum)}.`);
+    }
+    if (kind === "decToFrac") { const t = pick(rng, [[ "0.5", "1/2"], ["0.25", "1/4"], ["0.75", "3/4"], ["0.1", "1/10"], ["0.2", "1/5"]]); return choiceMcq(rng, `Write ${t[0]} as a fraction.`, t[1], ["1/3", "2/3", "1/8"].filter((x) => x !== t[1]).slice(0, 3), `${t[0]} means ${t[1]}.`); }
+    if (kind === "fracToDec") { const t = pick(rng, [["1/2", "0.5"], ["1/4", "0.25"], ["3/4", "0.75"], ["1/10", "0.1"], ["1/5", "0.2"]]); return choiceMcq(rng, `Write ${t[0]} as a decimal.`, t[1], ["0.3", "0.15", "0.05"].filter((x) => x !== t[1]).slice(0, 3), `${t[0]} = ${t[1]}.`); }
+    if (kind === "percentOf") { const pct = pick(rng, [10, 20, 25, 50]); const base = pct * randInt(rng, 2, 8); const ans = base * pct / 100; return numericMcq(rng, `What is ${pct}% of ${base}?`, ans, `${pct}% means ${pct} out of 100, so ${pct}% of ${base} = ${ans}.`, [ans + pct, ans * 2, base - ans, pct]); }
     return choiceMcq(rng, `Which fraction is equivalent to 1/2?`, "2/4", ["1/4", "2/3", "3/4"], `2/4 simplifies to 1/2, so they are equivalent.`);
   },
   measure(rng, stage) {
@@ -148,7 +167,7 @@ const TOPIC_RULES = [
   ["fractions", /fraction|decimal|percentage|percent|tenths|hundredths|ratio|proportion/i],
   ["time", /\btime\b|clock|hour|minute|calendar|o.clock|duration|telling the time/i],
   ["money", /money|coin|cash|price|change|currency|shilling|dollar|cost|budget/i],
-  ["statistics", /statistic|data|chart|graph|pictogram|tally|table|probability|average|mean|median|mode|survey|frequenc/i],
+  ["statistics", /statistic|data|chart|graph|pictogram|tally|table|probability|chance|likel|certain|impossible|outcome|average|mean|median|mode|survey|frequenc/i],
   ["geometry", /geometr|shape|angle|symmetr|polygon|triangle|circle|square|quadrilat|3-?d|2-?d|solid|net\b|position|movement|turn|rotation|reflect|coordinate|transformation/i],
   ["measure", /measure|length|mass|weight|capacity|volume|area|perimeter|distance|metre|litre|gram|scale|temperature/i],
   ["algebra", /algebra|equation|expression|sequence|pattern|formula|variable|unknown|function|nth term|substitut/i],

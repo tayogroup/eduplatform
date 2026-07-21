@@ -68,8 +68,39 @@ for the human reviewer as a style item, not a correctness one.
 
 ## 2. Mathematics — question topic-fit and decimal coverage
 
-(see section completed in the topic-fit pass — generated questions checked
-against unit topic; decimal units supplemented.)
+Reviewed the topic classifier's assignment for all 133 units against unit
+titles and concepts.
+
+- **One genuine misfit:** the "Chance" unit (Grade 3) classified as *number*
+  and was serving place-value questions instead of probability/data work.
+  Cause: the classifier matched "probability" but not "chance". Added
+  `chance | likel | certain | impossible | outcome` to the statistics rule (in
+  both the generator and the visuals classifier, kept in sync). "Chance",
+  "How Likely?" and "Pattern and Probability" units now serve data/statistics
+  questions.
+- **Decimal gap closed:** decimal/percentage units (Decimals, Percentages,
+  Fractions-Decimals-Percentages) previously received only simple fraction-of
+  questions. Added exact, integer-scaled templates — tenths addition
+  (`0.6 + 0.4 = 1`, computed in tenths so never float-rounded),
+  decimal↔fraction conversions (`0.25 = 1/4`), and percentage-of
+  (`25% of 75 = 18.75`). All restricted to Stage 4+. Independently recomputed:
+  381 decimal/percentage questions, 0 wrong.
+- **Bug caught and fixed during review:** the new decimal-addition distractors
+  could collide (`0.1 + 0.4` offering "0.4" twice), and `choiceMcq` — unlike
+  `numericMcq` — did not de-duplicate options. Hardened `choiceMcq` to
+  guarantee four distinct options; re-audit shows 0 broken questions across all
+  1,596.
+
+**Residual (verified acceptable):** 14 "placeholder" text flags are genuine
+place-value vocabulary (the placeholder zero), not scaffolding. The standing
+limitation remains that most maths questions are procedurally generated
+(correct by construction, machine-verified) rather than drawn from the source
+workbooks — the human reviewer should confirm topic *fit*, which this pass
+checked at the classifier level.
+
+## 3. English — cloze quality review
+
+(pending — final review task.)
 
 ---
 

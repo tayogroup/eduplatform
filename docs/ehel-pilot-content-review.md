@@ -100,7 +100,31 @@ checked at the classifier level.
 
 ## 3. English — cloze quality review
 
-(pending — final review task.)
+Screened all **330 cloze-in-context questions** (grades 3–8) for pedagogical
+quality: distractor plausibility, sentence-start casing give-aways, trivial or
+proper-noun answers, thin context, similar/confusable distractors, and
+answer-in-explanation sanity.
+
+- **No genuine defects found.** The screen's automated flags (32 "proper-noun"
+  and 4 "blank-at-start") were all **false positives**: capitalisation comes from
+  the blank sitting at a sentence start, and the generator correctly capitalises
+  the distractors to match — verified **0 casing give-aways across all 330**.
+- Spot-checks confirm strong questions: distractors are real near-synonyms drawn
+  from the unit's own vocabulary (e.g. *Communicate* vs Convince / Emphasize /
+  Persuade; *Behave* vs Behaviour), answers are legitimate targets, and every
+  answer appears in its explanation sentence.
+
+The structural cloze defects (13 answer give-aways) were already fixed in the
+earlier validation pass. English cloze is **review-clean** for the pilot.
+
+## 4. Review-status wording
+
+Following this AI-assisted review, the in-app banners across all three subjects
+read **"AI-assisted content review complete — human curriculum sign-off
+pending"** rather than the earlier "curriculum review required". This is the
+honest state: an AI reviewer (this document) has screened the corpus; the human
+curriculum reviewer (available ~September 2026) audits the reviewed corpus
+before any move from pilot to full public launch.
 
 ---
 

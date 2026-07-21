@@ -333,7 +333,7 @@ function buildGrade(grade) {
     const weHeads = lesson.blocks.map((block, index) => ({ block, index })).filter(({ block }) => /^Worked Example/i.test(tidy(block.text)));
     for (const { block, index } of weHeads.slice(0, 12)) {
       const body = lesson.blocks.slice(index + 1, index + 6).map((item) => tidy(item.text)).filter((text) => text.length > 10);
-      workedExamples.push({ id: `we${String(workedExamples.length + 1).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: "Intermediate", title: tidy(block.text).replace(/^Worked Example\s*[—:\-]?\s*/i, "") || `Worked example`, prompt: sentence(body[0] || title, 260), solution: sentence(body.slice(1).join(" ") || body[0] || title, 520) });
+      workedExamples.push({ id: `we${String(workedExamples.length + 1).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: "Intermediate", title: tidy(block.text).replace(/^Worked Examples?\s*[—:\-]?\s*/i, "") || `Worked example`, prompt: sentence(body[0] || title, 260), solution: sentence(body.slice(1).join(" ") || body[0] || title, 520) });
     }
     while (workedExamples.length < 8 && practice.length) {
       const item = practice[workedExamples.length % practice.length];

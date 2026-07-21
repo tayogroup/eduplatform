@@ -34,8 +34,8 @@ const sections = [
   ["challenge", "badge-check", "Unit Challenge"],
   ["capstone", "palette", "Stage Capstone"],
   ["capstonequiz", "circle-help", "Capstone Quiz"],
-  ["live", "video", "Live Math Class"],
-  ["progress", "badge-check", "My Math Progress"]
+  ["live", "video", "Live Science Class"],
+  ["progress", "badge-check", "My Science Progress"]
 ];
 
 let manifest;
@@ -395,7 +395,7 @@ function renderMathWords() {
   const terms = course.reference.terms.map(([term, meaning]) => `<article class="word-tile"><span>${escapeHtml(term.slice(0, 1))}</span><div><h3>${escapeHtml(term)}</h3><p>${escapeHtml(meaning)}</p></div></article>`).join("");
   $("#app").innerHTML = `${pageHeader("Language for science", "Science Words", `Learn the words and signs needed to discuss and explain ${escapeHtml(course.unit.unitTitle)}.`)}
     <div class="words-layout"><section class="panel"><h2>Key words</h2><div class="word-tile-grid">${terms}</div></section><section class="panel"><h2>Symbols in this unit</h2><div class="symbol-list">${symbols.map(([symbol, meaning, example]) => `<article><span>${symbol}</span><div><strong>${meaning}</strong><small>${example}</small></div></article>`).join("")}</div><button class="button primary" id="words-done" type="button">I know these words and symbols ✓</button></section></div>`;
-  $("#words-done").addEventListener("click", () => { complete("words", "Math language step complete."); navigate("explore"); });
+  $("#words-done").addEventListener("click", () => { complete("words", "Science words step complete."); navigate("explore"); });
 }
 
 function renderExploreConcept() {
@@ -679,7 +679,7 @@ const mathGamePack = {
       ]
     },
     {
-      id: "real-life-math", icon: "⌂", skill: "Problem solving", title: "Real-Life Math",
+      id: "real-life-math", icon: "⌂", skill: "Problem solving", title: "Real-Life Science",
       description: "Apply number skills to shopping, transport and daily life.", type: "choice",
       rounds: [
         { prompt: "A minibus has 4 rows of 10 seats and 6 extra seats. How many seats are there?", choices: ["40", "46", "64"], answer: "46", clue: "Combine four tens and six ones.", explanation: "40 plus 6 equals 46 seats." },
@@ -822,7 +822,7 @@ function renderExplainThinking() {
 }
 
 function renderLiveClass() {
-  $("#app").innerHTML = `${pageHeader("Learn together", "Live Math Class", "Bring your model, one solved problem and one question for teacher-led instruction and group practice.")}
+  $("#app").innerHTML = `${pageHeader("Learn together", "Live Science Class", "Bring your model, one solved problem and one question for teacher-led instruction and group practice.")}
     <div class="live-grid"><article class="panel live-card"><time>Session 1 · 35 minutes</time><h2>Model the core ideas</h2><h3>Before class</h3><p>Bring one model or object connected to ${escapeHtml(course.unit.unitTitle)}.</p><h3>Class plan</h3><ol class="agenda"><li>Teacher demonstration: ${escapeHtml(course.concepts[0]?.title || course.unit.unitTitle)}</li><li>Partner model-building challenge</li><li>Discuss key words and methods</li><li>Error clinic and questions</li></ol><h3>After class</h3><p>Complete two Guided Practice items you previously found difficult.</p><button class="button primary" data-live-ready type="button">I’m ready for class</button></article><article class="panel live-card"><time>Session 2 · 35 minutes</time><h2>Apply and explain</h2><h3>Before class</h3><p>Bring one solved real-life problem and one reasoning question.</p><h3>Class plan</h3><ol class="agenda"><li>Fluency warm-up</li><li>${escapeHtml(course.concepts[1]?.title || "Concept")} investigation</li><li>Small-group application problems</li><li>Explain-your-thinking presentations</li></ol><h3>After class</h3><p>Revise one explanation and prepare for the Unit Challenge.</p><button class="button primary" data-live-ready type="button">I’m ready for class</button></article></div>`;
   $$('[data-live-ready]').forEach(button=>button.addEventListener("click",()=>{button.disabled=true;button.textContent="Ready ✓";if($$('[data-live-ready]').every(item=>item.disabled))complete("live","Live Math Class preparation complete.");}));
 }
@@ -959,7 +959,7 @@ function renderAI() {
 
 function renderReflect() {
   const choices = ["Not yet", "With help", "By myself"];
-  $("#app").innerHTML = `${pageHeader("Mastery and next steps", "My Math Progress", "Reflect on each outcome and see which learning steps you have completed.")}
+  $("#app").innerHTML = `${pageHeader("Mastery and next steps", "My Science Progress", "Reflect on each outcome and see which learning steps you have completed.")}
     <section class="panel progress-summary"><div><strong>${unitSectionIds().filter((id) => progress.completed.includes(id)).length}/${unitSectionIds().length}</strong><span>unit learning steps complete</span></div><div class="progress-track"><span style="width:${Math.round(unitSectionIds().filter((id) => progress.completed.includes(id)).length/unitSectionIds().length*100)}%"></span></div></section>
     <section class="panel grade-progress-strip"><div><strong>${gradeProgress.completed.includes("capstone") ? "Complete" : "In progress"}</strong><span>Stage Capstone</span></div><div><strong>${gradeProgress.quizBest || 0}%</strong><span>Capstone Quiz best</span></div><button class="button secondary" data-go="capstone" type="button">View stage capstone</button></section>
     <section class="panel"><div class="self-list">${course.selfAssessment.map((statement, index) => `<div class="self-row"><strong>${escapeHtml(statement)}</strong>${choices.map((choice) => `<button class="self-choice ${progress.reflection[index] === choice ? "selected" : ""}" data-reflect="${index}" data-choice="${choice}" type="button">${choice}</button>`).join("")}</div>`).join("")}</div><p><button class="button primary" id="save-reflection" type="button">Save reflection ✓</button></p></section>`;

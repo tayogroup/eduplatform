@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-07-21T07:21:49.573Z",
+  "generatedAt": "2026-07-21T08:37:04.189Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -79,21 +79,21 @@
     },
     {
       "id": "concept-rule-4",
-      "title": "Times 10 and 100 Rule",
-      "explanation": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT.",
-      "example": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT."
-    },
-    {
-      "id": "concept-rule-5",
       "title": "Sequence Rule",
       "explanation": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear.",
       "example": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear."
     },
     {
-      "id": "concept-rule-6",
+      "id": "concept-rule-5",
       "title": "Negative Number Rule",
       "explanation": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left.",
       "example": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left."
+    },
+    {
+      "id": "concept-rule-6",
+      "title": "Place Value Rule",
+      "explanation": "Each place is 10 times the place to its right. The position of a digit decides its value. A zero can be a placeholder that keeps other digits in place.",
+      "example": "Each place is 10 times the place to its right. The position of a digit decides its value. A zero can be a placeholder that keeps other digits in place."
     }
   ],
   "explorations": [
@@ -137,8 +137,8 @@
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
-      "title": "Times 10 and 100 Rule",
-      "context": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT.",
+      "title": "Sequence Rule",
+      "context": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear.",
       "prompt": "Write the value of the underlined-style bold digit: a) 34,567 b) 45,678.",
       "answer": "−12, −10, −8, −6, −4.",
       "modelType": "model-4",
@@ -149,8 +149,8 @@
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
-      "title": "Sequence Rule",
-      "context": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear.",
+      "title": "Negative Number Rule",
+      "context": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left.",
       "prompt": "Calculate: a) 45 × 10 b) 237 × 100 c) 3,600 ÷ 10.",
       "answer": "a) 30,000, b) 600.",
       "modelType": "model-5",
@@ -161,8 +161,8 @@
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
-      "title": "Negative Number Rule",
-      "context": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left.",
+      "title": "Place Value Rule",
+      "context": "Each place is 10 times the place to its right. The position of a digit decides its value. A zero can be a placeholder that keeps other digits in place.",
       "prompt": "For each sequence, say if it is linear or non-linear and give the rule: a) 2, 4, 8, 16, 32 b) 10, 15, 20, 25, 30 c) 81, 27, 9, 3, 1.",
       "answer": "1) a) non-linear, multiply by 2; b) linear, add 5; c) non-linear, divide by 3.",
       "modelType": "model-6",
@@ -198,25 +198,25 @@
     {
       "id": "model-4",
       "outcomeId": "lo04",
-      "title": "Times 10 and 100 Rule",
+      "title": "Sequence Rule",
       "modelType": "concept-model-4",
-      "purpose": "Multiply by 10: every digit shifts one place LEFT. Multiply by 100: every digit shifts two places LEFT. Divide by 10 or 100: shift one or two places RIGHT.",
+      "purpose": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear.",
       "defaultNumber": null
     },
     {
       "id": "model-5",
       "outcomeId": "lo05",
-      "title": "Sequence Rule",
+      "title": "Negative Number Rule",
       "modelType": "concept-model-5",
-      "purpose": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear.",
+      "purpose": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left.",
       "defaultNumber": null
     },
     {
       "id": "model-6",
       "outcomeId": "lo06",
-      "title": "Negative Number Rule",
+      "title": "Place Value Rule",
       "modelType": "concept-model-6",
-      "purpose": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left.",
+      "purpose": "Each place is 10 times the place to its right. The position of a digit decides its value. A zero can be a placeholder that keeps other digits in place.",
       "defaultNumber": null
     }
   ],
@@ -854,19 +854,6 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in Sequence Rule.",
-      "keyIdeas": [
-        "Sequence",
-        "Term",
-        "Term-to-term rule"
-      ],
-      "modelAnswer": "Find the term-to-term rule: how do you get from one term to the next? Same amount added or subtracted each time = linear. Multiplying or dividing each time = non-linear."
-    },
-    {
-      "id": "reason06",
-      "outcomeId": "lo01",
-      "difficulty": "Core",
-      "responseMode": "text",
       "prompt": "Explain the key idea in Negative Number Rule.",
       "keyIdeas": [
         "Sequence",
@@ -874,6 +861,19 @@
         "Term-to-term rule"
       ],
       "modelAnswer": "Further left on the number line = smaller. So −5 is less than −2, even though 5 is bigger than 2. Add = move right. Subtract = move left."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in Place Value Rule.",
+      "keyIdeas": [
+        "Sequence",
+        "Term",
+        "Term-to-term rule"
+      ],
+      "modelAnswer": "Each place is 10 times the place to its right. The position of a digit decides its value. A zero can be a placeholder that keeps other digits in place."
     }
   ],
   "assessment": {

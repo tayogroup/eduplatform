@@ -73,8 +73,17 @@ function buildGrade(grade) {
         example: sentence(body[2] || body[0] || rules[position % Math.max(1, rules.length)]?.text || title, 220),
       };
     });
-    while (concepts.length < 6 && rules.length) {
-      const rule = rules[concepts.length % rules.length];
+    // Pad with reference rules, but only substantive learner-facing ones —
+    // a thin rule, teacher-guide text, or a near-duplicate of an existing
+    // concept becomes a junk card.
+    const norm = (text) => String(text).toLowerCase().replace(/\W+/g, " ").slice(0, 60);
+    const padRules = rules.filter((rule) =>
+      (rule.text || "").length >= 60
+      && !/^Concept\s+\d+\s*:/i.test(rule.text)
+      && !/^how to teach/i.test(rule.text)
+      && !concepts.some((c) => norm(c.explanation).includes(norm(rule.text).slice(0, 40)) || norm(rule.text).includes(norm(c.explanation).slice(0, 40))));
+    for (const rule of padRules) {
+      if (concepts.length >= 6) break;
       concepts.push({ id: `concept-rule-${concepts.length + 1}`, title: rule.title, explanation: rule.text, example: rule.text });
     }
     if (!concepts.length) {
@@ -125,9 +134,16 @@ function buildGrade(grade) {
     }
     if (!rules.length) {
       rules = lesson.blocks.map((block) => tidy(block.text))
-        .filter((text) => /^remember\b|rule\b/i.test(text) && text.length > 25)
+        // Substantive teaching lines only — skip table fragments and stray
+        // "Concept N:" headings that merely contain the word "rule".
+        .filter((text) => /^remember\b|rule\b/i.test(text) && text.length > 60 && !/^Concept\s+\d+\s*:/i.test(text))
         .slice(0, 6)
-        .map((text, index) => ({ title: `Key idea ${index + 1}`, text: text.replace(/^Remember[:!]?\s*/i, "") }));
+        .map((text) => {
+          const clean = text.replace(/^Remember[:!]?\s*/i, "");
+          // Derive a readable title from the opening words.
+          const words = clean.split(/\s+/).slice(0, 7).join(" ").replace(/[,;:.!?]+$/, "");
+          return { title: words.length > 14 ? words : clean.slice(0, 48), text: clean };
+        });
     }
     return { rules: rules.slice(0, 6), terms: terms.slice(0, 12), commonMistakes: commonMistakes.slice(0, 6) };
   }

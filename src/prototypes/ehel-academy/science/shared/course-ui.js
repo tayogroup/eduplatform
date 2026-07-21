@@ -1,6 +1,6 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260721a";
-import { initScienceWebGL } from "./science-webgl.js?v=science-20260721k";
-import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721k";
+import { initScienceWebGL } from "./science-webgl.js?v=science-20260721l";
+import { unitTopic, scienceDiagram } from "./science-visuals.js?v=science-20260721l";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -125,6 +125,37 @@ function icon(name, label = "") {
 
 function voiceButton(text, label = "Listen") {
   return `<button class="button secondary voice-button" data-speak="${escapeHtml(text)}" type="button" aria-label="${escapeHtml(label)}">${icon("volume-2")} <span>${escapeHtml(label)}</span></button>`;
+}
+
+// Pre-generated narration lookup. cyrb53 gives a stable hash shared
+// byte-for-byte with tools/generate-ehel-science-audio.js, so a Listen
+// button's full text maps to ./media/audio/tts/<hash>.mp3 when it has been
+// pre-rendered (static hosting). Falls back to the runtime TTS endpoint.
+function cyrb53(str, seed = 0) {
+  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+  for (let i = 0; i < str.length; i += 1) {
+    const ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+}
+const staticVoiceKey = (text) => cyrb53(String(text || "").replace(/\s+/g, " ").trim());
+const staticVoiceMisses = new Set();
+async function staticVoiceUrl(text) {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  if (!clean) return null;
+  const key = staticVoiceKey(clean);
+  if (staticVoiceMisses.has(key)) return null;
+  const url = new URL(`./media/audio/tts/${key}.mp3`, document.baseURI).href;
+  try {
+    const r = await fetch(url, { method: "HEAD" });
+    if (r.ok) return url;
+  } catch (e) { /* fall through to runtime */ }
+  staticVoiceMisses.add(key);
+  return null;
 }
 
 function stopVoice() {
@@ -265,12 +296,19 @@ async function speakText(text, button) {
   button.classList.add("is-playing");
   button.setAttribute("aria-label", "Stop ElevenLabs narration");
   try {
-    const chunks = narrationChunks(text);
-    for (let index = 0; index < chunks.length; index += 1) {
+    // Prefer a pre-generated static file (static hosting); one file per button.
+    const staticUrl = await staticVoiceUrl(text);
+    if (staticUrl) {
       if (requestId !== voiceRequestId) return;
-      button.title = `ElevenLabs narration ${index + 1} of ${chunks.length}`;
-      const source = await elevenLabsAudioUrl(chunks[index].text, chunks[index].speed);
-      await playVoiceSource(source, requestId);
+      await playVoiceSource(staticUrl, requestId);
+    } else {
+      const chunks = narrationChunks(text);
+      for (let index = 0; index < chunks.length; index += 1) {
+        if (requestId !== voiceRequestId) return;
+        button.title = `ElevenLabs narration ${index + 1} of ${chunks.length}`;
+        const source = await elevenLabsAudioUrl(chunks[index].text, chunks[index].speed);
+        await playVoiceSource(source, requestId);
+      }
     }
   } catch (error) {
     if (requestId === voiceRequestId) toast("ElevenLabs voice is unavailable. Please try again.");

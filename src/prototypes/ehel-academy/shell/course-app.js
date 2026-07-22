@@ -71,11 +71,16 @@ export function createCourseApp(config) {
   const PROGRESS_COURSE = config.courseKey(stageNumber);
   const PROGRESS_STUDENT = params.get("studentid") || "local";
   const PROGRESS_UNIT = `u${pad2(unitNumber)}`;
+  // Launch URLs travel through chat/email copy-paste, which injects invisible
+  // Unicode (zero-width chars, smart punctuation) that makes fetch() reject the
+  // Authorization header outright. Strip anything outside the JWT alphabet.
+  const launchEndpoint = (params.get("pwsEndpoint") || "").trim();
+  const launchToken = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
   const progressWS = createProgressClient({
     course: PROGRESS_COURSE, student: PROGRESS_STUDENT,
-    backend: params.get("pwsEndpoint") ? "remote" : "local",
-    endpoint: params.get("pwsEndpoint") || undefined,
-    token: params.get("pwsToken") || undefined,
+    backend: launchEndpoint ? "remote" : "local",
+    endpoint: launchEndpoint || undefined,
+    token: launchToken || undefined,
   });
   let unitCompletedSent = false;
   const emitProgress = (event) => { try { progressWS.emit(event); } catch { /* never break the lesson */ } };

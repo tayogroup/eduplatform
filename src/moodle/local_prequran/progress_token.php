@@ -26,6 +26,32 @@ if ($target !== (int)$USER->id && !is_siteadmin()) {
 
 $token = pqpg_mint_token($target, $course, $env);
 $endpoint = $CFG->wwwroot . '/local/prequran/progress_gateway.php';
+$launchparams = 'pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $target;
+
+// Build the ready-to-click app URL from the course key (ehel-{eng|math|sci}-gNN).
+$launchurl = '';
+if (preg_match('/^ehel-(eng|math|sci)-g(\d{2})$/', $course, $m)) {
+    $subjectdir = ['eng' => 'english', 'math' => 'mathematics', 'sci' => 'science'][$m[1]];
+    $stage = (int)$m[2];
+    $levelparam = $m[1] === 'eng' ? 'grade' : 'stage'; // english routes by ?grade=
+    $launchurl = 'https://ehelacademy.b-cdn.net/Ehel%20Primary/app/' . $subjectdir . '/index.html'
+        . '?' . $levelparam . '=' . $stage . '&unit=1&' . $launchparams;
+}
+
+// ?format=launch → a tiny page with a clickable link, so the ~350-char token
+// never travels through copy-paste (chat/email inject invisible Unicode that
+// breaks the Authorization header).
+if (optional_param('format', '', PARAM_ALPHA) === 'launch' && $launchurl !== '') {
+    header('Content-Type: text/html; charset=utf-8');
+    $safeurl = s($launchurl);
+    echo "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Ehel launch</title></head>"
+        . "<body style=\"font-family:system-ui;max-width:640px;margin:48px auto;line-height:1.6\">"
+        . "<h1 style=\"font-size:22px\">Launch: " . s($course) . "</h1>"
+        . "<p><a href=\"{$safeurl}\" style=\"display:inline-block;padding:12px 20px;background:#17324d;color:#fff;border-radius:8px;text-decoration:none;font-weight:700\">Open the course with progress sync →</a></p>"
+        . "<p style=\"color:#666;font-size:13px\">Signed for user {$target} · valid " . floor(PQPG_TOKEN_TTL / 3600) . " h · env " . s($env !== '' ? $env : 'default') . ".<br>Share this link only with that learner — it carries their identity.</p>"
+        . "</body></html>";
+    exit;
+}
 
 header('Content-Type: application/json; charset=utf-8');
 echo json_encode([
@@ -36,5 +62,6 @@ echo json_encode([
     'token' => $token,
     'expires' => time() + PQPG_TOKEN_TTL,
     'endpoint' => $endpoint,
-    'launchparams' => 'pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $target,
+    'launchparams' => $launchparams,
+    'launchurl' => $launchurl,
 ], JSON_UNESCAPED_SLASHES);

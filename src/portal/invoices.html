@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoices · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:16px}
+  .toolbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .field{display:grid;gap:5px}
+  .field label{font-size:11px;text-transform:uppercase;letter-spacing:.4px;font-weight:900;color:var(--ink2)}
+  select,input{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink);min-height:38px}
+  select{min-width:180px}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer;min-height:38px}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  button:disabled{opacity:.55;cursor:wait}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--ink2);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;font-weight:900;color:var(--ink)}
+  .sub2{display:block;margin-top:3px;color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.paid{background:#e1f2ff;color:var(--blue2)}
+  .pill.due{background:var(--amber-bg);color:var(--amber)}
+  .pill.overdue{background:var(--red-bg);color:var(--red)}
+  a.open{display:inline-block;background:var(--sky);color:var(--blue);text-decoration:none;padding:6px 12px;border-radius:8px;font-weight:900;font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .empty{padding:18px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:800;background:var(--bg)}
+  .warn{margin:0 0 12px;padding:10px 12px;border-radius:8px;background:var(--red-bg);color:var(--red);font-weight:800}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}table thead{display:none}table tr{display:block;border-bottom:2px solid var(--line);padding:6px 0}table td{display:block;border:0;padding:4px 0}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Invoices</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of invoices.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Invoices</h1><p class="sub">Manual draft and issue workflow for student tuition invoices.</p></div>
+  <div id="status" class="status">Loading invoices…</div>
+  <div class="grid" id="grid" hidden>
+    <aside class="panel">
+      <h2>Create draft</h2>
+      <div id="schema-warn"></div>
+      <form id="create-form">
+        <div class="field" style="margin-bottom:12px">
+          <label for="studentid">Student</label>
+          <select id="studentid" name="studentid"></select>
+        </div>
+        <button type="submit" id="create-btn">Create draft invoice</button>
+      </form>
+      <div id="create-status"></div>
+    </aside>
+    <section class="panel">
+      <div class="toolbar">
+        <div class="field">
+          <label for="status-filter">Status</label>
+          <select id="status-filter"></select>
+        </div>
+        <button class="ghost" id="csv-btn" type="button">Export CSV</button>
+      </div>
+      <div id="table-host"></div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short", year:"numeric" }) : "Not issued";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let current = null;
+  let statusFilter = qs.get("status") || "";
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "invoices", token });
+    if (statusFilter) p.set("status", statusFilter);
+    if (qs.get("workspaceid")) p.set("workspaceid", qs.get("workspaceid"));
+    if (qs.get("consumer")) p.set("consumer", qs.get("consumer"));
+    return endpoint + "?" + p.toString();
+  };
+
+  const pill = (inv) => {
+    if (inv.status === "paid") return `<span class="pill paid">${esc(inv.status_label)}</span>`;
+    if (inv.overdue) return `<span class="pill overdue">${esc(inv.status_label)} · overdue</span>`;
+    return `<span class="pill due">${esc(inv.status_label)}</span>`;
+  };
+
+  const invoiceLabel = (inv) => inv.invoicenumber !== "" ? inv.invoicenumber : "Draft #" + inv.id;
+
+  function render(d) {
+    current = d;
+    $("#title").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " — " : "") + "Invoices";
+
+    // schema warning
+    $("#schema-warn").innerHTML = d.schemaready ? "" :
+      `<div class="warn">Invoice schema is not ready. Run the local_prequran Moodle upgrade.</div>`;
+
+    // student picker
+    $("#studentid").innerHTML = (d.students || []).map((s) =>
+      `<option value="${esc(s.id)}">${esc(s.label)}</option>`).join("")
+      || `<option value="0">No students in this workspace</option>`;
+
+    // status filter
+    const opts = [`<option value="">All statuses</option>`]
+      .concat(Object.entries(d.statuses || {}).map(([k, label]) =>
+        `<option value="${esc(k)}"${statusFilter === k ? " selected" : ""}>${esc(label)}</option>`));
+    $("#status-filter").innerHTML = opts.join("");
+
+    // table
+    const rows = d.invoices || [];
+    if (!rows.length) {
+      $("#table-host").innerHTML = `<div class="empty">No invoices found.</div>`;
+    } else {
+      $("#table-host").innerHTML = `
+        <table>
+          <thead><tr><th>Invoice</th><th>Student</th><th>Billing account</th><th>Status</th><th>Total</th><th>Due</th><th></th></tr></thead>
+          <tbody>${rows.map((inv) => `
+            <tr>
+              <td><span class="name">${esc(invoiceLabel(inv))}</span><span class="sub2">Invoice #${esc(inv.id)}</span></td>
+              <td>${inv.student ? esc(inv.student) : "Not assigned"}<span class="sub2">${esc(inv.email)}</span></td>
+              <td>${esc(inv.accountname)}<span class="sub2">${esc(inv.billingemail)}</span></td>
+              <td>${pill(inv)}</td>
+              <td>${esc(inv.currency)} ${esc(inv.total)}<span class="sub2">Balance ${esc(inv.balancedue)}</span></td>
+              <td>${esc(dateOnly(inv.dueat))}</td>
+              <td>${inv.openurl ? `<a class="open" href="${esc(inv.openurl)}">Open</a>` : ""}</td>
+            </tr>`).join("")}</tbody>
+        </table>`;
+    }
+
+    $("#grid").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function exportCsv() {
+    if (!current || !(current.invoices || []).length) return;
+    const head = ["Invoice", "Invoice ID", "Student", "Email", "Billing account", "Billing email", "Status", "Currency", "Total", "Balance due", "Due date"];
+    const cell = (v) => { const s = String(v ?? ""); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const lines = [head.map(cell).join(",")];
+    for (const inv of current.invoices) {
+      lines.push([
+        invoiceLabel(inv), inv.id, inv.student, inv.email, inv.accountname, inv.billingemail,
+        inv.status_label + (inv.overdue ? " (overdue)" : ""), inv.currency, inv.total, inv.balancedue,
+        inv.dueat ? dateOnly(inv.dueat) : "Not issued",
+      ].map(cell).join(","));
+    }
+    const blob = new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "invoices.csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function createDraft(ev) {
+    ev.preventDefault();
+    const btn = $("#create-btn");
+    const studentid = Number($("#studentid").value || 0);
+    btn.disabled = true; btn.textContent = "Creating…";
+    $("#create-status").innerHTML = "";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "invoices", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ do: "create_draft", studentid }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#create-status").innerHTML = `<div class="status saved" style="margin-top:10px">${esc(d.message || "Draft invoice created.")}${d.launchurl ? ` · <a class="open" href="${esc(d.launchurl)}">Open</a>` : ""}</div>`;
+      load();
+    } catch (e) {
+      $("#create-status").innerHTML = `<div class="status error" style="margin-top:10px">Could not create: ${esc(e.message)}</div>`;
+    } finally {
+      btn.disabled = false; btn.textContent = "Create draft invoice";
+    }
+  }
+
+  document.addEventListener("change", (e) => {
+    if (e.target && e.target.id === "status-filter") { statusFilter = e.target.value; $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading invoices…"; $("#grid").hidden = true; load(); }
+  });
+  document.addEventListener("click", (e) => { if (e.target && e.target.id === "csv-btn") exportCsv(); });
+  $("#create-form").addEventListener("submit", createDraft);
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parent billing · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .metric b{display:block;font-size:20px;color:var(--ink)}
+  .metric span{font-size:12px;color:var(--muted);font-weight:700}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--ink2);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  .name{font-weight:800;color:var(--ink)}
+  .small{display:block;color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.paid{background:#e1f2ff;color:var(--blue2)}
+  .pill.due{background:var(--amber-bg);color:var(--amber)}
+  .pill.overdue{background:var(--red-bg);color:var(--red)}
+  a.btn{display:inline-block;background:var(--blue2);color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-weight:900;font-size:12px}
+  a.btn:hover{background:var(--blue)}
+  .support{margin-top:12px;padding:10px 12px;border-radius:8px;background:var(--sky);color:var(--ink2);font-size:13px;font-weight:700}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Parent billing</small></div>
+  <div class="note">Token-authenticated · parallel-run of parent_billing.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Parent billing</h1><p class="sub" id="subtitle">Invoices and balances for your linked students.</p></div>
+  <div id="status" class="status">Loading billing…</div>
+  <div class="panel" id="metrics-panel" hidden><div class="metrics" id="metrics"></div></div>
+  <div class="panel" id="invoices-panel" hidden>
+    <h2>Invoices</h2>
+    <div class="tablewrap" id="invoices"></div>
+    <div class="support" id="support" hidden></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short", year:"numeric" }) : "Not set";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "parent-billing", token });
+    for (const k of ["consumer", "workspaceid", "childid"]) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+
+  // Status pill: paid (blue) / due (amber) / overdue (red). Overdue comes from
+  // the API (past due date + balance); otherwise a remaining balance means due.
+  const pill = (inv) => {
+    const cls = inv.overdue ? "overdue" : (parseFloat(inv.balancedue || "0") > 0 ? "due" : "paid");
+    return `<span class="pill ${cls}">${esc(inv.status_label || inv.status || "")}</span>`;
+  };
+
+  const row = (inv) => `
+    <tr>
+      <td><span class="name">${esc(inv.invoicenumber)}</span><span class="small">${esc(inv.workspace_name)}</span></td>
+      <td>${esc(inv.student)}</td>
+      <td>${pill(inv)}</td>
+      <td>${esc(inv.currency + " " + inv.total)}</td>
+      <td>${esc(inv.balancedue)}</td>
+      <td>${esc(inv.dueat ? dateOnly(inv.dueat) : "Not set")}</td>
+      <td>${inv.plan ? `<span class="pill paid">${esc(inv.plan.status_label)}</span><span class="small">${esc(inv.plan.plannumber)}</span>` : `<span class="small">No plan</span>`}</td>
+      <td>${inv.viewurl ? `<a class="btn" href="${esc(inv.viewurl)}">View / Pay</a>` : ""}</td>
+    </tr>`;
+
+  function render(d) {
+    $("#subtitle").textContent = (d.workspace && d.workspace.name) ? d.workspace.name + " — invoices for linked students." : "Invoices and balances for your linked students.";
+    const m = d.metrics || {};
+    $("#metrics").innerHTML = [
+      ["Invoices", m.count], ["Total billed", m.total], ["Paid or credited", m.paid], ["Balance due", m.balance],
+    ].map(([label, value]) => `<div class="metric"><b>${esc(value ?? "")}</b><span>${esc(label)}</span></div>`).join("");
+    $("#metrics-panel").hidden = false;
+    const invoices = d.invoices || [];
+    $("#invoices").innerHTML = invoices.length
+      ? `<table><thead><tr><th>Invoice</th><th>Student</th><th>Status</th><th>Total</th><th>Balance</th><th>Due</th><th>Plan</th><th></th></tr></thead><tbody>${invoices.map(row).join("")}</tbody></table>`
+      : "<div class='muted'>No issued invoices are available yet.</div>";
+    if (d.supportlabel) {
+      $("#support").hidden = false;
+      $("#support").textContent = "Online payment is not enabled yet. Contact " + d.supportlabel + " for payment instructions.";
+    }
+    $("#invoices-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  (async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  })();
+})();
+</script>
+</body>
+</html>

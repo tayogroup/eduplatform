@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scholarship portal · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .field{display:grid;gap:5px;margin-bottom:11px}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:60px;resize:vertical}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button.light{background:var(--sky);color:var(--blue)}
+  button:disabled{opacity:.55;cursor:wait}
+  table{width:100%;border-collapse:separate;border-spacing:0}
+  th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;color:var(--ink);font-weight:900}
+  .pill{display:inline-flex;align-items:center;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);margin:0 4px 4px 0}
+  .pill.award{background:#e1f2ff;color:var(--blue2)}
+  .pill.approved,.pill.awarded{background:#e1f2ff;color:var(--blue2)}
+  .pill.declined{background:var(--red-bg);color:var(--red)}
+  .pill.waitlist,.pill.under_review,.pill.submitted{background:var(--amber-bg);color:var(--amber)}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:800;background:var(--bg)}
+  .review{display:grid;gap:6px;min-width:220px;margin-top:6px;padding:10px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  .tablewrap{overflow-x:auto}
+  @media(max-width:640px){table thead{display:none}table tr,table td{display:block}td:before{content:attr(data-label);display:block;color:var(--muted);font-size:10px;font-weight:900;text-transform:uppercase}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Scholarship applications</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of scholarship_portal.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Scholarship applications</h1><p class="sub" id="subtitle">Need-based aid intake, review, and award conversion.</p></div>
+  <div id="status" class="status">Loading scholarship portal…</div>
+  <div class="grid" id="grid" hidden>
+    <section class="panel" id="new-panel">
+      <h2>New application</h2>
+      <form id="new-form">
+        <div class="field"><label>Student</label><select name="studentid" id="f-student" required></select></div>
+        <div class="field"><label>Course offering</label><select name="offeringid" id="f-offering"><option value="0">General scholarship</option></select></div>
+        <div class="field"><label>Invoice ID</label><input name="invoiceid" placeholder="Optional invoice number ID"></div>
+        <div class="field"><label>Currency</label><input name="currency" id="f-currency"></div>
+        <div class="field"><label>Requested amount</label><input name="requestedamount" required placeholder="250.00"></div>
+        <div class="field"><label>Need level</label><select name="needlevel"><option value="standard">Standard</option><option value="high_need">High need</option><option value="emergency">Emergency</option><option value="merit">Merit</option></select></div>
+        <div class="field"><label>Funding preference</label><input name="fundingpreference" placeholder="Zakat, donor fund, hardship, merit"></div>
+        <div class="field"><label>Household note</label><textarea name="householdnote"></textarea></div>
+        <div class="field"><label>Academic note</label><textarea name="academicnote"></textarea></div>
+        <div class="field"><label>Documents note</label><textarea name="documentnote"></textarea></div>
+        <button type="submit">Submit application</button>
+      </form>
+    </section>
+    <section class="panel" id="list-panel">
+      <h2>Applications</h2>
+      <div class="tablewrap"><div id="applications"></div></div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const setStatus = (msg, cls) => { const el = $("#status"); el.className = "status" + (cls ? " " + cls : ""); el.hidden = false; el.textContent = msg; };
+
+  if (!endpoint || !token) { setStatus("Missing endpoint/token — open via the Moodle portal launch link.", "error"); return; }
+
+  let STATE = null;
+  const base = () => new URLSearchParams({ report: "scholarship-portal", token });
+  const wsParam = () => STATE && STATE.context && STATE.context.workspaceid ? "&workspaceid=" + STATE.context.workspaceid : "";
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + base().toString() + wsParam());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      STATE = d;
+      render(d);
+    } catch (e) { setStatus("Could not load: " + e.message, "error"); }
+  }
+
+  const statusPill = (s) => `<span class="pill ${esc(s)}">${esc((s || "").replace(/_/g, " "))}</span>`;
+
+  function renderApplications(d) {
+    const names = d.names || {};
+    const apps = d.applications || [];
+    if (!apps.length) { $("#applications").innerHTML = '<div class="empty">No scholarship applications yet.</div>'; return; }
+    const head = `<table><thead><tr><th>Application</th><th>Student</th><th>Need</th><th>Amount</th><th>Decision</th>${d.canmanage ? "<th>Review</th>" : ""}</tr></thead><tbody>`;
+    const rows = apps.map((a) => {
+      const student = names[a.studentid] || a.student || ("Student " + a.studentid);
+      const review = d.canmanage ? `<td data-label="Review">${reviewForm(a)}</td>` : "";
+      return `<tr>
+        <td data-label="Application"><span class="name">${esc(a.applicationnumber)}</span><span class="muted">${esc(a.offeringtitle || "General scholarship")}</span>${a.awardid > 0 ? `<br><span class="pill award">Award #${a.awardid}</span>` : ""}</td>
+        <td data-label="Student">${esc(student)}</td>
+        <td data-label="Need">${statusPill(a.needlevel)}<div class="muted">${esc(a.fundingpreference)}</div></td>
+        <td data-label="Amount">${esc(a.currency + " " + a.requestedamount)}</td>
+        <td data-label="Decision">${statusPill(a.status)}<div class="muted">${esc(a.decisionnote)}</div></td>
+        ${review}
+      </tr>`;
+    }).join("");
+    $("#applications").innerHTML = head + rows + "</tbody></table>";
+    document.querySelectorAll("form.review").forEach((f) => f.addEventListener("submit", submitReview));
+  }
+
+  const reviewForm = (a) => `
+    <form class="review" data-applicationid="${a.id}">
+      <select name="status">
+        <option value="under_review">Under review</option>
+        <option value="approved">Approve</option>
+        <option value="waitlist">Waitlist</option>
+        <option value="declined">Decline</option>
+        <option value="awarded">Award now</option>
+      </select>
+      <input name="invoiceid" value="${a.invoiceid || ""}" placeholder="Invoice ID for award">
+      <textarea name="decisionnote" placeholder="Decision note"></textarea>
+      <button class="light" type="submit">Save</button>
+    </form>`;
+
+  function render(d) {
+    $("#title").textContent = "Scholarship applications — " + (d.context && d.context.workspace ? d.context.workspace : "workspace");
+    // Student picker.
+    const sel = $("#f-student");
+    sel.innerHTML = (d.students || []).map((s) => `<option value="${s.id}">${esc(s.name)}</option>`).join("");
+    // Offerings.
+    const off = $("#f-offering");
+    off.innerHTML = '<option value="0">General scholarship</option>' + (d.offerings || []).map((o) => `<option value="${o.id}">${esc(o.title)}${o.scholarship_eligible ? " · eligible" : ""}</option>`).join("");
+    // Default currency.
+    if (d.defaultcurrency && !$("#f-currency").value) $("#f-currency").value = d.defaultcurrency;
+    renderApplications(d);
+    $("#grid").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  async function post(payload) {
+    const r = await fetch(endpoint + "?" + base().toString() + wsParam(), {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify(payload),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    return d;
+  }
+
+  $("#new-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget, btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Submitting…";
+    try {
+      const d = await post({
+        do: "submit_application",
+        studentid: Number(f.studentid.value),
+        offeringid: Number(f.offeringid.value || 0),
+        invoiceid: Number(f.invoiceid.value || 0),
+        currency: f.currency.value,
+        requestedamount: f.requestedamount.value,
+        needlevel: f.needlevel.value,
+        fundingpreference: f.fundingpreference.value,
+        householdnote: f.householdnote.value,
+        academicnote: f.academicnote.value,
+        documentnote: f.documentnote.value,
+      });
+      setStatus(d.message || "Application submitted.", "saved");
+      f.reset(); if (STATE && STATE.defaultcurrency) f.currency.value = STATE.defaultcurrency;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      setStatus("Could not submit: " + e.message, "error");
+    } finally {
+      btn.disabled = false; btn.textContent = "Submit application";
+    }
+  });
+
+  async function submitReview(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget, btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const d = await post({
+        do: "review_application",
+        applicationid: Number(f.dataset.applicationid),
+        status: f.status.value,
+        invoiceid: Number(f.invoiceid.value || 0),
+        decisionnote: f.decisionnote.value,
+      });
+      setStatus(d.message || "Application reviewed.", "saved");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Save";
+      setStatus("Could not save: " + e.message, "error");
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

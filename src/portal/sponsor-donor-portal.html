@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sponsor &amp; donor portal · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .metric b{display:block;font-size:20px;color:var(--ink)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}
+  .metric.warn b{color:var(--amber)}
+  .cols{display:grid;grid-template-columns:390px 1fr;gap:16px;align-items:start}
+  @media(max-width:900px){.cols{grid-template-columns:1fr}}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:10px 0 3px}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:64px;resize:vertical}
+  .btn{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer;margin-top:12px}
+  .btn.ghost{background:var(--sky);color:var(--blue2)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:640px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  td b{display:block;color:var(--ink)}
+  td .sm{display:block;margin-top:2px;color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.paid{background:#e1f2ff;color:var(--blue2)}
+  .pill.due{background:var(--amber-bg);color:var(--amber)}
+  .pill.overdue{background:var(--red-bg);color:var(--red)}
+  .pill.neutral{background:var(--sky);color:var(--ink2)}
+  .review{margin-top:8px;padding:10px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  .review label{margin:6px 0 3px}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;background:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Sponsor &amp; donor portal</small></div>
+  <div class="note">Token-authenticated · parallel-run of sponsor_donor_portal.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Sponsor &amp; donor portal</h1><p class="sub" id="subtitle">Pledges, sponsor invoices, donor privacy and commitment history.</p></div>
+  <div id="status" class="status">Loading sponsor &amp; donor portal…</div>
+  <div class="metrics" id="metrics" hidden></div>
+  <div class="cols" id="cols" hidden>
+    <section class="panel">
+      <h2>New pledge</h2>
+      <form id="pledge-form">
+        <label>Campaign</label>
+        <input name="campaign" placeholder="General scholarship fund">
+        <label>Pledge type</label>
+        <select name="pledge_type">
+          <option value="general">General fund</option>
+          <option value="student_sponsorship">Student sponsorship</option>
+          <option value="course_sponsorship">Course sponsorship</option>
+          <option value="zakat">Zakat</option>
+          <option value="sadaqah">Sadaqah</option>
+        </select>
+        <label>Student</label>
+        <select name="studentid" id="student-select"><option value="0">Not student-specific</option></select>
+        <label>Invoice ID</label>
+        <input name="invoiceid" type="number" min="0" placeholder="Optional invoice ID">
+        <label>Currency</label>
+        <input name="currency" id="currency-input" value="USD">
+        <label>Pledged amount</label>
+        <input name="pledgedamount" required placeholder="500.00">
+        <label>Expected date</label>
+        <input name="expected_date" type="date">
+        <label>Privacy</label>
+        <select name="privacy">
+          <option value="named">Named donor</option>
+          <option value="anonymous">Anonymous</option>
+          <option value="family_only">Visible to sponsored family only</option>
+        </select>
+        <label>Message</label>
+        <textarea name="donor_message" maxlength="1000"></textarea>
+        <button class="btn" type="submit">Submit pledge</button>
+      </form>
+    </section>
+    <div>
+      <section class="panel">
+        <h2>Pledges</h2>
+        <div class="tablewrap"><table>
+          <thead><tr><th>Pledge</th><th>Donor</th><th>Purpose</th><th>Amount</th><th>Status</th><th id="review-head" hidden>Review</th></tr></thead>
+          <tbody id="pledges"></tbody>
+        </table></div>
+      </section>
+      <section class="panel">
+        <h2>Invoices</h2>
+        <div class="tablewrap"><table>
+          <thead><tr><th>Invoice</th><th>Student</th><th>Status</th><th>Total</th><th>Balance</th><th>Due</th></tr></thead>
+          <tbody id="invoices"></tbody>
+        </table></div>
+      </section>
+      <section class="panel">
+        <h2>Commitments</h2>
+        <div class="tablewrap"><table>
+          <thead><tr><th>Commitment</th><th>Invoice</th><th>Status</th><th>Committed</th><th>Received</th><th>Expected</th></tr></thead>
+          <tbody id="commitments"></tbody>
+        </table></div>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const REPORT = "sponsor-donor-portal";
+  let canmanage = false;
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: REPORT, token });
+
+  // NO green anywhere: paid/settled = blue, due/pending = amber,
+  // overdue/failed = red, everything else neutral sky.
+  const statusPill = (s) => {
+    const v = (s || "").toLowerCase();
+    if (!v) return "";
+    let cls = "neutral";
+    if (/overdue|fail|error|cancel|void|reject|default|blocked|escalat|breach/.test(v)) cls = "overdue";
+    else if (/due|pending|open|await|partial|scheduled|suggest|draft|hold|queued|sent|pledged/.test(v)) cls = "due";
+    else if (/paid|received|succeed|complete|settl|resolved|posted|approved|active|ok|pass|accept|allocat/.test(v)) cls = "paid";
+    return `<span class="pill ${cls}">${esc(v.replace(/_/g, " "))}</span>`;
+  };
+
+  const metricCard = (val, label, cls) => `<div class="metric ${cls || ""}"><b>${esc(val)}</b><span>${esc(label)}</span></div>`;
+
+  const reviewForm = (p) => `
+    <form class="review" data-pledgeid="${p.id}">
+      <label>Status</label>
+      <select name="status">
+        <option value="accepted">Accept</option>
+        <option value="allocated">Allocate to invoice</option>
+        <option value="completed">Complete</option>
+        <option value="cancelled">Cancel</option>
+      </select>
+      <label>Invoice ID for allocation</label>
+      <input name="invoiceid" type="number" min="0" value="${p.invoiceid || 0}">
+      <label>Staff note</label>
+      <textarea name="staffnote" placeholder="Staff note"></textarea>
+      <button class="btn ghost" type="submit">Save</button>
+    </form>`;
+
+  const pledgeRow = (p) => `
+    <tr>
+      <td><b>${esc(p.pledgenumber)}</b><span class="sm">${esc(p.campaign)}</span>${p.commitmentid ? `<span class="sm">Commitment #${esc(p.commitmentid)}</span>` : ""}</td>
+      <td>${esc(p.sponsorname)}<span class="sm">${esc((p.privacy || "").replace(/_/g, " "))}</span></td>
+      <td>${statusPill(p.pledge_type)}<span class="sm">${esc(p.studentname)}</span></td>
+      <td>${esc(p.currency)} ${esc(p.pledgedamount)}<span class="sm">Balance ${esc(p.balanceamount)}</span></td>
+      <td>${statusPill(p.status)}<span class="sm">${esc(p.staffnote)}</span></td>
+      ${canmanage ? `<td>${reviewForm(p)}</td>` : ""}
+    </tr>`;
+
+  const invoiceRow = (i) => `
+    <tr>
+      <td><b>${esc(i.invoicenumber)}</b></td>
+      <td>${esc(i.studentname)}</td>
+      <td>${statusPill(i.status)}</td>
+      <td>${esc(i.currency)} ${esc(i.total)}</td>
+      <td>${esc(i.balancedue)}</td>
+      <td>${i.dueat ? esc(dateOnly(i.dueat)) : "Not set"}</td>
+    </tr>`;
+
+  const commitmentRow = (c) => `
+    <tr>
+      <td><b>${esc(c.commitmentnumber)}</b></td>
+      <td>${esc(c.invoicenumber)}</td>
+      <td>${statusPill(c.status)}</td>
+      <td>${esc(c.currency)} ${esc(c.committedamount)}</td>
+      <td>${esc(c.receivedamount)}</td>
+      <td>${c.expectedat ? esc(dateOnly(c.expectedat)) : "Not set"}</td>
+    </tr>`;
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading sponsor & donor portal…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    canmanage = !!d.canmanage;
+    const ctx = d.context || {}, m = d.metrics || {};
+    $("#title").textContent = (ctx.workspace ? ctx.workspace + " — " : "") + "Sponsor & donor portal";
+    $("#metrics").innerHTML =
+      metricCard(m.count, "visible invoices", "") +
+      metricCard(m.total, "total billed", "") +
+      metricCard(m.paid, "paid or credited", "") +
+      metricCard(m.balance, "balance due", "warn");
+    $("#metrics").hidden = false;
+
+    const sel = $("#student-select");
+    sel.innerHTML = `<option value="0">Not student-specific</option>` +
+      (d.students || []).map((s) => `<option value="${s.id}">${esc(s.name)}</option>`).join("");
+
+    $("#review-head").hidden = !canmanage;
+    $("#pledges").innerHTML = (d.pledges || []).map(pledgeRow).join("") ||
+      `<tr><td colspan="${canmanage ? 6 : 5}" class="muted">No donor pledges yet.</td></tr>`;
+    $("#invoices").innerHTML = (d.invoices || []).map(invoiceRow).join("") ||
+      `<tr><td colspan="6" class="muted">No sponsor invoices are visible yet.</td></tr>`;
+    $("#commitments").innerHTML = (d.commitments || []).map(commitmentRow).join("") ||
+      `<tr><td colspan="6" class="muted">No sponsor commitments are visible yet.</td></tr>`;
+
+    $("#cols").hidden = false;
+    $("#status").hidden = true;
+    document.querySelectorAll("form.review").forEach((f) => f.addEventListener("submit", submitReview));
+  }
+
+  async function post(payload, btn, okmsg) {
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: REPORT, token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || okmsg;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || "Save"; }
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  $("#pledge-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({
+      do: "submit_pledge",
+      campaign: f.campaign.value,
+      pledge_type: f.pledge_type.value,
+      studentid: Number(f.studentid.value) || 0,
+      invoiceid: Number(f.invoiceid.value) || 0,
+      currency: f.currency.value,
+      pledgedamount: f.pledgedamount.value,
+      expected_date: f.expected_date.value,
+      privacy: f.privacy.value,
+      donor_message: f.donor_message.value,
+    }, f.querySelector("button"), "Pledge submitted.");
+  });
+
+  function submitReview(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({
+      do: "review_pledge",
+      pledgeid: Number(f.dataset.pledgeid),
+      status: f.status.value,
+      invoiceid: Number(f.invoiceid.value) || 0,
+      staffnote: f.staffnote.value,
+    }, f.querySelector("button"), "Donor pledge reviewed.");
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

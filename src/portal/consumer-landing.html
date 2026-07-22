@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consumer landing · EduPlatform portal</title>
+<style>
+  /* EXACT live-summaries.html / live-schedule palette (blue-led; no green). */
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:17px}
+  .brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .mark{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;background:var(--blue2);color:#fff;font-weight:900;overflow:hidden;flex:0 0 auto}
+  .mark img{display:block;width:100%;height:100%;object-fit:cover}
+  .top .note{font-size:12px;color:#b9cbdd}
+  nav.links{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13px;font-weight:800}
+  .btn{display:inline-flex;min-height:38px;align-items:center;justify-content:center;gap:8px;border:0;border-radius:8px;padding:0 16px;font-weight:900;font-size:13px;background:var(--sky);color:var(--blue)}
+  .btn.primary{background:var(--blue2);color:#fff}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  .btn.on-dark{background:rgba(255,255,255,.14);color:#fff}
+  main{padding:22px 0 48px}
+  #status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  #status.error{background:var(--red-bg);color:var(--red)}
+  #status.hidden,[hidden]{display:none}
+  .alert{padding:12px 16px;border-radius:8px;background:var(--sky);color:var(--blue2);border:1px solid var(--line);font-weight:800;margin-bottom:16px}
+  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue) 0%,var(--blue2) 100%);color:#fff;border-radius:12px;padding:40px 34px;margin-bottom:18px}
+  .hero.has-image{background:linear-gradient(120deg,rgba(23,50,77,.94),rgba(42,108,176,.72) 60%,rgba(42,108,176,.32)),var(--hero-image) center/cover no-repeat}
+  .kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.14);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px}
+  .hero h1{margin:16px 0 0;max-width:800px;font-size:clamp(30px,5vw,52px);line-height:1.02}
+  .hero p{margin:14px 0 0;max-width:720px;color:#dbe7f2;font-size:17px;line-height:1.55}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  section.block{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:18px}
+  .grid{display:grid;gap:14px}
+  .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .cell{border:1px solid var(--line);border-radius:10px;padding:18px;background:var(--card)}
+  .cell h3{margin:0 0 6px;color:var(--blue);font-size:16px;line-height:1.18}
+  .cell p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start}
+  .copy h2{margin:0;color:var(--blue);font-size:clamp(22px,3vw,32px);line-height:1.1}
+  .copy p{margin:13px 0 0;color:var(--muted);font-size:15px;line-height:1.6}
+  ul.rows{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
+  ul.rows li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;color:var(--ink2);font-size:14px;font-weight:700;line-height:1.45}
+  ul.rows li .dot{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--sky);color:var(--blue2);font-weight:900;font-size:13px}
+  .panel{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:22px}
+  .panel h2{margin:0 0 14px;color:var(--blue);font-size:20px}
+  .panel-actions{display:grid;gap:10px}
+  .panel-actions .btn{width:100%}
+  .panel .muted{margin-top:14px;color:var(--muted);font-size:12px;font-weight:700}
+  footer{color:var(--muted);font-size:13px;text-align:center;padding:10px 0}
+  @media(max-width:900px){.grid.four{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}}
+  @media(max-width:560px){.grid.four{grid-template-columns:1fr}.actions .btn{width:100%}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand" id="brand"><span class="mark" id="brand-mark">W</span><span>EduPlatform Portal<small>Consumer landing</small></span></div>
+  <nav class="links" id="nav-links"></nav>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of consumer_landing.php</div>
+</div></header>
+
+<main class="wrap">
+  <div id="status">Loading consumer landing…</div>
+
+  <div id="content" hidden>
+    <div class="alert" id="submitted-banner" hidden></div>
+
+    <section class="hero" id="hero">
+      <span class="kicker" id="kicker"></span>
+      <h1 id="headline"></h1>
+      <p id="tagline"></p>
+      <div class="actions" id="hero-actions"></div>
+    </section>
+
+    <section class="block">
+      <div class="grid four" id="cards"></div>
+    </section>
+
+    <section class="block">
+      <div class="split">
+        <div class="copy">
+          <h2 id="split-heading"></h2>
+          <p id="split-body"></p>
+          <ul class="rows" id="split-rows"></ul>
+        </div>
+        <aside class="panel">
+          <h2>Get Started</h2>
+          <div class="panel-actions" id="panel-actions"></div>
+          <p class="muted" id="support" hidden></p>
+        </aside>
+      </div>
+    </section>
+
+    <footer id="footer"></footer>
+  </div>
+</main>
+
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const consumer = (qs.get("consumer") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = (qs.get("workspaceid") || "").replace(/[^0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) {
+    $("#status").className = "error";
+    $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link.";
+    return;
+  }
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "consumer-landing", token });
+    if (consumer) p.set("consumer", consumer);
+    if (workspaceid) p.set("workspaceid", workspaceid);
+    return endpoint + "?" + p.toString();
+  };
+
+  // Anchor helper — CTA/nav targets are absolute Moodle URLs from the JSON.
+  const link = (href, label, cls) => `<a class="btn ${cls}" href="${esc(href)}">${esc(label)}</a>`;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) {
+      $("#status").className = "error";
+      $("#status").hidden = false;
+      $("#status").textContent = "Could not load: " + e.message;
+    }
+  }
+
+  function render(d) {
+    const u = d.urls || {};
+    const L = d.labels || {};
+    const brand = d.brand || "EduPlatform";
+    const isInstitution = !!d.is_institution;
+    const isAcademy = !!d.is_academy;
+    const isProfile = !!d.is_profile_consumer;
+
+    // Brand mark: logo if present, else initial.
+    $("#brand-mark").innerHTML = d.brand_logo
+      ? `<img src="${esc(d.brand_logo)}" alt="${esc(brand)}">`
+      : esc(d.brand_initial || "W");
+    $("#brand").querySelector("span:last-child").innerHTML = esc(brand) + "<small>Consumer landing</small>";
+
+    // Top nav — mirrors the legacy nav conditionals.
+    let nav = [];
+    if (d.external_website) nav.push(link(d.external_website, "Institution Website", "on-dark"));
+    if (!isInstitution && u.market) nav.push(link(u.market, "Browse Teachers", "on-dark"));
+    if (isProfile && u.profile) {
+      nav.push(link(u.profile, "Profile", "on-dark"));
+      nav.push(link(u.profile_contact, "Contact", "on-dark"));
+    }
+    if (isInstitution && u.dashboard) nav.push(link(u.dashboard, "Workspace", "on-dark"));
+    if (u.login) nav.push(link(u.login, "Log In", "primary"));
+    $("#nav-links").innerHTML = nav.join("");
+
+    // Thank-you banner (legacy teacher_submitted GET flag).
+    if (d.teacher_submitted) {
+      $("#submitted-banner").textContent = "Thank you. Your teacher application was received and " + brand + " will review it.";
+      $("#submitted-banner").hidden = false;
+    }
+
+    // Hero.
+    if (d.heroimage) {
+      $("#hero").classList.add("has-image");
+      $("#hero").style.setProperty("--hero-image", `url('${d.heroimage}')`);
+    }
+    $("#kicker").textContent = d.kicker || "";
+    $("#headline").textContent = d.headline || brand;
+    $("#tagline").textContent = d.tagline || "";
+    let hero = [];
+    if (u.student) hero.push(link(u.student, L.student_primary, "primary"));
+    if (u.teacher) hero.push(link(u.teacher, L.teacher_hero, "on-dark"));
+    if (isProfile && u.profile) hero.push(link(u.profile, L.profile, "on-dark"));
+    if (isInstitution && u.dashboard) hero.push(link(u.dashboard, "Open Workspace", "on-dark"));
+    else if (u.market) hero.push(link(u.market, "Explore Marketplace", "on-dark"));
+    $("#hero-actions").innerHTML = hero.join("");
+
+    // Service cards.
+    $("#cards").innerHTML = (d.cards || []).map((c) =>
+      `<article class="cell"><h3>${esc(c.title)}</h3><p>${esc(c.body)}</p></article>`).join("");
+
+    // Split copy + get-started panel.
+    $("#split-heading").textContent = d.split_heading || "";
+    $("#split-body").textContent = d.split_body || "";
+    $("#split-rows").innerHTML = (d.split_rows || []).map((row, i) =>
+      `<li><span class="dot">${i + 1}</span><span>${esc(row)}</span></li>`).join("");
+
+    let panel = [];
+    if (u.student) panel.push(link(u.student, L.student_panel, "primary"));
+    if (u.teacher) panel.push(link(u.teacher, L.teacher_panel, "ghost"));
+    if (!isInstitution && !isAcademy && u.market) panel.push(link(u.market, "Teacher Marketplace", "ghost"));
+    if (isProfile && u.profile) {
+      panel.push(link(u.profile, L.profile, "ghost"));
+      panel.push(link(u.profile_contact, L.contact, "ghost"));
+    }
+    if (u.dashboard) panel.push(link(u.dashboard, L.dashboard, "ghost"));
+    $("#panel-actions").innerHTML = panel.join("");
+    if (d.support) {
+      $("#support").textContent = "Support: " + d.support;
+      $("#support").hidden = false;
+    }
+
+    $("#footer").innerHTML = "&copy; 2026 " + esc(brand) + " · Powered by EduPlatform.";
+
+    $("#status").hidden = true;
+    $("#content").hidden = false;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

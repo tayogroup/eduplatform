@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-18.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-19.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -180,6 +180,16 @@ $reports = [
     'certificates-awards' => ['pqpl_any_authenticated', 'certificates-awards.html'],
     'academic-calendar' => ['pqpl_any_authenticated', 'academic-calendar.html'],
     'admin-workflow' => ['pqpl_any_authenticated', 'admin-workflow.html'],
+    // Wave 14 (final): billing/sponsor/consumer tail. Workspace-finance and
+    // sponsor/parent gates live in the handlers with the legacy messages.
+    // (public-teacher-intake + consumer-landing resolve consumer from ?consumer=.)
+    'invoices' => ['pqpl_any_authenticated', 'invoices.html'],
+    'scholarship-portal' => ['pqpl_any_authenticated', 'scholarship-portal.html'],
+    'sponsor-donor-portal' => ['pqpl_any_authenticated', 'sponsor-donor-portal.html'],
+    'parent-billing' => ['pqpl_any_authenticated', 'parent-billing.html'],
+    'sponsor-billing' => ['pqpl_any_authenticated', 'sponsor-billing.html'],
+    'bulk-import-export' => ['pqpl_any_authenticated', 'bulk-import-export.html'],
+    'consumer-landing' => ['pqpl_any_authenticated', 'consumer-landing.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

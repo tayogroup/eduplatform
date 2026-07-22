@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulk import &amp; export · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  select,textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:150px;resize:vertical;font-family:ui-monospace,"Cascadia Code",Consolas,monospace}
+  .check{display:flex;align-items:center;gap:8px;margin:10px 0}
+  .check input{width:auto}.check label{margin:0}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button:disabled{opacity:.55;cursor:wait}
+  a.btn{display:inline-block;background:var(--sky);color:var(--blue2);border:1px solid var(--line);border-radius:8px;padding:9px 14px;font-weight:800;font-size:13px;text-decoration:none;margin-top:8px}
+  a.btn:hover{border-color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--ink2);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.completed{background:#e1f2ff;color:var(--blue2)}
+  .pill.failed{background:var(--red-bg);color:var(--red)}
+  .result{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .result ul{margin:6px 0 0;padding-left:18px}
+  .result li{margin:2px 0}
+  .callout{padding:10px 12px;border-radius:8px;background:var(--amber-bg);border:1px solid var(--amber);color:var(--amber);font-size:12px;font-weight:700;margin-top:8px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Bulk import &amp; export</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of bulk_import_export.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Bulk import &amp; export tools</h1><p class="sub" id="subtitle">CSV member imports, previews, and auditable job history.</p></div>
+  <div id="status" class="status">Loading bulk tools…</div>
+
+  <div class="grid" id="tools" hidden>
+    <div class="panel">
+      <h2>Import members</h2>
+      <p class="sub">Paste CSV rows: <code>role,email-or-user-id-or-username</code>. Preview validates without writing; tick commit to add members.</p>
+      <form id="import-form">
+        <label for="csv">CSV rows</label>
+        <textarea id="csv" placeholder="role,email-or-user-id-or-username&#10;student,student@example.com&#10;teacher,42"></textarea>
+        <div class="check"><input type="checkbox" id="commit"><label for="commit">Commit rows after validation</label></div>
+        <button type="submit" id="import-btn">Process import</button>
+      </form>
+      <div id="import-result"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Export</h2>
+      <p class="sub">CSV export is a file download, so it runs on the legacy page. Pick a dataset and download there.</p>
+      <label for="dataset">Dataset</label>
+      <select id="dataset"></select>
+      <div><a class="btn" id="export-link" href="#" target="_blank" rel="noopener">Download CSV on legacy page</a></div>
+      <div class="callout">File upload import and CSV file download are not portable to the token portal — they stay on the legacy Moodle page.</div>
+    </div>
+  </div>
+
+  <div class="panel" id="jobs-panel" hidden>
+    <h2>Job history</h2>
+    <div id="jobs"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let LEGACY = "";
+
+  const getUrl = () => endpoint + "?" + new URLSearchParams({ report: "bulk-import-export", token, workspaceid: qs.get("workspaceid") || "0" });
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const legacyExport = (dataset) => {
+    if (!LEGACY) return "#";
+    const u = new URL(LEGACY, location.href);
+    u.searchParams.set("dataset", dataset);
+    u.searchParams.set("export", "csv");
+    return u.href;
+  };
+
+  function renderJobs(jobs) {
+    if (!jobs.length) { $("#jobs").innerHTML = "<div class='muted'>No bulk jobs recorded yet.</div>"; return; }
+    const rows = jobs.map((j) => `
+      <tr>
+        <td><strong>${esc(j.jobnumber)}</strong><div class="muted">${esc(j.jobtype)}</div></td>
+        <td>${esc(j.dataset)}</td>
+        <td><span class="pill ${j.status === "failed" ? "failed" : "completed"}">${esc(j.status)}</span></td>
+        <td>${j.successrows} ok / ${j.errorrows} errors</td>
+        <td>${esc(j.createdby || "")}</td>
+        <td>${esc(j.timelabel)}</td>
+      </tr>`).join("");
+    $("#jobs").innerHTML = `<table><thead><tr><th>Job</th><th>Dataset</th><th>Status</th><th>Rows</th><th>By</th><th>Created</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  function render(d) {
+    LEGACY = d.legacyurl || "";
+    $("#title").textContent = "Bulk import & export — " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+    $("#dataset").innerHTML = (d.exportdatasets || []).map((o) => `<option value="${esc(o.value)}">${esc(o.label)}</option>`).join("");
+    const setLink = () => { $("#export-link").href = legacyExport($("#dataset").value); };
+    $("#dataset").addEventListener("change", setLink);
+    setLink();
+    renderJobs(d.jobs || []);
+    $("#status").hidden = true;
+    $("#tools").hidden = false;
+    $("#jobs-panel").hidden = false;
+  }
+
+  async function submitImport(ev) {
+    ev.preventDefault();
+    const btn = $("#import-btn");
+    btn.disabled = true; btn.textContent = "Processing…";
+    $("#import-result").innerHTML = "";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "bulk-import-export", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "process_import",
+          workspaceid: Number(qs.get("workspaceid") || "0"),
+          csv_rows: $("#csv").value,
+          commit: $("#commit").checked ? 1 : 0,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      const res = d.result || {};
+      const msgs = (res.messages || []).map((m) => `<li>${esc(m)}</li>`).join("");
+      $("#import-result").innerHTML = `<div class="result"><strong>${esc(d.message)}</strong>${msgs ? `<ul>${msgs}</ul>` : ""}</div>`;
+      load();
+    } catch (e) {
+      $("#import-result").innerHTML = `<div class="status error">Could not process: ${esc(e.message)}</div>`;
+    } finally {
+      btn.disabled = false; btn.textContent = "Process import";
+    }
+  }
+
+  $("#import-form").addEventListener("submit", submitImport);
+  load();
+})();
+</script>
+</body>
+</html>

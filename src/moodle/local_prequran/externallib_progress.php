@@ -214,7 +214,7 @@ class local_prequran_progress_external extends external_api {
         return new external_function_parameters([
             'userid' => new external_value(PARAM_INT, 'Student user id', VALUE_REQUIRED),
             'course' => new external_value(PARAM_RAW_TRIMMED, 'Catalog course idnumber (e.g. ehel-eng-g03)', VALUE_REQUIRED),
-            'contract' => new external_value(PARAM_ALPHANUMEXT, 'Contract version', VALUE_DEFAULT, '1.0'),
+            'contract' => new external_value(PARAM_RAW_TRIMMED, 'Contract version (e.g. 1.0)', VALUE_DEFAULT, '1.0'),
             'events_json' => new external_value(PARAM_RAW, 'JSON array of contract events', VALUE_REQUIRED),
             'pq_env' => new external_value(PARAM_ALPHANUMEXT, 'Environment: production|staging|integration', VALUE_DEFAULT, ''),
         ]);

@@ -49,7 +49,7 @@ if ($claims === null) {
 $scope = preg_replace('/^portal:/', '', (string)($claims['course'] ?? ''));
 $report = optional_param('report', 'summary', PARAM_ALPHANUMEXT);
 // Each portal token opens exactly one report family.
-$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard', 'intake' => 'intake-requests'];
+$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard', 'intake' => 'intake-requests', 'workspace' => 'workspace-reports'];
 if (!isset($reportscopes[$report]) || $scope !== $reportscopes[$report]) {
     pqpd_fail(403, 'This token does not grant access to that report.');
 }
@@ -70,6 +70,97 @@ set_exception_handler(function (Throwable $e) {
     echo json_encode(['ok' => false, 'error' => get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine()]);
     exit;
 });
+
+// ---- report: workspace (workspace reports; read-only) ------------------------
+// Ported from local_hubredirect/workspace_reports.php via workspace_reportslib
+// (pqwrl_*). The lib's functions read page globals — this handler runs at file
+// top level, so plain assignments below satisfy that contract.
+
+if ($report === 'workspace') {
+    global $CFG, $DB;
+    require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
+    require_once($CFG->dirroot . '/local/hubredirect/workspace_reportslib.php');
+    $userid = (int)($claims['sub'] ?? 0);
+
+    $requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+    $workspaceid = pqh_current_workspace_id($userid, $requestedworkspaceid);
+    if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace($userid, $workspaceid)) {
+        pqpd_fail(403, 'Only workspace teaching and admin users can view workspace reports.');
+    }
+    $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', IGNORE_MISSING);
+    if (!$workspace) {
+        pqpd_fail(404, 'Choose a valid workspace before opening workspace reports.');
+    }
+    $canmanage = pqh_user_can_manage_workspace($userid, $workspaceid);
+
+    // The globals the lib functions expect (same names/semantics as the page).
+    $baseurlparams = [];
+    $fromdate = optional_param('fromdate', '', PARAM_TEXT);
+    $todate = optional_param('todate', '', PARAM_TEXT);
+    $teacherid = optional_param('teacherid', 0, PARAM_INT);
+    $studentid = optional_param('studentid', 0, PARAM_INT);
+    $statusfilter = optional_param('status', '', PARAM_ALPHANUMEXT);
+    $fromtime = pqwrl_parse_date_start($fromdate);
+    $totime = pqwrl_parse_date_end($todate);
+    $validstatuses = ['', 'present', 'late', 'absent', 'scheduled', 'started', 'completed', 'cancelled', 'assigned', 'in_progress', 'reviewed'];
+    if (!in_array($statusfilter, $validstatuses, true)) {
+        $statusfilter = '';
+    }
+
+    $teachers = pqwrl_user_options($workspaceid, ['owner', 'admin', 'teacher', 'assistant_teacher']);
+    $students = pqwrl_user_options($workspaceid, ['student']);
+    $studentids = pqwrl_workspace_student_ids($workspaceid);
+    $roles = pqwrl_role_counts($workspaceid);
+    $sessions = pqwrl_session_status_counts();
+    $attendance = pqwrl_attendance_counts();
+    $materialworkflow = pqwrl_material_workflow_counts();
+    $teacherdrilldown = pqwrl_teacher_drilldown($workspaceid);
+    $studentdrilldown = pqwrl_student_drilldown($workspaceid);
+    $recentmaterials = pqwrl_recent_materials();
+    $recentnotes = pqwrl_recent_notes();
+    $recordings = pqwrl_recordings();
+    $attendancechart = pqwrl_attendance_trend();
+    $materialchart = pqwrl_material_completion_trend();
+    $teacherworkloadchart = pqwrl_teacher_workload_chart($teacherdrilldown);
+    $studenttimeline = pqwrl_student_progress_timeline();
+
+    $attendancetotal = array_sum($attendance);
+    $attendancepresent = 0;
+    foreach (['present', 'late', 'attended'] as $st) {
+        $attendancepresent += (int)($attendance[$st] ?? 0);
+    }
+    $materialtotal = array_sum($materialworkflow);
+    $materialcomplete = (int)($materialworkflow['completed'] ?? 0) + (int)($materialworkflow['reviewed'] ?? 0);
+    $parentnotes = 0;
+    foreach ($studentdrilldown as $row) {
+        $parentnotes += (int)$row->parentnotecount;
+    }
+    $metrics = [
+        'students' => count($studentids),
+        'teachers' => ($roles['teacher'] ?? 0) + ($roles['assistant_teacher'] ?? 0),
+        'sessions' => array_sum($sessions),
+        'attendance_rate' => pqwrl_percent($attendancepresent, $attendancetotal),
+        'material_completion_rate' => pqwrl_percent($materialcomplete, $materialtotal),
+        'reviewed_items' => (int)($materialworkflow['reviewed'] ?? 0),
+        'parent_visible_notes' => $parentnotes,
+        'materials' => pqwrl_count('local_prequran_workspace_material', ['workspaceid' => $workspaceid, 'status' => 'active']),
+        'recordings' => count($recordings),
+    ];
+
+    echo json_encode([
+        'ok' => true, 'ready' => true,
+        'workspace' => ['id' => $workspaceid, 'name' => (string)($workspace->name ?? ('Workspace ' . $workspaceid)), 'canmanage' => (bool)$canmanage],
+        'filters' => ['fromdate' => $fromdate, 'todate' => $todate, 'teacherid' => $teacherid, 'studentid' => $studentid, 'status' => $statusfilter],
+        'options' => ['teachers' => $teachers, 'students' => $students],
+        'metrics' => $metrics,
+        'sessions' => $sessions, 'attendance' => $attendance, 'materialworkflow' => $materialworkflow,
+        'teacherdrilldown' => $teacherdrilldown, 'studentdrilldown' => $studentdrilldown,
+        'recentmaterials' => $recentmaterials, 'recentnotes' => $recentnotes, 'recordings' => $recordings,
+        'charts' => ['attendance' => $attendancechart, 'materials' => $materialchart, 'teacherworkload' => $teacherworkloadchart],
+        'timeline' => $studenttimeline,
+    ], JSON_UNESCAPED_SLASHES);
+    exit;
+}
 
 // ---- report: intake (public intake request queue; FIRST portal write) --------
 // Ported from local_hubredirect/intake_requests.php. GET = status counts + the

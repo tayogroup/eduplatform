@@ -24,8 +24,9 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-2.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-3.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
+    'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

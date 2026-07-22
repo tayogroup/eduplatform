@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace reports · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-bottom:16px}
+  .chart .bars{display:flex;align-items:flex-end;gap:3px;height:110px;margin-top:8px}
+  .chart .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+  .chart .seg{border-radius:3px 3px 0 0;min-height:2px}
+  .chart .lbl{font-size:9px;color:var(--muted);text-align:center;margin-top:3px;white-space:nowrap;overflow:hidden}
+  .legend{display:flex;gap:12px;font-size:11px;color:var(--ink2);margin-top:6px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .c1{background:var(--blue2)} .c2{background:#7fb1dd} .c3{background:var(--amber)} .c4{background:#d9c49a}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Workspace reports · read-only</small></div>
+  <div class="note" id="ws-note">Token-authenticated · parallel-run of workspace_reports.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Workspace reports</h1><p class="sub">Attendance, materials, teaching workload and learner progress for this workspace.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-from">From</label><input type="date" id="f-from"></div>
+      <div class="field"><label for="f-to">To</label><input type="date" id="f-to"></div>
+      <div class="field"><label for="f-teacher">Teacher</label><select id="f-teacher"><option value="0">All</option></select></div>
+      <div class="field"><label for="f-student">Student</label><select id="f-student"><option value="0">All</option></select></div>
+      <div class="field"><label for="f-status">Status</label>
+        <select id="f-status"><option value="">All</option><option value="present">Attendance: present</option><option value="late">Attendance: late</option><option value="absent">Attendance: absent</option><option value="scheduled">Session: scheduled</option><option value="completed">Session: completed</option><option value="cancelled">Session: cancelled</option><option value="assigned">Material: assigned</option><option value="in_progress">Material: in progress</option><option value="reviewed">Material: reviewed</option></select></div>
+      <button type="submit">Apply</button>
+      <button type="button" class="ghost" id="csv-teachers">Teachers CSV</button>
+      <button type="button" class="ghost" id="csv-students">Students CSV</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading report…</div>
+  <section id="kpis" class="kpis"></section>
+  <section class="charts" id="charts"></section>
+  <div class="panel scroll" id="teachers-panel" hidden><h2>Teacher drilldown</h2><table id="teachers"></table></div>
+  <div class="panel scroll" id="students-panel" hidden><h2>Student drilldown</h2><table id="students"></table></div>
+  <div class="panel scroll" id="recordings-panel" hidden><h2>Recordings</h2><table id="recordings"></table></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const wsid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => Number(epoch) ? new Date(epoch * 1000).toLocaleDateString(undefined, {day:"numeric", month:"short"}) : "—";
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const query = () => new URLSearchParams({
+    report: "workspace", token, workspaceid: wsid,
+    fromdate: $("#f-from").value || "", todate: $("#f-to").value || "",
+    teacherid: $("#f-teacher").value || "0", studentid: $("#f-student").value || "0",
+    status: $("#f-status").value || "",
+  });
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading report…";
+    try {
+      const r = await fetch(endpoint + "?" + query());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function fillSelect(sel, options, current) {
+    sel.innerHTML = `<option value="0">All</option>` + Object.entries(options).map(([id, name]) => `<option value="${id}" ${Number(current) === Number(id) ? "selected" : ""}>${esc(name)}</option>`).join("");
+  }
+
+  function chart(title, rows, series) {
+    const max = Math.max(1, ...rows.map((r) => series.reduce((m, [k]) => Math.max(m, Number(r[k] || 0)), 0)));
+    return `<div class="panel chart"><h2>${title}</h2><div class="bars">` +
+      rows.map((r) => `<div class="col" title="${esc(r.label || "")}">` +
+        series.map(([k, cls]) => `<span class="seg ${cls}" style="height:${(Number(r[k] || 0) / max) * 100}%"></span>`).join("") +
+        `<span class="lbl">${esc((r.label || "").slice(0, 6))}</span></div>`).join("") +
+      `</div><div class="legend">${series.map(([k, cls, label]) => `<span><i class="${cls}"></i>${label}</span>`).join("")}</div></div>`;
+  }
+
+  function render() {
+    $("#title").textContent = "Workspace reports — " + data.workspace.name;
+    $("#ws-note").textContent = `Workspace #${data.workspace.id}${data.workspace.canmanage ? " · manager" : ""}`;
+    fillSelect($("#f-teacher"), data.options.teachers, data.filters.teacherid);
+    fillSelect($("#f-student"), data.options.students, data.filters.studentid);
+
+    const M = data.metrics;
+    $("#kpis").innerHTML = [
+      [M.students, "Students"], [M.teachers, "Teachers"], [M.sessions, "Sessions"],
+      [M.attendance_rate + "%", "Attendance"], [M.material_completion_rate + "%", "Materials complete"],
+      [M.reviewed_items, "Reviewed items"], [M.parent_visible_notes, "Parent notes"],
+      [M.materials, "Active materials"], [M.recordings, "Recordings"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${l}</span></div>`).join("");
+
+    const charts = [];
+    if ((data.charts.attendance || []).length) charts.push(chart("Attendance trend", data.charts.attendance, [["present", "c1", "Present"], ["late", "c3", "Late"], ["absent", "c4", "Absent"]]));
+    if ((data.charts.materials || []).length) charts.push(chart("Material completion trend", data.charts.materials, [["completed", "c1", "Completed"], ["assigned", "c2", "Assigned"]]));
+    if ((data.charts.teacherworkload || []).length) charts.push(chart("Teacher workload", data.charts.teacherworkload, [["sessions", "c1", "Sessions"], ["materials", "c3", "Materials"]]));
+    $("#charts").innerHTML = charts.join("");
+
+    const T = data.teacherdrilldown || [];
+    $("#teachers").innerHTML = `<thead><tr><th>Teacher</th><th>Sessions</th><th>Completed</th><th>Attendance marked</th><th>Materials</th><th>Notes</th></tr></thead><tbody>` +
+      T.map((t) => `<tr><td>${esc(t.name || ("User " + t.userid))}</td><td>${t.sessioncount ?? 0}</td><td>${t.completedcount ?? 0}</td><td>${t.attendancecount ?? 0}</td><td>${t.materialcount ?? 0}</td><td>${t.notecount ?? 0}</td></tr>`).join("") + "</tbody>";
+    $("#teachers-panel").hidden = !T.length;
+
+    const S = data.studentdrilldown || [];
+    $("#students").innerHTML = `<thead><tr><th>Student</th><th>Sessions</th><th>Present</th><th>Late</th><th>Absent</th><th>Materials done</th><th>Parent notes</th></tr></thead><tbody>` +
+      S.map((s) => `<tr><td>${esc(s.name || ("User " + s.userid))}</td><td>${s.sessioncount ?? 0}</td><td>${s.presentcount ?? 0}</td><td>${s.latecount ?? 0}</td><td>${s.absentcount ?? 0}</td><td>${s.materialdonecount ?? 0}</td><td>${s.parentnotecount ?? 0}</td></tr>`).join("") + "</tbody>";
+    $("#students-panel").hidden = !S.length;
+
+    const R = data.recordings || [];
+    $("#recordings").innerHTML = `<thead><tr><th>Session</th><th>Date</th><th>Status</th><th>Parent visible</th></tr></thead><tbody>` +
+      R.map((r) => `<tr><td>${esc(r.title || ("Session " + (r.sessionid ?? "")))}</td><td>${dt(r.scheduled_start || r.timecreated)}</td><td>${esc(r.status || "")}</td><td>${Number(r.visible_to_parent) ? "yes" : "—"}</td></tr>`).join("") + "</tbody>";
+    $("#recordings-panel").hidden = !R.length;
+    $("#status").hidden = true;
+  }
+
+  function downloadCsv(filename, headers, rows) {
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const blob = new Blob([[headers.map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href);
+  }
+  $("#csv-teachers").addEventListener("click", () => data && downloadCsv("workspace-teachers.csv", ["teacher","sessions","completed","attendance","materials","notes"], (data.teacherdrilldown || []).map((t) => [t.name || t.userid, t.sessioncount ?? 0, t.completedcount ?? 0, t.attendancecount ?? 0, t.materialcount ?? 0, t.notecount ?? 0])));
+  $("#csv-students").addEventListener("click", () => data && downloadCsv("workspace-students.csv", ["student","sessions","present","late","absent","materials_done","parent_notes"], (data.studentdrilldown || []).map((s) => [s.name || s.userid, s.sessioncount ?? 0, s.presentcount ?? 0, s.latecount ?? 0, s.absentcount ?? 0, s.materialdonecount ?? 0, s.parentnotecount ?? 0])));
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  load();
+})();
+</script>
+</body>
+</html>

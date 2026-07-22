@@ -56,4 +56,7 @@ function xmldb_local_prequran_install(): void {
     xmldb_local_prequran_ensure_sqa_tracker_schema();
     xmldb_local_prequran_ensure_safenet_schema();
     xmldb_local_prequran_ensure_safenet_schedule_fields();
+
+    require_once($CFG->dirroot . '/local/prequran/db/progresslib.php');
+    xmldb_local_prequran_ensure_progress_schema();
 }

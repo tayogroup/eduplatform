@@ -92,4 +92,25 @@ $tasks = [
         'month' => '*',
         'dayofweek' => '*',
     ],
+    [
+        // Ehel Academy: catalog.json -> categories, courses (by idnumber), grade items.
+        'classname' => 'local_prequran\task\catalog_sync',
+        'blocking' => 0,
+        'minute' => '10',
+        'hour' => '3',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*',
+    ],
+    [
+        // Ehel Academy: cohorts.json -> cohorts, memberships, cohort enrolments.
+        // Runs after catalog_sync so the courses exist.
+        'classname' => 'local_prequran\task\cohort_sync',
+        'blocking' => 0,
+        'minute' => '25',
+        'hour' => '3',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*',
+    ],
 ];

@@ -573,5 +573,27 @@ if ($hassiteconfig) {
         1
     ));
 
+    $settings->add(new admin_setting_heading(
+        'local_prequran/ehel_academy_heading',
+        'Ehel Academy catalog & enrolment',
+        'Static sources the catalog-sync and cohort-sync scheduled tasks read to create courses, grade items, and pilot enrolments.'
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/catalog_source_url',
+        'Ehel catalog URL',
+        'catalog.json that the catalog-sync task reads to create categories, courses (by idnumber) and grade items. Leave blank to disable the task.',
+        'https://ehelacademy.b-cdn.net/Ehel%20Primary/catalog.json',
+        PARAM_URL
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/cohorts_source_url',
+        'Ehel cohorts URL',
+        'cohorts.json that the cohort-sync task reads to enrol pilot learners into the synced courses. Leave blank to disable the task.',
+        'https://ehelacademy.b-cdn.net/Ehel%20Primary/cohorts.json',
+        PARAM_URL
+    ));
+
     $ADMIN->add('localplugins', $settings);
 }

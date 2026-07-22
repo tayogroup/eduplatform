@@ -586,5 +586,13 @@ function xmldb_local_prequran_upgrade($oldversion): bool {
         upgrade_plugin_savepoint(true, 202607210002, 'local', 'prequran');
     }
 
+    if ($oldversion < 202607220001) {
+        // Progress web service (P1.4): one reduced state row per
+        // (environment, user, course, unit) — see db/progresslib.php.
+        require_once($CFG->dirroot . '/local/prequran/db/progresslib.php');
+        xmldb_local_prequran_ensure_progress_schema();
+        upgrade_plugin_savepoint(true, 202607220001, 'local', 'prequran');
+    }
+
     return true;
 }

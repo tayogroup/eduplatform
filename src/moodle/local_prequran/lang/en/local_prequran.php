@@ -64,3 +64,5 @@ $string['task_transcript_maintenance'] = 'Transcript stale document maintenance'
 $string['task_finance_operations_refresh'] = 'Finance operations reporting refresh';
 $string['task_finance_api_hardening'] = 'Finance API hardening and scale controls';
 $string['task_support_sla_monitor'] = 'Support SLA warning and breach monitor';
+$string['task_catalog_sync'] = 'Ehel Academy catalog sync';
+$string['task_cohort_sync'] = 'Ehel Academy cohort enrolment sync';

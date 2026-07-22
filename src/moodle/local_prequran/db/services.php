@@ -1068,6 +1068,23 @@ $functions = [
         'ajax'        => true,
     ],
 
+    // Progress contract (P1.4) — docs/progress-event-contract.md.
+    'local_prequran_progress_ingest' => [
+        'classname'   => 'local_prequran_progress_external',
+        'methodname'  => 'progress_ingest',
+        'classpath'   => 'local/prequran/externallib_progress.php',
+        'description' => 'Progress contract: ingest a batch of learner progress events.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+    'local_prequran_progress_get' => [
+        'classname'   => 'local_prequran_progress_external',
+        'methodname'  => 'progress_get',
+        'classpath'   => 'local/prequran/externallib_progress.php',
+        'description' => 'Progress contract: hydrate a learner\'s saved course state.',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
 
 ];
 

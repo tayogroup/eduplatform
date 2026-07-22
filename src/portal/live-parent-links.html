@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student parent links · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1160px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  .metric{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  .metric strong{display:block;font-size:24px;font-weight:900;color:var(--blue2)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:800}
+  .filters{display:grid;grid-template-columns:2fr 1fr auto;gap:10px;align-items:end}
+  .field{display:grid;gap:6px}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .input,.select,textarea{width:100%;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:64px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 16px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn.light{background:var(--sky);color:var(--blue)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .linkform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:12px}
+  .linkform .wide{grid-column:1/-1}
+  .check{display:flex;gap:8px;align-items:flex-start;font-weight:700;color:var(--ink);font-size:13px}
+  .check input{margin-top:3px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--sky);font-size:12px;color:var(--ink2)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .tablewrap{overflow-x:auto}
+  @media(max-width:900px){.filters{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}.linkform{grid-template-columns:1fr}.linkform .wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Student parent links</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_parent_links.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Student parent links</h1><p class="sub" id="subtitle">Guardian account links, profile-only parent contacts, and live-session consent status.</p></div>
+  <div id="status" class="status">Loading parent links…</div>
+
+  <div class="panel" id="link-panel" hidden>
+    <h2>Link existing student to existing parent</h2>
+    <p class="sub" style="margin-bottom:10px">Enter Moodle core user IDs. This creates or refreshes the guardian communication link and consent records used by dashboards, parent trust, notifications, and recordings.</p>
+    <div id="link-status" class="status" hidden></div>
+    <form id="linkform">
+      <div class="linkform">
+        <div class="field"><label for="link_studentid">Student Moodle user ID</label><input class="input" id="link_studentid" type="number" min="1" placeholder="Example: 117" required></div>
+        <div class="field"><label for="link_parentid">Parent / guardian Moodle user ID</label><input class="input" id="link_parentid" type="number" min="1" placeholder="Example: 218" required></div>
+        <label class="check"><input type="checkbox" id="link_live_consent"> <span>Mark live-session consent as granted</span></label>
+        <label class="check"><input type="checkbox" id="link_recording_consent"> <span>Mark video recording consent as granted</span></label>
+        <label class="check"><input type="checkbox" id="link_update_profile"> <span>Update student profile parent contact from parent account</span></label>
+        <div class="field wide"><label for="link_notes">Notes / source</label><textarea id="link_notes" placeholder="Reason, verification source, or approval notes"></textarea></div>
+      </div>
+      <button class="btn" type="submit">Create / refresh link</button>
+    </form>
+  </div>
+
+  <div class="panel" id="filter-panel" hidden>
+    <form id="filterform">
+      <div class="filters">
+        <div class="field"><label for="q">Search</label><input class="input" id="q" placeholder="Student, parent, email, Moodle ID"></div>
+        <div class="field"><label for="source">Source</label><select class="select" id="source"><option value="all">All links</option><option value="linked">Linked parent accounts</option><option value="profile">Profile contact only</option></select></div>
+        <div class="field"><label>&nbsp;</label><button class="btn" type="submit">Apply filters</button></div>
+      </div>
+    </form>
+  </div>
+
+  <div class="metrics" id="metrics" hidden>
+    <div class="metric"><strong id="m-total">0</strong><span>visible rows</span></div>
+    <div class="metric"><strong id="m-linked">0</strong><span>linked parent accounts</span></div>
+    <div class="metric"><strong id="m-profile">0</strong><span>profile contacts only</span></div>
+  </div>
+
+  <div class="panel" id="rows-panel" hidden>
+    <h2>Student parent links</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Student</th><th>Parent / guardian</th><th>Source</th><th>Messaging</th><th>Live consent</th><th>Recording consent</th><th>Updated</th><th>Notes</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const filters = () => ({ q: $("#q").value.trim(), source: $("#source").value });
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-parent-links", token, ...filters() });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const cell = (row) => {
+    const parentCell = row.parentid > 0
+      ? `${esc(row.parent)}<br><span class="code">#${row.parentid} ${esc(row.parentemail)}</span>`
+      : `${esc(row.profileparent)}<br><span class="code">${esc(row.profilecontact)}</span>`;
+    const messaging = esc(row.messaging)
+      + (row.free_text !== "" ? `<br><span class="code">free text: ${esc(row.free_text)}</span>` : "")
+      + (row.parent_visible !== "" ? `<br><span class="code">parent visible: ${esc(row.parent_visible)}</span>` : "");
+    return `<tr>
+      <td>${esc(row.student)}<br><span class="code">#${row.studentid} ${esc(row.studentemail)}</span></td>
+      <td>${parentCell}</td>
+      <td><span class="pill ${row.parentid > 0 ? "" : "warn"}">${esc(row.source)}</span></td>
+      <td>${messaging}</td>
+      <td>${esc(row.live_consent)}</td>
+      <td>${esc(row.recording_consent)}</td>
+      <td>${esc(when(row.updated))}</td>
+      <td><span class="code">${esc(row.notes)}</span></td>
+    </tr>`;
+  };
+
+  function render(d) {
+    const rows = d.rows || [];
+    $("#m-total").textContent = d.total || 0;
+    $("#m-linked").textContent = d.linkedcount || 0;
+    $("#m-profile").textContent = d.profilecount || 0;
+    $("#rows").innerHTML = rows.length ? rows.map(cell).join("") : `<tr><td colspan="8" class="muted">No student parent links match these filters.</td></tr>`;
+    $("#link-panel").hidden = false;
+    $("#filter-panel").hidden = false;
+    $("#metrics").hidden = false;
+    $("#rows-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  $("#filterform").addEventListener("submit", (ev) => { ev.preventDefault(); load(); });
+
+  $("#linkform").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const btn = ev.currentTarget.querySelector("button");
+    const ls = $("#link-status");
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-parent-links", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "link",
+          link_studentid: Number($("#link_studentid").value),
+          link_parentid: Number($("#link_parentid").value),
+          link_notes: $("#link_notes").value,
+          link_live_consent: $("#link_live_consent").checked ? 1 : 0,
+          link_recording_consent: $("#link_recording_consent").checked ? 1 : 0,
+          link_update_profile: $("#link_update_profile").checked ? 1 : 0,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      ls.className = "status saved"; ls.hidden = false; ls.textContent = d.message || "Link saved.";
+      $("#link_notes").value = "";
+      load();
+    } catch (e) {
+      ls.className = "status error"; ls.hidden = false; ls.textContent = "Could not save: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Create / refresh link";
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher directory · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff;color:var(--ink)}
+  .field.search{flex:1 1 240px}
+  .field.search input{width:100%}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  .pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.flag{background:var(--amber-bg);color:var(--amber);margin-left:4px}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;color:var(--ink2)}
+  a.btn{display:inline-block;text-decoration:none;background:var(--sky);color:var(--blue);border-radius:8px;padding:5px 10px;font-weight:800;font-size:12px}
+  a.btn:hover{background:#d7e7f6}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher directory · read-only</small></div>
+  <div class="note" id="dir-note">Token-authenticated · parallel-run of live_teacher_directory.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Teacher directory &amp; profile finder</h1><p class="sub">Find live-class teachers, spot attention items, and open a performance profile without looking up IDs manually.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field search"><label for="f-q">Search</label><input type="search" id="f-q" placeholder="Name, email, or user ID"></div>
+      <div class="field"><label for="f-filter">Filter</label>
+        <select id="f-filter">
+          <option value="all">All teachers</option>
+          <option value="needs_attention">Needs attention</option>
+          <option value="open_plan">Has open plan</option>
+          <option value="low_qa">Low QA score</option>
+          <option value="no_recent_qa">No recent QA</option>
+          <option value="open_followup">Open follow-up</option>
+          <option value="leadership">Leadership case</option>
+          <option value="coaching">Open coaching</option>
+          <option value="inactive_30">No class in 30 days</option>
+        </select></div>
+      <div class="field"><label for="f-from">From</label><input type="date" id="f-from"></div>
+      <div class="field"><label for="f-to">To</label><input type="date" id="f-to"></div>
+      <button type="submit">Find teachers</button>
+      <button type="button" class="ghost" id="csv-directory">Export CSV</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading directory…</div>
+  <section id="kpis" class="kpis" hidden></section>
+  <div class="panel scroll" id="table-panel" hidden><h2>Teachers</h2><table id="directory"></table></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const wsid = qs.get("workspaceid") || "0";
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const query = () => new URLSearchParams({
+    report: "live-teacher-directory", token, workspaceid: wsid,
+    q: $("#f-q").value || "",
+    filter: $("#f-filter").value || "all",
+    from: $("#f-from").value || "",
+    to: $("#f-to").value || "",
+  });
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading directory…";
+    try {
+      const r = await fetch(endpoint + "?" + query());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  // portal_launch mints a fresh token from the live Moodle session and forwards
+  // to the teacher-profile portal report (parallel-run of live_teacher_profile.php).
+  const profileHref = (teacherid) => {
+    const p = new URLSearchParams({ report: "live-teacher-profile", teacherid: String(teacherid), from: data.from || "", to: data.to || "" });
+    if (wsid && wsid !== "0") p.set("workspaceid", wsid);
+    return moodleBase + "/local/prequran/portal_launch.php?" + p.toString();
+  };
+
+  const qaPill = (r) => {
+    const score = Number(r.avg_qa_score || 0);
+    const cls = score >= 85 ? "ok" : r.low_qa ? "bad" : "warn";
+    return `<span class="pill ${cls}">${score}%</span>`;
+  };
+
+  function render() {
+    if (!data.ready) {
+      $("#status").className = "status error";
+      $("#status").textContent = "Teacher directory requires live-session and participant tables.";
+      $("#kpis").hidden = true; $("#table-panel").hidden = true;
+      return;
+    }
+    const t = data.teachers || [];
+    const m = data.metrics || {};
+    const names = data.names || {};
+    $("#dir-note").textContent = `Workspace #${esc(wsid)} · ${esc(data.from || "")} → ${esc(data.to || "")}`;
+
+    $("#kpis").hidden = false;
+    $("#kpis").innerHTML = [
+      [m.teachers || 0, "Teachers shown"],
+      [m.attention || 0, "Need attention"],
+      [m.lowqa || 0, "Low QA"],
+      [m.openplans || 0, "Open plans"],
+      [m.openfollowups || 0, "Open follow-ups"],
+      [m.leadership || 0, "Leadership cases"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${esc(l)}</span></div>`).join("");
+
+    const accountFlag = (r) => (Number(r.deleted) ? '<span class="pill flag">deleted account</span>' : Number(r.suspended) ? '<span class="pill flag">suspended</span>' : "");
+
+    $("#directory").innerHTML =
+      `<thead><tr><th>Teacher</th><th>Sessions</th><th>QA</th><th>Attention</th><th>Open work</th><th>Last activity</th><th>Actions</th></tr></thead><tbody>` +
+      (t.length ? t.map((r) => {
+        const name = r.teacher_name || names[r.teacherid] || ("Teacher " + r.teacherid);
+        return `<tr>
+        <td><strong>${esc(name)}</strong>${accountFlag(r)}<br><span class="code">#${esc(r.teacherid)}${String(r.email || "").trim() ? " · " + esc(r.email) : ""}</span></td>
+        <td>${Number(r.session_count || 0)}<br><span class="code">${Number(r.distinct_students || 0)} students, ${Number(r.upcoming_count || 0)} upcoming</span></td>
+        <td>${qaPill(r)}<br><span class="code">${Number(r.reviewed_count || 0)} reviewed, ${Number(r.review_coverage || 0)}% coverage, ${Number(r.pass_rate || 0)}% pass</span></td>
+        <td><span class="pill ${r.needs_attention ? "bad" : "ok"}">${r.needs_attention ? "needs attention" : "stable"}</span><br><span class="code">${Number(r.qa_issue_count || 0)} QA issues, ${Number(r.serious_issue_count || 0)} serious</span></td>
+        <td><span class="code">${Number(r.coaching_open_count || 0)} coaching${Number(r.coaching_overdue_count || 0) > 0 ? ", " + Number(r.coaching_overdue_count) + " overdue" : ""}</span><br>
+            <span class="code">${Number(r.plan_open_count || 0)} plans${Number(r.plan_overdue_count || 0) > 0 ? ", " + Number(r.plan_overdue_count) + " overdue" : ""}</span><br>
+            <span class="code">${Number(r.leadership_open_count || 0)} leadership, ${Number(r.followup_open_count || 0)} follow-ups</span></td>
+        <td>${Number(r.last_session) ? esc(when(Number(r.last_session))) : "No sessions"}<br><span class="code">Last QA: ${Number(r.last_qa_time) ? esc(when(Number(r.last_qa_time))) : "none"}</span></td>
+        <td><a class="btn" href="${esc(profileHref(r.teacherid))}">Profile</a></td>
+      </tr>`;
+      }).join("") : `<tr><td colspan="7"><span class="code">No teachers match these filters.</span></td></tr>`) +
+      "</tbody>";
+    $("#table-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  // Client-side rebuild of the page's GET-triggered CSV export (verbatim columns).
+  function downloadCsv(filename, headers, rows) {
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const blob = new Blob([[headers.map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href);
+  }
+  $("#csv-directory").addEventListener("click", () => data && data.teachers && downloadCsv(
+    "quraan-live-teacher-directory.csv",
+    ["teacherid","teacher","email","sessions","students","qa_reviewed","qa_coverage","avg_qa_score","qa_pass_rate","qa_issues","coaching_open","plans_open","leadership_open","followups_open","last_session","last_qa","needs_attention"],
+    (data.teachers || []).map((r) => [
+      r.teacherid, r.teacher_name, r.email, Number(r.session_count || 0), Number(r.distinct_students || 0),
+      Number(r.reviewed_count || 0), Number(r.review_coverage || 0) + "%", Number(r.avg_qa_score || 0) + "%", Number(r.pass_rate || 0) + "%",
+      Number(r.qa_issue_count || 0), Number(r.coaching_open_count || 0), Number(r.plan_open_count || 0), Number(r.leadership_open_count || 0), Number(r.followup_open_count || 0),
+      Number(r.last_session) ? when(Number(r.last_session)) : "", Number(r.last_qa_time) ? when(Number(r.last_qa_time)) : "", r.needs_attention ? "yes" : "no",
+    ])
+  ));
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  load();
+})();
+</script>
+</body>
+</html>

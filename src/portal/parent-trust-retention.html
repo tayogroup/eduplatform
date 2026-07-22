@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parent trust retention · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 12px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .note{padding:12px 14px;border-radius:8px;background:var(--amber-bg);border:1px solid var(--amber);color:#6a4a13;font-size:13px;font-weight:600;margin-bottom:14px}
+  .note.ok{background:var(--sky);border-color:var(--blue2);color:var(--blue)}
+  .note.bad{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-weight:900;color:var(--ink2);background:var(--bg)}
+  .pill{display:inline-flex;align-items:center;min-height:24px;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word;color:var(--ink2)}
+  .metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  .metric{padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+  .metric b{display:block;font-size:24px;color:var(--blue2)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  select,input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:70px;resize:vertical}
+  .row{display:flex;gap:9px;flex-wrap:wrap;align-items:end;margin-top:10px}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  button.light{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+  button.danger{background:var(--red);color:#fff}
+  button:disabled{opacity:.55;cursor:wait}
+  .chk{display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-size:13px;font-weight:600;color:var(--ink2)}
+  .chk input{width:auto;margin-top:3px}
+  .over{overflow-x:auto}
+  @media(max-width:900px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Parent trust retention</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_parent_trust_retention.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Parent Trust Retention Readiness</h1>
+    <p class="sub">Dry-run, approval, guarded purge, and recovery evidence for parent trust support audit retention.</p>
+  </div>
+  <div id="status" class="status">Loading retention readiness…</div>
+  <div id="notes"></div>
+  <div id="body" hidden></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  let retentiondays = Number(qs.get("retentiondays") || "0") || 0;
+  let names = {};
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams(retentiondays ? { report: "parent-trust-retention", token, retentiondays } : { report: "parent-trust-retention", token });
+  const nm = (id, fallback) => names[id] || fallback;
+  const spaced = (s) => esc(String(s || "").replace(/_/g, " "));
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function policyTable(d) {
+    const p = d.policy, lp = d.latestpolicy;
+    const cmp = p.retention_days !== p.configured_retention_days;
+    let last;
+    if (lp) {
+      const cls = lp.action === "parent_trust_purge_review_approved" ? "" : (lp.action === "parent_trust_purge_review_rejected" ? "bad" : "warn");
+      last = `<span class="pill ${cls}">${spaced(lp.action)}</span><br><span class="code">${esc(lp.time_label)} by ${esc(nm(lp.actorid, "Admin " + lp.actorid))}</span>`;
+    } else {
+      last = `<span class="pill warn">no workflow decision yet</span>`;
+    }
+    return `<section class="panel"><h2>Configured Policy &amp; Approval Readiness</h2><div class="over"><table>
+      <tr><th>Policy Item</th><th>Status</th></tr>
+      <tr><td>Configured retention days</td><td><span class="pill">${p.configured_retention_days} days</span></td></tr>
+      <tr><td>Current dry-run policy</td><td><span class="pill ${cmp ? "warn" : ""}">${p.retention_days} days${cmp ? " comparison only" : ""}</span></td></tr>
+      <tr><td>Export required before purge</td><td><span class="pill ${p.requires_export ? "warn" : ""}">${p.requires_export ? "required" : "not required"}</span></td></tr>
+      <tr><td>Approval required before purge</td><td><span class="pill ${p.approval_required ? "warn" : ""}">${p.approval_required ? "required" : "not required"}</span></td></tr>
+      <tr><td>Last workflow decision</td><td>${last}</td></tr>
+    </table></div>
+    <form id="review-form">
+      <label for="review_note">Review note</label>
+      <textarea id="review_note" name="review_note" placeholder="Reason, export reference, or approval/rejection note"></textarea>
+      <div class="row">
+        <button type="submit" class="light" data-do="request_purge_review">Request purge review</button>
+        <button type="submit" data-do="approve_purge_review">Approve readiness</button>
+        <button type="submit" class="light" data-do="reject_purge_review">Reject with note</button>
+      </div>
+    </form></section>`;
+  }
+
+  function safeguardsTable(d) {
+    const p = d.policy, lp = d.latestpolicy, m = d.metrics;
+    const approved = lp && lp.action === "parent_trust_purge_review_approved";
+    const approvalBad = p.approval_required && !approved;
+    return `<section class="panel"><h2>Purge Execution Safeguards</h2>
+      <div class="note">This is the only section that can delete records. It deletes a maximum of 500 records per run and only the parent trust support audit actions listed below. Broader live-session audit rows are never targeted here.</div>
+      <div class="over"><table>
+        <tr><th>Safeguard</th><th>Status</th></tr>
+        <tr><td>Eligible records for selected policy</td><td><span class="pill ${m.eligible > 0 ? "warn" : ""}">${m.eligible}</span></td></tr>
+        <tr><td>Export confirmation</td><td><span class="pill ${p.requires_export ? "warn" : ""}">${p.requires_export ? "required before purge" : "not required by setting"}</span></td></tr>
+        <tr><td>Approval status</td><td><span class="pill ${approvalBad ? "bad" : ""}">${!p.approval_required ? "approval not required" : (approved ? "approved" : "not approved")}</span></td></tr>
+        <tr><td>Target actions</td><td class="code">${esc((d.purgeactions || []).join(", "))}</td></tr>
+        <tr><td>Run limit</td><td><span class="pill">500 records maximum</span></td></tr>
+      </table></div>
+      <form id="purge-form">
+        <label for="purge_note">Purge run note</label>
+        <textarea id="purge_note" name="review_note" placeholder="Export reference, approval note, or operational reason"></textarea>
+        <label class="chk"><input type="checkbox" id="export_confirmed"> I confirm the compliance review pack has been exported or export is not required by policy.</label>
+        <label for="confirm_phrase">Type confirmation phrase</label>
+        <input type="text" id="confirm_phrase" placeholder="${esc(d.confirm_phrase)}">
+        <div class="row"><button type="submit" class="danger">Execute guarded purge</button></div>
+      </form></section>`;
+  }
+
+  function historyTable(d) {
+    const rows = (d.purgehistory || []).map((row) => {
+      const det = row.details || {};
+      const ev = (det.evidence_snapshot && typeof det.evidence_snapshot === "object") ? det.evidence_snapshot : {};
+      let sampleids = ev.sample_ids || det.sample_ids || [];
+      sampleids = Array.isArray(sampleids) ? sampleids.map((n) => Number(n)) : [];
+      const oldest = Number(ev.oldest_timecreated || 0);
+      const newest = Number(ev.newest_timecreated || 0);
+      const candidate = Number(det.candidate_count || det.eligible_count || 0);
+      const deleted = Number(det.deleted_count || 0);
+      const snapshot = Number(ev.record_id_count || candidate);
+      let block = det.block_reasons || [];
+      block = Array.isArray(block) ? block : [];
+      const evcls = row.action === "parent_trust_purge_blocked" ? "bad" : (row.action === "parent_trust_purge_started" ? "warn" : "");
+      const when = (t) => t > 0 ? esc(new Date(t * 1000).toLocaleString()) : "n/a";
+      return `<tr>
+        <td>${esc(row.time_label)}<br><span class="code">#${row.id}</span></td>
+        <td><span class="pill ${evcls}">${spaced(row.action)}</span>${block.length ? '<br><span class="code">' + esc(block.join(", ")) + "</span>" : ""}</td>
+        <td>${esc(nm(row.actorid, "Admin " + row.actorid))}<br><span class="code">#${row.actorid}</span></td>
+        <td><span class="pill">${Number(det.retention_days || 0)} days</span><br><span class="code">export: ${det.export_confirmed ? "yes" : "no"}, approval: ${det.approval_ok ? "yes" : "no"}</span></td>
+        <td><span class="code">candidate: ${candidate}</span><br><span class="code">deleted: ${deleted}</span><br><span class="code">snapshot: ${snapshot}</span></td>
+        <td><span class="code">sample ids: ${sampleids.length ? esc(sampleids.join(", ")) : "none"}</span><br><span class="code">staff/students: ${Number(ev.staff_count || 0)}/${Number(ev.student_count || 0)}</span><br><span class="code">oldest/newest: ${when(oldest)} - ${when(newest)}</span></td>
+      </tr>`;
+    }).join("");
+    return `<section class="panel"><h2>Purge Recovery Log &amp; Evidence Snapshot</h2>
+      <div class="note">Every purge run writes a recovery log before and after deletion. The evidence snapshot keeps the deleted audit IDs, action/reason counts, affected staff/student counts, and a small row sample so an administrator can prove what was removed without restoring private support-audit rows.</div>
+      <div class="over"><table>
+        <tr><th>Time</th><th>Event</th><th>Admin</th><th>Policy</th><th>Counts</th><th>Evidence</th></tr>
+        ${rows || '<tr><td colspan="6">No purge attempts have been logged yet.</td></tr>'}
+      </table></div></section>`;
+  }
+
+  function metricsBlock(d) {
+    const m = d.metrics;
+    return `<section class="metrics" aria-label="Retention readiness metrics">
+      <div class="metric"><b>${m.total}</b><span>tracked events</span></div>
+      <div class="metric"><b>${m.eligible}</b><span>dry-run eligible</span></div>
+      <div class="metric"><b>${m.staff}</b><span>staff involved</span></div>
+      <div class="metric"><b>${m.students}</b><span>students involved</span></div>
+      <div class="metric"><b>${esc(m.oldest_label)}</b><span>oldest event</span></div>
+    </section>
+    <div class="note">Dry-run only. Export the review pack before any future purge. Recommended starting retention for child/privacy support audit records: 365 days unless legal or internal policy requires longer.</div>`;
+  }
+
+  function summariesGrid(d) {
+    const buckets = d.buckets || {};
+    const bucketRows = Object.keys(buckets).map((label) => {
+      const eligible = label === "180+ days" && d.policy.retention_days <= 180;
+      return `<tr><td>${esc(label)}</td><td>${buckets[label]}</td><td><span class="pill ${eligible ? "warn" : ""}">${eligible ? "review before purge" : "retain"}</span></td></tr>`;
+    }).join("");
+    const ac = d.actioncounts || {};
+    const actionRows = Object.keys(ac).map((a) => `<tr><td>${spaced(a)}</td><td>${ac[a]}</td></tr>`).join("") || '<tr><td colspan="2">No parent trust support audit events found.</td></tr>';
+    const rc = d.reasoncounts || {};
+    const reasonRows = Object.keys(rc).map((rr) => `<tr><td>${esc(rr)}</td><td>${rc[rr]}</td></tr>`).join("") || '<tr><td colspan="2">No reason metadata found yet.</td></tr>';
+    return `<section class="grid">
+      <article class="panel"><h2>Age Buckets</h2><div class="over"><table><tr><th>Age</th><th>Events</th><th>Status</th></tr>${bucketRows}</table></div></article>
+      <article class="panel"><h2>Event Types</h2><div class="over"><table><tr><th>Action</th><th>Events</th></tr>${actionRows}</table></div></article>
+    </section>
+    <section class="panel"><h2>Reason Summary</h2><div class="over"><table><tr><th>Reason</th><th>Events</th></tr>${reasonRows}</table></div></section>`;
+  }
+
+  function candidatesTable(d) {
+    const rows = (d.eligible || []).map((row) => `<tr>
+      <td>${esc(row.time_label)}</td>
+      <td><span class="pill warn">${spaced(row.action)}</span><br><span class="code">#${row.id}</span></td>
+      <td>${esc(nm(row.actorid, "Staff " + row.actorid))}<br><span class="code">#${row.actorid}</span></td>
+      <td>${esc(nm(row.targetid, "Student " + row.targetid))}<br><span class="code">#${row.targetid}</span></td>
+      <td class="code">${esc(row.reason)}</td>
+    </tr>`).join("");
+    return `<section class="panel"><h2>Dry-Run Purge Candidates</h2><div class="over"><table>
+      <tr><th>Time</th><th>Action</th><th>Staff</th><th>Student</th><th>Details</th></tr>
+      ${rows || '<tr><td colspan="5">No events are older than the selected retention policy.</td></tr>'}
+    </table></div></section>`;
+  }
+
+  function render(d) {
+    names = d.names || {};
+    retentiondays = d.policy.retention_days;
+    $("#status").hidden = true;
+    if (!d.ready) {
+      $("#body").hidden = false;
+      $("#body").innerHTML = '<div class="panel"><div class="note bad">The live audit table is not installed yet.</div></div>';
+      return;
+    }
+    const dry = `<section class="panel"><form id="dry-form" class="row">
+      <div style="flex:1;min-width:200px"><label for="retentiondays">Retention policy</label>
+        <select id="retentiondays" name="retentiondays">
+          <option value="180"${d.policy.retention_days === 180 ? " selected" : ""}>180 days</option>
+          <option value="365"${d.policy.retention_days === 365 ? " selected" : ""}>365 days recommended</option>
+          <option value="730"${d.policy.retention_days === 730 ? " selected" : ""}>730 days</option>
+        </select></div>
+      <button type="submit">Run dry-run</button>
+    </form></section>`;
+    $("#body").hidden = false;
+    $("#body").innerHTML = dry + policyTable(d) + safeguardsTable(d) + historyTable(d) + metricsBlock(d) + summariesGrid(d) + candidatesTable(d);
+    wire();
+  }
+
+  function note(kind, text) {
+    $("#notes").innerHTML = `<div class="note ${kind}">${esc(text)}</div>`;
+  }
+
+  function wire() {
+    $("#dry-form").addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      retentiondays = Number($("#retentiondays").value) || 0;
+      const u = new URL(location.href); u.searchParams.set("retentiondays", retentiondays);
+      history.replaceState(null, "", u.href);
+      $("#notes").innerHTML = "";
+      $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Running dry-run…";
+      $("#body").hidden = true;
+      load();
+    });
+    $("#review-form").addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const btn = ev.submitter; const doAction = btn && btn.dataset.do;
+      if (!doAction) return;
+      await postWrite(btn, { do: doAction, retentiondays, review_note: $("#review_note").value });
+    });
+    $("#purge-form").addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      await postWrite(ev.submitter, {
+        do: "execute_parent_trust_purge",
+        retentiondays,
+        review_note: $("#purge_note").value,
+        export_confirmed: $("#export_confirmed").checked ? 1 : 0,
+        confirm_phrase: $("#confirm_phrase").value,
+      });
+    });
+  }
+
+  async function postWrite(btn, payload) {
+    if (btn) { btn.disabled = true; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "parent-trust-retention", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      if (d.workflow) {
+        note("ok", "Retention approval workflow updated: " + d.workflow + ".");
+      } else if (d.purge === "blocked") {
+        note("bad", "Purge was blocked. Check export confirmation, approval status, confirmation phrase, and eligible record count.");
+      } else if (d.purge === "completed") {
+        note("ok", "Purge completed. Deleted " + Number(d.deleted || 0) + " parent trust support audit records.");
+      }
+      $("#body").hidden = true;
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      if (btn) { btn.disabled = false; }
+      note("bad", "Could not save: " + e.message);
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

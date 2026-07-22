@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Referrers · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1160px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .head-row{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+  .actions{display:flex;flex-wrap:wrap;gap:9px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:800;cursor:pointer}
+  .btn.light{background:var(--sky);color:var(--blue)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  .metric{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  .metric b{display:block;font-size:24px;font-weight:900;color:var(--blue)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .field{display:grid;gap:6px;margin-bottom:10px}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  input,select,textarea{width:100%;min-height:36px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:64px;resize:vertical}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--bg);font-size:12px;color:var(--ink2)}
+  .pill{display:inline-flex;align-items:center;min-height:24px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:800;background:var(--sky);color:var(--blue)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-weight:800}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:700;background:var(--card)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .row-form .field{margin-bottom:7px}
+  @media(max-width:900px){.metrics,.grid{grid-template-columns:1fr}.table-wrap{overflow:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Referrers</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of referrers.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <div class="head-row">
+      <div>
+        <h1 id="title">Referrers</h1>
+        <p class="sub" id="subtitle">Create referrers, track referred students, approve commission, and export referral records.</p>
+      </div>
+      <div class="actions">
+        <button class="btn light" id="export-btn" type="button" hidden>Export CSV</button>
+      </div>
+    </div>
+  </div>
+  <div id="status" class="status">Loading referrals…</div>
+  <div class="metrics" id="metrics" hidden></div>
+  <div class="panel" id="create-panel" hidden>
+    <h2>Create referrer</h2>
+    <form id="create-form" class="row-form">
+      <div class="grid">
+        <div class="field"><label>Name</label><input name="name" required></div>
+        <div class="field"><label>Contact email or phone</label><input name="contact" required></div>
+        <div class="field"><label>Phone / WhatsApp</label><input name="phone"></div>
+        <div class="field"><label>City</label><input name="city"></div>
+        <div class="field"><label>Country</label><input name="country"></div>
+      </div>
+      <div class="field"><label>Notes</label><textarea name="notes"></textarea></div>
+      <button class="btn" type="submit">Create referrer and code</button>
+    </form>
+  </div>
+  <div class="panel">
+    <form id="search-form" style="margin-bottom:14px">
+      <div class="grid">
+        <div class="field"><label>Search</label><input name="q" id="q" placeholder="Referrer, code, student, email"></div>
+        <div class="actions" style="align-items:end"><button class="btn" type="submit">Apply filters</button><button class="btn light" type="button" id="reset-btn">Reset</button></div>
+      </div>
+    </form>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Referrer</th><th>Student</th><th>Dates</th><th>Status</th><th>Commission</th><th>Payment</th><th id="update-head" hidden>Update</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { day:"numeric", month:"short", year:"numeric" }) : "";
+  const cap = (s) => String(s || "").replace(/^./, (c) => c.toUpperCase());
+
+  let STATE = { canmanage: false, rows: [], statusoptions: [], paymentoptions: [] };
+
+  const setStatus = (cls, msg) => { const s = $("#status"); s.className = "status" + (cls ? " " + cls : ""); s.hidden = false; s.textContent = msg; };
+
+  if (!endpoint || !token) { setStatus("error", "Missing endpoint/token — open via the Moodle portal launch link."); return; }
+
+  const url = (extra) => endpoint + "?" + new URLSearchParams(Object.assign({ report: "referrers", token }, extra || {}));
+
+  async function post(payload) {
+    const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "referrers", token }), {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify(payload),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    return d;
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(url({ q: $("#q").value || "" }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  const commission = (row) => {
+    const amt = [row.commission_amount, row.commission_currency].filter(Boolean).join(" ").trim();
+    return `${esc(amt)}${row.commission_rate ? "<br>" + esc(row.commission_rate) : ""}`;
+  };
+
+  const updateForm = (row) => {
+    const statusOpts = STATE.statusoptions.map((s) => `<option value="${esc(s)}"${row.referral_status === s ? " selected" : ""}>${esc(cap(s))}</option>`).join("");
+    const payOpts = STATE.paymentoptions.map((s) => `<option value="${esc(s)}"${row.payment_status === s ? " selected" : ""}>${esc(cap(s))}</option>`).join("");
+    return `<form class="row-form update" data-id="${row.id}">
+      <div class="field"><label>Status</label><select name="referral_status">${statusOpts}</select></div>
+      <div class="field"><label>Expires</label><input type="date" name="dateexpires" value="${esc(row.dateexpires_value || "")}"></div>
+      <div class="field"><label>Amount</label><input name="commission_amount" value="${esc(row.commission_amount || "")}"></div>
+      <div class="field"><label>Rate</label><input name="commission_rate" value="${esc(row.commission_rate || "")}"></div>
+      <div class="field"><label>Currency</label><input name="commission_currency" value="${esc(row.commission_currency || "")}"></div>
+      <div class="field"><label>Payment</label><select name="payment_status">${payOpts}</select></div>
+      <div class="field"><label>Reference</label><input name="payment_reference" value="${esc(row.payment_reference || "")}"></div>
+      <div class="field"><label>Notes</label><textarea name="notes">${esc(row.notes || "")}</textarea></div>
+      <button class="btn" type="submit">Save</button>
+    </form>`;
+  };
+
+  const rowHtml = (row) => `<tr>
+    <td><span class="code">${esc(row.referrer_code)}</span><br>${esc(row.referrer_name)}</td>
+    <td>${esc(row.studentname || "")}<br><span class="code">#${row.studentid}</span></td>
+    <td>Referred: ${esc(dateOnly(row.datereferred))}<br>Expires: ${esc(dateOnly(row.dateexpires))}</td>
+    <td><span class="pill">${esc(row.referral_status)}</span>${row.approvedat ? "<br>Approved: " + esc(dateOnly(row.approvedat)) : ""}</td>
+    <td>${commission(row)}</td>
+    <td><span class="pill">${esc(row.payment_status)}</span>${row.payment_reference ? "<br>" + esc(row.payment_reference) : ""}</td>
+    ${STATE.canmanage ? `<td>${updateForm(row)}</td>` : ""}
+  </tr>`;
+
+  function render(d) {
+    STATE = { canmanage: !!d.canmanage, rows: d.rows || [], statusoptions: d.statusoptions || [], paymentoptions: d.paymentoptions || [] };
+    if (!d.ready) { setStatus("error", "Referral tables are not ready. Run the Moodle plugin upgrade for local_prequran first."); return; }
+    $("#title").textContent = d.canmanage ? "Referrers" : "My referrals";
+    $("#subtitle").textContent = d.canmanage
+      ? "Create referrers, track referred students, approve commission, and export referral records."
+      : "Referral status and commission records for students linked to your referrer code.";
+    $("#mode-note").textContent = d.canmanage ? "Academy operations" : ("Referrer · code " + (d.mycode || ""));
+
+    const m = d.metrics || {};
+    $("#metrics").innerHTML = [
+      [m.referrals || 0, "referrals"],
+      [m.approved || 0, "approved"],
+      [m.paid || 0, "paid"],
+      [d.canmanage ? (m.referrers || 0) : (d.mycode || ""), d.canmanage ? "referrers" : "your code"],
+    ].map(([v, l]) => `<div class="metric"><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join("");
+    $("#metrics").hidden = false;
+
+    $("#create-panel").hidden = !d.canmanage;
+    $("#update-head").hidden = !d.canmanage;
+    $("#export-btn").hidden = false;
+
+    $("#rows").innerHTML = STATE.rows.length
+      ? STATE.rows.map(rowHtml).join("")
+      : `<tr><td colspan="${d.canmanage ? 7 : 6}"><div class="empty">No referrals found.</div></td></tr>`;
+
+    if (d.canmanage) {
+      document.querySelectorAll("form.update").forEach((f) => f.addEventListener("submit", submitUpdate));
+    }
+    $("#status").hidden = true;
+  }
+
+  async function submitCreate(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget, btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const d = await post({
+        do: "create_referrer",
+        name: f.name.value, contact: f.contact.value, phone: f.phone.value,
+        city: f.city.value, country: f.country.value, notes: f.notes.value,
+      });
+      f.reset();
+      setStatus("saved", d.message || "Referrer created.");
+      await load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) { setStatus("error", "Could not save: " + e.message); }
+    finally { btn.disabled = false; btn.textContent = "Create referrer and code"; }
+  }
+
+  async function submitUpdate(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget, btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const d = await post({
+        do: "update_referral",
+        referralid: Number(f.dataset.id),
+        referral_status: f.referral_status.value,
+        dateexpires: f.dateexpires.value,
+        commission_amount: f.commission_amount.value,
+        commission_rate: f.commission_rate.value,
+        commission_currency: f.commission_currency.value,
+        payment_status: f.payment_status.value,
+        payment_reference: f.payment_reference.value,
+        notes: f.notes.value,
+      });
+      setStatus("saved", d.message || "Referral updated.");
+      await load();
+    } catch (e) { setStatus("error", "Could not save: " + e.message); }
+    finally { btn.disabled = false; btn.textContent = "Save"; }
+  }
+
+  function exportCsv() {
+    const headers = ["referrer_code", "referrer", "student", "studentid", "date_referred", "status", "expires", "commission_amount", "commission_rate", "currency", "payment_status", "payment_reference"];
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const lines = [headers.map(cell).join(",")];
+    STATE.rows.forEach((r) => {
+      lines.push([
+        r.referrer_code, r.referrer_name, r.studentname, r.studentid,
+        dateOnly(r.datereferred), r.referral_status,
+        r.dateexpires ? dateOnly(r.dateexpires) : "",
+        r.commission_amount, r.commission_rate, r.commission_currency,
+        r.payment_status, r.payment_reference,
+      ].map(cell).join(","));
+    });
+    const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "quraan-referrals.csv";
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  }
+
+  $("#create-form").addEventListener("submit", submitCreate);
+  $("#search-form").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#reset-btn").addEventListener("click", () => { $("#q").value = ""; load(); });
+  $("#export-btn").addEventListener("click", exportCsv);
+
+  load();
+})();
+</script>
+</body>
+</html>

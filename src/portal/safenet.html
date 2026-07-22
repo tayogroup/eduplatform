@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safe Internet · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:minmax(280px,.9fr) 1.6fr;gap:16px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .field{margin-bottom:10px}
+  .field label{display:block;margin-bottom:4px;font-weight:800;font-size:12px;color:var(--ink2)}
+  input[type=text],select,input[type=time]{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 10px;font:inherit;font-size:14px;background:var(--card);color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-weight:800;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn:hover{border-color:var(--blue2)}
+  .btn--primary{background:var(--blue2);color:#fff;border-color:var(--blue2)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .meta{color:var(--muted);font-size:12px;margin-bottom:6px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;margin:0 6px 4px 0}
+  .pill.info{background:var(--sky);color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .host{display:inline-block;margin:6px 6px 0 0;padding:6px 10px;border-radius:8px;background:var(--sky);color:var(--blue);font-family:Consolas,monospace;font-size:13px;font-weight:700}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  details.steps{margin:10px 0 0;padding:10px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:13px;line-height:1.55}
+  details.steps summary{cursor:pointer;font-weight:800}
+  details.steps ol,details.steps ul{margin:8px 0 0 18px;padding:0}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .alert{margin-bottom:12px;padding:11px 13px;border-radius:8px;font-weight:700;font-size:13px;background:var(--sky);color:var(--blue)}
+  .alert.bad{background:var(--red-bg);color:var(--red)}
+  .days{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+  .days label{font-size:13px;font-weight:600;color:var(--ink2)}
+  .timerow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .timerow label{font-size:13px;color:var(--ink2)}
+  .timerow input[type=time]{width:auto}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Safe Internet</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of safenet.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Safe Internet</h1>
+    <p class="sub">Child-safe web filtering on every registered device — at home, at school, on any Wi-Fi.</p>
+  </div>
+  <div id="status" class="status">Loading devices…</div>
+  <div id="alerts"></div>
+  <div class="grid" id="console" hidden>
+    <section class="panel">
+      <h2>Register a device</h2>
+      <form id="register-form">
+        <div class="field">
+          <label for="reg-child">Student</label>
+          <select id="reg-child" name="childid" required><option value="">Choose a student…</option></select>
+        </div>
+        <div class="field">
+          <label for="reg-label">Device name</label>
+          <input id="reg-label" type="text" name="label" maxlength="255" placeholder="e.g. Salman laptop" required>
+        </div>
+        <div class="field">
+          <label for="reg-platform">Device type</label>
+          <select id="reg-platform" name="platform" required>
+            <option value="android">Android phone or tablet</option>
+            <option value="windows">Windows laptop or PC</option>
+            <option value="ios">iPhone or iPad</option>
+            <option value="macos">Mac</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <button class="btn btn--primary" type="submit">Register device</button>
+      </form>
+      <p class="muted" style="margin-top:12px">Registering creates the device's personal filtering address. You then set it on the device once — the steps appear on the device card.</p>
+      <form id="syncall-form" hidden style="margin-top:12px">
+        <button class="btn" type="submit">Sync pending devices to servers</button>
+      </form>
+    </section>
+    <section class="panel">
+      <h2>Registered devices</h2>
+      <div class="cards" id="devices"></div>
+    </section>
+  </div>
+  <div class="panel" id="tamper-panel" hidden>
+    <details class="steps">
+      <summary><strong>Keep it tamper-resistant — stop VPNs, hotspots and workarounds</strong></summary>
+      <p class="muted" style="margin:8px 0">Safe Internet filters every enrolled device on any network — including a phone hotspot, because the device keeps using our encrypted DNS wherever it goes. To keep a child from switching it off, lock the device with its built-in parental controls:</p>
+      <ul>
+        <li><strong>Windows:</strong> put the child on a <strong>standard (non-administrator)</strong> account and keep the admin password.</li>
+        <li><strong>Android:</strong> use <strong>Google Family Link</strong> to lock device settings and block app installs.</li>
+        <li><strong>iPhone / iPad:</strong> set a <strong>Screen Time</strong> passcode and disallow profile removal. For the strongest lock, enroll the iPad in <strong>MDM</strong>.</li>
+        <li><strong>Enroll every device</strong> the child uses — an un-enrolled device isn't filtered.</li>
+      </ul>
+      <p class="muted" style="margin:0"><em>Honest limit:</em> a device you don't manage, on mobile data, can't be filtered by any DNS service — that comes down to the parental controls above and supervision.</p>
+    </details>
+    <p class="muted" style="margin:12px 0 0"><strong>Learning Mode</strong> restricts a device to approved educational sites only. Ehel keeps device browsing summaries for 30 days so parents can review activity; only you and designated school staff can see your child's data. Removing a device deletes it from the filtering servers.</p>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const consumer = (qs.get("consumer") || "").replace(/[^A-Za-z0-9]/g, "");
+  const workspaceid = String(parseInt(qs.get("workspaceid") || "0", 10) || 0);
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  let DATA = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const ctx = () => { const o = { report: "safenet", token }; if (consumer) o.consumer = consumer; if (workspaceid !== "0") o.workspaceid = workspaceid; return o; };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(ctx()));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      DATA = d; render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function post(payload) {
+    const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "safenet", token }), {
+      method: "POST", headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify(Object.assign({ consumer, workspaceid: Number(workspaceid) }, payload)),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    return d;
+  }
+
+  function flash(msg, cls) {
+    $("#status").className = "status " + (cls || "saved");
+    $("#status").hidden = false; $("#status").textContent = msg;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function alerts(d) {
+    const out = [];
+    if (d.isstaff && !d.configured) out.push('<div class="alert bad">The filtering servers are not configured yet. Devices can be registered now and synced later.</div>');
+    if (!d.isstaff && !d.featureon) out.push('<div class="alert">Safe Internet is being rolled out and is not switched on for your school yet. Your registered devices will activate as soon as it is.</div>');
+    $("#alerts").innerHTML = out.join("");
+  }
+
+  const seenPill = (st) => st === "active" ? '<span class="pill ok">Active</span>'
+    : st === "stale" ? '<span class="pill bad">Not reporting</span>'
+    : '<span class="pill bad">Not seen yet</span>';
+
+  function stepsHtml(dev, dns) {
+    const host = esc((dev.hosts && dev.hosts[0]) || "");
+    if (dev.platform === "android") {
+      return `<p class="muted"><strong>Android is the quickest — one setting, no download.</strong></p>
+        <ol>
+          <li>Open <strong>Settings → Network &amp; internet → Private DNS</strong>.</li>
+          <li>Choose <strong>"Private DNS provider hostname"</strong> and paste:<br><span class="host">${host}</span></li>
+          <li>Tap <strong>Save</strong>. Every app is now filtered — on Wi-Fi and mobile data.</li>
+          <li><strong>Lock it:</strong> use <strong>Google Family Link</strong> to block changes to the child device's settings.</li>
+        </ol>`;
+    }
+    if (dev.platform === "ios" || dev.platform === "macos") {
+      return `<ol>
+          <li>Download the Apple profile (button above) and open it on the child's device.</li>
+          <li>Install it: Settings → General → VPN &amp; Device Management → install the profile.</li>
+          <li>Set a <strong>Screen Time</strong> passcode and disallow profile removal.</li>
+        </ol>`;
+    }
+    if (dev.platform === "windows") {
+      return `<ol>
+          <li><strong>Easiest:</strong> download the one-click setup (button above), double-click on the child's PC, approve the prompt. It sets encrypted DNS for the whole PC and locks Chrome, Edge and Firefox.</li>
+          <li>Put the child on a <strong>standard (non-administrator)</strong> Windows account; the parent keeps the admin password.</li>
+          <li><em>Manual alternative:</em> Settings → Network &amp; internet → DNS server assignment → Manual, IPv4 On, servers <code>${esc(dns[0] || "")}</code> and <code>${esc(dns[1] || "")}</code>, encryption <strong>DNS over HTTPS</strong>, template = the personal address above.</li>
+        </ol>`;
+    }
+    return `<ol>
+        <li>Point the device's private/encrypted DNS setting at the personal filtering address above.</li>
+        <li>Lock the device's settings with the platform's parental controls.</li>
+      </ol>`;
+  }
+
+  function scheduleForm(dev, daynames) {
+    const days = (dev.schedule && dev.schedule.days) || [];
+    const chks = Object.keys(daynames).map((n) => {
+      const num = Number(n);
+      return `<label><input type="checkbox" name="days" value="${num}"${days.includes(num) ? " checked" : ""}> ${esc(daynames[n])}</label>`;
+    }).join("");
+    const open = dev.schedule_summary ? " open" : "";
+    const sumtxt = dev.schedule_summary ? " — " + esc(dev.schedule_summary) : " (off)";
+    return `<details class="steps"${open}>
+        <summary>Learning schedule${sumtxt}</summary>
+        <form class="sched-form" data-deviceid="${dev.id}">
+          <p class="muted" style="margin:6px 0">Automatically switch this device to Learning Mode during these hours; normal child-safe browsing the rest of the time.</p>
+          <div class="days">${chks}</div>
+          <div class="timerow">
+            <label>From <input type="time" name="start" value="${esc((dev.schedule && dev.schedule.start) || "")}"></label>
+            <label>to <input type="time" name="end" value="${esc((dev.schedule && dev.schedule.end) || "")}"></label>
+          </div>
+          <button class="btn btn--primary" type="submit">Save schedule</button>
+          <button class="btn" type="button" data-clear="1">Clear</button>
+        </form>
+      </details>`;
+  }
+
+  function downloadButtons(dev) {
+    if (!dev.hosts || !dev.hosts.length) return "";
+    if (dev.platform === "windows") {
+      return `<div class="actions">
+          <button class="btn btn--primary" data-dl="winsetup" data-id="${dev.id}">Download one-click setup (.bat)</button>
+          <button class="btn" data-dl="winremove" data-id="${dev.id}">Removal script (.bat)</button>
+        </div>`;
+    }
+    if (dev.platform === "ios" || dev.platform === "macos") {
+      return `<div class="actions"><button class="btn btn--primary" data-dl="mobileconfig" data-id="${dev.id}">Download Apple profile</button></div>`;
+    }
+    return "";
+  }
+
+  function deviceCard(dev, dns, daynames) {
+    const hosts = (dev.hosts && dev.hosts.length)
+      ? `<div class="muted">Personal filtering address:</div>${dev.hosts.map((h) => `<span class="host">${esc(h)}</span>`).join(" ")}`
+      : `<p class="muted">The filtering address appears once the service is configured.</p>`;
+    const learnBtn = dev.policy === "learning"
+      ? `<button class="btn btn--primary" data-do="unlearn" data-id="${dev.id}">Exit Learning Mode</button>`
+      : `<button class="btn" data-do="learn" data-id="${dev.id}">Learning Mode</button>`;
+    const pauseBtn = dev.policy === "paused"
+      ? `<button class="btn" data-do="resume" data-id="${dev.id}">Resume filtering</button>`
+      : `<button class="btn" data-do="pause" data-id="${dev.id}">Pause filtering</button>`;
+    return `<article class="card">
+        <div>
+          <h3>${esc(dev.label)}</h3>
+          <div class="meta">${esc(dev.childname)} · ${esc(dev.platform_label)} · registered ${esc(dev.timecreated_label)}</div>
+          <span class="pill info">${esc(dev.policy_label)}</span>
+          <span class="pill info">${dev.onservers ? "On servers" : "Pending sync"}</span>
+          ${seenPill(dev.lastseen_state)}
+        </div>
+        ${hosts}
+        ${downloadButtons(dev)}
+        <details class="steps"><summary>Setup steps for this device</summary>${stepsHtml(dev, dns)}</details>
+        ${scheduleForm(dev, daynames)}
+        <div class="actions">
+          ${learnBtn}
+          ${pauseBtn}
+          <button class="btn" data-do="remove" data-id="${dev.id}" data-confirm="Remove this device from Safe Internet?">Remove</button>
+        </div>
+      </article>`;
+  }
+
+  function render(d) {
+    $("#status").hidden = true;
+    $("#console").hidden = false;
+    $("#tamper-panel").hidden = false;
+    $("#mode-note").textContent = (d.isstaff ? "Staff" : "Parent") + " · parallel-run of safenet.php";
+    alerts(d);
+
+    const sel = $("#reg-child");
+    sel.innerHTML = `<option value="">Choose a student…</option>` +
+      (d.children || []).map((c) => `<option value="${c.id}">${esc(c.name)}</option>`).join("");
+    $("#syncall-form").hidden = !d.isstaff;
+
+    const box = $("#devices");
+    if (!(d.devices || []).length) {
+      box.innerHTML = `<p class="muted">No devices yet. Register the first one on the left.</p>`;
+    } else {
+      box.innerHTML = d.devices.map((dev) => deviceCard(dev, d.dns_servers || [], d.daynames || {})).join("");
+    }
+    wire();
+  }
+
+  function wire() {
+    document.querySelectorAll("[data-do]").forEach((b) => b.addEventListener("click", async () => {
+      const conf = b.getAttribute("data-confirm");
+      if (conf && !window.confirm(conf)) return;
+      b.disabled = true;
+      try { const d = await post({ do: b.dataset.do, deviceid: Number(b.dataset.id) }); flash(d.message || "Saved.", "saved"); load(); }
+      catch (e) { b.disabled = false; flash("Could not save: " + e.message, "error"); }
+    }));
+    document.querySelectorAll("[data-dl]").forEach((b) => b.addEventListener("click", () => downloadFile(b.dataset.dl, b.dataset.id)));
+    document.querySelectorAll(".sched-form").forEach((f) => {
+      f.addEventListener("submit", (ev) => { ev.preventDefault(); saveSchedule(f, 0); });
+      const clr = f.querySelector("[data-clear]");
+      if (clr) clr.addEventListener("click", () => saveSchedule(f, 1));
+    });
+  }
+
+  async function saveSchedule(f, clear) {
+    const days = Array.from(f.querySelectorAll('input[name="days"]:checked')).map((c) => Number(c.value));
+    const btn = f.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    try {
+      const d = await post({ do: "setschedule", deviceid: Number(f.dataset.deviceid), days, start: f.start.value, end: f.end.value, clearschedule: clear });
+      flash(d.message || "Saved.", "saved"); load();
+    } catch (e) { btn.disabled = false; flash("Could not save: " + e.message, "error"); }
+  }
+
+  async function downloadFile(kind, id) {
+    try {
+      const p = new URLSearchParams(ctx()); p.set("download", kind); p.set("deviceid", id);
+      const r = await fetch(endpoint + "?" + p.toString());
+      const d = await r.json();
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      const bin = atob(d.download.b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const url = URL.createObjectURL(new Blob([bytes], { type: d.download.mime }));
+      const a = document.createElement("a"); a.href = url; a.download = d.download.filename;
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    } catch (e) { flash("Download failed: " + e.message, "error"); }
+  }
+
+  $("#register-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    try {
+      const d = await post({ do: "register", childid: Number(f.childid.value), label: f.label.value, platform: f.platform.value });
+      flash(d.message || "Registered.", "saved"); f.reset(); load();
+    } catch (e) { btn.disabled = false; flash("Could not register: " + e.message, "error"); }
+  });
+
+  $("#syncall-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const btn = ev.currentTarget.querySelector("button");
+    btn.disabled = true;
+    try { const d = await post({ do: "syncall" }); flash(d.message || "Synced.", "saved"); load(); }
+    catch (e) { btn.disabled = false; flash("Could not sync: " + e.message, "error"); }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher performance profile · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:end}
+  .field{display:grid;gap:5px}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .field input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .verdict{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:900}
+  .verdict.ok{background:var(--sky);color:var(--blue2)}
+  .verdict.warn{background:var(--amber-bg);color:var(--amber)}
+  .verdict.bad{background:var(--red-bg);color:var(--red)}
+  .metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .metric strong{display:block;font-size:22px;font-weight:900;color:var(--blue)}
+  .metric span{display:block;margin-top:2px;color:var(--muted);font-size:12px;font-weight:800}
+  .review{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .review-box{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card)}
+  .review-box h3{margin:0 0 8px;font-size:14px}
+  .review-box ul{margin:0;padding-left:18px;color:var(--ink2);font-size:13px}
+  .review-box li{margin:6px 0}
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+  .cards{display:grid;gap:10px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.neutral{background:#edf0f4;color:var(--muted)}
+  .pill.ok{background:var(--sky);color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--bg);font-size:12px;color:var(--ink2)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word;color:var(--ink2)}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  @media(max-width:1000px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.review{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+  @media(max-width:620px){.filters,.metrics{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher performance profile</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_teacher_profile.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Teacher performance profile</h1>
+    <p class="sub" id="subtitle">QA, coaching, leadership, improvement plans, and class timeline.</p>
+  </div>
+
+  <div class="panel">
+    <div class="filters">
+      <div class="field"><label for="f-teacherid">Teacher ID</label><input id="f-teacherid" type="number" min="1"></div>
+      <div class="field"><label for="f-from">From</label><input id="f-from" type="date"></div>
+      <div class="field"><label for="f-to">To</label><input id="f-to" type="date"></div>
+      <div class="field"><button class="btn" id="btn-load" type="button">Load profile</button></div>
+    </div>
+    <div class="actions" id="export-actions" hidden>
+      <button class="btn light" id="btn-csv" type="button">Export CSV</button>
+      <button class="btn light" id="btn-reviewpack" type="button">Export review pack</button>
+    </div>
+  </div>
+
+  <div id="status" class="status">Enter a teacher ID and load the profile.</div>
+
+  <section class="panel" id="metrics-panel" hidden><div class="metrics" id="metrics"></div></section>
+
+  <section class="panel" id="reviewpack-panel" hidden>
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+      <div><h2 style="margin:0">Leadership review pack</h2><p class="muted" style="margin:3px 0 0">For coaching meetings, leadership review, and internal documentation.</p></div>
+      <span class="verdict" id="verdict"></span>
+    </div>
+    <div class="review">
+      <div class="review-box"><h3>Strengths</h3><ul id="rp-strengths"></ul></div>
+      <div class="review-box"><h3>Risks to discuss</h3><ul id="rp-risks"></ul></div>
+      <div class="review-box"><h3>Recommended actions</h3><ul id="rp-actions"></ul></div>
+    </div>
+  </section>
+
+  <section class="grid" id="mid-grid" hidden>
+    <article class="panel">
+      <h2>Timeline</h2>
+      <div class="cards" id="timeline"></div>
+    </article>
+    <aside class="panel">
+      <h2>Recurring QA concerns</h2>
+      <table><thead><tr><th>Area</th><th>Concern</th><th>Checked</th><th>Rate</th></tr></thead><tbody id="concerns"></tbody></table>
+      <h2 style="margin-top:18px">Parent follow-up indicators</h2>
+      <table><thead><tr><th>Student</th><th>Session</th><th>Status</th><th>Updated</th></tr></thead><tbody id="followups"></tbody></table>
+    </aside>
+  </section>
+
+  <section class="panel" id="sessions-panel" hidden>
+    <h2>Session record</h2>
+    <div style="overflow-x:auto">
+      <table><thead><tr><th>Session</th><th>Date</th><th>Students</th><th>QA</th><th>Coaching</th><th>Leadership</th><th>Improvement</th></tr></thead><tbody id="sessions"></tbody></table>
+    </div>
+  </section>
+
+  <section class="panel" id="audit-panel" hidden>
+    <h2>Recent audit</h2>
+    <div style="overflow-x:auto">
+      <table><thead><tr><th>Time</th><th>Session</th><th>Actor</th><th>Action</th><th>Details</th></tr></thead><tbody id="audits"></tbody></table>
+    </div>
+  </section>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+  const words = (v) => String(v ?? "").replace(/_/g, " ");
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let last = null;
+
+  $("#f-teacherid").value = qs.get("teacherid") || "";
+  if (qs.get("from")) $("#f-from").value = qs.get("from");
+  if (qs.get("to")) $("#f-to").value = qs.get("to");
+
+  const url = () => endpoint + "?" + new URLSearchParams({
+    report: "live-teacher-profile",
+    token,
+    teacherid: ($("#f-teacherid").value || qs.get("teacherid") || "0"),
+    from: $("#f-from").value || "",
+    to: $("#f-to").value || "",
+  });
+
+  async function load() {
+    $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading profile…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      last = d;
+      render(d);
+    } catch (e) { hideAll(); $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const panels = ["#metrics-panel", "#reviewpack-panel", "#mid-grid", "#sessions-panel", "#audit-panel", "#export-actions"];
+  const hideAll = () => panels.forEach((p) => { $(p).hidden = true; });
+
+  const metricTiles = (m) => [
+    [m.sessions, "sessions"], [m.students, "students"], [m.reviewed, "QA reviewed"],
+    [m.avgscore + "%", "avg QA"], [(m.needscoaching + m.serious), "QA issues"],
+    [m.coachingopen, "coaching open"], [m.plansopen, "plans open"], [m.plansoverdue, "plans overdue"],
+    [m.leadershipopen, "leadership open"], [m.followupsopen, "follow-ups open"],
+  ].map(([v, l]) => `<div class="metric"><strong>${esc(v)}</strong><span>${esc(l)}</span></div>`).join("");
+
+  const verdictClass = (v) => v === "Performance currently stable" ? "ok" : v === "Leadership attention recommended" ? "bad" : "warn";
+  const li = (arr, fallback) => (arr && arr.length ? arr : [fallback]).map((x) => `<li>${esc(x)}</li>`).join("");
+
+  const timelineCard = (t) => `
+    <div class="card">
+      <h3>${esc(t.title || "Item")}<span class="pill neutral">${esc(words(t.status))}</span></h3>
+      <div class="meta">${esc(when(t.time))} · ${esc(words(t.type))}</div>
+      <div class="muted" style="margin-top:4px">${esc(t.detail)}</div>
+    </div>`;
+
+  const concernRow = (c) => `
+    <tr><td>${esc(c.label)}</td><td>${esc(c.concern)}</td><td>${esc(c.checked)}</td>
+      <td><span class="pill ${c.rate >= 30 ? "bad" : "ok"}">${esc(c.rate)}%</span></td></tr>`;
+
+  const followupRow = (f, names) => `
+    <tr><td>${esc(names[f.studentid] || ("Student " + f.studentid))}</td><td>${esc(f.session_title)}</td>
+      <td><span class="pill ${f.followup_resolved ? "ok" : "warn"}">${esc(words(f.followup_status))}</span></td>
+      <td>${esc(when(f.timemodified))}</td></tr>`;
+
+  const sessionRow = (s) => `
+    <tr>
+      <td>${esc(s.title)}<br><span class="code">#${esc(s.id)}</span></td>
+      <td>${esc(when(s.scheduled_start))}</td>
+      <td>${esc(s.student_count)}</td>
+      <td>${esc(words(s.qa_status))}<br><span class="code">${esc(s.qa_score)}%</span></td>
+      <td>${esc(words(s.qa_coaching_status))}</td>
+      <td>${esc(words(s.leadership_review_status))}</td>
+      <td>${esc(words(s.improvement_plan_status))}${s.improvement_plan_due_date ? '<br><span class="code">Due ' + esc(when(s.improvement_plan_due_date)) + "</span>" : ""}</td>
+    </tr>`;
+
+  const auditRow = (a, names) => `
+    <tr>
+      <td>${esc(when(a.timecreated))}</td>
+      <td>#${esc(a.sessionid)}</td>
+      <td>${a.actorid > 0 ? esc(names[a.actorid] || ("User " + a.actorid)) : "System"}</td>
+      <td>${esc(words(a.action))}</td>
+      <td><span class="code">${esc(a.details)}</span></td>
+    </tr>`;
+
+  function render(d) {
+    const names = d.names || {};
+    $("#title").textContent = "Teacher performance profile — " + (d.teachername || "not selected");
+    $("#mode-note").textContent = d.filters ? (d.filters.from + " → " + d.filters.to) : "Teacher performance profile";
+
+    if (!d.ready) {
+      hideAll();
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Teacher profile requires live-session and QA columns.";
+      return;
+    }
+    if (!d.teacherid) {
+      hideAll();
+      $("#status").className = "status"; $("#status").hidden = false;
+      $("#status").textContent = "Enter a teacher user ID to view the performance profile.";
+      return;
+    }
+
+    $("#metrics").innerHTML = metricTiles(d.metrics);
+    $("#metrics-panel").hidden = false;
+
+    $("#verdict").textContent = d.reviewpack.verdict;
+    $("#verdict").className = "verdict " + verdictClass(d.reviewpack.verdict);
+    $("#rp-strengths").innerHTML = li(d.reviewpack.strengths, "Not enough reviewed data to identify stable strengths yet.");
+    $("#rp-risks").innerHTML = li(d.reviewpack.risks, "No major risks surfaced in the selected range.");
+    $("#rp-actions").innerHTML = li(d.reviewpack.actions, "Continue routine QA sampling and keep parent follow-up records current.");
+    $("#reviewpack-panel").hidden = false;
+
+    $("#timeline").innerHTML = (d.timeline || []).map(timelineCard).join("") || "<div class='muted'>No timeline items in this range.</div>";
+    $("#concerns").innerHTML = (d.concerns || []).slice(0, 10).map(concernRow).join("") || "<tr><td colspan='4'>No QA checklist concerns found.</td></tr>";
+    $("#followups").innerHTML = (d.followups || []).slice(0, 12).map((f) => followupRow(f, names)).join("") || "<tr><td colspan='4'>No teacher-parent follow-up indicators.</td></tr>";
+    $("#mid-grid").hidden = false;
+
+    $("#sessions").innerHTML = (d.sessions || []).map(sessionRow).join("") || "<tr><td colspan='7'>No live sessions for this teacher in this range.</td></tr>";
+    $("#sessions-panel").hidden = false;
+
+    $("#audits").innerHTML = (d.audits || []).map((a) => auditRow(a, names)).join("") || "<tr><td colspan='5'>No audit rows for this teacher.</td></tr>";
+    $("#audit-panel").hidden = false;
+
+    $("#export-actions").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  // Client-side CSV export mirrors the legacy export=profile / export=reviewpack
+  // downloads (the read-only page's only non-render paths) from the same rows.
+  const csvCell = (v) => { const s = String(v ?? ""); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const download = (name, rows) => {
+    const blob = new Blob([rows.map((r) => r.map(csvCell).join(",")).join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = name; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
+  function exportProfile() {
+    if (!last) return;
+    const rows = [["sessionid", "title", "start", "status", "students", "attendance_rows", "parent_summaries", "qa_status", "qa_score", "coaching_status", "leadership_status", "improvement_status", "improvement_priority", "improvement_due"]];
+    (last.sessions || []).forEach((s) => rows.push([s.id, s.title, when(s.scheduled_start), s.status, s.student_count, s.attendance_count, s.parent_summary_count, s.qa_status, s.qa_score, s.qa_coaching_status, s.leadership_review_status, s.improvement_plan_status, s.improvement_plan_priority, s.improvement_plan_due_date ? when(s.improvement_plan_due_date) : ""]));
+    download("teacher-performance-profile-" + last.teacherid + ".csv", rows);
+  }
+
+  function exportReviewPack() {
+    if (!last) return;
+    const m = last.metrics, rp = last.reviewpack;
+    const rows = [["section", "item", "value", "detail"]];
+    rows.push(["profile", "teacher", last.teachername, "Teacher ID " + last.teacherid]);
+    rows.push(["profile", "range", last.filters.from + " to " + last.filters.to, ""]);
+    rows.push(["summary", "verdict", rp.verdict, ""]);
+    rows.push(["metric", "sessions", m.sessions, ""]);
+    rows.push(["metric", "students", m.students, "distinct students"]);
+    rows.push(["metric", "qa_reviewed", m.reviewed, ""]);
+    rows.push(["metric", "average_qa_score", m.avgscore + "%", ""]);
+    rows.push(["metric", "qa_issues", (m.needscoaching + m.serious), m.serious + " serious"]);
+    rows.push(["metric", "open_coaching", m.coachingopen, m.coachingoverdue + " overdue"]);
+    rows.push(["metric", "open_improvement_plans", m.plansopen, m.plansoverdue + " overdue"]);
+    rows.push(["metric", "open_leadership_cases", m.leadershipopen, ""]);
+    rows.push(["metric", "open_parent_followups", m.followupsopen, ""]);
+    (rp.strengths || []).forEach((x) => rows.push(["strength", x, "", ""]));
+    (rp.risks || []).forEach((x) => rows.push(["risk", x, "", ""]));
+    (rp.actions || []).forEach((x) => rows.push(["recommended_action", x, "", ""]));
+    (last.concerns || []).slice(0, 10).forEach((c) => rows.push(["qa_concern", c.label, c.concern, c.rate + "% concern rate"]));
+    download("teacher-review-pack-" + last.teacherid + ".csv", rows);
+  }
+
+  $("#btn-load").addEventListener("click", load);
+  $("#btn-csv").addEventListener("click", exportProfile);
+  $("#btn-reviewpack").addEventListener("click", exportReviewPack);
+
+  if ($("#f-teacherid").value) load();
+})();
+</script>
+</body>
+</html>

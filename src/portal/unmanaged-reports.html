@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unmanaged student reports · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff;color:var(--ink)}
+  button,.btn{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky);white-space:nowrap}
+  tr:hover td{background:#f6faff}
+  .name{display:block;font-weight:800;color:var(--ink)}
+  .mut{display:block;margin-top:2px;color:var(--muted);font-size:12px}
+  .pill{display:inline-block;margin:0 4px 4px 0;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800;background:var(--sky);color:var(--blue2)}
+  .pill.sus{background:var(--red-bg);color:var(--red)}
+  .pill.act{background:var(--sky);color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .muted{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Unmanaged student reports · read-only</small></div>
+  <div class="note" id="role-note">Token-authenticated · parallel-run of unmanaged_reports.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Unmanaged student reports</h1>
+    <p class="sub">Limited student directory report for Moodle students who are not marked as managed. No tracking or progress data is shown — this report intentionally excludes progress, tracking, focus, quiz, and recording metrics.</p>
+  </div>
+
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-q">Search</label><input id="f-q" placeholder="name, username, email, or idnumber"></div>
+      <div class="field"><label for="f-course">Course</label>
+        <select id="f-course"><option value="0">All courses</option></select></div>
+      <div class="field"><label for="f-group">Class group</label>
+        <select id="f-group"><option value="0">All groups</option></select></div>
+      <div class="field"><label for="f-limit">Limit</label>
+        <select id="f-limit"><option>25</option><option>50</option><option selected>100</option><option>250</option></select></div>
+      <button type="submit">Apply</button>
+    </form>
+  </div>
+
+  <div id="status" class="status">Loading report…</div>
+  <div class="panel scroll" id="rows-panel" hidden>
+    <h2 id="rows-title">Unmanaged students</h2>
+    <table id="rows"></table>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  let data = null, optsBuilt = false;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open this page via the Moodle portal launch link."; return; }
+
+  const query = () => new URLSearchParams({
+    report: "unmanaged-reports", token,
+    q: $("#f-q").value.trim(),
+    courseid: $("#f-course").value || "0",
+    groupid: $("#f-group").value || "0",
+    limit: $("#f-limit").value || "100",
+  }).toString();
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading report…";
+    try {
+      const r = await fetch(endpoint + "?" + query());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown error");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load the report: " + e.message; }
+  }
+
+  function buildOptions() {
+    if (optsBuilt) return;
+    const f = data.filters || {};
+    $("#f-course").innerHTML = `<option value="0">All courses</option>` +
+      (data.courses || []).map((c) => `<option value="${c.id}" ${Number(f.courseid) === Number(c.id) ? "selected" : ""}>${esc(c.fullname)}</option>`).join("");
+    $("#f-group").innerHTML = `<option value="0">All groups</option>` +
+      (data.groups || []).map((g) => `<option value="${g.id}" ${Number(f.groupid) === Number(g.id) ? "selected" : ""}>${esc(g.title)}</option>`).join("");
+    optsBuilt = true;
+  }
+
+  const pills = (items, fmt) => (items && items.length) ? items.map(fmt).join("") : "";
+
+  function render() {
+    buildOptions();
+    const rows = data.rows || [];
+    $("#role-note").textContent = "Showing " + rows.length + " unmanaged student" + (rows.length === 1 ? "" : "s");
+    $("#rows").innerHTML =
+      `<thead><tr><th>Student</th><th>Account</th><th>Course information</th><th>Class groups</th><th>Profile context</th></tr></thead><tbody>` +
+      rows.map((r) => {
+        const courses = pills(r.courses, (c) => `<span class="pill">${esc(c.fullname)} #${c.id}</span>`) || `<span class="mut">No student course role found.</span>`;
+        const groups = pills(r.groups, (g) => `<span class="pill">${esc(g.title)} #${g.id}</span>`) || `<span class="mut">No class groups</span>`;
+        const ctx = pills(r.profilebits, (b) => `<span class="pill">${esc(b)}</span>`) || `<span class="mut">No Pre-Quraan profile context</span>`;
+        const sus = Number(r.suspended) === 1;
+        return `<tr>
+          <td><span class="name">${esc(r.fullname)}</span><span class="mut">User ID: ${r.userid}</span><span class="mut">${esc(r.account_label)}</span></td>
+          <td><span class="mut">Username: ${esc(r.username)}</span><span class="mut">Email: ${esc(r.email !== "" ? r.email : "not set")}</span><span class="pill ${sus ? "sus" : "act"}">${sus ? "Suspended" : "Active"}</span><span class="mut">Last access: ${esc(r.lastaccess_label)}</span></td>
+          <td>${courses}</td>
+          <td>${groups}</td>
+          <td>${ctx}</td>
+        </tr>`;
+      }).join("") + "</tbody>";
+    $("#rows-title").textContent = `Unmanaged students (${rows.length})`;
+    $("#rows-panel").hidden = !rows.length;
+    $("#status").hidden = rows.length > 0;
+    if (!rows.length) { $("#status").className = "status"; $("#status").textContent = "No unmanaged students matched these filters."; }
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+
+  load();
+})();
+</script>
+</body>
+</html>

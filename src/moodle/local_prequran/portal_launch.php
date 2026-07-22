@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-15.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-16.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -140,6 +140,21 @@ $reports = [
     'live-session-materials' => ['pqpl_any_authenticated', 'live-session-materials.html'],
     'live-virtual-tutor' => ['pqpl_any_authenticated', 'live-virtual-tutor.html'],
     'marketplace-enrollment' => ['pqpl_any_authenticated', 'marketplace-enrollment.html'],
+    // Wave 11: parent-trust family + directory + reports. Academy-ops reports keep
+    // the legacy ops gate; parent-trust audit/retention/evidence are siteadmin-only
+    // (handlers re-enforce); self/parent-scoped pages use any_authenticated.
+    'live-teacher-profile' => ['pqh_can_manage_academy_operations', 'live-teacher-profile.html'],
+    'live-teacher-directory' => ['pqh_can_manage_academy_operations', 'live-teacher-directory.html'],
+    'live-parent-links' => ['pqh_can_manage_academy_operations', 'live-parent-links.html'],
+    'parent-trust-retention' => ['is_siteadmin', 'parent-trust-retention.html'],
+    'parent-trust-audit' => ['is_siteadmin', 'parent-trust-audit.html'],
+    'parent-trust-purge-evidence' => ['is_siteadmin', 'parent-trust-purge-evidence.html'],
+    'parent-trust-review-pack' => ['is_siteadmin', 'parent-trust-review-pack.html'],
+    'at-risk-report' => ['pqpl_any_authenticated', 'at-risk-report.html'],
+    'unmanaged-reports' => ['pqh_can_manage_academy_operations', 'unmanaged-reports.html'],
+    'safenet' => ['pqpl_any_authenticated', 'safenet.html'],
+    'referrers' => ['pqpl_any_authenticated', 'referrers.html'],
+    'enrollment-approval' => ['pqpl_any_authenticated', 'enrollment-approval.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

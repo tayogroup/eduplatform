@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parent trust review pack · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .in{min-height:38px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;font-size:13px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue2);border:1px solid var(--line)}
+  .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 14px}
+  .metric b{display:block;font-size:24px;color:var(--blue2)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-weight:800;color:var(--ink2);background:#fbfdff}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
+  .note{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;font-size:13px;margin-bottom:14px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  @media print{form.filters,.actions,.top .note{display:none!important}.top{background:#fff;color:#000}.panel,.metric{box-shadow:none}}
+  @media(max-width:900px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}form.filters{display:grid}table{display:block;overflow:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Parent trust review pack</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_parent_trust_review_pack.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Parent trust compliance review pack</h1><p class="sub">Printable and exportable record of staff parent-dashboard previews, reasons, and support case outcomes.</p></div>
+  <div id="status" class="status">Loading review pack…</div>
+  <div id="content" hidden>
+    <div class="panel">
+      <form class="filters" id="filters">
+        <div class="field"><label for="staffid">Staff user ID</label><input id="staffid" class="in" type="number"></div>
+        <div class="field"><label for="studentid">Student user ID</label><input id="studentid" class="in" type="number"></div>
+        <div class="field"><label for="reason">Reason</label><select id="reason" class="in"></select></div>
+        <div class="field"><label for="from">From</label><input id="from" class="in" type="date"></div>
+        <div class="field"><label for="to">To</label><input id="to" class="in" type="date"></div>
+        <div class="field actions" style="grid-auto-flow:column;display:flex;gap:9px;align-items:end">
+          <button class="btn" type="submit">Apply filters</button>
+          <button class="btn light" type="button" id="reset">Reset</button>
+          <button class="btn light" type="button" id="csv">Download CSV</button>
+          <button class="btn light" type="button" id="print">Print pack</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="metrics" id="metrics"></div>
+    <div class="note" id="genline"></div>
+
+    <div class="panel"><h2>Reason summary</h2><table id="reason-summary"></table></div>
+    <div class="panel"><h2>Audit event detail</h2><table id="detail"></table></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  let DATA = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const filterParams = () => {
+    const p = {};
+    const staff = $("#staffid").value.trim(); if (staff) p.staffid = staff;
+    const stu = $("#studentid").value.trim(); if (stu) p.studentid = stu;
+    if ($("#reason").value) p.reason = $("#reason").value;
+    if ($("#from").value) p.from = $("#from").value;
+    if ($("#to").value) p.to = $("#to").value;
+    return p;
+  };
+
+  async function load(params) {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading review pack…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "parent-trust-review-pack", token, ...(params || {}) }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      DATA = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const row = (cells) => "<tr>" + cells.map((c) => "<td>" + c + "</td>").join("") + "</tr>";
+
+  function render(d) {
+    // Populate filter controls from the echoed filters.
+    if (!$("#reason").options.length) {
+      $("#reason").innerHTML = Object.entries(d.reasonoptions).map(([k, v]) => `<option value="${esc(k)}">${esc(v)}</option>`).join("");
+    }
+    $("#staffid").value = d.filters.staffid > 0 ? d.filters.staffid : "";
+    $("#studentid").value = d.filters.studentid > 0 ? d.filters.studentid : "";
+    $("#reason").value = d.filters.reason || "";
+    $("#from").value = d.filters.from;
+    $("#to").value = d.filters.to;
+
+    if (!d.ready) {
+      $("#content").hidden = false; $("#status").hidden = true;
+      $("#metrics").innerHTML = ""; $("#reason-summary").innerHTML = ""; $("#detail").innerHTML = "";
+      $("#genline").textContent = "The live audit table is not installed yet.";
+      return;
+    }
+
+    const m = d.metrics;
+    $("#metrics").innerHTML = [
+      [m.previews, "preview events"], [m.staff_count, "staff involved"], [m.student_count, "students previewed"],
+      [m.reasoned_previews, "previews with reason"], [m.cases_opened, "cases opened"], [m.cases_resolved, "cases resolved"],
+      [m.cases_escalated, "cases escalated"], [m.events, "total audit events"],
+    ].map((x) => `<div class="metric"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join("");
+
+    $("#genline").textContent = "Generated " + d.generated_label + " for " + d.range_label + ". This pack contains support audit metadata only, not private teacher notes.";
+
+    $("#reason-summary").innerHTML = "<tr><th>Reason</th><th>Events</th></tr>" +
+      (d.reasonsummary.length ? d.reasonsummary.map((x) => row([esc(x.reason), esc(x.count)])).join("") : row(["No reasoned events found for these filters.", ""]));
+
+    $("#detail").innerHTML = "<tr><th>Time</th><th>Action</th><th>Staff</th><th>Student</th><th>Reason</th><th>Status / Notes</th></tr>" +
+      (d.rows.length ? d.rows.map((x) => {
+        const sc = x.case_status === "escalated" ? "bad" : (x.case_status === "open" ? "warn" : "");
+        const status = x.case_status ? `<span class="pill ${sc}">${esc(x.case_status.replace(/_/g, " "))}</span><br>` : "";
+        return row([
+          esc(x.time),
+          `<span class="pill">${esc(x.action.replace(/_/g, " "))}</span>`,
+          `${esc(x.staff)}<br><span class="code">#${esc(x.staffid)}</span>`,
+          `${esc(x.student)}<br><span class="code">#${esc(x.studentid)}</span>`,
+          esc(x.reason),
+          `${status}<span class="code">${esc(x.note_short)}</span>`,
+        ]);
+      }).join("") : row(["No audit events found for these filters.", "", "", "", "", ""]));
+
+    $("#content").hidden = false; $("#status").hidden = true;
+  }
+
+  // ---- client-side CSV (mirrors the legacy fputcsv layout) --------------------
+  const csvCell = (v) => { const s = String(v ?? ""); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const csvRow = (cells) => cells.map(csvCell).join(",");
+
+  function buildCsv(d) {
+    const m = d.metrics, f = d.filters;
+    const lines = [];
+    lines.push(csvRow([d.brand + " Parent Trust Compliance Review Pack"]));
+    lines.push(csvRow(["Generated", d.generated_csv]));
+    lines.push(csvRow(["From", f.from, "To", f.to, "Staff ID", f.staffid || "all", "Student ID", f.studentid || "all", "Reason", f.reason_label]));
+    lines.push("");
+    lines.push(csvRow(["events", "previews", "reasoned_previews", "staff_count", "student_count", "cases_opened", "cases_resolved", "cases_escalated"]));
+    lines.push(csvRow([m.events, m.previews, m.reasoned_previews, m.staff_count, m.student_count, m.cases_opened, m.cases_resolved, m.cases_escalated]));
+    lines.push("");
+    lines.push(csvRow(["time", "action", "staffid", "staff", "studentid", "student", "reason", "case_status", "case_note", "resolution_note", "details"]));
+    d.rows.forEach((x) => lines.push(csvRow([x.time, x.action, x.staffid, x.staff, x.studentid, x.student, x.reason, x.case_status, x.case_note, x.resolution_note, x.details])));
+    return lines.join("\n");
+  }
+
+  function download(name, text, mime) {
+    const blob = new Blob([text], { type: mime });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(filterParams()); });
+  $("#reset").addEventListener("click", () => load({}));
+  $("#print").addEventListener("click", () => window.print());
+  $("#csv").addEventListener("click", () => {
+    if (!DATA) return;
+    const ts = new Date().toISOString().replace(/[-:T]/g, "").slice(0, 15);
+    download("parent-trust-review-pack-" + ts + ".csv", buildCsv(DATA), "text/csv");
+  });
+
+  load(Object.fromEntries(["staffid", "studentid", "reason", "from", "to"].filter((k) => qs.get(k)).map((k) => [k, qs.get(k)])));
+})();
+</script>
+</body>
+</html>

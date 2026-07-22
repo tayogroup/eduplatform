@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>At-risk students · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff;width:110px}
+  .field select{width:auto}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  button.sm{min-height:29px;padding:0 10px;font-size:12px;border-radius:7px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .kpi strong{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .kpi.high strong{color:var(--red)} .kpi.medium strong{color:var(--amber)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky);white-space:nowrap}
+  tr:hover td{background:#fafcfe}
+  .name{font-weight:800}
+  .mut{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.high{background:var(--red-bg);color:var(--red)}
+  .pill.medium{background:var(--amber-bg);color:var(--amber)}
+  .pill.ok{background:var(--sky);color:var(--blue2)}
+  .reason{display:inline-block;margin:2px 4px 0 0;padding:1px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--ink2);font-size:11px;font-weight:700}
+  .acts{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+  .acts a{display:inline-flex;align-items:center;min-height:29px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--blue);font-size:12px;font-weight:800;text-decoration:none}
+  .acts a:hover{border-color:var(--blue2)}
+  .noteform{display:flex;gap:5px;margin-top:6px}
+  .noteform input{flex:1;min-width:120px;min-height:29px;border:1px solid var(--line);border-radius:7px;padding:0 8px;font:inherit;font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .empty{border:1px dashed var(--line);border-radius:10px;padding:26px;text-align:center;color:var(--muted);font-weight:700}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>At-risk students</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of at_risk_report.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1>At-risk students</h1><p class="sub" id="subtitle">Configurable rules over live signals: inactivity, attendance and missed classes.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-inactive">No login ≥ (days)</label><input type="number" id="f-inactive" min="3" max="90" value="14"></div>
+      <div class="field"><label for="f-attend">Attendance &lt; (%)</label><input type="number" id="f-attend" min="10" max="100" value="70"></div>
+      <div class="field"><label for="f-missed">Missed ≥</label><input type="number" id="f-missed" min="1" max="20" value="3"></div>
+      <div class="field"><label for="f-level">Risk level</label>
+        <select id="f-level"><option value="">All levels</option><option value="high">High</option><option value="medium">Medium</option></select></div>
+      <button type="submit">Apply</button>
+      <button type="button" class="ghost" id="csv">Export CSV</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading report…</div>
+  <section id="kpis" class="kpis" hidden></section>
+  <div class="panel scroll" id="table-panel" hidden><table id="table"></table></div>
+  <div class="panel" id="empty-panel" hidden><div class="empty">No students match the current rules. Loosen the thresholds above to widen the net.</div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const wsid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (t) => Number(t) ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short" }) : "Never";
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const query = () => new URLSearchParams({
+    report: "at-risk-report", token, workspaceid: wsid,
+    inactivedays: $("#f-inactive").value || "14",
+    attendthreshold: $("#f-attend").value || "70",
+    missedthreshold: $("#f-missed").value || "3",
+    risklevel: $("#f-level").value || "",
+  });
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading report…";
+    try {
+      const r = await fetch(endpoint + "?" + query());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const levelPill = (lvl) => `<span class="pill ${lvl === "high" ? "high" : "medium"}">${lvl === "high" ? "High" : "Medium"}</span>`;
+
+  function render() {
+    const M = data.metrics || {};
+    $("#mode-note").textContent = `Workspace #${data.workspaceid}${data.canmanage ? " · manager" : data.canteach ? " · teacher (scoped)" : ""}`;
+    if (!data.canmanage && data.canteach) $("#subtitle").textContent = "Configurable rules over live signals — scoped to your students.";
+    $("#kpis").hidden = false;
+    $("#kpis").innerHTML = [
+      ["high", M.high ?? 0, "High risk"],
+      ["medium", M.medium ?? 0, "Medium risk"],
+      ["", M.monitored ?? 0, "Students monitored"],
+      ["", M.reviewedweek ?? 0, "Reviewed · 7d"],
+    ].map(([cls, v, l]) => `<div class="kpi ${cls}"><strong>${v}</strong><span>${l}</span></div>`).join("");
+
+    const rows = data.students || [];
+    if (!rows.length) {
+      $("#table-panel").hidden = true; $("#empty-panel").hidden = false; $("#status").hidden = true; return;
+    }
+    $("#empty-panel").hidden = true;
+    $("#table").innerHTML =
+      `<thead><tr><th>Student</th><th>Teacher</th><th>Risk</th><th>Reasons</th><th>Last activity</th><th>Attend. 30d</th><th>Missed</th><th>Status</th><th>Actions</th></tr></thead><tbody>` +
+      rows.map((s) => `<tr>
+        <td><span class="name">${esc(s.name)}</span><br><span class="mut">${s.account ? "#" + esc(s.account) : "No account no."}</span></td>
+        <td class="mut">${esc(s.teacher)}</td>
+        <td>${levelPill(s.level)}</td>
+        <td>${(s.reasons || []).map((r) => `<span class="reason">${esc(r)}</span>`).join("")}${s.note ? `<br><span class="mut">Note: ${esc(s.note)}</span>` : ""}</td>
+        <td class="mut">${esc(dt(s.lastaccess))}</td>
+        <td class="mut">${s.rate !== null && s.rate !== undefined ? s.rate + "%" : "—"}</td>
+        <td class="mut">${Number(s.missed) || 0}</td>
+        <td>${Number(s.reviewedat) ? `<span class="pill ok">Reviewed ${esc(dt(s.reviewedat))}</span>` : `<span class="mut">Not reviewed</span>`}</td>
+        <td>
+          <div class="acts">
+            <a href="${esc(s.scheduleurl)}" target="_blank" rel="noopener">Schedule</a>
+            <a href="${esc(s.summariesurl)}" target="_blank" rel="noopener">Summaries</a>
+            <button type="button" class="sm" data-review="${s.id}">Reviewed ✓</button>
+          </div>
+          <div class="noteform">
+            <input type="text" maxlength="500" placeholder="Intervention note…" data-noteinput="${s.id}">
+            <button type="button" class="sm ghost" data-note="${s.id}">Save</button>
+          </div>
+        </td></tr>`).join("") + "</tbody>";
+    $("#table-panel").hidden = false;
+    $("#status").hidden = true;
+    document.querySelectorAll("[data-review]").forEach((b) => b.addEventListener("click", () => post("mark_reviewed", { studentid: Number(b.dataset.review) })));
+    document.querySelectorAll("[data-note]").forEach((b) => b.addEventListener("click", () => {
+      const inp = document.querySelector(`[data-noteinput="${b.dataset.note}"]`);
+      post("add_note", { studentid: Number(b.dataset.note), note: inp ? inp.value : "" });
+    }));
+  }
+
+  async function post(action, payload) {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "at-risk-report", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ do: action }, payload)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  function csv() {
+    if (!data || !(data.students || []).length) return;
+    const headers = ["Student", "Account", "Teacher", "Risk level", "Reasons", "Last activity", "Attendance 30d", "Missed 30d", "Reviewed", "Latest note"];
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const rows = data.students.map((s) => [
+      s.name, s.account, s.teacher, s.level.charAt(0).toUpperCase() + s.level.slice(1),
+      (s.reasons || []).join("; "),
+      Number(s.lastaccess) ? dt(s.lastaccess) : "Never",
+      s.rate !== null && s.rate !== undefined ? s.rate + "%" : "-",
+      Number(s.missed) || 0,
+      Number(s.reviewedat) ? dt(s.reviewedat) : "-",
+      s.note,
+    ]);
+    const blob = new Blob([[headers.map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "at-risk-students-" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + ".csv";
+    a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  $("#csv").addEventListener("click", csv);
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  load();
+})();
+</script>
+</body>
+</html>

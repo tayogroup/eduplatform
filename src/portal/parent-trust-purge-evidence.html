@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parent trust purge evidence · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 14px}
+  .metric b{display:block;font-size:24px;color:var(--blue2)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-weight:800;color:var(--ink2);background:#fbfdff}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
+  .note{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;font-size:13px;margin-bottom:14px}
+  .note.amber{background:var(--amber-bg);color:var(--amber)}
+  form.export{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+  .in{min-height:38px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;font-size:13px;flex:1;min-width:220px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue2);border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  @media(max-width:900px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}table{display:block;overflow:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Parent trust purge evidence</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_parent_trust_purge_evidence.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Parent trust purge evidence</h1><p class="sub" id="subtitle">Recovery snapshot for a purge audit row.</p></div>
+  <div id="status" class="status">Loading purge evidence…</div>
+  <div id="content" hidden>
+    <div class="panel">
+      <h2>Evidence export controls</h2>
+      <p class="note">Exports include recovery evidence for deleted support-audit rows. A reason is required and every download is written to the audit trail.</p>
+      <div id="export-msg"></div>
+      <form class="export" id="export-form">
+        <input class="in" type="text" id="export-reason" maxlength="255" placeholder="Export reason, case number, or reviewer request" required>
+        <button class="btn light" type="submit" data-format="csv">Export CSV</button>
+        <button class="btn" type="submit" data-format="json">Export JSON</button>
+      </form>
+    </div>
+
+    <div class="metrics" id="metrics"></div>
+
+    <div class="panel">
+      <h2>Purge run summary</h2>
+      <table id="summary-table"></table>
+    </div>
+
+    <div class="grid2">
+      <div class="panel"><h2>Action counts</h2><table id="action-counts"></table></div>
+      <div class="panel"><h2>Reason counts</h2><table id="reason-counts"></table></div>
+    </div>
+
+    <div class="panel">
+      <h2>Sample rows</h2>
+      <table id="samples"></table>
+    </div>
+
+    <div class="panel">
+      <h2>Access &amp; export audit review</h2>
+      <table id="history"></table>
+    </div>
+
+    <div class="panel">
+      <h2>Record IDs</h2>
+      <p class="code" id="record-ids"></p>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const id = (qs.get("id") || "0").replace(/[^0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString() : "";
+  let DATA = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+  if (Number(id) <= 0) { $("#status").className = "status error"; $("#status").textContent = "Missing purge evidence record id."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "parent-trust-purge-evidence", token, id });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      DATA = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const row = (cells) => "<tr>" + cells.map((c) => "<td>" + c + "</td>").join("") + "</tr>";
+  const yn = (b) => b ? "Yes" : "No";
+
+  function render(d) {
+    $("#title").textContent = "Purge evidence — audit #" + d.record.id;
+    $("#subtitle").textContent = "Recovery snapshot for audit row #" + d.record.id + ", logged " + d.record.timecreated_label + ".";
+
+    const s = d.summary;
+    $("#metrics").innerHTML = [
+      ["#" + s.record_id_count, "snapshot records"],
+      [s.deleted_count, "deleted count"],
+      [s.staff_count, "staff involved"],
+      [s.student_count, "students involved"],
+      [s.retention_days, "retention days"],
+    ].map((m) => `<div class="metric"><b>${esc(m[0])}</b><span>${esc(m[1])}</span></div>`).join("");
+
+    const evClass = d.record.action === "parent_trust_purge_blocked" ? "bad" : (d.record.action === "parent_trust_purge_started" ? "warn" : "");
+    $("#summary-table").innerHTML =
+      row(["<th>Item</th>", "<th>Value</th>"]).replace(/<td>/g, "").replace(/<\/td>/g, "") +
+      row([`Event`, `<span class="pill ${evClass}">${esc(d.record.action_label)}</span>`]) +
+      row([`Admin`, `${esc(d.record.admin_name)} <span class="code">#${esc(d.record.actorid)}</span>`]) +
+      row([`Cutoff`, esc(s.cutoff ? s.cutoff_label : "Not recorded")]) +
+      row([`Export confirmed`, yn(s.export_confirmed)]) +
+      row([`Approval OK`, yn(s.approval_ok)]) +
+      row([`Candidate / Deleted`, esc(s.candidate_count + " / " + s.deleted_count)]) +
+      row([`Blocked reasons`, esc(s.block_reasons.length ? s.block_reasons.join(", ") : "None")]) +
+      row([`Sample IDs`, `<span class="code">${esc(s.sample_ids.length ? s.sample_ids.join(", ") : "None")}</span>`]) +
+      row([`Oldest / newest deleted event`, esc((s.oldest ? s.oldest_label : "n/a") + " - " + (s.newest ? s.newest_label : "n/a"))]);
+
+    $("#action-counts").innerHTML = "<tr><th>Action</th><th>Count</th></tr>" +
+      (d.actioncounts.length ? d.actioncounts.map((a) => row([esc(a.action.replace(/_/g, " ")), esc(a.count)])).join("") : row(["No action counts recorded.", ""]));
+    $("#reason-counts").innerHTML = "<tr><th>Reason</th><th>Count</th></tr>" +
+      (d.reasoncounts.length ? d.reasoncounts.map((a) => row([esc(a.reason), esc(a.count)])).join("") : row(["No reason counts recorded.", ""]));
+
+    $("#samples").innerHTML = "<tr><th>ID</th><th>Action</th><th>Staff</th><th>Target</th><th>Time</th><th>Reason</th></tr>" +
+      (d.samples.length ? d.samples.map((x) => row([
+        `<span class="code">#${esc(x.id)}</span>`,
+        esc(x.action.replace(/_/g, " ")),
+        `<span class="code">#${esc(x.actorid)}</span>`,
+        `<span class="code">${esc(x.targettype)} #${esc(x.targetid)}</span>`,
+        esc(x.time_label),
+        esc(x.reason),
+      ])).join("") : row(["No sample rows recorded.", "", "", "", "", ""]));
+
+    $("#history").innerHTML = "<tr><th>Time</th><th>Admin</th><th>Action</th><th>Reason / Details</th></tr>" +
+      (d.accesshistory.length ? d.accesshistory.map((h) => row([
+        `${esc(h.time_label)}<br><span class="code">#${esc(h.id)}</span>`,
+        `${esc(h.admin_name)}<br><span class="code">#${esc(h.actorid)}</span>`,
+        `<span class="pill ${h.action === "parent_trust_purge_evidence_exported" ? "warn" : ""}">${esc(h.action.replace(/_/g, " "))}</span>`,
+        h.action === "parent_trust_purge_evidence_exported"
+          ? `<span class="code">format: ${esc(h.format)}; reason: ${esc(h.export_reason || "Not recorded")}</span>`
+          : `<span class="code">records: ${esc(h.record_id_count)}</span>`,
+      ])).join("") : row(["No evidence access has been logged yet.", "", "", ""]));
+
+    $("#record-ids").textContent = s.record_ids.length ? s.record_ids.join(", ") : "No full ID list recorded.";
+
+    if (!d.has_evidence) {
+      const n = document.createElement("div");
+      n.className = "note amber";
+      n.textContent = "This purge audit row has no evidence snapshot. Blocked purge attempts may only contain safeguard details.";
+      $("#content").insertBefore(n, $("#content").firstChild);
+    }
+
+    $("#status").hidden = true;
+    $("#content").hidden = false;
+  }
+
+  // ---- client-side export (audit written server-side, file built here) ----------
+  const csvCell = (v) => {
+    const s = String(v ?? "");
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+  const csvRow = (cells) => cells.map(csvCell).join(",");
+
+  function buildCsv(ex) {
+    const ev = ex.evidence_snapshot || {};
+    const lines = [];
+    lines.push(csvRow(["section", "key", "value"]));
+    lines.push(csvRow(["purge", "audit_id", ex.audit_id]));
+    lines.push(csvRow(["purge", "action", ex.audit_action]));
+    lines.push(csvRow(["purge", "logged_at", ex.purge_logged_at_readable]));
+    lines.push(csvRow(["purge", "admin_userid", ex.admin_userid]));
+    lines.push(csvRow(["purge", "admin_name", ex.admin_name]));
+    lines.push(csvRow(["purge", "retention_days", ex.retention_days]));
+    lines.push(csvRow(["purge", "export_confirmed", ex.export_confirmed ? "yes" : "no"]));
+    lines.push(csvRow(["purge", "approval_ok", ex.approval_ok ? "yes" : "no"]));
+    lines.push(csvRow(["purge", "candidate_count", ex.candidate_count]));
+    lines.push(csvRow(["purge", "deleted_count", ex.deleted_count]));
+    lines.push(csvRow(["purge", "export_reason", ex.export_reason]));
+    lines.push(csvRow(["snapshot", "record_id_count", ev.record_id_count || 0]));
+    lines.push(csvRow(["snapshot", "staff_count", ev.staff_count || 0]));
+    lines.push(csvRow(["snapshot", "student_count", ev.student_count || 0]));
+    lines.push(csvRow(["snapshot", "oldest_timecreated", ev.oldest_timecreated ? when(ev.oldest_timecreated) : ""]));
+    lines.push(csvRow(["snapshot", "newest_timecreated", ev.newest_timecreated ? when(ev.newest_timecreated) : ""]));
+    Object.entries(ev.action_counts || {}).forEach(([k, v]) => lines.push(csvRow(["action_count", k, v])));
+    Object.entries(ev.reason_counts || {}).forEach(([k, v]) => lines.push(csvRow(["reason_count", k, v])));
+    lines.push("");
+    lines.push(csvRow(["sample_id", "action", "actorid", "targettype", "targetid", "timecreated", "reason", "case_status", "support_case_id"]));
+    (ev.sample_rows || []).forEach((x) => lines.push(csvRow([
+      x.id || 0, x.action || "", x.actorid || 0, x.targettype || "", x.targetid || 0,
+      x.timecreated ? when(x.timecreated) : "", x.reason || "", x.case_status || "", x.support_case_id || 0,
+    ])));
+    return lines.join("\n");
+  }
+
+  function download(name, text, mime) {
+    const blob = new Blob([text], { type: mime });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  $("#export-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const format = (ev.submitter && ev.submitter.dataset.format) || "csv";
+    const reason = $("#export-reason").value.trim();
+    const msg = $("#export-msg");
+    if (!reason) { msg.innerHTML = '<div class="note amber">Enter a compliance reason before downloading purge evidence.</div>'; return; }
+    Array.from($("#export-form").querySelectorAll("button")).forEach((b) => b.disabled = true);
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "parent-trust-purge-evidence", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ do: "export", id: Number(id), format, export_reason: reason }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      const base = "parent-trust-purge-evidence-" + d.export.audit_id;
+      if (format === "json") download(base + ".json", JSON.stringify(d.export, null, 2), "application/json");
+      else download(base + ".csv", buildCsv(d.export), "text/csv");
+      msg.innerHTML = '<div class="note">Export logged to the audit trail and downloaded.</div>';
+      load();
+    } catch (e) {
+      msg.innerHTML = '<div class="note amber">Could not export: ' + esc(e.message) + "</div>";
+    } finally {
+      Array.from($("#export-form").querySelectorAll("button")).forEach((b) => b.disabled = false);
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

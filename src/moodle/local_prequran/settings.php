@@ -595,5 +595,13 @@ if ($hassiteconfig) {
         PARAM_URL
     ));
 
+    $settings->add(new admin_setting_configtextarea(
+        'local_prequran/progress_allowed_origins',
+        'Progress gateway allowed origins',
+        'Origins (one per line) permitted to call the progress gateway from the browser. Blank = the Ehel CDN + app.ehelacademy.org defaults. The launch-token signing secret auto-generates into progress_launch_secret; blank that config to rotate it.',
+        '',
+        PARAM_RAW_TRIMMED
+    ));
+
     $ADMIN->add('localplugins', $settings);
 }

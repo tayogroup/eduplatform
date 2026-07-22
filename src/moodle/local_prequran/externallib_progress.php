@@ -221,25 +221,34 @@ class local_prequran_progress_external extends external_api {
     }
 
     public static function progress_ingest($userid, $course, $contract, $events_json, $pq_env = '') {
-        global $DB;
-
         $params = self::validate_parameters(self::progress_ingest_parameters(), [
             'userid' => $userid, 'course' => $course, 'contract' => $contract,
             'events_json' => $events_json, 'pq_env' => $pq_env,
         ]);
         self::set_environment_override((string)($params['pq_env'] ?? ''));
-        $env = self::normalise_env((string)($params['pq_env'] ?? ''));
         $userid = (int)$params['userid'];
         $coursekey = (string)$params['course'];
         self::assert_progress_allowed($userid);
 
-        if (!self::table_exists('local_prequran_progress')) {
-            return ['ok' => false, 'message' => 'Progress schema is not installed yet.', 'accepted' => 0, 'durable' => 0, 'dropped' => 0, 'stateversion' => 0];
-        }
-
         $events = json_decode((string)$params['events_json'], true);
         if (!is_array($events)) {
             throw new invalid_parameter_exception('events_json must be a JSON array of events.');
+        }
+
+        return self::ingest_events($userid, $coursekey, $events, (string)($params['pq_env'] ?? ''));
+    }
+
+    /**
+     * The authoritative ingest path, shared by the WS above (after its
+     * self/siteadmin assert) and the launch-token gateway (after JWT verify).
+     * Callers MUST have authorised $userid before calling.
+     */
+    public static function ingest_events(int $userid, string $coursekey, array $events, string $env): array {
+        global $DB;
+        $env = self::normalise_env($env);
+
+        if (!self::table_exists('local_prequran_progress')) {
+            return ['ok' => false, 'message' => 'Progress schema is not installed yet.', 'accepted' => 0, 'durable' => 0, 'dropped' => 0, 'stateversion' => 0];
         }
 
         // Group events by unit; order within a unit by seq then at.
@@ -338,16 +347,25 @@ class local_prequran_progress_external extends external_api {
     }
 
     public static function progress_get($userid, $course, $pq_env = '') {
-        global $DB;
-
         $params = self::validate_parameters(self::progress_get_parameters(), [
             'userid' => $userid, 'course' => $course, 'pq_env' => $pq_env,
         ]);
         self::set_environment_override((string)($params['pq_env'] ?? ''));
-        $env = self::normalise_env((string)($params['pq_env'] ?? ''));
         $userid = (int)$params['userid'];
         $coursekey = (string)$params['course'];
         self::assert_progress_allowed($userid);
+
+        $doc = self::state_document($userid, $coursekey, (string)($params['pq_env'] ?? ''));
+        return ['ok' => true, 'course' => $coursekey, 'student' => $userid, 'stateversion' => (int)$doc['stateVersion'], 'state_json' => json_encode($doc, JSON_UNESCAPED_SLASHES)];
+    }
+
+    /**
+     * The hydrate document (contract shape), shared by the WS above and the
+     * launch-token gateway. Callers MUST have authorised $userid first.
+     */
+    public static function state_document(int $userid, string $coursekey, string $env): array {
+        global $DB;
+        $env = self::normalise_env($env);
 
         $units = new stdClass();
         $stateversion = 0;
@@ -362,8 +380,7 @@ class local_prequran_progress_external extends external_api {
             }
         }
 
-        $doc = ['course' => $coursekey, 'student' => $userid, 'stateVersion' => $stateversion, 'units' => $units];
-        return ['ok' => true, 'course' => $coursekey, 'student' => $userid, 'stateversion' => $stateversion, 'state_json' => json_encode($doc, JSON_UNESCAPED_SLASHES)];
+        return ['course' => $coursekey, 'student' => $userid, 'stateVersion' => $stateversion, 'units' => $units];
     }
 
     public static function progress_get_returns() {

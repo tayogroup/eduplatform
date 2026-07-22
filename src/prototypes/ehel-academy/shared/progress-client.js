@@ -109,14 +109,18 @@ function remoteBackend({ course, student, endpoint, token }) {
   return {
     kind: "remote",
     async persist(events, { beacon = false } = {}) {
-      const body = JSON.stringify({ contract: CONTRACT, student, course, session: sessionId(), sentAt: nowIso(), events: wire(events) });
+      const envelope = { contract: CONTRACT, student, course, session: sessionId(), sentAt: nowIso(), events: wire(events) };
       const url = `${endpoint}/progress/ingest`;
       if (beacon && navigator.sendBeacon) {
-        // Page is unloading — fire-and-forget. Token rides in the body for beacons
-        // (no custom headers allowed); the edge accepts it there for beacon posts.
-        navigator.sendBeacon(url, new Blob([body], { type: "application/json" }));
+        // Page is unloading — fire-and-forget. The token rides IN the body
+        // (sendBeacon cannot set headers) and the content type stays
+        // CORS-safelisted (text/plain) so cross-origin beacons deliver without
+        // a preflight; the gateway parses the raw body regardless.
+        const beaconBody = JSON.stringify({ ...envelope, token });
+        navigator.sendBeacon(url, new Blob([beaconBody], { type: "text/plain;charset=UTF-8" }));
         return { accepted: events.length, ok: true, beacon: true };
       }
+      const body = JSON.stringify(envelope);
       const r = await fetch(url, { method: "POST", headers: auth(), body, keepalive: true });
       if (!r.ok) throw new Error(`ingest ${r.status}`);
       return r.json();

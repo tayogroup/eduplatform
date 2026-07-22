@@ -89,14 +89,14 @@ function pqpd_names(array $userids): array {
     global $DB;
     $userids = array_values(array_unique(array_filter(array_map('intval', $userids))));
     if (!$userids) {
-        return new stdClass();
+        return [];
     }
     $users = $DB->get_records_list('user', 'id', $userids, '', 'id,firstname,lastname,firstnamephonetic,lastnamephonetic,middlename,alternatename');
     $names = [];
     foreach ($users as $user) {
         $names[(int)$user->id] = fullname($user);
     }
-    return (object)$names;
+    return $names; // int-keyed → JSON-encodes as an object map
 }
 
 // ---- filters (identical semantics to the PHP page) --------------------------

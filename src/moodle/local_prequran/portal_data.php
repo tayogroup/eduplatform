@@ -101,6 +101,14 @@ function pqpd_names(array $userids): array {
 
 // ---- filters (identical semantics to the PHP page) --------------------------
 
+// API endpoints must answer JSON even when something breaks — surface the real
+// error instead of Moodle's HTML error page.
+set_exception_handler(function (Throwable $e) {
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'error' => get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine()]);
+    exit;
+});
+
 $now = time();
 $defaultfrom = usergetmidnight($now - (30 * DAYSECS));
 $defaultto = usergetmidnight($now) + DAYSECS - 1;

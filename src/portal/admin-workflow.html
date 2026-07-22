@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin workflow · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 10px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:360px 1fr;gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .queues{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:16px}
+  @media(max-width:700px){.queues{grid-template-columns:repeat(2,1fr)}}
+  .queue{border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--sky)}
+  .queue strong{display:block;font-size:13px}
+  form.wf label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.wf input,form.wf select,form.wf textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.wf textarea{min-height:64px;resize:vertical}
+  form.wf button{margin-top:12px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.wf button:disabled{opacity:.55;cursor:wait}
+  form.inline{margin:0}
+  form.inline select,form.inline input{margin-bottom:5px;width:100%;border:1px solid var(--line);border-radius:6px;padding:6px 8px;font:inherit;font-size:12px;background:var(--card);color:var(--ink)}
+  form.inline button{background:var(--sky);color:var(--blue2);border:1px solid var(--line);border-radius:7px;padding:6px 12px;font-weight:900;font-size:12px;cursor:pointer}
+  hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .muted{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Admin workflow &amp; task queue</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of admin_workflow.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Admin workflow &amp; task queue</h1><p class="sub" id="subtitle">Work queues, approvals, escalations, assignees, due dates, internal notes, and audit history.</p></div>
+  <div id="status" class="status">Loading workflow…</div>
+  <div class="queues" id="queues" hidden></div>
+  <div class="grid" id="body" hidden>
+    <div>
+      <div class="panel">
+        <h3>Create / update task</h3>
+        <form class="wf" id="task-form" data-do="save_task">
+          <label>Task ID for update (blank = create)</label><input name="taskid" inputmode="numeric">
+          <label>Queue</label><select name="queue" id="queue-select"></select>
+          <label>Title</label><input name="title">
+          <label>Task type</label><input name="tasktype" placeholder="general">
+          <label>Status</label><input name="status" placeholder="open">
+          <label>Priority</label><input name="priority" placeholder="normal">
+          <label>Due date (YYYY-MM-DD)</label><input name="duedate">
+          <label>Target type</label><input name="targettype">
+          <label>Target ID</label><input name="targetid" inputmode="numeric">
+          <label>Assigned staff</label><select name="assignedto" id="assigned-select"></select>
+          <label>Student</label><select name="studentid" id="student-select"></select>
+          <label>Escalate to</label><select name="escalatedto" id="escalate-select"></select>
+          <label><input type="checkbox" name="escalated" value="1" style="width:auto"> Escalated</label>
+          <label><input type="checkbox" name="approval_required" value="1" style="width:auto"> Approval required</label>
+          <label>Approval note</label><textarea name="approval_note"></textarea>
+          <label>Description</label><textarea name="description"></textarea>
+          <button type="submit">Save Task</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h3>Internal note</h3>
+        <form class="wf" id="note-form" data-do="add_note">
+          <label>Task</label><select name="taskid" id="note-task-select"></select>
+          <label>Visibility</label><select name="visibility"><option value="internal">Internal</option><option value="audit">Audit note</option><option value="handoff">Handoff</option></select>
+          <label>Note</label><textarea name="note"></textarea>
+          <button type="submit">Add Note</button>
+        </form>
+      </div>
+    </div>
+    <div>
+      <div class="panel"><h2>Work queue</h2><table><thead><tr><th>Task</th><th>Owner</th><th>Workflow</th><th>Approve</th></tr></thead><tbody id="tasks"></tbody></table></div>
+      <div class="panel"><h2>Internal notes</h2><table><thead><tr><th>Task</th><th>Author</th><th>Note</th></tr></thead><tbody id="notes"></tbody></table></div>
+      <div class="panel"><h2>Audit history</h2><table><thead><tr><th>Task</th><th>Actor</th><th>Action</th></tr></thead><tbody id="audits"></tbody></table></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const cap = (s) => String(s || "").charAt(0).toUpperCase() + String(s || "").slice(1);
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const workspaceid = qs.get("workspaceid") || "0";
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "admin-workflow", token, workspaceid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const approveForm = (t) => `
+    <form class="inline" data-do="approve_task" data-taskid="${t.id}">
+      <select name="status"><option value="approved">Approved</option><option value="needs_changes">Needs changes</option><option value="closed">Closed</option></select>
+      <input name="decision_note" placeholder="Decision note">
+      <button type="submit">Save</button>
+    </form>`;
+
+  function render(d) {
+    $("#title").textContent = "Admin workflow — " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Admin workflow schema is not ready. Run the Moodle upgrade.";
+    } else {
+      $("#status").hidden = true;
+    }
+    const queues = d.queues || [];
+    const counts = d.queuecounts || {};
+    $("#queues").innerHTML = queues.map((q) => `<div class="queue"><strong>${esc(cap(q))}</strong><div class="muted">${Number(counts[q] || 0)} active task(s)</div></div>`).join("");
+    $("#queues").hidden = false;
+    $("#queue-select").innerHTML = queues.map((q) => `<option value="${esc(q)}">${esc(cap(q))}</option>`).join("");
+
+    const staffOpts = '<option value="0">Unassigned</option>' + (d.staff || []).map((u) => `<option value="${u.id}">${esc(u.label)}</option>`).join("");
+    $("#assigned-select").innerHTML = staffOpts;
+    $("#escalate-select").innerHTML = '<option value="0">No escalation</option>' + (d.staff || []).map((u) => `<option value="${u.id}">${esc(u.label)}</option>`).join("");
+    $("#student-select").innerHTML = '<option value="0">No student</option>' + (d.students || []).map((s) => `<option value="${s.id}">${esc(s.label)}</option>`).join("");
+
+    const tasks = d.tasks || [];
+    $("#note-task-select").innerHTML = tasks.map((t) => `<option value="${t.id}">#${t.id} ${esc(t.title)}</option>`).join("") || '<option value="0">No tasks</option>';
+    $("#tasks").innerHTML = tasks.map((t) => `
+      <tr>
+        <td><strong>#${t.id} ${esc(t.title)}</strong><div class="muted">${esc((t.queue || "") + " / " + (t.tasktype || ""))}</div></td>
+        <td>${esc(t.assignee_name || "")}<div class="muted">${esc(t.student_name || "")}</div></td>
+        <td><span class="pill">${esc(t.status)}</span> <span class="pill">${esc(t.priority)}</span><div class="muted">Due ${esc(t.duedate_label)}${Number(t.escalated) ? " / escalated" : ""}</div></td>
+        <td>${approveForm(t)}</td>
+      </tr>`).join("") || '<tr><td colspan="4" class="muted">No workflow tasks yet.</td></tr>';
+
+    $("#notes").innerHTML = (d.notes || []).map((n) => `
+      <tr>
+        <td>#${n.taskid}<div class="muted">${esc(n.visibility)}</div></td>
+        <td>${esc(n.author_name || "")}<div class="muted">${esc(n.timecreated_label)}</div></td>
+        <td>${esc(n.note_excerpt || "")}</td>
+      </tr>`).join("") || '<tr><td colspan="3" class="muted">No internal notes yet.</td></tr>';
+
+    $("#audits").innerHTML = (d.audits || []).map((a) => `
+      <tr>
+        <td>#${a.taskid}</td>
+        <td>${esc(a.actor_name || "")}<div class="muted">${esc(a.timecreated_label)}</div></td>
+        <td><span class="pill">${esc(a.action)}</span></td>
+      </tr>`).join("") || '<tr><td colspan="3" class="muted">No audit entries yet.</td></tr>';
+
+    $("#body").hidden = false;
+    document.querySelectorAll("form.inline").forEach((f) => f.addEventListener("submit", submitInline));
+  }
+
+  async function post(payload) {
+    const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "admin-workflow", token }), {
+      method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    return d;
+  }
+
+  async function submitForm(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "Saving…";
+    const payload = { do: f.dataset.do };
+    for (const el of f.elements) {
+      if (!el.name) continue;
+      payload[el.name] = el.type === "checkbox" ? (el.checked ? 1 : 0) : el.value;
+    }
+    try {
+      const d = await post(payload);
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      f.reset();
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = label;
+    }
+  }
+
+  async function submitInline(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "…";
+    try {
+      const d = await post({ do: "approve_task", taskid: Number(f.dataset.taskid), status: f.status.value, decision_note: f.decision_note.value });
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Save";
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  document.querySelectorAll("form.wf").forEach((f) => f.addEventListener("submit", submitForm));
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student progress &amp; learning path · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 8px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:360px 1fr;gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .cards{display:grid;gap:10px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  form.wf label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.wf input,form.wf select,form.wf textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.wf textarea{min-height:64px;resize:vertical}
+  form.wf button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.wf button:disabled{opacity:.55;cursor:wait}
+  form.wf+form.wf{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  .diag{border-left:3px solid var(--amber);background:var(--amber-bg);color:var(--ink2);padding:9px 12px;border-radius:6px;font-size:13px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Student progress &amp; learning path</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of learning_path.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Student progress &amp; learning path</h1><p class="sub" id="subtitle">Placement, advancement rules, mastery, skill maps, recommendations and intervention plans.</p></div>
+  <div id="status" class="status">Loading learning paths…</div>
+  <div class="grid" id="grid" hidden>
+    <section class="panel" id="forms-panel">
+      <div id="diagnostics"></div>
+      <div id="manage-forms" hidden>
+        <h3>Skill map</h3>
+        <form class="wf" data-do="save_skill">
+          <label>Skill key</label><input name="skill_key">
+          <label>Domain</label><input name="domain" value="quran">
+          <label>Title</label><input name="title">
+          <label>Level band</label><input name="level_band">
+          <label>Prerequisites</label><input name="prerequisite_keys">
+          <label>Sort order</label><input name="sortorder" value="0">
+          <label>Status</label><input name="status" value="active">
+          <label>Description</label><textarea name="description"></textarea>
+          <button type="submit">Save skill</button>
+        </form>
+        <form class="wf" data-do="save_rule">
+          <h3>Advancement rule</h3>
+          <label>From level</label><input name="from_level">
+          <label>To level</label><input name="to_level">
+          <label>Required mastery %</label><input name="required_mastery_percent" value="80">
+          <label>Required attendance %</label><input name="required_attendance_percent" value="70">
+          <label>Required grade %</label><input name="required_grade_percent" value="70">
+          <label>Recommended course key</label><input name="recommended_course_key">
+          <label>Status</label><input name="status" value="active">
+          <label>Notes</label><textarea name="notes"></textarea>
+          <button type="submit">Save rule</button>
+        </form>
+      </div>
+      <form class="wf" data-do="save_mastery">
+        <h3>Mastery tracking</h3>
+        <label>Student</label><select name="studentid" data-role="students"></select>
+        <label>Skill</label><select name="skillid" data-role="skills"></select>
+        <label>Mastery status</label><input name="mastery_status" value="introduced">
+        <label>Mastery percent</label><input name="mastery_percent" value="0">
+        <label>Evidence</label><input name="evidence">
+        <label>Teacher comment</label><textarea name="teacher_comment"></textarea>
+        <button type="submit">Save mastery</button>
+      </form>
+      <form class="wf" data-do="save_path">
+        <h3>Student path</h3>
+        <label>Student</label><select name="studentid" data-role="students"></select>
+        <label>Placement level</label><input name="placement_level">
+        <label>Current level</label><input name="current_level">
+        <label>Advancement status</label><input name="advancement_status">
+        <label>Recommended course key</label><input name="recommended_course_key">
+        <label>Recommendation reason</label><input name="recommendation_reason">
+        <label>Teacher comment</label><textarea name="teacher_comment"></textarea>
+        <button type="submit">Save path</button>
+      </form>
+      <form class="wf" data-do="save_intervention">
+        <h3>Intervention plan</h3>
+        <label>Student</label><select name="studentid" data-role="students"></select>
+        <label>Plan type</label><input name="plan_type" value="learning_support">
+        <label>Priority</label><input name="priority" value="normal">
+        <label>Status</label><input name="status" value="open">
+        <label>Due date</label><input name="duedate" type="date">
+        <label>Concern</label><textarea name="concern"></textarea>
+        <label>Goal</label><textarea name="goal"></textarea>
+        <label>Actions</label><textarea name="actions"></textarea>
+        <label>Resolution</label><textarea name="resolution"></textarea>
+        <button type="submit">Save intervention</button>
+      </form>
+    </section>
+    <section class="panel">
+      <h2>Student paths</h2>
+      <table><thead><tr><th>Student</th><th>Level</th><th>Recommendation</th></tr></thead><tbody id="paths"></tbody></table>
+      <h2 style="margin-top:18px">Mastery</h2>
+      <table><thead><tr><th>Student</th><th>Skill</th><th>Mastery</th></tr></thead><tbody id="mastery"></tbody></table>
+      <h2 style="margin-top:18px">Advancement rules</h2>
+      <table><thead><tr><th>From</th><th>To</th><th>Requirements</th></tr></thead><tbody id="rules"></tbody></table>
+      <h2 style="margin-top:18px">Intervention plans</h2>
+      <table><thead><tr><th>Student</th><th>Plan</th><th>Status</th></tr></thead><tbody id="interventions"></tbody></table>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = (qs.get("workspaceid") || "0").replace(/[^0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "learning-path", token, workspaceid });
+  let state = null;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      state = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function fillSelects(d) {
+    const studentOpts = (d.students || []).map((s) => `<option value="${s.id}">${esc(s.name)}${s.email ? " / " + esc(s.email) : ""}</option>`).join("");
+    const skillOpts = (d.skills || []).map((s) => `<option value="${s.id}">${esc(s.title)} / ${esc(s.domain)}</option>`).join("");
+    document.querySelectorAll('select[data-role="students"]').forEach((el) => { el.innerHTML = studentOpts; });
+    document.querySelectorAll('select[data-role="skills"]').forEach((el) => { el.innerHTML = skillOpts; });
+  }
+
+  function render(d) {
+    $("#title").textContent = "Learning path — " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+    const diag = $("#diagnostics");
+    diag.innerHTML = d.ready ? "" : '<div class="diag">Learning-path schema is not ready. Run the Moodle local_prequran upgrade.</div>';
+    $("#manage-forms").hidden = !d.canmanage;
+    fillSelects(d);
+
+    $("#paths").innerHTML = (d.paths || []).map((p) =>
+      `<tr><td><strong>${esc(p.fullname)}</strong><div class="muted">${esc(p.email)}</div></td>`
+      + `<td>${esc((p.placement_level || "") + " -> " + (p.current_level || ""))}<br><span class="pill">${esc(p.advancement_status || "")}</span></td>`
+      + `<td>${esc(p.recommended_course_key || "")}<div class="muted">${esc(p.recommendation_reason || "")}</div></td></tr>`
+    ).join("") || '<tr><td colspan="3" class="muted">No student paths yet.</td></tr>';
+
+    $("#mastery").innerHTML = (d.mastery || []).map((m) =>
+      `<tr><td><strong>${esc(m.fullname)}</strong></td>`
+      + `<td>${esc((m.skill_title || "") + " / " + (m.domain || ""))}</td>`
+      + `<td><span class="pill">${esc((m.mastery_status || "") + " / " + (m.mastery_percent || "") + "%")}</span><div class="muted">${esc(m.teacher_comment || "")}</div></td></tr>`
+    ).join("") || '<tr><td colspan="3" class="muted">No mastery records yet.</td></tr>';
+
+    $("#rules").innerHTML = (d.rules || []).map((r) =>
+      `<tr><td>${esc(r.from_level || "")}</td>`
+      + `<td>${esc((r.to_level || "") + " / " + (r.recommended_course_key || ""))}</td>`
+      + `<td>Mastery ${esc(r.required_mastery_percent || "")}% / Attendance ${esc(r.required_attendance_percent || "")}% / Grade ${esc(r.required_grade_percent || "")}%</td></tr>`
+    ).join("") || '<tr><td colspan="3" class="muted">No advancement rules yet.</td></tr>';
+
+    $("#interventions").innerHTML = (d.interventions || []).map((i) =>
+      `<tr><td><strong>${esc(i.fullname)}</strong></td>`
+      + `<td>${esc((i.plan_type || "") + " / " + (i.priority || ""))}<div class="muted">${esc(i.goal || "")}</div></td>`
+      + `<td><span class="pill">${esc(i.status || "")}</span></td></tr>`
+    ).join("") || '<tr><td colspan="3" class="muted">No intervention plans yet.</td></tr>';
+
+    $("#status").hidden = true;
+    $("#grid").hidden = false;
+  }
+
+  async function submitForm(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "Saving…";
+    const payload = { do: f.dataset.do };
+    f.querySelectorAll("input,select,textarea").forEach((el) => { if (el.name) payload[el.name] = el.value; });
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "learning-path", token, workspaceid }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      f.reset();
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = label;
+    }
+  }
+
+  document.querySelectorAll("form.wf").forEach((f) => f.addEventListener("submit", submitForm));
+  load();
+})();
+</script>
+</body>
+</html>

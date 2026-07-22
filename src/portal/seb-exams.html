@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safe Exam Browser exams · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:minmax(320px,380px) minmax(0,1fr);gap:16px;align-items:start}
+  @media(max-width:960px){.grid{grid-template-columns:1fr}}
+  .field{margin-bottom:12px}
+  .field label{display:block;margin:0 0 4px;color:var(--ink2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+  .field input,.field select,.field textarea{width:100%;box-sizing:border-box;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:0 11px;background:var(--card);color:var(--ink);font:550 13px/1.3 inherit}
+  .field textarea{padding:9px 11px;min-height:56px;resize:vertical}
+  .checks{max-height:170px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:6px}
+  .check{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:6px;font-size:13px;font-weight:600;color:var(--ink)}
+  .check:hover{background:var(--sky)}
+  .check input{width:auto;min-height:0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 15px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13.5px;font-weight:800;cursor:pointer}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .btn.light{background:var(--card);color:var(--ink);border:1px solid var(--line);min-height:32px;padding:0 11px;font-size:12.5px;font-weight:700}
+  .btn.light:hover{background:var(--sky)}
+  .exam{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px;background:var(--card)}
+  .exam.archived{opacity:.6}
+  .exam h3{margin:0 0 4px;font-size:15px}
+  .exam .meta{margin:0 0 10px}
+  .rowactions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin:0 6px 4px 0;background:var(--sky);color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .empty{border:1px dashed var(--line);border-radius:10px;padding:22px;text-align:center;color:var(--muted);font-weight:600}
+  .hint{color:var(--muted);font-size:11.5px;margin-top:3px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Safe Exam Browser exams</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of seb_exams.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Safe Exam Browser exams</h1>
+    <p class="sub">Create locked exams, assign students, and share launch links. Students need Safe Exam Browser installed (Windows, macOS, iPad).</p>
+  </div>
+  <div id="status" class="status">Loading exams…</div>
+  <div id="notice" class="status saved" hidden></div>
+  <div class="grid" id="grid" hidden>
+    <section class="panel" aria-label="Create exam">
+      <h2>Create exam</h2>
+      <form id="create-form">
+        <div class="field"><label for="f-title">Title</label><input id="f-title" name="title" type="text" required></div>
+        <div class="field"><label for="f-desc">Description</label><textarea id="f-desc" name="description" placeholder="Shown to students before they begin"></textarea></div>
+        <div class="field">
+          <label for="f-mode">Exam mode</label>
+          <select id="f-mode" name="mode">
+            <option value="seb">Safe Exam Browser (locked - needs install, ages 13+)</option>
+            <option value="focus">Browser focus mode (no install - monitors, best for young learners)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-known">Exam content</label>
+          <select id="f-known" name="knowncontent"><option value="">Choose content…</option></select>
+        </div>
+        <div class="field"><label for="f-embed">Or custom content URL</label><input id="f-embed" name="embedurl" type="text" placeholder="/local/hubredirect/issue_child.php?goto=…"></div>
+        <div class="field"><label for="f-duration">Duration (minutes)</label><input id="f-duration" name="duration" type="number" min="5" max="240" value="30"></div>
+        <div class="field"><label for="f-wstart">Window opens</label><input id="f-wstart" name="window_start" type="datetime-local"></div>
+        <div class="field"><label for="f-wend">Window closes</label><input id="f-wend" name="window_end" type="datetime-local"></div>
+        <div class="field" id="quit-field"><label for="f-quit">Emergency exit password (Safe Exam Browser only)</label><input id="f-quit" name="quitpassword" type="text" placeholder="ehel-unlock"></div>
+        <div class="field" id="proctor-field" hidden>
+          <label class="check" style="text-transform:none;letter-spacing:0;font-size:13px;font-weight:600;align-items:flex-start"><input type="checkbox" id="f-proctor" name="proctoring" value="1" style="margin-top:3px"> <span>Camera + audio proctoring <span class="hint" style="display:block">Adults only. Takes webcam snapshots and flags voices for staff review, with student consent. Never applies to managed child accounts.</span></span></label>
+        </div>
+        <div class="field">
+          <label>Students</label>
+          <div id="students-box"></div>
+        </div>
+        <button class="btn" type="submit" id="create-btn">Create exam</button>
+      </form>
+    </section>
+    <section aria-label="Exams">
+      <div id="exams"></div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "seb-exams", token, workspaceid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    if (!d.tablesready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "The exam tables are not installed yet. Run local_prequran/sql/create_seb_exam_tables.sql, then reload.";
+      $("#grid").hidden = true;
+      return;
+    }
+    $("#status").hidden = true;
+    $("#grid").hidden = false;
+
+    // Known-content picker.
+    const known = $("#f-known");
+    known.innerHTML = '<option value="">Choose content…</option>' +
+      (d.knowncontent || []).map((c) => `<option value="${esc(c.url)}">${esc(c.label)}</option>`).join("");
+
+    // Assignable students.
+    const box = $("#students-box");
+    if ((d.students || []).length) {
+      box.className = "checks";
+      box.innerHTML = d.students.map((s) =>
+        `<label class="check"><input type="checkbox" name="studentids" value="${s.id}"> ${esc(s.name)}</label>`).join("");
+    } else {
+      box.className = "empty";
+      box.textContent = "No assigned students found. Link students to your account first.";
+    }
+
+    // Exam list.
+    const names = d.names || {};
+    const wrap = $("#exams");
+    if (!(d.exams || []).length) {
+      wrap.innerHTML = '<div class="empty">No exams yet. Create your first exam on the left.</div>';
+      return;
+    }
+    wrap.innerHTML = d.exams.map((e) => {
+      const pills = [
+        `<span class="pill">${esc(e.mode_label)}</span>`,
+        e.proctored ? '<span class="pill">Proctored</span>' : "",
+        `<span class="pill">${e.duration_minutes} min</span>`,
+        `<span class="pill">${esc(e.window_line)}</span>`,
+        `<span class="pill">${e.finished}/${e.assigned} submitted</span>`,
+        e.status === "archived" ? '<span class="pill">Archived</span>' : "",
+        !e.has_content ? '<span class="pill">No content URL</span>' : "",
+      ].join("");
+      const links = [
+        `<a class="btn light" href="${esc(e.results_url)}" target="_blank" rel="noopener">Results</a>`,
+        `<a class="btn light" href="${esc(e.exam_url)}" target="_blank" rel="noopener">Open exam page</a>`,
+        e.config_url ? `<a class="btn light" href="${esc(e.config_url)}" target="_blank" rel="noopener">Download config</a>` : "",
+        e.status === "active" ? `<button class="btn light" data-archive="${e.id}">Archive</button>` : "",
+      ].join("");
+      const author = e.createdby && names[e.createdby] ? ' · ' + esc(names[e.createdby]) : "";
+      return `<article class="exam ${e.status === "archived" ? "archived" : ""}">
+        <h3>${esc(e.title)}</h3>
+        <p class="meta">${pills}</p>
+        <div class="rowactions">${links}</div>
+        <p class="hint" style="margin-top:8px">${esc(e.description || "")}${author}</p>
+      </article>`;
+    }).join("");
+
+    wrap.querySelectorAll("button[data-archive]").forEach((b) => b.addEventListener("click", () => archive(Number(b.dataset.archive))));
+  }
+
+  // Mode toggle: quit password (SEB) vs proctoring (focus).
+  const mode = $("#f-mode");
+  function syncMode() {
+    const focus = mode.value === "focus";
+    $("#quit-field").hidden = focus;
+    $("#proctor-field").hidden = !focus;
+  }
+  mode.addEventListener("change", syncMode); syncMode();
+
+  async function post(payload, btn, okmsg) {
+    if (btn) { btn.disabled = true; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "seb-exams", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ workspaceid: Number(workspaceid) }, payload)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#notice").hidden = false; $("#notice").className = "status saved"; $("#notice").textContent = d.message || okmsg;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      $("#notice").hidden = false; $("#notice").className = "status error"; $("#notice").textContent = "Could not save: " + e.message;
+    } finally {
+      if (btn) { btn.disabled = false; }
+    }
+  }
+
+  $("#create-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const studentids = Array.from(f.querySelectorAll('input[name="studentids"]:checked')).map((c) => Number(c.value));
+    post({
+      do: "create",
+      title: f.title.value,
+      description: f.description.value,
+      mode: f.mode.value,
+      knowncontent: f.knowncontent.value,
+      embedurl: f.embedurl.value,
+      duration: Number(f.duration.value),
+      window_start: f.window_start.value,
+      window_end: f.window_end.value,
+      quitpassword: f.quitpassword.value,
+      proctoring: $("#f-proctor").checked ? 1 : 0,
+      studentids,
+    }, $("#create-btn"), "Exam created.");
+  });
+
+  function archive(examid) {
+    if (!confirm("Archive this exam? Students will no longer be able to take it.")) return;
+    post({ do: "archive", examid }, null, "Exam archived.");
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

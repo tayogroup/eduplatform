@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compliance &amp; data governance · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 8px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:4px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--sky)}
+  .metric strong{display:block;font-size:22px;color:var(--blue)}
+  .metric span{color:var(--ink2);font-size:12px;text-transform:capitalize}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:4px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  .check{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink2)}
+  .check input{width:auto}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  button.light{background:var(--sky);color:var(--blue)}
+  button:disabled{opacity:.55;cursor:wait}
+  .row-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .pill.hold{background:var(--amber-bg);color:var(--amber)}
+  .inline{display:flex;gap:6px;margin-top:6px}
+  .inline input{flex:1;border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:inherit;font-size:12px}
+  .filter{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+  .filter .field{margin:0;min-width:140px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Compliance &amp; data governance</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of compliance_governance.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Compliance, audit &amp; data governance</h1><p class="sub" id="subtitle">Retention, privacy controls, consent history, export/delete/anonymize workflows, and full audit reports.</p></div>
+  <div id="status" class="status">Loading governance console…</div>
+
+  <div class="panel" id="period-panel" hidden>
+    <h2>Audit period</h2>
+    <div class="filter">
+      <div class="field"><label>Start</label><input id="f-start" type="date"></div>
+      <div class="field"><label>End</label><input id="f-end" type="date"></div>
+      <button id="apply-period">Apply period</button>
+      <button class="light" id="export-csv">Export CSV</button>
+    </div>
+    <div class="metrics" id="metrics" style="margin-top:14px"></div>
+  </div>
+
+  <div class="grid">
+    <section class="panel" id="controls-panel" hidden>
+      <h2>Governance controls</h2>
+      <div id="readonly-note" class="sub" hidden style="margin-bottom:12px">You have audit read access. Managing workflows requires administrator rights.</div>
+
+      <div id="write-forms" hidden>
+        <h3>Retention rule</h3>
+        <form id="form-rule">
+          <div class="field"><label>Rule ID (blank to create)</label><input name="ruleid" inputmode="numeric"></div>
+          <div class="field"><label>Data domain</label><input name="data_domain" placeholder="student_records"></div>
+          <div class="field"><label>Record type</label><input name="record_type" placeholder="general"></div>
+          <div class="field"><label>Retention days</label><input name="retention_days" inputmode="numeric" placeholder="2555"></div>
+          <div class="field"><label>Disposition</label><input name="disposition" placeholder="review"></div>
+          <div class="field"><label>Status</label><input name="status" placeholder="active"></div>
+          <div class="field"><label>Policy basis</label><input name="basis"></div>
+          <div class="field"><label>Policy owner</label><input name="owner"></div>
+          <label class="check"><input type="checkbox" name="legal_hold" value="1"> Legal hold</label>
+          <div class="row-actions"><button type="submit">Save rule</button></div>
+        </form>
+        <hr>
+        <h3>Privacy workflow</h3>
+        <form id="form-privacy">
+          <div class="field"><label>Subject user</label><select name="subjectuserid" id="sel-subject"></select></div>
+          <div class="field"><label>Request type</label>
+            <select name="request_type">
+              <option value="export">Export</option>
+              <option value="delete">Delete review</option>
+              <option value="anonymize">Anonymize review</option>
+              <option value="rectify">Rectify</option>
+            </select>
+          </div>
+          <div class="field"><label>Assigned to</label><select name="assignedto" id="sel-assigned"></select></div>
+          <div class="field"><label>Due date</label><input name="duedate" type="date"></div>
+          <div class="field"><label>Scope</label><input name="scope" value="student,finance,grades,transcripts"></div>
+          <div class="field"><label>Notes</label><textarea name="request_notes"></textarea></div>
+          <div class="row-actions"><button type="submit">Queue workflow</button></div>
+        </form>
+        <hr>
+        <div class="row-actions">
+          <button class="light" id="btn-consent">Capture consent history</button>
+          <button class="light" id="btn-report">Generate full audit report</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="tables-panel" hidden>
+      <h3>Retention rules</h3>
+      <table><tbody id="t-rules"></tbody></table>
+      <h3 style="margin-top:16px">Privacy requests</h3>
+      <table><tbody id="t-requests"></tbody></table>
+      <h3 style="margin-top:16px">Queued privacy actions</h3>
+      <table><tbody id="t-actions"></tbody></table>
+      <h3 style="margin-top:16px">Consent history</h3>
+      <table><tbody id="t-consents"></tbody></table>
+      <h3 style="margin-top:16px">Generated audit reports</h3>
+      <table><tbody id="t-reports"></tbody></table>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { day:"numeric", month:"short", year:"numeric" }) : "none";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let state = null;
+
+  const url = (extra) => endpoint + "?" + new URLSearchParams({ report: "compliance-governance", token, ...extra });
+
+  async function load() {
+    try {
+      const params = {};
+      if ($("#f-start").value) params.start = $("#f-start").value;
+      if ($("#f-end").value) params.end = $("#f-end").value;
+      const r = await fetch(url(params));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      state = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const nameOf = (id) => { const n = state && state.names ? state.names[id] : null; return n || (id ? "User #" + id : "—"); };
+
+  function fillMetrics(d) {
+    $("#metrics").innerHTML = Object.entries(d.summary || {}).map(([k, v]) =>
+      `<div class="metric"><strong>${esc(v)}</strong><span>${esc(String(k).replace(/_/g, " "))}</span></div>`).join("");
+  }
+
+  function fillPickers(d) {
+    const opt = (u) => `<option value="${u.id}">${esc(u.name)} / ${esc(u.workspace_role)}</option>`;
+    $("#sel-subject").innerHTML = (d.users || []).map(opt).join("");
+    $("#sel-assigned").innerHTML = `<option value="0">Unassigned</option>` + (d.staff || []).map(opt).join("");
+  }
+
+  function fillTables(d) {
+    $("#t-rules").innerHTML = (d.rules || []).map((r) =>
+      `<tr><td><strong>${esc(r.data_domain + " / " + r.record_type)}</strong><div class="muted">${Number(r.retention_days)} days / ${esc(r.disposition)}</div></td>
+       <td><span class="pill">${esc(r.status)}</span>${Number(r.legal_hold) ? ' <span class="pill hold">legal hold</span>' : ""}</td></tr>`
+    ).join("") || `<tr><td class="muted">No retention rules yet.</td></tr>`;
+
+    const canmanage = d.canmanage;
+    $("#t-requests").innerHTML = (d.requests || []).map((q) =>
+      `<tr><td><strong>#${Number(q.id)} ${esc(q.request_type)}</strong><div class="muted">${esc(nameOf(Number(q.subjectuserid)))} · due ${esc(dateOnly(Number(q.duedate)))}</div></td>
+       <td><span class="pill">${esc(q.status)}</span>${canmanage ? completeForm(q) : ""}</td></tr>`
+    ).join("") || `<tr><td class="muted">No privacy requests yet.</td></tr>`;
+
+    $("#t-actions").innerHTML = (d.actions || []).map((a) =>
+      `<tr><td>#${Number(a.requestid)} / ${esc(a.target_table)}</td><td><span class="pill">${esc(a.action_type + " / " + a.status)}</span></td></tr>`
+    ).join("") || `<tr><td class="muted">No privacy actions yet.</td></tr>`;
+
+    $("#t-consents").innerHTML = (d.consents || []).map((c) =>
+      `<tr><td>${esc(nameOf(Number(c.studentid)))} / guardian ${esc(nameOf(Number(c.guardianid)))}<div class="muted">${esc(c.source_table + " #" + c.source_id)}</div></td>
+       <td><span class="pill">${esc(c.consent_type + " / " + (Number(c.consented) ? "consented" : "declined"))}</span></td></tr>`
+    ).join("") || `<tr><td class="muted">No captured consent history yet.</td></tr>`;
+
+    $("#t-reports").innerHTML = (d.reports || []).map((r) =>
+      `<tr><td><strong>#${Number(r.id)} ${esc(r.report_type)}</strong><div class="muted">${esc(dateOnly(Number(r.period_start)))} to ${esc(dateOnly(Number(r.period_end)))}</div></td>
+       <td><span class="pill">${esc(r.status)}</span></td></tr>`
+    ).join("") || `<tr><td class="muted">No generated audit reports yet.</td></tr>`;
+
+    document.querySelectorAll("form.complete").forEach((f) => f.addEventListener("submit", submitComplete));
+  }
+
+  const completeForm = (q) => `
+    <form class="complete" data-requestid="${Number(q.id)}">
+      <div class="inline"><input name="resolution" placeholder="Resolution"><button type="submit" class="light">Complete</button></div>
+    </form>`;
+
+  function render(d) {
+    $("#title").textContent = "Compliance & data governance — " + (d.workspace ? d.workspace.name : "workspace");
+    $("#f-start").value = d.period ? d.period.start_label : "";
+    $("#f-end").value = d.period ? d.period.end_label : "";
+    fillMetrics(d);
+    fillPickers(d);
+    fillTables(d);
+    $("#period-panel").hidden = false;
+    $("#controls-panel").hidden = false;
+    $("#tables-panel").hidden = false;
+    $("#write-forms").hidden = !d.canmanage;
+    $("#readonly-note").hidden = !!d.canmanage;
+    if (!d.ready) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Governance schema is not ready. Run Moodle upgrade."; }
+    else { $("#status").hidden = true; }
+  }
+
+  async function post(payload, okMsg) {
+    const r = await fetch(url({}), {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify(payload),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || okMsg;
+    await load();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function formPayload(form, base) {
+    const p = { ...base };
+    new FormData(form).forEach((v, k) => { p[k] = v; });
+    if (form.querySelector('[name="legal_hold"]')) p.legal_hold = form.querySelector('[name="legal_hold"]').checked ? 1 : 0;
+    if ($("#f-start").value) p.start = $("#f-start").value;
+    if ($("#f-end").value) p.end = $("#f-end").value;
+    return p;
+  }
+
+  async function guarded(fn, btn) {
+    if (btn) { btn.disabled = true; }
+    try { await fn(); }
+    catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message; }
+    finally { if (btn) btn.disabled = false; }
+  }
+
+  $("#apply-period").addEventListener("click", () => guarded(load, null));
+  $("#export-csv").addEventListener("click", () => {
+    if (!state) return;
+    const rows = [["metric", "value"]].concat(Object.entries(state.summary || {}));
+    const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+    a.download = "governance-audit-" + (state.workspace ? state.workspace.id : "0") + ".csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  $("#form-rule").addEventListener("submit", (ev) => { ev.preventDefault();
+    guarded(() => post(formPayload(ev.target, { do: "save_rule" }), "Retention rule saved."), ev.target.querySelector("button")); });
+
+  $("#form-privacy").addEventListener("submit", (ev) => { ev.preventDefault();
+    guarded(() => post(formPayload(ev.target, { do: "privacy_request" }), "Privacy workflow queued."), ev.target.querySelector("button")); });
+
+  $("#btn-consent").addEventListener("click", (ev) =>
+    guarded(() => post({ do: "capture_consent" }, "Consent history captured."), ev.target));
+
+  $("#btn-report").addEventListener("click", (ev) =>
+    guarded(() => post({ do: "generate_report", report_type: "full" }, "Audit report generated."), ev.target));
+
+  function submitComplete(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    guarded(() => post({ do: "complete_privacy", requestid: Number(f.dataset.requestid), resolution: f.resolution.value }, "Privacy workflow updated."), f.querySelector("button"));
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

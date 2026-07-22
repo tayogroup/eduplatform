@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classroom operations · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 3px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:4px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  .check{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink2)}
+  .check input{width:auto}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button.light{background:var(--sky);color:var(--blue)}
+  button:disabled{opacity:.55;cursor:wait}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .pill.scheduled{background:#e1f2ff;color:var(--blue2)}
+  .pill.cancelled{background:var(--red-bg);color:var(--red)}
+  .inline{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .inline input[type=text]{flex:1;min-width:120px;border:1px solid var(--line);border-radius:7px;padding:7px 8px;font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand" id="brand">EduPlatform Portal<small>Classroom operations</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of classroom_operations.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Classroom &amp; live-session management</h1><p class="sub" id="subtitle">Scheduling, rooms, notes, homework, recordings, parent visibility, and reminders.</p></div>
+  <div id="status" class="status">Loading classroom operations…</div>
+
+  <div class="grid" id="board" hidden>
+    <section>
+      <div class="panel">
+        <h2>Schedule / reschedule</h2>
+        <form id="session-form">
+          <div class="field"><label>Session (leave blank to create new)</label><select name="sessionid" id="session-select"><option value="0">New session</option></select></div>
+          <div class="field"><label>Teacher</label><select name="teacherid" id="teacher-select"></select></div>
+          <div class="field"><label>Title</label><input name="title" type="text"></div>
+          <div class="field"><label>Date (YYYY-MM-DD)</label><input name="session_date" type="text" placeholder="2026-07-30"></div>
+          <div class="field"><label>Start time (HH:MM)</label><input name="start_time" type="text" placeholder="16:00"></div>
+          <div class="field"><label>Duration (minutes)</label><input name="duration_minutes" type="text" placeholder="60"></div>
+          <div class="field"><label>Timezone</label><input name="timezone" type="text" placeholder="Africa/Nairobi"></div>
+          <div class="field"><label>Lesson ID</label><input name="lessonid" type="text"></div>
+          <div class="field"><label>Unit ID</label><input name="unitid" type="text"></div>
+          <div class="field"><label>Room link (Zoom/BBB/Meet/internal)</label><input name="room_url" type="text"></div>
+          <div class="field"><label>Room provider</label><select name="room_provider"><option value="bbb">BBB</option><option value="zoom">Zoom</option><option value="meet">Google Meet</option><option value="internal">Internal room</option></select></div>
+          <div class="field"><label>Reminder minutes before</label><input name="reminder_offset_minutes" type="text" placeholder="60"></div>
+          <div class="field"><label>Status</label><input name="status" type="text" value="scheduled"></div>
+          <div class="field"><label>Description</label><textarea name="description"></textarea></div>
+          <div class="field check"><input type="checkbox" name="recording_enabled" id="recording_enabled"><label for="recording_enabled" style="margin:0">Recording enabled for missed-class playback when consent allows</label></div>
+          <div class="field check"><input type="checkbox" name="parent_observer_allowed" id="parent_observer_allowed"><label for="parent_observer_allowed" style="margin:0">Parent observer allowed</label></div>
+          <button type="submit">Save session</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Session notes / homework</h2>
+        <form id="note-form">
+          <div class="field"><label>Session</label><select name="sessionid" id="note-session"></select></div>
+          <div class="field"><label>Student</label><select name="studentid" id="note-student"></select></div>
+          <div class="field"><label>Strengths</label><textarea name="strengths"></textarea></div>
+          <div class="field"><label>Needs practice</label><textarea name="needs_practice"></textarea></div>
+          <div class="field"><label>Homework</label><textarea name="homework"></textarea></div>
+          <div class="field"><label>Parent summary</label><textarea name="parent_summary"></textarea></div>
+          <div class="field"><label>Private note</label><textarea name="private_note"></textarea></div>
+          <div class="field"><label>Homework due date (YYYY-MM-DD)</label><input name="homework_due_date" type="text"></div>
+          <div class="field check"><input type="checkbox" name="visible_to_parent" id="visible_to_parent" checked><label for="visible_to_parent" style="margin:0">Visible to parent</label></div>
+          <button type="submit">Save note</button>
+        </form>
+      </div>
+    </section>
+
+    <section>
+      <div class="panel">
+        <h2>Sessions</h2>
+        <table><thead><tr><th>Session</th><th>Room</th><th>Status</th><th>Cancel</th></tr></thead><tbody id="sessions-body"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Recordings</h2>
+        <table><thead><tr><th>Recording</th><th>Status</th><th>Visibility</th></tr></thead><tbody id="recordings-body"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Reminder queue</h2>
+        <table><thead><tr><th>Recipient</th><th>Channel</th><th>Status</th></tr></thead><tbody id="reminders-body"></tbody></table>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = (extra) => new URLSearchParams({ report: "classroom-operations", token, workspaceid: qs.get("workspaceid") || "0", ...extra });
+
+  let names = {};
+
+  function setStatus(msg, kind) {
+    const el = $("#status");
+    el.className = "status" + (kind ? " " + kind : "");
+    el.hidden = false;
+    el.textContent = msg;
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { setStatus("Could not load: " + e.message, "error"); }
+  }
+
+  function fillSelect(sel, items, valueKey, labelFn, includeNew) {
+    sel.innerHTML = (includeNew ? '<option value="0">New session</option>' : "") +
+      items.map((it) => `<option value="${esc(it[valueKey])}">${esc(labelFn(it))}</option>`).join("");
+  }
+
+  function render(d) {
+    if (d.brand) $("#brand").innerHTML = esc(d.brand) + "<small>Classroom operations</small>";
+    if (d.workspace && d.workspace.name) $("#subtitle").textContent = d.workspace.name + " · scheduling, rooms, notes, homework, recordings, parent visibility, and reminders.";
+    names = d.names || {};
+
+    const sessions = d.sessions || [];
+    const teachers = d.teachers || [];
+    const students = d.students || [];
+
+    fillSelect($("#teacher-select"), teachers, "id", (t) => t.name, false);
+    fillSelect($("#note-student"), students, "id", (s) => s.name, false);
+    const sessLabel = (s) => (s.title || "Untitled") + " / " + (s.start_label || when(s.scheduled_start));
+    fillSelect($("#session-select"), sessions, "id", sessLabel, true);
+    fillSelect($("#note-session"), sessions, "id", sessLabel, false);
+
+    $("#recording_enabled").checked = !!d.recordingdefault;
+
+    $("#sessions-body").innerHTML = sessions.length ? sessions.map((s) => `
+      <tr>
+        <td><strong>${esc(s.title || "Untitled")}</strong><div class="muted">${esc(s.start_label || when(s.scheduled_start))}</div></td>
+        <td>${esc(s.room_provider || "bbb")}<div class="muted">${esc(s.room_url || "")}</div></td>
+        <td><span class="pill ${/cancel/i.test(s.status) ? "cancelled" : "scheduled"}">${esc(s.status || "")}</span></td>
+        <td>
+          <form class="inline cancel-form" data-sessionid="${esc(s.id)}">
+            <input type="text" name="cancellation_reason" placeholder="Reason">
+            <button type="submit" class="light">Cancel</button>
+          </form>
+        </td>
+      </tr>`).join("") : `<tr><td colspan="4" class="muted">No sessions yet.</td></tr>`;
+
+    const recordings = d.recordings || [];
+    $("#recordings-body").innerHTML = recordings.length ? recordings.map((r) => `
+      <tr>
+        <td>${esc(r.name)}<div class="muted">${esc(r.playback_url || "")}</div></td>
+        <td><span class="pill">${esc(r.status || "")}</span></td>
+        <td>
+          <form class="recording-form" data-recordingid="${esc(r.id)}">
+            <label class="check"><input type="checkbox" name="published" ${r.published ? "checked" : ""}> Published</label>
+            <label class="check"><input type="checkbox" name="visible_to_parent" ${r.visible_to_parent ? "checked" : ""}> Parent visible</label>
+            <button type="submit" class="light" style="margin-top:6px">Save</button>
+          </form>
+        </td>
+      </tr>`).join("") : `<tr><td colspan="3" class="muted">No recordings found.</td></tr>`;
+
+    const reminders = d.reminders || [];
+    $("#reminders-body").innerHTML = reminders.length ? reminders.map((rm) => `
+      <tr>
+        <td>${esc(names[rm.recipientid] || ("User #" + rm.recipientid))}<div class="muted">${esc(when(rm.sendat))}</div></td>
+        <td>${esc(rm.channel || "")}</td>
+        <td><span class="pill">${esc(rm.status || "")}</span></td>
+      </tr>`).join("") : `<tr><td colspan="3" class="muted">No reminders queued.</td></tr>`;
+
+    $("#board").hidden = false;
+    $("#status").hidden = true;
+
+    document.querySelectorAll(".cancel-form").forEach((f) => f.addEventListener("submit", cancelSession));
+    document.querySelectorAll(".recording-form").forEach((f) => f.addEventListener("submit", saveRecording));
+  }
+
+  async function post(payload, okMsg, btn) {
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "classroom-operations", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus(d.message || okMsg, "saved");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      setStatus("Could not save: " + e.message, "error");
+    } finally {
+      if (btn) { btn.disabled = false; if (btn.dataset.label) btn.textContent = btn.dataset.label; }
+    }
+  }
+
+  function num(v) { const n = Number(v); return Number.isFinite(n) ? n : 0; }
+
+  $("#session-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({
+      do: "save_session",
+      workspaceid: num(qs.get("workspaceid")),
+      sessionid: num(f.sessionid.value),
+      teacherid: num(f.teacherid.value),
+      title: f.title.value,
+      session_date: f.session_date.value,
+      start_time: f.start_time.value,
+      duration_minutes: num(f.duration_minutes.value) || 60,
+      timezone: f.timezone.value || "Africa/Nairobi",
+      lessonid: f.lessonid.value,
+      unitid: f.unitid.value,
+      room_url: f.room_url.value,
+      room_provider: f.room_provider.value,
+      reminder_offset_minutes: num(f.reminder_offset_minutes.value) || 60,
+      status: f.status.value || "scheduled",
+      description: f.description.value,
+      recording_enabled: f.recording_enabled.checked ? 1 : 0,
+      parent_observer_allowed: f.parent_observer_allowed.checked ? 1 : 0,
+    }, "Session saved.", f.querySelector("button"));
+  });
+
+  $("#note-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({
+      do: "save_note",
+      workspaceid: num(qs.get("workspaceid")),
+      sessionid: num(f.sessionid.value),
+      studentid: num(f.studentid.value),
+      strengths: f.strengths.value,
+      needs_practice: f.needs_practice.value,
+      homework: f.homework.value,
+      parent_summary: f.parent_summary.value,
+      private_note: f.private_note.value,
+      homework_due_date: f.homework_due_date.value,
+      visible_to_parent: f.visible_to_parent.checked ? 1 : 0,
+    }, "Note saved.", f.querySelector("button"));
+  });
+
+  function cancelSession(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({
+      do: "cancel_session",
+      workspaceid: num(qs.get("workspaceid")),
+      sessionid: num(f.dataset.sessionid),
+      cancellation_reason: f.cancellation_reason.value,
+    }, "Session cancelled.", f.querySelector("button"));
+  }
+
+  function saveRecording(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({
+      do: "recording_visibility",
+      workspaceid: num(qs.get("workspaceid")),
+      recordingid: num(f.dataset.recordingid),
+      published: f.published.checked ? 1 : 0,
+      visible_to_parent: f.visible_to_parent.checked ? 1 : 0,
+    }, "Recording visibility updated.", f.querySelector("button"));
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

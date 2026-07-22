@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document management · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1080px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd;max-width:340px;text-align:right}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 3px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:4px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--sky)}
+  .metric b{display:block;font-size:22px;color:var(--blue)}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  a.dl{display:inline-block;padding:6px 11px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px}
+  a.dl:hover{border-color:var(--blue2)}
+  form.wf label{display:block;font-size:11px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.wf select,form.wf input,form.wf textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.wf textarea{min-height:56px;resize:vertical}
+  form.wf button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.wf button:disabled{opacity:.55;cursor:wait}
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .verify{margin-top:8px;padding:10px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .schemawarn{padding:10px 12px;border-radius:8px;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber);margin-bottom:16px}
+  @media(max-width:820px){.metrics,.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Document management</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of document_management.php · uploads &amp; file serving stay on the legacy page</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Document management</h1><p class="sub" id="subtitle">Student documents, IDs, certificates, consent forms, verification, expiration, and the generated PDF registry.</p></div>
+  <div id="status" class="status">Loading documents…</div>
+  <div id="schemawarn" class="schemawarn" hidden>Document schema is not ready. Run the Moodle upgrade on the legacy install.</div>
+  <div class="panel" id="metrics-panel" hidden><div class="metrics" id="metrics"></div></div>
+  <div class="panel" id="documents-panel" hidden><h2>Documents</h2><div style="overflow-x:auto"><table><thead><tr><th>Document</th><th>Student</th><th>Verification</th><th>Download</th></tr></thead><tbody id="documents"></tbody></table></div></div>
+  <div class="panel" id="register-panel" hidden><h2>Register generated PDF</h2><p class="sub" style="margin-bottom:10px">Record a system-generated PDF (invoice, receipt, transcript, certificate) in the document registry. File uploads are only available on the legacy page.</p><form class="wf" id="register-form"></form></div>
+  <div class="panel" id="generated-panel" hidden><h2>Generated PDFs</h2><div style="overflow-x:auto"><table><thead><tr><th>PDF</th><th>Source</th><th>Status</th></tr></thead><tbody id="generated"></tbody></table></div></div>
+  <div class="panel" id="audit-panel" hidden><h2>Audit history</h2><div style="overflow-x:auto"><table><thead><tr><th>Document</th><th>Actor</th><th>Action</th></tr></thead><tbody id="audits"></tbody></table></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = (extra) => endpoint + "?" + new URLSearchParams(Object.assign({ report: "document-management", token, workspaceid }, extra || {}));
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const verifyForm = (doc) => `
+    <form class="wf verify" data-documentid="${doc.id}">
+      <label>Verification status</label>
+      <select name="verification_status">
+        <option value="verified">Verified</option>
+        <option value="pending">Pending</option>
+        <option value="rejected">Rejected</option>
+        <option value="expired">Expired</option>
+      </select>
+      <div class="grid2">
+        <div><label>Status</label><input name="status" value="${esc(doc.status)}"></div>
+        <div><label>Expiration date</label><input name="expiresat" placeholder="YYYY-MM-DD"></div>
+      </div>
+      <label>Verification note</label>
+      <input name="verification_note" placeholder="Verification note">
+      <button type="submit">Save</button>
+    </form>`;
+
+  const documentRow = (doc) => `
+    <tr>
+      <td><strong>#${doc.id} ${esc(doc.title)}</strong>
+        <div class="muted">${esc(doc.document_type + " / " + doc.document_number)}</div>
+        <div class="muted">${esc(doc.filename)}</div></td>
+      <td>${esc(doc.studentname)}</td>
+      <td><span class="pill">${esc(doc.verification_status)}</span>
+        <div class="muted">Expires ${esc(doc.expireslabel)}</div>
+        ${verifyForm(doc)}</td>
+      <td>${doc.download ? `<a class="dl" href="${esc(doc.download)}">Download</a>` : '<span class="muted">Generated registry only</span>'}</td>
+    </tr>`;
+
+  const generatedRow = (g) => `
+    <tr>
+      <td><strong>${esc(g.document_key)}</strong><div class="muted">${esc(g.doc_type)}</div></td>
+      <td>${esc(g.source_type)} #${g.source_id}${g.download_url ? `<div class="muted">${esc(g.download_url)}</div>` : ""}</td>
+      <td><span class="pill">${esc(g.status)}</span><br><a class="dl" style="margin-top:6px" href="${esc(g.pdfurl)}">Generate PDF</a></td>
+    </tr>`;
+
+  const auditRow = (a) => `
+    <tr>
+      <td>#${a.documentid}</td>
+      <td>${esc(a.actor)}<div class="muted">${esc(a.timelabel || when(a.timecreated))}</div></td>
+      <td><span class="pill">${esc(a.action)}</span></td>
+    </tr>`;
+
+  const registerForm = (students) => {
+    const opts = ['<option value="0">No student</option>'].concat((students || []).map((s) => `<option value="${s.id}">${esc(s.label)}</option>`)).join("");
+    const text = (name, label) => `<div><label>${esc(label)}</label><input name="${name}"></div>`;
+    return `
+      <div><label>Student</label><select name="studentid">${opts}</select></div>
+      <div style="margin-top:8px"><label>PDF type</label>
+        <select name="doc_type">
+          <option value="invoice">Invoice</option>
+          <option value="receipt">Receipt</option>
+          <option value="transcript">Transcript</option>
+          <option value="certificate">Certificate</option>
+        </select></div>
+      <div class="grid2" style="margin-top:8px">
+        ${text("title","Title")}
+        ${text("source_type","Source type")}
+        ${text("source_id","Source ID")}
+        ${text("document_key","Document key")}
+        ${text("status","Status")}
+        ${text("pdfhash","PDF hash")}
+        ${text("download_url","Download URL")}
+        ${text("issuedat","Issued date (YYYY-MM-DD)")}
+        ${text("expiresat","Expiration date (YYYY-MM-DD)")}
+      </div>
+      <label>Source note</label>
+      <textarea name="source_note"></textarea>
+      <button type="submit">Register PDF</button>`;
+  };
+
+  function render(d) {
+    $("#title").textContent = "Document management — " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+    $("#schemawarn").hidden = !!d.schemaready;
+
+    const m = d.metrics || {};
+    $("#metrics").innerHTML = [
+      `<div class="metric"><b>${m.documents || 0}</b><div class="muted">documents</div></div>`,
+      `<div class="metric"><b>${m.expiring || 0}</b><div class="muted">expiring in 30 days</div></div>`,
+      `<div class="metric"><b>${m.generated || 0}</b><div class="muted">generated PDFs</div></div>`,
+    ].join("");
+    $("#metrics-panel").hidden = false;
+
+    $("#documents").innerHTML = (d.documents || []).map(documentRow).join("") || `<tr><td colspan="4" class="muted">No documents yet.</td></tr>`;
+    $("#documents-panel").hidden = false;
+
+    $("#register-form").innerHTML = registerForm(d.students);
+    $("#register-form").addEventListener("submit", submitRegister);
+    $("#register-panel").hidden = false;
+
+    $("#generated").innerHTML = (d.generated || []).map(generatedRow).join("") || `<tr><td colspan="3" class="muted">No generated PDF rows yet.</td></tr>`;
+    $("#generated-panel").hidden = false;
+
+    $("#audits").innerHTML = (d.audits || []).map(auditRow).join("") || `<tr><td colspan="3" class="muted">No document audit entries yet.</td></tr>`;
+    $("#audit-panel").hidden = false;
+
+    $("#status").hidden = true;
+    document.querySelectorAll("form.verify").forEach((f) => f.addEventListener("submit", submitVerify));
+  }
+
+  async function post(payload, btn, okmsg) {
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "document-management", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ workspaceid: Number(workspaceid) }, payload)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = okmsg + (d.message ? " — " + d.message : "");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || "Save"; }
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  function submitVerify(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({
+      do: "verify_document",
+      documentid: Number(f.dataset.documentid),
+      verification_status: f.verification_status.value,
+      status: f.status.value,
+      expiresat: f.expiresat.value,
+      verification_note: f.verification_note.value,
+    }, f.querySelector("button"), "Document verification updated");
+  }
+
+  function submitRegister(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const payload = { do: "register_generated" };
+    ["studentid","doc_type","title","source_type","source_id","document_key","status","pdfhash","download_url","issuedat","expiresat","source_note"].forEach((n) => {
+      if (f[n]) payload[n] = f[n].value;
+    });
+    post(payload, f.querySelector("button"), "Generated PDF registry row created");
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

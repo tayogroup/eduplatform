@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notification delivery audit · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .kpis{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
+  .kpi{padding:10px 12px;border-radius:8px;background:var(--sky);border:1px solid var(--line);font-weight:900;color:var(--ink2);font-size:13px}
+  .kpi code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  form.filters{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;align-items:end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.4px}
+  .field input{width:100%;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--card);color:var(--ink);font:inherit;font-size:13px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+  .actions button{min-height:38px;border:0;border-radius:8px;padding:0 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button.primary{background:var(--blue2);color:#fff}
+  button.ghost{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  button:disabled{opacity:.55;cursor:not-allowed}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;margin-top:12px}
+  th,td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--ink2);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  .pill{display:inline-flex;align-items:center;min-height:24px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.pass{background:#e1f2ff;color:var(--blue2)}
+  .pill.check{background:var(--amber-bg);color:var(--amber)}
+  code.src{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;color:var(--ink2)}
+  td .ev{display:block;max-width:520px;overflow-wrap:anywhere;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-size:11px;color:var(--ink2);font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;margin-top:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Notification delivery audit</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of notification_delivery_audit.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Notification Delivery Audit</h1>
+    <p class="sub">Message, announcement, invoice, attendance, grade, low-score, notification-center, email-delivery, and log evidence for one SQA run.</p>
+  </div>
+  <div id="status" class="status">Loading notification delivery evidence…</div>
+  <div class="panel" id="report-panel" hidden>
+    <div class="kpis" id="kpis"></div>
+    <form class="filters" id="filters">
+      <div class="field"><label>Run ID</label><input name="runid"></div>
+      <div class="field"><label>Student ID</label><input name="studentid" inputmode="numeric"></div>
+      <div class="field"><label>Parent ID</label><input name="parentid" inputmode="numeric"></div>
+      <div class="field"><label>Teacher ID</label><input name="teacherid" inputmode="numeric"></div>
+      <div class="field"><label>Invoice ID</label><input name="invoiceid" inputmode="numeric"></div>
+      <div class="field"><label>Session ID</label><input name="sessionid" inputmode="numeric"></div>
+      <div class="field"><label>Assessment ID</label><input name="assessmentid" inputmode="numeric"></div>
+      <div class="actions">
+        <button type="submit" class="primary">Filter</button>
+        <button type="button" class="ghost" id="csv">Export CSV</button>
+      </div>
+    </form>
+    <div id="empty" class="empty" hidden>No notification delivery evidence rows.</div>
+    <div class="tablewrap" id="tablewrap" hidden>
+      <table>
+        <thead><tr><th>Category</th><th>Status</th><th>Source</th><th>Count</th><th>Evidence</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const FILTERS = ["runid", "studentid", "parentid", "teacherid", "invoiceid", "sessionid", "assessmentid"];
+  let LAST = { rows: [], runid: "" };
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Same workspace/consumer context params the legacy page carries in its URL.
+  const params = (extra) => {
+    const p = new URLSearchParams({ report: "notification-delivery-audit", token, ...extra });
+    if (qs.get("workspaceid")) p.set("workspaceid", qs.get("workspaceid"));
+    if (qs.get("consumer")) p.set("consumer", qs.get("consumer"));
+    return p;
+  };
+
+  const filterValues = () => {
+    const f = document.getElementById("filters");
+    const out = {};
+    FILTERS.forEach((k) => { const v = (f.elements[k].value || "").trim(); if (v !== "") out[k] = v; });
+    return out;
+  };
+
+  async function load(filters) {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading notification delivery evidence…";
+    try {
+      const r = await fetch(endpoint + "?" + params(filters));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const row = (r) => `
+    <tr>
+      <td><strong>${esc(r.category)}</strong></td>
+      <td><span class="pill ${r.status === "PASS" ? "pass" : "check"}">${esc(r.status)}</span></td>
+      <td><code class="src">${esc(r.source)}</code></td>
+      <td>${Number(r.count) || 0}</td>
+      <td><span class="ev">${esc(r.evidence)}</span></td>
+    </tr>`;
+
+  const nameFor = (names, id) => (Number(id) && names[id]) ? " · " + esc(names[id]) : "";
+
+  function render(d) {
+    const names = d.names || {};
+    const f = document.getElementById("filters");
+    // Echo the server-cleaned filters back into the form.
+    FILTERS.forEach((k) => { const v = d.filters && d.filters[k]; f.elements[k].value = (v === 0 || v === "0" || v == null) ? "" : v; });
+    const rows = d.rows || [];
+    LAST = { rows, runid: (d.filters && d.filters.runid) || "" };
+    $("#kpis").innerHTML =
+      `<span class="kpi">${Number(d.passcount) || 0} pass</span>` +
+      `<span class="kpi">${Number(d.checkcount) || 0} checks</span>` +
+      `<span class="kpi"><code>${esc(LAST.runid || "no run id")}</code></span>` +
+      (Number(d.filters && d.filters.studentid) ? `<span class="kpi">student ${Number(d.filters.studentid)}${nameFor(names, d.filters.studentid)}</span>` : "") +
+      (Number(d.filters && d.filters.parentid) ? `<span class="kpi">parent ${Number(d.filters.parentid)}${nameFor(names, d.filters.parentid)}</span>` : "") +
+      (Number(d.filters && d.filters.teacherid) ? `<span class="kpi">teacher ${Number(d.filters.teacherid)}${nameFor(names, d.filters.teacherid)}</span>` : "");
+    $("#rows").innerHTML = rows.map((r) => row(r)).join("");
+    $("#tablewrap").hidden = !rows.length;
+    $("#empty").hidden = !!rows.length;
+    $("#report-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  // Client-side CSV — same columns/order as the legacy export=csv path.
+  function exportCsv() {
+    const cols = ["category", "source", "status", "count", "evidence"];
+    const cell = (v) => { const s = String(v ?? ""); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const lines = [cols.join(",")];
+    (LAST.rows || []).forEach((r) => lines.push(cols.map((c) => cell(r[c])).join(",")));
+    const safe = (LAST.runid || String(Date.now())).replace(/[^A-Za-z0-9._-]/g, "_");
+    const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "notification-delivery-audit-" + safe + ".csv";
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  }
+
+  document.getElementById("filters").addEventListener("submit", (ev) => { ev.preventDefault(); load(filterValues()); });
+  document.getElementById("csv").addEventListener("click", exportCsv);
+
+  // Initial load honors any filters carried on the launch URL.
+  const initial = {};
+  FILTERS.forEach((k) => { const v = (qs.get(k) || "").trim(); if (v !== "") initial[k] = v; });
+  const form = document.getElementById("filters");
+  Object.entries(initial).forEach(([k, v]) => { form.elements[k].value = v; });
+  load(initial);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academic calendar · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 10px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:360px 1fr;gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  form.wf label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.wf input,form.wf select,form.wf textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.wf textarea{min-height:64px;resize:vertical}
+  form.wf button{margin-top:12px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.wf button:disabled{opacity:.55;cursor:wait}
+  hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .pill.black{background:var(--amber-bg);color:var(--amber)}
+  .muted{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Academic calendar &amp; terms</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of academic_calendar.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Academic calendar &amp; terms</h1><p class="sub" id="subtitle">Terms, holidays, blackout dates, enrollment windows, schedules, and deadlines.</p></div>
+  <div id="status" class="status">Loading academic calendar…</div>
+  <div class="grid" id="body" hidden>
+    <div>
+      <div class="panel">
+        <h3>Term</h3>
+        <form class="wf" id="term-form" data-do="save_term">
+          <label>Term ID (blank = create)</label><input name="termid" inputmode="numeric">
+          <label>Term code</label><input name="term_code">
+          <label>Title</label><input name="title">
+          <label>Type</label><input name="term_type" placeholder="term">
+          <label>Start date (YYYY-MM-DD)</label><input name="startdate">
+          <label>End date</label><input name="enddate">
+          <label>Enrollment opens</label><input name="enrollment_open">
+          <label>Enrollment closes</label><input name="enrollment_close">
+          <label>Add/drop deadline</label><input name="add_drop_deadline">
+          <label>Withdrawal deadline</label><input name="withdrawal_deadline">
+          <label>Refund deadline</label><input name="refund_deadline">
+          <label>Status</label><input name="status" placeholder="planned">
+          <label>Notes</label><textarea name="notes"></textarea>
+          <button type="submit">Save Term</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h3>Holiday / Blackout</h3>
+        <form class="wf" id="event-form" data-do="save_event">
+          <label>Event ID (blank = create)</label><input name="eventid" inputmode="numeric">
+          <label>Term</label><select name="termid" id="event-termid"><option value="0">Workspace-wide</option></select>
+          <label>Title</label><input name="title">
+          <label>Type</label><input name="event_type" placeholder="holiday">
+          <label>Start date</label><input name="startdate">
+          <label>End date</label><input name="enddate">
+          <label>Status</label><input name="status" placeholder="active">
+          <label><input type="checkbox" name="blackout" value="1" style="width:auto"> Blackout scheduling</label>
+          <label>Notes</label><textarea name="notes"></textarea>
+          <button type="submit">Save Event</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h3>Course section schedule</h3>
+        <form class="wf" id="offering-form" data-do="bind_offering">
+          <label>Offering</label><select name="offeringid" id="offering-select"></select>
+          <label>Term</label><select name="termid" id="offering-termid"><option value="0">No term</option></select>
+          <label>Meeting days</label><input name="schedule_days">
+          <label>Meeting time</label><input name="schedule_time">
+          <label>Timezone</label><input name="schedule_timezone">
+          <label>Room or link</label><input name="schedule_room">
+          <label>Add/drop deadline</label><input name="add_drop_deadline">
+          <label>Withdrawal deadline</label><input name="withdrawal_deadline">
+          <label>Refund deadline</label><input name="refund_deadline">
+          <button type="submit">Save Schedule</button>
+        </form>
+      </div>
+    </div>
+    <div>
+      <div class="panel"><h2>Terms</h2><table><thead><tr><th>Term</th><th>Enrollment</th><th>Deadlines</th></tr></thead><tbody id="terms"></tbody></table></div>
+      <div class="panel"><h2>Events</h2><table><thead><tr><th>Event</th><th>Dates</th><th>Scope</th></tr></thead><tbody id="events"></tbody></table></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const date = (t) => (t && Number(t) > 0) ? new Date(Number(t) * 1000).toLocaleDateString(undefined, { day:"numeric", month:"short", year:"numeric" }) : "—";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const workspaceid = qs.get("workspaceid") || "0";
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "academic-calendar", token, workspaceid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    $("#title").textContent = "Academic calendar — " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Academic calendar schema is not ready. Run the local_prequran Moodle upgrade.";
+    } else {
+      $("#status").hidden = true;
+    }
+    const terms = d.terms || [];
+    const termOpts = '<option value="0">Workspace-wide</option>' + terms.map((t) => `<option value="${t.id}">${esc(t.title)}</option>`).join("");
+    $("#event-termid").innerHTML = termOpts;
+    $("#offering-termid").innerHTML = '<option value="0">No term</option>' + terms.map((t) => `<option value="${t.id}">${esc(t.title)}</option>`).join("");
+    $("#offering-select").innerHTML = (d.offerings || []).map((o) => `<option value="${o.id}">${esc(o.title)}</option>`).join("") || '<option value="0">No offerings</option>';
+
+    $("#terms").innerHTML = terms.map((t) => `
+      <tr>
+        <td><strong>${esc(t.title)}</strong><div class="muted">${esc((t.term_code || "") + " / " + (t.status || ""))}</div><span class="pill">${esc(date(t.startdate))} to ${esc(date(t.enddate))}</span></td>
+        <td>${esc(date(t.enrollment_open))} to ${esc(date(t.enrollment_close))}</td>
+        <td>Add/drop ${esc(date(t.add_drop_deadline))}<br>Withdraw ${esc(date(t.withdrawal_deadline))}<br>Refund ${esc(date(t.refund_deadline))}</td>
+      </tr>`).join("") || '<tr><td colspan="3" class="muted">No terms yet.</td></tr>';
+
+    $("#events").innerHTML = (d.events || []).map((e) => `
+      <tr>
+        <td><strong>${esc(e.title)}</strong><div class="muted">${esc((e.event_type || "") + " / " + (e.status || ""))}</div></td>
+        <td>${esc(date(e.startdate))} to ${esc(date(e.enddate))}</td>
+        <td>${Number(e.blackout) ? '<span class="pill black">blackout</span>' : '<span class="pill">informational</span>'}</td>
+      </tr>`).join("") || '<tr><td colspan="3" class="muted">No holidays or blackout dates yet.</td></tr>';
+
+    $("#body").hidden = false;
+  }
+
+  async function submitForm(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "Saving…";
+    const payload = { do: f.dataset.do };
+    for (const el of f.elements) {
+      if (!el.name) continue;
+      payload[el.name] = el.type === "checkbox" ? (el.checked ? 1 : 0) : el.value;
+    }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "academic-calendar", token }), {
+        method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      f.reset();
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = label;
+    }
+  }
+
+  document.querySelectorAll("form.wf").forEach((f) => f.addEventListener("submit", submitForm));
+  load();
+})();
+</script>
+</body>
+</html>

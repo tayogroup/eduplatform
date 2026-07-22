@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive dashboard · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  button:disabled{opacity:.55;cursor:wait}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+  .funnel .row{margin-bottom:10px}
+  .funnel .row b{display:block;font-size:13px;margin-bottom:4px}
+  .bar{height:12px;border-radius:999px;background:var(--sky);overflow:hidden}
+  .fill{height:100%;background:var(--blue2)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Executive dashboard · admin</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of executive_dashboard.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Executive dashboard</h1><p class="sub">Enrollment funnel, revenue, AR aging, collections, retention, utilization, progress, and course profitability.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-start">Start</label><input type="date" id="f-start"></div>
+      <div class="field"><label for="f-end">End</label><input type="date" id="f-end"></div>
+      <button type="submit">Apply</button>
+      <button type="button" class="ghost" id="csv">Export CSV</button>
+      <button type="button" class="ghost" id="snapshot">Save snapshot</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading executive dashboard…</div>
+  <section id="kpis" class="kpis"></section>
+  <div class="grid">
+    <section class="panel funnel" id="funnel-panel" hidden><h2>Enrollment funnel</h2><div id="funnel"></div></section>
+    <section class="panel" id="revenue-panel" hidden><h2>Revenue, AR aging, collections</h2><table id="revenue"></table></section>
+    <section class="panel" id="retention-panel" hidden><h2>Retention / churn</h2><table id="retention"></table></section>
+    <section class="panel scroll" id="teachers-panel" hidden><h2>Teacher utilization</h2><table id="teachers"></table></section>
+    <section class="panel scroll" id="progress-panel" hidden><h2>Student progress</h2><table id="progress"></table></section>
+    <section class="panel scroll" id="courses-panel" hidden><h2>Course profitability</h2><table id="courses"></table></section>
+    <section class="panel scroll" id="snapshots-panel" hidden><h2>Saved snapshots</h2><table id="snapshots"></table></section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { day:"numeric", month:"short", year:"numeric" }) : "";
+  const num = (v) => Number(v || 0);
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const query = () => new URLSearchParams({
+    report: "executive-dashboard", token,
+    start: $("#f-start").value || "", end: $("#f-end").value || "",
+  });
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading executive dashboard…";
+    try {
+      const r = await fetch(endpoint + "?" + query());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render() {
+    const m = data.metrics || {};
+    const money = data.money || {};
+    $("#title").textContent = "Executive dashboard — " + (data.workspace ? data.workspace.name : "workspace");
+    $("#mode-note").textContent = "Workspace #" + (data.workspace ? data.workspace.id : "?") + " · parallel-run of executive_dashboard.php";
+    if (data.filters) { $("#f-start").value = data.filters.start || ""; $("#f-end").value = data.filters.end || ""; }
+
+    $("#kpis").innerHTML = [
+      [num(m.applications), "Applications"],
+      [num(m.funnel_enroll_rate) + "%", "Enroll rate"],
+      [money.revenue ?? "0.00", "Revenue"],
+      [money.ar_balance ?? "0.00", "AR balance"],
+      [num(m.retention_rate) + "%", "Retention"],
+      [num(m.teacher_minutes), "Teacher min"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${esc(v)}</strong><span>${esc(l)}</span></div>`).join("");
+
+    // Enrollment funnel (applications -> accepted -> enrolled), scaled to applications.
+    const base = Math.max(1, num(m.applications));
+    const funnel = [["Applications", num(m.applications)], ["Accepted", num(m.accepted)], ["Enrolled", num(m.enrolled)]];
+    $("#funnel").innerHTML = funnel.map(([label, val]) => {
+      const pct = Math.min(100, Math.round((val / base) * 100));
+      return `<div class="row"><b>${esc(label)} ${esc(val)}</b><div class="bar"><div class="fill" style="width:${pct}%"></div></div></div>`;
+    }).join("");
+    $("#funnel-panel").hidden = false;
+
+    $("#revenue").innerHTML = `<tbody>` + [
+      ["Revenue", money.revenue ?? "0.00"],
+      ["AR balance", money.ar_balance ?? "0.00"],
+      ["Overdue AR", money.ar_overdue ?? "0.00"],
+      ["Collections", money.collections ?? "0.00"],
+    ].map(([l, v]) => `<tr><td>${esc(l)}</td><td><strong>${esc(v)}</strong></td></tr>`).join("") + `</tbody>`;
+    $("#revenue-panel").hidden = false;
+
+    $("#retention").innerHTML = `<tbody>` +
+      `<tr><td>Retention</td><td><span class="pill">${esc(num(m.retention_rate))}%</span></td></tr>` +
+      `<tr><td>Churn</td><td><span class="pill">${esc(num(m.churn_rate))}%</span></td></tr>` +
+      `<tr><td>Dropped</td><td>${esc(num(m.dropped))}</td></tr>` + `</tbody>`;
+    $("#retention-panel").hidden = false;
+
+    const T = data.teacherloads || [];
+    $("#teachers").innerHTML = `<thead><tr><th>Teacher</th><th>Load</th></tr></thead><tbody>` +
+      (T.length ? T.map((l) => `<tr><td><strong>${esc(l.name)}</strong><div class="muted">${esc(l.active_students)} students / ${esc(l.weekly_sessions)} sessions</div></td><td><span class="pill">${esc(l.load_status)}</span><div class="muted">${esc(l.weekly_minutes)} min</div></td></tr>`).join("")
+        : `<tr><td class="muted" colspan="2">No teacher utilization snapshots in this period.</td></tr>`) + `</tbody>`;
+    $("#teachers-panel").hidden = false;
+
+    const P = data.progress || [];
+    $("#progress").innerHTML = `<thead><tr><th>Status</th><th>Learners</th></tr></thead><tbody>` +
+      (P.length ? P.map((row) => `<tr><td>${esc(row.advancement_status)}</td><td><span class="pill">${esc(row.total)}</span></td></tr>`).join("")
+        : `<tr><td class="muted" colspan="2">No student progress rows yet.</td></tr>`) + `</tbody>`;
+    $("#progress-panel").hidden = false;
+
+    const C = data.courses || [];
+    $("#courses").innerHTML = `<thead><tr><th>Course</th><th>Enrollment</th><th>Collected</th></tr></thead><tbody>` +
+      (C.length ? C.map((c) => `<tr><td><strong>${esc(c.title)}</strong><div class="muted">${esc(c.status)} / tuition ${esc(c.tuition_amount)} ${esc(c.pricing_currency)}</div></td><td>${esc(c.enrolled_count)}</td><td>${esc(c.collected)}</td></tr>`).join("")
+        : `<tr><td class="muted" colspan="3">No course offerings yet.</td></tr>`) + `</tbody>`;
+    $("#courses-panel").hidden = false;
+
+    const S = data.snapshots || [];
+    $("#snapshots").innerHTML = `<thead><tr><th>Snapshot</th><th>Saved</th></tr></thead><tbody>` +
+      (S.length ? S.map((s) => `<tr><td>#${esc(s.id)}<div class="muted">${esc(dateOnly(s.period_start))} to ${esc(dateOnly(s.period_end))}</div></td><td>${esc(when(s.timecreated))}</td></tr>`).join("")
+        : `<tr><td class="muted" colspan="2">No saved snapshots yet.</td></tr>`) + `</tbody>`;
+    $("#snapshots-panel").hidden = false;
+
+    $("#status").hidden = true;
+  }
+
+  function exportCsv() {
+    if (!data) return;
+    const m = data.metrics || {};
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const rows = Object.entries(m).map(([k, v]) => [k, v]);
+    const blob = new Blob([[["metric", "value"].map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = "executive-dashboard-" + (data.workspace ? data.workspace.id : "0") + ".csv"; a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  async function saveSnapshot() {
+    const btn = $("#snapshot");
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "executive-dashboard", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "save_snapshot",
+          start: $("#f-start").value || "",
+          end: $("#f-end").value || "",
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Snapshot saved.";
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Save snapshot";
+    }
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#csv").addEventListener("click", exportCsv);
+  $("#snapshot").addEventListener("click", saveSnapshot);
+  load();
+})();
+</script>
+</body>
+</html>

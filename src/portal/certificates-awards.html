@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Certificates &amp; awards · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  form button{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form button:disabled{opacity:.55;cursor:wait}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .pill.revoked{background:var(--red-bg);color:var(--red)}
+  .pill.issued{background:#e1f2ff;color:var(--blue2)}
+  a.btn{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--sky);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px}
+  .rev{margin-top:6px;display:flex;gap:6px}
+  .rev input{flex:1;border:1px solid var(--line);border-radius:7px;padding:6px 8px;font:inherit;font-size:12px}
+  .rev button{margin:0;background:var(--card);color:var(--red);border:1px solid var(--line);padding:6px 12px;font-size:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Certificates &amp; awards</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of certificates_awards.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Certificates &amp; completion awards</h1><p class="sub" id="subtitle">Certificate templates, completion awards, generated PDFs, revocation, and audit history.</p></div>
+  <div id="status" class="status">Loading certificates…</div>
+  <div class="grid" id="grid" hidden>
+    <div>
+      <div class="panel">
+        <h2>Certificate template</h2>
+        <form id="template-form">
+          <div class="field"><label>Template ID for update</label><input name="templateid" inputmode="numeric"></div>
+          <div class="field"><label>Template key</label><input name="template_key"></div>
+          <div class="field"><label>Title</label><input name="title"></div>
+          <div class="field"><label>Award type</label><input name="award_type" placeholder="completion"></div>
+          <div class="field"><label>Status</label><input name="status" placeholder="active"></div>
+          <div class="field"><label>Accent color</label><input name="accent" placeholder="#2f6f4e"></div>
+          <div class="field"><label>Seal text</label><input name="seal"></div>
+          <div class="field"><label>Body template</label><textarea name="body_template"></textarea></div>
+          <button type="submit">Save template</button>
+        </form>
+        <hr>
+        <h2>Issue award</h2>
+        <form id="award-form">
+          <div class="field"><label>Award ID for update</label><input name="awardid" inputmode="numeric"></div>
+          <div class="field"><label>Student</label><select name="studentid" id="student-select"></select></div>
+          <div class="field"><label>Template</label><select name="templateid" id="template-select"></select></div>
+          <div class="field"><label>Course offering</label><select name="offeringid" id="offering-select"></select></div>
+          <div class="field"><label>Moodle course ID</label><input name="courseid" inputmode="numeric"></div>
+          <div class="field"><label>Award number</label><input name="awardnumber"></div>
+          <div class="field"><label>Award type</label><input name="award_type" placeholder="completion"></div>
+          <div class="field"><label>Award title</label><input name="title"></div>
+          <div class="field"><label>Status</label><input name="status" placeholder="issued"></div>
+          <div class="field"><label>Completion percent</label><input name="completion_percent"></div>
+          <div class="field"><label>Final grade</label><input name="final_grade"></div>
+          <div class="field"><label>Issued date</label><input name="issuedat" placeholder="YYYY-MM-DD"></div>
+          <div class="field"><label>Evidence</label><textarea name="evidence"></textarea></div>
+          <button type="submit">Issue award</button>
+        </form>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <h2>Awards</h2>
+        <table><thead><tr><th>Award</th><th>Student</th><th>Status</th><th>PDF / revoke</th></tr></thead><tbody id="awards-body"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Templates</h2>
+        <table><tbody id="templates-body"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Audit</h2>
+        <table><tbody id="audits-body"></tbody></table>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const base = () => new URLSearchParams({ report: "certificates-awards", token });
+  const getUrl = () => endpoint + "?" + base().toString();
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const opt = (val, label) => `<option value="${esc(val)}">${esc(label)}</option>`;
+
+  function render(d) {
+    $("#title").textContent = "Certificates & awards — " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+    if (d.ready === false) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Certificate schema is not ready. Run Moodle upgrade.";
+    } else {
+      $("#status").hidden = true;
+    }
+    $("#student-select").innerHTML = (d.students || []).map((s) => opt(s.id, s.name)).join("");
+    $("#template-select").innerHTML = opt(0, "No template") + (d.templates || []).map((t) => opt(t.id, t.title)).join("");
+    $("#offering-select").innerHTML = opt(0, "No offering") + (d.offerings || []).map((o) => opt(o.id, o.title)).join("");
+
+    const awards = d.awards || [];
+    $("#awards-body").innerHTML = awards.length ? awards.map((a) => {
+      const pdf = a.pdf_url ? `<a class="btn" href="${esc(a.pdf_url)}">PDF</a>` : `<span class="muted">No PDF</span>`;
+      const cls = /revoked/.test(a.status || "") ? "revoked" : /issued/.test(a.status || "") ? "issued" : "";
+      return `<tr>
+        <td><strong>${esc(a.title)}</strong><div class="muted">${esc(a.awardnumber + " / " + a.award_type)}</div></td>
+        <td>${esc(a.student_name)}</td>
+        <td><span class="pill ${cls}">${esc(a.status)}</span><div class="muted">${esc(a.issuedat_label)}</div></td>
+        <td>${pdf}<form class="revoke-form" data-awardid="${a.id}"><div class="rev"><input name="revocation_reason" placeholder="Revocation reason"><button type="submit">Revoke</button></div></form></td>
+      </tr>`;
+    }).join("") : `<tr><td colspan="4" class="muted">No awards yet.</td></tr>`;
+
+    const templates = d.templates || [];
+    $("#templates-body").innerHTML = templates.length ? templates.map((t) =>
+      `<tr><td><strong>#${t.id} ${esc(t.title)}</strong><div class="muted">${esc(t.template_key + " / " + t.award_type)}</div></td><td><span class="pill">${esc(t.status)}</span></td></tr>`
+    ).join("") : `<tr><td class="muted">No templates yet.</td></tr>`;
+
+    const audits = d.audits || [];
+    $("#audits-body").innerHTML = audits.length ? audits.map((a) =>
+      `<tr><td>Award #${a.awardid}</td><td><span class="pill">${esc(a.action)}</span><div class="muted">${esc(a.timecreated_label)}</div></td></tr>`
+    ).join("") : `<tr><td class="muted">No certificate audit entries yet.</td></tr>`;
+
+    $("#grid").hidden = false;
+    document.querySelectorAll(".revoke-form").forEach((f) => f.addEventListener("submit", revokeAward));
+  }
+
+  async function post(payload, btn, okText) {
+    const original = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + base().toString(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = okText || (d.message || "Saved.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+    }
+  }
+
+  function formPayload(form, extra) {
+    const p = Object.assign({}, extra);
+    new FormData(form).forEach((v, k) => { p[k] = v; });
+    return p;
+  }
+
+  $("#template-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "save_template" }), ev.currentTarget.querySelector("button"), "Certificate template saved.");
+  });
+  $("#award-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "issue_award" }), ev.currentTarget.querySelector("button"), "Completion award saved.");
+  });
+  function revokeAward(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({ do: "revoke_award", awardid: Number(f.dataset.awardid), revocation_reason: f.revocation_reason.value }, f.querySelector("button"), "Award revoked.");
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

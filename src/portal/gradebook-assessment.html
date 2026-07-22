@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gradebook &amp; assessment · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 12px;font-size:16px}
+  h3{margin:0 0 8px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .pill.published{background:#e1f2ff;color:var(--blue2)}
+  .pill.draft{background:var(--bg);color:var(--muted)}
+  .pill.reviewed{background:var(--amber-bg);color:var(--amber)}
+  form.gb{margin:0 0 6px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  form.gb+form.gb{margin-top:12px}
+  form.gb label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.gb input,form.gb select,form.gb textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.gb textarea{min-height:60px;resize:vertical}
+  form.gb button{margin-top:12px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.gb button:disabled{opacity:.55;cursor:wait}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td.inline-pub button{background:var(--sky);color:var(--blue);border:1px solid var(--line);border-radius:7px;padding:6px 12px;font-weight:800;font-size:12px;cursor:pointer}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .warn{padding:10px 12px;border-radius:8px;background:var(--amber-bg);color:var(--amber);font-weight:700;margin-bottom:16px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Gradebook &amp; assessment</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of gradebook_assessment.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Gradebook &amp; assessment</h1><p class="sub" id="subtitle">Weighted categories, assessments, grade entry, review, publishing, disputes, and audit.</p></div>
+  <div id="status" class="status">Loading gradebook…</div>
+  <div id="notready" class="warn" hidden>Gradebook schema is not ready. Run the Moodle local_prequran upgrade.</div>
+  <div class="grid" id="grid" hidden>
+    <section>
+      <div class="panel" id="manage-panel" hidden>
+        <h2>Set up</h2>
+        <form class="gb" id="form-category">
+          <h3>Weighted category</h3>
+          <label>Offering</label><select name="offeringid" data-src="offerings"></select>
+          <label>Key</label><input name="category_key">
+          <label>Title</label><input name="title">
+          <label>Weight percent</label><input name="weight_percent" value="0">
+          <label>Drop lowest count</label><input name="drop_lowest_count" value="0">
+          <label>Status</label><input name="status" value="active">
+          <button type="submit">Save category</button>
+        </form>
+        <form class="gb" id="form-assessment">
+          <h3>Assessment</h3>
+          <label>Offering</label><select name="offeringid" data-src="offerings"></select>
+          <label>Category</label><select name="categoryid" data-src="categories"></select>
+          <label>Type</label><select name="assessment_type">
+            <option value="assignment">Assignment</option>
+            <option value="quiz">Quiz</option>
+            <option value="exam">Exam</option>
+            <option value="oral_recitation">Oral recitation</option>
+          </select>
+          <label>Title</label><input name="title">
+          <label>Max points</label><input name="max_points" value="100">
+          <label>Weight override</label><input name="weight_override">
+          <label>Due date (YYYY-MM-DD)</label><input name="duedate">
+          <label>Status</label><input name="status" value="draft">
+          <label>Description</label><textarea name="description"></textarea>
+          <button type="submit">Save assessment</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Enter a grade</h2>
+        <form class="gb" id="form-grade">
+          <label>Assessment</label><select name="assessmentid" data-src="assessments"></select>
+          <label>Student</label><select name="studentid" data-src="students"></select>
+          <label>Score points</label><input name="score_points">
+          <label>Score percent</label><input name="score_percent">
+          <label>Rubric note</label><input name="rubric_note">
+          <label>Correction reason</label><input name="correction_reason">
+          <label>Status</label><select name="status">
+            <option value="draft">Draft</option>
+            <option value="reviewed">Reviewed</option>
+            <option value="published">Published</option>
+            <option value="corrected">Corrected</option>
+          </select>
+          <label>Teacher feedback</label><textarea name="teacher_feedback"></textarea>
+          <button type="submit">Save grade</button>
+        </form>
+        <form class="gb" id="form-dispute">
+          <h3>Dispute / correction</h3>
+          <label>Grade ID</label><input name="gradeid">
+          <label>Course grade ID</label><input name="coursegradeid">
+          <label>Student ID</label><input name="studentid">
+          <label>Reason</label><input name="reason">
+          <label>Resolution</label><input name="resolution">
+          <label>Status</label><input name="status" value="open">
+          <button type="submit">Record</button>
+        </form>
+      </div>
+    </section>
+    <section>
+      <div class="panel">
+        <h2>Published course grades</h2>
+        <table><thead><tr><th>Student</th><th>Course</th><th>Grade</th><th></th></tr></thead><tbody id="coursegrades"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Recent grade entries</h2>
+        <table><thead><tr><th>Student</th><th>Assessment</th><th>Score</th><th>Status</th></tr></thead><tbody id="grades"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Audit trail</h2>
+        <table><thead><tr><th>Action</th><th>Target</th><th>Time</th></tr></thead><tbody id="audits"></tbody></table>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const REPORT = "gradebook-assessment";
+  const getUrl = () => endpoint + "?" + new URLSearchParams({ report: REPORT, token, workspaceid: qs.get("workspaceid") || "0" });
+  let DATA = null;
+
+  const statusPill = (s) => `<span class="pill ${/publish/.test(s) ? "published" : /review/.test(s) ? "reviewed" : "draft"}">${esc(s || "")}</span>`;
+
+  function fillSelect(sel, rows, valueKey, labelFn) {
+    sel.innerHTML = rows.map((r) => `<option value="${esc(r[valueKey])}">${esc(labelFn(r))}</option>`).join("");
+  }
+
+  function render(d) {
+    DATA = d;
+    $("#mode-note").textContent = "Workspace · " + (d.workspace ? d.workspace.name : "");
+    $("#title").textContent = "Gradebook — " + (d.workspace ? d.workspace.name : "");
+    $("#status").hidden = true;
+    $("#notready").hidden = !!d.ready;
+    $("#grid").hidden = false;
+    $("#manage-panel").hidden = !d.canmanage;
+
+    // Populate the selects the forms depend on.
+    document.querySelectorAll('select[data-src="offerings"]').forEach((s) => fillSelect(s, d.offerings || [], "id", (r) => r.title));
+    document.querySelectorAll('select[data-src="categories"]').forEach((s) => fillSelect(s, d.categories || [], "id", (r) => r.title + " / " + r.weight_percent + "%"));
+    document.querySelectorAll('select[data-src="assessments"]').forEach((s) => fillSelect(s, d.assessments || [], "id", (r) => r.title + " / " + r.assessment_type));
+    document.querySelectorAll('select[data-src="students"]').forEach((s) => fillSelect(s, d.students || [], "id", (r) => r.name + " / " + r.email));
+
+    const names = d.names || {};
+    const cg = d.coursegrades || [];
+    $("#coursegrades").innerHTML = cg.length ? cg.map((r) => `
+      <tr>
+        <td><strong>${esc(r.name)}</strong><div class="muted">${esc(r.email)}</div></td>
+        <td>${esc(r.offering_title)}</td>
+        <td><span class="pill">${esc(r.final_percent)}% / ${esc(r.letter_grade)}</span><div class="muted">${esc(r.status)}</div></td>
+        <td class="inline-pub"><button type="button" data-offeringid="${esc(r.offeringid)}" data-studentid="${esc(r.studentid)}">Publish</button></td>
+      </tr>`).join("") : `<tr><td colspan="4" class="muted">No course grades calculated yet.</td></tr>`;
+
+    const gr = d.grades || [];
+    $("#grades").innerHTML = gr.length ? gr.map((r) => `
+      <tr>
+        <td><strong>${esc(r.name)}</strong><div class="muted">Grade #${esc(r.id)}</div></td>
+        <td>${esc(r.assessment_title)} / ${esc(r.assessment_type)}</td>
+        <td>${esc(r.score_percent)}% / ${esc(r.letter_grade)}</td>
+        <td>${statusPill(r.status)}</td>
+      </tr>`).join("") : `<tr><td colspan="4" class="muted">No grade entries yet.</td></tr>`;
+
+    const au = d.audits || [];
+    $("#audits").innerHTML = au.length ? au.map((r) => `
+      <tr>
+        <td>${esc(r.action)}</td>
+        <td>${r.studentid ? esc(names[r.studentid] || ("Student #" + r.studentid)) : "—"}${r.gradeid ? " / Grade #" + esc(r.gradeid) : ""}</td>
+        <td>${esc(when(r.timecreated))}</td>
+      </tr>`).join("") : `<tr><td colspan="3" class="muted">No audit entries yet.</td></tr>`;
+
+    document.querySelectorAll("#coursegrades button").forEach((b) => b.addEventListener("click", () => publish(b)));
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function showStatus(msg, kind) {
+    const el = $("#status");
+    el.hidden = false; el.className = "status" + (kind ? " " + kind : "");
+    el.textContent = msg;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function post(payload, okmsg, btn) {
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: REPORT, token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ workspaceid: Number(qs.get("workspaceid") || 0) }, payload)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      showStatus(d.message || okmsg, "saved");
+      await load();
+    } catch (e) {
+      showStatus("Could not save: " + e.message, "error");
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || "Save"; }
+    }
+  }
+
+  function formPayload(form, doKey) {
+    const payload = { do: doKey };
+    new FormData(form).forEach((v, k) => { payload[k] = v; });
+    return payload;
+  }
+
+  function bindForm(id, doKey) {
+    const form = $("#" + id);
+    if (!form) return;
+    form.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      post(formPayload(form, doKey), "Saved.", form.querySelector("button"));
+    });
+  }
+
+  function publish(btn) {
+    post({ do: "publish_course_grade", offeringid: Number(btn.dataset.offeringid), studentid: Number(btn.dataset.studentid) }, "Course grade published.", btn);
+  }
+
+  bindForm("form-category", "save_category");
+  bindForm("form-assessment", "save_assessment");
+  bindForm("form-grade", "save_grade");
+  bindForm("form-dispute", "save_dispute");
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -49,7 +49,7 @@ if ($claims === null) {
 $scope = preg_replace('/^portal:/', '', (string)($claims['course'] ?? ''));
 $report = optional_param('report', 'summary', PARAM_ALPHANUMEXT);
 // Each portal token opens exactly one report family.
-$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard', 'intake' => 'intake-requests', 'workspace' => 'workspace-reports'];
+$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard', 'intake' => 'intake-requests', 'workspace' => 'workspace-reports', 'schedule' => 'live-schedule'];
 if (!isset($reportscopes[$report]) || $scope !== $reportscopes[$report]) {
     pqpd_fail(403, 'This token does not grant access to that report.');
 }
@@ -70,6 +70,96 @@ set_exception_handler(function (Throwable $e) {
     echo json_encode(['ok' => false, 'error' => get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine()]);
     exit;
 });
+
+// ---- report: schedule (live-class schedule; read-only) ------------------------
+// Ported from local_hubredirect/live_schedule.php via live_schedulelib
+// (pqlschl_*). Same mode resolution: teacher schedule (self, or admin viewing
+// any teacher), a child's schedule (parent/managed-student), or a parent's
+// child chooser. Join states + status labels computed server-side.
+
+if ($report === 'schedule') {
+    global $CFG, $DB, $USER;
+    require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
+    require_once($CFG->dirroot . '/local/hubredirect/live_schedulelib.php');
+    $userid = (int)($claims['sub'] ?? 0);
+
+    $childid = optional_param('childid', 0, PARAM_INT);
+    $requestedteacherid = optional_param('teacherid', 0, PARAM_INT);
+
+    $modechildren = [];
+    $teacherid = 0;
+    if ($requestedteacherid > 0) {
+        if (!pqlschl_has_teacher_role($requestedteacherid)) {
+            pqpd_fail(404, 'The requested teacher schedule is not available.');
+        }
+        if (!is_siteadmin($USER) && $userid !== $requestedteacherid) {
+            pqpd_fail(403, 'You cannot view this teacher live class schedule.');
+        }
+        $teacherid = $requestedteacherid;
+        $childid = 0;
+    } else if ($childid > 0 && pqlschl_has_teacher_role($childid)) {
+        if (!is_siteadmin($USER) && $userid !== $childid) {
+            pqpd_fail(403, 'You cannot view this teacher live class schedule.');
+        }
+        $teacherid = $childid;
+        $childid = 0;
+    } else if ($childid <= 0) {
+        if (pqlschl_has_teacher_role($userid)) {
+            $teacherid = $userid;
+        } else if (pqlschl_is_managed_student($userid)) {
+            $childid = $userid;
+        } else {
+            $modechildren = pqlschl_parent_children($userid);
+        }
+        if (count($modechildren) === 1) {
+            $childid = (int)$modechildren[0]['studentid'];
+        }
+    }
+    if ($childid > 0 && !pqlschl_user_can_access_child($userid, $childid)) {
+        pqpd_fail(403, 'You cannot view this live class schedule.');
+    }
+
+    $isteacher = $teacherid > 0;
+    $subject = $isteacher ? core_user::get_user($teacherid) : ($childid > 0 ? core_user::get_user($childid) : null);
+    $subjectname = $subject ? fullname($subject) : ($isteacher ? 'Teacher ' . $teacherid : ($childid > 0 ? 'Student ' . $childid : ''));
+    $now = time();
+    $upcoming = $isteacher
+        ? pqlschl_teacher_sessions($teacherid, $now - HOURSECS, $now + (30 * DAYSECS), 30)
+        : ($childid > 0 ? pqlschl_sessions($childid, $now - HOURSECS, $now + (30 * DAYSECS), 30) : []);
+    $recent = $isteacher
+        ? pqlschl_teacher_sessions($teacherid, $now - (30 * DAYSECS), $now, 20)
+        : ($childid > 0 ? pqlschl_sessions($childid, $now - (30 * DAYSECS), $now, 20) : []);
+    usort($recent, function ($a, $b) {
+        return (int)$b->scheduled_start <=> (int)$a->scheduled_start;
+    });
+
+    $decorate = function ($session) use ($isteacher) {
+        [$joinstate, $joinlabel] = pqlschl_join_state($session);
+        $session->join_state = $joinstate;
+        $session->join_label = $joinlabel;
+        $session->status_label = pqlschl_recent_status_label($session, $isteacher);
+        $session->start_label = pqlschl_format_session_datetime($session, (int)$session->scheduled_start);
+        $session->end_label = pqlschl_format_session_time($session, (int)$session->scheduled_end);
+        return $session;
+    };
+    $upcoming = array_map($decorate, $upcoming);
+    $recent = array_map($decorate, $recent);
+
+    $nameids = [];
+    foreach (array_merge($upcoming, $recent) as $s) {
+        $nameids[] = (int)($s->teacherid ?? 0);
+    }
+
+    echo json_encode([
+        'ok' => true, 'ready' => true,
+        'mode' => $isteacher ? 'teacher' : ($childid > 0 ? 'child' : 'chooser'),
+        'subject' => ['id' => $isteacher ? $teacherid : $childid, 'name' => $subjectname],
+        'children' => $modechildren,
+        'upcoming' => array_values($upcoming), 'recent' => array_values($recent),
+        'names' => pqpd_names($nameids),
+    ], JSON_UNESCAPED_SLASHES);
+    exit;
+}
 
 // ---- report: workspace (workspace reports; read-only) ------------------------
 // Ported from local_hubredirect/workspace_reports.php via workspace_reportslib

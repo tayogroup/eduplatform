@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live class schedule · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .next{border:2px solid var(--blue2);background:linear-gradient(180deg,var(--sky),var(--card))}
+  .next .when{font-size:19px;font-weight:900;color:var(--blue2)}
+  .cards{display:grid;gap:10px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.open{background:#e1f2ff;color:var(--blue2)}
+  .pill.waiting{background:var(--amber-bg);color:var(--amber)}
+  .pill.early{background:var(--sky);color:var(--ink2)}
+  .pill.closed{background:#edf0f4;color:var(--muted)}
+  .pill.present{background:#e1f2ff;color:var(--blue2)}
+  .pill.absent{background:var(--red-bg);color:var(--red)}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live class schedule</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_schedule.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Live class schedule</h1><p class="sub" id="subtitle">Upcoming and recent live classes.</p></div>
+  <div id="status" class="status">Loading schedule…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Choose a learner</h2><div class="chooser" id="chooser"></div></div>
+  <div class="panel next" id="next-panel" hidden><h2>Next class</h2><div id="next"></div></div>
+  <div class="panel" id="upcoming-panel" hidden><h2>Upcoming (30 days)</h2><div class="cards" id="upcoming"></div></div>
+  <div class="panel" id="recent-panel" hidden><h2>Recent (30 days)</h2><div class="cards" id="recent"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = (extra) => new URLSearchParams({ report: "schedule", token, childid: qs.get("childid") || "0", teacherid: qs.get("teacherid") || "0", ...extra });
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const sessionCard = (s, names, isTeacher) => `
+    <div class="card">
+      <div><h3>${esc(s.title || "Live class")}</h3>
+        <div class="muted">${esc(s.start_label)} – ${esc(s.end_label)}${!isTeacher && s.teacherid ? " · " + esc(names[s.teacherid] || "Teacher") : ""}${s.student_count ? " · " + s.student_count + " students" : ""}</div></div>
+      <div><span class="pill ${esc(s.join_state)}">${esc(s.join_label)}</span></div>
+    </div>`;
+
+  const recentCard = (s, names, isTeacher) => `
+    <div class="card">
+      <div><h3>${esc(s.title || "Live class")}</h3>
+        <div class="muted">${esc(s.start_label)}${!isTeacher && s.teacherid ? " · " + esc(names[s.teacherid] || "Teacher") : ""}</div></div>
+      <div><span class="pill ${/absent/.test(s.status_label) ? "absent" : /present|completed/.test(s.status_label) ? "present" : "closed"}">${esc(s.status_label)}</span></div>
+    </div>`;
+
+  function render(d) {
+    const names = d.names || {};
+    const isTeacher = d.mode === "teacher";
+    $("#mode-note").textContent = d.mode === "chooser" ? "Choose a learner" : (isTeacher ? "Teaching schedule" : "Learner schedule");
+    if (d.mode === "chooser") {
+      $("#title").textContent = "Whose schedule?";
+      $("#chooser").innerHTML = d.children.map((c) => {
+        const u = new URL(location.href); u.searchParams.set("childid", c.studentid);
+        return `<a class="child" href="${esc(u.href)}">${esc(c.name || ("Student " + c.studentid))}</a>`;
+      }).join("") || "<div class='muted'>No linked learners found for this account.</div>";
+      $("#chooser-panel").hidden = false;
+      $("#status").hidden = true;
+      return;
+    }
+    $("#title").textContent = (isTeacher ? "Teaching schedule — " : "Live classes — ") + d.subject.name;
+    $("#subtitle").textContent = isTeacher ? "Your sessions for the next 30 days, plus the recent record." : "Upcoming classes and the recent attendance record.";
+
+    const next = d.upcoming[0];
+    if (next) {
+      $("#next").innerHTML = `<div class="when">${esc(next.start_label)}</div>
+        <div style="margin-top:6px"><strong>${esc(next.title || "Live class")}</strong>
+        <span class="pill ${esc(next.join_state)}" style="margin-left:8px">${esc(next.join_label)}</span></div>
+        <div class="muted" style="margin-top:4px">Ends ${esc(next.end_label)}${!isTeacher && next.teacherid ? " · " + esc(names[next.teacherid] || "Teacher") : ""}</div>`;
+      $("#next-panel").hidden = false;
+    }
+    const more = d.upcoming.slice(next ? 1 : 0);
+    $("#upcoming").innerHTML = more.map((s) => sessionCard(s, names, isTeacher)).join("") || "<div class='muted'>Nothing else scheduled.</div>";
+    $("#upcoming-panel").hidden = false;
+    $("#recent").innerHTML = d.recent.map((s) => recentCard(s, names, isTeacher)).join("") || "<div class='muted'>No recent classes.</div>";
+    $("#recent-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

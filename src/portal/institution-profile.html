@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Institution profile · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  .hero{border-radius:10px;padding:34px 30px;color:#fff;background:var(--blue);margin-bottom:16px}
+  .kicker{display:inline-block;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;background:rgba(255,255,255,.14);color:#fff}
+  .hero h1{margin:14px 0 0;font-size:34px;line-height:1.1}
+  .hero p{margin:12px 0 0;font-size:16px;color:#dbe6f1;max-width:720px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:var(--card)}
+  .card h2{color:var(--ink)}
+  .card p,.card li{color:var(--ink2);font-size:14px}
+  ul.services{margin:0;padding-left:18px}
+  .pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:800;margin:0 6px 6px 0;background:var(--sky);color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  form.contact label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:10px 0 3px;text-transform:uppercase;letter-spacing:.3px}
+  form.contact input,form.contact textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 11px;font:inherit;font-size:14px;background:var(--card);color:var(--ink)}
+  form.contact textarea{min-height:110px;resize:vertical}
+  form.contact button{margin-top:14px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:900;font-size:14px;cursor:pointer}
+  form.contact button:disabled{opacity:.55;cursor:wait}
+  .hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Institution profile</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of institution_profile.php</div>
+</div></header>
+<main class="wrap">
+  <div id="status" class="status">Loading profile…</div>
+  <section class="hero" id="hero" hidden>
+    <span class="kicker" id="kicker">Institution profile</span>
+    <h1 id="headline"></h1>
+    <p id="subtitle"></p>
+  </section>
+  <div id="feedback" hidden></div>
+  <div class="grid" id="body-grid" hidden>
+    <article class="card">
+      <h2 id="about-title">About</h2>
+      <p id="about-body"></p>
+      <div id="courses"></div>
+    </article>
+    <aside class="card">
+      <h2>Institution services</h2>
+      <ul class="services" id="services"></ul>
+      <p id="support" class="muted" style="color:var(--muted);font-size:13px"></p>
+    </aside>
+  </div>
+  <div class="grid" id="contact-grid" hidden>
+    <article class="card">
+      <h2 id="contact-title">Contact</h2>
+      <form class="contact" id="inquiry-form" autocomplete="off">
+        <div class="hp"><label>Website</label><input name="website" tabindex="-1" autocomplete="off"></div>
+        <label>Your name</label><input name="inquirer_name" required>
+        <label>Email</label><input name="inquirer_email" type="email" required>
+        <label>Phone / WhatsApp</label><input name="inquirer_phone">
+        <label>Interest</label><input name="interest" placeholder="Enrollment, partnership, teacher, support">
+        <label>Message</label><textarea name="inquiry_message" required></textarea>
+        <button type="submit">Send inquiry</button>
+      </form>
+    </article>
+    <aside class="card">
+      <h2>Next step</h2>
+      <p>Families can submit student intake, existing users can open the workspace, and new inquiries are routed to the branded support contact for this consumer.</p>
+    </aside>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Forward the consumer/workspace selectors the launch link carried (the CDN
+  // host has no consumer meaning; the endpoint resolves branding from these).
+  const passthrough = (extra) => {
+    const p = { report: "institution-profile", token };
+    ["consumer", "workspaceid"].forEach((k) => { const v = (qs.get(k) || "").trim(); if (v) p[k] = v; });
+    return Object.assign(p, extra || {});
+  };
+  const url = () => endpoint + "?" + new URLSearchParams(passthrough());
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    document.documentElement.style.setProperty("--blue2", d.accent || "#2a6cb0");
+    $("#mode-note").textContent = (d.brand || "Institution") + " · parallel-run of institution_profile.php";
+    $("#kicker").textContent = d.kicker || "Institution profile";
+    $("#headline").textContent = d.headline || d.brand || "Institution";
+    $("#subtitle").textContent = d.subtitle || "";
+    $("#hero").hidden = false;
+    if (d.primary) $("#hero").style.background = d.primary;
+
+    $("#about-title").textContent = "About " + (d.brand || "this institution");
+    $("#about-body").textContent = d.body || "";
+    $("#courses").innerHTML = (d.courses || []).map((c) => `<span class="pill">${esc(c)}</span>`).join("");
+    $("#services").innerHTML = (d.services || []).map((s) => `<li>${esc(s)}</li>`).join("");
+    $("#support").textContent = d.support ? "Support: " + d.support : "";
+    $("#contact-title").textContent = "Contact " + (d.brand || "this institution");
+    $("#body-grid").hidden = false;
+    $("#contact-grid").hidden = false;
+    $("#status").hidden = true;
+    $("#inquiry-form").addEventListener("submit", submitInquiry);
+  }
+
+  async function submitInquiry(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Sending…";
+    const fb = $("#feedback");
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(passthrough()), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "send_inquiry",
+          website: f.website.value,
+          inquirer_name: f.inquirer_name.value,
+          inquirer_email: f.inquirer_email.value,
+          inquirer_phone: f.inquirer_phone.value,
+          interest: f.interest.value,
+          inquiry_message: f.inquiry_message.value,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      fb.className = "status saved"; fb.hidden = false; fb.textContent = d.message || "Your inquiry was sent.";
+      f.reset();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      fb.className = "status error"; fb.hidden = false; fb.textContent = "Could not send: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Send inquiry";
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

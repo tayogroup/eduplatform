@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace recurring sessions · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .cards{display:grid;gap:10px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin:0 6px 4px 0}
+  .pill.open{background:#e1f2ff;color:var(--blue2)}
+  .pill.waiting{background:var(--amber-bg);color:var(--amber)}
+  .pill.early{background:var(--sky);color:var(--ink2)}
+  .pill.closed{background:#edf0f4;color:var(--muted)}
+  .pill.cancelled{background:var(--red-bg);color:var(--red)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .metric b{display:block;font-size:22px;color:var(--blue2)}
+  .metric span{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);font-weight:800}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  a.child,a.back{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:8px 14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800;font-size:13px}
+  a.child{display:block;margin-top:8px}
+  a.child:hover,a.back:hover{border-color:var(--blue2)}
+  form.wf label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.wf input,form.wf textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.wf textarea{min-height:56px;resize:vertical}
+  form.wf button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.wf button.danger{background:var(--red)}
+  form.wf button:disabled{opacity:.55;cursor:wait}
+  .inline{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}
+  .inline input{min-width:150px}
+  .inline button{margin-top:0}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Workspace recurring sessions</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of workspace_series.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Workspace recurring sessions</h1><p class="sub" id="subtitle">Edit a series, cancel or reschedule one class, or cancel the remaining series.</p></div>
+  <div id="status" class="status">Loading recurring sessions…</div>
+  <div class="panel" id="list-panel" hidden><h2>Series summary</h2><div class="cards" id="series-list"></div></div>
+  <div id="series-panel" hidden>
+    <div class="panel"><a class="back" href="#" id="back-link">← All series</a></div>
+    <div class="metrics" id="metrics"></div>
+    <div class="grid2">
+      <div class="panel">
+        <h2>Edit entire series</h2>
+        <form class="wf" id="edit-form">
+          <label>Title</label><input name="title" required>
+          <label>Lesson ID</label><input name="lessonid">
+          <label>Unit ID</label><input name="unitid">
+          <label>Duration minutes</label><input name="duration_minutes" type="number" min="15" max="240">
+          <button type="submit">Update future classes</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Cancel full series</h2>
+        <p class="muted">This cancels future uncompleted classes in the series. Past records remain for reporting.</p>
+        <form class="wf" id="cancel-series-form">
+          <label>Reason</label><textarea name="cancellation_reason" placeholder="optional"></textarea>
+          <button type="submit" class="danger">Cancel remaining series</button>
+        </form>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Classes in this series</h2>
+      <div id="sessions"></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let workspaceid = qs.get("workspaceid") || "0";
+  const seriesid = qs.get("seriesid") || "0";
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "workspace-series", token, workspaceid, seriesid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function send(payload, btn) {
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "workspace-series", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ workspaceid: Number(workspaceid) }, payload)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || "Save"; }
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  const statusPill = (s) => {
+    const st = (s || "").toLowerCase();
+    const cls = st === "cancelled" ? "cancelled" : st === "completed" ? "closed" : st === "live" ? "open" : "early";
+    return `<span class="pill ${cls}">${esc(st || "scheduled")}</span>`;
+  };
+
+  function renderList(d) {
+    $("#mode-note").textContent = "Series summary";
+    $("#title").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " — " : "") + "Recurring sessions";
+    const names = d.names || {};
+    const rows = d.series || [];
+    $("#series-list").innerHTML = rows.map((row) => {
+      const u = new URL(location.href); u.searchParams.set("seriesid", row.id);
+      return `<div class="card">
+        <h3>${esc(row.title || "Recurring series")}</h3>
+        <div class="muted">Teacher: ${esc(names[row.teacherid] || ("User " + row.teacherid))} · ${esc(row.pattern || "weekly")}</div>
+        <div style="margin-top:6px">
+          <span class="pill early">${row.session_total} classes</span>
+          <span class="pill open">${row.upcoming_total} upcoming</span>
+          <span class="pill cancelled">${row.cancelled_total} cancelled</span>
+          <span class="pill closed">${esc(row.status || "active")}</span>
+        </div>
+        <a class="child" href="${esc(u.href)}">Open series</a>
+      </div>`;
+    }).join("") || "<div class='muted'>No recurring series have been created for this workspace yet.</div>";
+    $("#list-panel").hidden = false;
+    $("#series-panel").hidden = true;
+    $("#status").hidden = true;
+  }
+
+  function renderSeries(d) {
+    $("#mode-note").textContent = "Series detail";
+    const s = d.selectedseries;
+    const sessions = d.sessions || [];
+    $("#title").textContent = (s.title || "Recurring series");
+    $("#subtitle").textContent = "Edit the series, cancel or reschedule one class, or cancel the remaining series.";
+
+    const upcoming = sessions.filter((x) => x.scheduled_start >= Math.floor(Date.now() / 1000) && x.status !== "cancelled").length;
+    const cancelled = sessions.filter((x) => x.status === "cancelled").length;
+    $("#metrics").innerHTML = [
+      [sessions.length, "classes"], [upcoming, "upcoming"], [cancelled, "cancelled"], [d.seriesstudents, "students"],
+    ].map(([n, l]) => `<div class="metric"><b>${n}</b><span>${l}</span></div>`).join("");
+
+    const ef = $("#edit-form");
+    ef.title.value = s.title || "";
+    ef.lessonid.value = s.lessonid || "";
+    ef.unitid.value = s.unitid || "";
+    ef.duration_minutes.value = s.duration_minutes || 60;
+    ef.onsubmit = (ev) => { ev.preventDefault(); send({
+      do: "update_series", seriesid: s.id,
+      title: ef.title.value, lessonid: ef.lessonid.value, unitid: ef.unitid.value,
+      duration_minutes: Number(ef.duration_minutes.value) || 60,
+    }, ef.querySelector("button")); };
+
+    const cf = $("#cancel-series-form");
+    cf.onsubmit = (ev) => { ev.preventDefault(); send({
+      do: "cancel_series", seriesid: s.id, cancellation_reason: cf.cancellation_reason.value,
+    }, cf.querySelector("button")); };
+
+    $("#sessions").innerHTML = sessions.length ? `<table>
+      <thead><tr><th>Class</th><th>When</th><th>Status</th><th>Reschedule one</th><th>Cancel one</th></tr></thead>
+      <tbody>${sessions.map((x) => {
+        const editable = x.status !== "completed" && x.status !== "cancelled";
+        return `<tr>
+          <td><strong>${esc(x.title || "Class")}</strong><div class="muted">#${x.id} · class ${x.series_sequence}</div></td>
+          <td>${esc(when(x.scheduled_start))}</td>
+          <td>${statusPill(x.status)}</td>
+          <td>${editable ? `<form class="wf resched" data-sessionid="${x.id}"><div class="inline"><input name="scheduled_start" type="datetime-local" required><button type="submit">Reschedule</button></div></form>` : `<span class="muted">Not available</span>`}</td>
+          <td>${editable ? `<form class="wf cancelone" data-sessionid="${x.id}"><div class="inline"><input name="cancellation_reason" placeholder="reason optional"><button type="submit" class="danger">Cancel class</button></div></form>` : `<span class="muted">Not available</span>`}</td>
+        </tr>`;
+      }).join("")}</tbody></table>` : "<div class='muted'>No classes are attached to this recurring series.</div>";
+
+    document.querySelectorAll("form.resched").forEach((f) => f.onsubmit = (ev) => { ev.preventDefault(); send({
+      do: "reschedule_session", sessionid: Number(f.dataset.sessionid), scheduled_start: f.scheduled_start.value,
+    }, f.querySelector("button")); });
+    document.querySelectorAll("form.cancelone").forEach((f) => f.onsubmit = (ev) => { ev.preventDefault(); send({
+      do: "cancel_session", sessionid: Number(f.dataset.sessionid), cancellation_reason: f.cancellation_reason.value,
+    }, f.querySelector("button")); });
+
+    $("#list-panel").hidden = true;
+    $("#series-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  function render(d) {
+    if (d.workspaceid) workspaceid = String(d.workspaceid);
+    if (d.mode === "series" && d.selectedseries) renderSeries(d); else renderList(d);
+  }
+
+  $("#back-link").addEventListener("click", (ev) => {
+    ev.preventDefault();
+    const u = new URL(location.href); u.searchParams.delete("seriesid"); location.href = u.href;
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

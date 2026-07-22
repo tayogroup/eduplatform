@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-13.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-14.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -113,6 +113,19 @@ $reports = [
     'live-capacity' => ['pqh_can_manage_academy_operations', 'live-capacity.html'],
     'live-trust' => ['pqpl_any_authenticated', 'live-trust.html'],
     'live-calendar' => ['pqpl_any_authenticated', 'live-calendar.html'],
+    // Wave 9: workspace + institution family. Workspace-manage/self/parent gates
+    // live in the handlers with the exact legacy messages; workspaces + onboarding
+    // keep the legacy academy-ops (+ foundation-domain) entry gate.
+    'workspaces' => ['pqh_can_manage_academy_operations', 'workspaces.html'],
+    'workspace-student' => ['pqpl_any_authenticated', 'workspace-student.html'],
+    'workspace-sessions' => ['pqpl_any_authenticated', 'workspace-sessions.html'],
+    'workspace-series' => ['pqpl_any_authenticated', 'workspace-series.html'],
+    'workspace-materials' => ['pqpl_any_authenticated', 'workspace-materials.html'],
+    'workspace-parent' => ['pqpl_any_authenticated', 'workspace-parent.html'],
+    'institution-onboarding' => ['pqh_can_manage_academy_operations', 'institution-onboarding.html'],
+    'institution-settings' => ['pqpl_any_authenticated', 'institution-settings.html'],
+    'institution-profile' => ['pqpl_any_authenticated', 'institution-profile.html'],
+    'institution-inquiry' => ['pqpl_any_authenticated', 'institution-inquiry.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

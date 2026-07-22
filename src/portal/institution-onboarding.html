@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Institution onboarding · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 6px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px;display:block;margin-top:3px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .toplinks{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:12px;font-weight:900;cursor:pointer;font-family:inherit}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .tophead{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+  .row{display:grid;grid-template-columns:minmax(320px,1.1fr) minmax(280px,.9fr);gap:16px;align-items:start}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .field{display:grid;gap:3px;margin-bottom:6px}
+  .field label{font-size:11px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.3px}
+  .field.full{grid-column:1/-1}
+  input.in,select.in,textarea.in{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea.in{min-height:64px;resize:vertical}
+  .step{display:grid;grid-template-columns:30px 1fr;gap:10px;margin-bottom:12px}
+  .step .n{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--sky);color:var(--blue2);font-weight:900}
+  .step b{display:block;color:var(--ink)}
+  .step em{display:block;color:var(--muted);font-style:normal;font-size:12px}
+  .inst{padding:12px 0;border-bottom:1px solid var(--line)}
+  .inst:last-child{border-bottom:0}
+  .inst strong{display:block}
+  .linkrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:800;background:var(--card)}
+  .created{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  @media(max-width:960px){.row,.grid2,.tophead{grid-template-columns:1fr}.toplinks{justify-content:flex-start}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Institution onboarding</small></div>
+  <div class="note">Token-authenticated · parallel-run of institution_onboarding.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel tophead">
+    <div>
+      <h1>Institution Onboarding</h1>
+      <p class="sub">Create the institution consumer, domain rows, workspace, first admin, defaults, landing page, and initial courses.</p>
+    </div>
+    <nav class="toplinks" id="toplinks"></nav>
+  </div>
+  <div id="status" class="status">Loading onboarding wizard…</div>
+  <div class="row" id="workspace" hidden>
+    <div class="card">
+      <h2>New institution</h2>
+      <form class="wizard" id="wizard">
+        <div class="grid2" id="formgrid"></div>
+        <button class="btn" type="submit">Create institution</button>
+      </form>
+    </div>
+    <div class="card">
+      <h2>What this creates</h2>
+      <div class="step"><span class="n">1</span><div><b>Consumer and domains</b><em>Creates the institution brand and public/app host rows.</em></div></div>
+      <div class="step"><span class="n">2</span><div><b>Workspace and first admin</b><em>Creates an institution workspace and grants owner/admin roles.</em></div></div>
+      <div class="step"><span class="n">3</span><div><b>Landing defaults</b><em>Stores colors, logo, hero image, support email, and landing copy.</em></div></div>
+      <div class="step"><span class="n">4</span><div><b>Initial courses</b><em>Stores starting course names in workspace settings for later enrollment setup.</em></div></div>
+      <h2 style="margin-top:14px">Recent institutions</h2>
+      <div id="institutions"></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "institution-onboarding", token });
+
+  let D = null;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      D = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const options = (map, selected) => Object.entries(map || {}).map(([v, l]) =>
+    `<option value="${esc(v)}"${String(selected) === String(v) ? " selected" : ""}>${esc(l)}</option>`).join("");
+  const field = (label, inner, full, cls) => `<div class="field${full ? " full" : ""}${cls ? " " + cls : ""}"><label>${esc(label)}</label>${inner}</div>`;
+  const input = (name, value, placeholder) => `<input class="in" name="${esc(name)}" value="${esc(value ?? "")}"${placeholder ? ` placeholder="${esc(placeholder)}"` : ""}>`;
+  const textarea = (name, ph) => `<textarea class="in" name="${esc(name)}"${ph ? ` placeholder="${esc(ph)}"` : ""}></textarea>`;
+  const select = (name, map, selected) => `<select class="in" name="${esc(name)}">${options(map, selected)}</select>`;
+  const linkBtn = (href, label, primary) => href ? `<a class="btn${primary ? "" : " light"}" href="${esc(href)}" target="_blank" rel="noopener">${esc(label)}</a>` : "";
+
+  function formGrid(o, def) {
+    return [
+      field("Institution name", `<input class="in" name="name" required>`),
+      field("Consumer slug", input("slug", "", "auto-generated if blank")),
+      field("Institution type", select("institution_type", o.institution_type, def.institution_type), true),
+      `<div class="field faith-field"><label>Faith sub-category</label><select class="in" name="faith_subcategory"><option value="">Select</option>${options(o.faith_subcategory, def.faith_subcategory)}</select></div>`,
+      field("Teaching method", select("teaching_method", o.teaching_method, def.teaching_method)),
+      field("Operator type", select("operator_type", o.operator_type, def.operator_type)),
+      field("First admin user", `<input class="in" name="adminuser" placeholder="Moodle user ID, email, or username" required>`, true),
+      field("Website hosting mode", select("website_mode", o.website_mode, def.website_mode), true),
+      field("EduPlatform-hosted public domain", input("publicdomain", "", "school.example.org"), false, "hosted-field"),
+      field("Existing website URL", input("externalwebsiteurl", "", "https://www.example.org"), false, "external-field"),
+      field("Learning portal domain", input("appdomain", "", "learn.example.org")),
+      field("Portal label", input("portallabel", "Learning portal")),
+      field("Portal domain management", select("domainmanagement", o.domain_management)),
+      field("Branding source", select("brandingsource", o.branding_source)),
+      field("Public intake location", select("intakelocation", o.intake_location)),
+      field("Website integration", select("integrationmethod", o.integration_method)),
+      field("Return URL after intake", input("returnurl", "", "https://www.example.org/thank-you")),
+      field("Support email", input("supportemail", "")),
+      field("Logo URL", input("logourl", "")),
+      field("Initials", `<input class="in" name="brandinitials" maxlength="6">`),
+      field("Plan code", input("plancode", "pilot")),
+      field("Primary color", input("primarycolor", "#2f6f4e")),
+      field("Accent color", input("accentcolor", "#d99a26")),
+      field("Surface color", input("surfacecolor", "#f4f8fb")),
+      field("Student limit", input("studentlimit", "0")),
+      field("Teacher limit", input("teacherlimit", "0")),
+      field("Session limit", input("sessionlimit", "0")),
+      field("Storage MB", input("storagelimit", "0")),
+      field("Hero image URL", input("heroimage", ""), true),
+      field("Landing headline", input("headline", ""), true),
+      field("Landing subtitle", textarea("subtitle"), true),
+      field("Landing body", textarea("bodycopy"), true),
+      field("Initial courses", input("initialcourses", "Pre-Quraan"), true),
+    ].join("");
+  }
+
+  const instRow = (i, names) => `
+    <div class="inst">
+      <strong>${esc(i.name)}</strong>
+      <span class="muted">#${i.id} / ${esc(i.slug)}${i.ownerid && names[i.ownerid] ? " · owner: " + esc(names[i.ownerid]) : ""}${i.status ? " · " + esc(i.status) : ""}</span>
+      <div class="linkrow">
+        ${linkBtn(i.links.workspace, "Workspace")}
+        ${linkBtn(i.links.settings, "Settings")}
+      </div>
+    </div>`;
+
+  function render(d) {
+    const o = d.options || {};
+    const def = d.defaults || {};
+    const t = d.toplinks || {};
+    $("#toplinks").innerHTML = linkBtn(t.consumers, "Consumers") + linkBtn(t.dashboard, "Platform dashboard");
+    $("#formgrid").innerHTML = formGrid(o, def);
+    $("#institutions").innerHTML = (d.institutions || []).length
+      ? d.institutions.map((i) => instRow(i, d.names || {})).join("")
+      : '<div class="empty">No institution workspaces found yet.</div>';
+    $("#workspace").hidden = false;
+    $("#status").hidden = true;
+
+    // Faith sub-category + website-mode toggles (same behavior as the legacy inline JS).
+    const form = $("#wizard");
+    const type = form.querySelector("select[name='institution_type']");
+    const faithField = form.querySelector(".faith-field");
+    const faithSel = faithField ? faithField.querySelector("select[name='faith_subcategory']") : null;
+    const syncFaith = () => {
+      const show = type && type.value === "faith_based_education";
+      if (faithField) faithField.style.display = show ? "" : "none";
+      if (!show && faithSel) faithSel.value = "";
+    };
+    if (type && faithField) { type.addEventListener("change", syncFaith); syncFaith(); }
+
+    const mode = form.querySelector("select[name='website_mode']");
+    const hostedField = form.querySelector(".hosted-field");
+    const externalField = form.querySelector(".external-field");
+    const externalInput = externalField ? externalField.querySelector("input") : null;
+    const syncMode = () => {
+      const external = mode && mode.value !== "hosted";
+      if (hostedField) hostedField.style.display = external ? "none" : "";
+      if (externalField) externalField.style.display = external ? "" : "none";
+      if (externalInput) externalInput.required = !!external;
+    };
+    if (mode) { mode.addEventListener("change", syncMode); syncMode(); }
+
+    form.addEventListener("submit", submitCreate);
+  }
+
+  async function submitCreate(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button[type='submit']");
+    const btnText = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Creating…"; }
+    const body = { do: "create_institution" };
+    f.querySelectorAll("input[name],select[name],textarea[name]").forEach((el) => {
+      if (el.closest(".field") && el.closest(".field").style.display === "none") return;
+      body[el.name] = el.value;
+    });
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "institution-onboarding", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      const c = d.created || {};
+      const links = c.links || {};
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").innerHTML = esc(d.message || "Institution workspace created.")
+        + (c.adminname ? " First admin: " + esc(c.adminname) + "." : "")
+        + `<div class="created">${linkBtn(links.workspace, "Open workspace", true)}${linkBtn(links.settings, "Settings")}${linkBtn(links.landing, "Landing")}</div>`;
+      f.reset();
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      if (btn) { btn.disabled = false; btn.textContent = btnText; }
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not create: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

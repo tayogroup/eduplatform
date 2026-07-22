@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parent workspace · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .metric b{display:block;font-size:24px;color:var(--ink)}
+  .metric span{font-size:12px;color:var(--muted);font-weight:700}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.present{background:#e1f2ff;color:var(--blue2)}
+  .pill.absent{background:var(--red-bg);color:var(--red)}
+  .pill.late{background:var(--amber-bg);color:var(--amber)}
+  .pill.status{background:var(--sky);color:var(--ink2);margin-left:0}
+  .sec{margin:8px 0 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td .name{font-weight:800;color:var(--ink);display:block}
+  td .sub2{color:var(--muted);font-size:12px}
+  a.btn{display:inline-block;border:1px solid var(--line);border-radius:7px;padding:6px 12px;background:var(--sky);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px}
+  a.btn:hover{border-color:var(--blue2)}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  select{border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink);font-weight:700}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Parent workspace</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of workspace_parent.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><div class="row">
+    <div><h1 id="title">Parent workspace</h1><p class="sub" id="subtitle">Assigned materials, attendance, and teacher notes for your child.</p></div>
+    <div id="picker" hidden><label class="muted" for="childsel" style="display:block;margin-bottom:4px">Child</label><select id="childsel"></select></div>
+  </div></div>
+  <div id="status" class="status">Loading parent workspace…</div>
+  <div class="panel" id="metrics-panel" hidden><div class="metrics" id="metrics"></div></div>
+  <div class="panel" id="materials-panel" hidden><h2>Assigned materials</h2><div id="materials"></div></div>
+  <div class="panel" id="attendance-panel" hidden><h2>Attendance</h2><div id="attendance"></div></div>
+  <div class="panel" id="recordings-panel" hidden><h2>Approved recordings</h2><div id="recordings"></div></div>
+  <div class="panel" id="notes-panel" hidden><h2>Teacher notes</h2><div class="cards" id="notes"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "workspace-parent", token, childid: qs.get("childid") || "0" });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const teacherName = (id, names) => (id && names[id]) ? names[id] : (id ? "Teacher #" + id : "");
+
+  const attPill = (a) => {
+    a = (a || "").toLowerCase();
+    if (!a) return "";
+    const cls = /absent/.test(a) ? "absent" : /late/.test(a) ? "late" : "present";
+    return `<span class="pill ${cls}">${esc(a.replace(/_/g, " "))}</span>`;
+  };
+
+  function renderMaterials(materials) {
+    if (!materials.length) { $("#materials").innerHTML = "<div class='muted'>No assigned materials yet.</div>"; return; }
+    const rows = materials.map((m) => `
+      <tr>
+        <td><span class="name">${esc(m.title || "Material")}</span><span class="sub2">${esc(m.workspace_name || "")}</span></td>
+        <td><span class="pill status">${esc(m.status_label || "Assigned")}</span></td>
+        <td>${m.source_url ? `<a class="btn" href="${esc(m.source_url)}" target="_blank" rel="noopener">Open</a>` : ""}</td>
+      </tr>`).join("");
+    $("#materials").innerHTML = `<table><thead><tr><th>Material</th><th>Status</th><th>Open</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  function renderAttendance(recent, names) {
+    if (!recent.length) { $("#attendance").innerHTML = "<div class='muted'>No attendance records yet.</div>"; return; }
+    const rows = recent.map((a) => `
+      <tr>
+        <td><span class="name">${esc(a.title || ("Session #" + a.sessionid))}</span><span class="sub2">${esc(teacherName(a.teacherid, names))}</span></td>
+        <td>${attPill(a.attendance_status)}</td>
+        <td>${esc(when(a.scheduled_start || a.timemodified))}</td>
+      </tr>`).join("");
+    $("#attendance").innerHTML = `<table><thead><tr><th>Session</th><th>Status</th><th>When</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  function renderRecordings(recordings, names) {
+    if (!recordings.length) { $("#recordings").innerHTML = "<div class='muted'>No approved class recordings are available yet.</div>"; return; }
+    const rows = recordings.map((r) => {
+      const fmt = [r.playback_format, (r.duration_minutes > 0 ? r.duration_minutes + " min" : "")].filter(Boolean).join(" · ");
+      return `
+      <tr>
+        <td><span class="name">${esc(r.title || ("Session #" + r.sessionid))}</span><span class="sub2">${esc(teacherName(r.teacherid, names))}</span></td>
+        <td>${esc(r.name || "Class recording")}<span class="sub2">${esc(fmt)}</span></td>
+        <td>${esc(when(r.scheduled_start || r.timemodified))}</td>
+        <td>${r.playback_url ? `<a class="btn" href="${esc(r.playback_url)}" target="_blank" rel="noopener">Open</a>` : ""}</td>
+      </tr>`;
+    }).join("");
+    $("#recordings").innerHTML = `<table><thead><tr><th>Session</th><th>Recording</th><th>When</th><th>Open</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  function renderNotes(notes) {
+    if (!notes.length) { $("#notes").innerHTML = "<div class='muted'>No parent-visible teacher notes yet.</div>"; return; }
+    $("#notes").innerHTML = notes.map((n) => {
+      let secs = "";
+      if (n.parent_summary) secs += `<div class="sec"><b>Note for parents</b>${esc(n.parent_summary)}</div>`;
+      if (n.strengths) secs += `<div class="sec"><b>Strengths</b>${esc(n.strengths)}</div>`;
+      if (n.needs_practice) secs += `<div class="sec"><b>Needs practice</b>${esc(n.needs_practice)}</div>`;
+      if (n.homework) secs += `<div class="sec"><b>Homework</b>${esc(n.homework)}</div>`;
+      const follow = (n.followup_status && n.followup_status !== "none") ? " · follow-up: " + esc(n.followup_status) : "";
+      return `<div class="card"><h3>${esc(n.title || ("Session #" + n.sessionid))}</h3><div class="meta">${esc(when(n.timemodified))}${follow}</div>${secs}</div>`;
+    }).join("");
+  }
+
+  function render(d) {
+    const names = d.names || {};
+    const child = d.child || {};
+    $("#title").textContent = "Parent workspace — " + (child.name || "student");
+    $("#mode-note").textContent = "Token-authenticated · parallel-run of workspace_parent.php";
+
+    // Child chooser (the legacy page shows a <select> only when >1 child).
+    const children = d.children || [];
+    if (children.length > 1) {
+      const sel = $("#childsel");
+      sel.innerHTML = children.map((c) => `<option value="${c.id}"${c.id === child.id ? " selected" : ""}>${esc(c.name)}</option>`).join("");
+      sel.onchange = () => { const u = new URL(location.href); u.searchParams.set("childid", sel.value); location.href = u.href; };
+      $("#picker").hidden = false;
+    }
+
+    const att = d.attendance || { total: 0, present: 0, recent: [] };
+    const materials = d.materials || [];
+    const notes = d.notes || [];
+    const recordings = d.recordings || [];
+
+    $("#metrics").innerHTML = [
+      ["<b>" + materials.length + "</b>", "assigned materials"],
+      ["<b>" + (att.present || 0) + "/" + (att.total || 0) + "</b>", "attendance present/total"],
+      ["<b>" + notes.length + "</b>", "parent-visible notes"],
+      ["<b>" + recordings.length + "</b>", "approved recordings"],
+    ].map(([v, l]) => `<div class="metric">${v}<span>${l}</span></div>`).join("");
+    $("#metrics-panel").hidden = false;
+
+    renderMaterials(materials); $("#materials-panel").hidden = false;
+    renderAttendance(att.recent || [], names); $("#attendance-panel").hidden = false;
+    renderRecordings(recordings, names); $("#recordings-panel").hidden = false;
+    renderNotes(notes); $("#notes-panel").hidden = false;
+
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

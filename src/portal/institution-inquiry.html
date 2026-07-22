@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Institution inquiry · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(880px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+  .idbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .mark{width:46px;height:46px;border-radius:10px;display:grid;place-items:center;background:var(--blue2);color:#fff;font-weight:900;font-size:18px}
+  h1{margin:0 0 2px;font-size:24px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:12px 0 3px;text-transform:uppercase;letter-spacing:.3px}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 11px;font:inherit;font-size:14px;background:var(--card);color:var(--ink)}
+  textarea{min-height:120px;resize:vertical}
+  button{margin-top:16px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 22px;font-weight:900;font-size:14px;cursor:pointer}
+  button:disabled{opacity:.55;cursor:wait}
+  @media(max-width:640px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Institution inquiry</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of institution_inquiry.php</div>
+</div></header>
+<main class="wrap">
+  <div id="status" class="status">Loading inquiry form…</div>
+  <div id="feedback" hidden></div>
+  <section class="panel" id="form-panel" hidden>
+    <div class="idbar"><span class="mark" id="mark">I</span><div><h1 id="title">Contact</h1><p class="sub">Send a public inquiry about enrollment, teacher services, schedules, or institution support.</p></div></div>
+    <form id="inquiry-form" autocomplete="off">
+      <div class="row">
+        <div><label>Name</label><input name="name" required></div>
+        <div><label>Email</label><input name="email" type="email" required></div>
+      </div>
+      <div class="row">
+        <div><label>Phone / WhatsApp</label><input name="phone"></div>
+        <div><label>Interest</label><select name="interest" id="interest"></select></div>
+      </div>
+      <label>Details</label><textarea name="details" required></textarea>
+      <button type="submit">Send inquiry</button>
+    </form>
+  </section>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const passthrough = () => {
+    const p = { report: "institution-inquiry", token };
+    ["consumer", "workspaceid"].forEach((k) => { const v = (qs.get(k) || "").trim(); if (v) p[k] = v; });
+    return p;
+  };
+  const url = () => endpoint + "?" + new URLSearchParams(passthrough());
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    if (d.accent) document.documentElement.style.setProperty("--blue2", d.accent);
+    $("#mode-note").textContent = (d.brand || "Institution") + " · parallel-run of institution_inquiry.php";
+    $("#mark").textContent = d.initials || "I";
+    $("#title").textContent = "Contact " + (d.brand || "this institution");
+    $("#interest").innerHTML = (d.interests || []).map((o) => `<option value="${esc(o)}">${esc(o)}</option>`).join("");
+    $("#form-panel").hidden = false;
+    $("#status").hidden = true;
+    $("#inquiry-form").addEventListener("submit", submitInquiry);
+  }
+
+  async function submitInquiry(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Sending…";
+    const fb = $("#feedback");
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(passthrough()), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "send_inquiry",
+          name: f.elements.name.value,
+          email: f.elements.email.value,
+          phone: f.elements.phone.value,
+          interest: f.elements.interest.value,
+          details: f.elements.details.value,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      fb.className = "status saved"; fb.hidden = false; fb.textContent = d.message || "Inquiry sent.";
+      f.reset();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      fb.className = "status error"; fb.hidden = false; fb.textContent = "Could not send: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Send inquiry";
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

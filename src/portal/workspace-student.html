@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace student · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .kpi strong{display:block;font-size:23px;color:var(--blue2)}
+  .kpi span{font-size:12px;color:var(--muted);font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+  .profile{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:560px){.profile{grid-template-columns:1fr}}
+  .profile div{padding:10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .profile strong{display:block;color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.3px}
+  .profile span{display:block;margin-top:4px;color:var(--ink);font-size:13px;font-weight:700}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn.small{padding:5px 10px;font-size:12px;margin:0 5px 5px 0}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);margin:0 4px 4px 0}
+  .pill.role{background:#e1f2ff;color:var(--blue2)}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;font-weight:900}
+  .sub2{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  .tablewrap{overflow-x:auto}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;background:var(--bg)}
+  .note-item{padding:12px 0;border-bottom:1px solid var(--line)}
+  .note-item:last-child{border-bottom:0}
+  .note-item p{margin:6px 0 0;font-size:13px}
+  .status-form{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Workspace student</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of workspace_student.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Workspace student</h1><p class="sub" id="subtitle">Assigned teachers, materials, attendance, notes, and learning progress.</p></div>
+  <div id="status" class="status">Loading student profile…</div>
+  <div id="app" hidden>
+    <div class="actions" id="actions"></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="grid2">
+      <div class="panel"><h2>Student details</h2><div class="profile" id="profile"></div></div>
+      <div class="panel"><h2>Teachers &amp; parents</h2><div id="teachers"></div><h2 style="margin-top:16px">Linked parents</h2><div id="guardians"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h2>Live consent</h2><div id="consents"></div></div>
+      <div class="panel"><h2>Recent live attendance</h2><div id="attendance"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h2>Recent lessons</h2><div id="lessons"></div></div>
+      <div class="panel"><h2>Recent quiz attempts</h2><div id="quiz"></div></div>
+    </div>
+    <div class="panel"><h2>Assigned materials</h2><div id="materials"></div></div>
+    <div class="panel"><h2>Recent teacher notes</h2><div id="notes"></div></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let moodleOrigin = "";
+  try { moodleOrigin = new URL(endpoint).origin; } catch (e) { moodleOrigin = ""; }
+  const workspaceid = String(parseInt(qs.get("workspaceid") || "0", 10) || 0);
+  const studentid = String(parseInt(qs.get("studentid") || "0", 10) || 0);
+  const consumerParam = (qs.get("consumer") || "").replace(/[^A-Za-z0-9]/g, "");
+
+  // portal_launch mints a fresh token from the live Moodle session and forwards
+  // studentid/workspaceid/childid/consumer to the target migrated portal page.
+  const launch = (report, extra) => {
+    const p = new URLSearchParams({ report, ...(extra || {}) });
+    if (consumerParam) p.set("consumer", consumerParam);
+    return moodleOrigin + "/local/prequran/portal_launch.php?" + p;
+  };
+  // Legacy Moodle URL for pages not yet migrated.
+  const legacy = (file, extra) => {
+    const p = new URLSearchParams(extra || {});
+    if (consumerParam) p.set("consumer", consumerParam);
+    const q = p.toString();
+    return moodleOrigin + "/local/hubredirect/" + file + (q ? "?" + q : "");
+  };
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "workspace-student", token, workspaceid, studentid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) {
+        let msg = "HTTP " + r.status;
+        try { const e = await r.json(); if (e && e.error) msg = e.error; } catch (_) {}
+        throw new Error(msg);
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function post(payload, btn, busyText) {
+    const old = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = busyText || "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "workspace-student", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ workspaceid: Number(workspaceid), studentid: Number(studentid) }, payload)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+      return true;
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return false;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = old; }
+    }
+  }
+
+  const table = (head, rows) => `<div class="tablewrap"><table><thead><tr>${head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+  const person = (p) => `<span class="pill">${esc(p.fullname)} · ${esc(p.account_label)}${p.email ? " · " + esc(p.email) : ""}</span>`;
+
+  function renderActions(d) {
+    const w = { workspaceid: d.workspace.id };
+    const ws = { workspaceid: d.workspace.id, studentid: d.student.id };
+    const items = [];
+    items.push(`<a class="btn light" href="${esc(launch("workspace-dashboard", w))}">Workspace dashboard</a>`);
+    if (d.canmanage) items.push(`<a class="btn light" href="${esc(launch("workspace-people", w))}">People</a>`);
+    if (d.canteach) items.push(`<a class="btn light" href="${esc(launch("workspace-reports", ws))}">Workspace report</a>`);
+    items.push(`<a class="btn light" href="${esc(launch("managed-reports", { studentid: d.student.id }))}">Student report</a>`);
+    items.push(`<a class="btn light" href="${esc(launch("live-summaries", { childid: d.student.id }))}">Class summaries</a>`);
+    items.push(`<a class="btn light" href="${esc(launch("course-transcript", ws))}">Transcript</a>`);
+    items.push(`<a class="btn light" href="${esc(legacy("student_billing.php", ws))}">Billing</a>`);
+    $("#actions").innerHTML = items.join("");
+  }
+
+  function renderProfile(d) {
+    const p = d.profile;
+    const rows = [
+      ["Email", d.student.email], ["Account No.", d.student.account_no || "pending repair"],
+      ["Username", d.student.username], ["Level", p.current_level], ["Status", p.status],
+      ["Age band", p.age_band], ["Language", p.language], ["Country", p.country],
+      ["Enrollment approval", p.enrollment_approval_status],
+    ];
+    $("#profile").innerHTML = rows.map(([l, v]) => `<div><strong>${esc(l)}</strong><span>${esc(v || "—")}</span></div>`).join("");
+  }
+
+  function render(d) {
+    $("#title").textContent = d.student.name || "Workspace student";
+    $("#subtitle").textContent = (d.workspace.name || "Workspace") + " · " + (d.student.account_label || "") + " · Moodle user #" + d.student.id;
+    renderActions(d);
+    const m = d.metrics;
+    $("#kpis").innerHTML = [
+      [m.lessons_completed + "/" + m.lessons_total, "lessons completed"],
+      [m.quiz_completed + "/" + m.quiz_total, "quiz attempts completed"],
+      [m.quiz_best + "%", "best quiz score"],
+      [m.attendance_present + "/" + m.attendance_total, "live attendance"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${esc(v)}</strong><span>${esc(l)}</span></div>`).join("");
+    renderProfile(d);
+
+    $("#teachers").innerHTML = d.teachers.length ? d.teachers.map(person).join("") : "<div class='empty'>No active teacher assignment found.</div>";
+    $("#guardians").innerHTML = d.guardians.length ? d.guardians.map(person).join("") : "<div class='empty'>No linked parent or guardian found.</div>";
+
+    $("#consents").innerHTML = d.consents.length ? table(["Type", "Guardian", "Status", "Updated"], d.consents.map((c) =>
+      `<tr><td>${esc(c.consent_type)}</td><td>${esc(c.guardian_name)}</td><td><span class="pill">${c.granted ? "granted" : "not granted"}</span></td><td>${esc(when(c.timemodified))}</td></tr>`)) : "<div class='empty'>No live consent rows found.</div>";
+
+    $("#attendance").innerHTML = d.attendance.length ? table(["Session", "Attendance", "Participation", "Updated"], d.attendance.map((a) =>
+      `<tr><td>#${Number(a.sessionid)}</td><td><span class="pill">${esc(a.attendance_status)}</span></td><td>${esc(a.participation_status)}</td><td>${esc(when(a.timemodified))}</td></tr>`)) : "<div class='empty'>No attendance rows found yet.</div>";
+
+    $("#lessons").innerHTML = d.lessons.length ? table(["Lesson", "Status", "Percent", "Updated"], d.lessons.map((l) =>
+      `<tr><td><span class="name">${esc(l.lessonid)}</span><span class="sub2">${esc(l.unitid)}</span></td><td><span class="pill">${esc(l.overall_status)}</span></td><td>${l.overall_percent === null ? "" : Number(l.overall_percent) + "%"}</td><td>${esc(when(l.timemodified))}</td></tr>`)) : "<div class='empty'>No lesson progress rows found yet.</div>";
+
+    $("#quiz").innerHTML = d.quiz.length ? table(["Quiz", "Status", "Score", "Updated"], d.quiz.map((q) =>
+      `<tr><td><span class="name">${esc(q.quizid)}</span><span class="sub2">${esc(q.lessonid + " / " + q.unitid)}</span></td><td><span class="pill">${esc(q.status)}</span></td><td>${q.percent === null ? "" : Number(q.percent) + "%"}</td><td>${esc(when(q.timemodified))}</td></tr>`)) : "<div class='empty'>No quiz attempts found yet.</div>";
+
+    $("#materials").innerHTML = d.materials.length ? table(["Material", "Type", "Progress", "Updated"], d.materials.map((mat) => {
+      const open = mat.source_url ? `<a class="btn small light" href="${esc(mat.source_url)}" target="_blank" rel="noopener">Open</a>` : "";
+      let form = "";
+      if (mat.can_update) {
+        const start = mat.can_start ? `<button class="btn small light" data-act="material" data-assignmentid="${mat.id}" data-workflow="in_progress">Start</button>` : "";
+        form = `<div class="status-form">${start}<button class="btn small" data-act="material" data-assignmentid="${mat.id}" data-workflow="completed">Complete</button></div>`;
+      }
+      return `<tr><td><span class="name">${esc(mat.title)}</span><span class="sub2">${esc(mat.course_key)}</span>${open}</td><td><span class="pill">${esc(mat.material_type)}</span></td><td><span class="pill role">${esc(mat.workflow_label)}</span>${form}</td><td>${esc(when(mat.timemodified))}</td></tr>`;
+    })) : "<div class='empty'>No materials assigned to this student yet.</div>";
+
+    $("#notes").innerHTML = d.notes.length ? d.notes.map((n) => `
+      <div class="note-item">
+        <span class="name">Session #${Number(n.sessionid)} · ${esc(n.teacher_name)}</span>
+        <span class="sub2">${esc(when(n.timemodified))}${n.followup_status ? " · follow-up: " + esc(n.followup_status) : ""}</span>
+        ${n.strengths ? `<p><strong>Strengths:</strong> ${esc(n.strengths)}</p>` : ""}
+        ${n.needs_practice ? `<p><strong>Needs practice:</strong> ${esc(n.needs_practice)}</p>` : ""}
+        ${n.homework ? `<p><strong>Homework:</strong> ${esc(n.homework)}</p>` : ""}
+      </div>`).join("") : "<div class='empty'>No live-class notes found yet.</div>";
+
+    $("#app").hidden = false;
+    if ($("#status").className === "status") $("#status").hidden = true;
+  }
+
+  // Material progress write buttons (self-service, mirrors the legacy student form).
+  document.addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-act='material']");
+    if (!b) return;
+    post({ do: "update_material_status", assignmentid: Number(b.dataset.assignmentid), workflow_status: b.dataset.workflow }, b, b.dataset.workflow === "completed" ? "Completing…" : "Starting…");
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

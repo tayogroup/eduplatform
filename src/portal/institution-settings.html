@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Institution settings · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd;text-align:right}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 12px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field.wide{grid-column:1/-1}
+  label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:74px;resize:vertical}
+  .sectitle{grid-column:1/-1;margin:6px 0 0;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+  .actions{margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:11px 22px;font-weight:900;font-size:14px;cursor:pointer}
+  button:disabled{opacity:.55;cursor:wait}
+  .preview{overflow:hidden;border-radius:10px;border:1px solid var(--line)}
+  .preview .hero{min-height:150px;padding:20px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(90deg,rgba(18,38,58,.78),rgba(23,50,77,.35)),var(--hero) center/cover no-repeat;color:#fff}
+  .preview .hero h3{margin:0;font-size:24px;font-weight:900;color:#fff}
+  .preview .hero p{margin:6px 0 0;color:rgba(255,255,255,.9);font-size:13px}
+  .mark{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:10px;background:var(--markbg,#2a6cb0);color:#fff;font-weight:900;margin-bottom:10px;overflow:hidden}
+  .mark img{width:100%;height:100%;object-fit:cover}
+  .domains{padding:12px}
+  .chip{display:inline-block;margin:4px 4px 0 0;padding:5px 10px;border-radius:999px;background:var(--sky);color:var(--blue);font-size:12px;font-weight:800}
+  .muted{color:var(--muted);font-size:12px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Institution settings</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of institution_settings.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Institution settings</h1><p class="sub" id="subtitle">Branding, domains, support, and landing page copy.</p></div>
+  <div id="status" class="status">Loading settings…</div>
+
+  <div class="panel" id="preview-panel" hidden>
+    <div class="preview">
+      <div class="hero" id="hero">
+        <span class="mark" id="mark"></span>
+        <h3 id="phead">Institution</h3>
+        <p id="psub"></p>
+      </div>
+      <div class="domains" id="domains"><span class="muted">No custom domain rows found.</span></div>
+    </div>
+  </div>
+
+  <form class="panel" id="form" hidden>
+    <h2>Settings</h2>
+    <div class="grid">
+      <div class="sectitle">Identity</div>
+      <div class="field"><label>Institution name</label><input name="name" required></div>
+      <div class="field"><label>Consumer slug</label><input name="slug" required></div>
+      <div class="field"><label>Logo URL</label><input name="logourl"></div>
+      <div class="field"><label>Initials</label><input name="brandinitials" maxlength="6"></div>
+      <div class="field"><label>Support email</label><input name="supportemail"></div>
+
+      <div class="sectitle">Theme colours</div>
+      <div class="field"><label>Primary color</label><input name="primarycolor"></div>
+      <div class="field"><label>Accent color</label><input name="accentcolor"></div>
+      <div class="field"><label>Surface color</label><input name="surfacecolor"></div>
+      <div class="field"><label>Dashboard header</label><input name="dashboardheaderbg" maxlength="7"></div>
+      <div class="field"><label>Header text</label><input name="dashboardheadertext" maxlength="7"></div>
+      <div class="field"><label>Page body</label><input name="pagebodybg" maxlength="7"></div>
+      <div class="field"><label>Report header</label><input name="reportheaderbg" maxlength="7"></div>
+      <div class="field"><label>Report header text</label><input name="reportheadertext" maxlength="7"></div>
+      <div class="field"><label>Report body</label><input name="reportbodybg" maxlength="7"></div>
+
+      <div class="sectitle">Website &amp; domains</div>
+      <div class="field wide"><label>Website hosting mode</label><select name="website_mode"></select></div>
+      <div class="field" id="hosted-field"><label>EduPlatform-hosted public domain</label><input name="publicdomain" placeholder="school.example.org"></div>
+      <div class="field" id="external-field"><label>Existing website URL</label><input name="externalwebsiteurl" placeholder="https://www.example.org"></div>
+      <div class="field"><label>Learning portal domain</label><input name="appdomain" placeholder="learn.example.org"></div>
+      <div class="field"><label>Portal label</label><input name="portallabel"></div>
+      <div class="field"><label>Portal domain management</label><select name="domainmanagement"></select></div>
+      <div class="field"><label>Branding source</label><select name="brandingsource"></select></div>
+      <div class="field"><label>Public intake location</label><select name="intakelocation"></select></div>
+      <div class="field"><label>Website integration</label><select name="integrationmethod"></select></div>
+      <div class="field"><label>Return URL after intake</label><input name="returnurl" placeholder="https://www.example.org/thank-you"></div>
+
+      <div class="sectitle">Landing page copy</div>
+      <div class="field wide"><label>Hero image URL</label><input name="heroimage"></div>
+      <div class="field wide"><label>Landing headline</label><input name="headline"></div>
+      <div class="field wide"><label>Landing subtitle</label><textarea name="subtitle"></textarea></div>
+      <div class="field wide"><label>Landing body</label><textarea name="bodycopy"></textarea></div>
+      <div class="field wide"><label>Initial courses</label><input name="initialcourses"></div>
+    </div>
+    <div class="actions">
+      <button type="submit" id="save">Save settings</button>
+      <span class="muted" id="savehint"></span>
+    </div>
+  </form>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const form = $("#form");
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = () => {
+    const p = { report: "institution-settings", token };
+    if (qs.get("workspaceid")) p.workspaceid = qs.get("workspaceid");
+    if (qs.get("consumer")) p.consumer = qs.get("consumer");
+    return new URLSearchParams(p);
+  };
+
+  const setVal = (name, val) => { const el = form.elements[name]; if (el) el.value = val ?? ""; };
+
+  const fillSelect = (name, options, current) => {
+    const el = form.elements[name];
+    if (!el) return;
+    el.innerHTML = Object.entries(options || {}).map(([v, lbl]) =>
+      `<option value="${esc(v)}"${v === current ? " selected" : ""}>${esc(lbl)}</option>`
+    ).join("");
+  };
+
+  function syncWebsiteMode() {
+    const external = form.elements["website_mode"] && form.elements["website_mode"].value !== "hosted";
+    $("#hosted-field").style.display = external ? "none" : "";
+    $("#external-field").style.display = external ? "" : "none";
+    if (form.elements["externalwebsiteurl"]) form.elements["externalwebsiteurl"].required = !!external;
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const c = d.consumer || {}, t = d.theme || {}, copy = d.copy || {}, wp = d.websiteprofile || {}, opt = d.options || {};
+    $("#title").textContent = "Institution settings — " + (d.workspacename || c.name || "workspace");
+    $("#mode-note").textContent = "Workspace #" + (d.workspaceid || "?") + " · parallel-run of institution_settings.php";
+
+    setVal("name", c.name); setVal("slug", c.slug); setVal("logourl", c.logourl); setVal("supportemail", c.supportemail);
+    setVal("brandinitials", copy.brand_initials);
+    setVal("primarycolor", t.primary_color); setVal("accentcolor", t.accent_color); setVal("surfacecolor", t.surface_color);
+    setVal("dashboardheaderbg", t.dashboard_header_bg); setVal("dashboardheadertext", t.dashboard_header_text);
+    setVal("pagebodybg", t.page_body_bg); setVal("reportheaderbg", t.report_header_bg);
+    setVal("reportheadertext", t.report_header_text); setVal("reportbodybg", t.report_body_bg);
+    setVal("publicdomain", d.publicdomain); setVal("appdomain", d.appdomain);
+    setVal("externalwebsiteurl", wp.external_website_url); setVal("portallabel", wp.portal_label); setVal("returnurl", wp.return_url);
+    setVal("heroimage", copy.hero_image_url); setVal("headline", copy.landing_headline);
+    setVal("subtitle", copy.landing_subtitle); setVal("bodycopy", copy.landing_body); setVal("initialcourses", copy.initial_courses);
+
+    fillSelect("website_mode", opt.website_mode, wp.website_mode);
+    fillSelect("domainmanagement", opt.domain_management, wp.domain_management);
+    fillSelect("brandingsource", opt.branding_source, wp.branding_source);
+    fillSelect("intakelocation", opt.intake_location, wp.intake_location);
+    fillSelect("integrationmethod", opt.integration_method, wp.integration_method);
+
+    // preview
+    const hero = $("#hero");
+    hero.style.setProperty("--hero", d.previewhero ? `url('${d.previewhero}')` : "none");
+    const mark = $("#mark");
+    mark.style.setProperty("--markbg", t.primary_color || "#2a6cb0");
+    mark.innerHTML = c.logourl ? `<img src="${esc(c.logourl)}" alt="">` : esc(copy.brand_initials || "");
+    $("#phead").textContent = copy.landing_headline || c.name || "Institution";
+    $("#psub").textContent = copy.landing_subtitle || "";
+    const dm = d.domains || [];
+    $("#domains").innerHTML = dm.length
+      ? dm.map((x) => `<span class="chip">${esc(x.domain)} / ${esc(x.domain_type)}</span>`).join("")
+      : '<span class="muted">No custom domain rows found.</span>';
+
+    if (form.elements["website_mode"]) form.elements["website_mode"].addEventListener("change", syncWebsiteMode);
+    syncWebsiteMode();
+
+    $("#status").hidden = true;
+    $("#preview-panel").hidden = false;
+    form.hidden = false;
+  }
+
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const btn = $("#save");
+    btn.disabled = true; btn.textContent = "Saving…";
+    $("#savehint").textContent = "";
+    const payload = { do: "save_settings" };
+    if (qs.get("workspaceid")) payload.workspaceid = Number(qs.get("workspaceid"));
+    for (const el of form.elements) { if (el.name) payload[el.name] = el.value; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "institution-settings", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Institution settings saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Save settings";
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

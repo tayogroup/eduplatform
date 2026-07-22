@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace materials · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .kpi strong{display:block;font-size:23px;color:var(--blue2)}
+  .kpi span{font-size:12px;color:var(--muted);font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+  .field{display:grid;gap:4px;margin-bottom:10px}
+  .field label{font-size:12px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:80px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn.danger{background:var(--red-bg);color:var(--red);border:1px solid var(--red)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .btn.small{padding:5px 10px;font-size:12px;margin:0 4px 4px 0}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);margin:0 4px 4px 0}
+  .pill.type{background:#e1f2ff;color:var(--blue2)}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;font-weight:900}
+  .sub2{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  .tablewrap{overflow-x:auto}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;background:var(--bg)}
+  .statusform{display:grid;gap:6px}
+  .statusform .row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .statusform select{max-width:180px}
+  a.open{color:var(--blue2);font-weight:900;text-decoration:none}
+  a.open:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Workspace materials</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of workspace_materials.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Workspace materials</h1><p class="sub" id="subtitle">House links and course resources for this workspace.</p></div>
+  <div id="status" class="status">Loading workspace materials…</div>
+  <div id="app" hidden>
+    <div class="kpis" id="kpis"></div>
+    <div class="grid2">
+      <div class="panel" id="add-panel" hidden>
+        <h2>Add material</h2>
+        <div class="empty">Adding a material (with an optional file upload) is only available on the legacy workspace materials page. <a class="open" id="add-legacy" href="#" target="_blank" rel="noopener">Open the legacy page</a>.</div>
+      </div>
+      <form class="panel" id="assign-panel" hidden>
+        <h2>Assign material</h2>
+        <div id="assign-empty" class="empty" hidden></div>
+        <div id="assign-fields" hidden>
+          <div class="field"><label>Material</label><select id="assign-material" required></select></div>
+          <div class="field"><label>Assign to</label><select id="assign-target" required></select></div>
+          <button class="btn" type="submit">Assign material</button>
+        </div>
+      </form>
+    </div>
+    <div class="panel">
+      <h2>Material library</h2>
+      <div id="materials-empty" class="empty" hidden>No active workspace materials yet.</div>
+      <div class="tablewrap"><table id="materials-table" hidden>
+        <thead><tr><th>Material</th><th>Type</th><th>Visibility</th><th>Updated</th><th></th></tr></thead>
+        <tbody id="materials-body"></tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <h2>Assignments</h2>
+      <div id="assignments-empty" class="empty" hidden>No material assignments yet.</div>
+      <div class="tablewrap"><table id="assignments-table" hidden>
+        <thead><tr><th>Material</th><th>Assigned to</th><th>Role</th><th>Progress</th><th>Updated</th></tr></thead>
+        <tbody id="assignments-body"></tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = (qs.get("workspaceid") || "0").replace(/[^0-9]/g, "");
+  const childid = (qs.get("childid") || "0").replace(/[^0-9]/g, "");
+  const consumer = (qs.get("consumer") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "—";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = (extra) => {
+    const p = new URLSearchParams({ report: "workspace-materials", token });
+    if (workspaceid && workspaceid !== "0") p.set("workspaceid", workspaceid);
+    if (childid && childid !== "0") p.set("childid", childid);
+    if (consumer) p.set("consumer", consumer);
+    for (const k in (extra || {})) p.set(k, extra[k]);
+    return p;
+  };
+
+  let STATE = null;
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params().toString());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      STATE = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#app").hidden = true; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function setStatus(msg, cls) {
+    const el = $("#status");
+    el.hidden = false; el.className = "status" + (cls ? " " + cls : ""); el.textContent = msg;
+  }
+
+  async function post(payload, btn) {
+    if (btn) { btn.disabled = true; }
+    try {
+      const r = await fetch(endpoint + "?" + params().toString(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus(d.message || "Saved.", "saved");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      if (btn) btn.disabled = false;
+      setStatus("Could not save: " + e.message, "error");
+    }
+  }
+
+  function render(d) {
+    const can = d.can || {};
+    $("#title").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " " : "") + "materials";
+    $("#subtitle").textContent = d.isstudentmaterials ? "Materials assigned to you in this workspace." : "House links and course resources for this workspace.";
+
+    const m = d.metrics || {};
+    $("#kpis").innerHTML = [
+      ["materials", "active materials"],
+      ["assignments", "active assignments"],
+      ["completed", "complete or reviewed"],
+      ["reviewed", "reviewed"],
+    ].map(([k, lbl]) => `<div class="kpi"><strong>${Number(m[k] || 0)}</strong><span>${lbl}</span></div>`).join("");
+
+    // Add-material panel: portal cannot do the file upload — link to legacy.
+    if (can.add === false && !d.isstudentmaterials && (can.manage || can.teach)) {
+      $("#add-legacy").href = d.legacyurl || "#";
+      $("#add-panel").hidden = false;
+    } else {
+      $("#add-panel").hidden = true;
+    }
+
+    // Assign-material form (owners/admins only).
+    if (can.manage) {
+      $("#assign-panel").hidden = false;
+      const materials = d.materials || [], students = d.students || [], teachers = d.teachers || [];
+      let emptyMsg = "";
+      if (!d.assigntableready) emptyMsg = "Material assignment table is not ready. Run the local_prequran Moodle upgrade first.";
+      else if (!materials.length) emptyMsg = "Add a material before assigning it.";
+      else if (!students.length && !teachers.length) emptyMsg = "Add workspace students or teachers before assigning materials.";
+      if (emptyMsg) {
+        $("#assign-empty").hidden = false; $("#assign-empty").textContent = emptyMsg; $("#assign-fields").hidden = true;
+      } else {
+        $("#assign-empty").hidden = true; $("#assign-fields").hidden = false;
+        $("#assign-material").innerHTML = materials.map((mat) => `<option value="${mat.id}">${esc(mat.title)}</option>`).join("");
+        let opts = "";
+        if (students.length) opts += `<optgroup label="Students">${students.map((s) => `<option value="student:${s.userid}">${esc(s.label)}</option>`).join("")}</optgroup>`;
+        if (teachers.length) opts += `<optgroup label="Teachers">${teachers.map((t) => `<option value="teacher:${t.userid}">${esc(t.label)}</option>`).join("")}</optgroup>`;
+        $("#assign-target").innerHTML = opts;
+      }
+    } else {
+      $("#assign-panel").hidden = true;
+    }
+
+    renderMaterials(d);
+    renderAssignments(d);
+
+    $("#app").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  function renderMaterials(d) {
+    const materials = d.materials || [], can = d.can || {};
+    if (!materials.length) {
+      $("#materials-empty").hidden = false; $("#materials-table").hidden = true; return;
+    }
+    $("#materials-empty").hidden = true; $("#materials-table").hidden = false;
+    $("#materials-body").innerHTML = materials.map((mat) => {
+      const open = mat.openurl ? `<a class="open" href="${esc(mat.openurl)}"${mat.openexternal ? ' target="_blank" rel="noopener"' : ""}>Open</a>` : "";
+      const del = can.delete ? `<button class="btn danger small" data-del="${mat.id}" type="button">Delete</button>` : "";
+      const key = mat.course_key ? ` <span class="muted">${esc(mat.course_key)}</span>` : "";
+      return `<tr>
+        <td><span class="name" title="${esc(mat.title)}">${esc(mat.displaytitle)}</span>${key}</td>
+        <td><span class="pill type">${esc(mat.material_type)}</span></td>
+        <td>${esc(mat.visibility)}</td>
+        <td>${esc(when(mat.timemodified))}</td>
+        <td>${open}${open && del ? " " : ""}${del}</td>
+      </tr>`;
+    }).join("");
+    $("#materials-body").querySelectorAll("button[data-del]").forEach((b) => b.addEventListener("click", () => {
+      if (!confirm("Archive (delete) this material?")) return;
+      post({ do: "set_material_status", materialid: Number(b.dataset.del), status: "archived" }, b);
+    }));
+  }
+
+  function renderAssignments(d) {
+    const assignments = d.assignments || [], can = d.can || {}, statuses = d.workflowstatuses || {};
+    if (!assignments.length) {
+      $("#assignments-empty").hidden = false; $("#assignments-table").hidden = true; return;
+    }
+    $("#assignments-empty").hidden = true; $("#assignments-table").hidden = false;
+    $("#assignments-body").innerHTML = assignments.map((a) => {
+      let progress;
+      if (can.updateassignments) {
+        const opts = Object.keys(statuses).map((k) => `<option value="${esc(k)}"${a.workflow_status === k ? " selected" : ""}>${esc(statuses[k])}</option>`).join("");
+        progress = `<div class="statusform" data-assignid="${a.id}">
+          <div class="row"><select class="wf">${opts}</select><button class="btn light small wf-save" type="button">Update</button></div>
+          <textarea class="rev" placeholder="Review note, required only when marking reviewed">${esc(a.review_notes)}</textarea>
+          ${can.manage ? `<div class="row"><button class="btn danger small remove" type="button">Remove assignment</button></div>` : ""}
+        </div>`;
+      } else {
+        progress = `<span class="pill">${esc(a.workflow_label)}</span>${a.review_notes ? `<span class="sub2">${esc(a.review_notes)}</span>` : ""}`;
+      }
+      return `<tr>
+        <td><span class="name">${esc(a.title)}</span><span class="sub2">${esc(a.material_type)}</span></td>
+        <td>${esc(a.fullname)}<span class="sub2">${esc(a.account_label)}${a.email ? " / " + esc(a.email) : ""}</span></td>
+        <td><span class="pill">${esc(a.target_type)}</span></td>
+        <td>${progress}</td>
+        <td>${esc(when(a.timemodified))}</td>
+      </tr>`;
+    }).join("");
+    $("#assignments-body").querySelectorAll(".statusform").forEach((f) => {
+      const id = Number(f.dataset.assignid);
+      const save = f.querySelector(".wf-save");
+      if (save) save.addEventListener("click", () => post({
+        do: "update_material_status",
+        assignmentid: id,
+        workflow_status: f.querySelector(".wf").value,
+        review_notes: f.querySelector(".rev") ? f.querySelector(".rev").value : "",
+      }, save));
+      const rem = f.querySelector(".remove");
+      if (rem) rem.addEventListener("click", () => {
+        if (!confirm("Remove this material assignment?")) return;
+        post({ do: "set_assignment_status", assignmentid: id, status: "inactive" }, rem);
+      });
+    });
+  }
+
+  $("#assign-panel").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const material = $("#assign-material").value, target = $("#assign-target").value;
+    if (!material || !target) return;
+    post({ do: "assign_material", materialid: Number(material), target }, ev.submitter);
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

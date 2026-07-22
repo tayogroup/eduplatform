@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace live sessions · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .metric b{display:block;font-size:22px;color:var(--ink)}
+  .metric span{display:block;margin-top:3px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  .cards{display:grid;gap:10px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.scheduled{background:#e1f2ff;color:var(--blue2)}
+  .pill.live,.pill.started{background:var(--sky);color:var(--ink2)}
+  .pill.completed{background:#e1f2ff;color:var(--blue2)}
+  .pill.cancelled,.pill.rejected,.pill.failed{background:var(--red-bg);color:var(--red)}
+  .pill.series{background:var(--amber-bg);color:var(--amber);margin-left:6px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  a.btn,button.btn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:7px 13px;background:var(--card);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px;cursor:pointer}
+  a.btn:hover{border-color:var(--blue2)}
+  .form-grid{display:grid;gap:10px}
+  .form-grid label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .form-grid input,.form-grid select,.form-grid textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .form-grid textarea{min-height:64px;resize:vertical}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .check{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);font-size:13px;font-weight:700}
+  .check input{width:auto}
+  form.create button[type=submit]{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:900;font-size:13px;cursor:pointer}
+  form.create button[type=submit]:disabled{opacity:.55;cursor:wait}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  @media(max-width:760px){.metrics{grid-template-columns:repeat(2,1fr)}.row2,.checks{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Workspace live sessions</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of workspace_sessions.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Workspace live sessions</h1><p class="sub" id="subtitle">Create and manage live sessions scoped to this workspace.</p></div>
+  <div id="status" class="status">Loading workspace sessions…</div>
+  <div class="panel" id="metrics-panel" hidden><div class="metrics" id="metrics"></div></div>
+  <div class="panel create" id="create-panel" hidden>
+    <h2>Create session</h2>
+    <div id="create-status"></div>
+    <form class="create" id="create-form">
+      <div class="form-grid">
+        <div><label>Title</label><input type="text" name="title" required placeholder="Arabic Reading"></div>
+        <div><label>Teacher</label><select name="teacherid" required id="teacher-select"></select></div>
+        <div class="row2">
+          <div><label>Start</label><input type="datetime-local" name="scheduled_start" required></div>
+          <div><label>Duration (minutes)</label><input type="number" name="duration_minutes" min="15" max="240" value="60"></div>
+        </div>
+        <div class="check" id="recurring-wrap"><input type="checkbox" name="recurring_enabled" value="1" id="recurring"> <label style="margin:0">Repeat weekly</label></div>
+        <div class="row2">
+          <div><label>Number of classes</label><input type="number" name="recurrence_count" min="1" max="52" value="4"></div>
+          <div><label>Pattern</label><input type="text" value="Weekly on selected start day" disabled></div>
+        </div>
+        <div class="row2">
+          <div><label>Lesson ID</label><input type="text" name="lessonid" placeholder="optional"></div>
+          <div><label>Unit ID</label><input type="text" name="unitid" placeholder="optional"></div>
+        </div>
+        <div><label>Description</label><textarea name="description"></textarea></div>
+        <div><label>Students</label><div class="checks" id="students"></div></div>
+        <button type="submit">Create session</button>
+      </div>
+    </form>
+  </div>
+  <div class="panel" id="sessions-panel" hidden><h2>Workspace sessions</h2><div class="cards" id="sessions"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = qs.get("workspaceid") || "0";
+  const consumer = qs.get("consumer") || "";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = (extra) => new URLSearchParams({ report: "workspace-sessions", token, workspaceid, ...(consumer ? { consumer } : {}), ...extra });
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const launchLink = (report, id) => {
+    const p = new URLSearchParams({ report, sessionid: String(id) });
+    if (workspaceid && workspaceid !== "0") p.set("workspaceid", workspaceid);
+    if (consumer) p.set("consumer", consumer);
+    return moodleBase + "/local/prequran/portal_launch.php?" + p.toString();
+  };
+
+  const sessionCard = (s) => {
+    const st = (s.status || "").toLowerCase();
+    const series = s.seriesid ? `<span class="pill series">Series #${s.seriesid}${s.series_sequence ? " · class " + s.series_sequence : ""}</span>` : "";
+    const ids = [s.lessonid, s.unitid].filter(Boolean).join(" ");
+    return `
+    <div class="card">
+      <div><h3>${esc(s.title || "Live session")}${series}</h3>
+        <div class="muted">#${s.id}${ids ? " · " + esc(ids) : ""} · ${esc(s.teachername || "Teacher")} · ${esc(s.start_label)}</div></div>
+      <div class="actions">
+        <span class="pill ${esc(st)}">${esc(s.status || "—")}</span>
+        <a class="btn" href="${esc(launchLink("live-sessions", s.id))}">Start / join</a>
+        <a class="btn" href="${esc(launchLink("live-review", s.id))}">Review</a>
+      </div>
+    </div>`;
+  };
+
+  function render(d) {
+    $("#mode-note").textContent = "Managing " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+    $("#title").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " — " : "") + "live sessions";
+
+    const c = d.counts || {};
+    $("#metrics").innerHTML = [
+      ["recent", d.sessioncount || 0],
+      ["scheduled", c.scheduled || 0],
+      ["started", c.started || 0],
+      ["completed", c.completed || 0],
+      ["cancelled", c.cancelled || 0],
+    ].map(([k, v]) => `<div class="metric"><b>${v}</b><span>${esc(k)}</span></div>`).join("");
+    $("#metrics-panel").hidden = false;
+
+    const teachers = d.teachers || [];
+    $("#teacher-select").innerHTML = teachers.map((t) => `<option value="${t.userid}">${esc(t.name)} #${t.userid}</option>`).join("");
+    const students = d.students || [];
+    $("#students").innerHTML = students.length
+      ? students.map((s) => `<label class="check"><input type="checkbox" name="studentids" value="${s.userid}"> ${esc(s.name)}</label>`).join("")
+      : "<div class='muted'>No student members are available in this workspace yet.</div>";
+    if (!d.tables_ready) {
+      $("#create-status").innerHTML = "<div class='status error'>Live session tables are not ready. Run the local_prequran Moodle upgrade first.</div>";
+      $("#create-form").querySelector("button[type=submit]").disabled = true;
+    }
+    if (!d.series_ready) { const r = $("#recurring"); r.disabled = true; }
+    $("#create-panel").hidden = false;
+
+    const sessions = d.sessions || [];
+    $("#sessions").innerHTML = sessions.length
+      ? sessions.map(sessionCard).join("")
+      : "<div class='muted'>No sessions are scoped to this workspace yet.</div>";
+    $("#sessions-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  $("#create-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button[type=submit]");
+    btn.disabled = true; btn.textContent = "Creating…";
+    const studentids = Array.from(f.querySelectorAll("input[name=studentids]:checked")).map((el) => Number(el.value));
+    const payload = {
+      do: "create",
+      workspaceid: Number(workspaceid) || 0,
+      title: f.title.value,
+      teacherid: Number(f.teacherid.value) || 0,
+      scheduled_start: f.scheduled_start.value,
+      duration_minutes: Number(f.duration_minutes.value) || 60,
+      recurring_enabled: f.recurring_enabled.checked ? 1 : 0,
+      recurrence_count: Number(f.recurrence_count.value) || 4,
+      lessonid: f.lessonid.value,
+      unitid: f.unitid.value,
+      description: f.description.value,
+      studentids,
+    };
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "workspace-sessions", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#create-status").innerHTML = `<div class="status saved">${esc(d.message || "Workspace live session created.")}</div>`;
+      f.reset();
+      load();
+    } catch (e) {
+      $("#create-status").innerHTML = `<div class="status error">Could not create: ${esc(e.message)}</div>`;
+    } finally {
+      btn.disabled = false; btn.textContent = "Create session";
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

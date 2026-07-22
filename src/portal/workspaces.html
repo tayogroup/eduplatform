@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teaching workspaces · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1280px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  .top .actions{display:flex;gap:8px;flex-wrap:wrap}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 6px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .split{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .field{display:grid;gap:5px;margin-bottom:10px;min-width:0}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .field input,.field select{width:100%;min-width:0;min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .inline{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+  .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .check{display:flex;align-items:center;gap:7px;min-height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:12px;font-weight:700}
+  .check input{flex:0 0 auto}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:2px 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff!important;text-decoration:none;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
+  .btn.ghost{background:var(--sky);color:var(--blue)!important;border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  .pill{display:inline-flex;align-items:center;margin:0 5px 5px 0;padding:2px 9px;border-radius:999px;background:var(--sky);color:var(--ink2);font-size:11px;font-weight:800}
+  .name{display:block;font-weight:900;font-size:13.5px}
+  .rowmuted{display:block;margin-top:3px;color:var(--muted);font-size:12px}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky);white-space:nowrap}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;background:var(--card)}
+  .alert{padding:12px 14px;margin-bottom:12px;border-radius:8px;font-weight:700}
+  .alert.ok{background:var(--sky);color:var(--blue2)}
+  .alert.warn{background:var(--amber-bg);color:var(--amber)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  form.wf{margin:0}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teaching workspaces</small></div>
+  <div class="actions" id="top-actions"></div>
+  <div class="note">Token-authenticated · parallel-run of workspaces.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Teaching Workspaces</h1>
+    <p class="sub">Create solo-teacher and institution workspaces, then attach owners, admins, teachers, parents, and students.</p>
+  </div>
+  <div id="status" class="status">Loading workspaces…</div>
+  <div id="saved" class="status saved" hidden></div>
+  <div id="body" hidden>
+    <section class="panel" id="dash-panel"><h2>Institution Dashboard</h2><div id="dash"></div></section>
+    <section class="panel" id="org-panel"><h2>Institution Operating Model</h2><div id="org"></div></section>
+    <section class="grid" id="forms"></section>
+    <section class="panel scroll"><h2>Active Workspaces</h2><div id="workspaces"></div></section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const editworkspaceid = (qs.get("editworkspaceid") || "0").replace(/[^0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "workspaces", token });
+    if (editworkspaceid && editworkspaceid !== "0") p.set("editworkspaceid", editworkspaceid);
+    return endpoint + "?" + p;
+  };
+
+  // Build a <select> of {value:label} options; `sel` marks the selected value.
+  const optsMap = (map, sel) => Object.entries(map || {}).map(([v, l]) =>
+    `<option value="${esc(v)}"${String(v) === String(sel) ? " selected" : ""}>${esc(l)}</option>`).join("");
+  // Build a <select> of workspaces (label "name #id").
+  const optsWorkspaces = (list, sel) => (list || []).map((w) =>
+    `<option value="${w.id}"${String(w.id) === String(sel) ? " selected" : ""}>${esc(w.name + " #" + w.id)}</option>`).join("");
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) { let m = ""; try { m = (await r.json()).error || ""; } catch (e) {} throw new Error(m || ("HTTP " + r.status)); }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function postAction(payload, btn) {
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "workspaces", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      const s = $("#saved"); s.hidden = false; s.className = "status saved"; s.textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || "Save"; }
+      const s = $("#saved"); s.hidden = false; s.className = "status error"; s.textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  // Wire every form.wf: gather its named controls into a JSON payload and POST.
+  function wireForms() {
+    document.querySelectorAll("form.wf").forEach((f) => f.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const payload = { do: f.dataset.do };
+      f.querySelectorAll("[name]").forEach((el) => {
+        if (el.type === "checkbox") {
+          if (el.name.endsWith("[]")) {
+            const k = el.name.slice(0, -2);
+            if (!Array.isArray(payload[k])) payload[k] = [];
+            if (el.checked) payload[k].push(el.value);
+          } else {
+            payload[el.name] = el.checked ? 1 : 0;
+          }
+        } else {
+          payload[el.name] = el.value;
+        }
+      });
+      postAction(payload, f.querySelector("button[type=submit]"));
+    }));
+  }
+
+  function renderDash(d) {
+    const el = $("#dash");
+    if (!d.orgready) { el.innerHTML = '<div class="empty">Organization group tables are not ready. Run the local_prequran Moodle upgrade first.</div>'; return; }
+    const m = d.institutiondashboard;
+    let h = '<div class="kpis">' +
+      `<div class="kpi"><strong>${esc(m.owned_workspaces)}</strong><span>Owned branches</span></div>` +
+      `<div class="kpi"><strong>${esc(m.owned_users)}</strong><span>Owned group users</span></div>` +
+      `<div class="kpi"><strong>${esc(m.franchise_workspaces)}</strong><span>Franchise schools</span></div>` +
+      `<div class="kpi"><strong>${esc(m.franchise_users)}</strong><span>Franchise users</span></div></div>`;
+    if (m.warnings && m.warnings.length) {
+      h += '<div class="alert warn">' + m.warnings.map((w) => `<span class="name">${esc(w)}</span>`).join("") + "</div>";
+    } else {
+      h += '<div class="alert ok">Institution operating model is ready for real school onboarding.</div>';
+    }
+    const owned = (d.orggroups || []).find((g) => g.slug === "owned-schools");
+    const franchise = (d.orggroups || []).find((g) => g.slug === "franchise-schools");
+    h += '<div class="split"><div><h3>Owned School Model</h3>' +
+      '<span class="muted">Institution admins can manage linked owned branches when operations access is enabled.</span><br>' +
+      `<span class="pill">${esc(m.owned_operations)} operational branches</span>` +
+      ((owned && owned.members) || []).map((mm) => `<span class="pill">${esc(mm.workspacename)}</span>`).join("") + "</div>";
+    h += '<div><h3>Franchise Model</h3>' +
+      '<span class="muted">Franchise schools stay governance-only unless operations or shared support is deliberately expanded.</span><br>' +
+      `<span class="pill">${esc(m.franchise_operations)} operations-expanded</span>` +
+      `<span class="pill">${esc(m.franchise_sensitive)} sensitive-inherited</span>` +
+      ((franchise && franchise.members) || []).map((mm) => `<span class="pill">${esc(mm.workspacename)} / ${esc(mm.access_scope)}</span>`).join("") + "</div></div>";
+    el.innerHTML = h;
+  }
+
+  function renderOrg(d) {
+    const el = $("#org");
+    if (!d.orgready) { el.innerHTML = '<div class="empty">Organization group tables are not ready. Run the local_prequran Moodle upgrade first.</div>'; return; }
+    const groups = d.orggroups || [];
+    const noGroups = groups.length === 0;
+    const groupOpts = groups.map((g) => `<option value="${g.id}" data-slug="${esc(g.slug)}" data-group-type="${esc(g.group_type)}">${esc(g.name + " - " + (g.group_type || "group"))}</option>`).join("");
+    const scopeChecks = Object.entries(d.options.org_access_scopes || {}).map(([k, l]) =>
+      `<label class="check"><input type="checkbox" name="org_access_scope[]" value="${esc(k)}"${k === "governance" ? " checked" : ""}> ${esc(l)}</label>`).join("");
+    const eligibleOpts = (d.eligibleorgusers || []).map((u) =>
+      `<option value="${u.id}">${esc(u.fullname + " - " + u.email + " (" + (u.sources || []).join(", ") + ")")}</option>`).join("");
+
+    let h = '<div class="split">';
+    // Seed operating groups.
+    h += `<form class="wf" data-do="seed_operating_model">
+      <h3>Operating groups</h3>
+      <p class="muted">Creates or refreshes one owned group and one franchise network.</p>
+      <button class="btn" type="submit">Create operating groups</button>
+    </form>`;
+    // Link school workspace.
+    h += `<form class="wf" data-do="link_org_workspace">
+      <h3>Link school workspace</h3>
+      <div class="field"><label>Operating group</label><select id="org-group" name="org_groupid" required>${groupOpts}</select></div>
+      <div class="field"><label>School workspace</label><select name="org_workspaceid" required>${optsWorkspaces(d.workspaces)}</select></div>
+      <div class="inline">
+        <div class="field"><label>Relationship</label><select id="org-relationship" name="org_relationship"><option value="owned_branch">Owned branch</option><option value="franchise_member">Franchise member</option></select></div>
+        <div class="field"><label>Access scope</label><div class="checks" id="org-scope">${scopeChecks}</div></div>
+      </div>
+      <label class="check"><input type="checkbox" id="org-inherit" name="org_inherit_sensitive_access" value="1"> Inherit sensitive operational access</label>
+      <div class="field" style="margin-top:10px"><label>Notes</label><input name="org_notes" placeholder="optional contract or ownership note"></div>
+      <button class="btn" type="submit"${noGroups ? " disabled" : ""}>Link workspace</button>
+    </form>`;
+    // Add group user.
+    h += `<form class="wf" data-do="add_org_user">
+      <h3>Add group user</h3>
+      <div class="field"><label>Operating group</label><select name="org_user_groupid" required>${groups.map((g) => `<option value="${g.id}">${esc(g.name + " - " + (g.group_type || "group"))}</option>`).join("")}</select></div>
+      <div class="field"><label>Eligible user</label><select name="org_userid"><option value="0">Select eligible user</option>${eligibleOpts}</select>${(d.eligibleorgusers || []).length ? "" : '<span class="muted">No eligible users found from platform roles or workspace leadership roles.</span>'}</div>
+      <div class="field"><label>Manual user lookup</label><input name="org_user" placeholder="ID, email, or username if not listed"></div>
+      <div class="field"><label>Group role</label><select name="org_group_role">${optsMap(d.options.org_group_roles, "admin")}</select></div>
+      <div class="field"><label>Notes</label><input name="org_user_notes" placeholder="optional role note"></div>
+      <button class="btn" type="submit"${noGroups ? " disabled" : ""}>Add group user</button>
+    </form>`;
+    h += "</div>";
+
+    // Current links.
+    h += '<div style="margin-top:14px"><h3>Current links</h3>';
+    if (noGroups) {
+      h += '<div class="empty">No operating groups yet.</div>';
+    } else {
+      h += groups.map((g) => {
+        let g2 = `<div style="margin-bottom:10px"><span class="name">${esc(g.name)}</span><span class="rowmuted">${esc(g.slug)} / ${esc(g.group_type)}</span>`;
+        g2 += (g.members || []).map((mm) => `<span class="pill">${esc(mm.workspacename)} - ${esc(mm.relationship_type)} / ${esc(mm.access_scope)}</span>`).join("");
+        if (!(g.members || []).length) g2 += '<span class="rowmuted">No linked school workspaces yet.</span>';
+        g2 += (g.users || []).map((u) => `<span class="pill">${esc(u.fullname)} - ${esc(u.group_role)}</span>`).join("");
+        if (!(g.users || []).length) g2 += '<span class="rowmuted">No group users yet.</span>';
+        return g2 + "</div>";
+      }).join("");
+    }
+    h += "</div>";
+    el.innerHTML = h;
+
+    // Operating-model default sync (mirrors the legacy inline script).
+    const group = document.getElementById("org-group");
+    const relationship = document.getElementById("org-relationship");
+    const scopeWrap = document.getElementById("org-scope");
+    const inherit = document.getElementById("org-inherit");
+    const selectScopes = (values) => { if (!scopeWrap) return; scopeWrap.querySelectorAll('input[type="checkbox"]').forEach((o) => { o.checked = values.indexOf(o.value) !== -1; }); };
+    const sync = () => {
+      if (!group || !relationship) return;
+      const opt = group.options[group.selectedIndex];
+      const slug = opt ? opt.getAttribute("data-slug") : "";
+      const gt = opt ? opt.getAttribute("data-group-type") : "";
+      if (slug === "franchise-schools" || gt === "franchise_network") { relationship.value = "franchise_member"; selectScopes(["governance"]); if (inherit) { inherit.checked = false; inherit.disabled = true; } return; }
+      if (slug === "owned-schools" || gt === "owned_group") { relationship.value = "owned_branch"; selectScopes(["governance", "operations"]); if (inherit) inherit.disabled = false; }
+    };
+    if (group) { group.addEventListener("change", sync); sync(); }
+  }
+
+  function consumerFields(d, ed) {
+    // Prefilled values from the quick-edit selection (ed = d.edit).
+    const c = (ed && ed.consumer) || {};
+    const t = (ed && ed.theme) || {};
+    const cp = (ed && ed.copy) || {};
+    const wp = (ed && ed.website_profile) || {};
+    const v = (x) => esc(x ?? "");
+    return `
+      <div class="field"><label>Consumer slug</label><input name="consumer_slug_existing" value="${v(c.slug)}" placeholder="auto from workspace name"></div>
+      <div class="field"><label>Display name</label><input name="display_name_existing" value="${v(c.name || (ed && ed.workspacename))}" placeholder="public institution name"></div>
+      <div class="field"><label>Logo URL</label><input name="logo_url_existing" value="${v(c.logourl)}" placeholder="https://example.org/logo.png"></div>
+      <div class="field"><label>Support email</label><input type="email" name="supportemail_existing" value="${v(c.supportemail)}" placeholder="support@example.org"></div>
+      <div class="inline">
+        <div class="field"><label>Primary color</label><input name="primary_color_existing" value="${v(t.primary_color)}" placeholder="#2a6cb0"></div>
+        <div class="field"><label>Accent color</label><input name="accent_color_existing" value="${v(t.accent_color)}" placeholder="#b97e12"></div>
+        <div class="field"><label>Surface color</label><input name="surface_color_existing" value="${v(t.surface_color)}" placeholder="#f4f7fa"></div>
+      </div>
+      <div class="inline">
+        <div class="field"><label>Dashboard header</label><input name="dashboard_header_bg_existing" maxlength="7" value="${v(t.dashboard_header_bg)}" placeholder="#17324d"></div>
+        <div class="field"><label>Header text</label><input name="dashboard_header_text_existing" maxlength="7" value="${v(t.dashboard_header_text)}" placeholder="#ffffff"></div>
+        <div class="field"><label>Page body</label><input name="page_body_bg_existing" maxlength="7" value="${v(t.page_body_bg)}" placeholder="#f4f7fa"></div>
+      </div>
+      <div class="inline">
+        <div class="field"><label>Report header</label><input name="report_header_bg_existing" maxlength="7" value="${v(t.report_header_bg)}" placeholder="#17324d"></div>
+        <div class="field"><label>Report header text</label><input name="report_header_text_existing" maxlength="7" value="${v(t.report_header_text)}" placeholder="#ffffff"></div>
+        <div class="field"><label>Report body</label><input name="report_body_bg_existing" maxlength="7" value="${v(t.report_body_bg)}" placeholder="#ffffff"></div>
+      </div>
+      <div class="field"><label>Landing headline</label><input name="landing_headline_existing" value="${v(cp.landing_headline)}" placeholder="optional custom headline"></div>
+      <div class="field"><label>Landing subtitle</label><input name="landing_subtitle_existing" value="${v(cp.landing_subtitle)}" placeholder="optional custom subtitle"></div>
+      <div class="field"><label>Website hosting mode</label><select class="website-mode" name="website_mode_existing">${optsMap(d.options.website_modes, wp.website_mode)}</select></div>
+      <div class="field external-website"><label>Existing website URL</label><input name="external_website_url_existing" value="${v(wp.external_website_url)}" placeholder="https://www.example.org"></div>
+      <div class="field"><label>Portal label</label><input name="portal_label_existing" value="${v(wp.portal_label)}"></div>
+      <div class="field"><label>Portal DNS</label><select name="domain_management_existing">${optsMap(d.options.domain_managements, wp.domain_management)}</select></div>
+      <div class="field"><label>Branding source</label><select name="branding_source_existing">${optsMap(d.options.branding_sources, wp.branding_source)}</select></div>
+      <div class="field"><label>Intake location</label><select name="intake_location_existing">${optsMap(d.options.intake_locations, wp.intake_location)}</select></div>
+      <div class="field"><label>Integration</label><select name="integration_method_existing">${optsMap(d.options.integration_methods, wp.integration_method)}</select></div>
+      <div class="field"><label>Return URL after intake</label><input name="return_url_existing" value="${v(wp.return_url)}" placeholder="https://www.example.org/thank-you"></div>
+      <div class="field hosted-public-domain"><label>EduPlatform-hosted public domain</label><input name="public_domain_existing" value="${v(ed && ed.publicdomain)}" placeholder="school.example.org"></div>
+      <div class="field"><label>Learning portal domain</label><input name="app_domain_existing" value="${v(ed && ed.appdomain)}" placeholder="learn.example.org"></div>`;
+  }
+
+  function renderForms(d) {
+    const ed = d.edit;
+    let h = "";
+    // Create workspace.
+    h += `<form class="panel wf" data-do="create_workspace">
+      <h2>Create Workspace</h2>
+      <div class="field"><label>Name</label><input name="name" required placeholder="Teacher name, masjid, school, or institute"></div>
+      <div class="field"><label>Type</label><select name="workspace_type">${optsMap(d.options.workspace_types, "institution")}</select></div>
+      <div class="field"><label>Owner user ID, email, or username</label><input name="owner" placeholder="optional"></div>
+      <div class="inline">
+        <div class="field"><label>Plan</label><input name="plan_code" value="pilot"></div>
+        <div class="field"><label>Students</label><input type="number" name="student_limit" min="0" value="0"></div>
+        <div class="field"><label>Teachers</label><input type="number" name="teacher_limit" min="0" value="0"></div>
+        <div class="field"><label>Sessions</label><input type="number" name="session_limit" min="0" value="0"></div>
+      </div>
+      <h3>Institution consumer and domains</h3>
+      <label class="check"><input type="checkbox" name="provision_consumer" value="1"> Create linked institution consumer</label>
+      <div class="field" style="margin-top:10px"><label>Consumer slug</label><input name="consumer_slug" placeholder="auto from workspace name"></div>
+      <div class="field"><label>Display name</label><input name="display_name" placeholder="public institution name"></div>
+      <div class="field"><label>Logo URL</label><input name="logo_url" placeholder="https://example.org/logo.png"></div>
+      <div class="field"><label>Support email</label><input type="email" name="supportemail" placeholder="support@example.org"></div>
+      <div class="inline">
+        <div class="field"><label>Primary color</label><input name="primary_color" placeholder="#2a6cb0"></div>
+        <div class="field"><label>Accent color</label><input name="accent_color" placeholder="#b97e12"></div>
+        <div class="field"><label>Surface color</label><input name="surface_color" placeholder="#f4f7fa"></div>
+      </div>
+      <div class="inline">
+        <div class="field"><label>Dashboard header</label><input name="dashboard_header_bg" maxlength="7" placeholder="#17324d"></div>
+        <div class="field"><label>Header text</label><input name="dashboard_header_text" maxlength="7" placeholder="#ffffff"></div>
+        <div class="field"><label>Page body</label><input name="page_body_bg" maxlength="7" placeholder="#f4f7fa"></div>
+      </div>
+      <div class="inline">
+        <div class="field"><label>Report header</label><input name="report_header_bg" maxlength="7" placeholder="#17324d"></div>
+        <div class="field"><label>Report header text</label><input name="report_header_text" maxlength="7" placeholder="#ffffff"></div>
+        <div class="field"><label>Report body</label><input name="report_body_bg" maxlength="7" placeholder="#ffffff"></div>
+      </div>
+      <div class="field"><label>Landing headline</label><input name="landing_headline" placeholder="optional custom headline"></div>
+      <div class="field"><label>Landing subtitle</label><input name="landing_subtitle" placeholder="optional custom subtitle"></div>
+      <div class="field"><label>Website hosting mode</label><select class="website-mode" name="website_mode">${optsMap(d.options.website_modes)}</select></div>
+      <div class="field external-website"><label>Existing website URL</label><input name="external_website_url" placeholder="https://www.example.org"></div>
+      <div class="inline">
+        <div class="field"><label>Portal label</label><input name="portal_label" value="Learning portal"></div>
+        <div class="field"><label>Portal DNS</label><select name="domain_management">${optsMap(d.options.domain_managements)}</select></div>
+      </div>
+      <div class="inline">
+        <div class="field"><label>Branding source</label><select name="branding_source">${optsMap(d.options.branding_sources)}</select></div>
+        <div class="field"><label>Intake location</label><select name="intake_location">${optsMap(d.options.intake_locations)}</select></div>
+        <div class="field"><label>Integration</label><select name="integration_method">${optsMap(d.options.integration_methods)}</select></div>
+      </div>
+      <div class="field"><label>Return URL after intake</label><input name="return_url" placeholder="https://www.example.org/thank-you"></div>
+      <div class="inline">
+        <div class="field hosted-public-domain"><label>EduPlatform-hosted public domain</label><input name="public_domain" placeholder="school.example.org"></div>
+        <div class="field"><label>Learning portal domain</label><input name="app_domain" placeholder="learn.example.org"></div>
+      </div>
+      <button class="btn" type="submit">Create workspace</button>
+    </form>`;
+
+    // Update institution consumer (prefilled from quick-edit selection).
+    h += `<form class="panel wf" data-do="update_consumer">
+      <h2>Update Institution Consumer</h2>
+      <div class="field"><label>Workspace</label><select name="consumer_workspaceid">${optsWorkspaces(d.workspaces, ed && ed.workspaceid)}</select></div>
+      ${consumerFields(d, ed)}
+      <button class="btn" type="submit">Save consumer/domain</button>
+    </form>`;
+
+    // Add member.
+    h += `<form class="panel wf" data-do="add_member">
+      <h2>Add Member</h2>
+      <div class="field"><label>Workspace</label><select name="workspaceid">${optsWorkspaces(d.workspaces)}</select></div>
+      <div class="field"><label>User ID, email, or username</label><input name="member" required></div>
+      <div class="field"><label>Role</label><select name="workspace_role">${optsMap(d.options.workspace_roles)}</select></div>
+      <button class="btn" type="submit">Add member</button>
+    </form>`;
+
+    $("#forms").innerHTML = h;
+
+    // Website-mode show/hide (mirrors the legacy inline script).
+    document.querySelectorAll(".website-mode").forEach((mode) => {
+      const form = mode.closest("form");
+      const ext = form ? form.querySelector(".external-website") : null;
+      const hosted = form ? form.querySelector(".hosted-public-domain") : null;
+      const extInput = ext ? ext.querySelector("input") : null;
+      const syncMode = () => {
+        const external = mode.value !== "hosted";
+        if (ext) ext.style.display = external ? "" : "none";
+        if (hosted) hosted.style.display = external ? "none" : "";
+        if (extInput) extInput.required = external;
+      };
+      mode.addEventListener("change", syncMode); syncMode();
+    });
+  }
+
+  function renderWorkspaces(d) {
+    const el = $("#workspaces");
+    if (!(d.workspaces || []).length) { el.innerHTML = '<div class="empty">No workspaces found.</div>'; return; }
+    el.innerHTML = `<table><thead><tr><th>Workspace</th><th>Type and Plan</th><th>Consumer / Domains</th><th>Limits</th><th>Members</th><th>Recent Members</th></tr></thead><tbody>` +
+      d.workspaces.map((w) => {
+        const c = w.consumer;
+        let cons = "";
+        if (c) {
+          const theme = c.theme || {};
+          const colors = [theme.primary_color, theme.accent_color, theme.surface_color, theme.dashboard_header_bg, theme.page_body_bg, theme.report_header_bg, theme.report_body_bg].filter(Boolean);
+          cons = `<span class="name">${esc(c.name)}</span><span class="rowmuted">${esc(c.slug)} / ${esc(c.consumer_type)}</span>`;
+          if ((c.logourl || "").trim() !== "") cons += `<span class="rowmuted">Logo: ${esc(c.logourl)}</span>`;
+          if (colors.length) cons += `<span class="rowmuted">Colors: ${esc(colors.join(" "))}</span>`;
+          if (c.copy && c.copy.landing_headline) cons += `<span class="rowmuted">Headline: ${esc(c.copy.landing_headline)}</span>`;
+          if (w.diagnostics_url) cons += `<br><a class="btn ghost" style="margin-top:8px" href="${esc(w.diagnostics_url)}">Diagnostics</a>`;
+          cons += (w.domains || []).map((dm) => `<span class="pill">${esc(dm.domain)} - ${esc(dm.domain_type)} / ${esc(dm.verificationstatus)}</span>`).join("");
+        } else {
+          cons = '<span class="rowmuted">No linked consumer yet</span>';
+        }
+        const recent = (w.recentmembers || []).length
+          ? (w.recentmembers).map((rm) => `<span class="pill">${esc(rm.fullname + " - " + rm.workspace_role)}</span>`).join("")
+          : '<span class="rowmuted">No members yet</span>';
+        const editHref = (() => { const u = new URL(location.href); u.searchParams.set("editworkspaceid", w.id); return u.href; })();
+        return `<tr>
+          <td><span class="name">${esc(w.name)}</span><span class="rowmuted">#${w.id} / ${esc(w.slug)}</span>
+            <br><a class="btn ghost" style="margin-top:8px" href="${esc(w.dashboard_launch)}">Open dashboard <span class="pill" style="background:#e1f2ff;color:var(--blue2);margin:0 0 0 4px">portal</span></a>
+            <a class="btn ghost" style="margin-top:8px" href="${esc(w.institution_settings_url)}">Institution settings</a>
+            <a class="btn ghost" style="margin-top:8px" href="${esc(editHref)}">Quick edit</a></td>
+          <td><span class="pill">${esc(w.type_label)}</span><span class="pill">${esc(w.plan_code)}</span><span class="rowmuted">Status: ${esc(w.status)}</span></td>
+          <td>${cons}</td>
+          <td><span class="rowmuted">Students: ${esc(w.student_limit)}, teachers: ${esc(w.teacher_limit)}, sessions: ${esc(w.session_limit)}</span></td>
+          <td><span class="name">${esc(w.membercount)}</span><span class="rowmuted">active members</span></td>
+          <td>${recent}</td>
+        </tr>`;
+      }).join("") + "</tbody></table>";
+  }
+
+  function render(d) {
+    $("#top-actions").innerHTML = [
+      [d.links.onboarding, "Institution onboarding"],
+      [d.links.liveadmin, "Live admin"],
+      [d.links.dashboard_launch, "Dashboard"],
+    ].map(([href, label]) => `<a class="btn ghost" href="${esc(href)}">${esc(label)}</a>`).join("");
+
+    if (!d.ready) {
+      $("#status").className = "status error";
+      $("#status").textContent = "Workspace tables are not ready. Run the Moodle plugin upgrade for local_prequran first.";
+      return;
+    }
+    renderDash(d);
+    renderOrg(d);
+    renderForms(d);
+    renderWorkspaces(d);
+    wireForms();
+    $("#status").hidden = true;
+    $("#body").hidden = false;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

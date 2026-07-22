@@ -31,6 +31,11 @@ const SUBJECTS = ["english", "mathematics", "science"];
 
 if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
 const TAG = (process.argv.slice(2).find((a) => /^v\d+$/.test(a))) || "v1";
+// --shell: package the unified shell (P1.5) instead of the per-subject apps.
+// Each subject's v{TAG}/ becomes self-contained: course-ui.js (the subject
+// module), course-app.js (the shell core), the subject's visual modules, and
+// course-ui.css — with import paths rewritten for the deployed layout.
+const SHELL = process.argv.slice(2).includes("--shell");
 
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 const CT = {
@@ -48,6 +53,22 @@ function versionIndexHtml(html) {
     .replace(/\.\/shared\/course-ui\.js(?:\?v=[^"']*)?/g, `${TAG}/course-ui.js`);
 }
 
+// Import rewrites for the deployed shell layout. Modules resolve imports against
+// their own URL (app/{subject}/v{TAG}/…), so:
+//   subject module: ../../{subject}/shared/X.js → ./X.js   (X copied into vN)
+//                   ../course-app.js            → ./course-app.js
+//                   ../../shared/…              → unchanged (→ app/shared/) ✓
+//   shell core:     ../shared/X.js              → ../../shared/X.js (→ app/shared/)
+function shellSubjectModule(subject) {
+  return fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8")
+    .replace(/\.\.\/\.\.\/(?:english|mathematics|science)\/shared\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
+    .replace(/\.\.\/course-app\.js(\?v=[^"']*)?/g, "./course-app.js");
+}
+function shellCore() {
+  return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")
+    .replace(/\.\.\/shared\/(course-shell|progress-client)\.js/g, "../../shared/$1.js");
+}
+
 // Build the deploy list. Each item is {remote, buf, always?} — always-upload items
 // (the pointer files) skip the hash cache since they change every release.
 function buildItems() {
@@ -60,14 +81,22 @@ function buildItems() {
       if (name === "grade-redirect.js") {
         // stable entry-layer file — grade-N/index.html loads ../shared/grade-redirect.js
         items.push({ remote: `app/${subject}/shared/${name}`, buf });
+      } else if (SHELL) {
+        // shell mode: vN gets the subject's visuals/css; course-ui.js is replaced
+        // by the shell subject module below.
+        if (name !== "course-ui.js") items.push({ remote: `app/${subject}/${TAG}/${name}`, buf });
       } else {
         items.push({ remote: `app/${subject}/${TAG}/${name}`, buf }); // immutable code
       }
     }
+    if (SHELL) {
+      items.push({ remote: `app/${subject}/${TAG}/course-ui.js`, buf: Buffer.from(shellSubjectModule(subject)) });
+      items.push({ remote: `app/${subject}/${TAG}/course-app.js`, buf: Buffer.from(shellCore()) });
+    }
     // Rewritten entry + release pointer (always upload — they carry the version).
     const html = versionIndexHtml(fs.readFileSync(path.join(EHEL, subject, "index.html"), "utf8"));
     items.push({ remote: `app/${subject}/index.html`, buf: Buffer.from(html), always: true });
-    const current = { version: TAG, builtFrom: `src/prototypes/ehel-academy/${subject}`, contract: "1.0" };
+    const current = { version: TAG, shell: SHELL, builtFrom: SHELL ? "src/prototypes/ehel-academy/shell" : `src/prototypes/ehel-academy/${subject}`, contract: "1.0" };
     items.push({ remote: `app/${subject}/current.json`, buf: Buffer.from(JSON.stringify(current, null, 2) + "\n"), always: true });
   }
   // Shared modules imported via ../../shared/ (course-shell.js, progress-client.js).

@@ -59,14 +59,19 @@ function versionIndexHtml(html) {
 //                   ../course-app.js            → ./course-app.js
 //                   ../../shared/…              → unchanged (→ app/shared/) ✓
 //   shell core:     ../shared/X.js              → ../../shared/X.js (→ app/shared/)
+// vN is fully self-contained: the subject module, the shell core, the subject's
+// visuals, AND the cross-subject modules (course-shell, progress-client) all
+// live inside the immutable version path — so a release can never be skewed by
+// a stale cached shared file.
 function shellSubjectModule(subject) {
   return fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8")
     .replace(/\.\.\/\.\.\/(?:english|mathematics|science)\/shared\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
+    .replace(/\.\.\/\.\.\/shared\/(course-shell|progress-client)\.js(\?v=[^"']*)?/g, "./$1.js")
     .replace(/\.\.\/course-app\.js(\?v=[^"']*)?/g, "./course-app.js");
 }
 function shellCore() {
   return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")
-    .replace(/\.\.\/shared\/(course-shell|progress-client)\.js/g, "../../shared/$1.js");
+    .replace(/\.\.\/shared\/(course-shell|progress-client)\.js(\?v=[^"']*)?/g, "./$1.js");
 }
 
 // Build the deploy list. Each item is {remote, buf, always?} — always-upload items
@@ -92,6 +97,9 @@ function buildItems() {
     if (SHELL) {
       items.push({ remote: `app/${subject}/${TAG}/course-ui.js`, buf: Buffer.from(shellSubjectModule(subject)) });
       items.push({ remote: `app/${subject}/${TAG}/course-app.js`, buf: Buffer.from(shellCore()) });
+      for (const name of ["course-shell.js", "progress-client.js"]) {
+        items.push({ remote: `app/${subject}/${TAG}/${name}`, buf: fs.readFileSync(path.join(EHEL, "shared", name)) });
+      }
     }
     // Rewritten entry + release pointer (always upload — they carry the version).
     const html = versionIndexHtml(fs.readFileSync(path.join(EHEL, subject, "index.html"), "utf8"));

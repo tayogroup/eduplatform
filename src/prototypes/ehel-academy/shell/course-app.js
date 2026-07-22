@@ -319,11 +319,41 @@ export function createCourseApp(config) {
     get route() { return route; },
   };
 
+  // Remote resume (cross-device): in remote mode, pull the server's state
+  // document on boot and seed the local progress store from it before first
+  // render — completed sections, known words, and (empty-slot-only) drafts
+  // follow the learner to this device. Offline or gateway-down degrades
+  // silently to the local per-device resume.
+  async function hydrateRemoteResume() {
+    if (progressWS.backend !== "remote") return;
+    try {
+      const doc = await progressWS.hydrate();
+      const unit = doc && doc.units && doc.units[PROGRESS_UNIT];
+      if (!unit) return;
+      let changed = false;
+      for (const s of unit.sectionsDone || []) {
+        if (!progress.completed.includes(s)) { progress.completed.push(s); changed = true; }
+      }
+      if (Array.isArray(unit.knownWords) && unit.knownWords.length && Array.isArray(progress.knownWords)) {
+        for (const w of unit.knownWords) if (!progress.knownWords.includes(w)) { progress.knownWords.push(w); changed = true; }
+      }
+      // Drafts: fill only slots this device has no local draft for (local edits win).
+      if (unit.drafts && progress.writing && typeof progress.writing === "object") {
+        for (const [key, draft] of Object.entries(unit.drafts)) {
+          const id = key.startsWith("writing:") ? key.slice(8) : key;
+          if (draft && draft.text && !progress.writing[id]) { progress.writing[id] = draft.text; changed = true; }
+        }
+      }
+      if (changed) localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    } catch (e) { /* offline / gateway unreachable → per-device resume */ }
+  }
+
   async function init() {
     try {
       const loaded = await config.load(ctx); // { manifest, course, gradeCapstone? }
       manifest = loaded.manifest; course = loaded.course; gradeCapstone = loaded.gradeCapstone;
       ctx.manifest = manifest; ctx.course = course; ctx.gradeCapstone = gradeCapstone; // concrete refs for renderers
+      await hydrateRemoteResume();
       config.bind(ctx);
       await config.onReady(ctx); // title, pickers
       $("#loading")?.remove();

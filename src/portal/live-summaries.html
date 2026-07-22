@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Class summaries · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .attention{border:2px solid var(--amber);background:linear-gradient(180deg,var(--amber-bg),var(--card))}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.present{background:#e1f2ff;color:var(--blue2)}
+  .pill.absent{background:var(--red-bg);color:var(--red)}
+  .pill.late{background:var(--amber-bg);color:var(--amber)}
+  .pill.followup{background:var(--amber-bg);color:var(--amber)}
+  .pill.resolved{background:var(--sky);color:var(--ink2)}
+  .sec{margin:8px 0 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  .sec.hw{background:var(--sky)}
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .stat{font-size:12px;color:var(--ink2)}
+  .stat b{font-size:14px;color:var(--ink);display:block}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  form.respond{margin-top:10px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  form.respond label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.respond select,form.respond textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.respond textarea{min-height:64px;resize:vertical}
+  form.respond button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.respond button:disabled{opacity:.55;cursor:wait}
+  .resp{margin-top:8px;padding:9px 12px;border-radius:8px;background:var(--sky);font-size:13px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Class summaries</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_summaries.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Class summaries</h1><p class="sub" id="subtitle">What happened in class, from the teacher.</p></div>
+  <div id="status" class="status">Loading summaries…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Choose a learner</h2><div class="chooser" id="chooser"></div></div>
+  <div class="panel attention" id="attention-panel" hidden><h2>Needs your attention</h2><p class="sub" style="margin-bottom:10px">The teacher flagged a follow-up. Please review and respond.</p><div class="cards" id="attention"></div></div>
+  <div class="panel" id="summaries-panel" hidden><h2>Recent class summaries</h2><div class="cards" id="summaries"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short" }) : "";
+  const mins = (ms) => Math.round((ms || 0) / 60000) + " min";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "summaries", token, childid: qs.get("childid") || "0" });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const attendancePill = (s) => {
+    const a = (s.attendance_status || "").toLowerCase();
+    if (!a) return "";
+    const cls = /absent/.test(a) ? "absent" : /late/.test(a) ? "late" : "present";
+    return `<span class="pill ${cls}">${esc(a.replace(/_/g, " "))}</span>`;
+  };
+
+  const sections = (s) => {
+    let h = "";
+    if (s.strengths) h += `<div class="sec"><b>Strengths</b>${esc(s.strengths)}</div>`;
+    if (s.needs_practice) h += `<div class="sec"><b>Needs practice</b>${esc(s.needs_practice)}</div>`;
+    if (s.homework) h += `<div class="sec hw"><b>Homework${s.homework_due_date ? " · due " + esc(dateOnly(s.homework_due_date)) : ""}${s.homework_priority && s.homework_priority !== "normal" ? " · " + esc(s.homework_priority) : ""}</b>${esc(s.homework)}</div>`;
+    if (s.parent_summary) h += `<div class="sec"><b>Note for parents</b>${esc(s.parent_summary)}</div>`;
+    return h;
+  };
+
+  const engagement = (s) => {
+    const bits = [];
+    if (s.focus && s.focus.ready && s.focus.hasdata) {
+      bits.push(`<div class="stat"><b>${esc(mins(s.focus.active_ms))}</b>active in app</div>`);
+      if (s.focus.idle_count) bits.push(`<div class="stat"><b>${s.focus.idle_count}</b>idle pauses</div>`);
+      if (s.focus.leave_count) bits.push(`<div class="stat"><b>${s.focus.leave_count}</b>times away</div>`);
+    }
+    if (s.coach && s.coach.ready && s.coach.hasdata) {
+      bits.push(`<div class="stat"><b>${s.coach.count}</b>coach nudges</div>`);
+    }
+    return bits.length ? `<div class="stats">${bits.join("")}</div>` : "";
+  };
+
+  const priorResponse = (s) => {
+    if (!s.parent_response_status || s.parent_response_status === "none" || !s.parent_responseat) return "";
+    const label = { reviewed: "Reviewed", homework_completed: "Homework completed", needs_help: "Help requested" }[s.parent_response_status] || s.parent_response_status;
+    return `<div class="resp"><strong>Your response:</strong> ${esc(label)} · ${esc(when(s.parent_responseat))}${s.parent_response_message ? "<br>" + esc(s.parent_response_message) : ""}</div>`;
+  };
+
+  const respondForm = (s) => `
+    <form class="respond" data-sessionid="${s.sessionid}" data-studentid="${s.studentid}">
+      <div class="sec" style="background:var(--amber-bg);border-color:var(--amber)"><b>Teacher follow-up (${esc((s.followup_status || "").replace(/_/g, " "))})</b>${esc(s.followup_message || "Please review this summary and respond.")}</div>
+      <label>Your response</label>
+      <select name="parent_response_status">
+        <option value="reviewed">Reviewed — all good</option>
+        <option value="homework_completed">Homework completed</option>
+        <option value="needs_help">We need help</option>
+      </select>
+      <label>Message to the teacher (optional)</label>
+      <textarea name="parent_response_message" maxlength="1000" placeholder="Anything the teacher should know…"></textarea>
+      <button type="submit">Send response</button>
+    </form>`;
+
+  const card = (s, names, withForm) => `
+    <div class="card">
+      <h3>${esc(s.title || "Live class")}${attendancePill(s)}${(s.followup_status && s.followup_status !== "none") ? (s.followup_resolved ? '<span class="pill resolved">follow-up resolved</span>' : '<span class="pill followup">follow-up</span>') : ""}</h3>
+      <div class="meta">${esc(when(s.scheduled_start))}${s.teacherid && names[s.teacherid] ? " · " + esc(names[s.teacherid]) : ""}</div>
+      ${sections(s)}
+      ${engagement(s)}
+      ${priorResponse(s)}
+      ${withForm ? respondForm(s) : ""}
+    </div>`;
+
+  function render(d) {
+    const names = d.names || {};
+    if (d.mode === "chooser") {
+      $("#mode-note").textContent = "Choose a learner";
+      $("#title").textContent = "Whose summaries?";
+      $("#chooser").innerHTML = (d.children || []).map((c) => {
+        const u = new URL(location.href); u.searchParams.set("childid", c.studentid);
+        return `<a class="child" href="${esc(u.href)}">${esc(c.name || ("Student " + c.studentid))}</a>`;
+      }).join("") || "<div class='muted'>No linked learners found for this account.</div>";
+      $("#chooser-panel").hidden = false;
+      $("#status").hidden = true;
+      return;
+    }
+    $("#title").textContent = "Class summaries — " + (d.child && d.child.name ? d.child.name : "student");
+    const att = d.needsattention || [];
+    if (att.length) {
+      $("#attention").innerHTML = att.map((s) => card(s, names, true)).join("");
+      $("#attention-panel").hidden = false;
+    }
+    const attIds = new Set(att.map((s) => s.id));
+    const rest = (d.summaries || []).filter((s) => !attIds.has(s.id));
+    $("#summaries").innerHTML = rest.map((s) => card(s, names, false)).join("") || "<div class='muted'>No parent-visible class summaries yet.</div>";
+    $("#summaries-panel").hidden = false;
+    $("#status").hidden = true;
+    document.querySelectorAll("form.respond").forEach((f) => f.addEventListener("submit", submitResponse));
+  }
+
+  async function submitResponse(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "summaries", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "parent_followup_response",
+          sessionid: Number(f.dataset.sessionid),
+          studentid: Number(f.dataset.studentid),
+          parent_response_status: f.parent_response_status.value,
+          parent_response_message: f.parent_response_message.value,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = "Response saved — thank you.";
+      $("#attention-panel").hidden = true; $("#summaries-panel").hidden = true;
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Send response";
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

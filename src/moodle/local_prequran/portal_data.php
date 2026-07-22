@@ -49,7 +49,7 @@ if ($claims === null) {
 $scope = preg_replace('/^portal:/', '', (string)($claims['course'] ?? ''));
 $report = optional_param('report', 'summary', PARAM_ALPHANUMEXT);
 // Each portal token opens exactly one report family.
-$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard', 'intake' => 'intake-requests', 'workspace' => 'workspace-reports', 'schedule' => 'live-schedule'];
+$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard', 'intake' => 'intake-requests', 'workspace' => 'workspace-reports', 'schedule' => 'live-schedule', 'summaries' => 'live-summaries'];
 if (!isset($reportscopes[$report]) || $scope !== $reportscopes[$report]) {
     pqpd_fail(403, 'This token does not grant access to that report.');
 }
@@ -70,6 +70,116 @@ set_exception_handler(function (Throwable $e) {
     echo json_encode(['ok' => false, 'error' => get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine()]);
     exit;
 });
+
+// ---- report: summaries (parent class summaries; read + parent write) ----------
+// Ported from local_hubredirect/live_summaries.php via live_summarieslib
+// (pqlsl_*). GET = the child's parent-visible summaries decorated with focus +
+// practice-coach stats. POST do=parent_followup_response = the page's parent
+// acknowledgement write verbatim (status whitelist, resolved logic, audit map).
+
+if ($report === 'summaries') {
+    global $CFG, $DB, $USER;
+    require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
+    require_once($CFG->dirroot . '/local/hubredirect/live_summarieslib.php');
+    $userid = (int)($claims['sub'] ?? 0);
+
+    if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+        $body = json_decode((string)file_get_contents('php://input'), true);
+        if (!is_array($body) || (string)($body['do'] ?? '') !== 'parent_followup_response') {
+            pqpd_fail(400, 'Unknown summaries action.');
+        }
+        if (!pqlsl_column_exists('local_prequran_live_note', 'parent_response_status')) {
+            pqpd_fail(409, 'Parent follow-up response fields are not installed yet.');
+        }
+        $sessionid = (int)($body['sessionid'] ?? 0);
+        $studentid = (int)($body['studentid'] ?? 0);
+        if ($sessionid <= 0 || $studentid <= 0) {
+            pqpd_fail(400, 'Choose a valid live summary before saving a follow-up response.');
+        }
+        if (!pqlsl_parent_can_access_child($userid, $studentid) && !is_siteadmin($USER)) {
+            pqpd_fail(403, 'Only a linked parent or guardian can respond to this follow-up.');
+        }
+        $note = $DB->get_record('local_prequran_live_note', [
+            'sessionid' => $sessionid, 'studentid' => $studentid, 'visible_to_parent' => 1,
+        ]);
+        if (!$note) {
+            pqpd_fail(404, 'This parent-visible live summary is no longer available.');
+        }
+        $pstatus = (string)($body['parent_response_status'] ?? 'reviewed');
+        if (!in_array($pstatus, ['reviewed', 'homework_completed', 'needs_help'], true)) {
+            $pstatus = 'reviewed';
+        }
+        $now = time();
+        $note->parent_response_status = $pstatus;
+        $note->parent_response_message = pqlsl_clean_text((string)($body['parent_response_message'] ?? ''), 1000);
+        $note->parent_responseby = $userid;
+        $note->parent_responseat = $now;
+        if (in_array($pstatus, ['reviewed', 'homework_completed'], true)) {
+            $note->followup_resolved = 1;
+            $note->followup_resolvedby = $userid;
+            $note->followup_resolvedat = $now;
+        } else {
+            $note->followup_resolved = 0;
+        }
+        $note->timemodified = $now;
+        $DB->update_record('local_prequran_live_note', $note);
+        $actionmap = [
+            'reviewed' => 'followup_parent_acknowledged',
+            'homework_completed' => 'followup_homework_completed',
+            'needs_help' => 'followup_parent_needs_help',
+        ];
+        pqlsl_audit($sessionid, $studentid, $actionmap[$pstatus] ?? 'followup_parent_response_saved', [
+            'status' => $pstatus,
+            'message' => (string)$note->parent_response_message,
+            'via' => 'portal',
+        ]);
+        echo json_encode(['ok' => true, 'message' => 'Follow-up response saved.', 'status' => $pstatus]);
+        exit;
+    }
+
+    $childid = optional_param('childid', 0, PARAM_INT);
+    $modechildren = [];
+    if ($childid <= 0) {
+        if (is_siteadmin($USER)) {
+            $modechildren = [];
+        } else if (pqlsl_has_teacher_role($userid) && !pqlsl_is_managed_student($userid)) {
+            $modechildren = pqlsl_teacher_students($userid);
+        } else {
+            $modechildren = pqlsl_parent_children($userid);
+        }
+        if (count($modechildren) === 1) {
+            $childid = (int)$modechildren[0]['studentid'];
+        }
+    }
+    if ($childid > 0 && !pqlsl_user_can_access_child($userid, $childid)) {
+        pqpd_fail(403, 'You cannot view live-session summaries for this student.');
+    }
+
+    $child = $childid > 0 ? core_user::get_user($childid) : null;
+    $summaries = $childid > 0 ? pqlsl_public_summaries($childid) : [];
+    foreach ($summaries as $s) {
+        $s->focus = pqlsl_focus_summary((int)$s->studentid, (int)$s->sessionid);
+        $s->coach = pqlsl_practice_coach_summary((int)$s->studentid, (int)$s->sessionid);
+    }
+    $needsattention = array_values(array_filter($summaries, function ($summary) {
+        return (string)($summary->followup_status ?? 'none') !== 'none' && empty($summary->followup_resolved);
+    }));
+    $nameids = [];
+    foreach ($summaries as $s) {
+        $nameids[] = (int)($s->teacherid ?? 0);
+    }
+
+    echo json_encode([
+        'ok' => true, 'ready' => true,
+        'mode' => $childid > 0 ? 'child' : 'chooser',
+        'child' => ['id' => $childid, 'name' => $child ? fullname($child) : ''],
+        'children' => $modechildren,
+        'summaries' => array_values($summaries),
+        'needsattention' => $needsattention,
+        'names' => pqpd_names($nameids),
+    ], JSON_UNESCAPED_SLASHES);
+    exit;
+}
 
 // ---- report: schedule (live-class schedule; read-only) ------------------------
 // Ported from local_hubredirect/live_schedule.php via live_schedulelib

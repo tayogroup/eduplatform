@@ -74,7 +74,7 @@ foreach ($members as $username => $m) {
         continue;
     }
 
-    $existing = $DB->get_record('user', ['username' => $username, 'mnethostid' => $CFG->mnethostid]);
+    $existing = $DB->get_record('user', ['username' => $username, 'mnethostid' => $CFG->mnet_localhost_id]);
 
     if ($options['delete']) {
         if ($existing && empty($existing->deleted)) {
@@ -97,7 +97,7 @@ foreach ($members as $username => $m) {
     $user = new stdClass();
     $user->auth = 'manual';
     $user->confirmed = 1;
-    $user->mnethostid = $CFG->mnethostid;
+    $user->mnethostid = $CFG->mnet_localhost_id;
     $user->username = $username;
     $user->password = $options['password']; // hashed by user_create_user
     $user->firstname = (string)($m['firstname'] ?? 'Pilot');

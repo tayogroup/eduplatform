@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intake requests · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink2)}
+  .chip.active{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .searchrow{display:flex;gap:10px}
+  .searchrow input{flex:1;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:4px 12px;font:inherit}
+  button{min-height:38px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+  .cardhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+  .cardhead h2{margin:0;font-size:17px}
+  .meta{color:var(--muted);font-size:12px;margin-top:3px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+  .pill.new{background:var(--amber-bg);color:var(--amber)}
+  .pill.reviewing{background:var(--sky);color:var(--blue2)}
+  .pill.needs_alternative{background:var(--amber-bg);color:var(--amber)}
+  .pill.rejected{background:var(--red-bg);color:var(--red)}
+  .pill.transferred{background:#e9eef4;color:var(--ink2)}
+  .facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin:12px 0}
+  .fact{background:#f8fbfe;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+  .fact b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink2);margin-bottom:2px}
+  form.review{display:grid;grid-template-columns:170px 140px 1fr auto;gap:8px;align-items:end;border-top:1px solid var(--line);padding-top:12px}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--ink2)}
+  .field input,.field select,.field textarea{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:5px 9px;font:inherit;background:#fff}
+  .saved{color:#1c5d8a;font-weight:800;font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  a.legacy{color:var(--blue2)}
+  @media(max-width:760px){form.review{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Public intake requests</small></div>
+  <div class="note">Token-authenticated · review saves write live via the portal</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Public intake requests</h1>
+    <p class="sub">Review, annotate and progress the public sign-up queue. Transfers into the full intake form continue on the <a class="legacy" id="legacy-link" href="#">Moodle page</a>.</p>
+  </div>
+  <div class="panel">
+    <div class="chips" id="chips"></div>
+    <div class="searchrow">
+      <input id="q" placeholder="Search name, parent, email, phone, level, notes…">
+      <button id="go">Search</button>
+    </div>
+  </div>
+  <div id="status" class="status">Loading queue…</div>
+  <div id="list"></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => Number(epoch) ? new Date(epoch * 1000).toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short"}) : "—";
+  let filterStatus = "";
+  const LABELS = { new: "New", reviewing: "Reviewing", needs_alternative: "Needs alternative", rejected: "Rejected", transferred: "Transferred" };
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open this page via the Moodle portal launch link."; return; }
+  $("#legacy-link").href = moodleBase + "/local/hubredirect/intake_requests.php";
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading queue…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "intake", token, status: filterStatus, q: $("#q").value.trim() }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      if (!d.ready) { $("#status").textContent = "The intake schema is not installed on this Moodle."; return; }
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const total = Object.values(d.statuscounts).reduce((a, b) => a + b, 0);
+    $("#chips").innerHTML = `<button class="chip ${filterStatus === "" ? "active" : ""}" data-s="">All (${total})</button>` +
+      d.statusoptions.map((s) => `<button class="chip ${filterStatus === s ? "active" : ""}" data-s="${s}">${LABELS[s] || s} (${d.statuscounts[s] || 0})</button>`).join("");
+    document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => { filterStatus = c.dataset.s; load(); }));
+
+    $("#list").innerHTML = d.requests.map((r) => {
+      const name = r.student_display_name || ((r.student_firstname || "") + " " + (r.student_lastname || ""));
+      return `<div class="card" id="card-${r.id}">
+        <div class="cardhead">
+          <div><h2>#${r.id} · ${esc(name)}</h2>
+            <div class="meta">Submitted ${dt(r.timecreated)} · age ${r.age_years ?? "?"} · ${esc(r.gender || "")}${r.reviewedat ? " · last reviewed " + dt(r.reviewedat) : ""}</div></div>
+          <span class="pill ${esc(r.status)}">${esc(LABELS[r.status] || r.status)}</span>
+        </div>
+        <div class="facts">
+          <div class="fact"><b>Parent</b>${esc(r.parent_name || "—")}<br>${esc(r.parent_email || "")} ${esc(r.parent_phone || "")}</div>
+          <div class="fact"><b>Level / goal</b>${esc(r.current_level || "—")}<br>${esc(r.primary_learning_goal || "")}</div>
+          <div class="fact"><b>Preferences</b>${esc(r.preferred_class_format || "—")} · ${esc(r.preferred_group_size || "")}<br>Teacher: ${esc(r.preferred_teacher_gender || "any")}</div>
+          <div class="fact"><b>Location</b>${esc(r.country || "—")} · ${esc(r.city || "")}<br>${esc(r.timezone || "")}</div>
+        </div>
+        <form class="review" data-id="${r.id}">
+          <div class="field"><label>Status</label>
+            <select name="status">${d.statusoptions.map((s) => `<option value="${s}" ${s === r.status ? "selected" : ""}>${LABELS[s] || s}</option>`).join("")}</select></div>
+          <div class="field"><label>Matched group id</label><input name="matched_groupid" type="number" min="0" value="${Number(r.matched_groupid) || 0}"></div>
+          <div class="field"><label>Admin notes</label><input name="admin_notes" value="${esc(r.admin_notes || "")}"></div>
+          <div style="display:flex;gap:8px;align-items:center"><button type="submit">Save review</button><span class="saved" data-saved></span></div>
+        </form>
+      </div>`;
+    }).join("") || `<div class="panel">No requests match the current filters.</div>`;
+
+    document.querySelectorAll("form.review").forEach((f) => f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const saved = f.querySelector("[data-saved]");
+      saved.textContent = "Saving…";
+      try {
+        const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "intake", token }), {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=UTF-8" },
+          body: JSON.stringify({
+            do: "save_review",
+            requestid: Number(f.dataset.id),
+            status: f.status.value,
+            matched_groupid: Number(f.matched_groupid.value) || 0,
+            admin_notes: f.admin_notes.value,
+          }),
+        });
+        const d = await r.json();
+        if (!r.ok || !d.ok) throw new Error(d.error || "HTTP " + r.status);
+        saved.textContent = "✓ " + d.message;
+        const pill = f.closest(".card").querySelector(".pill");
+        pill.className = "pill " + f.status.value;
+        pill.textContent = LABELS[f.status.value] || f.status.value;
+      } catch (err) { saved.textContent = "Failed: " + err.message; }
+    }));
+    $("#status").hidden = true;
+  }
+
+  $("#go").addEventListener("click", load);
+  $("#q").addEventListener("keydown", (e) => { if (e.key === "Enter") load(); });
+  load();
+})();
+</script>
+</body>
+</html>

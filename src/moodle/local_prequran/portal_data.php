@@ -21,7 +21,7 @@ if ($allowed = pqpg_allowed_origin($origin)) {
     header('Access-Control-Allow-Origin: ' . $allowed);
     header('Vary: Origin');
     header('Access-Control-Allow-Headers: Authorization, Content-Type');
-    header('Access-Control-Allow-Methods: GET, OPTIONS');
+    header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
     header('Access-Control-Max-Age: 86400');
 }
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
@@ -49,7 +49,7 @@ if ($claims === null) {
 $scope = preg_replace('/^portal:/', '', (string)($claims['course'] ?? ''));
 $report = optional_param('report', 'summary', PARAM_ALPHANUMEXT);
 // Each portal token opens exactly one report family.
-$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard'];
+$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard', 'intake' => 'intake-requests'];
 if (!isset($reportscopes[$report]) || $scope !== $reportscopes[$report]) {
     pqpd_fail(403, 'This token does not grant access to that report.');
 }
@@ -71,6 +71,151 @@ set_exception_handler(function (Throwable $e) {
     exit;
 });
 
+// ---- report: intake (public intake request queue; FIRST portal write) --------
+// Ported from local_hubredirect/intake_requests.php. GET = status counts + the
+// scoped request list. POST do=save_review = the page's save_review action
+// verbatim (status/matched group/notes + reviewer stamp + audit row). The
+// legacy load_intake transfer stays on the Moodle page (it hands off via
+// $SESSION into student_intake.php).
+
+if ($report === 'intake') {
+    global $CFG, $DB, $USER;
+    require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
+    $userid = (int)($claims['sub'] ?? 0);
+    if (!pqh_can_manage_academy_operations($userid)) {
+        pqpd_fail(403, 'Academy operations users only.');
+    }
+    if (!$DB->get_manager()->table_exists('local_prequran_intake_request')) {
+        echo json_encode(['ok' => true, 'ready' => false]);
+        exit;
+    }
+    $consumercontext = pqh_requested_consumer_context();
+    $statusoptions = ['new', 'reviewing', 'needs_alternative', 'rejected', 'transferred'];
+
+    $intakehasfield = function (string $column) use ($DB): bool {
+        try {
+            return array_key_exists($column, $DB->get_columns('local_prequran_intake_request'));
+        } catch (Throwable $e) {
+            return false;
+        }
+    };
+    // Mirrors pqireq_request_in_consumer_scope() on the legacy page.
+    $inscope = function (stdClass $request) use ($consumercontext, $intakehasfield): bool {
+        if (pqh_context_is_platform_foundation($consumercontext)) {
+            return true;
+        }
+        if ($intakehasfield('consumerid') && (int)($consumercontext->consumerid ?? 0) > 0) {
+            return (int)($request->consumerid ?? 0) === (int)$consumercontext->consumerid;
+        }
+        $workspaceid = (int)($request->workspaceid ?? 0);
+        return $workspaceid > 0 && pqh_consumer_context_allows_workspace($consumercontext, $workspaceid);
+    };
+
+    if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+        $body = json_decode((string)file_get_contents('php://input'), true);
+        if (!is_array($body) || (string)($body['do'] ?? '') !== 'save_review') {
+            pqpd_fail(400, 'Unknown intake action.');
+        }
+        $requestid = (int)($body['requestid'] ?? 0);
+        $status = (string)($body['status'] ?? '');
+        if (!in_array($status, $statusoptions, true)) {
+            pqpd_fail(400, 'Choose a valid public intake request status.');
+        }
+        $request = $requestid > 0 ? $DB->get_record('local_prequran_intake_request', ['id' => $requestid], '*', IGNORE_MISSING) : false;
+        if (!$request) {
+            pqpd_fail(404, 'Choose a valid public intake request before saving.');
+        }
+        if (!$inscope($request)) {
+            pqpd_fail(403, 'This public intake request does not belong to the active consumer.');
+        }
+        $previousstatus = (string)$request->status;
+        $request->status = $status;
+        $request->matched_groupid = (int)($body['matched_groupid'] ?? 0);
+        $request->admin_notes = trim((string)($body['admin_notes'] ?? ''));
+        $request->reviewedby = $userid;
+        $request->reviewedat = time();
+        $request->timemodified = time();
+        $DB->update_record('local_prequran_intake_request', $request);
+        if ($DB->get_manager()->table_exists('local_prequran_live_audit')) {
+            $DB->insert_record('local_prequran_live_audit', (object)[
+                'sessionid' => 0,
+                'actorid' => $userid,
+                'action' => 'public_intake_review_saved',
+                'targettype' => 'intake_request',
+                'targetid' => $requestid,
+                'details' => json_encode([
+                    'previous_status' => $previousstatus,
+                    'status' => (string)$request->status,
+                    'matched_groupid' => (int)$request->matched_groupid,
+                    'admin_notes' => (string)$request->admin_notes,
+                    'via' => 'portal',
+                ]),
+                'timecreated' => time(),
+            ]);
+        }
+        echo json_encode(['ok' => true, 'message' => 'Request #' . $requestid . ' review saved.', 'status' => $status]);
+        exit;
+    }
+
+    // GET: status counts + scoped list (ported filters + ordering).
+    $filterstatus = optional_param('status', '', PARAM_ALPHANUMEXT);
+    if ($filterstatus !== '' && !in_array($filterstatus, $statusoptions, true)) {
+        $filterstatus = '';
+    }
+    $filterquery = trim(optional_param('q', '', PARAM_TEXT));
+
+    $whereparts = [];
+    $scopeparams = [];
+    if (!pqh_context_is_platform_foundation($consumercontext)) {
+        if ($intakehasfield('consumerid') && (int)($consumercontext->consumerid ?? 0) > 0) {
+            $whereparts[] = 'consumerid = :consumerid';
+            $scopeparams['consumerid'] = (int)$consumercontext->consumerid;
+        } else {
+            $workspaceids = pqh_consumer_context_workspace_ids($consumercontext);
+            if ($workspaceids && $intakehasfield('workspaceid')) {
+                [$insql, $scopeparams] = $DB->get_in_or_equal($workspaceids, SQL_PARAMS_NAMED, 'scopeworkspace');
+                $whereparts[] = "workspaceid {$insql}";
+            } else {
+                $whereparts[] = '1 = 0';
+            }
+        }
+    }
+    $scopewhere = $whereparts ? 'WHERE ' . implode(' AND ', $whereparts) : '';
+    $statuscounts = array_fill_keys($statusoptions, 0);
+    foreach ($DB->get_records_sql("SELECT status, COUNT(1) AS total FROM {local_prequran_intake_request} {$scopewhere} GROUP BY status", $scopeparams) as $row) {
+        $statuscounts[(string)$row->status] = (int)$row->total;
+    }
+
+    $requestwhereparts = $whereparts;
+    $requestparams = $scopeparams;
+    if ($filterstatus !== '') {
+        $requestwhereparts[] = 'status = :filterstatus';
+        $requestparams['filterstatus'] = $filterstatus;
+    }
+    if ($filterquery !== '') {
+        $requestwhereparts[] = $DB->sql_like(
+            $DB->sql_concat("' '", 'student_display_name', "' '", 'student_firstname', "' '", 'student_lastname', "' '", 'student_email', "' '", 'parent_name', "' '", 'parent_email', "' '", 'parent_phone', "' '", 'current_level', "' '", 'admin_notes'),
+            ':filterquery', false
+        );
+        $requestparams['filterquery'] = '%' . $DB->sql_like_escape($filterquery) . '%';
+    }
+    $requestwhere = $requestwhereparts ? 'WHERE ' . implode(' AND ', $requestwhereparts) : '';
+    $requests = array_values($DB->get_records_sql(
+        "SELECT * FROM {local_prequran_intake_request} {$requestwhere}
+      ORDER BY CASE status WHEN 'new' THEN 1 WHEN 'reviewing' THEN 2 WHEN 'needs_alternative' THEN 3 WHEN 'transferred' THEN 4 ELSE 5 END,
+               timecreated DESC",
+        $requestparams, 0, 50
+    ));
+
+    echo json_encode([
+        'ok' => true, 'ready' => true,
+        'filters' => ['status' => $filterstatus, 'q' => $filterquery],
+        'statusoptions' => $statusoptions, 'statuscounts' => $statuscounts,
+        'requests' => $requests,
+    ], JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
 // ---- report: dashboard (role-aware portal hub) ------------------------------
 // v1 of the dashboard.php migration: role + per-student rollups (reusing the
 // managed-reports lib), upcoming live sessions, and (admin) platform counts.
@@ -81,10 +226,22 @@ if ($report === 'dashboard') {
     global $CFG, $DB;
     require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
     require_once($CFG->dirroot . '/local/hubredirect/managed_reportslib.php');
+    require_once($CFG->dirroot . '/local/hubredirect/dashboard_reslib.php');
     $userid = (int)($claims['sub'] ?? 0);
-    $role = pqmrl_role($userid);
-    $students = pqmrl_allowed_students($role, $userid);
+    // Display role with full fidelity (admin/school_principal/sqa_tester/
+    // teacher/parent/referrer/student); DATA scoping still uses the managed-
+    // reports role model, which folds principal into admin-style access.
+    $role = pqh_user_role($userid);
+    $datarole = pqmrl_role($userid);
+    $students = pqmrl_allowed_students($datarole, $userid);
     $rows = pqmrl_report_rows($students, 'production', '', '', '', '');
+
+    // Teacher live overview (the dashboard.php panels): today, upcoming,
+    // needs-review, follow-ups, coaching, improvement plans.
+    $teacheroverview = null;
+    if ($role === 'teacher' || pqh_has_teacher_role($userid)) {
+        $teacheroverview = pqh_teacher_live_overview($userid);
+    }
 
     // Upcoming live sessions (next 7 days) for the students in scope.
     $upcoming = [];
@@ -131,10 +288,20 @@ if ($report === 'dashboard') {
         }
     }
 
+    if ($teacheroverview) {
+        foreach (array_merge($teacheroverview['today'] ?? [], $teacheroverview['upcoming'] ?? []) as $s) {
+            $nameids[] = (int)($s->teacherid ?? 0);
+        }
+        foreach ($teacheroverview['followups'] ?? [] as $f) {
+            $nameids[] = (int)($f->studentid ?? 0);
+        }
+    }
+
     echo json_encode([
         'ok' => true, 'ready' => true, 'role' => $role,
         'students' => $students, 'rows' => $rows, 'upcoming' => $upcoming,
-        'platform' => $platform, 'names' => pqpd_names($nameids),
+        'platform' => $platform, 'teacher' => $teacheroverview,
+        'names' => pqpd_names($nameids),
     ], JSON_UNESCAPED_SLASHES);
     exit;
 }

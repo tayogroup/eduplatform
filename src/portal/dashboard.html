@@ -54,6 +54,11 @@
   <div id="status" class="status">Loading dashboard…</div>
   <section id="platform" class="kpis" hidden></section>
   <section id="kpis" class="kpis"></section>
+  <section id="teacher-kpis" class="kpis" hidden></section>
+  <div class="panel" id="teacher-panel" hidden>
+    <h2>Live teaching</h2>
+    <div class="tiles" id="teacher-lists"></div>
+  </div>
   <div class="panel" id="students-panel" hidden><h2 id="students-title">Students</h2><div class="tiles" id="tiles"></div></div>
   <div class="panel scroll" id="upcoming-panel" hidden><h2>Upcoming live sessions (7 days)</h2><table id="upcoming"></table></div>
   <div class="panel" id="nav-panel" hidden><h2>Where to next</h2><div class="nav-grid" id="nav"></div></div>
@@ -77,6 +82,7 @@
     admin: [
       ["portal:live-reports", "Live-session reports", "Delivery, attendance, QA and coaching"],
       ["portal:managed-reports", "Managed student reports", "Progress, focus, recordings per student"],
+      ["portal:intake-requests", "Intake requests", "Review the public sign-up queue"],
       ["local/hubredirect/live_ops.php", "Live operations", "Run today's live classes"],
       ["local/hubredirect/live_create_wizard.php", "Create live session", "Schedule classes and series"],
       ["local/hubredirect/master_dashboard.php", "Master dashboard", "Platform administration"],
@@ -102,6 +108,28 @@
       ["local/hubredirect/student_dashboard.php", "My dashboard", "Continue learning"],
       ["local/hubredirect/communications.php", "Messages", "Your teacher's messages"],
     ],
+    school_principal: [
+      ["portal:managed-reports", "Student reports", "Progress, focus, recordings per student"],
+      ["portal:live-reports", "Live-session reports", "Delivery, attendance, QA and coaching"],
+      ["local/hubredirect/workspace_dashboard.php", "School operations", "Your workspace dashboard"],
+      ["local/hubredirect/course_offerings.php", "Courses", "What your school teaches"],
+      ["local/hubredirect/live_schedule.php", "Live schedule", "Classes across the school"],
+      ["local/hubredirect/workspace_people.php", "People", "Staff and learners"],
+      ["local/hubredirect/workspace_reports.php", "School reports", "Rollups and exports"],
+      ["local/hubredirect/live_quality_analytics.php", "Quality", "QA reviews and coaching"],
+    ],
+    sqa_tester: [
+      ["local/hubredirect/sqa_test_artifacts.php", "SQA test artifacts", "Alphabet tracker and docs"],
+      ["local/hubredirect/sqa_tester_setup.php", "Tester setup", "Fixtures and accounts"],
+      ["local/hubredirect/quiz_report.php", "Quiz reports", "Attempt analytics"],
+      ["local/hubredirect/live_diagnostics.php", "Live diagnostics", "Session health checks"],
+      ["local/hubredirect/course_debug.php", "Course debug", "Runtime inspection"],
+      ["portal:live-reports", "Live-session reports", "Delivery and QA data"],
+    ],
+    referrer: [
+      ["local/hubredirect/referrers.php", "My referrals", "Track your referred families"],
+      ["local/hubredirect/public_intake.php", "Student intake", "Refer a new family"],
+    ],
   };
 
   async function load() {
@@ -117,7 +145,7 @@
   function render(d) {
     const names = d.names || {};
     const nameOf = (id) => names[id] || ("User " + id);
-    const roleLabel = { admin: "Operations admin", teacher: "Teacher", parent: "Parent", student: "Student" }[d.role] || d.role;
+    const roleLabel = { admin: "Operations admin", teacher: "Teacher", parent: "Parent", student: "Student", school_principal: "School principal", sqa_tester: "SQA tester", referrer: "Referrer" }[d.role] || d.role;
     $("#role-note").textContent = roleLabel + " · " + d.students.length + " student(s) in scope";
     $("#hello").textContent = roleLabel + " dashboard";
 
@@ -128,6 +156,27 @@
         [d.platform.activestudents, "Active students"], [d.platform.teachers, "Teacher profiles"],
         [d.platform.sessionstoday, "Live sessions today"], [d.platform.sessionsweek, "Sessions next 7 days"],
       ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${l}</span></div>`).join("");
+    }
+
+    if (d.teacher && d.teacher.ready) {
+      const T = d.teacher;
+      $("#teacher-kpis").hidden = false;
+      $("#teacher-kpis").innerHTML = [
+        [T.metrics.today, "Classes today"], [T.metrics.upcoming, "Upcoming (7d)"],
+        [T.metrics.studentsweek, "Students this week"], [T.metrics.needsreview, "Awaiting review"],
+        [T.metrics.followups, "Open follow-ups"], [T.metrics.coaching, "Coaching open"],
+        [T.metrics.improvementplans, "Improvement plans"],
+      ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${l}</span></div>`).join("");
+
+      const sess = (s) => `<div class="muted">${dt(s.scheduled_start)} · ${esc(s.title || "Live class")} · ${s.student_count ?? 0} students${s.status ? " · " + esc(s.status) : ""}</div>`;
+      const lists = [
+        ["Today", T.today], ["Upcoming (7 days)", T.upcoming],
+        ["Needs review", T.needsreview],
+        ["Follow-ups", (T.followups || []).map((f) => ({ scheduled_start: f.scheduled_start, title: (f.session_title || "Session") + " — " + esc(nameOf(f.studentid)) + " (" + esc(f.followup_status) + ")", student_count: "" }))],
+      ];
+      $("#teacher-lists").innerHTML = lists.filter(([, rows]) => rows && rows.length).map(([title, rows]) =>
+        `<div class="tile"><h3>${title}</h3>${rows.slice(0, 8).map(sess).join("")}</div>`).join("") || `<div class="tile"><h3>All clear</h3><div class="muted">No sessions, reviews, or follow-ups pending.</div></div>`;
+      $("#teacher-panel").hidden = false;
     }
 
     const units = d.rows.reduce((n, r) => n + r.units, 0);

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Managed student reports · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff;color:var(--ink)}
+  button,.btn{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  tr:hover td{background:#f6faff}
+  .bar{width:120px;height:8px;border-radius:999px;background:#e7edf0;overflow:hidden;display:inline-block;vertical-align:middle}
+  .bar span{display:block;height:100%;background:var(--blue2)}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800;background:var(--sky);color:var(--blue2)}
+  .pill.warnp{background:var(--amber-bg);color:var(--amber)}
+  .pill.badp{background:var(--red-bg);color:var(--red)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .muted{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Managed student reports · read-only</small></div>
+  <div class="note" id="role-note">Token-authenticated · parallel-run of managed_reports.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Managed student reports</h1>
+    <p class="sub">Lesson progress, focus time, recordings, quizzes and live attendance for the students this account manages.</p>
+  </div>
+
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-student">Student</label>
+        <select id="f-student"><option value="0">All students</option></select></div>
+      <div class="field"><label for="f-env">Environment</label>
+        <select id="f-env"><option>production</option><option>staging</option><option>integration</option></select></div>
+      <div class="field"><label for="f-lesson">Lesson id</label><input id="f-lesson" placeholder="any"></div>
+      <div class="field"><label for="f-unit">Unit id</label><input id="f-unit" placeholder="any"></div>
+      <div class="field"><label for="f-status">Status</label>
+        <select id="f-status"><option value="">Any</option><option value="not_started">Not started</option><option value="in_progress">In progress</option><option value="completed">Completed</option></select></div>
+      <div class="field"><label for="f-q">Search</label><input id="f-q" placeholder="name / id / group"></div>
+      <button type="submit">Apply</button>
+      <button type="button" class="ghost" id="csv">CSV</button>
+    </form>
+  </div>
+
+  <div id="status" class="status">Loading report…</div>
+  <section id="kpis" class="kpis"></section>
+  <div class="panel scroll" id="rows-panel" hidden>
+    <h2 id="rows-title">Students</h2>
+    <table id="rows"></table>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => Number(epoch) ? new Date(epoch * 1000).toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short"}) : "—";
+  const dur = (ms) => { const m = Math.ceil(Number(ms || 0) / 60000); return m >= 60 ? Math.floor(m/60) + "h " + (m%60) + "m" : m + "m"; };
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open this page via the Moodle portal launch link."; return; }
+
+  const query = () => new URLSearchParams({
+    report: "managed", token,
+    studentid: $("#f-student").value || "0",
+    pq_env: $("#f-env").value || "production",
+    lessonid: $("#f-lesson").value.trim(),
+    unitid: $("#f-unit").value.trim(),
+    status: $("#f-status").value,
+    q: $("#f-q").value.trim(),
+  }).toString();
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading report…";
+    try {
+      const r = await fetch(endpoint + "?" + query());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown error");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load the report: " + e.message; }
+  }
+
+  function render() {
+    $("#role-note").textContent = "Signed in role: " + data.role + " · " + data.students.length + " student(s) in scope";
+    const sel = $("#f-student");
+    const current = data.filters.studentid || 0;
+    sel.innerHTML = `<option value="0">All students (${data.students.length})</option>` +
+      data.students.map((s) => `<option value="${s.studentid}" ${Number(current) === Number(s.studentid) ? "selected" : ""}>${esc(s.name)}${s.groupname ? " · " + esc(s.groupname) : ""}</option>`).join("");
+
+    const M = data.metrics;
+    $("#kpis").innerHTML = [
+      [M.students, "Students shown"], [M.units, "Units tracked"], [M.completed, "Units completed"],
+      [M.recordings, "Recordings"], [M.quiz, "Quiz attempts"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${l}</span></div>`).join("");
+
+    $("#rows").innerHTML = `<thead><tr><th>Student</th><th>Group</th><th>Units</th><th>Done</th><th>In progress</th><th>Completion</th><th>Focus time</th><th>Idle/leave</th><th>Speak</th><th>Submit</th><th>Quizzes</th><th>Live (P/A)</th><th>Last activity</th></tr></thead><tbody>` +
+      data.rows.map((r) => {
+        const latest = r.latest || {};
+        const last = r.focus?.last_time || latest.overall_lastactivity || latest.timemodified || 0;
+        return `<tr><td>${esc(r.name)}<div class="muted">#${r.studentid}</div></td><td>${esc(r.groupname || "—")}</td><td>${r.units}</td><td>${r.completed}</td><td>${r.inprogress}</td><td><span class="bar"><span style="width:${r.completion}%"></span></span> ${r.completion}%</td><td>${dur(r.focus?.active_ms)}</td><td>${(r.focus?.idle_count || 0)}/${(r.focus?.leave_count || 0)}</td><td>${r.speak}</td><td>${r.submit}</td><td>${r.quiz}</td><td>${r.live?.sessions || 0} (${r.live?.present || 0}/${r.live?.absent || 0})</td><td>${dt(last)}</td></tr>`;
+      }).join("") + "</tbody>";
+    $("#rows-title").textContent = `Students (${data.rows.length})`;
+    $("#rows-panel").hidden = !data.rows.length;
+    $("#status").hidden = data.rows.length > 0;
+    if (!data.rows.length) { $("#status").className = "status"; $("#status").textContent = "No students match the current filters."; }
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#csv").addEventListener("click", () => {
+    if (!data) return;
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const rows = data.rows.map((r) => [r.studentid, r.name, r.groupname || "", r.units, r.completed, r.inprogress, r.completion + "%", dur(r.focus?.active_ms), r.speak, r.submit, r.quiz, r.live?.sessions || 0, r.live?.present || 0, r.live?.absent || 0]);
+    const blob = new Blob([[["studentid","name","group","units","completed","in_progress","completion","focus_time","speak","submit","quizzes","live_sessions","present","absent"].map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "managed-student-report.csv"; a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

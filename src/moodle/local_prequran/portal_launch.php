@@ -12,10 +12,19 @@ require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
 
 require_login();
 
+/** managed-reports is open to any authenticated user — the data endpoint
+ *  scopes what they see by role (admin/teacher/parent/student), exactly like
+ *  the legacy page. */
+function pqpl_any_authenticated(int $userid): bool {
+    return $userid > 0;
+}
+
 $report = optional_param('report', 'live-reports', PARAM_ALPHANUMEXT);
 $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
+    'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

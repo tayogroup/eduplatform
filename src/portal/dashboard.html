@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .tile h3{margin:0 0 6px;font-size:15px}
+  .tile .muted{color:var(--muted);font-size:12px}
+  .bar{height:8px;border-radius:999px;background:#e7edf0;overflow:hidden;margin:8px 0}
+  .bar span{display:block;height:100%;background:var(--blue2)}
+  .facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .fact{background:var(--sky);color:var(--blue);border-radius:999px;padding:2px 9px;font-size:11px;font-weight:800}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  .nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .nav-card{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;color:var(--ink);text-decoration:none}
+  .nav-card:hover{border-color:var(--blue2)}
+  .nav-card strong{display:block;margin-bottom:4px;color:var(--blue2)}
+  .nav-card span{font-size:12px;color:var(--muted)}
+  .nav-card.portal strong::after{content:" ↗ portal";font-size:10px;color:var(--amber)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Dashboard</small></div>
+  <div class="note" id="role-note">Token-authenticated · parallel-run of dashboard.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="hello">Dashboard</h1><p class="sub" id="hello-sub">Your learning operation at a glance.</p></div>
+  <div id="status" class="status">Loading dashboard…</div>
+  <section id="platform" class="kpis" hidden></section>
+  <section id="kpis" class="kpis"></section>
+  <div class="panel" id="students-panel" hidden><h2 id="students-title">Students</h2><div class="tiles" id="tiles"></div></div>
+  <div class="panel scroll" id="upcoming-panel" hidden><h2>Upcoming live sessions (7 days)</h2><table id="upcoming"></table></div>
+  <div class="panel" id="nav-panel" hidden><h2>Where to next</h2><div class="nav-grid" id="nav"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => Number(epoch) ? new Date(epoch * 1000).toLocaleString(undefined, {weekday:"short", day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}) : "—";
+  const dur = (ms) => { const m = Math.ceil(Number(ms || 0) / 60000); return m >= 60 ? Math.floor(m/60) + "h " + (m%60) + "m" : m + "m"; };
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open this page via the Moodle portal launch link."; return; }
+
+  // Per-role navigation. `portal:` targets relaunch through the token mint;
+  // everything else goes to the legacy Moodle pages (session still valid there).
+  const NAV = {
+    admin: [
+      ["portal:live-reports", "Live-session reports", "Delivery, attendance, QA and coaching"],
+      ["portal:managed-reports", "Managed student reports", "Progress, focus, recordings per student"],
+      ["local/hubredirect/live_ops.php", "Live operations", "Run today's live classes"],
+      ["local/hubredirect/live_create_wizard.php", "Create live session", "Schedule classes and series"],
+      ["local/hubredirect/master_dashboard.php", "Master dashboard", "Platform administration"],
+      ["local/hubredirect/platform_consumers.php", "Consumers", "Tenant administration"],
+      ["local/hubredirect/course_offerings.php", "Course offerings", "What each workspace teaches"],
+      ["local/hubredirect/communications.php", "Communications", "Threads and announcements"],
+    ],
+    teacher: [
+      ["portal:managed-reports", "My student reports", "Progress, focus, recordings per student"],
+      ["local/hubredirect/teacher_dashboard.php", "Teacher dashboard", "Classes, grading, to-dos"],
+      ["local/hubredirect/live_sessions.php", "Live sessions", "Your schedule and rosters"],
+      ["local/hubredirect/communications.php", "Messages", "Parents and students"],
+    ],
+    parent: [
+      ["portal:managed-reports", "Child progress reports", "Progress, focus, recordings per child"],
+      ["local/hubredirect/communications.php", "Messages", "Talk to the teacher"],
+      ["local/hubredirect/live_summaries.php", "Class summaries", "What happened in class"],
+      ["local/hubredirect/recordings.php", "Recordings", "Published class recordings"],
+      ["local/hubredirect/live_parent_trust.php", "Trust & safety", "Consents and controls"],
+      ["local/hubredirect/safenet.php", "SafeNet", "Safe internet for your child"],
+    ],
+    student: [
+      ["local/hubredirect/student_dashboard.php", "My dashboard", "Continue learning"],
+      ["local/hubredirect/communications.php", "Messages", "Your teacher's messages"],
+    ],
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "dashboard", token }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown error");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const names = d.names || {};
+    const nameOf = (id) => names[id] || ("User " + id);
+    const roleLabel = { admin: "Operations admin", teacher: "Teacher", parent: "Parent", student: "Student" }[d.role] || d.role;
+    $("#role-note").textContent = roleLabel + " · " + d.students.length + " student(s) in scope";
+    $("#hello").textContent = roleLabel + " dashboard";
+
+    if (d.platform) {
+      $("#platform").hidden = false;
+      $("#platform").innerHTML = [
+        [d.platform.consumers, "Consumers"], [d.platform.workspaces, "Workspaces"],
+        [d.platform.activestudents, "Active students"], [d.platform.teachers, "Teacher profiles"],
+        [d.platform.sessionstoday, "Live sessions today"], [d.platform.sessionsweek, "Sessions next 7 days"],
+      ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${l}</span></div>`).join("");
+    }
+
+    const units = d.rows.reduce((n, r) => n + r.units, 0);
+    const done = d.rows.reduce((n, r) => n + r.completed, 0);
+    const rec = d.rows.reduce((n, r) => n + r.speak + r.submit, 0);
+    $("#kpis").innerHTML = [
+      [d.rows.length, "Students"], [units, "Units tracked"], [done, "Units completed"],
+      [rec, "Recordings"], [d.upcoming.length, "Upcoming sessions"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${l}</span></div>`).join("");
+
+    $("#tiles").innerHTML = d.rows.slice(0, 24).map((r) => `
+      <div class="tile"><h3>${esc(r.name)}</h3><div class="muted">${esc(r.groupname || "")}</div>
+        <div class="bar"><span style="width:${r.completion}%"></span></div>
+        <div class="muted">${r.completion}% · ${r.completed}/${r.units} units complete</div>
+        <div class="facts"><span class="fact">focus ${dur(r.focus?.active_ms)}</span><span class="fact">rec ${r.speak + r.submit}</span><span class="fact">quiz ${r.quiz}</span><span class="fact">live ${r.live?.sessions || 0}</span></div>
+      </div>`).join("");
+    $("#students-title").textContent = `Students (${d.rows.length}${d.rows.length > 24 ? ", showing 24 — open the full report" : ""})`;
+    $("#students-panel").hidden = !d.rows.length;
+
+    $("#upcoming").innerHTML = `<thead><tr><th>When</th><th>Session</th><th>Teacher</th><th>Student</th></tr></thead><tbody>` +
+      d.upcoming.map((u) => `<tr><td>${dt(u.scheduled_start)}</td><td>${esc(u.title)}</td><td>${esc(nameOf(u.teacherid))}</td><td>${esc(nameOf(u.studentid))}</td></tr>`).join("") + "</tbody>";
+    $("#upcoming-panel").hidden = !d.upcoming.length;
+
+    const nav = NAV[d.role] || NAV.parent;
+    $("#nav").innerHTML = nav.map(([target, title, desc]) => {
+      const portal = target.startsWith("portal:");
+      const href = portal
+        ? moodleBase + "/local/prequran/portal_launch.php?report=" + encodeURIComponent(target.slice(7))
+        : moodleBase + "/" + target;
+      return `<a class="nav-card ${portal ? "portal" : ""}" href="${esc(href)}"><strong>${esc(title)}</strong><span>${esc(desc)}</span></a>`;
+    }).join("");
+    $("#nav-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

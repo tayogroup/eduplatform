@@ -43,8 +43,140 @@ if ($token === '') {
     pqpd_fail(401, 'Missing portal token.');
 }
 $claims = pqpg_verify_token($token);
-if ($claims === null || (string)($claims['course'] ?? '') !== 'portal:live-reports') {
-    pqpd_fail(401, 'Invalid, expired, or wrong-scope portal token.');
+if ($claims === null) {
+    pqpd_fail(401, 'Invalid or expired portal token.');
+}
+$scope = preg_replace('/^portal:/', '', (string)($claims['course'] ?? ''));
+$report = optional_param('report', 'summary', PARAM_ALPHANUMEXT);
+// Each portal token opens exactly one report family.
+$reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard'];
+if (!isset($reportscopes[$report]) || $scope !== $reportscopes[$report]) {
+    pqpd_fail(403, 'This token does not grant access to that report.');
+}
+
+// API endpoints must answer JSON even when something breaks — surface the real
+// error instead of Moodle's HTML error page.
+set_exception_handler(function (Throwable $e) {
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'error' => get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine()]);
+    exit;
+});
+
+// ---- report: dashboard (role-aware portal hub) ------------------------------
+// v1 of the dashboard.php migration: role + per-student rollups (reusing the
+// managed-reports lib), upcoming live sessions, and (admin) platform counts.
+// The legacy page's two writes are deferred: the QA step-config form is behind
+// a hardcoded-false flag, and the widget-prefs save is cosmetic.
+
+if ($report === 'dashboard') {
+    global $CFG, $DB;
+    require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
+    require_once($CFG->dirroot . '/local/hubredirect/managed_reportslib.php');
+    $userid = (int)($claims['sub'] ?? 0);
+    $role = pqmrl_role($userid);
+    $students = pqmrl_allowed_students($role, $userid);
+    $rows = pqmrl_report_rows($students, 'production', '', '', '', '');
+
+    // Upcoming live sessions (next 7 days) for the students in scope.
+    $upcoming = [];
+    $ids = array_map(static function (array $s): int {
+        return (int)$s['studentid'];
+    }, $students);
+    if ($ids && pqmrl_table_exists('local_prequran_live_session') && pqmrl_table_exists('local_prequran_live_participant')) {
+        [$insql, $inparams] = $DB->get_in_or_equal($ids, SQL_PARAMS_NAMED, 'updash');
+        $upcoming = array_values($DB->get_records_sql(
+            "SELECT s.id, s.title, s.teacherid, s.scheduled_start, s.scheduled_end, s.status, p.studentid
+               FROM {local_prequran_live_session} s
+               JOIN {local_prequran_live_participant} p ON p.sessionid = s.id AND p.role = 'student' AND p.status = 'active'
+              WHERE p.studentid {$insql}
+                AND s.scheduled_start >= :nowtime AND s.scheduled_start <= :weektime
+                AND s.status <> 'cancelled'
+           ORDER BY s.scheduled_start ASC",
+            $inparams + ['nowtime' => time(), 'weektime' => time() + (7 * DAYSECS)], 0, 30
+        ));
+    }
+    $nameids = $ids;
+    foreach ($upcoming as $u) {
+        $nameids[] = (int)$u->teacherid;
+    }
+
+    // Platform counts (admin only) — ported from dashboard.php's overview panel.
+    $platform = null;
+    if ($role === 'admin') {
+        $platform = [];
+        $platform['consumers'] = pqmrl_table_exists('local_prequran_consumer') ? (int)$DB->count_records('local_prequran_consumer') : 0;
+        $platform['workspaces'] = pqmrl_table_exists('local_prequran_workspace') ? (int)$DB->count_records('local_prequran_workspace') : 0;
+        $platform['activestudents'] = 0;
+        if (pqmrl_table_exists('local_prequran_workspace_member') && pqmrl_table_has_field('local_prequran_workspace_member', 'workspace_role')) {
+            $platform['activestudents'] = (int)$DB->count_records('local_prequran_workspace_member', ['workspace_role' => 'student', 'status' => 'active']);
+        }
+        $platform['teachers'] = pqmrl_table_exists('local_prequran_teacher_profile') ? (int)$DB->count_records('local_prequran_teacher_profile') : 0;
+        $platform['sessionstoday'] = 0;
+        $platform['sessionsweek'] = 0;
+        if (pqmrl_table_exists('local_prequran_live_session')) {
+            $daystart = usergetmidnight(time());
+            $platform['sessionstoday'] = (int)$DB->count_records_select('local_prequran_live_session',
+                'scheduled_start >= :s AND scheduled_start < :e', ['s' => $daystart, 'e' => $daystart + DAYSECS]);
+            $platform['sessionsweek'] = (int)$DB->count_records_select('local_prequran_live_session',
+                'scheduled_start >= :s AND scheduled_start < :e', ['s' => time(), 'e' => time() + (7 * DAYSECS)]);
+        }
+    }
+
+    echo json_encode([
+        'ok' => true, 'ready' => true, 'role' => $role,
+        'students' => $students, 'rows' => $rows, 'upcoming' => $upcoming,
+        'platform' => $platform, 'names' => pqpd_names($nameids),
+    ], JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+// ---- report: managed (managed-student reports, role-scoped) -----------------
+
+if ($report === 'managed') {
+    global $CFG;
+    require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
+    require_once($CFG->dirroot . '/local/hubredirect/managed_reportslib.php');
+    $userid = (int)($claims['sub'] ?? 0);
+    $role = pqmrl_role($userid);
+    $students = pqmrl_allowed_students($role, $userid);
+    $allowedids = array_map(static function (array $student): int {
+        return (int)$student['studentid'];
+    }, $students);
+    $onestudent = optional_param('studentid', 0, PARAM_INT);
+    if ($onestudent > 0 && !in_array($onestudent, $allowedids, true)) {
+        pqpd_fail(403, 'This account cannot view reports for that student.');
+    }
+    $environment = strtolower(trim(optional_param('pq_env', 'production', PARAM_ALPHANUMEXT)));
+    if (!in_array($environment, ['production', 'staging', 'integration'], true)) {
+        $environment = 'production';
+    }
+    $lessonid = trim(optional_param('lessonid', '', PARAM_ALPHANUMEXT));
+    $unitid = trim(optional_param('unitid', '', PARAM_ALPHANUMEXT));
+    $mstatus = strtolower(trim(optional_param('status', '', PARAM_ALPHANUMEXT)));
+    $statusmap = ['notstarted' => 'not_started', 'inprogress' => 'in_progress', 'all' => ''];
+    $mstatus = $statusmap[$mstatus] ?? $mstatus;
+    if (!in_array($mstatus, ['', 'not_started', 'in_progress', 'completed'], true)) {
+        $mstatus = '';
+    }
+    $search = optional_param('q', '', PARAM_TEXT);
+    $scoped = $onestudent > 0 ? array_values(array_filter($students, static function (array $student) use ($onestudent): bool {
+        return (int)$student['studentid'] === $onestudent;
+    })) : $students;
+    $rows = pqmrl_report_rows($scoped, $environment, $lessonid, $unitid, $mstatus, $search);
+    $metrics = ['students' => count($rows), 'units' => 0, 'completed' => 0, 'recordings' => 0, 'quiz' => 0];
+    foreach ($rows as $row) {
+        $metrics['units'] += (int)$row['units'];
+        $metrics['completed'] += (int)$row['completed'];
+        $metrics['recordings'] += (int)$row['speak'] + (int)$row['submit'];
+        $metrics['quiz'] += (int)$row['quiz'];
+    }
+    echo json_encode([
+        'ok' => true, 'ready' => true, 'role' => $role,
+        'students' => $students,
+        'filters' => ['pq_env' => $environment, 'lessonid' => $lessonid, 'unitid' => $unitid, 'status' => $mstatus, 'q' => $search, 'studentid' => $onestudent],
+        'metrics' => $metrics, 'rows' => $rows,
+    ], JSON_UNESCAPED_SLASHES);
+    exit;
 }
 
 // ---- helpers ported from live_reports.php ----------------------------------
@@ -99,15 +231,7 @@ function pqpd_names(array $userids): array {
     return $names; // int-keyed → JSON-encodes as an object map
 }
 
-// ---- filters (identical semantics to the PHP page) --------------------------
-
-// API endpoints must answer JSON even when something breaks — surface the real
-// error instead of Moodle's HTML error page.
-set_exception_handler(function (Throwable $e) {
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine()]);
-    exit;
-});
+// ---- live-reports filters (identical semantics to the PHP page) --------------
 
 $now = time();
 $defaultfrom = usergetmidnight($now - (30 * DAYSECS));
@@ -118,7 +242,6 @@ $teacherid = optional_param('teacherid', 0, PARAM_INT);
 $studentid = optional_param('studentid', 0, PARAM_INT);
 $status = optional_param('status', '', PARAM_ALPHANUMEXT);
 $seriesid = optional_param('seriesid', 0, PARAM_INT);
-$report = optional_param('report', 'summary', PARAM_ALPHANUMEXT);
 
 $where = ["s.scheduled_start >= :fromtime", "s.scheduled_start <= :totime"];
 $params = ['fromtime' => $from, 'totime' => $to];

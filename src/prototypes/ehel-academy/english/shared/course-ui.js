@@ -993,7 +993,7 @@ function renderDictionary() {
     $("#slow-word").addEventListener("click", (event) => play(event.currentTarget));
     $("#hear-sentence").addEventListener("click", (event) => {
       const descriptor = item.sentenceAudio[activeSentence];
-      if (!descriptor) return toast("This ElevenLabs sentence clip is not available yet.");
+      if (!descriptor || descriptor.available === false) return toast("This sentence recording is not available yet.");
       playAudio(descriptor.source, { rate: AI_NARRATION_RATE, start: descriptor.cueStart, end: descriptor.cueEnd, button: event.currentTarget });
     });
     $("#previous-sentence").addEventListener("click", () => { activeSentence = (activeSentence - 1 + item.practiceSentences.length) % item.practiceSentences.length; drawWord(); icons(); });

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transcript controls · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn.primary{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  form.ctl label{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin:8px 0 4px}
+  form.ctl input,form.ctl select,form.ctl textarea{width:100%;min-height:38px;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.ctl textarea{min-height:64px;resize:vertical}
+  form.ctl button{margin-top:12px}
+  .alert{padding:12px 14px;border-radius:8px;font-weight:700;margin-bottom:10px}
+  .alert.ok{background:var(--sky);color:var(--blue2)}
+  .alert.bad{background:var(--red-bg);color:var(--red)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .resolve{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .resolve input{min-height:32px;border:1px solid var(--line);border-radius:7px;padding:0 8px;font:inherit;font-size:12px;background:var(--card);color:var(--ink)}
+  .resolve button{min-height:32px;padding:0 10px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .tablewrap{overflow-x:auto}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Transcript controls</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of transcript_controls.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Transcript Controls</h1>
+    <p class="sub" id="subtitle">Registrar holds and field corrections for a managed student.</p>
+    <div class="actions" id="actions" hidden></div>
+  </div>
+  <div id="status" class="status">Loading transcript controls…</div>
+  <div id="flash"></div>
+  <div class="panel" id="forms-panel" hidden>
+    <div class="grid2">
+      <form class="ctl" id="hold-form">
+        <h2>Add Hold</h2>
+        <label>Hold type</label>
+        <input id="hold-type" value="registrar" maxlength="100">
+        <label>Reason</label>
+        <textarea id="hold-reason" required maxlength="1000"></textarea>
+        <button class="btn primary" type="submit">Add hold</button>
+      </form>
+      <form class="ctl" id="correction-form">
+        <h2>Record Correction</h2>
+        <label>Document</label>
+        <select id="corr-document"></select>
+        <label>Field path</label>
+        <input id="corr-fieldpath" required maxlength="255" placeholder="course.grade or student.account_no">
+        <label>Old value</label>
+        <input id="corr-oldvalue" maxlength="500">
+        <label>New value</label>
+        <input id="corr-newvalue" required maxlength="500">
+        <label>Reason</label>
+        <textarea id="corr-reason" required maxlength="1000"></textarea>
+        <button class="btn primary" type="submit">Record correction</button>
+      </form>
+    </div>
+  </div>
+  <div class="panel" id="holds-panel" hidden><h2>Holds</h2><div class="tablewrap"><table>
+    <thead><tr><th>Status</th><th>Type</th><th>Reason</th><th>Created</th><th>Resolve</th></tr></thead>
+    <tbody id="holds"></tbody></table></div></div>
+  <div class="panel" id="corrections-panel" hidden><h2>Corrections</h2><div class="tablewrap"><table>
+    <thead><tr><th>Status</th><th>Document</th><th>Field</th><th>Change</th><th>Reason</th><th>Recorded</th></tr></thead>
+    <tbody id="corrections"></tbody></table></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Legacy page params pass straight through to the handler.
+  const PASS = ["studentid", "workspaceid", "consumer", "documentid"];
+  const url = () => {
+    const p = new URLSearchParams({ report: "transcript-controls", token });
+    for (const k of PASS) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+  const posturl = () => {
+    const p = new URLSearchParams({ report: "transcript-controls", token });
+    for (const k of ["workspaceid", "consumer"]) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+
+  let data = null;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      data = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const student = d.student || {};
+    $("#title").textContent = student.name || "Transcript Controls";
+    $("#subtitle").textContent = student.account_label || "Registrar holds and field corrections for a managed student.";
+
+    const links = d.links || {};
+    const linkdefs = [["transcript", "Transcript"], ["official", "Official draft"], ["workspace", "Workspace"]];
+    $("#actions").innerHTML = linkdefs.filter(([k]) => links[k]).map(([k, label]) =>
+      `<a class="btn${k === "workspace" ? " primary" : ""}" href="${esc(links[k])}" target="_blank" rel="noopener">${esc(label)}</a>`).join("");
+    $("#actions").hidden = false;
+
+    // Correction document dropdown: live/current draft plus recent snapshots.
+    const docs = d.docs || [];
+    const preset = qs.get("documentid") || d.documentid || "";
+    let opts = `<option value="${esc(preset)}">${preset ? esc(preset) : "Live/current draft"}</option>`;
+    opts += docs.map((doc) => `<option value="${esc(doc.documentid)}">${esc(doc.documentid)} / ${esc(doc.status_label)}</option>`).join("");
+    $("#corr-document").innerHTML = opts;
+    $("#forms-panel").hidden = false;
+
+    const holds = d.holds || [];
+    $("#holds").innerHTML = holds.map((h) => `<tr>
+        <td><span class="pill">${esc(h.status_label)}</span></td>
+        <td>${esc(h.holdtype)}</td>
+        <td>${esc(h.reason)}${h.resolutionnote ? `<div class="muted">Resolution: ${esc(h.resolutionnote)}</div>` : ""}</td>
+        <td>${esc(h.created_label)}</td>
+        <td>${h.is_active ? `<form class="resolve" data-holdid="${Number(h.id)}"><input required placeholder="Resolution note" maxlength="1000"><button class="btn" type="submit">Resolve</button></form>` : ""}</td>
+      </tr>`).join("") || '<tr><td colspan="5">No transcript holds found.</td></tr>';
+    $("#holds-panel").hidden = false;
+
+    const corrections = d.corrections || [];
+    $("#corrections").innerHTML = corrections.map((c) => `<tr>
+        <td><span class="pill">${esc(c.status_label)}</span></td>
+        <td>${esc(c.documentid)}</td>
+        <td>${esc(c.fieldpath)}</td>
+        <td><div class="muted">From: ${esc(c.oldvalue)}</div><div class="muted">To: ${esc(c.newvalue)}</div></td>
+        <td>${esc(c.reason)}</td>
+        <td>${esc(c.recorded_label)}</td>
+      </tr>`).join("") || '<tr><td colspan="6">No correction records found.</td></tr>';
+    $("#corrections-panel").hidden = false;
+
+    document.querySelectorAll("form.resolve").forEach((f) => f.addEventListener("submit", onResolve));
+    $("#status").hidden = true;
+  }
+
+  // Writes mirror the legacy POST actions; a saved write reloads the state.
+  async function post(body, btns) {
+    btns.forEach((b) => { b.disabled = true; });
+    try {
+      const r = await fetch(posturl(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#flash").innerHTML = '<div class="alert ok">' + esc(d.message || "Transcript control saved.") + '</div>';
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      btns.forEach((b) => { b.disabled = false; });
+      $("#flash").innerHTML = `<div class="alert bad">${esc(e.message)}</div>`;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  $("#hold-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!data) return;
+    post({
+      do: "hold",
+      studentid: Number(data.studentid),
+      workspaceid: Number(data.workspaceid),
+      holdtype: $("#hold-type").value.trim(),
+      reason: $("#hold-reason").value.trim(),
+    }, [...ev.currentTarget.querySelectorAll("button")]);
+  });
+
+  $("#correction-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!data) return;
+    post({
+      do: "correction",
+      studentid: Number(data.studentid),
+      workspaceid: Number(data.workspaceid),
+      documentid: $("#corr-document").value,
+      fieldpath: $("#corr-fieldpath").value.trim(),
+      oldvalue: $("#corr-oldvalue").value,
+      newvalue: $("#corr-newvalue").value.trim(),
+      reason: $("#corr-reason").value.trim(),
+    }, [...ev.currentTarget.querySelectorAll("button")]);
+  });
+
+  function onResolve(ev) {
+    ev.preventDefault();
+    if (!data) return;
+    const f = ev.currentTarget;
+    post({
+      do: "resolvehold",
+      studentid: Number(data.studentid),
+      workspaceid: Number(data.workspaceid),
+      holdid: Number(f.dataset.holdid),
+      resolution: f.querySelector("input").value.trim(),
+    }, [...f.querySelectorAll("button")]);
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attendance operations · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  td.wrap-cell{white-space:normal;max-width:280px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.present{background:#e1f2ff;color:var(--blue2)}
+  .pill.absent{background:var(--red-bg);color:var(--red)}
+  .pill.late{background:var(--amber-bg);color:var(--amber)}
+  .pill.excused{background:var(--sky);color:var(--ink2)}
+  .pill.makeup_completed{background:var(--sky);color:var(--ink2)}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand" id="brand">EduPlatform Portal<small>Attendance operations · read-only</small></div>
+  <div class="note" id="ws-note">Token-authenticated · parallel-run of attendance_operations.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Attendance operations</h1><p class="sub">Session attendance, late/excused/absence/make-up tracking, standing and finance-hold actions for this workspace.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-from">From</label><input type="date" id="f-from"></div>
+      <div class="field"><label for="f-to">To</label><input type="date" id="f-to"></div>
+      <div class="field"><label for="f-status">Status</label>
+        <select id="f-status"><option value="">All</option><option value="present">Present</option><option value="late">Late</option><option value="excused">Excused</option><option value="absent">Absent</option><option value="makeup_completed">Make-up completed</option></select></div>
+      <div class="field"><label for="f-session">Session</label><select id="f-session"><option value="0">All</option></select></div>
+      <div class="field"><label for="f-student">Student</label><select id="f-student"><option value="0">All</option></select></div>
+      <div class="field"><label for="f-q">Search</label><input type="search" id="f-q" placeholder="name / notes…"></div>
+      <button type="button" class="ghost" id="reset">Reset</button>
+      <button type="button" class="ghost" id="csv">Export CSV</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading attendance…</div>
+  <section id="kpis" class="kpis" hidden></section>
+  <div class="panel scroll" id="attendance-panel" hidden><h2>Attendance</h2><table id="attendance"></table></div>
+  <div class="panel scroll" id="rules-panel" hidden><h2>Active rules</h2><table id="rules"></table></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const wsid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => Number(epoch) ? new Date(epoch * 1000).toLocaleString(undefined, {weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit"}) : "—";
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "attendance-operations", token, workspaceid: wsid });
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading attendance…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const statusPill = (s) => { const a = String(s || "").toLowerCase(); const cls = ["present","late","absent","excused","makeup_completed"].includes(a) ? a : "excused"; return `<span class="pill ${cls}">${esc(a.replace(/_/g, " "))}</span>`; };
+
+  function fillSelect(sel, options, valueKey, labelKey) {
+    const first = sel.querySelector("option");
+    sel.innerHTML = "";
+    sel.appendChild(first);
+    options.forEach((o) => { const opt = document.createElement("option"); opt.value = o[valueKey]; opt.textContent = o[labelKey]; sel.appendChild(opt); });
+  }
+
+  // Client-side filtering of the loaded attendance dataset.
+  function filtered() {
+    const from = $("#f-from").value ? Date.parse($("#f-from").value + "T00:00:00") / 1000 : 0;
+    const to = $("#f-to").value ? Date.parse($("#f-to").value + "T23:59:59") / 1000 : 0;
+    const st = $("#f-status").value;
+    const sess = Number($("#f-session").value || 0);
+    const stu = Number($("#f-student").value || 0);
+    const q = $("#f-q").value.trim().toLowerCase();
+    return (data.attendance || []).filter((r) => {
+      if (from && r.scheduled_start < from) return false;
+      if (to && r.scheduled_start > to) return false;
+      if (st && r.attendance_status !== st) return false;
+      if (sess && r.sessionid !== sess) return false;
+      if (stu && r.studentid !== stu) return false;
+      if (q && !((r.student || "").toLowerCase().includes(q) || (r.notes || "").toLowerCase().includes(q) || (r.session || "").toLowerCase().includes(q))) return false;
+      return true;
+    });
+  }
+
+  function renderRows() {
+    const rows = filtered();
+    $("#attendance").innerHTML = `<thead><tr><th>Student</th><th>Session</th><th>When</th><th>Status</th><th>Late</th><th>Excused</th><th>Make-up</th><th>Standing</th><th>Finance hold</th><th>Notes</th></tr></thead><tbody>` +
+      (rows.length ? rows.map((r) => `<tr>` +
+        `<td>${esc(r.student || ("Student " + r.studentid))}</td>` +
+        `<td>${esc(r.session)}</td>` +
+        `<td>${esc(dt(r.scheduled_start))}</td>` +
+        `<td>${statusPill(r.attendance_status)}</td>` +
+        `<td>${Number(r.minutes_late) || 0}</td>` +
+        `<td>${Number(r.excused) ? "yes" : "—"}</td>` +
+        `<td>${Number(r.makeup_required) ? "yes" : "—"}</td>` +
+        `<td>${esc(r.standing_action || "—")}</td>` +
+        `<td>${esc(r.finance_hold_action || "—")}</td>` +
+        `<td class="wrap-cell">${esc(r.notes || "")}</td></tr>`).join("")
+        : `<tr><td colspan="10" class="muted">No attendance rows match these filters.</td></tr>`) + "</tbody>";
+  }
+
+  function render() {
+    $("#brand").innerHTML = `${esc(data.brand || "EduPlatform")} Portal<small>Attendance operations · read-only</small>`;
+    $("#title").textContent = "Attendance operations — " + (data.workspace ? data.workspace.name : "workspace");
+    $("#ws-note").textContent = `Workspace #${data.workspaceid}${data.canmanage ? " · manager" : " · teacher"} · parallel-run of attendance_operations.php`;
+
+    const M = data.metrics || {};
+    $("#kpis").innerHTML = [
+      [M.total ?? 0, "Records"], [M.present ?? 0, "Present"], [M.late ?? 0, "Late"],
+      [M.excused ?? 0, "Excused"], [M.absent ?? 0, "Absent"],
+      [M.makeup_required ?? 0, "Make-up required"], [(data.rules || []).length, "Active rules"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${esc(l)}</span></div>`).join("");
+    $("#kpis").hidden = false;
+
+    fillSelect($("#f-session"), data.sessions || [], "id", "title");
+    fillSelect($("#f-student"), data.students || [], "id", "name");
+
+    renderRows();
+    $("#attendance-panel").hidden = false;
+
+    const R = data.rules || [];
+    $("#rules").innerHTML = `<thead><tr><th>Rule</th><th>Status</th><th>Late after</th><th>Warning at</th><th>Hold at</th><th>Standing</th><th>Finance hold</th></tr></thead><tbody>` +
+      (R.length ? R.map((r) => `<tr><td>${esc(r.rule_name)}</td><td>${esc(r.status)}</td><td>${r.late_after_minutes} min</td><td>${r.absence_warning_count}</td><td>${r.absence_hold_count}</td><td>${esc(r.academic_standing_behavior)}</td><td>${esc(r.finance_hold_behavior)}</td></tr>`).join("")
+        : `<tr><td colspan="7" class="muted">No attendance rules yet.</td></tr>`) + "</tbody>";
+    $("#rules-panel").hidden = false;
+
+    if (!data.ready) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Attendance operations schema is not ready. Run the local_prequran Moodle upgrade."; }
+    else { $("#status").hidden = true; }
+  }
+
+  function downloadCsv() {
+    if (!data) return;
+    const rows = filtered();
+    const headers = ["studentid","student","session","when","status","late_minutes","excused","makeup_required","standing_action","finance_hold_action","notes"];
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const body = rows.map((r) => [r.studentid, r.student, r.session, dt(r.scheduled_start), r.attendance_status, r.minutes_late, r.excused, r.makeup_required, r.standing_action, r.finance_hold_action, r.notes]);
+    const blob = new Blob([[headers.map(cell).join(","), ...body.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "attendance-workspace-" + wsid + ".csv"; a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  ["f-from","f-to","f-status","f-session","f-student"].forEach((id) => $("#" + id).addEventListener("change", renderRows));
+  $("#f-q").addEventListener("input", renderRows);
+  $("#reset").addEventListener("click", () => { $("#filters").reset(); renderRows(); });
+  $("#csv").addEventListener("click", downloadCsv);
+  $("#filters").addEventListener("submit", (e) => e.preventDefault());
+  load();
+})();
+</script>
+</body>
+</html>

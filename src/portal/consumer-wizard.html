@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consumer creation wizard · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .stepper{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+  .step{flex:1 1 160px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--card);display:flex;gap:9px;align-items:flex-start}
+  .step .n{display:grid;place-items:center;min-width:26px;height:26px;border-radius:8px;background:var(--sky);color:var(--blue2);font-weight:900;font-size:13px}
+  .step.active{border-color:var(--blue2);background:linear-gradient(180deg,var(--sky),var(--card))}
+  .step.active .n{background:var(--blue2);color:#fff}
+  .step.done .n{background:var(--blue);color:#fff}
+  .step strong{display:block;font-size:13px}
+  .step span{display:block;color:var(--muted);font-size:11px}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .field{display:grid;gap:5px}
+  .field.wide{grid-column:1/-1}
+  .field label{font-size:11px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.4px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:70px;resize:vertical}
+  .field .hint{font-size:11px;color:var(--muted);font-weight:600}
+  .actions{display:flex;gap:10px;justify-content:space-between;margin-top:16px;flex-wrap:wrap}
+  button{border:0;border-radius:8px;padding:10px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button.primary{background:var(--blue2);color:#fff}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  button:disabled{opacity:.55;cursor:wait}
+  .toplinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .toplinks a{font-size:12px;font-weight:800;color:var(--blue2);text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:6px 11px}
+  .toplinks a:hover{border-color:var(--blue2)}
+  .success a{display:inline-block;margin:4px 8px 4px 0;font-weight:800;color:var(--blue2);text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:8px 14px}
+  .success a:hover{border-color:var(--blue2)}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Consumer creation wizard</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of consumer_wizard.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Consumer creation wizard</h1>
+    <p class="sub">Create an academy, institution, marketplace, or teacher-workspace consumer with routes, workspace, first admin, domains, and landing defaults.</p>
+    <div class="toplinks" id="toplinks" hidden></div>
+  </div>
+  <div id="status" class="status">Loading wizard…</div>
+
+  <div id="wizard" hidden>
+    <div class="panel">
+      <div class="stepper" id="stepper"></div>
+    </div>
+
+    <form class="panel" id="wizard-form" autocomplete="off">
+      <!-- Step 1: consumer type -->
+      <div class="stepsec" data-step="0">
+        <h2>Consumer type</h2>
+        <div class="grid">
+          <div class="field"><label>Consumer type</label><select name="consumer_type" id="f-consumer_type"></select></div>
+          <div class="field"><label>Institution type</label><select name="institution_type" id="f-institution_type"></select></div>
+          <div class="field" id="faith-field"><label>Faith sub-category</label><select name="faith_subcategory" id="f-faith_subcategory"></select></div>
+          <div class="field"><label>Teaching method</label><select name="teaching_method" id="f-teaching_method"></select></div>
+          <div class="field"><label>Operator type</label><select name="operator_type" id="f-operator_type"></select></div>
+        </div>
+      </div>
+
+      <!-- Step 2: identity + admin -->
+      <div class="stepsec" data-step="1" hidden>
+        <h2>Name, workspace &amp; first admin</h2>
+        <div class="grid">
+          <div class="field"><label>Name</label><input name="name" required></div>
+          <div class="field"><label>Slug</label><input name="slug" placeholder="auto if blank"></div>
+          <div class="field wide"><label>Link workspace</label><select name="workspaceid" id="f-workspaceid"></select></div>
+          <div class="field wide"><label>Existing first admin</label><input name="adminuser" placeholder="Moodle user ID, username, or email"><span class="hint">Leave blank to create a new admin from the fields below.</span></div>
+          <div class="field"><label>New admin first name</label><input name="adminfirstname"></div>
+          <div class="field"><label>New admin last name</label><input name="adminlastname"></div>
+          <div class="field"><label>New admin email</label><input name="adminemail"></div>
+          <div class="field"><label>New admin username</label><input name="adminusername"></div>
+        </div>
+      </div>
+
+      <!-- Step 3: website + domains -->
+      <div class="stepsec" data-step="2" hidden>
+        <h2>Website &amp; domains</h2>
+        <div class="grid">
+          <div class="field wide"><label>Website hosting mode</label><select name="website_mode" id="f-website_mode"></select></div>
+          <div class="field" id="hosted-field"><label>EduPlatform-hosted public domain</label><input name="publicdomain" placeholder="school.example.org"></div>
+          <div class="field" id="external-field"><label>Existing website URL</label><input name="externalwebsiteurl" placeholder="https://www.example.org"></div>
+          <div class="field"><label>Learning portal domain</label><input name="appdomain" placeholder="learn.example.org"></div>
+          <div class="field"><label>Portal label</label><input name="portallabel" value="Learning portal"></div>
+          <div class="field"><label>Portal domain management</label><select name="domainmanagement" id="f-domainmanagement"></select></div>
+          <div class="field"><label>Branding source</label><select name="brandingsource" id="f-brandingsource"></select></div>
+          <div class="field"><label>Public intake location</label><select name="intakelocation" id="f-intakelocation"></select></div>
+          <div class="field"><label>Website integration</label><select name="integrationmethod" id="f-integrationmethod"></select></div>
+          <div class="field"><label>Return URL after intake</label><input name="returnurl" placeholder="https://www.example.org/thank-you"></div>
+        </div>
+      </div>
+
+      <!-- Step 4: branding, limits, landing, routes -->
+      <div class="stepsec" data-step="3" hidden>
+        <h2>Branding, limits &amp; landing defaults</h2>
+        <div class="grid">
+          <div class="field"><label>Support email</label><input name="supportemail"></div>
+          <div class="field"><label>Logo URL</label><input name="logourl"></div>
+          <div class="field"><label>Initials</label><input name="brandinitials" maxlength="6"></div>
+          <div class="field"><label>Plan code</label><input name="plancode" value="pilot"></div>
+          <div class="field"><label>Primary color</label><input name="primarycolor" value="#2f6f4e"></div>
+          <div class="field"><label>Accent color</label><input name="accentcolor" value="#d99a26"></div>
+          <div class="field"><label>Surface color</label><input name="surfacecolor" value="#f4f8fb"></div>
+          <div class="field"><label>Student limit</label><input name="studentlimit" value="0"></div>
+          <div class="field"><label>Teacher limit</label><input name="teacherlimit" value="0"></div>
+          <div class="field"><label>Session limit</label><input name="sessionlimit" value="0"></div>
+          <div class="field"><label>Storage MB</label><input name="storagelimit" value="0"></div>
+          <div class="field wide"><label>Default public path</label><input name="defaultpublicpath" placeholder="/local/hubredirect/consumer_landing.php"></div>
+          <div class="field wide"><label>Default dashboard path</label><input name="defaultdashboardpath" placeholder="/local/hubredirect/workspace_dashboard.php"></div>
+          <div class="field wide"><label>Default login path</label><input name="defaultloginpath" placeholder="/local/hubredirect/consumer_login.php"></div>
+          <div class="field wide"><label>Hero image URL</label><input name="heroimage"></div>
+          <div class="field wide"><label>Landing headline</label><input name="headline"></div>
+          <div class="field wide"><label>Landing subtitle</label><textarea name="subtitle"></textarea></div>
+          <div class="field wide"><label>Landing body</label><textarea name="bodycopy"></textarea></div>
+          <div class="field wide"><label>Initial courses</label><input name="initialcourses" value="Pre-Quraan"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="ghost" id="btn-back" hidden>Back</button>
+        <div style="flex:1"></div>
+        <button type="button" class="primary" id="btn-next">Next</button>
+        <button type="submit" class="primary" id="btn-create" hidden>Create consumer</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel success" id="success-panel" hidden>
+    <h2>Consumer created</h2>
+    <p class="sub" id="success-msg" style="margin-bottom:10px"></p>
+    <div id="success-links"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  const STEPS = [
+    ["Consumer type", "Type, institution details"],
+    ["Identity & admin", "Name, workspace, first admin"],
+    ["Website & domains", "Hosting, public + app domains"],
+    ["Branding & landing", "Colors, limits, routes, copy"],
+  ];
+  let step = 0; // client-side step state — no server session.
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = (extra) => endpoint + "?" + new URLSearchParams(Object.assign({ report: "consumer-wizard", token }, extra || {}));
+
+  function fillSelect(id, options, selected) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = Object.entries(options || {}).map(([v, label]) =>
+      `<option value="${esc(v)}"${String(selected) === String(v) ? " selected" : ""}>${esc(label)}</option>`).join("");
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      bootstrap(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function bootstrap(d) {
+    const o = d.options || {}, def = d.defaults || {};
+    fillSelect("f-consumer_type", o.consumer_type, def.consumer_type);
+    fillSelect("f-institution_type", o.institution_type, def.institution_type);
+    fillSelect("f-faith_subcategory", Object.assign({ "": "Select" }, o.faith_subcategory || {}), def.faith_subcategory);
+    fillSelect("f-teaching_method", o.teaching_method, def.teaching_method);
+    fillSelect("f-operator_type", o.operator_type, def.operator_type);
+    fillSelect("f-website_mode", o.website_mode, def.website_mode);
+    fillSelect("f-domainmanagement", o.domain_management);
+    fillSelect("f-brandingsource", o.branding_source);
+    fillSelect("f-intakelocation", o.intake_location);
+    fillSelect("f-integrationmethod", o.integration_method);
+
+    const ws = document.getElementById("f-workspaceid");
+    ws.innerHTML = `<option value="0">Create new workspace</option>` + (d.workspaceoptions || []).map((w) =>
+      `<option value="${w.id}">#${w.id} ${esc(w.name)}</option>`).join("");
+
+    const tl = d.toplinks || {};
+    const links = [];
+    if (tl.consumers) links.push(`<a href="${esc(tl.consumers)}">Consumers</a>`);
+    if (tl.dashboard) links.push(`<a href="${esc(tl.dashboard)}">Dashboard</a>`);
+    if (tl.institution_wizard) links.push(`<a href="${esc(tl.institution_wizard)}">Institution onboarding</a>`);
+    if (links.length) { $("#toplinks").innerHTML = links.join(""); $("#toplinks").hidden = false; }
+
+    if (d.schema_ready === false) {
+      $("#status").className = "status error";
+      $("#status").textContent = "Workspace and consumer tables are not ready yet.";
+      return;
+    }
+
+    $("#status").hidden = true;
+    $("#wizard").hidden = false;
+    syncConditional();
+    renderStepper();
+    showStep(0);
+
+    document.querySelector("select[name=institution_type]").addEventListener("change", syncConditional);
+    document.querySelector("select[name=website_mode]").addEventListener("change", syncConditional);
+    document.querySelector("select[name=consumer_type]").addEventListener("change", syncConditional);
+  }
+
+  function syncConditional() {
+    const it = document.querySelector("select[name=institution_type]").value;
+    const showFaith = it === "faith_based_education";
+    $("#faith-field").hidden = !showFaith;
+    if (!showFaith) document.querySelector("select[name=faith_subcategory]").value = "";
+    const external = document.querySelector("select[name=website_mode]").value !== "hosted";
+    $("#hosted-field").hidden = external;
+    $("#external-field").hidden = !external;
+  }
+
+  function renderStepper() {
+    $("#stepper").innerHTML = STEPS.map((s, i) =>
+      `<div class="step" data-i="${i}"><div class="n">${i + 1}</div><div><strong>${esc(s[0])}</strong><span>${esc(s[1])}</span></div></div>`).join("");
+  }
+
+  function showStep(i) {
+    step = i;
+    document.querySelectorAll(".stepsec").forEach((sec) => { sec.hidden = Number(sec.dataset.step) !== i; });
+    document.querySelectorAll("#stepper .step").forEach((el, idx) => {
+      el.classList.toggle("active", idx === i);
+      el.classList.toggle("done", idx < i);
+    });
+    $("#btn-back").hidden = i === 0;
+    $("#btn-next").hidden = i === STEPS.length - 1;
+    $("#btn-create").hidden = i !== STEPS.length - 1;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  $("#btn-next").addEventListener("click", () => {
+    if (step === 1) {
+      const name = document.querySelector("input[name=name]").value.trim();
+      if (!name) { document.querySelector("input[name=name]").focus(); flash("error", "Consumer name is required."); return; }
+    }
+    showStep(Math.min(step + 1, STEPS.length - 1));
+  });
+  $("#btn-back").addEventListener("click", () => showStep(Math.max(step - 1, 0)));
+
+  function flash(kind, msg) {
+    const s = $("#status");
+    s.hidden = false; s.className = "status" + (kind ? " " + kind : ""); s.textContent = msg;
+  }
+
+  function draft() {
+    const f = $("#wizard-form");
+    const body = { do: "create_consumer" };
+    f.querySelectorAll("input,select,textarea").forEach((el) => {
+      if (!el.name) return;
+      // Skip conditionally-hidden fields so the server applies its own defaults.
+      const wrap = el.closest(".field");
+      if (wrap && wrap.hidden) return;
+      body[el.name] = el.value;
+    });
+    return body;
+  }
+
+  $("#wizard-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const name = document.querySelector("input[name=name]").value.trim();
+    if (!name) { showStep(1); flash("error", "Consumer name is required."); return; }
+    const btn = $("#btn-create");
+    btn.disabled = true; btn.textContent = "Creating…";
+    try {
+      const r = await fetch(url(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(draft()),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      success(d);
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Create consumer";
+      flash("error", "Could not create: " + e.message);
+    }
+  });
+
+  function success(d) {
+    const c = d.created || {};
+    $("#wizard").hidden = true;
+    $("#status").hidden = true;
+    $("#success-msg").textContent = (d.message || "Consumer created.") + (c.adminname ? " First admin: " + c.adminname + "." : "");
+    const L = c.links || {};
+    const links = [];
+    if (L.workspace) links.push(`<a href="${esc(L.workspace)}">Open workspace</a>`);
+    if (L.settings) links.push(`<a href="${esc(L.settings)}">Settings</a>`);
+    if (L.landing) links.push(`<a href="${esc(L.landing)}">Landing</a>`);
+    $("#success-links").innerHTML = links.join("") || "";
+    $("#success-panel").hidden = false;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

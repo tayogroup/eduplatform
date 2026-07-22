@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transcript policy · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 12px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn.primary{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px}
+  .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{display:flex;flex-direction:column}
+  .field.wide{grid-column:1/-1}
+  .field label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:4px}
+  .field small{color:var(--muted);font-size:12px;margin-top:4px}
+  .field input,.field select{width:100%;min-height:38px;border:1px solid var(--line);border-radius:7px;padding:0 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .check{display:flex;gap:9px;align-items:center;min-height:38px;border:1px solid var(--line);border-radius:7px;padding:0 10px;background:var(--card);font-weight:800;font-size:13px}
+  .check input{width:auto;min-height:auto}
+  .alert{padding:12px 14px;border-radius:8px;font-weight:700;margin-bottom:10px}
+  .alert.ok{background:var(--sky);color:var(--blue2)}
+  .alert.bad{background:var(--red-bg);color:var(--red)}
+  .metas{display:grid;gap:9px}
+  .meta{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  .meta span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);font-weight:900}
+  .meta b{display:block;margin-top:3px;font-size:13px;overflow-wrap:anywhere}
+  .note{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.45}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  @media(max-width:820px){.grid,.formgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Transcript policy</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of transcript_policy.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Transcript Policy Settings</h1>
+    <p class="sub" id="subtitle">Grade, completion, attendance, and official display rules.</p>
+    <div class="actions" id="actions" hidden></div>
+  </div>
+  <div id="status" class="status">Loading transcript policy…</div>
+  <div id="flash"></div>
+  <div class="grid" id="grid" hidden>
+    <form class="panel" id="policy-form">
+      <h2>Display And Issue Policy</h2>
+      <div class="formgrid">
+        <div class="field"><label>Completion source</label><select data-field="completion_source"></select><small>Which completion signal receives priority in transcript previews.</small></div>
+        <div class="field"><label>Passing rule</label><select data-field="passing_rule"></select><small>Reserved for official issue checks and readiness reports.</small></div>
+        <div class="field"><label>Minimum pass percent</label><input type="number" min="0" max="100" data-field="minimum_passing_percent"></div>
+        <div class="field"><label>Grade display</label><select data-field="grade_display_mode"></select></div>
+        <div class="field"><label>Grade rounding</label><input type="number" min="0" max="2" data-field="grade_rounding"></div>
+        <div class="field"><label>In-progress grades</label><label class="check"><input type="checkbox" data-field="show_in_progress_grades"> Show before completion</label></div>
+        <div class="field"><label>Attendance display</label><select data-field="attendance_display"></select></div>
+        <div class="field"><label>Drop/withdrawal display</label><select data-field="drop_withdrawal_display"></select></div>
+        <div class="field"><label>Official teacher notes</label><select data-field="teacher_note_official_display"></select></div>
+        <div class="field"><label>Unofficial PDF</label><select data-field="unofficial_pdf_permission"></select></div>
+        <div class="field wide"><label>Official issue permission</label><select data-field="official_issue_permission"></select></div>
+      </div>
+      <button class="btn primary" type="submit" style="margin-top:14px">Save transcript policy</button>
+    </form>
+    <aside class="panel">
+      <h2>Current Policy</h2>
+      <div class="metas" id="metas"></div>
+      <p class="note">Official issuing remains disabled until later transcript phases. These settings already affect unofficial transcript display and are included in resolver payloads for auditability.</p>
+    </aside>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const SELECTS = ["completion_source", "passing_rule", "grade_display_mode", "attendance_display", "drop_withdrawal_display", "teacher_note_official_display", "unofficial_pdf_permission", "official_issue_permission"];
+  const NUMBERS = ["minimum_passing_percent", "grade_rounding"];
+  const BOOLS = ["show_in_progress_grades"];
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "transcript-policy", token });
+    for (const k of ["workspaceid", "consumer"]) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+
+  let data = null;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      data = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const workspace = d.workspace || {};
+    $("#title").textContent = "Transcript Policy Settings";
+    $("#subtitle").textContent = (workspace.name || "Workspace") + " grade, completion, attendance, and official display rules.";
+
+    const links = d.links || {};
+    const linkdefs = [["workspace", "Workspace"], ["preview", "Preview transcripts"]];
+    $("#actions").innerHTML = linkdefs.filter(([k]) => links[k]).map(([k, label]) =>
+      `<a class="btn" href="${esc(links[k])}" target="_blank" rel="noopener">${esc(label)}</a>`).join("");
+    $("#actions").hidden = false;
+
+    const policy = d.policy || {};
+    const options = d.options || {};
+    for (const field of SELECTS) {
+      const sel = $(`select[data-field="${field}"]`);
+      if (!sel) continue;
+      const cur = String(policy[field] ?? "");
+      sel.innerHTML = (options[field] || []).map((o) =>
+        `<option value="${esc(o.value)}"${o.value === cur ? " selected" : ""}>${esc(o.label)}</option>`).join("");
+    }
+    for (const field of NUMBERS) {
+      const el = $(`input[data-field="${field}"]`);
+      if (el) el.value = Number(policy[field]) || 0;
+    }
+    for (const field of BOOLS) {
+      const el = $(`input[data-field="${field}"]`);
+      if (el) el.checked = !!Number(policy[field]);
+    }
+
+    const m = d.meta || {};
+    $("#metas").innerHTML =
+      `<div class="meta"><span>Source</span><b>${esc(m.source || "")}</b></div>` +
+      `<div class="meta"><span>Version</span><b>${Number(m.policyversion) || 0}</b></div>` +
+      `<div class="meta"><span>Hash</span><b>${esc(m.policyhash || "")}</b></div>` +
+      `<div class="meta"><span>Last saved</span><b>${esc(m.timemodified_label || "Not saved yet")}</b></div>`;
+
+    $("#grid").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  // The write mirrors the legacy POST verbatim; a saved write reloads the state.
+  $("#policy-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    if (!data) return;
+    const btns = [...ev.currentTarget.querySelectorAll("button")];
+    btns.forEach((b) => { b.disabled = true; });
+    const body = { do: "save", workspaceid: Number(data.workspaceid) };
+    for (const field of SELECTS) { body[field] = $(`select[data-field="${field}"]`).value; }
+    for (const field of NUMBERS) { body[field] = Number($(`input[data-field="${field}"]`).value) || 0; }
+    for (const field of BOOLS) { body[field] = $(`input[data-field="${field}"]`).checked ? 1 : 0; }
+    try {
+      const r = await fetch(url(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#flash").innerHTML = '<div class="alert ok">' + esc(d.message || "Transcript policy saved.") + '</div>';
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      btns.forEach((b) => { b.disabled = false; });
+      $("#flash").innerHTML = `<div class="alert bad">${esc(e.message)}</div>`;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

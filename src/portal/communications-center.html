@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Communications Center · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 8px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:360px 1fr;gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:4px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:70px;resize:vertical}
+  .check{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink2)}
+  .check input{width:auto}
+  form.wf{border:1px dashed var(--line);border-radius:8px;background:var(--bg);padding:12px;margin-bottom:14px}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button:disabled{opacity:.55;cursor:wait}
+  .btn-light{background:var(--sky);color:var(--blue)}
+  table{width:100%;border-collapse:collapse;margin-bottom:8px}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .pill.declined{background:var(--red-bg);color:var(--red)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Communications Center</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of communications_center.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Communications Center</h1><p class="sub" id="subtitle">Messaging, announcements, templates, consent, delivery logs, and student case history.</p></div>
+  <div id="status" class="status">Loading…</div>
+  <div class="grid" id="app" hidden>
+    <section class="panel" id="left"></section>
+    <section class="panel" id="right"></section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = (qs.get("workspaceid") || "0").replace(/[^0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let DATA = null;
+  const nameOf = (id) => (DATA && DATA.names && DATA.names[id]) ? DATA.names[id] : ("User #" + id);
+  const opts = (rows, empty) => (empty ? `<option value="0">${esc(empty)}</option>` : "") + (rows || []).map((r) => `<option value="${r.id}">${esc(r.name || r.title || ("#" + r.id))}</option>`).join("");
+  const chan = () => `<option value="email">Email</option><option value="sms">SMS</option><option value="whatsapp">WhatsApp</option>`;
+
+  const url = (extra) => endpoint + "?" + new URLSearchParams(Object.assign({ report: "communications-center", token, workspaceid }, extra || {}));
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      DATA = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    $("#title").textContent = "Communications Center — " + (d.workspace || "workspace");
+    if (!d.tablesready) { $("#mode-note").textContent = "Communications schema is not ready — writes are disabled."; }
+
+    // ---- left column: message thread + case (+ consent if manager) ----
+    let left = `
+      <h2>Message Thread</h2>
+      <form class="wf" data-do="send_message">
+        <div class="field"><label>Student</label><select name="studentid">${opts(d.students)}</select></div>
+        <div class="field"><label>Parent</label><select name="parentid">${opts(d.parents, "None")}</select></div>
+        <div class="field"><label>Teacher</label><select name="teacherid">${opts(d.teachers, "None")}</select></div>
+        <div class="field"><label>Case</label><select name="caseid">${opts(d.cases, "No case")}</select></div>
+        <div class="field"><label>Thread type</label><select name="thread_type"><option value="parent_teacher">Parent / teacher</option><option value="student_support">Student support</option><option value="announcement">Announcement</option></select></div>
+        <div class="field"><label>Subject</label><input name="subject"></div>
+        <div class="field"><label>Message</label><textarea name="body"></textarea></div>
+        <button type="submit">Send Message</button>
+      </form>
+      <hr>
+      <h2>Case</h2>
+      <form class="wf" data-do="save_case">
+        <div class="field"><label>Student</label><select name="studentid">${opts(d.students)}</select></div>
+        <div class="field"><label>Title</label><input name="title"></div>
+        <div class="field"><label>Case type</label><input name="case_type"></div>
+        <div class="field"><label>Priority</label><input name="priority"></div>
+        <div class="field"><label>Status</label><input name="status"></div>
+        <div class="field"><label>Owner</label><select name="ownerid">${opts(d.teachers)}</select></div>
+        <div class="field"><label>Summary</label><textarea name="summary"></textarea></div>
+        <button type="submit">Save Case</button>
+      </form>`;
+    if (d.canmanage) {
+      left += `
+      <hr>
+      <h2>Consent</h2>
+      <form class="wf" data-do="save_consent">
+        <div class="field"><label>Student</label><select name="studentid">${opts(d.students)}</select></div>
+        <div class="field"><label>Guardian</label><select name="guardianid">${opts(d.parents)}</select></div>
+        <div class="field"><label>Channel</label><select name="channel">${chan()}</select></div>
+        <div class="field"><label class="check"><input type="checkbox" name="consented" checked> Consented</label></div>
+        <div class="field"><label>Source</label><input name="source" value="manual"></div>
+        <div class="field"><label>Notes</label><textarea name="notes"></textarea></div>
+        <button type="submit">Save Consent</button>
+      </form>`;
+    }
+    $("#left").innerHTML = left;
+
+    // ---- right column: template + campaign (manager) then history tables ----
+    let right = "";
+    if (d.canmanage) {
+      right += `
+      <h2>Template</h2>
+      <form class="wf" data-do="save_template">
+        <div class="field"><label>Template key</label><input name="templatekey"></div>
+        <div class="field"><label>Title</label><input name="title"></div>
+        <div class="field"><label>Subject</label><input name="subject"></div>
+        <div class="field"><label>Status</label><input name="status"></div>
+        <div class="field"><label>Channel</label><select name="channel">${chan()}</select></div>
+        <div class="field"><label>Body</label><textarea name="body"></textarea></div>
+        <button type="submit">Save Template</button>
+      </form>
+      <hr>
+      <h2>Announcement Campaign</h2>
+      <form class="wf" data-do="save_campaign">
+        <div class="field"><label>Title</label><input name="title"></div>
+        <div class="field"><label>Template</label><select name="templateid">${opts(d.templates, "No template")}</select></div>
+        <div class="field"><label>Channel</label><select name="channel">${chan()}</select></div>
+        <div class="field"><label>Audience</label><select name="audience"><option value="parents">Parents</option><option value="students">Students</option><option value="teachers">Teachers</option><option value="all">All</option></select></div>
+        <div class="field"><label>Status</label><input name="status" value="queued"></div>
+        <div class="field"><label>Scheduled date</label><input name="scheduled_date"></div>
+        <div class="field"><label>Scheduled time HH:MM</label><input name="scheduled_time"></div>
+        <div class="field"><label>Message body</label><textarea name="messagebody"></textarea></div>
+        <button type="submit">Queue Campaign</button>
+      </form>
+      <hr>`;
+    }
+
+    const rows = (arr, cols, empty) => (arr && arr.length)
+      ? arr.map(cols).join("")
+      : `<tr><td colspan="3" class="muted">${esc(empty)}</td></tr>`;
+
+    right += `
+      <h2>Student Thread History</h2>
+      <table><thead><tr><th>Thread</th><th>Student</th><th>Status</th></tr></thead><tbody>
+      ${rows(d.threads, (t) => `<tr><td><strong>${esc(t.subject)}</strong><div class="muted">${esc(t.type)} / ${esc(when(t.lastmessageat))}</div></td><td>${esc(t.student)}</td><td><span class="pill">${esc(t.status)}</span></td></tr>`, "No message threads yet.")}
+      </tbody></table>
+      <h2>Recent Messages</h2>
+      <table><thead><tr><th>Subject</th><th>Sender</th><th>Message</th></tr></thead><tbody>
+      ${rows(d.messages, (m) => `<tr><td>${esc(m.subject)}<div class="muted">${esc(when(m.timecreated))}</div></td><td>${esc(m.sender)}</td><td>${esc(m.body)}</td></tr>`, "No messages yet.")}
+      </tbody></table>
+      <h2>Campaigns</h2>
+      <table><thead><tr><th>Campaign</th><th>Audience</th><th>Status</th></tr></thead><tbody>
+      ${rows(d.campaigns, (c) => `<tr><td>${esc(c.title)}<div class="muted">${esc(c.channel)}</div></td><td>${esc(c.audience)}</td><td><span class="pill">${esc(c.status)}</span></td></tr>`, "No campaigns yet.")}
+      </tbody></table>
+      <h2>Delivery Logs</h2>
+      <table><thead><tr><th>Recipient</th><th>Channel</th><th>Status</th></tr></thead><tbody>
+      ${rows(d.deliveries, (x) => `<tr><td>${esc(nameOf(x.recipientid))}<div class="muted">${esc(x.recipient_address)}</div></td><td>${esc(x.channel)}</td><td><span class="pill">${esc(x.status)}</span></td></tr>`, "No delivery logs yet.")}
+      </tbody></table>
+      <h2>Consent Records</h2>
+      <table><thead><tr><th>Student</th><th>Guardian</th><th>Consent</th></tr></thead><tbody>
+      ${rows(d.consents, (c) => `<tr><td>${esc(nameOf(c.studentid))}</td><td>${esc(nameOf(c.guardianid))}</td><td><span class="pill ${c.consented ? "" : "declined"}">${c.consented ? "consented" : "declined"}</span><div class="muted">${esc(c.channel)}</div></td></tr>`, "No consent records yet.")}
+      </tbody></table>
+      <h2>Cases</h2>
+      <table><thead><tr><th>Case</th><th>Student</th><th>Status</th></tr></thead><tbody>
+      ${rows(d.cases, (c) => `<tr><td><strong>${esc(c.title)}</strong><div class="muted">${esc(c.case_type)} / ${esc(c.priority)}</div></td><td>${esc(nameOf(c.studentid))}</td><td><span class="pill">${esc(c.status)}</span></td></tr>`, "No cases yet.")}
+      </tbody></table>`;
+    $("#right").innerHTML = right;
+
+    $("#app").hidden = false;
+    $("#status").hidden = true;
+    document.querySelectorAll("form.wf").forEach((f) => f.addEventListener("submit", submitForm));
+  }
+
+  async function submitForm(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    const payload = { do: f.dataset.do };
+    f.querySelectorAll("input,select,textarea").forEach((el) => {
+      if (!el.name) return;
+      payload[el.name] = (el.type === "checkbox") ? (el.checked ? 1 : 0) : el.value;
+    });
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(url(), { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      btn.disabled = false; btn.textContent = label;
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academic quality controls · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .toolbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .field input{border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink);min-width:120px}
+  .btn{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  .btn.light{background:var(--sky);color:var(--blue)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .kpi b{display:block;font-size:26px;line-height:1.1}
+  .kpi.flag{border:2px solid var(--amber);background:linear-gradient(180deg,var(--amber-bg),var(--card))}
+  .kpi span{color:var(--muted);font-size:12px;font-weight:700}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.zero{background:var(--sky);color:var(--ink2)}
+  .pill.open{background:var(--amber-bg);color:var(--amber)}
+  .pill.warning{background:var(--amber-bg);color:var(--amber)}
+  .pill.alert{background:var(--red-bg);color:var(--red)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td .who{font-weight:800}
+  .muted{color:var(--muted);font-size:12px}
+  .empty{color:var(--muted);font-size:13px;padding:6px 2px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Academic quality controls</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of academic_quality_controls.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Academic quality controls</h1>
+    <p class="sub" id="subtitle">Missing grades, incomplete attendance, low-score and progress alerts — control evidence for this workspace.</p>
+    <div class="toolbar" style="margin-top:12px">
+      <div class="field"><label for="workspaceid">Workspace ID</label><input id="workspaceid" type="number" min="0" step="1" placeholder="current"></div>
+      <button class="btn" id="reload" type="button">Apply</button>
+      <button class="btn light" id="export" type="button" disabled>Export CSV</button>
+    </div>
+  </div>
+  <div id="status" class="status">Loading academic quality controls…</div>
+  <div class="summary" id="summary" hidden></div>
+  <div id="sections"></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let lastData = null;
+  const workspaceInput = $("#workspaceid");
+  if (qs.get("workspaceid")) workspaceInput.value = qs.get("workspaceid");
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "academic-quality-controls", token });
+    const ws = (workspaceInput.value || "").trim();
+    if (ws && Number(ws) > 0) p.set("workspaceid", ws);
+    return endpoint + "?" + p.toString();
+  };
+
+  async function load() {
+    $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading academic quality controls…";
+    $("#export").disabled = true;
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      lastData = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const sevPill = (sev) => `<span class="pill ${/alert/.test(sev) ? "alert" : "warning"}">${esc(sev)}</span>`;
+
+  const rowsTable = (issues, names) => {
+    if (!issues.length) return `<div class="empty">No open issues found for this control.</div>`;
+    return `<table><thead><tr><th>Student</th><th>Evidence</th><th>Status</th><th>Updated</th></tr></thead><tbody>` +
+      issues.map((i) => {
+        const name = names[i.studentid] || ("Student #" + esc(i.studentid));
+        return `<tr>
+          <td><div class="who">${esc(name)}</div><div class="muted">${esc(i.student_email)} · ${esc(i.issue_type)}</div></td>
+          <td><strong>${esc(i.title)}</strong><div class="muted">${esc(i.evidence)}</div></td>
+          <td>${sevPill(i.severity)}<div class="muted">${esc(i.status)}</div></td>
+          <td class="muted">${esc(when(Number(i.updated)))}</td>
+        </tr>`;
+      }).join("") + `</tbody></table>`;
+  };
+
+  function render(d) {
+    const names = d.names || {};
+    $("#title").textContent = "Academic quality controls — " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+    $("#mode-note").textContent = "Token-authenticated · " + (d.total || 0) + " open issue" + ((d.total === 1) ? "" : "s");
+
+    const sections = d.sections || [];
+    $("#summary").innerHTML = sections.map((s) =>
+      `<div class="kpi${s.count ? " flag" : ""}"><b>${s.count}</b><span>${esc(s.title)}</span></div>`
+    ).join("");
+    $("#summary").hidden = false;
+
+    $("#sections").innerHTML = sections.map((s) =>
+      `<section class="panel"><h2>${esc(s.title)}<span class="pill ${s.count ? "open" : "zero"}">${s.count} open</span></h2>${rowsTable(s.issues || [], names)}</section>`
+    ).join("");
+
+    $("#status").hidden = true;
+    $("#export").disabled = !(d.issues && d.issues.length);
+  }
+
+  function exportCsv() {
+    if (!lastData || !lastData.issues) return;
+    const cell = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+    const headers = ["issue_type", "studentid", "student_email", "title", "status", "severity", "evidence", "updated"];
+    const lines = [headers.map(cell).join(",")];
+    lastData.issues.forEach((i) => lines.push(headers.map((h) => cell(i[h])).join(",")));
+    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    const ws = (lastData.workspace && lastData.workspace.id) || 0;
+    const stamp = new Date().toISOString().replace(/[:T]/g, "-").slice(0, 15);
+    a.href = URL.createObjectURL(blob);
+    a.download = "academic-quality-controls-" + ws + "-" + stamp + ".csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(a.href);
+  }
+
+  $("#reload").addEventListener("click", load);
+  $("#export").addEventListener("click", exportCsv);
+  workspaceInput.addEventListener("keydown", (e) => { if (e.key === "Enter") load(); });
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admissions · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0;font-size:17px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink2)}
+  .chip.active{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+  .cardhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+  .cardhead h2{font-size:16px}
+  .meta{color:var(--muted);font-size:12px;margin-top:3px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.03em;margin-left:6px}
+  .pill.submitted,.pill.in_review,.pill.assessment,.pill.reviewing{background:var(--sky);color:var(--blue2)}
+  .pill.accepted,.pill.converted,.pill.placed{background:#e1f2ff;color:var(--blue2)}
+  .pill.waitlisted,.pill.not_assessed,.pill.scheduled,.pill.in_progress,.pill.ready_for_review{background:var(--amber-bg);color:var(--amber)}
+  .pill.declined,.pill.withdrawn{background:var(--red-bg);color:var(--red)}
+  .pill.pending{background:#e9eef4;color:var(--ink2)}
+  .facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin:12px 0}
+  .fact{background:#f8fbfe;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+  .fact b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink2);margin-bottom:2px}
+  .docs{margin:8px 0 0;font-size:12px;color:var(--ink2)}
+  .docs div{padding:2px 0}
+  form.review{display:grid;grid-template-columns:180px 1fr auto auto;gap:8px;align-items:end;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--ink2)}
+  .field select,.field input{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:5px 9px;font:inherit;background:#fff;color:var(--ink)}
+  button{min-height:38px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:#fff;color:var(--blue2);border:1px solid var(--blue2)}
+  button:disabled{opacity:.55;cursor:wait}
+  .saved{color:#1c5d8a;font-weight:800;font-size:13px;align-self:center}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  a.legacy{color:var(--blue2)}
+  @media(max-width:760px){form.review{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Admissions</small></div>
+  <div class="note">Token-authenticated · parallel-run of admissions.php · decisions write live via the portal</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Admissions pipeline</h1>
+    <p class="sub">Review applications, record decisions, and convert accepted applicants to students. The full intake form, placement notes and document uploads continue on the <a class="legacy" id="legacy-link" href="#">Moodle page</a>.</p>
+  </div>
+  <div class="panel"><div class="chips" id="chips"></div></div>
+  <div id="status" class="status">Loading admissions queue…</div>
+  <div id="list"></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = (qs.get("workspaceid") || "").replace(/[^0-9]/g, "");
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => Number(epoch) ? new Date(epoch * 1000).toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short"}) : "—";
+  let filterStatus = "";
+  let STATUS = {}, DECISIONS = {}, PLACEMENT = {};
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open this page via the Moodle portal launch link."; return; }
+  $("#legacy-link").href = moodleBase + "/local/hubredirect/admissions.php" + (workspaceid ? "?workspaceid=" + workspaceid : "");
+
+  const baseParams = (extra) => new URLSearchParams(Object.assign({ report: "admissions", token }, workspaceid ? { workspaceid } : {}, extra || {}));
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading admissions queue…";
+    try {
+      const r = await fetch(endpoint + "?" + baseParams({ status: filterStatus }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      if (!d.ready) { $("#status").textContent = "The admissions schema is not installed on this Moodle."; $("#list").innerHTML = ""; $("#chips").innerHTML = ""; return; }
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    STATUS = d.statusoptions || {}; DECISIONS = d.decisionoptions || {}; PLACEMENT = d.placementoptions || {};
+    const counts = d.statuscounts || {};
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+    $("#chips").innerHTML = `<button class="chip ${filterStatus === "" ? "active" : ""}" data-s="">All (${total})</button>` +
+      Object.keys(STATUS).map((s) => `<button class="chip ${filterStatus === s ? "active" : ""}" data-s="${esc(s)}">${esc(STATUS[s])} (${counts[s] || 0})</button>`).join("");
+    document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => { filterStatus = c.dataset.s; load(); }));
+
+    const docs = d.documents || {};
+    $("#list").innerHTML = (d.applications || []).map((a) => {
+      const dlist = (docs[a.id] || []).map((doc) => `<div>${esc(doc.document_label || doc.filename || "document")} · ${esc(doc.status || "")}</div>`).join("") || `<div class="muted">No documents uploaded.</div>`;
+      const decOpts = Object.keys(DECISIONS).map((k) => `<option value="${esc(k)}" ${k === a.decision ? "selected" : ""}>${esc(DECISIONS[k])}</option>`).join("");
+      return `<div class="card" id="card-${a.id}">
+        <div class="cardhead">
+          <div><h2>${esc(a.student_name || "Applicant")}</h2>
+            <div class="meta">${esc(a.application_no || "")} · ${esc(a.parent_email || "")} · updated ${dt(a.timemodified)}</div></div>
+          <div>
+            <span class="pill ${esc(a.application_status)}">${esc(STATUS[a.application_status] || a.application_status)}</span>
+            <span class="pill ${esc(a.decision)}">${esc(DECISIONS[a.decision] || a.decision)}</span>
+          </div>
+        </div>
+        <div class="facts">
+          <div class="fact"><b>Family / parent</b>${esc(a.family_name || a.parent_name || "—")}<br>${esc(a.parent_phone || "")}</div>
+          <div class="fact"><b>Program</b>${esc(a.program_key || "—")}<br>Start: ${esc(a.desired_start || "—")}</div>
+          <div class="fact"><b>Placement</b>${esc(PLACEMENT[a.placement_status] || a.placement_status || "—")}</div>
+          <div class="fact"><b>Review notes</b>${esc((a.review_notes || "—")).slice(0, 240)}</div>
+        </div>
+        <div class="docs"><b style="font-size:11px;text-transform:uppercase;color:var(--ink2)">Documents</b>${dlist}</div>
+        <form class="review" data-id="${a.id}">
+          <div class="field"><label>Decision</label><select name="decision">${decOpts}</select></div>
+          <div class="field"><label>Decision notes</label><input name="decision_notes" value="${esc(a.decision_notes || "")}"></div>
+          <button type="submit" data-act="decision">Save decision</button>
+          <button type="button" class="ghost" data-act="convert">Convert</button>
+          <span class="saved" data-saved></span>
+        </form>
+      </div>`;
+    }).join("") || `<div class="panel">No applications match the current filter.</div>`;
+
+    document.querySelectorAll("form.review").forEach((f) => {
+      f.addEventListener("submit", (e) => { e.preventDefault(); post(f, "decision"); });
+      f.querySelector('[data-act="convert"]').addEventListener("click", () => post(f, "convert"));
+    });
+    $("#status").hidden = true;
+  }
+
+  async function post(f, act) {
+    const saved = f.querySelector("[data-saved]");
+    const btns = f.querySelectorAll("button");
+    btns.forEach((b) => b.disabled = true);
+    saved.textContent = act === "convert" ? "Converting…" : "Saving…";
+    const payload = act === "convert"
+      ? { do: "convert", applicationid: Number(f.dataset.id) }
+      : { do: "decision", applicationid: Number(f.dataset.id), decision: f.decision.value, decision_notes: f.decision_notes.value };
+    try {
+      const r = await fetch(endpoint + "?" + baseParams(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || "HTTP " + r.status);
+      saved.textContent = "✓ " + d.message;
+      if (act === "decision") {
+        const pill = f.closest(".card").querySelector(".pill:last-child");
+        pill.className = "pill " + f.decision.value;
+        pill.textContent = DECISIONS[f.decision.value] || f.decision.value;
+      } else {
+        load();
+      }
+    } catch (err) {
+      saved.textContent = "Failed: " + err.message;
+    } finally {
+      btns.forEach((b) => b.disabled = false);
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

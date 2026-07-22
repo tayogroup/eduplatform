@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Educator / Tutor Application · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:17px}
+  .brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .brand .mark{width:38px;height:38px;border-radius:8px;background:var(--blue2);color:#fff;display:grid;place-items:center;font-size:16px;font-weight:900;flex:0 0 auto}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  .hero{border:2px solid var(--blue2);background:linear-gradient(180deg,var(--sky),var(--card))}
+  .hero .eyebrow{color:var(--blue2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+  h1{margin:2px 0 4px;font-size:24px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:20px 0 10px;font-size:14px;font-weight:900;color:var(--blue2)}
+  .sub{margin:0;color:var(--ink2);font-size:13px;max-width:840px}
+  .muted{color:var(--muted);font-size:12px;font-weight:600}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .errorlist{margin:8px 0 0;padding-left:20px;font-weight:600;font-size:13px}
+  .errorlist a{color:var(--red);text-decoration:underline}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .field{display:grid;gap:6px;margin-bottom:10px;align-content:start;align-self:start}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .field--full{grid-column:1/-1}
+  .field--error input,.field--error select,.field--error textarea,.field--error .calendar,.field--error .choicegrid{border-color:var(--red);background:var(--red-bg)}
+  .ferr{font-size:12px;font-weight:800;color:var(--red)}
+  input,select,textarea{width:100%;min-height:40px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:600 14px/1.3 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--card);color:var(--ink)}
+  textarea{min-height:86px;resize:vertical}
+  .choicegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border:1px solid transparent;border-radius:8px}
+  .choice{display:flex;gap:8px;align-items:center;min-height:38px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--sky);font-size:13px;font-weight:700;color:var(--ink)}
+  .choice input{width:18px;height:18px;min-height:0;margin:0;accent-color:var(--blue2)}
+  .checkrow{display:flex;gap:10px;align-items:flex-start;margin:8px 0 12px;color:var(--ink);font-size:13px;font-weight:700}
+  .checkrow input{width:18px;height:18px;min-height:0;margin-top:1px;accent-color:var(--blue2)}
+  .checkrow--error{color:var(--red)}
+  .calendar{overflow-x:auto;border:2px solid var(--line);border-radius:12px;background:var(--card)}
+  .calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:840px}
+  .calendar th,.calendar td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px;text-align:center;vertical-align:middle;font-size:12px}
+  .calendar th{background:var(--sky);color:var(--blue);font-weight:900}
+  .calendar td:first-child{font-weight:900;text-align:left;background:var(--bg);color:var(--ink)}
+  .slot{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:10px;background:var(--sky)}
+  .slot input{width:20px;height:20px;min-height:0;accent-color:var(--blue2)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-size:15px;font-weight:900;cursor:pointer}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:700;background:var(--card)}
+  .thanks{padding:18px;border:2px solid var(--blue2);border-radius:10px;background:var(--sky);color:var(--blue);font-weight:800;font-size:15px}
+  /* Honeypot: off-screen positioning exactly like the legacy .pqpti-trap
+     (NOT display:none, so bots still fill it). */
+  .trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+  @media(max-width:760px){.grid,.choicegrid{grid-template-columns:1fr}.calendar table{min-width:820px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand"><span class="mark" id="brand-mark">E</span><span><span id="brand-name">EduPlatform</span><small>Educator / Tutor Application</small></span></div>
+  <div class="note">Public sign-up · parallel-run of public_teacher_intake.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel hero">
+    <div class="eyebrow">Educator Application</div>
+    <h1>Educator / Tutor Application</h1>
+    <p class="sub" id="hero-sub">Share the subjects you teach, the schools or workspaces you want to support, your service model, profile summary, and weekly availability. The team will review your application before workspace access or marketplace visibility is created.</p>
+  </div>
+  <div id="status" class="status">Loading application form…</div>
+  <div class="panel" id="thanks-panel" hidden><div class="thanks" id="thanks"></div></div>
+  <div class="panel" id="form-panel" hidden>
+    <h2>Application Details</h2>
+    <form id="intake" novalidate></form>
+  </div>
+</main>
+<script>
+(() => {
+  // Env-specific: the Moodle install that owns the public teacher-intake
+  // endpoint. Override per-environment with ?endpoint=… on the page URL.
+  const DEFAULT_ENDPOINT = "https://quraantest.academy/local/prequran/public_teacher_intake_data.php";
+
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim() || DEFAULT_ENDPOINT;
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  // Consumer context travels as query params — the CDN host carries no
+  // consumer meaning; the endpoint resolves branding from these.
+  const passthrough = () => {
+    const p = {};
+    ["consumer", "workspaceid"].forEach((k) => {
+      const v = (qs.get(k) || "").trim();
+      if (v) p[k] = v;
+    });
+    return p;
+  };
+  const url = () => endpoint + "?" + new URLSearchParams(passthrough());
+
+  let D = null;          // GET bootstrap payload
+  let formtime = 0;      // stateless token pair, held in JS memory only
+  let formtoken = "";
+
+  // Field names posted as arrays (checkbox groups + the work-model radios +
+  // the availability calendar). Everything else posts as a scalar string.
+  const ARRAY_FIELDS = new Set([
+    "other_languages", "service_modes", "subject_areas", "age_groups", "general_levels",
+    "teacher_work_models", "primary_grades_taught", "primary_curricula_taught",
+    "higher_teacher_disciplines", "higher_teacher_supervision", "technical_teacher_trades",
+    "adult_teacher_areas", "professional_teacher_areas", "faith_teacher_subjects", "slots",
+  ]);
+
+  const label = (name) => (D && D.fieldlabels && D.fieldlabels[name]) || name.replace(/_/g, " ");
+  const optsOf = (key) => (D.options || {})[key] || {};
+
+  // ---- field renderers (labels/wording copied 1:1 from the legacy form) ----
+  const selectHtml = (spec) => {
+    const opts = spec.opts || optsOf(spec.optkey);
+    let h = `<select name="${esc(spec.name)}">`;
+    h += `<option value="">${esc(spec.placeholder || "Select")}</option>`;
+    for (const [v, l] of Object.entries(opts)) h += `<option value="${esc(v)}">${esc(l)}</option>`;
+    return h + "</select>";
+  };
+  const inputHtml = (spec) => {
+    const attrs = [
+      `name="${esc(spec.name)}"`,
+      `type="${esc(spec.type || "text")}"`,
+      spec.min !== undefined ? `min="${spec.min}"` : "",
+      spec.max !== undefined ? `max="${spec.max}"` : "",
+      spec.placeholder ? `placeholder="${esc(spec.placeholder)}"` : "",
+    ].filter(Boolean).join(" ");
+    return `<input ${attrs} value="${esc(String(spec.value ?? ""))}">`;
+  };
+  const textareaHtml = (spec) => `<textarea name="${esc(spec.name)}"${spec.placeholder ? ` placeholder="${esc(spec.placeholder)}"` : ""}></textarea>`;
+  const choiceHtml = (spec, inputtype) => {
+    const opts = spec.opts || optsOf(spec.optkey);
+    let h = `<div class="choicegrid">`;
+    for (const [v, l] of Object.entries(opts)) {
+      h += `<label class="choice"><input type="${inputtype}" name="${esc(spec.name)}" value="${esc(v)}"><span>${esc(l)}</span></label>`;
+    }
+    return h + `</div>`;
+  };
+
+  const field = (spec) => {
+    const inner = spec.kind === "select" ? selectHtml(spec)
+      : spec.kind === "textarea" ? textareaHtml(spec)
+      : spec.kind === "checks" ? choiceHtml(spec, "checkbox")
+      : spec.kind === "radios" ? choiceHtml(spec, "radio")
+      : inputHtml(spec);
+    const cls = "field" + (spec.full ? " field--full" : "") + (spec.extraclass ? " " + spec.extraclass : "");
+    return `<div class="${cls}" id="f-${esc(spec.name)}"><label>${esc(spec.label)}</label>${inner}${spec.note ? `<div class="muted">${esc(spec.note)}</div>` : ""}<div class="ferr" hidden></div></div>`;
+  };
+  const gridOf = (specs) => `<div class="grid">${specs.map(field).join("")}</div>`;
+
+  const calendarHtml = () => {
+    const days = optsOf("availability_days");
+    const hours = optsOf("availability_time_windows");
+    // The endpoint flags calendar errors under the "availability" field key.
+    let h = `<div class="field field--full" id="f-availability"><label>Select all recurring times that could work</label><div class="calendar"><table><thead><tr><th>Day</th>`;
+    for (const hl of Object.values(hours)) h += `<th>${esc(hl)}</th>`;
+    h += `</tr></thead><tbody>`;
+    for (const [dv, dl] of Object.entries(days)) {
+      h += `<tr><td>${esc(dl)}</td>`;
+      for (const [hv, hl] of Object.entries(hours)) {
+        const slot = `${dv}|${hv}`;
+        h += `<td><label class="slot" title="${esc(dl + " " + hl)}"><input type="checkbox" name="slots" value="${esc(slot)}"></label></td>`;
+      }
+      h += `</tr>`;
+    }
+    return h + `</tbody></table></div><div class="ferr" hidden></div></div>`;
+  };
+
+  function buildForm() {
+    const c = D.consumer || {};
+    const f = $("#intake");
+    let h = "";
+
+    // Honeypot trap — identical field name and off-screen hiding to legacy.
+    h += `<div class="trap" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>`;
+
+    h += `<h3>Basic teacher information</h3>`;
+    h += gridOf([
+      { name: "teacher_name", label: "Teacher/tutor name" },
+      { name: "preferred_name", label: "Preferred name" },
+      { name: "email", label: "Email" },
+      { name: "phone", label: "Phone / WhatsApp" },
+      { name: "preferred_contact", label: "Preferred contact method", kind: "select", optkey: "preferred_contact_methods" },
+      { name: "gender", label: "Gender", kind: "select", opts: { female: "Female", male: "Male" } },
+      { name: "primary_language", label: "Primary teaching language", kind: "select", optkey: "primary_languages" },
+      { name: "other_languages", label: "Other languages", kind: "checks", optkey: "other_languages" },
+    ]);
+
+    h += `<h3>Location</h3>`;
+    h += gridOf([
+      { name: "country", label: "Country", kind: "select", optkey: "countries" },
+      { name: "city", label: "City", kind: "select", optkey: "cities" },
+      { name: "city_other", label: "City not listed" },
+      { name: "timezone", label: "Time zone", kind: "select", optkey: "timezones" },
+    ]);
+
+    if (c.is_primary_education) {
+      h += `<h3>Primary education teaching details</h3>`;
+      h += gridOf([
+        { name: "primary_grades_taught", label: "Primary grades or year levels taught", kind: "checks", optkey: "primary_teacher_grade_levels" },
+        { name: "primary_curricula_taught", label: "Primary curricula taught", kind: "checks", optkey: "primary_teacher_curricula" },
+        { name: "primary_classroom_management", label: "Classroom-management experience", kind: "select", optkey: "primary_classroom_management_levels" },
+        { name: "primary_parent_communication", label: "Parent/guardian communication experience", kind: "select", optkey: "primary_parent_communication_levels" },
+        { name: "primary_safeguarding_status", label: "Child-safeguarding training status", kind: "select", optkey: "primary_safeguarding_statuses" },
+        { name: "primary_learning_support", label: "Learning-support or special-needs experience", kind: "select", optkey: "primary_learning_support_levels" },
+        { name: "primary_lesson_assessment", label: "Lesson-planning and assessment experience", kind: "select", optkey: "primary_assessment_experience_options" },
+        { name: "primary_teaching_credential", label: "Primary teaching credential" },
+        { name: "primary_background_check", label: "Background-check status", kind: "select", optkey: "primary_background_check_statuses" },
+      ]);
+      h += field({ name: "primary_teacher_notes", label: "Additional primary teaching notes", kind: "textarea", full: true });
+    }
+
+    if (c.is_higher_education) {
+      h += `<h3>Higher education teaching details</h3>`;
+      h += gridOf([
+        { name: "higher_teacher_academic_rank", label: "Academic rank or teaching role", kind: "select", optkey: "higher_teacher_academic_ranks" },
+        { name: "higher_teacher_disciplines", label: "Disciplines taught", kind: "checks", optkey: "higher_teacher_disciplines" },
+        { name: "higher_teacher_experience", label: "Higher-education teaching experience", kind: "select", optkey: "higher_teacher_experience_levels" },
+        { name: "higher_teacher_research_level", label: "Research experience", kind: "select", optkey: "higher_teacher_research_levels" },
+        { name: "higher_teacher_supervision", label: "Research supervision", kind: "checks", optkey: "higher_teacher_supervision_levels" },
+        { name: "higher_teacher_course_design", label: "Course or programme design experience", kind: "select", optkey: "higher_teacher_course_design_levels" },
+        { name: "higher_teacher_assessment", label: "Assessment and moderation experience", kind: "select", optkey: "higher_teacher_assessment_levels" },
+        { name: "higher_teacher_accreditation", label: "Accreditation or quality-assurance experience", kind: "select", optkey: "higher_teacher_accreditation_levels" },
+      ]);
+      h += field({ name: "higher_teacher_publications", label: "Publications or research output", kind: "textarea", full: true });
+      h += field({ name: "higher_teacher_notes", label: "Additional higher-education teaching notes", kind: "textarea", full: true });
+    }
+
+    if (c.is_technical_training) {
+      h += `<h3>Technical training teaching details</h3>`;
+      h += gridOf([
+        { name: "technical_teacher_trades", label: "Technical trades or programmes taught", kind: "checks", optkey: "technical_teacher_trades" },
+        { name: "technical_teacher_industry_experience", label: "Relevant industry experience", kind: "select", optkey: "technical_teacher_industry_experience" },
+        { name: "technical_teacher_qualification", label: "Technical or vocational qualification" },
+        { name: "technical_teacher_workshop_level", label: "Workshop or practical-training competence", kind: "select", optkey: "technical_teacher_practical_levels" },
+        { name: "technical_teacher_equipment_level", label: "Tools and equipment competence", kind: "select", optkey: "technical_teacher_practical_levels" },
+        { name: "technical_teacher_safety_status", label: "Safety-certification status", kind: "select", optkey: "technical_teacher_safety_statuses" },
+        { name: "technical_teacher_apprenticeship", label: "Apprenticeship supervision experience", kind: "select", optkey: "technical_teacher_supervision_levels" },
+        { name: "technical_teacher_assessment", label: "Practical competency assessment", kind: "select", optkey: "technical_teacher_assessment_levels" },
+        { name: "technical_teacher_workplace_training", label: "Workplace-based training experience", kind: "select", optkey: "technical_teacher_workplace_training_levels" },
+      ]);
+      h += field({ name: "technical_teacher_licenses", label: "Trade licences or professional certifications", kind: "textarea", full: true });
+      h += field({ name: "technical_teacher_notes", label: "Additional technical-training teaching notes", kind: "textarea", full: true });
+    }
+
+    if (c.is_adult_learning) {
+      h += `<h3>Adult learning teaching details</h3>`;
+      h += gridOf([
+        { name: "adult_teacher_areas", label: "Adult-learning areas taught", kind: "checks", optkey: "adult_teacher_learning_areas" },
+        { name: "adult_teacher_experience", label: "Adult-learning teaching experience", kind: "select", optkey: "adult_teacher_experience_levels" },
+        { name: "adult_teacher_literacy_instruction", label: "Adult literacy instruction", kind: "select", optkey: "adult_teacher_instruction_levels" },
+        { name: "adult_teacher_numeracy_instruction", label: "Adult numeracy instruction", kind: "select", optkey: "adult_teacher_instruction_levels" },
+        { name: "adult_teacher_digital_instruction", label: "Digital-literacy instruction", kind: "select", optkey: "adult_teacher_instruction_levels" },
+        { name: "adult_teacher_multilevel_facilitation", label: "Multi-level adult-group facilitation", kind: "select", optkey: "adult_teacher_facilitation_levels" },
+        { name: "adult_teacher_confidence_support", label: "Supporting adults returning to learning", kind: "select", optkey: "adult_teacher_learner_support_levels" },
+        { name: "adult_teacher_community_outreach", label: "Community outreach experience", kind: "select", optkey: "adult_teacher_community_levels" },
+        { name: "adult_teacher_barrier_support", label: "Supporting attendance or access barriers", kind: "select", optkey: "adult_teacher_barrier_support_levels" },
+      ]);
+      h += field({ name: "adult_teacher_notes", label: "Additional adult-learning teaching notes", kind: "textarea", full: true });
+    }
+
+    if (c.is_professional_development) {
+      h += `<h3>Professional development teaching details</h3>`;
+      h += gridOf([
+        { name: "professional_teacher_areas", label: "Professional-development areas", kind: "checks", optkey: "professional_teacher_areas" },
+        { name: "professional_teacher_industry_experience", label: "Relevant industry experience", kind: "select", optkey: "professional_teacher_industry_experience" },
+        { name: "professional_teacher_responsibility", label: "Professional responsibility level", kind: "select", optkey: "professional_teacher_responsibility_levels" },
+        { name: "professional_teacher_facilitation", label: "Workshop and course facilitation experience", kind: "select", optkey: "professional_teacher_facilitation_levels" },
+        { name: "professional_teacher_coaching", label: "Coaching or mentoring experience", kind: "select", optkey: "professional_teacher_coaching_levels" },
+        { name: "professional_teacher_corporate_training", label: "Corporate or organisational training", kind: "select", optkey: "professional_teacher_corporate_levels" },
+        { name: "professional_teacher_cpd", label: "CPD or accreditation experience", kind: "select", optkey: "professional_teacher_cpd_levels" },
+        { name: "professional_teacher_outcome_measurement", label: "Workplace-outcome measurement", kind: "select", optkey: "professional_teacher_outcome_levels" },
+      ]);
+      h += field({ name: "professional_teacher_credentials", label: "Professional credentials or certifications", kind: "textarea", full: true });
+      h += field({ name: "professional_teacher_case_studies", label: "Relevant workplace results or case studies", kind: "textarea", full: true });
+      h += field({ name: "professional_teacher_notes", label: "Additional professional-development teaching notes", kind: "textarea", full: true });
+    }
+
+    if (c.is_faith_based) {
+      h += `<h3>Religious / faith-based teaching details</h3>`;
+      h += gridOf([
+        { name: "faith_teacher_subjects", label: "Faith-study areas taught", kind: "checks", optkey: c.faith_subject_optionkey },
+        { name: "faith_teacher_experience", label: "Faith-based teaching experience", kind: "select", optkey: "faith_teacher_experience_levels" },
+        { name: "faith_teacher_scripture_proficiency", label: c.faith_scripture_label || "Scripture proficiency", kind: "select", optkey: "faith_teacher_proficiency_levels" },
+        { name: "faith_teacher_interpretation_level", label: c.faith_interpretation_label || "Interpretation level", kind: "select", optkey: "faith_teacher_interpretation_levels" },
+        { name: "faith_teacher_language_level", label: c.faith_language_label || "Language proficiency", kind: "select", optkey: "faith_teacher_language_levels" },
+        { name: "faith_teacher_practice_level", label: c.faith_practice_label || "Practice experience", kind: "select", optkey: "faith_teacher_practice_levels" },
+        { name: "faith_teacher_community_experience", label: "Faith-community teaching experience", kind: "select", optkey: "faith_teacher_community_levels" },
+        { name: "faith_teacher_reference", label: "Faith-community reference", kind: "select", optkey: "faith_teacher_reference_options" },
+      ]);
+      h += field({ name: "faith_teacher_qualification", label: "Faith-study qualification, authorisation, or teaching credential", kind: "textarea", full: true });
+      h += field({ name: "faith_teacher_notes", label: "Additional faith-based teaching notes", kind: "textarea", full: true });
+    }
+
+    h += `<h3>Teaching Services</h3>`;
+    h += gridOf([
+      { name: "teacher_work_models", label: "How do you want to teach?", kind: "radios", optkey: "teacher_work_models" },
+      { name: "service_modes", label: "Service modes", kind: "checks", optkey: "service_modes" },
+      { name: "subject_areas", label: "Subjects you can teach", kind: "checks", optkey: "subject_areas" },
+      { name: "subject_language", label: "Language subject", kind: "select", optkey: "subject_languages", placeholder: "Select language" },
+      { name: "subject_other", label: "Other subjects or specialties", kind: "textarea", placeholder: "Examples: biology, chemistry, accounting, robotics, Quran ijazah track, special curriculum" },
+      { name: "age_groups", label: "Learner levels", kind: "checks", optkey: "age_groups" },
+      { name: "general_levels", label: "Teaching levels", kind: "checks", optkey: "general_levels" },
+      { name: "workspace_preferences", label: "School / workspace preferences", kind: "textarea", placeholder: "Independent teachers: describe your current students, clients, school, or workspace needs. Marketplace teachers: describe the learners or clients you hope to be matched with." },
+      { name: "desired_services", label: "Desired services / notes", kind: "textarea", placeholder: "Describe the exact services you want to offer, including any school, tutoring, marketplace, live session, or subject-specific goals" },
+    ]);
+
+    h += `<h3>Qualifications and experience</h3>`;
+    h += gridOf([
+      { name: "teaching_experience_range", label: "Teaching or training experience", kind: "select", optkey: "teaching_experience_ranges" },
+      { name: "years_experience", label: "Years of experience", type: "number", min: 0, max: 80 },
+      { name: "highest_qualification", label: "Highest qualification", kind: "select", optkey: "teacher_qualification_levels" },
+      { name: "qualification_title", label: "Qualification title" },
+      { name: "awarding_institution", label: "Awarding institution" },
+      { name: "graduation_year", label: "Graduation year", type: "number", min: 1900, max: 2100 },
+      { name: "teaching_qualification", label: "Teaching or training qualification" },
+      { name: "institution_experience", label: "Schools, institutions, and freelance teaching", kind: "textarea", placeholder: "List schools, institutions, tutoring centers, and freelance/independent teaching experience" },
+      { name: "experience", label: "Teaching experience", kind: "textarea" },
+      { name: "education", label: "Education / qualifications", kind: "textarea" },
+      { name: "teaching_style", label: "Teaching style", kind: "textarea" },
+      { name: "teaching_offer_summary", label: "Teaching offer summary", kind: "textarea", placeholder: "Example: Arabic for beginners, conversational Arabic, reading, grammar, and private online tutoring" },
+      { name: "learner_outcomes", label: "Learner outcomes", kind: "textarea", placeholder: "What learners should be able to do after lessons or a course" },
+      { name: "curriculum_materials", label: "Curriculum and materials", kind: "textarea", placeholder: "Books, curriculum, worksheets, slides, assessments, or custom material used" },
+    ]);
+
+    h += `<h3>Teaching preferences and readiness</h3>`;
+    h += gridOf([
+      { name: "preferred_teaching_format", label: "Preferred teaching format", kind: "select", optkey: "preferred_teaching_formats" },
+      { name: "preferred_learner_arrangement", label: "Preferred learner arrangement", kind: "select", optkey: "preferred_learner_arrangements" },
+      { name: "preferred_weekly_hours", label: "Preferred weekly hours", type: "number", min: 1, max: 60 },
+      { name: "available_start_date", label: "Earliest available start date", type: "date" },
+      { name: "technology_readiness", label: "Technology and internet readiness", kind: "select", optkey: "technology_readiness_options" },
+      { name: "professional_reference", label: "Professional reference available", kind: "select", optkey: "professional_reference_options" },
+    ]);
+    h += field({ name: "teacher_support_needs", label: "Accessibility or workplace support needs", kind: "textarea", full: true });
+
+    h += `<h3>Online Presence</h3>`;
+    h += gridOf([
+      { name: "online_profile_name", label: "Online teaching brand/profile name", placeholder: "Example: MasterArabic Online" },
+      { name: "instagram_handle", label: "Social media handle", placeholder: "@masterarabic_online" },
+      { name: "social_profile_url", label: "Public social profile URL", placeholder: "https://www.instagram.com/masterarabic_online" },
+      { name: "website_or_booking_url", label: "Website or booking link", placeholder: "https://..." },
+      { name: "demo_video_url", label: "Demo lesson or sample video link", placeholder: "https://..." },
+      { name: "bio", label: "Public profile summary", kind: "textarea" },
+      { name: "social_proof", label: "Social proof / reviews", kind: "textarea", placeholder: "Follower/community signal, testimonials, results, screenshots to review, or references" },
+    ]);
+
+    h += `<h3>Weekly Availability</h3>`;
+    h += calendarHtml();
+
+    h += `<h3>Additional Notes</h3>`;
+    h += field({ name: "referral_source", label: "How did you hear about us?", full: true });
+    h += `<label class="checkrow" id="row-verification_consent"><input type="checkbox" name="verification_consent" value="1"><span>I consent to verification of my qualifications and professional references.</span></label><div class="ferr" id="ferr-verification_consent" hidden></div>`;
+    h += field({ name: "notes", label: "Anything else the review team should know?", kind: "textarea", full: true });
+
+    h += `<button class="btn" type="submit">Submit teacher application</button>`;
+    f.innerHTML = h;
+
+    wireCityOther();
+    f.addEventListener("submit", submitIntake);
+  }
+
+  // Reveal the "City not listed" field when City = Other (legacy renders it
+  // always; we only surface it when relevant, keeping the same field/wording).
+  function wireCityOther() {
+    const city = document.querySelector('select[name="city"]');
+    const other = document.getElementById("f-city_other");
+    if (!city || !other) return;
+    const refresh = () => { other.style.display = city.value === "Other" ? "" : "none"; };
+    city.addEventListener("change", refresh);
+    refresh();
+  }
+
+  // ---- collect + submit -----------------------------------------------------
+  function collect() {
+    const body = {};
+    const arrays = {};
+    document.querySelectorAll("#intake [name]").forEach((el) => {
+      const n = el.name;
+      if (n === "slots") return; // gathered below
+      if (el.type === "checkbox") {
+        if (n === "verification_consent") { body[n] = el.checked ? "1" : ""; return; }
+        (arrays[n] = arrays[n] || []); if (el.checked) arrays[n].push(el.value); return;
+      }
+      if (el.type === "radio") {
+        (arrays[n] = arrays[n] || []); if (el.checked) arrays[n].push(el.value); return;
+      }
+      body[n] = (el.value || "").trim();
+    });
+    // Ensure every array field is present even when nothing is checked.
+    ARRAY_FIELDS.forEach((n) => { if (n !== "slots" && !arrays[n] && document.querySelector(`#intake [name="${n}"]`)) arrays[n] = []; });
+    Object.assign(body, arrays);
+    body.slots = Array.from(document.querySelectorAll('input[name="slots"]:checked')).map((cb) => cb.value);
+    body.formtime = formtime;
+    body.formtoken = formtoken;
+    return body;
+  }
+
+  function showFieldErrors(errs, labels) {
+    document.querySelectorAll(".field--error").forEach((el) => el.classList.remove("field--error"));
+    document.querySelectorAll(".ferr").forEach((el) => { el.hidden = true; el.textContent = ""; });
+    document.querySelectorAll(".checkrow--error").forEach((el) => el.classList.remove("checkrow--error"));
+    const items = [];
+    for (const [name, message] of Object.entries(errs)) {
+      const l = (labels && labels[name]) || label(name);
+      items.push(`<li><a href="#f-${esc(name)}"><strong>${esc(l)}:</strong> ${esc(message)}</a></li>`);
+      const wrap = document.getElementById("f-" + name);
+      if (wrap) {
+        wrap.classList.add("field--error");
+        const fe = wrap.querySelector(".ferr");
+        if (fe) { fe.hidden = false; fe.textContent = l + ": " + message; }
+      } else if (name === "verification_consent") {
+        const row = document.getElementById("row-verification_consent");
+        if (row) row.classList.add("checkrow--error");
+        const fe = document.getElementById("ferr-verification_consent");
+        if (fe) { fe.hidden = false; fe.textContent = l + ": " + message; }
+      }
+    }
+    const st = $("#status");
+    st.className = "status error"; st.hidden = false;
+    st.innerHTML = `Please fix the highlighted fields below.<ul class="errorlist">${items.join("")}</ul>`;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function refreshToken() {
+    const r = await fetch(url());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const d = await r.json();
+    if (!d.ok) throw new Error(d.error || "unknown");
+    formtime = d.formtime;
+    formtoken = d.formtoken;
+  }
+
+  function showThanks(message) {
+    $("#thanks").textContent = message || ("Thank you. Your teacher application was received and " + (((D || {}).consumer || {}).name || "our team") + " will review it.");
+    $("#thanks-panel").hidden = false;
+    $("#form-panel").hidden = true;
+    $("#status").hidden = true;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function submitIntake(ev) {
+    ev.preventDefault();
+    const btn = document.querySelector("#intake button[type=submit]");
+    const body = collect();
+    btn.disabled = true; btn.textContent = "Submitting…";
+    try {
+      const r = await fetch(url(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" }, // simple CORS request, no preflight
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (d && d.ok) { showThanks(d.message); return; }
+      const fe = (d && d.fielderrors) || null;
+      // Stale/too-fast form token: transparently fetch a fresh formtime/
+      // formtoken once, then ask the user to press Submit again.
+      if (fe && fe.form_security && /reload the form/i.test(fe.form_security)) {
+        try {
+          await refreshToken();
+          const st = $("#status");
+          st.className = "status"; st.hidden = false;
+          st.textContent = "The form security check was refreshed. Please press Submit again.";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        } catch (e2) { /* fall through to normal error rendering */ }
+      }
+      if (fe) { showFieldErrors(fe, d.fieldlabels || null); return; }
+      throw new Error((d && d.error) || ("HTTP " + r.status));
+    } catch (e) {
+      const st = $("#status");
+      st.className = "status error"; st.hidden = false;
+      st.textContent = "The application could not be submitted: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      btn.disabled = false; btn.textContent = "Submit teacher application";
+    }
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      D = d;
+      formtime = d.formtime;
+      formtoken = d.formtoken;
+      const c = d.consumer || {};
+      if (c.name) {
+        $("#brand-name").textContent = c.name;
+        $("#brand-mark").textContent = (c.name.replace(/[^A-Za-z0-9]+/g, "")[0] || "E").toUpperCase();
+        document.title = c.name + " · Educator / Tutor Application";
+      }
+      if (!d.ready) {
+        $("#status").className = "status error";
+        $("#status").innerHTML = `<div class="empty">${esc(d.notready_message || "The teacher application form is not ready yet.")}</div>`;
+        return;
+      }
+      buildForm();
+      $("#form-panel").hidden = false;
+      $("#status").hidden = true;
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Could not load: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

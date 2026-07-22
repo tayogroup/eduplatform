@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-16.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-17.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -155,6 +155,18 @@ $reports = [
     'safenet' => ['pqpl_any_authenticated', 'safenet.html'],
     'referrers' => ['pqpl_any_authenticated', 'referrers.html'],
     'enrollment-approval' => ['pqpl_any_authenticated', 'enrollment-approval.html'],
+    // Wave 12: support/admissions/transcript-controls cluster. Workspace-manage
+    // and platform-ops gates live in the handlers with the legacy messages.
+    // (public-teacher-intake is a standalone cookieless endpoint, not a report.)
+    'live-series-wizard' => ['pqpl_any_authenticated', 'live-series-wizard.html'],
+    'communications-center' => ['pqpl_any_authenticated', 'communications-center.html'],
+    'consumer-wizard' => ['pqh_can_manage_academy_operations', 'consumer-wizard.html'],
+    'academic-quality-controls' => ['pqpl_any_authenticated', 'academic-quality-controls.html'],
+    'attendance-operations' => ['pqpl_any_authenticated', 'attendance-operations.html'],
+    'admissions' => ['pqpl_any_authenticated', 'admissions.html'],
+    'roles-permissions' => ['pqpl_any_authenticated', 'roles-permissions.html'],
+    'transcript-controls' => ['pqpl_any_authenticated', 'transcript-controls.html'],
+    'transcript-policy' => ['pqpl_any_authenticated', 'transcript-policy.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

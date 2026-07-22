@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roles &amp; permissions · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:360px 1fr;gap:16px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.allow{background:#e1f2ff;color:var(--blue2)}
+  .pill.deny{background:var(--red-bg);color:var(--red)}
+  .pill.neutral{background:var(--sky);color:var(--ink2)}
+  form.act{margin:0 0 14px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  form.act h3{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  form.act label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.act select,form.act input[type=text],form.act textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.act textarea{min-height:56px;resize:vertical}
+  form.act .chk{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:13px;font-weight:700;color:var(--ink2)}
+  form.act .chk input{width:auto}
+  form.act button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.act button.light{background:var(--sky);color:var(--blue)}
+  form.act button:disabled{opacity:.55;cursor:wait}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Roles &amp; permissions</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of roles_permissions.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Roles, permissions &amp; multi-tenant controls</h1><p class="sub" id="subtitle">Fine-grained role capabilities, isolation audits, and support access controls.</p></div>
+  <div id="status" class="status">Loading roles &amp; permissions…</div>
+  <div class="grid" id="grid" hidden>
+    <section class="panel">
+      <h2>Write controls</h2>
+      <form class="act" id="f-capability">
+        <h3>Capability override</h3>
+        <label>Role</label>
+        <select name="rolekey" id="cap-role"></select>
+        <label>Capability</label>
+        <select name="capability" id="cap-capability"></select>
+        <label>Scope</label>
+        <input type="text" name="scope" value="workspace">
+        <div class="chk"><input type="checkbox" name="allowed" id="cap-allowed" checked> Allowed</div>
+        <label>Note</label>
+        <textarea name="note" maxlength="1000"></textarea>
+        <button type="submit">Save capability</button>
+      </form>
+      <form class="act" id="f-grant">
+        <h3>Support access grant</h3>
+        <label>Support user</label>
+        <select name="supportuserid" id="grant-support"></select>
+        <label>Target user</label>
+        <select name="targetuserid" id="grant-target"></select>
+        <label>Status</label>
+        <input type="text" name="status" value="approved">
+        <label>Expires date (YYYY-MM-DD)</label>
+        <input type="text" name="expiresat" placeholder="leave blank for never">
+        <label>Reason</label>
+        <textarea name="reason" maxlength="1000"></textarea>
+        <button type="submit">Save grant</button>
+      </form>
+      <form class="act" id="f-session">
+        <h3>Log support session</h3>
+        <label>Grant</label>
+        <select name="grantid" id="session-grant"></select>
+        <label>Reason</label>
+        <input type="text" name="reason" placeholder="Reason">
+        <button type="submit" class="light">Log session</button>
+      </form>
+      <form class="act" id="f-audit">
+        <h3>Tenant isolation audit</h3>
+        <p class="muted" style="margin:0 0 4px">Runs the isolation checks and appends the results to the audit trail.</p>
+        <button type="submit">Run isolation audit</button>
+      </form>
+    </section>
+    <section>
+      <div class="panel">
+        <h2>Capability overrides</h2>
+        <table><thead><tr><th>Role</th><th>Capability</th><th>Allowed</th></tr></thead><tbody id="caps"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Support grants</h2>
+        <table><thead><tr><th>Grant</th><th>Users</th><th>Status</th></tr></thead><tbody id="grants"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Support sessions</h2>
+        <table><thead><tr><th>Session</th><th>Users</th><th>Status</th></tr></thead><tbody id="sessions"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Tenant isolation audit</h2>
+        <table><thead><tr><th>Check</th><th>Status</th><th>When</th></tr></thead><tbody id="audits"></tbody></table>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short" }) : "never";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "roles-permissions", token, workspaceid: qs.get("workspaceid") || "0" });
+  let NAMES = {};
+  const nameFor = (id) => (id && NAMES[id]) ? NAMES[id] : ("#" + id);
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const opt = (v, label) => `<option value="${esc(v)}">${esc(label)}</option>`;
+
+  function render(d) {
+    NAMES = d.names || {};
+    $("#title").textContent = "Roles & permissions — " + (d.workspace && d.workspace.name ? d.workspace.name : "workspace");
+
+    $("#cap-role").innerHTML = (d.rolekeys || []).map((r) => opt(r, r)).join("");
+    $("#cap-capability").innerHTML = (d.capkeys || []).map((c) => opt(c, c)).join("");
+    const userOpts = (d.users || []).map((u) => opt(u.id, u.fullname + " / " + u.workspace_role)).join("");
+    $("#grant-support").innerHTML = userOpts;
+    $("#grant-target").innerHTML = userOpts;
+    $("#session-grant").innerHTML = '<option value="0">No grant</option>' + (d.grants || []).map((g) => opt(g.id, "Grant #" + g.id)).join("");
+
+    const caps = d.caps || [];
+    $("#caps").innerHTML = caps.length ? caps.map((c) => `
+      <tr><td>${esc(c.rolekey)}</td><td>${esc(c.capability)}<div class="muted">${esc(c.scope)}</div></td>
+      <td><span class="pill ${c.allowed ? "allow" : "deny"}">${c.allowed ? "allow" : "deny"}</span></td></tr>`).join("")
+      : `<tr><td colspan="3" class="muted">No explicit overrides. Role defaults are active.</td></tr>`;
+
+    const grants = d.grants || [];
+    $("#grants").innerHTML = grants.length ? grants.map((g) => `
+      <tr><td>#${g.id}<div class="muted">${esc(g.grant_type)}</div></td>
+      <td>${esc(nameFor(g.supportuserid))} → ${esc(nameFor(g.targetuserid))}</td>
+      <td><span class="pill neutral">${esc(g.status)}</span><div class="muted">Expires ${esc(dateOnly(g.expiresat))}</div></td></tr>`).join("")
+      : `<tr><td colspan="3" class="muted">No support grants yet.</td></tr>`;
+
+    const sessions = d.sessions || [];
+    $("#sessions").innerHTML = sessions.length ? sessions.map((s) => `
+      <tr><td>#${s.id}</td><td>${esc(nameFor(s.supportuserid))} → ${esc(nameFor(s.targetuserid))}</td>
+      <td><span class="pill neutral">${esc(s.status)}</span></td></tr>`).join("")
+      : `<tr><td colspan="3" class="muted">No support sessions yet.</td></tr>`;
+
+    const audits = d.audits || [];
+    $("#audits").innerHTML = audits.length ? audits.map((a) => `
+      <tr><td>${esc(a.check_key)}<div class="muted">${esc(a.targettype)} #${a.targetid}</div></td>
+      <td><span class="pill allow">${esc(a.status)}</span></td><td>${esc(when(a.timecreated))}</td></tr>`).join("")
+      : `<tr><td colspan="3" class="muted">No tenant audit rows yet.</td></tr>`;
+
+    $("#grid").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  async function post(payload, btn) {
+    const prev = btn.textContent;
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "roles-permissions", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ workspaceid: Number(qs.get("workspaceid") || 0) }, payload)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      await load();
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = prev;
+    }
+  }
+
+  $("#f-capability").addEventListener("submit", (ev) => {
+    ev.preventDefault(); const f = ev.currentTarget;
+    post({ do: "save_capability", rolekey: f.rolekey.value, capability: f.capability.value, scope: f.scope.value, allowed: f.allowed.checked ? 1 : 0, note: f.note.value }, f.querySelector("button"));
+  });
+  $("#f-grant").addEventListener("submit", (ev) => {
+    ev.preventDefault(); const f = ev.currentTarget;
+    post({ do: "save_support_grant", supportuserid: Number(f.supportuserid.value), targetuserid: Number(f.targetuserid.value), status: f.status.value, expiresat: f.expiresat.value, reason: f.reason.value }, f.querySelector("button"));
+  });
+  $("#f-session").addEventListener("submit", (ev) => {
+    ev.preventDefault(); const f = ev.currentTarget;
+    post({ do: "log_support_session", grantid: Number(f.grantid.value), reason: f.reason.value }, f.querySelector("button"));
+  });
+  $("#f-audit").addEventListener("submit", (ev) => {
+    ev.preventDefault(); const f = ev.currentTarget;
+    post({ do: "run_audit" }, f.querySelector("button"));
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

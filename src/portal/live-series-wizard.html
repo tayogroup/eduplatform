@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recurring class series wizard · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 6px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:16px}
+  .step{padding:10px;border-radius:8px;background:var(--sky);color:var(--ink2);font-size:12px;font-weight:900;text-align:center}
+  .step.active{background:var(--blue2);color:#fff}
+  .field{display:grid;gap:6px;margin-bottom:12px}
+  .field label{font-size:13px;font-weight:900;color:var(--ink2)}
+  .input,.select,.textarea{width:100%;min-height:40px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:800 14px/1.2 system-ui;background:var(--card);color:var(--ink)}
+  .textarea{min-height:92px;resize:vertical}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .card{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-bottom:12px}
+  .meta{margin:3px 0;color:var(--muted);font-size:13px;font-weight:700}
+  .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .alert{padding:12px 14px;border-radius:8px;margin-bottom:12px;font-size:14px;font-weight:800;white-space:pre-wrap}
+  .alert.bad{background:var(--red-bg);color:var(--red);border:1px solid var(--red)}
+  .alert.ok{background:var(--sky);color:var(--blue2);border:1px solid var(--line)}
+  .check{display:flex;gap:9px;align-items:center;padding:7px 0;font-size:13px;font-weight:800}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:800;background:var(--card)}
+  .wk{display:flex;flex-wrap:wrap;gap:6px}
+  .wk label{display:flex;gap:6px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--bg);font-size:12px;font-weight:900;color:var(--ink2);cursor:pointer}
+  table.gen{width:100%;border-collapse:collapse;font-size:13px}
+  table.gen th,table.gen td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  table.gen th{background:var(--bg);color:var(--ink2);font-size:12px;font-weight:900}
+  .pill{display:inline-flex;align-items:center;min-height:26px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:900;background:var(--sky);color:var(--ink)}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  @media(max-width:780px){.grid2,.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Recurring class series wizard</small></div>
+  <div class="note">Token-authenticated · parallel-run of live_series_wizard.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Guided recurring class series wizard</h1>
+    <p class="sub">Preview every generated class date before creating a recurring BBB live-session series.</p>
+  </div>
+  <div id="status" class="status">Loading wizard…</div>
+  <div class="steps" id="steps" hidden></div>
+  <div class="panel" id="panel" hidden></div>
+  <div class="panel" id="success-panel" hidden>
+    <h2>Recurring series created</h2>
+    <div id="success-body"></div>
+    <div class="actions">
+      <a class="btn" id="success-link" href="#">Open recurring series</a>
+      <button class="btn light" type="button" id="success-again">Create another series</button>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Client-side draft: the legacy wizard carries this state in GET params
+  // between steps; here the page holds it and the final POST carries it all.
+  const draft = {
+    step: 1,
+    teacherid: 0,
+    groupid: 0,
+    studentids_raw: "",
+    title: "Pre-Quran review class series",
+    lessonid: "alphabet",
+    unitid: "alphabet_listen",
+    sessiondate: "",
+    sessiontime: "",
+    duration: 60,
+    recurrence_pattern: "weekdays",
+    recurrence_count: 8,
+    recurrence_until: "",
+    recurrence_weekdays: [],
+    override_conflicts: false,
+    override_reason: "",
+  };
+  let data = null;       // last GET payload
+  let submitting = false;
+
+  const apiParams = (extra) => {
+    const p = new URLSearchParams({ report: "live-series-wizard", token });
+    for (const key of ["workspaceid", "consumer"]) { if (qs.get(key)) p.set(key, qs.get(key)); }
+    Object.entries(extra || {}).forEach(([k, v]) => p.set(k, String(v)));
+    return p;
+  };
+
+  async function refresh() {
+    const p = apiParams({
+      teacherid: draft.teacherid || 0,
+      groupid: draft.groupid || 0,
+      studentids_raw: draft.studentids_raw,
+      title: draft.title,
+      lessonid: draft.lessonid,
+      unitid: draft.unitid,
+      sessiondate: draft.sessiondate,
+      sessiontime: draft.sessiontime,
+      duration: draft.duration,
+      recurrence_pattern: draft.recurrence_pattern,
+      recurrence_count: draft.recurrence_count,
+      recurrence_until: draft.recurrence_until,
+    });
+    (draft.recurrence_weekdays || []).forEach((d) => p.append("recurrence_weekdays[]", String(d)));
+    const r = await fetch(endpoint + "?" + p.toString());
+    if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+    const d = await r.json();
+    if (!d.ok) throw new Error(d.error || "unknown");
+    data = d;
+    if (!d.isadmin) draft.teacherid = d.userid;
+    return d;
+  }
+
+  const stepLabels = { 1: "Teacher", 2: "Students", 3: "Lesson", 4: "Recurrence", 5: "Safety", 6: "Review" };
+
+  function renderSteps() {
+    $("#steps").innerHTML = [1, 2, 3, 4, 5, 6].map((n) => `<div class="step ${draft.step === n ? "active" : ""}">${n}. ${esc(stepLabels[n])}</div>`).join("");
+    $("#steps").hidden = false;
+  }
+
+  const parseIds = (value) => (value || "").split(/[\s,;]+/).map((p) => parseInt(p, 10)).filter((id, i, list) => id > 0 && list.indexOf(id) === i);
+
+  function setStatus(kind, text) {
+    const el = $("#status");
+    if (!text) { el.hidden = true; return; }
+    el.className = "status" + (kind ? " " + kind : "");
+    el.hidden = false;
+    el.textContent = text;
+  }
+
+  // ---- step renderers (wording mirrors the legacy page) ----------------------
+  function stepTeacher() {
+    const teacherField = data.isadmin ? `
+      <div class="field">
+        <label for="f-teacherid">Teacher</label>
+        <select class="select" id="f-teacherid" required>
+          <option value="">Choose teacher</option>
+          ${(data.teachers || []).map((t) => `<option value="${t.id}" ${Number(draft.teacherid) === Number(t.id) ? "selected" : ""}>${esc(t.name + " #" + t.id)}</option>`).join("")}
+        </select>
+      </div>` : `
+      <div class="card"><h3>Teacher</h3><p class="meta">${esc((data.names && data.names[data.userid]) || (data.teachers && data.teachers[0] && data.teachers[0].name) || "Teacher")} #${data.userid}</p></div>`;
+    return `
+      ${teacherField}
+      <div class="actions"><button class="btn" type="button" data-next="2">Next: students</button></div>`;
+  }
+
+  function stepStudents() {
+    const groups = (data.classgroups || []);
+    const groupField = groups.length ? `
+      <div class="field">
+        <label for="f-groupid">Class group</label>
+        <select class="select" id="f-groupid">
+          <option value="0">No class group</option>
+          ${groups.map((g) => `<option value="${g.id}" ${Number(draft.groupid) === Number(g.id) ? "selected" : ""}>${esc(g.title + " #" + g.id)}</option>`).join("")}
+        </select>
+        <p class="meta">A class group automatically adds active assigned students. Extra IDs below are optional.</p>
+      </div>` : "";
+    return `
+      ${groupField}
+      <div class="field">
+        <label for="f-studentids">Student user IDs</label>
+        <textarea class="textarea" id="f-studentids" placeholder="101, 102, 103">${esc(draft.studentids_raw)}</textarea>
+        <p class="meta">These are Moodle user IDs and will be combined with any selected class-group students.</p>
+      </div>
+      <div class="actions"><button class="btn light" type="button" data-back="1">Back</button><button class="btn" type="button" data-next="3">Next: lesson</button></div>`;
+  }
+
+  function stepLesson() {
+    return `
+      <div class="field"><label for="f-title">Series title</label><input class="input" id="f-title" type="text" value="${esc(draft.title)}" required></div>
+      <div class="grid2">
+        <div class="field"><label for="f-lessonid">Lesson ID</label><input class="input" id="f-lessonid" type="text" value="${esc(draft.lessonid)}" required></div>
+        <div class="field"><label for="f-unitid">Unit ID</label><input class="input" id="f-unitid" type="text" value="${esc(draft.unitid)}" required></div>
+      </div>
+      <div class="actions"><button class="btn light" type="button" data-back="2">Back</button><button class="btn" type="button" data-next="4">Next: recurrence</button></div>`;
+  }
+
+  function stepRecurrence() {
+    const wk = (data.weekdays || []);
+    return `
+      <div class="grid2">
+        <div class="field"><label for="f-sessiondate">First date</label><input class="input" id="f-sessiondate" type="date" value="${esc(draft.sessiondate)}" required></div>
+        <div class="field"><label for="f-sessiontime">Class time</label><input class="input" id="f-sessiontime" type="time" value="${esc(draft.sessiontime)}" required></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="f-duration">Duration</label><select class="select" id="f-duration">
+          ${(data.durations || [45, 60, 75, 90]).map((m) => `<option value="${m}" ${Number(draft.duration) === m ? "selected" : ""}>${m} minutes</option>`).join("")}
+        </select></div>
+        <div class="field"><label for="f-pattern">Repeat</label><select class="select" id="f-pattern">
+          ${(data.patterns || []).map((pp) => `<option value="${esc(pp.value)}" ${draft.recurrence_pattern === pp.value ? "selected" : ""}>${esc(pp.label)}</option>`).join("")}
+        </select></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="f-count">Max sessions</label><input class="input" id="f-count" type="number" min="1" max="60" value="${Number(draft.recurrence_count) || 8}"></div>
+        <div class="field"><label for="f-until">Until date</label><input class="input" id="f-until" type="date" value="${esc(draft.recurrence_until)}"></div>
+      </div>
+      <div class="card">
+        <p class="meta">Weekdays for selected-weekdays repeat:</p>
+        <div class="wk">${wk.map((d) => `<label><input class="js-weekday" type="checkbox" value="${d.value}" ${(draft.recurrence_weekdays || []).includes(d.value) ? "checked" : ""}> ${esc(d.label)}</label>`).join("")}</div>
+      </div>
+      <div class="actions"><button class="btn light" type="button" data-back="3">Back</button><button class="btn" type="button" data-next="5">Next: safety</button></div>`;
+  }
+
+  function stepSafety() {
+    return `
+      <div class="card">
+        <h3>Recording &amp; consent</h3>
+        <p class="meta">Audio recording is always enabled for safeguarding and class quality. Student camera/video is allowed only where video consent exists.</p>
+        <label class="check"><input type="checkbox" checked disabled> <span>Audio recording required; video is opt-in and consent-controlled</span></label>
+      </div>
+      <div class="actions"><button class="btn light" type="button" data-back="4">Back</button><button class="btn" type="button" data-next="6">Preview series</button></div>`;
+  }
+
+  function stepReview() {
+    const d = data.draft || {};
+    const names = d.studentnames || {};
+    const ids = d.studentids || [];
+    const conflictCount = Number(d.conflict_count) || 0;
+    const sessions = d.sessions || [];
+    const teacherName = (data.names && data.names[d.teacherid]) || ("Teacher " + d.teacherid);
+    const studentLine = ids.map((id) => names[id] || ("Student " + id)).join(", ");
+    const alert = conflictCount > 0
+      ? `<div class="alert bad">${conflictCount} conflict warning(s) found across the generated series.</div>`
+      : `<div class="alert ok">No conflicts detected across the generated series.</div>`;
+    const rows = sessions.map((s, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${esc(s.label)}</td>
+        <td>${(s.messages && s.messages.length) ? `<span class="pill bad">${esc(s.messages.join("; "))}</span>` : `<span class="pill ok">clear</span>`}</td>
+      </tr>`).join("");
+    const overrideCard = (conflictCount > 0 && data.isadmin) ? `
+      <div class="card">
+        <h3>Admin conflict override</h3>
+        <label class="check"><input id="f-override" type="checkbox" ${draft.override_conflicts ? "checked" : ""}> <span>Override conflicts with audit reason</span></label>
+        <div class="field"><label for="f-override-reason">Override reason</label><input class="input" id="f-override-reason" type="text" value="${esc(draft.override_reason)}" placeholder="Required if overriding conflicts"></div>
+      </div>` : (conflictCount > 0 ? `<div class="alert bad">Resolve the scheduling conflicts before submitting this series.</div>` : "");
+    const blocked = conflictCount > 0 && !data.isadmin;
+    return `
+      ${alert}
+      <div class="card">
+        <h3>${esc(draft.title)}</h3>
+        <p class="meta">Teacher: ${esc(teacherName)} #${d.teacherid}</p>
+        <p class="meta">Students: ${esc(studentLine || "none selected")}</p>
+        <p class="meta">Lesson: ${esc(draft.lessonid)} / ${esc(draft.unitid)}</p>
+        <p class="meta">Generated sessions: ${Number(d.generated_count) || 0}, ${esc(draft.recurrence_pattern)}, audio recording always enabled; video opt-in and consent-controlled.</p>
+      </div>
+      <table class="gen"><thead><tr><th>#</th><th>Date</th><th>Status</th></tr></thead><tbody>${rows || `<tr><td colspan="3" class="muted">No dates generated — set the first date and time.</td></tr>`}</tbody></table>
+      ${overrideCard}
+      <div class="actions" style="margin-top:12px"><button class="btn light" type="button" data-back="5">Back</button><button class="btn" type="button" id="create-btn" ${blocked ? "disabled" : ""}>Create recurring series</button></div>`;
+  }
+
+  // ---- draft collection + validation (messages mirror the legacy checks) -----
+  function collect() {
+    const get = (id) => document.getElementById(id);
+    if (get("f-teacherid")) draft.teacherid = parseInt(get("f-teacherid").value, 10) || 0;
+    if (get("f-groupid")) draft.groupid = parseInt(get("f-groupid").value, 10) || 0;
+    if (get("f-studentids")) draft.studentids_raw = get("f-studentids").value.trim();
+    if (get("f-title")) draft.title = get("f-title").value.trim();
+    if (get("f-lessonid")) draft.lessonid = get("f-lessonid").value.trim();
+    if (get("f-unitid")) draft.unitid = get("f-unitid").value.trim();
+    if (get("f-sessiondate")) draft.sessiondate = get("f-sessiondate").value;
+    if (get("f-sessiontime")) draft.sessiontime = get("f-sessiontime").value;
+    if (get("f-duration")) draft.duration = parseInt(get("f-duration").value, 10) || 60;
+    if (get("f-pattern")) draft.recurrence_pattern = get("f-pattern").value;
+    if (get("f-count")) draft.recurrence_count = parseInt(get("f-count").value, 10) || 8;
+    if (get("f-until")) draft.recurrence_until = get("f-until").value;
+    const wk = Array.from(document.querySelectorAll(".js-weekday"));
+    if (wk.length) draft.recurrence_weekdays = wk.filter((c) => c.checked).map((c) => parseInt(c.value, 10));
+    if (get("f-override")) draft.override_conflicts = get("f-override").checked;
+    if (get("f-override-reason")) draft.override_reason = get("f-override-reason").value.trim();
+  }
+
+  function validateStep(step) {
+    if (step === 1 && data.isadmin && !draft.teacherid) return "Choose a teacher user ID.";
+    if (step === 3) {
+      if (!draft.title) return "Enter a series title.";
+      if (!draft.lessonid || !draft.unitid) return "Enter the lesson and unit IDs.";
+    }
+    if (step === 4 && (!draft.sessiondate || !draft.sessiontime)) return "Choose a first date and class time.";
+    return "";
+  }
+
+  // ---- render + navigation ---------------------------------------------------
+  async function renderStep(needRefresh) {
+    try {
+      if (needRefresh) { setStatus("", "Loading…"); await refresh(); }
+      setStatus("", "");
+      if (!data.ready) {
+        $("#panel").innerHTML = `<div class="empty">${esc(data.ready_message || "Recurring wizard requires the Phase 16 series table/columns.")}</div>`;
+        $("#panel").hidden = false; renderSteps(); return;
+      }
+      renderSteps();
+      const renderers = { 1: stepTeacher, 2: stepStudents, 3: stepLesson, 4: stepRecurrence, 5: stepSafety, 6: stepReview };
+      $("#panel").innerHTML = renderers[draft.step]();
+      $("#panel").hidden = false;
+      $("#success-panel").hidden = true;
+      $("#panel").querySelectorAll("[data-next]").forEach((b) => b.addEventListener("click", async () => {
+        collect();
+        const err = validateStep(draft.step);
+        if (err) { setStatus("error", err); return; }
+        draft.step = parseInt(b.getAttribute("data-next"), 10);
+        // Step 6 depends on server-computed state (group merge, generated dates,
+        // per-date conflicts preview).
+        await renderStep(draft.step === 6);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }));
+      $("#panel").querySelectorAll("[data-back]").forEach((b) => b.addEventListener("click", async () => {
+        collect();
+        draft.step = parseInt(b.getAttribute("data-back"), 10);
+        await renderStep(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }));
+      const createBtn = document.getElementById("create-btn");
+      if (createBtn) createBtn.addEventListener("click", submitCreate);
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  async function submitCreate() {
+    if (submitting) return;
+    collect();
+    submitting = true;
+    const btn = document.getElementById("create-btn");
+    if (btn) { btn.disabled = true; btn.textContent = "Creating…"; }
+    try {
+      const r = await fetch(endpoint + "?" + apiParams({}), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "create",
+          created_from_wizard: 1,
+          recurring_enabled: 1,
+          teacherid: draft.teacherid,
+          groupid: draft.groupid,
+          studentids_raw: draft.studentids_raw,
+          title: draft.title,
+          lessonid: draft.lessonid,
+          unitid: draft.unitid,
+          sessiondate: draft.sessiondate,
+          sessiontime: draft.sessiontime,
+          duration: draft.duration,
+          recurrence_pattern: draft.recurrence_pattern,
+          recurrence_count: draft.recurrence_count,
+          recurrence_until: draft.recurrence_until,
+          recurrence_weekdays: draft.recurrence_weekdays,
+          recording_enabled: 1,
+          override_conflicts: draft.override_conflicts ? 1 : 0,
+          override_reason: draft.override_reason,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus("saved", d.message || "Recurring series created.");
+      $("#panel").hidden = true;
+      $("#steps").hidden = true;
+      $("#success-body").innerHTML = `
+        <p class="sub">${esc(d.message || "Recurring series created.")}</p>
+        <div class="card">
+          <p class="meta">Sessions created: ${Number(d.created) || 0}</p>
+          <p class="meta">Session ID${(d.sessionids || []).length === 1 ? "" : "s"}: ${esc((d.sessionids || []).join(", ") || "-")}</p>
+          ${d.seriesid ? `<p class="meta">Series ID: ${Number(d.seriesid)}</p>` : ""}
+          <p class="meta">Approval status: ${esc(d.approval || "scheduled")}</p>
+        </div>`;
+      $("#success-link").href = moodleBase + "/local/prequran/portal_launch.php?report=live-series";
+      $("#success-panel").hidden = false;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      setStatus("error", "Could not create: " + e.message);
+      if (btn) { btn.disabled = false; btn.textContent = "Create recurring series"; }
+    }
+    submitting = false;
+  }
+
+  $("#success-again").addEventListener("click", () => {
+    draft.step = 1; draft.override_conflicts = false; draft.override_reason = "";
+    setStatus("", "");
+    renderStep(true);
+  });
+
+  renderStep(true);
+})();
+</script>
+</body>
+</html>

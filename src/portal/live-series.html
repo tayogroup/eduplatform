@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live class series · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 6px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .cards{display:grid;gap:14px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card .meta{color:var(--muted);font-size:12px;margin:2px 0}
+  .head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+  label.lb{display:block;font-size:11px;font-weight:900;color:var(--ink2);margin:0 0 4px;text-transform:uppercase;letter-spacing:.3px}
+  input.inp,textarea.inp{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  input.inp[readonly]{background:var(--bg);color:var(--muted)}
+  textarea.inp{min-height:64px;resize:vertical}
+  .edit{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue)}
+  .btn.danger{background:var(--red)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .sessions{display:grid;gap:8px;margin-top:12px}
+  .sess{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+  .sess form{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .sess .inp{width:210px}
+  .comm{margin-top:12px;padding:12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .comm-row{display:grid;grid-template-columns:150px 1fr 60px;gap:8px;padding:6px 0;border-top:1px solid var(--line);font-size:12px;color:var(--ink2)}
+  .comm-row:first-of-type{border-top:0}
+  .ack{margin-top:12px;padding:12px;border-radius:8px;background:var(--amber-bg);border:1px solid var(--amber)}
+  .ack.ok{background:var(--sky);border-color:var(--blue2)}
+  .cancel{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+  .cancel .inp{flex:1;min-width:180px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .rowmsg{margin-top:8px;padding:9px 12px;border-radius:8px;background:var(--sky);font-size:13px;font-weight:700}
+  .rowmsg.error{background:var(--red-bg);color:var(--red)}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}.comm-row{grid-template-columns:1fr}.head{display:block}.sess .inp{width:100%}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live class series</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_series.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Live class series</h1><p class="sub">View recurring class groups, edit future sessions, and cancel when needed.</p></div>
+  <div id="status" class="status">Loading series…</div>
+  <div id="series"></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "none";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = () => { const p = { report: "live-series", token }; const c = qs.get("consumer"); if (c) p.consumer = c; const w = qs.get("workspaceid"); if (w) p.workspaceid = w; return p; };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(params()));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const counts = (s) => `${s.generated_sessions} generated, ${s.active_sessions} active, ${s.completed_sessions} completed, ${s.cancelled_sessions} cancelled`;
+
+  const sessionRow = (s, seriesid) => {
+    const cancelForm = s.cancellable
+      ? `<form data-do="cancel_session" data-seriesid="${seriesid}" data-sessionid="${s.id}">
+           <input class="inp" name="reason" placeholder="Reason for this one session">
+           <button class="btn danger" type="submit">Cancel this session</button>
+         </form>`
+      : "";
+    return `<div class="sess">
+      <div><strong>#${s.series_sequence} ${esc(when(s.scheduled_start))}</strong><div class="meta">${esc(s.status)}</div></div>
+      ${cancelForm}
+    </div>`;
+  };
+
+  const commBlock = (rows) => `
+    <div class="comm"><h3>Recent communication</h3>
+      ${rows.length ? rows.map((c) => `<div class="comm-row"><span>${esc(when(c.timecreated))}</span><span>${esc(c.action)}${c.details ? " · " + esc(c.details) : ""}</span><span>#${c.targetid}</span></div>`).join("")
+        : `<p class="meta">No recent series notifications found.</p>`}
+    </div>`;
+
+  const ackBlock = (s, ackReady) => {
+    const a = s.ack;
+    if (!ackReady || !a) {
+      return `<div class="ack"><h3>Parent acknowledgements</h3><p class="meta">Run the Phase 49 acknowledgement SQL to enable read receipts.</p></div>`;
+    }
+    const isOk = a.expected > 0 && a.pending === 0;
+    let inner;
+    if (a.expected === 0) {
+      inner = `<p class="meta">No linked parent accounts found for acknowledgement tracking.</p>`;
+    } else {
+      let body = `<p class="meta">${a.current} of ${a.expected} linked parent receipt(s) acknowledged.${a.latestack > 0 ? " Latest acknowledgement: " + esc(when(a.latestack)) + "." : ""}</p>`;
+      if (a.latestchange <= 0) {
+        body += `<p class="meta">No parent-visible schedule change has been recorded yet.</p>`;
+      } else if (a.pending > 0) {
+        body += `<form data-do="remind_ack" data-seriesid="${s.id}" style="margin-top:10px"><button class="btn light" type="submit">Send acknowledgement reminder</button></form>`;
+      } else {
+        body += `<p class="meta">All linked parent receipts are current.</p>`;
+      }
+      inner = body;
+    }
+    return `<div class="ack${isOk ? " ok" : ""}"><h3>Parent acknowledgements</h3>${inner}</div>`;
+  };
+
+  const editForm = (s, canoperate) => `
+    <form class="edit" data-do="update_series" data-seriesid="${s.id}">
+      <div class="grid">
+        <div><label class="lb">Title</label><input class="inp" name="title" value="${esc(s.title)}" required></div>
+        <div><label class="lb">Teacher ID</label><input class="inp" name="teacherid" type="number" min="1" value="${s.teacherid}" ${canoperate ? "" : "readonly"} required></div>
+        <div><label class="lb">Class time</label><input class="inp" name="start_time" type="time" value="${esc(s.start_time)}" required></div>
+        <div><label class="lb">Lesson ID</label><input class="inp" name="lessonid" value="${esc(s.lessonid)}" required></div>
+        <div><label class="lb">Unit ID</label><input class="inp" name="unitid" value="${esc(s.unitid)}" required></div>
+        <div><label class="lb">Minutes</label><input class="inp" name="duration_minutes" type="number" min="15" max="240" step="15" value="${s.duration_minutes}" required></div>
+      </div>
+      <div style="margin-top:10px"><label class="lb">Active student IDs for future sessions</label><textarea class="inp" name="studentids_raw" required>${esc((s.studentids || []).join(", "))}</textarea></div>
+      <p class="meta">Saving updates the series and future sessions only. Completed and cancelled sessions keep their historical records.</p>
+      <div style="margin-top:10px"><button class="btn" type="submit">Save series changes</button></div>
+    </form>`;
+
+  const cancelForm = (s) => `
+    <form data-do="cancel_series" data-seriesid="${s.id}" class="cancel">
+      <input class="inp" name="reason" placeholder="Cancellation reason">
+      <button class="btn danger" type="submit">Cancel future sessions</button>
+    </form>`;
+
+  const card = (s, canoperate, ackReady, names) => {
+    const teacher = names[s.teacherid] || ("Teacher " + s.teacherid);
+    const statusWarn = s.derived_status === "needs review" || s.derived_status === "partially cancelled";
+    const active = s.status !== "cancelled";
+    return `<article class="card" data-seriescard="${s.id}">
+      <div class="head">
+        <div>
+          <h2 style="margin:0;font-size:18px">${esc(s.title)}</h2>
+          <p class="meta">Series #${s.id} · ${esc(s.pattern)}${s.weekdays ? " · " + esc(s.weekdays) : ""}</p>
+          <p class="meta">${esc(teacher)} · ${esc(counts(s))}</p>
+          <p class="meta">Next: ${esc(when(s.next_start))}</p>
+        </div>
+        <span class="pill ${statusWarn ? "warn" : "ok"}">${esc(s.derived_status)}</span>
+      </div>
+      ${active ? editForm(s, canoperate) : ""}
+      ${active && s.sessions.length ? `<div class="sessions">${s.sessions.map((x) => sessionRow(x, s.id)).join("")}</div>` : ""}
+      ${active ? commBlock(s.communications || []) : ""}
+      ${active ? ackBlock(s, ackReady) : ""}
+      ${active ? cancelForm(s) : ""}
+      <div class="rowmsg" data-msg="${s.id}" hidden></div>
+    </article>`;
+  };
+
+  function render(d) {
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Run the Phase 16 series SQL before managing recurring class series.";
+      $("#series").innerHTML = ""; return;
+    }
+    const names = d.names || {};
+    const rows = d.series || [];
+    $("#series").innerHTML = rows.length
+      ? `<div class="cards">${rows.map((s) => card(s, !!d.canoperate, !!d.ack_ready, names)).join("")}</div>`
+      : `<div class="panel"><p class="muted">No recurring class series found yet.</p></div>`;
+    $("#status").hidden = true;
+    document.querySelectorAll("form[data-do]").forEach((f) => f.addEventListener("submit", submitForm));
+  }
+
+  function showRowMsg(seriesid, text, isError) {
+    const el = document.querySelector(`[data-msg="${seriesid}"]`);
+    if (!el) return;
+    el.className = "rowmsg" + (isError ? " error" : "");
+    el.hidden = false; el.textContent = text;
+  }
+
+  async function submitForm(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const doName = f.dataset.do;
+    const seriesid = Number(f.dataset.seriesid);
+    const btn = f.querySelector("button");
+    const payload = { do: doName, seriesid };
+    if (doName === "update_series") {
+      payload.title = f.title.value;
+      payload.teacherid = Number(f.teacherid.value);
+      payload.start_time = f.start_time.value;
+      payload.lessonid = f.lessonid.value;
+      payload.unitid = f.unitid.value;
+      payload.duration_minutes = Number(f.duration_minutes.value);
+      payload.studentids_raw = f.studentids_raw.value;
+    } else if (doName === "cancel_session") {
+      payload.sessionid = Number(f.dataset.sessionid);
+      payload.reason = f.reason ? f.reason.value : "";
+    } else if (doName === "cancel_series") {
+      payload.reason = f.reason ? f.reason.value : "";
+    }
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(params()), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || "Save"; }
+      showRowMsg(seriesid, "Could not save: " + e.message, true);
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virtual Tutor · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .meta{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:4px}
+  .pill{border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--bg)}
+  .pill b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  .thread{display:grid;gap:10px}
+  .msg{padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--card);white-space:pre-wrap;line-height:1.45}
+  .msg .who{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:4px}
+  .msg.mine{background:var(--blue2);border-color:var(--blue2);color:#fff;justify-self:end;max-width:88%}
+  .msg.mine .who{color:#dbeafe}
+  .msg.tutor{background:var(--sky);border-color:var(--line);max-width:88%}
+  form.ask{margin-top:14px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  form.ask label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:4px}
+  form.ask textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 11px;font:inherit;font-size:14px;background:var(--card);color:var(--ink);min-height:78px;resize:vertical}
+  form.ask button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.ask button:disabled{opacity:.55;cursor:wait}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .muted{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Virtual Tutor</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_virtual_tutor.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Virtual Tutor</h1>
+    <p class="sub" id="subtitle">Live-session help for the current Pre-Quran lesson, one step at a time.</p>
+    <div class="meta" id="meta" hidden></div>
+  </div>
+  <div id="status" class="status">Loading tutor…</div>
+  <div class="panel" id="tutor-panel" hidden>
+    <h2>Ask for help</h2>
+    <div class="thread" id="thread"></div>
+    <form class="ask" id="ask">
+      <label for="message">Type the question from the live lesson</label>
+      <textarea id="message" name="message" maxlength="1000" required placeholder="Example: I am stuck on this step. How do I read this letter?"></textarea>
+      <button type="submit">Ask tutor</button>
+    </form>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const sessionid = qs.get("sessionid") || "0";
+  const studentid = qs.get("studentid") || qs.get("childid") || "0";
+  const getUrl = () => endpoint + "?" + new URLSearchParams({ report: "live-virtual-tutor", token, sessionid, studentid });
+
+  const bubble = (m) => `<div class="msg ${m.mine ? "mine" : "tutor"}"><span class="who">${esc(m.role || (m.mine ? "You" : "Virtual Tutor"))}</span>${esc(m.message)}</div>`;
+
+  function renderMeta(d) {
+    const s = d.session || {}, st = d.student || {};
+    const cells = [
+      ["Student", st.name || "Current learner"],
+      ["Session", s.title || "Live class"],
+      ["Lesson", s.lessonid || "Pre-Quran lesson"],
+      ["Unit", s.unitid || "Current step"],
+    ];
+    $("#meta").innerHTML = cells.map(([k, v]) => `<div class="pill"><b>${esc(k)}</b>${esc(v)}</div>`).join("");
+    $("#meta").hidden = false;
+  }
+
+  function renderThread(messages) {
+    const list = messages || [];
+    $("#thread").innerHTML = list.length
+      ? list.map(bubble).join("")
+      : "<div class='muted'>No tutor messages yet. Ask your first question below.</div>";
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      $("#title").textContent = "Virtual Tutor — " + ((d.student && d.student.name) ? d.student.name : "learner");
+      renderMeta(d);
+      renderThread(d.messages);
+      $("#tutor-panel").hidden = false;
+      $("#status").hidden = true;
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function ask(ev) {
+    ev.preventDefault();
+    const btn = $("#ask button");
+    const field = $("#message");
+    const text = (field.value || "").trim();
+    if (!text) return;
+    btn.disabled = true; btn.textContent = "Asking…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-virtual-tutor", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ do: "send", sessionid: Number(sessionid), studentid: Number(studentid), message: text }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      field.value = "";
+      renderThread(d.messages);
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = "Tutor replied below.";
+      $("#thread").lastElementChild && $("#thread").lastElementChild.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not send: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Ask tutor";
+    }
+  }
+
+  $("#ask").addEventListener("submit", ask);
+  load();
+})();
+</script>
+</body>
+</html>

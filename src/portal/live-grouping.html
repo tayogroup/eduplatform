@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student grouping · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:16px 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .metric .num{font-size:26px;font-weight:900;color:var(--blue2)}
+  .metric .label{font-size:12px;font-weight:800;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .grid .panel{margin-bottom:0}
+  .wide{grid-column:1/-1}
+  .formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .field{display:grid;gap:5px;margin-bottom:8px}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:60px;resize:vertical}
+  .checkrow{display:flex;gap:9px;align-items:flex-start;margin:6px 0 10px;font-size:13px;font-weight:700;color:var(--ink2)}
+  .checkrow input{width:17px;height:17px;margin-top:2px}
+  button.act{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button.act:disabled{opacity:.55;cursor:wait}
+  button.mini{background:var(--blue2);color:#fff;border:0;border-radius:7px;padding:6px 12px;font-weight:900;font-size:12px;cursor:pointer}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:12.5px;vertical-align:top}
+  th{font-weight:900;color:var(--ink2);background:var(--sky)}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.n{background:#edf0f4;color:var(--muted)}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .matchbox{margin-top:8px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink2);font-size:12px;font-weight:700;line-height:1.45}
+  .matchbox strong{color:var(--ink)}
+  .matchbox div+div{margin-top:4px}
+  .tlinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .tlinks a{display:inline-flex;align-items:center;min-height:26px;padding:0 9px;border:1px solid var(--line);border-radius:999px;background:var(--sky);color:var(--blue2);text-decoration:none;font-size:11px;font-weight:900}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:700;background:var(--card)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  @media(max-width:920px){.grid,.formgrid,.metrics{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Student grouping</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_grouping.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Student grouping</h1><p class="sub">Manage student profiles, matching pools, live class groups, and suggested assignments.</p></div>
+  <div id="status" class="status">Loading grouping console…</div>
+  <div id="console" hidden>
+    <div class="metrics" id="metrics"></div>
+    <div class="grid">
+      <article class="panel">
+        <h2>Student intake</h2>
+        <form id="form-profile">
+          <h3>Student identity</h3>
+          <div class="formgrid">
+            <div class="field"><label>User ID</label><input name="userid" type="number" min="1" required></div>
+            <div class="field"><label>Student display name</label><input name="student_display_name" placeholder="Optional display name"></div>
+            <div class="field"><label>Course</label><select name="course_type" data-courses required></select></div>
+            <div class="field"><label>Date of birth</label><input name="date_of_birth" type="date"></div>
+            <div class="field"><label>Age</label><input name="age_years" type="number" min="0" max="25" required></div>
+            <div class="field"><label>Gender</label><select name="gender" required><option value="">Select</option><option value="female">Female</option><option value="male">Male</option></select></div>
+            <div class="field"><label>Special needs</label><select name="special_needs"><option value="no">No</option><option value="yes">Yes</option></select></div>
+            <div class="field"><label>Status</label><select name="status"><option value="active">Active</option><option value="paused">Paused</option></select></div>
+          </div>
+          <h3>Location and language</h3>
+          <div class="formgrid">
+            <div class="field"><label>Country</label><input name="country" required></div>
+            <div class="field"><label>City</label><input name="city" required></div>
+            <div class="field"><label>Time zone</label><input name="timezone" value="Africa/Nairobi"></div>
+            <div class="field"><label>Primary language</label><input name="primary_language" placeholder="Somali" required></div>
+            <div class="field"><label>Other languages</label><input name="language" placeholder="English, Arabic"></div>
+          </div>
+          <h3>Placement</h3>
+          <div class="formgrid">
+            <div class="field"><label>Current level</label><input name="current_level" placeholder="alphabet, level_1" required></div>
+            <div class="field"><label>Base of learning</label><input name="learning_base" placeholder="new_learner" required></div>
+          </div>
+          <div class="field"><label>Availability</label><textarea name="availability" placeholder="Mon/Wed 5 PM, Sat morning"></textarea></div>
+          <h3>Parent and consent</h3>
+          <div class="formgrid">
+            <div class="field"><label>Parent name</label><input name="parent_name" required></div>
+            <div class="field"><label>Parent email</label><input name="parent_email" type="email" required></div>
+            <div class="field"><label>Parent phone / WhatsApp</label><input name="parent_phone" required></div>
+          </div>
+          <label class="checkrow"><input type="checkbox" name="live_class_consent" value="1" required><span>Parent/guardian consents to live interactive classes.</span></label>
+          <label class="checkrow"><input type="checkbox" name="recording_consent" value="1"><span>Parent/guardian consents to class recording when policy allows.</span></label>
+          <div class="field"><label>Consent notes</label><textarea name="consent_notes" placeholder="How consent was collected"></textarea></div>
+          <div class="field"><label>Parent preferences</label><textarea name="parent_preferences" placeholder="Teacher/gender/language preferences"></textarea></div>
+          <button class="act" type="submit">Save intake profile</button>
+        </form>
+      </article>
+
+      <article class="panel">
+        <h2>Matching pool</h2>
+        <form id="form-pool">
+          <div class="field"><label>Pool title</label><input name="title" placeholder="Somali beginner girls 6-8" required></div>
+          <div class="formgrid">
+            <div class="field"><label>Course</label><select name="course_type" data-courses required></select></div>
+            <div class="field"><label>Time zone</label><input name="timezone" value="Africa/Nairobi"></div>
+            <div class="field"><label>Language</label><input name="language"></div>
+            <div class="field"><label>Age min</label><input name="age_min" type="number" min="0" max="25" value="6"></div>
+            <div class="field"><label>Age max</label><input name="age_max" type="number" min="1" max="99" value="8"></div>
+            <div class="field"><label>Level min</label><input name="level_min" placeholder="alphabet"></div>
+            <div class="field"><label>Level max</label><input name="level_max" placeholder="alphabet"></div>
+            <div class="field"><label>Base</label><input name="learning_base"></div>
+            <div class="field"><label>Gender policy</label><select name="gender_policy"><option value="flexible">Flexible</option><option value="mixed">Mixed</option><option value="female">Female</option><option value="male">Male</option></select></div>
+            <div class="field"><label>Country</label><input name="country"></div>
+            <div class="field"><label>City</label><input name="city"></div>
+            <div class="field"><label>Max students</label><input name="max_students" type="number" min="1" max="15" value="9"></div>
+          </div>
+          <div class="field"><label>Schedule preferences</label><textarea name="schedule_preferences"></textarea></div>
+          <div class="field"><label>Rule notes</label><textarea name="rule_notes"></textarea></div>
+          <button class="act" type="submit">Create pool</button>
+        </form>
+      </article>
+
+      <article class="panel">
+        <h2>Class group</h2>
+        <form id="form-group">
+          <div class="field"><label>Pool</label><select name="poolid" id="group-pool"><option value="0">No pool</option></select></div>
+          <div class="field"><label>Group title</label><input name="title" required></div>
+          <div class="formgrid">
+            <div class="field"><label>Course</label><select name="course_type" data-courses required></select></div>
+            <div class="field"><label>Teacher recommendation</label><select name="teacherid" id="group-teacher"></select>
+              <div class="matchbox" id="teacher-match">Choose a matching pool to rank teachers by timezone, language, level, availability, and capacity.</div>
+            </div>
+            <div class="field"><label>Time zone</label><input name="timezone" value="Africa/Nairobi"></div>
+            <div class="field"><label>Language</label><input name="language"></div>
+            <div class="field"><label>Current level</label><input name="current_level"></div>
+            <div class="field"><label>Base</label><input name="learning_base"></div>
+            <div class="field"><label>Country</label><input name="country"></div>
+            <div class="field"><label>City</label><input name="city"></div>
+            <div class="field"><label>Gender policy</label><select name="gender_policy"><option value="flexible">Flexible</option><option value="mixed">Mixed</option><option value="female">Female</option><option value="male">Male</option></select></div>
+            <div class="field"><label>Age min</label><input name="age_min" type="number" min="0" max="25" value="6"></div>
+            <div class="field"><label>Age max</label><input name="age_max" type="number" min="1" max="99" value="8"></div>
+            <div class="field"><label>Max students</label><input name="max_students" type="number" min="1" max="15" value="9"></div>
+          </div>
+          <div class="field"><label>Schedule summary</label><textarea name="schedule_summary"></textarea></div>
+          <button class="act" type="submit">Create class group</button>
+        </form>
+      </article>
+
+      <article class="panel">
+        <h2>Suggested assignments</h2>
+        <div id="recommendations"></div>
+      </article>
+
+      <article class="panel wide">
+        <h2>Current class groups</h2>
+        <div id="groups"></div>
+      </article>
+
+      <article class="panel wide">
+        <h2>Recent student profiles</h2>
+        <div id="profiles"></div>
+      </article>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = (qs.get("workspaceid") || "").replace(/[^0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  let data = null;
+
+  if (!endpoint || !token) { setStatus("Missing endpoint/token — open via the Moodle portal launch link.", "error"); return; }
+
+  function setStatus(msg, kind) {
+    const el = $("#status");
+    el.hidden = false;
+    el.className = "status" + (kind ? " " + kind : "");
+    el.textContent = msg;
+  }
+
+  const getUrl = () => {
+    const p = new URLSearchParams({ report: "live-grouping", token });
+    if (workspaceid) p.set("workspaceid", workspaceid);
+    return endpoint + "?" + p.toString();
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render(d);
+    } catch (e) { setStatus("Could not load: " + e.message, "error"); }
+  }
+
+  const nameOf = (id, fb) => (data.names && data.names[id]) ? data.names[id] : (fb || ("#" + id));
+  const courseLabel = (key) => (data.course_types && data.course_types[key]) ? data.course_types[key] : (key || "Course not set");
+
+  function fillCourseSelects() {
+    document.querySelectorAll("select[data-courses]").forEach((sel) => {
+      sel.innerHTML = Object.entries(data.course_types || {}).map(([v, l]) =>
+        `<option value="${esc(v)}"${v === "pre_quraan" ? " selected" : ""}>${esc(l)}</option>`).join("");
+    });
+  }
+
+  function renderMetrics(m) {
+    const rows = [
+      [m.profiles, "active student profiles"],
+      [m.pools, "matching pools"],
+      [m.groups, "open class groups"],
+      [m.ungrouped, "ungrouped active students"],
+    ];
+    $("#metrics").innerHTML = rows.map(([n, l]) =>
+      `<div class="metric"><div class="num">${Number(n) || 0}</div><div class="label">${esc(l)}</div></div>`).join("");
+  }
+
+  function renderRecommendations(recs) {
+    if (!recs || !recs.length) { $("#recommendations").innerHTML = '<div class="empty">No recommendations yet. Add student profiles and class groups first.</div>'; return; }
+    $("#recommendations").innerHTML =
+      `<table><thead><tr><th>Student</th><th>Best group</th><th>Score</th><th></th></tr></thead><tbody>` +
+      recs.map((r) => `<tr>
+        <td>${esc(r.student_display_name || nameOf(r.studentid, "Student " + r.studentid))}<br><span class="pill n">${esc(r.student_level)}</span></td>
+        <td>${esc(r.group_title)}<br><span class="pill n">${esc(r.details)}</span></td>
+        <td><span class="pill ${r.score >= 80 ? "ok" : "warn"}">${Number(r.score) || 0}%</span></td>
+        <td><button class="mini" data-assign data-group="${r.group_id}" data-student="${r.studentid}">Assign</button></td>
+      </tr>`).join("") + `</tbody></table>`;
+    document.querySelectorAll("[data-assign]").forEach((b) => b.addEventListener("click", onAssign));
+  }
+
+  function renderGroups(groups) {
+    if (!groups || !groups.length) { $("#groups").innerHTML = '<div class="empty">No class groups yet.</div>'; return; }
+    $("#groups").innerHTML =
+      `<table><thead><tr><th>Group</th><th>Teacher</th><th>Criteria</th><th>Capacity</th><th>Schedule</th></tr></thead><tbody>` +
+      groups.map((g) => `<tr>
+        <td><strong>${esc(g.title)}</strong><br><span class="pill n">${esc(g.status)}</span></td>
+        <td>${esc(nameOf(g.teacherid, "Teacher " + g.teacherid))}</td>
+        <td>${esc(courseLabel(g.course_type))}<br>${esc(g.language)} / ${esc(g.current_level)} / ${esc(g.learning_base)}<br>${esc(g.timezone)} / ${esc(g.gender_policy)} / ages ${g.age_min}-${g.age_max}<br>${esc(g.country)} / ${esc(g.city)}</td>
+        <td>${g.active_students} / ${g.max_students}</td>
+        <td>${esc(g.schedule_summary)}</td>
+      </tr>`).join("") + `</tbody></table>`;
+  }
+
+  function renderProfiles(profiles) {
+    if (!profiles || !profiles.length) { $("#profiles").innerHTML = '<div class="empty">No student profiles yet.</div>'; return; }
+    $("#profiles").innerHTML =
+      `<table><thead><tr><th>Student</th><th>Time/Language</th><th>Level</th><th>Parent/Consent</th><th>Location</th><th>Status</th></tr></thead><tbody>` +
+      profiles.map((p) => `<tr>
+        <td>${esc(p.student_display_name || nameOf(p.userid, "Student " + p.userid))}<br>ID ${p.userid}</td>
+        <td>${esc(p.timezone)}<br>${esc(p.language)}</td>
+        <td>${esc(courseLabel(p.course_type))}<br>${esc(p.current_level)}<br>${esc(p.learning_base)}</td>
+        <td>${esc(p.parent_name)}<br>${esc(p.parent_email)}<br><span class="pill ${p.live_class_consent ? "ok" : "warn"}">live ${p.live_class_consent ? "yes" : "no"}</span> <span class="pill ${p.recording_consent ? "ok" : "warn"}">record ${p.recording_consent ? "yes" : "no"}</span></td>
+        <td>${esc(p.country)} / ${esc(p.city)}<br>${esc(p.gender)} / ${esc(p.age_band)}<br>Special needs: ${esc(p.special_needs)}</td>
+        <td><span class="pill n">${esc(p.status)}</span></td>
+      </tr>`).join("") + `</tbody></table>`;
+  }
+
+  // -- teacher recommendation wiring (mirrors the legacy page's inline script) --
+  const groupPool = () => $("#group-pool");
+  const groupTeacher = () => $("#group-teacher");
+  let currentMatches = [];
+
+  function rebuildTeacherOptions(options, autoselect) {
+    const t = groupTeacher();
+    t.innerHTML = '<option value="">Use top recommended teacher</option>';
+    let first = "";
+    Object.entries(options || {}).forEach(([v, l]) => {
+      const o = document.createElement("option");
+      o.value = v; o.textContent = l; t.appendChild(o);
+      if (!first) first = v;
+    });
+    t.value = autoselect && first ? first : "";
+  }
+
+  function selectedTeacherId() {
+    const t = groupTeacher();
+    if (t && t.value) return String(t.value);
+    if (currentMatches.length && currentMatches[0].userid) return String(currentMatches[0].userid);
+    return "";
+  }
+
+  function renderTeacherLinks() {
+    const links = (data.teacherlinks || {})[selectedTeacherId()];
+    if (!links) return "";
+    const item = (url, label) => url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}</a>` : "";
+    return `<div class="tlinks">${item(links.profile, "Profile")}${item(links.availability, "Availability")}${item(links.classes, "Current classes")}${item(links.directory, "Teacher directory")}${item(links.moodle, "Moodle account")}</div>`;
+  }
+
+  function renderMatches(matches) {
+    const box = $("#teacher-match");
+    currentMatches = matches || [];
+    if (!matches || !matches.length) { box.innerHTML = renderTeacherLinks() || "No teacher recommendations yet. Add teacher profiles with timezone, language, course, and availability."; return; }
+    const html = matches.slice(0, 3).map((m) => {
+      const label = String(m.label || "").split(" - ")[0];
+      return `<div><strong>${esc(label)}</strong> ${esc(m.score)}% match - ${esc(m.reasons)}</div>`;
+    }).join("");
+    box.innerHTML = html + renderTeacherLinks();
+  }
+
+  function applyPool() {
+    const id = groupPool().value;
+    const defaults = (data.pooldefaults || {})[id];
+    const form = $("#form-group");
+    if (defaults) {
+      Object.entries(defaults).forEach(([name, value]) => {
+        const f = form.querySelector(`[name="${name}"]`);
+        if (f && value !== undefined && value !== null) f.value = value;
+      });
+      rebuildTeacherOptions((data.teacheroptionsbypool || {})[id] || data.teachers, true);
+      renderMatches((data.teachermatchesbypool || {})[id] || []);
+    } else {
+      rebuildTeacherOptions(data.teachers, false);
+      $("#teacher-match").textContent = "Choose a matching pool to rank teachers by timezone, language, level, availability, and capacity.";
+    }
+  }
+
+  function wireGroupForm() {
+    const sel = groupPool();
+    sel.innerHTML = '<option value="0">No pool</option>' +
+      (data.pools || []).map((p) => `<option value="${p.id}">${esc(p.title)}</option>`).join("");
+    sel.addEventListener("change", applyPool);
+    groupTeacher().addEventListener("change", () => renderMatches(currentMatches));
+    applyPool();
+  }
+
+  function formBody(form, action) {
+    const body = { do: action };
+    if (workspaceid) body.workspaceid = Number(workspaceid);
+    new FormData(form).forEach((v, k) => { body[k] = v; });
+    // Unchecked checkboxes are absent from FormData; send explicit 0.
+    form.querySelectorAll('input[type="checkbox"]').forEach((c) => { if (!c.checked) body[c.name] = 0; });
+    return body;
+  }
+
+  async function submitForm(form, action, btn) {
+    btn.disabled = true;
+    const original = btn.textContent; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-grouping", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(formBody(form, action)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus(d.message || "Saved.", "saved");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      form.reset();
+      await load();
+      fillCourseSelects();
+      wireGroupForm();
+    } catch (e) {
+      setStatus("Could not save: " + e.message, "error");
+    } finally {
+      btn.disabled = false; btn.textContent = original;
+    }
+  }
+
+  async function onAssign(ev) {
+    const b = ev.currentTarget;
+    b.disabled = true; const original = b.textContent; b.textContent = "…";
+    try {
+      const body = { do: "assign_student", groupid: Number(b.dataset.group), studentid: Number(b.dataset.student) };
+      if (workspaceid) body.workspaceid = Number(workspaceid);
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-grouping", token }), {
+        method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus(d.message || "Student assigned to group.", "saved");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+      fillCourseSelects();
+      wireGroupForm();
+    } catch (e) {
+      setStatus("Could not assign: " + e.message, "error");
+      b.disabled = false; b.textContent = original;
+    }
+  }
+
+  function render(d) {
+    $("#status").hidden = true;
+    $("#console").hidden = false;
+    if (!d.ready) {
+      setStatus("Grouping tables are not ready. Run the Moodle plugin upgrade for local_prequran, then return to this page.", "error");
+      $("#console").hidden = true;
+      return;
+    }
+    renderMetrics(d.metrics || {});
+    fillCourseSelects();
+    wireGroupForm();
+    renderRecommendations(d.recommendations || []);
+    renderGroups(d.groups || []);
+    renderProfiles(d.profiles || []);
+  }
+
+  [["form-profile", "save_profile"], ["form-pool", "create_pool"], ["form-group", "create_group"]].forEach(([id, action]) => {
+    $("#" + id).addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      submitForm(ev.currentTarget, action, ev.currentTarget.querySelector("button.act"));
+    });
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

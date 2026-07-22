@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-14.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-15.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -126,6 +126,20 @@ $reports = [
     'institution-settings' => ['pqpl_any_authenticated', 'institution-settings.html'],
     'institution-profile' => ['pqpl_any_authenticated', 'institution-profile.html'],
     'institution-inquiry' => ['pqpl_any_authenticated', 'institution-inquiry.html'],
+    // Wave 10: platform admin + live-ops tier 2. Platform reports keep the
+    // legacy foundation-domain + academy-ops gate (handlers re-enforce it);
+    // workspace/self/session gates live in the handlers with legacy messages.
+    'platform-settings' => ['pqh_can_manage_academy_operations', 'platform-settings.html'],
+    'platform-dashboard' => ['pqh_can_manage_academy_operations', 'platform-dashboard.html'],
+    'platform-landing' => ['pqpl_any_authenticated', 'platform-landing.html'],
+    'platform-user-roster' => ['pqh_can_manage_academy_operations', 'platform-user-roster.html'],
+    'platform-course-roster' => ['pqh_can_manage_academy_operations', 'platform-course-roster.html'],
+    'live-grouping' => ['pqpl_any_authenticated', 'live-grouping.html'],
+    'live-series' => ['pqpl_any_authenticated', 'live-series.html'],
+    'live-series-schedule' => ['pqpl_any_authenticated', 'live-series-schedule.html'],
+    'live-session-materials' => ['pqpl_any_authenticated', 'live-session-materials.html'],
+    'live-virtual-tutor' => ['pqpl_any_authenticated', 'live-virtual-tutor.html'],
+    'marketplace-enrollment' => ['pqpl_any_authenticated', 'marketplace-enrollment.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

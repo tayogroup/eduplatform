@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduPlatform dashboard · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  a.btn{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900}
+  a.btn.primary{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  a.btn:hover{border-color:var(--blue2)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .kpi b{display:block;font-size:22px;color:var(--blue2)}
+  .kpi span{font-size:12px;color:var(--muted);font-weight:700}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  .nav-grid{display:grid;gap:10px}
+  .nav-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);text-decoration:none}
+  .nav-card:hover{border-color:var(--blue2);background:var(--sky)}
+  .nav-card strong{display:block;margin-bottom:3px;color:var(--blue2);font-size:14px}
+  .nav-card span.desc{display:block;font-size:12px;color:var(--muted)}
+  .nav-card.portal strong::after{content:" ↗ portal";font-size:10px;color:var(--amber)}
+  .con-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+  .con-card strong{display:block;color:var(--ink);font-size:14px}
+  .con-card .meta{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+  .con-links{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  .grp{margin-bottom:14px}
+  .grp>h3{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .dom{padding:10px 0;border-bottom:1px solid var(--line)}
+  .dom:last-child{border-bottom:0}
+  .dom strong{display:block;font-size:14px}
+  .dom .meta{display:block;font-size:12px;color:var(--muted);margin:2px 0 6px}
+  .pills{display:flex;gap:6px;flex-wrap:wrap}
+  .pill{display:inline-flex;align-items:center;justify-content:center;min-height:24px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap}
+  .pill.ready,.pill.active,.pill.verified,.pill.issued{background:#e1f2ff;color:var(--blue2)}
+  .pill.missing,.pill.disabled,.pill.archived,.pill.failed{background:var(--red-bg);color:var(--red)}
+  .pill.external,.pill.neutral,.pill.pending,.pill.paused,.pill.not_checked{background:var(--sky);color:var(--ink2)}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:10px;background:var(--card);color:var(--muted);font-weight:800;margin-bottom:16px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>EduPlatform dashboard</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of platform_dashboard.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">EduPlatform Dashboard</h1>
+    <p class="sub" id="subtitle">Foundation overview for consumers, custom domains, workspaces, and operational readiness.</p>
+    <div class="actions" id="actions" hidden></div>
+  </div>
+  <div id="status" class="status">Loading dashboard…</div>
+  <section class="kpis" id="kpis" hidden></section>
+  <section class="grid" id="grid" hidden>
+    <div>
+      <article class="section">
+        <h2>Administration</h2>
+        <div class="nav-grid" id="links"></div>
+      </article>
+      <article class="section" id="consumers-panel" hidden>
+        <h2>Consumers</h2>
+        <div id="consumers"></div>
+      </article>
+    </div>
+    <div>
+      <article class="section" id="domains-panel" hidden>
+        <h2>Domain readiness</h2>
+        <div id="domains"></div>
+      </article>
+    </div>
+  </section>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const safeUrl = (u) => { u = String(u ?? ""); return /^https?:\/\//i.test(u) ? u : "#"; };
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "platform-dashboard", token }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const navCard = (l) => `
+    <a class="nav-card${l.portal ? " portal" : ""}" href="${esc(safeUrl(l.url))}">
+      <span><strong>${esc(l.title)}</strong><span class="desc">${esc(l.desc)}</span></span>
+      <span class="pill ${esc(l.status)}">${esc(l.status)}</span>
+    </a>`;
+
+  const conCard = (c) => {
+    const links = [];
+    if (c.workspaceurl) links.push(`<a class="btn" href="${esc(safeUrl(c.workspaceurl))}">Workspace</a>`);
+    if (c.manageurl) links.push(`<a class="btn" href="${esc(safeUrl(c.manageurl))}">Manage</a>`);
+    return `
+      <div class="con-card">
+        <span>
+          <strong>${esc(c.name)}</strong>
+          <span class="meta">${esc(c.slug)}${c.supportemail ? " · " + esc(c.supportemail) : ""}</span>
+          <span class="meta">Workspace: ${c.workspaceid > 0 ? esc(c.workspacename) + " #" + c.workspaceid : "missing"}</span>
+          <span class="pills" style="margin-top:6px">
+            <span class="pill ${esc(c.statusclass)}">${esc(c.status)}</span>
+            <span class="pill ${esc(c.workspaceclass)}">workspace ${esc(c.workspaceid > 0 ? c.workspacestatus : "missing")}</span>
+            <span class="pill neutral">${Number(c.domaincount) || 0} domains</span>
+          </span>
+        </span>
+        <span class="con-links">${links.join("")}</span>
+      </div>`;
+  };
+
+  const domCard = (dm) => `
+    <div class="dom">
+      <strong>${esc(dm.domain)}</strong>
+      <span class="meta">${esc(dm.consumername)} · ${esc(dm.domain_type)}${dm.isprimary ? " · primary" : ""}</span>
+      <span class="pills">
+        <span class="pill ${esc(dm.statusclass)}">${esc(dm.status)}</span>
+        <span class="pill ${esc(dm.sslclass)}">SSL ${esc(dm.sslstatus)}</span>
+        <span class="pill ${esc(dm.verificationclass)}">${esc(dm.verificationstatus)}</span>
+      </span>
+    </div>`;
+
+  function render(d) {
+    $("#title").textContent = d.title || "EduPlatform Dashboard";
+    $("#subtitle").textContent = d.subtitle || "Foundation overview.";
+
+    const acts = d.actions || [];
+    if (acts.length) {
+      $("#actions").innerHTML = acts.map((a) => `<a class="btn${a.primary ? " primary" : ""}" href="${esc(safeUrl(a.url))}">${esc(a.title)}</a>`).join("");
+      $("#actions").hidden = false;
+    }
+
+    const c = d.counts || {};
+    $("#kpis").innerHTML = [
+      ["Consumer apps", c.consumers], ["Active consumers", c.activeconsumers],
+      ["Linked workspaces", c.workspaces], ["Custom domains", c.domains],
+      ["Missing workspace", c.missingworkspaces],
+    ].map(([label, n]) => `<div class="kpi"><b>${Number(n) || 0}</b><span>${esc(label)}</span></div>`).join("");
+    $("#kpis").hidden = false;
+
+    $("#links").innerHTML = (d.links || []).map(navCard).join("") || "<span class='sub'>No links configured.</span>";
+
+    const sections = d.consumers || [];
+    if (sections.length) {
+      $("#consumers").innerHTML = sections.map((s) => `
+        <div class="grp">
+          <h3>${esc(s.label)}</h3>
+          ${(s.consumers || []).map(conCard).join("") || "<span class='sub'>None.</span>"}
+        </div>`).join("");
+      $("#consumers-panel").hidden = false;
+    } else if (d.schemaready === false) {
+      $("#consumers").innerHTML = `<div class="empty">Consumer schema is not ready yet.</div>`;
+      $("#consumers-panel").hidden = false;
+    }
+
+    const domains = d.domains || [];
+    if (domains.length) {
+      $("#domains").innerHTML = domains.map(domCard).join("");
+      $("#domains-panel").hidden = false;
+    } else {
+      $("#domains").innerHTML = `<div class="empty">No custom domains found.</div>`;
+      $("#domains-panel").hidden = false;
+    }
+
+    $("#grid").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platform course roster · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1320px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .stat b{display:block;font-size:26px;line-height:1;color:var(--ink)}
+  .stat span{display:block;margin-top:6px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  .filters{display:grid;grid-template-columns:1fr 1fr .8fr .9fr 1.2fr auto auto;gap:10px;align-items:end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .field select,.field input{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  button{border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  .btn{background:var(--blue2);color:#fff}
+  .btn.ghost{background:var(--sky);color:var(--blue)}
+  a.btn{display:inline-block;text-decoration:none}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  .name{display:block;font-weight:800;color:var(--ink)}
+  .muted{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.4}
+  .pill{display:inline-flex;align-items:center;margin:0 5px 5px 0;padding:2px 9px;border-radius:999px;background:var(--sky);color:var(--blue);font-size:11px;font-weight:800}
+  .pill.published,.pill.active,.pill.visible{background:#e1f2ff;color:var(--blue2)}
+  .pill.draft,.pill.pending,.pill.drop_requested,.pill.workspace{background:var(--amber-bg);color:var(--amber)}
+  .pill.closed,.pill.archived,.pill.hidden,.pill.dropped{background:var(--red-bg);color:var(--red)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;background:var(--bg)}
+  @media(max-width:1100px){.filters{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(max-width:640px){.filters{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Platform course roster</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of platform_course_roster.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Platform course roster</h1>
+    <p class="sub">All institution course offerings, linked Moodle courses, seats, dates, visibility, and enrollment request status.</p>
+  </div>
+
+  <div id="status" class="status">Loading roster…</div>
+
+  <div id="report" hidden>
+    <div class="stats" id="stats"></div>
+
+    <div class="panel">
+      <form class="filters" id="filters" aria-label="Course roster filters">
+        <div class="field"><label>Institution / consumer</label><select name="consumerid" id="f-consumer"><option value="0">All consumers</option></select></div>
+        <div class="field"><label>Workspace</label><select name="workspaceid" id="f-workspace"><option value="0">All workspaces</option></select></div>
+        <div class="field"><label>Status</label><select name="status" id="f-status"><option value="">All statuses</option></select></div>
+        <div class="field"><label>Visibility</label><select name="visibility" id="f-visibility"><option value="">All visibility</option></select></div>
+        <div class="field"><label>Search</label><input name="q" id="f-q" placeholder="Title, Moodle course, institution, ID"></div>
+        <button type="submit" class="btn">Apply</button>
+        <button type="button" class="btn ghost" id="reset">Clear</button>
+      </form>
+    </div>
+
+    <div class="panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px">
+        <h2 style="margin:0">Course listings</h2>
+        <div class="actions">
+          <button type="button" class="btn ghost" id="csv">Export CSV</button>
+          <a class="btn ghost" id="legacy-link" href="#" target="_blank" rel="noopener">Open legacy page</a>
+        </div>
+      </div>
+      <div class="tablewrap"><table id="table"><thead><tr>
+        <th>Institution</th><th>Offering</th><th>Moodle course</th><th>Dates</th><th>Seats</th><th>Status</th><th>Requests</th><th>Actions</th>
+      </tr></thead><tbody id="rows"></tbody></table></div>
+      <div class="empty" id="empty" hidden></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const cls = (v) => String(v ?? "").toLowerCase().replace(/[^a-z0-9_-]/g, "");
+  let current = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const filterParams = () => {
+    const p = { report: "platform-course-roster", token };
+    const c = Number($("#f-consumer") && $("#f-consumer").value) || 0; if (c > 0) p.consumerid = c;
+    const w = Number($("#f-workspace") && $("#f-workspace").value) || 0; if (w > 0) p.workspaceid = w;
+    const s = ($("#f-status") && $("#f-status").value) || ""; if (s) p.status = s;
+    const v = ($("#f-visibility") && $("#f-visibility").value) || ""; if (v) p.visibility = v;
+    const q = (($("#f-q") && $("#f-q").value) || "").trim(); if (q) p.q = q;
+    return p;
+  };
+
+  async function load() {
+    $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading roster…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(filterParams()));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      current = d;
+      render(d);
+    } catch (e) { $("#report").hidden = true; $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function fillSelect(sel, options, valueKey, labelKey, keep) {
+    if (!sel || sel.dataset.filled) return;
+    const frag = options.map((o) => `<option value="${esc(o[valueKey])}">${esc(o[labelKey])}</option>`).join("");
+    sel.insertAdjacentHTML("beforeend", frag);
+    if (keep !== undefined && keep !== null && keep !== "" && keep !== 0) sel.value = String(keep);
+    sel.dataset.filled = "1";
+  }
+
+  function statPills(v) { return String(v); }
+
+  function render(d) {
+    const f = d.filters || {};
+    fillSelect($("#f-consumer"), (d.consumers || []).map((c) => ({ v: c.id, n: c.name + " #" + c.id })), "v", "n", f.consumerid);
+    fillSelect($("#f-workspace"), (d.workspaces || []).map((w) => ({ v: w.id, n: w.name + " #" + w.id })), "v", "n", f.workspaceid);
+    fillSelect($("#f-status"), Object.keys(d.statusoptions || {}).map((k) => ({ v: k, n: d.statusoptions[k] })), "v", "n", f.status);
+    fillSelect($("#f-visibility"), Object.keys(d.visibilityoptions || {}).map((k) => ({ v: k, n: d.visibilityoptions[k] })), "v", "n", f.visibility);
+    if ($("#f-q") && !$("#f-q").dataset.set) { $("#f-q").value = f.q || ""; $("#f-q").dataset.set = "1"; }
+
+    const s = d.stats || {};
+    $("#stats").innerHTML = [
+      [s.offerings || 0, "offerings shown"], [s.published || 0, "published"], [s.institutions || 0, "institutions"],
+      [s.approved || 0, "approved/enrolled"], [s.pending || 0, "pending requests"], [s.drop_requested || 0, "drop requests"],
+    ].map(([n, l]) => `<div class="stat"><b>${esc(statPills(n))}</b><span>${esc(l)}</span></div>`).join("");
+
+    $("#legacy-link").href = d.legacyurl || "#";
+
+    const rows = d.rows || [];
+    if (!d.ready) {
+      $("#rows").innerHTML = ""; $("#empty").hidden = false;
+      $("#empty").textContent = "Course offering schema is not ready yet. Run the local_prequran Moodle upgrade first.";
+    } else if (!rows.length) {
+      $("#rows").innerHTML = ""; $("#empty").hidden = false;
+      $("#empty").textContent = "No course offerings match these filters.";
+    } else {
+      $("#empty").hidden = true;
+      $("#rows").innerHTML = rows.map((r) => `
+        <tr>
+          <td><span class="name">${esc(r.workspacename || ("Workspace #" + r.workspaceid))}</span><span class="muted">${esc(r.consumername || "No consumer linked")}${r.workspaceid > 0 ? " · workspace #" + r.workspaceid : ""}</span></td>
+          <td><span class="name">${esc(r.title)}</span><span class="muted">Offering #${esc(r.offeringid)} · ${esc(r.course_key)}</span>${r.summary_short ? `<span class="muted">${esc(r.summary_short)}</span>` : ""}</td>
+          <td><span class="name">${r.moodlecourseid > 0 ? esc(r.moodlefullname || ("Course #" + r.moodlecourseid)) : "Not linked"}</span><span class="muted">${r.moodlecourseid > 0 ? "Moodle #" + esc(r.moodlecourseid) + " · " + esc(r.moodleshortname) : "Approval sync unavailable until linked"}</span>${r.moodlecategory ? `<span class="muted">${esc(r.moodlecategory)}</span>` : ""}</td>
+          <td>${esc(r.startdate_label)}<span class="muted">to ${esc(r.enddate_label)}</span></td>
+          <td><span class="pill">${r.capacity <= 0 ? "Unlimited capacity" : esc(r.capacity) + " capacity"}</span><span class="pill">${esc(r.approvedcount)} approved</span><span class="pill">${esc(r.open_seats)} open</span></td>
+          <td><span class="pill ${cls(r.status)}">${esc(r.status)}</span><span class="pill ${cls(r.visibility)}">${esc(r.visibility)}</span><span class="pill ${cls(r.moodlestatus)}">Moodle ${esc(r.moodlestatus)}</span></td>
+          <td><span class="pill">${esc(r.pendingcount)} pending</span><span class="pill drop_requested">${esc(r.droprequestedcount)} drop requested</span><span class="pill dropped">${esc(r.droppedcount)} dropped</span><span class="pill">${esc(r.requestcount)} total</span></td>
+          <td>${r.manage_url ? `<a class="btn ghost" href="${esc(r.manage_url)}" target="_blank" rel="noopener">Manage</a> <a class="btn ghost" href="${esc(r.catalog_url)}" target="_blank" rel="noopener">Catalog</a>` : `<span class="muted">No workspace link</span>`}</td>
+        </tr>`).join("");
+    }
+
+    $("#report").hidden = false; $("#status").hidden = true;
+  }
+
+  // Client-side CSV — same columns as the legacy export=csv (quality-analytics pattern).
+  function downloadCsv(filename, headers, rows) {
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const blob = new Blob([[headers.map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  $("#csv").addEventListener("click", () => {
+    if (!current) return;
+    const stamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, "");
+    downloadCsv("platform-course-roster-" + stamp + ".csv",
+      ["institution", "workspaceid", "consumer", "offeringid", "title", "course_key", "moodlecourseid",
+       "moodle_course", "moodle_shortname", "moodle_category", "status", "visibility", "approval_mode",
+       "startdate", "enddate", "capacity", "approved_or_enrolled", "pending_requests", "drop_requested", "dropped", "open_seats",
+       "summary", "syllabus", "prerequisites", "updated"],
+      (current.rows || []).map((r) => [
+        r.workspacename, r.workspaceid, r.consumername, r.offeringid, r.title, r.course_key, r.moodlecourseid,
+        r.moodlefullname, r.moodleshortname, r.moodlecategory, r.status, r.visibility, r.approval_mode,
+        r.startdate_label, r.enddate_label, r.capacity, r.approvedcount, r.pendingcount, r.droprequestedcount, r.droppedcount, r.open_seats,
+        r.summary, r.syllabus, r.prerequisites, r.updated_label,
+      ]));
+  });
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#reset").addEventListener("click", () => {
+    $("#f-consumer").value = "0"; $("#f-workspace").value = "0"; $("#f-status").value = ""; $("#f-visibility").value = ""; $("#f-q").value = "";
+    load();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

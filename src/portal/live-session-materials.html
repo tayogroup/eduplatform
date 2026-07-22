@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live session materials · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.live{background:#e1f2ff;color:var(--blue2)}
+  .pill.offline{background:var(--red-bg);color:var(--red)}
+  .pill.type{background:var(--sky);color:var(--ink2);margin-left:0}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .deck{margin-top:10px;padding:11px 14px;border-radius:8px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .deck b{font-size:14px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  button.act{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 15px;font-weight:900;font-size:13px;cursor:pointer}
+  button.act:hover{border-color:var(--blue2)}
+  button.act.primary{background:var(--blue2);color:#fff;border-color:var(--blue2)}
+  button.act.primary:hover{background:#215a94}
+  button.act:disabled{opacity:.55;cursor:wait}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;font-size:13px}
+  th{color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .mtitle{display:block;font-weight:800}
+  .mdesc{display:block;margin-top:2px;color:var(--muted);font-size:12px}
+  .empty{padding:20px;color:var(--muted);font-size:13px;text-align:center}
+  @media(max-width:640px){table,tbody,tr,td{display:block;width:100%}thead{display:none}td{border-bottom:0;padding:6px 12px}tr{border-bottom:1px solid var(--line);padding:8px 0}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live session materials</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_session_materials.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Live session materials</h1><p class="sub" id="subtitle">Swap the active presentation in your live room.</p></div>
+  <div id="status" class="status">Loading materials…</div>
+
+  <div class="panel" id="deck-panel" hidden>
+    <div class="head">
+      <div><h2>Session deck</h2><p class="sub" id="deck-sub"></p></div>
+      <div id="live-flag"></div>
+    </div>
+    <div class="deck" id="deck-row" hidden>
+      <div><b id="agenda-name"></b><span class="mdesc">Default lecture deck loaded when class starts.</span></div>
+      <span class="pill type">Agenda</span>
+    </div>
+    <div class="empty" id="deck-empty" hidden>No agenda deck is attached to this session yet.</div>
+    <div class="actions">
+      <button class="act" type="button" data-do="whiteboard" data-wbstyle="grid">Grid whiteboard</button>
+      <button class="act" type="button" data-do="whiteboard" data-wbstyle="blank">Blank whiteboard</button>
+      <button class="act primary" type="button" id="btn-agenda" data-do="insert" data-materialid="0" hidden>Return to agenda</button>
+    </div>
+  </div>
+
+  <div class="panel" id="lib-panel" hidden>
+    <h2>Workspace library</h2>
+    <p class="sub">PDF is fastest; PowerPoint may take longer while BBB converts it.</p>
+    <div id="lib"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const sessionid = qs.get("sessionid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-session-materials", token, sessionid });
+
+  let busy = false;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const s = d.session || {};
+    const names = d.names || {};
+    const teacher = s.teacherid && names[s.teacherid] ? " · " + esc(names[s.teacherid]) : "";
+    $("#title").textContent = "Live session materials — " + (s.title ? s.title : "session");
+    $("#deck-sub").innerHTML = esc(s.title || "Live session") + teacher + " — swaps the active BBB presentation for this live room.";
+    $("#live-flag").innerHTML = s.bbb_live
+      ? '<span class="pill live">room live</span>'
+      : '<span class="pill offline">room not started</span>';
+
+    const agenda = d.agenda || {};
+    if (agenda.attached) {
+      $("#agenda-name").textContent = agenda.filename || "Live Session Agenda template.pptx";
+      $("#deck-row").hidden = false;
+      $("#deck-empty").hidden = true;
+      $("#btn-agenda").hidden = false;
+    } else {
+      $("#deck-row").hidden = true;
+      $("#deck-empty").hidden = false;
+      $("#btn-agenda").hidden = true;
+    }
+    $("#deck-panel").hidden = false;
+
+    const mats = d.materials || [];
+    $("#lib").innerHTML = mats.length ? `
+      <table>
+        <thead><tr><th>Material</th><th>Type</th><th>Updated</th><th>Action</th></tr></thead>
+        <tbody>${mats.map((m) => `
+          <tr>
+            <td><span class="mtitle">${esc(m.title)}</span>${m.description ? `<span class="mdesc">${esc(m.description)}</span>` : ""}</td>
+            <td><span class="pill type">${esc(m.ext || "")}</span></td>
+            <td>${esc(m.timemodified_label || "")}</td>
+            <td><button class="act primary" type="button" data-do="insert" data-materialid="${m.id}">Use live</button></td>
+          </tr>`).join("")}</tbody>
+      </table>`
+      : `<div class="empty">No Bunny-backed PDF or PowerPoint materials are available in this workspace yet.</div>`;
+    $("#lib-panel").hidden = false;
+
+    $("#status").hidden = true;
+    document.querySelectorAll("button[data-do]").forEach((b) => b.addEventListener("click", onAction));
+  }
+
+  async function onAction(ev) {
+    if (busy) return;
+    const b = ev.currentTarget;
+    const payload = { do: b.dataset.do, sessionid: Number(sessionid) };
+    if (b.dataset.do === "whiteboard") payload.wbstyle = b.dataset.wbstyle;
+    if (b.dataset.do === "insert") payload.materialid = Number(b.dataset.materialid || 0);
+    busy = true;
+    const label = b.textContent;
+    b.disabled = true; b.textContent = "Sending…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-session-materials", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Sent to the live room.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not send: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      busy = false; b.disabled = false; b.textContent = label;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

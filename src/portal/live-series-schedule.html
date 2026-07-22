@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recurring live classes · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .series{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px;background:var(--card)}
+  .series-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+  .series-head h3{margin:0 0 3px;font-size:16px}
+  .series-head .meta{color:var(--muted);font-size:12px;margin:1px 0}
+  .cards{display:grid;gap:10px;margin-top:10px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+  .card.cancelled{background:var(--red-bg);border-color:var(--red)}
+  .card h4{margin:0 0 3px;font-size:14px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.open{background:#e1f2ff;color:var(--blue2)}
+  .pill.waiting{background:var(--amber-bg);color:var(--amber)}
+  .pill.early{background:var(--sky);color:var(--ink2)}
+  .pill.closed{background:#edf0f4;color:var(--muted)}
+  .pill.cancelled{background:var(--red-bg);color:var(--red)}
+  .pill.series{background:var(--sky);color:var(--ink2)}
+  .pill.series.warn{background:var(--amber-bg);color:var(--amber)}
+  .btn{display:inline-block;padding:6px 13px;border-radius:8px;font-size:12px;font-weight:900;text-decoration:none;background:var(--blue2);color:#fff}
+  .btn.light{background:var(--sky);color:var(--blue2)}
+  .acts{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .history{margin-top:12px;padding:11px 13px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .history h5{margin:0 0 7px;font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .change{display:grid;grid-template-columns:180px 1fr;gap:8px;padding:5px 0;border-top:1px solid var(--line);font-size:12px;color:var(--ink2)}
+  .change:first-of-type{border-top:0}
+  .ack{margin-top:10px;padding:11px 13px;border-radius:8px;background:var(--amber-bg);border:1px solid var(--amber)}
+  .ack.done{background:var(--sky);border-color:var(--blue2)}
+  .ack p{margin:0 0 8px;font-size:13px;color:var(--ink2)}
+  .ack button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  .ack button:disabled{opacity:.55;cursor:wait}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Recurring live classes</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_series_schedule.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Recurring live classes</h1><p class="sub" id="subtitle">Latest class times, cancellations, summaries, recordings, and parent-safe change history.</p></div>
+  <div id="status" class="status">Loading recurring class series…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Choose a learner</h2><div class="chooser" id="chooser"></div></div>
+  <div id="series-list" hidden></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-series-schedule", token, childid: qs.get("childid") || "0" });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const sessionCard = (s, names) => {
+    const acts = [];
+    if (s.join_state === "open" && s.joinlaunch) acts.push(`<a class="btn" href="${esc(s.joinlaunch)}">Join</a>`);
+    else acts.push(`<span class="pill ${esc(s.join_state)}">${esc(s.join_label)}</span>`);
+    if (s.noteid > 0 && s.summarylaunch) acts.push(`<a class="btn light" href="${esc(s.summarylaunch)}">Summary</a>`);
+    if (s.visible_recordings > 0 && s.recordinglaunch) acts.push(`<a class="btn light" href="${esc(s.recordinglaunch)}">Recording</a>`);
+    const cancelled = s.status === "cancelled";
+    const line = cancelled
+      ? "Cancelled" + (s.cancellation_reason ? " · " + esc(s.cancellation_reason) : "")
+      : "Scheduled";
+    return `<div class="card${cancelled ? " cancelled" : ""}">
+      <div><h4>Session ${s.series_sequence} · ${esc(when(s.scheduled_start))}</h4>
+        <div class="muted">${line}</div></div>
+      <div class="acts">${acts.join("")}</div>
+    </div>`;
+  };
+
+  const changeRows = (changes) => changes.length
+    ? changes.map((c) => `<div class="change"><span>${esc(when(c.timecreated))}</span><span>${esc(c.label)}</span></div>`).join("")
+    : `<div class="muted">No schedule changes recorded for this series.</div>`;
+
+  const ackBlock = (sr) => {
+    if (!sr.canack) return "";
+    if (sr.ackcurrent) {
+      return `<div class="ack done"><p>Acknowledged on ${esc(when(sr.acknowledgedat))}.</p></div>`;
+    }
+    return `<div class="ack">
+      <p>Please acknowledge that you have seen the latest schedule change for this recurring class.</p>
+      <button type="button" data-seriesid="${sr.seriesid}">Acknowledge schedule change</button>
+    </div>`;
+  };
+
+  const seriesCard = (sr, names) => `
+    <div class="series">
+      <div class="series-head">
+        <div>
+          <h3>${esc(sr.title || "Recurring class")}</h3>
+          <div class="meta">Teacher: ${esc(names[sr.teacherid] || ("Teacher " + sr.teacherid))}</div>
+          <div class="meta">Review target: ${esc(sr.review_target || "to be confirmed")}</div>
+          <div class="meta">${sr.active_count} active class(es), ${sr.cancelled_count} cancelled</div>
+        </div>
+        <span class="pill series${sr.cancelled_count > 0 ? " warn" : ""}">Series #${sr.seriesid}</span>
+      </div>
+      <div class="cards">${sr.sessions.map((s) => sessionCard(s, names)).join("")}</div>
+      <div class="history"><h5>Change history</h5>${changeRows(sr.changes)}</div>
+      ${ackBlock(sr)}
+    </div>`;
+
+  function render(d) {
+    const names = d.names || {};
+    if (d.mode === "chooser") {
+      $("#mode-note").textContent = "Choose a learner";
+      $("#title").textContent = "Whose recurring classes?";
+      $("#chooser").innerHTML = (d.children || []).map((c) => {
+        const u = new URL(location.href); u.searchParams.set("childid", c.studentid);
+        return `<a class="child" href="${esc(u.href)}">${esc(c.name || ("Student " + c.studentid))}</a>`;
+      }).join("") || "<div class='muted'>No linked learner was found for this recurring schedule view.</div>";
+      $("#chooser-panel").hidden = false;
+      $("#status").hidden = true;
+      return;
+    }
+    $("#title").textContent = "Series schedule for " + (d.child && d.child.name ? d.child.name : "student");
+    const list = $("#series-list");
+    if (!d.series || !d.series.length) {
+      list.innerHTML = `<div class="panel"><div class="muted">No recurring live class series found for this student.</div></div>`;
+    } else {
+      list.innerHTML = d.series.map((sr) => seriesCard(sr, names)).join("");
+    }
+    list.hidden = false;
+    $("#status").hidden = true;
+    document.querySelectorAll(".ack button[data-seriesid]").forEach((b) => b.addEventListener("click", () => acknowledge(b, d.child.id)));
+  }
+
+  async function acknowledge(btn, studentid) {
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-series-schedule", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ do: "ack_series_change", seriesid: Number(btn.dataset.seriesid), studentid: Number(studentid) }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Schedule change acknowledged. Thank you.";
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Acknowledge schedule change";
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

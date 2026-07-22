@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platform user roster · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1320px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .stat b{display:block;font-size:28px;line-height:1;color:var(--ink)}
+  .stat span{display:block;margin-top:6px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  form.filters{display:grid;grid-template-columns:1.2fr 1.2fr .8fr .8fr 1fr auto;gap:10px;align-items:end}
+  .field label{display:block;margin-bottom:5px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .field select,.field input{width:100%;min-height:38px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;font-size:13px;padding:0 10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 16px;border:1px solid var(--blue2);border-radius:8px;background:var(--blue2);color:#fff;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--card);color:var(--blue2)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:12px}
+  .tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  table{width:100%;border-collapse:collapse;min-width:1180px}
+  th,td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left;font-size:13px}
+  th{background:var(--sky);color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  tr:last-child td{border-bottom:0}
+  .name{display:block;font-weight:900;color:var(--ink)}
+  .meta{display:block;margin-top:3px;color:var(--muted);font-size:12px}
+  .list{max-width:290px;color:var(--ink2);font-size:12px;line-height:1.35}
+  .pill{display:inline-flex;align-items:center;min-height:24px;margin:0 4px 4px 0;padding:0 10px;border-radius:999px;background:var(--sky);color:var(--blue2);font-size:11px;font-weight:900}
+  .pill.active,.pill.approved,.pill.enrolled{background:#e1f2ff;color:var(--blue2)}
+  .pill.inactive,.pill.pending,.pill.draft{background:var(--amber-bg);color:var(--amber)}
+  .pill.archived,.pill.rejected,.pill.cancelled{background:var(--red-bg);color:var(--red)}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700}
+  @media(max-width:1100px){form.filters{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Platform user roster</small></div>
+  <div class="note">Token-authenticated · parallel-run of platform_user_roster.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Platform user roster</h1>
+    <p class="sub">Users by institution, independent teacher workspace, role, Moodle courses, course offerings, and assignment activity.</p>
+  </div>
+  <div id="status" class="status">Loading roster…</div>
+
+  <div class="stats" id="stats" hidden>
+    <div class="stat"><b id="stat-rows">0</b><span>roster rows</span></div>
+    <div class="stat"><b id="stat-users">0</b><span>unique users</span></div>
+    <div class="stat"><b id="stat-consumers">0</b><span>consumers</span></div>
+    <div class="stat"><b id="stat-workspaces">0</b><span>workspaces</span></div>
+  </div>
+
+  <div class="panel" id="filters-panel" hidden>
+    <form class="filters" id="filters">
+      <div class="field">
+        <label for="f-consumer">Institution / consumer</label>
+        <select id="f-consumer" name="consumerid"></select>
+      </div>
+      <div class="field">
+        <label for="f-workspace">Workspace</label>
+        <select id="f-workspace" name="workspaceid"></select>
+      </div>
+      <div class="field">
+        <label for="f-role">Role</label>
+        <select id="f-role" name="role"></select>
+      </div>
+      <div class="field">
+        <label for="f-status">Status</label>
+        <select id="f-status" name="status"></select>
+      </div>
+      <div class="field">
+        <label for="f-q">Search</label>
+        <input id="f-q" name="q" placeholder="Name, email, user ID">
+      </div>
+      <button class="btn" type="submit">Apply</button>
+    </form>
+  </div>
+
+  <div class="panel" id="roster-panel" hidden>
+    <div class="actions">
+      <button class="btn light" type="button" id="csv-btn">Export CSV</button>
+    </div>
+    <div id="roster"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+  const shortList = (items, limit = 4) => {
+    const a = [...new Set((items || []).map((x) => String(x).trim()).filter(Boolean))];
+    if (!a.length) return "";
+    if (a.length <= limit) return a.join(", ");
+    return a.slice(0, limit).join(", ") + " +" + (a.length - limit) + " more";
+  };
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const filterState = {
+    consumerid: qs.get("consumerid") || "0",
+    workspaceid: qs.get("workspaceid") || "0",
+    role: qs.get("role") || "",
+    status: qs.get("status") == null ? "active" : qs.get("status"),
+    q: qs.get("q") || "",
+  };
+  let lastRows = [];
+  let filtersBuilt = false;
+
+  const url = () => endpoint + "?" + new URLSearchParams(Object.assign({ report: "platform-user-roster", token }, filterState));
+
+  async function load() {
+    $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading roster…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function buildFilters(d) {
+    if (filtersBuilt) return;
+    const opts = d.options || {};
+    const consumerSel = $("#f-consumer");
+    consumerSel.innerHTML = '<option value="0">All institutions and teacher workspaces</option>' +
+      (opts.consumers || []).map((c) => `<option value="${c.id}">${esc(c.name + " - " + c.consumer_type_label)}</option>`).join("");
+    consumerSel.value = filterState.consumerid;
+    const workspaceSel = $("#f-workspace");
+    workspaceSel.innerHTML = '<option value="0">All workspaces</option>' +
+      (opts.workspaces || []).map((w) => `<option value="${w.id}">${esc(w.name + " #" + w.id)}</option>`).join("");
+    workspaceSel.value = filterState.workspaceid;
+    const roleSel = $("#f-role");
+    roleSel.innerHTML = Object.entries(opts.roles || {}).map(([k, v]) => `<option value="${esc(k)}">${esc(v)}</option>`).join("");
+    roleSel.value = filterState.role;
+    const statusSel = $("#f-status");
+    statusSel.innerHTML = Object.entries(opts.statuses || {}).map(([k, v]) => `<option value="${esc(k)}">${esc(v)}</option>`).join("");
+    statusSel.value = filterState.status;
+    $("#f-q").value = filterState.q;
+    filtersBuilt = true;
+    $("#filters-panel").hidden = false;
+  }
+
+  const rowHtml = (row, names) => {
+    const pending = (row.offeringpending || []).length;
+    const status = esc(row.rosterstatus || "");
+    const statusClass = esc(row.status_class || "");
+    return `<tr>
+      <td>
+        <span class="name">${esc(row.consumername || "Unlinked consumer")}</span>
+        <span class="meta">${esc(row.consumer_type_label || "")}${row.consumerid > 0 ? " #" + row.consumerid : ""}</span>
+        <span class="meta">${esc(row.workspacename || "No workspace")}${row.workspaceid > 0 ? " #" + row.workspaceid : ""}</span>
+      </td>
+      <td><span class="pill">${esc(row.role_label || "")}</span></td>
+      <td>
+        <span class="name">${esc(row.fullname || (names[row.userid] || ("User " + row.userid)))}</span>
+        <span class="meta">${esc(row.account_label || "")} · Moodle ID ${row.userid} · ${esc(row.username || "")}</span>
+        <span class="meta">${esc(row.email || "")}</span>
+      </td>
+      <td><div class="list">${esc(shortList(row.moodlecourses))}</div></td>
+      <td>
+        <div class="list">${esc(shortList(row.offeringactive))}</div>
+        ${pending ? `<span class="pill pending">${pending} pending</span>` : ""}
+      </td>
+      <td>
+        ${row.assignedstudents > 0 ? `<span class="pill">${row.assignedstudents} students</span>` : ""}
+        ${row.assignedteachers > 0 ? `<span class="pill">${row.assignedteachers} teachers</span>` : ""}
+      </td>
+      <td>
+        <span class="pill ${statusClass}">${status}</span>
+        <span class="meta">${esc(when(row.rosterupdated))}</span>
+      </td>
+    </tr>`;
+  };
+
+  function render(d) {
+    buildFilters(d);
+    lastRows = d.rows || [];
+    const names = d.names || {};
+    const stats = d.stats || {};
+    $("#stat-rows").textContent = stats.rows || 0;
+    $("#stat-users").textContent = stats.users || 0;
+    $("#stat-consumers").textContent = stats.consumers || 0;
+    $("#stat-workspaces").textContent = stats.workspaces || 0;
+    $("#stats").hidden = false;
+
+    if (!d.schema_ready) {
+      $("#roster").innerHTML = `<div class="empty">Workspace or consumer schema is not ready yet. Run the local_prequran Moodle upgrade, then reopen this report.</div>`;
+    } else if (!lastRows.length) {
+      $("#roster").innerHTML = `<div class="empty">No users match the current filters.</div>`;
+    } else {
+      $("#roster").innerHTML = `<div class="tablewrap"><table>
+        <thead><tr>
+          <th>Institution / workspace</th><th>Role</th><th>User</th>
+          <th>Moodle courses</th><th>Course offerings</th><th>Assignments</th><th>Status</th>
+        </tr></thead>
+        <tbody>${lastRows.map((row) => rowHtml(row, names)).join("")}</tbody>
+      </table></div>`;
+    }
+    $("#roster-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  // -- client-side CSV, same columns/order as the legacy pqpur_emit_csv() --
+  function exportCsv() {
+    const headers = ["consumer_id","consumer","consumer_type","workspace_id","workspace","workspace_type","role","member_status","userid","name","username","email","account_no","moodle_courses","course_offerings","pending_offerings","assigned_students","assigned_teachers","last_updated"];
+    const cell = (v) => {
+      const s = String(v ?? "");
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    };
+    const lines = [headers.join(",")];
+    for (const row of lastRows) {
+      lines.push([
+        row.consumerid || 0,
+        row.consumername || "",
+        row.consumer_type_label || "",
+        row.workspaceid || 0,
+        row.workspacename || "",
+        row.workspace_type || "",
+        row.role_label || "",
+        row.rosterstatus || "",
+        row.userid || 0,
+        row.fullname || "",
+        row.username || "",
+        row.email || "",
+        row.account_no || "",
+        (row.moodlecourses || []).join("; "),
+        (row.offeringall || []).join("; "),
+        (row.offeringpending || []).join("; "),
+        row.assignedstudents || 0,
+        row.assignedteachers || 0,
+        row.rosterupdated > 0 ? when(row.rosterupdated) : "",
+      ].map(cell).join(","));
+    }
+    const blob = new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    const stamp = new Date().toISOString().replace(/[-:T]/g, "").slice(0, 15);
+    a.href = URL.createObjectURL(blob);
+    a.download = "platform-user-roster-" + stamp + ".csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(a.href);
+  }
+
+  $("#filters").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    filterState.consumerid = $("#f-consumer").value;
+    filterState.workspaceid = $("#f-workspace").value;
+    filterState.role = $("#f-role").value;
+    filterState.status = $("#f-status").value;
+    filterState.q = $("#f-q").value;
+    load();
+  });
+  $("#csv-btn").addEventListener("click", exportCsv);
+
+  load();
+})();
+</script>
+</body>
+</html>

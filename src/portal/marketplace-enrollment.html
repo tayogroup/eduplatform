@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketplace enrollment · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .actions{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  a.btn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:8px 14px;background:var(--card);color:var(--blue2);text-decoration:none;font-weight:800;font-size:13px}
+  a.btn:hover{border-color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field.full{grid-column:1/-1}
+  label{font-size:12px;font-weight:800;color:var(--ink2)}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 11px;font:inherit;font-size:14px;background:var(--card);color:var(--ink)}
+  textarea{min-height:80px;resize:vertical}
+  .err{color:var(--red);font-size:12px;font-weight:800}
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--red)}
+  .check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-weight:700;font-size:13px;line-height:1.45}
+  .check input{width:19px;height:19px;flex:0 0 auto;margin-top:1px}
+  .footer{margin-top:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  button.submit{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:900;font-size:14px;cursor:pointer}
+  button.submit:disabled{opacity:.55;cursor:wait}
+  .foot-note{color:var(--muted);font-size:12px}
+  .trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Marketplace enrollment</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of marketplace_enrollment.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Marketplace learner enrollment</h1>
+    <p class="sub" id="subtitle">Complete the learner enrollment before messaging or selecting this teacher.</p>
+    <div class="actions" id="actions" hidden><a class="btn" id="profile-link" href="#" target="_blank" rel="noopener">Teacher profile</a></div>
+  </div>
+  <div id="status" class="status">Loading enrollment…</div>
+  <div class="panel" id="form-panel" hidden>
+    <h2 id="form-heading">Enrollment details</h2>
+    <p class="sub" id="form-intro" style="margin-bottom:14px"></p>
+    <form id="enroll-form" novalidate>
+      <div class="trap" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <div class="grid">
+        <div class="field" data-for="requester_name"><label>Your name</label><input name="requester_name"><span class="err" hidden></span></div>
+        <div class="field" data-for="contact"><label>Email or phone</label><input name="contact"><span class="err" hidden></span></div>
+        <div class="field" data-for="requester_role"><label>Your role</label><select name="requester_role"></select><span class="err" hidden></span></div>
+        <div class="field" data-for="learner_type"><label>Learner record</label><select name="learner_type"></select><span class="err" hidden></span></div>
+        <div class="field" data-for="studentid" id="child-field" hidden><label>Existing linked learner</label><select name="studentid"></select><span class="err" hidden></span></div>
+        <div class="field" data-for="learner_name"><label>Learner name</label><input name="learner_name"><span class="err" hidden></span></div>
+        <div class="field" data-for="age_years"><label>Learner age</label><input name="age_years" type="number" min="1" max="99"><span class="err" hidden></span></div>
+        <div class="field" data-for="subject_area"><label>Subject or learning service</label><select name="subject_area"></select><span class="err" hidden></span></div>
+        <div class="field" data-for="language_subject" id="language-field"><label>Language subject, when applicable</label><select name="language_subject"></select><span class="err" hidden></span></div>
+        <div class="field" data-for="learner_level"><label>Learner level</label><select name="learner_level"></select><span class="err" hidden></span></div>
+        <div class="field" data-for="service_mode"><label>Preferred service mode</label><select name="service_mode"></select><span class="err" hidden></span></div>
+        <div class="field" data-for="timezone"><label>Time zone</label><input name="timezone" placeholder="Example: Africa/Nairobi"><span class="err" hidden></span></div>
+        <div class="field full" data-for="learning_goals"><label>Learning goals</label><textarea name="learning_goals" maxlength="3000" placeholder="What should the learner be able to do or improve?"></textarea><span class="err" hidden></span></div>
+        <div class="field full" data-for="support_needs"><label>Learning support or accessibility needs</label><textarea name="support_needs" maxlength="3000" placeholder="Optional"></textarea><span class="err" hidden></span></div>
+        <div class="field full" data-for="availability"><label>Preferred days and times</label><textarea name="availability" maxlength="3000" placeholder="Include your local days and times."></textarea><span class="err" hidden></span></div>
+        <div class="field full" data-for="questions"><label id="questions-label">Questions for the teacher</label><textarea name="questions" maxlength="3000" placeholder="Optional questions about teaching style, materials, scheduling, or fees."></textarea><span class="err" hidden></span></div>
+        <div class="field full" data-for="consent">
+          <label class="check"><input type="checkbox" name="consent" value="1"><span id="consent-text"></span></label>
+          <span class="err" hidden></span>
+        </div>
+      </div>
+      <div class="footer">
+        <button type="submit" class="submit">Submit enrollment</button>
+        <span class="foot-note">Your verified account will be used; no duplicate identity is created.</span>
+      </div>
+    </form>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const teacherid = (qs.get("teacherid") || "0").replace(/[^0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const setStatus = (msg, cls) => { const el = $("#status"); el.className = "status" + (cls ? " " + cls : ""); el.hidden = false; el.textContent = msg; };
+
+  if (!endpoint || !token) { setStatus("Missing endpoint/token — open via the Moodle portal launch link.", "error"); return; }
+  if (!teacherid || teacherid === "0") { setStatus("Missing teacher — open this page from a teacher's marketplace profile.", "error"); return; }
+
+  const form = $("#enroll-form");
+  const fieldEl = (name) => document.querySelector('.field[data-for="' + name + '"]');
+  const setErr = (name, msg) => {
+    const wrap = fieldEl(name); if (!wrap) return;
+    const span = wrap.querySelector(".err");
+    if (msg) { span.textContent = msg; span.hidden = false; wrap.classList.add("invalid"); }
+    else { span.textContent = ""; span.hidden = true; wrap.classList.remove("invalid"); }
+  };
+  const clearErrors = () => document.querySelectorAll(".field").forEach((w) => { w.classList.remove("invalid"); const s = w.querySelector(".err"); if (s) { s.hidden = true; s.textContent = ""; } });
+
+  const fillOptions = (sel, entries, current, placeholder) => {
+    let html = placeholder !== undefined ? '<option value="">' + esc(placeholder) + "</option>" : "";
+    for (const [value, label] of entries) {
+      html += '<option value="' + esc(value) + '"' + (value === current ? " selected" : "") + ">" + esc(label) + "</option>";
+    }
+    sel.innerHTML = html;
+  };
+
+  const toggleLanguage = () => { $("#language-field").hidden = form.subject_area.value !== "languages"; };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "marketplace-enrollment", token, teacherid }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { setStatus("Could not load: " + e.message, "error"); }
+  }
+
+  function render(d) {
+    const t = d.teacher || {}, o = d.options || {}, def = d.defaults || {}, req = d.requester || {};
+    $("#title").textContent = "Enroll to request " + (t.name || "this teacher");
+    $("#mode-note").textContent = (d.brand || "Marketplace") + " · parallel-run of marketplace_enrollment.php";
+    if (t.profileurl) { $("#profile-link").href = t.profileurl; $("#actions").hidden = false; }
+    $("#form-intro").textContent = "This information gives " + (t.name || "the teacher") + " and " + (d.brand || "the marketplace") +
+      " the context needed to communicate safely and review whether the service is a good fit. It does not assign the teacher automatically.";
+    $("#questions-label").textContent = "Questions for " + (t.name || "the teacher");
+    $("#consent-text").textContent = "I confirm that the information is accurate and consent to " + (d.brand || "the marketplace") +
+      " sharing this enrollment with the selected teacher for marketplace review and communication.";
+
+    form.requester_name.value = req.name || "";
+    form.contact.value = req.contact || "";
+    form.timezone.value = def.timezone || "";
+
+    fillOptions(form.requester_role, Object.entries(o.roles || {}), def.requester_role || "parent_guardian");
+
+    const children = d.children || [];
+    const learnerTypes = [["self", "For myself"]];
+    if (children.length) learnerTypes.push(["linked_child", "Existing linked learner"]);
+    learnerTypes.push(["new_learner", "New learner / child"]);
+    fillOptions(form.learner_type, learnerTypes, def.learner_type || "new_learner");
+
+    if (children.length) {
+      fillOptions(form.studentid, children.map((c) => [String(c.studentid), c.name]), "", "Select learner");
+      $("#child-field").hidden = false;
+    }
+
+    fillOptions(form.subject_area, Object.entries(o.subjects || {}), "", "Select");
+    fillOptions(form.language_subject, (o.languages || []).map((l) => [l, l]), "", "Not applicable");
+    fillOptions(form.learner_level, Object.entries(o.levels || {}), "", "Select");
+    fillOptions(form.service_mode, Object.entries(o.modes || {}), "", "Select");
+
+    form.subject_area.addEventListener("change", toggleLanguage);
+    toggleLanguage();
+
+    $("#status").hidden = true;
+    $("#form-panel").hidden = false;
+    form.addEventListener("submit", submit);
+  }
+
+  async function submit(ev) {
+    ev.preventDefault();
+    clearErrors();
+    const btn = form.querySelector("button.submit");
+    btn.disabled = true; btn.textContent = "Submitting…";
+    const payload = { do: "submit_enrollment", website: form.website.value };
+    for (const name of ["requester_name","contact","requester_role","learner_type","studentid","learner_name","age_years","subject_area","language_subject","learner_level","learning_goals","support_needs","service_mode","timezone","availability","questions"]) {
+      payload[name] = form[name] ? form[name].value : "";
+    }
+    payload.consent = form.consent.checked ? 1 : 0;
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "marketplace-enrollment", token, teacherid }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (r.status === 422 && d.errors) {
+        for (const [name, msg] of Object.entries(d.errors)) setErr(name, msg);
+        setStatus(d.error || "Please complete the highlighted enrollment information.", "error");
+        btn.disabled = false; btn.textContent = "Submit enrollment";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#form-panel").hidden = true;
+      let msg = d.message || "Enrollment submitted.";
+      setStatus(msg, "saved");
+      if (d.messagesurl) {
+        const el = $("#status");
+        el.innerHTML = esc(msg) + ' <a href="' + esc(d.messagesurl) + '">Open messages</a>';
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Submit enrollment";
+      setStatus("Could not submit: " + e.message, "error");
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

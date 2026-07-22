@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speak recordings · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 4px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .cards{display:grid;gap:12px;margin-top:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card.is-chain-current{outline:3px solid rgba(42,108,176,.25);border-color:var(--blue2)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .card .head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2);white-space:nowrap}
+  .group-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .chain-status{width:100%;margin:2px 0 0;color:var(--ink2);font-size:13px;font-weight:700}
+  button.btn{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  button.btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  audio.rec{width:100%;margin-top:4px}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  a.child .muted{display:block;margin-top:4px;font-weight:600}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Speak recordings</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of recordings.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Speak recordings</h1><p class="sub" id="subtitle">Play submitted Speak practice together, or review individual recordings.</p></div>
+  <div id="status" class="status">Loading recordings…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Choose a student</h2><p class="sub">Students with submitted Speak practice recordings you can review.</p><div class="chooser" id="chooser"></div></div>
+  <div id="groups"></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "-";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const childid = qs.get("childid") || "0";
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "recordings", token, childid });
+  const playUrl = (id) => endpoint + "?" + new URLSearchParams({ report: "recordings", token, childid, action: "play", id: String(id) });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const recordCard = (groupKey, rec) => `
+    <div class="card" data-chain-item="${esc(groupKey)}" data-chain-title="${esc(rec.title || "Recording")}">
+      <div class="head">
+        <div>
+          <h3>${esc(rec.title || "Speak recording")}</h3>
+          <div class="meta">${esc(rec.unit || "Speak practice")} · Attempt ${Number(rec.attempt_no) || 0} · ${esc(when(rec.timecreated))}</div>
+        </div>
+        <span class="pill">${rec.duration_sec > 0 ? esc(rec.duration_sec + " sec") : "recorded"}</span>
+      </div>
+      <audio class="rec" controls preload="none" src="${esc(playUrl(rec.id))}"></audio>
+    </div>`;
+
+  const groupPanel = (g) => `
+    <div class="panel" data-recording-group="${esc(g.key)}">
+      <div class="group-head">
+        <div><h2>${esc(g.title)}</h2><p class="sub">${esc(g.summary || "")}</p></div>
+        <div class="chain">
+          <button class="btn js-play-all" type="button" data-group="${esc(g.key)}">Play all</button>
+          <button class="btn light js-stop" type="button" data-group="${esc(g.key)}">Stop</button>
+          <p class="chain-status" data-chain-status="${esc(g.key)}">${(g.records || []).length} recordings ready.</p>
+        </div>
+      </div>
+      <div class="cards">${(g.records || []).map((rec) => recordCard(g.key, rec)).join("")}</div>
+    </div>`;
+
+  function render(d) {
+    if (d.mode === "chooser") {
+      $("#mode-note").textContent = "Choose a student";
+      $("#title").textContent = "Whose recordings?";
+      $("#subtitle").textContent = "Choose a student to review submitted Speak practice recordings.";
+      $("#chooser").innerHTML = (d.students || []).map((c) => {
+        const u = new URL(location.href); u.searchParams.set("childid", c.studentid);
+        return `<a class="child" href="${esc(u.href)}">${esc(c.name || ("Student " + c.studentid))}
+          <span class="muted">${Number(c.recording_count) || 0} recordings · last ${esc(when(c.last_recorded))}</span></a>`;
+      }).join("") || "<div class='muted'>No Speak practice recordings are available for your account yet.</div>";
+      $("#chooser-panel").hidden = false;
+      $("#status").hidden = true;
+      return;
+    }
+    $("#title").textContent = "Student recordings for " + (d.child && d.child.name ? d.child.name : "student");
+    const groups = d.groups || [];
+    $("#groups").innerHTML = groups.length
+      ? groups.map(groupPanel).join("")
+      : "<div class='panel muted'>No student recordings have been submitted yet.</div>";
+    $("#status").hidden = true;
+    wireChain();
+  }
+
+  // Sequential play-all chain — ported from the legacy page's inline script.
+  const chain = { audio: null, items: [], index: -1, group: "" };
+
+  function chainStatus(group, text) {
+    const el = document.querySelector('[data-chain-status="' + group + '"]');
+    if (el) el.textContent = text;
+  }
+
+  function clearCurrent() {
+    document.querySelectorAll(".card.is-chain-current").forEach((card) => card.classList.remove("is-chain-current"));
+  }
+
+  function stopChain(message) {
+    if (chain.audio) {
+      chain.audio.pause();
+      chain.audio.removeAttribute("src");
+      chain.audio.load();
+    }
+    clearCurrent();
+    if (chain.group) chainStatus(chain.group, message || "Playback stopped.");
+    chain.items = [];
+    chain.index = -1;
+    chain.group = "";
+  }
+
+  function playAt(index) {
+    if (!chain.items[index]) {
+      stopChain("Playback complete.");
+      return;
+    }
+    chain.index = index;
+    clearCurrent();
+    const card = chain.items[index];
+    const audio = card.querySelector("audio");
+    const title = card.getAttribute("data-chain-title") || "Recording";
+    if (!audio || !audio.src) {
+      playAt(index + 1);
+      return;
+    }
+    card.classList.add("is-chain-current");
+    chainStatus(chain.group, "Playing " + (index + 1) + " of " + chain.items.length + ": " + title);
+    chain.audio.src = audio.src;
+    chain.audio.play().catch(() => {
+      chainStatus(chain.group, "Browser blocked autoplay. Press Play all again.");
+    });
+  }
+
+  function wireChain() {
+    document.querySelectorAll(".js-play-all").forEach((button) => {
+      button.addEventListener("click", () => {
+        const group = button.getAttribute("data-group") || "";
+        const items = Array.prototype.slice.call(document.querySelectorAll('[data-chain-item="' + group + '"]'));
+        if (!items.length) {
+          chainStatus(group, "No recordings to play.");
+          return;
+        }
+        document.querySelectorAll("audio.rec").forEach((audio) => audio.pause());
+        stopChain("");
+        chain.audio = chain.audio || new Audio();
+        chain.audio.onended = () => { playAt(chain.index + 1); };
+        chain.group = group;
+        chain.items = items;
+        playAt(0);
+      });
+    });
+
+    document.querySelectorAll(".js-stop").forEach((button) => {
+      button.addEventListener("click", () => stopChain("Playback stopped."));
+    });
+
+    document.querySelectorAll("audio.rec").forEach((audio) => {
+      audio.addEventListener("play", () => {
+        if (chain.group) stopChain("Playback stopped for individual review.");
+      });
+    });
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

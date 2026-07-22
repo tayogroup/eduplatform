@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course offerings · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px;align-items:start}
+  @media(max-width:980px){.grid{display:block}}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin:0 5px 4px 0;background:var(--sky);color:var(--ink2)}
+  .pill.blue{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .twrap{overflow-x:auto}
+  .name{display:block;font-weight:800;font-size:14px}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:70px;resize:vertical}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:640px){.row2{display:block}}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  button.light{background:var(--sky);color:var(--blue)}
+  button:disabled{opacity:.55;cursor:wait}
+  a.btn{display:inline-block;background:var(--sky);color:var(--blue);border-radius:8px;padding:7px 14px;font-weight:900;font-size:13px;text-decoration:none}
+  .checkline{display:flex;gap:8px;align-items:center;margin:6px 0;font-size:13px;font-weight:700;color:var(--ink)}
+  .checkline input{width:auto}
+  .filterbar{display:grid;grid-template-columns:1fr 1fr 1fr auto auto;gap:8px;align-items:end;margin-bottom:12px}
+  @media(max-width:840px){.filterbar{display:block}}
+  .inlineform{margin-top:8px;padding:10px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Course offerings</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of course_offerings.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Course offerings</h1><p class="sub" id="subtitle">Publish institution course seats, dates, syllabus, prerequisites, and approve enrollment requests.</p></div>
+  <div id="status" class="status">Loading course offerings…</div>
+  <div id="content" hidden>
+    <div class="grid">
+      <div class="panel">
+        <h2 id="form-title">Create offering</h2>
+        <form id="offering-form">
+          <input type="hidden" name="offeringid" value="0">
+          <div class="row2">
+            <div><label>Course track</label><select name="course_key"></select></div>
+            <div><label>Moodle course action</label><select name="course_link_mode">
+              <option value="existing">Use existing Moodle course</option>
+              <option value="create_new">Create new Moodle course</option>
+            </select><div class="muted">Create new will place the Moodle course in this institution's Moodle category and enable manual enrollment.</div></div>
+          </div>
+          <div><label>Linked Moodle course</label><select name="moodlecourseid"></select><div class="muted" id="moodle-help"></div></div>
+          <div><label>Title</label><input type="text" name="title" placeholder="Pre-Quraan beginner group"></div>
+          <div><label>Summary</label><textarea name="summary"></textarea></div>
+          <div><label>Syllabus</label><textarea name="syllabus"></textarea></div>
+          <div><label>Prerequisites</label><textarea name="prerequisites"></textarea></div>
+          <div class="row2">
+            <div><label>Start date</label><input type="date" name="startdate"></div>
+            <div><label>End date</label><input type="date" name="enddate"></div>
+          </div>
+          <div class="row2">
+            <div><label>Seats</label><input type="number" min="0" name="capacity" value="9"></div>
+            <div><label>Status</label><select name="status"></select></div>
+          </div>
+          <h2 style="margin-top:14px">Pricing</h2>
+          <div class="row2">
+            <div><label>Tuition amount</label><input type="text" name="tuition_amount" placeholder="0.00"></div>
+            <div><label>Currency</label><input type="text" maxlength="3" name="pricing_currency"></div>
+          </div>
+          <div class="row2">
+            <div><label>Registration fee</label><input type="text" name="registration_fee" placeholder="0.00"></div>
+            <div><label>Materials fee</label><input type="text" name="materials_fee" placeholder="0.00"></div>
+          </div>
+          <div class="row2">
+            <div><label>Tax behavior</label><select name="tax_behavior"></select></div>
+            <div><label>Payment timing</label><select name="payment_required_timing"></select></div>
+          </div>
+          <div><label>Refund policy label</label><input type="text" name="refund_policy_label" placeholder="Standard tuition refund policy"></div>
+          <div class="checkline"><input type="checkbox" name="installment_eligible" value="1"> Installments allowed</div>
+          <div class="checkline"><input type="checkbox" name="scholarship_eligible" value="1"> Scholarship eligible</div>
+          <div><label>Visibility</label><select name="visibility"></select></div>
+          <div class="actions">
+            <button type="submit">Save offering</button>
+            <a class="btn" id="blank-form-link" href="#">New blank form</a>
+          </div>
+        </form>
+      </div>
+      <div>
+        <div class="panel">
+          <h2>Offerings</h2>
+          <div class="twrap" id="offerings"></div>
+        </div>
+        <div class="panel">
+          <h2>Enrollment requests <span class="pill warn" id="pending-pill"></span><span class="pill" id="drop-pill"></span></h2>
+          <form class="filterbar" id="filter-form">
+            <div><label>Status</label><select name="request_status"><option value="">All statuses</option></select></div>
+            <div><label>Offering</label><select name="request_offeringid"><option value="0">All offerings</option></select></div>
+            <div><label>Student</label><input type="text" name="request_student" placeholder="Name, email, Account No."></div>
+            <button type="submit">Filter</button>
+            <button type="button" class="light" id="clear-filters">Clear</button>
+          </form>
+          <div class="actions" style="margin:0 0 12px">
+            <input type="text" id="bulk-notes" placeholder="Bulk admin note" style="max-width:220px">
+            <button id="bulk-approve" type="button">Bulk approve</button>
+            <button id="bulk-reject" type="button" class="light">Bulk reject</button>
+            <button id="export-csv" type="button" class="light">Export CSV</button>
+          </div>
+          <div class="twrap" id="requests"></div>
+        </div>
+        <div class="panel">
+          <h2>Course audit log</h2>
+          <div class="twrap" id="audits"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dateOnly = (t) => Number(t) ? new Date(t * 1000).toLocaleDateString(undefined, { day:"numeric", month:"short", year:"numeric" }) : "";
+  const when = (t) => Number(t) ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"2-digit", hour:"numeric", minute:"2-digit" }) : "";
+  const words = (v) => String(v || "").replace(/_/g, " ");
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const getParams = (extra) => new URLSearchParams({
+    report: "course-offerings", token,
+    workspaceid: qs.get("workspaceid") || "0",
+    consumer: qs.get("consumer") || "",
+    editid: qs.get("editid") || "0",
+    request_status: qs.get("request_status") || "",
+    request_offeringid: qs.get("request_offeringid") || "0",
+    request_student: qs.get("request_student") || "",
+    ...extra,
+  });
+
+  let data = null;
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + getParams());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function post(body, btn) {
+    if (btn) { btn.disabled = true; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "course-offerings", token, workspaceid: qs.get("workspaceid") || "0", consumer: qs.get("consumer") || "" }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").textContent = (d.message || "Saved.") + (d.error ? " · " + d.error : "");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+      return d;
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return null;
+    } finally {
+      if (btn) { btn.disabled = false; }
+    }
+  }
+
+  const fillSelect = (sel, entries, selected) => {
+    sel.innerHTML = entries.map(([v, l]) => `<option value="${esc(v)}"${String(v) === String(selected) ? " selected" : ""}>${esc(l)}</option>`).join("");
+  };
+
+  function renderForm(d) {
+    const f = document.forms["offering-form"];
+    const form = d.form || {};
+    $("#form-title").textContent = Number(form.offeringid) > 0 ? "Edit offering" : "Create offering";
+    f.offeringid.value = form.offeringid || "0";
+    fillSelect(f.course_key, (d.catalog || []).map((c) => [c.key, c.title]), form.course_key);
+    f.course_link_mode.value = form.course_link_mode || "existing";
+    fillSelect(f.moodlecourseid, [["0", "Choose Moodle course"]].concat((d.moodlecourses || []).map((c) => [c.id, c.label])), form.moodlecourseid);
+    $("#moodle-help").textContent = (d.moodlecourses || []).length
+      ? "Required. This is the Moodle course students will be enrolled into after approval."
+      : "No Moodle courses are available to link. Create the Moodle course first, then return here.";
+    fillSelect(f.status, Object.entries(d.options.statuses || {}), form.status);
+    fillSelect(f.visibility, Object.entries(d.options.visibilities || {}), form.visibility);
+    fillSelect(f.tax_behavior, Object.entries(d.options.tax_behaviors || {}), form.tax_behavior);
+    fillSelect(f.payment_required_timing, (d.options.payment_timings || []).map((v) => [v, words(v).replace(/\b\w/g, (c) => c.toUpperCase())]), form.payment_required_timing);
+    ["title", "summary", "syllabus", "prerequisites", "startdate", "enddate", "capacity", "tuition_amount", "pricing_currency", "registration_fee", "materials_fee", "refund_policy_label"].forEach((k) => { f[k].value = form[k] || ""; });
+    f.installment_eligible.checked = form.installment_eligible === "1";
+    f.scholarship_eligible.checked = form.scholarship_eligible === "1";
+  }
+
+  const offeringRow = (o) => {
+    const p = o.pricing || {};
+    const fees = ((Number(p.registration_fee) || 0) + (Number(p.materials_fee) || 0)).toFixed(2);
+    return `<tr>
+      <td><span class="name">${esc(o.title)}</span><span class="muted">${esc(o.track_title)} / Moodle #${Number(o.moodlecourseid)}</span></td>
+      <td>${Number(o.startdate) ? esc(dateOnly(o.startdate)) : "Not set"}${Number(o.enddate) ? "<br>" + esc(dateOnly(o.enddate)) : ""}</td>
+      <td><span class="pill">${Number(o.approved_count)} approved</span><span class="pill">${Number(o.capacity) <= 0 ? "Unlimited" : Number(o.open_seats) + " open"}</span></td>
+      <td><span class="name">${esc((p.currency || "") + " " + (p.total || ""))}</span><span class="muted">Tuition ${esc(p.tuition_amount || "")} / Fees ${esc(fees)}</span>${p.installment_eligible ? '<span class="pill">Installments</span>' : ""}${p.scholarship_eligible ? '<span class="pill">Scholarship</span>' : ""}</td>
+      <td><span class="pill blue">${esc(o.status)}</span><span class="pill">${esc(o.visibility)}</span><span class="pill">${esc(o.availability)}</span></td>
+      <td>
+        <button type="button" class="light" data-act="edit" data-id="${Number(o.id)}">Edit</button>
+        <button type="button" class="light" data-act="clone" data-id="${Number(o.id)}">Clone</button>
+        ${o.status !== "archived" ? `<button type="button" class="light" data-act="archive" data-id="${Number(o.id)}">Archive</button>` : ""}
+      </td>
+    </tr>`;
+  };
+
+  const reviewCell = (r) => {
+    const noteInput = `<label>Admin note</label><input type="text" name="admin_notes" placeholder="Optional note">`;
+    if (r.status === "pending") {
+      return `<form class="inlineform" data-do="review_request" data-requestid="${Number(r.id)}">${noteInput}
+        <div class="actions"><button name="decision" value="approved" type="submit">Approve</button>
+        <button name="decision" value="rejected" type="submit" class="light">Reject</button></div></form>`;
+    }
+    if (r.status === "approved") {
+      return `<span class="muted">${esc(r.admin_notes || "")}</span>
+        <form class="inlineform" data-do="retry_moodle_enrollment" data-requestid="${Number(r.id)}"><button type="submit" class="light">Retry Moodle sync</button></form>
+        <form class="inlineform" data-do="drop_enrollment" data-requestid="${Number(r.id)}"><label>Drop note</label><input type="text" name="admin_notes" placeholder="Reason or admin note"><div class="actions"><button type="submit" class="light">Drop enrollment</button></div></form>`;
+    }
+    if (r.status === "enrolled") {
+      return `<span class="muted">${esc((r.admin_notes || "").trim() || "Enrollment complete")}</span>
+        <form class="inlineform" data-do="drop_enrollment" data-requestid="${Number(r.id)}"><label>Drop note</label><input type="text" name="admin_notes" placeholder="Reason or admin note"><div class="actions"><button type="submit" class="light">Drop enrollment</button></div></form>`;
+    }
+    if (r.status === "drop_requested") {
+      return `<span class="muted">${esc((r.request_notes || "").trim() || "Student or parent requested to drop this course.")}</span>
+        <form class="inlineform" data-do="review_drop" data-requestid="${Number(r.id)}">${noteInput}
+        <div class="actions"><button name="decision" value="approved" type="submit">Approve drop</button>
+        <button name="decision" value="rejected" type="submit" class="light">Reject drop</button></div></form>`;
+    }
+    return `<span class="muted">${esc(r.admin_notes || "")}</span>`;
+  };
+
+  const requestRow = (r, d) => {
+    const fin = r.finance;
+    const p = r.pricing || {};
+    return `<tr>
+      <td>${r.status === "pending" ? `<input type="checkbox" class="bulk-check" value="${Number(r.id)}">` : '<span class="muted">-</span>'}</td>
+      <td><span class="name">${esc(r.student_name)}</span><span class="muted">${esc(r.offering_title)}<br>${esc(r.account_label)} / ${esc(r.email)}</span></td>
+      <td><span class="pill blue">${esc(r.status_label)}</span>${Number(r.moodleenrolledat) > 0 ? `<span class="muted">Moodle enrolled ${esc(when(r.moodleenrolledat))}</span>` : (r.status === "approved" ? '<span class="muted">Awaiting Moodle enrollment sync</span>' : "")}</td>
+      <td><span class="pill">${esc(r.finance_status_label)}</span><span class="muted">${esc((p.currency || "") + " " + (p.total || ""))} expected${fin ? " / balance " + esc(fin.balancedue) : ""}</span>
+        ${(r.finance_warnings || []).map((w) => `<span class="pill warn">${esc(w)}</span>`).join("")}
+        ${!fin && d.invoice_schema_ready ? `<form class="inlineform" data-do="create_invoice_from_request" data-requestid="${Number(r.id)}"><button type="submit" class="light">Create invoice</button></form>` : ""}</td>
+      <td>${esc(r.request_notes || "")}</td>
+      <td>${reviewCell(r)}</td>
+    </tr>`;
+  };
+
+  const auditRow = (a) => `<tr>
+    <td><span class="name">${esc(words(a.action))}</span></td>
+    <td><span class="name">${esc(a.actor_name)}</span><span class="muted">${esc(a.actor_account || "")}</span></td>
+    <td><span class="pill">${esc(a.targettype)} #${Number(a.targetid)}</span>${Number(a.offeringid) > 0 ? `<span class="pill">Offering #${Number(a.offeringid)}</span>` : ""}${Number(a.requestid) > 0 ? `<span class="pill">Request #${Number(a.requestid)}</span>` : ""}</td>
+    <td class="muted">${esc(a.details_label || "")}</td>
+    <td class="muted">${esc(when(a.timecreated))}</td>
+  </tr>`;
+
+  function render(d) {
+    $("#title").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " " : "") + "Course offerings";
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = d.message || "Course offering tables are not ready.";
+      return;
+    }
+    renderForm(d);
+
+    $("#offerings").innerHTML = (d.offerings || []).length
+      ? `<table><thead><tr><th>Offering</th><th>Dates</th><th>Seats</th><th>Pricing</th><th>Status</th><th>Actions</th></tr></thead><tbody>${d.offerings.map(offeringRow).join("")}</tbody></table>`
+      : "<div class='muted'>No course offerings yet.</div>";
+
+    $("#pending-pill").textContent = Number(d.pendingrequestcount) + " pending";
+    $("#drop-pill").textContent = Number(d.droprequestcount) + " drop requests";
+    const ff = document.forms["filter-form"];
+    fillSelect(ff.request_status, [["", "All statuses"]].concat((d.options.request_statuses || []).map((s) => [s, words(s)])), d.filters.request_status || "");
+    fillSelect(ff.request_offeringid, [["0", "All offerings"]].concat((d.offerings || []).map((o) => [o.id, o.title])), d.filters.request_offeringid || "0");
+    ff.request_student.value = d.filters.request_student || "";
+
+    $("#requests").innerHTML = (d.requests || []).length
+      ? `<table><thead><tr><th>Select</th><th>Request</th><th>Status</th><th>Finance</th><th>Notes</th><th>Review</th></tr></thead><tbody>${d.requests.map((r) => requestRow(r, d)).join("")}</tbody></table>`
+      : "<div class='muted'>No enrollment requests yet.</div>";
+
+    $("#audits").innerHTML = (d.courseaudits || []).length
+      ? `<table><thead><tr><th>Activity</th><th>Actor</th><th>Target</th><th>Details</th><th>Time</th></tr></thead><tbody>${d.courseaudits.map(auditRow).join("")}</tbody></table>`
+      : "<div class='muted'>No course audit activity yet.</div>";
+
+    $("#content").hidden = false;
+    $("#status").hidden = true;
+
+    // Offering table actions.
+    document.querySelectorAll("#offerings button[data-act]").forEach((b) => b.addEventListener("click", async () => {
+      const id = Number(b.dataset.id);
+      if (b.dataset.act === "edit") {
+        const u = new URL(location.href); u.searchParams.set("editid", id); location.href = u.href; return;
+      }
+      if (b.dataset.act === "clone") { await post({ do: "clone_offering", offeringid: id }, b); return; }
+      if (b.dataset.act === "archive") { await post({ do: "archive_offering", offeringid: id }, b); return; }
+    }));
+
+    // Per-request inline forms (review, drop, retry, invoice).
+    document.querySelectorAll("form.inlineform").forEach((f) => f.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const body = { do: f.dataset.do, requestid: Number(f.dataset.requestid) };
+      if (f.admin_notes) body.admin_notes = f.admin_notes.value;
+      const submitter = ev.submitter;
+      if (submitter && submitter.name === "decision") body.decision = submitter.value;
+      const d2 = await post(body, submitter || f.querySelector("button"));
+      if (d2 && d2.invoiceurl) {
+        $("#status").textContent = (d2.message || "") + " Open it in Moodle: " + d2.invoiceurl;
+      }
+    }));
+  }
+
+  // Create/edit offering form.
+  document.forms["offering-form"].addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const body = { do: "save_offering" };
+    ["offeringid", "course_link_mode", "course_key", "moodlecourseid", "title", "summary", "syllabus", "prerequisites",
+     "startdate", "enddate", "capacity", "tuition_amount", "pricing_currency", "registration_fee", "materials_fee",
+     "tax_behavior", "refund_policy_label", "payment_required_timing", "visibility", "status"].forEach((k) => { body[k] = f[k].value; });
+    body.installment_eligible = f.installment_eligible.checked ? 1 : 0;
+    body.scholarship_eligible = f.scholarship_eligible.checked ? 1 : 0;
+    const d2 = await post(body, f.querySelector("button[type=submit]"));
+    if (d2 && Number(body.offeringid) === 0) {
+      const u = new URL(location.href); u.searchParams.set("editid", d2.offeringid || 0); history.replaceState(null, "", u.href);
+    }
+  });
+
+  $("#blank-form-link").addEventListener("click", (ev) => {
+    ev.preventDefault();
+    const u = new URL(location.href); u.searchParams.delete("editid"); location.href = u.href;
+  });
+
+  // Request filters reload the page with filter params (server-side filtering, like legacy).
+  document.forms["filter-form"].addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const u = new URL(location.href);
+    u.searchParams.set("request_status", f.request_status.value);
+    u.searchParams.set("request_offeringid", f.request_offeringid.value);
+    u.searchParams.set("request_student", f.request_student.value);
+    location.href = u.href;
+  });
+  $("#clear-filters").addEventListener("click", () => {
+    const u = new URL(location.href);
+    ["request_status", "request_offeringid", "request_student"].forEach((k) => u.searchParams.delete(k));
+    location.href = u.href;
+  });
+
+  // Bulk approve / reject over checked pending requests.
+  const bulk = async (decision, btn) => {
+    const ids = Array.from(document.querySelectorAll(".bulk-check:checked")).map((c) => Number(c.value));
+    if (!ids.length) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Select at least one pending request.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    await post({ do: "bulk_review_requests", decision, admin_notes: $("#bulk-notes").value, requestids: ids }, btn);
+  };
+  $("#bulk-approve").addEventListener("click", (ev) => bulk("approved", ev.currentTarget));
+  $("#bulk-reject").addEventListener("click", (ev) => bulk("rejected", ev.currentTarget));
+
+  // CSV export: fetch up to 5000 filtered rows (export=requests_csv) and build
+  // the same column set as the legacy CSV client-side.
+  $("#export-csv").addEventListener("click", async (ev) => {
+    const btn = ev.currentTarget;
+    btn.disabled = true;
+    try {
+      const r = await fetch(endpoint + "?" + getParams({ export: "requests_csv" }));
+      const d = await r.json();
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      const cols = ["requestid", "workspaceid", "offeringid", "offering_title", "course_key", "moodlecourseid",
+        "studentid", "student_name", "account_no", "email", "requesterid", "requester_role",
+        "status", "request_notes", "admin_notes", "approvedby", "approved_at", "moodle_enrolled_at",
+        "droppedby", "dropped_at", "created_at", "updated_at"];
+      const cell = (v) => { const s = String(v ?? ""); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+      const lines = [cols.join(",")];
+      (d.requests || []).forEach((q) => {
+        lines.push([q.id, q.workspaceid, q.offeringid, q.offering_title, q.course_key, q.moodlecourseid,
+          q.studentid, q.student_name, q.idnumber, q.email, q.requesterid, q.requester_role,
+          q.status, q.request_notes, q.admin_notes, q.approvedby,
+          Number(q.approvedat) > 0 ? when(q.approvedat) : "",
+          Number(q.moodleenrolledat) > 0 ? when(q.moodleenrolledat) : "",
+          q.droppedby || 0, Number(q.droppedat) > 0 ? when(q.droppedat) : "",
+          Number(q.timecreated) > 0 ? when(q.timecreated) : "",
+          Number(q.timemodified) > 0 ? when(q.timemodified) : ""].map(cell).join(","));
+      });
+      const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      const wsid = (data && data.workspace && data.workspace.id) || qs.get("workspaceid") || "0";
+      a.download = "workspace-course-enrollment-requests-" + wsid + "-" + new Date().toISOString().replace(/[:T]/g, "-").slice(0, 17) + ".csv";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Export failed: " + e.message;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -24,11 +24,20 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-5.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-6.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
     'live-summaries' => ['pqpl_any_authenticated', 'live-summaries.html'],
+    // Batch wave (handlers in portal_handlers/): entry mirrors each legacy
+    // page's require_login()-only gate; the handlers re-enforce the real
+    // per-action authorization (course-offerings ports the workspace-manager
+    // gate with the exact legacy denial message).
+    'recordings' => ['pqpl_any_authenticated', 'recordings.html'],
+    'communications' => ['pqpl_any_authenticated', 'communications.html'],
+    'course-offerings' => ['pqpl_any_authenticated', 'course-offerings.html'],
+    'parent-trust' => ['pqpl_any_authenticated', 'parent-trust.html'],
+    'live-sessions' => ['pqpl_any_authenticated', 'live-sessions.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Communications · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .threads{display:grid;gap:10px}
+  a.thread{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:13px 15px;background:var(--card);color:var(--ink);text-decoration:none}
+  a.thread:hover{border-color:var(--blue2);background:var(--sky)}
+  .thread .badge{width:44px;height:44px;display:grid;place-items:center;border-radius:10px;background:var(--blue2);color:#fff;font-size:13px;font-weight:900}
+  .thread .main{min-width:0}
+  .thread .main strong{display:block;margin-bottom:2px;font-size:15px;color:var(--blue);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .thread .main .who{display:block;color:var(--ink2);font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .thread .main .snip{display:block;color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .thread .side{text-align:right}
+  .thread .time{display:inline-block;padding:5px 10px;border-radius:999px;background:var(--sky);color:var(--ink2);font-size:12px;font-weight:900;white-space:nowrap}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.unread{background:var(--amber-bg);color:var(--amber)}
+  a.back{display:inline-block;margin-bottom:12px;color:var(--blue2);font-weight:800;font-size:13px;text-decoration:none}
+  a.back:hover{text-decoration:underline}
+  .messages{display:grid;gap:12px}
+  .msg{max-width:78%;padding:12px 14px;border-radius:12px 12px 12px 4px;background:var(--card);border:1px solid var(--line)}
+  .msg.mine{justify-self:end;border-radius:12px 12px 4px 12px;background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .msg .meta{color:var(--muted);font-size:12px;font-weight:900;margin-bottom:5px}
+  .msg.mine .meta{color:#d8e9fa}
+  .msg .body{white-space:pre-wrap;overflow-wrap:anywhere}
+  form.reply{margin-top:16px;padding:14px;border:1px dashed var(--line);border-radius:10px;background:var(--bg)}
+  form.reply label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:5px}
+  form.reply textarea{width:100%;min-height:90px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;font-size:14px;background:var(--card);color:var(--ink)}
+  form.reply textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 3px rgba(42,108,176,.14);outline:none}
+  form.reply button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.reply button:disabled{opacity:.55;cursor:wait}
+  @media(max-width:700px){.msg{max-width:92%}.thread{grid-template-columns:40px minmax(0,1fr)}.thread .side{grid-column:2;text-align:left}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Communications</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of communications.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Messages</h1><p class="sub" id="subtitle">Parent-teacher and independent teacher conversations.</p></div>
+  <div id="status" class="status">Loading messages…</div>
+  <div class="panel" id="list-panel" hidden><h2>Conversations</h2><div class="threads" id="threads"></div></div>
+  <div class="panel" id="thread-panel" hidden>
+    <a class="back" id="back-link" href="#">&larr; All conversations</a>
+    <h2 id="thread-subject"></h2>
+    <p class="sub" id="thread-meta" style="margin-bottom:14px"></p>
+    <div class="messages" id="messages"></div>
+    <div id="reply-slot"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const threadid = Number(qs.get("threadid") || "0") || 0;
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { day:"numeric", month:"short" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = (extra) => new URLSearchParams({ report: "communications", token, threadid: String(threadid), workspaceid: qs.get("workspaceid") || "0", ...extra });
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const threadUrl = (id) => {
+    const u = new URL(location.href);
+    if (id > 0) { u.searchParams.set("threadid", String(id)); } else { u.searchParams.delete("threadid"); }
+    return u.href;
+  };
+
+  const others = (t, names, me) => (t.participantids || [])
+    .filter((id) => id !== me)
+    .map((id) => names[id] || ("User " + id))
+    .join(", ");
+
+  function renderList(d) {
+    const names = d.names || {};
+    $("#title").textContent = "Messages";
+    $("#subtitle").textContent = "Parent-teacher and independent teacher conversations.";
+    $("#threads").innerHTML = (d.threads || []).map((t) => `
+      <a class="thread" href="${esc(threadUrl(t.id))}">
+        <span class="badge">${esc((names[t.participantids && t.participantids.find((id) => id !== d.userid)] || "EP").slice(0, 2).toUpperCase())}</span>
+        <span class="main">
+          <strong>${esc(t.subject || "Message thread")}${t.unread ? ' <span class="pill unread">new</span>' : ""}</strong>
+          <span class="who">${esc(others(t, names, d.userid) || "Conversation")}</span>
+          <span class="snip">${esc(t.snippet || "Open thread")}</span>
+        </span>
+        <span class="side"><span class="time">${esc(t.lastmessageat ? dateOnly(t.lastmessageat) : "Open")}</span></span>
+      </a>`).join("") || "<div class='muted'><strong>No messages yet.</strong><br>When a parent or teacher starts a marketplace conversation, it will appear here.</div>";
+    $("#list-panel").hidden = false;
+    $("#thread-panel").hidden = true;
+    $("#status").hidden = true;
+  }
+
+  function renderThread(d) {
+    const names = d.names || {};
+    $("#title").textContent = d.thread.subject || "Message thread";
+    $("#subtitle").textContent = d.thread.type_label || "Communication thread";
+    $("#back-link").href = threadUrl(0);
+    $("#thread-subject").textContent = d.thread.subject || "Message thread";
+    $("#thread-meta").textContent = (d.thread.type_label || "Communication thread")
+      + (d.thread.lastmessageat ? " · " + when(d.thread.lastmessageat) : "");
+    $("#messages").innerHTML = (d.messages || []).map((m) => `
+      <article class="msg${m.mine ? " mine" : ""}">
+        <div class="meta">${esc(names[m.senderid] || m.sendername || "EduPlatform")} · ${esc(when(m.timecreated))}</div>
+        <div class="body">${esc(m.body)}</div>
+      </article>`).join("") || "<div class='muted'>No messages are visible in this thread yet.</div>";
+    $("#reply-slot").innerHTML = d.canreply ? `
+      <form class="reply" id="reply-form">
+        <label for="replybody">Reply</label>
+        <textarea id="replybody" name="replybody" maxlength="1000" required placeholder="Type a message…"></textarea>
+        <button type="submit">Send reply</button>
+      </form>` : "";
+    const f = $("#reply-form");
+    if (f) f.addEventListener("submit", sendReply);
+    $("#thread-panel").hidden = false;
+    $("#list-panel").hidden = true;
+    $("#status").hidden = true;
+  }
+
+  function render(d) {
+    $("#mode-note").textContent = d.mode === "thread" ? "Token-authenticated · thread view" : "Token-authenticated · parallel-run of communications.php";
+    if (d.mode === "thread") { renderThread(d); } else { renderList(d); }
+  }
+
+  async function sendReply(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    const body = f.replybody.value.trim();
+    if (!body) return;
+    btn.disabled = true; btn.textContent = "Sending…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "communications", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ do: "reply", threadid, replybody: body }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = "Message sent.";
+      load();
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Send reply";
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not send: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

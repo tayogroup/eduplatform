@@ -50,7 +50,14 @@ $scope = preg_replace('/^portal:/', '', (string)($claims['course'] ?? ''));
 $report = optional_param('report', 'summary', PARAM_ALPHANUMEXT);
 // Each portal token opens exactly one report family.
 $reportscopes = ['summary' => 'live-reports', 'attendance' => 'live-reports', 'managed' => 'managed-reports', 'dashboard' => 'dashboard', 'intake' => 'intake-requests', 'workspace' => 'workspace-reports', 'schedule' => 'live-schedule', 'summaries' => 'live-summaries'];
-if (!isset($reportscopes[$report]) || $scope !== $reportscopes[$report]) {
+// Batch-migrated reports live in portal_handlers/<report>.php with scope id
+// === report id, so parallel migrations never edit this shared file. $report
+// is PARAM_ALPHANUMEXT, so the path below cannot escape the directory.
+$handlerfile = __DIR__ . '/portal_handlers/' . $report . '.php';
+$scopeok = isset($reportscopes[$report])
+    ? $scope === $reportscopes[$report]
+    : ($scope === $report && is_file($handlerfile));
+if (!$scopeok) {
     pqpd_fail(403, 'This token does not grant access to that report.');
 }
 
@@ -70,6 +77,13 @@ set_exception_handler(function (Throwable $e) {
     echo json_encode(['ok' => false, 'error' => get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine()]);
     exit;
 });
+
+// Dispatch batch-migrated reports (runs with $claims validated, $USER set, and
+// the JSON exception handler installed). The handler echoes JSON and exits.
+if (!isset($reportscopes[$report])) {
+    require $handlerfile;
+    exit;
+}
 
 // ---- report: summaries (parent class summaries; read + parent write) ----------
 // Ported from local_hubredirect/live_summaries.php via live_summarieslib

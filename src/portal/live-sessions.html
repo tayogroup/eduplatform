@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live sessions · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 3px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .cards{display:grid;gap:10px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .card .head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap}
+  .pill.scheduled{background:var(--sky);color:var(--ink2)}
+  .pill.live{background:#e1f2ff;color:var(--blue2)}
+  .pill.pending{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.closed{background:#edf0f4;color:var(--muted)}
+  .pill.present{background:#e1f2ff;color:var(--blue2)}
+  .pill.late{background:var(--amber-bg);color:var(--amber)}
+  .pill.absent{background:var(--red-bg);color:var(--red)}
+  .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-size:13px;font-weight:900;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn.danger{background:var(--red)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px;white-space:pre-line}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .tablewrap{overflow-x:auto}
+  form.create label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:10px 0 3px}
+  form.create input[type=text],form.create input[type=number],form.create input[type=date],form.create input[type=time],form.create select{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .checks{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  .checks label{display:flex;gap:8px;align-items:center;margin:0;padding:7px 10px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700;color:var(--ink)}
+  .checks label:last-child{border-bottom:0}
+  .inline{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;margin:10px 0 0}
+  .subbox{margin-top:12px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  .subbox h4{margin:0 0 4px;font-size:13px;color:var(--ink2)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .maingrid{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:16px;align-items:start}
+  @media(max-width:860px){.maingrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live sessions</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_sessions.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Live sessions</h1><p class="sub" id="subtitle">Schedule, start, and join review classes through BigBlueButton.</p></div>
+  <div id="status" class="status">Loading live sessions…</div>
+
+  <!-- detail view -->
+  <div id="detail-view" hidden>
+    <div class="panel" id="detail-head"></div>
+    <div class="panel" id="detail-roster-panel"><h2>Roster</h2><div class="tablewrap" id="detail-roster"></div>
+      <p class="muted" style="margin-top:8px">Attendance and participation are recorded automatically when students join. Edits are made in Attendance &amp; notes (live_review), which has its own portal page.</p></div>
+  </div>
+
+  <!-- list view -->
+  <div id="list-view" hidden>
+    <div class="maingrid">
+      <div id="left-col">
+        <div class="panel" id="create-panel" hidden>
+          <h2 id="create-title">Create session</h2>
+          <form class="create" id="create-form">
+            <div id="admin-fields" hidden>
+              <label>Teacher user ID</label><input type="number" name="teacherid" min="1">
+              <div id="group-field" hidden><label>Class group</label><select name="groupid"><option value="0">No class group</option></select></div>
+              <label>Student user IDs</label><input type="text" name="studentids_raw" placeholder="101, 102, 103">
+              <p class="muted">Comma or space separated.</p>
+            </div>
+            <div id="teacher-fields" hidden>
+              <label>Students</label>
+              <div class="checks" id="student-checks"></div>
+            </div>
+            <label>Title</label><input type="text" name="title" value="Pre-Quran review session" required>
+            <div class="grid2">
+              <div><label>Date</label><input type="date" name="sessiondate" required></div>
+              <div><label>Time</label><input type="time" name="sessiontime" required></div>
+            </div>
+            <label>Duration</label>
+            <select name="duration"><option value="60">60 minutes</option><option value="45">45 minutes</option><option value="75">75 minutes</option><option value="90">90 minutes</option></select>
+            <div class="subbox" id="recurring-box">
+              <h4>Recurring class</h4>
+              <p class="muted" id="series-warning" hidden>Run the Phase 16 series SQL before creating recurring classes. One-time sessions still work.</p>
+              <div class="inline"><input type="checkbox" name="recurring_enabled" id="recurring-enabled"><label for="recurring-enabled" style="margin:0">Create multiple sessions as a class series</label></div>
+              <label>Repeat</label>
+              <select name="recurrence_pattern"><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="weekdays">Selected weekdays</option></select>
+              <label>Weekdays</label>
+              <div class="checks" id="weekday-checks" style="max-height:none"></div>
+              <div class="grid2">
+                <div><label>Max sessions</label><input type="number" name="recurrence_count" min="1" max="60" value="8"></div>
+                <div><label>Until date</label><input type="date" name="recurrence_until"></div>
+              </div>
+            </div>
+            <label>Lesson ID</label><input type="text" name="lessonid" value="alphabet" required>
+            <label>Unit ID</label><input type="text" name="unitid" value="alphabet_listen" required>
+            <div class="inline"><input type="checkbox" name="recording_enabled" id="recording-enabled"><label for="recording-enabled" style="margin:0" id="recording-label">Record session when consent policy allows</label></div>
+            <div class="subbox" id="override-box" hidden>
+              <h4>Admin conflict override</h4>
+              <div class="inline" style="margin-top:0"><input type="checkbox" name="override_conflicts" id="override-conflicts"><label for="override-conflicts" style="margin:0">Allow schedule conflict override with audit reason</label></div>
+              <label>Override reason</label><input type="text" name="override_reason" placeholder="Required when overriding conflicts">
+            </div>
+            <div class="actions"><button class="btn" type="submit" id="create-btn">Create live session</button></div>
+          </form>
+        </div>
+        <div class="panel" id="admin-panel" hidden>
+          <h2>Admin tools</h2>
+          <div class="actions"><button class="btn danger" id="delete-expired-btn" type="button">Delete expired sessions</button></div>
+          <p class="muted" style="margin-top:8px">Removes every session past its scheduled end, with its participant, attendance, note, recording metadata, and audit rows. Cannot be undone.</p>
+        </div>
+      </div>
+      <div class="panel" id="upcoming-panel">
+        <h2>Upcoming sessions</h2>
+        <div class="cards" id="upcoming"></div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const detailId = Number(qs.get("sessionid") || 0);
+  const workspaceid = qs.get("workspaceid") || "";
+  const consumer = qs.get("consumer") || "";
+
+  const getParams = () => {
+    const p = { report: "live-sessions", token };
+    if (workspaceid) p.workspaceid = workspaceid;
+    if (consumer) p.consumer = consumer;
+    if (detailId > 0) p.sessionid = String(detailId);
+    return new URLSearchParams(p);
+  };
+
+  const setStatus = (cls, text) => { const el = $("#status"); el.className = "status " + cls; el.hidden = false; el.textContent = text; };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + getParams());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 300));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render(d);
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  async function post(body, btn, busyText) {
+    if (btn) { btn.disabled = true; if (busyText) btn.textContent = busyText; }
+    try {
+      const p = { report: "live-sessions", token };
+      if (workspaceid) p.workspaceid = workspaceid;
+      if (consumer) p.consumer = consumer;
+      const r = await fetch(endpoint + "?" + new URLSearchParams(p), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      return d;
+    } finally { if (btn) btn.disabled = false; }
+  }
+
+  const statusPillClass = (s) => {
+    const st = String(s.status || "");
+    if (s.requires_approval || /^pending_/.test(st)) return "pending";
+    if (st === "live") return "live";
+    if (st === "scheduled") return "scheduled";
+    if (["cancelled", "failed", "rejected"].includes(st)) return "bad";
+    return "closed";
+  };
+
+  const sessionCard = (s, names) => {
+    const teacher = names[s.teacherid] || ("Teacher " + s.teacherid);
+    const lessonline = [s.lessonid, s.unitid].filter(Boolean).join(" / ");
+    const series = s.seriesid ? ("Series #" + s.seriesid + (s.series_sequence ? " · Class " + s.series_sequence : "")) : "";
+    const u = new URL(location.href); u.searchParams.set("sessionid", s.id);
+    let actions = `<a class="btn light" href="${esc(u.href)}">Details &amp; roster</a>`;
+    if (s.requires_approval) {
+      if (s.can_approve) {
+        actions += ` <button class="btn" data-act="approve_session" data-id="${s.id}" type="button">Approve</button>
+                     <button class="btn danger" data-act="reject_session" data-id="${s.id}" type="button">Reject</button>`;
+      }
+    } else {
+      actions += ` <button class="btn" data-act="join" data-id="${s.id}" data-ws="${Number(s.workspaceid || 0)}" type="button">${s.can_start ? "Start class" : "Join class"}</button>`;
+    }
+    return `<div class="card">
+      <div class="head"><div>
+        <h3>${esc(s.title || "Live session")}</h3>
+        <div class="muted">${esc(s.start_label)} – ${esc(s.end_label)} · ${esc(teacher)}</div>
+        ${lessonline ? `<div class="muted">${esc(lessonline)}</div>` : ""}
+        ${series ? `<div class="muted">${esc(series)}</div>` : ""}
+      </div><span class="pill ${statusPillClass(s)}">${esc(s.status_label || s.status)}</span></div>
+      <div class="actions">${actions}</div>
+    </div>`;
+  };
+
+  const attPill = (v, kind) => {
+    if (!v) return `<span class="muted">—</span>`;
+    const cls = kind === "att" ? (/absent/.test(v) ? "absent" : /late/.test(v) ? "late" : "present") : "closed";
+    return `<span class="pill ${cls}">${esc(String(v).replace(/_/g, " "))}</span>`;
+  };
+
+  function renderDetail(d) {
+    const s = d.detail.session;
+    const names = d.names || {};
+    const back = new URL(location.href); back.searchParams.delete("sessionid");
+    let actions = `<a class="btn light" href="${esc(back.href)}">Back to all sessions</a>`;
+    if (s.requires_approval) {
+      if (s.can_approve) {
+        actions += ` <button class="btn" data-act="approve_session" data-id="${s.id}" type="button">Approve</button>
+                     <button class="btn danger" data-act="reject_session" data-id="${s.id}" type="button">Reject</button>`;
+      }
+    } else {
+      actions += ` <button class="btn" data-act="join" data-id="${s.id}" data-ws="${Number(s.workspaceid || 0)}" type="button">${s.can_start ? "Start class" : "Join class"}</button>`;
+    }
+    $("#detail-head").innerHTML = `
+      <div class="head" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div><h2 style="margin:0">${esc(s.title || "Live session")}</h2>
+          <div class="muted">${esc(s.start_label)} – ${esc(s.end_label)} · ${esc(names[s.teacherid] || ("Teacher " + s.teacherid))}</div>
+          ${[s.lessonid, s.unitid].filter(Boolean).length ? `<div class="muted">${esc([s.lessonid, s.unitid].filter(Boolean).join(" / "))}</div>` : ""}
+        </div><span class="pill ${statusPillClass(s)}">${esc(s.status_label || s.status)}</span></div>
+      <div class="actions">${actions}</div>`;
+    if (!d.detail.roster_available) {
+      $("#detail-roster").innerHTML = "<div class='muted'>The roster is visible to the session teacher and administrators.</div>";
+    } else if (!d.detail.roster.length) {
+      $("#detail-roster").innerHTML = "<div class='muted'>No participants on this session yet.</div>";
+    } else {
+      $("#detail-roster").innerHTML = `<table><thead><tr>
+          <th>Name</th><th>Role</th><th>Status</th><th>Attendance</th><th>Participation</th><th>Joined</th><th>Issue</th><th>Notes</th>
+        </tr></thead><tbody>` + d.detail.roster.map((p) => `<tr>
+          <td>${esc(p.displayname || names[p.userid] || ("User " + p.userid))}</td>
+          <td>${esc(String(p.role || "").replace(/_/g, " "))}</td>
+          <td>${attPill(p.status, "st")}</td>
+          <td>${p.role === "student" ? attPill(p.attendance_status, "att") : "<span class='muted'>—</span>"}</td>
+          <td>${p.role === "student" ? attPill(p.participation_status, "part") : "<span class='muted'>—</span>"}</td>
+          <td class="muted">${esc(when(p.join_time)) || "—"}</td>
+          <td>${p.technical_issue ? '<span class="pill late">technical issue</span>' : "<span class='muted'>—</span>"}</td>
+          <td class="muted">${esc(p.notes) || "—"}</td>
+        </tr>`).join("") + "</tbody></table>";
+    }
+    $("#detail-view").hidden = false;
+    $("#list-view").hidden = true;
+    $("#status").hidden = true;
+    wireActions($("#detail-view"));
+  }
+
+  function renderList(d) {
+    const names = d.names || {};
+    $("#subtitle").textContent = "Schedule, start, and join " + (d.brand || "EduPlatform") + " review classes through BigBlueButton.";
+    $("#upcoming").innerHTML = (d.upcoming || []).map((s) => sessionCard(s, names)).join("")
+      || "<div class='muted'>No upcoming live sessions. Sessions leave this list automatically once their scheduled end time passes.</div>";
+
+    if (d.cancreate) {
+      $("#create-panel").hidden = false;
+      if (d.is_siteadmin) {
+        $("#admin-fields").hidden = false;
+        if ((d.classgroups || []).length) {
+          $("#group-field").hidden = false;
+          $("#create-form").groupid.innerHTML = '<option value="0">No class group</option>' +
+            d.classgroups.map((g) => `<option value="${Number(g.id)}">${esc(g.title + " #" + g.id)}</option>`).join("");
+        }
+        $("#override-box").hidden = false;
+      } else {
+        $("#teacher-fields").hidden = false;
+        $("#student-checks").innerHTML = (d.teacherstudents || []).map((st) =>
+          `<label><input type="checkbox" name="studentids" value="${Number(st.studentid)}" ${d.teacherstudents.length === 1 ? "checked" : ""}> ${esc(st.name)}</label>`
+        ).join("") || "<div class='muted' style='padding:10px'>No assigned students found. Add a student to this workspace first, then return here.</div>";
+      }
+      $("#series-warning").hidden = !!d.series_ready;
+      if (!d.series_ready) {
+        ["recurring_enabled", "recurrence_pattern", "recurrence_count", "recurrence_until"].forEach((n) => { if ($("#create-form")[n]) $("#create-form")[n].disabled = true; });
+      }
+      $("#weekday-checks").innerHTML = [[1,"Mon"],[2,"Tue"],[3,"Wed"],[4,"Thu"],[5,"Fri"],[6,"Sat"],[0,"Sun"]].map(([v, l]) =>
+        `<label><input type="checkbox" name="recurrence_weekdays" value="${v}" ${d.series_ready ? "" : "disabled"}> ${l}</label>`).join("");
+      $("#recording-enabled").checked = !!d.recordingdefault;
+      $("#recording-label").textContent = d.recordingdefault
+        ? "Record private-teacher session for missed-class playback when consent policy allows"
+        : "Record session when consent policy allows";
+    }
+    if (d.is_siteadmin) $("#admin-panel").hidden = false;
+
+    $("#list-view").hidden = false;
+    $("#detail-view").hidden = true;
+    $("#status").hidden = true;
+    wireActions($("#upcoming"));
+  }
+
+  function render(d) {
+    $("#mode-note").textContent = (d.is_siteadmin ? "Administrator" : d.canmanage ? "Teacher" : "Participant") + " · parallel-run of live_sessions.php";
+    if (detailId > 0 && d.detail) renderDetail(d);
+    else renderList(d);
+  }
+
+  function wireActions(root) {
+    root.querySelectorAll("button[data-act]").forEach((btn) => btn.addEventListener("click", async () => {
+      const act = btn.dataset.act;
+      const id = Number(btn.dataset.id);
+      try {
+        if (act === "join") {
+          setStatus("saved", "Preparing the live room…");
+          const body = { do: "join", sessionid: id };
+          const ws = Number(btn.dataset.ws || 0);
+          if (ws > 0) body.workspaceid = ws;
+          const d = await post(body, btn, "Opening…");
+          btn.textContent = "Open again";
+          if (d.joinurl) window.open(d.joinurl, "_blank", "noopener");
+          setStatus("saved", "Live room ready — the classroom opened in a new tab (role: " + (d.role || "?") + "). If it was blocked, allow pop-ups and press the button again.");
+          load();
+          return;
+        }
+        if (act === "approve_session" || act === "reject_session") {
+          const d = await post({ do: act, sessionid: id }, btn, "Saving…");
+          setStatus("saved", d.message || "Saved.");
+          load();
+          return;
+        }
+      } catch (e) { setStatus("error", "Could not complete: " + e.message); }
+    }));
+  }
+
+  $("#delete-expired-btn").addEventListener("click", async () => {
+    if (!confirm("Delete all expired live sessions and their participant, attendance, note, recording metadata, and audit rows? This cannot be undone.")) return;
+    try {
+      const d = await post({ do: "delete_expired" }, $("#delete-expired-btn"), "Deleting…");
+      setStatus("saved", d.message || "Done.");
+      load();
+    } catch (e) { setStatus("error", "Could not delete: " + e.message); }
+  });
+
+  $("#create-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const body = { do: "create" };
+    const studentBoxes = [...f.querySelectorAll('input[name="studentids"]:checked')];
+    if (f.querySelector("#teacher-fields:not([hidden])") && !studentBoxes.length) {
+      setStatus("error", "Tick at least one student in the Students list above before creating the session.");
+      return;
+    }
+    body.studentids = studentBoxes.map((b) => Number(b.value));
+    if (f.teacherid && f.teacherid.value) body.teacherid = Number(f.teacherid.value);
+    if (f.studentids_raw && f.studentids_raw.value.trim()) body.studentids_raw = f.studentids_raw.value.trim();
+    if (f.groupid && Number(f.groupid.value) > 0) body.groupid = Number(f.groupid.value);
+    body.title = f.title.value;
+    body.sessiondate = f.sessiondate.value;
+    body.sessiontime = f.sessiontime.value;
+    body.duration = Number(f.duration.value);
+    body.lessonid = f.lessonid.value;
+    body.unitid = f.unitid.value;
+    body.recording_enabled = f.recording_enabled.checked ? 1 : 0;
+    if (f.recurring_enabled.checked) {
+      body.recurring_enabled = 1;
+      body.recurrence_pattern = f.recurrence_pattern.value;
+      body.recurrence_count = Number(f.recurrence_count.value);
+      if (f.recurrence_until.value) body.recurrence_until = f.recurrence_until.value;
+      body.recurrence_weekdays = [...f.querySelectorAll('input[name="recurrence_weekdays"]:checked')].map((b) => Number(b.value));
+    }
+    if (f.override_conflicts && f.override_conflicts.checked) {
+      body.override_conflicts = 1;
+      body.override_reason = f.override_reason.value;
+    }
+    try {
+      const d = await post(body, $("#create-btn"), "Creating…");
+      setStatus("saved", d.message || "Live session created.");
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) { setStatus("error", "Could not create: " + e.message); }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

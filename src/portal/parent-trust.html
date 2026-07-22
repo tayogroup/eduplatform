@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trust &amp; safety · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .kicker{margin:0 0 4px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--blue2)}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .muted{color:var(--muted);font-size:12px}
+  .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.granted{background:#e1f2ff;color:var(--blue2)}
+  .pill.withheld{background:var(--amber-bg);color:var(--amber)}
+  .pill.open{background:#e1f2ff;color:var(--blue2)}
+  .pill.waiting{background:var(--amber-bg);color:var(--amber)}
+  .pill.early{background:var(--sky);color:var(--ink2)}
+  .pill.closed{background:#edf0f4;color:var(--muted)}
+  .pill.cancelled{background:var(--red-bg);color:var(--red)}
+  .pill.hot{background:var(--red-bg);color:var(--red)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .metric strong{display:block;font-size:24px;font-weight:900;color:var(--blue2)}
+  .metric span{font-size:12px;font-weight:800;color:var(--muted)}
+  .sec{margin:8px 0 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  .sec.hw{background:var(--sky)}
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .stat{font-size:12px;color:var(--ink2)}
+  .stat b{font-size:14px;color:var(--ink);display:block}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+  @media(max-width:620px){.mini{grid-template-columns:1fr}}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  a.child span{display:block;margin-top:4px;color:var(--muted);font-size:12px;font-weight:700}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .alert{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--amber-bg);color:var(--amber);font-size:13px;font-weight:800;margin-bottom:8px}
+  .alert strong{color:var(--ink)}
+  .btn{display:inline-block;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .support{border:2px solid var(--blue2);background:linear-gradient(180deg,var(--sky),var(--card))}
+  .support form{margin-top:12px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--card)}
+  .support label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  .support select,.support textarea,.support input[type=text]{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .support textarea{min-height:64px;resize:vertical}
+  .support ul{margin:8px 0 0;padding-left:18px;color:var(--ink2);font-size:13px}
+  .field{margin-top:8px;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .field b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Trust &amp; safety</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_parent_trust.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <p class="kicker">Parent trust dashboard</p>
+    <h1 id="title">Parent Live-Class Hub</h1>
+    <p class="sub" id="subtitle">Upcoming classes, teacher feedback, recordings, homework, follow-ups, and schedule acknowledgements in one place.</p>
+  </div>
+  <div id="status" class="status">Loading parent live-class hub…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Select a student</h2><div class="chooser" id="chooser"></div></div>
+  <div class="panel" id="priority-panel" hidden><h2>Priority actions</h2><div class="actions" id="priority"></div></div>
+  <div class="panel" id="diagnostics-panel" hidden><h2>Dashboard health</h2><div id="diagnostics"></div></div>
+  <div class="panel support" id="support-panel" hidden>
+    <h2>Staff Preview &amp; Support</h2>
+    <p class="sub">You are viewing the parent trust dashboard as support staff. Private teacher notes remain hidden here; this panel is only visible to authorized staff.</p>
+    <div class="metrics" id="support-metrics" style="margin-top:10px"></div>
+    <label for="support-url">Parent hub URL</label>
+    <input id="support-url" type="text" readonly onclick="this.select();">
+    <form id="support-form">
+      <label for="support_reason">Access reason</label>
+      <select id="support_reason" name="support_reason" required></select>
+      <label for="case_status">Case status</label>
+      <select id="case_status" name="case_status">
+        <option value="open">Open</option>
+        <option value="resolved">Resolved</option>
+        <option value="escalated">Escalated</option>
+      </select>
+      <label for="case_note">Support case note</label>
+      <textarea id="case_note" name="case_note" placeholder="Parent-safe reason for previewing this dashboard"></textarea>
+      <button class="btn" type="submit" style="margin-top:10px">Save support reason</button>
+    </form>
+    <div id="support-parents"></div>
+    <div id="support-missing"></div>
+  </div>
+  <div class="panel" id="metrics-panel" hidden><h2>Live class overview</h2><div class="metrics" id="metrics"></div></div>
+  <div class="panel" id="upcoming-panel" hidden><h2>Upcoming Live Sessions</h2><div class="cards" id="upcoming"></div></div>
+  <div class="panel" id="feedback-panel" hidden><h2>Latest Teacher Feedback</h2><div class="cards" id="feedback"></div></div>
+  <div class="panel" id="ack-panel" hidden><h2>Schedule Acknowledgements</h2><div class="cards" id="acks"></div></div>
+  <div class="panel" id="recordings-panel" hidden><h2>Approved Recordings</h2><div class="cards" id="recordings"></div></div>
+  <div class="panel" id="trust-panel" hidden>
+    <h2>Safety &amp; Trust</h2>
+    <div class="field"><b>Parent-visible only</b>Private teacher notes are not shown on parent pages.</div>
+    <div class="field"><b>Reviewed recordings</b>Only recordings published for parents are listed here.</div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short" }) : "";
+  const timeOnly = (t) => t ? new Date(t * 1000).toLocaleTimeString(undefined, { hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let moodleOrigin = "";
+  try { moodleOrigin = new URL(endpoint).origin; } catch (e) {}
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "parent-trust", token, childid: qs.get("childid") || "0" });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function post(body, savedMessage) {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "parent-trust", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").textContent = d.message || savedMessage;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+      return true;
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return false;
+    }
+  }
+
+  const sessionCard = (s, names) => {
+    const teacher = s.teacherid && names[s.teacherid] ? names[s.teacherid] : ("Teacher " + s.teacherid);
+    const target = [s.lessonid, s.unitid].filter(Boolean).join(" / ") || "not set";
+    const joinBtn = (s.join_state === "open" && moodleOrigin)
+      ? `<div class="actions"><a class="btn" href="${esc(moodleOrigin + "/local/hubredirect/live_sessions.php?join=" + Number(s.id))}" target="_blank" rel="noopener noreferrer">Join class</a></div>` : "";
+    return `<div class="card"><div class="row">
+      <div><h3>${esc(s.title || "Live class")}</h3>
+        <div class="meta">${esc(when(s.scheduled_start))} - ${esc(teacher)}</div>
+        <div class="meta">Target: ${esc(target)}</div></div>
+      <div><span class="pill ${esc(s.join_state)}">${esc(s.join_label)}</span></div>
+    </div>${joinBtn}</div>`;
+  };
+
+  const feedbackCard = (s) => {
+    const followupOpen = s.followup_status && s.followup_status !== "none" && !Number(s.followup_resolved);
+    let activity = "";
+    if (s.focus && s.focus.hasdata) {
+      activity = `<div class="stats">
+        <div class="stat"><b>${esc(s.focus.active_label)}</b>active lesson time</div>
+        <div class="stat"><b>${esc(s.focus.step_label)}</b>last step</div>
+        <div class="stat"><b>${Number(s.focus.idle_count) || 0}</b>focus reminders</div>
+        <div class="stat"><b>${s.focus.last_time ? esc(timeOnly(s.focus.last_time)) : "n/a"}</b>last activity</div>
+      </div>`;
+    }
+    return `<div class="card"><div class="row">
+      <div><h3>${esc(s.title || "Live class")}</h3>
+        <div class="meta">${esc(when(s.scheduled_start))} - ${esc(s.attendance_status || "attendance pending")}</div></div>
+      ${followupOpen ? '<div><span class="pill hot">Waiting for your response</span></div>' : ""}
+    </div>
+    ${activity}
+    <div class="mini">
+      <div class="sec"><b>Strengths</b>${esc(s.strengths || "Not added yet.")}</div>
+      <div class="sec"><b>Needs Practice</b>${esc(s.needs_practice || "Not added yet.")}</div>
+      <div class="sec hw"><b>Homework${s.homework_due_date ? " · due " + esc(dateOnly(s.homework_due_date)) : ""}</b>${esc(s.homework || "No homework assigned.")}</div>
+      <div class="sec"><b>Parent Summary</b>${esc(s.parent_summary || "Not added yet.")}</div>
+    </div></div>`;
+  };
+
+  const ackCard = (se, canAck) => {
+    const pill = se.ack_current
+      ? '<span class="pill granted">Acknowledged</span>'
+      : '<span class="pill withheld">Schedule change needs acknowledgement</span>';
+    const btn = (se.needs_ack && canAck)
+      ? `<div class="actions"><button class="btn ack-btn" data-seriesid="${Number(se.id)}" type="button">Acknowledge change</button></div>` : "";
+    return `<div class="card"><div class="row">
+      <div><h3>${esc(se.title || "Recurring class")}</h3>
+        <div class="meta">${esc(se.pattern || "")}${se.start_time ? " - " + esc(se.start_time) : ""}</div>
+        ${se.latestchange ? `<div class="muted">Last schedule change: ${esc(when(se.latestchange))}</div>` : ""}
+        ${se.acknowledgedat ? `<div class="muted">Your acknowledgement: ${esc(when(se.acknowledgedat))}</div>` : ""}</div>
+      <div>${pill}</div>
+    </div>${btn}</div>`;
+  };
+
+  const recordingCard = (r) => `
+    <div class="card"><div class="row">
+      <div><h3>${esc(r.session_title || "Live class")}</h3>
+        <div class="meta">${esc(when(r.scheduled_start))}${r.expiresat ? " - Expires " + esc(dateOnly(r.expiresat)) : ""}</div></div>
+      ${r.playback_url ? `<div><a class="btn light" href="${esc(r.playback_url)}" target="_blank" rel="noopener noreferrer">Open recording</a></div>` : ""}
+    </div></div>`;
+
+  function renderSupport(d) {
+    $("#support-metrics").innerHTML = [
+      [d.linkedparents.length, "linked parents"],
+      [d.upcoming.length, "upcoming sessions"],
+      [d.summaries.length, "visible summaries"],
+      [d.openfollowups.length, "open follow-ups"],
+      [d.pendingackcount, "pending acknowledgements"],
+      [d.recordings.length, "visible recordings"],
+    ].map(([v, l]) => `<div class="metric"><strong>${Number(v) || 0}</strong><span>${esc(l)}</span></div>`).join("");
+    $("#support-url").value = d.supporturl || "";
+    const sel = $("#support_reason");
+    sel.innerHTML = Object.entries(d.supportreasons || {}).map(([k, v]) => `<option value="${esc(k)}">${esc(v)}</option>`).join("");
+    $("#support-parents").innerHTML = d.linkedparents.length
+      ? "<ul>" + d.linkedparents.map((p) => `<li>${esc(p.name)} (${esc(p.account_label || "")}, #${Number(p.userid)}${p.email ? ", " + esc(p.email) : ""})</li>`).join("") + "</ul>" : "";
+    $("#support-missing").innerHTML = (d.missingitems || []).length
+      ? "<ul>" + d.missingitems.map((m) => `<li>${esc(m)}</li>`).join("") + "</ul>" : "";
+    $("#support-form").onsubmit = async (ev) => {
+      ev.preventDefault();
+      const btn = ev.currentTarget.querySelector("button");
+      btn.disabled = true; btn.textContent = "Saving…";
+      await post({
+        do: "log_support_case",
+        studentid: Number(d.child.id),
+        support_reason: sel.value,
+        case_status: $("#case_status").value,
+        case_note: $("#case_note").value,
+      }, "Support reason and case note saved to the audit trail.");
+      btn.disabled = false; btn.textContent = "Save support reason";
+    };
+    $("#support-panel").hidden = false;
+  }
+
+  function render(d) {
+    const names = d.names || {};
+    ["chooser-panel","priority-panel","diagnostics-panel","support-panel","metrics-panel","upcoming-panel","feedback-panel","ack-panel","recordings-panel","trust-panel"].forEach((id) => { document.getElementById(id).hidden = true; });
+
+    if (d.mode === "chooser") {
+      $("#mode-note").textContent = "Select a student";
+      $("#title").textContent = "Select a student";
+      $("#chooser").innerHTML = (d.children || []).map((c) => {
+        const u = new URL(location.href); u.searchParams.set("childid", c.studentid);
+        return `<a class="child" href="${esc(u.href)}">${esc(c.name || ("Student " + c.studentid))}<span>Open parent live-class hub</span></a>`;
+      }).join("") || "<div class='muted'>No linked student accounts were found for this login.</div>";
+      $("#chooser-panel").hidden = false;
+      $("#status").hidden = true;
+      return;
+    }
+
+    $("#title").textContent = "Live-class hub for " + (d.child && d.child.name ? d.child.name : "your student");
+    $("#mode-note").textContent = d.supportmode ? "Staff preview" : "Token-authenticated · parallel-run of live_parent_trust.php";
+
+    // Priority actions (same triggers as the legacy priority strip).
+    const nextJoin = (d.upcoming || []).find((s) => s.join_state === "open");
+    const pendingSeries = (d.series || []).find((se) => se.needs_ack);
+    const priority = [];
+    if (nextJoin && moodleOrigin) priority.push(`<a class="btn" href="${esc(moodleOrigin + "/local/hubredirect/live_sessions.php?join=" + Number(nextJoin.id))}" target="_blank" rel="noopener noreferrer">Join live class now</a>`);
+    if (pendingSeries && d.canackasparent) priority.push(`<button class="btn ack-btn" data-seriesid="${Number(pendingSeries.id)}" type="button">Acknowledge schedule change</button>`);
+    if ((d.openfollowups || []).length) priority.push('<span class="pill withheld" style="margin:0">Teacher follow-up waiting for your response</span>');
+    if (priority.length) { $("#priority").innerHTML = priority.join(""); $("#priority-panel").hidden = false; }
+
+    if ((d.diagnostics || []).length) {
+      $("#diagnostics").innerHTML = d.diagnostics.map((t) => `<div class="alert"><strong>Status</strong><span>${esc(t)}</span></div>`).join("");
+      $("#diagnostics-panel").hidden = false;
+    }
+
+    if (d.supportmode) renderSupport(d);
+
+    const homeworkCount = (d.homework || []).length;
+    $("#metrics").innerHTML = [
+      [d.upcoming.length, "upcoming classes"],
+      [d.openfollowups.length, "open follow-ups"],
+      [homeworkCount, "recent homework items"],
+      [d.recordings.length, "approved recordings"],
+    ].map(([v, l]) => `<div class="metric"><strong>${Number(v) || 0}</strong><span>${esc(l)}</span></div>`).join("");
+    $("#metrics-panel").hidden = false;
+
+    $("#upcoming").innerHTML = (d.upcoming || []).map((s) => sessionCard(s, names)).join("") || "<div class='muted'>No upcoming live sessions are scheduled.</div>";
+    $("#upcoming-panel").hidden = false;
+
+    $("#feedback").innerHTML = (d.summaries || []).map(feedbackCard).join("") || "<div class='muted'>No parent-visible teacher summaries are ready yet.</div>";
+    $("#feedback-panel").hidden = false;
+
+    $("#acks").innerHTML = (d.series || []).map((se) => ackCard(se, d.canackasparent)).join("") || "<div class='muted'>No recurring live class series found.</div>";
+    $("#ack-panel").hidden = false;
+
+    $("#recordings").innerHTML = (d.recordings || []).map(recordingCard).join("") || "<div class='muted'>No approved recordings are available yet.</div>";
+    $("#recordings-panel").hidden = false;
+
+    $("#trust-panel").hidden = false;
+    $("#status").hidden = true;
+
+    document.querySelectorAll(".ack-btn").forEach((b) => b.addEventListener("click", async () => {
+      b.disabled = true; b.textContent = "Saving…";
+      const ok = await post({
+        do: "ack_series_change",
+        seriesid: Number(b.dataset.seriesid),
+        studentid: Number(d.child.id),
+      }, "Schedule acknowledgement saved.");
+      if (!ok) { b.disabled = false; b.textContent = "Acknowledge change"; }
+    }));
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

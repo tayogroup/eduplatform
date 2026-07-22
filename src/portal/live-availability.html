@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher availability · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1160px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .helper{margin:0 0 12px;color:var(--ink2);font-size:13px}
+  .field{display:grid;gap:6px;margin-bottom:14px;max-width:280px}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .field input{border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:14px;background:var(--card);color:var(--ink)}
+  .matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  table.matrix{width:100%;min-width:1040px;border-collapse:separate;border-spacing:0}
+  table.matrix th,table.matrix td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+  table.matrix th{padding:12px 8px;background:var(--sky);color:var(--blue);font-size:12px;font-weight:900;white-space:pre-line}
+  table.matrix th:first-child{width:120px}
+  table.matrix td:first-child{padding:12px;text-align:left;background:var(--bg);color:var(--ink);font-size:14px;font-weight:800}
+  table.matrix td:not(:first-child){padding:8px}
+  .cell{display:inline-grid;place-items:center;width:40px;height:40px;border:1px solid var(--line);border-radius:9px;background:var(--card);cursor:pointer}
+  .cell input{width:20px;height:20px;accent-color:var(--blue2);cursor:pointer}
+  .cell:has(input:checked){background:var(--sky);border-color:var(--blue2)}
+  .save{margin-top:14px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:900;font-size:14px;cursor:pointer}
+  .save:disabled{opacity:.55;cursor:wait}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher availability</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_availability.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Teacher availability</h1><p class="sub" id="subtitle">Weekly windows used by class-group matching and conflict prevention.</p></div>
+  <div id="status" class="status">Loading availability…</div>
+  <div class="panel" id="grid-panel" hidden>
+    <h2 id="grid-title">Select all recurring times this teacher can teach</h2>
+    <p class="helper" id="grid-helper"></p>
+    <div class="field" id="teacher-field" hidden>
+      <label for="teacherid">Teacher user ID</label>
+      <input id="teacherid" type="number" min="1" inputmode="numeric">
+    </div>
+    <div class="matrix-wrap">
+      <table class="matrix" aria-label="Teacher weekly availability calendar">
+        <thead><tr id="head-row"></tr></thead>
+        <tbody id="grid-body"></tbody>
+      </table>
+    </div>
+    <button class="save" id="save-btn" type="button">Save availability calendar</button>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const workspaceid = qs.get("workspaceid") || "0";
+  let teacheridParam = qs.get("teacherid") || "0";
+  let data = null;
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-availability", token, teacherid: teacheridParam, workspaceid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    $("#mode-note").textContent = d.canmanage ? "Operations · availability" : "Teaching availability";
+    $("#title").textContent = "Teacher availability — " + (d.teacher_name || ("Teacher " + d.teacherid));
+    $("#subtitle").textContent = "Weekly windows used by class-group matching and conflict prevention.";
+
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = d.ready_message || "Availability is not installed yet.";
+      $("#grid-panel").hidden = true;
+      return;
+    }
+
+    $("#grid-helper").textContent = "Checked times are saved as " + (d.slot_label || "") + " weekly availability windows.";
+
+    if (d.canmanage) {
+      $("#teacher-field").hidden = false;
+      $("#teacherid").value = d.teacherid;
+    } else {
+      $("#teacher-field").hidden = true;
+    }
+
+    const checked = new Set(d.checked || []);
+    const days = d.days || [], hours = d.hours || [];
+
+    $("#head-row").innerHTML = `<th scope="col">Day</th>` +
+      hours.map((h) => `<th scope="col">${esc(String(h.label).replace(/ /g, "\n"))}</th>`).join("");
+
+    $("#grid-body").innerHTML = days.map((day) => {
+      const cells = hours.map((h) => {
+        const val = day.weekday + "|" + h.hour;
+        const on = checked.has(val) ? " checked" : "";
+        return `<td><label class="cell" title="${esc(day.label + " " + h.label)}">` +
+          `<input type="checkbox" value="${esc(val)}"${on}></label></td>`;
+      }).join("");
+      return `<tr><td>${esc(day.label)}</td>${cells}</tr>`;
+    }).join("");
+
+    $("#grid-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  async function save() {
+    const btn = $("#save-btn");
+    btn.disabled = true; btn.textContent = "Saving…";
+    const slots = Array.from(document.querySelectorAll("#grid-body input:checked")).map((c) => c.value);
+    const teacherid = (data && data.canmanage) ? (Number($("#teacherid").value) || 0) : Number(data ? data.teacherid : 0);
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-availability", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ do: "save_calendar", teacherid, slots, workspaceid: Number(workspaceid) || 0 }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      teacheridParam = String(d.teacherid || teacherid || teacheridParam);
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").textContent = d.message || "Availability updated.";
+      btn.disabled = false; btn.textContent = "Save availability calendar";
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Save availability calendar";
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  $("#save-btn").addEventListener("click", save);
+  $("#teacherid").addEventListener("change", () => { teacheridParam = String(Number($("#teacherid").value) || 0); load(); });
+
+  load();
+})();
+</script>
+</body>
+</html>

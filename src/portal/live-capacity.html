@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher capacity · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-bottom:16px}
+  .chart .bars{display:flex;align-items:flex-end;gap:3px;height:130px;margin-top:8px}
+  .chart .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;min-width:0}
+  .chart .seg{border-radius:3px 3px 0 0;min-height:2px}
+  .chart .lbl{font-size:9px;color:var(--muted);text-align:center;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .legend{display:flex;gap:12px;font-size:11px;color:var(--ink2);margin-top:6px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  .pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;color:var(--ink2)}
+  .flags{color:var(--muted);font-size:11px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .c1{background:var(--blue2)} .c2{background:#7fb1dd} .c3{background:var(--amber)} .c4{background:#d9c49a}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher capacity · read-only</small></div>
+  <div class="note" id="cap-note">Token-authenticated · parallel-run of live_capacity.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Teacher assignment &amp; capacity planning</h1><p class="sub">Compare availability, assigned hours, quality workload and slot conflicts before assigning live classes.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-week">Week</label><input type="date" id="f-week"></div>
+      <div class="field"><label for="f-date">Proposed date</label><input type="date" id="f-date"></div>
+      <div class="field"><label for="f-time">Proposed time</label><input type="time" id="f-time"></div>
+      <div class="field"><label for="f-duration">Minutes</label><input type="number" id="f-duration" min="15" max="240" step="15" value="60"></div>
+      <div class="field"><label for="f-students">Students</label><input type="number" id="f-students" min="1" max="30" value="9"></div>
+      <div class="field"><label for="f-filter">Filter</label>
+        <select id="f-filter">
+          <option value="all">All teachers</option>
+          <option value="recommended">Recommended</option>
+          <option value="available_slot">Available for slot</option>
+          <option value="overloaded">Overloaded</option>
+          <option value="open_quality">Open quality work</option>
+        </select></div>
+      <button type="submit">Calculate capacity</button>
+      <button type="button" class="ghost" id="csv-capacity">Capacity CSV</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading capacity…</div>
+  <section id="kpis" class="kpis" hidden></section>
+  <section class="charts" id="charts"></section>
+  <div class="panel scroll" id="table-panel" hidden><h2>Teacher capacity</h2><table id="capacity"></table></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const wsid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const query = () => new URLSearchParams({
+    report: "live-capacity", token, workspaceid: wsid,
+    week: $("#f-week").value || "",
+    classdate: $("#f-date").value || "",
+    classtime: $("#f-time").value || "",
+    duration: $("#f-duration").value || "60",
+    students: $("#f-students").value || "9",
+    filter: $("#f-filter").value || "all",
+  });
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading capacity…";
+    try {
+      const r = await fetch(endpoint + "?" + query());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function chart(title, rows, series, maxval) {
+    const max = Math.max(1, maxval || 0, ...rows.map((r) => series.reduce((m, [k]) => Math.max(m, Number(r[k] || 0)), 0)));
+    return `<div class="panel chart"><h2>${esc(title)}</h2><div class="bars">` +
+      rows.map((r) => `<div class="col" title="${esc(r.label || "")}">` +
+        series.map(([k, cls]) => `<span class="seg ${cls}" style="height:${(Number(r[k] || 0) / max) * 100}%"></span>`).join("") +
+        `<span class="lbl">${esc((r.label || "").split(" ")[0].slice(0, 8))}</span></div>`).join("") +
+      `</div><div class="legend">${series.map(([k, cls, label]) => `<span><i class="${cls}"></i>${esc(label)}</span>`).join("")}</div></div>`;
+  }
+
+  const capPill = (rate) => rate >= 85 ? "bad" : rate >= 70 ? "warn" : "ok";
+  const fitPill = (label) => label === "Recommended" ? "ok" : label === "Avoid" ? "bad" : "warn";
+
+  function render() {
+    if (!data.ready) {
+      $("#status").className = "status error";
+      $("#status").textContent = "Capacity planning requires live-session and participant tables.";
+      $("#kpis").hidden = true; $("#charts").innerHTML = ""; $("#table-panel").hidden = true;
+      return;
+    }
+    const t = data.teachers || [];
+    const m = data.metrics || {};
+    $("#cap-note").textContent = `Workspace #${esc(wsid)}${data.proposed && data.proposed.active ? " · proposed slot set" : ""}`;
+
+    $("#kpis").hidden = false;
+    $("#kpis").innerHTML = [
+      [m.teachers || 0, "Teachers shown"],
+      [m.recommended || 0, "Recommended"],
+      [m.available || 0, "Available slot"],
+      [m.overloaded || 0, "High load"],
+      [m.conflicts || 0, "Slot conflicts"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${v}</strong><span>${esc(l)}</span></div>`).join("");
+
+    const top = t.slice(0, 16).map((r) => ({
+      label: r.name || ("Teacher " + r.teacherid),
+      capacity_rate: r.capacity_rate,
+      fit_score: r.fit_score,
+      assigned: r.assigned_hours,
+      available: r.available_hours,
+    }));
+    const charts = [];
+    if (top.length) {
+      charts.push(chart("Capacity utilization (%)", top, [["capacity_rate", "c1", "Capacity %"]], 100));
+      charts.push(chart("Assignment fit score", top, [["fit_score", "c2", "Fit score"]], 100));
+      charts.push(chart("Weekly hours: assigned vs available", top, [["assigned", "c1", "Assigned h"], ["available", "c3", "Available h"]]));
+    }
+    $("#charts").innerHTML = charts.join("");
+
+    const proposed = data.proposed && data.proposed.active;
+    const slotCell = (r) => {
+      if (!proposed) return `<span class="code">Enter proposed date/time</span>`;
+      let h = `<span class="pill ${r.slot_available ? "ok" : "warn"}">${r.slot_available ? "available" : "outside availability"}</span>`;
+      if (r.slot_conflict) h += ` <span class="pill bad">conflict</span>`;
+      return h;
+    };
+    $("#capacity").innerHTML =
+      `<thead><tr><th>Teacher</th><th>Capacity</th><th>Week load</th><th>Quality load</th><th>Proposed slot</th><th>Fit</th></tr></thead><tbody>` +
+      (t.length ? t.map((r) => `<tr>
+        <td><strong>${esc(r.name || ("Teacher " + r.teacherid))}</strong><br><span class="code">#${r.teacherid}</span></td>
+        <td><span class="pill ${capPill(r.capacity_rate)}">${r.capacity_rate}%</span><br><span class="code">${r.assigned_hours}h assigned / ${r.available_hours}h available</span></td>
+        <td>${r.sessions} sessions<br><span class="code">${r.students} students, ${r.upcoming} upcoming</span></td>
+        <td><span class="code">QA ${r.avg_qa}%, ${r.qa_issues} issues</span><br>
+            <span class="code">${r.coaching_open} coaching, ${r.plans_open} plans</span><br>
+            <span class="code">${r.leadership_open} leadership, ${r.followups_open} follow-ups</span></td>
+        <td>${slotCell(r)}</td>
+        <td><span class="pill ${fitPill(r.fit_label)}">${esc(r.fit_label)} ${r.fit_score}</span><br><span class="flags">${esc((r.flags || []).join(", ") || "No major flags")}</span></td>
+      </tr>`).join("") : `<tr><td colspan="6"><span class="flags">No teachers match this capacity filter.</span></td></tr>`) +
+      "</tbody>";
+    $("#table-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  function downloadCsv(filename, headers, rows) {
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const blob = new Blob([[headers.map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href);
+  }
+  $("#csv-capacity").addEventListener("click", () => data && data.teachers && downloadCsv(
+    "quraan-teacher-capacity.csv",
+    ["teacherid","teacher","available_hours","assigned_hours","capacity_rate","sessions","students","qa_issues","coaching_open","plans_open","leadership_open","followups_open","slot_available","slot_conflict","fit_score","fit_label","flags"],
+    (data.teachers || []).map((r) => [r.teacherid, r.name, r.available_hours, r.assigned_hours, r.capacity_rate + "%", r.sessions, r.students, r.qa_issues, r.coaching_open, r.plans_open, r.leadership_open, r.followups_open, r.slot_available ? "yes" : "no", r.slot_conflict ? "yes" : "no", r.fit_score, r.fit_label, (r.flags || []).join(", ")])
+  ));
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  load();
+})();
+</script>
+</body>
+</html>

@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-12.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-13.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -99,6 +99,20 @@ $reports = [
     'invoice-detail' => ['pqpl_any_authenticated', 'invoice-detail.html'],
     'invoice-view' => ['pqpl_any_authenticated', 'invoice-view.html'],
     'payment-receipt' => ['pqpl_any_authenticated', 'payment-receipt.html'],
+    // Wave 8: live-ops satellites. Per-session/self/child gates live in the
+    // handlers with the exact legacy messages; academy-ops reports keep the
+    // legacy academy-operations entry gate.
+    'live-monitor' => ['pqpl_any_authenticated', 'live-monitor.html'],
+    'live-recordings' => ['pqpl_any_authenticated', 'live-recordings.html'],
+    'live-leadership' => ['pqh_can_manage_academy_operations', 'live-leadership.html'],
+    'live-followup-message' => ['pqpl_any_authenticated', 'live-followup-message.html'],
+    'live-practice-coach' => ['pqpl_any_authenticated', 'live-practice-coach.html'],
+    'live-availability' => ['pqpl_any_authenticated', 'live-availability.html'],
+    'live-admin' => ['pqh_can_manage_academy_operations', 'live-admin.html'],
+    'live-improvement-plans' => ['pqh_can_manage_academy_operations', 'live-improvement-plans.html'],
+    'live-capacity' => ['pqh_can_manage_academy_operations', 'live-capacity.html'],
+    'live-trust' => ['pqpl_any_authenticated', 'live-trust.html'],
+    'live-calendar' => ['pqpl_any_authenticated', 'live-calendar.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

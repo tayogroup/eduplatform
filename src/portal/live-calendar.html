@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live class calendar · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1080px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:900;border:0;cursor:pointer}
+  .btn.light{background:var(--sky);color:var(--blue2)}
+  .actions{display:flex;flex-wrap:wrap;gap:8px}
+  .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+  .dayname{font-size:11px;font-weight:900;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.4px}
+  .day{min-height:112px;padding:8px;border:1px solid var(--line);border-radius:9px;background:var(--card)}
+  .day.muted{background:var(--bg);color:var(--muted)}
+  .day .date{font-size:12px;font-weight:900;margin-bottom:6px}
+  .ev{display:block;margin:5px 0;padding:6px 7px;border-radius:7px;background:var(--sky);border:1px solid var(--line);text-decoration:none;color:var(--ink)}
+  .ev b{display:block;font-size:11px;font-weight:900;line-height:1.25}
+  .ev span{display:block;margin-top:2px;font-size:10px;font-weight:800;color:var(--ink2)}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.open{background:#e1f2ff;color:var(--blue2)}
+  .pill.waiting{background:var(--amber-bg);color:var(--amber)}
+  .pill.early{background:var(--sky);color:var(--ink2)}
+  .pill.closed{background:#edf0f4;color:var(--muted)}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  @media(max-width:760px){.cal{grid-template-columns:1fr}.dayname{display:none}.day{min-height:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live class calendar</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_calendar.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><div class="panel-head">
+    <div><h1 id="title">Live class calendar</h1><p class="sub" id="subtitle">This month's live classes and add-to-calendar downloads.</p></div>
+    <div class="actions" id="top-actions" hidden><a class="btn light" id="schedule-btn" href="#">Schedule</a></div>
+  </div></div>
+  <div id="status" class="status">Loading calendar…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Choose a learner</h2><div class="chooser" id="chooser"></div></div>
+  <div class="panel" id="cal-panel" hidden><h2 id="cal-heading">Month</h2><div class="cal" id="cal"></div></div>
+  <div class="panel" id="list-panel" hidden><h2>Classes this month</h2><div class="cards" id="list"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-calendar", token, childid: qs.get("childid") || "0", workspaceid: qs.get("workspaceid") || "0" });
+
+  let DATA = null;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      DATA = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    $("#brand-tag") && ($("#brand-tag").textContent = d.brand || "EduPlatform");
+    if (d.mode === "chooser") {
+      $("#mode-note").textContent = "Choose a learner";
+      $("#title").textContent = "Whose calendar?";
+      $("#subtitle").textContent = "Pick a learner to see their monthly live classes.";
+      $("#chooser").innerHTML = (d.children || []).map((c) => {
+        const u = new URL(location.href); u.searchParams.set("childid", c.studentid);
+        return `<a class="child" href="${esc(u.href)}">${esc(c.name || ("Student " + c.studentid))}</a>`;
+      }).join("") || "<div class='muted'>No linked learners found for this account.</div>";
+      $("#chooser-panel").hidden = false;
+      $("#status").hidden = true;
+      return;
+    }
+
+    $("#mode-note").textContent = "Learner calendar";
+    $("#title").textContent = "Live class calendar — " + (d.child && d.child.name ? d.child.name : "student");
+    $("#subtitle").textContent = (d.month_label || "This month") + " — classes and add-to-calendar links.";
+    $("#cal-heading").textContent = d.month_label || "Month";
+    if (d.schedulelaunch) { $("#schedule-btn").href = d.schedulelaunch; $("#top-actions").hidden = false; }
+
+    const names = d.names || {};
+    const byDay = {};
+    (d.sessions || []).forEach((s) => { (byDay[s.day_iso] = byDay[s.day_iso] || []).push(s); });
+
+    // Month grid — mirrors the legacy last-Sunday..next-Saturday cell loop.
+    const dow = d.weekdays || ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    let grid = dow.map((n) => `<div class="dayname">${esc(n)}</div>`).join("");
+    grid += (d.days || []).map((day) => {
+      const evs = (byDay[day.iso] || []).map((s) =>
+        `<a class="ev" href="#s-${s.id}"><b>${esc(s.title || "Live class")}</b><span>${esc(s.time_label)}</span></a>`
+      ).join("");
+      return `<div class="day${day.in_month ? "" : " muted"}"><div class="date">${esc(day.label)}</div>${evs}</div>`;
+    }).join("");
+    $("#cal").innerHTML = grid;
+    $("#cal-panel").hidden = false;
+
+    // Agenda list — mirrors the legacy per-session card + action set.
+    const list = (d.sessions || []);
+    $("#list").innerHTML = list.length ? list.map((s) => {
+      const teacher = s.teacherid && names[s.teacherid] ? names[s.teacherid] : "Teacher " + s.teacherid;
+      const series = s.seriesid ? `<div class="muted">Recurring class #${s.seriesid}${s.series_sequence ? " · Session " + s.series_sequence : ""}</div>` : "";
+      const pill = `<span class="pill ${esc(s.join_state)}">${esc(s.join_label)}</span>`;
+      const btns = [];
+      if (s.join_state === "open") btns.push(`<a class="btn" href="${esc(s.joinlaunch)}">Join class</a>`);
+      btns.push(`<button class="btn light" data-ics="${s.id}">Add to calendar</button>`);
+      btns.push(`<a class="btn light" href="${esc(s.trustlaunch)}">Trust center</a>`);
+      if (s.summary_visible) btns.push(`<a class="btn light" href="${esc(s.summarylaunch)}">Summary</a>`);
+      if (s.visible_recordings > 0) btns.push(`<a class="btn light" href="${esc(s.recordinglaunch)}">Recording</a>`);
+      return `<div class="card" id="s-${s.id}">
+        <h3>${esc(s.title || "Live class")}${pill}</h3>
+        <div class="meta">${esc(s.datetime_label)} · ${esc(teacher)}</div>
+        ${series}
+        <div class="actions" style="margin-top:8px">${btns.join("")}</div>
+      </div>`;
+    }).join("") : "<div class='muted'>No live classes found for this month.</div>";
+    $("#list-panel").hidden = false;
+    $("#status").hidden = true;
+
+    document.querySelectorAll("[data-ics]").forEach((b) => b.addEventListener("click", () => downloadIcs(Number(b.dataset.ics))));
+  }
+
+  // The .ics bytes are built server-side (verbatim VCALENDAR) and delivered in
+  // the GET payload; here we turn them into a file download, then record the
+  // same calendar_downloaded audit the legacy page wrote.
+  function downloadIcs(id) {
+    const s = (DATA.sessions || []).find((x) => x.id === id);
+    if (!s || !s.ics_text) return;
+    const blob = new Blob([s.ics_text], { type: "text/calendar;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = s.ics_filename || ("live-" + id + ".ics");
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+    fetch(endpoint + "?" + new URLSearchParams({ report: "live-calendar", token }), {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ do: "log_calendar_download", childid: DATA.child.id, sessionid: id }),
+    }).catch(() => {});
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

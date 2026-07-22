@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live class trust center · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .stat{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .stat b{display:block;font-size:24px;font-weight:900;color:var(--blue2)}
+  .stat span{display:block;margin-top:2px;color:var(--muted);font-size:12px;font-weight:700}
+  .policy{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .policy .box{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+  .policy .box b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:4px}
+  .policy .box p{margin:0;font-size:14px;font-weight:700;color:var(--ink)}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:2px}
+  .muted{color:var(--muted);font-size:12px}
+  .badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.n{background:#edf0f4;color:var(--muted)}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  a.child span{display:block;margin-top:4px;color:var(--muted);font-size:12px;font-weight:700}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  form.consent{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  form.consent .note{margin:0 0 12px;color:var(--muted);font-size:13px;font-weight:600;line-height:1.45}
+  .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  fieldset.choice{margin:0;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  fieldset.choice legend{padding:0 5px;font-size:13px;font-weight:900;color:var(--ink)}
+  fieldset.choice label{display:flex;align-items:flex-start;gap:8px;font-size:14px;font-weight:600;color:var(--ink2);line-height:1.4}
+  fieldset.choice label+label{margin-top:9px}
+  .confirm{display:flex;align-items:flex-start;gap:8px;margin:14px 0;font-size:14px;font-weight:600;color:var(--ink2);line-height:1.4}
+  form.consent button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.consent button:disabled{opacity:.55;cursor:wait}
+  .readonly{margin-top:14px;padding:12px 14px;border-radius:8px;background:var(--red-bg);color:var(--red);font-size:13px;font-weight:700;line-height:1.45}
+  @media(max-width:560px){.cgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live class trust center</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_trust.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Live class trust center</h1><p class="sub" id="subtitle">Clear visibility into sessions, attendance, recording policy, and parent-facing feedback.</p></div>
+  <div id="status" class="status">Loading trust center…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Choose a student</h2><div class="chooser" id="chooser"></div></div>
+  <div class="panel" id="stats-panel" hidden><h2>Trust summary</h2><div class="grid" id="stats"></div></div>
+  <div class="panel" id="consent-panel" hidden><h2>Safety and Consent</h2><div class="policy" id="policy"></div><div id="consent-slot"></div></div>
+  <div class="panel" id="sessions-panel" hidden><h2>Class Transparency</h2><div class="cards" id="sessions"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let childName = "your student";
+  const childId = () => qs.get("childid") || "0";
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-trust", token, childid: childId() });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const statusText = (v) => v || "Not recorded in system yet";
+
+  function sessionCard(s, names) {
+    const att = String(s.attendance_status || "").trim();
+    const lesson = [s.lessonid, s.unitid].map((x) => String(x || "").trim()).filter(Boolean).join(" / ");
+    const teacher = (s.teacherid && names[s.teacherid]) ? names[s.teacherid] : ("Teacher " + (s.teacherid || 0));
+    const summaryPub = !!(s.visible_to_parent && Number(s.visible_to_parent));
+    const recEnabled = !!(s.recording_enabled && Number(s.recording_enabled));
+    let badges = "";
+    badges += `<span class="pill ${att ? "ok" : "warn"}">Attendance: ${esc(att ? att.replace(/_/g, " ") : "not marked")}</span>`;
+    badges += `<span class="pill ${summaryPub ? "ok" : "warn"}">Summary: ${summaryPub ? "published" : "not published"}</span>`;
+    badges += `<span class="pill ${recEnabled ? "ok" : "warn"}">Recording: ${recEnabled ? "audio on; video consent-controlled" : "audio policy not marked"}</span>`;
+    badges += `<span class="pill n">Capacity: ${Number(s.max_participants || 0)}</span>`;
+    if (s.technical_issue) badges += `<span class="pill warn">Technical issue noted</span>`;
+    if (Number(s.visible_recordings || 0) > 0) badges += `<span class="pill ok">Parent recording available</span>`;
+    return `<div class="card">
+      <h3>${esc(s.title || "Live class")} <span class="pill n">${esc(String(s.status || ""))}</span></h3>
+      <div class="meta">${esc(when(s.scheduled_start))} — ${esc(teacher)}</div>
+      ${lesson ? `<div class="meta">${esc(lesson)}</div>` : ""}
+      <div class="badges">${badges}</div>
+    </div>`;
+  }
+
+  function consentForm(d) {
+    const liveG = d.live_consent_granted;       // true | false | null
+    const recG = d.recording_consent_granted;   // true | false | null
+    const chk = (val, want) => (val === want ? "checked" : "");
+    return `
+      <form class="consent" id="consent-form">
+        <p class="note">Your choices apply to future live sessions. Recording consent permits session recording when the institution enables it; recordings remain unavailable to families until they are reviewed and published.</p>
+        <div class="cgrid">
+          <fieldset class="choice">
+            <legend>Live class participation</legend>
+            <label><input type="radio" name="live_consent" value="grant" required ${chk(liveG, true)}> <span>Grant consent</span></label>
+            <label><input type="radio" name="live_consent" value="decline" required ${chk(liveG, false)}> <span>Decline consent</span></label>
+          </fieldset>
+          <fieldset class="choice">
+            <legend>Live-session recording</legend>
+            <label><input type="radio" name="recording_consent" value="grant" required ${chk(recG, true)}> <span>Grant consent</span></label>
+            <label><input type="radio" name="recording_consent" value="decline" required ${chk(recG, false)}> <span>Decline consent</span></label>
+          </fieldset>
+        </div>
+        <label class="confirm"><input type="checkbox" name="guardian_confirmation" value="1" required> <span>I confirm that I am ${esc(childName)}'s parent or legal guardian and that these are my consent decisions.</span></label>
+        <button type="submit">Save consent choices</button>
+      </form>`;
+  }
+
+  function render(d) {
+    if (d.mode === "chooser") {
+      $("#mode-note").textContent = "Choose a student";
+      $("#title").textContent = "Whose trust center?";
+      $("#chooser").innerHTML = (d.children || []).map((c) => {
+        const u = new URL(location.href); u.searchParams.set("childid", c.studentid);
+        return `<a class="child" href="${esc(u.href)}">${esc(c.name || ("Student " + c.studentid))}<span>Open live class trust center</span></a>`;
+      }).join("") || "<div class='muted'>Choose a student from the dashboard first. Administrators can open this page with <code>?childid=STUDENT_USER_ID</code>.</div>";
+      $("#chooser-panel").hidden = false;
+      $("#status").hidden = true;
+      return;
+    }
+
+    childName = (d.child && d.child.name) ? d.child.name : "your student";
+    $("#title").textContent = "Live class safety for " + childName;
+    const names = d.names || {};
+    const st = d.stats || {};
+
+    $("#stats").innerHTML =
+      `<div class="stat"><b>${Number(st.visible || 0)}</b><span>visible live classes</span></div>` +
+      `<div class="stat"><b>${Number(st.completed || 0)}</b><span>started or completed</span></div>` +
+      `<div class="stat"><b>${Number(st.published || 0)}</b><span>parent summaries published</span></div>` +
+      `<div class="stat"><b>${Number(st.recordingenabled || 0)}</b><span>sessions marked for recording</span></div>`;
+    $("#stats-panel").hidden = false;
+
+    $("#policy").innerHTML =
+      `<div class="box"><b>Live participation</b><p>${esc(statusText(d.liveconsent))}</p></div>` +
+      `<div class="box"><b>Recording consent</b><p>${esc(statusText(d.recordingconsent))}</p></div>` +
+      `<div class="box"><b>Privacy rule</b><p>Parents see attendance and approved summaries only. Private teacher notes stay hidden.</p></div>`;
+    if (d.islinkedparent) {
+      $("#consent-slot").innerHTML = consentForm(d);
+      $("#consent-form").addEventListener("submit", submitConsent);
+    } else {
+      $("#consent-slot").innerHTML = `<div class="readonly">This is a read-only view. Consent can be completed only after ${esc(childName)}'s linked parent or legal guardian signs in to their own account and opens Dashboard &gt; Trust Center.</div>`;
+    }
+    $("#consent-panel").hidden = false;
+
+    const sessions = d.sessions || [];
+    $("#sessions").innerHTML = sessions.length
+      ? sessions.map((s) => sessionCard(s, names)).join("")
+      : "<div class='muted'>No live classes are linked to this student yet.</div>";
+    $("#sessions-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  async function submitConsent(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    if (!f.guardian_confirmation.checked) { flash("Confirm that you are the student's parent or legal guardian.", true); return; }
+    const live = (f.querySelector('input[name="live_consent"]:checked') || {}).value;
+    const rec = (f.querySelector('input[name="recording_consent"]:checked') || {}).value;
+    if (!live || !rec) { flash("Choose Grant or Decline for both consent decisions.", true); return; }
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-trust", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "save_parent_consent",
+          childid: Number(childId()),
+          live_consent: live,
+          recording_consent: rec,
+          guardian_confirmation: 1,
+          workspaceid: Number(qs.get("workspaceid") || 0),
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      flash("Your consent choices were saved.", false);
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Save consent choices";
+      flash("Could not save: " + e.message, true);
+    }
+  }
+
+  function flash(msg, isError) {
+    const s = $("#status");
+    s.hidden = false;
+    s.className = "status " + (isError ? "error" : "saved");
+    s.textContent = msg;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

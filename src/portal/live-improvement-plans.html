@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher improvement plans · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 12px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .filters{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+  .field{display:grid;gap:5px}
+  .field label{font-size:11px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.3px}
+  .field input,.field select{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .chk{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--ink2);align-self:end;min-height:36px}
+  .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .btn{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+  .btn.light{background:var(--sky);color:var(--blue)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .metrics{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}
+  .metric{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .metric b{display:block;font-size:23px;font-weight:900;color:var(--blue)}
+  .metric span{display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:700}
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+  .card h3{margin:0;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin:4px 0 0}
+  .card p{margin:6px 0 0;font-size:13px}
+  .pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.ok{background:var(--sky);color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
+  .kv div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg)}
+  .kv b{display:block;font-size:16px;color:var(--blue)}
+  .kv span{display:block;color:var(--muted);font-size:11px;font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--bg);font-size:11px;color:var(--ink2);text-transform:uppercase;letter-spacing:.3px}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word;color:var(--ink2)}
+  .muted{color:var(--muted);font-size:13px}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;background:var(--bg)}
+  @media(max-width:1000px){.filters{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}table{display:block;overflow:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher improvement plans</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_improvement_plans.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Teacher improvement plans</h1>
+    <p class="sub">Review active plans, overdue items, completed history, teacher trends, and improvement-plan audit activity. Plans are assigned and acknowledged in the teacher workspace — this is the read-only management console.</p>
+  </div>
+  <div id="status" class="status">Loading improvement plans…</div>
+
+  <div class="panel" id="filters-panel" hidden>
+    <form id="filters">
+      <div class="filters">
+        <div class="field"><label for="from">From</label><input id="from" name="from" type="date"></div>
+        <div class="field"><label for="to">To</label><input id="to" name="to" type="date"></div>
+        <div class="field"><label for="teacherid">Teacher ID</label><input id="teacherid" name="teacherid" type="number" min="0" value="0"></div>
+        <div class="field"><label for="mentorid">Mentor ID</label><input id="mentorid" name="mentorid" type="number" min="0" value="0"></div>
+        <div class="field"><label for="status">Status</label><select id="status" name="status">
+          <option value="open">Open plans</option><option value="assigned">Assigned</option><option value="in_progress">In progress</option><option value="completed">Completed</option><option value="all">All</option>
+        </select></div>
+        <div class="field"><label for="priority">Priority</label><select id="priority" name="priority">
+          <option value="all">All</option><option value="high">High</option><option value="normal">Normal</option><option value="low">Low</option>
+        </select></div>
+        <label class="chk"><input type="checkbox" id="overdue" name="overdue"> Overdue only</label>
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit">Apply filters</button>
+        <button class="btn light" type="button" id="reset">Reset</button>
+        <button class="btn light" type="button" id="export">Export CSV</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel" id="metrics-panel" hidden><div class="metrics" id="metrics"></div></div>
+
+  <div class="grid" id="grid" hidden>
+    <div class="panel">
+      <h2>Improvement plan history</h2>
+      <div class="cards" id="plans"></div>
+    </div>
+    <div class="panel">
+      <h2>Teacher history</h2>
+      <div id="teacherhistory"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="audit-panel" hidden>
+    <h2>Recent improvement plan audit</h2>
+    <div id="audits"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+  const words = (v) => String(v ?? "").replace(/_/g, " ");
+  let last = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const filterValues = () => ({
+    from: $("#from").value || "",
+    to: $("#to").value || "",
+    teacherid: $("#teacherid").value || "0",
+    mentorid: $("#mentorid").value || "0",
+    status: $("#status").value || "open",
+    priority: $("#priority").value || "all",
+    overdue: $("#overdue").checked ? "1" : "0",
+  });
+
+  const url = () => endpoint + "?" + new URLSearchParams(Object.assign(
+    { report: "live-improvement-plans", token, workspaceid }, filterValues()));
+
+  const name = (names, id, fallback) => (id && names[id]) ? names[id] : fallback;
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading improvement plans…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      last = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function applyFilters(f) {
+    $("#from").value = f.from || ""; $("#to").value = f.to || "";
+    $("#teacherid").value = f.teacherid || 0; $("#mentorid").value = f.mentorid || 0;
+    $("#status").value = f.status || "open"; $("#priority").value = f.priority || "all";
+    $("#overdue").checked = String(f.overdue) === "1";
+  }
+
+  const metricTile = (v, label) => `<div class="metric"><b>${Number(v) || 0}</b><span>${esc(label)}</span></div>`;
+
+  function render(d) {
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Improvement plan columns are not installed yet. Run Phase 37 SQL first.";
+      $("#filters-panel").hidden = $("#metrics-panel").hidden = $("#grid").hidden = $("#audit-panel").hidden = true;
+      return;
+    }
+    if (d.filters) applyFilters(d.filters);
+    const now = Number(d.now) || Math.floor(Date.now() / 1000);
+    const names = d.names || {};
+    const m = d.metrics || {};
+
+    $("#metrics").innerHTML = [
+      metricTile(m.open, "open plans"), metricTile(m.assigned, "assigned"),
+      metricTile(m.inprogress, "in progress"), metricTile(m.overdue, "overdue"),
+      metricTile(m.completed, "completed"), metricTile(m.due7, "due next 7d"),
+      metricTile(m.alerts7, "alerts 7d"), metricTile(m.teachers, "teachers"),
+    ].join("");
+
+    const plans = d.plans || [];
+    $("#plans").innerHTML = plans.map((p) => {
+      const st = String(p.improvement_plan_status || "");
+      const overdue = (st === "assigned" || st === "in_progress") && Number(p.improvement_plan_due_date) > 0 && Number(p.improvement_plan_due_date) < now;
+      const cls = st === "completed" ? "ok" : (overdue ? "bad" : "warn");
+      const goals = String(p.improvement_plan_goals || "").trim();
+      const actions = String(p.improvement_plan_actions || "").trim();
+      return `<div class="card">
+        <div class="card-head">
+          <div><h3>${esc(p.title || "Live class")}</h3>
+          <p class="meta">#${Number(p.id)} · ${esc(name(names, p.teacherid, "Teacher " + Number(p.teacherid)))} · ${esc(when(p.scheduled_start))}</p></div>
+          <span class="pill ${cls}">${overdue ? "overdue" : esc(words(st))}</span>
+        </div>
+        <div class="kv">
+          <div><b>${esc(words(p.improvement_plan_priority))}</b><span>priority</span></div>
+          <div><b>${Number(p.qa_score) || 0}%</b><span>QA score</span></div>
+          <div><b>${Number(p.student_count) || 0}</b><span>students</span></div>
+          <div><b>${Number(p.plan_alert_count) || 0}</b><span>alerts</span></div>
+        </div>
+        <p class="meta">QA: ${esc(words(p.qa_status))} · Leadership: ${esc(words(p.leadership_review_status))}</p>
+        <p class="meta">Assigned: ${p.improvement_plan_assignedat ? esc(when(p.improvement_plan_assignedat)) : "not recorded"}${p.improvement_plan_ackat ? " · Acknowledged: " + esc(when(p.improvement_plan_ackat)) : ""}</p>
+        <p class="meta">Due: ${p.improvement_plan_due_date ? esc(when(p.improvement_plan_due_date)) : "no due date"}${p.improvement_plan_completedat ? " · Completed: " + esc(when(p.improvement_plan_completedat)) : ""}</p>
+        ${goals ? `<p><strong>Goals:</strong> ${esc(goals)}</p>` : ""}
+        ${actions ? `<p><strong>Actions:</strong> ${esc(actions)}</p>` : ""}
+      </div>`;
+    }).join("") || `<div class="empty">No improvement plans match these filters.</div>`;
+
+    const th = d.teacherhistory || [];
+    $("#teacherhistory").innerHTML = th.length ? `<table>
+      <tr><th>Teacher</th><th>Plans</th><th>Open</th><th>Overdue</th><th>QA</th></tr>
+      ${th.map((r) => `<tr>
+        <td>${esc(name(names, r.teacherid, "Teacher " + Number(r.teacherid)))}<br><span class="code">#${Number(r.teacherid)}</span></td>
+        <td>${Number(r.plan_count) || 0}<br><span class="code">${Number(r.completed_count) || 0} completed</span></td>
+        <td>${Number(r.open_count) || 0}</td>
+        <td><span class="pill ${Number(r.overdue_count) > 0 ? "bad" : "ok"}">${Number(r.overdue_count) || 0}</span></td>
+        <td>${Number(r.avg_qa_score) || 0}%<br><span class="code">${Number(r.needs_coaching_count) || 0} coaching, ${Number(r.serious_issue_count) || 0} serious</span></td>
+      </tr>`).join("")}
+    </table>` : `<div class="empty">No teacher improvement history yet.</div>`;
+
+    const au = d.audits || [];
+    $("#audits").innerHTML = au.length ? `<table>
+      <tr><th>Time</th><th>Session</th><th>Actor</th><th>Action</th><th>Details</th></tr>
+      ${au.map((a) => `<tr>
+        <td>${esc(when(a.timecreated))}</td>
+        <td>#${Number(a.sessionid)}</td>
+        <td>${Number(a.actorid) > 0 ? esc(name(names, a.actorid, "User " + Number(a.actorid))) : "System"}</td>
+        <td>${esc(words(a.action))}</td>
+        <td><span class="code">${esc(a.details || "")}</span></td>
+      </tr>`).join("")}
+    </table>` : `<div class="empty">No improvement plan audit rows yet.</div>`;
+
+    $("#filters-panel").hidden = $("#metrics-panel").hidden = $("#grid").hidden = $("#audit-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  function exportCsv() {
+    if (!last || !last.plans) return;
+    const names = last.names || {};
+    const head = ["sessionid","title","teacherid","teacher","mentorid","students","qa_status","qa_score","leadership_status","plan_status","priority","assigned_at","acknowledged_at","due_date","completed_at","goals","actions","completion_notes"];
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const rows = last.plans.map((p) => [
+      Number(p.id), p.title || "", Number(p.teacherid) || 0,
+      name(names, p.teacherid, "Teacher " + Number(p.teacherid)),
+      Number(p.improvement_plan_mentorid) || 0, Number(p.student_count) || 0,
+      p.qa_status || "", Number(p.qa_score) || 0, p.leadership_review_status || "",
+      p.improvement_plan_status || "", p.improvement_plan_priority || "",
+      p.improvement_plan_assignedat ? when(p.improvement_plan_assignedat) : "",
+      p.improvement_plan_ackat ? when(p.improvement_plan_ackat) : "",
+      p.improvement_plan_due_date ? when(p.improvement_plan_due_date) : "",
+      p.improvement_plan_completedat ? when(p.improvement_plan_completedat) : "",
+      p.improvement_plan_goals || "", p.improvement_plan_actions || "",
+      p.improvement_plan_completion_notes || "",
+    ].map(cell).join(","));
+    const csv = [head.map(cell).join(","), ...rows].join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    a.download = "quraan-teacher-improvement-plans.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#reset").addEventListener("click", () => { applyFilters({ status: "open", priority: "all", overdue: 0, teacherid: 0, mentorid: 0, from: "", to: "" }); load(); });
+  $("#export").addEventListener("click", exportCsv);
+
+  load();
+})();
+</script>
+</body>
+</html>

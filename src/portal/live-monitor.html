@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live lesson monitor · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+  a.btn{display:inline-flex;align-items:center;min-height:36px;padding:0 13px;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:900}
+  a.btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  a.btn:hover{opacity:.92}
+  .cards{display:grid;gap:14px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:var(--card)}
+  .card__head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+  .card h3{margin:0 0 3px;font-size:17px}
+  .meta{color:var(--muted);font-size:12px;margin:4px 0 0}
+  .pill{display:inline-flex;align-items:center;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+  .metric{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  .metric strong{display:block;font-size:20px;font-weight:900;color:var(--blue2)}
+  .metric span{display:block;margin-top:2px;color:var(--muted);font-size:12px;font-weight:800}
+  .live{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:12px 0;padding:10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .live__item{min-height:44px;padding:8px 10px;border-radius:7px;background:var(--card);border:1px solid var(--line)}
+  .live__item strong{display:block;color:var(--ink);font-size:13px;font-weight:900}
+  .live__item span{display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:800}
+  .tone--active{background:var(--sky);border-color:var(--blue2)}
+  .tone--idle{background:var(--amber-bg);border-color:var(--amber)}
+  .tone--away{background:var(--red-bg);border-color:var(--red)}
+  .tone--muted{background:var(--bg)}
+  .line{margin:8px 0 0;color:var(--ink2);font-size:13px}
+  .coach{margin:12px 0 0;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--sky)}
+  .coach h4{margin:0 0 8px;color:var(--blue);font-size:14px;font-weight:900}
+  .coach__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .coach__item{padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--card)}
+  .coach__item strong{display:block;color:var(--blue2);font-size:16px;font-weight:900}
+  .coach__item span{display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:800}
+  .coach__events{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+  .coach__events li{padding:8px;border-radius:7px;background:var(--card);border:1px solid var(--line);color:var(--ink);font-size:12px;font-weight:700}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:800;background:var(--card)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  @media(max-width:900px){.grid,.live{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.grid,.live,.coach__grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live lesson monitor</small></div>
+  <div class="note">Token-authenticated · parallel-run of live_monitor.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Live lesson monitor</h1>
+    <p class="sub" id="subtitle">Self-study activity for the students in this live session.</p>
+    <div class="actions" id="top-actions" hidden></div>
+  </div>
+  <div id="status" class="status">Loading monitor…</div>
+  <div class="panel" id="focus-panel" hidden><h2>Session lesson focus</h2><p class="meta" id="focus-meta"></p></div>
+  <div id="students"></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const sessionid = (qs.get("sessionid") || "0").replace(/[^0-9]/g, "");
+  const workspaceid = (qs.get("workspaceid") || "").replace(/[^0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const timeOnly = (t) => t ? new Date(t * 1000).toLocaleTimeString(undefined, { hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-monitor", token, sessionid, ...(workspaceid ? { workspaceid } : {}) });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const metric = (val, label) => `<div class="metric"><strong>${esc(val)}</strong><span>${esc(label)}</span></div>`;
+  const liveItem = (val, label, tone) => `<div class="live__item${tone ? " tone--" + esc(tone) : ""}"><strong>${esc(val)}</strong><span>${esc(label)}</span></div>`;
+
+  const coachPanel = (c) => {
+    if (!c || !c.ready) return "";
+    const events = (c.events || []).map((e) => `
+      <li><strong>${esc(e.trigger_label)}</strong> — ${esc(e.message)}
+      <span class="meta">${esc(e.timelabel)}${e.message_source ? " · " + esc(e.message_source) : ""}</span>
+      ${e.recommendation_message ? `<br><span class="meta">Recommendation: ${esc(e.recommendation_message)}</span>` : ""}</li>`).join("");
+    return `
+      <section class="coach">
+        <h4>Chatbot Practice Coach</h4>
+        <div class="coach__grid">
+          ${coachItem(c.count, "coach prompts")}${coachItem(c.idle, "idle nudges")}${coachItem(c.away, "screen returns")}${coachItem(c.latest_ago, "latest coach event")}
+        </div>
+        ${events ? `<ul class="coach__events">${events}</ul>` : `<p class="meta">No Practice Coach prompts recorded for this student yet.</p>`}
+      </section>`;
+  };
+  const coachItem = (val, label) => `<div class="coach__item"><strong>${esc(val)}</strong><span>${esc(label)}</span></div>`;
+
+  const focusLine = (f) => {
+    let base;
+    if (f.latest) {
+      base = "Focus: " + esc([f.latest.unitid, f.latest.step_id].filter(Boolean).join(" / ") || "—");
+    } else if (f.ready && !f.scoped) {
+      base = "Focus: session-based focus schema is not installed yet";
+    } else {
+      base = "Focus: no focus data for this session";
+    }
+    if (f.ready) base += ` — idle ${f.idle_count}, left ${f.leave_count}`;
+    return base;
+  };
+
+  const speakLine = (s) => {
+    let base = "Speak practice: " + (s.ready ? `${s.count} recordings` : "not available");
+    if (s.latest) base += " — latest " + esc(s.latest.letter_name || s.latest.unitid);
+    return base;
+  };
+
+  const card = (st) => {
+    const p = st.progress || {};
+    const latest = p.latest;
+    const f = st.focus || {};
+    const ind = st.indicators || {};
+    return `
+      <article class="card">
+        <div class="card__head">
+          <div>
+            <h3>${esc(st.name)}</h3>
+            <p class="meta">Student #${esc(st.studentid)}${latest ? " · Latest: " + esc(latest.unit_title || latest.lesson_title || latest.unitid) : ""}</p>
+          </div>
+          <span class="pill">${esc(latest ? (latest.overall_status || "").replace(/_/g, " ") : "no progress")}</span>
+        </div>
+        <div class="grid">
+          ${metric((p.completed || 0) + "/" + (p.units || 0), "completed units")}
+          ${metric(latest ? latest.completion_percent + "%" : "0%", "latest progress")}
+          ${metric(p.steps || 0, "steps/stars")}
+          ${metric(f.active_label || "n/a", "active self-study")}
+        </div>
+        <div class="live" aria-label="Live activity indicators for ${esc(st.name)}">
+          ${liveItem(ind.status, "live status", ind.tone)}
+          ${liveItem(ind.step, "current step", "")}
+          ${liveItem(ind.last_activity, "last activity", "")}
+          ${liveItem(ind.idle_summary, "idle signal", "")}
+          ${liveItem(ind.leave_summary, "tab signal", "")}
+        </div>
+        <p class="line">${focusLine(f)}</p>
+        <p class="line">${speakLine(st.speak || {})}</p>
+        ${coachPanel(st.coach)}
+        <div class="actions">
+          <a class="btn" href="${esc(st.lessonurl)}">Open lesson</a>
+          <a class="btn light" href="${esc(st.recordingsurl)}">Speak recordings</a>
+        </div>
+      </article>`;
+  };
+
+  function render(d) {
+    const s = d.session || {};
+    $("#title").textContent = "Live lesson monitor — " + (s.title || "session");
+    $("#subtitle").textContent = [s.title, when(s.scheduled_start), s.teacher_name].filter(Boolean).join(" · ");
+    const L = d.links || {};
+    $("#top-actions").innerHTML = [
+      L.review ? `<a class="btn light" href="${esc(L.review)}">Attendance &amp; notes</a>` : "",
+      L.workspace ? `<a class="btn light" href="${esc(L.workspace)}">Teacher workspace</a>` : "",
+      L.sessions ? `<a class="btn light" href="${esc(L.sessions)}">Live sessions</a>` : "",
+    ].join("");
+    $("#top-actions").hidden = false;
+
+    $("#focus-meta").textContent =
+      "Session #" + (s.id || 0) + " · " + when(s.scheduled_start) + (s.scheduled_end ? " to " + timeOnly(s.scheduled_end) : "") +
+      " · Lesson: " + (s.lessonid || "not set") + " · Unit: " + (s.unitid || "not set");
+    $("#focus-panel").hidden = false;
+
+    const rows = d.students || [];
+    $("#students").innerHTML = rows.length
+      ? `<div class="cards">${rows.map(card).join("")}</div>`
+      : `<div class="empty">No active students are assigned to this session.</div>`;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

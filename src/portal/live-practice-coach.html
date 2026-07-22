@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chatbot Practice Coach report · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  form.filters{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;align-items:end}
+  form.filters label{display:block;margin-bottom:5px;color:var(--ink2);font-size:12px;font-weight:800}
+  form.filters input,form.filters select{width:100%;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink);font-weight:700}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 15px;border-radius:8px;background:var(--blue2);color:#fff;border:0;font:inherit;font-size:13px;font-weight:900;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue2);border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  .metric{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  .metric strong{display:block;color:var(--blue2);font-size:24px;font-weight:950}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:800}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;background:var(--card)}
+  th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{background:var(--sky);color:var(--blue);font-weight:900}
+  a{color:var(--blue2)}
+  .pill{display:inline-flex;min-height:24px;align-items:center;padding:2px 9px;border-radius:999px;background:var(--sky);color:var(--ink2);font-size:11px;font-weight:900}
+  .empty{padding:18px;border:1px dashed var(--line);border-radius:10px;background:var(--card);color:var(--muted);font-weight:800}
+  @media(max-width:980px){form.filters,.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}}
+  @media(max-width:560px){form.filters,.metrics{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Chatbot Practice Coach report</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_practice_coach.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Chatbot Practice Coach report</h1><p class="sub">Teacherless-session coaching prompts, focus nudges, and support history.</p></div>
+  <div id="status" class="status">Loading report…</div>
+
+  <div class="panel" id="filter-panel" hidden>
+    <form class="filters" id="filters">
+      <div><label>From</label><input type="date" name="from"></div>
+      <div><label>To</label><input type="date" name="to"></div>
+      <div id="teacher-field"><label>Teacher ID</label><input type="number" name="teacherid" min="0"></div>
+      <div><label>Student ID</label><input type="number" name="studentid" min="0"></div>
+      <div><label>Session ID</label><input type="number" name="sessionid" min="0"></div>
+      <div>
+        <label>Trigger</label>
+        <select name="trigger">
+          <option value="">All triggers</option>
+          <option value="practice_start">Practice Start</option>
+          <option value="idle_nudge">Idle Nudge</option>
+          <option value="screen_return">Screen Return</option>
+          <option value="focus_return">Focus Return</option>
+          <option value="progress_check">Progress Check</option>
+          <option value="step_changed">Step Changed</option>
+        </select>
+      </div>
+    </form>
+    <div class="actions">
+      <button class="btn" type="button" id="apply">Apply filters</button>
+      <button class="btn light" type="button" id="reset">Reset</button>
+      <button class="btn light" type="button" id="csv">Export CSV</button>
+    </div>
+  </div>
+
+  <div id="report" hidden>
+    <section class="metrics" id="metrics" aria-label="Practice Coach metrics"></section>
+    <div class="grid">
+      <div class="panel"><h2>Students supported</h2><div class="tablewrap">
+        <table><thead><tr><th>Student</th><th>Events</th><th>Focus</th><th>Latest</th></tr></thead><tbody id="students"></tbody></table>
+      </div></div>
+      <div class="panel"><h2>Sessions</h2><div class="tablewrap">
+        <table><thead><tr><th>Session</th><th>Teacher</th><th>Events</th><th>End-session guidance</th><th>Latest</th></tr></thead><tbody id="sessions"></tbody></table>
+      </div></div>
+    </div>
+    <div class="panel"><h2>Recent coach events</h2><div class="tablewrap">
+      <table><thead><tr><th>Time</th><th>Session</th><th>Student</th><th>Step</th><th>Trigger</th><th>Source</th><th>Recommendation</th><th>Message</th></tr></thead><tbody id="events"></tbody></table>
+    </div></div>
+  </div>
+  <div class="empty" id="notready" hidden>Practice Coach reporting tables are not installed yet.</div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "n/a";
+  const title = (v) => String(v ?? "").replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  let last = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "live-practice-coach", token });
+    const f = new FormData($("#filters"));
+    for (const [k, v] of f.entries()) { if (String(v).trim() !== "") p.set(k, v); }
+    return endpoint + "?" + p.toString();
+  };
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading report…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      last = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function syncFiltersFromServer(d) {
+    const f = $("#filters");
+    if (!f.dataset.init) {
+      f.from.value = d.filters.from || "";
+      f.to.value = d.filters.to || "";
+      f.studentid.value = d.filters.studentid || "";
+      f.sessionid.value = d.filters.sessionid || "";
+      f.trigger.value = d.filters.trigger || "";
+      if (d.canmanage) f.teacherid.value = d.filters.teacherid || "";
+      f.dataset.init = "1";
+    }
+    $("#teacher-field").hidden = !d.canmanage;
+  }
+
+  function render(d) {
+    $("#filter-panel").hidden = false;
+    syncFiltersFromServer(d);
+    if (!d.ready) { $("#report").hidden = true; $("#notready").hidden = false; $("#status").hidden = true; return; }
+    $("#notready").hidden = true;
+
+    const names = d.names || {};
+    const nm = (id) => (id && names[id]) ? names[id] : ("User " + id);
+
+    const m = d.metrics || {};
+    $("#metrics").innerHTML = [
+      [m.events, "coach events"], [m.students, "students supported"], [m.sessions, "sessions"],
+      [m.idle, "idle nudges"], [m.away, "screen returns"], [m.starts, "practice starts"],
+    ].map(([n, l]) => `<div class="metric"><strong>${Number(n || 0)}</strong><span>${esc(l)}</span></div>`).join("");
+
+    $("#students").innerHTML = (d.studentrows || []).map((r) => `
+      <tr>
+        <td>${esc(nm(r.userid))}<br><span class="pill">${esc(r.account_label || "")}</span> <span class="pill">#${Number(r.userid)}</span></td>
+        <td>${Number(r.event_count || 0)}</td>
+        <td>${Number(r.idle_count || 0)} idle, ${Number(r.away_count || 0)} away</td>
+        <td>${esc(when(r.latest_time))}</td>
+      </tr>`).join("") || `<tr><td colspan="4" class="muted">No student coach events found.</td></tr>`;
+
+    $("#sessions").innerHTML = (d.sessionrows || []).map((r) => {
+      const g = r.guidance || {};
+      return `<tr>
+        <td>${esc(r.title || "")}<br><span class="pill">#${Number(r.live_sessionid)}</span></td>
+        <td>${esc(nm(r.teacherid))}</td>
+        <td>${Number(r.event_count || 0)} / ${Number(r.student_count || 0)} students<br><span class="pill">${Number(r.idle_count || 0)} idle, ${Number(r.away_count || 0)} away</span></td>
+        <td><span class="pill">${esc(title(g.key || ""))}</span><br>${esc(g.teacher || "")}<br><span class="muted">${esc(g.parent || "")}</span></td>
+        <td>${esc(when(r.latest_time))}</td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="5" class="muted">No session coach events found.</td></tr>`;
+
+    $("#events").innerHTML = (d.rows || []).map((r) => `
+      <tr>
+        <td>${esc(when(r.timecreated))}</td>
+        <td>${esc(r.title || "")}<br><span class="pill">#${Number(r.live_sessionid)}</span></td>
+        <td>${esc(nm(r.userid))}<br><span class="pill">${esc(r.account_label || "")}</span> <span class="pill">#${Number(r.userid)}</span></td>
+        <td>${esc(String(((r.unitid || "") + " / " + (r.step_id || "")).replace(/^ \/ | \/ $/g, "").trim()))}</td>
+        <td>${esc(title(r.trigger_key || ""))}</td>
+        <td>${esc(title(r.message_source || "rule_based"))}${r.ai_model ? '<br><span class="pill">' + esc(r.ai_model) + '</span>' : ""}</td>
+        <td>${esc(title(r.recommendation_key || ""))}${r.recommendation_message ? '<br><span class="muted">' + esc(r.recommendation_message) + '</span>' : ""}</td>
+        <td>${esc(r.message || "")}</td>
+      </tr>`).join("") || `<tr><td colspan="8" class="muted">No coach events match these filters.</td></tr>`;
+
+    $("#report").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  function exportCsv() {
+    if (!last || !last.rows) return;
+    const names = last.names || {};
+    const nm = (id) => (id && names[id]) ? names[id] : ("User " + id);
+    const header = ["id","sessionid","session","teacherid","teacher","studentid","student","lessonid","unitid","step_id","trigger","event_type","message_source","recommendation_key","recommendation_message","message","time"];
+    const cell = (v) => { const s = String(v ?? ""); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const lines = [header.join(",")];
+    for (const r of last.rows) {
+      lines.push([
+        r.id, r.live_sessionid, r.title, r.teacherid, nm(r.teacherid), r.userid, nm(r.userid),
+        r.lessonid, r.unitid, r.step_id, r.trigger_key, r.event_type, r.message_source || "",
+        r.recommendation_key || "", r.recommendation_message || "", r.message, when(r.timecreated),
+      ].map(cell).join(","));
+    }
+    const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "quraan-practice-coach-events.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  $("#apply").addEventListener("click", load);
+  $("#reset").addEventListener("click", () => {
+    const f = $("#filters"); f.reset(); delete f.dataset.init; load();
+  });
+  $("#csv").addEventListener("click", exportCsv);
+
+  load();
+})();
+</script>
+</body>
+</html>

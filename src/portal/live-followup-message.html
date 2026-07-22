@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send follow-up message · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(880px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.followup{background:var(--amber-bg);color:var(--amber)}
+  .pill.resolved{background:var(--sky);color:var(--ink2)}
+  .sec{margin:8px 0 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  .sec.hw{background:var(--sky)}
+  .preview{white-space:pre-wrap;font-size:13px;color:var(--ink2);background:var(--sky);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-top:8px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  form.compose{margin-top:10px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  form.compose button{margin-top:4px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.compose button:disabled{opacity:.55;cursor:wait}
+  a.btn{display:inline-block;margin-top:10px;background:var(--blue2);color:#fff;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;text-decoration:none}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Send follow-up message</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_followup_message.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Send follow-up message</h1><p class="sub" id="subtitle">Start (or reopen) the parent follow-up thread for this class.</p></div>
+  <div id="status" class="status">Loading follow-up…</div>
+  <div class="panel" id="compose-panel" hidden>
+    <h2 id="compose-title">Follow-up</h2>
+    <div class="meta" id="compose-meta"></div>
+    <div id="note-sections"></div>
+    <div class="sec"><b>Message that will be sent to the parent</b><div class="preview" id="preview-body"></div></div>
+    <form class="compose" id="compose-form">
+      <button type="submit" id="send-btn">Send follow-up message</button>
+    </form>
+    <div id="thread-link"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const sessionid = qs.get("sessionid") || "0";
+  const studentid = qs.get("studentid") || "0";
+  const workspaceid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+  if (Number(sessionid) <= 0 || Number(studentid) <= 0) { $("#status").className = "status error"; $("#status").textContent = "Choose a valid live session and student before opening follow-up messaging."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-followup-message", token, sessionid, studentid, workspaceid });
+
+  const noteSections = (n) => {
+    let h = "";
+    const msg = (n.followup_message || "").trim();
+    if (msg) h += `<div class="sec"><b>Teacher follow-up (${esc((n.followup_status || "follow-up").replace(/_/g, " "))})</b>${esc(msg)}</div>`;
+    if ((n.homework || "").trim()) h += `<div class="sec hw"><b>Homework${(n.homework_unitid || "").trim() ? " · unit " + esc(n.homework_unitid) : ""}</b>${esc(n.homework)}</div>`;
+    return h;
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const names = d.names || {};
+    const s = d.session || {};
+    const n = d.note || {};
+    const studentName = (d.student && d.student.name) || ("Student " + studentid);
+    $("#title").textContent = "Follow-up — " + studentName;
+    const resolvedPill = (n.followup_status && n.followup_status !== "none")
+      ? ' <span class="pill followup">follow-up</span>' : "";
+    $("#compose-title").innerHTML = esc(s.title || "Live class") + resolvedPill;
+    $("#compose-meta").textContent = when(s.scheduled_start) + (s.teacherid && names[s.teacherid] ? " · " + names[s.teacherid] : "");
+    $("#note-sections").innerHTML = noteSections(n);
+    $("#preview-body").textContent = d.preview_body || "";
+    $("#compose-panel").hidden = false;
+    $("#status").hidden = true;
+    if (n.threadid) {
+      $("#send-btn").textContent = "Resend follow-up message";
+    }
+    $("#compose-form").addEventListener("submit", send);
+  }
+
+  async function send(ev) {
+    ev.preventDefault();
+    const btn = $("#send-btn");
+    btn.disabled = true; btn.textContent = "Sending…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-followup-message", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "send_followup_message",
+          sessionid: Number(sessionid),
+          studentid: Number(studentid),
+          workspaceid: Number(workspaceid),
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#compose-panel").hidden = true;
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").textContent = d.message || "Follow-up message sent.";
+      if (d.threadid) {
+        const href = moodleBase + "/local/prequran/portal_launch.php?" + new URLSearchParams({
+          report: "communications", cohortid: d.cohortid || 0, studentid: d.studentid || studentid,
+          opencomm: "messages", threadid: d.threadid,
+        });
+        $("#thread-link").innerHTML = `<a class="btn" href="${esc(href)}">Open the message thread</a>`;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Send follow-up message";
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not send: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

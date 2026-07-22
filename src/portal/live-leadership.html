@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leadership reviews · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .filters{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:12px}
+  .field{display:grid;gap:6px}
+  .field label{font-size:12px;font-weight:900;color:var(--ink2)}
+  .input,.select,.textarea{width:100%;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:700 13px/1.25 system-ui;background:var(--card);color:var(--ink)}
+  .textarea{min-height:78px;resize:vertical}
+  .actions{display:flex;flex-wrap:wrap;gap:9px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn--light{background:#eef4f6;color:var(--ink);border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .metrics{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  .metric{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  .metric strong{display:block;font-size:24px;font-weight:900;color:var(--blue)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:800}
+  .grid{display:grid;grid-template-columns:1fr;gap:14px}
+  .case{border:1px solid var(--line);border-radius:10px;padding:18px;background:var(--card)}
+  .case h3{margin:0 0 3px;font-size:18px;font-weight:900}
+  .case-head{display:flex;justify-content:space-between;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+  .case-meta{color:var(--muted);font-size:13px;font-weight:700}
+  .pill{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill--ok{background:var(--sky);color:var(--ink2)}
+  .pill--warn{background:var(--amber-bg);color:var(--amber)}
+  .pill--bad{background:var(--red-bg);color:var(--red)}
+  .kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
+  .kv div{padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  .kv strong{display:block;color:var(--blue);font-size:17px}
+  .kv span{display:block;color:var(--muted);font-size:12px;font-weight:800}
+  .case-body{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+  .case-body p{margin:4px 0;font-size:13px}
+  form.upd label{display:block;font-size:12px;font-weight:900;color:var(--ink2);margin:8px 0 3px}
+  .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .table{width:100%;border-collapse:collapse;font-size:13px}
+  .table th,.table td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .table th{background:var(--bg);font-size:12px;color:var(--ink2)}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:800;background:var(--card)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-word}
+  @media(max-width:1050px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.case-body{grid-template-columns:1fr}.kv{grid-template-columns:repeat(2,minmax(0,1fr))}.table{display:block;overflow:auto}}
+  @media(max-width:620px){.filters,.metrics,.kv,.three{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Leadership reviews</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_leadership.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Leadership Review Command Center</h1><p class="sub">Manage flagged QA cases, leadership notes, case status, and resolution history.</p></div>
+  <div id="status" class="status">Loading leadership cases…</div>
+
+  <div class="panel" id="filters-panel" hidden>
+    <h2>Filters</h2>
+    <div class="filters">
+      <div class="field"><label for="from">From</label><input class="input" id="from" type="date"></div>
+      <div class="field"><label for="to">To</label><input class="input" id="to" type="date"></div>
+      <div class="field"><label for="f-teacherid">Teacher ID</label><input class="input" id="f-teacherid" type="number" min="0" value="0"></div>
+      <div class="field"><label for="f-status">Status</label><select class="select" id="f-status">
+        <option value="open">Open cases</option>
+        <option value="flagged">Flagged</option>
+        <option value="in_review">In review</option>
+        <option value="cleared">Cleared</option>
+        <option value="none">No review</option>
+        <option value="all">All</option>
+      </select></div>
+      <div class="field"><label for="f-reason">Reason contains</label><input class="input" id="f-reason"></div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="apply">Apply filters</button>
+      <button class="btn btn--light" id="reset">Reset</button>
+      <button class="btn btn--light" id="export">Export cases CSV</button>
+    </div>
+  </div>
+
+  <section class="metrics" id="metrics-panel" hidden></section>
+
+  <div class="panel" id="cases-panel" hidden><h2>Leadership cases</h2><div class="grid" id="cases"></div></div>
+
+  <div class="panel" id="audit-panel" hidden><h2>Recent Leadership Audit</h2>
+    <table class="table"><thead><tr><th>Time</th><th>Session</th><th>Actor</th><th>Action</th><th>Details</th></tr></thead>
+    <tbody id="audit"></tbody></table>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const und = (v) => esc(String(v ?? "").replace(/_/g, " "));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const dateVal = (t) => t ? new Date(t * 1000).toISOString().slice(0, 10) : "";
+  let state = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const filterArgs = () => ({
+    from: $("#from").value, to: $("#to").value,
+    teacherid: $("#f-teacherid").value || "0",
+    status: $("#f-status").value, reason: $("#f-reason").value,
+    workspaceid: qs.get("workspaceid") || "0",
+  });
+
+  const url = (extra) => endpoint + "?" + new URLSearchParams(Object.assign({ report: "live-leadership", token }, extra || filterArgs()));
+
+  async function load(useForm) {
+    try {
+      const args = useForm ? filterArgs() : { workspaceid: qs.get("workspaceid") || "0" };
+      const r = await fetch(url(args));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      state = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const METRICS = [
+    ["open", "open cases"], ["flagged", "flagged"], ["inreview", "in review"], ["cleared", "cleared"],
+    ["serious", "serious QA"], ["overduecoaching", "overdue coaching"],
+    ["plansopen", "open plans"], ["plansoverdue", "overdue plans"], ["planscompleted", "completed plans"],
+  ];
+
+  const pillClass = (s) => s === "cleared" ? "pill--ok" : (s === "in_review" ? "pill--warn" : "pill--bad");
+
+  function caseCard(c, names, improvementready, now) {
+    const overdue = ["assigned", "acknowledged"].includes(c.qa_coaching_status) && Number(c.qa_coaching_due_date) > 0 && Number(c.qa_coaching_due_date) < now;
+    const teacher = names[c.teacherid] || ("Teacher " + c.teacherid);
+    const plan = improvementready ? (c.improvement_plan_status || "none") : "none";
+    const opt = (val, cur, label) => `<option value="${esc(val)}"${cur === val ? " selected" : ""}>${esc(label)}</option>`;
+    let planFields = "";
+    if (improvementready) {
+      planFields = `
+        <label>Improvement Plan Status</label>
+        <select class="select" name="improvement_plan_status">
+          ${opt("none", plan, "No plan")}${opt("assigned", plan, "Assigned")}${opt("in_progress", plan, "In progress")}${opt("completed", plan, "Completed")}
+        </select>
+        <div class="three">
+          <div><label>Priority</label><select class="select" name="improvement_plan_priority">
+            ${["high","normal","low"].map((p) => opt(p, c.improvement_plan_priority, p.charAt(0).toUpperCase() + p.slice(1))).join("")}
+          </select></div>
+          <div><label>Due Date</label><input class="input" type="date" name="improvement_plan_due_date" value="${esc(dateVal(c.improvement_plan_due_date))}"></div>
+          <div><label>Mentor User ID</label><input class="input" type="number" min="0" name="improvement_plan_mentorid" value="${Number(c.improvement_plan_mentorid) || 0}"></div>
+        </div>
+        <label>Improvement Goals</label><textarea class="textarea" name="improvement_plan_goals">${esc(c.improvement_plan_goals || "")}</textarea>
+        <label>Action Steps</label><textarea class="textarea" name="improvement_plan_actions">${esc(c.improvement_plan_actions || "")}</textarea>
+        <label>Completion Notes</label><textarea class="textarea" name="improvement_plan_completion_notes">${esc(c.improvement_plan_completion_notes || "")}</textarea>`;
+    }
+    let planLine = "";
+    if (improvementready && plan !== "none") {
+      planLine = `<p><strong>Improvement plan:</strong> ${und(plan)}${Number(c.improvement_plan_due_date) > 0 ? " · due " + esc(when(c.improvement_plan_due_date)) : ""}</p>`;
+      if (Number(c.improvement_plan_ackat) > 0) planLine += `<p><strong>Teacher acknowledged:</strong> ${esc(when(c.improvement_plan_ackat))}</p>`;
+    }
+    return `<article class="case">
+      <div class="case-head">
+        <div><h3>${esc(c.title || "Live class")}</h3><div class="case-meta">#${Number(c.id)} · ${esc(when(c.scheduled_start))} · ${esc(teacher)}</div></div>
+        <div><span class="pill ${pillClass(c.leadership_review_status)}">${und(c.leadership_review_status)}</span></div>
+      </div>
+      <div class="kv">
+        <div><strong>${und(c.qa_status)}</strong><span>QA status</span></div>
+        <div><strong>${Number(c.qa_score)}%</strong><span>QA score</span></div>
+        <div><strong>${und(c.qa_coaching_status)}</strong><span>coaching</span></div>
+        <div><strong>${Number(c.student_count)}</strong><span>students</span></div>
+      </div>
+      <div class="case-body">
+        <div>
+          <p><strong>Reason:</strong> ${esc(c.leadership_review_reason || "No reason recorded.")}</p>
+          <p><strong>Notes:</strong> ${esc(c.leadership_review_notes || "No leadership notes yet.")}</p>
+          <p><strong>Due:</strong> ${Number(c.qa_coaching_due_date) > 0 ? esc(when(c.qa_coaching_due_date)) : "No coaching due date"}${overdue ? " · overdue" : ""}</p>
+          ${planLine}
+        </div>
+        <form class="upd" data-sessionid="${Number(c.id)}">
+          <label>Status</label>
+          <select class="select" name="leadership_review_status">
+            ${opt("flagged", c.leadership_review_status, "Flagged")}${opt("in_review", c.leadership_review_status, "In review")}${opt("cleared", c.leadership_review_status, "Cleared")}
+          </select>
+          <label>Reason</label><textarea class="textarea" name="leadership_review_reason">${esc(c.leadership_review_reason || "")}</textarea>
+          <label>Leadership Notes</label><textarea class="textarea" name="leadership_review_notes">${esc(c.leadership_review_notes || "")}</textarea>
+          ${planFields}
+          <button class="btn" type="submit" style="margin-top:12px">Update case</button>
+        </form>
+      </div>
+    </article>`;
+  }
+
+  function render(d) {
+    $("#from").value = d.filters.from; $("#to").value = d.filters.to;
+    $("#f-teacherid").value = d.filters.teacherid; $("#f-status").value = d.filters.status;
+    $("#f-reason").value = d.filters.reason;
+    $("#filters-panel").hidden = false;
+
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Leadership review columns are not installed yet. Run Phase 34 SQL first.";
+      $("#metrics-panel").hidden = true; $("#cases-panel").hidden = true; $("#audit-panel").hidden = true;
+      return;
+    }
+    $("#status").hidden = true;
+
+    $("#metrics-panel").innerHTML = METRICS.map(([k, label]) => `<div class="metric"><strong>${Number(d.metrics[k] || 0)}</strong><span>${esc(label)}</span></div>`).join("");
+    $("#metrics-panel").hidden = false;
+
+    const names = d.names || {};
+    $("#cases").innerHTML = (d.cases || []).map((c) => caseCard(c, names, d.improvementready, d.now)).join("") || "<div class='empty'>No leadership cases match these filters.</div>";
+    $("#cases-panel").hidden = false;
+    document.querySelectorAll("form.upd").forEach((f) => f.addEventListener("submit", submitCase));
+
+    $("#audit").innerHTML = (d.audits || []).map((a) => `<tr>
+      <td>${esc(when(a.timecreated))}</td>
+      <td>#${Number(a.sessionid)}</td>
+      <td>${Number(a.actorid) > 0 ? esc(names[a.actorid] || ("User " + a.actorid)) : "System"}</td>
+      <td>${und(a.action)}</td>
+      <td><span class="code">${esc(a.details || "")}</span></td>
+    </tr>`).join("") || "<tr><td colspan='5'>No leadership audit rows yet.</td></tr>";
+    $("#audit-panel").hidden = false;
+  }
+
+  async function submitCase(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Saving…";
+    const payload = { do: "update_case", sessionid: Number(f.dataset.sessionid) };
+    f.querySelectorAll("select, textarea, input").forEach((el) => { if (el.name) payload[el.name] = el.value; });
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-leadership", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = "Leadership case updated.";
+      load(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Update case";
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  function exportCsv() {
+    if (!state || !state.cases) return;
+    const names = state.names || {};
+    const imp = state.improvementready;
+    const head = ["sessionid","title","teacherid","teacher","start","qa_status","qa_score","coaching_status","leadership_status","reason","notes","improvement_status","improvement_priority","mentorid","improvement_due","improvement_goals","improvement_actions","reviewed_at","cleared_at"];
+    const cell = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+    const dt = (t) => t ? new Date(t * 1000).toLocaleString() : "";
+    const rows = state.cases.map((c) => [
+      c.id, c.title, c.teacherid, names[c.teacherid] || ("Teacher " + c.teacherid), dt(c.scheduled_start),
+      c.qa_status, c.qa_score, c.qa_coaching_status, c.leadership_review_status, c.leadership_review_reason, c.leadership_review_notes,
+      imp ? c.improvement_plan_status : "", imp ? c.improvement_plan_priority : "", imp ? c.improvement_plan_mentorid : 0,
+      imp && c.improvement_plan_due_date ? dt(c.improvement_plan_due_date) : "",
+      imp ? c.improvement_plan_goals : "", imp ? c.improvement_plan_actions : "",
+      c.leadership_reviewat ? dt(c.leadership_reviewat) : "", c.leadership_clearedat ? dt(c.leadership_clearedat) : "",
+    ].map(cell).join(","));
+    const blob = new Blob([head.map(cell).join(",") + "\n" + rows.join("\n")], { type: "text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "quraan-live-leadership-cases.csv";
+    a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  $("#apply").addEventListener("click", () => load(true));
+  $("#reset").addEventListener("click", () => { location.href = location.pathname + "?" + new URLSearchParams({ endpoint, token, workspaceid: qs.get("workspaceid") || "0" }); });
+  $("#export").addEventListener("click", exportCsv);
+  load(false);
+})();
+</script>
+</body>
+</html>

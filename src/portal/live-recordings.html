@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live class recordings · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 4px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .cards{display:grid;gap:12px;margin-top:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .card .head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2);white-space:nowrap}
+  a.play{display:inline-block;margin-top:6px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;text-decoration:none}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover{border-color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live class recordings</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_recordings.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Live class recordings</h1><p class="sub" id="subtitle">Only recordings reviewed and published by your school are shown here.</p></div>
+  <div id="status" class="status">Loading recordings…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Choose a student</h2><p class="sub">Students whose approved live-class recordings you can review.</p><div class="chooser" id="chooser"></div></div>
+  <div class="panel" id="list-panel" hidden><h2>Approved recordings</h2><div class="cards" id="list"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "-";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const childid = qs.get("childid") || "0";
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "live-recordings", token, childid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const recordCard = (rec, names) => `
+    <div class="card">
+      <div class="head">
+        <div>
+          <h3>${esc(rec.title || "Live class")}</h3>
+          <div class="meta">${esc(when(rec.scheduled_start))}${rec.teacherid && names[rec.teacherid] ? " · " + esc(names[rec.teacherid]) : ""}${rec.lesson ? " · " + esc(rec.lesson) : ""}</div>
+          <div class="muted">Expires: ${rec.expiresat ? esc(when(rec.expiresat)) : "not set"}</div>
+        </div>
+      </div>
+      ${rec.playback_url ? `<a class="play" href="${esc(rec.playback_url)}" target="_blank" rel="noopener noreferrer">Open recording</a>` : `<div class="muted">Recording link not available yet.</div>`}
+    </div>`;
+
+  function render(d) {
+    const names = d.names || {};
+    if (d.mode === "chooser") {
+      $("#mode-note").textContent = "Choose a student";
+      $("#title").textContent = "Whose recordings?";
+      $("#subtitle").textContent = "Choose a student to review approved live-class recordings.";
+      $("#chooser").innerHTML = (d.children || []).map((c) => {
+        const u = new URL(location.href); u.searchParams.set("childid", c.studentid);
+        return `<a class="child" href="${esc(u.href)}">${esc(c.name || ("Student " + c.studentid))}</a>`;
+      }).join("") || "<div class='muted'>No linked learners with approved recordings were found for this account.</div>";
+      $("#chooser-panel").hidden = false;
+      $("#status").hidden = true;
+      return;
+    }
+    $("#title").textContent = "Live class recordings — " + (d.child && d.child.name ? d.child.name : "student");
+    const recs = d.recordings || [];
+    $("#list").innerHTML = recs.length
+      ? recs.map((rec) => recordCard(rec, names)).join("")
+      : "<div class='muted'>No approved live-class recordings are available yet.</div>";
+    $("#list-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

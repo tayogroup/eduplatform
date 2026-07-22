@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace dashboard · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .mark{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;background:var(--blue2);color:#fff;font-weight:900;font-size:16px;overflow:hidden;flex:0 0 auto}
+  .mark img{width:100%;height:100%;object-fit:cover;display:block}
+  select.switcher{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff;color:var(--ink);max-width:320px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi strong.risk{color:var(--red)}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-bottom:16px}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:130px;padding-top:8px}
+  .bars>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0;height:100%}
+  .bars i{width:100%;max-width:38px;border-radius:7px 7px 0 0;background:var(--sky)}
+  .bars i.f{background:var(--blue2)}
+  .bars b{font-size:10.5px;color:var(--muted);font-weight:650}
+  .bars em{font-style:normal;font-size:11px;font-weight:750;color:var(--ink)}
+  .todo{display:grid;gap:8px}
+  .todo-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+  .todo-ico{flex:0 0 auto;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800}
+  .todo-ico.warn{background:var(--amber-bg);color:var(--amber)}
+  .todo-ico.risk{background:var(--red-bg);color:var(--red)}
+  .todo-ico.ok{background:var(--sky);color:var(--blue2)}
+  .todo-body{min-width:0;flex:1}
+  .todo-body strong{display:block;font-size:13px}
+  .todo-body span{display:block;color:var(--muted);font-size:12px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:2px 12px;border:0;border-radius:8px;background:var(--blue2);color:#fff!important;text-decoration:none;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
+  .btn.ghost{background:var(--sky);color:var(--blue)!important;border:1px solid var(--line)}
+  .cardlinks{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+  a.link-card{display:block;min-height:78px;padding:12px 14px;border-radius:10px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none}
+  a.link-card:hover{border-color:var(--blue2)}
+  a.link-card strong{display:block;font-size:14px;font-weight:900}
+  a.link-card strong .pill{margin-left:6px}
+  a.link-card span{display:block;margin-top:4px;color:var(--muted);font-size:12px;line-height:1.4}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10.5px;font-weight:900;vertical-align:1px}
+  .pill.portal{background:#e1f2ff;color:var(--blue2)}
+  .pill.role{background:var(--sky);color:var(--ink2)}
+  .pill.domain{background:var(--sky);color:var(--ink2);font-size:11px;padding:3px 10px}
+  .code{display:inline-block;margin-top:6px;padding:4px 8px;border-radius:6px;background:var(--sky);color:var(--blue);font-size:12px;font-weight:800;overflow-wrap:anywhere}
+  .public{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(320px,1.15fr);gap:18px;align-items:start}
+  .public-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+  .public-links .btn{min-height:38px;white-space:normal;text-align:center}
+  .domain-list{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky);white-space:nowrap}
+  .name{display:block;font-weight:900;font-size:13.5px}
+  .muted{color:var(--muted);font-size:12px}
+  .row-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  @media(max-width:900px){.public{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Workspace dashboard</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of workspace_dashboard.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <div class="head">
+      <div style="min-width:0">
+        <h1 id="title"><span class="mark" id="mark" hidden></span><span id="ws-name">Workspace dashboard</span></h1>
+        <p class="sub" id="subtitle">School operations home for this teaching workspace.</p>
+      </div>
+      <select class="switcher" id="switcher" hidden aria-label="Workspace switcher"></select>
+    </div>
+  </div>
+  <div id="status" class="status">Loading workspace dashboard…</div>
+  <div class="panel public" id="public-panel" hidden>
+    <div>
+      <h2>Public Workspace Links</h2>
+      <span class="muted">Use these to test the institution domain, landing page, login, and intake flows.</span><br>
+      <span class="code" id="primary-domain"></span>
+      <div class="domain-list" id="domains"></div>
+    </div>
+    <div class="public-links" id="public-links"></div>
+  </div>
+  <section class="kpis" id="kpis" hidden></section>
+  <section class="grid2" id="analytics" hidden>
+    <div class="panel" style="margin:0">
+      <h2>Live sessions · last 7 days</h2>
+      <div class="bars" id="week-bars"></div>
+    </div>
+    <div class="panel" style="margin:0">
+      <h2>Needs attention</h2>
+      <div class="todo" id="todo"></div>
+    </div>
+  </section>
+  <div class="panel" id="links-panel" hidden>
+    <h2>Workspace actions</h2>
+    <p class="sub" style="margin-bottom:10px">Pages already migrated to the portal open token-authenticated (marked <span class="pill portal">portal</span>); the rest open the legacy Moodle pages.</p>
+    <div class="cardlinks" id="cardlinks"></div>
+  </div>
+  <div class="panel scroll" id="students-panel" hidden><h2>Students</h2><div id="students"></div></div>
+  <div class="panel scroll" id="sessions-panel" hidden>
+    <div class="head" style="margin-bottom:8px"><h2 style="margin:0">Upcoming Sessions</h2><a class="btn ghost" id="sessions-cta" href="#" hidden></a></div>
+    <div id="sessions"></div>
+  </div>
+  <div class="panel scroll" id="members-panel" hidden><h2>Workspace Members</h2><div id="members"></div></div>
+  <div class="panel" id="viewer-panel" hidden><h2 id="viewer-title"></h2><div class="muted" id="viewer-note"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let moodleOrigin = "";
+  try { moodleOrigin = new URL(endpoint).origin; } catch (e) { moodleOrigin = ""; }
+  const wsParam = qs.get("workspaceid") || "0";
+  const consumerParam = (qs.get("consumer") || "").replace(/[^A-Za-z0-9]/g, "");
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "workspace-dashboard", token, workspaceid: wsParam, consumer: consumerParam });
+
+  // portal_launch mints a fresh token from the live Moodle session and forwards
+  // sessionid/childid/workspaceid/consumer to the target portal page.
+  const launch = (report, extra) => {
+    const p = new URLSearchParams({ report, ...(extra || {}) });
+    if (consumerParam) p.set("consumer", consumerParam);
+    return moodleOrigin + "/local/prequran/portal_launch.php?" + p;
+  };
+  // Legacy Moodle URL for pages not yet migrated (same params the legacy page passes).
+  const legacy = (file, extra) => {
+    const p = new URLSearchParams(extra || {});
+    if (consumerParam) p.set("consumer", consumerParam);
+    const q = p.toString();
+    return moodleOrigin + "/local/hubredirect/" + file + (q ? "?" + q : "");
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) {
+        let msg = ""; try { msg = (await r.json()).error || ""; } catch (e) { /* noop */ }
+        throw new Error(msg || ("HTTP " + r.status));
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const kpi = (value, label, risk) => `<div class="kpi"><strong${risk ? ' class="risk"' : ""}>${esc(value)}</strong><span>${esc(label)}</span></div>`;
+
+  const card = (l) => `<a class="link-card" href="${esc(l.href)}"><strong>${esc(l.title)}${l.portal ? ' <span class="pill portal">portal</span>' : ""}</strong><span>${esc(l.desc)}</span></a>`;
+
+  const todoItem = (ico, title, note, ctaLabel, ctaHref) =>
+    `<div class="todo-item"><span class="todo-ico ${ico[0]}">${ico[1]}</span><span class="todo-body"><strong>${esc(title)}</strong><span>${esc(note)}</span></span>${ctaHref ? `<a class="btn" href="${esc(ctaHref)}">${esc(ctaLabel)}</a>` : ""}</div>`;
+
+  function cardLinks(d) {
+    const w = { workspaceid: d.workspace.id };
+    const f = d.flags;
+    const links = [];
+    if (f.canteach) {
+      if (f.canmanageofferings) {
+        links.push({ href: legacy("teacher_marketing.php", w), title: "Market My Services", desc: "Manage your public profile, service offers, pricing, and online presence." });
+        links.push({ href: legacy("teacher_student_connect.php", w), title: "Find or Invite Student", desc: "Search for an existing learner first, or invite a new student into this independent teaching workspace." });
+        links.push({ href: launch("course-offerings", w), portal: true, title: "Course Offerings", desc: "Create courses or tutoring services, set dates, seats, syllabus, pricing, and review enrollment requests." });
+      }
+      links.push({ href: legacy("teacher_workspace.php", w), title: "Teacher Workspace", desc: "Today's classes, attendance, notes, and post-class review." });
+      links.push({ href: legacy("teacher_portal.php", w), title: "Teacher Portal", desc: "Today's classes, roster, attendance, grades, notes, homework, and progress updates." });
+      links.push({ href: launch("workspace-reports", w), portal: true, title: "Workspace Reports", desc: "Institution-level teacher load, session, attendance, material, and quiz summaries." });
+      links.push({ href: legacy("at_risk_report.php", w), title: "At-Risk Students", desc: "Early-warning report with configurable rules, intervention notes, and CSV export." });
+      links.push({ href: legacy("workspace_materials.php", w), title: "Material Library", desc: "Review resources, assignment progress, and completed student materials." });
+      links.push({ href: launch("live-sessions", w), portal: true, title: "Live Sessions", desc: "Open upcoming classes, join/start rooms, review notes, recordings, homework, and reminders." });
+      links.push({ href: legacy("communications_center.php", w), title: "Communications Center", desc: "Message parents, students, and teachers, manage cases, and review student thread history." });
+      links.push({ href: legacy("gradebook_assessment.php", w), title: "Gradebook", desc: "Enter and review assessment grades, oral recitation marks, publishing, disputes, corrections, and audit history." });
+      links.push({ href: legacy("learning_path.php", w), title: "Learning Path", desc: "Track placement, mastery, skill maps, recommended next courses, comments, and interventions." });
+      links.push({ href: legacy("course_transcript.php", w), title: "Unofficial Transcripts", desc: "Review live transcript previews for assigned students." });
+    }
+    if (f.canmanage) {
+      links.push({ href: legacy("workspace_people.php", w), title: "People & Assignments", desc: "Add students, add teachers, and assign students to teachers inside this workspace." });
+      links.push({ href: legacy("institution_settings.php", w), title: "Institution Settings", desc: "Edit logo, initials, colors, domains, support email, landing text, and default courses." });
+      links.push({ href: launch("course-offerings", w), portal: true, title: "Course Offerings", desc: "Create institution course seats, link Moodle courses, set dates, syllabus, prerequisites, and approve enrollment requests." });
+      links.push({ href: legacy("admissions.php", w), title: "Admissions Pipeline", desc: "Review applications, documents, placement assessments, decisions, waitlists, and student conversion." });
+      links.push({ href: legacy("scholarship_portal.php", w), title: "Scholarship Applications", desc: "Manage scholarship intake, family/student requests, review decisions, waitlists, awards, and finance conversion." });
+      links.push({ href: legacy("sponsor_donor_portal.php", w), title: "Sponsor & Donor Portal", desc: "Review donor pledges, sponsor commitments, invoice allocations, donor privacy, and sponsorship readiness." });
+      links.push({ href: legacy("placement_tests.php", w), title: "Placement Tests", desc: "Define placement tests, schedule assessments, score readiness, and apply level/course recommendations." });
+      links.push({ href: legacy("academic_calendar.php", w), title: "Academic Calendar", desc: "Manage terms, holidays, blackout dates, enrollment windows, course schedules, and deadlines." });
+      links.push({ href: legacy("attendance_operations.php", w), title: "Attendance Operations", desc: "Track late, excused, absent, make-up, reports, academic standing actions, and finance holds." });
+      links.push({ href: legacy("gradebook_assessment.php", w), title: "Gradebook & Assessment", desc: "Configure weighted categories, assessments, grade review, publishing, disputes, corrections, and transcript grades." });
+      links.push({ href: legacy("learning_path.php", w), title: "Student Learning Paths", desc: "Manage placement, advancement rules, mastery tracking, skill maps, next-course recommendations, and interventions." });
+      links.push({ href: legacy("teacher_administration.php", w), title: "Teacher Administration", desc: "Manage availability, load, contracts, rates, assignments, substitutes, and marketplace payout readiness." });
+      links.push({ href: legacy("live_ops.php", w), title: "Live Operations", desc: "Monitor scheduling, capacity, room readiness, recordings, parent visibility, reminders, and diagnostics." });
+      links.push({ href: legacy("communications_center.php", w), title: "Communications Center", desc: "Manage messaging, announcements, templates, consent, delivery logs, and student case histories." });
+      links.push({ href: legacy("admin_workflow.php", w), title: "Admin Workflow", desc: "Run admissions, finance, registrar, teacher, and support queues with approvals, escalations, notes, and audit history." });
+      links.push({ href: legacy("document_management.php", w), title: "Document Management", desc: "Upload, verify, expire, download, and audit student documents, IDs, certificates, consent forms, and generated PDFs." });
+      links.push({ href: legacy("certificates_awards.php", w), title: "Certificates & Awards", desc: "Create templates, issue completion awards, generate certificate PDFs, revoke awards, and audit changes." });
+      links.push({ href: legacy("roles_permissions.php", w), title: "Roles & Tenant Controls", desc: "Manage registrar, finance, teacher, parent, sponsor, and support capabilities, isolation audits, and support access." });
+      links.push({ href: legacy("mobile_api_readiness.php", w), title: "Mobile & API Readiness", desc: "Review REST endpoint health, service inventory, token readiness, mobile client profiles, and readiness snapshots." });
+      links.push({ href: legacy("localization_currency.php", w), title: "Localization & Currency", desc: "Manage tenant locale, regional display formats, enabled currencies, exchange rates, and tax-region policy." });
+      links.push({ href: legacy("bulk_import_export.php", w), title: "Bulk Import/Export", desc: "Validate member CSVs, commit bulk workspace imports, export operational datasets, and review processing history." });
+      links.push({ href: legacy("data_migration_tools.php", w), title: "Data Migration Tools", desc: "Run scoped inventory, record dry-run validations, mapping notes, rollback plans, and migration audit history." });
+      links.push({ href: legacy("backup_dr_checks.php", w), title: "Backup & DR Checks", desc: "Track backup evidence, restore-test dates, disaster recovery readiness findings, runbooks, and recurring checks." });
+      links.push({ href: legacy("compliance_governance.php", w), title: "Compliance & Governance", desc: "Manage retention, privacy workflows, consent history, export/delete/anonymize review, and full audit reports." });
+      links.push({ href: legacy("executive_dashboard.php", w), title: "Executive Dashboard", desc: "Review enrollment funnel, revenue, AR aging, retention, utilization, student progress, and course profitability." });
+      links.push({ href: legacy("finance_operations.php", w), title: "Finance Operations", desc: "Review open invoices, overdue balances, payments, exceptions, holds, reconciliation reports, and CSV exports." });
+      links.push({ href: legacy("course_seat_report.php", w), title: "Course Seat Report", desc: "Review capacity, open seats, utilization, pending requests, and dropped enrollments." });
+      links.push({ href: legacy("course_student_history.php", w), title: "Student Course History", desc: "See each student's course request, approval, sync, and drop history." });
+      links.push({ href: legacy("course_transcript.php", w), title: "Unofficial Transcripts", desc: "Preview transcript headers, course lines, warnings, and admin diagnostics." });
+      links.push({ href: legacy("transcript_readiness.php", w), title: "Transcript Readiness", desc: "Find transcript blockers, warnings, repair links, and export data-quality CSVs." });
+      links.push({ href: legacy("course_transcript_official.php", w), title: "Official Transcript Drafts", desc: "Open the issue workflow after selecting a student from transcript previews." });
+      links.push({ href: legacy("transcript_controls.php", w), title: "Transcript Controls", desc: "Manage transcript holds, correction records, revocation, and reissue workflows." });
+      links.push({ href: legacy("course_transcript_export.php", { ...w, type: "documents", format: "csv" }), title: "Issued Transcript CSV", desc: "Export issued transcript document IDs, hashes, policy, and issue metadata." });
+      links.push({ href: legacy("transcript_policy.php", w), title: "Transcript Policy", desc: "Configure completion, grade, attendance, display, and official issue rules." });
+      links.push({ href: legacy("course_sync_report.php", w), title: "Moodle Sync Report", desc: "Find approved requests needing Moodle sync and linked-course setup issues." });
+      links.push({ href: legacy("institution_sample_data.php", w), title: "Validation Data", desc: "Create sample students, teachers, sessions, attendance, materials, and report data for end-to-end testing." });
+      links.push({ href: legacy("institution_test_matrix.php", w), title: "Role Test Matrix", desc: "Test guest, institution admin, teacher, parent, student, and platform admin flows on the custom domain." });
+      links.push({ href: d.publiclinks.profile, title: "Public Institution Profile", desc: "Preview the public profile and inquiry path for this institution." });
+      if (f.canacademyops) {
+        links.push({ href: legacy("platform_consumers.php", {}), title: "Platform Consumers", desc: "Manage institution consumers, domains, workspace status, support email, and debug links." });
+        links.push({ href: launch("student-intake", w), portal: true, title: "Student Intake", desc: "Create new Moodle student and parent accounts directly inside this workspace." });
+        links.push({ href: launch("teacher-intake", w), portal: true, title: "Teacher Onboarding", desc: "Create or link teacher accounts and add them to this workspace." });
+      } else {
+        links.push({ href: legacy("workspace_people.php", w), title: "Add Existing Users", desc: "Add existing Moodle students, parents, and teachers to this workspace." });
+      }
+      links.push({ href: legacy("workspace_sessions.php", w), title: "Live Sessions", desc: "Create, start, join, and review live sessions for this workspace." });
+      links.push({ href: legacy("workspace_series.php", w), title: "Recurring Series", desc: "Edit, reschedule, and cancel recurring workspace classes." });
+    }
+    if (d.role === "student") {
+      links.push({ href: legacy("course_catalog_browse.php", w), title: "Course Catalog", desc: "Browse available institution courses and request enrollment." });
+      links.push({ href: legacy("scholarship_portal.php", w), title: "Scholarship Applications", desc: "Submit and track scholarship requests for eligible courses, hardship aid, or donor-funded support." });
+      links.push({ href: legacy("course_transcript.php", w), title: "Unofficial Transcript", desc: "Review your live course record, grades, completion, attendance, and warnings." });
+      links.push({ href: legacy("student_parent_portal.php", w), title: "My Portal", desc: "Review courses, invoices, payments, attendance, grades, transcripts, payment plans, and secure downloads." });
+      links.push({ href: legacy("workspace_student.php", w), title: "My Student Profile", desc: "Review assigned teachers, materials, attendance, notes, and learning progress." });
+      links.push({ href: launch("live-sessions", w), portal: true, title: "My Live Sessions", desc: "Open upcoming classes and live-session links for this workspace." });
+    }
+    if (d.role === "parent") {
+      links.push({ href: legacy("course_catalog_browse.php", w), title: "Course Catalog", desc: "Review available seats, dates, syllabus, prerequisites, and request enrollment for linked students." });
+      links.push({ href: legacy("scholarship_portal.php", w), title: "Scholarship Applications", desc: "Submit and track scholarship requests for linked students, invoices, eligible courses, and donor-funded support." });
+      links.push({ href: legacy("student_parent_portal.php", w), title: "Family Portal", desc: "Review enrolled courses, invoices, payments, attendance, grades, transcripts, payment plans, and secure downloads." });
+      links.push({ href: legacy("course_transcript.php", w), title: "Unofficial Transcripts", desc: "Review live course records for linked children." });
+      links.push({ href: legacy("workspace_parent.php", w), title: "Parent View", desc: "Review linked students, attendance, notes, materials, and recordings." });
+      links.push({ href: legacy("live_trust.php", w), title: "Live Class Safety", desc: "Open parent-facing live-session visibility, consent, and recording controls." });
+    }
+    if (d.role === "sponsor") {
+      links.push({ href: legacy("sponsor_donor_portal.php", w), title: "Sponsor & Donor Portal", desc: "Submit pledges, review sponsored learner invoices, donor privacy, commitments, and allocation status." });
+      links.push({ href: legacy("sponsor_billing.php", w), title: "Sponsor Billing", desc: "Open the focused invoice and commitment billing view." });
+    }
+    return links;
+  }
+
+  function render(d) {
+    const f = d.flags;
+    const w = { workspaceid: d.workspace.id };
+
+    // Header.
+    $("#ws-name").textContent = d.workspace.name;
+    $("#subtitle").textContent = d.workspace.type_label + " workspace · your role: " + d.role_label;
+    const mark = $("#mark");
+    mark.hidden = false;
+    mark.style.background = d.brand.color || "";
+    mark.innerHTML = d.brand.logo ? `<img src="${esc(d.brand.logo)}" alt="${esc(d.brand.name)}">` : esc(d.brand.initial || "W");
+    if ((d.workspaces || []).length > 1) {
+      const sw = $("#switcher");
+      sw.innerHTML = d.workspaces.map((c) => `<option value="${c.id}" ${Number(c.id) === Number(d.workspace.id) ? "selected" : ""}>${esc(c.name)}</option>`).join("");
+      sw.hidden = false;
+      sw.addEventListener("change", () => {
+        const u = new URL(location.href); u.searchParams.set("workspaceid", sw.value); location.href = u.href;
+      });
+    }
+
+    // Public links panel.
+    if (f.showpubliclinks) {
+      $("#primary-domain").textContent = d.primarydomain;
+      $("#domains").innerHTML = (d.domains || []).map((x) =>
+        `<span class="pill domain">${esc(x.domain)} / ${esc(x.domain_type)}${x.isprimary ? " / primary" : ""}</span>`
+      ).join("") || '<span class="pill domain">No custom domain rows found</span>';
+      const pl = d.publiclinks || {};
+      const buttons = [
+        [pl.landing, "Landing"], [pl.profile, "Profile"], [pl.inquiry, "Inquiry"], [pl.login, "Login"],
+        [pl.studentintake, "Student intake"], [pl.coursecatalog, "Course catalog"],
+        [pl.teacheronboarding, "Teacher onboarding"], [pl.workspaceurl, "Workspace URL"],
+      ];
+      if (f.canacademyops) {
+        buttons.push([legacy("consumer_diagnostics.php", {}), "Diagnostics"]);
+        buttons.push([legacy("institution_test_matrix.php", w), "Test matrix"]);
+        buttons.push([legacy("institution_settings.php", w), "Institution settings"]);
+        buttons.push([legacy("institution_onboarding.php", {}), "Onboard institution"]);
+      }
+      $("#public-links").innerHTML = buttons.map(([href, label]) => `<a class="btn ghost" href="${esc(href)}">${esc(label)}</a>`).join("");
+      $("#public-panel").hidden = false;
+    }
+
+    // KPI strip (same tiles as the legacy metrics band).
+    const m = d.metrics;
+    $("#kpis").innerHTML =
+      kpi(m.students, "students") + kpi(m.teachers, "teachers") + kpi(m.admins, "admins") +
+      kpi(m.groups, "class groups") + kpi(m.sessions, "upcoming sessions") + kpi(m.offerings, "course offerings") +
+      kpi(m.pending_enrollments, "pending enrollments") +
+      kpi(d.attrate !== null && d.attrate !== undefined ? d.attrate + "%" : "—", "attendance · 30d") +
+      kpi(d.held30, "sessions held · 30d") +
+      kpi(d.inactive14, "inactive students · 14d", d.inactive14 > 0);
+    $("#kpis").hidden = false;
+
+    // 7-day bars.
+    const wm = Math.max(1, d.weekmax || 1);
+    $("#week-bars").innerHTML = (d.week || []).map((day) =>
+      `<div><i style="height:${Math.max(6, Math.round(100 * day.count / wm))}%"${day.count > 0 ? ' class="f"' : ""}></i><b>${esc(day.label)}</b><em>${day.count}</em></div>`
+    ).join("") || '<div class="muted">No live-session data for this workspace.</div>';
+
+    // Needs attention (same conditions as legacy).
+    const todos = [];
+    if (m.pending_enrollments > 0) todos.push(todoItem(["warn", "!"], m.pending_enrollments + " enrollment request" + (m.pending_enrollments === 1 ? "" : "s") + " pending", "Families are waiting on approval.", "Review", launch("course-offerings", w)));
+    if (d.inactive14 > 0) todos.push(todoItem(["risk", "●"], d.inactive14 + " student" + (d.inactive14 === 1 ? "" : "s") + " inactive 14+ days", "No platform access recorded recently.", "See who", legacy("at_risk_report.php", w)));
+    if (m.sessions === 0) todos.push(todoItem(["warn", "▶"], "No upcoming live sessions", "Nothing is on the schedule yet.", "Create", legacy("live_create_wizard.php", w)));
+    if (m.offerings === 0) todos.push(todoItem(["warn", "◆"], "No published course offerings", "Students cannot request enrollment yet.", "Publish", launch("course-offerings", w)));
+    if (!todos.length) todos.push(todoItem(["ok", "✓"], "All clear", "No pending approvals, inactive students, or scheduling gaps.", "", ""));
+    $("#todo").innerHTML = todos.join("");
+    $("#analytics").hidden = false;
+
+    // Action card links.
+    const links = cardLinks(d);
+    if (links.length) { $("#cardlinks").innerHTML = links.map(card).join(""); $("#links-panel").hidden = false; }
+
+    if (f.canmanage || f.canteach) {
+      // Students (legacy shows the first 20).
+      const st = (d.students || []).slice(0, 20);
+      $("#students").innerHTML = !st.length
+        ? '<div class="muted">No students are linked to this workspace yet.</div>'
+        : `<table><thead><tr><th>Student</th><th>Teacher</th><th>Courses enrolled</th><th>Level</th><th>Status</th><th>Links</th></tr></thead><tbody>` +
+          st.map((s) => {
+            const teachers = (d.studentteachers && d.studentteachers[s.studentid]) || [];
+            const courses = (d.studentcourses && d.studentcourses[s.studentid]) || [];
+            return `<tr>
+              <td><span class="name">${esc(s.name)}</span><span class="muted">Account No. ${esc(s.accountno || "pending repair")} / User #${s.studentid}</span></td>
+              <td>${esc(teachers.join(", "))}</td>
+              <td>${courses.length ? esc(courses.join(", ")) : '<span class="muted">none</span>'}</td>
+              <td>${esc(s.level || "")}</td>
+              <td><span class="pill role">${esc(s.status || "active")}</span></td>
+              <td><div class="row-actions">
+                <a class="btn ghost" href="${esc(legacy("workspace_student.php", { workspaceid: d.workspace.id, studentid: s.studentid }))}">Profile</a>
+                <a class="btn ghost" href="${esc(launch("managed-reports", w))}">Report</a>
+              </div></td>
+            </tr>`;
+          }).join("") + "</tbody></table>";
+      $("#students-panel").hidden = false;
+
+      // Upcoming sessions.
+      const cta = $("#sessions-cta");
+      cta.hidden = false;
+      cta.textContent = f.canmanage ? "Create session" : "Open sessions";
+      cta.href = f.canmanage ? legacy("workspace_sessions.php", w) : launch("live-sessions", w);
+      $("#sessions").innerHTML = !(d.sessions || []).length
+        ? '<div class="muted">No upcoming sessions are scoped to this workspace yet.</div>'
+        : `<table><thead><tr><th>Session</th><th>Teacher</th><th>Time</th><th>Actions</th></tr></thead><tbody>` +
+          d.sessions.map((s) => `<tr>
+            <td><span class="name">${esc(s.title)}</span><span class="muted">${esc(s.status + " / " + s.session_type)}</span></td>
+            <td>${esc(s.teachername || (d.names && d.names[s.teacherid]) || "")}</td>
+            <td>${esc(when(s.scheduled_start))}</td>
+            <td><div class="row-actions">
+              <a class="btn" href="${esc(launch("live-sessions", { workspaceid: d.workspace.id, sessionid: s.id }))}">${esc(s.action_label || "Join class")}</a>
+              ${f.canteach ? `<a class="btn ghost" href="${esc(launch("live-review", { workspaceid: d.workspace.id, sessionid: s.id }))}">Review</a>` : ""}
+            </div></td>
+          </tr>`).join("") + "</tbody></table>";
+      $("#sessions-panel").hidden = false;
+
+      // Members.
+      $("#members").innerHTML = !(d.members || []).length
+        ? '<div class="muted">No active members found.</div>'
+        : `<table><thead><tr><th>Member</th><th>Role</th><th>Updated</th></tr></thead><tbody>` +
+          d.members.map((mm) => `<tr>
+            <td><span class="name">${esc(mm.name)}</span><span class="muted">${esc(mm.accountlabel)} / ${esc(mm.email)}</span></td>
+            <td><span class="pill role">${esc(mm.workspace_role)}</span></td>
+            <td>${esc(when(mm.timemodified))}</td>
+          </tr>`).join("") + "</tbody></table>";
+      $("#members-panel").hidden = false;
+    } else {
+      $("#viewer-title").textContent = d.role === "parent" ? "Parent Workspace" : "Student Workspace";
+      $("#viewer-note").textContent = d.role === "parent"
+        ? "Use the parent view and live safety links above to review only students linked to your parent account."
+        : "Use the student profile and live session links above to review your own classes, materials, attendance, and notes.";
+      $("#viewer-panel").hidden = false;
+    }
+
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

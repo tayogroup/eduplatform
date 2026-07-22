@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA analytics · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .kpi.warn strong{color:var(--amber)}
+  .kpi.bad strong{color:var(--red)}
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-bottom:16px}
+  .chart .bars{display:flex;align-items:flex-end;gap:3px;height:110px;margin-top:8px}
+  .chart .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+  .chart .seg{border-radius:3px 3px 0 0;min-height:2px}
+  .chart .lbl{font-size:9px;color:var(--muted);text-align:center;margin-top:3px;white-space:nowrap;overflow:hidden}
+  .legend{display:flex;gap:12px;font-size:11px;color:var(--ink2);margin-top:6px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.plain{background:var(--sky);color:var(--ink2)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;color:var(--muted)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .c1{background:var(--blue2)} .c2{background:#7fb1dd} .c3{background:var(--amber)} .c4{background:#d9c49a}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>QA analytics &amp; teacher performance</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_quality_analytics.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">QA Analytics &amp; Teacher Performance</h1><p class="sub">Track live-class quality, coaching completion, checklist concerns, and teacher improvement trends.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-from">From</label><input type="date" id="f-from"></div>
+      <div class="field"><label for="f-to">To</label><input type="date" id="f-to"></div>
+      <div class="field"><label for="f-teacher">Teacher ID</label><input type="number" id="f-teacher" min="0" value="0" style="width:110px"></div>
+      <button type="submit">Apply filters</button>
+      <button type="button" class="ghost" id="reset">Reset</button>
+      <button type="button" class="ghost" id="csv-teachers">Export teacher trends CSV</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading QA analytics…</div>
+  <section id="kpis" class="kpis"></section>
+  <section class="charts" id="charts"></section>
+  <div class="panel scroll" id="teachers-panel" hidden><h2>Teacher Performance Trends</h2><table id="teachers"></table></div>
+  <div class="panel scroll" id="trend-panel" hidden><h2>Monthly QA Trend</h2><table id="trend"></table></div>
+  <div class="panel scroll" id="concerns-panel" hidden><h2>Common Checklist Concerns</h2><table id="concerns"></table></div>
+  <div class="panel scroll" id="risks-panel" hidden><h2>Needs Attention</h2><table id="risks"></table></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const wsid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => Number(epoch) ? new Date(epoch * 1000).toLocaleString(undefined, {day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit"}) : "—";
+  const pct = (part, whole) => Number(whole) > 0 ? Math.round((Number(part) / Number(whole)) * 100) : 0;
+  const words = (v) => esc(String(v ?? "").replace(/_/g, " "));
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const query = () => new URLSearchParams({
+    report: "quality-analytics", token, workspaceid: wsid,
+    from: $("#f-from").value || "", to: $("#f-to").value || "",
+    teacherid: $("#f-teacher").value || "0",
+  });
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading QA analytics…";
+    try {
+      const r = await fetch(endpoint + "?" + query());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      data = await r.json();
+      if (!data.ok) throw new Error(data.error || "unknown");
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const teacherName = (id) => (data.names && data.names[id]) ? data.names[id] : ("Teacher " + id);
+
+  // Same alert rules the legacy page computes per teacher row.
+  const alertFor = (t) => {
+    if (Number(t.serious_issue_count) > 0) return "Serious issue";
+    if (Number(t.avg_score) < 75 && Number(t.reviewed_count) >= 2) return "Low score trend";
+    if (Number(t.needs_coaching_count) >= 2) return "Repeated coaching";
+    if (Number(t.coaching_overdue_count) > 0) return "Overdue coaching";
+    return "OK";
+  };
+  const scorePill = (t) => {
+    const cls = Number(t.avg_score) >= 85 ? "ok" : (Number(t.avg_score) < 75 && Number(t.reviewed_count) > 0 ? "bad" : "warn");
+    return `<span class="pill ${cls}">${Number(t.avg_score) || 0}%</span>`;
+  };
+
+  function chart(title, rows, series) {
+    const max = Math.max(1, ...rows.map((r) => series.reduce((m, [k]) => Math.max(m, Number(r[k] || 0)), 0)));
+    return `<div class="panel chart"><h2>${title}</h2><div class="bars">` +
+      rows.map((r) => `<div class="col" title="${esc(r.label || "")}">` +
+        series.map(([k, cls]) => `<span class="seg ${cls}" style="height:${(Number(r[k] || 0) / max) * 100}%"></span>`).join("") +
+        `<span class="lbl">${esc((r.label || "").slice(0, 8))}</span></div>`).join("") +
+      `</div><div class="legend">${series.map(([k, cls, label]) => `<span><i class="${cls}"></i>${label}</span>`).join("")}</div></div>`;
+  }
+
+  function render() {
+    $("#f-from").value = data.filters.from || "";
+    $("#f-to").value = data.filters.to || "";
+    $("#f-teacher").value = data.filters.teacherid || 0;
+
+    if (!data.ready) {
+      $("#status").className = "status error";
+      $("#status").textContent = "QA analytics requires Phase 30 quality review columns.";
+      return;
+    }
+
+    const M = data.metrics;
+    $("#kpis").innerHTML = [
+      [M.sessions, "sessions", ""], [M.reviewed, "QA reviewed", ""], [M.average_score + "%", "average score", ""],
+      [M.passed, "passed", ""], [M.needs_coaching, "needs coaching", Number(M.needs_coaching) ? "warn" : ""],
+      [M.serious_issue, "serious issues", Number(M.serious_issue) ? "bad" : ""],
+      [M.coaching_open, "coaching open", ""], [M.coaching_completed, "coaching done", ""],
+      [M.coaching_overdue, "coaching overdue", Number(M.coaching_overdue) ? "bad" : ""],
+      [M.leadership_open, "leadership open", Number(M.leadership_open) ? "warn" : ""],
+      [M.reminders, "reminder audits", ""],
+    ].map(([v, l, cls]) => `<div class="kpi ${cls}"><strong>${esc(v)}</strong><span>${esc(l)}</span></div>`).join("");
+
+    const charts = [];
+    const trendAsc = (data.trend || []).slice().reverse().map((r) => ({
+      label: `${String(r.y).padStart(4, "0")}-${String(r.m).padStart(2, "0")}`,
+      session_count: r.session_count, reviewed_count: r.reviewed_count,
+      issue_count: r.issue_count, avg_score: r.avg_score,
+    }));
+    if (trendAsc.length) {
+      charts.push(chart("Monthly sessions vs reviewed", trendAsc, [["session_count", "c2", "Sessions"], ["reviewed_count", "c1", "Reviewed"], ["issue_count", "c3", "Issues"]]));
+      charts.push(chart("Monthly average QA score", trendAsc, [["avg_score", "c1", "Avg score %"]]));
+    }
+    const concernRows = (data.concerns || []).slice(0, 10).map((c) => ({ label: c.label, rate: pct(c.concern, c.checked), concern: c.concern, checked: c.checked }));
+    if (concernRows.some((c) => Number(c.checked) > 0)) {
+      charts.push(chart("Checklist concern rate", concernRows, [["rate", "c3", "Concern rate %"]]));
+    }
+    $("#charts").innerHTML = charts.join("");
+
+    const T = data.teachers || [];
+    $("#teachers").innerHTML = `<thead><tr><th>Teacher</th><th>Sessions</th><th>Reviewed</th><th>Avg Score</th><th>Pass Rate</th><th>QA Issues</th><th>Alert</th><th>Coaching Open</th><th>Coaching Done</th><th>Overdue</th><th>Leadership</th></tr></thead><tbody>` +
+      (T.map((t) => {
+        const issues = Number(t.needs_coaching_count) + Number(t.serious_issue_count);
+        const alert = alertFor(t);
+        return `<tr>
+          <td>${esc(teacherName(t.teacherid))} <span class="code">#${Number(t.teacherid)}</span></td>
+          <td>${Number(t.session_count)}</td><td>${Number(t.reviewed_count)}</td>
+          <td>${scorePill(t)}</td>
+          <td>${pct(t.passed_count, t.reviewed_count)}%</td>
+          <td>${issues}${Number(t.serious_issue_count) > 0 ? " serious" : ""}</td>
+          <td><span class="pill ${alert === "OK" ? "ok" : "bad"}">${esc(alert)}</span></td>
+          <td>${Number(t.coaching_open_count)}</td><td>${Number(t.coaching_completed_count)}</td>
+          <td>${Number(t.coaching_overdue_count)}</td><td>${Number(t.leadership_open_count)}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="11">No teacher QA rows in this range.</td></tr>`) + "</tbody>";
+    $("#teachers-panel").hidden = false;
+
+    const R = data.trend || [];
+    $("#trend").innerHTML = `<thead><tr><th>Month</th><th>Sessions</th><th>Reviewed</th><th>Avg Score</th><th>Issue Rate</th></tr></thead><tbody>` +
+      (R.map((r) => `<tr><td>${String(r.y).padStart(4, "0")}-${String(r.m).padStart(2, "0")}</td><td>${Number(r.session_count)}</td><td>${Number(r.reviewed_count)}</td><td>${Number(r.avg_score) || 0}%</td><td>${pct(r.issue_count, r.reviewed_count)}%</td></tr>`).join("") || `<tr><td colspan="5">No monthly trend rows.</td></tr>`) + "</tbody>";
+    $("#trend-panel").hidden = false;
+
+    const C = (data.concerns || []).slice(0, 10);
+    $("#concerns").innerHTML = `<thead><tr><th>Checklist Item</th><th>Concerns</th><th>Checked</th><th>Concern Rate</th></tr></thead><tbody>` +
+      C.map((c) => `<tr><td style="white-space:normal">${esc(c.label)}</td><td>${Number(c.concern)}</td><td>${Number(c.checked)}</td><td>${pct(c.concern, c.checked)}%</td></tr>`).join("") + "</tbody>";
+    $("#concerns-panel").hidden = !C.length;
+
+    const K = data.risks || [];
+    $("#risks").innerHTML = `<thead><tr><th>Session</th><th>Teacher</th><th>Date</th><th>QA</th><th>Score</th><th>Coaching</th><th>Leadership</th><th>Due</th></tr></thead><tbody>` +
+      (K.map((r) => {
+        const overdue = Number(r.qa_coaching_due_date) > 0 && Number(r.qa_coaching_due_date) < Number(data.now) && ["assigned", "acknowledged"].includes(String(r.qa_coaching_status));
+        const qacls = String(r.qa_status) === "serious_issue" ? "bad" : (String(r.qa_status) === "needs_coaching" ? "warn" : "plain");
+        return `<tr>
+          <td style="white-space:normal">${esc(r.title)} <span class="code">#${Number(r.id)}</span></td>
+          <td>${esc(teacherName(r.teacherid))}</td>
+          <td>${dt(r.scheduled_start)}</td>
+          <td><span class="pill ${qacls}">${words(r.qa_status)}</span></td>
+          <td>${Number(r.qa_score)}%</td>
+          <td>${words(r.qa_coaching_status)}${overdue ? ' <span class="pill bad">overdue</span>' : ""}</td>
+          <td>${words(r.leadership_review_status)}${String(r.leadership_review_reason || "").trim() ? `<br><span class="code">${esc(r.leadership_review_reason)}</span>` : ""}</td>
+          <td>${Number(r.qa_coaching_due_date) ? dt(r.qa_coaching_due_date) : ""}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="8">No QA risks in this range.</td></tr>`) + "</tbody>";
+    $("#risks-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  function downloadCsv(filename, headers, rows) {
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const blob = new Blob([[headers.map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href);
+  }
+  // Same columns as the legacy export=teachers CSV.
+  $("#csv-teachers").addEventListener("click", () => data && downloadCsv("quraan-live-qa-teacher-trends.csv",
+    ["teacherid", "teacher", "sessions", "reviewed", "avg_score", "passed", "needs_coaching", "serious_issue", "coaching_open", "coaching_completed", "coaching_overdue", "leadership_open"],
+    (data.teachers || []).map((t) => [Number(t.teacherid), teacherName(t.teacherid), Number(t.session_count), Number(t.reviewed_count), Number(t.avg_score) || 0, Number(t.passed_count), Number(t.needs_coaching_count), Number(t.serious_issue_count), Number(t.coaching_open_count), Number(t.coaching_completed_count), Number(t.coaching_overdue_count), Number(t.leadership_open_count)])));
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#reset").addEventListener("click", () => { $("#f-from").value = ""; $("#f-to").value = ""; $("#f-teacher").value = "0"; load(); });
+  load();
+})();
+</script>
+</body>
+</html>

@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-7.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-8.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -46,6 +46,13 @@ $reports = [
     'student-intake' => ['pqpl_any_authenticated', 'student-intake.html'],
     'teacher-intake' => ['pqh_can_manage_academy_operations', 'teacher-intake.html'],
     'teacher-intake-requests' => ['pqh_can_manage_academy_operations', 'teacher-intake-requests.html'],
+    // Batch wave 3. workspace-dashboard/-people gates are workspace-scoped
+    // (handlers enforce the legacy manage checks with identical messages).
+    'live-ops' => ['pqh_can_manage_academy_operations', 'live-ops.html'],
+    'workspace-dashboard' => ['pqpl_any_authenticated', 'workspace-dashboard.html'],
+    'workspace-people' => ['pqpl_any_authenticated', 'workspace-people.html'],
+    'quality-analytics' => ['pqh_can_manage_academy_operations', 'quality-analytics.html'],
+    'master-dashboard' => ['is_siteadmin', 'master-dashboard.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);
@@ -69,7 +76,7 @@ $endpoint = $CFG->wwwroot . '/local/prequran/portal_data.php';
 $redirecturl = $base . '/' . $page . '?endpoint=' . urlencode($endpoint) . '&token=' . urlencode($token);
 // Forward deep-link context so "Review"-style links land on a preselected
 // record (e.g. live_sessions roster -> live-review with sessionid set).
-foreach (['sessionid', 'childid', 'workspaceid', 'threadid', 'requestid', 'teacher_requestid', 'existing_teacherid'] as $p) {
+foreach (['sessionid', 'childid', 'studentid', 'workspaceid', 'threadid', 'requestid', 'teacher_requestid', 'existing_teacherid'] as $p) {
     $v = optional_param($p, 0, PARAM_INT);
     if ($v > 0) {
         $redirecturl .= '&' . $p . '=' . $v;

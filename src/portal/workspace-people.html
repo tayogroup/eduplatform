@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace people · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .kpi strong{display:block;font-size:23px;color:var(--blue2)}
+  .kpi span{font-size:12px;color:var(--muted);font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+  .field{display:grid;gap:4px;margin-bottom:10px}
+  .field label{font-size:12px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:110px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn.danger{background:var(--red-bg);color:var(--red);border:1px solid var(--red)}
+  .btn.done{background:var(--bg);color:var(--muted);border:1px solid var(--line);cursor:default}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .btn.small{padding:5px 10px;font-size:12px;margin:0 5px 5px 0}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);margin:0 4px 4px 0}
+  .pill.inactive{background:var(--red-bg);color:var(--red)}
+  .pill.role{background:#e1f2ff;color:var(--blue2)}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;font-weight:900}
+  .sub2{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  .tablewrap{overflow-x:auto}
+  .toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:10px}
+  .toolbar .field{margin:0;min-width:260px}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;background:var(--bg)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tabs button{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:999px;padding:7px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  .tabs button.active{background:var(--blue2);border-color:var(--blue2);color:#fff}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Workspace people</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of workspace_people.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Workspace people</h1><p class="sub" id="subtitle">Add existing Moodle users, create non-student workspace accounts, and assign students to teachers.</p></div>
+  <div id="status" class="status">Loading workspace people…</div>
+  <div id="notready" class="empty" hidden>Workspace membership tables are not ready. Run the local_prequran Moodle upgrade first.</div>
+  <div id="app" hidden>
+    <div class="kpis" id="kpis"></div>
+    <div class="tabs" id="tabs">
+      <button data-tab="people" class="active">People</button>
+      <button data-tab="add">Add &amp; create</button>
+      <button data-tab="relations">Assignments &amp; links</button>
+      <button data-tab="invites">Invites &amp; bulk</button>
+      <button data-tab="recent">Recent Moodle users</button>
+    </div>
+
+    <section data-panel="people">
+      <div class="grid2">
+        <div class="panel"><h2>Teachers</h2><div id="teachers"></div></div>
+        <div class="panel"><h2>Students</h2><div id="students"></div></div>
+      </div>
+      <div class="panel"><h2>Workspace members</h2><p class="sub" style="margin-bottom:10px">Every membership row, including inactive ones.</p><div class="toolbar"><div class="field"><label>Search members</label><input id="member-filter" type="search" placeholder="Search name, email, role, or user ID"></div></div><div id="allmembers"></div></div>
+    </section>
+
+    <section data-panel="add" hidden>
+      <div class="grid2">
+        <div class="panel">
+          <h2>Add existing user</h2>
+          <form id="form-add-member">
+            <div class="field"><label>Choose user</label><select name="member_userid" id="candidate-select"><option value="0">Choose recent active Moodle user</option></select></div>
+            <div class="field"><label>Or enter user ID, email, or username</label><input name="member" placeholder="Optional if user is selected above"></div>
+            <div class="field"><label>Workspace role</label><select name="workspace_role" id="add-role-select"></select></div>
+            <button class="btn" type="submit">Add user</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Create Moodle user</h2>
+          <p class="muted" style="margin-bottom:10px">For admins, coordinators, auditors, owners, and parents who do not already have a Moodle account. Use student or teacher intake for learner/teacher profiles.</p>
+          <form id="form-create-member">
+            <div class="field"><label>First name</label><input name="new_firstname" required></div>
+            <div class="field"><label>Last name</label><input name="new_lastname" required></div>
+            <div class="field"><label>Email</label><input name="new_email" type="email" required></div>
+            <div class="field"><label>Username optional</label><input name="new_username" placeholder="Generated from email if blank"></div>
+            <div class="field"><label>Workspace role</label><select name="workspace_role" id="create-role-select"></select></div>
+            <button class="btn" type="submit">Create and add</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section data-panel="relations" hidden>
+      <div class="grid2">
+        <div class="panel">
+          <h2>Assign student</h2>
+          <form id="form-assign-student">
+            <div class="field"><label>Teacher</label><select name="teacherid" id="assign-teacher" required></select></div>
+            <div class="field"><label>Student</label><select name="studentid" id="assign-student" required></select></div>
+            <div id="assign-note" class="muted" style="margin-bottom:8px"></div>
+            <button class="btn" type="submit" id="assign-btn">Assign student</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Link parent to student</h2>
+          <form id="form-link-parent">
+            <div class="field"><label>Parent</label><select name="parentid" id="link-parent" required></select></div>
+            <div class="field"><label>Student</label><select name="studentid" id="link-student" required></select></div>
+            <div id="link-note" class="muted" style="margin-bottom:8px"></div>
+            <button class="btn" type="submit" id="link-btn">Link parent</button>
+          </form>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="panel"><h2>Teacher-student assignments</h2><div id="assignments"></div></div>
+        <div class="panel"><h2>Parent-student links</h2><div id="parentlinks"></div></div>
+      </div>
+    </section>
+
+    <section data-panel="invites" hidden>
+      <div class="grid2">
+        <div class="panel">
+          <h2>Bulk import / invite</h2>
+          <p class="muted" style="margin-bottom:10px">One CSV row per person: role,email-or-user-id-or-username,full name,parent email,teacher email.</p>
+          <form id="form-bulk-import">
+            <div class="field"><label>Rows</label><textarea name="bulk_members" placeholder="student,student@example.com,Ayan Mohamed,parent@example.com,teacher@example.com&#10;teacher,teacher@example.com,Ustad Ahmed&#10;parent,parent@example.com,Parent Mohamed"></textarea></div>
+            <button class="btn" type="submit">Process rows</button>
+          </form>
+        </div>
+        <div class="panel"><h2>Pending invites</h2><div id="invites"></div></div>
+      </div>
+    </section>
+
+    <section data-panel="recent" hidden>
+      <div class="panel">
+        <h2>Recent Moodle users</h2>
+        <div class="toolbar">
+          <div class="field"><label>Search recent users</label><input id="user-filter" type="search" placeholder="Search name, email, username, or user ID"></div>
+          <span class="muted">Showing the 30 newest active accounts.</span>
+        </div>
+        <div id="candidates"></div>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const workspaceid = String(parseInt(qs.get("workspaceid") || "0", 10) || 0);
+  // Same role lists the legacy forms offer (order preserved).
+  const ADD_ROLES = ["student","teacher","assistant_teacher","admin","owner","coordinator","registrar","finance","support","auditor","sponsor","parent"];
+  const CREATE_ROLES = ["coordinator","registrar","finance","support","auditor","sponsor","admin","owner","parent"];
+  let D = null;
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "workspace-people", token, workspaceid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) {
+        let msg = "HTTP " + r.status;
+        try { const e = await r.json(); if (e && e.error) msg = e.error; } catch (_) {}
+        throw new Error(msg);
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      D = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function post(payload, btn, busyText) {
+    const old = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = busyText || "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "workspace-people", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ workspaceid: Number(workspaceid) }, payload)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+      return true;
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return false;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = old; }
+    }
+  }
+
+  const personCell = (m) => `<span class="name">${esc(m.fullname)}</span><span class="sub2">${esc(m.account_label)} / #${Number(m.userid || m.id)} / ${esc(m.email || m.username)}</span>`;
+  const table = (head, rows) => `<div class="tablewrap"><table><thead><tr>${head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+
+  function renderTeachers(d) {
+    if (!d.teachers.length) { $("#teachers").innerHTML = "<div class='empty'>No teaching members yet.</div>"; return; }
+    $("#teachers").innerHTML = table(["Teacher", "Role", "Email"], d.teachers.map((t) => `<tr><td>${personCell(t)}</td><td><span class="pill role">${esc(t.workspace_role)}</span></td><td>${esc(t.email)}</td></tr>`));
+  }
+
+  function renderStudents(d) {
+    if (!d.students.length) { $("#students").innerHTML = "<div class='empty'>No student members yet.</div>"; return; }
+    const rows = d.students.map((s) => {
+      const assigns = d.teachers.map((t) => {
+        const assigned = !!d.assignmentmap[t.userid + ":" + s.userid];
+        return assigned
+          ? `<span class="btn small done">Assigned to ${esc(t.fullname)}</span>`
+          : `<button class="btn small light" data-act="assign" data-teacherid="${t.userid}" data-studentid="${s.userid}">Assign to ${esc(t.fullname)}</button>`;
+      }).join("");
+      return `<tr><td>${personCell(s)}</td><td>${esc(s.email)}</td><td>${assigns || "<span class='muted'>No teaching members yet.</span>"}</td><td>${esc(when(s.timemodified))}</td></tr>`;
+    });
+    $("#students").innerHTML = table(["Student", "Email", "Assign", "Updated"], rows);
+  }
+
+  function renderAllMembers(d) {
+    if (!d.allmembers.length) { $("#allmembers").innerHTML = "<div class='empty'>No workspace members have been added yet.</div>"; return; }
+    const rows = d.allmembers.map((m) => {
+      const active = m.status === "active";
+      const filter = (m.account_label + " #" + m.userid + " " + m.fullname + " " + (m.email || "") + " " + (m.username || "") + " " + m.workspace_role).toLowerCase();
+      return `<tr data-filter="${esc(filter)}"><td>${personCell(m)}</td><td><span class="pill role">${esc(m.role_label)}</span></td><td><span class="pill ${active ? "" : "inactive"}">${esc(m.status)}</span></td><td>${esc(when(m.timemodified))}</td><td><button class="btn small ${active ? "danger" : "light"}" data-act="status" data-memberid="${m.id}" data-status="${active ? "inactive" : "active"}">${active ? "Deactivate" : "Reactivate"}</button></td></tr>`;
+    });
+    $("#allmembers").innerHTML = table(["Member", "Role", "Status", "Updated", "Actions"], rows);
+  }
+
+  function renderForms(d) {
+    $("#candidate-select").innerHTML = '<option value="0">Choose recent active Moodle user</option>' +
+      d.candidates.map((c) => `<option value="${c.id}">${esc(c.account_label + " - #" + c.id + " - " + c.fullname + " - " + (c.email || c.username))}</option>`).join("");
+    $("#add-role-select").innerHTML = ADD_ROLES.map((r) => `<option value="${esc(r)}">${esc(d.roles[r] || r)}</option>`).join("");
+    $("#create-role-select").innerHTML = CREATE_ROLES.map((r) => `<option value="${esc(r)}">${esc(d.roles[r] || r)}</option>`).join("");
+
+    const opt = (m) => `<option value="${m.userid}">${esc(m.fullname + " - " + m.account_label + " - #" + m.userid)}</option>`;
+    $("#assign-teacher").innerHTML = d.teachers.map(opt).join("");
+    const unassigned = d.students.filter((s) => !d.assignedstudentmap[s.userid]);
+    $("#assign-student").innerHTML = unassigned.map(opt).join("");
+    let note = "";
+    if (!d.students.length) note = "Add student members before assigning them to a teacher.";
+    else if (!unassigned.length) note = "All students in this workspace already have an active teacher assignment.";
+    $("#assign-note").textContent = note;
+    $("#assign-btn").disabled = !d.teachers.length || !unassigned.length;
+
+    $("#link-parent").innerHTML = d.parents.map(opt).join("");
+    $("#link-student").innerHTML = d.students.map(opt).join("");
+    $("#link-note").textContent = (!d.parents.length || !d.students.length) ? "Add at least one active parent and one active student before linking." : "";
+    $("#link-btn").disabled = !d.parents.length || !d.students.length;
+  }
+
+  function renderAssignments(d) {
+    if (!d.teacher_student_ready) { $("#assignments").innerHTML = "<div class='empty'>Teacher-student assignment table is not ready. Run the local_prequran Moodle upgrade first.</div>"; return; }
+    if (!d.assignments.length) { $("#assignments").innerHTML = "<div class='empty'>No active teacher-student assignments yet.</div>"; return; }
+    $("#assignments").innerHTML = table(["Teacher", "Student", "Status", "Updated"], d.assignments.map((a) =>
+      `<tr><td><span class="name">${esc(a.teacher_name)}</span><span class="sub2">${esc(a.teacher_account_label)} / ${esc(a.teacher_email)}</span></td><td><span class="name">${esc(a.student_name)}</span><span class="sub2">${esc(a.student_account_label)} / ${esc(a.student_email)}</span></td><td><span class="pill">${esc(a.status)}</span></td><td>${esc(when(a.timemodified))}</td></tr>`));
+  }
+
+  function renderParentLinks(d) {
+    if (!d.parentlinks.length) { $("#parentlinks").innerHTML = "<div class='empty'>No active parent-student links were found for this workspace.</div>"; return; }
+    $("#parentlinks").innerHTML = table(["Parent", "Student", "Visible", "Updated"], d.parentlinks.map((l) =>
+      `<tr><td><span class="name">${esc(l.parent_name)}</span><span class="sub2">${esc(l.parent_account_label)} / ${esc(l.parent_email)}</span></td><td><span class="name">${esc(l.student_name)}</span><span class="sub2">${esc(l.student_account_label)} / ${esc(l.student_email)}</span></td><td><span class="pill">${l.parent_visible === 1 ? "parent visible" : "limited"}</span></td><td>${esc(when(l.timemodified))}</td></tr>`));
+  }
+
+  function renderInvites(d) {
+    if (!d.pendinginvites.length) { $("#invites").innerHTML = "<div class='empty'>No pending invite rows are waiting for account creation.</div>"; return; }
+    $("#invites").innerHTML = table(["Email", "Role", "Status", "Updated", "Actions"], d.pendinginvites.map((i) =>
+      `<tr><td><span class="name">${esc(i.email)}</span><span class="sub2">${esc(i.name)}</span></td><td><span class="pill role">${esc(i.role_label)}</span></td><td><span class="pill">${esc(i.status)}</span></td><td>${esc(when(i.timemodified))}</td><td><button class="btn small danger" data-act="clear-invite" data-invitekey="${esc(i.invitekey)}">Remove</button></td></tr>`));
+  }
+
+  function renderCandidates(d) {
+    if (!d.candidates.length) { $("#candidates").innerHTML = "<div class='empty'>No active Moodle users were found.</div>"; return; }
+    const rows = d.candidates.slice(0, 30).map((c) => {
+      const existing = c.existing_roles || [];
+      const filter = (c.account_no + " #" + c.id + " " + c.fullname + " " + (c.email || "") + " " + (c.username || "")).toLowerCase();
+      const seen = {};
+      const buttons = [c.likely_role, "student", "parent", "teacher"].map((role) => {
+        if (role !== "student" && role !== "parent" && role !== "teacher") return "";
+        if (seen[role]) return "";
+        seen[role] = true;
+        const already = existing.includes(role) || (role === "teacher" && (existing.includes("owner") || existing.includes("admin") || existing.includes("assistant_teacher")));
+        if (already) return `<span class="btn small done">Already ${esc(role)}</span>`;
+        return `<button class="btn small ${role === c.likely_role ? "" : "light"}" data-act="add-role" data-userid="${c.id}" data-role="${esc(role)}">Add ${esc(role)}</button>`;
+      }).join("");
+      const pills = `<span class="pill role">${esc(c.likely_role)}</span>` + existing.map((r) => `<span class="pill">Already ${esc((D.roles || {})[r] || r)}</span>`).join("");
+      return `<tr data-filter="${esc(filter)}"><td><span class="name">${esc(c.fullname)}</span><span class="sub2">${esc(c.account_label)} / #${c.id} / ${esc(c.username)}</span></td><td>${esc(c.email)}</td><td>${pills}</td><td>${buttons}</td></tr>`;
+    });
+    $("#candidates").innerHTML = table(["User", "Email", "Likely role", "Actions"], rows);
+  }
+
+  function render(d) {
+    $("#title").textContent = (d.workspace && d.workspace.name ? d.workspace.name : "Workspace") + " People";
+    if (!d.ready) { $("#status").hidden = true; $("#notready").hidden = false; $("#app").hidden = true; return; }
+    $("#notready").hidden = true;
+    $("#kpis").innerHTML = [
+      [d.teachers.length, "teaching members"], [d.students.length, "students"], [d.parents.length, "parents"],
+      [d.pendinginvites.length, "pending invites"], [d.inactivecount, "inactive rows"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${Number(v)}</strong><span>${esc(l)}</span></div>`).join("");
+    renderTeachers(d); renderStudents(d); renderAllMembers(d);
+    renderForms(d); renderAssignments(d); renderParentLinks(d); renderInvites(d); renderCandidates(d);
+    $("#app").hidden = false;
+    if ($("#status").className === "status") $("#status").hidden = true;
+    applyFilter($("#member-filter"), "#allmembers");
+    applyFilter($("#user-filter"), "#candidates");
+  }
+
+  // Tabs.
+  document.querySelectorAll("#tabs button").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll("#tabs button").forEach((x) => x.classList.toggle("active", x === b));
+    document.querySelectorAll("[data-panel]").forEach((p) => { p.hidden = p.dataset.panel !== b.dataset.tab; });
+  }));
+
+  // Search filters (mirrors the legacy data-filter row hiding).
+  function applyFilter(input, container) {
+    if (!input) return;
+    const needle = input.value.toLowerCase().trim();
+    document.querySelectorAll(container + " tbody tr").forEach((row) => {
+      const haystack = row.getAttribute("data-filter") || "";
+      row.style.display = needle !== "" && haystack.indexOf(needle) === -1 ? "none" : "";
+    });
+  }
+  $("#member-filter").addEventListener("input", () => applyFilter($("#member-filter"), "#allmembers"));
+  $("#user-filter").addEventListener("input", () => applyFilter($("#user-filter"), "#candidates"));
+
+  // Row action buttons (assign, status toggle, invite removal, add-as-role).
+  document.addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-act]");
+    if (!b) return;
+    const act = b.dataset.act;
+    if (act === "assign") post({ do: "assign_student", teacherid: Number(b.dataset.teacherid), studentid: Number(b.dataset.studentid) }, b);
+    else if (act === "status") post({ do: "set_member_status", memberid: Number(b.dataset.memberid), member_status: b.dataset.status }, b);
+    else if (act === "clear-invite") post({ do: "clear_invite", invitekey: b.dataset.invitekey }, b, "Removing…");
+    else if (act === "add-role") post({ do: "add_member", member_userid: Number(b.dataset.userid), workspace_role: b.dataset.role }, b, "Adding…");
+  });
+
+  // Forms.
+  $("#form-add-member").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({ do: "add_member", member_userid: Number(f.member_userid.value), member: f.member.value, workspace_role: f.workspace_role.value }, f.querySelector("button"));
+  });
+  $("#form-create-member").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({ do: "create_member", new_firstname: f.new_firstname.value, new_lastname: f.new_lastname.value, new_email: f.new_email.value, new_username: f.new_username.value, workspace_role: f.workspace_role.value }, f.querySelector("button"), "Creating…").then((ok) => { if (ok) f.reset(); });
+  });
+  $("#form-assign-student").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({ do: "assign_student", teacherid: Number(f.teacherid.value), studentid: Number(f.studentid.value) }, $("#assign-btn"));
+  });
+  $("#form-link-parent").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({ do: "link_parent_student", parentid: Number(f.parentid.value), studentid: Number(f.studentid.value) }, $("#link-btn"), "Linking…");
+  });
+  $("#form-bulk-import").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    post({ do: "bulk_import_members", bulk_members: f.bulk_members.value }, f.querySelector("button"), "Processing…").then((ok) => { if (ok) f.reset(); });
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

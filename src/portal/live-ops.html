@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live operations · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--sky);color:var(--blue);text-decoration:none;font-size:12px;font-weight:900;cursor:pointer}
+  .btn:hover{border-color:var(--blue2)}
+  button.btn{font:inherit;font-size:12px;font-weight:900}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .metric{padding:13px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+  .metric strong{display:block;font-size:24px;font-weight:900;color:var(--blue2)}
+  .metric.warn strong{color:var(--amber)}
+  .metric.bad strong{color:var(--red)}
+  .metric span{display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:800}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .grid .panel{margin-bottom:0}
+  .panel.wide{grid-column:1/-1}
+  .tblwrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-weight:900;color:var(--ink2);background:var(--bg);white-space:nowrap}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;color:var(--muted);word-break:break-word}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live operations</small></div>
+  <div class="note">Token-authenticated · parallel-run of live_ops.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><div class="head">
+    <div><h1>Live Operations Dashboard</h1><p class="sub">Monitor sessions, reviews, BBB errors, recordings, reminders, and teacher workload from one admin view.</p></div>
+    <button class="btn" id="refresh" type="button">Refresh</button>
+  </div></div>
+  <div id="status" class="status">Loading live operations…</div>
+  <section class="metrics" id="metrics" hidden></section>
+  <section class="grid" id="grid" hidden>
+    <div class="panel wide"><h2>Today</h2><div class="tblwrap" id="today"></div></div>
+    <div class="panel"><h2>Post-Class Review Queue</h2><div class="tblwrap" id="missingreviews"></div></div>
+    <div class="panel"><h2>Teacher Coaching Queue</h2><div class="tblwrap" id="coachingqueue"></div></div>
+    <div class="panel"><h2>Leadership Review Queue</h2><div class="tblwrap" id="leadershipqueue"></div></div>
+    <div class="panel"><h2>Teacher Improvement Plans</h2><div class="tblwrap" id="improvementqueue"></div></div>
+    <div class="panel"><h2>Quality Review Queue</h2><div class="tblwrap" id="qualityqueue"></div></div>
+    <div class="panel"><h2>Recording Review Queue</h2><div class="tblwrap" id="recordingqueue"></div></div>
+    <div class="panel"><h2>Follow-Up Queue</h2><div class="tblwrap" id="followupqueue"></div></div>
+    <div class="panel"><h2>BBB Errors</h2><div class="tblwrap" id="bbberrors"></div></div>
+    <div class="panel"><h2>Notification Issues</h2><div class="tblwrap" id="notificationissues"></div></div>
+    <div class="panel wide"><h2>Teacher Workload, Next 7 Days</h2><div class="tblwrap" id="teacherworkload"></div></div>
+  </section>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = qs.get("workspaceid") || "0";
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (t) => Number(t) ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" }) : "";
+  const tm = (t) => Number(t) ? new Date(t * 1000).toLocaleTimeString(undefined, { hour:"2-digit", minute:"2-digit" }) : "";
+  const words = (v) => esc(String(v ?? "").replace(/_/g, " "));
+  const short = (v, n) => { v = String(v ?? "").trim(); return v.length > n ? v.slice(0, n) + "..." : v; };
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let names = {};
+  const nameOf = (id, kind) => names[id] || (kind + " " + id);
+  // Legacy per-session buttons go to live_review.php / live_quality.php; the
+  // portal equivalent is the live-review launch (portal_launch forwards
+  // sessionid and mints a scoped token).
+  const reviewLink = (sessionid, label) =>
+    `<a class="btn" href="${esc(moodleBase + "/local/prequran/portal_launch.php?report=live-review&sessionid=" + Number(sessionid))}">${esc(label)}</a>`;
+  const table = (id, head, rows, empty) => {
+    $(id).innerHTML = `<table><thead><tr>${head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>` +
+      (rows.length ? rows.join("") : `<tr><td colspan="${head.length}" class="muted">${esc(empty)}</td></tr>`) + "</tbody></table>";
+  };
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading live operations…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-ops", token, workspaceid }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    names = d.names || {};
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").textContent = "Live-session tables are not fully installed yet.";
+      $("#metrics").hidden = true; $("#grid").hidden = true;
+      return;
+    }
+    const now = Number(d.now) || Math.floor(Date.now() / 1000);
+    const m = d.metrics || {};
+    const tiles = [
+      ["today", "today's sessions", ""], ["upcoming", "next 7 days", ""],
+      ["awaitingreview", "awaiting review", "warn"], ["missingreview", "review gaps", "warn"],
+      ["followups", "open follow-ups", "warn"], ["overduefollowups", "overdue follow-ups", "bad"],
+      ["bbberrors", "BBB errors", "bad"], ["recordingqueue", "recordings to review", ""],
+      ["qualityqueue", "QA review queue", ""], ["qualityissues", "QA issues", "bad"],
+      ["coachingqueue", "coaching queue", ""], ["coachingoverdue", "coaching overdue", "bad"],
+      ["qualityreminders", "QA reminders 7d", ""], ["leadershipqueue", "leadership reviews", "warn"],
+      ["improvementplans", "improvement plans", ""], ["improvementoverdue", "plans overdue", "bad"],
+      ["improvementalerts", "plan alerts 7d", ""], ["parentpreviews", "parent previews 7d", ""],
+      ["notificationissues", "notification issues", "warn"],
+    ];
+    $("#metrics").innerHTML = tiles.map(([k, label, tone]) =>
+      `<div class="metric ${Number(m[k]) > 0 ? tone : ""}"><strong>${Number(m[k]) || 0}</strong><span>${esc(label)}</span></div>`).join("");
+    $("#metrics").hidden = false;
+
+    table("#today", ["Session", "Teacher", "Time", "Status", "Students", "Attendance", "Summaries", "Action"],
+      (d.today || []).map((s) => `<tr>
+        <td>${esc(s.title)}</td>
+        <td>${esc(nameOf(s.teacherid, "Teacher"))}</td>
+        <td>${esc(tm(s.scheduled_start))}</td>
+        <td><span class="pill">${esc(s.status)}</span></td>
+        <td>${Number(s.student_count) || 0}</td>
+        <td>${Number(s.attendance_count) || 0}</td>
+        <td>${Number(s.visible_summary_count) || 0}</td>
+        <td>${reviewLink(s.id, "Review")}</td>
+      </tr>`), "No live sessions today.");
+
+    table("#missingreviews", ["Session", "Ended", "Status", "Counts", "Action"],
+      (d.missingreviews || []).map((s) => `<tr>
+        <td>${esc(s.title)}<br><span class="code">#${Number(s.id)}</span></td>
+        <td>${esc(dt(s.scheduled_end))}</td>
+        <td><span class="pill warn">${esc(s.status)}</span></td>
+        <td>${Number(s.attendance_count) || 0}/${Number(s.student_count) || 0} attendance<br>${Number(s.visible_summary_count) || 0}/${Number(s.student_count) || 0} parent summaries</td>
+        <td>${reviewLink(s.id, "Open")}</td>
+      </tr>`), "No recent classes awaiting review.");
+
+    table("#coachingqueue", ["Session", "Teacher", "Coaching", "Due"],
+      (d.coachingqueue || []).map((s) => {
+        const overdue = Number(s.qa_coaching_due_date) > 0 && Number(s.qa_coaching_due_date) < now;
+        return `<tr>
+          <td>${esc(s.title)}<br><span class="code">QA ${words(s.qa_status)} - ${Number(s.qa_score) || 0}%</span></td>
+          <td>${esc(nameOf(s.teacherid, "Teacher"))}</td>
+          <td><span class="pill ${overdue ? "bad" : "warn"}">${words(s.qa_coaching_status)}</span><br><span class="code">${esc(s.qa_coaching_priority)}</span></td>
+          <td>${Number(s.qa_coaching_due_date) ? esc(dt(s.qa_coaching_due_date)) : "No due date"}${overdue ? '<br><span class="code">overdue</span>' : ""}</td>
+        </tr>`;
+      }), "No active coaching assignments.");
+
+    table("#leadershipqueue", ["Session", "Teacher", "QA", "Status"],
+      (d.leadershipqueue || []).map((s) => `<tr>
+        <td>${esc(s.title)}<br><span class="code">#${Number(s.id)}</span></td>
+        <td>${esc(nameOf(s.teacherid, "Teacher"))}</td>
+        <td>${words(s.qa_status)}<br><span class="code">${Number(s.qa_score) || 0}%</span></td>
+        <td><span class="pill bad">${words(s.leadership_review_status)}</span><br><span class="code">${esc(short(s.leadership_review_reason, 90))}</span></td>
+      </tr>`), "No sessions in leadership review.");
+
+    table("#improvementqueue", ["Session", "Teacher", "Plan", "Due"],
+      (d.improvementqueue || []).map((s) => {
+        const overdue = Number(s.improvement_plan_due_date) > 0 && Number(s.improvement_plan_due_date) < now;
+        return `<tr>
+          <td>${esc(s.title)}<br><span class="code">#${Number(s.id)}</span></td>
+          <td>${esc(nameOf(s.teacherid, "Teacher"))}</td>
+          <td><span class="pill ${overdue ? "bad" : "warn"}">${words(s.improvement_plan_status)}</span><br><span class="code">${esc(s.improvement_plan_priority)}</span></td>
+          <td>${Number(s.improvement_plan_due_date) ? esc(dt(s.improvement_plan_due_date)) : "No due date"}${overdue ? '<br><span class="code">overdue</span>' : ""}</td>
+        </tr>`;
+      }), "No active improvement plans.");
+
+    table("#qualityqueue", ["Session", "Teacher", "QA", "Evidence", "Action"],
+      (d.qualityqueue || []).map((s) => `<tr>
+        <td>${esc(s.title)}<br><span class="code">${esc(dt(s.scheduled_end))}</span></td>
+        <td>${esc(nameOf(s.teacherid, "Teacher"))}</td>
+        <td><span class="pill ${s.qa_status === "serious_issue" ? "bad" : s.qa_status === "needs_coaching" ? "warn" : ""}">${words(s.qa_status)}</span><br><span class="code">${Number(s.qa_score) || 0}%</span></td>
+        <td>${Number(s.attendance_count) || 0}/${Number(s.student_count) || 0} attendance<br>${Number(s.visible_summary_count) || 0} summaries<br>${Number(s.recording_count) || 0} recordings</td>
+        <td>${reviewLink(s.id, "Review")}</td>
+      </tr>`), "No sessions waiting for quality review.");
+
+    table("#recordingqueue", ["Recording", "Status", "Visibility", "Action"],
+      (d.recordingqueue || []).map((r) => `<tr>
+        <td>${esc(r.name)}<br><span class="code">${esc(r.session_title)}</span></td>
+        <td><span class="pill ${r.status === "available" ? "ok" : "warn"}">${esc(r.status)}</span></td>
+        <td>${Number(r.visible_to_parent) ? "parent visible" : "hidden"}</td>
+        <td>${reviewLink(r.sessionid, "Session review")}</td>
+      </tr>`), "No recordings waiting for review.");
+
+    table("#followupqueue", ["Student", "Session", "Status", "Message", "Action"],
+      (d.followupqueue || []).map((n) => {
+        const overdue = Number(n.followup_age_start) > 0 && Number(n.followup_age_start) <= now - 2 * 86400;
+        let msg = esc(short(n.followup_message, 180));
+        if (n.parent_response_status && n.parent_response_status !== "none") {
+          msg += `<br><span class="code">Parent: ${words(n.parent_response_status)}${Number(n.parent_responseat) ? " - " + esc(dt(n.parent_responseat)) : ""}</span>`;
+          if (n.parent_response_message) msg += `<br><span class="code">${esc(short(n.parent_response_message, 140))}</span>`;
+        }
+        return `<tr>
+          <td>${esc(nameOf(n.studentid, "Student"))}</td>
+          <td>${esc(n.session_title)}<br><span class="code">${esc(dt(n.scheduled_start))}</span></td>
+          <td><span class="pill ${n.followup_status === "admin_support_requested" || overdue ? "bad" : "warn"}">${words(n.followup_status)}</span>${overdue ? '<br><span class="code">overdue</span>' : ""}</td>
+          <td>${msg}</td>
+          <td>${reviewLink(n.sessionid, "Open")}</td>
+        </tr>`;
+      }), "No open teacher-parent follow-ups.");
+
+    table("#bbberrors", ["Session", "Error"],
+      (d.bbberrors || []).map((s) => `<tr>
+        <td>${esc(s.title)}<br><span class="code">${esc(s.bbb_meeting_id)}</span></td>
+        <td>${esc(short(s.bbb_last_error, 130))}</td>
+      </tr>`), "No BBB errors recorded.");
+
+    table("#notificationissues", ["Time", "Action", "Target", "Details"],
+      (d.notificationissues || []).map((a) => `<tr>
+        <td>${esc(dt(a.timecreated))}</td>
+        <td><span class="pill ${a.action === "notification_failed" ? "bad" : "warn"}">${esc(a.action)}</span></td>
+        <td>User #${Number(a.targetid)}</td>
+        <td class="code">${esc(short(a.details, 180))}</td>
+      </tr>`), "No recent notification issues.");
+
+    table("#teacherworkload", ["Teacher", "Sessions", "Scheduled", "Live", "Next Class"],
+      (d.teacherworkload || []).map((r) => `<tr>
+        <td>${esc(nameOf(r.teacherid, "Teacher"))}</td>
+        <td>${Number(r.session_count) || 0}</td>
+        <td>${Number(r.scheduled_count) || 0}</td>
+        <td>${Number(r.live_count) || 0}</td>
+        <td>${Number(r.next_start) ? esc(dt(r.next_start)) : ""}</td>
+      </tr>`), "No upcoming teacher workload.");
+
+    $("#grid").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  $("#refresh").addEventListener("click", load);
+  load();
+})();
+</script>
+</body>
+</html>

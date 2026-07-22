@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher Portal · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1160px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:14px 0 8px;font-size:14px;color:var(--ink2)}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .nav-card{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;color:var(--ink);text-decoration:none}
+  .nav-card:hover{border-color:var(--blue2)}
+  .nav-card strong{display:block;margin-bottom:4px;color:var(--blue2)}
+  .nav-card span{font-size:12px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card);margin-bottom:12px}
+  .card h3:first-child{margin-top:0}
+  form label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin:8px 0 3px}
+  form label.check{display:flex;align-items:center;gap:7px;text-transform:none;font-size:13px;font-weight:700;letter-spacing:0}
+  form input[type=text],form select,form textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form textarea{min-height:60px;resize:vertical}
+  form button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form button:disabled{opacity:.55;cursor:wait}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  a.btn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:6px 11px;background:var(--sky);color:var(--blue);text-decoration:none;font-weight:800;font-size:12px}
+  a.btn:hover{border-color:var(--blue2);color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher Portal</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of teacher_portal.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Teacher Portal</h1><p class="sub" id="subtitle">Today's classes, roster, attendance, grade entry, notes, homework, and progress updates.</p></div>
+  <div id="status" class="status">Loading teacher portal…</div>
+  <div class="panel" id="nav-panel" hidden><h2>Where to next</h2><div class="nav-grid" id="nav"></div></div>
+  <div class="grid" id="content" hidden>
+    <section>
+      <div class="card">
+        <h3>Attendance Entry</h3>
+        <form id="f-attendance">
+          <label>Class</label><select name="sessionid" data-list="sessions-long"></select>
+          <label>Student</label><select name="studentid" data-list="roster"></select>
+          <label>Attendance</label>
+          <select name="attendance_status">
+            <option value="present">Present</option><option value="late">Late</option><option value="excused">Excused</option><option value="absent">Absent</option><option value="makeup">Make-up</option>
+          </select>
+          <label>Participation</label><input type="text" name="participation_status" value="engaged">
+          <label class="check"><input type="checkbox" name="technical_issue" value="1"> Technical issue</label>
+          <label>Notes</label><textarea name="notes"></textarea>
+          <button type="submit" data-label="Save Attendance">Save Attendance</button>
+        </form>
+        <h3>Notes / Homework</h3>
+        <form id="f-note">
+          <label>Class</label><select name="sessionid" data-list="sessions"></select>
+          <label>Student</label><select name="studentid" data-list="roster"></select>
+          <label>Strengths</label><textarea name="strengths"></textarea>
+          <label>Needs practice</label><textarea name="needs_practice"></textarea>
+          <label>Homework</label><textarea name="homework"></textarea>
+          <label>Parent summary</label><textarea name="parent_summary"></textarea>
+          <label>Private note</label><textarea name="private_note"></textarea>
+          <label>Homework due date</label><input type="text" name="homework_due_date" placeholder="YYYY-MM-DD">
+          <label class="check"><input type="checkbox" name="visible_to_parent" value="1" checked> Parent visible</label>
+          <button type="submit" data-label="Save Notes">Save Notes</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Grade / Assessment Entry</h3>
+        <form id="f-grade">
+          <label>Assessment</label><select name="assessmentid" data-list="assessments"></select>
+          <label>Student</label><select name="studentid" data-list="roster"></select>
+          <label>Offering ID</label><input type="text" name="offeringid">
+          <label>Score points</label><input type="text" name="score_points">
+          <label>Score percent</label><input type="text" name="score_percent">
+          <label>Letter grade</label><input type="text" name="letter_grade">
+          <label>Status</label>
+          <select name="status"><option value="reviewed">Reviewed</option><option value="published">Published</option><option value="draft">Draft</option></select>
+          <label>Feedback</label><textarea name="teacher_feedback"></textarea>
+          <button type="submit" data-label="Save Grade">Save Grade</button>
+        </form>
+        <h3>Progress Update</h3>
+        <form id="f-progress">
+          <label>Student</label><select name="studentid" data-list="roster"></select>
+          <label>Current level</label><input type="text" name="current_level">
+          <label>Placement level</label><input type="text" name="placement_level">
+          <label>Advancement status</label><input type="text" name="advancement_status" value="on_track">
+          <label>Recommended next course</label><input type="text" name="recommended_course_key">
+          <label>Recommendation reason</label><input type="text" name="recommendation_reason">
+          <label>Teacher comment</label><input type="text" name="teacher_comment">
+          <button type="submit" data-label="Save Progress">Save Progress</button>
+        </form>
+      </div>
+    </section>
+    <section>
+      <div class="card">
+        <h3>Today's Classes</h3>
+        <table><thead><tr><th>Class</th><th>Time</th><th>Roster</th></tr></thead><tbody id="sessions-body"></tbody></table>
+        <h3>Student Roster</h3>
+        <table><thead><tr><th>Student</th><th>Actions</th></tr></thead><tbody id="roster-body"></tbody></table>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = qs.get("workspaceid") || "0";
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "teacher-portal", token, workspaceid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) {
+        let msg = ""; try { msg = (await r.json()).error || ""; } catch (e) { /* noop */ }
+        throw new Error(msg || ("HTTP " + r.status));
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function fillSelects(d) {
+    const lists = {
+      "sessions-long": (d.sessions || []).map((s) => [s.id, s.title + " / " + when(s.scheduled_start)]),
+      "sessions": (d.sessions || []).map((s) => [s.id, s.title]),
+      "roster": (d.roster || []).map((s) => [s.studentid, s.name]),
+      "assessments": (d.assessments || []).map((a) => [a.id, a.title + " / " + a.assessment_type]),
+    };
+    document.querySelectorAll("select[data-list]").forEach((sel) => {
+      const rows = lists[sel.dataset.list] || [];
+      sel.innerHTML = rows.map(([v, l]) => `<option value="${Number(v)}">${esc(l)}</option>`).join("") || "<option value='0'>— none available —</option>";
+    });
+  }
+
+  function render(d) {
+    $("#subtitle").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " — " : "") +
+      "today's classes, roster, attendance, grade entry, notes, homework, and progress updates.";
+
+    $("#nav").innerHTML = (d.links || []).map((l) =>
+      `<a class="nav-card" href="${esc(l.url)}"><strong>${esc(l.title)}</strong><span>${esc(l.desc || "")}</span></a>`).join("");
+    $("#nav-panel").hidden = !(d.links || []).length;
+
+    fillSelects(d);
+
+    $("#sessions-body").innerHTML = (d.sessions || []).map((s) =>
+      `<tr><td><strong>${esc(s.title)}</strong><div class="muted">${esc(s.status)}</div></td><td>${esc(when(s.scheduled_start))}</td><td><span class="pill">${Number(s.roster_count) || 0} students</span></td></tr>`
+    ).join("") || `<tr><td colspan="3" class="muted">No classes scheduled today.</td></tr>`;
+
+    $("#roster-body").innerHTML = (d.roster || []).map((s) =>
+      `<tr><td><strong>${esc(s.name)}</strong><div class="muted">${esc(s.email)}</div></td><td><a class="btn" href="${esc(s.profileurl)}">Profile</a></td></tr>`
+    ).join("") || `<tr><td colspan="2" class="muted">No assigned students found.</td></tr>`;
+
+    $("#content").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  const actionOf = { "f-attendance": "attendance", "f-note": "note", "f-grade": "grade", "f-progress": "progress" };
+  const numeric = new Set(["sessionid", "studentid", "assessmentid", "offeringid", "technical_issue", "visible_to_parent"]);
+
+  async function submit(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Saving…";
+    const body = { do: actionOf[f.id], workspaceid: Number(workspaceid) };
+    for (const el of f.elements) {
+      if (!el.name) continue;
+      if (el.type === "checkbox") { body[el.name] = el.checked ? 1 : 0; continue; }
+      body[el.name] = numeric.has(el.name) ? Number(el.value) || 0 : el.value;
+    }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "teacher-portal", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = btn.dataset.label || "Save";
+    }
+  }
+
+  ["f-attendance", "f-note", "f-grade", "f-progress"].forEach((id) => document.getElementById(id).addEventListener("submit", submit));
+
+  load();
+})();
+</script>
+</body>
+</html>

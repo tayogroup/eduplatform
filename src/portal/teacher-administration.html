@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher administration · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h2.mt{margin-top:18px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+  @media(max-width:920px){.grid{display:block}}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:4px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:9px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  button.btn{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  button.btn:disabled{opacity:.55;cursor:wait}
+  button.btn.light{background:var(--sky);color:var(--blue)}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  td input{width:100%;border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:inherit;font-size:12px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher administration</small></div>
+  <div class="note">Token-authenticated · parallel-run of teacher_administration.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Teacher Administration</h1><p class="sub" id="subtitle">Availability, load, contracts, assignments, substitutes, and marketplace payout readiness.</p></div>
+  <div id="status" class="status">Loading teacher administration…</div>
+  <div class="grid" id="content" hidden>
+    <section class="panel">
+      <h2>Contract / Rates</h2>
+      <form id="form-contract">
+        <div class="field"><label>Teacher</label><select name="teacherid" data-list="teachers"></select></div>
+        <div class="field"><label>Contract type</label><input name="contract_type" value="hourly"></div>
+        <div class="field"><label>Currency</label><input name="currency" value="USD"></div>
+        <div class="field"><label>Hourly rate</label><input name="hourly_rate"></div>
+        <div class="field"><label>Session rate</label><input name="session_rate"></div>
+        <div class="field"><label>Marketplace rate</label><input name="marketplace_rate"></div>
+        <div class="field"><label>Effective start</label><input name="effective_start" placeholder="YYYY-MM-DD"></div>
+        <div class="field"><label>Effective end</label><input name="effective_end" placeholder="YYYY-MM-DD"></div>
+        <div class="field"><label>Status</label><input name="status" value="active"></div>
+        <div class="field"><label>Terms</label><textarea name="terms"></textarea></div>
+        <button class="btn" type="submit">Save Contract</button>
+      </form>
+      <hr>
+      <h2>Assign Student</h2>
+      <form id="form-assign">
+        <div class="field"><label>Teacher</label><select name="teacherid" data-list="teachers"></select></div>
+        <div class="field"><label>Student</label><select name="studentid" data-list="students"></select></div>
+        <div class="field"><label>Status</label><input name="status" value="active"></div>
+        <div class="field"><label>Notes</label><textarea name="notes"></textarea></div>
+        <button class="btn" type="submit">Save Assignment</button>
+      </form>
+      <hr>
+      <h2>Substitute</h2>
+      <form id="form-substitute">
+        <div class="field"><label>Session</label><select name="sessionid" data-list="sessions"></select></div>
+        <div class="field"><label>Substitute teacher</label><select name="substitute_teacherid" data-list="teachers"></select></div>
+        <div class="field"><label>Status</label><input name="status" value="approved"></div>
+        <div class="field"><label>Reason</label><textarea name="reason"></textarea></div>
+        <div class="field"><label>Handoff notes</label><textarea name="handoff_notes"></textarea></div>
+        <button class="btn" type="submit">Save Substitute</button>
+      </form>
+    </section>
+    <section class="panel">
+      <h2>Teacher Load</h2>
+      <table><thead><tr><th>Teacher</th><th>Load</th><th>Refresh</th></tr></thead><tbody id="loads"></tbody></table>
+      <h2 class="mt">Assignments</h2>
+      <table><thead><tr><th>Teacher</th><th>Student</th><th>Status</th></tr></thead><tbody id="assignments"></tbody></table>
+      <h2 class="mt">Marketplace Payout Readiness</h2>
+      <table><thead><tr><th>Payout</th><th>Status</th><th>Approve</th></tr></thead><tbody id="payouts"></tbody></table>
+      <h2 class="mt">Contracts</h2>
+      <table><thead><tr><th>Teacher</th><th>Type / rates</th><th>Status</th></tr></thead><tbody id="contracts"></tbody></table>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = Number(qs.get("workspaceid") || "0") || 0;
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = () => { const p = { report: "teacher-administration", token }; if (workspaceid) p.workspaceid = String(workspaceid); return p; };
+  const url = () => endpoint + "?" + new URLSearchParams(params());
+
+  const setStatus = (cls, text) => { const el = $("#status"); el.className = "status" + (cls ? " " + cls : ""); el.hidden = false; el.textContent = text; };
+
+  const personName = (row, names) => {
+    const joined = [row.firstname, row.lastname].filter(Boolean).join(" ").trim();
+    return joined || (names && names[row.id]) || ("User #" + row.id);
+  };
+  const nameOf = (id) => (data && data.names && data.names[id]) || (id ? "User #" + id : "");
+  const pill = (v) => `<span class="pill${/pend|wait|review/i.test(v||"") ? " warn" : /reject|error|fail|suspend/i.test(v||"") ? " bad" : ""}">${esc(v || "—")}</span>`;
+
+  function fillSelects(d) {
+    const lists = {
+      teachers: (d.teachers || []).map((t) => [t.id, personName(t, d.names) + (t.email ? " / " + t.email : "")]),
+      students: (d.students || []).map((s) => [s.id, personName(s, d.names)]),
+      sessions: (d.sessions || []).map((s) => [s.id, (s.title || "Session #" + s.id) + " / " + when(s.scheduled_start)]),
+    };
+    document.querySelectorAll("select[data-list]").forEach((sel) => {
+      const prev = sel.value;
+      sel.innerHTML = (lists[sel.dataset.list] || []).map(([id, label]) => `<option value="${id}">${esc(label)}</option>`).join("");
+      if (prev && [...sel.options].some((o) => o.value === prev)) sel.value = prev;
+    });
+  }
+
+  function render(d) {
+    data = d;
+    $("#subtitle").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " " : "") + "availability, load, contracts, assignments, substitutes, and marketplace payout readiness.";
+    fillSelects(d);
+    $("#loads").innerHTML = (d.loads || []).map((l) => `
+      <tr><td><strong>${esc(personName(l, d.names))}</strong><div class="muted">${esc(l.email || "")}</div></td>
+      <td>${pill(l.load_status)}<br>${Number(l.active_students || 0)} students / ${Number(l.weekly_sessions || 0)} sessions / ${Number(l.weekly_minutes || 0)} min</td>
+      <td><button class="btn light" data-refresh="${l.teacherid}" type="button">Refresh</button></td></tr>`).join("")
+      || `<tr><td colspan="3" class="muted">No load snapshots yet. Save a contract or assignment to create one.</td></tr>`;
+    $("#assignments").innerHTML = (d.assignments || []).map((a) => `
+      <tr><td>${esc([a.tfirst, a.tlast].filter(Boolean).join(" ").trim() || nameOf(a.teacherid))}</td>
+      <td>${esc([a.sfirst, a.slast].filter(Boolean).join(" ").trim() || nameOf(a.studentid))}</td>
+      <td>${pill(a.status)}</td></tr>`).join("")
+      || `<tr><td colspan="3" class="muted">No assignments yet.</td></tr>`;
+    $("#payouts").innerHTML = (d.payouts || []).map((p) => `
+      <tr><td>${esc(p.payoutnumber || ("Payout #" + p.id))}<div class="muted">${esc(nameOf(p.teacherid) || ("Teacher #" + p.teacherid))} / ${esc((p.payoutamount || "0") + " " + (p.currency || ""))}</div></td>
+      <td>${pill(p.status)}<div class="muted">${esc(p.readiness_status || "")}</div></td>
+      <td><input data-note="${p.id}" placeholder="Review note"><button class="btn" data-approve="${p.id}" type="button">Approve</button></td></tr>`).join("")
+      || `<tr><td colspan="3" class="muted">No marketplace payouts waiting in this workspace.</td></tr>`;
+    $("#contracts").innerHTML = (d.contracts || []).map((c) => `
+      <tr><td>${esc(personName(c, d.names))}<div class="muted">${esc(c.email || "")}</div></td>
+      <td>${esc(c.contract_type || "")} · ${esc(c.currency || "")}<div class="muted">hourly ${esc(c.hourly_rate || "0")} / session ${esc(c.session_rate || "0")} / marketplace ${esc(c.marketplace_rate || "0")}</div></td>
+      <td>${pill(c.status)}</td></tr>`).join("")
+      || `<tr><td colspan="3" class="muted">No contracts saved yet.</td></tr>`;
+    document.querySelectorAll("[data-refresh]").forEach((b) => b.addEventListener("click", () => post({ do: "refresh_load", teacherid: Number(b.dataset.refresh) }, b)));
+    document.querySelectorAll("[data-approve]").forEach((b) => b.addEventListener("click", () => {
+      const note = document.querySelector(`[data-note="${b.dataset.approve}"]`);
+      post({ do: "approve_payout", payoutid: Number(b.dataset.approve), status: "approved", readiness_status: "approved", review_note: note ? note.value : "" }, b);
+    }));
+    if (!d.ready) setStatus("error", "Operations schema is not ready. Run Moodle upgrade.");
+    else $("#status").hidden = true;
+    $("#content").hidden = false;
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  async function post(payload, btn) {
+    const label = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+    try {
+      if (workspaceid) payload.workspaceid = workspaceid;
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "teacher-administration", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus("saved", d.message || "Saved.");
+      await load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      setStatus("error", "Could not save: " + e.message);
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = label; }
+    }
+  }
+
+  const hook = (id, build) => {
+    const f = document.getElementById(id);
+    f.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      post(build(f), f.querySelector("button[type=submit]"));
+    });
+  };
+  hook("form-contract", (f) => ({
+    do: "save_contract",
+    teacherid: Number(f.teacherid.value),
+    contract_type: f.contract_type.value,
+    currency: f.currency.value,
+    hourly_rate: f.hourly_rate.value,
+    session_rate: f.session_rate.value,
+    marketplace_rate: f.marketplace_rate.value,
+    effective_start: f.effective_start.value,
+    effective_end: f.effective_end.value,
+    status: f.status.value,
+    terms: f.terms.value,
+  }));
+  hook("form-assign", (f) => ({
+    do: "assign_student",
+    teacherid: Number(f.teacherid.value),
+    studentid: Number(f.studentid.value),
+    status: f.status.value,
+    notes: f.notes.value,
+  }));
+  hook("form-substitute", (f) => ({
+    do: "substitute",
+    sessionid: Number(f.sessionid.value),
+    substitute_teacherid: Number(f.substitute_teacherid.value),
+    status: f.status.value,
+    reason: f.reason.value,
+    handoff_notes: f.handoff_notes.value,
+  }));
+
+  load();
+})();
+</script>
+</body>
+</html>

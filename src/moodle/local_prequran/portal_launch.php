@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-9.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-10.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -61,6 +61,21 @@ $reports = [
     'live-quality' => ['pqh_can_manage_academy_operations', 'live-quality.html'],
     'live-followups' => ['pqpl_any_authenticated', 'live-followups.html'],
     'recordings-admin' => ['pqh_can_manage_academy_operations', 'recordings-admin.html'],
+    // Wave 5: teacher family. Workspace/teacher/self-scoped gates live in the
+    // handlers with the exact legacy denial messages; marketplace-admin keeps
+    // the legacy academy-ops entry gate.
+    'teacher-administration' => ['pqpl_any_authenticated', 'teacher-administration.html'],
+    'teacher-homework' => ['pqpl_any_authenticated', 'teacher-homework.html'],
+    'teacher-marketing' => ['pqpl_any_authenticated', 'teacher-marketing.html'],
+    'teacher-marketplace' => ['pqpl_any_authenticated', 'teacher-marketplace.html'],
+    'teacher-marketplace-request' => ['pqpl_any_authenticated', 'teacher-marketplace-request.html'],
+    'teacher-marketplace-admin' => ['pqh_can_manage_academy_operations', 'teacher-marketplace-admin.html'],
+    'teacher-marketplace-profile' => ['pqpl_any_authenticated', 'teacher-marketplace-profile.html'],
+    'teacher-marketplace-queue' => ['pqpl_any_authenticated', 'teacher-marketplace-queue.html'],
+    'teacher-office' => ['pqpl_any_authenticated', 'teacher-office.html'],
+    'teacher-portal' => ['pqpl_any_authenticated', 'teacher-portal.html'],
+    'teacher-student-connect' => ['pqpl_any_authenticated', 'teacher-student-connect.html'],
+    'teacher-workspace' => ['pqpl_any_authenticated', 'teacher-workspace.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

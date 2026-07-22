@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher profile · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .note-panel{border:1px solid var(--line);background:var(--sky);color:var(--ink2);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;font-weight:600}
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
+  .pills{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+  .pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .pill.reviewed{background:var(--amber-bg);color:var(--amber)}
+  .text{margin:0;color:var(--ink2);font-size:14px;line-height:1.55;white-space:pre-line}
+  .social{display:grid;gap:8px;margin-bottom:12px}
+  .social-row{display:grid;grid-template-columns:145px minmax(0,1fr);gap:10px;align-items:start}
+  .social-label{color:var(--ink2);font-size:13px;font-weight:800}
+  .social-value{font-size:14px;overflow-wrap:anywhere}
+  .social-value a,.linkbtns a{color:var(--blue2);font-weight:800}
+  .linkbtns{display:flex;gap:9px;flex-wrap:wrap}
+  a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:14px;font-weight:900}
+  a.btn.light{background:var(--sky);color:var(--blue)}
+  .empty{padding:18px;border:1px dashed var(--line);border-radius:10px;background:var(--card);color:var(--muted);font-weight:700}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}.social-row{grid-template-columns:1fr;gap:3px}h1{font-size:19px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher profile</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of teacher_marketplace_profile.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Teacher Profile</h1><p class="sub">Private teacher/tutor profile for parent review.</p></div>
+  <div id="status" class="status">Loading teacher profile…</div>
+  <div class="note-panel" id="review-note" hidden></div>
+  <div id="content" hidden>
+    <div class="grid">
+      <div id="main-col">
+        <div class="panel" id="overview-panel">
+          <h2>Overview</h2>
+          <div class="pills" id="pills"></div>
+          <p class="text" id="bio" hidden></p>
+        </div>
+        <div id="panels"></div>
+        <div class="panel" id="online-panel" hidden>
+          <h2>Online presence</h2>
+          <div class="social" id="social"></div>
+          <div class="linkbtns" id="online-links"></div>
+        </div>
+      </div>
+      <aside>
+        <div class="panel" id="request-teacher">
+          <h2>Request This Teacher</h2>
+          <p class="text" style="white-space:normal">Complete the learner enrollment before messaging or selecting this teacher.</p>
+          <p style="margin:12px 0 0"><a class="btn" id="request-btn" href="#">Request this teacher</a></p>
+          <p style="margin:10px 0 0"><a class="btn light" id="marketplace-btn" href="#">Back to marketplace</a></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <div class="empty" id="empty" hidden></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Passthrough lookup params: ?teacherid= (or ?teacherslug=), plus consumer
+  // context, exactly like the legacy page's query string.
+  const url = () => endpoint + "?" + new URLSearchParams({
+    report: "teacher-marketplace-profile",
+    token,
+    teacherid: qs.get("teacherid") || "0",
+    teacherslug: qs.get("teacherslug") || "",
+    consumer: qs.get("consumer") || "",
+    workspaceid: qs.get("workspaceid") || "0",
+  });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    if (d.reviewnote) { $("#review-note").textContent = d.reviewnote; $("#review-note").hidden = false; }
+    if (!d.ready) {
+      $("#empty").textContent = d.notready_message || "Teacher marketplace schema is not ready yet.";
+      $("#empty").hidden = false; $("#status").hidden = true;
+      return;
+    }
+    if (!d.teacher) {
+      $("#empty").textContent = "This teacher profile is not available.";
+      $("#empty").hidden = false; $("#status").hidden = true;
+      return;
+    }
+    const t = d.teacher;
+    $("#title").textContent = t.name || "Teacher Profile";
+    document.title = (t.name ? t.name + " · " : "") + "Teacher profile · EduPlatform portal";
+
+    const pills = (t.pills || []).map((p) => `<span class="pill">${esc(p)}</span>`);
+    pills.push('<span class="pill reviewed">Platform reviewed</span>');
+    $("#pills").innerHTML = pills.join("");
+    if ((t.bio || "").trim()) { $("#bio").textContent = t.bio; $("#bio").hidden = false; }
+
+    $("#panels").innerHTML = (t.panels || []).map((p) =>
+      `<div class="panel"><h2>${esc(p.heading)}</h2><p class="text">${esc(p.content)}</p></div>`
+    ).join("");
+
+    const o = t.online || {};
+    const socialRows = [];
+    if (o.social_handle) socialRows.push(`<div class="social-row"><span class="social-label">Social media handle</span><span class="social-value">@${esc(o.social_handle)}</span></div>`);
+    if (o.social_url) socialRows.push(`<div class="social-row"><span class="social-label">Social media link</span><span class="social-value"><a href="${esc(o.social_url)}" target="_blank" rel="noopener noreferrer">${esc(o.social_url)}</a></span></div>`);
+    const links = [];
+    if (o.website_url) links.push(`<a class="btn light" href="${esc(o.website_url)}" target="_blank" rel="noopener noreferrer">Website / booking</a>`);
+    if (o.demo_url) links.push(`<a class="btn light" href="${esc(o.demo_url)}" target="_blank" rel="noopener noreferrer">Introduction video</a>`);
+    if (socialRows.length || links.length) {
+      $("#social").innerHTML = socialRows.join("");
+      $("#online-links").innerHTML = links.join("");
+      $("#online-panel").hidden = false;
+    }
+
+    // CTA links exactly as the legacy public branch: the request flow and the
+    // marketplace list live on the legacy Moodle pages (parallel-run).
+    $("#request-btn").href = d.requesturl || "#";
+    $("#marketplace-btn").href = d.marketplaceurl || "#";
+
+    $("#content").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

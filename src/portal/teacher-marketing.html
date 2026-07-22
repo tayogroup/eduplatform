@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Market my services · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:8px;vertical-align:2px}
+  .pill.pending_review{background:var(--amber-bg);color:var(--amber)}
+  .pill.published,.pill.approved{background:#e1f2ff;color:var(--blue2)}
+  .pill.rejected{background:var(--red-bg);color:var(--red)}
+  .pill.draft{background:var(--sky);color:var(--ink2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  .field{margin-bottom:12px}
+  .field.wide{grid-column:1/-1}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:88px;resize:vertical}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+  button.primary{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:900;font-size:13px;cursor:pointer}
+  button.primary:disabled{opacity:.55;cursor:wait}
+  a.linkbtn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:9px 16px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800;font-size:13px}
+  a.linkbtn:hover{border-color:var(--blue2)}
+  .preview h3{margin:14px 0 4px;font-size:14px;color:var(--ink2)}
+  .preview h3:first-of-type{margin-top:4px}
+  .preview p{margin:0;color:var(--ink2);font-size:13px;line-height:1.5;white-space:pre-line;overflow-wrap:anywhere}
+  .preview a{color:var(--blue2);font-weight:800;overflow-wrap:anywhere}
+  @media(max-width:860px){.grid,.fields{grid-template-columns:1fr}.field.wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Market my services</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of teacher_marketing.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Market My Services</h1><p class="sub" id="subtitle">Your public marketplace teacher profile.</p></div>
+  <div id="status" class="status">Loading your marketing profile…</div>
+  <div class="grid" id="content" hidden>
+    <div class="panel">
+      <h2>Public Marketing Profile<span class="pill draft" id="review-pill" data-status="">Draft</span></h2>
+      <form id="marketing-form">
+        <div class="fields">
+          <div class="field"><label for="display_name">Public name</label><input id="display_name" name="display_name" required></div>
+          <div class="field"><label for="social_media_handle">Social media handle</label><input id="social_media_handle" name="social_media_handle" placeholder="masterarabic_online"></div>
+          <div class="field wide"><label for="bio">Public profile summary</label><textarea id="bio" name="bio" required></textarea></div>
+          <div class="field wide"><label for="services">Subjects and services</label><textarea id="services" name="services" required></textarea></div>
+          <div class="field"><label for="skills">Skills and specialties</label><textarea id="skills" name="skills"></textarea></div>
+          <div class="field"><label for="pricing_summary">Pricing or package summary</label><textarea id="pricing_summary" name="pricing_summary"></textarea></div>
+          <div class="field"><label for="experience">Teaching experience</label><textarea id="experience" name="experience"></textarea></div>
+          <div class="field"><label for="education">Education and qualifications</label><textarea id="education" name="education"></textarea></div>
+          <div class="field"><label for="teaching_style">Teaching style</label><textarea id="teaching_style" name="teaching_style"></textarea></div>
+          <div class="field"><label for="learner_outcomes">Learner outcomes</label><textarea id="learner_outcomes" name="learner_outcomes"></textarea></div>
+          <div class="field wide"><label for="curriculum_materials">Curriculum and materials</label><textarea id="curriculum_materials" name="curriculum_materials"></textarea></div>
+          <div class="field wide"><label for="social_profile_url">Public social profile URL</label><input id="social_profile_url" name="social_profile_url" type="url" placeholder="https://www.instagram.com/masterarabic_online"></div>
+          <div class="field"><label for="website_or_booking_url">Website or booking URL</label><input id="website_or_booking_url" name="website_or_booking_url" type="url"></div>
+          <div class="field"><label for="demo_video_url">Introduction or demo video URL</label><input id="demo_video_url" name="demo_video_url" type="url"></div>
+        </div>
+        <div class="actions">
+          <button class="primary" type="submit">Submit for review</button>
+          <a class="linkbtn" id="public-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Public profile</a>
+        </div>
+      </form>
+    </div>
+    <aside class="panel preview">
+      <h2>Profile Preview</h2>
+      <div id="preview"></div>
+    </aside>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const FIELDS = ["display_name", "social_media_handle", "bio", "services", "skills", "pricing_summary",
+    "experience", "education", "teaching_style", "learner_outcomes", "curriculum_materials",
+    "social_profile_url", "website_or_booking_url", "demo_video_url"];
+  const url = (extra) => endpoint + "?" + new URLSearchParams(Object.assign({ report: "teacher-marketing", token }, extra || {}));
+  let dirty = false;
+  let pollTimer = 0;
+
+  function setPill(status, label) {
+    const pill = $("#review-pill");
+    pill.dataset.status = status || "";
+    pill.className = "pill " + (status || "draft");
+    pill.textContent = label || status || "Draft";
+  }
+
+  function renderPreview() {
+    const v = (n) => $("#" + n).value.trim();
+    let h = `<h3>${esc(v("display_name") || "Teacher")}</h3><p>${esc(v("bio"))}</p>`;
+    h += `<h3>Subjects and services</h3><p>${esc(v("services"))}</p>`;
+    if (v("learner_outcomes")) h += `<h3>Learner outcomes</h3><p>${esc(v("learner_outcomes"))}</p>`;
+    if (v("pricing_summary")) h += `<h3>Pricing and packages</h3><p>${esc(v("pricing_summary"))}</p>`;
+    if (v("social_profile_url")) h += `<h3>Online presence</h3><a href="${esc(v("social_profile_url"))}" target="_blank" rel="noopener noreferrer">@${esc(v("social_media_handle") || "social profile")}</a>`;
+    $("#preview").innerHTML = h;
+  }
+
+  // Mirrors the legacy page's 10s statuscheck poll while a submission is pending.
+  function startPoll() {
+    if (pollTimer) return;
+    pollTimer = window.setInterval(async () => {
+      try {
+        const r = await fetch(url({ statuscheck: "1" }), { cache: "no-store" });
+        if (!r.ok) return;
+        const d = await r.json();
+        if (!d.ok || !d.status || d.status === $("#review-pill").dataset.status) return;
+        setPill(d.status, d.label);
+        window.clearInterval(pollTimer); pollTimer = 0;
+        if (!dirty) load();
+      } catch (e) { /* the next poll retries while the page remains open */ }
+    }, 10000);
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      $("#subtitle").textContent = (d.brandname || "Marketplace") + " teacher profile";
+      FIELDS.forEach((n) => { $("#" + n).value = (d.source && d.source[n]) || ""; });
+      setPill(d.status, d.label);
+      if (d.publicurl) { $("#public-link").href = d.publicurl; $("#public-link").hidden = false; }
+      dirty = false;
+      renderPreview();
+      $("#content").hidden = false;
+      $("#status").hidden = true;
+      if (d.status === "pending_review") startPoll();
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  $("#marketing-form").addEventListener("input", () => { dirty = true; renderPreview(); });
+
+  $("#marketing-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const btn = ev.currentTarget.querySelector("button.primary");
+    btn.disabled = true; btn.textContent = "Submitting…";
+    try {
+      const body = { do: "submit_marketing" };
+      FIELDS.forEach((n) => { body[n] = $("#" + n).value; });
+      const r = await fetch(url(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setPill(d.status, d.label);
+      dirty = false;
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").textContent = d.message || "Marketing profile submitted for marketplace review.";
+      if (d.status === "pending_review") startPoll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not submit: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Submit for review";
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

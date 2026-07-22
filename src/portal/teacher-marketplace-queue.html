@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher requests · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1080px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .toplinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  a.btn{display:inline-block;border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:8px;padding:7px 13px;font-weight:800;font-size:13px;text-decoration:none}
+  a.btn:hover{border-color:var(--blue2);color:var(--blue2)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink2)}
+  .chip.active{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+  .cardhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+  .cardhead h2{margin:0;font-size:17px}
+  .meta{color:var(--muted);font-size:12px;margin-top:3px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .sec{margin:10px 0 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+  form.decide{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);margin-top:12px;padding-top:12px;width:100%}
+  form.decide .lead{font-size:12px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.03em;margin-right:4px}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 13px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--card);color:var(--ink2);border:1px solid var(--line)}
+  button:disabled{opacity:.55;cursor:wait}
+  .saved{color:#1c5d8a;font-weight:800;font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  a.legacy{color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>My teacher requests</small></div>
+  <div class="note">Token-authenticated · parallel-run of teacher_marketplace_requests.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">My teacher requests</h1>
+    <p class="sub" id="subtitle">Track teacher marketplace messages, selections, assignments, and next operational steps.</p>
+    <div class="toplinks" id="toplinks" hidden>
+      <a class="btn" id="link-marketplace" href="#">Marketplace</a>
+      <a class="btn" id="link-dashboard" href="#">Dashboard</a>
+      <a class="btn" id="link-legacy" href="#">Moodle page</a>
+    </div>
+  </div>
+  <div class="panel" id="chips-panel" hidden><div class="chips" id="chips"></div></div>
+  <div id="status" class="status">Loading requests…</div>
+  <div id="list"></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => Number(epoch) ? new Date(epoch * 1000).toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short"}) : "—";
+  let data = null;
+  let filterStatus = "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open this page via the Moodle portal launch link."; return; }
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading requests…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "teacher-marketplace-queue", token, consumer: qs.get("consumer") || "" }));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const card = (r) => `
+    <div class="card" id="card-${r.id}">
+      <div class="cardhead">
+        <div><h2>${esc(r.teacher_name)}</h2>
+          <div class="meta">Student: ${esc(r.student_name)} · Submitted ${esc(dt(r.timecreated))}</div>
+          <div class="meta">Your role: ${r.is_guardian ? "Parent / guardian" : (r.is_teacher ? "Requesting teacher" : "Viewer")}${r.consumer_name ? " · " + esc(r.consumer_name) : ""}</div>
+        </div>
+        <span class="pill ${esc(r.pill)}">${esc(r.status_label)}</span>
+      </div>
+      ${r.message_short ? `<div class="sec"><b>Message</b>${esc(r.message_short)}</div>` : ""}
+      ${r.notes_short ? `<div class="sec"><b>Review notes</b>${esc(r.notes_short)}</div>` : ""}
+      <div class="actions">
+        <a class="btn" href="${esc(r.profileurl)}">Teacher profile</a>
+        ${r.messagesurl ? `<a class="btn" href="${esc(r.messagesurl)}">Messages</a>` : ""}
+        ${r.calendarurl ? `<a class="btn" href="${esc(r.calendarurl)}">Calendar</a>` : ""}
+        ${r.workspaceurl ? `<a class="btn" href="${esc(r.workspaceurl)}">Student workspace</a>` : ""}
+      </div>
+      ${r.decisionable ? `
+      <form class="decide" data-id="${r.id}">
+        <span class="lead">Guardian decision</span>
+        <button type="submit" name="decision" value="approve">Approve connection</button>
+        <button type="submit" name="decision" value="decline" class="ghost">Decline</button>
+        <span class="saved" data-saved></span>
+      </form>` : ""}
+    </div>`;
+
+  function render() {
+    const d = data;
+    $("#title").textContent = "My teacher requests" + (d.brand ? " — " + d.brand : "");
+    $("#link-marketplace").href = d.marketplaceurl || "#";
+    $("#link-dashboard").href = d.dashboardurl || "#";
+    $("#link-legacy").href = d.legacyurl || "#";
+    $("#toplinks").hidden = false;
+    if (!d.ready) { $("#status").hidden = false; $("#status").textContent = "Teacher request schema is not ready yet. Please run the local_prequran Moodle upgrade."; $("#chips-panel").hidden = true; $("#list").innerHTML = ""; return; }
+
+    const all = d.requests || [];
+    const counts = {};
+    all.forEach((r) => { counts[r.status] = (counts[r.status] || 0) + 1; });
+    const labelOf = {};
+    all.forEach((r) => { labelOf[r.status] = r.status_label; });
+    $("#chips").innerHTML = `<button class="chip ${filterStatus === "" ? "active" : ""}" data-s="">All (${all.length})</button>` +
+      Object.keys(counts).map((s) => `<button class="chip ${filterStatus === s ? "active" : ""}" data-s="${esc(s)}">${esc(labelOf[s] || s)} (${counts[s]})</button>`).join("");
+    $("#chips-panel").hidden = all.length === 0;
+    document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => { filterStatus = c.dataset.s; render(); }));
+
+    const rows = filterStatus ? all.filter((r) => r.status === filterStatus) : all;
+    $("#list").innerHTML = rows.map(card).join("") ||
+      `<div class="panel">No teacher connection requests are linked to the current account${d.user_fullname ? ", " + esc(d.user_fullname) : ""}. Guardians see requests linked to them for approval; teachers see requests they submitted for tracking.</div>`;
+    document.querySelectorAll("form.decide").forEach((f) => f.addEventListener("submit", decide));
+    $("#status").hidden = true;
+  }
+
+  async function decide(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const decision = (ev.submitter && ev.submitter.value) || "approve";
+    const saved = f.querySelector("[data-saved]");
+    f.querySelectorAll("button").forEach((b) => { b.disabled = true; });
+    saved.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "teacher-marketplace-queue", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+        body: JSON.stringify({
+          do: "connection_decision",
+          requestid: Number(f.dataset.id),
+          connection_decision: decision,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Decision saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      f.querySelectorAll("button").forEach((b) => { b.disabled = false; });
+      saved.textContent = "Failed: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

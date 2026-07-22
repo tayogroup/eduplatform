@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher marketplace admin · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .links a{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--blue2);text-decoration:none;font-size:12px;font-weight:800}
+  .links a:hover{border-color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:720px}
+  th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{font-weight:900;color:var(--ink2);background:var(--bg);font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.plain{background:var(--sky);color:var(--ink2)}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-size:13px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 12px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-size:12px;font-weight:900;cursor:pointer;text-decoration:none}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .btnrow{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+  textarea,select{width:100%;border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:56px;resize:vertical;margin:6px 0}
+  form{margin:0}
+  a{color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher marketplace admin</small></div>
+  <div class="note">Token-authenticated · parallel-run of teacher_marketplace_admin.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Teacher Marketplace Admin</h1>
+    <p class="sub">Review publish state, vetting state, parent messages, and formal teacher selection requests.</p>
+    <div class="links" id="links" hidden></div>
+  </div>
+  <div id="status" class="status">Loading marketplace console…</div>
+  <div class="panel" id="drafts-panel" hidden><h2>Marketing Profile Reviews</h2><div id="drafts"></div></div>
+  <div class="panel" id="profiles-panel" hidden><h2>Marketplace Profiles</h2><div id="profiles"></div></div>
+  <div class="panel" id="academy-panel" hidden><h2 id="academy-title">Teacher Vetting</h2><div id="academy"></div></div>
+  <div class="panel" id="live-panel" hidden><h2>Live Session Requests</h2><div id="live"></div></div>
+  <div class="panel" id="requests-panel" hidden><h2>Parent Requests</h2><div id="requests"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const consumer = (qs.get("consumer") || "").replace(/[^A-Za-z0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = () => { const p = new URLSearchParams({ report: "teacher-marketplace-admin", token }); if (consumer) p.set("consumer", consumer); return p; };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function post(body, btn, busyLabel) {
+    const idle = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = busyLabel || "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + params(), { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(body) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      if (btn) { btn.disabled = false; btn.textContent = idle; }
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  const table = (head, rows) => rows.length
+    ? `<div class="tablewrap"><table><thead><tr>${head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`
+    : "";
+
+  function render(d) {
+    $("#status").hidden = true;
+    if (d.brand && d.consumer) { $("#title").textContent = "Teacher Marketplace Admin — " + d.consumer.name; }
+    if (d.links) {
+      $("#links").innerHTML =
+        `<a href="${esc(d.links.teacherintake)}">Teacher intake</a>` +
+        `<a href="${esc(d.links.parentmarketplace)}">Parent marketplace</a>` +
+        `<a href="${esc(d.links.adminmenu)}">Admin menu</a>` +
+        `<a href="${esc(d.links.legacy)}">Legacy page</a>`;
+      $("#links").hidden = false;
+    }
+    if (d.ready === false) {
+      $("#status").hidden = false; $("#status").className = "status error";
+      $("#status").textContent = "Teacher marketplace schema is not ready yet. Please run the local_prequran Moodle upgrade.";
+      return;
+    }
+
+    // Marketing profile reviews (write: marketing_action approve|reject).
+    const drafts = d.marketingdrafts || [];
+    $("#drafts").innerHTML = table(
+      ["Teacher", "Profile summary", "Services / pricing", "Online presence", "Review"],
+      drafts.map((m) => `<tr>
+        <td><strong>${esc(m.display_name)}</strong><br><span class="muted">Submitted ${esc(when(m.submitted_at))}</span></td>
+        <td>${esc(m.bio_short)}</td>
+        <td>${esc(m.services_short)}${m.pricing_short ? `<br><span class="muted">${esc(m.pricing_short)}</span>` : ""}</td>
+        <td>${m.social_url ? `<a href="${esc(m.social_url)}" target="_blank" rel="noopener noreferrer">@${esc(m.social_handle)}</a>` : '<span class="muted">Not provided</span>'}</td>
+        <td>
+          <form class="marketing" data-profileid="${m.profileid}">
+            <textarea name="marketing_review_note" placeholder="Review note"></textarea>
+            <div class="btnrow">
+              <button class="btn" type="submit" name="marketing_action" value="approve">Approve &amp; publish</button>
+              <button class="btn light" type="submit" name="marketing_action" value="reject">Return for revision</button>
+            </div>
+          </form>
+        </td>
+      </tr>`)
+    ) || "<div class='empty'>No teacher marketing profiles are waiting for review.</div>";
+    $("#drafts-panel").hidden = false;
+
+    // Marketplace profiles (read-only + legacy links).
+    const profiles = d.profiles || [];
+    $("#profiles").innerHTML = table(
+      ["Teacher", "Marketplace", "Vetting", "Subjects / skills", "Actions"],
+      profiles.map((p) => `<tr>
+        <td><strong>${esc(p.name)}</strong><br><span class="muted">${esc(p.account_label)} / Moodle ID ${p.userid}</span></td>
+        <td><span class="pill ${p.published ? "ok" : "warn"}">${p.published ? "Visible" : "Hidden"}</span><br>${esc(p.marketplace_status)} / ${p.marketplace_visible ? "visible flag on" : "visible flag off"}</td>
+        <td><span class="pill ${p.vetting_status === "approved" ? "ok" : "bad"}">${esc(p.vetting_status)}</span><br>${esc(p.vetting_summary_short)}</td>
+        <td>${esc(p.subjects_short)}</td>
+        <td><div class="btnrow"><a class="btn light" href="${esc(p.intake_url)}">Update intake</a>${p.public_url ? `<a class="btn" href="${esc(p.public_url)}">View public</a>` : ""}</div></td>
+      </tr>`)
+    ) || "<div class='empty'>No teacher profiles found.</div>";
+    $("#profiles-panel").hidden = false;
+
+    // Academy vetting (read-only).
+    $("#academy-title").textContent = (d.brand || "Academy") + " Teacher Vetting";
+    const academy = d.academyprofiles || [];
+    $("#academy").innerHTML = table(
+      ["Teacher", "Teacher status", "Vetting", "Subjects / levels", "Actions"],
+      academy.map((p) => `<tr>
+        <td><strong>${esc(p.name)}</strong><br><span class="muted">${esc(p.account_label)} / Moodle ID ${p.userid}</span></td>
+        <td><span class="pill ${p.status === "active" ? "ok" : "warn"}">${esc(p.status)}</span><br><span class="muted">Teacher profile</span></td>
+        <td><span class="pill ${p.vetting_status === "approved" ? "ok" : "bad"}">${esc(p.vetting_status)}</span><br>${esc(p.vetting_summary_short)}</td>
+        <td>${esc(p.subjects_short)}</td>
+        <td><a class="btn light" href="${esc(p.intake_url)}">Update intake</a></td>
+      </tr>`)
+    ) || "<div class='empty'>No teacher profiles are outside the marketplace pipeline.</div>";
+    $("#academy-panel").hidden = false;
+
+    // Live-session requests: approve/reject are live_sessions.php writes — review on the legacy page.
+    const live = d.livesessions || [];
+    $("#live").innerHTML = table(
+      ["Teacher / students", "Session", "Schedule", "Status", "Actions"],
+      live.map((s) => `<tr>
+        <td><strong>${esc(s.teacher_name)}</strong><br><span class="muted">Moodle ID ${s.teacherid}</span><br>Students: ${esc((s.students || []).join(", ") || "Not listed")}</td>
+        <td><strong>${esc(s.title)}</strong><br><span class="muted">${esc(s.lessonid)} / ${esc(s.unitid)}</span><br>Request #${s.id}</td>
+        <td>${esc(when(s.scheduled_start))}<br><span class="muted">${esc(s.timezone)}</span></td>
+        <td><span class="pill warn">Pending marketplace approval</span>${s.description_short ? `<br>${esc(s.description_short)}` : ""}</td>
+        <td><a class="btn light" href="${esc(s.review_url)}">Review &amp; approve on live sessions</a></td>
+      </tr>`)
+    ) || "<div class='empty'>No live sessions are waiting for marketplace approval.</div>";
+    $("#live-panel").hidden = false;
+
+    // Parent requests (writes: quick_update_request + update_request).
+    const reqs = d.requests || [];
+    $("#requests").innerHTML = table(
+      ["Request", "Message", "Status", "Update"],
+      reqs.map((r) => `<tr>
+        <td><strong>${esc(r.parent_name)}</strong><br>Teacher: ${esc(r.teacher_name)}<br>Student: ${esc(r.student_name)}<br>${esc(when(r.timecreated))}${r.consumer_name ? `<br><span class="pill plain">${esc(r.consumer_name)}</span>` : ""}</td>
+        <td>${esc(r.message_short)}${r.thread_url ? `<br><a href="${esc(r.thread_url)}">Open message thread</a>` : ""}<br><a href="${esc(r.teacher_profile_url)}">Teacher profile</a></td>
+        <td>
+          <span class="pill plain">${esc(r.status_label)}</span>
+          ${r.assignmentid > 0 ? `<span class="pill ok">Assigned #${r.assignmentid}</span>` : ""}
+          <br><span class="muted">${esc(r.admin_notes_short)}</span>
+          ${r.marketplace_status ? `<br><span class="muted">Profile: ${esc(r.marketplace_status)} / ${esc(r.vetting_status)}</span>` : ""}
+          ${r.can_schedule ? `<div class="btnrow" style="margin-top:8px">
+            <a class="btn" href="${esc(r.series_url)}">Schedule series</a>
+            <a class="btn light" href="${esc(r.onetime_url)}">One-time session</a>
+            ${r.workspace_url ? `<a class="btn light" href="${esc(r.workspace_url)}">Student workspace</a>` : ""}
+            <a class="btn light" href="${esc(r.calendar_url)}">Calendar</a>
+            <a class="btn light" href="${esc(r.messages_url)}">Messages</a>
+          </div>` : (r.needs_student_link ? '<br><span class="muted">Create/link the student before scheduling.</span>' : "")}
+        </td>
+        <td>
+          <div class="btnrow">
+            ${(r.quick_actions || []).map((a) => `<button class="btn light quick" type="button" data-requestid="${r.id}" data-status="${esc(a.value)}">${esc(a.label)}</button>`).join("")}
+          </div>
+          <form class="update" data-requestid="${r.id}">
+            <select name="request_status">
+              ${(r.allowed_statuses || []).map((o) => `<option value="${esc(o.value)}"${o.value === r.status ? " selected" : ""}>${esc(o.label)}</option>`).join("")}
+            </select>
+            <textarea name="admin_notes" placeholder="Admin notes">${esc(r.admin_notes)}</textarea>
+            <button class="btn" type="submit">Save</button>
+          </form>
+        </td>
+      </tr>`)
+    ) || "<div class='empty'>No parent marketplace requests yet.</div>";
+    $("#requests-panel").hidden = false;
+
+    document.querySelectorAll("form.marketing").forEach((f) => f.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const btn = ev.submitter || f.querySelector("button");
+      post({
+        do: "marketing_action",
+        marketing_action: btn ? btn.value : "",
+        profileid: Number(f.dataset.profileid),
+        marketing_review_note: f.marketing_review_note.value,
+      }, btn);
+    }));
+    document.querySelectorAll("button.quick").forEach((b) => b.addEventListener("click", () => {
+      post({
+        do: "quick_update_request",
+        requestid: Number(b.dataset.requestid),
+        quick_request_status: b.dataset.status,
+      }, b, "Working…");
+    }));
+    document.querySelectorAll("form.update").forEach((f) => f.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const btn = f.querySelector("button[type=submit]");
+      post({
+        do: "update_request",
+        requestid: Number(f.dataset.requestid),
+        request_status: f.request_status.value,
+        admin_notes: f.admin_notes.value,
+      }, btn);
+    }));
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher homework · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1140px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .grid{display:grid;grid-template-columns:minmax(300px,.85fr) minmax(0,1.55fr);gap:16px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px;white-space:nowrap}
+  .pill.assigned{background:var(--sky);color:var(--ink2)}
+  .pill.in_progress{background:#e1f2ff;color:var(--blue2)}
+  .pill.submitted{background:var(--amber-bg);color:var(--amber)}
+  .pill.graded{background:#e1f2ff;color:var(--blue2)}
+  .pill.returned{background:var(--red-bg);color:var(--red)}
+  .response{margin:8px 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);white-space:pre-wrap;font-size:13px}
+  .sec{margin:8px 0 0;padding:9px 12px;border-radius:8px;background:var(--sky);font-size:13px}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:10px 0 3px}
+  input[type=text],input[type=number],input[type=datetime-local],select,textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:72px;resize:vertical}
+  .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:3px}
+  .modes label{display:flex;align-items:center;justify-content:center;gap:6px;margin:0;padding:8px 6px;border:1px solid var(--line);border-radius:7px;background:var(--bg);font-weight:800;font-size:12px;color:var(--ink2);cursor:pointer}
+  @media(max-width:520px){.modes{grid-template-columns:1fr}}
+  .students{max-height:210px;overflow:auto;border:1px solid var(--line);border-radius:7px;padding:8px;margin-top:3px;background:var(--card)}
+  .students label{display:flex;align-items:center;gap:8px;margin:0;padding:5px 4px;font-weight:700;color:var(--ink);font-size:13px;cursor:pointer}
+  .check{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;font-weight:700;color:var(--ink)}
+  .check input{width:auto}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button:disabled{opacity:.55;cursor:wait}
+  button.ghost{background:var(--bg);color:var(--ink2);border:1px solid var(--line)}
+  .review{display:grid;grid-template-columns:minmax(90px,.4fr) minmax(150px,1fr) auto auto;gap:8px;align-items:end;margin-top:10px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  .review label{margin-top:0}
+  @media(max-width:640px){.review{grid-template-columns:1fr 1fr}.review .field{grid-column:1/-1}}
+  .archive{margin-top:8px;font-size:12px}
+  .archive a{color:var(--red);font-weight:800;text-decoration:none}
+  .archive a:hover{text-decoration:underline}
+  a.material{color:var(--blue2);font-weight:800;font-size:13px;text-decoration:none}
+  a.material:hover{text-decoration:underline}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  #target-summary{margin-top:8px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher homework</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of teacher_homework.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Homework</h1><p class="sub">Create course work, review submissions, and publish grades.</p></div>
+  <div id="status" class="status">Loading homework…</div>
+  <div class="grid" id="content" hidden>
+    <div class="panel">
+      <h2>Assign homework</h2>
+      <form id="create">
+        <label for="courseid">Course</label>
+        <select id="courseid" name="courseid" required><option value="">Choose course</option></select>
+        <label for="hw-title">Title</label>
+        <input type="text" id="hw-title" name="title" maxlength="255" required>
+        <label for="instructions">Instructions</label>
+        <textarea id="instructions" name="instructions"></textarea>
+        <label for="resourcematerialid">Course material</label>
+        <select id="resourcematerialid" name="resourcematerialid"><option value="0">No document attached</option></select>
+        <div class="muted" id="materials-note" hidden>No workspace documents are available.</div>
+        <label for="duedate">Due date</label>
+        <input type="datetime-local" id="duedate" name="duedate">
+        <label for="maxpoints">Points</label>
+        <input type="number" id="maxpoints" name="maxpoints" min="1" step="0.01" value="100" required>
+        <label>Assign to</label>
+        <div class="modes">
+          <label><input type="radio" name="target_type" value="course" checked> Entire course</label>
+          <label><input type="radio" name="target_type" value="group"> Group</label>
+          <label><input type="radio" name="target_type" value="individual"> Individual</label>
+        </div>
+        <div id="group-field" hidden>
+          <label for="target_groupid">Student group</label>
+          <select id="target_groupid" name="target_groupid"><option value="0">Choose group</option></select>
+          <div class="muted" id="groups-note" hidden>No assigned class groups are available.</div>
+        </div>
+        <div id="individual-field" hidden>
+          <label>Individual students enrolled in the course</label>
+          <div class="students" id="students"></div>
+        </div>
+        <div class="muted" id="target-summary">Choose a course to see eligible recipients.</div>
+        <label class="check"><input type="checkbox" id="allowresubmit" checked> Allow resubmission after feedback</label>
+        <button type="submit" style="margin-top:12px">Assign homework</button>
+      </form>
+    </div>
+    <div class="panel">
+      <h2>Student submissions</h2>
+      <div class="cards" id="rows"></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = () => {
+    const p = { report: "teacher-homework", token };
+    if (qs.get("workspaceid")) p.workspaceid = qs.get("workspaceid");
+    if (qs.get("consumer")) p.consumer = qs.get("consumer");
+    return p;
+  };
+  let data = null;
+
+  const setStatus = (cls, text) => { const el = $("#status"); el.className = "status" + (cls ? " " + cls : ""); el.hidden = false; el.textContent = text; };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(params()));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render(d);
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  async function post(payload, btn, busyText) {
+    const idle = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = busyText || "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(params()), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus("saved", d.message || "Saved.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+      return true;
+    } catch (e) {
+      setStatus("error", "Could not save: " + e.message);
+      return false;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = idle; }
+    }
+  }
+
+  const rowCard = (row) => {
+    const cls = /^(assigned|in_progress|submitted|graded|returned)$/.test(row.status) ? row.status : "assigned";
+    const reviewable = row.status === "submitted" || row.status === "graded";
+    return `<div class="card">
+      <h3>${esc(row.title)}<span class="pill ${cls}">${esc(row.status_label || row.status)}</span></h3>
+      <div class="meta">${esc(row.coursename)} · ${esc(row.studentname)}${row.duedate_label ? " · Due " + esc(row.duedate_label) : ""}</div>
+      ${String(row.response_text || "").trim() !== "" ? `<div class="response">${esc(row.response_text)}</div>` : ""}
+      ${row.feedback ? `<div class="sec"><b>Feedback${row.scorepoints !== "" ? " · " + esc(row.scorepoints) + " / " + esc(row.maxpoints) : ""}</b>${esc(row.feedback)}</div>` : ""}
+      ${row.material_url ? `<div style="margin-top:8px"><a class="material" href="${esc(row.material_url)}" target="_blank" rel="noopener">Open attached material</a></div>` : ""}
+      ${reviewable ? `<form class="review" data-submissionid="${Number(row.id)}">
+        <div class="field"><label>Score / ${esc(row.maxpoints)}</label><input type="number" name="scorepoints" min="0" max="${esc(row.maxpoints)}" step="0.01" value="${esc(row.scorepoints)}"></div>
+        <div class="field"><label>Feedback</label><input type="text" name="feedback" value="${esc(row.feedback)}"></div>
+        <button type="button" class="ghost" data-decision="return">Return</button>
+        <button type="button" data-decision="grade">Grade</button>
+      </form>` : ""}
+      <div class="archive"><a href="#" data-archive="${Number(row.homeworkid)}">Archive homework</a></div>
+    </div>`;
+  };
+
+  function refreshTargets() {
+    if (!data) return;
+    const courseid = Number($("#courseid").value || 0);
+    const mode = (document.querySelector('input[name="target_type"]:checked') || {}).value || "course";
+    $("#group-field").hidden = mode !== "group";
+    $("#individual-field").hidden = mode !== "individual";
+    let shown = 0, checked = 0;
+    document.querySelectorAll("#students label").forEach((label) => {
+      const ids = (label.dataset.courses || "").split(",").map(Number);
+      const box = label.querySelector("input");
+      const visible = courseid > 0 && ids.indexOf(courseid) !== -1;
+      label.hidden = !visible;
+      if (!visible && box) box.checked = false;
+      if (visible) { shown++; if (box && box.checked) checked++; }
+    });
+    const groupSelect = $("#target_groupid");
+    Array.prototype.forEach.call(groupSelect.options, (option, index) => {
+      if (index === 0) return;
+      const ids = (option.dataset.courses || "").split(",").map(Number);
+      option.hidden = courseid <= 0 || ids.indexOf(courseid) === -1;
+      if (option.hidden && option.selected) groupSelect.value = "0";
+    });
+    const summary = $("#target-summary");
+    if (courseid <= 0) summary.textContent = "Choose a course to see eligible recipients.";
+    else if (mode === "course") summary.textContent = shown + " enrolled student" + (shown === 1 ? "" : "s") + " will receive this homework.";
+    else if (mode === "group") {
+      const option = groupSelect.options[groupSelect.selectedIndex];
+      const count = option ? Number(option.dataset.count || 0) : 0;
+      summary.textContent = count > 0 ? count + " group student" + (count === 1 ? "" : "s") + " selected." : "Choose a group enrolled in this course.";
+    } else summary.textContent = checked + " individual student" + (checked === 1 ? "" : "s") + " selected.";
+  }
+
+  function render(d) {
+    $("#title").textContent = "Homework — workspace " + d.workspaceid;
+    const courseSelect = $("#courseid");
+    const prevCourse = courseSelect.value;
+    courseSelect.innerHTML = '<option value="">Choose course</option>' + (d.courses || []).map((c) => `<option value="${Number(c.id)}">${esc(c.title)}</option>`).join("");
+    if (prevCourse) courseSelect.value = prevCourse;
+    $("#resourcematerialid").innerHTML = '<option value="0">No document attached</option>' + (d.materials || []).map((m) => `<option value="${Number(m.id)}">${esc(m.title)} (${esc(m.material_type)})</option>`).join("");
+    $("#materials-note").hidden = (d.materials || []).length > 0;
+    $("#target_groupid").innerHTML = '<option value="0">Choose group</option>' + (d.groups || []).map((g) => `<option value="${Number(g.id)}" data-courses="${esc((g.courseids || []).join(","))}" data-count="${Number((g.studentids || []).length)}">${esc(g.title)} (${Number((g.studentids || []).length)})</option>`).join("");
+    $("#groups-note").hidden = (d.groups || []).length > 0;
+    $("#students").innerHTML = (d.students || []).map((s) => `<label data-courses="${esc((s.courseids || []).join(","))}" hidden><input type="checkbox" name="studentids" value="${Number(s.id)}"> ${esc(s.name)}</label>`).join("") || '<span class="muted">No assigned students are available.</span>';
+    $("#rows").innerHTML = (d.rows || []).map(rowCard).join("") || '<p class="muted">No homework has been assigned yet.</p>';
+    $("#content").hidden = false;
+    if ($("#status").className === "status") $("#status").hidden = true;
+    refreshTargets();
+
+    document.querySelectorAll("form.review button").forEach((btn) => btn.addEventListener("click", async (ev) => {
+      const f = ev.currentTarget.closest("form");
+      await post({
+        do: "review",
+        submissionid: Number(f.dataset.submissionid),
+        decision: ev.currentTarget.dataset.decision,
+        scorepoints: f.scorepoints.value,
+        feedback: f.feedback.value,
+        workspaceid: d.workspaceid,
+      }, ev.currentTarget);
+    }));
+    document.querySelectorAll("[data-archive]").forEach((a) => a.addEventListener("click", async (ev) => {
+      ev.preventDefault();
+      if (!window.confirm("Archive this homework for all its students?")) return;
+      await post({ do: "archive", homeworkid: Number(ev.currentTarget.dataset.archive), workspaceid: d.workspaceid }, null);
+    }));
+  }
+
+  $("#create").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const studentids = Array.from(document.querySelectorAll('#students input[name="studentids"]:checked')).map((b) => Number(b.value));
+    const ok = await post({
+      do: "create",
+      courseid: Number($("#courseid").value || 0),
+      title: $("#hw-title").value,
+      instructions: $("#instructions").value,
+      resourcematerialid: Number($("#resourcematerialid").value || 0),
+      duedate: $("#duedate").value,
+      maxpoints: $("#maxpoints").value,
+      target_type: (document.querySelector('input[name="target_type"]:checked') || {}).value || "course",
+      target_groupid: Number($("#target_groupid").value || 0),
+      studentids,
+      allowresubmit: $("#allowresubmit").checked ? 1 : 0,
+      workspaceid: data ? data.workspaceid : 0,
+    }, ev.target.querySelector("button[type=submit]"), "Assigning…");
+    if (ok) { $("#hw-title").value = ""; $("#instructions").value = ""; }
+  });
+  $("#courseid").addEventListener("change", refreshTargets);
+  document.querySelectorAll('input[name="target_type"]').forEach((r) => r.addEventListener("change", refreshTargets));
+  $("#target_groupid").addEventListener("change", refreshTargets);
+  $("#students").addEventListener("change", refreshTargets);
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request teacher · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(920px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 8px;font-size:17px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .intro{margin:0 0 16px;color:var(--ink2);font-size:14px;line-height:1.5}
+  .options{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .option{padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+  .option h3{margin:0 0 8px;font-size:15px}
+  .option p{margin:0 0 14px;color:var(--ink2);font-size:13px;line-height:1.5}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 16px;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:900}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn.amber{background:var(--amber);color:#fff}
+  .fine{margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.5}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.notice{background:var(--amber-bg);color:var(--amber)}
+  .status a{color:inherit;font-weight:900}
+  @media(max-width:700px){.options{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Request teacher</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of teacher_marketplace_request.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Request Teacher</h1>
+    <p class="sub" id="subtitle">Choose how you would like to continue.</p>
+    <div style="margin-top:10px"><a class="btn light" id="back-link" href="#" hidden>Back to profile</a></div>
+  </div>
+  <div id="status" class="status">Loading request options…</div>
+  <div class="panel" id="options-panel" hidden>
+    <h2>Continue your teacher request</h2>
+    <p class="intro">Existing families can sign in. New families and adult learners can submit a secure intake without creating a duplicate account.</p>
+    <div class="options">
+      <article class="option">
+        <h3>I already have an account</h3>
+        <p id="login-copy"></p>
+        <a class="btn" id="login-link" href="#">Log in and continue</a>
+      </article>
+      <article class="option">
+        <h3 id="new-heading">I am new</h3>
+        <p id="new-copy"></p>
+        <a class="btn amber" id="new-link" href="#">Start a new request</a>
+      </article>
+    </div>
+    <p class="fine" id="fine"></p>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const consumer = (qs.get("consumer") || "").replace(/[^A-Za-z0-9]/g, "");
+  const teacherid = String(parseInt(qs.get("teacherid") || "0", 10) || 0);
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "teacher-marketplace-request", token, consumer, teacherid });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const brand = d.brandname || "the marketplace";
+    // Legacy redirect branches become in-page notices with the same target.
+    if (d.state === "choose_teacher" || d.state === "not_available") {
+      $("#status").className = "status notice"; $("#status").hidden = false;
+      $("#status").innerHTML = (d.state === "choose_teacher"
+        ? "No teacher selected. "
+        : "This teacher profile is not available. ")
+        + `Continue to the <a href="${esc(d.redirect)}">teacher marketplace</a> to choose a teacher.`;
+      return;
+    }
+    const teacher = d.teachername || "this teacher";
+    $("#title").textContent = "Request " + teacher;
+    $("#back-link").href = d.profileurl; $("#back-link").hidden = false;
+    if (d.state === "enroll_redirect") {
+      // Legacy: logged-in users are redirected straight to the required
+      // marketplace enrollment; the portal shows the same destination.
+      $("#status").className = "status notice"; $("#status").hidden = false;
+      $("#status").innerHTML = `You are signed in — <a href="${esc(d.redirect)}">continue to the required marketplace enrollment for ${esc(teacher)}</a>.`;
+      return;
+    }
+    $("#login-copy").textContent = "Sign in with your existing " + brand + " account. You will return to the required marketplace enrollment for " + teacher + ".";
+    $("#login-link").href = d.loginurl;
+    $("#new-heading").textContent = "I am new to " + brand;
+    $("#new-copy").textContent = "Share the learner's goals, level, contact information, and preferred schedule. " + teacher + " will remain selected.";
+    $("#new-link").href = d.newrequesturl;
+    $("#fine").textContent = brand + " checks existing verified contact details before account conversion. Existing parent and learner identities are reused instead of creating duplicates.";
+    $("#options-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

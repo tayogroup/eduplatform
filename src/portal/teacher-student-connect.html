@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find or invite student · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 6px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .search{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:12px}
+  @media(max-width:520px){.search{grid-template-columns:1fr}}
+  .search input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;font-size:14px;background:var(--card);color:var(--ink)}
+  button.btn,a.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer;text-decoration:none;font-family:inherit}
+  button.btn:disabled{opacity:.55;cursor:wait}
+  a.btn.ghost,button.btn.ghost{background:var(--sky);color:var(--blue)}
+  .cards{display:grid;gap:12px;margin-top:14px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:10px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .note{margin-top:14px;padding:10px 12px;border-left:4px solid var(--amber);border-radius:0 8px 8px 0;background:var(--amber-bg);color:var(--amber);font-size:13px;font-weight:700}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Find or invite student</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of teacher_student_connect.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1>Find or Invite Student</h1><p class="sub" id="subtitle">Reuse an existing learner identity or invite a genuinely new student into your independent teaching workspace.</p></div>
+  <div id="status" class="status">Loading your workspace…</div>
+  <div class="grid" id="content" hidden>
+    <section class="panel">
+      <h2>Find existing student</h2>
+      <p class="sub" id="search-help">Search using the exact Moodle user ID, account number, username, verified email, or guardian contact. Partial-name searches are intentionally not supported.</p>
+      <form class="search" id="search-form">
+        <input id="q" name="q" placeholder="Exact account number, ID, email, username, or contact" required>
+        <button class="btn" type="submit" id="search-btn">Search</button>
+      </form>
+      <div class="cards" id="results" hidden></div>
+      <div class="note">A match creates a connection request. It does not copy, transfer, or expose the institution's private grades, notes, billing, or communications.</div>
+    </section>
+    <section class="panel">
+      <h2>Invite new student</h2>
+      <p class="sub">Use the full intake only when no existing learner account is found. The intake creates the learner and guardian records, consent, and workspace relationship.</p>
+      <p style="margin:12px 0 0"><a class="btn" id="intake-link" href="#" target="_blank" rel="noopener">Open new student intake</a></p>
+      <div class="note">Always search first. This prevents duplicate Moodle accounts and fragmented learning histories.</div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // The legacy page reads ?consumer=&workspaceid= — pass the same context on.
+  const ctx = {};
+  for (const key of ["consumer", "workspaceid"]) {
+    if (qs.get(key)) ctx[key] = qs.get(key);
+  }
+  const url = (extra) => endpoint + "?" + new URLSearchParams({ report: "teacher-student-connect", token, ...ctx, ...(extra || {}) });
+
+  const setStatus = (cls, text) => { const s = $("#status"); s.className = "status" + (cls ? " " + cls : ""); s.hidden = false; s.textContent = text; };
+
+  async function load(q) {
+    try {
+      const r = await fetch(url(q ? { q } : {}));
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      render(d, q || "");
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  function render(d, q) {
+    $("#content").hidden = false;
+    $("#search-help").textContent = "Search using the exact Moodle user ID, " + (d.brandname || "Marketplace") + " account number, username, verified email, or guardian contact. Partial-name searches are intentionally not supported.";
+    if (d.intakeurl) $("#intake-link").href = d.intakeurl;
+    $("#status").hidden = true;
+    const results = $("#results");
+    if (!q) { results.hidden = true; results.innerHTML = ""; return; }
+    const matches = d.matches || [];
+    results.hidden = false;
+    results.innerHTML = matches.length
+      ? matches.map((m) => `
+        <article class="card">
+          <h3>${esc(m.name)}</h3>
+          <div class="meta">Account ${esc(m.account)} - Moodle ID ${Number(m.id)}</div>
+          <button class="btn connect" type="button" data-studentid="${Number(m.id)}">Request connection</button>
+        </article>`).join("")
+      : `<div class="card muted">No exact existing learner match was found. Check the identifier or invite a new student.</div>`;
+    results.querySelectorAll("button.connect").forEach((b) => b.addEventListener("click", requestConnection));
+  }
+
+  async function requestConnection(ev) {
+    const btn = ev.currentTarget;
+    btn.disabled = true; btn.textContent = "Requesting…";
+    try {
+      const r = await fetch(url(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ do: "request_connection", studentid: Number(btn.dataset.studentid) }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      // The legacy page clears the query and results after a successful request.
+      $("#q").value = "";
+      $("#results").hidden = true; $("#results").innerHTML = "";
+      setStatus("saved", d.message || "Connection request submitted.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Request connection";
+      setStatus("error", e.message);
+    }
+  }
+
+  $("#search-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const q = $("#q").value.trim();
+    if (!q) return;
+    const btn = $("#search-btn");
+    btn.disabled = true; btn.textContent = "Searching…";
+    setStatus("", "Searching…");
+    load(q).finally(() => { btn.disabled = false; btn.textContent = "Search"; });
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

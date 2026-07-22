@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document Studio · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .status a{color:inherit;font-weight:900}
+  .warn{padding:12px 14px;border-radius:8px;background:var(--amber-bg);color:var(--amber);font-weight:700;margin-bottom:16px}
+  .nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .nav-card{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;color:var(--ink);text-decoration:none}
+  .nav-card:hover{border-color:var(--blue2)}
+  .nav-card strong{display:block;margin-bottom:4px;color:var(--blue2)}
+  .nav-card span{font-size:12px;color:var(--muted)}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 6px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .card label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin:8px 0 3px}
+  .card input{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .card button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  .card button:disabled{opacity:.55;cursor:wait}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  a.btn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:7px 12px;background:var(--sky);color:var(--blue);text-decoration:none;font-weight:800;font-size:12px}
+  a.btn:hover{border-color:var(--blue2);color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Document Studio</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of teacher_office.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Document Studio</h1><p class="sub" id="subtitle">Materials for documents, spreadsheets, presentations, and PDFs.</p></div>
+  <div id="status" class="status">Loading Document Studio…</div>
+  <div id="docserver-warn" class="warn" hidden>ONLYOFFICE is not configured yet. Set the document server URL in the PreQuraan Moodle plugin settings.</div>
+  <div class="panel" id="nav-panel" hidden><h2>Where to next</h2><div class="nav-grid" id="nav"></div></div>
+  <div class="panel" id="create-panel" hidden><h2>Create</h2><div class="card-grid" id="create"></div></div>
+  <div class="panel" id="materials-panel" hidden><h2>Recent Editable Materials</h2><div class="card-grid" id="materials"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = qs.get("workspaceid") || "0";
+  const childid = qs.get("childid") || "0";
+  const consumer = (qs.get("consumer") || "").replace(/[^A-Za-z0-9]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = (extra) => new URLSearchParams({ report: "teacher-office", token, workspaceid, childid, ...(consumer ? { consumer } : {}), ...(extra || {}) });
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) {
+        let msg = ""; try { msg = (await r.json()).error || ""; } catch (e) { /* noop */ }
+        throw new Error(msg || ("HTTP " + r.status));
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    $("#subtitle").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " — " : "") +
+      (d.isstudentoffice ? "student documents, materials, and course work." : "materials for documents, spreadsheets, presentations, and PDFs.");
+    $("#docserver-warn").hidden = !!d.docserver_configured;
+
+    $("#nav").innerHTML = (d.links || []).map((l) =>
+      `<a class="nav-card" href="${esc(l.url)}"><strong>${esc(l.title)}</strong><span>${esc(l.desc || "")}</span></a>`).join("");
+    $("#nav-panel").hidden = !(d.links || []).length;
+
+    $("#create").innerHTML = (d.types || []).map((t) => `
+      <form class="card" data-type="${esc(t.type)}">
+        <h3>${esc(t.label)}</h3>
+        <label>Title</label><input name="title" value="${esc(t.default)}">
+        <label>Course key</label><input name="course_key" placeholder="optional">
+        <button type="submit">Create</button>
+      </form>`).join("");
+    $("#create-panel").hidden = false;
+    document.querySelectorAll("#create form").forEach((f) => f.addEventListener("submit", createMaterial));
+
+    $("#materials").innerHTML = (d.materials || []).map((m) => `
+      <div class="card">
+        <h3>${esc(m.title || "Material")}</h3>
+        <div class="meta">${esc(m.filename || "")}${m.timemodified ? " · updated " + esc(when(m.timemodified)) : ""}</div>
+        <div class="actions"><a class="btn" href="${esc(m.editorurl)}">Open</a><a class="btn" href="${esc(m.downloadurl)}">Download</a></div>
+      </div>`).join("") || "<div class='muted'>No editable office materials have been created yet.</div>";
+    $("#materials-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  async function createMaterial(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Creating…";
+    try {
+      const r = await fetch(endpoint + "?" + params(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "create_material",
+          workspaceid: Number(workspaceid),
+          childid: Number(childid),
+          office_type: f.dataset.type,
+          title: f.title.value,
+          course_key: f.course_key.value,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").innerHTML = esc(d.message || "Material created.") + (d.editorurl ? ` <a href="${esc(d.editorurl)}">Open in editor</a>` : "");
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not create: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Create";
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

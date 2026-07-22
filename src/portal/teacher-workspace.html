@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher workspace · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi strong.risk{color:var(--red)}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .attention{border:2px solid var(--amber);background:linear-gradient(180deg,var(--amber-bg),var(--card))}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .sec{margin:8px 0 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10.5px;font-weight:900;margin-left:6px;vertical-align:1px}
+  .pill.portal{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.risk{background:var(--red-bg);color:var(--red)}
+  .pill.ok{background:var(--sky);color:var(--ink2)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:2px 12px;border:0;border-radius:8px;background:var(--blue2);color:#fff!important;text-decoration:none;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
+  .btn.ghost{background:var(--sky);color:var(--blue)!important;border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .row-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .cardlinks{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+  a.link-card{display:block;min-height:70px;padding:12px 14px;border-radius:10px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none}
+  a.link-card:hover{border-color:var(--blue2)}
+  a.link-card strong{display:block;font-size:14px;font-weight:900}
+  a.link-card span{display:block;margin-top:4px;color:var(--muted);font-size:12px;line-height:1.4}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky);white-space:nowrap}
+  .name{display:block;font-weight:900;font-size:13.5px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher workspace</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of teacher_workspace.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <div class="head">
+      <div style="min-width:0">
+        <h1 id="title">Teacher Live-Class Workspace</h1>
+        <p class="sub" id="subtitle">Student and teacher action tools.</p>
+      </div>
+      <div class="row-actions" id="admin-actions" hidden></div>
+    </div>
+  </div>
+  <div id="status" class="status">Loading teacher workspace…</div>
+  <section class="kpis" id="kpis" hidden></section>
+  <div class="panel attention" id="coaching-panel" hidden>
+    <h2>Quality coaching</h2>
+    <p class="sub" style="margin-bottom:10px">Coaching items assigned from quality reviews. Acknowledge each one to confirm you have read it.</p>
+    <div class="cards" id="coaching"></div>
+  </div>
+  <div class="panel attention" id="plans-panel" hidden>
+    <h2>Improvement plans</h2>
+    <p class="sub" style="margin-bottom:10px">Assigned improvement plans. Acknowledging moves a plan to in-progress.</p>
+    <div class="cards" id="plans"></div>
+  </div>
+  <div class="panel" id="followups-panel" hidden>
+    <h2>Open parent follow-ups</h2>
+    <div class="cards" id="followups"></div>
+  </div>
+  <div class="panel scroll" id="today-panel" hidden><h2>Today's sessions</h2><div id="today"></div></div>
+  <div class="panel scroll" id="upcoming-panel" hidden><h2>Upcoming · next 7 days</h2><div id="upcoming"></div></div>
+  <div class="panel scroll" id="review-panel" hidden><h2>Needs post-class review</h2><div id="needsreview"></div></div>
+  <div class="panel scroll" id="completed-panel" hidden><h2>Recently completed</h2><div id="recentcompleted"></div></div>
+  <div class="panel" id="child-panel" hidden>
+    <h2 id="child-title">Student tools</h2>
+    <p class="sub" style="margin-bottom:10px">Student-specific work moved from the dashboard.</p>
+    <div class="cardlinks" id="child-links"></div>
+  </div>
+  <div class="panel" id="ops-panel" hidden>
+    <h2>Teacher operations</h2>
+    <p class="sub" style="margin-bottom:10px">Daily teacher work tools. Pages already migrated to the portal open token-authenticated (marked <span class="pill portal">portal</span>); the rest open the legacy Moodle pages.</p>
+    <div class="cardlinks" id="ops-links"></div>
+  </div>
+  <div class="panel" id="live-panel" hidden>
+    <h2>Live sessions</h2>
+    <p class="sub" style="margin-bottom:10px">Schedule, run, and follow up on live classes.</p>
+    <div class="cardlinks" id="live-links"></div>
+  </div>
+  <div class="panel" id="docs-panel" hidden>
+    <h2>Document Studio</h2>
+    <p class="sub" style="margin-bottom:10px">Create and edit teaching documents, spreadsheets, presentations, PDFs, course materials, and lesson resources with ONLYOFFICE.</p>
+    <div class="cardlinks" id="docs-links"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let moodleOrigin = "";
+  try { moodleOrigin = new URL(endpoint).origin; } catch (e) { moodleOrigin = ""; }
+  const wsParam = qs.get("workspaceid") || "0";
+  const consumerParam = (qs.get("consumer") || "").replace(/[^A-Za-z0-9]/g, "");
+  const childParam = qs.get("childid") || "0";
+  const teacherParam = qs.get("teacherid") || "0";
+
+  const url = () => endpoint + "?" + new URLSearchParams({
+    report: "teacher-workspace", token,
+    workspaceid: wsParam, consumer: consumerParam, childid: childParam, teacherid: teacherParam,
+  });
+
+  // portal_launch mints a fresh token from the live Moodle session and forwards
+  // sessionid/childid/studentid/workspaceid/consumer to the target portal page.
+  const launch = (report, extra) => {
+    const p = new URLSearchParams({ report, ...(extra || {}) });
+    if (consumerParam) p.set("consumer", consumerParam);
+    return moodleOrigin + "/local/prequran/portal_launch.php?" + p;
+  };
+  // Legacy Moodle URL for pages not yet migrated (same params the legacy page passes).
+  const legacy = (file, extra) => {
+    const p = new URLSearchParams(extra || {});
+    if (consumerParam) p.set("consumer", consumerParam);
+    const q = p.toString();
+    return moodleOrigin + "/local/hubredirect/" + file + (q ? "?" + q : "");
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) {
+        let msg = ""; try { msg = (await r.json()).error || ""; } catch (e) { /* noop */ }
+        throw new Error(msg || ("HTTP " + r.status));
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const kpi = (value, label, risk) => `<div class="kpi"><strong${risk ? ' class="risk"' : ""}>${esc(value)}</strong><span>${esc(label)}</span></div>`;
+  const card = (l) => `<a class="link-card" href="${esc(l.href)}"${l.blank ? ' target="_blank" rel="noopener"' : ""}><strong>${esc(l.title)}${l.portal ? ' <span class="pill portal">portal</span>' : ""}</strong><span>${esc(l.desc)}</span></a>`;
+  const prioPill = (p) => p === "high" ? '<span class="pill risk">high priority</span>' : (p && p !== "normal" ? `<span class="pill ok">${esc(p)}</span>` : "");
+
+  const sessionTable = (rows, w) => !rows.length
+    ? '<div class="muted">Nothing here yet.</div>'
+    : `<table><thead><tr><th>Session</th><th>Time</th><th>Students</th><th>Review state</th><th>Actions</th></tr></thead><tbody>` +
+      rows.map((s) => `<tr>
+        <td><span class="name">${esc(s.title || "Live class")}</span><span class="muted">${esc(s.status)}${s.session_type ? " / " + esc(s.session_type) : ""}</span></td>
+        <td>${esc(when(s.scheduled_start))}</td>
+        <td>${s.student_count}</td>
+        <td><span class="muted">attendance ${s.attendance_count}/${s.student_count} · summaries ${s.visible_summary_count}/${s.student_count}</span></td>
+        <td><div class="row-actions">
+          <a class="btn" href="${esc(launch("live-sessions", { ...w, sessionid: s.id }))}">Open</a>
+          <a class="btn ghost" href="${esc(launch("live-review", { ...w, sessionid: s.id }))}">Review</a>
+        </div></td>
+      </tr>`).join("") + "</tbody></table>";
+
+  const followupCard = (n, names) => `
+    <div class="card">
+      <h3>${esc(n.session_title || "Live class")}<span class="pill warn">${esc((n.followup_status || "").replace(/_/g, " "))}</span></h3>
+      <div class="meta">${esc(names[n.studentid] || ("Student " + n.studentid))} · ${esc(when(n.scheduled_start))}</div>
+      ${n.followup_message ? `<div class="sec"><b>Follow-up message</b>${esc(n.followup_message)}</div>` : ""}
+      ${n.parent_response_status && n.parent_response_status !== "none" ? `<div class="sec"><b>Parent response (${esc(n.parent_response_status.replace(/_/g, " "))})</b>${esc(n.parent_response_message || "")} <span class="muted">${esc(when(n.parent_responseat))}</span></div>` : ""}
+      <div class="row-actions" style="margin-top:10px">
+        <a class="btn ghost" href="${esc(launch("live-followups", { sessionid: n.sessionid }))}">Open follow-ups</a>
+        <a class="btn ghost" href="${esc(launch("live-review", { sessionid: n.sessionid }))}">Open review</a>
+      </div>
+    </div>`;
+
+  const coachingCard = (s) => `
+    <div class="card">
+      <h3>${esc(s.title || "Live class")}${prioPill(s.qa_coaching_priority)}${s.qa_coaching_status === "acknowledged" ? '<span class="pill ok">acknowledged</span>' : '<span class="pill warn">assigned</span>'}</h3>
+      <div class="meta">${esc(when(s.scheduled_start))}${s.qa_coaching_due_date ? " · due " + esc(dateOnly(s.qa_coaching_due_date)) : ""}</div>
+      ${s.qa_coaching_notes ? `<div class="sec"><b>Coaching notes</b>${esc(s.qa_coaching_notes)}</div>` : ""}
+      ${s.qa_review_notes ? `<div class="sec"><b>Review notes</b>${esc(s.qa_review_notes)}</div>` : ""}
+      <div class="row-actions" style="margin-top:10px">
+        <button class="btn" data-do="ack_quality_coaching" data-sessionid="${s.id}">${s.qa_coaching_status === "acknowledged" ? "Re-acknowledge" : "Acknowledge coaching"}</button>
+        <a class="btn ghost" href="${esc(launch("live-review", { sessionid: s.id }))}">Open review</a>
+      </div>
+    </div>`;
+
+  const planCard = (s) => `
+    <div class="card">
+      <h3>${esc(s.title || "Live class")}${prioPill(s.improvement_plan_priority)}${s.improvement_plan_status === "in_progress" ? '<span class="pill ok">in progress</span>' : '<span class="pill warn">assigned</span>'}</h3>
+      <div class="meta">${esc(when(s.scheduled_start))}${s.improvement_plan_due_date ? " · due " + esc(dateOnly(s.improvement_plan_due_date)) : ""}</div>
+      ${s.improvement_plan_notes ? `<div class="sec"><b>Plan notes</b>${esc(s.improvement_plan_notes)}</div>` : ""}
+      ${s.improvement_plan_summary ? `<div class="sec"><b>Plan summary</b>${esc(s.improvement_plan_summary)}</div>` : ""}
+      <div class="row-actions" style="margin-top:10px">
+        <button class="btn" data-do="ack_improvement_plan" data-sessionid="${s.id}">${s.improvement_plan_status === "in_progress" ? "Confirm in progress" : "Acknowledge plan"}</button>
+        <a class="btn ghost" href="${esc(launch("live-review", { sessionid: s.id }))}">Open review</a>
+      </div>
+    </div>`;
+
+  function toolLinks(d) {
+    const wsid = Number(d.workspaceid) || 0;
+    const w = wsid > 0 ? { workspaceid: wsid } : {};
+    const t = Number(d.teacher.id) || 0;
+
+    // Teacher Operations (legacy tool group, portal where the target is migrated).
+    const ops = [
+      { href: legacy("teacher_homework.php", w), title: "Homework", desc: "Assign, review, and close out student homework." },
+      { href: legacy("live_teacher_schedule.php", { teacherid: t }), title: "Teacher schedule", desc: "Your personal live-class teaching schedule." },
+      { href: legacy("live_sessions.php", { session_type: "teacher_meeting", title: "Teacher Meeting Room" }), title: "Teacher meetings", desc: "Meeting rooms with other teachers (type-filtered legacy view)." },
+      { href: legacy("live_sessions.php", { session_type: "teacher_parent_room", title: "Teacher-Parent Room" }), title: "Teacher-parent rooms", desc: "One-to-one rooms with parents (type-filtered legacy view)." },
+      { href: legacy("live_availability.php", w), title: "Availability", desc: "Publish the hours you are available to teach." },
+      { href: legacy("live_practice_coach.php", w), title: "Practice coach", desc: "Automated practice nudges and coach events." },
+      { href: launch("live-followups", {}), portal: true, title: "Parent follow-ups", desc: "Track requested parent contact and homework reviews." },
+      { href: launch("managed-reports", w), portal: true, title: "Managed reports", desc: "Progress reports for your managed students." },
+      { href: legacy("quiz_report.php", { pq_env: "integration", lessonid: "alphabet", unitid: "alphabet_quiz" }), title: "Quiz reports", desc: "Lesson quiz attempt and score reports." },
+    ];
+
+    // Live Sessions group.
+    const tb = { ...w }; if (t) tb.teacherid = t; // legacy passes teacherid only for admin views
+    const live = [
+      { href: launch("live-create-wizard", w), portal: true, title: "Create session", desc: "Guided wizard for scheduling a new live class." },
+      { href: legacy("live_series_wizard.php", tb), title: "Create series", desc: "Set up a recurring class series." },
+      { href: launch("live-followups", {}), portal: true, title: "Follow-ups", desc: "Open parent and admin follow-up queue." },
+      { href: legacy("live_series.php", tb), title: "Class series", desc: "Edit, reschedule, and cancel recurring classes." },
+      { href: legacy("live_availability.php", tb), title: "Availability", desc: "Publish available teaching hours." },
+      { href: legacy("seb_exams.php", w), title: "Exams", desc: "Safe Exam Browser exam sessions." },
+      { href: launch("live-schedule", w), portal: true, title: "Live schedule", desc: "The full live-class schedule view." },
+      { href: legacy("live_calendar.php", tb), title: "Calendar", desc: "Calendar view of scheduled live classes." },
+      { href: launch("live-summaries", w), portal: true, title: "Live summaries", desc: "Parent-visible class summaries and follow-ups." },
+      { href: d.explainerurl, blank: true, title: "Watch live-session guide", desc: "Explainer video for running live sessions." },
+      { href: d.agendatemplateurl, blank: true, title: "Live Session Agenda template", desc: "Downloadable agenda slides template." },
+    ];
+
+    // Student tools (only when a child is selected, mirrors the legacy group).
+    const child = [];
+    if (d.selectedchild) {
+      const cid = Number(d.selectedchild.studentid);
+      const c = { childid: cid };
+      if (d.selectedchild.managed) {
+        child.push({ href: legacy("virtual_tutor.php", { studentid: cid }), title: "Virtual tutor", desc: "Managed-student virtual tutoring." });
+      }
+      child.push({ href: launch("parent-trust", c), portal: true, title: "Parent live hub", desc: "The parent-facing live-class trust dashboard." });
+      child.push({ href: launch("live-schedule", c), portal: true, title: "Live schedule", desc: "This student's live-class schedule." });
+      child.push({ href: legacy("live_series_schedule.php", c), title: "Class series", desc: "Recurring class schedule for this student." });
+      child.push({ href: legacy("live_calendar.php", c), title: "Live calendar", desc: "Calendar view for this student." });
+      child.push({ href: legacy("course_transcript.php", { studentid: cid, ...w }), title: "Unofficial transcript", desc: "Live transcript preview for this student." });
+      child.push({ href: launch("live-summaries", c), portal: true, title: "Live summaries", desc: "Teacher class summaries for this student." });
+      child.push({ href: legacy("live_trust.php", c), title: "Trust center", desc: "Live-class visibility, consent, and recording controls." });
+      child.push({ href: legacy("live_recordings.php", c), title: "Live recordings", desc: "Approved live-class recordings." });
+      child.push({ href: launch("managed-reports", { studentid: cid, ...w }), portal: true, title: "Managed report", desc: "Progress report for this student." });
+      child.push({ href: launch("recordings", c), portal: true, title: "Review Speak recordings", desc: "Student speak-practice recordings." });
+      child.push({ href: legacy("quiz_report.php", { pq_env: "integration", lessonid: "alphabet", unitid: "alphabet_quiz", userid: cid }), title: "Quiz report", desc: "Quiz attempts for this student." });
+    }
+
+    // Document Studio (workspace required, like the legacy page).
+    const docs = [];
+    if (wsid > 0) {
+      const dc = { ...w }; if (d.selectedchild) dc.childid = Number(d.selectedchild.studentid);
+      docs.push({ href: legacy("teacher_office.php", dc), title: "New Word document", desc: "Create a teaching document in ONLYOFFICE." });
+      docs.push({ href: legacy("teacher_office.php", dc), title: "New spreadsheet", desc: "Create a spreadsheet in ONLYOFFICE." });
+      docs.push({ href: legacy("teacher_office.php", dc), title: "New presentation", desc: "Create a presentation in ONLYOFFICE." });
+      docs.push({ href: legacy("teacher_office.php", dc), title: "PDF tools", desc: "Open the ONLYOFFICE PDF tools." });
+      docs.push({ href: legacy("workspace_materials.php", w), title: "Material library", desc: "Review resources and completed student materials." });
+    }
+
+    return { ops, live, child, docs };
+  }
+
+  function render(d) {
+    $("#subtitle").textContent = d.teacher.name + (d.workspace ? " - " + d.workspace.name : "") + " - student and teacher action tools.";
+    if (d.isadmin) {
+      const w = Number(d.workspaceid) > 0 ? { workspaceid: Number(d.workspaceid) } : {};
+      $("#admin-actions").innerHTML =
+        `<a class="btn ghost" href="${esc(legacy("live_admin.php", {}))}">Admin menu</a>` +
+        `<a class="btn ghost" href="${esc(launch("live-ops", w))}">Admin ops <span class="pill portal">portal</span></a>`;
+      $("#admin-actions").hidden = false;
+    }
+
+    if (!d.ready) {
+      $("#status").className = "status error";
+      $("#status").textContent = "Live-session tables are not fully installed yet.";
+      return;
+    }
+
+    const m = d.metrics;
+    $("#kpis").innerHTML =
+      kpi(m.today, "classes today") + kpi(m.upcoming, "upcoming · 7d") +
+      kpi(m.needsreview, "need review · 14d", m.needsreview > 0) +
+      kpi(m.followups, "open follow-ups", m.followups > 0) +
+      kpi(m.coaching, "coaching items", m.coaching > 0) +
+      kpi(m.improvementplans, "improvement plans", m.improvementplans > 0) +
+      kpi(m.studentsweek, "students this week");
+    $("#kpis").hidden = false;
+
+    const names = d.names || {};
+    if (d.coachingready && (d.coaching || []).length) {
+      $("#coaching").innerHTML = d.coaching.map(coachingCard).join("");
+      $("#coaching-panel").hidden = false;
+    }
+    if (d.improvementready && (d.improvementplans || []).length) {
+      $("#plans").innerHTML = d.improvementplans.map(planCard).join("");
+      $("#plans-panel").hidden = false;
+    }
+    if (d.followupready && (d.followups || []).length) {
+      $("#followups").innerHTML = d.followups.map((n) => followupCard(n, names)).join("");
+      $("#followups-panel").hidden = false;
+    }
+
+    const w = Number(d.workspaceid) > 0 ? { workspaceid: Number(d.workspaceid) } : {};
+    $("#today").innerHTML = sessionTable(d.today || [], w); $("#today-panel").hidden = false;
+    $("#upcoming").innerHTML = sessionTable(d.upcoming || [], w); $("#upcoming-panel").hidden = false;
+    $("#needsreview").innerHTML = sessionTable(d.needsreview || [], w); $("#review-panel").hidden = false;
+    if ((d.recentcompleted || []).length) {
+      $("#recentcompleted").innerHTML = sessionTable(d.recentcompleted, w);
+      $("#completed-panel").hidden = false;
+    }
+
+    const links = toolLinks(d);
+    if (links.child.length) {
+      $("#child-title").textContent = (d.selectedchild ? d.selectedchild.name + " " : "") + "Tools";
+      $("#child-links").innerHTML = links.child.map(card).join("");
+      $("#child-panel").hidden = false;
+    }
+    $("#ops-links").innerHTML = links.ops.map(card).join(""); $("#ops-panel").hidden = false;
+    $("#live-links").innerHTML = links.live.map(card).join(""); $("#live-panel").hidden = false;
+    if (links.docs.length) { $("#docs-links").innerHTML = links.docs.map(card).join(""); $("#docs-panel").hidden = false; }
+
+    $("#status").hidden = true;
+    document.querySelectorAll("button[data-do]").forEach((b) => b.addEventListener("click", acknowledge));
+  }
+
+  async function acknowledge(ev) {
+    const btn = ev.currentTarget;
+    const doAction = btn.dataset.do;
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "teacher-workspace", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: doAction,
+          sessionid: Number(btn.dataset.sessionid),
+          workspaceid: Number(wsParam) || 0,
+          teacherid: Number(teacherParam) || 0,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = "Acknowledge";
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

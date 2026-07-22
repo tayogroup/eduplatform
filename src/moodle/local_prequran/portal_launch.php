@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-2.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
 ];
 if (!isset($reports[$report])) {

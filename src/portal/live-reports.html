@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live-session reports · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff;color:var(--ink)}
+  .field input{width:130px}
+  button,.btn{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .kpi.warn strong{color:var(--amber)} .kpi.bad strong{color:var(--red)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky)}
+  tr:hover td{background:#f6faff}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800}
+  .pill.completed{background:var(--sky);color:var(--blue2)}
+  .pill.scheduled{background:#eef2f6;color:var(--ink2)}
+  .pill.cancelled{background:var(--red-bg);color:var(--red)}
+  .pill.warnp{background:var(--amber-bg);color:var(--amber)}
+  .row-actions{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  a.drill{color:var(--blue2);cursor:pointer;text-decoration:underline}
+  #drill:empty{display:none}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live-session reports · read-only</small></div>
+  <div class="note" id="session-note">Token-authenticated · parallel-run of live_reports.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Live-session reports</h1>
+    <p class="sub">Delivery, attendance, parent visibility, quality and coaching across live sessions.</p>
+  </div>
+
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-from">From</label><input type="date" id="f-from"></div>
+      <div class="field"><label for="f-to">To</label><input type="date" id="f-to"></div>
+      <div class="field"><label for="f-status">Status</label>
+        <select id="f-status"><option value="">Any</option><option>scheduled</option><option>completed</option><option>cancelled</option></select></div>
+      <div class="field"><label for="f-teacher">Teacher id</label><input type="number" id="f-teacher" min="0" placeholder="0"></div>
+      <div class="field"><label for="f-student">Student id</label><input type="number" id="f-student" min="0" placeholder="0"></div>
+      <div class="field"><label for="f-series">Series id</label><input type="number" id="f-series" min="0" placeholder="0"></div>
+      <button type="submit">Apply filters</button>
+      <button type="button" class="ghost" id="csv-sessions">Sessions CSV</button>
+      <button type="button" class="ghost" id="csv-attendance">Attendance CSV</button>
+    </form>
+  </div>
+
+  <div id="status" class="status">Loading report…</div>
+  <section id="kpis" class="kpis"></section>
+  <div class="panel scroll" id="sessions-panel" hidden>
+    <div class="row-actions"><h2>Sessions (latest 200)</h2></div>
+    <table id="sessions"></table>
+  </div>
+  <div class="panel scroll" id="teachers-panel" hidden><h2>Teacher rollup</h2><table id="teachers"></table></div>
+  <div class="panel scroll" id="drill-panel" hidden><h2 id="drill-title">Student drill</h2><table id="drill"></table></div>
+  <div class="panel scroll" id="audit-panel" hidden><h2>Operational audit (latest 100)</h2><table id="audit"></table></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (epoch) => epoch ? new Date(epoch * 1000).toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short"}) : "—";
+  let data = null;
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open this page via the Moodle portal launch link."; return; }
+
+  const filterQuery = () => new URLSearchParams({
+    from: $("#f-from").value || "", to: $("#f-to").value || "",
+    status: $("#f-status").value || "", teacherid: $("#f-teacher").value || "0",
+    studentid: $("#f-student").value || "0", seriesid: $("#f-series").value || "0",
+    token,
+  }).toString();
+
+  async function fetchReport(extra) {
+    const r = await fetch(endpoint + "?" + filterQuery() + (extra ? "&" + extra : ""));
+    if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 160));
+    return r.json();
+  }
+
+  const KPIS = [
+    ["sessions","Sessions",""],["completed","Completed",""],["cancelled","Cancelled","warn"],
+    ["students","Student seats",""],["attendance","Attendance records",""],["summaries","Parent summaries",""],
+    ["homework","With homework",""],["recordings","Parent recordings",""],["conflicts","Schedule conflicts","warn"],
+    ["notifications","Notifications",""],["missingtargets","Missing lesson/unit","warn"],
+    ["qareview","QA review queue","warn"],["qaissues","QA issues","bad"],
+    ["coaching","Coaching open","warn"],["coachingoverdue","Coaching overdue","bad"],
+  ];
+
+  function render() {
+    const names = data.names || {};
+    const nameOf = (id) => names[id] || ("User " + id);
+    $("#kpis").innerHTML = KPIS.map(([k, label, cls]) =>
+      `<div class="kpi ${data.metrics[k] > 0 ? cls : ""}"><strong>${data.metrics[k] ?? 0}</strong><span>${label}</span></div>`).join("");
+
+    $("#sessions").innerHTML = `<thead><tr><th>#</th><th>Title</th><th>Teacher</th><th>Start</th><th>Status</th><th>Students</th><th>Present</th><th>Late</th><th>Absent</th><th>Tech</th><th>Summaries</th><th>Recordings</th><th>QA</th><th>Coaching</th></tr></thead><tbody>` +
+      data.sessions.map((s) => `<tr><td><a class="drill" data-session="${s.id}">${s.id}</a></td><td>${esc(s.title)}</td><td><a class="drill" data-teacher="${s.teacherid}">${esc(nameOf(s.teacherid))}</a></td><td>${dt(s.scheduled_start)}</td><td><span class="pill ${esc(s.status)}">${esc(s.status)}</span></td><td>${s.student_count}</td><td>${s.present_count}</td><td>${s.late_count}</td><td>${s.absent_count}</td><td>${s.technical_issue_count}</td><td>${s.visible_summary_count}</td><td>${s.visible_recording_count}</td><td>${s.qa_status ? `<span class="pill ${/needs|serious/.test(s.qa_status) ? "warnp" : "scheduled"}">${esc(s.qa_status)}</span>` : "—"}</td><td>${s.qa_coaching_status && s.qa_coaching_status !== "none" ? esc(s.qa_coaching_status) : "—"}</td></tr>`).join("") + "</tbody>";
+    $("#sessions-panel").hidden = !data.sessions.length;
+
+    $("#teachers").innerHTML = `<thead><tr><th>Teacher</th><th>Sessions</th><th>Completed</th><th>Cancelled</th><th>Student seats</th><th>Parent summaries</th></tr></thead><tbody>` +
+      data.teachers.map((t) => `<tr><td><a class="drill" data-teacher="${t.teacherid}">${esc(nameOf(t.teacherid))}</a></td><td>${t.session_count}</td><td>${t.completed_count}</td><td>${t.cancelled_count}</td><td>${t.student_total}</td><td>${t.summary_total}</td></tr>`).join("") + "</tbody>";
+    $("#teachers-panel").hidden = !data.teachers.length;
+
+    $("#audit").innerHTML = `<thead><tr><th>When</th><th>Action</th><th>User</th><th>Detail</th></tr></thead><tbody>` +
+      data.audit.map((a) => `<tr><td>${dt(a.timecreated)}</td><td>${esc(a.action)}</td><td>${a.userid ? esc(nameOf(a.userid)) : "—"}</td><td>${esc((a.detail || a.note || a.info || "")).slice(0, 140)}</td></tr>`).join("") + "</tbody>";
+    $("#audit-panel").hidden = !data.audit.length;
+
+    document.querySelectorAll("a.drill").forEach((a) => a.addEventListener("click", () => loadDrill(a.dataset)));
+    $("#status").hidden = true;
+  }
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading report…";
+    try {
+      data = await fetchReport("report=summary");
+      if (!data.ready) { $("#status").textContent = "Live-session schema is not installed on this Moodle."; return; }
+      $("#f-from").value = data.filters.from; $("#f-to").value = data.filters.to;
+      render();
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load the report: " + e.message; }
+  }
+
+  async function loadDrill({ session, teacher }) {
+    $("#drill-title").textContent = session ? `Students in session #${session}` : `Students with ${((data||{}).names||{})[teacher] || "teacher " + teacher}`;
+    $("#drill-panel").hidden = false;
+    $("#drill").innerHTML = "<tbody><tr><td>Loading…</td></tr></tbody>";
+    try {
+      const d = await fetchReport("report=attendance&" + (session ? "drillsessionid=" + session : "drillteacherid=" + teacher));
+      const nameOf = (id) => (d.names || {})[id] || ("User " + id);
+      $("#drill").innerHTML = `<thead><tr><th>Session</th><th>Title</th><th>Start</th><th>Student</th><th>Attendance</th><th>Participation</th><th>Tech issue</th><th>Joined</th></tr></thead><tbody>` +
+        d.rows.map((r) => `<tr><td>${r.sessionid}</td><td>${esc(r.title)}</td><td>${dt(r.scheduled_start)}</td><td>${esc(nameOf(r.studentid))}</td><td>${r.attendance_status ? `<span class="pill ${r.attendance_status === "absent" ? "cancelled" : r.attendance_status === "late" ? "warnp" : "completed"}">${esc(r.attendance_status)}</span>` : "—"}</td><td>${esc(r.participation_status || "—")}</td><td>${Number(r.technical_issue) ? "yes" : "—"}</td><td>${dt(r.join_time)}</td></tr>`).join("") + "</tbody>";
+      $("#drill-panel").scrollIntoView({ behavior: "smooth" });
+    } catch (e) { $("#drill").innerHTML = `<tbody><tr><td>Drill failed: ${esc(e.message)}</td></tr></tbody>`; }
+  }
+
+  function downloadCsv(filename, headers, rows) {
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const blob = new Blob([[headers.map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#csv-sessions").addEventListener("click", () => {
+    if (!data) return;
+    const nameOf = (id) => (data.names || {})[id] || ("User " + id);
+    downloadCsv("live-session-report.csv",
+      ["sessionid","title","teacher","start","end","status","students","attendance","present","late","absent","parent_summaries","parent_recordings","qa_status","qa_score","coaching_status"],
+      data.sessions.map((s) => [s.id, s.title, nameOf(s.teacherid), dt(s.scheduled_start), dt(s.scheduled_end), s.status, s.student_count, s.attendance_count, s.present_count, s.late_count, s.absent_count, s.visible_summary_count, s.visible_recording_count, s.qa_status || "", s.qa_score || 0, s.qa_coaching_status || ""]));
+  });
+  $("#csv-attendance").addEventListener("click", async () => {
+    try {
+      const d = await fetchReport("report=attendance");
+      const nameOf = (id) => (d.names || {})[id] || ("User " + id);
+      downloadCsv("live-attendance-report.csv",
+        ["sessionid","title","teacher","start","studentid","student","attendance","participation","technical_issue","join_time"],
+        d.rows.map((r) => [r.sessionid, r.title, nameOf(r.teacherid), dt(r.scheduled_start), r.studentid, nameOf(r.studentid), r.attendance_status || "", r.participation_status || "", Number(r.technical_issue) ? "yes" : "", dt(r.join_time)]));
+    } catch (e) { alert("Attendance export failed: " + e.message); }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

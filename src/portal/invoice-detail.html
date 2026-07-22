@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice detail · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:14px 0 8px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px;display:block}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);margin:0 4px 4px 0}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--ink2);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  .kv{display:grid;grid-template-columns:110px minmax(0,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .kv div{padding:8px 10px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700}
+  .kv div:nth-child(odd){background:var(--bg);color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase}
+  .kv div:nth-last-child(-n+2){border-bottom:0}
+  .empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;font-size:13px;margin-bottom:10px}
+  form.act{margin-top:14px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  form.act.inline{margin:6px 0 0;padding:8px}
+  form.act label{display:block;font-size:11px;font-weight:900;color:var(--ink2);text-transform:uppercase;margin:8px 0 3px}
+  form.act input,form.act select{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.act button,button.btn{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  form.act button.danger,button.btn.danger{background:var(--red)}
+  form.act button.quiet,button.btn.quiet{background:var(--sky);color:var(--ink2)}
+  form.act button:disabled{opacity:.55;cursor:wait}
+  .formgrid{display:grid;grid-template-columns:2fr 70px 100px 100px 100px;gap:8px}
+  .formgrid2{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  @media(max-width:960px){.grid,.formgrid,.formgrid2{display:block}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Invoice detail</small></div>
+  <div class="note">Token-authenticated · parallel-run of invoice_detail.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Invoice detail</h1><p class="sub" id="subtitle">Lines, payments, plans, assistance, and corrections for one invoice.</p></div>
+  <div id="status" class="status">Loading invoice…</div>
+  <div class="grid" id="layout" hidden>
+    <div>
+      <div class="panel" id="lines-panel"><h2>Invoice lines</h2><div id="line-form-slot"></div><div id="lines"></div></div>
+      <div class="panel"><h2>Payments and receipts</h2><div id="payments"></div></div>
+      <div class="panel"><h2>Payment plans and scheduled installments</h2><div id="plans"></div></div>
+      <div class="panel"><h2>Scholarships, sponsorships, and marketplace payout readiness</h2><div id="assistance"></div></div>
+      <div class="panel"><h2>Credits, write-offs, and refunds</h2><div id="corrections"></div></div>
+    </div>
+    <div>
+      <div class="panel"><h2>Invoice summary</h2><div id="summary"></div><div id="summary-actions"></div></div>
+      <div class="panel" id="sideforms-panel"><h2>Record and adjust</h2><div id="sideforms"></div></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short", year:"numeric" }) : "";
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+  const words = (v) => String(v || "").replace(/_/g, " ");
+  const today = () => new Date().toISOString().slice(0, 10);
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Deep-link context: invoiceid comes through the launch URL (portal_launch
+  // forwards whitelisted int params; append &invoiceid=N manually until it is
+  // whitelisted there). workspaceid/consumer keep the same tenant scoping the
+  // legacy page resolves from its URL params.
+  const ctx = {};
+  for (const p of ["invoiceid", "workspaceid", "consumer"]) { const v = (qs.get(p) || "").trim(); if (v) ctx[p] = v; }
+  if (!ctx.invoiceid) { $("#status").className = "status error"; $("#status").textContent = "No invoice selected — open this page with ?invoiceid=<id> (e.g. from the invoices list)."; return; }
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "invoice-detail", token, ...ctx });
+
+  let data = null;
+  let editLineId = 0;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) {
+        let msg = "HTTP " + r.status;
+        try { const e = await r.json(); if (e && e.error) msg = e.error; } catch (_) {}
+        throw new Error(msg);
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  async function post(payload, btn) {
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(url(), { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || btn.textContent; }
+    }
+  }
+
+  // Every action form posts do=<action> + its named fields. data-confirm forms
+  // (voids, reversals, write-offs, refunds, cancels, revokes) ask first.
+  function bindForms(root) {
+    root.querySelectorAll("form.act").forEach((f) => f.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      if (f.dataset.confirm && !window.confirm(f.dataset.confirm)) return;
+      const payload = { do: f.dataset.do };
+      for (const el of f.elements) { if (el.name) payload[el.name] = el.value; }
+      post(payload, f.querySelector("button[type=submit]"));
+    }));
+  }
+
+  const field = (label, inner) => `<label>${esc(label)}</label>${inner}`;
+  const input = (name, value, ph, type) => `<input type="${type || "text"}" name="${name}" value="${esc(value ?? "")}" placeholder="${esc(ph || "")}">`;
+
+  function lineFormHtml(inv) {
+    const l = (data.lines || []).find((x) => x.id === editLineId) || null;
+    return `
+      <form class="act" data-do="save_line">
+        <input type="hidden" name="lineid" value="${l ? l.id : 0}">
+        <div class="formgrid">
+          <div>${field("Description", input("description", l ? l.description : "", "Tuition"))}</div>
+          <div>${field("Qty", input("quantity", l ? l.quantity : "1"))}</div>
+          <div>${field("Unit", input("unitamount", l ? l.unitamount : "0.00"))}</div>
+          <div>${field("Discount", input("discountamount", l ? l.discountamount : "0.00"))}</div>
+          <div>${field("Tax", input("taxamount", l ? l.taxamount : "0.00"))}</div>
+        </div>
+        <div class="formgrid2">
+          <div>${field("Offering ID", input("offeringid", l ? l.offeringid : 0))}</div>
+          <div>${field("Request ID", input("requestid", l ? l.requestid : 0))}</div>
+          <div>${field("Moodle course", input("moodlecourseid", l ? l.moodlecourseid : 0))}</div>
+          <div>${field("Teacher ID", input("teacherid", l ? l.teacherid : 0))}</div>
+        </div>
+        <button type="submit">${l ? "Save line" : "Add line"}</button>
+        ${l ? '<button type="button" class="quiet" id="cancel-edit">Cancel edit</button>' : ""}
+      </form>`;
+  }
+
+  function linesHtml(d) {
+    const inv = d.invoice;
+    if (!d.lines.length) return "<div class='empty'>No invoice lines yet.</div>";
+    const rows = d.lines.map((l) => `
+      <tr>
+        <td>${l.linesequence}</td>
+        <td>${esc(l.description)}${l.status !== "active" ? `<span class="muted">${esc(l.status)}</span>` : ""}</td>
+        <td>${esc(l.quantity)}</td><td>${esc(l.unitamount)}</td><td>${esc(l.discountamount)}</td><td>${esc(l.taxamount)}</td><td>${esc(l.linetotal)}</td>
+        <td><span class="muted">Offering ${l.offeringid} / Request ${l.requestid} / Course ${l.moodlecourseid} / Teacher ${l.teacherid}${l.teacherid && d.names[l.teacherid] ? " (" + esc(d.names[l.teacherid]) + ")" : ""}</span></td>
+        <td>${inv.status === "draft" && l.status === "active" ? `
+          <button class="btn quiet" data-editline="${l.id}" type="button">Edit</button>
+          <form class="act inline" data-do="void_line" data-confirm="Void this invoice line?">
+            <input type="hidden" name="lineid" value="${l.id}">
+            <input type="hidden" name="description" value="${esc(l.description)}">
+            <input type="hidden" name="quantity" value="${esc(l.quantity)}">
+            <input type="hidden" name="unitamount" value="${esc(l.unitamount)}">
+            <input type="hidden" name="discountamount" value="${esc(l.discountamount)}">
+            <input type="hidden" name="taxamount" value="${esc(l.taxamount)}">
+            <button class="danger" type="submit">Void line</button>
+          </form>` : ""}</td>
+      </tr>`).join("");
+    return `<table><thead><tr><th>#</th><th>Description</th><th>Qty</th><th>Unit</th><th>Discount</th><th>Tax</th><th>Total</th><th>Sources</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  function paymentsHtml(d) {
+    if (!d.payments.length) return "<div class='empty'>No payments recorded yet.</div>";
+    const rows = d.payments.map((p) => `
+      <tr>
+        <td><span class="pill">${esc(p.receiptnumber)}</span></td>
+        <td>${esc(p.method_label)}</td>
+        <td>${esc(p.currency + " " + p.allocationamount)}</td>
+        <td><span class="pill${p.status === "reversed" ? " bad" : ""}">${esc(p.status)}</span><span class="muted">Allocation ${esc(p.allocationstatus)}</span></td>
+        <td>${p.receivedat ? esc(dateOnly(p.receivedat)) : "Not set"}</td>
+        <td>${esc(p.reference)}</td>
+        <td>${p.status !== "reversed" ? `
+          <form class="act inline" data-do="send_receipt_notice" data-confirm="Email this receipt notice to the billing contacts?">
+            <input type="hidden" name="paymentid" value="${p.id}"><button type="submit">Send receipt</button>
+          </form>
+          <form class="act inline" data-do="mark_payment_disputed">
+            <input type="hidden" name="paymentid" value="${p.id}">
+            <input name="paymentdisputereason" placeholder="Dispute reason"><button class="quiet" type="submit">Dispute</button>
+          </form>
+          <form class="act inline" data-do="reverse_payment" data-confirm="Reverse this payment? This backs the money out of the invoice.">
+            <input type="hidden" name="paymentid" value="${p.id}">
+            <input name="reversalreason" placeholder="Reversal reason"><button class="danger" type="submit">Reverse</button>
+          </form>` : ""}</td>
+      </tr>`).join("");
+    return `<table><thead><tr><th>Receipt</th><th>Method</th><th>Amount</th><th>Status</th><th>Received</th><th>Reference</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  function plansHtml(d) {
+    if (!d.planschemaready) return "<div class='empty'>Payment plan schema is not ready. Run the local_prequran Moodle upgrade.</div>";
+    if (!d.paymentplans.length) return "<div class='empty'>No payment plan has been scheduled for this invoice.</div>";
+    return d.paymentplans.map((plan) => {
+      const inst = plan.installments.map((i) => `
+        <tr><td>${i.installmentnumber}</td><td><span class="pill">${esc(i.status_label)}</span></td>
+        <td>${i.dueat ? esc(dateOnly(i.dueat)) : "Not set"}</td><td>${esc(i.currency + " " + i.amount)}</td>
+        <td>${esc(i.paidamount)}</td><td>${esc(i.balancedue)}</td></tr>`).join("");
+      return `
+      <div style="margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)">
+        <span class="pill">${esc(plan.plannumber)}</span><span class="pill">${esc(plan.status_label)}</span>
+        <span class="muted">${esc(plan.currency + " " + plan.principalamount)} over ${plan.installmentcount} installments</span>
+        ${plan.termsnote.trim() ? `<span class="muted">${esc(plan.termsnote)}</span>` : ""}
+        ${["draft", "active", "past_due"].includes(plan.status) ? `
+          <form class="act inline" data-do="cancel_payment_plan" data-confirm="Cancel this payment plan and its remaining installments?">
+            <input type="hidden" name="planid" value="${plan.id}">
+            <input name="cancelreason" placeholder="Cancellation reason"><button class="danger" type="submit">Cancel plan</button>
+          </form>` : ""}
+        ${inst ? `<table style="margin-top:8px"><thead><tr><th>#</th><th>Status</th><th>Due</th><th>Amount</th><th>Paid</th><th>Balance</th></tr></thead><tbody>${inst}</tbody></table>` : ""}
+      </div>`;
+    }).join("");
+  }
+
+  function assistanceHtml(d) {
+    if (!d.assistanceschemaready) return "<div class='empty'>Scholarship, sponsorship, and payout readiness schema is not ready. Run the local_prequran Moodle upgrade.</div>";
+    let h = "";
+    if (!d.scholarshipawards.length && !d.sponsorcommitments.length && !d.marketplacepayouts.length) {
+      h += "<div class='empty'>No scholarship awards, sponsor commitments, or marketplace payout readiness records have been added yet.</div>";
+    }
+    if (d.scholarshipawards.length) {
+      h += `<h3>Scholarship awards</h3><table><thead><tr><th>Award</th><th>Type</th><th>Source</th><th>Amount</th><th>Status</th><th>Reason</th></tr></thead><tbody>` +
+        d.scholarshipawards.map((a) => `<tr><td>${esc(a.awardnumber)}<span class="muted">Credit #${a.creditnoteid}</span></td><td>${esc(words(a.awardtype))}</td><td>${esc(a.fundingsource)}</td><td>${esc(a.currency + " " + a.amount)}</td><td><span class="pill">${esc(a.status)}</span></td><td>${esc(a.reason)}</td></tr>`).join("") + "</tbody></table>";
+    }
+    if (d.sponsorcommitments.length) {
+      h += `<h3>Sponsor commitments</h3><table><thead><tr><th>Commitment</th><th>Sponsor</th><th>Committed</th><th>Received</th><th>Balance</th><th>Status</th></tr></thead><tbody>` +
+        d.sponsorcommitments.map((c) => `<tr><td>${esc(c.commitmentnumber)}<span class="muted">${c.expectedat ? "Expected " + esc(dateOnly(c.expectedat)) : "No expected date"}</span></td><td>${esc(c.sponsorname || ("Sponsor account #" + c.sponsoraccountid))}</td><td>${esc(c.currency + " " + c.committedamount)}</td><td>${esc(c.receivedamount)}</td><td>${esc(c.balanceamount)}</td><td><span class="pill">${esc(c.status)}</span></td></tr>`).join("") + "</tbody></table>";
+    }
+    if (d.marketplacepayouts.length) {
+      h += `<h3>Marketplace payout readiness</h3><table><thead><tr><th>Payout</th><th>Teacher</th><th>Gross</th><th>Platform fee</th><th>Net payout</th><th>Status</th></tr></thead><tbody>` +
+        d.marketplacepayouts.map((p) => `<tr><td>${esc(p.payoutnumber)}<span class="muted">Request #${p.requestid}</span></td><td>#${p.teacherid}${d.names[p.teacherid] ? " " + esc(d.names[p.teacherid]) : ""}</td><td>${esc(p.currency + " " + p.grossamount)}</td><td>${esc(p.platformfee)}</td><td>${esc(p.payoutamount)}</td><td><span class="pill">${esc(words(p.status))}</span></td></tr>`).join("") + "</tbody></table>";
+    }
+    return h;
+  }
+
+  function correctionsHtml(d) {
+    if (!d.credits.length && !d.refunds.length) return "<div class='empty'>No credits, write-offs, or refunds recorded yet.</div>";
+    let h = "";
+    if (d.credits.length) {
+      h += `<table><thead><tr><th>Credit</th><th>Type</th><th>Amount</th><th>Status</th><th>Reason</th><th>Issued</th></tr></thead><tbody>` +
+        d.credits.map((c) => `<tr><td>${esc(c.creditnumber)}</td><td>${esc(words(c.credittype))}</td><td>${esc(c.currency + " " + c.amount)}</td><td><span class="pill">${esc(c.status)}</span></td><td>${esc(c.reason)}</td><td>${c.issuedat ? esc(dateOnly(c.issuedat)) : "Not set"}</td></tr>`).join("") + "</tbody></table>";
+    }
+    if (d.refunds.length) {
+      h += `<table style="margin-top:10px"><thead><tr><th>Refund</th><th>Payment</th><th>Amount</th><th>Status</th><th>Reason</th><th>Refunded</th></tr></thead><tbody>` +
+        d.refunds.map((r) => `<tr><td>${esc(r.refundnumber)}</td><td>#${r.paymentid}</td><td>${esc(r.currency + " " + r.amount)}</td><td><span class="pill">${esc(r.status)}</span></td><td>${esc(r.reason)}</td><td>${r.refundedat ? esc(dateOnly(r.refundedat)) : "Not set"}</td></tr>`).join("") + "</tbody></table>";
+    }
+    return h;
+  }
+
+  function summaryHtml(d) {
+    const inv = d.invoice;
+    return `
+      <div style="margin:0 0 10px"><span class="pill">${esc(inv.status_label)}</span><span class="pill">${esc(inv.currency)}</span></div>
+      <div class="kv">
+        <div>Subtotal</div><div>${esc(inv.subtotal)}</div>
+        <div>Discount</div><div>${esc(inv.discounttotal)}</div>
+        <div>Tax</div><div>${esc(inv.taxtotal)}</div>
+        <div>Total</div><div>${esc(inv.total)}</div>
+        <div>Paid</div><div>${esc(inv.paidamount)}</div>
+        <div>Credited</div><div>${esc(inv.creditedamount)}</div>
+        <div>Balance</div><div>${esc(inv.balancedue)}</div>
+        <div>Issued</div><div>${inv.issuedat ? esc(when(inv.issuedat)) : "Not issued"}</div>
+        <div>Due</div><div>${inv.dueat ? esc(dateOnly(inv.dueat)) : "Not issued"}</div>
+      </div>`;
+  }
+
+  function summaryActionsHtml(d) {
+    const s = d.invoice.status;
+    let h = "";
+    if (s === "draft") h += `<form class="act inline" data-do="issue" data-confirm="Issue this invoice? Totals lock and it becomes billable."><button type="submit">Issue invoice</button></form>`;
+    if (s === "issued") h += `<form class="act inline" data-do="mark_sent"><button type="submit">Mark sent</button></form>`;
+    if (["issued", "sent", "partially_paid", "paid"].includes(s)) {
+      h += `<form class="act inline" data-do="send_invoice_notice" data-confirm="Email an invoice notice to the billing contacts?"><button type="submit">Send invoice notice</button></form>`;
+      h += `<form class="act inline" data-do="revoke_invoice_links" data-confirm="Revoke all secure invoice links already shared with the family?"><button class="danger" type="submit">Revoke invoice links</button></form>`;
+    }
+    return h;
+  }
+
+  function sideFormsHtml(d) {
+    const inv = d.invoice;
+    const s = inv.status;
+    let h = "";
+    if (d.paymentschemaready && ["issued", "sent", "partially_paid", "paid"].includes(s)) {
+      h += `<form class="act" data-do="record_payment"><h3 style="margin-top:0">Record payment</h3>
+        ${field("Amount", input("paymentamount", inv.balancedue))}
+        ${field("Method", `<select name="paymentmethod">${Object.entries(d.paymentmethods).map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join("")}</select>`)}
+        ${field("Reference", input("paymentreference", "", "Bank ref, check no, mobile money id"))}
+        ${field("Received date", input("receiveddate", today(), "", "date"))}
+        ${field("Notes", input("paymentnotes", "", "Optional receipt note"))}
+        <button type="submit">Record payment</button></form>`;
+    } else if (!d.paymentschemaready) {
+      h += "<div class='empty'>Payment schema is not ready. Run the local_prequran Moodle upgrade.</div>";
+    }
+    if (d.planschemaready && !d.activeplan && ["issued", "sent", "partially_paid"].includes(s) && inv.balanceduecents > 0) {
+      const firstDue = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
+      h += `<form class="act" data-do="create_payment_plan"><h3 style="margin-top:0">Create payment plan</h3>
+        ${field("Installments", `<input type="number" min="2" max="24" name="installmentcount" value="3">`)}
+        ${field("Frequency", `<select name="frequency"><option value="monthly">Monthly</option><option value="biweekly">Every 2 weeks</option><option value="weekly">Weekly</option></select>`)}
+        ${field("First due date", input("firstduedate", firstDue, "", "date"))}
+        ${field("Terms note", input("termsnote", "", "Optional agreement note"))}
+        <button type="submit">Schedule installments</button></form>`;
+    } else if (d.planschemaready && d.activeplan) {
+      h += "<div class='empty'>This invoice already has an active payment plan.</div>";
+    }
+    if (d.assistanceschemaready && s !== "void") {
+      h += `<form class="act" data-do="create_scholarship_award" data-confirm="Approve this scholarship? A credit is applied to the invoice."><h3 style="margin-top:0">Scholarship award</h3>
+        ${field("Amount", input("scholarshipamount", inv.balancedue))}
+        ${field("Award type", `<select name="awardtype"><option value="need_based">Need based</option><option value="merit">Merit</option><option value="hardship">Hardship</option><option value="staff">Staff approved</option></select>`)}
+        ${field("Funding source", input("fundingsource", "", "Fund, donor, program, or internal"))}
+        ${field("Required reason", input("scholarshipreason", "", "Approval note"))}
+        <button type="submit">Approve scholarship</button></form>`;
+      h += `<form class="act" data-do="create_sponsor_commitment"><h3 style="margin-top:0">Sponsor commitment</h3>
+        ${field("Sponsor account", `<select name="sponsoraccountid">${d.sponsoraccounts.map((sp) => `<option value="${sp.id}">${esc(sp.displayname)}</option>`).join("")}</select>`)}
+        ${field("Amount", input("sponsoramount", inv.balancedue))}
+        ${field("Expected date", input("sponsorexpecteddate", "", "", "date"))}
+        ${field("Terms note", input("sponsortermsnote", "", "Optional sponsor terms"))}
+        <button type="submit" ${!d.sponsoraccounts.length ? "disabled" : ""}>Record sponsor pledge</button>
+        ${!d.sponsoraccounts.length ? '<span class="muted">Create a sponsor billing account before recording a sponsor commitment.</span>' : ""}</form>`;
+      h += `<form class="act" data-do="create_marketplace_payout"><h3 style="margin-top:0">Marketplace payout readiness</h3>
+        ${field("Teacher ID", input("payoutteacherid", "", "Auto from invoice line when available"))}
+        ${field("Gross amount", input("payoutgrossamount", inv.paidamount))}
+        ${field("Platform fee", input("payoutplatformfee", "0.00"))}
+        ${field("Notes", input("payoutnotes", "", "Payout basis or review note"))}
+        <button type="submit">Mark payout ready</button></form>`;
+    }
+    if (d.correctionschemaready && s !== "void") {
+      h += `<form class="act" data-do="create_credit_note" data-confirm="Create this credit note against the invoice balance?"><h3 style="margin-top:0">Credit note</h3>
+        ${field("Amount", input("creditamount", inv.balancedue))}
+        ${field("Reason code", input("creditreasoncode", "manual_correction"))}
+        ${field("Required reason", input("creditreason", "", "Why this credit is being issued"))}
+        <button type="submit">Create credit</button></form>`;
+      h += `<form class="act" data-do="record_write_off" data-confirm="Write off this amount? The balance is forgiven permanently."><h3 style="margin-top:0">Write-off</h3>
+        ${field("Amount", input("writeoffamount", inv.balancedue))}
+        ${field("Required reason", input("writeoffreason", "", "Approval or collection reason"))}
+        <button class="danger" type="submit">Record write-off</button></form>`;
+      if (d.payments.length) {
+        h += `<form class="act" data-do="record_refund" data-confirm="Record this refund against the selected payment?"><h3 style="margin-top:0">Refund</h3>
+          ${field("Original payment", `<select name="refundpaymentid">${d.payments.map((p) => `<option value="${p.id}">${esc(p.receiptnumber + " / " + p.currency + " " + p.amount)}</option>`).join("")}</select>`)}
+          ${field("Amount", input("refundamount", "", "0.00"))}
+          ${field("Method", input("refundmethod", "manual"))}
+          ${field("Reference", input("refundreference", "", "Refund reference"))}
+          ${field("Refund date", input("refunddate", today(), "", "date"))}
+          ${field("Required reason", input("refundreason", "", "Why refund is being recorded"))}
+          <button type="submit">Record refund</button></form>`;
+      }
+      h += `<form class="act" data-do="mark_invoice_disputed"><h3 style="margin-top:0">Dispute</h3>
+        ${field("Required reason", input("disputereason", "", "What is disputed"))}
+        <button type="submit">Mark invoice disputed</button></form>`;
+    } else if (!d.correctionschemaready) {
+      h += "<div class='empty'>Correction schema is not ready. Run the local_prequran Moodle upgrade.</div>";
+    }
+    if (["draft", "issued", "sent"].includes(s)) {
+      h += `<form class="act" data-do="void_invoice" data-confirm="Void this entire invoice? This cannot be undone."><h3 style="margin-top:0">Void invoice</h3>
+        ${field("Void reason", input("voidreason", "", "Optional"))}
+        <button class="danger" type="submit">Void invoice</button></form>`;
+    }
+    return h;
+  }
+
+  function render(d) {
+    const inv = d.invoice;
+    $("#title").textContent = inv.invoicenumber !== "" ? inv.invoicenumber : "Draft invoice #" + inv.id;
+    $("#subtitle").textContent = (d.account ? d.account.displayname : "") + " / " + (d.student ? d.student.name : "No student assigned");
+    $("#line-form-slot").innerHTML = inv.status === "draft" ? lineFormHtml(inv) : "";
+    $("#lines").innerHTML = linesHtml(d);
+    $("#payments").innerHTML = paymentsHtml(d);
+    $("#plans").innerHTML = plansHtml(d);
+    $("#assistance").innerHTML = assistanceHtml(d);
+    $("#corrections").innerHTML = correctionsHtml(d);
+    $("#summary").innerHTML = summaryHtml(d);
+    $("#summary-actions").innerHTML = summaryActionsHtml(d);
+    $("#sideforms").innerHTML = sideFormsHtml(d);
+    bindForms(document);
+    document.querySelectorAll("[data-editline]").forEach((b) => b.addEventListener("click", () => {
+      editLineId = Number(b.dataset.editline);
+      $("#line-form-slot").innerHTML = lineFormHtml(inv);
+      bindForms($("#line-form-slot"));
+      const cancel = $("#cancel-edit");
+      if (cancel) cancel.addEventListener("click", () => { editLineId = 0; render(data); });
+      $("#line-form-slot").scrollIntoView({ behavior: "smooth", block: "center" });
+    }));
+    const cancel = $("#cancel-edit");
+    if (cancel) cancel.addEventListener("click", () => { editLineId = 0; render(data); });
+    $("#layout").hidden = false;
+    if ($("#status").classList.contains("status") && !$("#status").classList.contains("saved") && !$("#status").classList.contains("error")) $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

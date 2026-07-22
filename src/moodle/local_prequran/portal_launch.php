@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-11.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-12.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -90,6 +90,15 @@ $reports = [
     'course-transcript' => ['pqpl_any_authenticated', 'course-transcript.html'],
     'course-transcript-export' => ['pqpl_any_authenticated', 'course-transcript-export.html'],
     'course-transcript-official' => ['pqpl_any_authenticated', 'course-transcript-official.html'],
+    // Wave 7: finance family. Workspace-finance-admin and invoice-ownership
+    // gates live in the handlers with the exact legacy denial messages.
+    'finance-audit' => ['pqpl_any_authenticated', 'finance-audit.html'],
+    'finance-policy' => ['pqpl_any_authenticated', 'finance-policy.html'],
+    'payment-gateway-settings' => ['pqpl_any_authenticated', 'payment-gateway-settings.html'],
+    'finance-operations' => ['pqpl_any_authenticated', 'finance-operations.html'],
+    'invoice-detail' => ['pqpl_any_authenticated', 'invoice-detail.html'],
+    'invoice-view' => ['pqpl_any_authenticated', 'invoice-view.html'],
+    'payment-receipt' => ['pqpl_any_authenticated', 'payment-receipt.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);
@@ -113,7 +122,7 @@ $endpoint = $CFG->wwwroot . '/local/prequran/portal_data.php';
 $redirecturl = $base . '/' . $page . '?endpoint=' . urlencode($endpoint) . '&token=' . urlencode($token);
 // Forward deep-link context so "Review"-style links land on a preselected
 // record (e.g. live_sessions roster -> live-review with sessionid set).
-foreach (['sessionid', 'childid', 'studentid', 'workspaceid', 'threadid', 'requestid', 'teacher_requestid', 'existing_teacherid'] as $p) {
+foreach (['sessionid', 'childid', 'studentid', 'workspaceid', 'threadid', 'requestid', 'teacher_requestid', 'existing_teacherid', 'invoiceid', 'paymentid', 'teacherid'] as $p) {
     $v = optional_param($p, 0, PARAM_INT);
     if ($v > 0) {
         $redirecturl .= '&' . $p . '=' . $v;

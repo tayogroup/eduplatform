@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance audit · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .warn{padding:12px 14px;border-radius:8px;background:var(--amber-bg);color:var(--amber);font-weight:700;margin-bottom:12px}
+  form.filters{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;align-items:end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.4px}
+  .field input{width:100%;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--card);color:var(--ink);font:inherit;font-size:13px}
+  form.filters button{min-height:38px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:0 18px;font-weight:900;font-size:13px;cursor:pointer}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--ink2);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  td .sub2{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  td code{display:block;max-width:420px;overflow-wrap:anywhere;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-size:11px;color:var(--ink2)}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:700;margin-top:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Finance audit</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of finance_audit.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Finance Audit</h1><p class="sub">Invoice, payment, credit, refund, write-off, and receipt events.</p></div>
+  <div id="status" class="status">Loading finance audit events…</div>
+  <div class="panel" id="report-panel" hidden>
+    <div id="schema-warn" class="warn" hidden>Finance audit schema is not ready. Run the local_prequran Moodle upgrade.</div>
+    <form class="filters" id="filters">
+      <div class="field"><label>Student ID</label><input name="studentid" inputmode="numeric"></div>
+      <div class="field"><label>Consumer ID</label><input name="consumerid" inputmode="numeric"></div>
+      <div class="field"><label>Billing account</label><input name="billingaccountid" inputmode="numeric"></div>
+      <div class="field"><label>Invoice ID</label><input name="invoiceid" inputmode="numeric"></div>
+      <div class="field"><label>Payment ID</label><input name="paymentid" inputmode="numeric"></div>
+      <div class="field"><label>Admin ID</label><input name="actorid" inputmode="numeric"></div>
+      <div class="field"><label>Action</label><input name="actionfilter"></div>
+      <div class="field"><label>From</label><input type="date" name="datefrom"></div>
+      <div class="field"><label>To</label><input type="date" name="dateto"></div>
+      <button type="submit">Filter</button>
+    </form>
+    <div id="empty" class="empty" hidden>No finance audit events found.</div>
+    <div class="tablewrap" id="tablewrap" hidden>
+      <table>
+        <thead><tr><th>Time</th><th>Action</th><th>Targets</th><th>Actor</th><th>Details</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const FILTERS = ["studentid", "consumerid", "billingaccountid", "invoiceid", "paymentid", "actorid", "actionfilter", "datefrom", "dateto"];
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Same workspace/consumer context params the legacy page carries in its URL.
+  const params = (extra) => {
+    const p = new URLSearchParams({ report: "finance-audit", token, ...extra });
+    if (qs.get("workspaceid")) p.set("workspaceid", qs.get("workspaceid"));
+    if (qs.get("consumer")) p.set("consumer", qs.get("consumer"));
+    return p;
+  };
+
+  const filterValues = () => {
+    const f = document.getElementById("filters");
+    const out = {};
+    FILTERS.forEach((k) => { const v = (f.elements[k].value || "").trim(); if (v !== "") out[k] = v; });
+    return out;
+  };
+
+  async function load(filters) {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading finance audit events…";
+    try {
+      const r = await fetch(endpoint + "?" + params(filters));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const row = (r, names) => `
+    <tr>
+      <td>${esc(r.time_label)}</td>
+      <td>${esc(r.action)}<span class="sub2">${esc(r.targettype)} #${Number(r.targetid) || 0}</span></td>
+      <td>Student ${Number(r.studentid) || 0}${names[r.studentid] ? " · " + esc(names[r.studentid]) : ""}<span class="sub2">Account ${Number(r.billingaccountid) || 0} / Invoice ${Number(r.invoiceid) || 0} / Payment ${Number(r.paymentid) || 0}</span></td>
+      <td>${Number(r.actorid) || 0}${names[r.actorid] ? "<span class='sub2'>" + esc(names[r.actorid]) + "</span>" : ""}</td>
+      <td><code>${esc(r.details)}</code></td>
+    </tr>`;
+
+  function render(d) {
+    const names = d.names || {};
+    // Echo the server-cleaned filters back into the form.
+    const f = document.getElementById("filters");
+    FILTERS.forEach((k) => { const v = d.filters && d.filters[k]; f.elements[k].value = (v === 0 || v === "0" || v == null) ? "" : v; });
+    $("#schema-warn").hidden = !!d.schemaready;
+    const rows = d.rows || [];
+    $("#rows").innerHTML = rows.map((r) => row(r, names)).join("");
+    $("#tablewrap").hidden = !rows.length;
+    $("#empty").hidden = !!rows.length;
+    $("#report-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  document.getElementById("filters").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    load(filterValues());
+  });
+
+  // Initial load honors any filters carried on the launch URL.
+  const initial = {};
+  FILTERS.forEach((k) => { const v = (qs.get(k) || "").trim(); if (v !== "") initial[k] = v; });
+  const form = document.getElementById("filters");
+  Object.entries(initial).forEach(([k, v]) => { form.elements[k].value = v; });
+  load(initial);
+})();
+</script>
+</body>
+</html>

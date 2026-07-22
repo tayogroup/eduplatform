@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance policy · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .warn{padding:12px 14px;border-radius:8px;background:var(--amber-bg);color:var(--amber);font-weight:700;margin-bottom:12px}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+  .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.4px}
+  .field small{color:var(--muted);font-size:12px;line-height:1.4}
+  .field input,.field select{width:100%;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--card);color:var(--ink);font:inherit;font-size:13px}
+  button.save{margin-top:14px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:900;font-size:13px;cursor:pointer}
+  button.save:disabled{opacity:.55;cursor:wait}
+  .meta{display:grid;gap:9px}
+  .meta div{padding:10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .meta span{display:block;color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .meta strong{display:block;margin-top:4px;color:var(--ink);font-size:13px;overflow-wrap:anywhere}
+  .sidenote{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.45}
+  @media(max-width:900px){.grid,.formgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Finance policy settings</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of finance_policy.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Finance Policy Settings</h1><p class="sub" id="subtitle">Billing defaults before invoices affect enrollment.</p></div>
+  <div id="status" class="status">Loading finance policy…</div>
+  <div id="default-warn" class="warn" hidden>This workspace is using default finance policy values. Save explicit settings before invoice phases launch.</div>
+  <div class="grid" id="report" hidden>
+    <form class="panel" id="policy-form">
+      <h2>Billing Defaults</h2>
+      <div class="formgrid">
+        <div class="field">
+          <label>Default currency</label>
+          <input name="default_currency" maxlength="3">
+          <small>One invoice and one payment currency only. Cross-currency allocation remains out of scope.</small>
+        </div>
+        <div class="field"><label>Invoice number prefix</label><input name="invoice_number_prefix" maxlength="20"></div>
+        <div class="field"><label>Invoice due days</label><input type="number" min="0" max="365" name="invoice_due_days"></div>
+        <div class="field"><label>Invoice issue timing</label><select name="invoice_issue_timing"></select></div>
+        <div class="field">
+          <label>Payment required timing</label>
+          <select name="payment_required_timing"></select>
+          <small>Current recommendation: admin review. Automatic blocking comes later only after pilot.</small>
+        </div>
+        <div class="field"><label>Deposit requirement</label><select name="deposit_requirement"></select></div>
+        <div class="field"><label>Deposit amount</label><input name="deposit_amount" placeholder="Optional"></div>
+        <div class="field"><label>Student billing visibility</label><select name="student_billing_visibility"></select></div>
+        <div class="field"><label>Sponsor visibility</label><select name="sponsor_billing_visibility"></select></div>
+        <div class="field"><label>Hold balance threshold</label><input name="finance_hold_balance_threshold" placeholder="Optional"></div>
+        <div class="field"><label>Hold overdue days</label><input type="number" min="0" max="365" name="finance_hold_overdue_days"></div>
+        <div class="field"><label>Transcript hold</label><select name="transcript_hold_behavior"></select></div>
+        <div class="field"><label>Certificate hold</label><select name="certificate_hold_behavior"></select></div>
+        <div class="field"><label>Late fees</label><select name="late_fee_behavior"></select></div>
+        <div class="field"><label>Automatic access lockout</label><select name="automatic_access_lockout"></select></div>
+      </div>
+      <button class="save" type="submit">Save finance policy</button>
+    </form>
+    <aside class="panel">
+      <h2>Current Policy</h2>
+      <div class="meta">
+        <div><span>Source</span><strong id="meta-source"></strong></div>
+        <div><span>Version</span><strong id="meta-version"></strong></div>
+        <div><span>Hash</span><strong id="meta-hash"></strong></div>
+        <div><span>Last saved</span><strong id="meta-saved"></strong></div>
+      </div>
+      <p class="sidenote">Phase 2 does not create invoices or block enrollment. These settings provide an authoritative policy resolver for later invoice, payment, hold, and notification phases.</p>
+    </aside>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const SELECTS = ["invoice_issue_timing", "payment_required_timing", "deposit_requirement", "student_billing_visibility", "sponsor_billing_visibility", "transcript_hold_behavior", "certificate_hold_behavior", "late_fee_behavior", "automatic_access_lockout"];
+  const INPUTS = ["default_currency", "invoice_number_prefix", "invoice_due_days", "deposit_amount", "finance_hold_balance_threshold", "finance_hold_overdue_days"];
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Same workspace/consumer context params the legacy page carries in its URL.
+  const params = () => {
+    const p = new URLSearchParams({ report: "finance-policy", token });
+    if (qs.get("workspaceid")) p.set("workspaceid", qs.get("workspaceid"));
+    if (qs.get("consumer")) p.set("consumer", qs.get("consumer"));
+    return p;
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    $("#subtitle").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " " : "") + "billing defaults before invoices affect enrollment.";
+    const f = document.getElementById("policy-form");
+    SELECTS.forEach((name) => {
+      const opts = (d.allowed && d.allowed[name]) || [];
+      const selected = String(d.policy[name] ?? "");
+      f.elements[name].innerHTML = opts.map((o) => `<option value="${esc(o.value)}"${o.value === selected ? " selected" : ""}>${esc(o.label)}</option>`).join("");
+    });
+    INPUTS.forEach((name) => { f.elements[name].value = d.policy[name] ?? ""; });
+    $("#meta-source").textContent = d.policyinfo.source;
+    $("#meta-version").textContent = d.policyinfo.policyversion;
+    $("#meta-hash").textContent = d.policyinfo.policyhash;
+    $("#meta-saved").textContent = d.policyinfo.timemodified_label;
+    $("#default-warn").hidden = !d.policyinfo.defaultwarning;
+    $("#report").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  document.getElementById("policy-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button.save");
+    btn.disabled = true; btn.textContent = "Saving…";
+    const body = { do: "save_policy" };
+    SELECTS.concat(INPUTS).forEach((name) => { body[name] = f.elements[name].value; });
+    try {
+      const r = await fetch(endpoint + "?" + params(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Finance policy saved.";
+      await load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+    btn.disabled = false; btn.textContent = "Save finance policy";
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

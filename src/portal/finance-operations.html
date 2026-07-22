@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance operations · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .metric b{display:block;font-size:20px;color:var(--ink)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}
+  .metric.warn b{color:var(--amber)}
+  .metric.bad b{color:var(--red)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tab{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:8px;padding:7px 12px;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+  .tab[aria-current="true"]{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .toolbar label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .toolbar input{border:1px solid var(--line);border-radius:7px;padding:7px 10px;font:inherit;font-size:13px;width:120px;background:var(--card);color:var(--ink)}
+  .btn{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:900;font-size:13px;cursor:pointer}
+  .btn.ghost{background:var(--sky);color:var(--blue2)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:820px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  td b{display:block;color:var(--ink)}
+  td .sm{display:block;margin-top:2px;color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.paid{background:#e1f2ff;color:var(--blue2)}
+  .pill.due{background:var(--amber-bg);color:var(--amber)}
+  .pill.overdue{background:var(--red-bg);color:var(--red)}
+  .pill.neutral{background:var(--sky);color:var(--ink2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Finance operations</small></div>
+  <div class="note">Token-authenticated · parallel-run of finance_operations.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Finance operations</h1><p class="sub" id="subtitle">Workspace finance console — invoices, payments, plans and exception queues.</p></div>
+  <div id="status" class="status">Loading finance operations…</div>
+  <div class="metrics" id="metrics" hidden></div>
+  <div class="tabs" id="tabs" hidden></div>
+  <div class="panel" id="report-panel" hidden>
+    <div class="toolbar">
+      <h2 id="report-title" style="margin:0;flex:1">Report</h2>
+      <label for="wsid">Workspace ID</label>
+      <input id="wsid" type="number" min="0" placeholder="auto">
+      <button class="btn ghost" id="refresh" type="button">Refresh</button>
+      <button class="btn" id="export" type="button">Export CSV</button>
+    </div>
+    <p class="muted" id="rowcount"></p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>ID</th><th>Student</th><th>Reference</th><th>Status</th><th>Amounts</th><th>Details</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:12px">Read-only console: the legacy finance operations page defines no write actions, so this portal page makes no changes. Use invoices / student finance in Moodle for financial writes.</p>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let finreport = (qs.get("finreport") || "aging").replace(/[^a-z]/g, "");
+  let lastData = null;
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "finance-operations", token, finreport });
+    const ws = $("#wsid") && $("#wsid").value.trim();
+    if (ws) p.set("workspaceid", ws);
+    return endpoint + "?" + p;
+  };
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading finance operations…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  // NO green anywhere: paid/settled = blue, due/pending = amber,
+  // overdue/failed = red, everything else neutral sky.
+  const statusPill = (s) => {
+    const v = (s || "").toLowerCase();
+    if (!v) return "";
+    let cls = "neutral";
+    if (/overdue|fail|error|cancel|void|reject|default|blocked|escalat|breach/.test(v)) cls = "overdue";
+    else if (/due|pending|open|await|partial|scheduled|suggest|draft|hold|queued|sent/.test(v)) cls = "due";
+    else if (/paid|received|succeed|complete|settl|resolved|posted|approved|active|ok|pass|acknowledg/.test(v)) cls = "paid";
+    return `<span class="pill ${cls}">${esc(v.replace(/_/g, " "))}</span>`;
+  };
+
+  const metricCard = (val, label, cls) => `<div class="metric ${cls || ""}"><b>${esc(val)}</b><span>${esc(label)}</span></div>`;
+
+  const rowHtml = (r) => `
+    <tr>
+      <td><b>${esc(r.reconciliationid)}</b></td>
+      <td><b>${esc(r.student)}</b><span class="sm">${esc(r.email)}</span></td>
+      <td>${esc(r.reference)}<span class="sm">Invoice ${esc(r.refid)}</span></td>
+      <td>${statusPill(r.status)}</td>
+      <td>${esc(r.currency)} ${esc(r.amount)}<span class="sm">Paid ${esc(r.paid)}</span></td>
+      <td>${esc(r.detail)}<span class="sm">${esc(r.detailnote)}</span>${r.nextdueat ? `<span class="sm">Next due ${esc(dateOnly(r.nextdueat))}</span>` : ""}</td>
+    </tr>`;
+
+  function render(d) {
+    lastData = d;
+    const m = d.metrics || {};
+    $("#title").textContent = (d.context && d.context.workspace ? d.context.workspace + " — " : "") + "Finance operations";
+    $("#subtitle").textContent = d.context ? (d.context.consumer || "") + (d.context.domain ? " / " + d.context.domain : "") : "";
+    $("#metrics").innerHTML =
+      metricCard(m.open_invoices, "open invoices", "") +
+      metricCard(m.overdue_invoices, "overdue invoices", m.overdue_invoices ? "bad" : "") +
+      metricCard(m.payments_received, "payments received", "") +
+      metricCard(m.outstanding_balance, "outstanding balance", "warn") +
+      metricCard(m.paid_not_enrolled, "paid not enrolled", m.paid_not_enrolled ? "warn" : "") +
+      metricCard(m.enrolled_unpaid, "enrolled unpaid", m.enrolled_unpaid ? "warn" : "") +
+      metricCard(m.finance_holds, "finance holds", m.finance_holds ? "bad" : "");
+    $("#metrics").hidden = false;
+    $("#tabs").innerHTML = Object.entries(d.reports || {}).map(([key, label]) =>
+      `<button class="tab" type="button" data-key="${esc(key)}" aria-current="${key === d.finreport ? "true" : "false"}">${esc(label)}</button>`).join("");
+    $("#tabs").hidden = false;
+    document.querySelectorAll("#tabs .tab").forEach((b) => b.addEventListener("click", () => { finreport = b.dataset.key; load(); }));
+    $("#report-title").textContent = (d.reports && d.reports[d.finreport]) || "Report";
+    const rows = d.rows || [];
+    $("#rows").innerHTML = rows.map(rowHtml).join("") || `<tr><td colspan="6" class="muted">No report rows found.</td></tr>`;
+    $("#rowcount").textContent = rows.length < (d.rowstotal || 0)
+      ? `Showing first ${rows.length} of ${d.rowstotal} rows (same 100-row view as the legacy page).`
+      : `${rows.length} row${rows.length === 1 ? "" : "s"}.`;
+    $("#report-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  function exportCsv() {
+    if (!lastData) return;
+    const cols = ["reconciliationid", "student", "email", "reference", "refid", "status", "currency", "amount", "paid", "detail", "detailnote", "nextdueat"];
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const csv = [cols.join(",")].concat((lastData.rows || []).map((r) => cols.map((c) => cell(r[c])).join(","))).join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    a.download = "finance-" + (lastData.finreport || "report") + "-" + new Date().toISOString().slice(0, 10) + ".csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = "CSV exported (visible columns; the legacy page keeps the full-column export).";
+  }
+
+  $("#refresh").addEventListener("click", load);
+  $("#export").addEventListener("click", exportCsv);
+  load();
+})();
+</script>
+</body>
+</html>

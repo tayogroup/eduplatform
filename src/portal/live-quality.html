@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live session quality review · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:16px 0 8px;font-size:14px;color:var(--ink2)}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .metric b{display:block;font-size:20px;color:var(--blue2)}
+  .metric span{display:block;margin-top:4px;color:var(--muted);font-size:12px;font-weight:700}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.passed{background:#e1f2ff;color:var(--blue2)}
+  .pill.not_reviewed{background:var(--sky);color:var(--ink2)}
+  .pill.needs_coaching{background:var(--amber-bg);color:var(--amber)}
+  .pill.serious_issue{background:var(--red-bg);color:var(--red)}
+  .pill.plain{background:var(--sky);color:var(--ink2);margin-left:0}
+  table{width:100%;border-collapse:collapse;background:var(--card)}
+  th,td{padding:10px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--ink2);background:var(--bg);font-weight:900}
+  a{color:var(--blue2)}
+  a.btn{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px}
+  a.btn:hover{border-color:var(--blue2)}
+  .filter{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .filter label{font-size:12px;font-weight:800;color:var(--ink2)}
+  select,textarea,input[type=date]{border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+  .field select,.field textarea,.field input{width:100%}
+  .field textarea{min-height:90px;resize:vertical}
+  .checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .item{border:1px solid var(--line);border-radius:8px;padding:12px;background:var(--bg)}
+  .item strong{display:block;font-size:12px;color:var(--ink2);margin-bottom:6px}
+  .item select{width:100%}
+  .loop{margin-top:14px;padding:14px;border:1px solid var(--amber);border-radius:10px;background:var(--amber-bg)}
+  .loop.lead{border-color:var(--blue2);background:var(--sky)}
+  button.save{margin-top:12px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:900;font-size:13px;cursor:pointer}
+  button.save:disabled{opacity:.55;cursor:wait}
+  @media(max-width:820px){.grid,.checklist{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live session quality review</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_quality.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Live Session Quality Review</h1><p class="sub" id="subtitle">Score sessions against the QA checklist. Analytics reads what you save here.</p></div>
+  <div id="status" class="status">Loading quality review…</div>
+  <div class="panel" id="queue-panel" hidden>
+    <h2>Review queue</h2>
+    <div class="filter">
+      <label for="qa-filter">QA status</label>
+      <select id="qa-filter"><option value="">All sessions</option></select>
+    </div>
+    <div id="queue"></div>
+  </div>
+  <div id="review" hidden>
+    <div class="metrics" id="metrics"></div>
+    <form id="qa-form">
+      <div class="panel">
+        <h2>Quality outcome</h2>
+        <div class="grid">
+          <div class="field"><label for="qa_status">QA status</label><select id="qa_status" name="qa_status"></select></div>
+          <div class="field"><label>Last reviewed</label><div class="pill plain" id="last-reviewed">Not reviewed yet</div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Checklist</h2>
+        <div class="checklist" id="checklist"></div>
+      </div>
+      <div class="panel">
+        <h2>Notes</h2>
+        <div class="grid">
+          <div class="field"><label for="qa_notes">Quality notes</label><textarea id="qa_notes"></textarea></div>
+          <div class="field"><label for="qa_coaching_notes">Coaching notes</label><textarea id="qa_coaching_notes"></textarea></div>
+        </div>
+        <div class="loop" id="coaching-panel" hidden>
+          <h2>Teacher coaching loop</h2>
+          <div class="grid">
+            <div class="field"><label for="qa_coaching_status">Coaching status</label><select id="qa_coaching_status"></select></div>
+            <div class="field"><label for="qa_coaching_priority">Priority</label><select id="qa_coaching_priority"></select></div>
+            <div class="field"><label for="qa_coaching_due_date">Due date</label><input type="date" id="qa_coaching_due_date"></div>
+            <div class="field"><label>Teacher acknowledgement</label><div class="pill plain" id="coach-ack">Not acknowledged</div></div>
+          </div>
+        </div>
+        <div class="loop lead" id="leadership-panel" hidden>
+          <h2>Leadership review</h2>
+          <div class="grid">
+            <div class="field"><label for="leadership_review_status">Leadership status</label><select id="leadership_review_status"></select></div>
+            <div class="field"><label>Review timeline</label><div class="pill plain" id="lead-timeline">No leadership review activity</div></div>
+            <div class="field"><label for="leadership_review_reason">Leadership review reason</label><textarea id="leadership_review_reason"></textarea></div>
+            <div class="field"><label for="leadership_review_notes">Leadership notes</label><textarea id="leadership_review_notes"></textarea></div>
+          </div>
+        </div>
+        <button class="save" type="submit">Save quality review</button>
+      </div>
+    </form>
+    <div class="panel">
+      <h2>Class evidence</h2>
+      <div id="evidence"></div>
+      <h3>Recordings</h3>
+      <div id="recordings"></div>
+    </div>
+    <div class="panel">
+      <h2>QA audit</h2>
+      <div id="audit"></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const sessionid = Number(qs.get("sessionid") || 0) || 0;
+  const workspaceid = Number(qs.get("workspaceid") || 0) || 0;
+  const consumer = (qs.get("consumer") || "").replace(/[^A-Za-z0-9_-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => Number(t) ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const dateVal = (t) => Number(t) ? new Date(t * 1000).toISOString().slice(0, 10) : "";
+  const words = (v) => esc(String(v ?? "").replace(/_/g, " "));
+  const setStatus = (cls, text) => { const el = $("#status"); el.className = "status" + (cls ? " " + cls : ""); el.hidden = false; el.textContent = text; };
+
+  if (!endpoint || !token) { setStatus("error", "Missing endpoint/token — open via the Moodle portal launch link."); return; }
+
+  const ctx = (extra) => {
+    const p = new URLSearchParams({ report: "live-quality", token });
+    if (workspaceid) p.set("workspaceid", String(workspaceid));
+    if (consumer) p.set("consumer", consumer);
+    Object.entries(extra || {}).forEach(([k, v]) => { if (v !== "" && v !== null && v !== undefined) p.set(k, String(v)); });
+    return p;
+  };
+
+  let names = {};
+  const nameOf = (id, kind) => names[id] || (kind + " " + id);
+  const table = (id, head, rows, empty) => {
+    $(id).innerHTML = `<table><thead><tr>${head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>` +
+      (rows.length ? rows.join("") : `<tr><td colspan="${head.length}" class="muted">${esc(empty)}</td></tr>`) + "</tbody></table>";
+  };
+  const options = (el, map, selected) => {
+    el.innerHTML = Object.entries(map || {}).map(([v, l]) => `<option value="${esc(v)}"${v === selected ? " selected" : ""}>${esc(l)}</option>`).join("");
+  };
+
+  async function load() {
+    setStatus("", "Loading quality review…");
+    try {
+      const extra = sessionid ? { sessionid } : { qastatus: qs.get("qastatus") || "" };
+      const r = await fetch(endpoint + "?" + ctx(extra));
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        throw new Error(d.error || ("HTTP " + r.status));
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      names = d.names || {};
+      if (d.mode === "queue") renderQueue(d); else renderReview(d);
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  function reviewLink(id) {
+    const u = new URL(location.href);
+    u.searchParams.set("sessionid", id);
+    u.searchParams.delete("qastatus");
+    return u.href;
+  }
+
+  function renderQueue(d) {
+    $("#mode-note").textContent = "Review queue · parallel-run of live_quality.php";
+    const filter = $("#qa-filter");
+    filter.innerHTML = `<option value="">All sessions</option>` +
+      Object.entries(d.status_options || {}).map(([v, l]) => `<option value="${esc(v)}"${v === (d.qastatus || "") ? " selected" : ""}>${esc(l)}</option>`).join("");
+    filter.onchange = () => {
+      const u = new URL(location.href);
+      if (filter.value) u.searchParams.set("qastatus", filter.value); else u.searchParams.delete("qastatus");
+      location.href = u.href;
+    };
+    const rows = (d.queue || []).map((s) => `<tr>
+      <td><strong>${esc(s.title || ("Session " + s.id))}</strong><div class="muted">${esc(when(s.scheduled_start))}</div></td>
+      <td>${esc(nameOf(s.teacherid, "Teacher"))}</td>
+      <td>${words(s.status)}</td>
+      <td><span class="pill ${esc(s.qa_status)}">${words(s.qa_status)}</span></td>
+      <td>${Number(s.qa_score) || 0}%</td>
+      <td>${s.qa_reviewedat ? esc(when(s.qa_reviewedat)) + (s.qa_reviewedby ? " · " + esc(nameOf(s.qa_reviewedby, "User")) : "") : '<span class="muted">Never</span>'}</td>
+      <td>${d.coachingready ? words(s.qa_coaching_status || "none") : ""}${d.leadershipready && s.leadership_review_status && s.leadership_review_status !== "none" ? ' · <span class="pill serious_issue">' + words(s.leadership_review_status) + "</span>" : ""}</td>
+      <td><a class="btn" href="${esc(reviewLink(s.id))}">Open review</a></td>
+    </tr>`);
+    table("#queue", ["Session", "Teacher", "Status", "QA status", "Score", "Last reviewed", "Coaching", ""], rows, "No live sessions match this filter.");
+    $("#queue-panel").hidden = false;
+    $("#review").hidden = true;
+    $("#status").hidden = true;
+  }
+
+  function renderReview(d) {
+    const s = d.session || {};
+    $("#title").textContent = "Live Session Quality Review";
+    $("#subtitle").textContent = (s.title || "Live class") + " - " + when(s.scheduled_start) + " - " + (d.teachername || nameOf(s.teacherid, "Teacher"));
+    $("#metrics").innerHTML = `
+      <div class="metric"><b>${words(s.qa_status)}</b><span>QA status</span></div>
+      <div class="metric"><b>${Number(s.qa_score) || 0}%</b><span>QA score</span></div>
+      <div class="metric"><b>${(d.evidence || []).length}</b><span>students</span></div>
+      <div class="metric"><b>${d.leadershipready ? words(s.leadership_review_status || "none") : (d.recordings || []).length}</b><span>${d.leadershipready ? "leadership review" : "recordings"}</span></div>`;
+
+    options($("#qa_status"), d.status_options, s.qa_status || "not_reviewed");
+    $("#last-reviewed").textContent = s.qa_reviewedat
+      ? when(s.qa_reviewedat) + " by " + nameOf(s.qa_reviewedby, "User")
+      : "Not reviewed yet";
+
+    $("#checklist").innerHTML = Object.entries(d.items || {}).map(([key, label]) => `
+      <div class="item"><strong>${esc(label)}</strong>
+        <select data-check="${esc(key)}">${Object.entries(d.checklist_options || {}).map(([v, l]) => `<option value="${esc(v)}"${(d.checklist || {})[key] === v ? " selected" : ""}>${esc(l)}</option>`).join("")}</select>
+      </div>`).join("");
+
+    $("#qa_notes").value = s.qa_notes || "";
+    $("#qa_coaching_notes").value = s.qa_coaching_notes || "";
+
+    if (d.coachingready) {
+      $("#coaching-panel").hidden = false;
+      options($("#qa_coaching_status"), d.coaching_options, s.qa_coaching_status || "none");
+      options($("#qa_coaching_priority"), d.priority_options, s.qa_coaching_priority || "normal");
+      $("#qa_coaching_due_date").value = dateVal(s.qa_coaching_due_date);
+      $("#coach-ack").textContent = s.qa_coaching_ackat
+        ? when(s.qa_coaching_ackat) + " by " + nameOf(s.qa_coaching_ackby, "User")
+        : "Not acknowledged";
+    }
+    if (d.leadershipready) {
+      $("#leadership-panel").hidden = false;
+      options($("#leadership_review_status"), d.leadership_options, s.leadership_review_status || "none");
+      $("#leadership_review_reason").value = s.leadership_review_reason || "";
+      $("#leadership_review_notes").value = s.leadership_review_notes || "";
+      $("#lead-timeline").textContent = s.leadership_reviewat
+        ? "Flagged " + when(s.leadership_reviewat) + " by " + nameOf(s.leadership_reviewby, "User")
+        : (s.leadership_clearedat
+          ? "Cleared " + when(s.leadership_clearedat) + " by " + nameOf(s.leadership_clearedby, "User")
+          : "No leadership review activity");
+    }
+
+    table("#evidence", ["Student", "Attendance", "Parent summary", "Follow-up"],
+      (d.evidence || []).map((st) => `<tr>
+        <td>${esc(st.name)}</td>
+        <td>${words(st.attendance_status || "not marked")}${st.technical_issue ? " - technical issue" : ""}</td>
+        <td>${st.parent_summary_ready ? "Ready" : "Missing"}</td>
+        <td>${words(st.followup_status || "none")}${st.followup_resolved ? " - resolved" : ""}</td>
+      </tr>`), "No active students found.");
+
+    table("#recordings", ["Name", "Status", "Parent visible", "Reviewed", "Playback"],
+      (d.recordings || []).map((r) => `<tr>
+        <td>${esc(r.name)}</td>
+        <td>${words(r.status)}</td>
+        <td>${r.visible_to_parent ? "Yes" : "No"}</td>
+        <td>${r.reviewedat ? esc(when(r.reviewedat)) : "No"}</td>
+        <td>${r.playback_url ? `<a class="btn" href="${esc(r.playback_url)}" target="_blank" rel="noopener">Open</a>` : ""}</td>
+      </tr>`), "No recordings found for this session.");
+
+    table("#audit", ["Time", "Actor", "Action", "Details"],
+      (d.audit || []).map((a) => `<tr>
+        <td>${esc(when(a.timecreated))}</td>
+        <td>${esc(nameOf(a.actorid, "User"))}</td>
+        <td>${words(a.action)}</td>
+        <td class="muted">${esc(a.details)}</td>
+      </tr>`), "No QA audit rows yet.");
+
+    $("#queue-panel").hidden = true;
+    $("#review").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  $("#qa-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const btn = $("#qa-form button.save");
+    btn.disabled = true; btn.textContent = "Saving…";
+    const checklist = {};
+    document.querySelectorAll("[data-check]").forEach((el) => { checklist[el.dataset.check] = el.value; });
+    const body = {
+      do: "save_quality",
+      sessionid,
+      workspaceid,
+      qa_status: $("#qa_status").value,
+      checklist,
+      qa_notes: $("#qa_notes").value,
+      qa_coaching_notes: $("#qa_coaching_notes").value,
+    };
+    if (!$("#coaching-panel").hidden) {
+      body.qa_coaching_status = $("#qa_coaching_status").value;
+      body.qa_coaching_priority = $("#qa_coaching_priority").value;
+      body.qa_coaching_due_date = $("#qa_coaching_due_date").value;
+    }
+    if (!$("#leadership-panel").hidden) {
+      body.leadership_review_status = $("#leadership_review_status").value;
+      body.leadership_review_reason = $("#leadership_review_reason").value;
+      body.leadership_review_notes = $("#leadership_review_notes").value;
+    }
+    try {
+      const r = await fetch(endpoint + "?" + ctx(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus("saved", d.message || "Quality review saved.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+      setStatus("saved", d.message || "Quality review saved.");
+    } catch (e) {
+      setStatus("error", "Could not save: " + e.message);
+    } finally {
+      btn.disabled = false; btn.textContent = "Save quality review";
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

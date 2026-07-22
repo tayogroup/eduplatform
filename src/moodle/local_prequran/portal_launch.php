@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-8.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-9.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -53,6 +53,14 @@ $reports = [
     'workspace-people' => ['pqpl_any_authenticated', 'workspace-people.html'],
     'quality-analytics' => ['pqh_can_manage_academy_operations', 'quality-analytics.html'],
     'master-dashboard' => ['is_siteadmin', 'master-dashboard.html'],
+    // Batch wave 4. Wizard + followups gates are workspace/role-scoped
+    // (handlers enforce the legacy checks with identical messages);
+    // platform-consumers' handler adds the foundation-domain stage.
+    'live-create-wizard' => ['pqpl_any_authenticated', 'live-create-wizard.html'],
+    'platform-consumers' => ['pqh_can_manage_academy_operations', 'platform-consumers.html'],
+    'live-quality' => ['pqh_can_manage_academy_operations', 'live-quality.html'],
+    'live-followups' => ['pqpl_any_authenticated', 'live-followups.html'],
+    'recordings-admin' => ['pqh_can_manage_academy_operations', 'recordings-admin.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

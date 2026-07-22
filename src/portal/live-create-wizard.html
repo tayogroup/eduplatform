@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create live session · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 6px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:16px}
+  .step{padding:10px;border-radius:8px;background:var(--sky);color:var(--ink2);font-size:12px;font-weight:900;text-align:center}
+  .step.active{background:var(--blue2);color:#fff}
+  .field{display:grid;gap:6px;margin-bottom:12px}
+  .field label{font-size:13px;font-weight:900;color:var(--ink2)}
+  .input,.select,.textarea{width:100%;min-height:40px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:800 14px/1.2 system-ui;background:var(--card);color:var(--ink)}
+  .textarea{min-height:92px;resize:vertical}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .card{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-bottom:12px}
+  .meta{margin:3px 0;color:var(--muted);font-size:13px;font-weight:700}
+  .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .alert{padding:12px 14px;border-radius:8px;margin-bottom:12px;font-size:14px;font-weight:800;white-space:pre-wrap}
+  .alert.bad{background:var(--red-bg);color:var(--red);border:1px solid var(--red)}
+  .alert.ok{background:var(--sky);color:var(--blue2);border:1px solid var(--line)}
+  .check{display:flex;gap:9px;align-items:center;font-size:13px;font-weight:800}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:800;background:var(--card)}
+  .availability{margin:0 0 14px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+  .availability-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+  .day{min-height:96px;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--card)}
+  .day.selected{border-color:var(--blue2);box-shadow:0 0 0 2px rgba(42,108,176,.16)}
+  .day-title{margin-bottom:8px;color:var(--ink2);font-size:12px;font-weight:900}
+  .slot{display:block;margin:5px 0;padding:6px 8px;border-radius:999px;background:var(--sky);color:var(--blue2);font-size:12px;font-weight:900}
+  .slot small{display:block;margin-top:2px;color:var(--muted);font-size:10px;font-weight:800}
+  .slot.emptyslot{background:var(--bg);color:var(--muted)}
+  .filter-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px}
+  .roster{max-height:430px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-bottom:12px}
+  .roster table{width:100%;border-collapse:collapse;font-size:13px}
+  .roster th,.roster td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .roster th{position:sticky;top:0;background:var(--bg);color:var(--ink2);font-size:12px;font-weight:900;z-index:1}
+  .student-main{font-weight:900;color:var(--ink)}
+  .student-meta{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  .pill{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;background:var(--sky);color:var(--ink);font-size:12px;font-weight:900;white-space:nowrap;border:0}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .selected-list{display:flex;flex-wrap:wrap;gap:8px;min-height:42px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);margin-bottom:12px}
+  .selected-list .pill{cursor:pointer}
+  .selected-count{font-weight:900;color:var(--ink);margin-bottom:6px}
+  @media(max-width:780px){.grid2,.steps,.availability-grid,.filter-grid{grid-template-columns:1fr}.roster table{min-width:760px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Guided Session Creation Wizard</small></div>
+  <div class="note">Token-authenticated · parallel-run of live_create_wizard.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Guided Session Creation Wizard</h1>
+    <p class="sub">Create one live review session with capacity, availability, and conflict checks before final submission.</p>
+  </div>
+  <div id="status" class="status">Loading wizard…</div>
+  <div class="steps" id="steps" hidden></div>
+  <div class="panel" id="panel" hidden></div>
+  <div class="panel" id="success-panel" hidden>
+    <h2>Live session created</h2>
+    <div id="success-body"></div>
+    <div class="actions">
+      <a class="btn" id="success-link" href="#">Open live sessions</a>
+      <button class="btn light" type="button" id="success-again">Create another session</button>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Client-side draft: the legacy wizard carries this state in GET params
+  // between steps; here the page holds it and the final POST carries it all.
+  const draft = {
+    step: 1,
+    session_type: "teacher_led",
+    teacherid: 0,
+    practice_access_mode: "bbb_and_lesson",
+    groupid: 0,
+    studentids_raw: "",
+    participantids_raw: "",
+    title: "Pre-Quran review session",
+    lessonid: "alphabet",
+    unitid: "alphabet_listen",
+    sessiondate: "",
+    sessiontime: "",
+    timezone: "",
+    duration: 60,
+    override_conflicts: false,
+    override_reason: "",
+  };
+  let data = null;       // last GET payload
+  let submitting = false;
+
+  const typeInfo = (value) => (data && data.session_types || []).find((t) => t.value === value) || { label: value, meeting: false, teacherrequired: true, owner_label: "Teacher", detail_help: "", owner_help: "" };
+  const isMeeting = () => typeInfo(draft.session_type).meeting;
+  const teacherRequired = () => typeInfo(draft.session_type).teacherrequired;
+
+  const apiParams = (extra) => {
+    const p = new URLSearchParams({ report: "live-create-wizard", token });
+    for (const key of ["workspaceid", "consumer"]) { if (qs.get(key)) p.set(key, qs.get(key)); }
+    Object.entries(extra || {}).forEach(([k, v]) => p.set(k, String(v)));
+    return p;
+  };
+
+  async function refresh() {
+    const r = await fetch(endpoint + "?" + apiParams({
+      teacherid: draft.teacherid || 0,
+      groupid: draft.groupid || 0,
+      studentids_raw: draft.studentids_raw,
+      title: draft.title,
+      lessonid: draft.lessonid,
+      unitid: draft.unitid,
+      sessiondate: draft.sessiondate,
+      sessiontime: draft.sessiontime,
+      timezone: draft.timezone,
+      duration: draft.duration,
+      session_type: draft.session_type,
+      practice_access_mode: draft.practice_access_mode,
+      participantids_raw: draft.participantids_raw,
+    }));
+    if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+    const d = await r.json();
+    if (!d.ok) throw new Error(d.error || "unknown");
+    data = d;
+    if (!draft.timezone) draft.timezone = d.default_timezone || "Africa/Nairobi";
+    if (!d.isadmin) draft.teacherid = d.userid;
+    return d;
+  }
+
+  const stepLabels = () => ({ 1: "Mode", 2: isMeeting() ? "Participants" : "Students", 3: isMeeting() ? "Details" : "Lesson", 4: "Time", 5: "Safety", 6: "Review" });
+
+  function renderSteps() {
+    const labels = stepLabels();
+    $("#steps").innerHTML = [1, 2, 3, 4, 5, 6].map((n) => `<div class="step ${draft.step === n ? "active" : ""}">${n}. ${esc(labels[n])}</div>`).join("");
+    $("#steps").hidden = false;
+  }
+
+  const parseIds = (value) => (value || "").split(/[\s,;]+/).map((p) => parseInt(p, 10)).filter((id, i, list) => id > 0 && list.indexOf(id) === i);
+  const selectedIds = () => parseIds(draft.studentids_raw);
+
+  function setStatus(kind, text) {
+    const el = $("#status");
+    if (!text) { el.hidden = true; return; }
+    el.className = "status" + (kind ? " " + kind : "");
+    el.hidden = false;
+    el.textContent = text;
+  }
+
+  // ---- step renderers (wording mirrors the legacy page) ----------------------
+  function stepMode() {
+    const teacherField = data.isadmin ? `
+      <div class="field">
+        <label for="f-teacherid">Teacher / reporting teacher / moderator</label>
+        <select class="select" id="f-teacherid" required>
+          <option value="">Choose teacher</option>
+          ${(data.teachers || []).map((t) => `<option value="${t.id}" ${Number(draft.teacherid) === Number(t.id) ? "selected" : ""}>${esc(t.name + " #" + t.id)}</option>`).join("")}
+        </select>
+        <p class="meta">For meeting rooms this is the moderator who opens the room. For classes this is the teacher or reporting teacher.</p>
+      </div>` : `
+      <div class="card"><h3>Teacher</h3><p class="meta">${esc((data.names && data.names[data.userid]) || (data.teachers && data.teachers[0] && data.teachers[0].name) || "Teacher")} #${data.userid}</p></div>`;
+    return `
+      <div class="field">
+        <label for="f-session-type">Session type</label>
+        <select class="select" id="f-session-type" required>
+          ${(data.session_types || []).map((t) => `<option value="${esc(t.value)}" ${draft.session_type === t.value ? "selected" : ""}>${esc(t.label)}</option>`).join("")}
+        </select>
+        <p class="meta">Teacher-led sessions are student classes. Teacherless supervised practice is monitored student work. Meeting rooms are community rooms with an assigned moderator.</p>
+      </div>
+      ${teacherField}
+      <div class="field">
+        <label for="f-practice-mode">Student access mode</label>
+        <select class="select" id="f-practice-mode">
+          ${(data.practice_modes || []).map((m) => `<option value="${esc(m.value)}" ${draft.practice_access_mode === m.value ? "selected" : ""}>${esc(m.label)}</option>`).join("")}
+        </select>
+        <p class="meta">Used only for teacherless supervised practice. Meeting rooms always use the BBB room.</p>
+      </div>
+      <div class="actions"><button class="btn" type="button" data-next="2">Next: ${isMeeting() ? "participants" : "students"}</button></div>`;
+  }
+
+  function rosterRow(p) {
+    const ids = selectedIds();
+    return `
+      <tr class="js-student-row" data-userid="${p.userid}" data-name="${esc(p.name)}" data-timezone="${esc(p.timezone)}" data-level="${esc((p.level || "").toLowerCase())}" data-language="${esc((p.language || "").toLowerCase())}" data-search="${esc(p.search)}">
+        <td><label class="check"><input class="js-student-check" type="checkbox" value="${p.userid}" ${ids.includes(p.userid) ? "checked" : ""}></label></td>
+        <td><span class="student-main">${esc(p.name)}</span><span class="student-meta">${esc(p.account_label)} / Moodle ID ${p.userid}</span></td>
+        <td>${p.age_years} / ${esc(p.gender)}</td>
+        <td>${esc(p.level)}</td>
+        <td>${esc(p.language)}</td>
+        <td>${esc(p.timezone)}</td>
+        <td>${esc([p.city, p.country].filter(Boolean).join(", "))}</td>
+        <td><span class="pill ${p.live_class_consent ? "ok" : "warn"}">live ${p.live_class_consent ? "yes" : "no"}</span> <span class="pill ${p.recording_consent ? "ok" : "warn"}">record ${p.recording_consent ? "yes" : "no"}</span></td>
+      </tr>`;
+  }
+
+  function stepStudents() {
+    if (isMeeting()) {
+      return `
+        <div class="field">
+          <label for="f-participantids">Optional invited participant user IDs</label>
+          <textarea class="textarea" id="f-participantids" placeholder="201, 202, 203">${esc(draft.participantids_raw)}</textarea>
+          <p class="meta">Leave blank for a role-based room. Parent, teacher, teacher-parent, and student rooms are visible to their matching account roles.</p>
+        </div>
+        <div class="actions"><button class="btn light" type="button" data-back="1">Back</button><button class="btn" type="button" data-next="3">Next: details</button></div>`;
+    }
+    const groups = (data.classgroups || []);
+    const groupField = groups.length ? `
+      <div class="field">
+        <label for="f-groupid">Class group</label>
+        <select class="select" id="f-groupid">
+          <option value="0">No class group</option>
+          ${groups.map((g) => `<option value="${g.id}" ${Number(draft.groupid) === Number(g.id) ? "selected" : ""}>${esc(g.title + " #" + g.id)}</option>`).join("")}
+        </select>
+        <p class="meta">A class group automatically adds active assigned students. Extra IDs below are optional.</p>
+      </div>` : "";
+    const roster = (data.studentprofiles || []).length ? `
+      <div class="roster"><table>
+        <thead><tr><th>Select</th><th>Student</th><th>Age / Gender</th><th>Level</th><th>Language</th><th>Time zone</th><th>Location</th><th>Consent</th></tr></thead>
+        <tbody>${(data.studentprofiles || []).map(rosterRow).join("")}</tbody>
+      </table></div>` :
+      `<div class="empty">No approved student assignments are available for this teacher workspace. Parent confirmation alone does not activate access; a marketplace administrator must mark the connection request Assigned.</div>`;
+    return `
+      ${groupField}
+      <div class="card">
+        <h3>Choose students</h3>
+        <p class="meta">Filter first, then select students. The selected Moodle IDs are copied into the manual ID box below.</p>
+        <div class="filter-grid">
+          <div class="field"><label for="flt-timezone">Time zone</label>
+            <select class="select" id="flt-timezone"><option value="">All time zones</option>${(data.studenttimezones || []).map((tz) => `<option value="${esc(tz)}">${esc(tz)}</option>`).join("")}</select></div>
+          <div class="field"><label for="flt-level">Level</label><input class="input" id="flt-level" type="search" placeholder="alphabet, level 1"></div>
+          <div class="field"><label for="flt-language">Language</label><input class="input" id="flt-language" type="search" placeholder="Somali"></div>
+          <div class="field"><label for="flt-search">Search</label><input class="input" id="flt-search" type="search" placeholder="Name, city, ID"></div>
+        </div>
+        <div class="selected-count"><span id="selected-count">${selectedIds().length}</span> students selected</div>
+        <div class="selected-list" id="selected-list" aria-live="polite"></div>
+      </div>
+      ${roster}
+      <div class="field">
+        <label for="f-studentids">Student user IDs</label>
+        <textarea class="textarea" id="f-studentids" placeholder="101, 102, 103">${esc(draft.studentids_raw)}</textarea>
+        <p class="meta">Manual fallback. These are Moodle user IDs and will be combined with any selected class-group students.</p>
+      </div>
+      <div class="actions"><button class="btn light" type="button" data-back="1">Back</button><button class="btn" type="button" data-next="3">Next: lesson</button></div>`;
+  }
+
+  function stepLesson() {
+    const meeting = isMeeting();
+    const help = typeInfo(draft.session_type).detail_help;
+    return `
+      <div class="field"><label for="f-title">Title</label><input class="input" id="f-title" type="text" value="${esc(draft.title)}" required></div>
+      <div class="grid2">
+        <div class="field"><label for="f-lessonid">Lesson ID${meeting ? " (optional)" : ""}</label><input class="input" id="f-lessonid" type="text" value="${esc(draft.lessonid)}" ${meeting ? "" : "required"}></div>
+        <div class="field"><label for="f-unitid">Unit ID${meeting ? " (optional)" : ""}</label><input class="input" id="f-unitid" type="text" value="${esc(draft.unitid)}" ${meeting ? "" : "required"}></div>
+      </div>
+      ${meeting && help ? `<p class="meta">${esc(help)}</p>` : ""}
+      <div class="actions"><button class="btn light" type="button" data-back="2">Back</button><button class="btn" type="button" data-next="4">Next: time</button></div>`;
+  }
+
+  function availabilityCalendar() {
+    const av = data.availability || {};
+    if (!av.teacherid) {
+      return `<section class="availability"><h3>Teacher availability calendar</h3><p class="meta">Choose a teacher first to view weekly availability.</p></section>`;
+    }
+    const days = data.weekdays || {};
+    const cal = av.calendar || [];
+    let html = `<section class="availability"><h3>Teacher availability calendar</h3><p class="meta">${esc(av.teacher_name)} #${av.teacherid} - active weekly availability windows.</p>`;
+    if (av.manage_url) html += `<p class="meta"><a href="${esc(av.manage_url)}" target="_blank" rel="noopener">Manage availability</a></p>`;
+    html += `<div class="availability-grid">`;
+    for (let wd = 0; wd <= 6; wd++) {
+      html += `<div class="day ${wd === av.selected_weekday ? "selected" : ""}"><div class="day-title">${esc(days[wd] || wd)}</div>`;
+      const slots = cal[wd] || [];
+      html += slots.length
+        ? slots.map((s) => `<span class="slot">${esc(s.label)}${s.timezone ? `<small>${esc(s.timezone)}</small>` : ""}</span>`).join("")
+        : `<span class="slot emptyslot">No availability</span>`;
+      html += `</div>`;
+    }
+    html += `</div>`;
+    if (av.selected_weekday >= 0) html += `<p class="meta">The selected date falls on ${esc(days[av.selected_weekday] || "")}, highlighted above.</p>`;
+    return html + `</section>`;
+  }
+
+  function stepTime() {
+    const info = typeInfo(draft.session_type);
+    let top;
+    if (info.meeting) {
+      top = `<div class="card"><h3>${esc(info.label)}</h3><p class="meta">${esc(info.owner_help)}</p></div>`;
+    } else if (info.teacherrequired) {
+      top = availabilityCalendar();
+    } else {
+      top = `<div class="card"><h3>Teacherless supervised practice</h3><p class="meta">Teacher availability is not required. The selected teacher remains the reporting teacher for Practice Coach summaries and follow-up.</p></div>`;
+    }
+    return `
+      ${top}
+      <div class="grid2">
+        <div class="field"><label for="f-sessiondate">Date</label><input class="input" id="f-sessiondate" type="date" value="${esc(draft.sessiondate)}" required></div>
+        <div class="field"><label for="f-sessiontime">Time</label><input class="input" id="f-sessiontime" type="time" value="${esc(draft.sessiontime)}" required></div>
+      </div>
+      <div class="field"><label for="f-timezone">Class timezone</label><input class="input" id="f-timezone" type="text" value="${esc(draft.timezone)}" placeholder="Africa/Nairobi" required><p class="meta">Use Africa/Nairobi for East Africa Time. The saved class time and all schedule pages will display using this timezone.</p></div>
+      <div class="field"><label for="f-duration">Duration</label><select class="select" id="f-duration">
+        ${(data.durations || [45, 60, 75, 90]).map((m) => `<option value="${m}" ${Number(draft.duration) === m ? "selected" : ""}>${m} minutes</option>`).join("")}
+      </select></div>
+      <div class="actions"><button class="btn light" type="button" data-back="3">Back</button><button class="btn" type="button" data-next="5">Next: safety</button></div>`;
+  }
+
+  function stepSafety() {
+    const coach = draft.session_type === "supervised_practice" ? `
+      <div class="card">
+        <h3>Practice Coach</h3>
+        <p class="meta">Chatbot Practice Coach monitors lesson activity during teacherless practice, gives short prompts, and prepares a teacher and parent-safe summary.</p>
+        <p class="meta">Access mode: ${esc((data.practice_modes || []).find((m) => m.value === draft.practice_access_mode)?.label || draft.practice_access_mode)}</p>
+      </div>` : "";
+    return `
+      <div class="card">
+        <h3>Recording &amp; Consent</h3>
+        <p class="meta">Audio recording is always enabled for safeguarding and class quality. Student camera/video is allowed only where video consent exists.</p>
+        <label class="check"><input type="checkbox" checked disabled> <span>Audio recording required; video is opt-in and consent-controlled</span></label>
+      </div>
+      ${coach}
+      <div class="actions"><button class="btn light" type="button" data-back="4">Back</button><button class="btn" type="button" data-next="6">Review session</button></div>`;
+  }
+
+  function stepReview() {
+    const d = data.draft || {};
+    const info = typeInfo(draft.session_type);
+    const conflicts = d.conflicts || [];
+    const names = d.studentnames || {};
+    const studentLine = selectedIds().map((id) => names[id] || ("Student " + id)).join(", ");
+    const teacherName = (data.names && data.names[d.teacherid]) || ("User " + d.teacherid);
+    const alert = conflicts.length
+      ? `<div class="alert bad">${esc(conflicts.join("\n"))}</div>`
+      : `<div class="alert ok">No schedule conflicts detected for this teacher, group, and time.</div>`;
+    const overrideCard = conflicts.length ? `
+      <div class="card">
+        <h3>${data.isadmin ? "Schedule Conflict Override" : "Request Schedule Exception"}</h3>
+        <p class="meta">${data.isadmin
+          ? "The override and reason will be recorded in the session audit trail."
+          : "The session will remain pending approval. A marketplace administrator must review this exception before the session can start."}</p>
+        <label class="check"><input id="f-override" type="checkbox" ${draft.override_conflicts ? "checked" : ""}> <span>${data.isadmin ? "Override schedule conflicts" : "Submit despite this availability or schedule conflict"}</span></label>
+        <div class="field"><label for="f-override-reason">${data.isadmin ? "Override Reason" : "Exception Reason"}</label><input class="input" id="f-override-reason" type="text" value="${esc(draft.override_reason)}" placeholder="Required when submitting this exception"></div>
+      </div>` : "";
+    return `
+      ${alert}
+      <div class="card">
+        <h3>${esc(draft.title)}</h3>
+        <p class="meta">Mode: ${esc(info.label)}</p>
+        <p class="meta">${esc(info.meeting ? info.owner_label : (info.teacherrequired ? "Teacher" : "Reporting teacher"))}: ${esc(teacherName)} #${d.teacherid}</p>
+        ${draft.session_type === "supervised_practice" ? `<p class="meta">Access: ${esc(d.practice_access_label || "")}</p>` : ""}
+        ${info.meeting
+          ? `<p class="meta">Participants: role-based room${draft.participantids_raw ? "; invited users " + esc(draft.participantids_raw) : ""}.</p>`
+          : `<p class="meta">Students: ${esc(studentLine)}</p><p class="meta">Lesson: ${esc(draft.lessonid)} / ${esc(draft.unitid)}</p>`}
+        <p class="meta">Time: ${d.start > 0 ? esc(d.start_label) : "Not set"} for ${Number(draft.duration)} minutes</p>
+        <p class="meta">Recording: audio always enabled for safeguarding/class quality; video is opt-in and consent-controlled.</p>
+      </div>
+      ${overrideCard}
+      <div class="actions"><button class="btn light" type="button" data-back="5">Back</button><button class="btn" type="button" id="create-btn">Create live session</button></div>`;
+  }
+
+  // ---- draft collection + validation (messages mirror the legacy checks) -----
+  function collect() {
+    const get = (id) => document.getElementById(id);
+    if (get("f-session-type")) draft.session_type = get("f-session-type").value;
+    if (get("f-teacherid")) draft.teacherid = parseInt(get("f-teacherid").value, 10) || 0;
+    if (get("f-practice-mode")) draft.practice_access_mode = get("f-practice-mode").value;
+    if (get("f-groupid")) draft.groupid = parseInt(get("f-groupid").value, 10) || 0;
+    if (get("f-studentids")) draft.studentids_raw = get("f-studentids").value.trim();
+    if (get("f-participantids")) draft.participantids_raw = get("f-participantids").value.trim();
+    if (get("f-title")) draft.title = get("f-title").value.trim();
+    if (get("f-lessonid")) draft.lessonid = get("f-lessonid").value.trim();
+    if (get("f-unitid")) draft.unitid = get("f-unitid").value.trim();
+    if (get("f-sessiondate")) draft.sessiondate = get("f-sessiondate").value;
+    if (get("f-sessiontime")) draft.sessiontime = get("f-sessiontime").value;
+    if (get("f-timezone")) draft.timezone = get("f-timezone").value.trim();
+    if (get("f-duration")) draft.duration = parseInt(get("f-duration").value, 10) || 60;
+    if (get("f-override")) draft.override_conflicts = get("f-override").checked;
+    if (get("f-override-reason")) draft.override_reason = get("f-override-reason").value.trim();
+  }
+
+  function validateStep(step) {
+    if (step === 1 && data.isadmin && !draft.teacherid) return "Choose a teacher user ID.";
+    if (step === 3) {
+      if (!draft.title) return "Enter a live session title.";
+      if (!isMeeting() && (!draft.lessonid || !draft.unitid)) return "Enter the lesson and unit IDs.";
+    }
+    if (step === 4 && (!draft.sessiondate || !draft.sessiontime)) return "Choose a live session date and time.";
+    return "";
+  }
+
+  // ---- student picker behaviour (mirrors the legacy inline script) -----------
+  function wireStudentPicker() {
+    const manual = document.getElementById("f-studentids");
+    const rows = Array.from(document.querySelectorAll(".js-student-row"));
+    const checks = Array.from(document.querySelectorAll(".js-student-check"));
+    if (!manual || !rows.length) return;
+    const setManual = (ids) => { manual.value = ids.filter((id, i, list) => id > 0 && list.indexOf(id) === i).join(", "); draft.studentids_raw = manual.value; };
+    const checkedIds = () => checks.filter((c) => c.checked).map((c) => parseInt(c.value, 10)).filter((id) => id > 0);
+    const syncChecks = () => { const ids = parseIds(manual.value); checks.forEach((c) => { c.checked = ids.includes(parseInt(c.value, 10)); }); };
+    const renderSelected = () => {
+      const ids = parseIds(manual.value);
+      const count = document.getElementById("selected-count");
+      const list = document.getElementById("selected-list");
+      if (count) count.textContent = String(ids.length);
+      if (!list) return;
+      list.innerHTML = "";
+      if (!ids.length) { const s = document.createElement("span"); s.className = "meta"; s.textContent = "No students selected yet."; list.appendChild(s); return; }
+      ids.forEach((id) => {
+        const row = rows.find((r) => parseInt(r.getAttribute("data-userid") || "0", 10) === id);
+        const pill = document.createElement("button");
+        pill.type = "button"; pill.className = "pill";
+        pill.textContent = (row ? row.getAttribute("data-name") : "Student") + " #" + id + " x";
+        pill.addEventListener("click", () => { setManual(parseIds(manual.value).filter((x) => x !== id)); syncChecks(); renderSelected(); });
+        list.appendChild(pill);
+      });
+    };
+    const syncManualFromChecks = () => {
+      const rosterIds = rows.map((r) => parseInt(r.getAttribute("data-userid") || "0", 10)).filter((id) => id > 0);
+      const manualOnly = parseIds(manual.value).filter((id) => !rosterIds.includes(id));
+      setManual(manualOnly.concat(checkedIds()));
+      syncChecks(); renderSelected();
+    };
+    const flt = (id) => document.getElementById(id);
+    const rowMatches = (row) => {
+      const tz = flt("flt-timezone") ? flt("flt-timezone").value : "";
+      const lvl = flt("flt-level") ? flt("flt-level").value.trim().toLowerCase() : "";
+      const lang = flt("flt-language") ? flt("flt-language").value.trim().toLowerCase() : "";
+      const q = flt("flt-search") ? flt("flt-search").value.trim().toLowerCase() : "";
+      if (tz && row.getAttribute("data-timezone") !== tz) return false;
+      if (lvl && (row.getAttribute("data-level") || "").indexOf(lvl) === -1) return false;
+      if (lang && (row.getAttribute("data-language") || "").indexOf(lang) === -1) return false;
+      if (q && (row.getAttribute("data-search") || "").indexOf(q) === -1) return false;
+      return true;
+    };
+    const applyFilters = () => rows.forEach((row) => { row.hidden = !rowMatches(row); });
+    checks.forEach((c) => c.addEventListener("change", syncManualFromChecks));
+    manual.addEventListener("input", () => { draft.studentids_raw = manual.value; syncChecks(); renderSelected(); });
+    ["flt-timezone", "flt-level", "flt-language", "flt-search"].forEach((id) => { const el = flt(id); if (el) { el.addEventListener("input", applyFilters); el.addEventListener("change", applyFilters); } });
+    syncChecks(); renderSelected(); applyFilters();
+  }
+
+  // ---- render + navigation ---------------------------------------------------
+  async function renderStep(needRefresh) {
+    try {
+      if (needRefresh) { setStatus("", "Loading…"); await refresh(); }
+      setStatus("", "");
+      if (!data.tables_ready) {
+        $("#panel").innerHTML = `<div class="empty">${esc(data.tables_message || "Live-session tables are required before using the wizard.")}</div>`;
+        $("#panel").hidden = false; renderSteps(); return;
+      }
+      renderSteps();
+      const renderers = { 1: stepMode, 2: stepStudents, 3: stepLesson, 4: stepTime, 5: stepSafety, 6: stepReview };
+      $("#panel").innerHTML = renderers[draft.step]();
+      $("#panel").hidden = false;
+      $("#success-panel").hidden = true;
+      if (draft.step === 2 && !isMeeting()) wireStudentPicker();
+      if (document.getElementById("f-session-type")) {
+        document.getElementById("f-session-type").addEventListener("change", () => { collect(); renderSteps(); });
+      }
+      $("#panel").querySelectorAll("[data-next]").forEach((b) => b.addEventListener("click", async () => {
+        collect();
+        const err = validateStep(draft.step);
+        if (err) { setStatus("error", err); return; }
+        draft.step = parseInt(b.getAttribute("data-next"), 10);
+        // Steps 2, 4 and 6 depend on server-computed state (picker roster for
+        // the chosen teacher, availability calendar, group merge + conflicts).
+        await renderStep([2, 4, 6].includes(draft.step));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }));
+      $("#panel").querySelectorAll("[data-back]").forEach((b) => b.addEventListener("click", async () => {
+        collect();
+        draft.step = parseInt(b.getAttribute("data-back"), 10);
+        await renderStep([2, 4].includes(draft.step));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }));
+      const createBtn = document.getElementById("create-btn");
+      if (createBtn) createBtn.addEventListener("click", submitCreate);
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  async function submitCreate() {
+    if (submitting) return;
+    collect();
+    submitting = true;
+    const btn = document.getElementById("create-btn");
+    if (btn) { btn.disabled = true; btn.textContent = "Creating…"; }
+    try {
+      const r = await fetch(endpoint + "?" + apiParams({}), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "create",
+          created_from_wizard: 1,
+          teacherid: draft.teacherid,
+          groupid: draft.groupid,
+          studentids_raw: selectedIds().join(", "),
+          participantids_raw: draft.participantids_raw,
+          title: draft.title,
+          lessonid: draft.lessonid,
+          unitid: draft.unitid,
+          sessiondate: draft.sessiondate,
+          sessiontime: draft.sessiontime,
+          timezone: draft.timezone,
+          duration: draft.duration,
+          session_type: draft.session_type,
+          practice_access_mode: draft.practice_access_mode,
+          recording_enabled: 1,
+          override_conflicts: draft.override_conflicts ? 1 : 0,
+          override_reason: draft.override_reason,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus("saved", d.message || "Live session created.");
+      $("#panel").hidden = true;
+      $("#steps").hidden = true;
+      $("#success-body").innerHTML = `
+        <p class="sub">${esc(d.message || "Live session created.")}</p>
+        <div class="card">
+          <p class="meta">Sessions created: ${Number(d.created) || 0}</p>
+          <p class="meta">Session ID${(d.sessionids || []).length === 1 ? "" : "s"}: ${esc((d.sessionids || []).join(", ") || "-")}</p>
+          ${d.seriesid ? `<p class="meta">Series ID: ${Number(d.seriesid)}</p>` : ""}
+          <p class="meta">Approval status: ${esc(d.approval || "scheduled")}</p>
+        </div>`;
+      $("#success-link").href = moodleBase + "/local/prequran/portal_launch.php?report=live-sessions";
+      $("#success-panel").hidden = false;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      setStatus("error", "Could not create: " + e.message);
+      if (btn) { btn.disabled = false; btn.textContent = "Create live session"; }
+    }
+    submitting = false;
+  }
+
+  $("#success-again").addEventListener("click", () => {
+    draft.step = 1; draft.override_conflicts = false; draft.override_reason = "";
+    setStatus("", "");
+    renderStep(true);
+  });
+
+  renderStep(true);
+})();
+</script>
+</body>
+</html>

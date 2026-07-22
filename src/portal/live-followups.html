@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Follow-up command center · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1140px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .metric{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;text-decoration:none;color:var(--ink);cursor:pointer;text-align:left;font:inherit}
+  .metric:hover,.metric.active{border-color:var(--blue2)}
+  .metric strong{display:block;font-size:22px;color:var(--blue2)}
+  .metric span{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:800}
+  form.filters{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:10px;align-items:end}
+  form.filters label{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:4px}
+  form.filters select,form.filters input{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.filters button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card.overdue{border-color:var(--red);background:linear-gradient(180deg,var(--red-bg),var(--card) 45%)}
+  .card .head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start;margin-bottom:10px}
+  .card h3{margin:0 0 3px;font-size:16px}
+  .card .meta{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.plain{background:var(--sky);color:var(--ink2);margin-left:0}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.resolved{background:#e1f2ff;color:var(--blue2)}
+  .grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:12px}
+  @media(max-width:820px){.grid2,form.filters{grid-template-columns:1fr}}
+  .sec{margin:0 0 8px;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  .sec p{margin:0;font-size:13px;white-space:pre-wrap}
+  .timeline{margin:0;padding:0;list-style:none}
+  .timeline li{padding:5px 0;border-top:1px solid var(--line);color:var(--ink2);font-size:12px}
+  .timeline li:first-child{border-top:0}
+  .row-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  a.btn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:7px 13px;background:var(--card);color:var(--blue2);text-decoration:none;font-size:12px;font-weight:900}
+  a.btn:hover{border-color:var(--blue2)}
+  form.update{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+  @media(max-width:820px){form.update{grid-template-columns:1fr}}
+  form.update label{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:4px}
+  form.update select,form.update input{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .ops{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+  .ops button{border:0;border-radius:8px;padding:9px 16px;font-weight:900;font-size:13px;cursor:pointer;background:var(--blue2);color:#fff}
+  .ops button.light{background:var(--sky);color:var(--ink2);border:1px solid var(--line)}
+  .ops button.danger{background:var(--red);color:#fff}
+  .ops button:disabled{opacity:.55;cursor:wait}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Follow-up command center</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of live_followups.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Follow-Up Command Center</h1><p class="sub">Triage parent follow-ups, responses, overdue items, escalations, and resolution history from one workspace.</p></div>
+  <div id="status" class="status">Loading follow-ups…</div>
+  <div class="metrics" id="metrics" hidden></div>
+  <div class="panel" id="filters-panel" hidden>
+    <form class="filters" id="filters">
+      <div><label for="f-filter">Status</label>
+        <select id="f-filter" name="filter">
+          <option value="all">All follow-ups</option>
+          <option value="open">Open</option>
+          <option value="needs_help">Parent needs help</option>
+          <option value="overdue">Overdue</option>
+          <option value="escalated">Admin support</option>
+          <option value="resolved">Resolved</option>
+        </select></div>
+      <div id="teacher-field" hidden><label for="f-teacher">Teacher</label>
+        <select id="f-teacher" name="teacherid"><option value="0">All teachers</option></select></div>
+      <div><label for="f-q">Search</label>
+        <input id="f-q" name="q" placeholder="Session, message, or summary"></div>
+      <div><button type="submit">Apply filters</button></div>
+    </form>
+  </div>
+  <div class="panel" id="queue-panel" hidden><h2 id="queue-title">Follow-Ups</h2><div class="cards" id="queue"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const workspaceid = qs.get("workspaceid") || "0";
+  const moodleBase = endpoint.replace(/\/local\/prequran\/portal_data\.php.*$/, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const words = (v) => String(v || "").replace(/_/g, " ");
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const state = { filter: qs.get("filter") || "open", teacherid: qs.get("teacherid") || "0", q: qs.get("q") || "" };
+
+  const params = () => new URLSearchParams({ report: "live-followups", token, filter: state.filter, teacherid: state.teacherid, q: state.q, workspaceid });
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading follow-ups…";
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const nameOf = (names, id, fallback) => (id && names[id]) ? names[id] : fallback;
+
+  const statusPill = (n) => {
+    const cls = n.followup_status === "admin_support_requested" ? "bad" : (n.overdue ? "warn" : "plain");
+    return `<span class="pill ${cls}" style="margin-left:0">${esc(words(n.followup_status))}</span>`;
+  };
+
+  const timeline = (n, names) => {
+    if (!n.timeline || !n.timeline.length) return "<p class='muted' style='margin:0'>No follow-up audit rows yet.</p>";
+    return `<ul class="timeline">` + n.timeline.map((ev) =>
+      `<li>${esc(when(ev.timecreated))} — ${esc(words(ev.action))} by ${esc(nameOf(names, ev.actorid, "User " + ev.actorid))}</li>`).join("") + `</ul>`;
+  };
+
+  const parentResponse = (n) => {
+    const resp = n.parent_response_status || "none";
+    if (resp === "none") return "<p>No parent response yet.</p>";
+    let h = `<p>${esc(words(resp))}${n.parent_responseat ? " — " + esc(when(n.parent_responseat)) : ""}</p>`;
+    if (n.parent_response_message) h += `<p>${esc(n.parent_response_message)}</p>`;
+    return h;
+  };
+
+  const updateForm = (n) => {
+    const statuses = [["review_homework","Review homework"],["parent_contact_requested","Parent contact requested"],["admin_support_requested","Admin support requested"],["none","No follow-up"]];
+    const buttons = !n.followup_resolved
+      ? `<button type="submit" name="operation" value="resolve">Mark resolved</button>
+         <button type="submit" name="operation" value="admin_support" class="danger">Escalate to admin</button>
+         <button type="submit" name="operation" value="update" class="light">Save status only</button>`
+      : `<button type="submit" name="operation" value="reopen">Reopen follow-up</button>
+         <button type="submit" name="operation" value="update" class="light">Save status only</button>`;
+    return `<form class="update" data-noteid="${Number(n.id)}">
+      <div><label for="st-${Number(n.id)}">Follow-up status</label>
+        <select id="st-${Number(n.id)}" name="followup_status">
+          ${statuses.map(([v, l]) => `<option value="${v}" ${n.followup_status === v ? "selected" : ""}>${l}</option>`).join("")}
+        </select></div>
+      <div><label for="in-${Number(n.id)}">Internal note</label>
+        <input id="in-${Number(n.id)}" name="internal_note" maxlength="1000" placeholder="Optional audit note"></div>
+      <div class="ops">${buttons}</div>
+    </form>`;
+  };
+
+  const card = (n, names) => {
+    const student = nameOf(names, n.studentid, "Student " + n.studentid);
+    const teacher = nameOf(names, n.teacherid, "Teacher " + n.teacherid);
+    const reviewHref = moodleBase + "/local/prequran/portal_launch.php?report=live-review&sessionid=" + Number(n.sessionid);
+    return `<article class="card ${n.overdue ? "overdue" : ""}">
+      <div class="head">
+        <div>
+          <h3>${esc(student)}</h3>
+          <div class="meta">${esc(n.session_title || "Live class")} — ${esc(when(n.scheduled_start))} — ${esc(teacher)}</div>
+        </div>
+        <div>
+          ${statusPill(n)}
+          ${n.followup_resolved ? '<span class="pill resolved">resolved</span>' : ""}
+          ${n.overdue ? '<span class="pill warn">overdue</span>' : ""}
+        </div>
+      </div>
+      <div class="grid2">
+        <div>
+          <div class="sec"><b>Teacher follow-up</b><p>${esc(n.followup_message || "Follow-up requested.")}</p></div>
+          <div class="sec"><b>Parent response</b>${parentResponse(n)}</div>
+        </div>
+        <div>
+          <div class="sec"><b>Timeline</b>${timeline(n, names)}</div>
+          <div class="row-links"><a class="btn" href="${esc(reviewHref)}">Review session</a></div>
+        </div>
+      </div>
+      ${updateForm(n)}
+    </article>`;
+  };
+
+  function render(d) {
+    const names = d.names || {};
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Follow-up fields are not installed yet. Complete Phases 25, 26, and 28 first.";
+      $("#metrics").hidden = true; $("#filters-panel").hidden = true; $("#queue-panel").hidden = true;
+      return;
+    }
+    const labels = [["open","open"],["needs_help","parent needs help"],["overdue","overdue"],["escalated","admin support"],["resolved","resolved"]];
+    $("#metrics").innerHTML = labels.map(([k, l]) =>
+      `<button type="button" class="metric ${state.filter === k ? "active" : ""}" data-filter="${k}"><strong>${Number(d.metrics[k] || 0)}</strong><span>${esc(l)}</span></button>`).join("");
+    $("#metrics").hidden = false;
+    document.querySelectorAll(".metric").forEach((b) => b.addEventListener("click", () => { state.filter = b.dataset.filter; $("#f-filter").value = state.filter; load(); }));
+
+    $("#f-filter").value = d.filter;
+    if (d.isadmin) {
+      const sel = $("#f-teacher");
+      sel.innerHTML = `<option value="0">All teachers</option>` +
+        (d.teachers || []).map((t) => `<option value="${Number(t.teacherid)}">${esc(t.name)}</option>`).join("");
+      sel.value = String(d.teacherfilter || 0);
+      $("#teacher-field").hidden = false;
+    }
+    $("#f-q").value = d.q || "";
+    $("#filters-panel").hidden = false;
+
+    $("#queue-title").textContent = words(d.filter).replace(/^./, (c) => c.toUpperCase()) + " Follow-Ups";
+    $("#queue").innerHTML = (d.rows || []).map((n) => card(n, names)).join("") || "<div class='muted'>No follow-ups match this view.</div>";
+    $("#queue-panel").hidden = false;
+    $("#status").hidden = true;
+    document.querySelectorAll("form.update").forEach((f) => f.addEventListener("submit", submitUpdate));
+  }
+
+  $("#filters").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    state.filter = $("#f-filter").value;
+    state.teacherid = $("#teacher-field").hidden ? state.teacherid : $("#f-teacher").value;
+    state.q = $("#f-q").value.trim();
+    load();
+  });
+
+  async function submitUpdate(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const op = ev.submitter && ev.submitter.value ? ev.submitter.value : "resolve";
+    f.querySelectorAll("button").forEach((b) => { b.disabled = true; });
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-followups", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "update_followup",
+          noteid: Number(f.dataset.noteid),
+          operation: op,
+          followup_status: f.followup_status.value,
+          internal_note: f.internal_note.value,
+          workspaceid: Number(workspaceid) || 0,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = "Follow-up updated.";
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      f.querySelectorAll("button").forEach((b) => { b.disabled = false; });
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

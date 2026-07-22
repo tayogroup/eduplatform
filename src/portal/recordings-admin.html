@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recording review · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:18px 0 8px;font-size:14px;color:var(--ink2)}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 14px}
+  .metric b{display:block;font-size:24px;font-weight:900;color:var(--blue2)}
+  .metric span{display:block;margin-top:2px;font-size:12px;color:var(--muted);font-weight:700}
+  .metric.warn b{color:var(--amber)}
+  .metric.bad b{color:var(--red)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
+  button.act{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-weight:900;font-size:13px;cursor:pointer;font-family:inherit}
+  button.act.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  button.act.warn{background:var(--amber)}
+  button.act.danger{background:var(--red)}
+  button.act:disabled{opacity:.55;cursor:wait}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-weight:900;color:var(--ink2);background:var(--bg);font-size:12px}
+  .tblwrap{overflow-x:auto}
+  .code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;word-break:break-all;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900}
+  .pill.pending{background:var(--amber-bg);color:var(--amber)}
+  .pill.processing{background:var(--sky);color:var(--ink2)}
+  .pill.published{background:#e1f2ff;color:var(--blue2)}
+  .pill.failed{background:var(--red-bg);color:var(--red)}
+  .pill.hidden-pill{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+  .pill.expired{background:var(--red-bg);color:var(--red)}
+  .rowacts{display:flex;flex-wrap:wrap;gap:6px}
+  .rowacts button.act{min-height:28px;padding:0 10px;font-size:12px}
+  a{color:var(--blue2)}
+  .check td:first-child{font-weight:800;color:var(--ink2);white-space:nowrap}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Recording review</small></div>
+  <div class="note">Token-authenticated · parallel-run of live_recordings_admin.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1>Live Recording Review</h1><p class="sub">Sync BBB recordings, keep them hidden by default, review quality, publish safely, and monitor retention automation.</p></div>
+  <div id="status" class="status">Loading recording queue…</div>
+  <div class="metrics" id="metrics" hidden></div>
+  <div class="toolbar" id="toolbar" hidden>
+    <button class="act" data-do="sync_all">Sync BBB recordings</button>
+    <button class="act warn" data-do="expire_old" data-confirm="Apply retention expiry now? All recordings past their retention date will be hidden from parents and marked expired.">Apply retention expiry</button>
+  </div>
+  <div class="panel" id="checklist-panel" hidden><h2>Pilot Operations Checklist</h2><div class="tblwrap"><table class="check" id="checklist"></table></div></div>
+  <div class="panel" id="sessions-panel" hidden><h2>BBB Sessions</h2><div class="tblwrap"><table id="sessions"></table></div></div>
+  <div class="panel" id="queue-panel" hidden><h2>Admin Quality Review</h2><p class="sub">Grouped by pipeline state. Recordings stay hidden from parents until published here.</p><div id="queue"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => endpoint + "?" + new URLSearchParams({ report: "recordings-admin", token });
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  // Pipeline grouping: published (parent-visible + available), pending (available
+  // but not yet parent-visible = the review queue), processing, failed/removed.
+  const groupOf = (r) => {
+    const st = String(r.status || "").toLowerCase();
+    if (Number(r.visible_to_parent) && st === "available") return "published";
+    if (st === "available") return "pending";
+    if (["processing", "processed", "queued"].includes(st)) return "processing";
+    return "failed";
+  };
+  const GROUPS = [
+    ["pending", "Pending review", "pending"],
+    ["processing", "Processing", "processing"],
+    ["published", "Published to parents", "published"],
+    ["failed", "Failed / expired / removed", "failed"],
+  ];
+
+  const statusPill = (r, group) => {
+    const cls = group === "published" ? "published" : group === "pending" ? "pending" : group === "processing" ? "processing" : "failed";
+    return `<span class="pill ${cls}">${esc(String(r.status || "unknown"))}</span>`;
+  };
+
+  const recRow = (r, names, group) => {
+    const acts = [];
+    const mk = (doName, label, cls, confirm) =>
+      `<button class="act ${cls}" data-do="${esc(doName)}" data-recordingid="${Number(r.id)}"${confirm ? ` data-confirm="${esc(confirm)}"` : ""}>${esc(label)}</button>`;
+    acts.push(mk("mark_reviewed", "Mark reviewed", "light", ""));
+    acts.push(mk("publish", "Publish", "", ""));
+    acts.push(mk("unpublish", "Hide", "warn", "Hide this recording from parents?"));
+    acts.push(mk("archive", "Archive", "danger", "Archive this recording? It will be hidden from parents and marked archived."));
+    return `<tr>
+      <td><strong>${esc(r.name || "Recording " + r.id)}</strong><br><span class="code">${esc(r.bbb_record_id || "")}</span>${r.playback_url ? `<br><a href="${esc(r.playback_url)}" target="_blank" rel="noopener noreferrer">Open playback</a>` : ""}</td>
+      <td>${esc(r.session_title || ("Session " + r.sessionid))}${r.scheduled_start ? "<br><span class='muted'>" + esc(when(r.scheduled_start)) + "</span>" : ""}${r.teacherid && names[r.teacherid] ? "<br><span class='muted'>" + esc(names[r.teacherid]) + "</span>" : ""}</td>
+      <td>${statusPill(r, group)}${r.expired ? ' <span class="pill expired">expired</span>' : ""}</td>
+      <td>${Number(r.visible_to_parent) ? '<span class="pill published">visible to parents</span>' : '<span class="pill hidden-pill">hidden</span>'}</td>
+      <td>${r.expiresat ? esc(when(r.expiresat)) : "not set"}</td>
+      <td>${r.reviewed ? "Reviewed by " + esc(names[r.reviewedby] || ("#" + r.reviewedby)) + "<br><span class='muted'>" + esc(when(r.reviewedat)) + "</span>" : "Not reviewed"}</td>
+      <td><div class="rowacts">${acts.join("")}</div></td>
+    </tr>`;
+  };
+
+  function render(d) {
+    const names = d.names || {};
+    if (d.error) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = d.error;
+    } else {
+      $("#status").hidden = true;
+    }
+    const m = d.metrics || {};
+    $("#metrics").innerHTML = [
+      ["synced_total", "stored recordings", ""],
+      ["pending_review", "review queue", "warn"],
+      ["parent_visible", "parent visible", ""],
+      ["visible_without_review", "visible without review", "bad"],
+      ["expired_visible", "expired visible", "bad"],
+      ["expiring_7d", "expiring 7d", "warn"],
+    ].map(([k, label, cls]) => `<div class="metric ${Number(m[k]) > 0 && cls ? cls : ""}"><b>${Number(m[k] || 0)}</b><span>${esc(label)}</span></div>`).join("");
+    $("#metrics").hidden = false;
+    $("#toolbar").hidden = !d.ready;
+
+    $("#checklist").innerHTML = [
+      ["Operating model", "Scheduled Moodle cron sync checks recent ended BBB sessions hourly. Manual sync remains available for immediate checks."],
+      ["Retention policy", `${Number(d.retentiondays || 0)} day(s). Expired recordings are automatically hidden from parents and marked expired.`],
+      ["Last sync", d.lastsync ? when(d.lastsync) : "No sync audit yet"],
+      ["Last automated sync", d.lastautosync ? when(d.lastautosync) : "No automated sync audit yet"],
+      ["Last review queue reminder", d.lastqueue ? when(d.lastqueue) : "No review queue reminder audit yet"],
+      ["Last expiry run", d.lastexpiry ? when(d.lastexpiry) : "No expired recording audit yet"],
+      ["Publish rule", "Recordings remain hidden until admin review. Expired recordings and recordings without playback URLs cannot be published."],
+    ].map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("");
+    $("#checklist-panel").hidden = false;
+
+    const sess = d.sessions || [];
+    $("#sessions").innerHTML = "<tr><th>Session</th><th>Start</th><th>Recording</th><th>Consent</th><th>Stored</th><th>Action</th></tr>" +
+      (sess.map((s) => `<tr>
+        <td>${esc(s.title || ("Session " + s.id))}<br><span class="code">${esc(s.bbb_meeting_id || "")}</span>${s.teacherid && names[s.teacherid] ? "<br><span class='muted'>" + esc(names[s.teacherid]) + "</span>" : ""}</td>
+        <td>${esc(when(s.scheduled_start))}</td>
+        <td>${Number(s.recording_enabled) ? '<span class="pill published">enabled</span>' : '<span class="pill hidden-pill">off</span>'}</td>
+        <td>${Number(s.recording_consent_required) ? '<span class="pill pending">consent required</span>' : '<span class="pill hidden-pill">not required</span>'}</td>
+        <td>${Number(s.recording_count || 0)}</td>
+        <td><button class="act light" data-do="sync_session" data-sessionid="${Number(s.id)}">Sync this session</button></td>
+      </tr>`).join("") || "<tr><td colspan='6' class='muted'>No BBB-created sessions found yet.</td></tr>");
+    $("#sessions-panel").hidden = false;
+
+    const recs = d.recordings || [];
+    const bygroup = { pending: [], processing: [], published: [], failed: [] };
+    recs.forEach((r) => bygroup[groupOf(r)].push(r));
+    $("#queue").innerHTML = recs.length
+      ? GROUPS.filter(([g]) => bygroup[g].length).map(([g, label, cls]) => `
+        <h3><span class="pill ${cls}">${bygroup[g].length}</span> ${esc(label)}</h3>
+        <div class="tblwrap"><table>
+          <tr><th>Recording</th><th>Session</th><th>Status</th><th>Parent visibility</th><th>Retention</th><th>Review</th><th>Actions</th></tr>
+          ${bygroup[g].map((r) => recRow(r, names, g)).join("")}
+        </table></div>`).join("")
+      : "<div class='muted'>No recordings synced yet.</div>";
+    $("#queue-panel").hidden = false;
+
+    document.querySelectorAll("button.act[data-do]").forEach((b) => b.addEventListener("click", runAction));
+  }
+
+  async function runAction(ev) {
+    const btn = ev.currentTarget;
+    const confirmMsg = btn.dataset.confirm || "";
+    if (confirmMsg && !window.confirm(confirmMsg)) return;
+    const payload = { do: btn.dataset.do };
+    if (btn.dataset.recordingid) payload.recordingid = Number(btn.dataset.recordingid);
+    if (btn.dataset.sessionid) payload.sessionid = Number(btn.dataset.sessionid);
+    const oldLabel = btn.textContent;
+    btn.disabled = true; btn.textContent = "Working…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "recordings-admin", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) {
+      btn.disabled = false; btn.textContent = oldLabel;
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

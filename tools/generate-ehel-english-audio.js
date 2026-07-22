@@ -8,7 +8,11 @@
 //
 // Usage:
 //   node tools/generate-ehel-english-audio.js <category> [grade ...] [--dry] [--limit N] [--force]
-//   category = readings | grammar | speaking
+//   category = readings | grammar | speaking | vocabulary
+//   vocabulary = one clip per dictionaryLinks practice sentence; rewrites each
+//   sentenceAudio descriptor to the resolver-compatible media/audio/grade-N/
+//   vocabulary/ path (the template's original ./unit-K/media/... paths matched
+//   neither the disk layout nor resolveMediaUrl and never had files).
 //   e.g. node tools/generate-ehel-english-audio.js readings 1
 //        node tools/generate-ehel-english-audio.js readings 1 2 3 --limit 5
 //        node tools/generate-ehel-english-audio.js readings --dry   (estimate only)
@@ -24,7 +28,7 @@ const MODEL_ID = "eleven_multilingual_v2";
 
 // --- args ---
 const args = process.argv.slice(2);
-const category = args.find((a) => /^(readings|grammar|speaking)$/.test(a)) || "readings";
+const category = args.find((a) => /^(readings|grammar|speaking|vocabulary)$/.test(a)) || "readings";
 const grades = args.filter((a) => /^[1-8]$/.test(a)).map(Number);
 const gradeList = grades.length ? grades : [1, 2, 3, 4, 5, 6, 7, 8];
 const dry = args.includes("--dry");
@@ -72,6 +76,34 @@ function itemsForUnit(unit, grade) {
       output: path.join(ENGLISH, dir, `${g.grammarId}.mp3`),
     }));
   }
+  if (category === "vocabulary") {
+    const items = [];
+    for (const entry of unit.dictionaryLinks || []) {
+      const sentences = entry.practiceSentences || [];
+      if (!Array.isArray(entry.sentenceAudio)) entry.sentenceAudio = [];
+      sentences.forEach((sentence, i) => {
+        const id = `${entry.vocabularyId}-sentence-${i + 1}`;
+        const source = `./${dir}/${id}.mp3`;
+        items.push({
+          id, ref: entry, title: entry.vocabularyId,
+          text: narration(sentence),
+          source,
+          output: path.join(ENGLISH, dir, `${id}.mp3`),
+          done: entry.sentenceAudio[i]?.available === true && entry.sentenceAudio[i]?.source === source,
+          apply() {
+            const prev = entry.sentenceAudio[i] || {};
+            entry.sentenceAudio[i] = {
+              source, normal: source, slow: source,
+              provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+              slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
+              available: true, status: "Generated",
+            };
+          },
+        });
+      });
+    }
+    return items;
+  }
   // speaking
   return (unit.speaking || []).map((s) => ({
     id: s.speakingId, ref: s, title: s.title,
@@ -113,7 +145,11 @@ async function tts(text) {
         if (dry) { count += 1; continue; }
         if (exists && !force) {
           reused += 1;
-          if (!item.ref.audio?.available) { item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, available: true }; changed = true; }
+          if (item.apply) {
+            if (!item.done) { item.apply(); changed = true; }
+          } else if (!item.ref.audio?.available) {
+            item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, available: true }; changed = true;
+          }
           continue;
         }
         fs.mkdirSync(path.dirname(item.output), { recursive: true });
@@ -124,7 +160,8 @@ async function tts(text) {
             const buf = await tts(item.text);
             fs.writeFileSync(item.output, buf);
             charsSent += item.text.length; generated += 1; count += 1; ok = true;
-            item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, available: true };
+            if (item.apply) item.apply();
+            else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, available: true };
             changed = true;
             console.log(`ok ${(buf.length / 1024).toFixed(0)} KB`);
           } catch (e) {

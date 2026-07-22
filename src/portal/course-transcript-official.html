@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Official transcript · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn.primary{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .btn.danger{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .metas{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+  .meta{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  .meta span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);font-weight:900}
+  .meta b{display:block;margin-top:3px;font-size:13px;overflow-wrap:anywhere}
+  .alert{padding:12px 14px;border-radius:8px;font-weight:700;margin-bottom:10px}
+  .alert.ok{background:var(--sky);color:var(--blue2)}
+  .alert.bad{background:var(--red-bg);color:var(--red)}
+  .alert.warn{background:var(--amber-bg);color:var(--amber)}
+  form.reg{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:end}
+  form.reg label{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:4px}
+  form.reg input{width:100%;min-height:38px;border:1px solid var(--line);border-radius:7px;padding:0 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .name{display:block;font-weight:900}
+  .key{display:block;margin-top:2px;color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .tablewrap{overflow-x:auto}
+  @media(max-width:820px){form.reg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Official transcript</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of course_transcript_official.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Official Transcript</h1>
+    <p class="sub" id="subtitle">Draft preview from current live data. Issuing stores an immutable snapshot.</p>
+    <div class="actions" id="actions" hidden></div>
+  </div>
+  <div id="status" class="status">Loading official transcript…</div>
+  <div id="flash"></div>
+  <div class="panel" id="meta-panel" hidden><h2>Official Transcript Metadata</h2><div class="metas" id="metas"></div></div>
+  <div class="panel" id="blockers-panel" hidden><h2>Issue Blockers</h2><div id="blockers"></div></div>
+  <div class="panel" id="issue-panel" hidden>
+    <h2>Issue Official Transcript</h2>
+    <form class="reg" id="issue-form">
+      <div><label>Issue reason</label><input id="issue-reason" required maxlength="500" placeholder="Registrar review complete"></div>
+      <button class="btn primary" type="submit">Issue official transcript</button>
+    </form>
+  </div>
+  <div class="panel" id="registrar-panel" hidden>
+    <h2>Registrar Actions</h2>
+    <form class="reg" id="registrar-form">
+      <div><label>Reason</label><input id="registrar-reason" required maxlength="500" placeholder="Required registrar reason"></div>
+      <button class="btn" type="submit" data-do="reissue">Reissue</button>
+      <button class="btn danger" type="submit" data-do="revoke">Revoke</button>
+    </form>
+  </div>
+  <div class="panel" id="revoked-panel" hidden><h2>Revocation</h2><div class="alert bad" id="revoked-reason"></div></div>
+  <div class="panel" id="lines-panel" hidden><h2>Course Lines</h2><div class="tablewrap"><table>
+    <thead><tr><th>Course</th><th>Status</th><th>Grade</th><th>Completion</th><th>Attendance</th><th>Warnings</th></tr></thead>
+    <tbody id="lines"></tbody></table></div></div>
+  <div class="panel" id="recent-panel" hidden><h2>Recent Issued Snapshots</h2><div class="tablewrap"><table>
+    <thead><tr><th>Document</th><th>Status</th><th>Issued</th><th>Snapshot</th></tr></thead>
+    <tbody id="recent"></tbody></table></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Legacy page params pass straight through to the handler.
+  const PASS = ["studentid", "workspaceid", "consumer", "documentid", "issued"];
+  const url = () => {
+    const p = new URLSearchParams({ report: "course-transcript-official", token });
+    for (const k of PASS) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+  const posturl = () => {
+    const p = new URLSearchParams({ report: "course-transcript-official", token });
+    for (const k of ["workspaceid", "consumer"]) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+
+  let data = null;
+  const meta = (label, value) => `<div class="meta"><span>${esc(label)}</span><b>${esc(value)}</b></div>`;
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      data = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    const issuedmode = d.mode === "issued";
+    const student = (d.header && d.header.student) || {};
+    const workspace = (d.header && d.header.workspace) || {};
+    const doc = d.doc || {};
+    $("#mode-note").textContent = (issuedmode ? "Issued Official Transcript" : "Official Transcript Draft") + " · parallel-run of course_transcript_official.php";
+    $("#title").textContent = student.name || "Student";
+    $("#subtitle").textContent = issuedmode
+      ? "This page is rendering the immutable issued snapshot."
+      : "Draft preview from current live data. Issuing stores an immutable snapshot.";
+
+    // Legacy action buttons: links to the live Moodle pages (parallel-run).
+    const links = d.links || {};
+    const linkdefs = [["unofficial", "Unofficial preview"], ["pdf", "PDF"], ["csv", "CSV"], ["controls", "Controls"], ["readiness", "Readiness"], ["workspace", "Workspace"]];
+    $("#actions").innerHTML = linkdefs.filter(([k]) => links[k]).map(([k, label]) =>
+      `<a class="btn${k === "workspace" ? " primary" : ""}" href="${esc(links[k])}" target="_blank" rel="noopener">${esc(label)}</a>`).join("");
+    $("#actions").hidden = false;
+
+    if (Number(d.issued)) { $("#flash").innerHTML = '<div class="alert ok">Official transcript issued and stored as a snapshot.</div>'; }
+
+    let m =
+      meta("Workspace", workspace.name || "") +
+      meta("Account No.", student.account_no || "Not recorded") +
+      meta("Policy Hash", d.policyhash || "") +
+      meta(issuedmode ? "Document ID" : "Draft Status", issuedmode ? (doc.documentid || d.documentid) : ((d.blockers || []).length ? "Blocked" : "Ready"));
+    if (issuedmode) {
+      m += meta("Issued", doc.issued_label || "Not recorded")
+        + meta("Snapshot Hash", doc.snapshothash || "")
+        + meta("Status", doc.status_label || "Issued")
+        + `<div class="meta"><span>Verification</span><b><a href="${esc(d.verificationurl || "#")}" target="_blank" rel="noopener">Public status</a></b></div>`;
+      if (doc.replacedbydocumentid) { m += meta("Replaced By", doc.replacedbydocumentid); }
+    }
+    m += meta("Lines", String((d.lines || []).length)) + meta("Warnings", String(Number(d.warning_count) || 0));
+    $("#metas").innerHTML = m;
+    $("#meta-panel").hidden = false;
+
+    const blockers = d.blockers || [];
+    if (!issuedmode && blockers.length) {
+      $("#blockers").innerHTML = blockers.map((b) => `<div class="alert warn">${esc(b)}</div>`).join("");
+      $("#blockers-panel").hidden = false;
+    }
+    $("#issue-panel").hidden = !(!issuedmode && !blockers.length);
+    $("#registrar-panel").hidden = !(issuedmode && doc.can_registrar_act);
+    if (issuedmode && doc.status === "revoked") {
+      $("#revoked-reason").textContent = doc.revocationreason || "This transcript has been revoked.";
+      $("#revoked-panel").hidden = false;
+    }
+
+    $("#lines").innerHTML = (d.lines || []).map((line) => {
+      const course = line.course || {};
+      const rr = line.render || {};
+      return `<tr>
+        <td><span class="name">${esc(course.title || "Course")}</span><span class="key">${esc(course.key || "")} / Moodle #${Number(course.moodlecourseid) || 0}</span></td>
+        <td><span class="pill">${esc(rr.status_label || "Unknown")}</span></td>
+        <td>${esc(rr.grade || "Not recorded")}</td>
+        <td>${esc(rr.completion || "Not recorded")}</td>
+        <td>${esc(rr.attendance || "Not recorded")}</td>
+        <td>${Number(rr.warning_count) || 0}</td>
+      </tr>`;
+    }).join("") || '<tr><td colspan="6">No course lines are available for this transcript.</td></tr>';
+    $("#lines-panel").hidden = false;
+
+    const recent = d.recentdocs || [];
+    if (!issuedmode && recent.length) {
+      $("#recent").innerHTML = recent.map((r2) => {
+        const u = new URL(location.href);
+        u.searchParams.set("documentid", r2.documentid);
+        u.searchParams.delete("issued");
+        return `<tr>
+          <td><a href="${esc(u.href)}">${esc(r2.documentid)}</a></td>
+          <td>${esc(r2.status_label || "")}</td>
+          <td>${esc(r2.issued_label || "")}</td>
+          <td>${esc(r2.snapshothash || "")}</td>
+        </tr>`;
+      }).join("");
+      $("#recent-panel").hidden = false;
+    } else { $("#recent-panel").hidden = true; }
+
+    $("#status").hidden = true;
+  }
+
+  // Writes mirror the legacy POST actions; a saved write navigates to the
+  // documentid the legacy redirect would have targeted.
+  async function post(body, btns) {
+    btns.forEach((b) => { b.disabled = true; });
+    try {
+      const r = await fetch(posturl(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      const u = new URL(location.href);
+      u.searchParams.set("documentid", d.documentid || "");
+      if (Number(d.issued)) { u.searchParams.set("issued", "1"); } else { u.searchParams.delete("issued"); }
+      location.href = u.href;
+    } catch (e) {
+      btns.forEach((b) => { b.disabled = false; });
+      $("#flash").innerHTML = `<div class="alert bad">${esc(e.message)}</div>`;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  $("#issue-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!data) return;
+    post({
+      do: "issue",
+      studentid: Number(data.studentid),
+      workspaceid: Number(data.workspaceid),
+      issuereason: $("#issue-reason").value.trim(),
+    }, [...ev.currentTarget.querySelectorAll("button")]);
+  });
+
+  $("#registrar-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!data) return;
+    const which = (ev.submitter && ev.submitter.dataset.do) || "reissue";
+    post({
+      do: which,
+      documentid: data.documentid,
+      reason: $("#registrar-reason").value.trim(),
+    }, [...ev.currentTarget.querySelectorAll("button")]);
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

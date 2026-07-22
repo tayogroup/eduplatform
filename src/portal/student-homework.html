@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--ink2)}
+  .stat b{display:block;font-size:24px;color:var(--ink)}
+  .stat.overdue b{color:var(--red)}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card h3{margin:0 0 3px;font-size:15px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:6px}
+  .pill.status{background:var(--sky);color:var(--ink2)}
+  .pill.status.review{background:#e1f2ff;color:var(--blue2)}
+  .pill.status.returned{background:var(--amber-bg);color:var(--amber)}
+  .pill.due{background:var(--sky);color:var(--ink2)}
+  .pill.due.soon{background:var(--amber-bg);color:var(--amber)}
+  .pill.due.overdue{background:var(--red-bg);color:var(--red)}
+  .sec{margin:8px 0 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);white-space:pre-wrap}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px;white-space:normal}
+  .sec.feedback{background:var(--amber-bg);border-color:var(--amber)}
+  .sec.grade{background:var(--sky)}
+  a.linkbtn{display:inline-block;margin-top:8px;padding:7px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--blue2);font-weight:800;font-size:13px;text-decoration:none}
+  a.linkbtn:hover{border-color:var(--blue2)}
+  form.work{margin-top:10px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  form.work label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  form.work select,form.work textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  form.work textarea{min-height:90px;resize:vertical}
+  form.work .btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  form.work button{border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.work button.save{background:var(--sky);color:var(--blue)}
+  form.work button.submit{background:var(--blue2);color:#fff}
+  form.work button:disabled{opacity:.55;cursor:wait}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Homework</small></div>
+  <div class="note">Token-authenticated · parallel-run of student_homework.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1>Homework</h1><p class="sub">Complete course assignments and review teacher feedback.</p></div>
+  <div id="status" class="status">Loading homework…</div>
+  <div class="stats" id="stats" hidden>
+    <div class="stat"><b id="c-open">0</b>To do</div>
+    <div class="stat"><b id="c-review">0</b>Awaiting review</div>
+    <div class="stat"><b id="c-graded">0</b>Graded</div>
+    <div class="stat overdue"><b id="c-overdue">0</b>Overdue</div>
+  </div>
+  <div class="panel" id="list-panel" hidden><h2>Your assignments</h2><div class="cards" id="list"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = () => {
+    const p = { report: "student-homework", token };
+    if (qs.get("workspaceid")) p.workspaceid = qs.get("workspaceid");
+    return p;
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(params()));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const duePill = (row) => {
+    if (!Number(row.duedate)) return "";
+    const now = Date.now() / 1000;
+    const closed = row.status === "submitted" || row.status === "graded";
+    const cls = !closed && Number(row.duedate) < now ? "overdue" : (!closed && Number(row.duedate) < now + 3 * 86400 ? "soon" : "");
+    return `<span class="pill due ${cls}">due ${esc(row.duedate_label)}</span>`;
+  };
+
+  const statusPill = (row) => {
+    const cls = row.status === "submitted" ? "review" : row.status === "returned" ? "returned" : "";
+    return `<span class="pill status ${cls}">${esc(row.status_label || row.status)}</span>`;
+  };
+
+  const workForm = (row, d) => `
+    <form class="work" data-submissionid="${Number(row.id)}">
+      <label>Written response</label>
+      <textarea name="response_text" placeholder="Type your answer here…">${esc(row.response_text)}</textarea>
+      <label>Document Studio file</label>
+      <select name="materialid">
+        <option value="0">No file attached</option>
+        ${(d.materials || []).map((m) => `<option value="${Number(m.id)}"${Number(row.materialid) === Number(m.id) ? " selected" : ""}>${esc(m.title)}</option>`).join("")}
+      </select>
+      <div class="muted" style="margin-top:4px">Need a file? <a href="${esc(d.urls && d.urls.office || "#")}">Create one in Document Studio</a> (opens the Moodle page).</div>
+      <div class="btns">
+        <button type="button" class="save" data-do="save">Save draft</button>
+        <button type="submit" class="submit" data-do="submit">${row.status === "returned" ? "Resubmit homework" : "Submit homework"}</button>
+      </div>
+    </form>`;
+
+  const card = (row, d) => `
+    <div class="card">
+      <h3>${esc(row.title || "Homework")}${statusPill(row)}${duePill(row)}</h3>
+      <div class="meta">${esc(row.coursename)} · ${esc(String(row.maxpoints))} points</div>
+      ${String(row.instructions || "").trim() ? `<div class="sec"><b>Instructions</b>${esc(row.instructions)}</div>` : ""}
+      ${row.resource_url ? `<a class="linkbtn" href="${esc(row.resource_url)}">Open course material</a>` : ""}
+      ${String(row.feedback || "").trim() ? `<div class="sec feedback"><b>Teacher feedback</b>${esc(row.feedback)}</div>` : ""}
+      ${row.status === "graded" ? `<div class="sec grade"><b>Grade</b>${esc(String(row.scorepoints))} / ${esc(String(row.maxpoints))} (${esc(String(Math.round(Number(row.scorepercent) || 0)))}%)</div>` : ""}
+      ${row.status !== "submitted" && row.status !== "graded" ? workForm(row, d) : ""}
+    </div>`;
+
+  function render(d) {
+    const c = d.counts || {};
+    $("#c-open").textContent = c.open || 0;
+    $("#c-review").textContent = c.review || 0;
+    $("#c-graded").textContent = c.graded || 0;
+    $("#c-overdue").textContent = c.overdue || 0;
+    $("#stats").hidden = false;
+    $("#list").innerHTML = (d.rows || []).map((row) => card(row, d)).join("") || "<div class='muted'>No homework has been assigned yet.</div>";
+    $("#list-panel").hidden = false;
+    $("#status").hidden = true;
+    document.querySelectorAll("form.work").forEach((f) => {
+      f.addEventListener("submit", (ev) => { ev.preventDefault(); act(f, "submit"); });
+      f.querySelector("button.save").addEventListener("click", () => act(f, "save"));
+    });
+  }
+
+  async function act(f, doAction) {
+    const btns = f.querySelectorAll("button");
+    btns.forEach((b) => { b.disabled = true; });
+    try {
+      const body = {
+        do: doAction,
+        submissionid: Number(f.dataset.submissionid),
+        response_text: f.response_text.value,
+        materialid: Number(f.materialid.value) || 0,
+      };
+      if (qs.get("workspaceid")) body.workspaceid = Number(qs.get("workspaceid"));
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "student-homework", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      btns.forEach((b) => { b.disabled = false; });
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

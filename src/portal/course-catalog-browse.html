@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course catalog · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 4px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .toplinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  a.btn,button.btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-weight:900;font-size:13px;cursor:pointer;font-family:inherit}
+  a.btn.light,button.btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  button.btn:disabled{opacity:.55;cursor:not-allowed}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+  .field{display:grid;gap:4px;min-width:200px;flex:1}
+  .field label{font-size:11px;font-weight:900;color:var(--ink2);text-transform:uppercase;letter-spacing:.4px}
+  select,input[type=text]{width:100%;min-height:36px;border:1px solid var(--line);border-radius:7px;padding:0 10px;background:var(--card);color:var(--ink);font:inherit;font-size:13px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;font-weight:800}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin:2px 4px 2px 0;background:var(--sky);color:var(--ink2)}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .section-head{margin:20px 0 10px}
+  .section-head h2{margin:0;font-size:17px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card .text{color:var(--ink2);font-size:13px;margin:6px 0}
+  .sec{margin:8px 0 0;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .sec b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:2px}
+  .sec.hw{background:var(--sky)}
+  .pqcb-detail-list{margin:4px 0 0 18px;padding:0;color:var(--ink2);font-size:13px;line-height:1.5}
+  .pqcb-muted,.pqcb-text{color:var(--ink2);font-size:13px}
+  details.more{margin-top:10px}
+  details.more summary{cursor:pointer;font-weight:900;font-size:13px;color:var(--blue2)}
+  form.request{margin-top:10px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
+  form.request label{display:block;font-size:11px;font-weight:900;color:var(--ink2);margin:8px 0 3px;text-transform:uppercase;letter-spacing:.4px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Course catalog</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of course_catalog_browse.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Course Catalog</h1>
+    <p class="sub">Browse available institution course seats, dates, syllabus, prerequisites, and request enrollment.</p>
+    <div class="toplinks" id="toplinks" hidden></div>
+  </div>
+  <div class="panel" id="filters-panel" hidden>
+    <div class="filters">
+      <div class="field"><label for="f-course">Course track</label><select id="f-course"><option value="">All course tracks</option></select></div>
+      <div class="field"><label for="f-available">Available only</label><select id="f-available"><option value="0">Show all visible</option><option value="1">Only open seats</option></select></div>
+      <button class="btn" id="f-apply" type="button">Filter</button>
+      <button class="btn light" id="f-clear" type="button">Clear</button>
+    </div>
+  </div>
+  <div id="status" class="status">Loading course catalog…</div>
+  <div class="panel" id="requests-panel" hidden>
+    <h2>Enrollment Request Status</h2>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Student</th><th>Course</th><th>Status</th><th>Updated</th><th>Actions</th></tr></thead>
+      <tbody id="requests"></tbody>
+    </table></div>
+  </div>
+  <div id="catalog"></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+  const dateOnly = (t) => t ? new Date(t * 1000).toLocaleDateString(undefined, { day:"numeric", month:"short", year:"numeric" }) : "";
+  const ACTIVE = ["pending", "approved", "enrolled", "drop_requested"];
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const state = { course: qs.get("course") || "", availableOnly: qs.get("available_only") === "1" };
+
+  const baseParams = () => {
+    const p = { report: "course-catalog-browse", token };
+    if (qs.get("consumer")) p.consumer = qs.get("consumer");
+    if (qs.get("workspaceid")) p.workspaceid = qs.get("workspaceid");
+    return p;
+  };
+  const url = () => {
+    const p = baseParams();
+    if (state.course) p.course = state.course;
+    if (state.availableOnly) p.available_only = "1";
+    return endpoint + "?" + new URLSearchParams(p);
+  };
+
+  async function load() {
+    $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading course catalog…";
+    try {
+      const r = await fetch(url());
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const statusPill = (s, label) => {
+    const cls = s === "pending" || s === "drop_requested" ? "warn" : (s === "rejected" || s === "dropped" || s === "cancelled") ? "bad" : "ok";
+    return `<span class="pill ${cls}">${esc(label || s)}</span>`;
+  };
+
+  const requestRow = (r) => `
+    <tr>
+      <td><span class="name">${esc(r.student_name)}</span><span class="muted">${esc(r.account_label || "")}${r.email ? " / " + esc(r.email) : ""}</span></td>
+      <td><span class="name">${esc(r.offering_title)}</span><span class="muted">${esc(r.track_title || r.course_key)}</span></td>
+      <td>${statusPill(r.status, r.status_label)}${r.admin_notes && String(r.admin_notes).trim() ? `<div class="muted">${esc(r.admin_notes)}</div>` : ""}</td>
+      <td>${esc(when(r.timemodified))}</td>
+      <td>
+        ${r.can_cancel ? `<button class="btn light" data-act="cancel_request" data-requestid="${r.id}">Cancel</button>` : ""}
+        ${r.can_open ? `<div class="actions"><a class="btn" href="${esc(r.launch_url)}">Open course</a><button class="btn light" data-act="request_drop" data-requestid="${r.id}">Request drop</button></div>` : ""}
+        ${r.pending_sync ? `<span class="muted">Course access is pending Moodle sync.</span>` : ""}
+        ${!r.can_cancel && !r.can_open && !r.pending_sync ? `<span class="muted">No action needed</span>` : ""}
+      </td>
+    </tr>`;
+
+  const requestForm = (o, d) => {
+    let hasRequestable = false;
+    const opts = (d.requeststudents || []).map((st) => {
+      const req = (d.requestmap || {})[o.id + ":" + st.id];
+      const disabled = req && ACTIVE.includes(req.status);
+      if (!disabled) hasRequestable = true;
+      return `<option value="${st.id}"${disabled ? " disabled" : ""}>${esc(st.name)} - ${esc(st.account_label || "")}${req ? " - " + esc(req.status_label) : ""}</option>`;
+    }).join("");
+    return `
+      <form class="request" data-offeringid="${o.id}">
+        <label>Student</label><select name="studentid">${opts}</select>
+        <label>Optional note</label><input type="text" name="request_notes" maxlength="1000" placeholder="Schedule, placement, or parent note">
+        <div class="actions"><button class="btn" type="submit"${!o.can_request || !hasRequestable ? " disabled" : ""}>Request enrollment</button></div>
+      </form>`;
+  };
+
+  const card = (o, d) => {
+    const p = o.pricing || {};
+    const pills = [
+      `<span class="pill">${esc(o.track_title || o.course_key)}</span>`,
+      `<span class="pill ${o.open_seats > 0 ? "ok" : "warn"}">${o.capacity <= 0 ? "Unlimited seats" : o.open_seats + " seats open"}</span>`,
+      `<span class="pill ${o.can_request ? "ok" : "warn"}">${esc(o.availability || "")}</span>`,
+      o.has_prerequisites ? `<span class="pill warn">Prerequisites</span>` : "",
+      o.startdate > 0 ? `<span class="pill">Starts ${esc(dateOnly(o.startdate))}</span>` : "",
+      o.enddate > 0 ? `<span class="pill">Ends ${esc(dateOnly(o.enddate))}</span>` : "",
+      d.showpricing && p.has_price ? `<span class="pill">${esc(p.currency + " " + p.total)}</span>` : "",
+    ].join("");
+    const staffNote = !d.canrequestenrollment
+      ? `<div class="sec"><b>Staff preview</b>${d.canmanage ? "Use Manage offerings to publish changes or review requests." : "Enrollment requests are submitted by students or parents."}</div>` : "";
+    return `
+      <div class="card">
+        <h3>${esc(o.title)}</h3>
+        <div>${pills}</div>
+        ${o.summary_short ? `<p class="text">${esc(o.summary_short)}</p>` : ""}
+        ${d.showpricing && p.has_price ? `<div class="sec"><b>Tuition</b>${esc(p.currency + " " + p.total)}${p.installment_eligible ? " / installments may be available" : ""}${p.scholarship_eligible ? " / scholarship eligible" : ""}</div>` : ""}
+        <details class="more"><summary>View details</summary>
+          <div class="sec"><b>Summary</b>${o.summary_html || ""}</div>
+          <div class="sec"><b>Syllabus</b>${o.syllabus_html || ""}</div>
+          <div class="sec"><b>Prerequisites</b>${o.prerequisites_html || ""}</div>
+          ${d.showpricing && p.has_price ? `<div class="sec"><b>Pricing</b>Tuition ${esc(p.tuition_amount)}, registration ${esc(p.registration_fee)}, materials ${esc(p.materials_fee)}. Total ${esc(p.currency + " " + p.total)}.</div>` : ""}
+          ${d.showpricing && p.has_price && p.refund_policy_label && String(p.refund_policy_label).trim() ? `<div class="sec"><b>Refund policy</b>${esc(p.refund_policy_label)}</div>` : ""}
+          <div class="sec"><b>Dates</b>${o.startdate > 0 ? esc(dateOnly(o.startdate)) : "Start date not set"} to ${o.enddate > 0 ? esc(dateOnly(o.enddate)) : "End date not set"}</div>
+        </details>
+        ${d.canrequestenrollment && (d.requeststudents || []).length ? requestForm(o, d) : staffNote}
+      </div>`;
+  };
+
+  function render(d) {
+    $("#title").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " " : "") + "Course Catalog";
+    const links = d.links || {};
+    $("#toplinks").innerHTML = [
+      links.manage_offerings ? `<a class="btn light" href="${esc(links.manage_offerings)}">Manage offerings</a>` : "",
+      links.workspace_dashboard ? `<a class="btn light" href="${esc(links.workspace_dashboard)}">Workspace dashboard</a>` : "",
+      links.legacy_page ? `<a class="btn light" href="${esc(links.legacy_page)}">Open legacy page</a>` : "",
+    ].join("");
+    $("#toplinks").hidden = false;
+
+    if (d.ready === false) {
+      $("#status").className = "status"; $("#status").hidden = false;
+      $("#status").textContent = d.message || "Course offering tables are not ready yet.";
+      return;
+    }
+
+    const sel = $("#f-course");
+    sel.innerHTML = `<option value="">All course tracks</option>` +
+      (d.catalog || []).map((c) => `<option value="${esc(c.key)}"${(d.filters && d.filters.course) === c.key ? " selected" : ""}>${esc(c.title)}</option>`).join("");
+    $("#f-available").value = d.filters && d.filters.available_only ? "1" : "0";
+    $("#filters-panel").hidden = false;
+
+    const reqs = d.myrequests || [];
+    $("#requests").innerHTML = reqs.map(requestRow).join("");
+    $("#requests-panel").hidden = !reqs.length;
+
+    const offerings = d.offerings || [];
+    let html = "";
+    if (d.canrequestenrollment && !(d.requeststudents || []).length) {
+      html += `<div class="panel"><span class="muted">No student is linked to this account in this workspace yet.</span></div>`;
+    }
+    if (!offerings.length) {
+      html += `<div class="panel"><span class="muted">No course offerings match these filters.</span></div>`;
+    } else {
+      // Category sections: offerings grouped by catalog course track.
+      const groups = new Map();
+      offerings.forEach((o) => {
+        const key = o.track_title || o.course_key || "Other";
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(o);
+      });
+      groups.forEach((rows, track) => {
+        html += `<div class="section-head"><h2>${esc(track)}</h2><p class="sub">${rows.length} offering${rows.length === 1 ? "" : "s"}</p></div>`;
+        html += `<div class="cards">${rows.map((o) => card(o, d)).join("")}</div>`;
+      });
+    }
+    $("#catalog").innerHTML = html;
+    $("#status").hidden = true;
+
+    document.querySelectorAll("form.request").forEach((f) => f.addEventListener("submit", submitEnrollment));
+    document.querySelectorAll("button[data-act]").forEach((b) => b.addEventListener("click", requestAction));
+  }
+
+  async function post(body, okMessage) {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(baseParams()), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || okMessage;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+      return true;
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return false;
+    }
+  }
+
+  async function submitEnrollment(ev) {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const btn = f.querySelector("button");
+    btn.disabled = true; btn.textContent = "Sending…";
+    const ok = await post({
+      do: "request_enrollment",
+      offeringid: Number(f.dataset.offeringid),
+      studentid: Number(f.studentid.value),
+      request_notes: f.request_notes.value,
+    }, "Enrollment request sent for admin approval.");
+    if (!ok) { btn.disabled = false; btn.textContent = "Request enrollment"; }
+  }
+
+  async function requestAction(ev) {
+    const b = ev.currentTarget;
+    const act = b.dataset.act;
+    b.disabled = true;
+    const ok = await post({ do: act, requestid: Number(b.dataset.requestid), request_notes: "" },
+      act === "cancel_request" ? "Enrollment request cancelled." : "Drop request sent for admin review.");
+    if (!ok) b.disabled = false;
+  }
+
+  $("#f-apply").addEventListener("click", () => {
+    state.course = $("#f-course").value;
+    state.availableOnly = $("#f-available").value === "1";
+    load();
+  });
+  $("#f-clear").addEventListener("click", () => {
+    state.course = ""; state.availableOnly = false;
+    load();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

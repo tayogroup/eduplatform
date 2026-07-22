@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student course history · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1280px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .head{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  a.btn,button.btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:8px;border:0;background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900;cursor:pointer;font-family:inherit}
+  a.btn:hover,button.btn:hover{background:#dbe9f7}
+  a.mini{display:inline-block;margin:4px 6px 0 0;color:var(--blue2);font-size:12px;font-weight:900;text-decoration:none}
+  a.mini:hover{text-decoration:underline}
+  form.filter{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:end}
+  .field label{display:block;margin-bottom:5px;color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .field input{width:100%;min-height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;font-size:13px}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{background:var(--bg);color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;color:var(--ink);font-weight:900}
+  .sm{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  .pill{display:inline-flex;min-height:22px;align-items:center;margin:0 4px 4px 0;padding:0 9px;border-radius:999px;background:var(--sky);color:var(--ink2);font-size:11px;font-weight:900}
+  .empty{padding:18px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:800;background:var(--card)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Student course history</small></div>
+  <div class="note">Token-authenticated · parallel-run of course_student_history.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel head">
+    <div><h1 id="title">Student Course History</h1><p class="sub">Every course request and enrollment lifecycle event by student.</p></div>
+    <nav class="actions" id="actions" hidden>
+      <a class="btn" id="link-offerings" href="#">Course offerings</a>
+      <a class="btn" id="link-dashboard" href="#">Workspace dashboard</a>
+    </nav>
+  </div>
+  <div class="panel">
+    <form class="filter" id="filter">
+      <div class="field"><label for="q">Search student/course</label><input id="q" name="q" placeholder="Name, email, Account No., course"></div>
+      <button class="btn" type="submit">Filter</button>
+      <button class="btn" type="button" id="clear">Clear</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading course history…</div>
+  <div class="panel" id="report-panel" hidden><div class="tablewrap" id="report"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  let q = (qs.get("q") || "").trim();
+  $("#q").value = q;
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "course-student-history", token });
+    for (const k of ["workspaceid", "consumer", "studentid"]) { const v = qs.get(k); if (v) p.set(k, v); }
+    if (q) p.set("q", q);
+    return endpoint + "?" + p;
+  };
+
+  async function load() {
+    $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading course history…";
+    $("#report-panel").hidden = true;
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const rowHtml = (r) => `<tr>
+    <td><span class="name">${esc(r.student_name)}</span><span class="sm">${esc(r.account_label)} / ${esc(r.email)}</span>${r.transcript_url ? `<a class="mini" href="${esc(r.transcript_url)}">Transcript</a>` : ""}${r.finance_url ? `<a class="mini" href="${esc(r.finance_url)}">Finance</a>` : ""}</td>
+    <td><span class="name">${esc(r.offering_title)}</span><span class="sm">${esc(r.course_key)} / Moodle #${Number(r.moodlecourseid) || 0}</span></td>
+    <td><span class="pill">${esc(r.status_label || r.status)}</span></td>
+    <td>${esc(when(Number(r.timecreated)))}</td>
+    <td>${esc(when(Number(r.approvedat)))}</td>
+    <td>${esc(when(Number(r.moodleenrolledat)))}</td>
+    <td>${esc(when(Number(r.droppedat)))}</td>
+    <td><span class="sm">${esc(r.request_notes)}</span><span class="sm">${esc(r.admin_notes)}</span></td>
+  </tr>`;
+
+  function render(d) {
+    $("#title").textContent = ((d.workspace && d.workspace.name) ? d.workspace.name + " " : "") + "Student Course History";
+    if (d.links) {
+      if (d.links.course_offerings) $("#link-offerings").href = d.links.course_offerings;
+      if (d.links.workspace_dashboard) $("#link-dashboard").href = d.links.workspace_dashboard;
+      $("#actions").hidden = false;
+    }
+    const rows = d.rows || [];
+    $("#report").innerHTML = !rows.length
+      ? '<div class="empty">No course history found.</div>'
+      : `<table><thead><tr><th>Student</th><th>Course</th><th>Status</th><th>Requested</th><th>Approved</th><th>Moodle</th><th>Dropped</th><th>Notes</th></tr></thead><tbody>${rows.map(rowHtml).join("")}</tbody></table>`;
+    $("#report-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  $("#filter").addEventListener("submit", (ev) => { ev.preventDefault(); q = $("#q").value.trim(); load(); });
+  $("#clear").addEventListener("click", () => { q = ""; $("#q").value = ""; load(); });
+
+  load();
+})();
+</script>
+</body>
+</html>

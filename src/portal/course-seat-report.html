@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course seat utilization · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .head{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:8px;background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900}
+  a.btn:hover{background:#dbe9f7}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{background:var(--bg);color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;color:var(--ink);font-weight:900}
+  .sm{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  .pill{display:inline-flex;min-height:22px;align-items:center;margin:0 4px 4px 0;padding:0 9px;border-radius:999px;background:var(--sky);color:var(--ink2);font-size:11px;font-weight:900}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .empty{padding:18px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:800;background:var(--card)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Course seat utilization</small></div>
+  <div class="note">Token-authenticated · parallel-run of course_seat_report.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel head">
+    <div><h1 id="title">Course Seat Utilization</h1><p class="sub">Capacity, active enrollments, open seats, pending requests, and dropped counts by offering.</p></div>
+    <nav class="actions" id="actions" hidden>
+      <a class="btn" id="link-offerings" href="#">Course offerings</a>
+      <a class="btn" id="link-dashboard" href="#">Workspace dashboard</a>
+    </nav>
+  </div>
+  <div id="status" class="status">Loading seat report…</div>
+  <div class="panel" id="report-panel" hidden><div class="tablewrap" id="report"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "course-seat-report", token });
+    for (const k of ["workspaceid", "consumer"]) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  // Same per-row math the legacy page runs inline while rendering.
+  const rowHtml = (r) => {
+    const capacity = Number(r.capacity) || 0;
+    const active = Number(r.activecount) || 0;
+    const open = capacity <= 0 ? "Unlimited" : String(Math.max(0, capacity - active));
+    const util = capacity <= 0 ? "n/a" : Math.min(100, Math.round((active / Math.max(1, capacity)) * 100)) + "%";
+    return `<tr>
+      <td><span class="name">${esc(r.title)}</span><span class="sm">${esc(r.course_key)} / Offering #${Number(r.offeringid) || 0}</span></td>
+      <td><span class="pill">${esc(r.status)}</span><span class="pill">${esc(r.visibility)}</span></td>
+      <td>${capacity <= 0 ? "Unlimited" : capacity}</td>
+      <td>${active}</td>
+      <td>${esc(open)}</td>
+      <td>${esc(util)}</td>
+      <td><span class="pill${Number(r.pendingcount) ? " warn" : ""}">${Number(r.pendingcount) || 0} pending</span><span class="pill${Number(r.droprequestedcount) ? " warn" : ""}">${Number(r.droprequestedcount) || 0} drop requested</span><span class="pill">${Number(r.droppedcount) || 0} dropped</span><span class="pill">${Number(r.totalrequests) || 0} total</span></td>
+    </tr>`;
+  };
+
+  function render(d) {
+    $("#title").textContent = ((d.workspace && d.workspace.name) ? d.workspace.name + " " : "") + "Seat Utilization";
+    if (d.links) {
+      if (d.links.course_offerings) $("#link-offerings").href = d.links.course_offerings;
+      if (d.links.workspace_dashboard) $("#link-dashboard").href = d.links.workspace_dashboard;
+      $("#actions").hidden = false;
+    }
+    const rows = d.rows || [];
+    $("#report").innerHTML = !rows.length
+      ? '<div class="empty">No offerings found.</div>'
+      : `<table><thead><tr><th>Offering</th><th>Status</th><th>Capacity</th><th>Active</th><th>Open</th><th>Utilization</th><th>Requests</th></tr></thead><tbody>${rows.map(rowHtml).join("")}</tbody></table>`;
+    $("#report-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

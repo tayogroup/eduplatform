@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course Moodle sync report · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1280px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .head{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:8px;background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900}
+  a.btn:hover{background:#dbe9f7}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+  th{background:var(--bg);color:var(--ink2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+  .name{display:block;color:var(--ink);font-weight:900}
+  .sm{display:block;margin-top:3px;color:var(--muted);font-size:12px;font-weight:700}
+  .pill{display:inline-flex;min-height:22px;align-items:center;margin:0 4px 4px 0;padding:0 9px;border-radius:999px;background:var(--amber-bg);color:var(--amber);font-size:11px;font-weight:900}
+  .pill.ready{background:var(--sky);color:var(--blue2)}
+  .empty{padding:18px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-weight:800;background:var(--card)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Course Moodle sync report</small></div>
+  <div class="note">Token-authenticated · parallel-run of course_sync_report.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel head">
+    <div><h1 id="title">Course Moodle Sync Report</h1><p class="sub">Approved requests waiting for Moodle enrollment and offerings with linked-course setup issues.</p></div>
+    <nav class="actions" id="actions" hidden>
+      <a class="btn" id="link-offerings" href="#">Course offerings</a>
+      <a class="btn" id="link-dashboard" href="#">Workspace dashboard</a>
+    </nav>
+  </div>
+  <div id="status" class="status">Loading sync report…</div>
+  <div class="panel" id="pending-panel" hidden><h2>Requests Needing Moodle Sync</h2><div class="tablewrap" id="pending"></div></div>
+  <div class="panel" id="issues-panel" hidden><h2>Offering Link Issues</h2><div class="tablewrap" id="issues"></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "course-sync-report", token });
+    for (const k of ["workspaceid", "consumer"]) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const setupPill = (label) => `<span class="pill${label === "Ready" ? " ready" : ""}">${esc(label)}</span>`;
+
+  const pendingRow = (r) => `<tr>
+    <td><span class="name">${esc(r.student_name)}</span><span class="sm">${esc(r.account_label)} / ${esc(r.email)}</span></td>
+    <td><span class="name">${esc(r.offering_title)}</span><span class="sm">${esc(r.course_key)} / Moodle #${Number(r.moodlecourseid) || 0}</span></td>
+    <td>${esc(when(Number(r.approvedat)))}</td>
+    <td>${setupPill(r.manual_label || "")}</td>
+    <td>${r.retry_url ? `<a class="btn" href="${esc(r.retry_url)}">Retry from requests</a>` : ""}</td>
+  </tr>`;
+
+  const issueRow = (r) => `<tr>
+    <td><span class="name">${esc(r.title)}</span><span class="sm">${esc(r.course_key)} / Offering #${Number(r.offeringid) || 0}</span></td>
+    <td>${Number(r.moodlecourseid) > 0 ? "Moodle #" + Number(r.moodlecourseid) + " " + esc(r.moodle_fullname) : "Not linked"}</td>
+    <td>${setupPill(r.manual_label || "")}</td>
+    <td>${r.edit_url ? `<a class="btn" href="${esc(r.edit_url)}">Edit offering</a>` : ""}</td>
+  </tr>`;
+
+  function render(d) {
+    $("#title").textContent = ((d.workspace && d.workspace.name) ? d.workspace.name + " " : "") + "Moodle Sync Report";
+    if (d.links) {
+      if (d.links.course_offerings) $("#link-offerings").href = d.links.course_offerings;
+      if (d.links.workspace_dashboard) $("#link-dashboard").href = d.links.workspace_dashboard;
+      $("#actions").hidden = false;
+    }
+    const pending = d.pending || [];
+    $("#pending").innerHTML = !pending.length
+      ? '<div class="empty">No approved requests are waiting for Moodle sync.</div>'
+      : `<table><thead><tr><th>Student</th><th>Offering</th><th>Approved</th><th>Moodle Setup</th><th>Action</th></tr></thead><tbody>${pending.map(pendingRow).join("")}</tbody></table>`;
+    const issues = d.linkissues || [];
+    $("#issues").innerHTML = !issues.length
+      ? '<div class="empty">All linked Moodle courses look ready.</div>'
+      : `<table><thead><tr><th>Offering</th><th>Moodle Course</th><th>Status</th><th>Action</th></tr></thead><tbody>${issues.map(issueRow).join("")}</tbody></table>`;
+    $("#pending-panel").hidden = false;
+    $("#issues-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

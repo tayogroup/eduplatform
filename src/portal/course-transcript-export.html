@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transcript export · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  form.filters{display:grid;grid-template-columns:1fr 1fr 1fr 1.2fr auto;gap:10px;align-items:end}
+  form.filters label{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:4px}
+  form.filters select,form.filters input{width:100%;min-height:36px;border:1px solid var(--line);border-radius:7px;padding:0 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn.primary{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.note{background:var(--amber-bg);color:var(--amber)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .tablewrap{overflow-x:auto}
+  .dl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  @media(max-width:820px){form.filters{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Transcript export</small></div>
+  <div class="note">Token-authenticated · parallel-run of course_transcript_export.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1>Transcript Export</h1>
+    <p class="sub">Same datasets and access gates as the legacy export page. CSV files are built in your browser from the exact legacy columns; PDF downloads stay on the legacy page.</p>
+  </div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div><label>Type</label><select id="f-type">
+        <option value="unofficial">Unofficial (student lines)</option>
+        <option value="official">Official (issued snapshot)</option>
+        <option value="documents">Documents (workspace admin)</option>
+      </select></div>
+      <div><label>Format</label><select id="f-format">
+        <option value="csv">CSV</option>
+        <option value="pdf">PDF (via legacy page)</option>
+      </select></div>
+      <div><label>Student ID</label><input type="number" id="f-studentid" min="0" placeholder="for unofficial"></div>
+      <div><label>Document ID</label><input id="f-documentid" placeholder="for official"></div>
+      <button class="btn primary" type="submit">Fetch export</button>
+    </form>
+  </div>
+  <div id="status" class="status" hidden></div>
+  <div class="panel" id="result-panel" hidden>
+    <h2 id="result-title">Export</h2>
+    <div class="dl" id="result-actions"></div>
+    <div class="tablewrap"><table id="preview"><thead></thead><tbody></tbody></table></div>
+    <p class="muted" id="result-note"></p>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const say = (cls, text) => { $("#status").className = "status " + cls; $("#status").hidden = false; $("#status").textContent = text; };
+
+  if (!endpoint || !token) { say("error", "Missing endpoint/token — open via the Moodle portal launch link."); return; }
+
+  // Legacy request params pass straight through (?type=&format=&studentid=
+  // &documentid=&workspaceid=&consumer=), same names as the PHP page.
+  $("#f-type").value = ["unofficial", "official", "documents"].includes(qs.get("type")) ? qs.get("type") : "unofficial";
+  $("#f-format").value = qs.get("format") === "pdf" ? "pdf" : "csv";
+  $("#f-studentid").value = qs.get("studentid") || "";
+  $("#f-documentid").value = qs.get("documentid") || "";
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "course-transcript-export", token });
+    p.set("type", $("#f-type").value);
+    p.set("format", $("#f-format").value);
+    if ($("#f-studentid").value) p.set("studentid", $("#f-studentid").value);
+    if ($("#f-documentid").value.trim()) p.set("documentid", $("#f-documentid").value.trim());
+    for (const k of ["workspaceid", "consumer"]) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+
+  // Identical CSV bytes to the legacy fputcsv dataset (same headers, same
+  // formatted values, same clean_filename name from the handler).
+  function downloadCsv(filename, headers, rows) {
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const blob = new Blob([[headers.map(cell).join(","), ...rows.map((r) => r.map(cell).join(","))].join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  let last = null;
+
+  function render(d) {
+    $("#result-panel").hidden = false;
+    const actions = $("#result-actions");
+    const thead = $("#preview thead");
+    const tbody = $("#preview tbody");
+    if (d.mode === "csv" && d.csv) {
+      last = d.csv;
+      $("#result-title").textContent = "CSV — " + (d.csv.filename || "export.csv");
+      actions.innerHTML = `<button class="btn primary" id="dl-csv" type="button">Download ${esc(d.csv.filename || "export.csv")}</button><span class="muted">${(d.csv.rows || []).length} rows</span>`;
+      $("#dl-csv").addEventListener("click", () => downloadCsv(last.filename, last.headers, last.rows));
+      thead.innerHTML = "<tr>" + (d.csv.headers || []).map((h) => `<th>${esc(h)}</th>`).join("") + "</tr>";
+      tbody.innerHTML = (d.csv.rows || []).map((r) => "<tr>" + r.map((v) => `<td>${esc(v)}</td>`).join("") + "</tr>").join("") || `<tr><td colspan="${(d.csv.headers || []).length || 1}">No rows in this export.</td></tr>`;
+      $("#result-note").textContent = d.verificationurl ? "Verification: " + d.verificationurl : "";
+      say("note", "Dataset loaded — the matching export audit was recorded, exactly like the legacy CSV.");
+    } else {
+      last = null;
+      $("#result-title").textContent = "PDF — generated by the legacy page";
+      actions.innerHTML = d.pdfurl ? `<a class="btn primary" href="${esc(d.pdfurl)}" target="_blank" rel="noopener">Open legacy PDF export</a>` : "";
+      thead.innerHTML = ""; tbody.innerHTML = "";
+      $("#result-note").textContent = (d.note || "") + (d.verificationurl ? " · Verification: " + d.verificationurl : "");
+      say("note", "PDF generation is not ported to the portal — use the legacy link (it keeps the legacy audit and bytes).");
+    }
+  }
+
+  async function load() {
+    say("", "Loading export dataset…");
+    try {
+      const r = await fetch(url());
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      render(d);
+    } catch (e) { $("#result-panel").hidden = true; say("error", "Could not load: " + e.message); }
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  load();
+})();
+</script>
+</body>
+</html>

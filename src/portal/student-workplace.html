@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student workplace · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  .top .links{display:flex;gap:8px;flex-wrap:wrap}
+  .top .links a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;font-size:13px;font-weight:800;text-decoration:none}
+  .top .links a:hover{background:rgba(255,255,255,.22)}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 6px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card.primary{background:linear-gradient(180deg,var(--sky),var(--card));border:2px solid var(--blue2)}
+  .card.exam{border:2px solid var(--amber);background:linear-gradient(180deg,var(--amber-bg),var(--card))}
+  .card h2{color:var(--ink)}
+  .card p{margin:0 0 14px;color:var(--ink2);font-size:13px}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:12px;background:var(--blue2);color:#fff;font-size:14.5px;font-weight:900;text-decoration:none}
+  .btn:hover{background:var(--blue)}
+  .btn.light{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+  .btn.light:hover{background:var(--sky);border-color:var(--blue2)}
+  .tools{grid-column:1/-1}
+  .tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+  .tool-grid .btn{width:100%;min-height:52px}
+  .exam .btn{background:var(--amber);width:100%}
+  .exam .btn:hover{background:#8f6209}
+  .exam .btn small{margin-left:8px;font-weight:700;opacity:.9}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Student workplace</small></div>
+  <div class="links" id="top-links" hidden></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of student_workplace.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Student Workplace</h1><p class="sub" id="subtitle">Tasks, lessons, documents, and assigned materials.</p></div>
+  <div id="status" class="status">Loading your workplace…</div>
+  <div class="grid" id="grid" hidden></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Moodle links come back absolute (wwwroot); if one is ever relative,
+  // anchor it to the Moodle origin derived from the endpoint param.
+  let moodleOrigin = "";
+  try { moodleOrigin = new URL(endpoint, location.href).origin; } catch (e) { moodleOrigin = ""; }
+  const abs = (u) => { u = String(u || ""); if (!u) return "#"; return /^https?:\/\//i.test(u) ? u : moodleOrigin + (u.startsWith("/") ? "" : "/") + u; };
+
+  async function load() {
+    try {
+      const params = new URLSearchParams({ report: "student-workplace", token });
+      const workspaceid = (qs.get("workspaceid") || "").trim();
+      if (workspaceid) params.set("workspaceid", workspaceid);
+      const consumer = (qs.get("consumer") || "").trim();
+      if (consumer) params.set("consumer", consumer);
+      const r = await fetch(endpoint + "?" + params);
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const card = (title, desc, buttons, cls) => `
+    <div class="card${cls ? " " + cls : ""}">
+      <h2>${esc(title)}</h2><p>${esc(desc)}</p>
+      <div class="actions">${buttons.join("")}</div>
+    </div>`;
+  const btn = (label, url, light) => `<a class="btn${light ? " light" : ""}" href="${esc(abs(url))}">${esc(label)}</a>`;
+
+  function render(d) {
+    const u = d.urls || {};
+    $("#title").textContent = "Student Workplace";
+    $("#subtitle").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " " : "") + "tasks, lessons, documents, and assigned materials.";
+    $("#top-links").innerHTML = [
+      `<a href="${esc(abs(u.dashboard))}">My dashboard</a>`,
+      `<a href="${esc(abs(u.messages))}">Messages</a>`,
+      `<a href="${esc(abs(u.announcements))}">Announcements</a>`,
+    ].join("");
+    $("#top-links").hidden = false;
+
+    const cards = [];
+    cards.push(card("Homework", "Open course assignments, submit your work, and review teacher feedback and grades.",
+      [btn("Open homework", u.homework)], "primary"));
+    cards.push(card("Lesson Work", "Continue the current lesson and complete practice steps that update your progress.",
+      [btn("Continue lesson", u.lesson), btn("Virtual tutor", u.virtualtutor, true)], "primary"));
+    cards.push(card("Document Studio", "Create Word, Excel, PowerPoint, and PDF materials for your course work.",
+      [btn("Open studio", u.studio)]));
+    cards.push(card("Materials Library", "Open assigned materials, course resources, and your own student documents.",
+      [btn("Open library", u.materials)]));
+    cards.push(card("Live Class Work", "Join live sessions, review the schedule, and check class series work.",
+      [btn("Live sessions", u.livesessions, true), btn("Schedule", u.schedule, true)]));
+    cards.push(card("Submissions", "Open speak recordings, quiz work, and assigned review tasks.",
+      [btn("Speak recordings", u.speakrecordings, true), btn("Quiz work", u.quizreport, true)]));
+    if ((d.exams || []).length) {
+      cards.push(`
+        <div class="card exam">
+          <h2>Exams</h2><p>Assigned exams open in Safe Exam Browser at their scheduled time.</p>
+          <div class="actions" style="flex-direction:column;align-items:stretch">
+            ${d.exams.map((x) => `<a class="btn" href="${esc(abs(x.url))}">${esc(x.title)}${x.window_label ? `<small>${esc(x.window_label)}</small>` : ""}</a>`).join("")}
+          </div>
+        </div>`);
+    }
+    cards.push(card("Reviews", "Check transcripts, reports, and teacher feedback after work is submitted.",
+      [btn("Transcript", u.transcript, true), btn("Report", u.managedreport, true)]));
+    cards.push(`
+      <div class="card tools">
+        <h2>Student Tools</h2><p>Open your live-class, progress, recording, and learning review tools.</p>
+        <div class="tool-grid">
+          ${(d.tools || []).map((t) => `<a class="btn light" href="${esc(abs(t.url))}">${esc(t.label)}</a>`).join("")}
+        </div>
+        <p class="muted" style="margin:12px 0 0">Support tickets are available on the <a href="${esc(abs(u.support))}">classic workplace page</a>.</p>
+      </div>`);
+
+    $("#grid").innerHTML = cards.join("");
+    $("#grid").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

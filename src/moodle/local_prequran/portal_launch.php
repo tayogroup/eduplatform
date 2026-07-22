@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-10.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-11.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -76,6 +76,20 @@ $reports = [
     'teacher-portal' => ['pqpl_any_authenticated', 'teacher-portal.html'],
     'teacher-student-connect' => ['pqpl_any_authenticated', 'teacher-student-connect.html'],
     'teacher-workspace' => ['pqpl_any_authenticated', 'teacher-workspace.html'],
+    // Wave 6: student + course families. Self/parent/workspace-admin gates
+    // live in the handlers with the exact legacy denial messages.
+    'student-billing' => ['pqpl_any_authenticated', 'student-billing.html'],
+    'student-finance' => ['pqpl_any_authenticated', 'student-finance.html'],
+    'student-homework' => ['pqpl_any_authenticated', 'student-homework.html'],
+    'student-parent-portal' => ['pqpl_any_authenticated', 'student-parent-portal.html'],
+    'student-workplace' => ['pqpl_any_authenticated', 'student-workplace.html'],
+    'course-catalog-browse' => ['pqpl_any_authenticated', 'course-catalog-browse.html'],
+    'course-seat-report' => ['pqpl_any_authenticated', 'course-seat-report.html'],
+    'course-student-history' => ['pqpl_any_authenticated', 'course-student-history.html'],
+    'course-sync-report' => ['pqpl_any_authenticated', 'course-sync-report.html'],
+    'course-transcript' => ['pqpl_any_authenticated', 'course-transcript.html'],
+    'course-transcript-export' => ['pqpl_any_authenticated', 'course-transcript-export.html'],
+    'course-transcript-official' => ['pqpl_any_authenticated', 'course-transcript-official.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);

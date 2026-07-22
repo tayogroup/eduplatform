@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student &amp; parent portal · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td strong{font-size:14px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  a.linkbtn{display:inline-block;margin:4px 6px 4px 0;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--blue2);font-weight:800;font-size:13px;text-decoration:none}
+  a.linkbtn:hover{border-color:var(--blue2)}
+  .chooser{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  a.child{display:block;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:800}
+  a.child:hover,a.child.active{border-color:var(--blue2)}
+  a.child.active{background:var(--sky)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Student &amp; parent portal</small></div>
+  <div class="note">Token-authenticated · parallel-run of student_parent_portal.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Student And Parent Portal</h1><p class="sub" id="subtitle">Classes, billing, grades, and documents for your student.</p></div>
+  <div id="status" class="status">Loading portal…</div>
+  <div class="panel" id="chooser-panel" hidden><h2>Your linked students</h2><div class="chooser" id="chooser"></div></div>
+  <div class="grid" id="grid" hidden>
+    <div class="panel"><h2>Enrolled Courses / Classes</h2><table><thead><tr><th>Class</th><th>When</th><th>Attendance</th></tr></thead><tbody id="sessions"></tbody></table></div>
+    <div class="panel"><h2>Invoices And Payments</h2><table><tbody id="billing"></tbody></table></div>
+    <div class="panel"><h2>Payment Plans</h2><table><tbody id="plans"></tbody></table></div>
+    <div class="panel"><h2>Grades</h2><table><tbody id="grades"></tbody></table></div>
+    <div class="panel"><h2>Secure Downloads</h2><table><tbody id="documents"></tbody></table></div>
+    <div class="panel"><h2>Self-Service</h2><div id="selfservice"></div><p class="muted">These links open the Moodle pages (your login session is still valid there).</p></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const params = () => {
+    const p = { report: "student-parent-portal", token };
+    if (qs.get("workspaceid")) p.workspaceid = qs.get("workspaceid");
+    if (qs.get("studentid")) p.studentid = qs.get("studentid");
+    return p;
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(params()));
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const attendPill = (v) => {
+    const a = String(v || "").toLowerCase();
+    const cls = /absent|cancel/.test(a) ? "bad" : /late/.test(a) ? "warn" : /present|attended|completed/.test(a) ? "good" : "";
+    return `<span class="pill ${cls}">${esc(a.replace(/_/g, " ") || "—")}</span>`;
+  };
+
+  const emptyRow = (cols, text) => `<tr><td colspan="${cols}" class="muted">${esc(text)}</td></tr>`;
+
+  function render(d) {
+    $("#title").textContent = "Student And Parent Portal";
+    $("#subtitle").textContent = (d.workspacename || "") + " / " + ((d.student && d.student.name) || "Student");
+
+    const children = d.children || [];
+    if (children.length > 1) {
+      $("#chooser").innerHTML = children.map((c) => {
+        const u = new URL(location.href); u.searchParams.set("studentid", c.studentid);
+        const active = d.student && Number(d.student.id) === Number(c.studentid);
+        return `<a class="child ${active ? "active" : ""}" href="${esc(u.href)}">${esc(c.name || ("Student #" + c.studentid))}</a>`;
+      }).join("");
+      $("#chooser-panel").hidden = false;
+    }
+
+    $("#sessions").innerHTML = (d.sessions || []).map((s) =>
+      `<tr><td><strong>${esc(s.title)}</strong><div class="muted">${esc(s.session_type)}</div></td><td>${esc(s.scheduled_start_label)}</td><td>${attendPill(s.attendance_label)}</td></tr>`
+    ).join("") || emptyRow(3, "No enrolled class sessions found.");
+
+    const billing = []
+      .concat((d.invoices || []).map((i) => `<tr><td><strong>${esc(i.invoicenumber || ("Invoice #" + i.id))}</strong><div class="muted">${esc(((i.balancedue ?? "") + " " + (i.currency ?? "")).trim())}</div></td><td><span class="pill">${esc(i.status || "")}</span></td></tr>`))
+      .concat((d.payments || []).map((p) => `<tr><td><strong>${esc(p.receiptnumber || ("Payment #" + p.id))}</strong><div class="muted">${esc(((p.amount ?? "") + " " + (p.currency ?? "")).trim())}</div></td><td><span class="pill">${esc(p.status || "")}</span></td></tr>`));
+    $("#billing").innerHTML = billing.join("") || emptyRow(2, "No invoice or payment rows found.");
+
+    $("#plans").innerHTML = (d.plans || []).map((p) =>
+      `<tr><td><strong>${esc(p.plannumber || ("Plan #" + p.id))}</strong><div class="muted">${esc(((p.principalamount ?? "") + " " + (p.currency ?? "")).trim())}</div></td><td><span class="pill">${esc(p.status || "")}</span></td></tr>`
+    ).join("") || emptyRow(2, "No payment plan is visible for this student.");
+
+    $("#grades").innerHTML = (d.grades || []).map((g) =>
+      `<tr><td><strong>Offering #${Number(g.offeringid)}</strong><div class="muted">${esc(String(g.final_percent) + "%")}</div></td><td><span class="pill">${esc((g.letter_grade || "") + " / " + (g.status || ""))}</span></td></tr>`
+    ).join("") || emptyRow(2, "No published course grades yet.");
+
+    $("#documents").innerHTML = (d.documents || []).map((doc) =>
+      `<tr><td><strong>${esc(doc.title)}</strong><div class="muted">${esc((doc.document_type || "") + " / " + (doc.verification_status || ""))}</div></td><td>${doc.download_url ? `<a class="linkbtn" href="${esc(doc.download_url)}">Download</a>` : '<span class="muted">Registry row</span>'}</td></tr>`
+    ).join("") || emptyRow(2, "No secure documents are available yet.");
+
+    const urls = d.urls || {};
+    $("#selfservice").innerHTML =
+      (urls.transcriptpdf ? `<a class="linkbtn" href="${esc(urls.transcriptpdf)}">Download transcript PDF</a>` : "") +
+      (urls.finance ? `<a class="linkbtn" href="${esc(urls.finance)}">Open finance account</a>` : "") +
+      (urls.transcript ? `<a class="linkbtn" href="${esc(urls.transcript)}">Transcript</a>` : "") +
+      (urls.workspace ? `<a class="linkbtn" href="${esc(urls.workspace)}">Workspace</a>` : "");
+
+    $("#grid").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

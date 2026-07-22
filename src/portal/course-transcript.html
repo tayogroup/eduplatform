@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unofficial transcript · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--sky);color:var(--blue);text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
+  .btn.primary{background:var(--blue2);border-color:var(--blue2);color:#fff}
+  .metas{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+  .meta{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  .meta span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);font-weight:900}
+  .meta b{display:block;margin-top:3px;font-size:13px;overflow-wrap:anywhere}
+  form.filters{display:grid;grid-template-columns:1.2fr 1fr .8fr .8fr .8fr auto auto;gap:10px;align-items:end}
+  form.filters label{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);margin-bottom:4px}
+  form.filters select,form.filters input{width:100%;min-height:36px;border:1px solid var(--line);border-radius:7px;padding:0 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+  .stat{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+  .stat b{display:block;font-size:22px}
+  .stat span{display:block;margin-top:2px;color:var(--muted);font-size:12px;font-weight:800}
+  .warn{padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--amber-bg);color:var(--amber);margin-bottom:8px}
+  .warn.blocker{background:var(--red-bg);color:var(--red)}
+  .warn b{display:block;font-size:13px}
+  .warn span{display:block;margin-top:2px;font-size:12px;font-weight:700}
+  .cards{display:grid;gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+  .card .head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+  .card h3{margin:0;font-size:15px}
+  .card .key{color:var(--muted);font-size:12px;margin-top:2px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-top:12px}
+  .cell{padding:9px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .cell span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);font-weight:900}
+  .cell b{display:block;margin-top:3px;font-size:13px;overflow-wrap:anywhere}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td code{font-size:12px;color:var(--ink2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .tablewrap{overflow-x:auto}
+  @media(max-width:900px){form.filters{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Unofficial transcript</small></div>
+  <div class="note">Token-authenticated · parallel-run of course_transcript.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Unofficial Transcript</h1>
+    <p class="sub" id="subtitle">Live course record preview. This preview is not an issued official transcript.</p>
+    <div class="actions" id="actions" hidden></div>
+  </div>
+  <div id="status" class="status">Loading transcript…</div>
+  <div class="panel" id="record-panel" hidden><h2>Student Record</h2><div class="metas" id="record"></div></div>
+  <div class="panel" id="filter-panel" hidden>
+    <form class="filters" id="filters">
+      <div><label>Student</label><select id="f-student"></select></div>
+      <div><label>Course</label><select id="f-course"><option value="">All courses</option></select></div>
+      <div><label>Status</label><select id="f-status"><option value="">All statuses</option></select></div>
+      <div><label>From</label><input type="date" id="f-from"></div>
+      <div><label>To</label><input type="date" id="f-to"></div>
+      <button class="btn primary" type="submit">Apply</button>
+      <button class="btn" type="button" id="f-clear">Clear</button>
+    </form>
+  </div>
+  <div class="panel" id="stats-panel" hidden><div class="stats" id="stats"></div></div>
+  <div class="panel" id="warnings-panel" hidden><h2>Transcript Warnings</h2><div id="warnings"></div></div>
+  <div class="panel" id="lines-panel" hidden><h2>Course Lines</h2><div class="cards" id="lines"></div></div>
+  <div class="panel" id="admin-panel" hidden><h2>Admin Diagnostics</h2><div class="tablewrap"><table>
+    <thead><tr><th>Course</th><th>Source IDs</th><th>Warning Codes</th></tr></thead>
+    <tbody id="admin-rows"></tbody></table></div></div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Legacy page filter params pass straight through to the handler.
+  const PASS = ["studentid", "workspaceid", "consumer", "status", "course", "from", "to"];
+  const url = () => {
+    const p = new URLSearchParams({ report: "course-transcript", token });
+    for (const k of PASS) { const v = qs.get(k); if (v) p.set(k, v); }
+    return endpoint + "?" + p;
+  };
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const meta = (label, value) => `<div class="meta"><span>${esc(label)}</span><b>${esc(value)}</b></div>`;
+  const cell = (label, value) => `<div class="cell"><span>${esc(label)}</span><b>${esc(value)}</b></div>`;
+
+  function render(d) {
+    const student = (d.header && d.header.student) || {};
+    const workspace = (d.header && d.header.workspace) || {};
+    const consumer = (d.header && d.header.consumer) || {};
+    const policy = (d.header && d.header.policy) || {};
+    $("#title").textContent = student.name || "Student";
+    $("#subtitle").textContent = "Live course record for " + (workspace.name || "this workspace") + ". This preview is not an issued official transcript.";
+
+    // Legacy action buttons: links to the live Moodle pages (parallel-run).
+    const links = d.links || {};
+    const linkdefs = [["catalog", "Course catalog"], ["history", "Course history"], ["readiness", "Readiness"], ["official", "Official draft"], ["controls", "Controls"], ["csv", "CSV"], ["policy", "Transcript policy"], ["diagnostics", "Diagnostics"], ["pdf", "PDF"], ["dashboard", "Dashboard"]];
+    $("#actions").innerHTML = linkdefs.filter(([k]) => links[k]).map(([k, label]) =>
+      `<a class="btn${k === "dashboard" ? " primary" : ""}" href="${esc(links[k])}" target="_blank" rel="noopener">${esc(label)}</a>`).join("");
+    $("#actions").hidden = false;
+
+    $("#record").innerHTML =
+      meta("Student", student.name || "") +
+      meta("Account No.", student.account_no || "Not recorded") +
+      meta("Institution", consumer.name || "") +
+      meta("Generated", d.header.generated_label || "") +
+      meta("Policy", (policy.source || "Default") + " / v" + (Number(policy.version) || 1)) +
+      meta("Policy Hash", policy.hash || "");
+    $("#record-panel").hidden = false;
+
+    // Filters (same params as the legacy GET form; Apply reloads this page).
+    const f = d.filters || {};
+    $("#f-student").innerHTML = (d.students || []).map((s) =>
+      `<option value="${Number(s.id)}"${Number(s.id) === Number(d.studentid) ? " selected" : ""}>${esc(s.name)}</option>`).join("");
+    $("#f-student").disabled = (d.students || []).length <= 1;
+    $("#f-course").innerHTML = '<option value="">All courses</option>' + Object.entries(d.courseoptions || {}).map(([v, label]) =>
+      `<option value="${esc(v)}"${v === (f.course || "") ? " selected" : ""}>${esc(label)}</option>`).join("");
+    $("#f-status").innerHTML = '<option value="">All statuses</option>' + Object.entries(d.statusoptions || {}).map(([v, label]) =>
+      `<option value="${esc(v)}"${v === (f.status || "") ? " selected" : ""}>${esc(label)}</option>`).join("");
+    $("#f-from").value = f.from || "";
+    $("#f-to").value = f.to || "";
+    $("#filter-panel").hidden = false;
+
+    const summary = d.summary || {};
+    $("#stats").innerHTML =
+      `<div class="stat"><b>${Number(d.total_lines) || 0}</b><span>total course lines</span></div>` +
+      `<div class="stat"><b>${(d.filteredlines || []).length}</b><span>shown after filters</span></div>` +
+      `<div class="stat"><b>${Number(summary.warning_count) || 0}</b><span>warnings</span></div>` +
+      `<div class="stat"><b>${Number(summary.blocker_count) || 0}</b><span>blockers before official issue</span></div>`;
+    $("#stats-panel").hidden = false;
+
+    const warnings = d.warnings || [];
+    if (warnings.length) {
+      $("#warnings").innerHTML = warnings.map((w) =>
+        `<div class="warn${(w.severity || "") === "blocker" ? " blocker" : ""}"><b>${esc(w.message || "Transcript warning")}</b>${w.recommended_action ? `<span>${esc(w.recommended_action)}</span>` : ""}</div>`).join("");
+      $("#warnings-panel").hidden = false;
+    }
+
+    // Course line cards mirror the legacy 10-cell grid, using the server-side
+    // rendered strings (verbatim page helpers, incl. the legacy quiz quirk).
+    $("#lines").innerHTML = (d.filteredlines || []).map((line) => {
+      const course = line.course || {};
+      const rr = line.render || {};
+      return `<div class="card">
+        <div class="head">
+          <div><h3>${esc(course.title || "Course")}</h3><div class="key">${esc(course.key || "")}${course.moodle_shortname ? " / " + esc(course.moodle_shortname) : ""}</div></div>
+          <span class="pill">${esc(rr.status_label || "Unknown")}</span>
+        </div>
+        <div class="cells">
+          ${cell("Course Dates", rr.course_dates || "Not recorded")}
+          ${cell("Enrollment", rr.enrollment || "Not recorded")}
+          ${cell("Grade", rr.grade || "Not recorded")}
+          ${cell("Completion", rr.completion || "Not recorded")}
+          ${cell("Attendance", rr.attendance || "Not recorded")}
+          ${cell("Quiz", rr.quiz || "Not recorded")}
+          ${cell("Teacher Of Record", rr.teachers || "Not recorded")}
+          ${cell("Local Status", rr.local_status_label || "Unknown")}
+          ${cell("Warnings", String(Number(rr.warning_count) || 0))}
+          ${cell("Source", "Live course enrollment")}
+        </div>
+      </div>`;
+    }).join("") || "<div class='muted'>No transcript course lines match the current filters.</div>";
+    $("#lines-panel").hidden = false;
+
+    if (d.canmanage) {
+      $("#admin-rows").innerHTML = (d.filteredlines || []).map((line) => `<tr>
+        <td>${esc((line.course || {}).title || "Course")}</td>
+        <td><code>${esc((line.render || {}).source_ids || "")}</code></td>
+        <td>${esc((line.render || {}).warning_codes || "none")}</td>
+      </tr>`).join("");
+      $("#admin-panel").hidden = false;
+    }
+
+    $("#status").hidden = true;
+  }
+
+  $("#filters").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const u = new URL(location.href);
+    const set = (k, v) => { if (v) { u.searchParams.set(k, v); } else { u.searchParams.delete(k); } };
+    set("studentid", $("#f-student").value);
+    set("course", $("#f-course").value);
+    set("status", $("#f-status").value);
+    set("from", $("#f-from").value);
+    set("to", $("#f-to").value);
+    location.href = u.href;
+  });
+  $("#f-clear").addEventListener("click", () => {
+    const u = new URL(location.href);
+    for (const k of ["course", "status", "from", "to"]) { u.searchParams.delete(k); }
+    location.href = u.href;
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

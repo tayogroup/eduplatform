@@ -10,14 +10,6 @@ function pqlsl_url(string $path, array $urlparams, array $params = []): moodle_u
     return new moodle_url($path, $urlparams + $params);
 }
 
-$context = context_system::instance();
-$PAGE->set_context($context);
-$PAGE->set_url(pqlsl_url('/local/hubredirect/live_summaries.php', $urlparams, $childid > 0 ? ['childid' => $childid] : []));
-$PAGE->set_pagelayout('standard');
-$PAGE->set_title('Live Session Summaries');
-$PAGE->set_heading('Live Session Summaries');
-$PAGE->add_body_class('pqh-live-summaries-page');
-
 function pqlsl_table_exists(string $table): bool {
     global $DB;
     return $DB->get_manager()->table_exists($table);

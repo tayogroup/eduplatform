@@ -267,28 +267,46 @@ Moodle remains the multi-consumer backend (independent teachers, marketplaces, f
 | `workflow_documentlib.php` | 5 | 10 fns, backend logic |
 | `lib.php` | 3 | 1 fns, backend logic |
 
-## Remove from the plugin — cruft (15)
+## Remove from the plugin — cruft (VERIFIED 2026-07-22: only 4 of 15 were deletable)
 
-| File | KB | Signal |
+Reference-verified across the whole repo (plugin cross-references, `tests/e2e/**`,
+`tools/**`, `package.json`). The original heuristic over-matched: most "cruft"
+is live SQA/e2e infrastructure.
+
+**Deleted (0 references anywhere):**
+
+| File | KB | |
 |---|--:|---|
-| `institution_school_functional_test.php` | 37 | test/fixture/cruft |
-| `sqa_teacher_portal_fixture.php` | 30 | test/fixture/cruft |
-| `institution_sample_data.php` | 24 | test/fixture/cruft |
-| `create_mock_teachers.php` | 19 | test/fixture/cruft |
-| `create_mock_students.php` | 18 | test/fixture/cruft |
-| `institution_test_matrix.php` | 17 | test/fixture/cruft |
-| `placement_tests.php` ⚠️ | 14 | test/fixture/cruft — **verify: may be a real feature, not cruft** |
-| `performance_reliability_smoke.php` | 11 | test/fixture/cruft |
-| `sqa_test_artifacts.php` | 9 | test/fixture/cruft |
-| `sqa_tester_setup.php` | 9 | test/fixture/cruft |
-| `create_test_teachers.php` | 8 | test/fixture/cruft |
-| `sqa_tracker_api.php` ⚠️ | 5 | test/fixture/cruft — **verify: may be a real feature, not cruft** |
-| `consumer_probe.php` | 4 | test/fixture/cruft |
-| `demo_students_setup.php` | 4 | test/fixture/cruft |
-| `deployment_drift_probe.php` | 3 | test/fixture/cruft |
+| `create_mock_teachers.php` | 19 | mock generator, orphaned |
+| `create_mock_students.php` | 18 | mock generator, orphaned |
+| `create_test_teachers.php` | 8 | mock generator, orphaned |
+| `demo_students_setup.php` | 4 | demo fixture, orphaned |
 
----
-⚠️ = flagged for human verification before action.
+**Reclassified → SQA-INFRA (stay; the e2e suite and ops tooling probe them):**
+
+| File | Referenced by |
+|---|---|
+| `institution_school_functional_test.php` | `institution_readiness_rollup.php` readiness check + 3 e2e suites + `verify-eduplatform-sqa-package.js` |
+| `sqa_teacher_portal_fixture.php` | 5 e2e suites; its name is even a `consent_source` value in live SQL |
+| `performance_reliability_smoke.php` | performance e2e suite + SQA package verifier |
+| `deployment_drift_probe.php` | `verify-hubredirect-deployment-drift.js` (the drift check) |
+
+**Reclassified → ADMIN-TOOLS (stay for now; soft-linked from live dashboards):**
+
+| File | Linked from |
+|---|---|
+| `institution_sample_data.php` | workspace_dashboard |
+| `institution_test_matrix.php` | platform_dashboard, workspace_dashboard |
+| `sqa_test_artifacts.php` (+ its `sqa_tracker_api.php` endpoint) | dashboard.php ("Alphabet test tracker", "Admin/SQA docs") |
+| `sqa_tester_setup.php` | dashboard.php |
+| `consumer_probe.php` | master_dashboard, platform_consumers, platform_diagnostics |
+
+Retiring the ADMIN-TOOLS set is a product decision (remove the dashboard links
+with it) — not a mechanical cleanup.
+
+**Reclassified → UI → SPA:** `placement_tests.php` — a real feature (workspace
+dashboard links it as "Define placement tests, schedule assessments, score
+readiness…"). Migrates with the other UI pages.
 
 ---
 

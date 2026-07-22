@@ -54,6 +54,15 @@ if (!isset($reportscopes[$report]) || $scope !== $reportscopes[$report]) {
     pqpd_fail(403, 'This token does not grant access to that report.');
 }
 
+// Become the token's user (as the WS server does): the report libraries read
+// the global $USER for workspace/role checks, and with NO_MOODLE_COOKIES that
+// would otherwise be nobody — silently emptying every scoped list.
+$tokenuserrec = core_user::get_user((int)($claims['sub'] ?? 0));
+if (!$tokenuserrec || !empty($tokenuserrec->deleted) || !empty($tokenuserrec->suspended)) {
+    pqpd_fail(401, 'Launch-token user is not available.');
+}
+\core\session\manager::set_user($tokenuserrec);
+
 // API endpoints must answer JSON even when something breaks — surface the real
 // error instead of Moodle's HTML error page.
 set_exception_handler(function (Throwable $e) {

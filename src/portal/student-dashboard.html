@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My dashboard · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .hero{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .cta{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border-radius:12px;background:var(--blue2);color:#fff;font-weight:900;font-size:15px;text-decoration:none}
+  .cta:hover{background:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .kpi b{display:block;color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}
+  .kpi strong{display:block;margin-top:4px;font-size:24px;font-weight:900;letter-spacing:-.02em}
+  .kpi strong.risk{color:var(--red)}
+  .kpi strong.small{font-size:17px}
+  .kpi a{display:inline-block;margin-top:6px;color:var(--blue2);font-size:12px;font-weight:800;text-decoration:none}
+  .kpi a:hover{text-decoration:underline}
+  .next{border:2px solid var(--blue2);background:linear-gradient(180deg,var(--sky),var(--card))}
+  .next .when{font-size:19px;font-weight:900;color:var(--blue2)}
+  .cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:16px;align-items:start}
+  @media(max-width:900px){.cols{grid-template-columns:1fr}}
+  .courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .ccard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .ccard .cover{height:56px;background:linear-gradient(115deg,var(--cc,#2a6cb0),var(--cc2,#4d8be0))}
+  .courses .ccard:nth-child(5n+1){--cc:#2a6cb0;--cc2:#4d8be0}
+  .courses .ccard:nth-child(5n+2){--cc:#0d5c8c;--cc2:#3383b4}
+  .courses .ccard:nth-child(5n+3){--cc:#0f7f9e;--cc2:#3aa7c4}
+  .courses .ccard:nth-child(5n+4){--cc:#4f5fc4;--cc2:#7b88dd}
+  .courses .ccard:nth-child(5n+5){--cc:#33567e;--cc2:#5c7ea6}
+  .ccard .body{display:flex;flex-direction:column;gap:8px;flex:1;padding:12px 14px 14px}
+  .ccard h3{margin:0;font-size:15px}
+  .ccard .meta{color:var(--muted);font-size:12px;font-weight:600}
+  .chip{display:inline-flex;align-self:flex-start;padding:2px 10px;border-radius:999px;background:var(--red-bg);color:var(--red);font-size:11px;font-weight:900}
+  .progress{height:8px;border-radius:999px;background:var(--sky);overflow:hidden}
+  .progress i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue2),#4d8be0)}
+  .progress.warn i{background:var(--amber)}
+  .ccard .actions{margin-top:auto}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 18px;border-radius:10px;background:var(--blue2);color:#fff;font-size:13.5px;font-weight:900;text-decoration:none}
+  .btn:hover{background:var(--blue)}
+  .btn.light{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+  .btn.light:hover{background:var(--sky)}
+  .todo{display:grid;gap:8px}
+  .todo .item{display:flex;align-items:center;gap:11px;padding:12px;border-radius:10px;background:var(--bg);flex-wrap:wrap}
+  .todo .dot{flex:0 0 auto;width:12px;height:12px;border-radius:999px;background:var(--blue2)}
+  .todo .dot.risk{background:var(--red)}
+  .todo .dot.warn{background:var(--amber)}
+  .todo .dot.ok{background:var(--blue)}
+  .todo .body{min-width:0;flex:1}
+  .todo .body strong{display:block;font-size:13px}
+  .todo .body span{display:block;color:var(--muted);font-size:12px}
+  .fb{display:flex;gap:11px;align-items:flex-start;padding:12px;border-radius:10px;background:var(--bg)}
+  .fb+.fb{margin-top:8px}
+  .fb .pct{flex:0 0 auto;min-width:44px;text-align:center;padding:6px 4px;border-radius:8px;background:var(--sky);color:var(--blue2);font-weight:900;font-size:13px}
+  .fb strong{display:block;font-size:13px}
+  .fb span{display:block;color:var(--ink2);font-size:12.5px}
+  .empty{border:1px dashed var(--line);border-radius:10px;padding:16px;text-align:center;color:var(--muted);font-weight:600}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>My dashboard</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of student_dashboard.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel hero"><div><h1 id="title">My dashboard</h1><p class="sub" id="subtitle">Your learning home.</p></div><a class="cta" id="continue-cta" hidden href="#">Continue learning</a></div>
+  <div id="status" class="status">Loading your dashboard…</div>
+  <div class="kpis" id="kpis" hidden></div>
+  <div class="panel next" id="next-panel" hidden><h2>Next live class</h2><div id="next"></div></div>
+  <div class="cols" id="cols" hidden>
+    <div class="panel"><h2>My courses</h2><div class="courses" id="courses"></div></div>
+    <div>
+      <div class="panel"><h2>Up next</h2><p class="sub" style="margin-bottom:10px">Your week at a glance</p><div class="todo" id="todo"></div></div>
+      <div class="panel"><h2>Recent feedback</h2><p class="sub" style="margin-bottom:10px">From your teachers</p><div id="feedback"></div></div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Moodle links come back absolute (wwwroot); if one is ever relative,
+  // anchor it to the Moodle origin derived from the endpoint param.
+  let moodleOrigin = "";
+  try { moodleOrigin = new URL(endpoint, location.href).origin; } catch (e) { moodleOrigin = ""; }
+  const abs = (u) => { u = String(u || ""); if (!u) return "#"; return /^https?:\/\//i.test(u) ? u : moodleOrigin + (u.startsWith("/") ? "" : "/") + u; };
+
+  async function load() {
+    try {
+      const params = new URLSearchParams({ report: "student-dashboard", token });
+      const consumer = (qs.get("consumer") || "").trim();
+      if (consumer) params.set("consumer", consumer);
+      const r = await fetch(endpoint + "?" + params);
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const courseCard = (c) => {
+    let mid = "";
+    if (c.missing > 0) mid = `<span class="chip">${c.missing} missing task${c.missing === 1 ? "" : "s"}</span>`;
+    else if (c.next) mid = `<div class="meta">Next: ${esc(c.next)}</div>`;
+    else if (c.summary) mid = `<div class="meta">${esc(c.summary)}</div>`;
+    let prog = "";
+    if (c.pct !== null && c.pct !== undefined) {
+      prog = `<div class="progress${c.missing > 0 ? " warn" : ""}"><i style="width:${Math.max(0, Math.min(100, Number(c.pct) || 0))}%"></i></div>
+        <div class="meta">${Number(c.pct) || 0}% complete${c.grade ? " · grade " + esc(c.grade) : ""}</div>`;
+    }
+    return `<div class="ccard"><div class="cover"></div><div class="body">
+      <h3>${esc(c.title)}</h3>${mid}${prog}
+      <div class="actions"><a class="btn" href="${esc(abs(c.continueurl))}">Continue</a></div>
+    </div></div>`;
+  };
+
+  const todoItem = (dot, title, sub, btnLabel, btnUrl, light) =>
+    `<div class="item"><span class="dot ${dot}"></span>
+      <span class="body"><strong>${esc(title)}</strong><span>${esc(sub)}</span></span>
+      <a class="btn${light ? " light" : ""}" href="${esc(abs(btnUrl))}">${esc(btnLabel)}</a></div>`;
+
+  function render(d) {
+    const urls = d.urls || {};
+    const k = d.kpis || {};
+    $("#title").textContent = "Welcome back, " + (d.firstname || "student");
+    $("#subtitle").textContent = d.coursecount
+      ? "You're on track in " + d.oncourses + " of " + d.coursecount + " course" + (d.coursecount === 1 ? "" : "s")
+      : "Your learning home.";
+
+    const first = (d.courses || [])[0];
+    if (first) { const cta = $("#continue-cta"); cta.href = abs(first.continueurl); cta.hidden = false; }
+
+    $("#kpis").innerHTML = `
+      <div class="kpi"><b>Due this week</b><strong>${Number(k.dueweek) || 0}</strong><a href="${esc(abs(urls.homework))}">View deadlines</a></div>
+      <div class="kpi"><b>Missing work</b><strong${(Number(k.missing) || 0) > 0 ? ' class="risk"' : ""}>${Number(k.missing) || 0}</strong><a href="${esc(abs(urls.homework))}">Submit now</a></div>
+      <div class="kpi"><b>Current average</b><strong>${esc(k.avg_letter || "—")}${k.avg_up ? " ▲" : ""}</strong><a href="${esc(abs(urls.homework))}">Grades</a></div>
+      <div class="kpi"><b>Next live class</b><strong class="small">${esc(k.next_label || "None booked")}</strong><a href="${esc(abs(urls.schedule))}">Join info</a></div>`;
+    $("#kpis").hidden = false;
+
+    if (d.nextsession) {
+      $("#next").innerHTML = `<div class="when">${esc(d.nextsession.start_label || when(d.nextsession.scheduled_start))}</div>
+        <div style="margin-top:6px"><strong>${esc(d.nextsession.title || "Live class")}</strong></div>
+        <div style="margin-top:10px"><a class="btn" href="${esc(abs(urls.schedule))}">Join info</a></div>`;
+      $("#next-panel").hidden = false;
+    }
+
+    $("#courses").innerHTML = (d.courses || []).map(courseCard).join("")
+      || "<div class='empty'>No course enrolments yet. Ask your teacher or browse the catalog.</div>";
+
+    const todo = [];
+    const up = d.upnext || {};
+    if (up.missing) todo.push(todoItem("risk", up.missing.title + " — missing", "Was due " + (up.missing.duedate_day || ""), "Do it", urls.homework, false));
+    if (d.nextsession) todo.push(todoItem("", "Live: " + (d.nextsession.title || "Live class"), d.nextsession.start_label || "", "Join", urls.schedule, true));
+    if (up.firstdue) todo.push(todoItem("warn", up.firstdue.title + " due " + (up.firstdue.duedate_day || ""), up.firstdue.coursename || "", "Open", urls.homework, true));
+    if (!todo.length) todo.push(todoItem("ok", "All caught up", "Nothing waiting — keep learning!", "Workplace", urls.workplace, true));
+    $("#todo").innerHTML = todo.join("");
+
+    $("#feedback").innerHTML = (d.feedback || []).map((f) => `
+      <div class="fb">${f.gradepct !== null && f.gradepct !== undefined ? `<span class="pct">${Number(f.gradepct)}%</span>` : ""}
+        <span><strong>${esc(f.title)}</strong><span>“${esc(f.feedback)}”</span>
+        <span class="muted">${esc(when(f.timemodified))}</span></span></div>`).join("")
+      || "<div class='empty'>No feedback yet. Submit homework to hear from your teacher.</div>";
+
+    $("#cols").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student intake · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:18px 0 10px;font-size:14px;font-weight:900;color:var(--blue2)}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px;font-weight:600}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .errorlist{margin:8px 0 0;padding-left:20px;font-weight:600;font-size:13px}
+  .errorlist a{color:var(--red);text-decoration:underline}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .field{display:grid;gap:6px;margin-bottom:10px;align-content:start;align-self:start}
+  .field label{font-size:12px;font-weight:800;color:var(--ink2)}
+  .field--full{grid-column:1/-1}
+  .field--error input,.field--error select,.field--error textarea,.field--error .calendar{border-color:var(--red);background:var(--red-bg)}
+  .ferr{font-size:12px;font-weight:800;color:var(--red)}
+  input,select,textarea{width:100%;min-height:40px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:600 14px/1.3 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--card);color:var(--ink)}
+  textarea{min-height:86px;resize:vertical}
+  select[multiple]{min-height:124px}
+  .checkrow{display:flex;gap:10px;align-items:flex-start;margin:8px 0 12px;color:var(--ink);font-size:13px;font-weight:700}
+  .checkrow input{width:18px;height:18px;min-height:0;margin-top:1px}
+  .checkrow--error{color:var(--red)}
+  .section-pill{display:inline-flex;align-items:center;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--sky);color:var(--blue2);font-weight:900}
+  .calendar{overflow-x:auto;border:2px solid var(--line);border-radius:12px;background:var(--card)}
+  .calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:980px}
+  .calendar th,.calendar td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px;text-align:center;vertical-align:middle;font-size:12px}
+  .calendar th{background:var(--sky);color:var(--blue);font-weight:900}
+  .calendar td:first-child{font-weight:900;text-align:left;background:var(--bg);color:var(--ink)}
+  .slot{display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:10px;background:var(--sky)}
+  .slot input{width:20px;height:20px;min-height:0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 20px;border:0;border-radius:8px;background:var(--blue2);color:#fff;font-size:14px;font-weight:900;cursor:pointer}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .city-other{display:none}
+  .city-other--visible{display:grid}
+  .result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .result div{padding:12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-weight:600;font-size:13px}
+  .result strong{display:block;color:var(--blue2);margin-bottom:4px}
+  .resultnote{margin-top:12px;padding:14px;border:1px dashed var(--line);border-radius:10px;color:var(--ink2);font-weight:600;font-size:13px;background:var(--card)}
+  .resultnote a{color:var(--blue2)}
+  .empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:700;background:var(--card)}
+  @media(max-width:760px){.grid,.result{grid-template-columns:1fr}.calendar table{min-width:820px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Student intake</small></div>
+  <div class="note">Token-authenticated · parallel-run of student_intake.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1>Student Intake</h1><p class="sub">Create a Moodle student account, link a parent when needed, capture consent, and prepare the student for grouping.</p></div>
+  <div id="status" class="status">Loading intake form…</div>
+  <div class="panel" id="created-panel" hidden><h2>Created Accounts</h2><div class="result" id="created"></div><div id="created-extra"></div></div>
+  <div class="panel" id="form-panel" hidden>
+    <h2>Recommended Required Minimum</h2>
+    <form id="intake" novalidate></form>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const passthrough = () => {
+    const p = { report: "student-intake", token };
+    ["consumer", "requestid", "workspaceid"].forEach((k) => { const v = (qs.get(k) || "").trim(); if (v) p[k] = v; });
+    return p;
+  };
+  const url = () => endpoint + "?" + new URLSearchParams(passthrough());
+
+  let D = null; // GET bootstrap payload
+
+  // ---- field renderers (labels/placeholders copied verbatim from legacy) ----
+  const optionsFor = (spec) => {
+    if (spec.opts) return spec.opts;
+    return (D.options || {})[spec.optkey] || {};
+  };
+  const selectHtml = (spec) => {
+    const opts = optionsFor(spec);
+    const sel = String((D.form || {})[spec.name] ?? "");
+    let h = `<select name="${esc(spec.name)}">`;
+    if (!spec.noplaceholder) h += `<option value="">${esc(spec.placeholder || "Select")}</option>`;
+    for (const [v, l] of Object.entries(opts)) h += `<option value="${esc(v)}"${sel === String(v) ? " selected" : ""}>${esc(l)}</option>`;
+    return h + "</select>";
+  };
+  const inputHtml = (spec) => {
+    const v = String((D.form || {})[spec.name] ?? "");
+    const attrs = [
+      `name="${esc(spec.name)}"`,
+      `type="${esc(spec.type || "text")}"`,
+      spec.min !== undefined ? `min="${spec.min}"` : "",
+      spec.max !== undefined ? `max="${spec.max}"` : "",
+      spec.maxlength ? `maxlength="${spec.maxlength}"` : "",
+      spec.inputmode ? `inputmode="${esc(spec.inputmode)}"` : "",
+      spec.ph ? `placeholder="${esc(spec.ph)}"` : "",
+      spec.required ? "required" : "",
+    ].filter(Boolean).join(" ");
+    return `<input ${attrs} value="${esc(v)}">`;
+  };
+  const textareaHtml = (spec) => `<textarea name="${esc(spec.name)}"${spec.ph ? ` placeholder="${esc(spec.ph)}"` : ""}>${esc(String((D.form || {})[spec.name] ?? ""))}</textarea>`;
+  const multiHtml = (spec) => {
+    const opts = optionsFor(spec);
+    let h = `<select name="${esc(spec.name)}" multiple size="5">`;
+    for (const [v, l] of Object.entries(opts)) h += `<option value="${esc(v)}">${esc(l)}</option>`;
+    return h + "</select>";
+  };
+  const field = (spec) => {
+    const inner = spec.kind === "select" ? selectHtml(spec)
+      : spec.kind === "textarea" ? textareaHtml(spec)
+      : spec.kind === "multi" ? multiHtml(spec)
+      : inputHtml(spec);
+    const cls = "field" + (spec.full ? " field--full" : "") + (spec.extraclass ? " " + spec.extraclass : "");
+    return `<div class="${cls}" id="f-${esc(spec.name)}"><label>${esc(spec.label)}</label>${inner}<div class="ferr" hidden></div></div>`;
+  };
+  const gridOf = (specs) => `<div class="grid">${specs.map(field).join("")}</div>`;
+
+  const calendarHtml = () => {
+    const days = (D.options || {}).availability_days || {};
+    const hours = (D.options || {}).availability_time_windows || {};
+    let h = `<div class="field field--full" id="f-slots"><label>Select all recurring times that could work</label><div class="calendar"><table><thead><tr><th>Day</th>`;
+    for (const hl of Object.values(hours)) h += `<th>${esc(hl)}</th>`;
+    h += `</tr></thead><tbody>`;
+    for (const [dv, dl] of Object.entries(days)) {
+      h += `<tr><td>${esc(dl)}</td>`;
+      for (const [hv, hl] of Object.entries(hours)) {
+        const slot = `${dv}|${hv}`;
+        h += `<td><label class="slot" title="${esc(dl + ", " + hl)}"><input type="checkbox" name="slots" value="${esc(slot)}"></label></td>`;
+      }
+      h += `</tr>`;
+    }
+    return h + `</tbody></table></div><div class="ferr" hidden></div></div>`;
+  };
+
+  function buildForm() {
+    const inst = D.institution || {};
+    const f = $("#intake");
+    let h = "";
+
+    h += `<h3>Core student information</h3><h3>Student account</h3>`;
+    h += field({ name: "existing_studentid", label: "Existing Moodle student ID", type: "number", min: 0, ph: "Optional: use only to add an intake profile to an already-created student", full: true });
+    h += gridOf([
+      { name: "student_firstname", label: "First name" },
+      { name: "student_middle_name", label: "Middle name", required: true },
+      { name: "student_lastname", label: "Last name" },
+      { name: "student_display_name", label: "Preferred name", ph: "Optional" },
+      { name: "student_username", label: "Username", ph: "Auto-generated if blank" },
+      { name: "student_email", label: "Student email or phone", ph: "Optional for children; email or phone required for adults" },
+      { name: "student_access_type", label: "Student access type", kind: "select", optkey: "student_access_types" },
+    ]);
+
+    if (inst.is_primary_education) {
+      h += `<h3>Primary education details</h3>`;
+      h += gridOf([
+        { name: "date_of_birth", label: "Date of birth", type: "date" },
+        { name: "age_years", label: "Age", type: "number", min: 0, max: 99 },
+        { name: "gender", label: "Gender", kind: "select", opts: { female: "Female", male: "Male" } },
+        { name: "current_grade", label: "Current grade/year", kind: "select", optkey: "primary_grade_levels" },
+        { name: "school_curriculum", label: "School curriculum", kind: "select", optkey: "primary_curricula" },
+        { name: "current_school_name", label: "Current school name" },
+        { name: "student_lives_with", label: "Student lives with", kind: "select", optkey: "student_lives_with_options" },
+        { name: "primary_learning_goal", label: "Primary learning goal" },
+        { name: "preferred_class_format", label: "Preferred class format", kind: "select", optkey: "primary_class_formats" },
+        { name: "preferred_group_size", label: "Preferred group size", kind: "select", optkey: "primary_group_sizes" },
+        { name: "preferred_teacher_gender", label: "Preferred teacher gender", kind: "select", optkey: "teacher_gender_preferences" },
+        { name: "school_term", label: "School term/admission year" },
+        { name: "special_needs", label: "Special learning needs / accommodations", kind: "select", opts: { no: "No", yes: "Yes" } },
+      ]);
+      h += field({ name: "medical_safety_notes", label: "Medical/allergy/safety notes", kind: "textarea", full: true });
+    } else {
+      h += gridOf([{ name: "age_years", label: "Age", type: "number", min: 0, max: 99 }]);
+    }
+
+    if (inst.is_adult_learning) {
+      h += `<h3>Adult learning details</h3>`;
+      h += gridOf([
+        { name: "adult_learning_area", label: "Learning area of interest", kind: "select", optkey: "adult_learning_areas" },
+        { name: "adult_subject_skill", label: "Specific subject or skill" },
+        { name: "adult_education_level", label: "Highest education level completed", kind: "select", optkey: "adult_education_levels" },
+        { name: "adult_literacy_level", label: "Current literacy level", kind: "select", optkey: "adult_literacy_levels" },
+        { name: "adult_numeracy_level", label: "Current numeracy level", kind: "select", optkey: "adult_numeracy_levels" },
+        { name: "adult_digital_skill_level", label: "Digital skill level", kind: "select", optkey: "adult_digital_skill_levels" },
+        { name: "adult_previous_experience", label: "Previous adult-learning experience", kind: "select", optkey: "adult_previous_experiences" },
+        { name: "adult_previous_learning_method", label: "Previous learning method", kind: "select", optkey: "adult_learning_methods" },
+        { name: "adult_learning_goal", label: "Primary learning goal", kind: "select", optkey: "adult_learning_goals" },
+        { name: "adult_employment_status", label: "Current employment status", kind: "select", optkey: "adult_employment_statuses" },
+        { name: "adult_learning_format", label: "Preferred learning format", kind: "select", optkey: "adult_learning_formats" },
+        { name: "adult_learning_pace", label: "Preferred learning pace", kind: "select", optkey: "adult_learning_paces" },
+        { name: "adult_class_arrangement", label: "Preferred class arrangement", kind: "select", optkey: "adult_class_arrangements" },
+        { name: "adult_childcare_impact", label: "Childcare responsibilities affecting attendance", kind: "select", optkey: "adult_childcare_options" },
+        { name: "adult_work_impact", label: "Work responsibilities affecting attendance", kind: "select", optkey: "adult_attendance_impact_options" },
+        { name: "adult_access_limitations", label: "Transport or connectivity limitations", kind: "select", optkey: "adult_access_limitations" },
+        { name: "adult_learning_confidence", label: "Confidence returning to learning", kind: "select", optkey: "adult_learning_confidence_levels" },
+      ]);
+      h += field({ name: "adult_support_needs", label: "Learning support or accessibility needs", kind: "textarea", full: true });
+      h += field({ name: "adult_notes", label: "Additional adult-learning notes", kind: "textarea", full: true });
+    }
+
+    if (inst.is_professional_development) {
+      h += `<h3>Professional development details</h3>`;
+      h += gridOf([
+        { name: "professional_area", label: "Professional development area", kind: "select", optkey: "professional_development_areas" },
+        { name: "professional_topic_skill", label: "Specific topic or skill" },
+        { name: "professional_current_role", label: "Current professional role" },
+        { name: "professional_industry", label: "Industry or sector", kind: "select", optkey: "professional_industries" },
+        { name: "professional_employment_status", label: "Employment status", kind: "select", optkey: "professional_employment_statuses" },
+        { name: "professional_employer", label: "Employer or organisation" },
+        { name: "professional_experience_years", label: "Years of professional experience", kind: "select", optkey: "professional_experience_ranges" },
+        { name: "professional_responsibility_level", label: "Current responsibility level", kind: "select", optkey: "professional_responsibility_levels" },
+        { name: "professional_development_goal", label: "Primary development goal", kind: "select", optkey: "professional_development_goals" },
+        { name: "professional_skill_level", label: "Current skill level", kind: "select", optkey: "professional_skill_levels" },
+        { name: "professional_credential_sought", label: "Certification or credential sought" },
+        { name: "professional_certification_deadline", label: "Certification deadline", type: "date" },
+        { name: "professional_learning_format", label: "Preferred learning format", kind: "select", optkey: "professional_learning_formats" },
+        { name: "professional_learning_schedule", label: "Preferred learning schedule", kind: "select", optkey: "professional_learning_schedules" },
+        { name: "professional_course_intensity", label: "Preferred course intensity", kind: "select", optkey: "professional_course_intensities" },
+        { name: "professional_employer_sponsored", label: "Employer-sponsored training", kind: "select", optkey: "professional_sponsorship_options" },
+        { name: "professional_cpd_required", label: "CPD credits required", kind: "select", optkey: "professional_cpd_options" },
+        { name: "professional_cpd_credits", label: "Required CPD credits or hours", type: "number", min: 0 },
+      ]);
+      h += field({ name: "professional_workplace_outcome", label: "Expected workplace outcome", kind: "textarea", full: true });
+      h += field({ name: "professional_support_needs", label: "Professional support or accessibility needs", kind: "textarea", full: true });
+      h += field({ name: "professional_notes", label: "Additional professional development notes", kind: "textarea", full: true });
+    }
+
+    if (inst.is_technical_training) {
+      h += `<h3>Technical training details</h3>`;
+      h += gridOf([
+        { name: "technical_program", label: "Training program or trade", kind: "select", optkey: "technical_programs" },
+        { name: "technical_specialization", label: "Specific specialization" },
+        { name: "technical_training_level", label: "Training level", kind: "select", optkey: "technical_training_levels" },
+        { name: "technical_previous_experience", label: "Previous technical experience", kind: "select", optkey: "technical_experience_types" },
+        { name: "technical_previous_learning_method", label: "Previous learning method", kind: "select", optkey: "technical_learning_methods" },
+        { name: "technical_experience_duration", label: "Experience duration", kind: "select", optkey: "technical_experience_durations" },
+        { name: "technical_employment_status", label: "Current employment status", kind: "select", optkey: "technical_employment_statuses" },
+        { name: "technical_employer_workshop", label: "Current employer or workshop" },
+        { name: "technical_training_goal", label: "Primary training goal", kind: "select", optkey: "technical_training_goals" },
+        { name: "technical_certification_sought", label: "Certification sought" },
+        { name: "technical_training_format", label: "Preferred training format", kind: "select", optkey: "technical_training_formats" },
+        { name: "technical_training_schedule", label: "Preferred training schedule", kind: "select", optkey: "technical_training_schedules" },
+        { name: "technical_tool_access", label: "Access to required tools or equipment", kind: "select", optkey: "technical_tool_access_options" },
+        { name: "technical_digital_skill_level", label: "Computer or digital skill level", kind: "select", optkey: "technical_digital_skill_levels" },
+        { name: "technical_safety_training", label: "Safety training completed", kind: "select", optkey: "technical_yes_no_unsure" },
+        { name: "technical_protective_equipment", label: "Protective equipment available", kind: "select", optkey: "technical_protective_equipment_options" },
+      ]);
+      h += field({ name: "technical_tools_experience", label: "Tools or equipment experience", kind: "textarea", full: true });
+      h += field({ name: "technical_support_needs", label: "Practical support or accessibility needs", kind: "textarea", full: true });
+      h += field({ name: "technical_notes", label: "Additional technical training notes", kind: "textarea", full: true });
+    }
+
+    if (inst.is_higher_education) {
+      h += `<h3>Higher education details</h3>`;
+      h += gridOf([
+        { name: "higher_application_level", label: "Application level", kind: "select", optkey: "higher_application_levels" },
+        { name: "higher_program_field", label: "Program or field of study" },
+        { name: "higher_specialization", label: "Intended specialization" },
+        { name: "higher_highest_qualification", label: "Highest qualification completed", kind: "select", optkey: "higher_qualification_levels" },
+        { name: "higher_previous_institution", label: "Previous institution" },
+        { name: "higher_qualification_title", label: "Qualification title" },
+        { name: "higher_completion_year", label: "Graduation or expected completion year", type: "number", min: 1900, max: 2100 },
+        { name: "higher_academic_result", label: "Academic result" },
+        { name: "higher_academic_status", label: "Current academic status", kind: "select", optkey: "higher_academic_statuses" },
+        { name: "higher_admission_route", label: "Admission route", kind: "select", optkey: "higher_admission_routes" },
+        { name: "higher_transfer_credits", label: "Transfer credits requested", kind: "select", optkey: "higher_transfer_credit_options" },
+        { name: "higher_study_mode", label: "Preferred study mode", kind: "select", optkey: "higher_study_modes" },
+        { name: "higher_study_load", label: "Preferred study load", kind: "select", optkey: "higher_study_loads" },
+        { name: "higher_preferred_intake", label: "Preferred intake or academic term" },
+        { name: "higher_funding_method", label: "Funding method", kind: "select", optkey: "higher_funding_methods" },
+        { name: "higher_financial_aid_interest", label: "Scholarship or financial-aid interest", kind: "select", optkey: "higher_financial_aid_options" },
+      ]);
+      h += field({ name: "higher_research_interest", label: "Research interest or proposed topic", kind: "textarea", full: true });
+      h += field({ name: "higher_support_needs", label: "Academic support or accessibility needs", kind: "textarea", full: true });
+    }
+
+    if (inst.is_islamic_studies) {
+      h += `<h3>Islamic studies details</h3>`;
+      h += gridOf([
+        { name: "islamic_program_interest", label: "Islamic program interest", kind: "select", optkey: "islamic_program_interests" },
+        { name: "quran_reading_level", label: "Quran reading level", kind: "select", optkey: "quran_reading_levels" },
+        { name: "tajweed_level", label: "Tajweed level", kind: "select", optkey: "tajweed_levels" },
+        { name: "memorization_status", label: "Memorization status", kind: "select", optkey: "memorization_statuses" },
+        { name: "memorized_portion", label: "Memorized portion" },
+        { name: "arabic_reading_ability", label: "Arabic reading ability", kind: "select", optkey: "arabic_reading_abilities" },
+        { name: "islamic_learning_goal", label: "Islamic learning goal" },
+        { name: "previous_learning_method", label: "Previous learning method", kind: "select", optkey: "previous_learning_methods" },
+        { name: "tafsir_level", label: "Tafsir level", kind: "select", optkey: "tafsir_levels" },
+      ]);
+      h += field({ name: "prior_islamic_studies", label: "Prior Islamic studies", kind: "textarea", full: true });
+      h += field({ name: "islamic_notes", label: "Islamic studies notes", kind: "textarea", full: true });
+    }
+
+    if (inst.is_christian_studies) {
+      h += `<h3>Christian studies details</h3>`;
+      h += gridOf([
+        { name: "christian_program_interest", label: "Christian program interest", kind: "select", optkey: "christian_program_interests" },
+        { name: "bible_reading_level", label: "Bible reading level", kind: "select", optkey: "bible_reading_levels" },
+        { name: "bible_knowledge_level", label: "Bible knowledge level", kind: "select", optkey: "bible_knowledge_levels" },
+        { name: "christian_studies_level", label: "Christian studies level", kind: "select", optkey: "christian_studies_levels" },
+        { name: "christian_previous_learning_method", label: "Previous learning method", kind: "select", optkey: "christian_previous_learning_methods" },
+        { name: "christian_learning_goal", label: "Primary learning goal" },
+      ]);
+      h += field({ name: "prior_christian_studies", label: "Previous Christian studies", kind: "textarea", full: true });
+      h += field({ name: "christian_notes", label: "Additional Christian studies notes", kind: "textarea", full: true });
+    }
+
+    h += `<h3>Location and language</h3>`;
+    h += gridOf([
+      { name: "country", label: "Country", kind: "select", optkey: "countries" },
+      { name: "city", label: "City", kind: "select", optkey: "cities" },
+      { name: "city_other", label: "City not listed", extraclass: "city-other" },
+      { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
+      { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
+      { name: "other_languages", label: "Other languages", kind: "multi", optkey: "other_languages" },
+    ]);
+
+    h += `<h3>Learning placement</h3>`;
+    h += gridOf([
+      { name: "course_type", label: "Course", kind: "select", optkey: "course_types" },
+      { name: "current_level", label: "Placement level", kind: "select", optkey: "current_levels" },
+      { name: "tajweed_sub_level", label: "Tajweed sub-level", kind: "select", optkey: "tajweed_sub_levels", placeholder: "Select when Level 3" },
+      { name: "learning_base", label: "Learning background", kind: "select", optkey: "learning_bases" },
+    ]);
+
+    h += `<h3><span class="section-pill">Preferred weekly live-session number of sessions and hours</span></h3>`;
+    h += gridOf([
+      { name: "session_count", label: "Number of sessions", kind: "select", optkey: "session_counts", noplaceholder: false },
+      { name: "timezone", label: "Time zone", kind: "select", optkey: "timezones" },
+    ]);
+    h += calendarHtml();
+    h += field({ name: "availability_summary", label: "Availability notes", kind: "textarea", full: true, ph: "Exact availability, restrictions, preferred days, breaks, or admin notes" });
+
+    h += `<h3>Parent / guardian <span class="muted">${inst.is_primary_education ? "(required for primary education)" : "(required only when the student is under 18)"}</span></h3>`;
+    h += gridOf([
+      { name: "parent_name", label: "Parent/guardian name" },
+      { name: "parent_relationship", label: "Relationship to student", kind: "select", optkey: "parent_relationships" },
+      { name: "parent_relationship_other", label: "Describe relationship" },
+      { name: "parent_email", label: "Parent/guardian email or phone", ph: "Email or phone number" },
+      { name: "parent_phone", label: "Parent/guardian phone / WhatsApp" },
+      { name: "emergency_contact_name", label: "Emergency contact name" },
+      { name: "emergency_contact_phone", label: "Emergency contact phone" },
+      { name: "parent_username", label: "Parent username", ph: "Auto-generated if blank" },
+    ]);
+    h += `<label class="checkrow"><input type="checkbox" name="parent_email_enabled" value="1" checked><span>Send parent email notifications when the parent contact is a valid email address.</span></label>`;
+    h += field({ name: "parent_preferences", label: "Parent preferences", kind: "textarea", full: true, ph: "Teacher gender, language, schedule, sibling grouping" });
+
+    h += `<h3>Referrer <span class="muted">(optional, separate from parent/guardian access)</span></h3>`;
+    h += gridOf([
+      { name: "referrer_code", label: "Referrer Code", inputmode: "numeric", maxlength: 5, ph: "Five-digit code" },
+      { name: "referrer_name", label: "Referrer name" },
+      { name: "referrer_contact_number", label: "Contact number" },
+      { name: "referrer_email", label: "Email", type: "email" },
+      { name: "referrer_city", label: "City" },
+      { name: "referrer_state", label: "State" },
+      { name: "referrer_country", label: "Country" },
+      { name: "referral_datereferred", label: "Date referred", type: "date" },
+      { name: "referral_effective_date", label: "Referral effective date", type: "date" },
+      { name: "referral_status", label: "Referral status", kind: "select", opts: { pending: "Pending", contacted: "Contacted", enrolled: "Enrolled", approved: "Approved" }, noplaceholder: true },
+      { name: "referral_dateexpires", label: "Referral expiry date", type: "date" },
+      { name: "commission_amount", label: "Commission amount", ph: "Example: 25.00" },
+      { name: "commission_rate", label: "Commission rate", ph: "Example: 10%" },
+      { name: "commission_currency", label: "Commission currency", ph: "USD" },
+    ]);
+    h += field({ name: "referral_notes", label: "Referral notes", kind: "textarea", full: true, ph: "Campaign, agreement, source notes, or commission context" });
+
+    h += `<h3>Consent</h3>`;
+    h += `<label class="checkrow" id="row-live_class_consent"><input type="checkbox" name="live_class_consent" value="1"><span>Student or parent/guardian consents to live interactive classes.</span></label><div class="ferr" id="ferr-live_class_consent" hidden></div>`;
+    h += `<div class="field field--full"><label>Audio recording declaration</label><p class="muted" style="margin:0">Live-class audio is always recorded as part of safeguarding and class-quality practice. Audio may be used for teacher review, parent review, lesson quality checks, attendance or incident review, quiz and learning support, and compliance. Access is limited to authorised workspace users and linked parents/guardians according to the recording review and retention policy.</p></div>`;
+    h += `<label class="checkrow"><input type="checkbox" name="recording_consent" value="1"><span>Student or parent/guardian gives opt-in consent for student camera/video recording and video playback visibility when policy allows.</span></label>`;
+    h += field({ name: "consent_notes", label: "Consent notes/comment", kind: "textarea", full: true, ph: "How consent was collected, who confirmed, and any limits" });
+
+    h += `<button class="btn" type="submit">Create student intake</button>`;
+    f.innerHTML = h;
+
+    wireCountryCityTimezone();
+    f.addEventListener("submit", submitIntake);
+  }
+
+  // ---- country -> city/timezone dependent selects (legacy JS, verbatim logic) ----
+  function wireCountryCityTimezone() {
+    const countryCities = (D.options || {}).country_cities || {};
+    const cityLabels = (D.options || {}).cities || {};
+    const countryTimezones = (D.options || {}).country_timezones || {};
+    const timezoneLabels = (D.options || {}).timezones || {};
+    const country = document.querySelector('select[name="country"]');
+    const city = document.querySelector('select[name="city"]');
+    const timezone = document.querySelector('select[name="timezone"]');
+    const cityOther = document.querySelector(".city-other");
+    const option = (value, label, selected) => { const i = document.createElement("option"); i.value = value; i.textContent = label; if (selected) i.selected = true; return i; };
+    const keys = (source) => Array.isArray(source) ? source.slice() : Object.keys(source || {});
+    const labelFor = (source, value, fallback) => (!source || Array.isArray(source)) ? fallback : (source[value] || fallback);
+    function refreshCities() {
+      if (!country || !city) return;
+      const selected = city.value;
+      const countryList = countryCities[country.value];
+      const cities = countryList ? keys(countryList) : keys(cityLabels);
+      if (cities.indexOf("Other") === -1) cities.push("Other");
+      city.innerHTML = "";
+      city.appendChild(option("", "Select", selected === ""));
+      cities.forEach((cityname) => city.appendChild(option(cityname, labelFor(countryList, cityname, labelFor(cityLabels, cityname, cityname)), cityname === selected)));
+      if (selected && cities.indexOf(selected) === -1) city.value = "Other";
+      if (cityOther) cityOther.classList.toggle("city-other--visible", city.value === "Other");
+    }
+    function refreshTimezones() {
+      if (!country || !timezone) return;
+      const selected = timezone.value;
+      const countryList = countryTimezones[country.value];
+      const zones = countryList ? keys(countryList) : keys(timezoneLabels);
+      timezone.innerHTML = "";
+      timezone.appendChild(option("", "Select", selected === ""));
+      zones.forEach((zone) => timezone.appendChild(option(zone, labelFor(countryList, zone, labelFor(timezoneLabels, zone, zone)), zone === selected)));
+      if (selected && zones.indexOf(selected) === -1) timezone.value = zones.length === 1 ? zones[0] : "";
+    }
+    if (country) country.addEventListener("change", () => { refreshCities(); refreshTimezones(); });
+    if (city) city.addEventListener("change", refreshCities);
+    refreshCities();
+    refreshTimezones();
+  }
+
+  // ---- collect + client-side required checks mirroring the legacy rules ----
+  const val = (n) => { const el = document.querySelector(`[name="${n}"]`); return el ? el.value.trim() : ""; };
+  const checked = (n) => { const el = document.querySelector(`input[name="${n}"]`); return el && el.checked ? 1 : 0; };
+  const multiVals = (n) => Array.from(document.querySelectorAll(`select[name="${n}"] option:checked`)).map((o) => o.value).filter(Boolean);
+  const slotVals = () => Array.from(document.querySelectorAll('input[name="slots"]:checked')).map((c) => c.value);
+
+  function collect() {
+    const body = { do: "create_intake" };
+    document.querySelectorAll("#intake [name]").forEach((el) => {
+      const n = el.name;
+      if (n === "slots") return;
+      if (el.type === "checkbox") { body[n] = el.checked ? 1 : 0; return; }
+      if (el.multiple) { body[n] = multiVals(n); return; }
+      body[n] = el.value.trim();
+    });
+    body.slots = slotVals();
+    const rq = (qs.get("requestid") || "").trim(); if (rq && !body.requestid) body.requestid = rq;
+    const ws = (qs.get("workspaceid") || "").trim(); if (ws && !body.workspaceid) body.workspaceid = ws;
+    if (!body.requestid) body.requestid = String((D && D.requestid) || 0);
+    if (!body.workspaceid) body.workspaceid = String((D && D.workspaceid) || 0);
+    return body;
+  }
+
+  function validate(body) {
+    const inst = D.institution || {};
+    const errs = {};
+    const existing = parseInt(body.existing_studentid || "0", 10) > 0;
+    if (!existing && (!body.student_firstname || !body.student_middle_name || !body.student_lastname)) {
+      if (!body.student_firstname) errs.student_firstname = "First name is required when creating a new Moodle student account.";
+      if (!body.student_middle_name) errs.student_middle_name = "Middle name is required.";
+      if (!body.student_lastname) errs.student_lastname = "Last name is required when creating a new Moodle student account.";
+    } else if (!body.student_middle_name) {
+      errs.student_middle_name = "Middle name is required.";
+    }
+    const age = parseInt(body.age_years || "0", 10) || 0;
+    const parentcontact = body.parent_email || body.parent_phone || "";
+    if (inst.is_primary_education) {
+      const req = {
+        date_of_birth: "Date of birth is required for primary education students.",
+        age_years: "Age is required for primary education students.",
+        gender: "Gender is required for primary education students.",
+        special_needs: "Special Needs must be Yes or No for primary education students.",
+        current_grade: "Current grade/year is required for primary education students.",
+        parent_name: "Parent/guardian name is required for primary education students.",
+        parent_relationship: "Relationship to student is required for primary education students.",
+        emergency_contact_phone: "Emergency contact phone is required for primary education students.",
+      };
+      for (const [k, m] of Object.entries(req)) if (!String(body[k] || "").trim() || (k === "age_years" && age <= 0)) errs[k] = m;
+      if (!parentcontact) errs.parent_email = "Parent/guardian email, phone, or WhatsApp is required for primary education students.";
+    }
+    if (inst.is_higher_education) {
+      const req = {
+        higher_application_level: "Application level is required for higher education students.",
+        higher_program_field: "Program or field of study is required for higher education students.",
+        higher_highest_qualification: "Highest qualification completed is required for higher education students.",
+        higher_academic_status: "Current academic status is required for higher education students.",
+        higher_study_mode: "Preferred study mode is required for higher education students.",
+        higher_study_load: "Preferred study load is required for higher education students.",
+      };
+      for (const [k, m] of Object.entries(req)) if (!String(body[k] || "").trim()) errs[k] = m;
+    }
+    if (inst.is_technical_training) {
+      const req = {
+        technical_program: "Training program or trade is required for technical training students.",
+        technical_training_level: "Training level is required for technical training students.",
+        technical_previous_experience: "Previous technical experience is required for technical training students.",
+        technical_training_goal: "Primary training goal is required for technical training students.",
+        technical_training_format: "Preferred training format is required for technical training students.",
+        technical_tool_access: "Access to required tools or equipment is required for technical training students.",
+      };
+      for (const [k, m] of Object.entries(req)) if (!String(body[k] || "").trim()) errs[k] = m;
+    }
+    if (inst.is_professional_development) {
+      const req = {
+        professional_area: "Professional development area is required.",
+        professional_current_role: "Current professional role is required.",
+        professional_employment_status: "Employment status is required.",
+        professional_development_goal: "Primary development goal is required.",
+        professional_skill_level: "Current skill level is required.",
+        professional_learning_format: "Preferred learning format is required.",
+      };
+      for (const [k, m] of Object.entries(req)) if (!String(body[k] || "").trim()) errs[k] = m;
+    }
+    if (inst.is_adult_learning) {
+      const req = {
+        adult_learning_area: "Learning area of interest is required.",
+        adult_education_level: "Highest education level completed is required.",
+        adult_learning_goal: "Primary learning goal is required.",
+        adult_learning_format: "Preferred learning format is required.",
+        adult_learning_pace: "Preferred learning pace is required.",
+      };
+      for (const [k, m] of Object.entries(req)) if (!String(body[k] || "").trim()) errs[k] = m;
+    }
+    if (age < 18) {
+      if (!body.parent_name) errs.parent_name = "Parent/guardian name is required for students under 18.";
+      if (!body.parent_relationship) errs.parent_relationship = "Relationship to student is required for students under 18.";
+      if (!parentcontact) errs.parent_email = "Parent/guardian email, phone, or WhatsApp is required for students under 18.";
+    } else if (!body.student_email) {
+      errs.student_email = "Adult students must have their own email address or phone number when no parent/guardian is linked.";
+    }
+    if (body.parent_relationship === "other" && !body.parent_relationship_other) {
+      errs.parent_relationship_other = "Describe the relationship to the student.";
+    }
+    if (!body.live_class_consent) errs.live_class_consent = "Live class consent is required before creating the student intake record.";
+    const core = {
+      course_type: "Course is required.",
+      country: "Country is required.",
+      city: "City is required.",
+      timezone: "Time zone is required.",
+      primary_language: "Primary language is required.",
+      preferred_teaching_language: "Preferred teaching language is required.",
+      current_level: "Placement level is required.",
+      learning_base: "Learning background is required.",
+    };
+    for (const [k, m] of Object.entries(core)) if (!String(body[k] || "").trim()) errs[k] = m;
+    if (body.current_level === "level_3" && !body.tajweed_sub_level) errs.tajweed_sub_level = "Select Beginner, Middle, or Advanced for Level 3.";
+    const sessions = parseInt(body.session_count || "1", 10) || 1;
+    if (!body.slots.length) errs.slots = "Select at least one weekly time that could work.";
+    else if (body.slots.length < sessions) errs.slots = "Select at least as many weekly time options as the requested number of sessions.";
+    if (body.city === "Other" && !body.city_other) errs.city_other = "Enter the city name.";
+    const code = String(body.referrer_code || "").replace(/\D+/g, "");
+    if (code && code.length !== 5) errs.referrer_code = "Enter the five-digit referrer code.";
+    return errs;
+  }
+
+  const labelOf = (name) => {
+    if (name === "live_class_consent") return "Live class consent";
+    if (name === "slots") return "Preferred weekly live-session number of sessions and hours";
+    const f = document.querySelector(`#f-${CSS.escape(name)} label`);
+    return f ? f.textContent : name.replace(/_/g, " ");
+  };
+
+  function showFieldErrors(errs, labels) {
+    document.querySelectorAll(".field--error").forEach((el) => el.classList.remove("field--error"));
+    document.querySelectorAll(".ferr").forEach((el) => { el.hidden = true; el.textContent = ""; });
+    document.querySelectorAll(".checkrow--error").forEach((el) => el.classList.remove("checkrow--error"));
+    const items = [];
+    for (const [name, message] of Object.entries(errs)) {
+      const label = (labels && labels[name]) || labelOf(name);
+      items.push(`<li><a href="#f-${esc(name)}"><strong>${esc(label)}:</strong> ${esc(message)}</a></li>`);
+      const wrap = document.getElementById("f-" + name);
+      if (wrap) {
+        wrap.classList.add("field--error");
+        const fe = wrap.querySelector(".ferr");
+        if (fe) { fe.hidden = false; fe.textContent = label + ": " + message; }
+      } else if (name === "live_class_consent") {
+        const row = document.getElementById("row-live_class_consent");
+        if (row) row.classList.add("checkrow--error");
+        const fe = document.getElementById("ferr-live_class_consent");
+        if (fe) { fe.hidden = false; fe.textContent = message; }
+      }
+    }
+    const st = $("#status");
+    st.className = "status error"; st.hidden = false;
+    st.innerHTML = `Please fix the highlighted fields below.<ul class="errorlist">${items.join("")}</ul>`;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // ---- success confirmation (mirrors the legacy Created Accounts panel) ----
+  function showCreated(d) {
+    const c = d.created || {};
+    const cells = [];
+    let student = `<strong>Student</strong>ID ${esc(c.studentaccountid || "")}<br>Moodle user ID: ${esc(c.studentid)}<br>Username: ${esc(c.studentusername)}`;
+    student += c.existingstudent ? "<br>Existing Moodle account linked." : `<br>Temporary password: ${esc(c.studentpassword)}`;
+    cells.push(`<div>${student}</div>`);
+    let parent = "<strong>Parent/guardian</strong>";
+    if (c.parentid) {
+      parent += `ID ${esc(c.parentaccountid || "")}<br>Moodle user ID: ${esc(c.parentid)}<br>${c.parentcreated ? "Parent/guardian account created." : "Existing parent/guardian account linked."}`;
+      if (c.parentpassword) parent += `<br>Temporary password: ${esc(c.parentpassword)}`;
+      parent += `<br>Email: ${c.parentemailattempted ? (c.parentemailsent ? "sent" : "attempted but not confirmed") : "not sent"}`;
+    } else {
+      parent += "<br>Not required for this adult student.";
+    }
+    cells.push(`<div>${parent}</div>`);
+    let referrer = "<strong>Referrer</strong>";
+    referrer += c.referralid ? `${esc(c.referrername || "")}<br>Code: ${esc(c.referrercode || "")}<br>Referral ID: ${esc(c.referralid)}` : "No referrer linked.";
+    cells.push(`<div>${referrer}</div>`);
+    if (c.workspaceid) cells.push(`<div><strong>Workspace</strong>Linked to workspace ID ${esc(c.workspaceid)}.<br>Student and parent membership rows were created or reactivated.</div>`);
+    $("#created").innerHTML = cells.join("");
+    let extra = "";
+    if (c.approvalurl) extra += `<div class="resultnote">Parent approval status: <strong>${esc(c.enrollmentapprovalstatus || "pending_parent")}</strong><br>Parent approval link: <a href="${esc(c.approvalurl)}" target="_blank" rel="noopener">${esc(c.approvalurl)}</a></div>`;
+    if (c.teacherrequestid) extra += `<div class="resultnote">Marketplace teacher request created: <strong>#${esc(c.teacherrequestid)}</strong></div>`;
+    $("#created-extra").innerHTML = extra;
+    $("#created-panel").hidden = false;
+    const st = $("#status");
+    st.className = "status saved"; st.hidden = false; st.textContent = d.message || "Student intake completed.";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function submitIntake(ev) {
+    ev.preventDefault();
+    const btn = document.querySelector("#intake button[type=submit]");
+    const body = collect();
+    const errs = validate(body);
+    if (Object.keys(errs).length) { showFieldErrors(errs, null); return; }
+    btn.disabled = true; btn.textContent = "Creating…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(passthrough()), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(body),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) {
+        if (d && d.fielderrors) { showFieldErrors(d.fielderrors, d.fieldlabels || null); }
+        else { throw new Error((d && d.error) || ("HTTP " + r.status)); }
+        return;
+      }
+      showCreated(d);
+    } catch (e) {
+      const st = $("#status");
+      st.className = "status error"; st.hidden = false; st.textContent = "Student intake did not complete: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      btn.disabled = false; btn.textContent = "Create student intake";
+    }
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      D = d;
+      if (!d.ready) {
+        $("#status").className = "status error";
+        $("#status").textContent = d.notready_message || "Student profile table is not ready. Run the Moodle plugin upgrade for local_prequran first.";
+        return;
+      }
+      buildForm();
+      $("#form-panel").hidden = false;
+      $("#status").hidden = true;
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Could not load: " + e.message;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

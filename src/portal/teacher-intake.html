@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher intake · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:18px 0 10px;font-size:14px;font-weight:900;color:var(--blue2)}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .status.warn{background:var(--amber-bg);color:var(--amber)}
+  .status ul{margin:8px 0 0;padding-left:20px}
+  .status a{color:inherit}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+  .field{display:grid;gap:6px;margin-bottom:10px;align-content:start}
+  .field label{margin:0;font-size:12px;font-weight:900;color:var(--ink2)}
+  .field input[type=text],.field input[type=number],.field input[type=date],.field select,.field textarea{width:100%;min-height:40px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:86px;resize:vertical}
+  .field.err input,.field.err select,.field.err textarea,.field.err .choicegrid,.field.err .calendar{border-color:var(--red);background:var(--red-bg)}
+  .fielderr{font-size:12px;font-weight:900;color:var(--red)}
+  .choicegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+  .choice{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:700;color:var(--ink)}
+  .choice input{width:16px;height:16px;accent-color:var(--blue2)}
+  .cityother{display:none}.cityother.show{display:grid}
+  .calendar{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  .calendar table{width:100%;min-width:900px;border-collapse:collapse}
+  .calendar th,.calendar td{border:1px solid var(--line);text-align:center;padding:8px;font-size:12px}
+  .calendar th{background:var(--sky);color:var(--ink2);font-weight:900}
+  .calendar td:first-child{background:var(--bg);text-align:left;font-weight:900;color:var(--ink)}
+  .calendar input{width:18px;height:18px;accent-color:var(--blue2);cursor:pointer}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:14px;font-weight:900;cursor:pointer}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
+  .result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .result>div{padding:12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-weight:600;font-size:13px}
+  .result strong{display:block;color:var(--blue2);margin-bottom:4px}
+  .checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .check{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-weight:600;font-size:13px}
+  .check strong{display:block;margin-bottom:4px;color:var(--blue2)}
+  .pill{display:inline-flex;align-items:center;min-height:24px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .linkrow{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+  @media(max-width:760px){.grid,.result,.choicegrid{grid-template-columns:1fr}}
+  @media(max-width:920px){.checks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.checks{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Teacher intake</small></div>
+  <div class="note">Token-authenticated · parallel-run of teacher_intake.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Teacher Intake</h1><p class="sub" id="subtitle">Create or link a Moodle teacher account, capture live-class readiness, and set initial BBB availability.</p>
+    <div class="linkrow" id="legacy-links" hidden></div></div>
+  <div id="status" class="status">Loading teacher intake…</div>
+  <div id="loaderror" class="status warn" hidden></div>
+  <div id="schema-warning" class="status error" hidden></div>
+  <div class="panel" id="recent-panel" hidden>
+    <h2>Recent Public Teacher Applications</h2>
+    <p class="muted">Open one of these applications to carry its public form answers into the intake form below.</p>
+    <div class="result" id="recent"></div>
+  </div>
+  <div class="panel" id="created-panel" hidden>
+    <h2>Teacher Account</h2>
+    <div class="result" id="created"></div>
+  </div>
+  <div class="panel" id="checklist-panel" hidden>
+    <h2>Conversion Checklist</h2>
+    <div class="checks" id="checklist"></div>
+  </div>
+  <div class="panel" id="online-panel" hidden>
+    <h2>Source Online Presence</h2>
+    <div class="result" id="online"></div>
+  </div>
+  <div class="panel" id="form-panel" hidden>
+    <h2 id="paneltitle">Teacher Onboarding</h2>
+    <form id="intake" novalidate></form>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit" }) : "";
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  // Moodle origin for the classic-form fallback links, derived from the endpoint.
+  let moodleOrigin = "";
+  try { moodleOrigin = new URL(endpoint).origin; } catch (e) {}
+
+  // Context params the legacy page reads from its own URL — pass them through.
+  const passthrough = () => {
+    const p = {};
+    ["consumer", "workspaceid", "teacher_requestid", "requestid", "existing_teacherid"].forEach((k) => {
+      const v = (qs.get(k) || "").trim();
+      if (v !== "") p[k] = v;
+    });
+    return p;
+  };
+  const apiUrl = (extra) => endpoint + "?" + new URLSearchParams(Object.assign({ report: "teacher-intake", token }, passthrough(), extra || {}));
+
+  let D = null; // last GET payload
+
+  async function load() {
+    try {
+      const r = await fetch(apiUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      D = d;
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  // ---- field builders (labels and wording copied from teacher_intake.php) ----
+  const opt = (value, label, selected) => `<option value="${esc(value)}"${selected ? " selected" : ""}>${esc(label)}</option>`;
+  const selectField = (name, label, options, value, placeholder) => `
+    <div class="field" id="f-${esc(name)}"><label>${esc(label)}</label>
+      <select name="${esc(name)}">${opt("", placeholder || "Select", value === "")}${Object.entries(options || {}).map(([v, l]) => opt(v, l, String(v) === String(value))).join("")}</select>
+    </div>`;
+  const inlineSelect = (name, label, pairs, value) => `
+    <div class="field" id="f-${esc(name)}"><label>${esc(label)}</label>
+      <select name="${esc(name)}">${pairs.map(([v, l]) => opt(v, l, String(v) === String(value))).join("")}</select>
+    </div>`;
+  const inputField = (name, label, value, attrs, placeholder) => `
+    <div class="field" id="f-${esc(name)}"><label>${esc(label)}</label>
+      <input type="text" name="${esc(name)}" value="${esc(value)}"${attrs || ""}${placeholder ? ` placeholder="${esc(placeholder)}"` : ""}>
+    </div>`;
+  const numberField = (name, label, value, min, max, placeholder) => `
+    <div class="field" id="f-${esc(name)}"><label>${esc(label)}</label>
+      <input type="number" name="${esc(name)}" min="${min}" max="${max}" value="${esc(value)}"${placeholder ? ` placeholder="${esc(placeholder)}"` : ""}>
+    </div>`;
+  const textareaField = (name, label, value, placeholder) => `
+    <div class="field" id="f-${esc(name)}"><label>${esc(label)}</label>
+      <textarea name="${esc(name)}"${placeholder ? ` placeholder="${esc(placeholder)}"` : ""}>${esc(value)}</textarea>
+    </div>`;
+  const checkboxGroup = (name, label, options, selected) => `
+    <div class="field" id="f-${esc(name)}"><label>${esc(label)}</label>
+      <div class="choicegrid">${Object.entries(options || {}).map(([v, l]) => `<label class="choice"><input type="checkbox" name="${esc(name)}[]" value="${esc(v)}"${(selected || []).map(String).includes(String(v)) ? " checked" : ""}><span>${esc(l)}</span></label>`).join("")}</div>
+    </div>`;
+  const radioGroup = (name, label, options, selected) => {
+    const sel = Array.isArray(selected) ? String(selected[0] ?? "") : String(selected ?? "");
+    return `
+    <div class="field" id="f-${esc(name)}"><label>${esc(label)}</label>
+      <div class="choicegrid">${Object.entries(options || {}).map(([v, l]) => `<label class="choice"><input type="radio" name="${esc(name)}[]" value="${esc(v)}"${String(v) === sel ? " checked" : ""}><span>${esc(l)}</span></label>`).join("")}</div>
+    </div>`;
+  };
+
+  const calendar = (o, slots) => {
+    const days = o.availability_days || {}, hours = o.availability_time_windows || {};
+    return `
+    <div class="field" id="f-slots"><label>Select all recurring times that could work</label>
+      <div class="calendar"><table>
+        <thead><tr><th>Day</th>${Object.values(hours).map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead>
+        <tbody>${Object.entries(days).map(([d, dl]) => `<tr><td>${esc(dl)}</td>${Object.keys(hours).map((h) => {
+          const slot = d + "|" + h;
+          return `<td><label title="${esc(dl + " " + hours[h])}"><input type="checkbox" name="slots[]" value="${esc(slot)}"${(slots || []).includes(slot) ? " checked" : ""}></label></td>`;
+        }).join("")}</tr>`).join("")}</tbody>
+      </table></div>
+    </div>`;
+  };
+
+  function institutionSection(d, f, o) {
+    const I = d.institution || {};
+    if (I.is_primary_education) return `
+      <h3>Primary education teaching details</h3>
+      <div class="grid">
+        ${checkboxGroup("primary_grades_taught", "Primary grades or year levels taught", o.primary_teacher_grade_levels, f.primary_grades_taught)}
+        ${checkboxGroup("primary_curricula_taught", "Primary curricula taught", o.primary_teacher_curricula, f.primary_curricula_taught)}
+        ${selectField("primary_classroom_management", "Classroom-management experience", o.primary_classroom_management_levels, f.primary_classroom_management)}
+        ${selectField("primary_parent_communication", "Parent/guardian communication experience", o.primary_parent_communication_levels, f.primary_parent_communication)}
+        ${selectField("primary_safeguarding_status", "Child-safeguarding training status", o.primary_safeguarding_statuses, f.primary_safeguarding_status)}
+        ${selectField("primary_learning_support", "Learning-support or special-needs experience", o.primary_learning_support_levels, f.primary_learning_support)}
+        ${selectField("primary_lesson_assessment", "Lesson-planning and assessment experience", o.primary_assessment_experience_options, f.primary_lesson_assessment)}
+        ${inputField("primary_teaching_credential", "Primary teaching credential", f.primary_teaching_credential)}
+        ${selectField("primary_background_check", "Background-check status", o.primary_background_check_statuses, f.primary_background_check)}
+      </div>
+      ${textareaField("primary_teacher_notes", "Additional primary teaching notes", f.primary_teacher_notes)}`;
+    if (I.is_higher_education) return `
+      <h3>Higher education teaching details</h3>
+      <div class="grid">
+        ${selectField("higher_teacher_academic_rank", "Academic rank or teaching role", o.higher_teacher_academic_ranks, f.higher_teacher_academic_rank)}
+        ${checkboxGroup("higher_teacher_disciplines", "Disciplines taught", o.higher_teacher_disciplines, f.higher_teacher_disciplines)}
+        ${selectField("higher_teacher_experience", "Higher-education teaching experience", o.higher_teacher_experience_levels, f.higher_teacher_experience)}
+        ${selectField("higher_teacher_research_level", "Research experience", o.higher_teacher_research_levels, f.higher_teacher_research_level)}
+        ${checkboxGroup("higher_teacher_supervision", "Research supervision", o.higher_teacher_supervision_levels, f.higher_teacher_supervision)}
+        ${selectField("higher_teacher_course_design", "Course or programme design experience", o.higher_teacher_course_design_levels, f.higher_teacher_course_design)}
+        ${selectField("higher_teacher_assessment", "Assessment and moderation experience", o.higher_teacher_assessment_levels, f.higher_teacher_assessment)}
+        ${selectField("higher_teacher_accreditation", "Accreditation or quality-assurance experience", o.higher_teacher_accreditation_levels, f.higher_teacher_accreditation)}
+      </div>
+      ${textareaField("higher_teacher_publications", "Publications or research output", f.higher_teacher_publications)}
+      ${textareaField("higher_teacher_notes", "Additional higher-education teaching notes", f.higher_teacher_notes)}`;
+    if (I.is_technical_training) return `
+      <h3>Technical training teaching details</h3>
+      <div class="grid">
+        ${checkboxGroup("technical_teacher_trades", "Technical trades or programmes taught", o.technical_teacher_trades, f.technical_teacher_trades)}
+        ${selectField("technical_teacher_industry_experience", "Relevant industry experience", o.technical_teacher_industry_experience, f.technical_teacher_industry_experience)}
+        ${inputField("technical_teacher_qualification", "Technical or vocational qualification", f.technical_teacher_qualification)}
+        ${selectField("technical_teacher_workshop_level", "Workshop or practical-training competence", o.technical_teacher_practical_levels, f.technical_teacher_workshop_level)}
+        ${selectField("technical_teacher_equipment_level", "Tools and equipment competence", o.technical_teacher_practical_levels, f.technical_teacher_equipment_level)}
+        ${selectField("technical_teacher_safety_status", "Safety-certification status", o.technical_teacher_safety_statuses, f.technical_teacher_safety_status)}
+        ${selectField("technical_teacher_apprenticeship", "Apprenticeship supervision experience", o.technical_teacher_supervision_levels, f.technical_teacher_apprenticeship)}
+        ${selectField("technical_teacher_assessment", "Practical competency assessment", o.technical_teacher_assessment_levels, f.technical_teacher_assessment)}
+        ${selectField("technical_teacher_workplace_training", "Workplace-based training experience", o.technical_teacher_workplace_training_levels, f.technical_teacher_workplace_training)}
+      </div>
+      ${textareaField("technical_teacher_licenses", "Trade licences or professional certifications", f.technical_teacher_licenses)}
+      ${textareaField("technical_teacher_notes", "Additional technical-training teaching notes", f.technical_teacher_notes)}`;
+    if (I.is_adult_learning) return `
+      <h3>Adult learning teaching details</h3>
+      <div class="grid">
+        ${checkboxGroup("adult_teacher_areas", "Adult-learning areas taught", o.adult_teacher_learning_areas, f.adult_teacher_areas)}
+        ${selectField("adult_teacher_experience", "Adult-learning teaching experience", o.adult_teacher_experience_levels, f.adult_teacher_experience)}
+        ${selectField("adult_teacher_literacy_instruction", "Adult literacy instruction", o.adult_teacher_instruction_levels, f.adult_teacher_literacy_instruction)}
+        ${selectField("adult_teacher_numeracy_instruction", "Adult numeracy instruction", o.adult_teacher_instruction_levels, f.adult_teacher_numeracy_instruction)}
+        ${selectField("adult_teacher_digital_instruction", "Digital-literacy instruction", o.adult_teacher_instruction_levels, f.adult_teacher_digital_instruction)}
+        ${selectField("adult_teacher_multilevel_facilitation", "Multi-level adult-group facilitation", o.adult_teacher_facilitation_levels, f.adult_teacher_multilevel_facilitation)}
+        ${selectField("adult_teacher_confidence_support", "Supporting adults returning to learning", o.adult_teacher_learner_support_levels, f.adult_teacher_confidence_support)}
+        ${selectField("adult_teacher_community_outreach", "Community outreach experience", o.adult_teacher_community_levels, f.adult_teacher_community_outreach)}
+        ${selectField("adult_teacher_barrier_support", "Supporting attendance or access barriers", o.adult_teacher_barrier_support_levels, f.adult_teacher_barrier_support)}
+      </div>
+      ${textareaField("adult_teacher_notes", "Additional adult-learning teaching notes", f.adult_teacher_notes)}`;
+    if (I.is_professional_development) return `
+      <h3>Professional development teaching details</h3>
+      <div class="grid">
+        ${checkboxGroup("professional_teacher_areas", "Professional-development areas", o.professional_teacher_areas, f.professional_teacher_areas)}
+        ${selectField("professional_teacher_industry_experience", "Relevant industry experience", o.professional_teacher_industry_experience, f.professional_teacher_industry_experience)}
+        ${selectField("professional_teacher_responsibility", "Professional responsibility level", o.professional_teacher_responsibility_levels, f.professional_teacher_responsibility)}
+        ${selectField("professional_teacher_facilitation", "Workshop and course facilitation experience", o.professional_teacher_facilitation_levels, f.professional_teacher_facilitation)}
+        ${selectField("professional_teacher_coaching", "Coaching or mentoring experience", o.professional_teacher_coaching_levels, f.professional_teacher_coaching)}
+        ${selectField("professional_teacher_corporate_training", "Corporate or organisational training", o.professional_teacher_corporate_levels, f.professional_teacher_corporate_training)}
+        ${selectField("professional_teacher_cpd", "CPD or accreditation experience", o.professional_teacher_cpd_levels, f.professional_teacher_cpd)}
+        ${selectField("professional_teacher_outcome_measurement", "Workplace-outcome measurement", o.professional_teacher_outcome_levels, f.professional_teacher_outcome_measurement)}
+      </div>
+      ${textareaField("professional_teacher_credentials", "Professional credentials or certifications", f.professional_teacher_credentials)}
+      ${textareaField("professional_teacher_case_studies", "Relevant workplace results or case studies", f.professional_teacher_case_studies)}
+      ${textareaField("professional_teacher_notes", "Additional professional-development teaching notes", f.professional_teacher_notes)}`;
+    if (I.is_faith_based) return `
+      <h3>Religious / faith-based teaching details</h3>
+      <div class="grid">
+        ${checkboxGroup("faith_teacher_subjects", "Faith-study areas taught", o[I.faith_subject_optionkey], f.faith_teacher_subjects)}
+        ${selectField("faith_teacher_experience", "Faith-based teaching experience", o.faith_teacher_experience_levels, f.faith_teacher_experience)}
+        ${selectField("faith_teacher_scripture_proficiency", I.faith_scripture_label, o.faith_teacher_proficiency_levels, f.faith_teacher_scripture_proficiency)}
+        ${selectField("faith_teacher_interpretation_level", I.faith_interpretation_label, o.faith_teacher_interpretation_levels, f.faith_teacher_interpretation_level)}
+        ${selectField("faith_teacher_language_level", I.faith_language_label, o.faith_teacher_language_levels, f.faith_teacher_language_level)}
+        ${selectField("faith_teacher_practice_level", I.faith_practice_label, o.faith_teacher_practice_levels, f.faith_teacher_practice_level)}
+        ${selectField("faith_teacher_community_experience", "Faith-community teaching experience", o.faith_teacher_community_levels, f.faith_teacher_community_experience)}
+        ${selectField("faith_teacher_reference", "Faith-community reference", o.faith_teacher_reference_options, f.faith_teacher_reference)}
+      </div>
+      ${textareaField("faith_teacher_qualification", "Faith-study qualification, authorisation, or teaching credential", f.faith_teacher_qualification)}
+      ${textareaField("faith_teacher_notes", "Additional faith-based teaching notes", f.faith_teacher_notes)}`;
+    return "";
+  }
+
+  function formHtml(d) {
+    const f = d.form, o = d.options;
+    return `
+      <h3>Core teacher information</h3>
+      ${numberField("existing_teacherid", "Existing Moodle teacher ID", f.existing_teacherid, 0, 99999999, "Optional: use only to add/update onboarding profile for an existing teacher")}
+      <div class="grid">
+        ${inputField("teacher_firstname", "First name", f.teacher_firstname)}
+        ${inputField("teacher_lastname", "Last name", f.teacher_lastname)}
+        ${inputField("teacher_display_name", "Display name", f.teacher_display_name, "", "Optional")}
+        ${inputField("teacher_username", "Username", f.teacher_username, "", "Auto-generated if blank")}
+        ${inputField("teacher_contact", "Teacher email or phone", f.teacher_contact, "", "Email preferred; phone accepted")}
+        ${inputField("teacher_phone", "Phone / WhatsApp", f.teacher_phone)}
+        ${inlineSelect("preferred_contact", "Preferred contact", [["email","Email"],["phone","Phone"],["whatsapp","WhatsApp"],["moodle","Moodle message"]], f.preferred_contact)}
+        ${inlineSelect("gender", "Gender", [["","Select"],["female","Female"],["male","Male"]], f.gender)}
+      </div>
+
+      <h3>Location and language</h3>
+      <div class="grid">
+        ${selectField("country", "Country", o.countries, f.country)}
+        ${selectField("city", "City", o.cities, f.city)}
+        <div class="field cityother${f.city === "Other" ? " show" : ""}" id="f-city_other"><label>City not listed</label><input type="text" name="city_other" value="${esc(f.city_other)}"></div>
+        ${selectField("primary_language", "Primary teaching language", o.primary_languages, f.primary_language)}
+        ${checkboxGroup("other_languages", "Other languages", o.other_languages, f.other_languages)}
+      </div>
+
+      ${institutionSection(d, f, o)}
+
+      <h3>Qualifications and teaching preferences</h3>
+      <div class="grid">
+        ${selectField("teaching_experience_range", "Teaching or training experience", o.teaching_experience_ranges, f.teaching_experience_range)}
+        ${selectField("highest_qualification", "Highest qualification", o.teacher_qualification_levels, f.highest_qualification)}
+        ${inputField("qualification_title", "Qualification title", f.qualification_title)}
+        ${inputField("awarding_institution", "Awarding institution", f.awarding_institution)}
+        ${numberField("graduation_year", "Graduation year", f.graduation_year, 1900, 2100)}
+        ${inputField("teaching_qualification", "Teaching or training qualification", f.teaching_qualification)}
+        ${selectField("preferred_teaching_format", "Preferred teaching format", o.preferred_teaching_formats, f.preferred_teaching_format)}
+        ${selectField("preferred_learner_arrangement", "Preferred learner arrangement", o.preferred_learner_arrangements, f.preferred_learner_arrangement)}
+        ${numberField("preferred_weekly_hours", "Preferred weekly hours", f.preferred_weekly_hours, 1, 60)}
+        <div class="field" id="f-available_start_date"><label>Earliest available start date</label><input type="date" name="available_start_date" value="${esc(f.available_start_date)}"></div>
+        ${selectField("technology_readiness", "Technology and internet readiness", o.technology_readiness_options, f.technology_readiness)}
+        ${selectField("professional_reference", "Professional reference available", o.professional_reference_options, f.professional_reference)}
+        ${inputField("referral_source", "How did they hear about us?", f.referral_source)}
+      </div>
+      ${textareaField("teacher_support_needs", "Accessibility or workplace support needs", f.teacher_support_needs)}
+      <div class="field" id="f-verification_consent"><label class="choice"><input type="checkbox" name="verification_consent" value="1"${String(f.verification_consent) === "1" ? " checked" : ""}> Consent to verify qualifications and professional references</label></div>
+
+      <h3>Teaching scope and services</h3>
+      <div class="grid">
+        ${radioGroup("teacher_work_models", "How do you want to teach?", o.teacher_work_models, f.teacher_work_models)}
+        ${checkboxGroup("service_modes", "Service modes", o.service_modes, f.service_modes)}
+        ${checkboxGroup("subject_areas", "Subjects you can teach", o.subject_areas, f.subject_areas)}
+        ${selectField("subject_language", "Language subject", o.subject_languages, f.subject_language, "Select language")}
+        ${textareaField("subject_other", "Other subjects / specialties", f.subject_other, "Optional unless Other is selected. Include school-specific subjects, certificates, or specialties.")}
+        ${checkboxGroup("age_groups", "Learner levels", o.age_groups, f.age_groups)}
+        ${checkboxGroup("general_levels", "Teaching levels", o.general_levels, f.general_levels)}
+        ${textareaField("workspace_preferences", "School / workspace preferences", f.workspace_preferences, "Independent workspace, school names, multiple-school availability, or internal/private restrictions")}
+        ${numberField("max_students_per_class", "Max students per class", f.max_students_per_class, 1, 20)}
+        ${numberField("max_weekly_hours", "Max weekly live hours", f.max_weekly_hours, 1, 60)}
+      </div>
+
+      <h3>Parent-facing marketplace profile</h3>
+      <div class="grid">
+        ${inlineSelect("marketplace_status", "Marketplace status", [["draft","Draft"],["review","Ready for platform review"],["published","Published"],["paused","Paused"]], f.marketplace_status)}
+        ${inlineSelect("marketplace_visible", "Parent visibility", [["","Keep hidden"],["0","Hidden"],["1","Visible to parents after approval"]], f.marketplace_visible)}
+        ${inlineSelect("vetting_status", "Platform vetting status", [["not_reviewed","Not reviewed"],["in_review","In review"],["approved","Approved"],["needs_update","Needs update"],["rejected","Rejected"]], f.vetting_status)}
+        ${textareaField("vetting_summary", "Parent-visible platform vetting summary", f.vetting_summary, "Short, parent-safe summary of platform review status")}
+      </div>
+
+      <h3>Online presence</h3>
+      <div class="grid">
+        ${inputField("online_profile_name", "Online teaching brand/profile name", f.online_profile_name, "", "Example: MasterArabic Online")}
+        ${inputField("instagram_handle", "Social media handle", f.instagram_handle, "", "@masterarabic_online")}
+        ${inputField("social_profile_url", "Public social profile URL", f.social_profile_url, "", "https://www.instagram.com/...")}
+        ${inputField("website_or_booking_url", "Website or booking link", f.website_or_booking_url, "", "https://...")}
+        ${inputField("demo_video_url", "Demo lesson or sample video link", f.demo_video_url, "", "https://...")}
+        ${textareaField("social_proof", "Social proof / reviews", f.social_proof, "Follower/community signal, testimonials, results, screenshots to review, or references")}
+      </div>
+      <div class="grid">
+        ${numberField("years_experience", "Years of experience", f.years_experience, 0, 80)}
+        ${textareaField("institution_experience", "Schools, institutions, and freelance teaching", f.institution_experience, "List schools, institutions, tutoring centers, and freelance/independent teaching experience")}
+        ${textareaField("marketplace_bio", "General profile / bio", f.marketplace_bio, "Parent-safe introduction, teaching background, and learner fit")}
+        ${textareaField("teaching_offer_summary", "Teaching offer summary", f.teaching_offer_summary, "Subjects, services, and learning support this teacher offers")}
+        ${textareaField("learner_outcomes", "Learner outcomes", f.learner_outcomes, "What learners should be able to do after lessons or a course")}
+        ${textareaField("curriculum_materials", "Curriculum and materials", f.curriculum_materials, "Books, curriculum, worksheets, slides, assessments, or custom material used")}
+        ${textareaField("marketplace_skills", "Skills", f.marketplace_skills, "Tajweed, beginner Arabic, memorization support, child engagement, etc.")}
+        ${textareaField("marketplace_experience", "Experience", f.marketplace_experience, "Years taught, student ages, settings, online teaching experience")}
+        ${textareaField("marketplace_education", "Education and qualifications", f.marketplace_education, "Formal education, ijazah, certificates, institutes, training")}
+        ${textareaField("marketplace_teaching_style", "Teaching style", f.marketplace_teaching_style, "How the teacher works with children, adults, beginners, review, practice, feedback")}
+        ${textareaField("marketplace_courses", "Subjects / services intended for marketplace", f.marketplace_courses, "Parent-safe subjects, school offerings, tutoring services, and learning support areas")}
+      </div>
+
+      <h3>Preferred weekly live-session number of sessions and hours</h3>
+      <div class="grid">
+        ${selectField("session_count", "Number of sessions", o.session_counts, f.session_count, "Select")}
+        ${selectField("timezone", "Time zone", o.timezones, f.timezone)}
+      </div>
+      ${calendar(o, f.slots)}
+      ${textareaField("availability_summary", "Availability notes", f.availability_summary, "Exact availability, restrictions, preferred days, breaks, or admin notes")}
+
+      <h3>Safety and classroom readiness</h3>
+      <div class="grid">
+        ${inlineSelect("bbb_trained", "BBB/live classroom training", [["","Select"],["1","Completed"],["0","Not completed"]], f.bbb_trained)}
+        ${inlineSelect("safeguarding_trained", "Child safety training", [["","Select"],["1","Completed"],["0","Not completed"]], f.safeguarding_trained)}
+        ${inlineSelect("recording_qa_ack", "Recording and QA policy acknowledgement", [["","Select"],["1","Acknowledged"],["0","Not acknowledged"]], f.recording_qa_ack)}
+        ${inlineSelect("status", "Teacher status", [["pending","Pending"],["active","Active"],["paused","Paused"],["inactive","Inactive"]], f.status)}
+      </div>
+      ${textareaField("admin_notes", "Admin notes", f.admin_notes, "Background checks, onboarding notes, internal restrictions, teaching strengths")}
+
+      <input type="hidden" name="teacher_requestid" value="${esc(f.teacher_requestid)}">
+      <input type="hidden" name="workspaceid" value="${esc(f.workspaceid)}">
+      <button class="btn" type="submit" id="submit-btn">${esc(d.submitlabel)}</button>`;
+  }
+
+  function render(d) {
+    $("#title").textContent = d.pagetitle;
+    $("#subtitle").textContent = d.pagesubtitle;
+    $("#paneltitle").textContent = d.paneltitle;
+
+    if (moodleOrigin) {
+      const legacyParams = new URLSearchParams(passthrough());
+      const legacyUrl = moodleOrigin + "/local/hubredirect/teacher_intake.php" + (legacyParams.toString() ? "?" + legacyParams : "");
+      $("#legacy-links").innerHTML = `<a class="btn light" href="${esc(legacyUrl)}">Open classic form</a>`;
+      $("#legacy-links").hidden = false;
+    }
+
+    if (d.loaderror) { $("#loaderror").hidden = false; $("#loaderror").textContent = d.loaderror; }
+
+    if (!d.ready) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Teacher profile table is not ready. Run the teacher intake SQL script first.";
+      return;
+    }
+    if ((d.missingprofilecolumns || []).length) {
+      $("#schema-warning").hidden = false;
+      $("#schema-warning").textContent = "Teacher profile table is missing columns needed to save updated intake fields: " + d.missingprofilecolumns.join(", ") + ". Update the teacher profile schema before saving intake changes.";
+    }
+
+    const recent = d.recentapplications || [];
+    if (recent.length) {
+      $("#recent").innerHTML = recent.map((a) => {
+        const u = new URL(location.href);
+        u.searchParams.set("teacher_requestid", a.id);
+        u.searchParams.set("requestid", a.id);
+        return `<div><strong>${esc(a.teacher_name)}</strong>${esc(a.email || a.phone || "No contact")}<br>Status: ${esc(a.status)}<br>Submitted: ${esc(when(a.timecreated))}<br><a class="btn light" style="margin-top:8px" href="${esc(u.href)}">Open teacher intake</a></div>`;
+      }).join("");
+      $("#recent-panel").hidden = false;
+    }
+
+    if (d.source && d.source.id > 0) {
+      const mc = d.missingconversion || [];
+      $("#checklist").innerHTML = `
+        <div class="check"><strong>Source application</strong>#${d.source.id}${d.source.name ? "<br>" + esc(d.source.name) : ""}</div>
+        <div class="check"><strong>Consumer</strong>${esc(d.consumer.consumername)}<br><span class="muted">${esc(d.consumer.consumerslug)}</span></div>
+        <div class="check"><strong>Required fields</strong><span class="pill ${mc.length ? "warn" : "ok"}">${mc.length ? mc.length + " remaining" : "Ready"}</span>${mc.length ? "<br><span class='muted'>" + esc(mc.slice(0, 5).join(", ")) + (mc.length > 5 ? "..." : "") + "</span>" : ""}</div>
+        <div class="check"><strong>Marketplace</strong><span class="pill ${d.willpublish ? "ok" : "warn"}">${d.willpublish ? "Will be public" : "Will stay hidden"}</span><br><span class="muted">Needs active + visible + published + approved.</span></div>
+        <div class="check"><strong>Application status</strong><span class="pill ok">Will mark converted</span><br><span class="muted">After successful save.</span></div>
+        <div class="check"><strong>Current source state</strong>${esc(d.source.status || "Unknown")}</div>
+        <div class="check"><strong>Account mode</strong>${d.isupdate ? "Update existing teacher" : "Create/link teacher account"}</div>
+        <div class="check"><strong>Next action</strong>Complete decisions below, then save intake.</div>`;
+      $("#checklist-panel").hidden = false;
+      const online = d.source.online || {};
+      if (Object.keys(online).length) {
+        $("#online").innerHTML = Object.entries(online).map(([l, v]) => `<div><strong>${esc(l)}</strong>${esc(v)}</div>`).join("");
+        $("#online-panel").hidden = false;
+      }
+    }
+
+    const form = $("#intake");
+    form.innerHTML = formHtml(d);
+    $("#form-panel").hidden = false;
+    $("#status").hidden = true;
+
+    wireDynamicSelects(d);
+    form.addEventListener("submit", submitIntake);
+  }
+
+  // Country -> city/timezone filtering, same behaviour as the page's inline JS.
+  function wireDynamicSelects(d) {
+    const o = d.options;
+    const countryCities = o.country_cities || {}, cityLabels = o.cities || {};
+    const countryTimezones = o.country_timezones || {}, timezoneLabels = o.timezones || {};
+    let initialTimezone = String(d.form.timezone || "");
+    const country = document.querySelector('select[name="country"]');
+    const city = document.querySelector('select[name="city"]');
+    const timezone = document.querySelector('select[name="timezone"]');
+    const cityOther = document.querySelector(".cityother");
+    if (!country || !city || !timezone) return;
+    const mkOpt = (value, label, selected) => {
+      const item = document.createElement("option");
+      item.value = value; item.textContent = label;
+      if (selected) item.selected = true;
+      return item;
+    };
+    function refreshCities() {
+      const selected = city.value;
+      const cities = countryCities[country.value] ? Object.keys(countryCities[country.value]) : Object.keys(cityLabels);
+      if (cities.indexOf("Other") === -1) cities.push("Other");
+      city.innerHTML = "";
+      city.appendChild(mkOpt("", "Select", selected === ""));
+      cities.forEach((cityname) => {
+        const label = (countryCities[country.value] && countryCities[country.value][cityname]) || cityLabels[cityname] || cityname;
+        city.appendChild(mkOpt(cityname, label, cityname === selected));
+      });
+      if (selected && cities.indexOf(selected) === -1) city.value = "Other";
+      if (cityOther) cityOther.classList.toggle("show", city.value === "Other");
+    }
+    function refreshTimezones() {
+      const selected = timezone.value || initialTimezone;
+      const zones = countryTimezones[country.value] ? Object.keys(countryTimezones[country.value]) : Object.keys(timezoneLabels);
+      timezone.innerHTML = "";
+      timezone.appendChild(mkOpt("", "Select", selected === ""));
+      if (selected && zones.indexOf(selected) === -1) {
+        timezone.appendChild(mkOpt(selected, timezoneLabels[selected] || selected, true));
+      }
+      zones.forEach((zone) => {
+        const label = (countryTimezones[country.value] && countryTimezones[country.value][zone]) || timezoneLabels[zone] || zone;
+        timezone.appendChild(mkOpt(zone, label, zone === selected));
+      });
+      timezone.value = selected;
+      initialTimezone = "";
+    }
+    country.addEventListener("change", () => { refreshCities(); refreshTimezones(); });
+    city.addEventListener("change", refreshCities);
+    refreshCities();
+    refreshTimezones();
+  }
+
+  function collectBody(form) {
+    const body = { do: "submit_intake" };
+    const fd = new FormData(form);
+    for (const [rawKey, value] of fd.entries()) {
+      if (rawKey.endsWith("[]")) {
+        const key = rawKey.slice(0, -2);
+        (body[key] = body[key] || []).push(String(value));
+      } else {
+        body[rawKey] = String(value);
+      }
+    }
+    return body;
+  }
+
+  async function submitIntake(ev) {
+    ev.preventDefault();
+    const form = ev.currentTarget;
+    const btn = $("#submit-btn");
+    btn.disabled = true; btn.textContent = "Saving…";
+    document.querySelectorAll(".field.err").forEach((el) => el.classList.remove("err"));
+    document.querySelectorAll(".fielderr").forEach((el) => el.remove());
+    try {
+      const r = await fetch(apiUrl(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(collectBody(form)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) {
+        if (d.fielderrors && Object.keys(d.fielderrors).length) {
+          const labels = d.fieldlabels || {};
+          $("#status").className = "status error"; $("#status").hidden = false;
+          $("#status").innerHTML = esc(d.error || "Please fix the highlighted fields below.") + "<ul>" +
+            Object.entries(d.fielderrors).map(([name, msg]) => `<li><a href="#f-${esc(name)}"><strong>${esc(labels[name] || name)}:</strong> ${esc(msg)}</a></li>`).join("") + "</ul>";
+          Object.entries(d.fielderrors).forEach(([name, msg]) => {
+            const field = document.getElementById("f-" + name);
+            if (field) {
+              field.classList.add("err");
+              const note = document.createElement("div");
+              note.className = "fielderr";
+              note.textContent = msg;
+              field.appendChild(note);
+            }
+          });
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+        throw new Error(d.error || ("HTTP " + r.status));
+      }
+      const c = d.created || {};
+      $("#created").innerHTML = `
+        <div><strong>Teacher</strong>ID ${esc(c.teacheraccountid || "")}<br>Moodle user ID: ${Number(c.teacherid) || 0}<br>Username: ${esc(c.teacherusername)}${!c.existingteacher ? "<br>Temporary password: " + esc(c.teacherpassword) : "<br>Existing Moodle account linked."}</div>
+        <div><strong>Onboarding</strong>Profile ID ${Number(c.profileid) || 0}<br>Availability rows created: ${Number(c.availabilityrows) || 0}</div>
+        ${c.workspaceid ? `<div><strong>Workspace</strong>Linked as teacher in workspace ID ${Number(c.workspaceid)}.</div>` : ""}`;
+      $("#created-panel").hidden = false;
+      $("#form-panel").hidden = true;
+      $("#checklist-panel").hidden = true;
+      $("#online-panel").hidden = true;
+      $("#status").className = "status saved"; $("#status").hidden = false;
+      $("#status").textContent = d.message || "Teacher intake completed. The teacher is now ready for scheduling and BBB assignment.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Could not save: " + e.message;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      btn.disabled = false; btn.textContent = (D && D.submitlabel) || "Create teacher intake";
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

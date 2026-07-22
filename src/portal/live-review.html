@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session review · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 96px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 3px;font-size:15px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-left:8px;vertical-align:middle}
+  .pill.ok{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.plain{background:var(--sky);color:var(--ink2)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .checklist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px}
+  .checkitem{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  .checkitem strong{display:block;font-size:18px;color:var(--blue2)}
+  .checkitem span{display:block;margin-top:2px;color:var(--muted);font-size:12px;font-weight:700}
+  ul.missing{margin:0 0 8px;padding-left:18px;color:var(--amber);font-size:13px;font-weight:700}
+  .lifeforms{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+  .inline{display:grid;grid-template-columns:1fr 110px 110px auto;gap:8px;align-items:end}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
+  input[type=text],input[type=date],input[type=time],input[type=number],select,textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  textarea{min-height:72px;resize:vertical}
+  .check{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--ink2);margin-top:10px}
+  .check input{width:auto}
+  button{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button:disabled{opacity:.55;cursor:wait}
+  button.light{background:var(--sky);color:var(--blue)}
+  button.danger{background:var(--red)}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card);margin-bottom:12px}
+  .card .meta{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .grid3{display:grid;grid-template-columns:230px 1fr 1fr;gap:14px}
+  .followup{margin-top:10px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--amber-bg)}
+  .followup h4{margin:0 0 4px;font-size:13px;color:var(--amber)}
+  .footer{position:fixed;left:0;right:0;bottom:0;background:rgba(244,247,250,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 0}
+  .footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .picker{display:flex;gap:8px;align-items:end;max-width:420px}
+  @media(max-width:960px){.grid3,.checklist,.lifeforms,.inline{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Live session review</small></div>
+  <div class="note">Token-authenticated · parallel-run of live_review.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Live session review</h1><p class="sub" id="subtitle">Attendance, participation, and parent-visible feedback for one live session.</p></div>
+  <div id="status" class="status">Loading session…</div>
+
+  <div class="panel" id="picker-panel" hidden>
+    <h2>Choose a session</h2>
+    <p class="sub" style="margin-bottom:10px">Open this page from a live-sessions roster link, or enter a session id.</p>
+    <form class="picker" id="picker-form">
+      <div style="flex:1"><label for="pick-sessionid">Session id</label><input type="number" id="pick-sessionid" min="1" required></div>
+      <button type="submit">Open review</button>
+    </form>
+  </div>
+
+  <div class="panel" id="lifecycle-panel" hidden>
+    <h2 style="margin-bottom:2px">Completion workflow <span class="pill plain" id="session-status"></span></h2>
+    <p class="sub" style="margin-bottom:12px">Complete the session only after attendance and parent-visible feedback are ready for every active student.</p>
+    <div class="checklist" id="checklist"></div>
+    <ul class="missing" id="missing" hidden></ul>
+    <div class="lifeforms">
+      <form id="reschedule-form">
+        <h3>Reschedule</h3>
+        <div class="inline">
+          <div><label for="reschedule_date">New date</label><input type="date" id="reschedule_date"></div>
+          <div><label for="reschedule_time">Time</label><input type="time" id="reschedule_time"></div>
+          <div><label for="reschedule_duration">Minutes</label><input type="number" id="reschedule_duration" min="15" step="15" value="60"></div>
+          <button type="submit" class="light">Reschedule</button>
+        </div>
+      </form>
+      <form id="cancel-form">
+        <h3>Cancel session</h3>
+        <label for="cancellation_reason">Cancellation reason</label>
+        <input type="text" id="cancellation_reason" placeholder="Reason shown in audit history">
+        <button type="submit" class="danger" style="margin-top:10px">Cancel session</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="roster"></div>
+</main>
+
+<div class="footer" id="footer" hidden><div class="wrap">
+  <label class="check" style="margin:0"><input type="checkbox" id="mark_completed"> Mark session completed</label>
+  <button id="save-btn">Save attendance and notes</button>
+</div></div>
+
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const sessionid = Number(qs.get("sessionid") || 0);
+  const workspaceid = Number(qs.get("workspaceid") || 0);
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString(undefined, { weekday:"short", day:"numeric", month:"short", hour:"numeric", minute:"2-digit" }) : "";
+  const pad = (n) => String(n).padStart(2, "0");
+  const dateVal = (t) => { const d = new Date(t * 1000); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); };
+  const timeVal = (t) => { const d = new Date(t * 1000); return pad(d.getHours()) + ":" + pad(d.getMinutes()); };
+  const setStatus = (cls, text) => { const el = $("#status"); el.className = "status" + (cls ? " " + cls : ""); el.hidden = false; el.textContent = text; };
+
+  if (!endpoint || !token) { setStatus("error", "Missing endpoint/token — open via the Moodle portal launch link."); return; }
+
+  $("#picker-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const u = new URL(location.href);
+    u.searchParams.set("sessionid", $("#pick-sessionid").value);
+    location.href = u.href;
+  });
+
+  if (!sessionid) {
+    $("#status").hidden = true;
+    $("#picker-panel").hidden = false;
+    return;
+  }
+
+  const params = (extra) => new URLSearchParams(Object.assign({ report: "live-review", token }, extra || {}));
+  const getParams = { sessionid: String(sessionid) };
+  if (workspaceid > 0) getParams.workspaceid = String(workspaceid);
+  let data = null;
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params(getParams));
+      if (!r.ok) {
+        let msg = "HTTP " + r.status;
+        try { const e = await r.json(); if (e && e.error) msg = e.error; } catch (_) {}
+        throw new Error(msg);
+      }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render(d);
+    } catch (e) { setStatus("error", "Could not load: " + e.message); }
+  }
+
+  async function post(body, btn, busyLabel, idleLabel) {
+    if (btn) { btn.disabled = true; btn.textContent = busyLabel; }
+    try {
+      const r = await fetch(endpoint + "?" + params(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(Object.assign({ sessionid, workspaceid: workspaceid > 0 ? workspaceid : undefined }, body)),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      setStatus("saved", d.message || "Saved.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      setStatus("error", "Could not save: " + e.message);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = idleLabel; }
+    }
+  }
+
+  const options = (map, selected) => Object.entries(map || {}).map(([v, l]) =>
+    `<option value="${esc(v)}"${v === selected ? " selected" : ""}>${esc(l)}</option>`).join("");
+
+  const statusPillClass = (s) => s === "completed" ? "ok" : (s === "cancelled" ? "bad" : (s === "awaiting_review" ? "warn" : "plain"));
+
+  const studentCard = (r, d) => {
+    const p = "s" + r.studentid + "_";
+    return `<div class="card" data-student-card data-studentid="${r.studentid}">
+      <h3>${esc(r.name)} <span class="pill ${r.attendance_status ? (/absent/.test(r.attendance_status) ? "bad" : (/late|technical/.test(r.attendance_status) ? "warn" : "ok")) : "plain"}">${esc(r.attendance_status ? r.attendance_status.replace(/_/g, " ") : "not marked")}</span></h3>
+      <div class="meta">Student #${r.studentid}${r.join_time ? " · Joined " + esc(when(r.join_time)) : ""}</div>
+      <div class="grid3">
+        <div>
+          <label for="${p}att">Attendance</label>
+          <select id="${p}att" data-f="attendance_status">${options(d.attendance_options, r.attendance_status || "absent")}</select>
+          <label for="${p}part">Participation</label>
+          <input type="text" id="${p}part" data-f="participation_status" value="${esc(r.participation_status)}" placeholder="joined, read aloud, observed">
+          <label class="check"><input type="checkbox" data-f="technical_issue"${r.technical_issue ? " checked" : ""}> Technical issue</label>
+          <label class="check"><input type="checkbox" data-f="visible_to_parent"${r.visible_to_parent ? " checked" : ""}> Parent summary visible</label>
+        </div>
+        <div>
+          <label for="${p}str">Strengths</label>
+          <textarea id="${p}str" data-f="strengths">${esc(r.strengths)}</textarea>
+          <label for="${p}np">Needs practice</label>
+          <textarea id="${p}np" data-f="needs_practice">${esc(r.needs_practice)}</textarea>
+          <label for="${p}hw">Homework</label>
+          <textarea id="${p}hw" data-f="homework">${esc(r.homework)}</textarea>
+          ${d.homeworkfieldsready ? `
+            <label for="${p}hwu">Homework unit</label>
+            <input type="text" id="${p}hwu" data-f="homework_unitid" value="${esc(r.homework_unitid)}" placeholder="alphabet_listen">
+            <input type="hidden" data-f="homework_lessonid" value="${esc(r.homework_lessonid)}">
+            <label for="${p}hwd">Homework due date</label>
+            <input type="date" id="${p}hwd" data-f="homework_due_date" value="${r.homework_due_date ? esc(dateVal(r.homework_due_date)) : ""}">
+            <label for="${p}hwp">Priority</label>
+            <select id="${p}hwp" data-f="homework_priority">${options(d.priority_options, r.homework_priority || "normal")}</select>` : ""}
+        </div>
+        <div>
+          <label for="${p}ps">Parent summary</label>
+          <textarea id="${p}ps" data-f="parent_summary">${esc(r.parent_summary)}</textarea>
+          <label for="${p}pn">Private teacher note (not visible to parents)</label>
+          <textarea id="${p}pn" data-f="private_note">${esc(r.private_note)}</textarea>
+          <label for="${p}an">Attendance notes</label>
+          <textarea id="${p}an" data-f="attendance_notes">${esc(r.attendance_notes)}</textarea>
+          ${d.followupfieldsready ? `
+            <div class="followup">
+              <h4>Parent follow-up</h4>
+              <label for="${p}fs">Follow-up status</label>
+              <select id="${p}fs" data-f="followup_status">${options(d.followup_options, r.followup_status || "none")}</select>
+              <label for="${p}fm">Parent-safe follow-up message</label>
+              <textarea id="${p}fm" data-f="followup_message">${esc(r.followup_message)}</textarea>
+              <label class="check"><input type="checkbox" data-f="followup_resolved"${r.followup_resolved ? " checked" : ""}> Follow-up resolved</label>
+            </div>` : ""}
+        </div>
+      </div>
+    </div>`;
+  };
+
+  function render(d) {
+    const s = d.session;
+    $("#title").textContent = "Live session review — " + (s.title || ("Session #" + s.id));
+    $("#subtitle").textContent = when(s.scheduled_start) + " · " + (d.teachername || "") +
+      " · Target: " + ((s.lessonid || "") + " / " + (s.unitid || "")).replace(/^\s*\/\s*|\s*\/\s*$/g, "") || "not set";
+    const pill = $("#session-status");
+    pill.className = "pill " + statusPillClass(s.status);
+    pill.textContent = (s.status || "").replace(/_/g, " ");
+    const c = d.completion || {};
+    $("#checklist").innerHTML =
+      `<div class="checkitem"><strong>${Number(c.active) || 0}</strong><span>active students</span></div>` +
+      `<div class="checkitem"><strong>${Number(c.attendance) || 0}/${Number(c.active) || 0}</strong><span>attendance marked</span></div>` +
+      `<div class="checkitem"><strong>${Number(c.summaries) || 0}/${Number(c.active) || 0}</strong><span>parent summaries ready</span></div>`;
+    const missing = (c.missing || []).slice(0, 8);
+    $("#missing").hidden = c.complete || !missing.length;
+    $("#missing").innerHTML = missing.map((m) => `<li>${esc(m)}</li>`).join("");
+    $("#reschedule_date").value = dateVal(s.scheduled_start);
+    $("#reschedule_time").value = timeVal(s.scheduled_start);
+    $("#reschedule_duration").value = Math.max(15, Math.ceil((s.scheduled_end - s.scheduled_start) / 60));
+    $("#cancellation_reason").value = s.cancellation_reason || "";
+    $("#lifecycle-panel").hidden = false;
+    $("#roster").innerHTML = (d.roster || []).map((r) => studentCard(r, d)).join("") ||
+      `<div class="panel muted">No active students are assigned to this session.</div>`;
+    $("#mark_completed").checked = s.status === "completed";
+    $("#footer").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  const fieldValue = (el) => el.type === "checkbox" ? (el.checked ? 1 : 0) : el.value;
+
+  $("#save-btn").addEventListener("click", () => {
+    const students = Array.from(document.querySelectorAll("[data-student-card]")).map((card) => {
+      const row = { studentid: Number(card.dataset.studentid) };
+      card.querySelectorAll("[data-f]").forEach((el) => { row[el.dataset.f] = fieldValue(el); });
+      return row;
+    });
+    post({ do: "save_review", students, mark_completed: $("#mark_completed").checked ? 1 : 0 },
+      $("#save-btn"), "Saving…", "Save attendance and notes");
+  });
+
+  $("#reschedule-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post({
+      do: "reschedule_session",
+      reschedule_date: $("#reschedule_date").value,
+      reschedule_time: $("#reschedule_time").value,
+      reschedule_duration: Number($("#reschedule_duration").value) || 60,
+    }, ev.currentTarget.querySelector("button"), "Saving…", "Reschedule");
+  });
+
+  $("#cancel-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!window.confirm("Cancel this live session? This is recorded in the audit history.")) return;
+    post({ do: "cancel_session", cancellation_reason: $("#cancellation_reason").value },
+      ev.currentTarget.querySelector("button"), "Cancelling…", "Cancel session");
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

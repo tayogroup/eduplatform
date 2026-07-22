@@ -24,7 +24,7 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-6.html'],
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard-7.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],
@@ -38,6 +38,14 @@ $reports = [
     'course-offerings' => ['pqpl_any_authenticated', 'course-offerings.html'],
     'parent-trust' => ['pqpl_any_authenticated', 'parent-trust.html'],
     'live-sessions' => ['pqpl_any_authenticated', 'live-sessions.html'],
+    // Batch wave 2. live-review's real gate is per-session (handler enforces
+    // owner/workspace/ops with the legacy security audit); student-intake's is
+    // ops-or-independent-teacher (handler enforces with the legacy messages).
+    'live-review' => ['pqpl_any_authenticated', 'live-review.html'],
+    'student-dashboard' => ['pqpl_any_authenticated', 'student-dashboard.html'],
+    'student-intake' => ['pqpl_any_authenticated', 'student-intake.html'],
+    'teacher-intake' => ['pqh_can_manage_academy_operations', 'teacher-intake.html'],
+    'teacher-intake-requests' => ['pqh_can_manage_academy_operations', 'teacher-intake-requests.html'],
 ];
 if (!isset($reports[$report])) {
     throw new moodle_exception('invalidparameter', 'debug', '', null, 'Unknown portal report: ' . $report);
@@ -58,4 +66,17 @@ if ($base === '') {
 }
 $endpoint = $CFG->wwwroot . '/local/prequran/portal_data.php';
 
-redirect($base . '/' . $page . '?endpoint=' . urlencode($endpoint) . '&token=' . urlencode($token));
+$redirecturl = $base . '/' . $page . '?endpoint=' . urlencode($endpoint) . '&token=' . urlencode($token);
+// Forward deep-link context so "Review"-style links land on a preselected
+// record (e.g. live_sessions roster -> live-review with sessionid set).
+foreach (['sessionid', 'childid', 'workspaceid', 'threadid', 'requestid', 'teacher_requestid', 'existing_teacherid'] as $p) {
+    $v = optional_param($p, 0, PARAM_INT);
+    if ($v > 0) {
+        $redirecturl .= '&' . $p . '=' . $v;
+    }
+}
+$consumer = optional_param('consumer', '', PARAM_ALPHANUMEXT);
+if ($consumer !== '') {
+    $redirecturl .= '&consumer=' . urlencode($consumer);
+}
+redirect($redirecturl);

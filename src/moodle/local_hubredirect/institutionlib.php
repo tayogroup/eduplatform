@@ -367,7 +367,7 @@ function pqhi_workspace_type_for_consumer(string $consumertype): string {
 function pqhi_default_routes_for_consumer(string $consumertype): array {
     return match ($consumertype) {
         'academy_consumer' => [
-            'public' => '/local/ehelhome/index.php',
+            'public' => '/local/hubredirect/platform_landing.php',
             'dashboard' => '/local/hubredirect/dashboard.php',
             'login' => '/local/hubredirect/consumer_login.php',
         ],

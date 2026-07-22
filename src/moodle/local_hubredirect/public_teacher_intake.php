@@ -924,7 +924,7 @@ body.pqh-public-teacher-intake-page header,body.pqh-public-teacher-intake-page f
 body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #page-content,body.pqh-public-teacher-intake-page #region-main,body.pqh-public-teacher-intake-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
 .pqpti-shell{min-height:100vh;padding:0 0 56px;background:linear-gradient(180deg,#f6fbff 0,#fffaf0 100%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
 .pqpti-wrap{max-width:1120px;margin:0 auto;padding:18px}
-.pqpti-hero{min-height:300px;padding:46px 34px;margin-bottom:18px;border-radius:8px;background:linear-gradient(90deg,rgba(9,37,32,.94),rgba(16,74,60,.72)),url("/local/ehelhome/pix/landing-welcome.jpg") center/cover no-repeat;color:#fff}
+.pqpti-hero{min-height:300px;padding:46px 34px;margin-bottom:18px;border-radius:8px;background:linear-gradient(90deg,rgba(9,37,32,.94),rgba(16,74,60,.72)),url("/local/hubredirect/pix/landing-welcome.jpg") center/cover no-repeat;color:#fff}
 .pqpti-brand{display:inline-flex;margin-bottom:13px;color:#ffd88c;font-size:13px;font-weight:950;text-transform:uppercase}
 .pqpti-title{max-width:820px;margin:0;font-size:44px;line-height:1.05;font-weight:950;color:#fff;letter-spacing:0}
 .pqpti-sub{max-width:780px;margin:13px 0 0;color:rgba(255,255,255,.9);font-size:17px;font-weight:800;line-height:1.58}

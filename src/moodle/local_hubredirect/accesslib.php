@@ -464,13 +464,13 @@ function pqh_consumer_feature_enabled(?stdClass $consumer, string $feature, bool
     return $default;
 }
 
-function pqh_consumer_hero_image_url(?stdClass $consumer = null, string $fallback = '/local/ehelhome/pix/landing-welcome.jpg'): string {
+function pqh_consumer_hero_image_url(?stdClass $consumer = null, string $fallback = '/local/hubredirect/pix/landing-welcome.jpg'): string {
     $copy = pqh_consumer_copy($consumer);
     $hero = pqh_clean_brand_url((string)($copy['hero_image_url'] ?? ''));
     if ($hero !== '') {
         return $hero;
     }
-    return pqh_clean_brand_url($fallback) ?: '/local/ehelhome/pix/landing-welcome.jpg';
+    return pqh_clean_brand_url($fallback) ?: '/local/hubredirect/pix/landing-welcome.jpg';
 }
 
 function pqh_consumer_brand_initials(?stdClass $consumer = null, string $fallback = 'W'): string {

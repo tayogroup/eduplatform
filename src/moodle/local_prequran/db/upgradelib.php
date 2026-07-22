@@ -1240,7 +1240,7 @@ function xmldb_local_prequran_ensure_consumer_schema(): void {
             'supportemail' => 'support@quraan.academy',
             'emailfromname' => 'Quraan Academy',
             'emailreplyto' => 'support@quraan.academy',
-            'defaultpublicpath' => '/local/ehelhome/index.php',
+            'defaultpublicpath' => '/local/hubredirect/platform_landing.php',
             'defaultdashboardpath' => '/local/hubredirect/dashboard.php',
         ]
     );

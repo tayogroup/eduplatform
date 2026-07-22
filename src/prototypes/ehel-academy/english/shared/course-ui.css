@@ -109,11 +109,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .activity-response { width: 100%; min-height: 92px !important; margin: 10px 0; }
 .audio-pending { display: inline-flex; align-items: center; gap: 6px; margin: 8px 0 12px; color: var(--muted); font-size: 12px; font-weight: 750; }
 #section-nav { padding: 14px 0; display: grid; gap: 3px; }
-.nav-button, .teacher-switch { width: 100%; min-height: 44px; border: 0; border-radius: 6px; padding: 9px 11px; background: transparent; color: #cbdde7; display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 10px; text-align: left; cursor: pointer; font-size: 13px; line-height: 1.25; }
+.nav-button, .teacher-switch { width: 100%; min-height: 44px; border: 0; border-radius: 6px; padding: 9px 11px; background: transparent; color: #cbdde7; display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 10px; text-align: left; cursor: pointer; font-size: 14px; line-height: 1.25; }
 .nav-button:hover, .nav-button.active, .teacher-switch:hover, .teacher-switch.active { color: white; background: rgba(255,255,255,.1); }
 .nav-button.active { box-shadow: inset 3px 0 var(--gold); }
 .nav-button svg, .teacher-switch svg { width: 18px; }
-.nav-button > span:not(.nav-state) { font-size: 13px; }
+.nav-button > span:not(.nav-state) { font-size: 14px; }
 .nav-state { width: 18px; height: 18px; border: 1px solid #7694a6; border-radius: 50%; display: grid; place-items: center; font-size: 11px; }
 .nav-state.done { color: #0a392d; background: #6ee7b7; border-color: #6ee7b7; }
 .teacher-switch { margin-top: 8px; border-top: 1px solid rgba(255,255,255,.14); border-radius: 0; padding-top: 18px; grid-template-columns: 22px 1fr; }
@@ -566,7 +566,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .course-context, .teacher-switch { display: none; }
   #section-nav { display: flex; overflow-x: auto; padding: 0; gap: 1px; }
   .nav-button { min-width: 62px; min-height: 55px; }
-  .nav-button > span:not(.nav-state) { display: block; max-width: 58px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 9px; text-align: center; }
+  .nav-button > span:not(.nav-state) { display: block; max-width: 58px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; text-align: center; }
   .nav-button { grid-template-rows: 22px 16px; gap: 2px; }
   .content { padding: 22px 14px 94px; }
   .page-header { display: block; }

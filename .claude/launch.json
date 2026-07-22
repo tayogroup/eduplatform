@@ -12,6 +12,13 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview:bunny:production"],
       "port": 4173
+    },
+    {
+      "name": "src-preview",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["tools/serve-src-preview.js"],
+      "port": 4287,
+      "autoPort": true
     }
   ]
 }

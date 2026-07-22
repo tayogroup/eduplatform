@@ -95,7 +95,7 @@ export function createCourseApp(config) {
     saveGradeProgress();
     if (message) toast(message);
   };
-  const unitSectionIds = () => sections.map(([id]) => id).filter((id) => !nonCountable.includes(id));
+  const unitSectionIds = () => (config.visibleSections ? config.visibleSections() : sections).map(([id]) => id).filter((id) => !nonCountable.includes(id));
 
   const escapeHtml = (v = "") => sharedEscapeHtml(v);
   const icon = (name, label = "") => sharedIcon(name, label);
@@ -269,35 +269,42 @@ export function createCourseApp(config) {
     renderNav();
     if (message) toast(message);
   }
+  // navSections() lets a subject vary the nav list at runtime (english gates
+  // `games` on a loaded gamePack and appends a unit-10-only `final-quiz`).
+  const navSections = () => (config.visibleSections ? config.visibleSections() : sections);
   function updateProgress() {
     const countable = unitSectionIds();
     const done = countable.filter((id) => progress.completed.includes(id)).length;
     const value = countable.length ? Math.round(done / countable.length * 100) : 0;
     const valueEl = $("#progress-value"); if (valueEl) valueEl.textContent = `${value}%`;
     const fill = $("#progress-fill"); if (fill) fill.style.width = `${value}%`;
-    const track = $(".progress-track"); if (track) track.setAttribute("aria-valuenow", value);
+    const track = $(".progress-track"); if (track) { track.setAttribute("aria-valuenow", value); track.setAttribute("aria-valuetext", `${value} percent of this unit complete`); }
     if (value >= 100 && !unitCompletedSent) { unitCompletedSent = true; emitProgress({ type: "unit.completed", unit: PROGRESS_UNIT, sectionsDone: done, total: countable.length }); }
   }
   const isSectionDone = config.isSectionDone || ((id) => (gradeSections.includes(id) ? gradeProgress.completed.includes(id) : progress.completed.includes(id)));
   function renderNav() {
-    $("#section-nav").innerHTML = sectionNavigation(sections.map(([id, sectionIcon, label]) => ({ id, iconName: sectionIcon, label, active: route === id, done: isSectionDone(id) })));
+    $("#section-nav").innerHTML = sectionNavigation(navSections().map(([id, sectionIcon, label]) => ({ id, iconName: sectionIcon, label, active: route === id, done: isSectionDone(id) })));
     $$('[data-route]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.route)));
     const teacherSwitch = $("#teacher-switch");
     if (teacherSwitch) {
       teacherSwitch.classList.toggle("active", route === "teacher");
       if (!teacherSwitch.dataset.bound) { teacherSwitch.dataset.bound = "true"; teacherSwitch.addEventListener("click", () => navigate("teacher")); }
     }
+    if (config.onNavRendered) config.onNavRendered();
   }
   function navigate(next) {
+    if (config.onNavigate) config.onNavigate();
     stopVoice(); route = next; location.hash = next;
     renderNav(); renderRoute();
-    $("#content").focus({ preventScroll: true });
+    $("#content")?.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   function renderRoute() {
+    if (config.onBeforeRender) config.onBeforeRender();
     $("#app").innerHTML = "";
     (config.renderers[route] || config.renderers.overview)();
-    bindVoiceControls();
+    if (!config.disableShellVoice) bindVoiceControls();
+    if (config.onAfterRender) config.onAfterRender();
   }
 
   // --- ctx: the surface the subject's renderers close over ------------------
@@ -305,7 +312,7 @@ export function createCourseApp(config) {
     $, $$, escapeHtml, icon, voiceButton, pageHeader, toast,
     complete, completeGradeSection, saveProgress, saveGradeProgress,
     navigate, emitProgress, bindVoiceControls, updateVoiceUI, renderNav, renderRoute,
-    unitSectionIds, stageNumber, unitNumber, params, dataRootUrl,
+    unitSectionIds, updateProgress, stageNumber, unitNumber, params, dataRootUrl,
     STORAGE_KEY, STAGE_STORAGE_KEY, PROGRESS_UNIT,
     progress, gradeProgress,
     manifest: undefined, course: undefined, gradeCapstone: undefined,
@@ -334,15 +341,19 @@ export function createCourseApp(config) {
     const next = location.hash.slice(1);
     if (next && next !== route) { route = next; renderNav(); renderRoute(); }
   });
-  const voiceToggle = $("#voice-toggle");
-  if (voiceToggle) voiceToggle.addEventListener("click", () => {
-    voiceEnabled = !voiceEnabled;
-    localStorage.setItem(`${STORAGE_KEY}-voice-enabled`, String(voiceEnabled));
-    if (!voiceEnabled) stopVoice();
+  // Subjects with their own audio engine (english: file-based reading + TTS/STT)
+  // opt out of the shell voice UI entirely via config.disableShellVoice.
+  if (!config.disableShellVoice) {
+    const voiceToggle = $("#voice-toggle");
+    if (voiceToggle) voiceToggle.addEventListener("click", () => {
+      voiceEnabled = !voiceEnabled;
+      localStorage.setItem(`${STORAGE_KEY}-voice-enabled`, String(voiceEnabled));
+      if (!voiceEnabled) stopVoice();
+      updateVoiceUI();
+      toast(voiceEnabled ? "Voice Guide is on." : "Voice Guide is off.");
+    });
     updateVoiceUI();
-    toast(voiceEnabled ? "Voice Guide is on." : "Voice Guide is off.");
-  });
-  updateVoiceUI();
+  }
   init();
 
   return ctx;

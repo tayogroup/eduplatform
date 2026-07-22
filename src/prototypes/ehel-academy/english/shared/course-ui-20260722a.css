@@ -1,0 +1,13 @@
+/* Local-dev alias for the dated shared-css snapshot.
+ *
+ * Math/science import the DATED filename because the Bunny pull zone ignores
+ * query strings (?v= busting never worked) — a new filename is the only
+ * reliable cache-bust. On the CDN, app/english/shared/course-ui-20260722a.css
+ * is a FULL SNAPSHOT of course-ui.css uploaded at release time; locally this
+ * alias keeps dev servers tracking the live file.
+ *
+ * When shared styles change again: mint a new dated alias like this one,
+ * point mathematics/science course-ui.css imports at it, upload the full
+ * course-ui.css content to the new dated CDN path, and ship a new shell vN.
+ */
+@import url("./course-ui.css");

@@ -1,0 +1,7 @@
+/* Local-dev alias for the dated shared-css snapshot (see course-ui-20260722a.css
+ * for the full explanation: the Bunny pull zone ignores query strings, so
+ * math/science import a dated FILENAME; on the CDN this path holds a full
+ * snapshot of course-ui.css uploaded at release time, while locally this alias
+ * keeps dev servers tracking the live file).
+ * This revision adds focus mode (full-screen section content on nav clicks). */
+@import url("./course-ui.css");

@@ -297,9 +297,28 @@ export function createCourseApp(config) {
     }
     if (config.onNavRendered) config.onNavRendered();
   }
+  // --- focus mode: a nav click shows the section content full-screen --------
+  // (topbar + sidebar hidden via body.focus-mode; the floating Menu button or
+  // Escape restores the navigation without changing the route).
+  function exitFocusMode() { document.body.classList.remove("focus-mode"); }
+  function enterFocusMode() {
+    if (!document.getElementById("focus-exit")) {
+      const exitButton = document.createElement("button");
+      exitButton.id = "focus-exit";
+      exitButton.className = "focus-exit";
+      exitButton.type = "button";
+      exitButton.setAttribute("aria-label", "Show the menu and unit navigation");
+      exitButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span>';
+      exitButton.addEventListener("click", exitFocusMode);
+      document.body.appendChild(exitButton);
+      document.addEventListener("keydown", (event) => { if (event.key === "Escape") exitFocusMode(); });
+    }
+    document.body.classList.add("focus-mode");
+  }
   function navigate(next) {
     if (config.onNavigate) config.onNavigate();
     stopVoice(); route = next; location.hash = next;
+    enterFocusMode();
     renderNav(); renderRoute();
     $("#content")?.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: "smooth" });

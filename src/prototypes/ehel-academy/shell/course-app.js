@@ -300,7 +300,10 @@ export function createCourseApp(config) {
   // --- focus mode: a nav click shows the section content full-screen --------
   // (topbar + sidebar hidden via body.focus-mode; the floating Menu button or
   // Escape restores the navigation without changing the route).
-  function exitFocusMode() { document.body.classList.remove("focus-mode"); }
+  function exitFocusMode() {
+    document.body.classList.remove("focus-mode");
+    if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+  }
   function enterFocusMode() {
     if (!document.getElementById("focus-exit")) {
       const exitButton = document.createElement("button");
@@ -312,8 +315,15 @@ export function createCourseApp(config) {
       exitButton.addEventListener("click", exitFocusMode);
       document.body.appendChild(exitButton);
       document.addEventListener("keydown", (event) => { if (event.key === "Escape") exitFocusMode(); });
+      // Leaving browser fullscreen (Esc, browser UI) restores the navigation
+      // too, so the two states never drift apart.
+      document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) document.body.classList.remove("focus-mode"); });
     }
     document.body.classList.add("focus-mode");
+    // True fullscreen: the nav click is a user gesture, so the request is
+    // allowed. Browsers that refuse (e.g. iPhone Safari) keep the CSS-only
+    // full-viewport mode — the catch is deliberate.
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
   }
   function navigate(next) {
     if (config.onNavigate) config.onNavigate();

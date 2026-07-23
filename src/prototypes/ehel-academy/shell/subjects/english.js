@@ -967,7 +967,7 @@ function playAudio(source, { rate = AI_NARRATION_RATE, start = 0, end = null, bu
     });
   };
   if (player.currentSrc !== absoluteSource) {
-    player.src = source;
+    player.src = absoluteSource; // rebased media-tier URL; raw `source` 404s on the CDN
     player.addEventListener("loadedmetadata", begin, { once: true });
     player.load();
   } else {

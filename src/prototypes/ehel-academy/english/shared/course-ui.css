@@ -128,8 +128,14 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .gc-pattern { font: 900 46px/1.1 inherit; color: #12263a; letter-spacing: .5px; }
 .gc-lead { margin: 0; font-size: 19px; line-height: 1.5; color: #33465e; font-weight: 700; }
 .gc-emoji { font-size: 26px; line-height: 1; }
+.gc-title { margin: 0; font-size: 21px; color: #12263a; }
+.gc-inner .grammar-visual { margin: 0; max-width: 460px; }
+.gc-source { color: #8595a6; font-size: 12px; }
 .gc-note { margin: 0; font-size: 15px; line-height: 1.5; color: #52627a; max-width: 520px; }
-.gc-try { background: #e8f1fa; color: #17324d; padding: 10px 14px; border-radius: 10px; font-weight: 700; }
+.gc-mistake { color: #b3392c; }
+.gc-try { background: #e8f1fa; color: #17324d; padding: 10px 14px; border-radius: 10px; font-weight: 700; margin-top: 8px; }
+.gc-practice { max-width: 520px; }
+.gc-practice summary { cursor: pointer; font-weight: 800; color: #2a6cb0; font-size: 14px; }
 .gc-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 .gc-btn { display: inline-flex; align-items: center; gap: 9px; font: 800 18px/1 inherit; padding: 15px 26px; border-radius: 999px; border: none; cursor: pointer; background: #2a6cb0; color: #fff; box-shadow: 0 6px 16px #17324d33; transition: transform .16s, box-shadow .16s; }
 .gc-btn:hover { transform: translateY(-2px); box-shadow: 0 9px 20px #17324d40; }

@@ -1240,22 +1240,28 @@ const GC_EMOJI = ["🔤", "👂", "🧩", "🗣️", "👀", "⭐", "🌈", "�
 function renderGrammarCarousel() {
   const lessons = course.grammar;
   const esc = escapeHtml;
+  // Every field the grid workshop shows is preserved — only the layout changes:
+  // title, the S/V/O diagram, explanation, the rule (ruleAndExamples), the
+  // common-mistake teacher note, the memory tip, the practice, audio + source.
   const slides = lessons.map((lesson, i) => {
     const emoji = GC_EMOJI[i % GC_EMOJI.length];
-    const pattern = lesson.ruleAndExamples || lesson.title;
     return `<section class="gc-slide gc-v${i % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Pattern ${lesson.sequence} of ${lessons.length} · ${esc(lesson.practiceType)}</span>
-      <div class="gc-pattern" lang="en">${esc(pattern)}</div>
+      <h3 class="gc-title">${esc(lesson.title)}</h3>
+      ${grammarDiagram(lesson.title, lesson.explanation)}
       <p class="gc-lead"><span class="gc-emoji" aria-hidden="true">${emoji}</span> ${esc(lesson.explanation)}</p>
+      ${lesson.ruleAndExamples ? `<div class="gc-pattern" lang="en">${esc(lesson.ruleAndExamples)}</div>` : ""}
       <div class="gc-actions">
         ${lesson.audio?.available
           ? `<button class="gc-btn play" type="button" data-grammar-audio="${esc(lesson.grammarId)}" data-rate="${AI_NARRATION_RATE}">${icon("volume-2")} Hear it</button>
              <button class="gc-btn ghost" type="button" data-grammar-audio="${esc(lesson.grammarId)}" data-rate="${AI_NARRATION_RATE}">${icon("rotate-ccw")} Again</button>`
-          : `<span class="audio-pending">${icon("clock-3")} Audio pending</span>`}
+          : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}
       </div>
-      ${lesson.memoryTip ? `<p class="gc-note"><strong>Remember:</strong> ${esc(lesson.memoryTip)}</p>` : ""}
-      ${lesson.practice ? `<p class="gc-note gc-try"><strong>Your turn:</strong> ${esc(lesson.practice)}</p>` : ""}
-      ${i === lessons.length - 1 ? `<button class="gc-btn done" id="grammar-done" type="button">${icon("check")} I practised them all</button>` : ""}
+      ${lesson.audio?.available ? `<small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : ""}
+      ${lesson.commonMistake ? `<p class="gc-note gc-mistake">${esc(lesson.commonMistake)}</p>` : ""}
+      ${lesson.memoryTip ? `<p class="gc-note"><strong>Memory tip:</strong> ${esc(lesson.memoryTip)}</p>` : ""}
+      ${lesson.practice ? `<details class="gc-practice"><summary>Show practice</summary><p class="gc-note gc-try">${esc(lesson.practice)}</p></details>` : ""}
+      ${i === lessons.length - 1 ? `<button class="gc-btn done" id="grammar-done" type="button">${icon("check")} I practised all six lessons</button>` : ""}
     </div></section>`;
   }).join("");
 

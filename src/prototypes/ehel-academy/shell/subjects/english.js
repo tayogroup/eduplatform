@@ -1277,6 +1277,11 @@ function renderGrammarCarousel() {
       <div class="gc-dots">${lessons.map((_, i) => `<button class="gc-dot" type="button" data-dot="${i}" aria-label="Pattern ${i + 1} of ${count}"></button>`).join("")}</div>
     </div>`;
 
+  // Full-bleed: the carousel fills the whole viewport (paired with focus mode,
+  // which already hides the topbar/sidebar and requests browser fullscreen on
+  // the nav click). Cleared in onBeforeRender when leaving grammar.
+  document.body.classList.add("gc-full");
+
   const track = $(".gc-track");
   const dots = $$("[data-dot]");
   const prevArrow = $(".gc-arrow.prev");
@@ -2408,7 +2413,7 @@ const config = {
   visibleSections: () => visibleSections().map(([id, ic, lb]) => (id === "lecture" && unitNumber === 10 ? [id, ic, "Capstone launch"] : [id, ic, lb])),
   isSectionDone: (id) => (id === "final-quiz" ? finalQuizProgress.completed : progress.completed.includes(id)),
   onNavigate: () => stopAudio(),
-  onBeforeRender: () => { route = shellCtx.route; stopAudio(); $("#app").setAttribute("aria-busy", "true"); },
+  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
   onNavRendered: () => icons(),
   renderers: {

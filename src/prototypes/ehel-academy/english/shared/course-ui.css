@@ -152,6 +152,18 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .gc-dots { display: flex; gap: 9px; justify-content: center; margin-top: 18px; }
 .gc-dot { width: 13px; height: 13px; border-radius: 50%; border: none; background: #cdd8e8; cursor: pointer; padding: 0; transition: transform .16s, background .16s; }
 .gc-dot.active { background: #2a6cb0; transform: scale(1.35); }
+/* Grammar full-bleed: with focus mode already hiding the topbar/sidebar, the
+   carousel fills the entire viewport — nothing else on the page. Scoped to
+   .focus-mode so the Menu button (which drops focus mode) restores the normal
+   padded layout even before the next render clears .gc-full. */
+body.focus-mode.gc-full .content { padding: 0; }
+body.focus-mode.gc-full #app { max-width: none; margin: 0; }
+body.focus-mode.gc-full .gc-wrap { max-width: none; }
+body.focus-mode.gc-full .gc-top { display: none; }
+body.focus-mode.gc-full .gc-carousel { height: 100vh; }
+body.focus-mode.gc-full .gc-viewport { border-radius: 0; height: 100vh; box-shadow: none; }
+body.focus-mode.gc-full .gc-slide { min-height: 100vh; }
+body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 16px; margin: 0; z-index: 55; }
 @media (max-width: 720px) {
   .gc-arrow { width: 46px; height: 46px; }
   .gc-pattern { font-size: 34px; }

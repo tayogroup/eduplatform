@@ -25,7 +25,10 @@ const RULES = [
   ["conjunction", /conjunction|connect|linking word|because|although|however|\band\b.*\bbut\b/i],
   ["adjective", /adjective|describing word|adverb|-ly\b/i],
   ["preposition", /preposition|\bin\b.*\bon\b.*\bat\b|position word/i],
-  ["modal", /modal|\bcan\b|could|should|must|might|\bmay\b|ought/i],
+  // NB: a bare "can" is NOT a modal trigger — it appears incidentally in ordinary
+  // prose ("adjectives can use different prepositions", "I can ___") and used to
+  // mislabel 27 lessons across all grades as modal-verb lessons.
+  ["modal", /modal|\bcould\b|\bshould\b|\bmust\b|\bmight\b|\bmay\b|\bought\b/i],
   ["reported", /reported speech|direct speech|indirect speech/i],
   ["conjunction2", /joining|linking/i],
   ["comparative2", /comparison|compare/i],
@@ -33,11 +36,18 @@ const RULES = [
 ];
 const ALIAS = { conjunction2: "conjunction", comparative2: "comparative" };
 
+// Topics whose keywords are common in ordinary prose ("we must choose the right
+// one") need a narrower pattern when scanning the explanation — otherwise an
+// incidental modal verb relabels a homophones lesson as a modal-verb lesson.
+const EXPLANATION_SCOPE = { modal: /modal/i };
+
 export function grammarTopic(title, explanation) {
   // Title is authoritative; explanation is only a fallback (its prose often
   // mentions "what/when/how" and would over-trigger the question rule).
   for (const [topic, pattern] of RULES) if (pattern.test(String(title))) return ALIAS[topic] || topic;
-  for (const [topic, pattern] of RULES) if (pattern.test(String(explanation))) return ALIAS[topic] || topic;
+  for (const [topic, pattern] of RULES) {
+    if ((EXPLANATION_SCOPE[topic] || pattern).test(String(explanation))) return ALIAS[topic] || topic;
+  }
   return "sentence";
 }
 
@@ -83,4 +93,67 @@ export function grammarDiagram(title, explanation) {
   const topic = grammarTopic(title, explanation);
   const entry = DIAGRAMS[topic] || DIAGRAMS.sentence;
   return `<figure class="grammar-visual" data-grammar-topic="${topic}">${entry.art()}<figcaption>${esc(entry.caption)}</figcaption></figure>`;
+}
+
+// --- Early-years phonics visuals -------------------------------------------
+// Grade 1 "language patterns" are phonics, not sentence grammar: letter sounds
+// ("A says /a/."), blending ("c-a-t, cat.") and spoken frames ("I see a ___.").
+// The generic DIAGRAMS above are all wrong for these, so match on the pattern
+// itself and return "" when nothing fits — no diagram beats a misleading one.
+const PHONICS = [
+  {
+    // A says /a/.
+    test: /^\s*([A-Za-z])\s+says\s+\/?([^/.\s]+)\/?\s*\.?\s*$/,
+    caption: (m) => `The letter ${m[1].toUpperCase()} makes the sound /${m[2]}/.`,
+    art: (m) => `<svg viewBox="0 0 400 130" class="g-diagram" aria-hidden="true" focusable="false"><rect x="60" y="34" width="96" height="62" rx="14" class="g-box blue"/><text x="108" y="80" class="g-word" style="font-size:38px">${esc(m[1].toUpperCase())}${esc(m[1].toLowerCase())}</text><path d="M170 65h50m0 0l-8-5m8 5l-8 5" class="g-arrow"/><rect x="234" y="34" width="106" height="62" rx="14" class="g-box gold"/><text x="287" y="76" class="g-word" style="font-size:30px">/${esc(m[2])}/</text><text x="200" y="118" class="g-tiny">letter → sound</text></svg>`,
+  },
+  {
+    // c-a-t, cat.
+    test: /^\s*([A-Za-z])\s*-\s*([A-Za-z])\s*-\s*([A-Za-z])\s*,\s*([A-Za-z]+)\s*\.?\s*$/,
+    caption: (m) => `Blend the sounds together to read the word “${m[4]}”.`,
+    art: (m) => {
+      const boxes = [m[1], m[2], m[3]].map((letter, i) => {
+        const x = 40 + i * 74;
+        return `<rect x="${x}" y="38" width="60" height="52" rx="10" class="g-box ${["blue", "gold", "teal"][i]}"/><text x="${x + 30}" y="74" class="g-word" style="font-size:26px">${esc(letter)}</text>`;
+      }).join("");
+      return `<svg viewBox="0 0 400 130" class="g-diagram" aria-hidden="true" focusable="false">${boxes}<path d="M266 64h44m0 0l-8-5m8 5l-8 5" class="g-arrow"/><rect x="316" y="38" width="70" height="52" rx="10" class="g-box plain"/><text x="351" y="72" class="g-word dark" style="font-size:24px">${esc(m[4])}</text><text x="200" y="116" class="g-tiny">sound it out, then blend</text></svg>`;
+    },
+  },
+  {
+    // Spoken frames and model sentences: "I see a ___.", "I am ___ years old.",
+    // "The ___ is ___ing.", "It is rainy.", "Which sense do I use?"
+    // A speech card carries the whole line; gaps become a "your word" chip.
+    test: /^\s*(\S.{0,44}?)\s*$/,
+    caption: (m) => (/_{2,}/.test(m[1])
+      ? "Say the whole sentence, and put your own word in the gap."
+      : "Say this sentence out loud, clearly and warmly."),
+    art: (m) => {
+      const line = m[1].replace(/_{2,}/g, "――");
+      const gap = /――/.test(line);
+      const question = /\?\s*$/.test(m[1]);
+      const size = line.length > 26 ? 19 : line.length > 20 ? 22 : 25;
+      return `<svg viewBox="0 0 400 130" class="g-diagram" aria-hidden="true" focusable="false">`
+        + `<rect x="28" y="26" width="344" height="60" rx="16" class="g-box blue"/>`
+        + `<path d="M96 86l10 18 16-18z" class="g-box blue" stroke="none"/>`
+        + `<text x="200" y="64" class="g-word" style="font-size:${size}px">${esc(line)}</text>`
+        + (gap
+          ? `<rect x="150" y="96" width="100" height="24" rx="12" class="g-box gold" stroke-dasharray="6 5"/><text x="200" y="113" class="g-tiny strong">your word</text>`
+          : `<text x="200" y="112" class="g-tiny">${question ? "ask it, then answer it" : "listen, then say it back"}</text>`)
+        + `</svg>`;
+    },
+  },
+];
+
+/**
+ * Visual for an early-years phonics pattern. `pattern` is the lesson's
+ * ruleAndExamples ("A says /a/."). Returns "" when the pattern is not a
+ * recognised phonics shape, so the caller renders no diagram at all.
+ */
+export function phonicsDiagram(pattern) {
+  const text = String(pattern || "");
+  for (const rule of PHONICS) {
+    const m = text.match(rule.test);
+    if (m) return `<figure class="grammar-visual" data-phonics="1">${rule.art(m)}<figcaption>${esc(rule.caption(m))}</figcaption></figure>`;
+  }
+  return "";
 }

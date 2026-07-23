@@ -7,7 +7,7 @@
 // renderers and all English subsystems are kept BYTE-FOR-BYTE from
 // english/shared/course-ui.js via `let` bindings populated by bind(ctx).
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader } from "../../shared/course-shell.js?v=20260721a";
-import { grammarDiagram } from "../../english/shared/grammar-visuals.js?v=english-20260721d";
+import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-visuals.js?v=english-20260723a";
 import { createCourseApp } from "../course-app.js?v=t2";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -1248,7 +1248,7 @@ function renderGrammarCarousel() {
     return `<section class="gc-slide gc-v${i % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Pattern ${lesson.sequence} of ${lessons.length} · ${esc(lesson.practiceType)}</span>
       <h3 class="gc-title">${esc(lesson.title)}</h3>
-      ${grammarDiagram(lesson.title, lesson.explanation)}
+      ${phonicsDiagram(lesson.ruleAndExamples)}
       <p class="gc-lead"><span class="gc-emoji" aria-hidden="true">${emoji}</span> ${esc(lesson.explanation)}</p>
       ${lesson.ruleAndExamples ? `<div class="gc-pattern" lang="en">${esc(lesson.ruleAndExamples)}</div>` : ""}
       <div class="gc-actions">

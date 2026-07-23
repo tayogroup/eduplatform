@@ -1,5 +1,5 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../../shared/course-shell.js?v=20260721a";
-import { grammarDiagram } from "./grammar-visuals.js?v=english-20260721d";
+import { grammarDiagram } from "./grammar-visuals.js?v=english-20260723a";
 import { createProgressClient } from "../../shared/progress-client.js?v=20260722a";
 
 const $ = (selector, root = document) => root.querySelector(selector);

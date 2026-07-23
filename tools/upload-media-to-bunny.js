@@ -68,7 +68,7 @@ function buildList() {
   if (subjectList.includes("english")) {
     const base = path.join(EHEL, "english", "media", "audio");
     for (let g = 1; g <= 12; g += 1) {
-      for (const cat of ["readings", "grammar", "speaking"]) {
+      for (const cat of ["readings", "grammar", "speaking", "vocabulary"]) {
         const d = path.join(base, `grade-${g}`, cat);
         if (!fs.existsSync(d)) continue;
         for (const f of fs.readdirSync(d)) if (f.endsWith(".mp3"))

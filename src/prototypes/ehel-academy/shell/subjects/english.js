@@ -1221,12 +1221,91 @@ function renderComprehension() {
 }
 
 function renderGrammar() {
+  // Grade 1 gets the kid-friendly full-screen carousel (one pattern at a time),
+  // modelled on the Arabic Alphabet unit's Learn section. Older grades keep the
+  // grid workshop.
+  if (gradeNumber === 1) return renderGrammarCarousel();
   $("#app").innerHTML = `${pageHeader("Language focus", "Grammar workshop", "Complete six practices: guided recognition followed by independent language use.")}<div class="grammar-grid">${course.grammar.map((lesson) => `<article class="panel grammar-card"><div class="word-card-head"><span class="lesson-number">${lesson.sequence}</span><span class="word-type">${escapeHtml(lesson.practiceType)}</span></div><h3>${escapeHtml(lesson.title)}</h3>${grammarDiagram(lesson.title, lesson.explanation)}<p>${escapeHtml(lesson.explanation)}</p>${lesson.ruleAndExamples ? `<div class="rule-box">${escapeHtml(lesson.ruleAndExamples)}</div>` : ""}${lesson.commonMistake ? `<p class="mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}${lesson.memoryTip ? `<p><strong>Memory tip:</strong> ${escapeHtml(lesson.memoryTip)}</p>` : ""}<details><summary>Show practice</summary><p class="rule-box">${escapeHtml(lesson.practice)}</p></details>${lesson.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Listen</button><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}</article>`).join("")}</div><p><button class="button primary" id="grammar-done" type="button">I practised all six lessons ${icon("check")}</button></p>`;
   $$('[data-grammar-audio]').forEach((button) => button.addEventListener("click", () => {
     const lesson = course.grammar.find((item) => item.grammarId === button.dataset.grammarAudio);
     playAudio(lesson.audio.source, { rate: Number(button.dataset.rate), button });
   }));
   $("#grammar-done").addEventListener("click", () => complete("grammar", "Grammar workshop complete."));
+}
+
+// Grade 1 grammar as a full-screen slide carousel (Arabic-Alphabet Learn style):
+// one language pattern per vibrant slide, big "Hear it" button, side arrows,
+// dots, swipe. Reaching the last slide completes the section.
+const GC_EMOJI = ["🔤", "👂", "🧩", "🗣️", "👀", "⭐", "🌈", "🎈"];
+function renderGrammarCarousel() {
+  const lessons = course.grammar;
+  const esc = escapeHtml;
+  const slides = lessons.map((lesson, i) => {
+    const emoji = GC_EMOJI[i % GC_EMOJI.length];
+    const pattern = lesson.ruleAndExamples || lesson.title;
+    return `<section class="gc-slide gc-v${i % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Pattern ${lesson.sequence} of ${lessons.length} · ${esc(lesson.practiceType)}</span>
+      <div class="gc-pattern" lang="en">${esc(pattern)}</div>
+      <p class="gc-lead"><span class="gc-emoji" aria-hidden="true">${emoji}</span> ${esc(lesson.explanation)}</p>
+      <div class="gc-actions">
+        ${lesson.audio?.available
+          ? `<button class="gc-btn play" type="button" data-grammar-audio="${esc(lesson.grammarId)}" data-rate="${AI_NARRATION_RATE}">${icon("volume-2")} Hear it</button>
+             <button class="gc-btn ghost" type="button" data-grammar-audio="${esc(lesson.grammarId)}" data-rate="${AI_NARRATION_RATE}">${icon("rotate-ccw")} Again</button>`
+          : `<span class="audio-pending">${icon("clock-3")} Audio pending</span>`}
+      </div>
+      ${lesson.memoryTip ? `<p class="gc-note"><strong>Remember:</strong> ${esc(lesson.memoryTip)}</p>` : ""}
+      ${lesson.practice ? `<p class="gc-note gc-try"><strong>Your turn:</strong> ${esc(lesson.practice)}</p>` : ""}
+      ${i === lessons.length - 1 ? `<button class="gc-btn done" id="grammar-done" type="button">${icon("check")} I practised them all</button>` : ""}
+    </div></section>`;
+  }).join("");
+
+  const count = lessons.length;
+  $("#app").innerHTML = `
+    <div class="gc-wrap">
+      <div class="gc-top"><h2 class="gc-heading">Say the patterns</h2><span class="gc-count" id="gc-count">Pattern 1 of ${count}</span></div>
+      <div class="gc-carousel">
+        <button class="gc-arrow prev" type="button" aria-label="Previous pattern">${icon("chevron-left")}</button>
+        <div class="gc-viewport"><div class="gc-track">${slides}</div></div>
+        <button class="gc-arrow next" type="button" aria-label="Next pattern">${icon("chevron-right")}</button>
+      </div>
+      <div class="gc-dots">${lessons.map((_, i) => `<button class="gc-dot" type="button" data-dot="${i}" aria-label="Pattern ${i + 1} of ${count}"></button>`).join("")}</div>
+    </div>`;
+
+  const track = $(".gc-track");
+  const dots = $$("[data-dot]");
+  const prevArrow = $(".gc-arrow.prev");
+  const nextArrow = $(".gc-arrow.next");
+  const countLabel = $("#gc-count");
+  let slide = 0;
+  const goToSlide = (n) => {
+    slide = Math.max(0, Math.min(count - 1, n));
+    track.style.transform = `translateX(-${slide * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle("active", i === slide));
+    prevArrow.disabled = slide === 0;
+    nextArrow.disabled = slide === count - 1;
+    countLabel.textContent = `Pattern ${slide + 1} of ${count}`;
+    stopAudio();
+    if (slide === count - 1 && !progress.completed.includes("grammar")) complete("grammar", "Grammar patterns complete. Well done!");
+  };
+  prevArrow.addEventListener("click", () => goToSlide(slide - 1));
+  nextArrow.addEventListener("click", () => goToSlide(slide + 1));
+  dots.forEach((dot) => dot.addEventListener("click", () => goToSlide(Number(dot.dataset.dot))));
+  $$('[data-grammar-audio]').forEach((button) => button.addEventListener("click", () => {
+    const lesson = lessons.find((item) => item.grammarId === button.dataset.grammarAudio);
+    playAudio(lesson.audio.source, { rate: Number(button.dataset.rate), button });
+  }));
+  $("#grammar-done")?.addEventListener("click", () => complete("grammar", "Grammar patterns complete. Well done!"));
+  // Swipe (touch) support.
+  const viewport = $(".gc-viewport");
+  let startX = null;
+  viewport.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  viewport.addEventListener("touchend", (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 45) goToSlide(slide + (dx < 0 ? 1 : -1));
+    startX = null;
+  }, { passive: true });
+  goToSlide(0);
 }
 
 function renderSpeaking() {

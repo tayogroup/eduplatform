@@ -57,6 +57,8 @@ Adults exist to be a job, not a personality. Reuse these rather than inventing:
 | **Leila** | f | Firefighter |
 | **Nadia** | f | Bus driver |
 | **Doctor Sarah** | f | Doctor at the clinic |
+| **Elena** | f | Engineer (bridge builder) |
+| **Talia** | f | Animal helper / vet at the animal centre |
 
 Firefighters other than Leila, and Amal's parents, stay unnamed.
 

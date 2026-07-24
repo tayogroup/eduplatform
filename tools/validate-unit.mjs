@@ -51,7 +51,13 @@ const MOJIBAKE = /�|Ã[©¨¤¢°½¼ ]|â€[™œ“”]|Â[ °]/;
 // a/an: "a" immediately before a vowel-SOUND word (allow genuine consonant-sound vowels)
 // Words spelled with a leading vowel but pronounced with a consonant sound —
 // "a unicorn / a European / a one-off" are correct, not errors.
+// Words spelt with a vowel but pronounced with a consonant onset, so "a" is
+// correct: "a unit", "a European", "a one-way street". Kept as a prefix list
+// because the /juː/ words share stems ("uni-", "use-", "utensil/utility/…").
+// A missing entry costs real content: "a utensil" is correct English but was
+// rejected until "ute" was added, and a Grade 4 passage got reworded to appease it.
 const CONSONANT_SOUND = /^(uni|use|user|useful|usual|uniform|unit|unicorn|europ|euro|ewe|one|once|u)$/;
+const CONSONANT_ONSET = /^(uni|use|usu|usa|ute|util|utop|uran|ukul|eulog|euphem|ubiq|una|one|onc|euro|ewe)/;
 // An article introduces a noun phrase, so it is NEVER followed by a function
 // word. When it appears to be, we're looking at a word LIST ("cards for I, see,
 // a and can") or phoneme notation ("/a/ as in apple"), not a grammar error.
@@ -81,7 +87,7 @@ function articleHits(s) {
     const w = toks[i + 1].replace(/[^A-Za-z'’-]/g, "").toLowerCase();
     if (!/^[aeiou]/.test(w)) continue;
     const head = w.replace(/[^a-z].*/, "");
-    if (CONSONANT_SOUND.test(head) || /^(uni|use|usu|one|onc|euro|ewe)/.test(w)) continue;
+    if (CONSONANT_SOUND.test(head) || CONSONANT_ONSET.test(w)) continue;
     if (NEVER_AFTER_ARTICLE.has(head)) continue;   // word list / notation, not an article
     out.push(`${art} ${w}`);
   }

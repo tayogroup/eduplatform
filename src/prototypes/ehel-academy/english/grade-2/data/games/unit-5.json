@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The number 10.",
+          "prompt": "Which word means: The number 10, which is one whole group of ten ones.",
           "choices": [
             "ten",
             "forty",
             "seventy"
           ],
           "answer": "ten",
-          "explanation": "ten: The number 10."
+          "explanation": "ten: The number 10, which is one whole group of ten ones."
         },
         {
-          "prompt": "Which word means: A shape with three sides and three corners.",
+          "prompt": "Which word means: A shape with three straight sides and three pointed corners.",
           "choices": [
             "ten",
             "forty",
             "triangle"
           ],
           "answer": "triangle",
-          "explanation": "triangle: A shape with three sides and three corners."
+          "explanation": "triangle: A shape with three straight sides and three pointed corners."
         },
         {
-          "prompt": "Which word means: large in size.",
+          "prompt": "Which word means: Large in size; it takes up a lot of space.",
           "choices": [
             "forty",
             "big",
             "ten"
           ],
           "answer": "big",
-          "explanation": "big: large in size."
+          "explanation": "big: Large in size; it takes up a lot of space."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The number 20.",
+          "clue": "The number 20, which is two groups of ten ones.",
           "answer": "twenty"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A shape with four sides; the opposite sides are equal.",
+          "clue": "A shape with four sides, where the two sides opposite each other match.",
           "answer": "rectangle"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "little in size.",
+          "clue": "Little in size; it does not take up much space.",
           "answer": "small"
         }
       ]
@@ -97,27 +97,26 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hour.",
-            "one",
-            "in",
-            "minutes",
-            "sixty",
-            "are",
-            "There"
+            "old.",
+            "years",
+            "seventy",
+            "is",
+            "grandfather",
+            "My"
           ],
-          "answer": "There are sixty minutes in one hour."
+          "answer": "My grandfather is seventy years old."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "shape.",
-            "square",
+            "triangle",
             "a",
             "has",
-            "window",
+            "roof",
             "The"
           ],
-          "answer": "The window has a square shape."
+          "answer": "The roof has a triangle shape."
         }
       ]
     },
@@ -130,37 +129,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which word means: The number 70.",
+          "prompt": "Which sentence compares the two animals correctly?",
           "choices": [
-            "seventy",
-            "twenty",
-            "thirty",
-            "forty"
+            "A snake is longer than a worm.",
+            "A snake is more long than a worm.",
+            "A snake is long than a worm.",
+            "A snake is longest than a worm."
           ],
-          "answer": "seventy",
-          "explanation": "seventy: The number 70. My grandfather is seventy years old."
+          "answer": "A snake is longer than a worm.",
+          "explanation": "Short describing words take -er rather than more, and a comparison of two things always needs than after the -er word."
         },
         {
-          "prompt": "What type of word is 'eighty'?",
+          "prompt": "Which sentence uses is or are correctly?",
           "choices": [
-            "Number",
-            "Noun",
-            "Verb",
-            "Adjective"
+            "There is ten circles on the chart.",
+            "There are one clock on the wall.",
+            "There are ten circles on the chart.",
+            "There is many circles on the chart."
           ],
-          "answer": "Number",
-          "explanation": "eighty: The number 80. The tall tree is eighty feet high."
+          "answer": "There are ten circles on the chart.",
+          "explanation": "Ten is more than one, so the sentence needs are. There is only fits a single thing, such as one clock."
         },
         {
-          "prompt": "She scored ____ points in the game.",
+          "prompt": "Choose the correct word: “I have ______ hands.”",
           "choices": [
-            "ninety",
-            "forty",
-            "fifty",
-            "sixty"
+            "too",
+            "two",
+            "to",
+            "ate"
           ],
-          "answer": "ninety",
-          "explanation": "ninety: The number 90. She scored ninety points in the game."
+          "answer": "two",
+          "explanation": "Two is the number 2. Too means also, to is a joining word, and ate is the past form of eat."
         }
       ]
     },
@@ -173,37 +172,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What type of word is 'thirty'?",
+          "prompt": "What shape is the sun in this text, and what shape is a book?",
           "choices": [
-            "Number word",
-            "Noun",
-            "Verb",
-            "Adjective"
+            "The sun is a circle and a book is a rectangle.",
+            "Little fingers.",
+            "A new reading corner, with a mat long enough for six friends to sit on."
           ],
-          "answer": "Number word",
-          "explanation": "There are thirty days in the month of September."
+          "answer": "The sun is a circle and a book is a rectangle.",
+          "explanation": "Review the unit text evidence: The sun is a circle and a book is a rectangle."
         },
         {
-          "prompt": "The farmer has ____ goats.",
+          "prompt": "How far did Leo jump?",
           "choices": [
-            "forty",
-            "ten",
-            "twenty",
-            "thirty"
+            "Little fingers.",
+            "Leo's feet are big and Amal's feet are small, so the same floor took a different number of feet.",
+            "He jumped 45 centimetres."
           ],
-          "answer": "forty",
-          "explanation": "The farmer has forty goats."
+          "answer": "He jumped 45 centimetres.",
+          "explanation": "Review the unit text evidence: He jumped 45 centimetres."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "What did Teacher Yasmin say they should use instead, and how many centimetres are in one metre?",
           "choices": [
-            "fifty",
-            "ffity",
-            "fift",
-            "fiftyy"
+            "Leo's feet are big and Amal's feet are small, so the same floor took a different number of feet.",
+            "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
+            "There are one hundred fingers in the air."
           ],
-          "answer": "fifty",
-          "explanation": "Fifty people came to the celebration."
+          "answer": "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
+          "explanation": "Review the unit text evidence: A ruler and a metre stick, and there are one hundred centimetres in one metre."
         }
       ]
     },
@@ -217,7 +213,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1 — Count in Tens",
-          "target": "Ten … twenty … thirty … forty … fifty … sixty … seventy … eighty … ninety … one hundred!"
+          "target": "Ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, one hundred!"
         },
         {
           "prompt": "Speaking Game — Bigger, Longer, Taller",
@@ -225,7 +221,7 @@
         },
         {
           "prompt": "Speaking 5 - Shape and Pattern Talk",
-          "target": "Describe five shapes and explain a repeating pattern for a partner to continue."
+          "target": "It goes circle, square, circle, square."
         }
       ]
     },
@@ -240,43 +236,41 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "stick.",
-            "metre",
-            "a",
-            "with",
-            "mat",
-            "the",
-            "measure",
-            "We"
-          ],
-          "answer": "We measure the mat with a metre stick."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "size.",
-            "different",
-            "a",
-            "are",
-            "shoes",
-            "two",
-            "These"
-          ],
-          "answer": "These two shoes are a different size."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "narrow.",
+            "long.",
+            "centimetres",
+            "3",
             "is",
-            "path",
-            "The",
-            "wide.",
-            "is",
-            "river",
+            "shell",
             "The"
           ],
-          "answer": "The river is wide. The path is narrow."
+          "answer": "The shell is 3 centimetres long."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "big.",
+            "very",
+            "is",
+            "zoo",
+            "the",
+            "at",
+            "elephant",
+            "The"
+          ],
+          "answer": "The elephant at the zoo is very big."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "lift.",
+            "to",
+            "heavy",
+            "is",
+            "stone",
+            "big",
+            "A"
+          ],
+          "answer": "A big stone is heavy to lift."
         }
       ]
     },
@@ -291,32 +285,32 @@
         {
           "prompt": "What does 'pattern' mean in this unit?",
           "choices": [
-            "A design that repeats again and again.",
-            "The number 10.",
-            "The number 40."
+            "A design that repeats the same thing again and again.",
+            "The number 10, which is one whole group of ten ones.",
+            "The number 40, which is four groups of ten ones."
           ],
-          "answer": "A design that repeats again and again.",
-          "explanation": "pattern: A design that repeats again and again."
+          "answer": "A design that repeats the same thing again and again.",
+          "explanation": "pattern: A design that repeats the same thing again and again."
         },
         {
           "prompt": "What does 'short' mean in this unit?",
           "choices": [
-            "The number 10.",
-            "The number 40.",
-            "a little length."
+            "The number 10, which is one whole group of ten ones.",
+            "The number 40, which is four groups of ten ones.",
+            "Not long; it measures only a little from one end to the other."
           ],
-          "answer": "a little length.",
-          "explanation": "short: a little length."
+          "answer": "Not long; it measures only a little from one end to the other.",
+          "explanation": "short: Not long; it measures only a little from one end to the other."
         },
         {
           "prompt": "What does 'forty' mean in this unit?",
           "choices": [
-            "The number 70.",
-            "The number 40.",
-            "The number 10."
+            "The number 70, which is seven groups of ten ones.",
+            "The number 40, which is four groups of ten ones.",
+            "The number 10, which is one whole group of ten ones."
           ],
-          "answer": "The number 40.",
-          "explanation": "forty: The number 40."
+          "answer": "The number 40, which is four groups of ten ones.",
+          "explanation": "forty: The number 40, which is four groups of ten ones."
         }
       ]
     },
@@ -373,15 +367,15 @@
           "pairs": [
             [
               "thirty",
-              "The number 30."
+              "The number 30, which is three groups of ten ones."
             ],
             [
               "seventy",
-              "The number 70."
+              "The number 70, which is seven groups of ten ones."
             ],
             [
               "circle",
-              "A round shape with no corners and no sides."
+              "A round shape with no corners and no straight sides."
             ]
           ]
         },
@@ -390,15 +384,15 @@
           "pairs": [
             [
               "heart",
-              "A shape that looks like ♥."
+              "A shape with two round tops and one point at the bottom."
             ],
             [
               "centimetre",
-              "A small unit for measuring length. We use it for small things."
+              "A small unit of length; one hundred of them make one metre."
             ],
             [
               "weight",
-              "How heavy or light something is."
+              "How heavy or how light something is when you lift it."
             ]
           ]
         },
@@ -407,15 +401,15 @@
           "pairs": [
             [
               "long",
-              "a lot of length."
+              "Measuring a lot from one end to the other end."
             ],
             [
               "heavy",
-              "hard to lift."
+              "Hard to lift because it weighs a lot."
             ],
             [
               "high",
-              "far up."
+              "Far up above the ground."
             ]
           ]
         }
@@ -430,37 +424,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "The farmer has ____ goats.",
+          "prompt": "How many sides does a triangle have?",
           "choices": [
-            "forty",
-            "ten",
-            "twenty",
-            "thirty"
+            "one",
+            "two",
+            "three",
+            "four"
           ],
-          "answer": "forty",
-          "explanation": "The farmer has forty goats."
+          "answer": "three",
+          "explanation": "A triangle has three straight sides and three corners. A square and a rectangle each have four sides instead."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "Look at this pattern: circle, square, triangle, circle, square, triangle. Which shape comes next?",
           "choices": [
+            "square",
+            "circle",
+            "triangle",
+            "heart"
+          ],
+          "answer": "circle",
+          "explanation": "The three shapes repeat in the same order, so after triangle the pattern begins again with circle."
+        },
+        {
+          "prompt": "How many centimetres are there in one metre?",
+          "choices": [
+            "ten",
             "fifty",
-            "ffity",
-            "fift",
-            "fiftyy"
+            "ninety",
+            "one hundred"
           ],
-          "answer": "fifty",
-          "explanation": "Fifty people came to the celebration."
-        },
-        {
-          "prompt": "Which word means: The number 60.",
-          "choices": [
-            "sixty",
-            "ten",
-            "twenty",
-            "thirty"
-          ],
-          "answer": "sixty",
-          "explanation": "sixty: The number 60. There are sixty minutes in one hour."
+          "answer": "one hundred",
+          "explanation": "Teacher Yasmin tells the class that one metre is always one hundred centimetres long."
         }
       ]
     },
@@ -473,37 +467,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'ten' mean?",
+          "prompt": "How many tens are there in one hundred?",
           "choices": [
-            "The number 10.",
-            "The number 20.",
-            "The number 30.",
-            "The number 40."
-          ],
-          "answer": "The number 10.",
-          "explanation": "There are ten fingers on my two hands."
-        },
-        {
-          "prompt": "Which word means: The number 20.",
-          "choices": [
-            "twenty",
+            "five",
             "ten",
-            "thirty",
-            "forty"
+            "twenty",
+            "one hundred"
           ],
-          "answer": "twenty",
-          "explanation": "Twenty children are playing in the field."
+          "answer": "ten",
+          "explanation": "One hundred is made of ten groups of ten, so the answer is ten. Five, twenty and one hundred are all real numbers, but none of them counts the tens."
         },
         {
-          "prompt": "What type of word is 'thirty'?",
+          "prompt": "Which number word comes straight after seventy when you count in tens?",
           "choices": [
-            "Number word",
-            "Noun",
-            "Verb",
-            "Adjective"
+            "sixty",
+            "seventeen",
+            "ninety",
+            "eighty"
           ],
-          "answer": "Number word",
-          "explanation": "There are thirty days in the month of September."
+          "answer": "eighty",
+          "explanation": "Counting in tens runs seventy, eighty, ninety. Sixty comes earlier, seventeen is not a ten, and ninety comes one step later."
+        },
+        {
+          "prompt": "Which shape has no corners and no straight sides?",
+          "choices": [
+            "circle",
+            "square",
+            "triangle",
+            "rectangle"
+          ],
+          "answer": "circle",
+          "explanation": "A circle is completely round. The other three shapes are all built from straight sides that meet at corners."
         }
       ]
     }

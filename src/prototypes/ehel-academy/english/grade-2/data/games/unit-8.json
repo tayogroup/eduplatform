@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A building where people live, with walls and a roof.",
+          "prompt": "Which word means: A building where a family lives, with walls, a roof and rooms.",
           "choices": [
             "house",
             "hut",
             "nest"
           ],
           "answer": "house",
-          "explanation": "house: A building where people live, with walls and a roof."
+          "explanation": "house: A building where a family lives, with walls, a roof and rooms."
         },
         {
-          "prompt": "Which word means: A room with a sink and a toilet for washing.",
+          "prompt": "Which word means: A room with a sink and a toilet, used for washing.",
           "choices": [
             "house",
             "hut",
             "bathroom"
           ],
           "answer": "bathroom",
-          "explanation": "bathroom: A room with a sink and a toilet for washing."
+          "explanation": "bathroom: A room with a sink and a toilet, used for washing."
         },
         {
-          "prompt": "Which word means: An opening in a wall with glass to let in light.",
+          "prompt": "Which word means: An opening in a wall with glass that lets light in.",
           "choices": [
             "hut",
             "window",
             "house"
           ],
           "answer": "window",
-          "explanation": "window: An opening in a wall with glass to let in light."
+          "explanation": "window: An opening in a wall with glass that lets light in."
         }
       ]
     },
@@ -62,12 +62,12 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A room where people sleep.",
+          "clue": "A room where people sleep and keep their clothes.",
           "answer": "bedroom"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A long, soft seat for two or three people.",
+          "clue": "A long, soft seat made for two or three people.",
           "answer": "sofa"
         }
       ]
@@ -84,6 +84,7 @@
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "garden.",
+            "small",
             "a",
             "with",
             "house",
@@ -93,34 +94,35 @@
             "family",
             "My"
           ],
-          "answer": "My family lives in a house with a garden."
+          "answer": "My family lives in a house with a small garden."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hive.",
-            "their",
-            "in",
-            "honey",
-            "make",
-            "bees",
-            "The"
-          ],
-          "answer": "The bees make honey in their hive."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "room.",
-            "living",
+            "tree.",
+            "tall",
             "the",
             "in",
-            "together",
-            "tea",
-            "drink",
-            "We"
+            "nest",
+            "a",
+            "made",
+            "bird",
+            "The"
           ],
-          "answer": "We drink tea together in the living room."
+          "answer": "The bird made a nest in the tall tree."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bathroom.",
+            "the",
+            "in",
+            "hands",
+            "my",
+            "wash",
+            "I"
+          ],
+          "answer": "I wash my hands in the bathroom."
         }
       ]
     },
@@ -133,37 +135,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which word means: An opening in the ground where some animals live.",
+          "prompt": "In which room do people cook the family meal?",
           "choices": [
-            "hole",
-            "apartment",
-            "hut",
-            "tree house"
+            "The bedroom",
+            "The bathroom",
+            "The kitchen",
+            "The living room"
           ],
-          "answer": "hole",
-          "explanation": "hole: An opening in the ground where some animals live. The rabbit ran into its hole."
+          "answer": "The kitchen",
+          "explanation": "The kitchen is the room where food is cooked. People sleep in the bedroom, wash in the bathroom and rest in the living room."
         },
         {
-          "prompt": "What type of word is 'bedroom'?",
+          "prompt": "In “Helping Hands at Home”, what surprise had Father built in the garden?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "A tree house",
+            "A stone wall",
+            "A flower bed",
+            "A new kitchen"
           ],
-          "answer": "Noun",
-          "explanation": "bedroom: A room where people sleep. I keep my bed and toys in my bedroom."
+          "answer": "A tree house",
+          "explanation": "Father built a tree house under the big tree, with walls, a small roof and a tiny window."
         },
         {
-          "prompt": "My mother is cooking rice in the ____.",
+          "prompt": "What does the word rug mean?",
           "choices": [
-            "kitchen",
-            "tree house",
-            "nest",
-            "hive"
+            "A soft mat that covers part of the floor.",
+            "A basin where you wash with water.",
+            "A long, soft seat for two or three people.",
+            "An opening in a wall with glass that lets light in."
           ],
-          "answer": "kitchen",
-          "explanation": "kitchen: A room where food is cooked. My mother is cooking rice in the kitchen."
+          "answer": "A soft mat that covers part of the floor.",
+          "explanation": "A rug lies on the floor. The other three options describe a sink, a sofa and a window."
         }
       ]
     },
@@ -176,37 +178,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What type of word is 'hut'?",
+          "prompt": "Which three animal homes does the poem name, and which animal lives in each one?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "A nest is for a bird, a hive is for a bee, and a hole is for a rabbit.",
+            "A set of rooms that is part of a big building.",
+            "Grandma Hana is coming, and she will stay for one whole week."
           ],
-          "answer": "Noun",
-          "explanation": "In the village, some people live in a hut made of mud and straw."
+          "answer": "A nest is for a bird, a hive is for a bee, and a hole is for a rabbit.",
+          "explanation": "Review the unit text evidence: A nest is for a bird, a hive is for a bee, and a hole is for a rabbit."
         },
         {
-          "prompt": "The children climb a ladder to their ____.",
+          "prompt": "In hot, wet places, why do people build their houses high on stilts?",
           "choices": [
-            "tree house",
-            "house",
-            "apartment",
-            "hut"
+            "A set of rooms that is part of a big building.",
+            "Amal made her bed and put her clean clothes in the closet. Idris picked up his toys from under the bed and put them in the toy...",
+            "So that the air can blow underneath the house."
           ],
-          "answer": "tree house",
-          "explanation": "The children climb a ladder to their tree house."
+          "answer": "So that the air can blow underneath the house.",
+          "explanation": "Review the unit text evidence: So that the air can blow underneath the house."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "In the bedroom, what job did Amal do and what job did Idris do?",
           "choices": [
-            "nest",
-            "nset",
-            "nes",
-            "nestt"
+            "A tree house, with walls, a small roof and a tiny window.",
+            "Amal made her bed and put her clean clothes in the closet. Idris picked up his toys from under the bed and put them in the toy...",
+            "They are built from mud and dry grass, and the thick mud walls keep the rooms cool."
           ],
-          "answer": "nest",
-          "explanation": "The bird made a nest in the tall tree."
+          "answer": "Amal made her bed and put her clean clothes in the closet. Idris picked up his toys from under the bed and put them in the toy...",
+          "explanation": "Review the unit text evidence: Amal made her bed and put her clean clothes in the closet. Idris picked up his toys from under the bed and put them in the toy..."
         }
       ]
     },
@@ -227,8 +226,8 @@
           "target": "This is my ______."
         },
         {
-          "prompt": "Speaking 5 - Where Does It Belong?",
-          "target": "Describe the position of six household objects for a partner to identify."
+          "prompt": "Speaking 5 — Where Does It Belong?",
+          "target": "It is under the bed."
         }
       ]
     },
@@ -254,14 +253,15 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "bed.",
+            "room.",
             "my",
-            "make",
-            "I",
-            "morning",
-            "Every"
+            "in",
+            "windows",
+            "two",
+            "are",
+            "There"
           ],
-          "answer": "Every morning I make my bed."
+          "answer": "There are two windows in my room."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -289,29 +289,29 @@
         {
           "prompt": "What does 'dining room' mean in this unit?",
           "choices": [
-            "A room where people eat their meals.",
-            "A building where people live, with walls and a roof.",
+            "A room where people sit at a table to eat meals.",
+            "A building where a family lives, with walls, a roof and rooms.",
             "A small, simple house with only one or two rooms."
           ],
-          "answer": "A room where people eat their meals.",
-          "explanation": "dining room: A room where people eat their meals."
+          "answer": "A room where people sit at a table to eat meals.",
+          "explanation": "dining room: A room where people sit at a table to eat meals."
         },
         {
           "prompt": "What does 'sweep the floor' mean in this unit?",
           "choices": [
-            "A building where people live, with walls and a roof.",
+            "A building where a family lives, with walls, a roof and rooms.",
             "A small, simple house with only one or two rooms.",
-            "To clean the floor with a broom."
+            "To clean the floor by brushing the dust away with a broom."
           ],
-          "answer": "To clean the floor with a broom.",
-          "explanation": "sweep the floor: To clean the floor with a broom."
+          "answer": "To clean the floor by brushing the dust away with a broom.",
+          "explanation": "sweep the floor: To clean the floor by brushing the dust away with a broom."
         },
         {
           "prompt": "What does 'hut' mean in this unit?",
           "choices": [
-            "A home a bird builds to lay its eggs.",
+            "A home that a bird builds to keep its eggs safe.",
             "A small, simple house with only one or two rooms.",
-            "A building where people live, with walls and a roof."
+            "A building where a family lives, with walls, a roof and rooms."
           ],
           "answer": "A small, simple house with only one or two rooms.",
           "explanation": "hut: A small, simple house with only one or two rooms."
@@ -375,11 +375,11 @@
             ],
             [
               "hive",
-              "A home for bees."
+              "A home where bees live together and make their honey."
             ],
             [
               "kitchen",
-              "A room where food is cooked."
+              "A room where food is cooked and dishes are washed."
             ]
           ]
         },
@@ -388,11 +388,11 @@
           "pairs": [
             [
               "dining room",
-              "A room where people eat their meals."
+              "A room where people sit at a table to eat meals."
             ],
             [
               "chair",
-              "A seat for one person."
+              "A seat with a back and legs, made for one person."
             ],
             [
               "rug",
@@ -405,15 +405,15 @@
           "pairs": [
             [
               "tidy my room",
-              "To put things back in their place."
+              "To put every toy, book and piece of clothing back in its place."
             ],
             [
               "wash the dishes",
-              "To clean the plates and cups in the sink."
+              "To clean the plates, cups and pots in water."
             ],
             [
               "cave house",
-              "A home dug into rock in a cliff."
+              "A home that people dig into the rock of a cliff."
             ]
           ]
         }
@@ -428,37 +428,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "The children climb a ladder to their ____.",
+          "prompt": "The lamp is ____ the two books.",
           "choices": [
-            "tree house",
-            "house",
-            "apartment",
-            "hut"
+            "above",
+            "between",
+            "under",
+            "in"
           ],
-          "answer": "tree house",
-          "explanation": "The children climb a ladder to their tree house."
+          "answer": "between",
+          "explanation": "Between means in the middle of two things, so the lamp has one book on each side of it."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "Which sentence is written correctly?",
           "choices": [
-            "nest",
-            "nset",
-            "nes",
-            "nestt"
+            "There is two chairs in the kitchen.",
+            "There are two chairs in the kitchen.",
+            "There am two chairs in the kitchen.",
+            "There be two chairs in the kitchen."
           ],
-          "answer": "nest",
-          "explanation": "The bird made a nest in the tall tree."
+          "answer": "There are two chairs in the kitchen.",
+          "explanation": "Two chairs is more than one thing, so the sentence needs there are."
         },
         {
-          "prompt": "Which word means: A home for bees.",
+          "prompt": "Which sentence talks about the future in the right way?",
           "choices": [
-            "hive",
-            "house",
-            "apartment",
-            "hut"
+            "I will to sweep the floor.",
+            "I will sweeping the floor.",
+            "I will sweep the floor.",
+            "I sweep will the floor."
           ],
-          "answer": "hive",
-          "explanation": "hive: A home for bees. The bees make honey in their hive."
+          "answer": "I will sweep the floor.",
+          "explanation": "After will we use the plain verb, with no to and no -ing, and will always comes before the verb."
         }
       ]
     },
@@ -471,37 +471,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'house' mean?",
+          "prompt": "Which word means a home where bees live and make honey?",
           "choices": [
-            "A building where people live, with walls and a roof.",
-            "A set of rooms to live in inside a bigger building.",
-            "A small, simple house with only one or two rooms.",
-            "A small house built up in the branches of a tree."
+            "hive",
+            "broom",
+            "ladder",
+            "closet"
           ],
-          "answer": "A building where people live, with walls and a roof.",
-          "explanation": "My family lives in a house with a garden."
+          "answer": "hive",
+          "explanation": "Bees build a hive and store their honey inside it. A broom, a ladder and a closet are things at home, not animal homes."
         },
         {
-          "prompt": "Which word means: A set of rooms to live in inside a bigger building.",
+          "prompt": "In “Different Kinds of Homes”, what are adobe houses built from?",
           "choices": [
-            "apartment",
-            "house",
-            "hut",
-            "tree house"
+            "Glass and steel",
+            "Mud and dry grass",
+            "Wood and rope",
+            "Brick and paint"
           ],
-          "answer": "apartment",
-          "explanation": "In the city, many people live in an apartment."
+          "answer": "Mud and dry grass",
+          "explanation": "The text says people build adobe houses from mud and dry grass, and that the thick walls keep them cool."
         },
         {
-          "prompt": "What type of word is 'hut'?",
+          "prompt": "Which of these things would you find in a bathroom?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "sofa",
+            "nest",
+            "sink",
+            "ladder"
           ],
-          "answer": "Noun",
-          "explanation": "In the village, some people live in a hut made of mud and straw."
+          "answer": "sink",
+          "explanation": "A bathroom has a sink and a toilet for washing. A sofa belongs in the living room, a nest is a bird's home, and a ladder is not a bathroom thing."
         }
       ]
     }

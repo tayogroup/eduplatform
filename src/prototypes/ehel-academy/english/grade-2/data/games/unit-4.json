@@ -67,7 +67,7 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Giving or reflecting a lot of light.",
+          "clue": "Giving out or sending back a lot of light.",
           "answer": "bright"
         }
       ]
@@ -97,17 +97,19 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shadow.",
-            "a",
-            "make",
-            "you",
-            "light,",
+            "night.",
+            "at",
+            "dark",
+            "and",
+            "day",
             "the",
-            "block",
-            "you",
-            "When"
+            "in",
+            "blue",
+            "is",
+            "sky",
+            "The"
           ],
-          "answer": "When you block the light, you make a shadow."
+          "answer": "The sky is blue in the day and dark at night."
         },
         {
           "prompt": "Build the complete model sentence.",
@@ -116,11 +118,15 @@
             "turns",
             "sky",
             "the",
-            "evening",
+            "and",
+            "down",
+            "goes",
+            "sun",
             "the",
-            "In"
+            "sunset",
+            "At"
           ],
-          "answer": "In the evening the sky turns orange."
+          "answer": "At sunset the sun goes down and the sky turns orange."
         }
       ]
     },
@@ -133,37 +139,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which word means: The early part of the day, after the sun comes up.",
+          "prompt": "Yesterday I ____ at the moon for a long time.",
           "choices": [
-            "morning",
-            "light",
-            "sun",
-            "source"
+            "look",
+            "looks",
+            "looked",
+            "looking"
           ],
-          "answer": "morning",
-          "explanation": "morning: The early part of the day, after the sun comes up. In the morning we eat breakfast."
+          "answer": "looked",
+          "explanation": "Yesterday tells us the action is already finished, so the verb adds -ed. Look and looks are present forms, and looking needs a helping word."
         },
         {
-          "prompt": "What type of word is 'midday'?",
+          "prompt": "The sky is full of grey clouds and we cannot see the sun. What is the weather like?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "sunny",
+            "orange",
+            "midday",
+            "cloudy"
           ],
-          "answer": "Noun",
-          "explanation": "midday: The middle of the day, when the sun is highest. At midday my shadow is very short."
+          "answer": "cloudy",
+          "explanation": "Cloudy means many clouds cover the sky and hide the sun. Orange is a colour, midday is a time, and sunny is the opposite of what the question describes."
         },
         {
-          "prompt": "In the ____ the sky turns orange.",
+          "prompt": "The compound word sunrise is made from two little words. Which two?",
           "choices": [
-            "evening",
-            "source",
-            "block",
-            "sky"
+            "sun + rise",
+            "sea + side",
+            "rain + coat",
+            "moon + light"
           ],
-          "answer": "evening",
-          "explanation": "evening: The part of the day before night, when the sun sets. In the evening the sky turns orange."
+          "answer": "sun + rise",
+          "explanation": "Sunrise splits into sun and rise. The other three joins make seaside, raincoat and moonlight."
         }
       ]
     },
@@ -176,37 +182,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What type of word is 'sun'?",
+          "prompt": "The poet writes about his shadow as if it were a person. Which little word does he use instead of “it”?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "Him.",
+            "From the heels up to the head, which is his whole body.",
+            "It was pale and pink."
           ],
-          "answer": "Noun",
-          "explanation": "The sun rises in the east and sets in the west."
+          "answer": "Him.",
+          "explanation": "Review the unit text evidence: Him."
         },
         {
-          "prompt": "The sun is a ____ of light and heat.",
+          "prompt": "When is the shadow on a sundial short, and when is it long?",
           "choices": [
-            "source",
-            "shadow",
-            "light",
-            "sun"
+            "From the heels up to the head, which is his whole body.",
+            "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short.",
+            "It is short at midday, and it is long in the morning and long again in the evening."
           ],
-          "answer": "source",
-          "explanation": "The sun is a source of light and heat."
+          "answer": "It is short at midday, and it is long in the morning and long again in the evening.",
+          "explanation": "Review the unit text evidence: It is short at midday, and it is long in the morning and long again in the evening."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "Why was Amal's shadow long in the morning but short at midday?",
           "choices": [
-            "block",
-            "bolck",
-            "bloc",
-            "blockk"
+            "It disappeared for a moment, because the cloud blocked the light.",
+            "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short.",
+            "It jumps before him, so it seems to jump into bed first."
           ],
-          "answer": "block",
-          "explanation": "When you block the light, you make a shadow."
+          "answer": "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short.",
+          "explanation": "Review the unit text evidence: In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short."
         }
       ]
     },
@@ -220,15 +223,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 — Describe the Sky",
-          "target": "It is the ______ (morning / midday / evening)."
+          "target": "It is the ______."
         },
         {
           "prompt": "Speaking Game — Shadow Play",
-          "target": "I am making a ______ shadow."
+          "target": "My hands are making a shadow."
         },
         {
-          "prompt": "Speaking 5 - Shadow Scientist",
-          "target": "Explain how a shadow forms and compare a morning shadow with a midday shadow."
+          "prompt": "Speaking 5 — Shadow Scientist",
+          "target": "When my part of Earth faces the sun, it is day."
         }
       ]
     },
@@ -243,42 +246,41 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "sun.",
+            "night.",
+            "at",
+            "stars",
+            "and",
+            "moon",
             "the",
-            "covered",
-            "cloud",
-            "big",
-            "A"
+            "see",
+            "can",
+            "We"
           ],
-          "answer": "A big cloud covered the sun."
+          "answer": "We can see the moon and stars at night."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "midday.",
-            "at",
-            "short",
-            "and",
-            "morning",
+            "evening.",
             "the",
             "in",
-            "long",
+            "low",
             "is",
-            "shadow",
-            "My"
+            "sun",
+            "The"
           ],
-          "answer": "My shadow is long in the morning and short at midday."
+          "answer": "The sun is low in the evening."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "cloudy.",
-            "is",
-            "weather",
-            "the",
-            "Today"
+            "orange.",
+            "turns",
+            "sky",
+            "evening",
+            "The"
           ],
-          "answer": "Today the weather is cloudy."
+          "answer": "The evening sky turns orange."
         }
       ]
     },
@@ -400,7 +402,7 @@
             ],
             [
               "high",
-              "Far above the ground or another level."
+              "Far above the ground or above another level."
             ]
           ]
         },
@@ -409,15 +411,15 @@
           "pairs": [
             [
               "dark",
-              "Having very little light."
+              "Having very little light, so it is hard to see."
             ],
             [
               "sunny",
-              "Bright with plenty of sunshine."
+              "Bright with plenty of sunshine and very few clouds."
             ],
             [
               "rainy",
-              "With rain falling or likely to fall."
+              "With rain falling, or with rain likely to fall."
             ]
           ]
         }
@@ -434,35 +436,35 @@
         {
           "prompt": "The sun is a ____ of light and heat.",
           "choices": [
-            "source",
             "shadow",
-            "light",
-            "sun"
+            "midday",
+            "cloud",
+            "source"
           ],
           "answer": "source",
-          "explanation": "The sun is a source of light and heat."
+          "explanation": "A source is the place something comes from, so the sun is our biggest source of light. A shadow is dark, midday is a time, and a cloud blocks the light."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "Which sentence uses a describing word correctly?",
           "choices": [
-            "block",
-            "bolck",
-            "bloc",
-            "blockk"
+            "The sky is colour blue.",
+            "The sky is blue.",
+            "The sky blue is.",
+            "The sky is the blue."
           ],
-          "answer": "block",
-          "explanation": "When you block the light, you make a shadow."
+          "answer": "The sky is blue.",
+          "explanation": "The describing word blue comes straight after is. The word colour is not needed, and the other two sentences are in the wrong order."
         },
         {
-          "prompt": "Which word means: The space above the Earth that you see when you look up.",
+          "prompt": "Which sentence is written correctly in the present simple?",
           "choices": [
-            "sky",
-            "shadow",
-            "light",
-            "sun"
+            "The sun rise in the east.",
+            "The sun rises in the east.",
+            "The sun rising in the east.",
+            "The sun to rise in the east."
           ],
-          "answer": "sky",
-          "explanation": "sky: The space above the Earth that you see when you look up. The sky is blue in the day and dark at night."
+          "answer": "The sun rises in the east.",
+          "explanation": "The sun is an “it”, so its verb takes -s. The other three sentences have the wrong verb form."
         }
       ]
     },
@@ -475,37 +477,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'shadow' mean?",
+          "prompt": "What does the word shadow mean?",
           "choices": [
+            "The time when the sun goes down in the evening.",
+            "White or grey shapes in the sky made of tiny drops of water.",
             "A dark shape made when something blocks the light.",
-            "The brightness that lets us see things.",
-            "The star that gives Earth light and heat in the day.",
-            "The place where something comes from."
+            "The brightness that lets us see things."
           ],
           "answer": "A dark shape made when something blocks the light.",
-          "explanation": "My shadow follows me when the sun shines."
+          "explanation": "A shadow needs something solid to stop the light. The other three choices describe sunset, clouds and light."
         },
         {
-          "prompt": "Which word means: The brightness that lets us see things.",
+          "prompt": "Which of these gives Earth its light and heat in the day?",
           "choices": [
-            "light",
-            "shadow",
-            "sun",
-            "source"
+            "the sun",
+            "the evening",
+            "a raincoat",
+            "grey"
           ],
-          "answer": "light",
-          "explanation": "We need light to see things clearly."
+          "answer": "the sun",
+          "explanation": "The sun is the star closest to us, and it gives Earth both light and heat. Evening is a time, a raincoat is clothing, and grey is a colour."
         },
         {
-          "prompt": "What type of word is 'sun'?",
+          "prompt": "Which of these is the time when your part of Earth faces away from the sun?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "a cloud",
+            "night",
+            "a source",
+            "windy"
           ],
-          "answer": "Noun",
-          "explanation": "The sun rises in the east and sets in the west."
+          "answer": "night",
+          "explanation": "When your part of Earth has turned away from the sun, it is night. A cloud is a sky object, a source is where something comes from, and windy describes the weather."
         }
       ]
     }

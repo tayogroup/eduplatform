@@ -26,24 +26,24 @@
           "explanation": "head: The top part of your body, with your eyes, ears, nose and mouth."
         },
         {
-          "prompt": "Which word means: To jump on one foot.",
+          "prompt": "Which word means: To jump up and down on one foot.",
           "choices": [
             "head",
             "arm",
             "hop"
           ],
           "answer": "hop",
-          "explanation": "hop: To jump on one foot."
+          "explanation": "hop: To jump up and down on one foot."
         },
         {
-          "prompt": "Which word means: The clear drink your body needs every day.",
+          "prompt": "Which word means: The clear drink that your body needs every single day.",
           "choices": [
             "arm",
             "water",
             "head"
           ],
           "answer": "water",
-          "explanation": "water: The clear drink your body needs every day."
+          "explanation": "water: The clear drink that your body needs every single day."
         }
       ]
     },
@@ -57,7 +57,7 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The part from your shoulder to your hand.",
+          "clue": "The long part of your body from your shoulder to your hand.",
           "answer": "arm"
         },
         {
@@ -67,7 +67,7 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To rest with your eyes closed at night.",
+          "clue": "To rest with your eyes closed, usually at night.",
           "answer": "sleep"
         }
       ]
@@ -83,19 +83,17 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sunny.",
-            "is",
-            "it",
-            "when",
+            "outside.",
             "head",
             "my",
             "on",
             "hat",
+            "sun",
             "a",
             "wear",
             "I"
           ],
-          "answer": "I wear a hat on my head when it is sunny."
+          "answer": "I wear a sun hat on my head outside."
         },
         {
           "prompt": "Build the complete model sentence.",
@@ -113,14 +111,17 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "rabbits.",
+            "garden.",
+            "the",
+            "in",
+            "rabbits",
             "little",
             "like",
             "hop",
             "children",
             "The"
           ],
-          "answer": "The children hop like little rabbits."
+          "answer": "The children hop like little rabbits in the garden."
         }
       ]
     },
@@ -133,37 +134,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which word means: To move your hand from side to side to say hello or goodbye.",
+          "prompt": "Which of these helps your body stay healthy and strong?",
           "choices": [
-            "wave",
-            "arm",
-            "hand",
-            "finger"
+            "Watching television all day",
+            "Sitting still for many hours",
+            "Staying awake all night",
+            "Drinking water every day"
           ],
-          "answer": "wave",
-          "explanation": "wave: To move your hand from side to side to say hello or goodbye. I wave goodbye to my friend."
+          "answer": "Drinking water every day",
+          "explanation": "Water helps your body work well. The other three choices keep your body still or tired."
         },
         {
-          "prompt": "What type of word is 'hop'?",
+          "prompt": "In the poem “Reach for the Sky!”, where do you put your finger?",
           "choices": [
-            "Verb",
-            "Noun",
-            "Adjective",
-            "Adverb"
+            "On your knee",
+            "On your ear",
+            "On your nose",
+            "On your elbow"
           ],
-          "answer": "Verb",
-          "explanation": "hop: To jump on one foot. The children hop like little rabbits."
+          "answer": "On your nose",
+          "explanation": "Line three of the poem says, “Put your finger on your nose.” The other body parts are not in the poem."
         },
         {
-          "prompt": "We ____ over the puddles when it rains.",
+          "prompt": "In “The Big Race”, why did Theo fall over?",
           "choices": [
-            "jump",
-            "finger",
-            "tummy",
-            "toe"
+            "He was waving to the crowd and did not watch his feet.",
+            "He tripped over a big bag that somebody had left on the grass.",
+            "He stopped in the middle of the race to drink his water.",
+            "He was helping Amal to stand up again after her fall."
           ],
-          "answer": "jump",
-          "explanation": "jump: To push yourself off the ground with both feet. We jump over the puddles when it rains."
+          "answer": "He was waving to the crowd and did not watch his feet.",
+          "explanation": "The story says Theo was so busy waving that he did not look at his feet, and then he tripped."
         }
       ]
     },
@@ -176,37 +177,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What type of word is 'hand'?",
+          "prompt": "Which line of the poem is said at the beginning and then again at the end?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "“Reach for the sky!”",
+            "It helps you stay strong.",
+            "She shouted, “Keep going, Leo!”"
           ],
-          "answer": "Noun",
-          "explanation": "I wash my hands before I eat."
+          "answer": "“Reach for the sky!”",
+          "explanation": "Review the unit text evidence: “Reach for the sky!”"
         },
         {
-          "prompt": "I hold my pencil with my ____s.",
+          "prompt": "What is the special day at school called in this listening text?",
           "choices": [
-            "finger",
-            "head",
-            "arm",
-            "hand"
+            "It helps you stay strong.",
+            "He was waving to the crowd, so he did not look at his feet.",
+            "“Get Up and Move” day."
           ],
-          "answer": "finger",
-          "explanation": "I hold my pencil with my fingers."
+          "answer": "“Get Up and Move” day.",
+          "explanation": "Review the unit text evidence: “Get Up and Move” day."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "Why did Theo trip and fall in the relay race?",
           "choices": [
-            "tummy",
-            "tmumy",
-            "tumm",
-            "tummyy"
+            "She walked back and helped Theo stand up. Accept any reason that uses the story, such as Theo looking sad or rubbing his hurt...",
+            "He was waving to the crowd, so he did not look at his feet.",
+            "Eating healthy food."
           ],
-          "answer": "tummy",
-          "explanation": "My tummy feels full after lunch."
+          "answer": "He was waving to the crowd, so he did not look at his feet.",
+          "explanation": "Review the unit text evidence: He was waving to the crowd, so he did not look at his feet."
         }
       ]
     },
@@ -223,12 +221,12 @@
           "target": "This is my ______."
         },
         {
-          "prompt": "Speaking Game — Simon Says",
-          "target": "Simon says, touch your toes!"
+          "prompt": "Speaking Game — Leader Says",
+          "target": "The leader says, touch your toes!"
         },
         {
-          "prompt": "Speaking 5 - Healthy Habit Interview",
-          "target": "and answer six questions about moving, food, water and sleep."
+          "prompt": "Speaking 5 — Healthy Habit Interview",
+          "target": "What exercise do you enjoy?"
         }
       ]
     },
@@ -243,7 +241,9 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "understand.",
+            "question.",
+            "the",
+            "understand",
             "I",
             "when",
             "head",
@@ -251,7 +251,7 @@
             "nod",
             "I"
           ],
-          "answer": "I nod my head when I understand."
+          "answer": "I nod my head when I understand the question."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -290,18 +290,18 @@
         {
           "prompt": "What does 'clap' mean in this unit?",
           "choices": [
-            "To hit your hands together to make a sound.",
+            "To hit your two hands together to make a sound.",
             "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The part from your shoulder to your hand."
+            "The long part of your body from your shoulder to your hand."
           ],
-          "answer": "To hit your hands together to make a sound.",
-          "explanation": "clap: To hit your hands together to make a sound."
+          "answer": "To hit your two hands together to make a sound.",
+          "explanation": "clap: To hit your two hands together to make a sound."
         },
         {
           "prompt": "What does 'energy' mean in this unit?",
           "choices": [
             "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The part from your shoulder to your hand.",
+            "The long part of your body from your shoulder to your hand.",
             "The power you get from food and rest to play and learn."
           ],
           "answer": "The power you get from food and rest to play and learn.",
@@ -311,11 +311,11 @@
           "prompt": "What does 'arm' mean in this unit?",
           "choices": [
             "One of the five long parts at the end of your hand.",
-            "The part from your shoulder to your hand.",
+            "The long part of your body from your shoulder to your hand.",
             "The top part of your body, with your eyes, ears, nose and mouth."
           ],
-          "answer": "The part from your shoulder to your hand.",
-          "explanation": "arm: The part from your shoulder to your hand."
+          "answer": "The long part of your body from your shoulder to your hand.",
+          "explanation": "arm: The long part of your body from your shoulder to your hand."
         }
       ]
     },
@@ -372,15 +372,15 @@
           "pairs": [
             [
               "hand",
-              "The part at the end of your arm, with fingers."
+              "The part at the end of your arm, with a thumb and fingers."
             ],
             [
               "tummy",
-              "The front of your body below your chest (also called the stomach)."
+              "The front part of your body below your chest, also called the stomach."
             ],
             [
               "hop",
-              "To jump on one foot."
+              "To jump up and down on one foot."
             ]
           ]
         },
@@ -389,15 +389,15 @@
           "pairs": [
             [
               "clap",
-              "To hit your hands together to make a sound."
+              "To hit your two hands together to make a sound."
             ],
             [
               "exercise",
-              "Moving your body to keep it strong and fit."
+              "Moving your body on purpose to keep it fit and strong."
             ],
             [
               "strong",
-              "Having lots of power in your body."
+              "Having lots of power in your body or your muscles."
             ]
           ]
         },
@@ -410,11 +410,11 @@
             ],
             [
               "turn",
-              "To move your body around to face another way."
+              "To move your body around so that you face another way."
             ],
             [
               "flap",
-              "To move your arms up and down like wings."
+              "To move your arms up and down like the wings of a bird."
             ]
           ]
         }
@@ -429,37 +429,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "I hold my pencil with my ____s.",
+          "prompt": "Which sentence uses the present continuous correctly?",
           "choices": [
-            "finger",
-            "head",
-            "arm",
-            "hand"
+            "She jumping on the grass.",
+            "She are jumping on the grass.",
+            "She am jumping on the grass.",
+            "She is jumping on the grass."
           ],
-          "answer": "finger",
-          "explanation": "I hold my pencil with my fingers."
+          "answer": "She is jumping on the grass.",
+          "explanation": "She takes the helping word is. Am belongs with I, and are belongs with you, we and they."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "Which is the correct -ing form of the verb hop?",
           "choices": [
-            "tummy",
-            "tmumy",
-            "tumm",
-            "tummyy"
+            "hoping",
+            "hopping",
+            "hopps",
+            "hopped"
           ],
-          "answer": "tummy",
-          "explanation": "My tummy feels full after lunch."
+          "answer": "hopping",
+          "explanation": "Hop is a short word with one vowel, so the p doubles before -ing. Hoping comes from hope, and hopped is a past form."
         },
         {
-          "prompt": "Which word means: One of the five small parts at the end of your foot.",
+          "prompt": "Which of these sentences is a command?",
           "choices": [
-            "toe",
-            "head",
-            "arm",
-            "hand"
+            "Touch your toes.",
+            "My toes are cold.",
+            "Are your toes cold?",
+            "I am touching my toes."
           ],
-          "answer": "toe",
-          "explanation": "toe: One of the five small parts at the end of your foot. I can wiggle my toes inside my shoes."
+          "answer": "Touch your toes.",
+          "explanation": "A command starts with the action word and tells someone to do something. The others describe, ask or report."
         }
       ]
     },
@@ -472,37 +472,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'head' mean?",
+          "prompt": "Which word means the part at the end of your arm, with fingers?",
           "choices": [
-            "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The part from your shoulder to your hand.",
-            "The part at the end of your arm, with fingers.",
-            "One of the five long parts at the end of your hand."
-          ],
-          "answer": "The top part of your body, with your eyes, ears, nose and mouth.",
-          "explanation": "I wear a hat on my head when it is sunny."
-        },
-        {
-          "prompt": "Which word means: The part from your shoulder to your hand.",
-          "choices": [
-            "arm",
-            "head",
             "hand",
-            "finger"
+            "water",
+            "sleep",
+            "energy"
           ],
-          "answer": "arm",
-          "explanation": "I use my arms to carry my school bag."
+          "answer": "hand",
+          "explanation": "A hand sits at the end of each arm. Water, sleep and energy are health words, not body parts."
         },
         {
-          "prompt": "What type of word is 'hand'?",
+          "prompt": "Sami holds his pencil with his ____s.",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "toe",
+            "finger",
+            "water",
+            "turn"
           ],
-          "answer": "Noun",
-          "explanation": "I wash my hands before I eat."
+          "answer": "finger",
+          "explanation": "We hold a pencil between our fingers and thumb. Toes are on your feet, and water and turn are not body parts of the hand."
+        },
+        {
+          "prompt": "Which word means to jump up and down on one foot?",
+          "choices": [
+            "clap",
+            "water",
+            "hop",
+            "head"
+          ],
+          "answer": "hop",
+          "explanation": "Hopping uses one foot only. Clapping uses hands, water is a drink, and head is a body part."
         }
       ]
     }

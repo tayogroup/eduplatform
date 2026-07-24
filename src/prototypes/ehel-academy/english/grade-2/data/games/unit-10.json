@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The word that a person is called.",
+          "prompt": "Which word means: The word that people call you when they talk to you.",
           "choices": [
             "name",
             "head",
             "butterfly"
           ],
           "answer": "name",
-          "explanation": "name: The word that a person is called."
+          "explanation": "name: The word that people call you when they talk to you."
         },
         {
-          "prompt": "Which word means: A person whose job is to clean windows.",
+          "prompt": "Which word means: A person whose job is to clean the windows of houses and shops.",
           "choices": [
             "name",
             "head",
             "window cleaner"
           ],
           "answer": "window cleaner",
-          "explanation": "window cleaner: A person whose job is to clean windows."
+          "explanation": "window cleaner: A person whose job is to clean the windows of houses and shops."
         },
         {
-          "prompt": "Which word means: The part at the end of your arm, with fingers.",
+          "prompt": "Which word means: The part at the end of your arm, with a thumb and fingers.",
           "choices": [
             "head",
             "hand",
             "name"
           ],
           "answer": "hand",
-          "explanation": "hand: The part at the end of your arm, with fingers."
+          "explanation": "hand: The part at the end of your arm, with a thumb and fingers."
         }
       ]
     },
@@ -57,12 +57,12 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who lives near you.",
+          "clue": "A person who lives near you, on your street or in your building.",
           "answer": "neighbour"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person you work or play with.",
+          "clue": "A person you work or play with in a pair.",
           "answer": "partner"
         },
         {
@@ -83,45 +83,47 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "name?",
-            "your",
-            "is",
-            "What",
-            "Samira.",
+            "book.",
+            "my",
+            "on",
+            "it",
+            "write",
+            "I",
+            "and",
+            "Amal,",
             "is",
             "name",
             "My"
           ],
-          "answer": "My name is Samira. What is your name?"
+          "answer": "My name is Amal, and I write it on my book."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shade.",
-            "us",
-            "gives",
-            "and",
-            "air",
-            "the",
-            "clean",
-            "helps",
-            "trees",
-            "Planting"
-          ],
-          "answer": "Planting trees helps clean the air and gives us shade."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "field.",
-            "the",
-            "in",
-            "playing",
+            "hands.",
+            "two",
+            "my",
+            "on",
+            "fingers",
+            "ten",
             "are",
-            "children",
-            "Twenty"
+            "There"
           ],
-          "answer": "Twenty children are playing in the field."
+          "answer": "There are ten fingers on my two hands."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "game.",
+            "reading",
+            "the",
+            "for",
+            "partner",
+            "my",
+            "is",
+            "Leo"
+          ],
+          "answer": "Leo is my partner for the reading game."
         }
       ]
     },
@@ -134,37 +136,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence describes the past?",
+          "prompt": "Which sentence tells you about the past?",
           "choices": [
-            "I wrote a poem.",
-            "I will write a poem.",
-            "I am writing a poem.",
-            "I write poems."
+            "We planted a tree last term.",
+            "We are planting a tree today.",
+            "We will plant a tree in Year 3.",
+            "We plant trees every year."
           ],
-          "answer": "I wrote a poem.",
-          "explanation": "Wrote tells about a completed past action."
+          "answer": "We planted a tree last term.",
+          "explanation": "Planted ends in -ed and last term is finished, so this is the past from Unit 7."
         },
         {
-          "prompt": "Which sentence states a future goal?",
+          "prompt": "There ______ three pictures beside the booklet.",
           "choices": [
-            "I will read longer stories.",
-            "I read a story.",
-            "I am reading now.",
-            "I wrote a story."
+            "is",
+            "am",
+            "are",
+            "was"
           ],
-          "answer": "I will read longer stories.",
-          "explanation": "Will expresses a future action or goal."
+          "answer": "are",
+          "explanation": "Three pictures are more than one, so we use There are, as Unit 8 taught."
         },
         {
-          "prompt": "What is the best feedback?",
+          "prompt": "Which word means a large building with many different shops inside it?",
           "choices": [
-            "Your details are clear; add punctuation to the last sentence.",
-            "It is bad.",
-            "Change everything.",
-            "I do not like it."
+            "library",
+            "shopping center",
+            "apartment",
+            "hut"
           ],
-          "answer": "Your details are clear; add punctuation to the last sentence.",
-          "explanation": "Useful feedback is kind, specific and actionable."
+          "answer": "shopping center",
+          "explanation": "A library holds books, an apartment is rooms to live in and a hut is a small home. Only the shopping center holds many shops."
         }
       ]
     },
@@ -177,34 +179,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What six earlier pieces did Samira find in her folder?",
+          "prompt": "What did Amal find at the very front of her English folder?",
           "choices": [
-            "Her welcome card, neighbourhood poem, firefighter drawing, sky journal, measurement table, garden promise and city map are named;...",
-            "She introduced herself and wrote about a neighbour, healthy habit, plant, home and city place, using pictures, labels and...",
-            "Use the kind, specific suggestion to improve the project."
+            "Her welcome card from Unit 1, with her name written in careful blue letters.",
+            "Her hands felt cold, and she had to breathe slowly before she spoke.",
+            "It wants you to read every page aloud before you hand the booklet in."
           ],
-          "answer": "Her welcome card, neighbourhood poem, firefighter drawing, sky journal, measurement table, garden promise and city map are named;...",
-          "explanation": "Review the unit text evidence: Her welcome card, neighbourhood poem, firefighter drawing, sky journal, measurement table, garden promise and city map are named;..."
+          "answer": "Her welcome card from Unit 1, with her name written in careful blue letters.",
+          "explanation": "Review the unit text evidence: Her welcome card from Unit 1, with her name written in careful blue letters."
         },
         {
-          "prompt": "What was Samira's next English goal?",
+          "prompt": "Amal wrote that she wants to read a long chapter book next year. What does that tell you about her reading now?",
           "choices": [
-            "She introduced herself and wrote about a neighbour, healthy habit, plant, home and city place, using pictures, labels and...",
-            "Reading aloud helps them notice unclear language, missing words and punctuation before submitting.",
-            "She wanted to read longer stories by herself."
+            "Her hands felt cold, and she had to breathe slowly before she spoke.",
+            "Page four, because it shows the sun and her long shadow.",
+            "She can already read shorter books by herself, so she is ready for something longer."
           ],
-          "answer": "She wanted to read longer stories by herself.",
-          "explanation": "Review the unit text evidence: She wanted to read longer stories by herself."
+          "answer": "She can already read shorter books by herself, so she is ready for something longer.",
+          "explanation": "Review the unit text evidence: She can already read shorter books by herself, so she is ready for something longer."
         },
         {
-          "prompt": "Why should learners read every page aloud?",
+          "prompt": "The brief says your ears will find the missing full stops. What does it want you to do?",
           "choices": [
-            "Her plant page, because she used labels and complete sentences.",
-            "Reading aloud helps them notice unclear language, missing words and punctuation before submitting.",
-            "She remembered to breathe and speak slowly."
+            "Adam said it was too short, so she added two facts about planting.",
+            "It wants you to read every page aloud before you hand the booklet in.",
+            "She can already read shorter books by herself, so she is ready for something longer."
           ],
-          "answer": "Reading aloud helps them notice unclear language, missing words and punctuation before submitting.",
-          "explanation": "Review the unit text evidence: Reading aloud helps them notice unclear language, missing words and punctuation before submitting."
+          "answer": "It wants you to read every page aloud before you hand the booklet in.",
+          "explanation": "Review the unit text evidence: It wants you to read every page aloud before you hand the booklet in."
         }
       ]
     },
@@ -217,16 +219,16 @@
       "description": "Listen, record, review and submit useful unit language.",
       "rounds": [
         {
-          "prompt": "Speaking 1 - Introduce My English World",
-          "target": "Give a 30-second introduction with your name, project title and the four earlier units you selected."
+          "prompt": "Speaking 1 — Introduce My English World",
+          "target": "My name is ______."
         },
         {
-          "prompt": "Speaking 3 - Read Aloud with Expression",
-          "target": "Planting trees helps clean the air and gives us shade."
+          "prompt": "Speaking 3 — Read Aloud with Expression",
+          "target": "There are ten fingers on my two hands."
         },
         {
-          "prompt": "Speaking 5 - Rehearse and Answer Questions",
-          "target": "Give a two-minute rehearsal, then answer one What question and one How question from a partner."
+          "prompt": "Speaking 5 — Answer a Visitor's Question",
+          "target": "Which unit did this page come from?"
         }
       ]
     },
@@ -241,7 +243,24 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "eat.",
+            "school.",
+            "before",
+            "morning",
+            "every",
+            "flowers",
+            "the",
+            "watering",
+            "is",
+            "Nora"
+          ],
+          "answer": "Nora is watering the flowers every morning before school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "lunch.",
+            "my",
+            "eat",
             "I",
             "before",
             "hands",
@@ -249,35 +268,24 @@
             "wash",
             "I"
           ],
-          "answer": "I wash my hands before I eat."
+          "answer": "I wash my hands before I eat my lunch."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "please?",
-            "me,",
-            "for",
-            "name",
-            "your",
-            "spell",
-            "you",
-            "Can"
+            "straw.",
+            "and",
+            "mud",
+            "of",
+            "made",
+            "hut",
+            "a",
+            "in",
+            "live",
+            "people",
+            "Some"
           ],
-          "answer": "Can you spell your name for me, please?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "thing.",
-            "one",
-            "than",
-            "more",
-            "for",
-            "are",
-            "there",
-            "Use"
-          ],
-          "answer": "Use there are for more than one thing."
+          "answer": "Some people live in a hut made of mud and straw."
         }
       ]
     },
@@ -293,7 +301,7 @@
           "prompt": "What does 'light' mean in this unit?",
           "choices": [
             "The brightness that lets us see things.",
-            "The word that a person is called.",
+            "The word that people call you when they talk to you.",
             "The top part of your body, with your eyes, ears, nose and mouth."
           ],
           "answer": "The brightness that lets us see things.",
@@ -302,19 +310,19 @@
         {
           "prompt": "What does 'thirty' mean in this unit?",
           "choices": [
-            "The word that a person is called.",
+            "The word that people call you when they talk to you.",
             "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The number 30."
+            "The number 30, which is three groups of ten ones."
           ],
-          "answer": "The number 30.",
-          "explanation": "thirty: The number 30."
+          "answer": "The number 30, which is three groups of ten ones.",
+          "explanation": "thirty: The number 30, which is three groups of ten ones."
         },
         {
           "prompt": "What does 'head' mean in this unit?",
           "choices": [
             "An insect with large, colourful wings that flies from flower to flower.",
             "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The word that a person is called."
+            "The word that people call you when they talk to you."
           ],
           "answer": "The top part of your body, with your eyes, ears, nose and mouth.",
           "explanation": "head: The top part of your body, with your eyes, ears, nose and mouth."
@@ -382,7 +390,7 @@
             ],
             [
               "library",
-              "A building where books are kept to read or borrow."
+              "A building where you can read books and borrow them to take home."
             ]
           ]
         },
@@ -395,11 +403,11 @@
             ],
             [
               "watering",
-              "Giving water to plants to help them grow."
+              "Giving water to plants so that they do not dry out."
             ],
             [
               "like",
-              "To enjoy something or think it is good."
+              "To enjoy something or to think that it is good."
             ]
           ]
         },
@@ -408,7 +416,7 @@
           "pairs": [
             [
               "thirty",
-              "The number 30."
+              "The number 30, which is three groups of ten ones."
             ],
             [
               "hut",
@@ -416,7 +424,7 @@
             ],
             [
               "reporter",
-              "A person who finds out news and writes stories about it."
+              "A person who finds out news and writes or tells stories about it."
             ]
           ]
         }
@@ -431,37 +439,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "There ___ three pictures beside the booklet.",
+          "prompt": "Which sentence compares two things correctly?",
           "choices": [
-            "are",
-            "is",
-            "am",
-            "was"
-          ],
-          "answer": "are",
-          "explanation": "Use there are for more than one thing."
-        },
-        {
-          "prompt": "Which sentence gives a correct comparison?",
-          "choices": [
+            "The metre is more long than the centimetre.",
+            "The metre is longest than the centimetre.",
             "The metre is longer than the centimetre.",
-            "The metre is long than the centimetre.",
-            "The metre longer the centimetre.",
-            "The metre is longest than."
+            "The metre long than the centimetre."
           ],
           "answer": "The metre is longer than the centimetre.",
-          "explanation": "Longer than is the correct comparison form."
+          "explanation": "Short describing words take -er plus than, which Unit 5 taught for measuring."
         },
         {
-          "prompt": "Which sentence describes an action happening now?",
+          "prompt": "Which word tells you a position?",
           "choices": [
-            "Selma is reading.",
-            "Selma read yesterday.",
-            "Selma will read.",
-            "Selma likes books."
+            "quickly",
+            "under",
+            "butterfly",
+            "shouted"
           ],
-          "answer": "Selma is reading.",
-          "explanation": "Is plus reading describes an action happening now."
+          "answer": "under",
+          "explanation": "Under is a position word from Unit 6. Quickly tells how, butterfly names an insect and shouted is an action."
+        },
+        {
+          "prompt": "Which word is a describing word?",
+          "choices": [
+            "jump",
+            "library",
+            "quickly",
+            "bright"
+          ],
+          "answer": "bright",
+          "explanation": "Bright describes the sky, as in Unit 4. Jump is an action, library names a place and quickly tells how."
         }
       ]
     },
@@ -474,37 +482,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "This is Samira. ___ is presenting her booklet.",
+          "prompt": "This is Amal. ______ is presenting her booklet to the class.",
           "choices": [
-            "She",
             "He",
+            "She",
             "They",
             "We"
           ],
           "answer": "She",
-          "explanation": "Use she for one girl or woman."
+          "explanation": "Amal is one girl, so we use she. Unit 1 taught this pronoun."
         },
         {
-          "prompt": "The learners ___ listening carefully.",
+          "prompt": "The firefighters ______ helping on Warta Street.",
           "choices": [
-            "are",
             "is",
             "am",
-            "was"
+            "was",
+            "are"
           ],
           "answer": "are",
-          "explanation": "Use are with the plural subject learners."
+          "explanation": "Firefighters is more than one person, so the verb is are. This is the Unit 2 pattern."
         },
         {
-          "prompt": "Which question asks about a person?",
+          "prompt": "Which sentence is a command?",
           "choices": [
-            "Who helped you?",
-            "What is your topic?",
-            "Where is the book?",
-            "How did you revise?"
+            "Point at page four.",
+            "Amal points at page four.",
+            "She is pointing at page four.",
+            "Amal will point at page four."
           ],
-          "answer": "Who helped you?",
-          "explanation": "Who asks about a person."
+          "answer": "Point at page four.",
+          "explanation": "A command starts with the plain verb and tells somebody what to do, as in Unit 3."
         }
       ]
     }

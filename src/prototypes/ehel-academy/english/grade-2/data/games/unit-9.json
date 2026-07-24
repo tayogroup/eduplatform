@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A building where books are kept to read or borrow.",
+          "prompt": "Which word means: A building where you can read books and borrow them to take home.",
           "choices": [
             "library",
             "shopping center",
-            "ferry"
+            "underground"
           ],
           "answer": "library",
-          "explanation": "library: A building where books are kept to read or borrow."
+          "explanation": "library: A building where you can read books and borrow them to take home."
         },
         {
-          "prompt": "Which word means: An aircraft that can fly straight up and hover.",
+          "prompt": "Which word means: A busy place where people buy and sell food and other things.",
           "choices": [
             "library",
             "shopping center",
-            "helicopter"
+            "market"
           ],
-          "answer": "helicopter",
-          "explanation": "helicopter: An aircraft that can fly straight up and hover."
+          "answer": "market",
+          "explanation": "market: A busy place where people buy and sell food and other things."
         },
         {
-          "prompt": "Which word means: A reptile with a hard shell.",
+          "prompt": "Which word means: Words that tell you which way to go.",
           "choices": [
             "shopping center",
-            "turtle",
+            "directions",
             "library"
           ],
-          "answer": "turtle",
-          "explanation": "turtle: A reptile with a hard shell."
+          "answer": "directions",
+          "explanation": "directions: Words that tell you which way to go."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A train that runs below the city streets.",
+          "clue": "A train that runs in tunnels below the city streets.",
           "answer": "underground"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A drawing that shows where places are.",
-          "answer": "map"
+          "clue": "A flying machine that can go straight up and hover in one place.",
+          "answer": "helicopter"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very impressive or surprising.",
-          "answer": "amazing"
+          "clue": "A sea animal with eight long arms and no bones at all.",
+          "answer": "octopus"
         }
       ]
     },
@@ -83,7 +83,10 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "books.",
+            "sea.",
+            "the",
+            "about",
+            "books",
             "borrow",
             "to",
             "library",
@@ -92,33 +95,34 @@
             "go",
             "I"
           ],
-          "answer": "I go to the library to borrow books."
+          "answer": "I go to the library to borrow books about the sea."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "river.",
+            "museum.",
             "the",
-            "across",
-            "ferry",
+            "to",
+            "underground",
             "the",
             "took",
             "We"
           ],
-          "answer": "We took the ferry across the river."
+          "answer": "We took the underground to the museum."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "helicopter.",
-            "a",
-            "from",
-            "city",
+            "market.",
             "the",
-            "saw",
-            "We"
+            "at",
+            "fish",
+            "and",
+            "fruit",
+            "buys",
+            "Mum"
           ],
-          "answer": "We saw the city from a helicopter."
+          "answer": "Mum buys fruit and fish at the market."
         }
       ]
     },
@@ -131,37 +135,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which word means: The many cars and vehicles moving on the roads.",
+          "prompt": "Which sentence uses the present simple correctly?",
           "choices": [
-            "traffic",
-            "shopping center",
-            "underground",
-            "ferry"
+            "The ferry take people across the river.",
+            "The ferry takes people across the river.",
+            "The ferry taking people across the river.",
+            "The ferry taked people across the river."
           ],
-          "answer": "traffic",
-          "explanation": "traffic: The many cars and vehicles moving on the roads. There is a lot of traffic in the city center."
+          "answer": "The ferry takes people across the river.",
+          "explanation": "One ferry is an it, so the verb needs the -s ending: takes. The other three leave out the -s, use an -ing form, or invent a past form."
         },
         {
-          "prompt": "What type of word is 'helicopter'?",
+          "prompt": "Which sentence talks about the future?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "Tomorrow we will ride the ferry.",
+            "Yesterday we went to the aquarium.",
+            "We ate fruit at the market.",
+            "Last week we saw the sharks."
           ],
-          "answer": "Noun",
-          "explanation": "helicopter: An aircraft that can fly straight up and hover. We saw the city from a helicopter."
+          "answer": "Tomorrow we will ride the ferry.",
+          "explanation": "Tomorrow and will both point forward. The other three sentences use the past verbs went, ate and saw."
         },
         {
-          "prompt": "We take the ____ to school every morning.",
+          "prompt": "Your friend says, “I like the library.” Which reply agrees politely?",
           "choices": [
-            "bus",
-            "ferry",
-            "Ferris wheel",
-            "market"
+            "I don't.",
+            "I no like it.",
+            "Why do you?",
+            "I do too!"
           ],
-          "answer": "bus",
-          "explanation": "bus: A large vehicle that carries many people. We take the bus to school every morning."
+          "answer": "I do too!",
+          "explanation": "“I do too!” agrees. “I don't.” disagrees, “I no like it.” is not correct English, and “Why do you?” asks a question instead of giving an opinion."
         }
       ]
     },
@@ -174,37 +178,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What type of word is 'underground'?",
+          "prompt": "What does the poem tell you to look around at when you stand at the zebra crossing?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "City places and city faces.",
+            "Places, faces and laces.",
+            "They took the bus into the city."
           ],
-          "answer": "Noun",
-          "explanation": "We took the underground to the museum."
+          "answer": "City places and city faces.",
+          "explanation": "Review the unit text evidence: City places and city faces."
         },
         {
-          "prompt": "We took the ____ across the river.",
+          "prompt": "The schedule calls one animal clever and another one hungry. Which animal is which?",
           "choices": [
-            "ferry",
-            "library",
-            "shopping center",
-            "underground"
+            "Places, faces and laces.",
+            "She smelled fresh bread and sweet mangoes, and people were buying fish, fruit and bright cloth.",
+            "The octopus is clever and the shark is hungry."
           ],
-          "answer": "ferry",
-          "explanation": "We took the ferry across the river."
+          "answer": "The octopus is clever and the shark is hungry.",
+          "explanation": "Review the unit text evidence: The octopus is clever and the shark is hungry."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "Who did the children meet near the shopping center, and what was his problem?",
           "choices": [
-            "Ferris wheel",
-            "Freriswheel",
-            "Ferriswhee",
-            "Ferriswheell"
+            "She smelled fresh bread and sweet mangoes, and people were buying fish, fruit and bright cloth.",
+            "An old man who was lost and needed to find the hospital, because his daughter was there with a new baby.",
+            "Because the words are shouted, and shouting shows there is only a short, safe moment left to cross."
           ],
-          "answer": "Ferris wheel",
-          "explanation": "We saw the whole city from the Ferris wheel."
+          "answer": "An old man who was lost and needed to find the hospital, because his daughter was there with a new baby.",
+          "explanation": "Review the unit text evidence: An old man who was lost and needed to find the hospital, because his daughter was there with a new baby."
         }
       ]
     },
@@ -218,15 +219,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 — Talk About City Places",
-          "target": "This is a ______."
+          "target": "This is a / an ______."
         },
         {
           "prompt": "Speaking Game — Mystery Animal",
-          "target": "I am thinking of an animal. It is ______ and ______."
+          "target": "It is ______ and ______."
         },
         {
-          "prompt": "Speaking 5 - Aquarium Expert",
-          "target": "Describe three sea animals and state two true facts about each."
+          "prompt": "Speaking 5 — Aquarium Expert",
+          "target": "An octopus has eight arms."
         }
       ]
     },
@@ -241,40 +242,46 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "light.",
-            "traffic",
+            "morning.",
+            "every",
+            "school",
+            "to",
+            "bus",
+            "the",
+            "take",
+            "We"
+          ],
+          "answer": "We take the bus to school every morning."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "market.",
             "the",
             "to",
-            "ahead",
-            "straight",
-            "Walk"
+            "directions",
+            "us",
+            "gave",
+            "woman",
+            "kind",
+            "A"
           ],
-          "answer": "Walk straight ahead to the traffic light."
+          "answer": "A kind woman gave us directions to the market."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "shell.",
-            "its",
-            "into",
-            "head",
-            "its",
-            "pulled",
-            "turtle",
-            "The"
+            "walk.",
+            "they",
+            "when",
+            "side",
+            "to",
+            "side",
+            "from",
+            "waddle",
+            "Penguins"
           ],
-          "answer": "The turtle pulled its head into its shell."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "animals.",
-            "clever",
-            "very",
-            "are",
-            "Octopuses"
-          ],
-          "answer": "Octopuses are very clever animals."
+          "answer": "Penguins waddle from side to side when they walk."
         }
       ]
     },
@@ -287,34 +294,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'map' mean in this unit?",
+          "prompt": "What does 'traffic' mean in this unit?",
           "choices": [
-            "A drawing that shows where places are.",
-            "A building where books are kept to read or borrow.",
-            "A large building with many shops inside."
+            "All the cars, buses and lorries moving on the roads.",
+            "A building where you can read books and borrow them to take home.",
+            "A large building with many different shops inside it."
           ],
-          "answer": "A drawing that shows where places are.",
-          "explanation": "map: A drawing that shows where places are."
+          "answer": "All the cars, buses and lorries moving on the roads.",
+          "explanation": "traffic: All the cars, buses and lorries moving on the roads."
         },
         {
-          "prompt": "What does 'amazing' mean in this unit?",
+          "prompt": "What does 'octopus' mean in this unit?",
           "choices": [
-            "A building where books are kept to read or borrow.",
-            "A large building with many shops inside.",
-            "Very impressive or surprising."
+            "A building where you can read books and borrow them to take home.",
+            "A large building with many different shops inside it.",
+            "A sea animal with eight long arms and no bones at all."
           ],
-          "answer": "Very impressive or surprising.",
-          "explanation": "amazing: Very impressive or surprising."
+          "answer": "A sea animal with eight long arms and no bones at all.",
+          "explanation": "octopus: A sea animal with eight long arms and no bones at all."
         },
         {
           "prompt": "What does 'shopping center' mean in this unit?",
           "choices": [
-            "A boat that carries people across water.",
-            "A large building with many shops inside.",
-            "A building where books are kept to read or borrow."
+            "A train that runs in tunnels below the city streets.",
+            "A large building with many different shops inside it.",
+            "A building where you can read books and borrow them to take home."
           ],
-          "answer": "A large building with many shops inside.",
-          "explanation": "shopping center: A large building with many shops inside."
+          "answer": "A large building with many different shops inside it.",
+          "explanation": "shopping center: A large building with many different shops inside it."
         }
       ]
     },
@@ -327,34 +334,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'octopus'?",
+          "prompt": "What type of word is 'map'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "octopus is used as a noun in this dictionary sense."
+          "explanation": "map is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'huge'?",
+          "prompt": "What type of word is 'turtle'?",
           "choices": [
-            "Noun",
             "Verb",
-            "Adjective"
+            "Adjective",
+            "Noun"
           ],
-          "answer": "Adjective",
-          "explanation": "huge is used as a adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "turtle is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'market'?",
+          "prompt": "What type of word is 'Ferris wheel'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "market is used as a noun in this dictionary sense."
+          "explanation": "Ferris wheel is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -371,15 +378,15 @@
           "pairs": [
             [
               "underground",
-              "A train that runs below the city streets."
+              "A train that runs in tunnels below the city streets."
             ],
             [
-              "Ferris wheel",
-              "A big wheel at a park that you ride for fun."
+              "ferry",
+              "A boat that carries people and cars across water."
             ],
             [
-              "helicopter",
-              "An aircraft that can fly straight up and hover."
+              "market",
+              "A busy place where people buy and sell food and other things."
             ]
           ]
         },
@@ -387,16 +394,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
+              "helicopter",
+              "A flying machine that can go straight up and hover in one place."
+            ],
+            [
               "map",
-              "A drawing that shows where places are."
+              "A drawing that shows you where places are."
             ],
             [
-              "aquarium",
-              "A building where sea animals are kept for people to see."
-            ],
-            [
-              "penguin",
-              "A black-and-white bird that swims but cannot fly."
+              "directions",
+              "Words that tell you which way to go."
             ]
           ]
         },
@@ -404,16 +411,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "amazing",
-              "Very impressive or surprising."
+              "octopus",
+              "A sea animal with eight long arms and no bones at all."
             ],
             [
-              "clever",
-              "Quick to learn or understand."
+              "turtle",
+              "A slow sea animal with a hard shell on its back."
             ],
             [
-              "scary",
-              "Making you feel afraid."
+              "library",
+              "A building where you can read books and borrow them to take home."
             ]
           ]
         }
@@ -428,37 +435,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "We took the ____ across the river.",
+          "prompt": "We took the ____ across the river to the other side.",
           "choices": [
+            "market",
             "ferry",
             "library",
-            "shopping center",
-            "underground"
+            "shark"
           ],
           "answer": "ferry",
-          "explanation": "We took the ferry across the river."
+          "explanation": "A ferry is the boat that carries people across water. A market and a library are buildings, and a shark is a sea animal."
         },
         {
           "prompt": "Which spelling is correct?",
           "choices": [
-            "Ferris wheel",
-            "Freriswheel",
-            "Ferriswhee",
-            "Ferriswheell"
+            "Ferriss weel",
+            "Feris wheal",
+            "Ferrys wheel",
+            "Ferris wheel"
           ],
           "answer": "Ferris wheel",
-          "explanation": "We saw the whole city from the Ferris wheel."
+          "explanation": "Ferris wheel has a double r, a single s, and wheel is spelled with wh and a double e."
         },
         {
-          "prompt": "Which word means: A busy place where people buy and sell things.",
+          "prompt": "How many arms does an octopus have?",
           "choices": [
-            "market",
-            "library",
-            "shopping center",
-            "underground"
+            "Two",
+            "Six",
+            "Eight",
+            "Twelve"
           ],
-          "answer": "market",
-          "explanation": "market: A busy place where people buy and sell things. Mum buys fruit and fish at the market."
+          "answer": "Eight",
+          "explanation": "Reading 2 and the library book in the story both say that an octopus has eight arms."
         }
       ]
     },
@@ -471,37 +478,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'library' mean?",
+          "prompt": "What does the word library mean?",
           "choices": [
-            "A building where books are kept to read or borrow.",
-            "A large building with many shops inside.",
-            "A train that runs below the city streets.",
-            "A boat that carries people across water."
+            "A boat that carries people and cars across water.",
+            "A building where you can read books and borrow them to take home.",
+            "All the cars, buses and lorries moving on the roads.",
+            "A sea animal with eight long arms and no bones at all."
           ],
-          "answer": "A building where books are kept to read or borrow.",
-          "explanation": "I go to the library to borrow books."
+          "answer": "A building where you can read books and borrow them to take home.",
+          "explanation": "A library is full of books to read and to borrow. The other three options describe a ferry, traffic and an octopus."
         },
         {
-          "prompt": "Which word means: A large building with many shops inside.",
+          "prompt": "Which word means a large building with many different shops inside it?",
           "choices": [
             "shopping center",
-            "library",
-            "underground",
-            "ferry"
+            "penguin",
+            "helicopter",
+            "directions"
           ],
           "answer": "shopping center",
-          "explanation": "We bought new clothes at the shopping center."
+          "explanation": "A shopping center holds many shops under one roof. A penguin is a bird, a helicopter flies, and directions are words that tell you the way."
         },
         {
-          "prompt": "What type of word is 'underground'?",
+          "prompt": "Which of these travels below the city streets?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "the ferry",
+            "the Ferris wheel",
+            "the helicopter",
+            "the underground"
           ],
-          "answer": "Noun",
-          "explanation": "We took the underground to the museum."
+          "answer": "the underground",
+          "explanation": "The underground runs through tunnels below the streets. The ferry travels on water, the Ferris wheel turns in a park, and the helicopter flies above the city."
         }
       ]
     }

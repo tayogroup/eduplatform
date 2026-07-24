@@ -13,9 +13,36 @@
       "skill": "Vocabulary",
       "description": "Match each unit word to its child-friendly meaning.",
       "rounds": [
-        {"prompt": "Which word means a person you work or play with?", "choices": ["partner", "calendar", "birthday"], "answer": "partner", "explanation": "A partner is a person you work or play with."},
-        {"prompt": "Which word means a chart that shows days, weeks and months?", "choices": ["friend", "calendar", "picture"], "answer": "calendar", "explanation": "A calendar helps us find days, weeks, months and dates."},
-        {"prompt": "Which word means the day each year when you celebrate being born?", "choices": ["birthday", "goodbye", "week"], "answer": "birthday", "explanation": "Your birthday comes once each year."}
+        {
+          "prompt": "Which word means a person you work or play with?",
+          "choices": [
+            "partner",
+            "calendar",
+            "birthday"
+          ],
+          "answer": "partner",
+          "explanation": "A partner is a person you work or play with."
+        },
+        {
+          "prompt": "Which word means a chart that shows days, weeks and months?",
+          "choices": [
+            "friend",
+            "calendar",
+            "picture"
+          ],
+          "answer": "calendar",
+          "explanation": "A calendar helps us find days, weeks, months and dates."
+        },
+        {
+          "prompt": "Which word means the day each year when you celebrate being born?",
+          "choices": [
+            "birthday",
+            "goodbye",
+            "week"
+          ],
+          "answer": "birthday",
+          "explanation": "Your birthday comes once each year."
+        }
       ]
     },
     {
@@ -26,9 +53,21 @@
       "skill": "Spelling",
       "description": "Choose letter tiles to build important unit words.",
       "rounds": [
-        {"prompt": "Build the greeting word.", "clue": "You say it when you meet someone.", "answer": "hello"},
-        {"prompt": "Build the friendship word.", "clue": "A person you know and like.", "answer": "friend"},
-        {"prompt": "Build the calendar word.", "clue": "It shows days, weeks and months.", "answer": "calendar"}
+        {
+          "prompt": "Build the greeting word.",
+          "clue": "You say it when you meet someone.",
+          "answer": "hello"
+        },
+        {
+          "prompt": "Build the friendship word.",
+          "clue": "A person you know and like.",
+          "answer": "friend"
+        },
+        {
+          "prompt": "Build the calendar word.",
+          "clue": "It shows days, weeks and months.",
+          "answer": "calendar"
+        }
       ]
     },
     {
@@ -39,9 +78,36 @@
       "skill": "Sentence building",
       "description": "Put the words in order to make a complete sentence.",
       "rounds": [
-        {"prompt": "Introduce Sarah.", "tokens": ["Sarah.", "is", "name", "My"], "answer": "My name is Sarah."},
-        {"prompt": "Tell what she enjoys.", "tokens": ["drawing.", "likes", "She"], "answer": "She likes drawing."},
-        {"prompt": "Ask a complete colour question.", "tokens": ["your", "What", "bag?", "is", "colour"], "answer": "What colour is your bag?"}
+        {
+          "prompt": "Introduce Amal.",
+          "tokens": [
+            "Amal.",
+            "is",
+            "name",
+            "My"
+          ],
+          "answer": "My name is Amal."
+        },
+        {
+          "prompt": "Tell what she enjoys.",
+          "tokens": [
+            "drawing.",
+            "likes",
+            "She"
+          ],
+          "answer": "She likes drawing."
+        },
+        {
+          "prompt": "Ask a complete colour question.",
+          "tokens": [
+            "your",
+            "What",
+            "bag?",
+            "is",
+            "colour"
+          ],
+          "answer": "What colour is your bag?"
+        }
       ]
     },
     {
@@ -52,9 +118,36 @@
       "skill": "Grammar",
       "description": "Choose the form that makes each sentence correct.",
       "rounds": [
-        {"prompt": "This is Samira. ___ likes reading.", "choices": ["She", "He", "They"], "answer": "She", "explanation": "Use she when talking about one girl or woman."},
-        {"prompt": "Adam ___ football.", "choices": ["like", "likes", "liking"], "answer": "likes", "explanation": "Use likes with he, she or one named person."},
-        {"prompt": "Choose the complete question.", "choices": ["What colour is your bag?", "Your bag colour.", "How colour bag?"], "answer": "What colour is your bag?", "explanation": "The complete pattern is: What colour is ...?"}
+        {
+          "prompt": "This is Amal. ___ likes reading.",
+          "choices": [
+            "She",
+            "He",
+            "They"
+          ],
+          "answer": "She",
+          "explanation": "Use she when talking about one girl or woman."
+        },
+        {
+          "prompt": "Leo ___ football.",
+          "choices": [
+            "like",
+            "likes",
+            "liking"
+          ],
+          "answer": "likes",
+          "explanation": "Use likes with he, she or one named person."
+        },
+        {
+          "prompt": "Choose the complete question.",
+          "choices": [
+            "What colour is your bag?",
+            "Your bag colour.",
+            "How colour bag?"
+          ],
+          "answer": "What colour is your bag?",
+          "explanation": "The complete pattern is: What colour is ...?"
+        }
       ]
     },
     {
@@ -63,12 +156,39 @@
       "icon": "scan-search",
       "title": "Reading Detective",
       "skill": "Comprehension",
-      "description": "Use evidence from Sarah's First Week to solve each clue.",
-      "passage": "Sarah met Adam on Saturday. Adam became her first partner. He likes football and mangoes, and his birthday is in June. On Thursday, Sarah welcomed Amal and offered to be her partner.",
+      "description": "Use evidence from Amal's First Week to solve each clue.",
+      "passage": "Amal met Leo on Saturday. Leo became her first partner. He likes football and mangoes, and his birthday is in June. On Thursday, Amal welcomed Nora and offered to be her partner.",
       "rounds": [
-        {"prompt": "Who was Sarah's first partner?", "choices": ["Adam", "Amal", "Teacher Nadia"], "answer": "Adam", "explanation": "The story says that Adam offered to be Sarah's partner."},
-        {"prompt": "When is Adam's birthday?", "choices": ["June", "December", "Saturday"], "answer": "June", "explanation": "Adam says that his birthday is in June."},
-        {"prompt": "How did Sarah help Amal?", "choices": ["She welcomed her.", "She closed the door.", "She took her calendar."], "answer": "She welcomed her.", "explanation": "Sarah smiled, introduced herself and offered to be Amal's partner."}
+        {
+          "prompt": "Who was Amal's first partner?",
+          "choices": [
+            "Leo",
+            "Nora",
+            "Teacher Yasmin"
+          ],
+          "answer": "Leo",
+          "explanation": "The story says that Leo offered to be Amal's partner."
+        },
+        {
+          "prompt": "When is Leo's birthday?",
+          "choices": [
+            "June",
+            "December",
+            "Saturday"
+          ],
+          "answer": "June",
+          "explanation": "Leo says that his birthday is in June."
+        },
+        {
+          "prompt": "How did Amal help Nora?",
+          "choices": [
+            "She welcomed her.",
+            "She closed the door.",
+            "She took her calendar."
+          ],
+          "answer": "She welcomed her.",
+          "explanation": "Amal smiled, introduced herself and offered to be Nora's partner."
+        }
       ]
     },
     {
@@ -79,9 +199,18 @@
       "skill": "Pronunciation",
       "description": "Listen, record, review and submit three useful sentences.",
       "rounds": [
-        {"prompt": "Introduce yourself and say what you like.", "target": "My name is Samira. I like reading."},
-        {"prompt": "Talk about a birthday month.", "target": "My birthday is in June."},
-        {"prompt": "Welcome a new friend.", "target": "Hello. You can be my partner."}
+        {
+          "prompt": "Introduce yourself and say what you like.",
+          "target": "My name is Amal. I like reading."
+        },
+        {
+          "prompt": "Talk about a birthday month.",
+          "target": "My birthday is in June."
+        },
+        {
+          "prompt": "Welcome a new friend.",
+          "target": "Hello. You can be my partner."
+        }
       ]
     },
     {
@@ -92,9 +221,33 @@
       "skill": "Calendar order",
       "description": "Put days and months into the correct order before time runs out.",
       "rounds": [
-        {"prompt": "Put these school-week days in order.", "tokens": ["Monday", "Saturday", "Sunday"], "answer": "Saturday Sunday Monday"},
-        {"prompt": "Put these middle-week days in order.", "tokens": ["Thursday", "Tuesday", "Wednesday"], "answer": "Tuesday Wednesday Thursday"},
-        {"prompt": "Put these months in calendar order.", "tokens": ["March", "January", "February"], "answer": "January February March"}
+        {
+          "prompt": "Put these school-week days in order.",
+          "tokens": [
+            "Monday",
+            "Saturday",
+            "Sunday"
+          ],
+          "answer": "Saturday Sunday Monday"
+        },
+        {
+          "prompt": "Put these middle-week days in order.",
+          "tokens": [
+            "Thursday",
+            "Tuesday",
+            "Wednesday"
+          ],
+          "answer": "Tuesday Wednesday Thursday"
+        },
+        {
+          "prompt": "Put these months in calendar order.",
+          "tokens": [
+            "March",
+            "January",
+            "February"
+          ],
+          "answer": "January February March"
+        }
       ]
     },
     {
@@ -105,9 +258,36 @@
       "skill": "Colours and numbers",
       "description": "Choose the correct colour or number word in each fast challenge.",
       "rounds": [
-        {"prompt": "Which word names the colour of grass?", "choices": ["green", "purple", "orange"], "answer": "green", "explanation": "Grass is commonly described as green."},
-        {"prompt": "Which number comes after eleven?", "choices": ["twelve", "ten", "twenty"], "answer": "twelve", "explanation": "The counting order ends this unit with eleven, twelve."},
-        {"prompt": "Which spelling names the colour of the sky on a clear day?", "choices": ["blue", "blew", "blu"], "answer": "blue", "explanation": "Blue is the colour word."}
+        {
+          "prompt": "Which word names the colour of grass?",
+          "choices": [
+            "green",
+            "purple",
+            "orange"
+          ],
+          "answer": "green",
+          "explanation": "Grass is commonly described as green."
+        },
+        {
+          "prompt": "Which number comes after eleven?",
+          "choices": [
+            "twelve",
+            "ten",
+            "twenty"
+          ],
+          "answer": "twelve",
+          "explanation": "The counting order ends this unit with eleven, twelve."
+        },
+        {
+          "prompt": "Which spelling names the colour of the sky on a clear day?",
+          "choices": [
+            "blue",
+            "blew",
+            "blu"
+          ],
+          "answer": "blue",
+          "explanation": "Blue is the colour word."
+        }
       ]
     },
     {
@@ -118,9 +298,36 @@
       "skill": "He and she",
       "description": "Choose he or she to introduce each person clearly.",
       "rounds": [
-        {"prompt": "This is Hannah. ___ likes trees.", "choices": ["She", "He", "It"], "answer": "She", "explanation": "Use she for Hannah in this unit dialogue."},
-        {"prompt": "This is Adam. ___ likes football.", "choices": ["He", "She", "We"], "answer": "He", "explanation": "Use he for Adam in the story."},
-        {"prompt": "This is Teacher Nadia. ___ welcomes Sarah.", "choices": ["She", "He", "They"], "answer": "She", "explanation": "The story uses she for Teacher Nadia."}
+        {
+          "prompt": "This is Hannah. ___ likes trees.",
+          "choices": [
+            "She",
+            "He",
+            "It"
+          ],
+          "answer": "She",
+          "explanation": "Use she for Hannah in this unit dialogue."
+        },
+        {
+          "prompt": "This is Leo. ___ likes football.",
+          "choices": [
+            "He",
+            "She",
+            "We"
+          ],
+          "answer": "He",
+          "explanation": "Use he for Leo in the story."
+        },
+        {
+          "prompt": "This is Teacher Yasmin. ___ welcomes Amal.",
+          "choices": [
+            "She",
+            "He",
+            "They"
+          ],
+          "answer": "She",
+          "explanation": "The story uses she for Teacher Yasmin."
+        }
       ]
     },
     {
@@ -131,9 +338,57 @@
       "skill": "Vocabulary recall",
       "description": "Turn over tiles and connect each word with its matching meaning.",
       "rounds": [
-        {"prompt": "Match the greeting words.", "pairs": [["hello", "a greeting"], ["goodbye", "said when leaving"], ["friend", "a person you know and like"]]},
-        {"prompt": "Match the calendar words.", "pairs": [["day", "one part of a week"], ["month", "one part of a year"], ["date", "a numbered day"]]},
-        {"prompt": "Match the learning words.", "pairs": [["book", "pages to read"], ["picture", "an image to look at"], ["word", "letters with meaning"]]}
+        {
+          "prompt": "Match the greeting words.",
+          "pairs": [
+            [
+              "hello",
+              "a greeting"
+            ],
+            [
+              "goodbye",
+              "said when leaving"
+            ],
+            [
+              "friend",
+              "a person you know and like"
+            ]
+          ]
+        },
+        {
+          "prompt": "Match the calendar words.",
+          "pairs": [
+            [
+              "day",
+              "one part of a week"
+            ],
+            [
+              "month",
+              "one part of a year"
+            ],
+            [
+              "date",
+              "a numbered day"
+            ]
+          ]
+        },
+        {
+          "prompt": "Match the learning words.",
+          "pairs": [
+            [
+              "book",
+              "pages to read"
+            ],
+            [
+              "picture",
+              "an image to look at"
+            ],
+            [
+              "word",
+              "letters with meaning"
+            ]
+          ]
+        }
       ]
     },
     {
@@ -144,9 +399,37 @@
       "skill": "Question formation",
       "description": "Arrange words to build complete questions for a partner.",
       "rounds": [
-        {"prompt": "Ask for a person's name.", "tokens": ["name?", "your", "is", "What"], "answer": "What is your name?"},
-        {"prompt": "Ask how to spell a name.", "tokens": ["spell", "you", "it?", "do", "How"], "answer": "How do you spell it?"},
-        {"prompt": "Ask what someone likes.", "tokens": ["like?", "you", "do", "What"], "answer": "What do you like?"}
+        {
+          "prompt": "Ask for a person's name.",
+          "tokens": [
+            "name?",
+            "your",
+            "is",
+            "What"
+          ],
+          "answer": "What is your name?"
+        },
+        {
+          "prompt": "Ask how to spell a name.",
+          "tokens": [
+            "spell",
+            "you",
+            "it?",
+            "do",
+            "How"
+          ],
+          "answer": "How do you spell it?"
+        },
+        {
+          "prompt": "Ask what someone likes.",
+          "tokens": [
+            "like?",
+            "you",
+            "do",
+            "What"
+          ],
+          "answer": "What do you like?"
+        }
       ]
     },
     {
@@ -157,9 +440,36 @@
       "skill": "Dialogue and kindness",
       "description": "Choose the best response to help a new classmate feel welcome.",
       "rounds": [
-        {"prompt": "A new learner is standing by the door. What should you say first?", "choices": ["Hello. What is your name?", "Go away.", "Give me your book."], "answer": "Hello. What is your name?", "explanation": "A friendly greeting helps a new learner feel welcome."},
-        {"prompt": "The learner tells you her name. What is a kind next response?", "choices": ["You can be my partner.", "That is wrong.", "Do not sit here."], "answer": "You can be my partner.", "explanation": "Offering to be a partner shows kindness and inclusion."},
-        {"prompt": "Your new partner says, 'I like drawing.' What should you say?", "choices": ["I like drawing too!", "Be quiet.", "That is not a colour."], "answer": "I like drawing too!", "explanation": "A relevant, friendly response keeps the dialogue going."}
+        {
+          "prompt": "A new learner is standing by the door. What should you say first?",
+          "choices": [
+            "Hello. What is your name?",
+            "Go away.",
+            "Give me your book."
+          ],
+          "answer": "Hello. What is your name?",
+          "explanation": "A friendly greeting helps a new learner feel welcome."
+        },
+        {
+          "prompt": "The learner tells you her name. What is a kind next response?",
+          "choices": [
+            "You can be my partner.",
+            "That is wrong.",
+            "Do not sit here."
+          ],
+          "answer": "You can be my partner.",
+          "explanation": "Offering to be a partner shows kindness and inclusion."
+        },
+        {
+          "prompt": "Your new partner says, 'I like drawing.' What should you say?",
+          "choices": [
+            "I like drawing too!",
+            "Be quiet.",
+            "That is not a colour."
+          ],
+          "answer": "I like drawing too!",
+          "explanation": "A relevant, friendly response keeps the dialogue going."
+        }
       ]
     }
   ]

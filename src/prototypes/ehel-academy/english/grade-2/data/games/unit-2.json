@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A person who lives near you.",
+          "prompt": "Which word means: A person who lives near you, on your street or in your building.",
           "choices": [
             "neighbour",
             "window cleaner",
             "reporter"
           ],
           "answer": "neighbour",
-          "explanation": "neighbour: A person who lives near you."
+          "explanation": "neighbour: A person who lives near you, on your street or in your building."
         },
         {
-          "prompt": "Which word means: Strong shoes that cover the feet and part of the legs.",
+          "prompt": "Which word means: Strong shoes that cover your feet and part of your legs.",
           "choices": [
             "neighbour",
             "window cleaner",
             "boots"
           ],
           "answer": "boots",
-          "explanation": "boots: Strong shoes that cover the feet and part of the legs."
+          "explanation": "boots: Strong shoes that cover your feet and part of your legs."
         },
         {
-          "prompt": "Which word means: A person who grows food and looks after animals.",
+          "prompt": "Which word means: A person who grows food and looks after farm animals.",
           "choices": [
             "window cleaner",
             "farmer",
             "neighbour"
           ],
           "answer": "farmer",
-          "explanation": "farmer: A person who grows food and looks after animals."
+          "explanation": "farmer: A person who grows food and looks after farm animals."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who finds out news and writes stories about it.",
+          "clue": "A person who finds out news and writes or tells stories about it.",
           "answer": "reporter"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The special clothes people wear for a job.",
+          "clue": "The special set of clothes that people wear for their job or school.",
           "answer": "uniform"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Doing something to make things easier for someone.",
+          "clue": "Doing something that makes a job easier or better for someone.",
           "answer": "helping"
         }
       ]
@@ -83,48 +83,51 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "garden.",
-            "her",
+            "house.",
+            "blue",
+            "the",
             "in",
-            "flowers",
-            "grows",
-            "Nadia",
-            "neighbour",
-            "My"
+            "lives",
+            "he",
+            "and",
+            "neighbour,",
+            "our",
+            "is",
+            "Theo"
           ],
-          "answer": "My neighbour Nadia grows flowers in her garden."
+          "answer": "Theo is our neighbour, and he lives in the blue house."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tree.",
+            "newspaper.",
+            "town",
             "the",
-            "from",
-            "cat",
-            "the",
-            "rescued",
-            "firefighter",
-            "brave",
+            "for",
+            "day",
+            "market",
+            "about",
+            "wrote",
+            "reporter",
             "The"
           ],
-          "answer": "The brave firefighter rescued the cat from the tree."
+          "answer": "The reporter wrote about market day for the town newspaper."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "smoke.",
-            "in",
-            "air",
-            "fresh",
-            "breathe",
+            "safe.",
+            "head",
+            "her",
+            "keep",
             "to",
-            "mask",
+            "helmet",
             "a",
             "wears",
             "firefighter",
             "The"
           ],
-          "answer": "The firefighter wears a mask to breathe fresh air in smoke."
+          "answer": "The firefighter wears a helmet to keep her head safe."
         }
       ]
     },
@@ -137,37 +140,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which question asks about an action?",
+          "prompt": "In the story, how many passengers does Amal count on Nadia's bus?",
           "choices": [
-            "What is the firefighter doing?",
-            "Who is the firefighter?",
-            "Who is your neighbour?",
-            "Who drives the bus?"
+            "Two",
+            "Five",
+            "Seven",
+            "Ten"
           ],
-          "answer": "What is the firefighter doing?",
-          "explanation": "Use What to ask about an action."
+          "answer": "Ten",
+          "explanation": "Amal counts all the way from one to ten, then says that there are ten people on the bus."
         },
         {
-          "prompt": "The firefighters ___ climbing the ladder.",
+          "prompt": "In the story, what does Karim use to reach the high glass?",
           "choices": [
-            "are",
-            "is",
-            "am",
-            "be"
+            "A ladder and a rope",
+            "A long pole",
+            "A hose and a bucket of water",
+            "A tractor and some seeds"
           ],
-          "answer": "are",
-          "explanation": "Firefighters means more than one person, so use are."
+          "answer": "A long pole",
+          "explanation": "The story says Karim used a long pole. A hose belongs to the firefighters, and a tractor belongs to a farmer."
         },
         {
-          "prompt": "Which is the correct -ing form of drive?",
+          "prompt": "The bus driver wears a blue ______ to work every day.",
           "choices": [
-            "driving",
-            "driveing",
-            "drivving",
-            "drived"
+            "helmet",
+            "tractor",
+            "uniform",
+            "stethoscope"
           ],
-          "answer": "driving",
-          "explanation": "Drop the final e in drive before adding -ing."
+          "answer": "uniform",
+          "explanation": "A uniform is the set of clothes worn for a job. A helmet is worn by firefighters, and a tractor and a stethoscope are not clothes."
         }
       ]
     },
@@ -180,34 +183,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Why do firefighters wear masks? Why do they wear gloves?",
+          "prompt": "What two jobs does the text say firefighters do?",
           "choices": [
-            "Masks help firefighters breathe fresh air; gloves protect their hands from hot things.",
-            "The neighbours are helping one another.",
-            "Adam brought water, Selma swept, Adam carried boxes, and the firefighters helped clean Sarah's shop."
+            "They put out fires, and they rescue people who are trapped inside burning buildings.",
+            "The mask lets her breathe fresh air inside the smoke, and the gloves let her hold hot things without burning her hands.",
+            "She counts ten passengers."
           ],
-          "answer": "Masks help firefighters breathe fresh air; gloves protect their hands from hot things.",
-          "explanation": "Review the unit text evidence: Masks help firefighters breathe fresh air; gloves protect their hands from hot things."
+          "answer": "They put out fires, and they rescue people who are trapped inside burning buildings.",
+          "explanation": "Review the unit text evidence: They put out fires, and they rescue people who are trapped inside burning buildings."
         },
         {
-          "prompt": "On which street does Samira live? What is near it?",
+          "prompt": "What does the poem say the neighbours are doing?",
           "choices": [
-            "The neighbours are helping one another.",
-            "They chose to help her after finishing their own important jobs, showing kindness and teamwork.",
-            "Samira lives on Warta Street, near the market."
+            "The mask lets her breathe fresh air inside the smoke, and the gloves let her hold hot things without burning her hands.",
+            "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face.",
+            "The neighbours are helping other neighbours."
           ],
-          "answer": "Samira lives on Warta Street, near the market.",
-          "explanation": "Review the unit text evidence: Samira lives on Warta Street, near the market."
+          "answer": "The neighbours are helping other neighbours.",
+          "explanation": "Review the unit text evidence: The neighbours are helping other neighbours."
         },
         {
-          "prompt": "How did the neighbours help old Sarah after the fire?",
+          "prompt": "Which four pieces of equipment do the two firefighters wear in the story?",
           "choices": [
-            "Anyone can notice a need and help kindly; helping is not limited to a person's paid job.",
-            "Adam brought water, Selma swept, Adam carried boxes, and the firefighters helped clean Sarah's shop.",
-            "Samira lives on Warta Street, near the market."
+            "Karim brought water, Nadia swept the floor, Rami carried the heavy boxes, and the two firefighters helped clean the shop.",
+            "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face.",
+            "Grandmas, grandpas, mums, dads and children."
           ],
-          "answer": "Adam brought water, Selma swept, Adam carried boxes, and the firefighters helped clean Sarah's shop.",
-          "explanation": "Review the unit text evidence: Adam brought water, Selma swept, Adam carried boxes, and the firefighters helped clean Sarah's shop."
+          "answer": "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face.",
+          "explanation": "Review the unit text evidence: Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face."
         }
       ]
     },
@@ -220,16 +223,16 @@
       "description": "Listen, record, review and submit useful unit language.",
       "rounds": [
         {
-          "prompt": "Speaking 1 \u2014 Describe a Job",
-          "target": "A ______ (job) helps people by ______."
+          "prompt": "Speaking 1 — Describe a Job",
+          "target": "Theo is our neighbour, and he lives in the blue house."
         },
         {
-          "prompt": "Speaking Game \u2014 Who Am I?",
-          "target": "Are you a ______?"
+          "prompt": "Speaking Game — Who Am I?",
+          "target": "Play this guessing game with an adult or a friend."
         },
         {
-          "prompt": "Speaking 5 - What Is Happening Now?",
-          "target": "Describe six actions in the picture using is or are and an -ing word."
+          "prompt": "Speaking 5 — What Is Happening Now?",
+          "target": "Describe six actions in the neighbourhood picture, one after the other."
         }
       ]
     },
@@ -244,42 +247,50 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "words.",
-            "English",
-            "new",
-            "read",
-            "us",
-            "helps",
-            "teacher",
-            "My"
-          ],
-          "answer": "My teacher helps us read new English words."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "words.",
-            "new",
-            "us",
-            "teaching",
-            "is",
-            "teacher",
+            "goats.",
+            "brown",
+            "six",
+            "keeps",
+            "and",
+            "maize",
+            "grows",
+            "farmer",
             "The"
           ],
-          "answer": "The teacher is teaching us new words."
+          "answer": "The farmer grows maize and keeps six brown goats."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "sick.",
-            "are",
-            "who",
-            "people",
-            "helps",
-            "doctor",
-            "A"
+            "books.",
+            "of",
+            "box",
+            "heavy",
+            "a",
+            "carry",
+            "neighbour",
+            "our",
+            "helping",
+            "is",
+            "Adam"
           ],
-          "answer": "A doctor helps people who are sick."
+          "answer": "Adam is helping our neighbour carry a heavy box of books."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "market.",
+            "the",
+            "behind",
+            "goats",
+            "baby",
+            "the",
+            "rescuing",
+            "are",
+            "firefighters",
+            "The"
+          ],
+          "answer": "The firefighters are rescuing the baby goats behind the market."
         }
       ]
     },
@@ -294,32 +305,32 @@
         {
           "prompt": "What does 'gloves' mean in this unit?",
           "choices": [
-            "Coverings for the hands, with a part for each finger.",
-            "A person who lives near you.",
-            "A person whose job is to clean windows."
+            "Coverings for your hands, with a separate part for each finger.",
+            "A person who lives near you, on your street or in your building.",
+            "A person whose job is to clean the windows of houses and shops."
           ],
-          "answer": "Coverings for the hands, with a part for each finger.",
-          "explanation": "gloves: Coverings for the hands, with a part for each finger."
+          "answer": "Coverings for your hands, with a separate part for each finger.",
+          "explanation": "gloves: Coverings for your hands, with a separate part for each finger."
         },
         {
           "prompt": "What does 'shopkeeper' mean in this unit?",
           "choices": [
-            "A person who lives near you.",
-            "A person whose job is to clean windows.",
-            "A person who sells things in a shop."
+            "A person who lives near you, on your street or in your building.",
+            "A person whose job is to clean the windows of houses and shops.",
+            "A person who owns or looks after a shop and sells things."
           ],
-          "answer": "A person who sells things in a shop.",
-          "explanation": "shopkeeper: A person who sells things in a shop."
+          "answer": "A person who owns or looks after a shop and sells things.",
+          "explanation": "shopkeeper: A person who owns or looks after a shop and sells things."
         },
         {
           "prompt": "What does 'window cleaner' mean in this unit?",
           "choices": [
-            "A person who finds out news and writes stories about it.",
-            "A person whose job is to clean windows.",
-            "A person who lives near you."
+            "A person who finds out news and writes or tells stories about it.",
+            "A person whose job is to clean the windows of houses and shops.",
+            "A person who lives near you, on your street or in your building."
           ],
-          "answer": "A person whose job is to clean windows.",
-          "explanation": "window cleaner: A person whose job is to clean windows."
+          "answer": "A person whose job is to clean the windows of houses and shops.",
+          "explanation": "window cleaner: A person whose job is to clean the windows of houses and shops."
         }
       ]
     },
@@ -376,15 +387,15 @@
           "pairs": [
             [
               "police officer",
-              "A person who keeps people safe and helps them follow the law."
+              "A person who keeps people safe and helps everyone follow the rules."
             ],
             [
               "bus driver",
-              "A person whose job is to drive a bus."
+              "A person whose job is to drive a bus and carry passengers safely."
             ],
             [
               "helmet",
-              "A hard hat that protects the head."
+              "A hard hat that protects your head from knocks and falling things."
             ]
           ]
         },
@@ -393,15 +404,15 @@
           "pairs": [
             [
               "mask",
-              "A covering for the face."
+              "A covering that goes over your nose and mouth to protect them."
             ],
             [
               "doctor",
-              "A person who helps people who are sick."
+              "A person who helps people who are ill and makes them better."
             ],
             [
               "teacher",
-              "A person who helps others learn."
+              "A person whose job is to help other people learn new things."
             ]
           ]
         },
@@ -410,15 +421,15 @@
           "pairs": [
             [
               "helping",
-              "Doing something to make things easier for someone."
+              "Doing something that makes a job easier or better for someone."
             ],
             [
               "rescuing",
-              "Saving someone from danger."
+              "Saving a person or an animal from danger and bringing them somewhere safe."
             ],
             [
               "driving",
-              "Making a car or bus go."
+              "Making a car, bus or lorry move and steering it along the road."
             ]
           ]
         }
@@ -433,37 +444,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "The ____ asked questions about our market day.",
+          "prompt": "Which of these questions asks about an action?",
           "choices": [
-            "reporter",
-            "neighbour",
-            "window cleaner",
-            "police officer"
+            "Who is the bus driver?",
+            "What is the police officer doing?",
+            "Who is the firefighter helping today?",
+            "Who is your teacher?"
           ],
-          "answer": "reporter",
-          "explanation": "The reporter asked questions about our market day."
+          "answer": "What is the police officer doing?",
+          "explanation": "An action is a thing and not a person, so it takes What. The other three questions all ask about a person."
         },
         {
-          "prompt": "Which spelling is correct?",
+          "prompt": "The firefighters ______ climbing the ladder.",
           "choices": [
-            "bus driver",
-            "bsudriver",
-            "busdrive",
-            "busdriverr"
+            "am",
+            "is",
+            "are",
+            "be"
           ],
-          "answer": "bus driver",
-          "explanation": "The bus driver takes people from our town to the city."
+          "answer": "are",
+          "explanation": "Firefighters means more than one person, so the helping word is are. Am belongs with I, and is belongs with one person."
         },
         {
-          "prompt": "Who helps people who are sick?",
+          "prompt": "Which is the correct -ing form of the verb drive?",
           "choices": [
-            "A doctor",
-            "A farmer",
-            "A bus driver",
-            "A reporter"
+            "driving",
+            "driveing",
+            "drived",
+            "drivving"
           ],
-          "answer": "A doctor",
-          "explanation": "A doctor helps people who are sick."
+          "answer": "driving",
+          "explanation": "Drive ends in a silent e, so the e is dropped before -ing. Drived is not a word, and the v is never doubled."
         }
       ]
     },
@@ -476,37 +487,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'neighbour' mean?",
+          "prompt": "What does the word neighbour mean?",
           "choices": [
+            "A person who puts out fires and rescues people.",
+            "A person who owns a shop and sells things.",
             "A person who lives near you.",
-            "A person whose job is to clean windows.",
-            "A person who keeps people safe and helps them follow the law.",
-            "A person who finds out news and writes stories about it."
+            "A hard hat that protects the head."
           ],
           "answer": "A person who lives near you.",
-          "explanation": "My neighbour Nadia grows flowers in her garden."
+          "explanation": "A neighbour lives close to your home. The other options describe a firefighter, a shopkeeper and a helmet."
         },
         {
-          "prompt": "Which word means: A person whose job is to clean windows.",
+          "prompt": "The ______ uses a long pole to reach the high windows.",
           "choices": [
             "window cleaner",
-            "neighbour",
-            "police officer",
-            "reporter"
+            "helmet",
+            "uniform",
+            "busy market square"
           ],
           "answer": "window cleaner",
-          "explanation": "The window cleaner uses a long pole to reach the high windows."
+          "explanation": "Only a person can use a pole. A helmet and a uniform are clothing, and a market square is a place."
         },
         {
-          "prompt": "What type of word is 'police officer'?",
+          "prompt": "Which piece of equipment helps a firefighter breathe fresh air inside smoke?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective",
-            "Adverb"
+            "A badge",
+            "A tractor",
+            "A whistle",
+            "A mask"
           ],
-          "answer": "Noun",
-          "explanation": "The police officer helped the children cross the busy road."
+          "answer": "A mask",
+          "explanation": "The mask covers the nose and mouth. A badge and a whistle belong to a police officer, and a tractor belongs to a farmer."
         }
       ]
     }

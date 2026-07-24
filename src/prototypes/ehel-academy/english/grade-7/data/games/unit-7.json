@@ -83,167 +83,41 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "fluently.",
-            "English",
-            "speak",
+            "areas.",
+            "rural",
+            "in",
+            "children",
+            "helps",
+            "who",
+            "doctor",
+            "a",
+            "become",
             "to",
-            "learned",
-            "she",
-            "perseverance,",
-            "Through"
+            "is",
+            "ambition",
+            "Her"
           ],
-          "answer": "Through perseverance, she learned to speak English fluently."
+          "answer": "Her ambition is to become a doctor who helps children in rural areas."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "year.",
-            "this",
-            "achievement",
-            "greatest",
-            "her",
-            "was",
-            "prize",
-            "science",
-            "the",
-            "Winning"
+            "life.",
+            "student’s",
+            "a",
+            "in",
+            "milestone",
+            "major",
+            "a",
+            "is",
+            "school",
+            "primary",
+            "Finishing"
           ],
-          "answer": "Winning the science prize was her greatest achievement this year."
+          "answer": "Finishing primary school is a major milestone in a student’s life."
         },
         {
           "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "flood.",
-            "the",
-            "after",
-            "rebuild",
-            "them",
-            "helped",
-            "community",
-            "the",
-            "of",
-            "resilience",
-            "The"
-          ],
-          "answer": "The resilience of the community helped them rebuild after the flood."
-        }
-      ]
-    },
-    {
-      "id": "language-choice",
-      "type": "choice",
-      "icon": "list-filter",
-      "title": "Language Choice",
-      "skill": "Grammar and usage",
-      "description": "Choose the form that makes the unit language accurate.",
-      "rounds": [
-        {
-          "prompt": "What does 'resilience' mean?",
-          "choices": [
-            "A person learning a trade or skill from an experienced worker.",
-            "A person who starts and runs their own business.",
-            "A strong feeling of being suited to a particular career or calling.",
-            "The ability to recover from difficulties and keep going."
-          ],
-          "answer": "The ability to recover from difficulties and keep going.",
-          "explanation": "The resilience of the community helped them rebuild after the flood."
-        },
-        {
-          "prompt": "What does 'profession' mean?",
-          "choices": [
-            "A job that requires special training or education.",
-            "A person learning a trade or skill from an experienced worker.",
-            "A person who starts and runs their own business.",
-            "A skill, quality, or certificate that makes someone suitable for a job."
-          ],
-          "answer": "A job that requires special training or education.",
-          "explanation": "Teaching is a respected profession that requires years of training."
-        },
-        {
-          "prompt": "What does 'vocation' mean?",
-          "choices": [
-            "A person who starts and runs their own business.",
-            "A skill, quality, or certificate that makes someone suitable for a job.",
-            "A strong feeling of being suited to a particular career or calling.",
-            "Guidance and support given by an experienced person to someone less experienced."
-          ],
-          "answer": "A strong feeling of being suited to a particular career or calling.",
-          "explanation": "She felt a vocation for nursing from a very young age."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to the passage, what matters more than the job title you hold?",
-          "choices": [
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "A strong desire to achieve something important in life.",
-            "Being fully committed to a task or purpose; giving time and energy to something."
-          ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
-        },
-        {
-          "prompt": "What does Noah mean when he says, “Success is not measured by a certificate on the wall”?",
-          "choices": [
-            "A strong desire to achieve something important in life.",
-            "Being fully committed to a task or purpose; giving time and energy to something.",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
-          ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
-        },
-        {
-          "prompt": "What are adjective + preposition combinations?",
-          "choices": [
-            "Being fully committed to a task or purpose; giving time and energy to something.",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "A strong desire to achieve something important in life."
-          ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "Through perseverance, she learned to speak English fluently."
-        },
-        {
-          "prompt": "Speaking 3: Five-Minute Unit Talk",
-          "target": "Winning the science prize was her greatest achievement this year."
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
           "tokens": [
             "age.",
             "young",
@@ -258,23 +132,159 @@
             "She"
           ],
           "answer": "She felt a vocation for nursing from a very young age."
+        }
+      ]
+    },
+    {
+      "id": "language-choice",
+      "type": "choice",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Building a Future': She studied by lamplight every evening, and her _____ impressed everyone who knew her.",
+          "choices": [
+            "perseverance",
+            "apprentice",
+            "ambition",
+            "dedication"
+          ],
+          "answer": "perseverance",
+          "explanation": "The text says: She studied by lamplight every evening, and her perseverance impressed everyone who knew her."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Storm of Truth, part 3': \"But a true friend reminded me that integrity is the foundation of every real _____.",
+          "choices": [
+            "perseverance",
+            "milestone",
+            "achievement",
+            "dedication"
+          ],
+          "answer": "achievement",
+          "explanation": "The text says: \"But a true friend reminded me that integrity is the foundation of every real achievement."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Storm of Truth, part 1': The winner would receive a scholarship to attend a special leadership academy in Nairobi — a _____ that could change her...",
+          "choices": [
+            "distinction",
+            "resilience",
+            "profession",
+            "milestone"
+          ],
+          "answer": "milestone",
+          "explanation": "The text says: The winner would receive a scholarship to attend a special leadership academy in Nairobi — a milestone that could change her life forever."
+        }
+      ]
+    },
+    {
+      "id": "reading-detective",
+      "type": "choice",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
+      "rounds": [
+        {
+          "prompt": "According to the opening of “Building a Future”, what matters most about the work a person does?",
+          "choices": [
+            "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people...",
+            "Sana was trained in Mogadishu and now works as a nurse at the district hospital, where she has been for six years.",
+            "She said the speech was found online, that she did not have time to write her own, that she was afraid of looking weak, and that..."
+          ],
+          "answer": "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people...",
+          "explanation": "Review the unit text evidence: What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people..."
+        },
+        {
+          "prompt": "What prize would the winner of the Regional Young Leaders Competition receive?",
+          "choices": [
+            "Sana was trained in Mogadishu and now works as a nurse at the district hospital, where she has been for six years.",
+            "Amal warned that everything Nora had worked for would be lost and that her reputation would be damaged, which is why she asked...",
+            "The winner would receive a scholarship to attend a special leadership academy in Nairobi."
+          ],
+          "answer": "The winner would receive a scholarship to attend a special leadership academy in Nairobi.",
+          "explanation": "Review the unit text evidence: The winner would receive a scholarship to attend a special leadership academy in Nairobi."
+        },
+        {
+          "prompt": "What reasons did Nora give for using a speech that was not her own?",
+          "choices": [
+            "Nora admitted that she nearly gave a speech that was not hers; she called her honesty a kind of success because a true friend...",
+            "She said the speech was found online, that she did not have time to write her own, that she was afraid of looking weak, and that...",
+            "The winner would receive a scholarship to attend a special leadership academy in Nairobi."
+          ],
+          "answer": "She said the speech was found online, that she did not have time to write her own, that she was afraid of looking weak, and that...",
+          "explanation": "Review the unit text evidence: She said the speech was found online, that she did not have time to write her own, that she was afraid of looking weak, and that..."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Present Your Career Choice",
+          "target": "Her ambition is to become a doctor who helps children in rural areas."
+        },
+        {
+          "prompt": "Speaking 3: Career Guess Game",
+          "target": "Think of a career and give three spoken clues without naming it, using adjective + preposition phrases and the passive voice."
+        },
+        {
+          "prompt": "Speaking 5: Retell the Storm of Truth",
+          "target": "She felt a vocation for nursing from a very young age."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "career.",
+            "right",
+            "the",
+            "choose",
+            "her",
+            "helped",
+            "teacher",
+            "her",
+            "from",
+            "received",
+            "she",
+            "mentorship",
+            "The"
+          ],
+          "answer": "The mentorship she received from her teacher helped her choose the right career."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "carpenter.",
-            "master",
-            "the",
-            "from",
-            "furniture",
-            "build",
+            "clean.",
+            "it",
+            "keeping",
+            "by",
+            "school",
+            "their",
             "to",
-            "learned",
-            "apprentice",
-            "young",
-            "The"
+            "contribution",
+            "a",
+            "make",
+            "can",
+            "student",
+            "Every"
           ],
-          "answer": "The young apprentice learned to build furniture from the master carpenter."
+          "answer": "Every student can make a contribution to their school by keeping it clean."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -455,26 +465,26 @@
           "explanation": "Winning the science prize was her greatest achievement this year."
         },
         {
-          "prompt": "What does 'milestone' mean?",
+          "prompt": "Choose the missing word from 'The Storm of Truth, part 1': Her family was proud of her _____, and her mother had told her, \"We are grateful for every opportunity you earn.",
           "choices": [
-            "A job that requires special training or education.",
-            "A strong feeling of being suited to a particular career or calling.",
-            "An important event or stage in the development of something.",
-            "The ability to recover from difficulties and keep going."
+            "ambition",
+            "vocation",
+            "apprentice",
+            "dedication"
           ],
-          "answer": "An important event or stage in the development of something.",
-          "explanation": "Finishing primary school is a major milestone in a student’s life."
+          "answer": "ambition",
+          "explanation": "The text says: Her family was proud of her ambition, and her mother had told her, \"We are grateful for every opportunity you earn."
         },
         {
-          "prompt": "What does 'distinction' mean?",
+          "prompt": "Choose the missing word from 'Building a Future': What matters most is not the title you hold but the _____ you bring to your work and the contribution you make to the people...",
           "choices": [
-            "A job that requires special training or education.",
-            "A person learning a trade or skill from an experienced worker.",
-            "A strong feeling of being suited to a particular career or calling.",
-            "Excellence that makes someone stand out; a high mark or honour."
+            "resilience",
+            "dedication",
+            "milestone",
+            "distinction"
           ],
-          "answer": "Excellence that makes someone stand out; a high mark or honour.",
-          "explanation": "She passed her exams with distinction and was praised by all her teachers."
+          "answer": "dedication",
+          "explanation": "The text says: What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you."
         }
       ]
     },

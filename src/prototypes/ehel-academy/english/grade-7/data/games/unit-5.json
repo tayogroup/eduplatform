@@ -83,49 +83,51 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "environment.",
-            "the",
+            "project.",
+            "your",
+            "on",
+            "job",
+            "great",
+            "a",
+            "did",
+            "you",
+            "that",
+            "acknowledge",
+            "to",
+            "want",
+            "I"
+          ],
+          "answer": "I want to acknowledge that you did a great job on your project."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "students.",
+            "for",
+            "club",
+            "environmental",
+            "an",
+            "establish",
+            "to",
+            "wants",
+            "school",
+            "The"
+          ],
+          "answer": "The school wants to establish an environmental club for students."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "rainforests.",
             "protecting",
-            "about",
-            "posters",
-            "create",
-            "to",
-            "collaborate",
-            "will",
-            "students",
+            "of",
+            "importance",
+            "the",
+            "conveyed",
+            "documentary",
             "The"
           ],
-          "answer": "The students will collaborate to create posters about protecting the environment."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "endeavour.",
-            "worthwhile",
-            "a",
-            "was",
-            "compass",
-            "a",
-            "with",
-            "navigate",
-            "to",
-            "Learning"
-          ],
-          "answer": "Learning to navigate with a compass was a worthwhile endeavour."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "forest.",
-            "of",
-            "hectares",
-            "of",
-            "thousands",
-            "devastated",
-            "wildfire",
-            "The"
-          ],
-          "answer": "The wildfire devastated thousands of hectares of forest."
+          "answer": "The documentary conveyed the importance of protecting rainforests."
         }
       ]
     },
@@ -138,37 +140,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'significant' mean?",
+          "prompt": "Choose the correct form: The river ______ by industrial waste last year.",
           "choices": [
-            "Important or meaningful; large enough to have an effect.",
-            "To cause a lot of damage or destruction.",
-            "To communicate or express a message, feeling or idea.",
-            "To finish something, or to reach a decision after thinking carefully."
+            "polluted",
+            "is polluted",
+            "was polluting",
+            "was polluted"
           ],
-          "answer": "Important or meaningful; large enough to have an effect.",
-          "explanation": "Losing so many trees was a significant blow to the local ecosystem."
+          "answer": "was polluted",
+          "explanation": "The time phrase 'last year' places the action in the past, so the past passive 'was polluted' is needed."
         },
         {
-          "prompt": "What does 'resolve' mean?",
+          "prompt": "Choose the correct form: Endangered animals must ______ by law.",
           "choices": [
-            "To break a rule or law, or to limit someone's rights.",
-            "To cause a lot of damage or destruction.",
-            "To communicate or express a message, feeling or idea.",
-            "To find a solution to a problem, or to make a firm decision."
+            "protect",
+            "be protected",
+            "protecting",
+            "to protect"
           ],
-          "answer": "To find a solution to a problem, or to make a firm decision.",
-          "explanation": "We need to resolve the issue of plastic waste in our rivers."
+          "answer": "be protected",
+          "explanation": "After a modal verb such as must, the passive always uses be plus the past participle: must be protected."
         },
         {
-          "prompt": "What does 'conclude' mean?",
+          "prompt": "Choose the correct form: She is interested in ______ about renewable energy.",
           "choices": [
-            "To break a rule or law, or to limit someone's rights.",
-            "To cause a lot of damage or destruction.",
-            "To completely destroy or remove something so it no longer exists.",
-            "To finish something, or to reach a decision after thinking carefully."
+            "learn",
+            "to learn",
+            "learning",
+            "to learning"
           ],
-          "answer": "To finish something, or to reach a decision after thinking carefully.",
-          "explanation": "After examining the evidence, the team concluded that the river was polluted."
+          "answer": "learning",
+          "explanation": "A verb that follows a preposition such as 'in' must take the -ing form, so 'interested in learning' is correct."
         }
       ]
     },
@@ -181,34 +183,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Where did the students go on their expedition, and how long did the journey take?",
+          "prompt": "Where did Amal's class go on their expedition, and how long did the bus journey take?",
           "choices": [
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "To accept or admit that something is true, or to recognise that you have received something.",
-            "To work together with others to achieve a common goal."
+            "They went to the Boni National Reserve, one of Kenya's least-visited protected forests, and the bus journey took three hours.",
+            "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream.",
+            "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still..."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "They went to the Boni National Reserve, one of Kenya's least-visited protected forests, and the bus journey took three hours.",
+          "explanation": "Review the unit text evidence: They went to the Boni National Reserve, one of Kenya's least-visited protected forests, and the bus journey took three hours."
         },
         {
-          "prompt": "How did the students make sure they did not harm the environment at their campsite?",
+          "prompt": "How did the students take care of the environment at their campsite?",
           "choices": [
-            "To accept or admit that something is true, or to recognise that you have received something.",
-            "To work together with others to achieve a common goal.",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+            "Trees along the bank have been cut down, and without tree roots the soil erodes and the river becomes shallower.",
+            "Performing the copyrighted play without permission would have been plagiarizing, so Jamal persuaded the group to collaborate on...",
+            "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream.",
+          "explanation": "Review the unit text evidence: They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream."
         },
         {
-          "prompt": "Adam is amazed by the stars because he cannot see them in the city. What is something beautiful in nature that people often overlook or take for granted?",
+          "prompt": "What did the anonymous note under Jamal's pillow say, and what did he discover because of it?",
           "choices": [
-            "To work together with others to achieve a common goal.",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "To accept or admit that something is true, or to recognise that you have received something."
+            "He believed that true leadership is about growth rather than power, so he stepped down early to let a new leader take over with...",
+            "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still...",
+            "Trees along the bank have been cut down, and without tree roots the soil erodes and the river becomes shallower."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still...",
+          "explanation": "Review the unit text evidence: The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still..."
         }
       ]
     },
@@ -222,15 +224,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Describe Your Ideal Outdoor Adventure",
-          "target": "I would enjoy hiking..."
+          "target": "I want to acknowledge that you did a great job on your project."
         },
         {
-          "prompt": "Speaking 3: Vocabulary Expert Interview",
-          "target": "Learning to navigate with a compass was a worthwhile endeavour."
+          "prompt": "Speaking 3: Retell the River Report",
+          "target": "Listen while an adult or your AI tutor reads Daniel's river report from the Eco-Club Field Reports aloud."
         },
         {
           "prompt": "Speaking 5: Five-Minute Unit Talk",
-          "target": "The wildfire devastated thousands of hectares of forest."
+          "target": "The documentary conveyed the importance of protecting rainforests."
         }
       ]
     },
@@ -245,51 +247,57 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "park.",
-            "national",
-            "a",
-            "of",
-            "beauty",
+            "land.",
+            "their",
+            "take",
+            "companies",
+            "logging",
+            "when",
+            "oppressed",
+            "feel",
+            "forest",
             "the",
-            "tarnish",
-            "can",
-            "dumping",
-            "Illegal"
+            "on",
+            "depend",
+            "that",
+            "Communities"
           ],
-          "answer": "Illegal dumping can tarnish the beauty of a national park."
+          "answer": "Communities that depend on the forest feel oppressed when logging companies take their land."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "points.",
-            "collection",
-            "more",
-            "adding",
+            "floods.",
+            "future",
             "by",
-            "programme",
-            "recycling",
-            "our",
-            "augment",
-            "can",
-            "We"
+            "caused",
+            "damage",
+            "the",
+            "mitigate",
+            "will",
+            "dam",
+            "a",
+            "Building"
           ],
-          "answer": "We can augment our recycling programme by adding more collection points."
+          "answer": "Building a dam will mitigate the damage caused by future floods."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "consequences.",
-            "serious",
-            "face",
-            "could",
-            "you",
-            "essay,",
-            "your",
-            "plagiarize",
-            "you",
-            "If"
+            "details.",
+            "exaggerated",
+            "but",
+            "exciting",
+            "with",
+            "stories",
+            "adventure",
+            "her",
+            "embellish",
+            "to",
+            "likes",
+            "She"
           ],
-          "answer": "If you plagiarize your essay, you could face serious consequences."
+          "answer": "She likes to embellish her adventure stories with exciting but exaggerated details."
         }
       ]
     },
@@ -443,37 +451,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'endeavour' mean?",
+          "prompt": "What does 'tarnish' mean?",
           "choices": [
-            "A serious effort or attempt to do something.",
-            "Important or meaningful; large enough to have an effect.",
-            "To find a solution to a problem, or to make a firm decision.",
-            "To think carefully about something to decide how good, important or effective it is."
+            "To cause a lot of damage or destruction.",
+            "To copy someone or something in order to be like them.",
+            "To damage or spoil something, especially a reputation or quality.",
+            "To make something bigger, better or stronger by adding to it."
           ],
-          "answer": "A serious effort or attempt to do something.",
-          "explanation": "Learning to navigate with a compass was a worthwhile endeavour."
+          "answer": "To damage or spoil something, especially a reputation or quality.",
+          "explanation": "Illegal dumping can tarnish the beauty of a national park."
         },
         {
-          "prompt": "What does 'establish' mean?",
+          "prompt": "Choose the missing word from 'The Weight of a Choice, part 2': He did not try to ______ the facts. He explained everything honestly.",
           "choices": [
-            "Important or meaningful; large enough to have an effect.",
-            "To create or start something that is meant to last.",
-            "To find a solution to a problem, or to make a firm decision.",
-            "To finish something, or to reach a decision after thinking carefully."
+            "embellish",
+            "imitate",
+            "oppress",
+            "incorporate"
           ],
-          "answer": "To create or start something that is meant to last.",
-          "explanation": "The school wants to establish an environmental club for students."
+          "answer": "embellish",
+          "explanation": "The story says Jamal did not try to embellish the facts when he wrote his honest report to the head teacher."
         },
         {
-          "prompt": "What does 'evaluate' mean?",
+          "prompt": "Choose the missing word from 'Guardians of the Green': Protecting the forest is not one person's job — it requires ______.",
           "choices": [
-            "To communicate or express a message, feeling or idea.",
-            "To find a solution to a problem, or to make a firm decision.",
-            "To finish something, or to reach a decision after thinking carefully.",
-            "To think carefully about something to decide how good, important or effective it is."
+            "collaboration",
+            "deforestation",
+            "biodiversity",
+            "sustainability"
           ],
-          "answer": "To think carefully about something to decide how good, important or effective it is.",
-          "explanation": "Before choosing a campsite, we need to evaluate which location is safest."
+          "answer": "collaboration",
+          "explanation": "Ranger Tariq explains that protecting the forest requires collaboration, because it is not one person's job."
         }
       ]
     },
@@ -497,26 +505,26 @@
           "explanation": "I want to acknowledge that you did a great job on your project."
         },
         {
-          "prompt": "What does 'collaborate' mean?",
+          "prompt": "What does 'mitigate' mean?",
           "choices": [
-            "A serious effort or attempt to do something.",
-            "To create or start something that is meant to last.",
-            "To think carefully about something to decide how good, important or effective it is.",
-            "To work together with others to achieve a common goal."
+            "To communicate or express a message, feeling or idea.",
+            "To become smaller or less in amount, size or strength.",
+            "To break a rule or law, or to limit someone's rights.",
+            "To make something less severe, harmful or serious."
           ],
-          "answer": "To work together with others to achieve a common goal.",
-          "explanation": "The students will collaborate to create posters about protecting the environment."
+          "answer": "To make something less severe, harmful or serious.",
+          "explanation": "Building a dam will mitigate the damage caused by future floods."
         },
         {
-          "prompt": "What does 'demonstrate' mean?",
+          "prompt": "What does 'relinquish' mean?",
           "choices": [
-            "Important or meaningful; large enough to have an effect.",
-            "To create or start something that is meant to last.",
-            "To show how something works or to prove something clearly.",
-            "To think carefully about something to decide how good, important or effective it is."
+            "To give up or let go of something, especially power or a right.",
+            "To treat someone or something in a cruel or unfair way, making them powerless.",
+            "To give up or leave something or someone behind.",
+            "To copy someone or something in order to be like them."
           ],
-          "answer": "To show how something works or to prove something clearly.",
-          "explanation": "The ranger will demonstrate how to set up a tent safely."
+          "answer": "To give up or let go of something, especially power or a right.",
+          "explanation": "She decided to relinquish her position as club president at the end of the year."
         }
       ]
     }

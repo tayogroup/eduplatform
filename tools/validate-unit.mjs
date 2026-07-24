@@ -280,6 +280,37 @@ function validate(file) {
   for (const f of ["question", "correctAnswer", "explanation"]) F(comp.filter((c) => isBlank(c[f])).length === 0, `comprehension: blank ${f}`, `${comp.filter((c) => isBlank(c[f])).length}`);
   F(comp.filter((c) => c.marks !== undefined && !(Number(c.marks) >= 0)).length === 0, "comprehension: non-numeric marks", "");
 
+  // Anchoring: a question must be answerable from the passage it points at.
+  // Grade 3 Unit 1 shipped with its questions cycled round the readings
+  // mechanically, so one asking about the lunch area pointed at a listening
+  // text about someone's family. Only flag when a DIFFERENT reading is a
+  // strictly better match — a question whose wording matches nothing anywhere
+  // is a note, since short answers ("Yes, she did.") legitimately share no
+  // content words with the passage.
+  const CONTENT = (s) => new Set(String(s || "").toLowerCase().match(/[a-z']{5,}/g) || []);
+  const readText = new Map(rd.map((r) => [r.readingId, String(r.passageScript || "").toLowerCase()]));
+  let misAnchored = 0, unanchored = 0; const misSample = [];
+  for (const c of comp) {
+    if (!c.readingId || !readText.has(c.readingId)) continue;
+    const words = [...CONTENT(`${c.question} ${c.correctAnswer}`)];
+    if (words.length < 2) continue;
+    const score = (id) => words.filter((w) => (readText.get(id) || "").includes(w)).length;
+    const mine = score(c.readingId);
+    const best = Math.max(...[...readText.keys()].map(score));
+    if (best === 0) { unanchored++; continue; }
+    // Only flag a total miss. A ratio test punishes short passages: a poem
+    // question that says "the poem" and points at the poem still loses to the
+    // longer story, which repeats the same vocabulary more often. Requiring
+    // ZERO overlap with the cited passage while another matches strongly keeps
+    // the check to genuine mis-pointing.
+    if (mine === 0 && best >= 3) {
+      misAnchored++;
+      if (misSample.length < 3) misSample.push(c.questionId);
+    }
+  }
+  F(misAnchored === 0, "comprehension: question anchored to the wrong reading", `${misAnchored} item(s) e.g. ${misSample.join(", ")}`);
+  if (unanchored) N(`comprehension note: ${unanchored} question(s) share no wording with any passage — check they are answerable`);
+
   // ═══ 6. QUIZ (deep) ═══
   const qz = get("quizzes");
   let badOpts = 0, ansMiss = 0, optQ = 0, blankExp = 0; const pos = {};

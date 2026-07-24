@@ -153,7 +153,50 @@ function validate(file) {
   const fillerTitles = (d.grammar || []).filter((g) => /^Language pattern \d+$/.test(g.title || "")).length;
   add(fillerTitles === 0, "grammar titles specific", `${fillerTitles} "Language pattern N"`);
 
-  // reviewer reminder (not a failure): the one machine can't judge
+  // F. answer key — real content ids, no repeated filler
+  const ak = d.answerKey || [];
+  const akFiller = ak.filter((a) => /^Accept an accurate detail/i.test(a.answerOrGuidance || "")).length;
+  add(akFiller <= 1, "answer-key not filler", `${akFiller} generic "accept an accurate detail" entries`);
+
+  // G. companion games pack (games/unit-N.json) — same rigour + sync with dictionary
+  const gamesPath = path.join(path.dirname(file), "..", "games", path.basename(file));
+  if (fs.existsSync(gamesPath)) {
+    let gp;
+    try { gp = JSON.parse(fs.readFileSync(gamesPath, "utf8")); } catch (e) { fails.push(`games pack parse error: ${e.message}`); gp = null; }
+    if (gp) {
+      const meaningSet = new Set((d.dictionaryLinks || []).map((e) => (e.childMeaning || "").trim()));
+      let gBadAns = 0, gTemplated = 0, gStaleMeaning = 0, gDupRounds = 0, gRounds = 0;
+      for (const game of gp.games || []) {
+        // For choice/pairs games the prompt IS the question, so it must be distinct.
+        // For spelling/sentence/sequence games the prompt is a generic instruction
+        // ("Build the word…") and legitimately repeats — there, the ANSWER must differ.
+        const questionLike = game.type === "choice" || game.type === "pairs";
+        const seen = new Set();
+        for (const r of game.rounds || []) {
+          gRounds++;
+          const key = questionLike ? (r.prompt || "") : JSON.stringify(r.answer ?? r.solution ?? r.sequence ?? r.pairs ?? r.prompt);
+          if (seen.has(key)) gDupRounds++; else seen.add(key);
+          if (Array.isArray(r.choices) && r.answer !== undefined) {
+            if (!r.choices.includes(r.answer) || new Set(r.choices).size !== r.choices.length) gBadAns++;
+          }
+          const blob = `${r.prompt || ""} ${r.explanation || ""}`;
+          if (BANNED_MEANING.test(blob)) gTemplated++;
+          // a "Which word means: <meaning>" round must quote a real current dictionary meaning
+          const mm = /means:\s*(.+?)(?:"|$)/i.exec(r.prompt || "");
+          if (mm && meaningSet.size) {
+            const quoted = mm[1].trim().replace(/["""]/g, "");
+            if (![...meaningSet].some((m) => m && (quoted.includes(m) || m.includes(quoted)))) gStaleMeaning++;
+          }
+        }
+      }
+      add(gTemplated === 0, "games: no templated meanings", `${gTemplated} rounds quote the banned generic meaning`);
+      add(gStaleMeaning === 0, "games: meanings in sync with dictionary", `${gStaleMeaning} rounds quote a meaning not in the unit dictionary`);
+      add(gBadAns === 0, "games: choice rounds valid", `${gBadAns} rounds with answer∉choices or dup choices`);
+      add(gDupRounds === 0, "games: rounds distinct", `${gDupRounds} duplicate prompts`);
+    }
+  }
+
+  // reviewer reminder (not a failure): the ones a machine can't fully judge
   for (const q of quizzes) {
     if (/which (word|one) (belongs to|names?|is)/i.test(q.question || "")) {
       warn.push(`manual-review quiz distractors: "${q.question}" — confirm the 3 wrong options are a different category`);

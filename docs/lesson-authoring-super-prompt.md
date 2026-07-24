@@ -32,18 +32,28 @@ Character canon (authoritative — never contradict): `{{CANON}}`
 
 The unit is done only when **all** of these are true and you have proven each in the self-check (§6). If any check fails, fix it and re-check *before* returning. Returning output that fails a check is a failure of the task.
 
-### 2 — OUTPUT CONTRACT (produce every section)
+### 2 — OUTPUT CONTRACT (produce EVERY section the learner and teacher can open)
 
-Produce a single JSON object with these sections. Match the existing unit schema exactly (same field names as the current `unit-N.json`). Every section below is mandatory; never leave one templated or thin.
+The unit drives a learner app whose left navigation has these sections — **you must author all of them.** Match the existing schema exactly (same field names as the current `unit-N.json`, plus the two companion files noted). Nothing may be left templated, thin, stale, or out of sync with the rest of the unit.
 
-- `vocabularyGroups` — the words grouped by theme.
-- `dictionaryLinks` — one entry per word: `childMeaning`, `exampleSentence`, `practiceSentences` (5), `spellingPractice`, `sentenceStarter`.
-- `readings` — the story + any shared-reading / rhyme.
-- `comprehension` — questions tied to the readings, with `correctAnswer` + `explanation`.
-- `grammar` — the unit's language patterns: `title`, `ruleAndExamples`, `explanation`, `commonMistake`, `memoryTip`, `practice`.
-- `speaking`, `writing`, `activities` — hands-on tasks with real instructions/model lines.
-- `quizzes` — multiple-choice, `options` joined by " | ", `correctAnswer`, `explanation`.
-- `liveSessions`, `assignments`, `outcomes`, `selfAssessment`, `rubrics`, `teacherNotes`.
+| App section (nav) | Data you author | Must contain |
+|---|---|---|
+| **Overview** | `unit.unitOverview`, `unit.learningPath` | A true 2–4 sentence summary of *this* unit's content; a learning path that names the real sections in order. |
+| **Teacher lecture** | `visual` (+ companion `lecture-media.json`) + the lecture script | A spoken teacher-lecture script that teaches this unit's words/patterns; caption text that matches the script; poster alt-text. If media is generated later, the script is still authored now. |
+| **AI English** | `aiTutorPrompt` on vocabulary/tasks + AI-tutor guidance in `teacherNotes` | Per-item tutor prompts that are specific and **safe** (adult present, no child left alone with the device); never a templated prompt reused across items. |
+| **Vocabulary** | `vocabularyGroups`, `dictionaryLinks` | Per word: `childMeaning`, `exampleSentence`, `practiceSentences` (5), `spellingPractice`, `sentenceStarter`, `aiTutorPrompt`, `masterWord`. |
+| **Reading & story** | `readings` | The story + shared-reading + rhyme, each a real passage. |
+| **Comprehension** | `comprehension` | Passage-anchored questions with `correctAnswer` + `explanation`. |
+| **Grammar** | `grammar` | Per pattern: `title`, `ruleAndExamples`, `explanation`, `commonMistake`, `memoryTip`, `practice`. |
+| **Speaking / Writing / Activities** | `speaking`, `writing`, `activities` | Real, distinct instructions and model lines per item. |
+| **Games** | companion `games/unit-N.json` | 10–12 games (`choice`, `spelling`, `sentence`, `sequence`, `pairs`, `speaking`), each with `rounds`. **Choice-game rounds obey the same rules as quizzes** (one correct, real distractors, answer ∈ choices, distinct). Any round that shows a word's *meaning* must use that word's **real `childMeaning`** from this unit — never the banned generic string, never a stale copy. |
+| **Quiz** | `quizzes` | Multiple-choice: `options` joined by " \| ", `correctAnswer`, `explanation`. |
+| **Books** | shared `ebooks/` library | Reference only — do not invent per-unit; if you recommend titles, they must exist in the shared catalogue. |
+| **Live sessions** | `liveSessions` | Distinct session plans (`beforeSession`, `agenda`, `afterSession`) that actually teach this unit. |
+| **My progress** | `selfAssessment`, `outcomes` | `selfAssessment` statements the child rates, each mapped to a real `outcome`; `outcomes` measurable, distinct, Bloom-tagged. |
+| **Teacher resources** | `teacherNotes`, `answerKey`, `rubrics`, `assignments` | `teacherNotes` (incl. device-safety); `answerKey` entries that match real `contentId`s with real guidance (not "accept an accurate detail" filler); `rubrics` with distinct criteria per target; one unit-specific `assignment`. |
+
+**Cross-file sync is mandatory.** The unit file, its `games/unit-N.json`, and its `lecture-media.json` describe one unit. A word's meaning, a character's name, a pattern's wording must be **identical everywhere they appear**. The historical defect: the dictionary was fixed but the games pack kept the old templated meanings — do not let the three files drift.
 
 ### 3 — THE CONSTITUTION (hard rules — a violation is a defect, not a style choice)
 
@@ -92,7 +102,22 @@ Warm, encouraging tone; the adult helper is addressed where the task needs it.
 
 **H. Culture & safety (Islamic school).** Content must be appropriate: **no** pork, alcohol, dating, or music-party themes. Halal food, mosque, Eid, wudu, salaam, dates are welcome where natural. Use the canon cast. `commonMistake`/teacher notes are kind — never label the child as wrong.
 
-**I. Audio safety (critical for production).** Narrated fields (vocabulary practice sentences, grammar, speaking, readings) have recorded audio. **If you change narrated text, the audio no longer matches.** State clearly in your report **which narrated fields changed**, so audio can be regenerated. Regenerated clips **must get a fresh, dated filename** — the CDN caches media for a year, so reusing a filename keeps serving the old audio. Never silently change narrated text without flagging the audio.
+**I. Audio safety (critical for production).** Narrated fields (vocabulary practice sentences, grammar, speaking, readings, teacher lecture) have recorded audio. **If you change narrated text, the audio no longer matches.** State clearly in your report **which narrated fields changed**, so audio can be regenerated. Regenerated clips **must get a fresh, dated filename** — the CDN caches media for a year, so reusing a filename keeps serving the old audio. Never silently change narrated text without flagging the audio.
+
+**J. Games (same assessment rigour as quizzes, plus sync).**
+20. Every `choice`/`pairs` game round has **exactly one correct `answer`**, present verbatim in its `choices`, with **real distractors** from a different category — the "all choices are the same category" defect is banned here too.
+21. Rounds must be **distinct** within a game; a game's rounds must actually exercise its stated `skill`.
+22. A round that quotes a word's **meaning** (Meaning Match, Definition Dash) must quote that word's **current `childMeaning` from this unit's dictionary** — never the banned generic "A naming word used when…" string, never a stale pre-fix copy.
+23. `spelling`/`sentence`/`sequence` rounds must have a solvable, unambiguous target that matches this unit's real words and patterns.
+
+**K. Overview, learning path & teacher lecture.**
+24. `unitOverview` must describe **this** unit truthfully (right topic, right words) — no generic or wrong-unit blurb. `learningPath` must reference the sections that actually exist, in a sensible order.
+25. The teacher-lecture script teaches this unit's real content, is age-appropriate to read aloud, and its **captions match the script** word-for-word. Poster `alt` text describes the real image.
+
+**L. AI tutor, answer key, rubrics, outcomes, self-assessment.**
+26. Each `aiTutorPrompt` is specific to its word/task and **safe** — it assumes an adult is present and never instructs a child to use the device alone. No templated tutor prompt reused across items.
+27. Every `answerKey` entry points to a **real `contentId`** in this unit and gives **usable guidance or the actual answer** — generic filler ("Accept an accurate detail from the source story.") repeated across items is banned.
+28. `rubrics` criteria are distinct and matched to their `target` (Speaking/Writing/…); `outcomes` are measurable, distinct, and Bloom-tagged; each `selfAssessment` statement maps to a real `outcome` and is written in the child's voice ("I can …").
 
 ### 4 — POSITIVE QUALITY BAR (what "excellent" looks like, beyond "not wrong")
 
@@ -124,12 +149,17 @@ Before returning, verify and report each. Any FAIL must be fixed and the check r
 9. **Register:** report min/max sentence length against the band's range.
 10. **Culture/safety:** confirm zero prohibited content.
 11. **Audio:** list exactly which narrated fields you changed (so audio is regenerated under fresh filenames).
+12. **Games:** every choice/pairs round has one answer ∈ choices with cross-category distractors; rounds distinct; report the count of rounds and any you were unsure about. Confirm zero rounds quote the banned generic meaning and every quoted meaning matches this unit's dictionary.
+13. **Cross-file sync:** confirm the unit file, `games/unit-N.json` and `lecture-media.json` agree on every word meaning, character name and pattern wording (report any you reconciled).
+14. **Overview & lecture:** confirm `unitOverview` names this unit's real topic/words; `learningPath` lists real sections; lecture captions match the script.
+15. **AI/answer-key/rubrics/outcomes:** confirm AI-tutor prompts are per-item and adult-supervised; every `answerKey.contentId` resolves to a real item with real guidance (no repeated filler); rubric criteria distinct; each `selfAssessment` maps to a real outcome.
 
 ### 7 — RETURN FORMAT
 
-Return two things:
-1. The complete unit JSON.
-2. A **verification report**: the §6 checklist with a PASS/FAIL and the measured number for each, the character/canon list, and the list of narrated fields that changed. If anything is a judgement call, say so explicitly rather than hiding it.
+Return three things:
+1. The complete **unit JSON** (all learner/teacher sections).
+2. The companion **`games/unit-N.json`** (and `lecture-media.json` script/captions if you authored lecture text), kept in sync with the unit.
+3. A **verification report**: the §6 checklist (now items 1–15) with a PASS/FAIL and the measured number for each, the character/canon list, the list of narrated fields that changed, and any cross-file reconciliations. If anything is a judgement call, say so explicitly rather than hiding it.
 
 ## ═══ PROMPT END ═══
 

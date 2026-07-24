@@ -95,22 +95,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "fun.",
-            "is",
-            "reading",
-            "that",
-            "brother",
-            "my",
-            "convince",
-            "to",
-            "tried",
-            "I"
-          ],
-          "answer": "I tried to convince my brother that reading is fun."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "tomorrow.",
             "for",
             "homework",
@@ -121,6 +105,20 @@
             "I"
           ],
           "answer": "I will inquire about the homework for tomorrow."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "group.",
+            "the",
+            "of",
+            "fringe",
+            "the",
+            "at",
+            "stood",
+            "She"
+          ],
+          "answer": "She stood at the fringe of the group."
         }
       ]
     },
@@ -133,37 +131,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Memory Wall, part 1': _____ your way.” That evening, Adam sat at his desk.",
+          "prompt": "According to “How to Make Bariis”, what happens if you lift the lid while the rice simmers?",
           "choices": [
-            "Convince",
-            "Communicate",
-            "Emphasize",
-            "Persuade"
+            "The rice browns and sticks to the base of the pot",
+            "The spices lose their colour",
+            "The onion begins to burn",
+            "The steam escapes and the rice stays hard"
           ],
-          "answer": "Communicate",
-          "explanation": "The text says: Communicate your way.” That evening, Adam sat at his desk."
+          "answer": "The steam escapes and the rice stays hard",
+          "explanation": "Step 7 states the consequence directly, because the trapped steam is what actually cooks the grains."
         },
         {
-          "prompt": "Choose the missing word from 'The Memory Wall, part 2': “But if you _____ a hard feeling, that’s a big thing,” Miss Ibrahim said.",
+          "prompt": "In “The Memory Wall”, why does Leo feel nervous at the start?",
           "choices": [
-            "indicate",
-            "hesitate",
-            "emerge",
-            "navigate"
+            "He worries that he cannot remember anything exciting",
+            "He does not like his new classroom timetable",
+            "He has forgotten his pencil case at home",
+            "He would rather draw pictures than write about himself"
           ],
-          "answer": "navigate",
-          "explanation": "The text says: “But if you navigate a hard feeling, that’s a big thing,” Miss Ibrahim said."
+          "answer": "He worries that he cannot remember anything exciting",
+          "explanation": "Leo asks that question aloud in part 1; wanting to draw instead is Nora's reaction, not his."
         },
         {
-          "prompt": "Choose the missing word from 'Tell Me How: source text 1': Use new vocabulary words accurately in both speech and writing, including words such as combine, indicate, navigate, and...",
+          "prompt": "Nora stands at the fringe of the growing crowd. What does “fringe” mean there?",
           "choices": [
-            "quote",
-            "emphasize",
-            "indicate",
-            "communicate"
+            "The centre of it",
+            "The noise it made",
+            "The person leading it",
+            "The outer edge of it"
           ],
-          "answer": "emphasize",
-          "explanation": "The text says: Use new vocabulary words accurately in both speech and writing, including words such as combine, indicate, navigate, and emphasize."
+          "answer": "The outer edge of it",
+          "explanation": "Fringe names a border or outer edge, which is why Nora can watch the crowd without being inside it."
         }
       ]
     },
@@ -176,34 +174,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What is bariis?",
+          "prompt": "In “What Makes Instructions Work”, which five parts does every strong set of instructions share?",
           "choices": [
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "To share information or ideas with someone.",
-            "A group of words that someone has said or written."
+            "They share the title, the opening paragraph, the materials list, the numbered steps and the tips section.",
+            "It soaks in cold water for at least fifteen minutes, which softens the grains so they cook evenly.",
+            "He feels nervous, and the proof is his question, “What if I cannot remember anything exciting?”"
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "They share the title, the opening paragraph, the materials list, the numbered steps and the tips section.",
+          "explanation": "Review the unit text evidence: They share the title, the opening paragraph, the materials list, the numbered steps and the tips section."
         },
         {
-          "prompt": "What should you do after the water begins to boil?",
+          "prompt": "Why does the bariis recipe warn you not to lift the lid while the rice is simmering?",
           "choices": [
-            "To share information or ideas with someone.",
-            "A group of words that someone has said or written.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+            "It soaks in cold water for at least fifteen minutes, which softens the grains so they cook evenly.",
+            "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough.",
+            "Lifting the lid lets the steam escape, and the steam is what cooks the rice, so the grains stay hard."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "Lifting the lid lets the steam escape, and the steam is what cooks the rice, so the grains stay hard.",
+          "explanation": "Review the unit text evidence: Lifting the lid lets the steam escape, and the steam is what cooks the rice, so the grains stay hard."
         },
         {
-          "prompt": "Why do you think the instructions tell you to gather all your ingredients before you start cooking? What problems could arise if you do not?",
+          "prompt": "Nora tells Leo not to hesitate at the wall. What does “hesitate” mean at that moment in part 2?",
           "choices": [
-            "A group of words that someone has said or written.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "To share information or ideas with someone."
+            "She means that working your way through a hard emotion takes real courage, so it deserves a place on the wall.",
+            "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough.",
+            "The drained rice is added to the pot and stirred gently for two minutes until every grain is coated."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough.",
+          "explanation": "Review the unit text evidence: It means he paused before pinning his writing up, because he was unsure whether his memory was good enough."
         }
       ]
     },
@@ -221,11 +219,11 @@
         },
         {
           "prompt": "Speaking 3: Interview About Daily Routines (Pairs)",
-          "target": "I tried to convince my brother that reading is fun."
+          "target": "I will inquire about the homework for tomorrow."
         },
         {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
+          "prompt": "Speaking 5: Read the Recipe Aloud",
+          "target": "She stood at the fringe of the group."
         }
       ]
     },
@@ -240,43 +238,53 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "cocoon.",
-            "its",
-            "from",
-            "emerge",
-            "will",
-            "butterfly",
-            "A"
+            "breakfast.",
+            "after",
+            "—",
+            "study",
+            "to",
+            "time",
+            "prime",
+            "the",
+            "is",
+            "This"
           ],
-          "answer": "A butterfly will emerge from its cocoon."
+          "answer": "This is the prime time to study — after breakfast."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "group.",
+            "grain.",
+            "one",
+            "tasting",
+            "without",
+            "ready",
+            "is",
+            "rice",
+            "the",
+            "assume",
+            "not",
+            "do",
+            "cooks",
+            "Careful"
+          ],
+          "answer": "Careful cooks do not assume the rice is ready without tasting one grain."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "field.",
+            "school",
             "the",
             "of",
             "fringe",
             "the",
-            "at",
-            "stood",
-            "She"
+            "along",
+            "grows",
+            "grass",
+            "Tall"
           ],
-          "answer": "She stood at the fringe of the group."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "fade.",
-            "to",
-            "began",
-            "painting",
-            "the",
-            "of",
-            "colours",
-            "The"
-          ],
-          "answer": "The colours of the painting began to fade."
+          "answer": "Tall grass grows along the fringe of the school field."
         }
       ]
     },
@@ -430,37 +438,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'persuade' mean?",
+          "prompt": "Where does the comma go in a conditional sentence?",
           "choices": [
-            "To convince someone to do or believe something.",
-            "To make something seem bigger or more important than it really is.",
-            "To support someone or give them confidence.",
-            "To think something is true without proof."
+            "After the if-clause when it comes first",
+            "Before the word if in every sentence",
+            "After the main clause when the main clause comes first",
+            "Commas are never used in conditional sentences"
           ],
-          "answer": "To convince someone to do or believe something.",
-          "explanation": "She tried to persuade her friend to join the team."
+          "answer": "After the if-clause when it comes first",
+          "explanation": "The comma marks the join only when the condition is stated first; reversing the halves removes the need for it."
         },
         {
-          "prompt": "What does 'convince' mean?",
+          "prompt": "Which of these is an imperative verb used in the bariis recipe?",
           "choices": [
-            "To ask about something to get information.",
-            "To make someone believe that something is true.",
-            "To make something seem bigger or more important than it really is.",
-            "To think something is true without proof."
+            "quickly",
+            "golden",
+            "Drain",
+            "saucepan"
           ],
-          "answer": "To make someone believe that something is true.",
-          "explanation": "I tried to convince my brother that reading is fun."
+          "answer": "Drain",
+          "explanation": "Drain is a base-form verb giving an order, while the others are an adverb, an adjective and a noun."
         },
         {
-          "prompt": "What does 'encourage' mean?",
+          "prompt": "Which of these signals the order of the steps in a procedure?",
           "choices": [
-            "To ask about something to get information.",
-            "To show or point out something.",
-            "To support someone or give them confidence.",
-            "To think something is true without proof."
+            "measure carefully",
+            "after that",
+            "golden brown",
+            "sieve"
           ],
-          "answer": "To support someone or give them confidence.",
-          "explanation": "My teacher encourages me to try my best."
+          "answer": "after that",
+          "explanation": "After that is a time connective, whereas the others name an action, a colour and a piece of equipment."
         }
       ]
     },
@@ -473,37 +481,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'communicate' mean?",
+          "prompt": "Which sentence is a correct zero conditional?",
           "choices": [
-            "To convince someone to do or believe something.",
-            "To make someone believe that something is true.",
-            "To make something seem important by saying it clearly or strongly.",
-            "To share information or ideas with someone."
+            "If you heat ice, it will melt.",
+            "If you heat ice, it melts.",
+            "If you heated ice, it melts.",
+            "If you will heat ice, it melts."
           ],
-          "answer": "To share information or ideas with someone.",
-          "explanation": "Good writers communicate their ideas clearly."
+          "answer": "If you heat ice, it melts.",
+          "explanation": "The zero conditional puts the present simple in both halves, so no form of will and no past tense belongs there."
         },
         {
-          "prompt": "What does 'quote' mean?",
+          "prompt": "In a zero conditional, which tense do both halves of the sentence use?",
           "choices": [
-            "A group of words that someone has said or written.",
-            "To convince someone to do or believe something.",
-            "To make someone believe that something is true.",
-            "To support someone or give them confidence."
+            "Present simple",
+            "Past simple",
+            "Present perfect",
+            "Future with will"
           ],
-          "answer": "A group of words that someone has said or written.",
-          "explanation": "Sarah shared a quote from her grandmother."
+          "answer": "Present simple",
+          "explanation": "The result is a permanent fact rather than a prediction, so both clauses stay in the present simple."
         },
         {
-          "prompt": "What does 'emphasize' mean?",
+          "prompt": "Which of these sentences is a first conditional rather than a zero conditional?",
           "choices": [
-            "To make someone believe that something is true.",
-            "To make something seem bigger or more important than it really is.",
-            "To make something seem important by saying it clearly or strongly.",
-            "To support someone or give them confidence."
+            "If it rains, the ground gets wet.",
+            "If you heat metal, it expands.",
+            "If we leave now, we will be early.",
+            "If the temperature drops below zero, water freezes."
           ],
-          "answer": "To make something seem important by saying it clearly or strongly.",
-          "explanation": "The teacher will emphasize the key points in the lesson."
+          "answer": "If we leave now, we will be early.",
+          "explanation": "Only this sentence predicts one particular future occasion, and the word will in the main clause is the giveaway."
         }
       ]
     }

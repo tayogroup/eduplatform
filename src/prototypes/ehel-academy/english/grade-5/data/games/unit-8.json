@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The ability to learn, understand, and think about things.",
+          "prompt": "Which word means: The ability to learn, understand and think carefully about things.",
           "choices": [
             "intelligence",
             "physician",
             "ancient"
           ],
           "answer": "intelligence",
-          "explanation": "intelligence: The ability to learn, understand, and think about things."
+          "explanation": "intelligence: The ability to learn, understand and think carefully about things."
         },
         {
-          "prompt": "Which word means: Not guilty of doing anything wrong; pure.",
+          "prompt": "Which word means: Not guilty of doing anything wrong.",
           "choices": [
             "intelligence",
             "physician",
             "innocent"
           ],
           "answer": "innocent",
-          "explanation": "innocent: Not guilty of doing anything wrong; pure."
+          "explanation": "innocent: Not guilty of doing anything wrong."
         },
         {
-          "prompt": "Which word means: A great victory or success.",
+          "prompt": "Which word means: A great victory or success after real effort.",
           "choices": [
             "physician",
             "triumph",
             "intelligence"
           ],
           "answer": "triumph",
-          "explanation": "triumph: A great victory or success."
+          "explanation": "triumph: A great victory or success after real effort."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A doctor who helps people stay healthy and treats them when sick.",
+          "clue": "A doctor who keeps people healthy and treats them when they are ill.",
           "answer": "physician"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Good enough or acceptable.",
+          "clue": "Good enough to accept, though not the very best.",
           "answer": "decent"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The act of going down or lowering.",
+          "clue": "The act of going down from a higher place.",
           "answer": "descent"
         }
       ]
@@ -97,21 +97,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "years.",
-            "of",
-            "hundreds",
-            "for",
-            "stood",
-            "has",
-            "castle",
-            "ancient",
-            "The"
-          ],
-          "answer": "The ancient castle has stood for hundreds of years."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "play.",
             "to",
             "wanted",
@@ -121,6 +106,20 @@
             "The"
           ],
           "answer": "The innocent puppy just wanted to play."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "finishing.",
+            "building,",
+            "planning,",
+            "phases:",
+            "three",
+            "has",
+            "project",
+            "The"
+          ],
+          "answer": "The project has three phases: planning, building, finishing."
         }
       ]
     },
@@ -133,37 +132,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Temple of One Step, part 3': A visiting _____ from the national museum nodded with interest.",
+          "prompt": "In The Hall of One Step, what does the carved phrase say about power?",
           "choices": [
-            "ancient",
-            "magnificent",
-            "central",
-            "geographer"
+            "Power belongs to the tallest building.",
+            "Power grows out of wealth and trade.",
+            "Power is not in height; one step is a phase.",
+            "Power is measured by counting the steps."
           ],
-          "answer": "geographer",
-          "explanation": "The text says: A visiting geographer from the national museum nodded with interest."
+          "answer": "Power is not in height; one step is a phase.",
+          "explanation": "The carving separates power from height entirely, which is why Nora reads the hall as a place built for thinking."
         },
         {
-          "prompt": "Choose the missing word from 'Share Your Views: source text 1': It is about two young students, Sami and Nadia, who investigate an _____ temple and discover that real power comes...",
+          "prompt": "Which modal verb makes the strongest recommendation in a persuasive letter?",
           "choices": [
-            "citizenship",
-            "ancient",
-            "recent",
-            "intelligence"
+            "might",
+            "could",
+            "may",
+            "must"
           ],
-          "answer": "ancient",
-          "explanation": "The text says: It is about two young students, Sami and Nadia, who investigate an ancient temple and discover that real power comes not from climbing high, but from thinking deeply."
+          "answer": "must",
+          "explanation": "Must states an obligation, while might, could and may only offer a possibility."
         },
         {
-          "prompt": "Choose the missing word from 'Share Your Views: source text 2': Third, a garden makes the school more _____.",
+          "prompt": "Which sentence uses formal register for a letter to the headteacher?",
           "choices": [
-            "magnificent",
-            "physician",
-            "geographer",
-            "ancient"
+            "We can't wait for the garden to be ready!",
+            "I am writing to request a garden behind the science block.",
+            "You guys should totally come along on Friday.",
+            "It's gonna be the best thing our school has ever done."
           ],
-          "answer": "magnificent",
-          "explanation": "The text says: Third, a garden makes the school more magnificent."
+          "answer": "I am writing to request a garden behind the science block.",
+          "explanation": "Formal register avoids contractions and slang, so only the second option suits a letter to a headteacher."
         }
       ]
     },
@@ -176,34 +175,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Why do we need a school garden?",
+          "prompt": "In “Save Our School Garden!”, what does the writer say the patch behind the science block looks like now?",
           "choices": [
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "The ability to learn, understand, and think about things.",
-            "The status of being a member of a country with rights and responsibilities."
+            "The writer says it is only dust and stones, with nothing growing on it.",
+            "Each class donates soil or seeds, teachers give one hour a week, and parents lend tools or farming experience.",
+            "They think it could be the entrance, even though Nora warns it might only be a goat trap."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "The writer says it is only dust and stones, with nothing growing on it.",
+          "explanation": "Review the unit text evidence: The writer says it is only dust and stones, with nothing growing on it."
         },
         {
-          "prompt": "What evidence does the writer use to support the idea that gardens are good for students?",
+          "prompt": "The text claims emotive language works better than numbers. What reason does it give?",
           "choices": [
-            "The ability to learn, understand, and think about things.",
-            "The status of being a member of a country with rights and responsibilities.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+            "Each class donates soil or seeds, teachers give one hour a week, and parents lend tools or farming experience.",
+            "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase.",
+            "It says feelings stay in the memory far longer than numbers do."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "It says feelings stay in the memory far longer than numbers do.",
+          "explanation": "Review the unit text evidence: It says feelings stay in the memory far longer than numbers do."
         },
         {
-          "prompt": "Exercise 2: For or Since?",
+          "prompt": "How does Nora explain the carved phrase “Power is not in height. One step is a phase.”?",
           "choices": [
-            "The status of being a member of a country with rights and responsibilities.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "The ability to learn, understand, and think about things."
+            "She says understanding is never finished: it is hard work, it changes, and still it lasts.",
+            "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase.",
+            "A fact can be checked and proved, while an opinion is only what somebody believes or feels."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase.",
+          "explanation": "Review the unit text evidence: She says the hall was built for thinking, and that its makers taught that every stage of life is a phase."
         }
       ]
     },
@@ -216,16 +215,16 @@
       "description": "Listen, record, review and submit useful unit language.",
       "rounds": [
         {
-          "prompt": "Speaking 1: Present Your Views",
-          "target": "Every school should have a garden."
+          "prompt": "Speaking 1: One Minute to Persuade",
+          "target": "Her intelligence helped her solve the tricky problem."
         },
         {
-          "prompt": "Speaking 3: Vocabulary Expert Interview",
-          "target": "The ancient castle has stood for hundreds of years."
+          "prompt": "Speaking 3: Spot the Technique",
+          "target": "an adult to read a short persuasive text aloud while you listen without the page in front of you."
         },
         {
-          "prompt": "Speaking 5: Three-Minute Unit Talk",
-          "target": "The innocent puppy just wanted to play."
+          "prompt": "Speaking 5: Interview the Expert",
+          "target": "The project has three phases: planning, building, finishing."
         }
       ]
     },
@@ -240,47 +239,54 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "anniversary.",
-            "school's",
-            "our",
-            "celebrate",
-            "to",
-            "ceremony",
+            "brings.",
+            "it",
+            "duties",
+            "the",
+            "and",
+            "citizenship",
+            "about",
+            "poster",
             "a",
-            "had",
-            "We"
+            "made",
+            "class",
+            "Our"
           ],
-          "answer": "We had a ceremony to celebrate our school's anniversary."
+          "answer": "Our class made a poster about citizenship and the duties it brings."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "finishing.",
-            "building,",
-            "planning,",
-            "phases:",
-            "three",
-            "has",
-            "project",
+            "time.",
+            "library",
+            "longer",
+            "want",
+            "pupils",
+            "most",
+            "that",
+            "showed",
+            "survey",
+            "recent",
+            "A"
+          ],
+          "answer": "A recent survey showed that most pupils want longer library time."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "up.",
+            "climb",
+            "the",
+            "than",
+            "longer",
+            "took",
+            "ridge",
+            "the",
+            "from",
+            "descent",
             "The"
           ],
-          "answer": "The project has three phases: planning, building, finishing."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "down.",
-            "things",
-            "pulls",
-            "gravity",
-            "how",
-            "learned",
-            "we",
-            "class,",
-            "physics",
-            "In"
-          ],
-          "answer": "In physics class, we learned how gravity pulls things down."
+          "answer": "The descent from the ridge took longer than the climb up."
         }
       ]
     },
@@ -295,32 +301,32 @@
         {
           "prompt": "What does 'decent' mean in this unit?",
           "choices": [
-            "Good enough or acceptable.",
-            "The ability to learn, understand, and think about things.",
-            "A doctor who helps people stay healthy and treats them when sick."
+            "Good enough to accept, though not the very best.",
+            "The ability to learn, understand and think carefully about things.",
+            "A doctor who keeps people healthy and treats them when they are ill."
           ],
-          "answer": "Good enough or acceptable.",
-          "explanation": "decent: Good enough or acceptable."
+          "answer": "Good enough to accept, though not the very best.",
+          "explanation": "decent: Good enough to accept, though not the very best."
         },
         {
           "prompt": "What does 'descent' mean in this unit?",
           "choices": [
-            "The ability to learn, understand, and think about things.",
-            "A doctor who helps people stay healthy and treats them when sick.",
-            "The act of going down or lowering."
+            "The ability to learn, understand and think carefully about things.",
+            "A doctor who keeps people healthy and treats them when they are ill.",
+            "The act of going down from a higher place."
           ],
-          "answer": "The act of going down or lowering.",
-          "explanation": "descent: The act of going down or lowering."
+          "answer": "The act of going down from a higher place.",
+          "explanation": "descent: The act of going down from a higher place."
         },
         {
           "prompt": "What does 'physician' mean in this unit?",
           "choices": [
-            "Very old; from a long time ago.",
-            "A doctor who helps people stay healthy and treats them when sick.",
-            "The ability to learn, understand, and think about things."
+            "Very old, belonging to a time long before ours.",
+            "A doctor who keeps people healthy and treats them when they are ill.",
+            "The ability to learn, understand and think carefully about things."
           ],
-          "answer": "A doctor who helps people stay healthy and treats them when sick.",
-          "explanation": "physician: A doctor who helps people stay healthy and treats them when sick."
+          "answer": "A doctor who keeps people healthy and treats them when they are ill.",
+          "explanation": "physician: A doctor who keeps people healthy and treats them when they are ill."
         }
       ]
     },
@@ -377,15 +383,15 @@
           "pairs": [
             [
               "physician",
-              "A doctor who helps people stay healthy and treats them when sick."
+              "A doctor who keeps people healthy and treats them when they are ill."
             ],
             [
               "ancient",
-              "Very old; from a long time ago."
+              "Very old, belonging to a time long before ours."
             ],
             [
               "precise",
-              "Exact and accurate; not vague."
+              "Exact and accurate, with no vague or careless detail."
             ]
           ]
         },
@@ -394,15 +400,15 @@
           "pairs": [
             [
               "decent",
-              "Good enough or acceptable."
+              "Good enough to accept, though not the very best."
             ],
             [
               "ceremony",
-              "A special event where people celebrate something important."
+              "A special planned event that marks something important."
             ],
             [
               "evidence",
-              "Something that shows whether something is true or real."
+              "Something that shows whether a claim is true or false."
             ]
           ]
         },
@@ -411,15 +417,15 @@
           "pairs": [
             [
               "descent",
-              "The act of going down or lowering."
+              "The act of going down from a higher place."
             ],
             [
               "physics",
-              "The study of how things move and work, like forces and energy."
+              "The study of forces, energy and how things move."
             ],
             [
               "judicial",
-              "Related to the law or the courts."
+              "To do with judges, courts and the law."
             ]
           ]
         }
@@ -434,37 +440,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'geographer' mean?",
+          "prompt": "Complete the sentence: Amal has lived in Lomi ______ 2021.",
           "choices": [
-            "A person who studies maps and the Earth's features.",
-            "Exact and accurate; not vague.",
-            "The most important part or the middle of something.",
-            "Very beautiful or impressive."
+            "for",
+            "during",
+            "while",
+            "since"
           ],
-          "answer": "A person who studies maps and the Earth's features.",
-          "explanation": "The geographer showed us how to read a map."
+          "answer": "since",
+          "explanation": "The year 2021 names the starting point of the situation, and a starting point always takes since."
         },
         {
-          "prompt": "Choose the missing word from 'The Temple of One Step, part 2': \u201c_____ meant knowing the stars, the land, and the law.\u201d Miss Sarah smiled.",
+          "prompt": "Which phrase places the adjectives in the natural English order?",
           "choices": [
-            "Citizenship",
-            "Intelligence",
-            "Physician",
-            "Geographer"
+            "a grey round ancient stone",
+            "an ancient round grey stone",
+            "a round ancient grey stone",
+            "an ancient grey round stone"
           ],
-          "answer": "Citizenship",
-          "explanation": "The text says: \u201cCitizenship meant knowing the stars, the land, and the law.\u201d Miss Sarah smiled."
+          "answer": "an ancient round grey stone",
+          "explanation": "English orders adjectives by age, then shape, then colour, which gives ancient, round, grey."
         },
         {
-          "prompt": "Choose the missing word from 'Share Your Views: source text 2': A _____ from the National Health Board has also stated that children who eat fresh vegetables have stronger bodies...",
+          "prompt": "Which line from the story is a simile?",
           "choices": [
-            "ancient",
-            "physician",
-            "citizenship",
-            "geographer"
+            "Ideas moved like a telegraph, quiet but fast.",
+            "The hall stood magnificent and tall.",
+            "Amal held up her sketch.",
+            "Birds circled above them."
           ],
-          "answer": "physician",
-          "explanation": "The text says: A physician from the National Health Board has also stated that children who eat fresh vegetables have stronger bodies and better concentration."
+          "answer": "Ideas moved like a telegraph, quiet but fast.",
+          "explanation": "A simile compares two unlike things with like or as, and only the first line makes that comparison."
         }
       ]
     },
@@ -477,37 +483,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'intelligence' mean?",
+          "prompt": "Which sentence from the school garden poster is a fact rather than an opinion?",
           "choices": [
-            "A doctor who helps people stay healthy and treats them when sick.",
-            "A person who studies maps and the Earth's features.",
-            "The ability to learn, understand, and think about things.",
-            "Very old; from a long time ago."
+            "The patch of land sits behind the science block.",
+            "A garden would make our school more magnificent.",
+            "The garden is the best idea for our school this year.",
+            "Gardening is far more enjoyable than reading indoors."
           ],
-          "answer": "The ability to learn, understand, and think about things.",
-          "explanation": "Her intelligence helped her solve the tricky problem."
+          "answer": "The patch of land sits behind the science block.",
+          "explanation": "Only the first statement can be checked by walking outside; the other three describe what somebody feels."
         },
         {
-          "prompt": "What does 'citizenship' mean?",
+          "prompt": "Which word names the study of how living bodies work?",
           "choices": [
-            "A person who studies maps and the Earth's features.",
-            "The status of being a member of a country with rights and responsibilities.",
-            "Very beautiful or impressive.",
-            "Very old; from a long time ago."
+            "telegraph",
+            "ceremony",
+            "physiology",
+            "descent"
           ],
-          "answer": "The status of being a member of a country with rights and responsibilities.",
-          "explanation": "Citizenship means you can vote and go to school."
+          "answer": "physiology",
+          "explanation": "Physiology studies how bodies function; a telegraph sends messages, a ceremony marks an event and a descent is a way down."
         },
         {
-          "prompt": "What does 'physician' mean?",
+          "prompt": "Which sentence uses the present perfect correctly?",
           "choices": [
-            "A doctor who helps people stay healthy and treats them when sick.",
-            "The most important part or the middle of something.",
-            "Very beautiful or impressive.",
-            "Very old; from a long time ago."
+            "She have finished her poster.",
+            "She has finished her poster.",
+            "She has finish her poster.",
+            "She have finish her poster."
           ],
-          "answer": "A doctor who helps people stay healthy and treats them when sick.",
-          "explanation": "The physician gave me medicine to feel better."
+          "answer": "She has finished her poster.",
+          "explanation": "She takes has, and the verb must be the past participle finished, so only the second option is correct."
         }
       ]
     }

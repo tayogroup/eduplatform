@@ -99,22 +99,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "time.",
-            "on",
-            "project",
-            "the",
-            "finish",
-            "to",
-            "cooperate",
-            "to",
-            "need",
-            "We"
-          ],
-          "answer": "We need to cooperate to finish the project on time."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "candy.",
             "much",
             "too",
@@ -125,6 +109,25 @@
             "I"
           ],
           "answer": "I try to avoid eating too much candy."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "project.",
+            "my",
+            "for",
+            "approval",
+            "her",
+            "me",
+            "gave",
+            "teacher",
+            "my",
+            "when",
+            "happy",
+            "felt",
+            "I"
+          ],
+          "answer": "I felt happy when my teacher gave me her approval for my project."
         }
       ]
     },
@@ -137,37 +140,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Burrow Discovery, part 2': \"Where did this _____ idea come from?\" \"It started when we saw rabbits dig near the road,\" Noah said.",
+          "prompt": "Which of these statements about space is an opinion rather than a fact?",
           "choices": [
-            "consume",
-            "source",
-            "contract",
-            "misunderstood"
+            "The Moon orbits the Earth.",
+            "Sputnik 1 was launched in 1957.",
+            "The space station has been in orbit since 1998.",
+            "Stars are the most beautiful things in the sky."
           ],
-          "answer": "source",
-          "explanation": "The text says: \"Where did this source idea come from?\" \"It started when we saw rabbits dig near the road,\" Noah said."
+          "answer": "Stars are the most beautiful things in the sky.",
+          "explanation": "Most beautiful signals a personal view that cannot be checked. The other three statements can be verified in a reference book."
         },
         {
-          "prompt": "Choose the missing word from 'Exploring Space: source text 2': Scientists began to _____ across borders, sharing ideas and working together to reach the Moon.",
+          "prompt": "In The Burrow Discovery, what did Sami build for the team's model?",
           "choices": [
-            "source",
-            "cooperate",
-            "expose",
-            "glare"
+            "A painted banner",
+            "A soil sensor",
+            "A card windmill",
+            "A glass telescope"
           ],
-          "answer": "cooperate",
-          "explanation": "The text says: Scientists began to cooperate across borders, sharing ideas and working together to reach the Moon."
+          "answer": "A soil sensor",
+          "explanation": "Sami built the soil sensor that measures moisture. The windmill belonged to Leo's group and the banner to the boycott pupils."
         },
         {
-          "prompt": "Choose the missing word from 'The Burrow Discovery, part 3': \"They're starting a _____ against plastic cups in the lunchroom,\" someone said.",
+          "prompt": "The prefix mis in the word misunderstood tells you the action was done in which way?",
           "choices": [
-            "issue",
-            "empire",
-            "boycott",
-            "independence"
+            "again",
+            "before",
+            "wrongly",
+            "quickly"
           ],
-          "answer": "boycott",
-          "explanation": "The text says: \"They're starting a boycott against plastic cups in the lunchroom,\" someone said."
+          "answer": "wrongly",
+          "explanation": "The prefix mis means wrongly, so misunderstood means understood wrongly. The prefix re means again."
         }
       ]
     },
@@ -180,34 +183,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What did ancient Muslim astronomers build to study the sky?",
+          "prompt": "What did the early observers build on high ground, and what did they use it for?",
           "choices": [
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "The ability to take care of yourself and make your own choices",
-            "A problem or topic that people talk about or need to think about"
+            "They built observatories on high ground so that they could map the patterns of the stars.",
+            "They built a towering windmill from card and wire, and Leo claimed the glare from the bulbs proved it worked.",
+            "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "They built observatories on high ground so that they could map the patterns of the stars.",
+          "explanation": "Review the unit text evidence: They built observatories on high ground so that they could map the patterns of the stars."
         },
         {
-          "prompt": "Why does the passage say that space exploration is not just about science?",
+          "prompt": "Why does Sami want to research the plastic-cup boycott before he joins it?",
           "choices": [
-            "The ability to take care of yourself and make your own choices",
-            "A problem or topic that people talk about or need to think about",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+            "They built a towering windmill from card and wire, and Leo claimed the glare from the bulbs proved it worked.",
+            "It says that nothing in science happens quickly, so you have to be patient to get brilliant results.",
+            "He believes that nobody should sign anything they have not read, so he wants the figures first."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "He believes that nobody should sign anything they have not read, so he wants the figures first.",
+          "explanation": "Review the unit text evidence: He believes that nobody should sign anything they have not read, so he wants the figures first."
         },
         {
-          "prompt": "cooperate (paragraph 3): How did scientists cooperate to reach the Moon?",
+          "prompt": "Elena tells the team they seem very loyal to their work. Which detail from the story supports her?",
           "choices": [
-            "A problem or topic that people talk about or need to think about",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "The ability to take care of yourself and make your own choices"
+            "Scientists began to cooperate across borders, sharing ideas and instruments as they worked towards the Moon.",
+            "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly.",
+            "He believes that nobody should sign anything they have not read, so he wants the figures first."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly.",
+          "explanation": "Review the unit text evidence: They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly."
         }
       ]
     },
@@ -220,16 +223,16 @@
       "description": "Listen, record, review and submit useful unit language.",
       "rounds": [
         {
-          "prompt": "Speaking 1: Astronaut Interview Role-Play",
+          "prompt": "Speaking 1: Astronaut interview role-play",
           "target": "The Roman Empire was very powerful and included many countries."
         },
         {
-          "prompt": "Speaking 3: Vocabulary Expert Interview",
-          "target": "We need to cooperate to finish the project on time."
+          "prompt": "Speaking 3: Group presentation of a science mission",
+          "target": "In a small group, plan a pretend science mission and give it a name."
         },
         {
-          "prompt": "Speaking 5: Three-Minute Unit Talk",
-          "target": "I try to avoid eating too much candy."
+          "prompt": "Speaking 5: Should our school hold a boycott?",
+          "target": "I agree with Nora because..."
         }
       ]
     },
@@ -244,52 +247,58 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "tomorrow.",
-            "contest",
+            "solve.",
+            "to",
+            "wants",
+            "class",
+            "our",
+            "issue",
+            "an",
+            "is",
+            "field",
+            "school",
+            "the",
+            "on",
+            "Litter"
+          ],
+          "answer": "Litter on the school field is an issue our class wants to solve."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "minute.",
+            "a",
+            "than",
+            "less",
+            "in",
+            "model",
+            "paper",
+            "a",
+            "destroy",
+            "can",
+            "rain",
+            "Heavy"
+          ],
+          "answer": "Heavy rain can destroy a paper model in less than a minute."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "it.",
+            "saw",
+            "we",
+            "before",
+            "long",
+            "us",
+            "reached",
+            "parade",
             "the",
             "of",
-            "winner",
-            "the",
-            "announce",
-            "will",
-            "teacher",
-            "The"
-          ],
-          "answer": "The teacher will announce the winner of the contest tomorrow."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "dancing.",
-            "was",
-            "everyone",
-            "and",
-            "party,",
-            "the",
-            "at",
+            "drums",
             "booming",
-            "was",
-            "music",
             "The"
           ],
-          "answer": "The music was booming at the party, and everyone was dancing."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "with.",
-            "play",
-            "can",
-            "we",
-            "that",
-            "object",
-            "round",
-            "a",
-            "is",
-            "ball",
-            "The"
-          ],
-          "answer": "The ball is a round object that we can play with."
+          "answer": "The booming drums of the parade reached us long before we saw it."
         }
       ]
     },
@@ -443,37 +452,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'expose' mean?",
+          "prompt": "Which sentence avoids a double negative?",
           "choices": [
-            "A place or thing where something comes from",
-            "To show something that is usually hidden or to make something known",
-            "To work together with others to achieve something",
-            "When people decide not to buy or use something to show they disagree"
+            "Nobody was not late for class.",
+            "There is not nothing in the box.",
+            "I can't find nothing in my bag.",
+            "Nobody was late for class."
           ],
-          "answer": "To show something that is usually hidden or to make something known",
-          "explanation": "The teacher will expose the secret to the class during the lesson."
+          "answer": "Nobody was late for class.",
+          "explanation": "Nobody already carries the negative, so no extra not is needed. The other three sentences say the opposite of what the writer meant."
         },
         {
-          "prompt": "Choose the missing word from 'The Burrow Discovery, part 2': \"We wanted to _____ how animals create cool, dark places to rest -- especially in this hot season.\" \"I was also...",
+          "prompt": "According to The Night Sky Above Us, in which year was the first artificial satellite launched?",
           "choices": [
-            "destroy",
-            "independence",
-            "issue",
-            "expose"
+            "1957",
+            "1969",
+            "1998",
+            "2005"
           ],
-          "answer": "expose",
-          "explanation": "The text says: \"We wanted to expose how animals create cool, dark places to rest -- especially in this hot season.\" \"I was also inspired by a film about energy,\" Selma added."
+          "answer": "1957",
+          "explanation": "The passage dates the launch of Sputnik 1 to 1957. The Moon landing came in 1969, twelve years later."
         },
         {
-          "prompt": "Choose the missing word from 'The Burrow Discovery, part 2': Your task is to reduce _____ from public lights and consume less electricity.\" \"Another project?\" Selma asked, feeling...",
+          "prompt": "Which unit word describes somebody who feels sleepy and wants to rest?",
           "choices": [
-            "consume",
-            "object",
-            "brilliant",
-            "glare"
+            "loyal",
+            "towering",
+            "drowsy",
+            "booming"
           ],
-          "answer": "glare",
-          "explanation": "The text says: Your task is to reduce glare from public lights and consume less electricity.\" \"Another project?\" Selma asked, feeling drowsy."
+          "answer": "drowsy",
+          "explanation": "Drowsy means sleepy. Loyal describes faithfulness, towering describes height and booming describes loudness."
         }
       ]
     },
@@ -486,37 +495,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'independence' mean?",
+          "prompt": "Which sentence uses the correct verb after an indefinite pronoun?",
           "choices": [
-            "A large area of land that is controlled by one ruler or government",
-            "A very bright light that is hard to see in",
-            "The ability to take care of yourself and make your own choices",
-            "To show something that is usually hidden or to make something known"
+            "Everyone is ready for the presentation.",
+            "Everyone are ready for the presentation.",
+            "Nobody know the answer yet.",
+            "Everything have been packed."
           ],
-          "answer": "The ability to take care of yourself and make your own choices",
-          "explanation": "On her birthday, she felt proud of her independence because she could choose her own cake."
+          "answer": "Everyone is ready for the presentation.",
+          "explanation": "Everyone is singular, so it takes the singular verb is. The other three sentences pair a singular pronoun with a plural verb."
         },
         {
-          "prompt": "What does 'issue' mean?",
+          "prompt": "What does the word burrow mean?",
           "choices": [
-            "A place or thing where something comes from",
-            "A problem or topic that people talk about or need to think about",
+            "A large area of land ruled by one government",
             "A very bright light that is hard to see in",
-            "To show something that is usually hidden or to make something known"
+            "A hole or tunnel that an animal makes in the ground to live in",
+            "A written agreement between two or more groups"
           ],
-          "answer": "A problem or topic that people talk about or need to think about",
-          "explanation": "We had a big issue with our school project, so we worked together to fix it."
+          "answer": "A hole or tunnel that an animal makes in the ground to live in",
+          "explanation": "A burrow is an animal home dug into the ground. The other options define empire, glare and contract."
         },
         {
-          "prompt": "What does 'empire' mean?",
+          "prompt": "Which sentence uses anyone correctly?",
           "choices": [
-            "A large area of land that is controlled by one ruler or government",
-            "A place or thing where something comes from",
-            "A very bright light that is hard to see in",
-            "To work together with others to achieve something"
+            "Anyone left a bag in the hall.",
+            "Did anyone see my notebook?",
+            "Anyone has been using the tablets today.",
+            "Anyone is more important than teamwork."
           ],
-          "answer": "A large area of land that is controlled by one ruler or government",
-          "explanation": "The Roman Empire was very powerful and included many countries."
+          "answer": "Did anyone see my notebook?",
+          "explanation": "Anyone belongs in questions and negatives. The other three are statements, which need someone, somebody or nothing."
         }
       ]
     }

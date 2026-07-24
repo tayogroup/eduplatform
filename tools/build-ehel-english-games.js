@@ -47,15 +47,29 @@ function quizRounds(unit, start) {
 }
 
 function sentenceCandidates(unit, vocabulary) {
-  const candidates = [
+  // Upper-grade units carry longer sentences, so a hard 11-word cap starves the
+  // word-order game and forces the padding path. Widen the window and fall back
+  // to the first practice sentence when the example sentence is too long.
+  const pool = [
     ...vocabulary.map((item) => item.link.exampleSentence),
+    ...vocabulary.map((item) => (item.link.practiceSentences || [])[0]),
     ...unit.quizzes.map((item) => item.explanation),
-  ].map((item) => clean(item, 150)).filter((item) => {
+  ];
+  const candidates = pool.map((item) => clean(item, 150)).filter((item) => {
     const words = item.split(/\s+/);
-    return words.length >= 3 && words.length <= 11 && /[.!?]$/.test(item);
+    return words.length >= 3 && words.length <= 14 && /[.!?]$/.test(item);
   });
   const unique = [...new Set(candidates)];
-  while (unique.length < 6) unique.push(`I am learning about ${clean(unit.unit.unitTitle, 60)}.`);
+  // Distinct padding so the sequence game never gets duplicate rounds — one line
+  // per unused vocabulary word, then an indexed generic as a last resort.
+  const words = vocabulary.map((item) => item.entry.displayWord);
+  let w = 0, n = 1;
+  while (unique.length < 6) {
+    const next = w < words.length
+      ? `The word ${words[w++]} is on our Unit ${unit.unit.unitNo} list.`
+      : `Review sentence ${n++} for ${clean(unit.unit.unitTitle, 50)}.`;
+    if (!unique.includes(next)) unique.push(next);
+  }
   return unique;
 }
 

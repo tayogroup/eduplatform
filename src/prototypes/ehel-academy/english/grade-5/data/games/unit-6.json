@@ -83,50 +83,55 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "umbrellas.",
-            "our",
-            "without",
-            "wet",
-            "got",
-            "we",
-            "so",
-            "unexpected,",
+            "rules.",
+            "the",
+            "change",
+            "to",
+            "wanted",
+            "people",
+            "because",
+            "city",
+            "the",
+            "in",
+            "unrest",
             "was",
-            "rain",
-            "The"
+            "There"
           ],
-          "answer": "The rain was unexpected, so we got wet without our umbrellas."
+          "answer": "There was unrest in the city because people wanted to change the rules."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "help.",
             "needed",
-            "friend",
-            "her",
-            "that",
-            "unaware",
+            "and",
+            "unconscious",
             "was",
-            "She"
+            "he",
+            "bike,",
+            "his",
+            "off",
+            "falling",
+            "After"
           ],
-          "answer": "She was unaware that her friend needed help."
+          "answer": "After falling off his bike, he was unconscious and needed help."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "has.",
-            "else",
+            "question.",
             "one",
-            "no",
-            "that",
-            "necklace",
-            "unique",
-            "a",
-            "has",
-            "grandma",
+            "answer",
+            "to",
+            "forgot",
+            "I",
+            "because",
+            "incomplete",
+            "is",
+            "homework",
             "My"
           ],
-          "answer": "My grandma has a unique necklace that no one else has."
+          "answer": "My homework is incomplete because I forgot to answer one question."
         }
       ]
     },
@@ -139,18 +144,18 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Case of the Incomplete Rule, part 1': \u201cAsk any student who felt unwelcome, _____, or ignored.\u201d After the trial, the students gathered in the...",
+          "prompt": "Choose the missing word from part 1 of the story: \"Ask any student who felt unwelcome, ______, or ignored.\"",
           "choices": [
-            "uneasy",
             "unexpected",
             "unsuccessful",
-            "unfamiliar"
+            "unfamiliar",
+            "uneasy"
           ],
           "answer": "uneasy",
-          "explanation": "The text says: \u201cAsk any student who felt unwelcome, uneasy, or ignored.\u201d After the trial, the students gathered in the library."
+          "explanation": "Amal lists three uncomfortable feelings, and uneasy is the one that means worried or uncomfortable."
         },
         {
-          "prompt": "Choose the missing word from 'The Case of the Incomplete Rule, part 2': \u201cBecause some were too _____ to speak,\u201d added Sophia.",
+          "prompt": "Choose the missing word from part 2 of the story: \"Because some were too ______ to speak,\" added Nora.",
           "choices": [
             "unaware",
             "unconscious",
@@ -158,18 +163,18 @@
             "unfamiliar"
           ],
           "answer": "uncertain",
-          "explanation": "The text says: \u201cBecause some were too uncertain to speak,\u201d added Sophia."
+          "explanation": "Nora explains that people were not sure enough to speak, and uncertain means not sure about something."
         },
         {
-          "prompt": "Choose the missing word from 'The Case of the Incomplete Rule, part 2': \u201cBecause people were _____ of its effects,\u201d said Sami.",
+          "prompt": "Choose the FANBOYS word that fits: \"The task was long, ______ they finished on time.\"",
           "choices": [
-            "unfortunately",
-            "unaware",
-            "unconscious",
-            "unique"
+            "yet",
+            "nor",
+            "for",
+            "or"
           ],
-          "answer": "unaware",
-          "explanation": "The text says: \u201cBecause people were unaware of its effects,\u201d said Sami."
+          "answer": "yet",
+          "explanation": "The second half is a surprise after the first, and yet marks a surprising contrast."
         }
       ]
     },
@@ -182,34 +187,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "How many bookshelves does Mrs Adam show the class?",
+          "prompt": "How many bookshelves does Teacher Yasmin stand in front of, and what does each one hold?",
           "choices": [
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "A situation where people are unhappy and may protest or cause trouble.",
-            "Feeling worried or uncomfortable about something."
+            "She stands in front of five colourful bookshelves, and each shelf holds one story genre.",
+            "It takes place in the small red-brick courthouse in Bukoba, as part of their civic education week.",
+            "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "She stands in front of five colourful bookshelves, and each shelf holds one story genre.",
+          "explanation": "Review the unit text evidence: She stands in front of five colourful bookshelves, and each shelf holds one story genre."
         },
         {
-          "prompt": "Why do you think the writer chose a librarian as the character who explains the genres? What does this tell us about the importance of libraries?",
+          "prompt": "What two reasons do Sami and Nora give for the unfair law lasting so long?",
           "choices": [
-            "A situation where people are unhappy and may protest or cause trouble.",
-            "Feeling worried or uncomfortable about something.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+            "It takes place in the small red-brick courthouse in Bukoba, as part of their civic education week.",
+            "It suggests the reader sees clearly into someone else's ordinary life and understands their feelings.",
+            "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak.",
+          "explanation": "Review the unit text evidence: Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak."
         },
         {
-          "prompt": "What was the old rule about? Why was it unfair?",
+          "prompt": "Teacher Yasmin says a mystery writer also plants false clues. Why would a writer choose to do that?",
           "choices": [
-            "Feeling worried or uncomfortable about something.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "A situation where people are unhappy and may protest or cause trouble."
+            "They found letters from students, including one saying they felt punished for a condition they could not change.",
+            "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense.",
+            "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense.",
+          "explanation": "Review the unit text evidence: False clues keep the reader guessing, so the suspense holds until the ending finally makes sense."
         }
       ]
     },
@@ -223,15 +228,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Genre Detective Game",
-          "target": "In this game, one person describes a story without saying which genre it belongs to."
+          "target": "My story is about a girl who finds a locked box under her bed."
         },
         {
           "prompt": "Speaking 3: Dramatic Reading",
-          "target": "She was unaware that her friend needed help."
+          "target": "After falling off his bike, he was unconscious and needed help."
         },
         {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
+          "prompt": "Speaking 5: Prefix Expert Explains",
+          "target": "The word is ______, and the base word inside it is ______."
         }
       ]
     },
@@ -246,51 +251,59 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "trouble.",
-            "in",
-            "get",
-            "might",
-            "you",
-            "rules,",
-            "the",
-            "disregard",
-            "you",
-            "If"
-          ],
-          "answer": "If you disregard the rules, you might get in trouble."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "herself.",
-            "by",
-            "box",
-            "heavy",
-            "the",
-            "lifting",
-            "of",
-            "incapable",
-            "is",
-            "She"
-          ],
-          "answer": "She is incapable of lifting the heavy box by herself."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "danger.",
-            "from",
-            "city",
-            "the",
-            "saved",
-            "he",
-            "when",
-            "invincible",
-            "felt",
-            "superhero",
+            "attention.",
+            "pay",
+            "to",
+            "hard",
+            "it",
+            "made",
+            "it",
+            "and",
+            "monotonous,",
+            "was",
+            "voice",
+            "teacher's",
             "The"
           ],
-          "answer": "The superhero felt invincible when he saved the city from danger."
+          "answer": "The teacher's voice was monotonous, and it made it hard to pay attention."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "pavement.",
+            "the",
+            "on",
+            "unconscious",
+            "still",
+            "was",
+            "patient",
+            "the",
+            "because",
+            "quickly",
+            "worked",
+            "paramedics",
+            "The"
+          ],
+          "answer": "The paramedics worked quickly because the patient was still unconscious on the pavement."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "right.",
+            "it",
+            "putting",
+            "towards",
+            "step",
+            "first",
+            "the",
+            "is",
+            "loud",
+            "out",
+            "injustice",
+            "an",
+            "Naming"
+          ],
+          "answer": "Naming an injustice out loud is the first step towards putting it right."
         }
       ]
     },
@@ -444,37 +457,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'unsuccessful' mean?",
+          "prompt": "Which genre uses talking animals as its main characters and always teaches a moral?",
           "choices": [
-            "Not achieving the desired result or goal.",
-            "Not awake and not aware of what is happening.",
-            "Not knowing or realising something.",
-            "Not sure about something."
+            "Fable",
+            "Adventure",
+            "Mystery",
+            "Legend"
           ],
-          "answer": "Not achieving the desired result or goal.",
-          "explanation": "He tried to climb the tree, but he was unsuccessful and fell down."
+          "answer": "Fable",
+          "explanation": "The green shelf holds fables; legends may also be old, but they do not always end with a clear moral."
         },
         {
-          "prompt": "What does 'unfamiliar' mean?",
+          "prompt": "Which sentence puts the comma in the right place?",
           "choices": [
-            "Not awake and not aware of what is happening.",
-            "Not knowing or realising something.",
-            "Not known or recognised; something you have not seen before.",
-            "One of a kind; very special."
+            "The trial began and, the room grew quiet.",
+            "The trial began, and the room grew quiet.",
+            "The trial, began and the room grew quiet.",
+            "The trial began and the room, grew quiet."
           ],
-          "answer": "Not known or recognised; something you have not seen before.",
-          "explanation": "The new school was unfamiliar to me, so I felt a little nervous."
+          "answer": "The trial began, and the room grew quiet.",
+          "explanation": "The word and joins two complete sentences here, so the comma goes immediately before it."
         },
         {
-          "prompt": "Choose the missing word from 'The Case of the Incomplete Rule, part 1': \u201cAnd this part says the rule was reviewed during a time of civil _____.\u201d They flipped pages, curious and...",
+          "prompt": "Choose the missing word from part 1 of the story: \"And this part says the rule was reviewed during a time of civil ______.\"",
           "choices": [
-            "unrest",
             "unique",
+            "unrest",
             "unfortunately",
             "uneasy"
           ],
           "answer": "unrest",
-          "explanation": "The text says: \u201cAnd this part says the rule was reviewed during a time of civil unrest.\u201d They flipped pages, curious and focused."
+          "explanation": "Civil unrest names a time when people are unhappy enough to protest, which is what Sami finds in the file."
         }
       ]
     },
@@ -487,37 +500,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'unrest' mean?",
+          "prompt": "What does the word \"illegible\" mean?",
           "choices": [
-            "A situation where people are unhappy and may protest or cause trouble.",
-            "Not achieving the desired result or goal.",
-            "Not known or recognised; something you have not seen before.",
-            "Something that happens suddenly and is not planned."
+            "Very boring because it is always the same.",
+            "Able to be travelled on, especially by boats.",
+            "Not awake and not aware of what is happening.",
+            "Hard to read or not clear enough to understand."
           ],
-          "answer": "A situation where people are unhappy and may protest or cause trouble.",
-          "explanation": "There was unrest in the city because people wanted to change the rules."
+          "answer": "Hard to read or not clear enough to understand.",
+          "explanation": "Legible means readable, so the prefix il- flips it: the faded files in the story were illegible."
         },
         {
-          "prompt": "What does 'uneasy' mean?",
+          "prompt": "Which prefix turns \"complete\" into a word meaning the opposite?",
           "choices": [
-            "Feeling worried or uncomfortable about something.",
-            "Not achieving the desired result or goal.",
-            "Not known or recognised; something you have not seen before.",
-            "Not sure about something."
+            "in-",
+            "-ous",
+            "re-",
+            "-able"
           ],
-          "answer": "Feeling worried or uncomfortable about something.",
-          "explanation": "I felt uneasy when I heard a strange noise in the dark."
+          "answer": "in-",
+          "explanation": "In- means not, so complete becomes incomplete; -ous and -able are endings, and re- means again."
         },
         {
-          "prompt": "What does 'unexpected' mean?",
+          "prompt": "Teacher Yasmin says one genre is built on suspense, real clues and false clues. Which genre is it?",
           "choices": [
-            "Not knowing or realising something.",
-            "Not known or recognised; something you have not seen before.",
-            "Not sure about something.",
-            "Something that happens suddenly and is not planned."
+            "Fable",
+            "Legend",
+            "Mystery",
+            "Realistic fiction"
           ],
-          "answer": "Something that happens suddenly and is not planned.",
-          "explanation": "The rain was unexpected, so we got wet without our umbrellas."
+          "answer": "Mystery",
+          "explanation": "The dark blue shelf holds mysteries, where the writer plants false clues to keep the reader guessing."
         }
       ]
     }

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A black rock burned for heat and energy",
+          "prompt": "Which word means: A hard black rock that people dig up and burn to make heat and energy.",
           "choices": [
             "coal",
             "encounter",
             "issue"
           ],
           "answer": "coal",
-          "explanation": "coal: A black rock burned for heat and energy"
+          "explanation": "coal: A hard black rock that people dig up and burn to make heat and energy."
         },
         {
-          "prompt": "Which word means: A set of rules that explains how a country or organisation works.",
+          "prompt": "Which word means: A set of written rules that explains how a country or group is run.",
           "choices": [
             "coal",
             "encounter",
             "constitution"
           ],
           "answer": "constitution",
-          "explanation": "constitution: A set of rules that explains how a country or organisation works."
+          "explanation": "constitution: A set of written rules that explains how a country or group is run."
         },
         {
-          "prompt": "Which word means: A situation where people are unhappy and may protest or cause trouble.",
+          "prompt": "Which word means: A restless, troubled mood when people are unhappy and may protest.",
           "choices": [
             "encounter",
             "unrest",
             "coal"
           ],
           "answer": "unrest",
-          "explanation": "unrest: A situation where people are unhappy and may protest or cause trouble."
+          "explanation": "unrest: A restless, troubled mood when people are unhappy and may protest."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A small bag or pocket that can hold things",
+          "clue": "A small soft bag or pocket used to hold and protect little things.",
           "answer": "pouch"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A special document that gives rights or rules to a group.",
+          "clue": "A special document that grants rights or rules to a group of people.",
           "answer": "charter"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A situation where people are unhappy and may protest or cause trouble.",
+          "clue": "A restless, troubled mood when people are unhappy and may protest.",
           "answer": "unrest"
         }
       ]
@@ -83,51 +83,58 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "homes.",
-            "our",
-            "for",
-            "electricity",
-            "make",
-            "help",
-            "to",
-            "coal",
-            "use",
-            "We"
+            "pouch.",
+            "worn",
+            "a",
+            "inside",
+            "paper",
+            "land",
+            "folded",
+            "a",
+            "carried",
+            "family",
+            "visiting",
+            "The"
           ],
-          "answer": "We use coal to help make electricity for our homes."
+          "answer": "The visiting family carried a folded land paper inside a worn pouch."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "uniform.",
+            "wind.",
+            "dreadful",
             "a",
-            "wear",
-            "must",
-            "everyone",
-            "that",
-            "policy",
-            "a",
-            "has",
-            "school",
-            "Our"
+            "into",
+            "explorers",
+            "the",
+            "led",
+            "once",
+            "route",
+            "of",
+            "choice",
+            "hasty",
+            "A"
           ],
-          "answer": "Our school has a policy that everyone must wear a uniform."
+          "answer": "A hasty choice of route once led the explorers into a dreadful wind."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "toy.",
-            "favourite",
-            "her",
-            "broke",
-            "brother",
-            "her",
-            "when",
-            "furious",
+            "one.",
+            "calmer",
+            "a",
+            "tried",
+            "they",
+            "so",
+            "unsuccessful,",
             "was",
-            "She"
+            "plan",
+            "hasty",
+            "first,",
+            "team's",
+            "The"
           ],
-          "answer": "She was furious when her brother broke her favourite toy."
+          "answer": "The team's first, hasty plan was unsuccessful, so they tried a calmer one."
         }
       ]
     },
@@ -142,35 +149,35 @@
         {
           "prompt": "What does 'hasty' mean?",
           "choices": [
-            "Doing something too quickly without thinking carefully.",
-            "Feeling happy and thankful for something nice someone has done.",
-            "Very angry or mad.",
-            "Worried or nervous about something that might happen."
+            "Having plenty of room, so nothing feels crowded",
+            "Unwilling, or feeling unsure about doing something",
+            "Done too quickly, without stopping to think carefully",
+            "A special document that grants certain rights or rules to a whole group"
           ],
-          "answer": "Doing something too quickly without thinking carefully.",
-          "explanation": "He made a hasty decision to leave the game early."
+          "answer": "Done too quickly, without stopping to think carefully",
+          "explanation": "A hasty route once led the explorers into danger."
         },
         {
           "prompt": "What does 'reluctant' mean?",
           "choices": [
-            "Easily annoyed or made angry.",
-            "Feeling happy and thankful for something nice someone has done.",
-            "Not wanting to do something or feeling unsure about it.",
-            "Worried or nervous about something that might happen."
+            "Unwilling, or feeling unsure about doing something",
+            "A restless mood when people are unhappy and protest",
+            "To uncover something hidden, or make a fact known",
+            "Belonging to a city or busy town"
           ],
-          "answer": "Not wanting to do something or feeling unsure about it.",
-          "explanation": "She was reluctant to try the new food because she didn't know if she would like it."
+          "answer": "Unwilling, or feeling unsure about doing something",
+          "explanation": "Sami was reluctant to sign until he had read every line."
         },
         {
           "prompt": "Choose the missing word from 'Review text 1: The Silence After the Rumble, part 3': Suddenly, she _____ a boy her age.",
           "choices": [
+            "persuaded",
             "encountered",
-            "charter",
-            "furious",
-            "anxious"
+            "exposed",
+            "communicated"
           ],
           "answer": "encountered",
-          "explanation": "The text says: Suddenly, she encountered a boy her age."
+          "explanation": "The text says: Suddenly, she encountered a boy her age. To encounter is to meet by chance."
         }
       ]
     },
@@ -183,34 +190,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What does Amal understand about her role by the end of the passage?",
           "choices": [
-            "Accept an accurate response supported by the selected review text.",
-            "A black rock burned for heat and energy",
-            "A small bag or pocket that can hold things"
+            "She understands that opening the courthouse doors each morning is important, because without her nothing there can begin.",
+            "The group leader's figures show hundreds of cups are used each week and none are recycled, so the waste is a real issue.",
+            "She says no, the storm was part of the journey, and it led to a well that had never been recorded before."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "She understands that opening the courthouse doors each morning is important, because without her nothing there can begin.",
+          "explanation": "Review the unit text evidence: She understands that opening the courthouse doors each morning is important, because without her nothing there can begin."
         },
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What does Sami say before the friends agree to sign anything?",
           "choices": [
-            "A black rock burned for heat and energy",
-            "A small bag or pocket that can hold things",
-            "Accept an accurate response supported by the selected review text."
+            "The group leader's figures show hundreds of cups are used each week and none are recycled, so the waste is a real issue.",
+            "The author says Leo has honoured the old tradition of passing stories on by memory, and this time Leo feels pride instead of fear.",
+            "He says he would rather research it first, because nobody should sign anything they have not read."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "He says he would rather research it first, because nobody should sign anything they have not read.",
+          "explanation": "Review the unit text evidence: He says he would rather research it first, because nobody should sign anything they have not read."
         },
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "How does Amal answer the judge who asks whether the storm was a mistake?",
           "choices": [
-            "A small bag or pocket that can hold things",
-            "Accept an accurate response supported by the selected review text.",
-            "A black rock burned for heat and energy"
+            "The class turns it into a book that will be shared with next year's pupils.",
+            "She says no, the storm was part of the journey, and it led to a well that had never been recorded before.",
+            "He says he would rather research it first, because nobody should sign anything they have not read."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "She says no, the storm was part of the journey, and it led to a well that had never been recorded before.",
+          "explanation": "Review the unit text evidence: She says no, the storm was part of the journey, and it led to a well that had never been recorded before."
         }
       ]
     },
@@ -228,7 +235,7 @@
         },
         {
           "prompt": "Vocabulary in context",
-          "target": "Our school has a policy that everyone must wear a uniform."
+          "target": "A hasty choice of route once led the explorers into a dreadful wind."
         },
         {
           "prompt": "Question-and-answer practice",
@@ -247,48 +254,54 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "lesson.",
-            "the",
-            "in",
-            "points",
-            "key",
-            "the",
-            "emphasize",
-            "will",
-            "teacher",
-            "The"
-          ],
-          "answer": "The teacher will emphasize the key points in the lesson."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "afternoon.",
-            "every",
-            "play",
-            "we",
-            "where",
-            "is",
-            "park",
-            "local",
-            "The"
-          ],
-          "answer": "The local park is where we play every afternoon."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "class.",
+            "independence.",
+            "of",
+            "sense",
+            "strong",
+            "a",
+            "Nora",
+            "gave",
+            "alone",
+            "board",
             "whole",
             "the",
-            "for",
-            "enough",
-            "spacious",
-            "was",
-            "hall",
-            "The"
+            "Building"
           ],
-          "answer": "The hall was spacious enough for the whole class."
+          "answer": "Building the whole board alone gave Nora a strong sense of independence."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "normal.",
+            "is",
+            "that",
+            "and",
+            "audience,",
+            "an",
+            "before",
+            "anxious",
+            "feel",
+            "learners",
+            "Many"
+          ],
+          "answer": "Many learners feel anxious before an audience, and that is normal."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cars.",
+            "than",
+            "it",
+            "on",
+            "goats",
+            "more",
+            "have",
+            "may",
+            "road",
+            "rural",
+            "A"
+          ],
+          "answer": "A rural road may have more goats on it than cars."
         }
       ]
     },
@@ -303,32 +316,32 @@
         {
           "prompt": "What does 'hasty' mean in this unit?",
           "choices": [
-            "Doing something too quickly without thinking carefully.",
-            "A black rock burned for heat and energy",
-            "To meet or come across someone by chance"
+            "Done too quickly, without stopping to think it through carefully.",
+            "A hard black rock that people dig up and burn to make heat and energy.",
+            "To meet somebody or something by chance, without planning it first."
           ],
-          "answer": "Doing something too quickly without thinking carefully.",
-          "explanation": "hasty: Doing something too quickly without thinking carefully."
+          "answer": "Done too quickly, without stopping to think it through carefully.",
+          "explanation": "hasty: Done too quickly, without stopping to think it through carefully."
         },
         {
           "prompt": "What does 'unexpected' mean in this unit?",
           "choices": [
-            "A black rock burned for heat and energy",
-            "To meet or come across someone by chance",
-            "Something that happens suddenly and is not planned."
+            "A hard black rock that people dig up and burn to make heat and energy.",
+            "To meet somebody or something by chance, without planning it first.",
+            "Surprising, because it was not planned or predicted."
           ],
-          "answer": "Something that happens suddenly and is not planned.",
-          "explanation": "unexpected: Something that happens suddenly and is not planned."
+          "answer": "Surprising, because it was not planned or predicted.",
+          "explanation": "unexpected: Surprising, because it was not planned or predicted."
         },
         {
           "prompt": "What does 'encounter' mean in this unit?",
           "choices": [
-            "A problem or topic that people talk about or need to think about",
-            "To meet or come across someone by chance",
-            "A black rock burned for heat and energy"
+            "A problem or topic that people discuss because it needs to be solved.",
+            "To meet somebody or something by chance, without planning it first.",
+            "A hard black rock that people dig up and burn to make heat and energy."
           ],
-          "answer": "To meet or come across someone by chance",
-          "explanation": "encounter: To meet or come across someone by chance"
+          "answer": "To meet somebody or something by chance, without planning it first.",
+          "explanation": "encounter: To meet somebody or something by chance, without planning it first."
         }
       ]
     },
@@ -385,15 +398,15 @@
           "pairs": [
             [
               "encounter",
-              "To meet or come across someone by chance"
+              "To meet somebody or something by chance, without planning it first."
             ],
             [
               "issue",
-              "A problem or topic that people talk about or need to think about"
+              "A problem or topic that people discuss because it needs to be solved."
             ],
             [
               "policy",
-              "A plan or rule that helps people decide what to do."
+              "A plan or rule that guides the choices a group of people makes."
             ]
           ]
         },
@@ -402,15 +415,15 @@
           "pairs": [
             [
               "hasty",
-              "Doing something too quickly without thinking carefully."
+              "Done too quickly, without stopping to think it through carefully."
             ],
             [
               "anxious",
-              "Worried or nervous about something that might happen."
+              "Worried or nervous about something that might happen soon."
             ],
             [
               "emphasize",
-              "To make something seem important by saying it clearly or strongly."
+              "To show that something matters by saying it clearly and strongly."
             ]
           ]
         },
@@ -419,15 +432,15 @@
           "pairs": [
             [
               "unexpected",
-              "Something that happens suddenly and is not planned."
+              "Surprising, because it was not planned or predicted."
             ],
             [
               "urban",
-              "Related to a city or town."
+              "Belonging to a city or busy town rather than the countryside."
             ],
             [
               "intelligence",
-              "The ability to learn, understand, and think about things."
+              "The ability to learn, understand and think carefully about things."
             ]
           ]
         }
@@ -444,35 +457,35 @@
         {
           "prompt": "What does 'issue' mean?",
           "choices": [
-            "A place or thing where something comes from",
-            "A problem or topic that people talk about or need to think about",
-            "A very bright light that is hard to see in",
-            "To show something that is usually hidden or to make something known"
+            "A problem or topic that people discuss because it needs solving",
+            "A city or busy town rather than the countryside",
+            "The open countryside, with farms, wide fields and very few buildings around",
+            "Extremely angry, so calm is hard to keep"
           ],
-          "answer": "A problem or topic that people talk about or need to think about",
-          "explanation": "We had a big issue with our school project, so we worked together to fix it."
+          "answer": "A problem or topic that people discuss because it needs solving",
+          "explanation": "The wasted plastic cups were an issue the students wanted to fix."
         },
         {
           "prompt": "What does 'policy' mean?",
           "choices": [
-            "A plan or rule that helps people decide what to do.",
-            "A set of rules that explains how a country or organisation works.",
-            "A special document that gives rights or rules to a group.",
-            "Related to making laws or rules."
+            "A young sheep, or the meat that comes from it",
+            "Feeling worried or nervous about something soon",
+            "The quiet countryside, with farms, open fields and very few buildings",
+            "A plan or rule that guides the choices a group makes"
           ],
-          "answer": "A plan or rule that helps people decide what to do.",
-          "explanation": "Our school has a policy that everyone must wear a uniform."
+          "answer": "A plan or rule that guides the choices a group makes",
+          "explanation": "A policy is a guiding rule, like a school policy about spelling."
         },
         {
           "prompt": "What does 'lobby' mean?",
           "choices": [
-            "A large area inside a building where people wait or meet.",
-            "A special document that gives rights or rules to a group.",
-            "A special job or task that someone is trying to do.",
-            "Related to making laws or rules."
+            "Done too quickly, without thinking it through",
+            "A large open area inside a building where people wait",
+            "To make someone agree by giving good reasons",
+            "The ability to learn, to understand and to think about things carefully"
           ],
-          "answer": "A large area inside a building where people wait or meet.",
-          "explanation": "We waited in the lobby of the museum for our guide."
+          "answer": "A large open area inside a building where people wait",
+          "explanation": "The class met the curator in the museum lobby."
         }
       ]
     },
@@ -487,35 +500,35 @@
         {
           "prompt": "What does 'coal' mean?",
           "choices": [
-            "A black rock burned for heat and energy",
-            "Areas or parts of a country with something in common",
-            "To meet or come across someone by chance",
-            "When the air has tiny water drops, making it hard to see"
+            "A small soft bag that holds little things",
+            "A hard black rock that people burn for heat and energy",
+            "Areas or parts of a country that share something in common together",
+            "A problem that people discuss and try to solve"
           ],
-          "answer": "A black rock burned for heat and energy",
-          "explanation": "We use coal to help make electricity for our homes."
+          "answer": "A hard black rock that people burn for heat and energy",
+          "explanation": "Coal is a black rock we burn to make heat and electricity."
         },
         {
           "prompt": "What does 'pouch' mean?",
           "choices": [
-            "A feeling of worry or nervousness",
-            "A small bag or pocket that can hold things",
-            "Areas or parts of a country with something in common",
-            "When the air has tiny water drops, making it hard to see"
+            "A very large area of land that is ruled by one single government",
+            "A written rule that guides a group's choices",
+            "A restless mood when people feel unhappy",
+            "A small soft bag or pocket used to hold little things"
           ],
-          "answer": "A small bag or pocket that can hold things",
-          "explanation": "He kept his coins in a small leather pouch."
+          "answer": "A small soft bag or pocket used to hold little things",
+          "explanation": "A pouch is a small bag; the family carried a paper inside a worn pouch."
         },
         {
           "prompt": "What does 'independence' mean?",
           "choices": [
-            "A large area of land that is controlled by one ruler or government",
-            "A very bright light that is hard to see in",
-            "The ability to take care of yourself and make your own choices",
-            "To show something that is usually hidden or to make something known"
+            "To share information or ideas with other people",
+            "A group of words that someone has said or written",
+            "Being able to look after yourself and make your own choices",
+            "Surprising and sudden, because it was not planned or predicted at all"
           ],
-          "answer": "The ability to take care of yourself and make your own choices",
-          "explanation": "On her birthday, she felt proud of her independence because she could choose her own cake."
+          "answer": "Being able to look after yourself and make your own choices",
+          "explanation": "Independence means making your own choices, as Amal did at the court."
         }
       ]
     }

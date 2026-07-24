@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Related to a specific place or area near you.",
+          "prompt": "Which word means: Belonging to the small area where you live, such as your own town.",
           "choices": [
             "local",
             "rural",
             "colonial"
           ],
           "answer": "local",
-          "explanation": "local: Related to a specific place or area near you."
+          "explanation": "local: Belonging to the small area where you live, such as your own town."
         },
         {
-          "prompt": "Which word means: When a group enters a place and takes control, often by force.",
+          "prompt": "Which word means: The moment an army enters a place and takes control by force.",
           "choices": [
             "local",
             "rural",
             "invasion"
           ],
           "answer": "invasion",
-          "explanation": "invasion: When a group enters a place and takes control, often by force."
+          "explanation": "invasion: The moment an army enters a place and takes control by force."
         },
         {
-          "prompt": "Which word means: An amount that is more than what is needed.",
+          "prompt": "Which word means: An amount that is left over because it is more than you need.",
           "choices": [
             "rural",
             "surplus",
             "local"
           ],
           "answer": "surplus",
-          "explanation": "surplus: An amount that is more than what is needed."
+          "explanation": "surplus: An amount that is left over because it is more than you need."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Related to a city or town.",
+          "clue": "Belonging to a city or a busy town rather than the countryside.",
           "answer": "urban"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To win against something or take control of a place.",
+          "clue": "To defeat somebody in a fight, or to take control of a place.",
           "answer": "conquer"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not useful or realistic in a situation.",
+          "clue": "Not sensible or useful, because it would be too hard to do.",
           "answer": "impractical"
         }
       ]
@@ -98,21 +98,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "old.",
-            "very",
-            "are",
-            "city",
-            "the",
-            "in",
-            "buildings",
-            "colonial",
-            "The"
-          ],
-          "answer": "The colonial buildings in the city are very old."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "city.",
             "coastal",
             "the",
@@ -125,6 +110,23 @@
             "The"
           ],
           "answer": "The history book described the invasion of the coastal city."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "materials.",
+            "of",
+            "surplus",
+            "a",
+            "had",
+            "we",
+            "project,",
+            "our",
+            "finished",
+            "we",
+            "After"
+          ],
+          "answer": "After we finished our project, we had a surplus of materials."
         }
       ]
     },
@@ -137,37 +139,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Forgotten Mural, part 1': In the _____ town of Ayensu, nestled between clay hills and riverbanks, the Year 5 class of Nkrumah Primary was given...",
+          "prompt": "Which reply disagrees politely and gives a reason?",
           "choices": [
-            "colonial",
-            "historical",
-            "rural",
+            "I disagree with everything you said.",
+            "I see your point, but I think that the cat would notice more, because animals watch food.",
+            "That is wrong and you know it.",
+            "No, the hero's view is the only one."
+          ],
+          "answer": "I see your point, but I think that the cat would notice more, because animals watch food.",
+          "explanation": "It names the other view, states its own view and supplies a reason. The other replies dismiss the speaker or omit a reason."
+        },
+        {
+          "prompt": "A narrator who uses the words I, me and my is telling a story in which point of view?",
+          "choices": [
+            "First person",
+            "Third person",
+            "Past tense",
+            "Direct speech"
+          ],
+          "answer": "First person",
+          "explanation": "First-person narration uses I, me and my. Third person uses he, she and they, while tense and direct speech describe other features."
+        },
+        {
+          "prompt": "Choose the missing word from The Forgotten Mural, part 3: 'It belongs to the whole ______.'",
+          "choices": [
+            "urban",
+            "invasion",
+            "festival",
             "continent"
           ],
-          "answer": "rural",
-          "explanation": "The text says: In the rural town of Ayensu, nestled between clay hills and riverbanks, the Year 5 class of Nkrumah Primary was given an unusual task."
-        },
-        {
-          "prompt": "Choose the missing word from 'The Forgotten Mural, part 1': It was loud and _____, the opposite of their quiet home village.",
-          "choices": [
-            "local",
-            "spacious",
-            "federal",
-            "political"
-          ],
-          "answer": "spacious",
-          "explanation": "The text says: It was loud and spacious, the opposite of their quiet home village."
-        },
-        {
-          "prompt": "Choose the missing word from 'The Forgotten Mural, part 3': \u201cIt belongs to the whole _____.",
-          "choices": [
-            "continent",
-            "urban",
-            "rural",
-            "spacious"
-          ],
           "answer": "continent",
-          "explanation": "The text says: \u201cIt belongs to the whole continent."
+          "explanation": "Amal is saying the mural belongs to far more than one school, so she names the whole landmass."
         }
       ]
     },
@@ -180,34 +182,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Uncle Adam mentions that the fishing boats returned empty for nine days. Does Amal mention this detail? Why do you think she does or does not include it?",
+          "prompt": "In Omar's account, how many days did the fishing boats come back with nothing?",
           "choices": [
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "Related to a specific place or area near you.",
-            "Related to a city or town."
+            "The fishing boats came back with nothing for nine days.",
+            "Amal says the fish eyes looked like tiny glass marbles.",
+            "It suggests the streets were wide and open, unlike the narrow lanes of their quiet village."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "The fishing boats came back with nothing for nine days.",
+          "explanation": "Review the unit text evidence: The fishing boats came back with nothing for nine days."
         },
         {
-          "prompt": "Amal notices the orange cat trying to steal a fish. Why do you think Uncle Adam does not mention the cat in his version?",
+          "prompt": "What did the class decide to do straight after Teacher Yasmin praised their presentation?",
           "choices": [
-            "Related to a specific place or area near you.",
-            "Related to a city or town.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+            "Amal says the fish eyes looked like tiny glass marbles.",
+            "The flag matches no real country, so Daniel decided it must stand for a group's own dream.",
+            "They voted to paint a new mural on their own school wall."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "They voted to paint a new mural on their own school wall.",
+          "explanation": "Review the unit text evidence: They voted to paint a new mural on their own school wall."
         },
         {
-          "prompt": "Read Amal's final sentences again. What do they tell us about how children experience the world differently from adults?",
+          "prompt": "Daniel says the flag on the tunic may stand for an early independence group. What made him think so?",
           "choices": [
-            "Related to a city or town.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "Related to a specific place or area near you."
+            "She promised that their mural would appear in the heritage newsletter.",
+            "The flag matches no real country, so Daniel decided it must stand for a group's own dream.",
+            "She asked them to investigate a hidden mural behind a wooden wall in the old federal hall."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "The flag matches no real country, so Daniel decided it must stand for a group's own dream.",
+          "explanation": "Review the unit text evidence: The flag matches no real country, so Daniel decided it must stand for a group's own dream."
         }
       ]
     },
@@ -220,16 +222,16 @@
       "description": "Listen, record, review and submit useful unit language.",
       "rounds": [
         {
-          "prompt": "Speaking 1: Hot-Seating (Character Interview)",
-          "target": "In this activity, one person sits in the \"hot seat\" and pretends to be a character from the reading passage or from any story you have studied."
+          "prompt": "Speaking 1: Hot-Seating a Narrator",
+          "target": "One person sits in the hot seat and answers as a character from this unit."
         },
         {
           "prompt": "Speaking 3: Retelling Race",
-          "target": "This is a fast, fun activity that practises your retelling skills under time pressure."
+          "target": "This is a fast game that shows how quickly you can switch between points of view."
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "The history book described the invasion of the coastal city."
+          "target": "After we finished our project, we had a surplus of materials."
         }
       ]
     },
@@ -244,49 +246,57 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "homework.",
-            "the",
-            "about",
-            "ask",
-            "to",
-            "friend",
-            "my",
-            "contact",
-            "will",
-            "I"
+            "times.",
+            "colonial",
+            "during",
+            "over",
+            "painted",
+            "were",
+            "stories",
+            "local",
+            "many",
+            "that",
+            "learned",
+            "Amal"
           ],
-          "answer": "I will contact my friend to ask about the homework."
+          "answer": "Amal learned that many local stories were painted over during colonial times."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "sentences.",
-            "three",
-            "in",
-            "tale",
-            "fairy",
-            "the",
-            "of",
-            "synopsis",
+            "visit.",
+            "peaceful",
             "a",
-            "Write"
+            "as",
+            "same",
+            "the",
+            "not",
+            "is",
+            "invasion",
+            "an",
+            "that",
+            "explained",
+            "Daniel"
           ],
-          "answer": "Write a synopsis of the fairy tale in three sentences."
+          "answer": "Daniel explained that an invasion is not the same as a peaceful visit."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "thoughtful.",
-            "and",
-            "quiet",
-            "feel",
-            "everyone",
-            "made",
-            "song",
-            "plaintive",
-            "The"
+            "stall.",
+            "every",
+            "filled",
+            "suddenly",
+            "fish",
+            "of",
+            "surplus",
+            "a",
+            "days,",
+            "empty",
+            "nine",
+            "After"
           ],
-          "answer": "The plaintive song made everyone feel quiet and thoughtful."
+          "answer": "After nine empty days, a surplus of fish suddenly filled every stall."
         }
       ]
     },
@@ -301,32 +311,32 @@
         {
           "prompt": "What does 'cultural' mean in this unit?",
           "choices": [
-            "Related to the ideas, customs, and behaviour of a group of people.",
-            "Related to a specific place or area near you.",
-            "Related to the countryside, not the city."
+            "Connected with the customs, arts and beliefs shared by a group of people.",
+            "Belonging to the small area where you live, such as your own town.",
+            "Belonging to the countryside, where there are farms, fields and few buildings."
           ],
-          "answer": "Related to the ideas, customs, and behaviour of a group of people.",
-          "explanation": "cultural: Related to the ideas, customs, and behaviour of a group of people."
+          "answer": "Connected with the customs, arts and beliefs shared by a group of people.",
+          "explanation": "cultural: Connected with the customs, arts and beliefs shared by a group of people."
         },
         {
           "prompt": "What does 'industrial' mean in this unit?",
           "choices": [
-            "Related to a specific place or area near you.",
-            "Related to the countryside, not the city.",
-            "Related to factories and making things."
+            "Belonging to the small area where you live, such as your own town.",
+            "Belonging to the countryside, where there are farms, fields and few buildings.",
+            "Connected with factories and the making of goods in large amounts."
           ],
-          "answer": "Related to factories and making things.",
-          "explanation": "industrial: Related to factories and making things."
+          "answer": "Connected with factories and the making of goods in large amounts.",
+          "explanation": "industrial: Connected with factories and the making of goods in large amounts."
         },
         {
           "prompt": "What does 'rural' mean in this unit?",
           "choices": [
-            "Related to a time when one country controlled another.",
-            "Related to the countryside, not the city.",
-            "Related to a specific place or area near you."
+            "Belonging to a time when one country ruled and controlled another country.",
+            "Belonging to the countryside, where there are farms, fields and few buildings.",
+            "Belonging to the small area where you live, such as your own town."
           ],
-          "answer": "Related to the countryside, not the city.",
-          "explanation": "rural: Related to the countryside, not the city."
+          "answer": "Belonging to the countryside, where there are farms, fields and few buildings.",
+          "explanation": "rural: Belonging to the countryside, where there are farms, fields and few buildings."
         }
       ]
     },
@@ -383,15 +393,15 @@
           "pairs": [
             [
               "rural",
-              "Related to the countryside, not the city."
+              "Belonging to the countryside, where there are farms, fields and few buildings."
             ],
             [
               "colonial",
-              "Related to a time when one country controlled another."
+              "Belonging to a time when one country ruled and controlled another country."
             ],
             [
               "political",
-              "Related to government or how people make decisions about rules and laws."
+              "Connected with government and the ways people decide on rules and laws."
             ]
           ]
         },
@@ -400,15 +410,15 @@
           "pairs": [
             [
               "cultural",
-              "Related to the ideas, customs, and behaviour of a group of people."
+              "Connected with the customs, arts and beliefs shared by a group of people."
             ],
             [
               "symbol",
-              "A picture or sign that represents something else."
+              "A picture, sign or object that stands for a bigger idea."
             ],
             [
               "journal",
-              "A book where you write your thoughts, feelings, and daily activities."
+              "A book where you write your own thoughts, notes and daily events."
             ]
           ]
         },
@@ -417,15 +427,15 @@
           "pairs": [
             [
               "industrial",
-              "Related to factories and making things."
+              "Connected with factories and the making of goods in large amounts."
             ],
             [
               "flee",
-              "To escape by running away."
+              "To run away quickly from danger or trouble."
             ],
             [
               "thriving",
-              "Growing or developing successfully."
+              "Growing strongly and doing very well."
             ]
           ]
         }
@@ -440,37 +450,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'spacious' mean?",
+          "prompt": "Choose the missing word from The Forgotten Mural, part 1: 'The centre was loud and ______, the opposite of their quiet village lanes.'",
           "choices": [
-            "Having a lot of space; not crowded or small.",
-            "Related to a king or queen.",
-            "Related to a time when one country controlled another.",
-            "Related to events that happened in the past."
-          ],
-          "answer": "Having a lot of space; not crowded or small.",
-          "explanation": "The hall was spacious enough for the whole class."
-        },
-        {
-          "prompt": "Choose the missing word from 'The Forgotten Mural, part 2': They titled it: \u201cThe Forgotten Mural: A Story of Symbols, Space, and Struggle.\u201d Nadia began: \u201cDuring the colonial era,...",
-          "choices": [
-            "historical",
-            "local",
-            "continent",
-            "colonial"
-          ],
-          "answer": "local",
-          "explanation": "The text says: They titled it: \u201cThe Forgotten Mural: A Story of Symbols, Space, and Struggle.\u201d Nadia began: \u201cDuring the colonial era, many local stories were painted over or removed."
-        },
-        {
-          "prompt": "Choose the missing word from 'The Forgotten Mural, part 1': \u201cThere\u2019s an old building in the _____ centre.",
-          "choices": [
-            "urban",
+            "rural",
             "royal",
             "federal",
-            "political"
+            "spacious"
           ],
-          "answer": "urban",
-          "explanation": "The text says: \u201cThere\u2019s an old building in the urban centre."
+          "answer": "spacious",
+          "explanation": "The urban centre is contrasted with narrow village lanes, so the missing word describes open, roomy streets."
+        },
+        {
+          "prompt": "Which of these sentences is an opinion rather than a fact?",
+          "choices": [
+            "Amal's account is far more exciting than Omar's.",
+            "The fishing boats returned empty for nine days.",
+            "Omar sells fish at a market stall.",
+            "The market stands near the coast."
+          ],
+          "answer": "Amal's account is far more exciting than Omar's.",
+          "explanation": "More exciting is a judgement that a reader could reasonably dispute. The other three can be checked against the texts."
+        },
+        {
+          "prompt": "Which sentence uses an opinion phrase correctly?",
+          "choices": [
+            "In my opinion that the mural should stay.",
+            "I think the that mural should stay.",
+            "I believe that the mural should stay.",
+            "I feel that cold about the mural."
+          ],
+          "answer": "I believe that the mural should stay.",
+          "explanation": "In my opinion takes a comma, that never follows the article, and I feel drops that before a physical feeling."
         }
       ]
     },
@@ -483,37 +493,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'local' mean?",
+          "prompt": "Which word names a large picture painted straight onto a wall?",
           "choices": [
-            "A large area of land on Earth surrounded by water.",
-            "Having a lot of space; not crowded or small.",
-            "Related to a specific place or area near you.",
-            "Related to the countryside, not the city."
+            "journal",
+            "mural",
+            "festival",
+            "continent"
           ],
-          "answer": "Related to a specific place or area near you.",
-          "explanation": "The local park is where we play every afternoon."
+          "answer": "mural",
+          "explanation": "A journal is a private notebook, a festival is a public event and a continent is a landmass, so only mural names wall art."
         },
         {
-          "prompt": "What does 'urban' mean?",
+          "prompt": "What does the word 'rural' describe?",
           "choices": [
-            "A large area of land on Earth surrounded by water.",
-            "Having a lot of space; not crowded or small.",
-            "Related to a city or town.",
-            "Related to a time when one country controlled another."
+            "Belonging to the countryside, not the city.",
+            "A time when one country controlled another country.",
+            "A large event with music, food and shared activities.",
+            "A book for private daily writing."
           ],
-          "answer": "Related to a city or town.",
-          "explanation": "The urban centre had tall buildings and busy streets."
+          "answer": "Belonging to the countryside, not the city.",
+          "explanation": "Rural describes countryside places. The other options define colonial, festival and journal."
         },
         {
-          "prompt": "What does 'rural' mean?",
+          "prompt": "Choose the missing word from Omar's account: 'My ______ dried up like a puddle in the midday sun.'",
           "choices": [
-            "A large area of land on Earth surrounded by water.",
-            "Related to a time when one country controlled another.",
-            "Related to events that happened in the past.",
-            "Related to the countryside, not the city."
+            "surplus",
+            "invasion",
+            "income",
+            "journal"
           ],
-          "answer": "Related to the countryside, not the city.",
-          "explanation": "The rural village was peaceful and surrounded by farms."
+          "answer": "income",
+          "explanation": "Omar is describing money that stopped arriving during the nine empty days, so income fits the sentence."
         }
       ]
     }

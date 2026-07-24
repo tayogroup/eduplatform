@@ -339,9 +339,15 @@ function validate(file) {
 
   // ═══ 10. ANSWER KEY (deep) ═══
   const ak = get("answerKey");
-  const akFiller = ak.filter((a) => /^Accept an accurate detail/i.test(a.answerOrGuidance || "")).length;
-  F(akFiller <= 1, "answerKey: repeated filler guidance", `${akFiller} "accept an accurate detail" entries`);
   F(ak.filter((a) => isBlank(a.answerOrGuidance)).length === 0, "answerKey: blank guidance", "");
+  // Generic filler detection: real marking guidance is item-specific, so the
+  // SAME string repeating many times means boilerplate — whatever its wording.
+  // (Hardcoding one known filler string missed the activity one entirely.)
+  const akCounts = new Map();
+  for (const a of ak) { const g = norm(a.answerOrGuidance); if (g) akCounts.set(g, (akCounts.get(g) || 0) + 1); }
+  const worst = [...akCounts.entries()].sort((x, y) => y[1] - x[1])[0];
+  if (worst) F(worst[1] <= 2, "answerKey: repeated boilerplate guidance",
+    `"${worst[0].slice(0, 60)}…" used ${worst[1]}× (guidance must be item-specific)`);
 
   // ═══ 11. TEACHER NOTES ═══
   const tn = get("teacherNotes");

@@ -153,9 +153,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $device->timemodified = time();
             $DB->update_record('local_prequran_safenet_dev', $device);
             if ($cfg->apiready) {
-                if ($action === 'learn') {
-                    pqsn_ensure_learning_rules();
-                }
+                // Sync the tag change first (fast). The static learning ruleset is
+                // kept in place by the cron, so we don't reload it inline here —
+                // reloading before the sync made the sync time out (device showed
+                // "pending" and the tag never applied).
                 pqsn_sync_device($device);
             }
             pqsn_audit($consumerid, $workspaceid, (int)$device->id, 'policy_' . $device->policy, []);

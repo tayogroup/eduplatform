@@ -261,12 +261,14 @@ function pqsn_dns_hostnames(string $clientid): array {
 function pqsn_children_of(int $parentid): array {
     global $DB;
     $children = [];
+    // Revoked links (consented=0/granted=0) grant NO device control — a
+    // revoked parent must not manage the child's DNS filtering.
     foreach ([
-        ['local_prequran_comm_consent', 'guardianid', 'studentid'],
-        ['local_prequran_live_consent', 'guardianid', 'studentid'],
-    ] as [$table, $guardianfield, $studentfield]) {
+        ['local_prequran_comm_consent', 'guardianid', 'studentid', 'consented'],
+        ['local_prequran_live_consent', 'guardianid', 'studentid', 'granted'],
+    ] as [$table, $guardianfield, $studentfield, $consentfield]) {
         try {
-            $rows = $DB->get_records($table, [$guardianfield => $parentid]);
+            $rows = $DB->get_records($table, [$guardianfield => $parentid, $consentfield => 1]);
             foreach ($rows as $row) {
                 $sid = (int)$row->{$studentfield};
                 if ($sid > 0) {
@@ -337,8 +339,8 @@ function pqsn_api_request_ep(stdClass $ep, string $method, string $path, ?array 
         CURLOPT_CUSTOMREQUEST => $method,
         CURLOPT_USERPWD => $ep->user . ':' . $ep->pass,
         CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_CONNECTTIMEOUT => 5,
-        CURLOPT_TIMEOUT => 10,
+        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TIMEOUT => 30,
     ]);
     if ($body !== null) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));

@@ -28,6 +28,14 @@ class safenet_schedule extends \core\task\scheduled_task {
 
         $now = time();
 
+        // Keep the static learning ruleset present on the resolvers (self-heal).
+        // Done once per run so per-device syncs are never blocked by a reload.
+        try {
+            pqsn_ensure_learning_rules();
+        } catch (\Throwable $e) {
+            // Resolvers unreachable this run; devices still track policy in the DB.
+        }
+
         // Student userids currently inside a live session's scheduled window.
         $insession = [];
         try {
@@ -130,9 +138,6 @@ class safenet_schedule extends \core\task\scheduled_task {
         $device->syncstatus = 'pending';
         $device->timemodified = $now;
         $DB->update_record('local_prequran_safenet_dev', $device);
-        if ($policy === 'learning') {
-            pqsn_ensure_learning_rules();
-        }
         pqsn_sync_device($device);
         pqsn_audit((int)$device->consumerid, (int)$device->workspaceid, (int)$device->id, 'auto_' . $policy, []);
     }

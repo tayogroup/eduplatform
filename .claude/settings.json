@@ -1,6 +1,8 @@
 {
   "permissions": {
     "allow": [
+      "Bash",
+      "PowerShell",
       "Bash(npm run dev:*)",
       "Bash(npm run check:alphabet:*)",
       "Bash(npm run validate:units:*)",
@@ -23,21 +25,34 @@
       "Bash(git ls-files:*)",
       "Bash(git count-objects:*)",
       "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(PYTHONIOENCODING=utf-8 python:*)",
       "Bash(node:*)",
       "Bash(node tools/:*)",
       "Bash(npx:*)",
       "Bash(ls:*)",
       "Bash(cat:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
       "Bash(head:*)",
       "Bash(tail:*)",
       "Bash(wc:*)",
       "Bash(grep:*)",
       "Bash(sed:*)",
+      "Bash(awk:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(paste:*)",
+      "Bash(diff:*)",
       "Bash(find:*)",
       "Bash(unzip:*)",
       "Bash(mkdir:*)",
       "Bash(for:*)",
+      "Bash(while:*)",
+      "Bash(if:*)",
       "Bash(echo:*)",
+      "Bash(printf:*)",
+      "Bash(cd:*)",
       "Bash(curl:*)",
       "PowerShell(npm run check:alphabet:*)",
       "PowerShell(npm run validate:units:*)",
@@ -50,7 +65,9 @@
     ],
     "ask": [
       "Bash(npm run deploy:*)",
-      "PowerShell(npm run deploy:*)"
+      "PowerShell(npm run deploy:*)",
+      "Bash(git push --force:*)",
+      "Bash(rm -rf:*)"
     ]
   }
 }

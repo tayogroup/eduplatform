@@ -21,9 +21,12 @@ import path from "node:path";
 
 const rawArgs = process.argv.slice(2);
 const QUIET = rawArgs.includes("--quiet");
+// --strict-cambridge promotes "no objectives mapped" and "single-strand unit"
+// from a note to a FAIL. Use it once outcomes carry cambridgeObjectives codes.
+const STRICT = rawArgs.includes("--strict-cambridge");
 const args = rawArgs.filter((a) => !a.startsWith("--"));
 if (!args.length) {
-  console.error("usage: node tools/validate-unit.mjs [--quiet] <unit.json> [...]");
+  console.error("usage: node tools/validate-unit.mjs [--quiet] [--strict-cambridge] <unit.json> [...]");
   process.exit(2);
 }
 const files = args.flatMap((a) => {
@@ -328,7 +331,61 @@ function validate(file) {
   const tn = get("teacherNotes");
   if (tn.length) { const hasSafety = tn.some((n) => /adult|caregiver|supervis|present|not.*(alone|leave)/i.test(n.note || "")); if (!hasSafety) N("teacherNotes note: no device-safety / adult-present note found"); }
 
-  // ═══ 12. GAMES PACK (companion file, deep) ═══
+  // ═══ 12. CAMBRIDGE CURRICULUM ALIGNMENT (stage / strand / objective codes) ═══
+  // Objective code = <stage><reportingCode>.<nn>, e.g. 1Rw.01 (Cambridge Primary
+  // English 0058). Validates that the unit's declared stage matches its grade,
+  // that every objective it claims is REAL and belongs to THAT stage, and reports
+  // strand coverage. Frameworks not shipped as JSON (e.g. 0861 Lower Secondary)
+  // are skipped with a note rather than guessed at.
+  const camb = d.cambridge || {};
+  const gradeNum = Number(String(d.unit?.gradeId || "").replace(/\D/g, "")) || null;
+  F(!isBlank(camb.level) && !isBlank(String(camb.code ?? "")), "cambridge: missing level/code", "");
+  if (camb.stage !== undefined) {
+    F(Number(camb.stage) > 0, "cambridge: invalid stage", String(camb.stage));
+    if (gradeNum) F(Number(camb.stage) === gradeNum, "cambridge: stage ≠ grade", `stage ${camb.stage} vs grade ${gradeNum}`);
+  } else F(false, "cambridge: missing stage", "");
+  if (d.curriculumFramework && camb.stage !== undefined && !String(d.curriculumFramework).includes(String(camb.stage)))
+    N(`cambridge note: curriculumFramework "${d.curriculumFramework}" doesn't mention stage ${camb.stage}`);
+
+  // collect every objective code the unit claims, wherever it is declared
+  const CODE_RE = /^([1-9])(R[wvgsia]|W[wvgscpa]|SL[msgpr])\.(\d{2})$/;
+  const claimed = [];
+  for (const [pth, s] of allStrings(d)) {
+    if (/cambridgeObjectives?|objectiveCodes?|learningObjectiveCodes?/i.test(pth) && CODE_RE.test(s.trim())) claimed.push([pth, s.trim()]);
+  }
+  const fwPath = path.join(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "..", "src", "curriculum", `cambridge-english-${camb.code}.json`);
+  let fw = null;
+  if (fs.existsSync(fwPath)) { try { fw = JSON.parse(fs.readFileSync(fwPath, "utf8")); } catch { /* ignore */ } }
+
+  if (!fw) {
+    N(`cambridge note: no framework file for code ${camb.code} (expected src/curriculum/cambridge-english-${camb.code}.json) — objective validation skipped`);
+    if (claimed.length) N(`cambridge note: ${claimed.length} objective code(s) claimed but not verifiable without the framework`);
+  } else {
+    const stageKey = String(camb.stage);
+    const stageObjs = fw.objectivesByStage?.[stageKey] || [];
+    const validCodes = new Set(stageObjs.map((o) => o.code));
+    const allCodes = new Set(Object.values(fw.objectivesByStage || {}).flat().map((o) => o.code));
+    const unknown = claimed.filter(([, c]) => !allCodes.has(c));
+    const wrongStage = claimed.filter(([, c]) => allCodes.has(c) && !validCodes.has(c));
+    F(unknown.length === 0, "cambridge: unknown objective code", unknown.slice(0, 3).map(([p, c]) => `${c} @ ${p}`).join(", "));
+    F(wrongStage.length === 0, "cambridge: objective from the wrong stage", wrongStage.slice(0, 3).map(([p, c]) => `${c} (unit is stage ${stageKey}) @ ${p}`).join(", "));
+    const uniq = [...new Set(claimed.map(([, c]) => c))].filter((c) => validCodes.has(c));
+    if (!claimed.length) {
+      N(`cambridge: unit declares Stage ${stageKey} but maps 0 learning objectives — alignment is unevidenced (${stageObjs.length} objectives available for this stage). Add cambridgeObjectives:["${stageObjs[0]?.code || "1Rw.01"}", …] to each outcome.`);
+      if (STRICT) F(false, "cambridge (strict): no objectives mapped", `0 of ${stageObjs.length} stage-${stageKey} objectives referenced`);
+    } else {
+      const byStrand = {};
+      for (const c of uniq) { const o = stageObjs.find((x) => x.code === c); if (o) byStrand[o.strand] = (byStrand[o.strand] || 0) + 1; }
+      const strands = Object.keys(byStrand);
+      N(`cambridge: ${uniq.length} objective(s) mapped — strands ${JSON.stringify(byStrand)}`);
+      if (strands.length < 2) {
+        N(`cambridge note: only ${strands.length} strand covered; Cambridge advises planning across more than one strand`);
+        if (STRICT) F(false, "cambridge (strict): single-strand unit", strands.join(", "));
+      }
+    }
+  }
+
+  // ═══ 13. GAMES PACK (companion file, deep) ═══
   const gamesPath = path.join(path.dirname(file), "..", "games", path.basename(file));
   if (fs.existsSync(gamesPath)) {
     let gp; try { gp = JSON.parse(fs.readFileSync(gamesPath, "utf8")); } catch (e) { fails.push(`games: parse error — ${e.message}`); gp = null; }

@@ -114,6 +114,12 @@ Warm, encouraging tone; the adult helper is addressed where the task needs it.
 24. `unitOverview` must describe **this** unit truthfully (right topic, right words) — no generic or wrong-unit blurb. `learningPath` must reference the sections that actually exist, in a sensible order.
 25. The teacher-lecture script teaches this unit's real content, is age-appropriate to read aloud, and its **captions match the script** word-for-word. Poster `alt` text describes the real image.
 
+**M. Cambridge curriculum alignment (evidence, not a claim).**
+29. The unit declares its framework in `cambridge` (`level`, `code`, `stage`) and the **stage must equal the grade** (Grade 3 → Stage 3). Primary grades 1–6 use **Cambridge Primary English 0058**; grades 7–8 use **Lower Secondary English 0861**.
+30. **Every `outcome` must carry `cambridgeObjectives`: an array of real objective codes** for that stage — e.g. `"cambridgeObjectives": ["1Rw.01", "1Ww.03"]`. A code is `<stage><reportingCode>.<nn>`: stage digit, sub-strand code, then the number (`1Rw.01`). Use the authoritative list in `src/curriculum/cambridge-english-0058.json`; **never invent a code**, and never cite an objective from another stage.
+31. **Cover more than one strand per unit.** The three strands are **Reading** (`Rw` phonics, `Rv` vocabulary/language, `Rg` grammar/punctuation, `Rs` structure, `Ri` interpretation, `Ra` appreciation), **Writing** (`Ww` spelling, `Wv`, `Wg`, `Ws`, `Wc` creation, `Wp` presentation) and **Speaking and Listening** (`SLm` making yourself understood, `SLs` showing understanding, `SLg` group work, `SLp` performance, `SLr` reflection). Cambridge explicitly advises planning lessons that draw on more than one strand — a single-strand unit is a planning defect.
+32. The objectives you cite must genuinely match what the unit teaches; do not pad the list to look well-covered.
+
 **L. AI tutor, answer key, rubrics, outcomes, self-assessment.**
 26. Each `aiTutorPrompt` is specific to its word/task and **safe** — it assumes an adult is present and never instructs a child to use the device alone. No templated tutor prompt reused across items.
 27. Every `answerKey` entry points to a **real `contentId`** in this unit and gives **usable guidance or the actual answer** — generic filler ("Accept an accurate detail from the source story.") repeated across items is banned.
@@ -153,6 +159,7 @@ Before returning, verify and report each. Any FAIL must be fixed and the check r
 13. **Cross-file sync:** confirm the unit file, `games/unit-N.json` and `lecture-media.json` agree on every word meaning, character name and pattern wording (report any you reconciled).
 14. **Overview & lecture:** confirm `unitOverview` names this unit's real topic/words; `learningPath` lists real sections; lecture captions match the script.
 15. **AI/answer-key/rubrics/outcomes:** confirm AI-tutor prompts are per-item and adult-supervised; every `answerKey.contentId` resolves to a real item with real guidance (no repeated filler); rubric criteria distinct; each `selfAssessment` maps to a real outcome.
+16. **Cambridge alignment:** confirm `cambridge.stage` equals the grade; list every objective code you cited, confirm each **exists in `src/curriculum/cambridge-english-<code>.json` for THIS stage** (report any you could not find — never invent one); and report the strand spread (must cover more than one of Reading / Writing / Speaking and Listening).
 
 ### 7 — RETURN FORMAT
 

@@ -280,6 +280,17 @@ function validate(file) {
   for (const f of ["question", "correctAnswer", "explanation"]) F(comp.filter((c) => isBlank(c[f])).length === 0, `comprehension: blank ${f}`, `${comp.filter((c) => isBlank(c[f])).length}`);
   F(comp.filter((c) => c.marks !== undefined && !(Number(c.marks) >= 0)).length === 0, "comprehension: non-numeric marks", "");
 
+  // Distinct questions were already required, but every unit in Grades 3-8
+  // shipped with one boilerplate string as the answer to ALL of them — most
+  // often "Accept an accurate complete-sentence response supported by a
+  // relevant detail from the selected text." A section with twelve questions
+  // and one answer cannot be marked, so the questions may as well not exist.
+  const compAns = new Map();
+  for (const c of comp) { const a = norm(c.correctAnswer); if (a) compAns.set(a, (compAns.get(a) || 0) + 1); }
+  const compWorst = [...compAns.entries()].sort((a, b) => b[1] - a[1])[0];
+  if (compWorst) F(compWorst[1] <= 2, "comprehension: repeated boilerplate answer",
+    `${compWorst[1]}/${comp.length} share "${compWorst[0].slice(0, 60)}…"`);
+
   // Anchoring: a question must be answerable from the passage it points at.
   // Grade 3 Unit 1 shipped with its questions cycled round the readings
   // mechanically, so one asking about the lunch area pointed at a listening

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "prompt": "Which word means: A round fruit that is sweet and crunchy. It can be red or green.",
           "choices": [
             "apple",
             "dog",
             "goat"
           ],
           "answer": "apple",
-          "explanation": "apple: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "explanation": "apple: A round fruit that is sweet and crunchy. It can be red or green."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "prompt": "Which word means: The bright light we see in the night sky.",
           "choices": [
             "apple",
             "dog",
             "moon"
           ],
           "answer": "moon",
-          "explanation": "moon: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "explanation": "moon: The bright light we see in the night sky."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "prompt": "Which word means: A round toy on a string that rolls down and up.",
           "choices": [
             "dog",
             "yo-yo",
             "apple"
           ],
           "answer": "yo-yo",
-          "explanation": "yo-yo: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "explanation": "yo-yo: A round toy on a string that rolls down and up."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "clue": "A round toy that you can throw, kick and bounce.",
           "answer": "ball"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "clue": "A light toy that flies high in the sky on a string.",
           "answer": "kite"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "clue": "Something you hold over your head to stay dry in rain.",
           "answer": "umbrella"
         }
       ]
@@ -83,32 +83,36 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "apple.",
-            "a",
-            "is",
-            "This"
+            "school.",
+            "after",
+            "apple",
+            "an",
+            "eat",
+            "I"
           ],
-          "answer": "This is a apple."
+          "answer": "I eat an apple after school."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hat.",
-            "a",
-            "is",
-            "This"
+            "grass.",
+            "green",
+            "eats",
+            "goat",
+            "The"
           ],
-          "answer": "This is a hat."
+          "answer": "The goat eats green grass."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "pen.",
-            "a",
-            "is",
-            "This"
+            "night.",
+            "at",
+            "shines",
+            "moon",
+            "The"
           ],
-          "answer": "This is a pen."
+          "answer": "The moon shines at night."
         }
       ]
     },
@@ -121,26 +125,26 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a sight word?",
+          "prompt": "Which word completes the sentence: ___ cat sat on the mat.",
           "choices": [
-            "the",
-            "zebra",
-            "orange",
-            "queen"
+            "Sat",
+            "Mat",
+            "The",
+            "Cat"
           ],
-          "answer": "the",
-          "explanation": "The correct answer is the."
+          "answer": "The",
+          "explanation": "The is our sight word and it goes before cat; the other words are already used in the sentence."
         },
         {
-          "prompt": "Complete: I ___ a cat.",
+          "prompt": "Which word completes the sentence: I ___ a cat.",
           "choices": [
-            "see",
+            "pen",
             "moon",
             "hat",
-            "pen"
+            "see"
           ],
           "answer": "see",
-          "explanation": "The correct answer is see."
+          "explanation": "See is a doing word that fits after I; moon, hat and pen are naming words, so they do not work here."
         },
         {
           "prompt": "Which sentence begins with a capital letter?",
@@ -151,7 +155,7 @@
             "cat I see"
           ],
           "answer": "I see a cat.",
-          "explanation": "The correct answer is I see a cat.."
+          "explanation": "Only this one starts with the capital letter I; the others start with small i, s and c."
         }
       ]
     },
@@ -164,34 +168,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What can you do now after Week 1: Learn the Alphabet (A–Z)?",
+          "prompt": "The plan says q is special. Which letter almost always comes with q?",
           "choices": [
-            "Accept a demonstrated skill from the week's objectives.",
-            "A",
-            "m"
+            "u",
+            "15",
+            "Hut"
           ],
-          "answer": "Accept a demonstrated skill from the week's objectives.",
-          "explanation": "Review the unit text evidence: Accept a demonstrated skill from the week's objectives."
+          "answer": "u",
+          "explanation": "Review the unit text evidence: u"
         },
         {
-          "prompt": "What can you do now after Week 3: Phonics (N–Z)?",
+          "prompt": "The plan changes cat to hat. Which word comes next?",
           "choices": [
-            "A",
-            "m",
-            "Accept a demonstrated skill from the week's objectives."
+            "u",
+            "15",
+            "Hut"
           ],
-          "answer": "Accept a demonstrated skill from the week's objectives.",
-          "explanation": "Review the unit text evidence: Accept a demonstrated skill from the week's objectives."
+          "answer": "Hut",
+          "explanation": "Review the unit text evidence: Hut"
         },
         {
-          "prompt": "What can you do now after Week 5: First Sight Words + Alphabet Practice?",
+          "prompt": "How many Week 5 sight words can you read by Week 6?",
           "choices": [
-            "m",
-            "Accept a demonstrated skill from the week's objectives.",
-            "A"
+            "u",
+            "15",
+            "Hut"
           ],
-          "answer": "Accept a demonstrated skill from the week's objectives.",
-          "explanation": "Review the unit text evidence: Accept a demonstrated skill from the week's objectives."
+          "answer": "15",
+          "explanation": "Review the unit text evidence: 15"
         }
       ]
     },
@@ -205,15 +209,15 @@
       "rounds": [
         {
           "prompt": "Sound and say 1",
-          "target": "Listen, point, repeat and change one part: A says /a/."
+          "target": "the /a/ sound five times, then find things that begin with it."
         },
         {
           "prompt": "Sound and say 3",
-          "target": "Listen, point, repeat and change one part: S says /s/."
+          "target": "Hiss like a snake for the /s/ sound."
         },
         {
           "prompt": "Sound and say 5",
-          "target": "Listen, point, repeat and change one part: I see a ___."
+          "target": "The moon shines at night."
         }
       ]
     },
@@ -228,33 +232,37 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "water.",
-            "a",
+            "today.",
+            "warm",
             "is",
-            "This"
-          ],
-          "answer": "This is a water."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "see.",
-            "a",
-            "is",
-            "This"
-          ],
-          "answer": "This is a see."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "m.",
-            "is",
-            "answer",
-            "correct",
+            "sun",
             "The"
           ],
-          "answer": "The correct answer is m."
+          "answer": "The sun is warm today."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "down.",
+            "and",
+            "up",
+            "goes",
+            "yo-yo",
+            "My"
+          ],
+          "answer": "My yo-yo goes up and down."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "night.",
+            "at",
+            "moon",
+            "the",
+            "see",
+            "I"
+          ],
+          "answer": "I see the moon at night."
         }
       ]
     },
@@ -269,32 +277,32 @@
         {
           "prompt": "What does 'pen' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about letters, sounds, blending and first sight words.",
-            "Accept a demonstrated skill from the week's objectives.",
-            "A"
+            "A thin tool with ink that we write with.",
+            "A round fruit that is sweet and crunchy. It can be red or green.",
+            "A pet animal that barks, wags its tail and likes long walks."
           ],
-          "answer": "A naming word used when we talk about letters, sounds, blending and first sight words.",
-          "explanation": "pen: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "answer": "A thin tool with ink that we write with.",
+          "explanation": "pen: A thin tool with ink that we write with."
         },
         {
           "prompt": "What does 'the' mean in this unit?",
           "choices": [
-            "Accept a demonstrated skill from the week's objectives.",
-            "A",
-            "A naming word used when we talk about letters, sounds, blending and first sight words."
+            "A round fruit that is sweet and crunchy. It can be red or green.",
+            "A pet animal that barks, wags its tail and likes long walks.",
+            "A small word we put before a naming word, like 'the cat'."
           ],
-          "answer": "A naming word used when we talk about letters, sounds, blending and first sight words.",
-          "explanation": "the: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "answer": "A small word we put before a naming word, like 'the cat'.",
+          "explanation": "the: A small word we put before a naming word, like 'the cat'."
         },
         {
           "prompt": "What does 'dog' mean in this unit?",
           "choices": [
-            "A",
-            "A naming word used when we talk about letters, sounds, blending and first sight words.",
-            "Accept a demonstrated skill from the week's objectives."
+            "A farm animal with horns that gives us milk.",
+            "A pet animal that barks, wags its tail and likes long walks.",
+            "A round fruit that is sweet and crunchy. It can be red or green."
           ],
-          "answer": "A naming word used when we talk about letters, sounds, blending and first sight words.",
-          "explanation": "dog: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "answer": "A pet animal that barks, wags its tail and likes long walks.",
+          "explanation": "dog: A pet animal that barks, wags its tail and likes long walks."
         }
       ]
     },
@@ -351,15 +359,15 @@
           "pairs": [
             [
               "cat",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "A soft pet animal that says miaow and has long whiskers."
             ],
             [
               "goat",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "A farm animal with horns that gives us milk."
             ],
             [
               "kite",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "A light toy that flies high in the sky on a string."
             ]
           ]
         },
@@ -368,15 +376,15 @@
           "pairs": [
             [
               "orange",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "A round juicy fruit with a thick orange skin."
             ],
             [
               "sun",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "The big hot star that gives us light in the day."
             ],
             [
               "water",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "A clear drink with no colour. We need it every day."
             ]
           ]
         },
@@ -385,15 +393,15 @@
           "pairs": [
             [
               "I",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "A small word you use when you talk about yourself."
             ],
             [
               "see",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "To look at something and know it with your eyes."
             ],
             [
               "we",
-              "A naming word used when we talk about letters, sounds, blending and first sight words."
+              "A small word for you and other people together."
             ]
           ]
         }
@@ -408,37 +416,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word begins with /s/?",
+          "prompt": "Which word begins with the /s/ sound?",
           "choices": [
-            "sun",
             "moon",
             "dog",
-            "hat"
+            "hat",
+            "sun"
           ],
           "answer": "sun",
-          "explanation": "The correct answer is sun."
+          "explanation": "Sun starts with s, so we hear /s/; moon, dog and hat begin with /m/, /d/ and /h/."
         },
         {
-          "prompt": "Blend c-a-t.",
+          "prompt": "Blend these sounds: c - a - t. Which word do you get?",
           "choices": [
             "cat",
-            "cap",
+            "can",
             "cot",
-            "can"
+            "cap"
           ],
           "answer": "cat",
-          "explanation": "The correct answer is cat."
+          "explanation": "The middle sound is /a/ and the last sound is /t/, so c-a-t says cat, not cap or can."
         },
         {
-          "prompt": "Blend s-u-n.",
+          "prompt": "Blend these sounds: s - u - n. Which word do you get?",
           "choices": [
-            "sun",
-            "sit",
             "sum",
-            "run"
+            "sun",
+            "run",
+            "sit"
           ],
           "answer": "sun",
-          "explanation": "The correct answer is sun."
+          "explanation": "The last sound is /n/, so s-u-n says sun; sum ends with /m/ and run begins with /r/."
         }
       ]
     },
@@ -451,37 +459,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which is the uppercase partner for a?",
+          "prompt": "Which capital letter matches the small letter a?",
           "choices": [
             "A",
+            "O",
             "B",
-            "D",
-            "O"
+            "D"
           ],
           "answer": "A",
-          "explanation": "The correct answer is A."
+          "explanation": "Small a is written as capital A; B, D and O are the partners of b, d and o."
         },
         {
-          "prompt": "Which is the lowercase partner for M?",
+          "prompt": "Which small letter matches the capital letter M?",
           "choices": [
-            "m",
             "n",
+            "m",
             "w",
             "s"
           ],
           "answer": "m",
-          "explanation": "The correct answer is m."
+          "explanation": "Capital M is written as small m; w is m turned over, and n and s are different letters."
         },
         {
-          "prompt": "Which word begins with /b/?",
+          "prompt": "Which word begins with the /b/ sound?",
           "choices": [
-            "ball",
+            "fish",
             "cat",
-            "sun",
-            "fish"
+            "ball",
+            "sun"
           ],
           "answer": "ball",
-          "explanation": "The correct answer is ball."
+          "explanation": "Ball starts with b, so we hear /b/; cat starts with /c/, sun with /s/ and fish with /f/."
         }
       ]
     }

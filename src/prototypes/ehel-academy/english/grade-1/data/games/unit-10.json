@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "prompt": "Which word means: A round, crunchy fruit that is red or green.",
           "choices": [
             "apple",
             "mother",
             "cow"
           ],
           "answer": "apple",
-          "explanation": "apple: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "explanation": "apple: A round, crunchy fruit that is red or green."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "prompt": "Which word means: A round toy you can kick, throw or bounce.",
           "choices": [
             "apple",
             "mother",
             "ball"
           ],
           "answer": "ball",
-          "explanation": "ball: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "explanation": "ball: A round toy you can kick, throw or bounce."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about letters, sounds, blending and first sight words.",
+          "prompt": "Which word means: A soft pet with whiskers that purrs and chases mice.",
           "choices": [
             "mother",
             "cat",
             "apple"
           ],
           "answer": "cat",
-          "explanation": "cat: A naming word used when we talk about letters, sounds, blending and first sight words."
+          "explanation": "cat: A soft pet with whiskers that purrs and chases mice."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about school, colours and confident introductions.",
+          "clue": "A flat top on legs where we eat or write.",
           "answer": "table"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about school, colours and confident introductions.",
+          "clue": "A seat with a back and four legs for one person.",
           "answer": "chair"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about school, colours and confident introductions.",
+          "clue": "A smooth white board the teacher writes on at school.",
           "answer": "whiteboard"
         }
       ]
@@ -83,30 +83,39 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "apple.",
-            "a",
+            "break.",
+            "at",
+            "apple",
+            "an",
+            "eats",
+            "Musa"
+          ],
+          "answer": "Musa eats an apple at break."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "field.",
+            "the",
+            "in",
+            "grass",
+            "eats",
+            "cow",
+            "The"
+          ],
+          "answer": "The cow eats grass in the field."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "white.",
+            "and",
+            "red",
             "is",
-            "This"
+            "ball",
+            "My"
           ],
-          "answer": "This is a apple."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "see.",
-            "can",
-            "I"
-          ],
-          "answer": "I can see."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "roll.",
-            "can",
-            "I"
-          ],
-          "answer": "I can roll."
+          "answer": "My ball is red and white."
         }
       ]
     },
@@ -119,37 +128,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which animal lives on a farm?",
+          "prompt": "Which one is an animal that lives on a farm?",
           "choices": [
-            "goat",
-            "bus",
             "pencil",
-            "river"
+            "river",
+            "goat",
+            "bus"
           ],
           "answer": "goat",
-          "explanation": "The correct answer is goat."
+          "explanation": "A goat is a farm animal; a bus, a pencil and a river are not animals."
         },
         {
-          "prompt": "Which body part helps you hear?",
+          "prompt": "Which body part helps you hear the call to prayer?",
           "choices": [
-            "ears",
             "eyes",
             "hands",
-            "nose"
+            "nose",
+            "ears"
           ],
           "answer": "ears",
-          "explanation": "The correct answer is ears."
+          "explanation": "We hear with our ears; eyes see, hands touch and the nose smells."
         },
         {
-          "prompt": "Which sentence tells a safe town action?",
+          "prompt": "Which sentence tells a safe thing to do in the town?",
           "choices": [
             "Stop at the red light.",
             "Run into the road.",
-            "Drop litter.",
-            "Push people."
+            "Drop litter on the path.",
+            "Push people at the bus stop."
           ],
           "answer": "Stop at the red light.",
-          "explanation": "The correct answer is Stop at the red light.."
+          "explanation": "Stopping at a red light keeps you safe; the other actions are dangerous or unkind."
         }
       ]
     },
@@ -162,34 +171,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What did Amal find?",
+          "prompt": "Where did Amal find her letters and family pictures?",
           "choices": [
-            "Accept an accurate detail from the capstone text or a relevant personal response where invited.",
-            "is",
-            "can"
+            "In her learning folder",
+            "They clapped",
+            "Labels and short patterns"
           ],
-          "answer": "Accept an accurate detail from the capstone text or a relevant personal response where invited.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the capstone text or a relevant personal response where invited."
+          "answer": "In her learning folder",
+          "explanation": "Review the unit text evidence: In her learning folder"
         },
         {
-          "prompt": "Which page would you make?",
+          "prompt": "How many favourite pieces must you choose?",
           "choices": [
-            "is",
-            "can",
-            "Accept an accurate detail from the capstone text or a relevant personal response where invited."
+            "They clapped",
+            "The family page",
+            "Three"
           ],
-          "answer": "Accept an accurate detail from the capstone text or a relevant personal response where invited.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the capstone text or a relevant personal response where invited."
+          "answer": "Three",
+          "explanation": "Review the unit text evidence: Three"
         },
         {
-          "prompt": "What happens after sharing?",
+          "prompt": "What two things do you add to your book pages?",
           "choices": [
-            "can",
-            "Accept an accurate detail from the capstone text or a relevant personal response where invited.",
-            "is"
+            "'This is my mum. I love my family.'",
+            "Labels and short patterns",
+            "Three"
           ],
-          "answer": "Accept an accurate detail from the capstone text or a relevant personal response where invited.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the capstone text or a relevant personal response where invited."
+          "answer": "Labels and short patterns",
+          "explanation": "Review the unit text evidence: Labels and short patterns"
         }
       ]
     },
@@ -203,15 +212,15 @@
       "rounds": [
         {
           "prompt": "Capstone speaking 1",
-          "target": "This is a apple."
+          "target": "the opening of your show-and-tell."
         },
         {
           "prompt": "Capstone speaking 3",
-          "target": "I can see."
+          "target": "Show a favourite page and say why you chose it."
         },
         {
           "prompt": "Capstone speaking 5",
-          "target": "I can roll."
+          "target": "Describe one picture from your folder in two ways."
         }
       ]
     },
@@ -226,32 +235,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "cat.",
-            "a",
-            "is",
-            "This"
-          ],
-          "answer": "This is a cat."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "smell.",
-            "can",
-            "I"
-          ],
-          "answer": "I can smell."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "blue.",
-            "is",
-            "answer",
-            "correct",
+            "day.",
+            "each",
+            "egg",
+            "an",
+            "lays",
+            "hen",
             "The"
           ],
-          "answer": "The correct answer is blue."
+          "answer": "The hen lays an egg each day."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bed.",
+            "my",
+            "on",
+            "sleeps",
+            "cat",
+            "The"
+          ],
+          "answer": "The cat sleeps on my bed."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hen.",
+            "the",
+            "follows",
+            "chick",
+            "tiny",
+            "The"
+          ],
+          "answer": "The tiny chick follows the hen."
         }
       ]
     },
@@ -266,32 +282,32 @@
         {
           "prompt": "What does 'mum' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about family, food, counting and helping.",
-            "A naming word used when we talk about letters, sounds, blending and first sight words.",
-            "A naming word used when we talk about farm animals, sounds, growing and work."
+            "A warm, friendly name that children use for their own mother.",
+            "A round, crunchy fruit that is red or green.",
+            "The woman who looks after you and loves you at home."
           ],
-          "answer": "A naming word used when we talk about family, food, counting and helping.",
-          "explanation": "mum: A naming word used when we talk about family, food, counting and helping."
+          "answer": "A warm, friendly name that children use for their own mother.",
+          "explanation": "mum: A warm, friendly name that children use for their own mother."
         },
         {
           "prompt": "What does 'father' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about letters, sounds, blending and first sight words.",
-            "A naming word used when we talk about farm animals, sounds, growing and work.",
-            "A naming word used when we talk about family, food, counting and helping."
+            "A round, crunchy fruit that is red or green.",
+            "The woman who looks after you and loves you at home.",
+            "The man who looks after you and loves you at home."
           ],
-          "answer": "A naming word used when we talk about family, food, counting and helping.",
-          "explanation": "father: A naming word used when we talk about family, food, counting and helping."
+          "answer": "The man who looks after you and loves you at home.",
+          "explanation": "father: The man who looks after you and loves you at home."
         },
         {
           "prompt": "What does 'mother' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about farm animals, sounds, growing and work.",
-            "A naming word used when we talk about family, food, counting and helping.",
-            "A naming word used when we talk about letters, sounds, blending and first sight words."
+            "A big farm animal that gives us milk.",
+            "The woman who looks after you and loves you at home.",
+            "A round, crunchy fruit that is red or green."
           ],
-          "answer": "A naming word used when we talk about family, food, counting and helping.",
-          "explanation": "mother: A naming word used when we talk about family, food, counting and helping."
+          "answer": "The woman who looks after you and loves you at home.",
+          "explanation": "mother: The woman who looks after you and loves you at home."
         }
       ]
     },
@@ -348,15 +364,15 @@
           "pairs": [
             [
               "mother",
-              "A naming word used when we talk about family, food, counting and helping."
+              "The woman who looks after you and loves you at home."
             ],
             [
               "cow",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "A big farm animal that gives us milk."
             ],
             [
               "water",
-              "A naming word used when we talk about water, weather, living things and care."
+              "The clear drink we need every day to stay healthy."
             ]
           ]
         },
@@ -365,15 +381,15 @@
           "pairs": [
             [
               "mum",
-              "A naming word used when we talk about family, food, counting and helping."
+              "A warm, friendly name that children use for their own mother."
             ],
             [
               "hen",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "A female farm bird that lays the eggs we eat."
             ],
             [
               "rain",
-              "A naming word used when we talk about water, weather, living things and care."
+              "Water falling from the clouds in many small drops."
             ]
           ]
         },
@@ -382,15 +398,15 @@
           "pairs": [
             [
               "father",
-              "A naming word used when we talk about family, food, counting and helping."
+              "The man who looks after you and loves you at home."
             ],
             [
               "chick",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "A baby bird that has just come out of its egg."
             ],
             [
               "drop",
-              "A naming word used when we talk about water, weather, living things and care."
+              "A very small round bit of liquid, like one tear."
             ]
           ]
         }
@@ -407,35 +423,35 @@
         {
           "prompt": "Which word names a colour?",
           "choices": [
-            "blue",
             "bus",
             "farm",
-            "hear"
+            "hear",
+            "blue"
           ],
           "answer": "blue",
-          "explanation": "The correct answer is blue."
+          "explanation": "Blue is a colour; a bus is a vehicle, a farm is a place and hear is a sense word."
         },
         {
-          "prompt": "Which word names a family member?",
+          "prompt": "Which word names a person in a family?",
           "choices": [
             "mum",
-            "market",
+            "mat",
             "moon",
-            "mat"
+            "market"
           ],
           "answer": "mum",
-          "explanation": "The correct answer is mum."
+          "explanation": "Mum is a family member; the other words start with m too but they are a place, the sky and a thing."
         },
         {
-          "prompt": "Which action happens in a game?",
+          "prompt": "Which word is an action you do in a ball game?",
           "choices": [
-            "bounce",
             "hospital",
-            "water",
-            "triangle"
+            "bounce",
+            "triangle",
+            "water"
           ],
           "answer": "bounce",
-          "explanation": "The correct answer is bounce."
+          "explanation": "Bounce is an action with a ball; a hospital is a place, water is a liquid and a triangle is a shape."
         }
       ]
     },
@@ -448,37 +464,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Complete: My name ___ Amal.",
+          "prompt": "Which word completes the sentence: My name ___ Aisha.",
           "choices": [
             "is",
-            "are",
             "am",
-            "be"
+            "be",
+            "are"
           ],
           "answer": "is",
-          "explanation": "The correct answer is is."
+          "explanation": "My name is one thing, so we use is; are is for more than one and am only goes with I."
         },
         {
-          "prompt": "Complete: I ___ hop.",
+          "prompt": "Which word completes the sentence: I ___ hop on one foot.",
           "choices": [
-            "can",
             "is",
-            "are",
-            "the"
+            "can",
+            "the",
+            "are"
           ],
           "answer": "can",
-          "explanation": "The correct answer is can."
+          "explanation": "Can tells what you are able to do; is and are do not go with I hop, and the is not a doing word."
         },
         {
-          "prompt": "Which is a complete sentence?",
+          "prompt": "Which one is a complete sentence?",
           "choices": [
-            "This is a cat.",
             "cat this",
             "a cat",
+            "This is a cat.",
             "is cat"
           ],
           "answer": "This is a cat.",
-          "explanation": "The correct answer is This is a cat.."
+          "explanation": "It starts with a capital letter, makes sense and ends with a full stop; the others are just groups of words."
         }
       ]
     }

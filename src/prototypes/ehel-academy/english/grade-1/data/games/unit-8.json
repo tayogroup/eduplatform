@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about water, weather, living things and care.",
+          "prompt": "Which word means: The clear liquid we drink, and that fills rivers and rain.",
           "choices": [
             "water",
             "drop",
             "dry"
           ],
           "answer": "water",
-          "explanation": "water: A naming word used when we talk about water, weather, living things and care."
+          "explanation": "water: The clear liquid we drink, and that fills rivers and rain."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about water, weather, living things and care.",
+          "prompt": "Which word means: Water that falls from clouds and fills puddles and rivers.",
           "choices": [
             "water",
             "drop",
             "rain"
           ],
           "answer": "rain",
-          "explanation": "rain: A naming word used when we talk about water, weather, living things and care."
+          "explanation": "rain: Water that falls from clouds and fills puddles and rivers."
         },
         {
-          "prompt": "Which word means: A describing word used when we talk about water, weather, living things and care.",
+          "prompt": "Which word means: Describes a bright day with warm sun and few clouds.",
           "choices": [
             "drop",
             "sunny",
             "water"
           ],
           "answer": "sunny",
-          "explanation": "sunny: A describing word used when we talk about water, weather, living things and care."
+          "explanation": "sunny: Describes a bright day with warm sun and few clouds."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about water, weather, living things and care.",
+          "clue": "Drops of water that fall down from grey clouds.",
           "answer": "rain"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about water, weather, living things and care.",
+          "clue": "Lots of water moving along the land to the sea.",
           "answer": "river"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A describing word used when we talk about water, weather, living things and care.",
+          "clue": "Describes a sky covered with grey or white clouds.",
           "answer": "cloudy"
         }
       ]
@@ -83,31 +83,39 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "water.",
-            "a",
-            "is",
-            "This"
+            "school.",
+            "after",
+            "water",
+            "cool",
+            "drinks",
+            "Samira"
           ],
-          "answer": "This is a water."
+          "answer": "Samira drinks cool water after school."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "clean.",
-            "a",
+            "dry.",
+            "and",
+            "warm",
             "is",
-            "This"
+            "towel",
+            "My"
           ],
-          "answer": "This is a clean."
+          "answer": "My towel is warm and dry."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "drink.",
-            "can",
-            "I"
+            "village.",
+            "our",
+            "in",
+            "well",
+            "the",
+            "fills",
+            "Rain"
           ],
-          "answer": "I can drink."
+          "answer": "Rain fills the well in our village."
         }
       ]
     },
@@ -120,37 +128,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for Wonderful Water?",
+          "prompt": "What falls from the clouds when it rains?",
           "choices": [
-            "It is rainy.",
-            "I use water to ___.",
-            "A ___ needs water.",
-            "The ___ floats."
+            "leaves",
+            "sand",
+            "water",
+            "stones"
           ],
-          "answer": "It is rainy.",
-          "explanation": "The approved Unit pattern is: It is rainy."
+          "answer": "water",
+          "explanation": "Rain is drops of water from the clouds; sand, leaves and stones do not fall from clouds."
         },
         {
-          "prompt": "Which is a useful complete pattern for Wonderful Water?",
+          "prompt": "What do we use water for before we pray?",
           "choices": [
-            "A ___ needs water.",
-            "I use water to ___.",
-            "It is rainy.",
-            "The ___ floats."
+            "reading",
+            "sleeping",
+            "writing",
+            "washing"
           ],
-          "answer": "A ___ needs water.",
-          "explanation": "The approved Unit pattern is: A ___ needs water."
+          "answer": "washing",
+          "explanation": "We wash with clean water before we pray; writing, reading and sleeping do not need water."
         },
         {
-          "prompt": "Which is a useful complete pattern for Wonderful Water?",
+          "prompt": "Which is a good way to save water?",
           "choices": [
-            "The ___ floats.",
-            "I use water to ___.",
-            "It is rainy.",
-            "A ___ needs water."
+            "Turn the tap off while you brush your teeth.",
+            "Leave the tap running all day.",
+            "Play with the garden hose for hours.",
+            "Fill the bath right to the top."
           ],
-          "answer": "The ___ floats.",
-          "explanation": "The approved Unit pattern is: The ___ floats."
+          "answer": "Turn the tap off while you brush your teeth.",
+          "explanation": "Turning the tap off stops water being wasted; the other choices all waste a lot of water."
         }
       ]
     },
@@ -163,34 +171,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the The Well in the Village story?",
+          "prompt": "Who walked to the well with Amal every morning?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "water"
+            "Her big brother, Ishmael",
+            "Not one drop",
+            "Because the well was getting low"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Her big brother, Ishmael",
+          "explanation": "Review the unit text evidence: Her big brother, Ishmael"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "Ishmael says water is precious. How much must they not waste?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "water",
-            "Accept an accurate detail from the source story."
+            "It turned brown",
+            "It is rainy.",
+            "Not one drop"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Not one drop",
+          "explanation": "Review the unit text evidence: Not one drop"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "Why did the whole village share the water?",
           "choices": [
-            "water",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "We must not waste water.",
+            "Because the well was getting low",
+            "It turned brown"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Because the well was getting low",
+          "explanation": "Review the unit text evidence: Because the well was getting low"
         }
       ]
     },
@@ -204,15 +212,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "I use water to ___."
+          "target": "Mime a job you need water for, then say it."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "A ___ needs water."
+          "target": "and answer about living things that drink."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "We must not waste water."
+          "target": "Role-play washing your hands carefully with a partner."
         }
       ]
     },
@@ -227,37 +235,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "cloudy.",
-            "is",
-            "It"
+            "eating.",
+            "before",
+            "hands",
+            "my",
+            "wash",
+            "I"
           ],
-          "answer": "It is cloudy."
+          "answer": "I wash my hands before eating."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "whale.",
-            "a",
+            "warm.",
+            "very",
+            "and",
+            "sunny",
             "is",
-            "This"
+            "Today"
           ],
-          "answer": "This is a whale."
+          "answer": "Today is sunny and very warm."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "words.",
-            "water",
-            "for",
-            "words",
-            "Unit",
+            "pond.",
             "the",
-            "of",
-            "one",
-            "is",
-            "dry"
+            "in",
+            "swims",
+            "fish",
+            "small",
+            "A"
           ],
-          "answer": "dry is one of the Unit words for water words."
+          "answer": "A small fish swims in the pond."
         }
       ]
     },
@@ -272,32 +282,32 @@
         {
           "prompt": "What does 'sea' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about water, weather, living things and care.",
-            "An action word used when we talk about water, weather, living things and care.",
-            "A describing word used when we talk about water, weather, living things and care."
+            "A huge amount of salty water with waves and fish.",
+            "The clear liquid we drink, and that fills rivers and rain.",
+            "One tiny round bit of water, smaller than your fingertip."
           ],
-          "answer": "A naming word used when we talk about water, weather, living things and care.",
-          "explanation": "sea: A naming word used when we talk about water, weather, living things and care."
+          "answer": "A huge amount of salty water with waves and fish.",
+          "explanation": "sea: A huge amount of salty water with waves and fish."
         },
         {
           "prompt": "What does 'windy' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about water, weather, living things and care.",
-            "An action word used when we talk about water, weather, living things and care.",
-            "A describing word used when we talk about water, weather, living things and care."
+            "The clear liquid we drink, and that fills rivers and rain.",
+            "One tiny round bit of water, smaller than your fingertip.",
+            "Describes weather when strong air pushes and moves things."
           ],
-          "answer": "A describing word used when we talk about water, weather, living things and care.",
-          "explanation": "windy: A describing word used when we talk about water, weather, living things and care."
+          "answer": "Describes weather when strong air pushes and moves things.",
+          "explanation": "windy: Describes weather when strong air pushes and moves things."
         },
         {
           "prompt": "What does 'drop' mean in this unit?",
           "choices": [
-            "A describing word used when we talk about water, weather, living things and care.",
-            "A naming word used when we talk about water, weather, living things and care.",
-            "An action word used when we talk about water, weather, living things and care."
+            "Having no water on it at all, like sand in sunshine.",
+            "One tiny round bit of water, smaller than your fingertip.",
+            "The clear liquid we drink, and that fills rivers and rain."
           ],
-          "answer": "A naming word used when we talk about water, weather, living things and care.",
-          "explanation": "drop: A naming word used when we talk about water, weather, living things and care."
+          "answer": "One tiny round bit of water, smaller than your fingertip.",
+          "explanation": "drop: One tiny round bit of water, smaller than your fingertip."
         }
       ]
     },
@@ -354,15 +364,15 @@
           "pairs": [
             [
               "drop",
-              "A naming word used when we talk about water, weather, living things and care."
+              "One tiny round bit of water, smaller than your fingertip."
             ],
             [
               "dry",
-              "A naming word used when we talk about water, weather, living things and care."
+              "Having no water on it at all, like sand in sunshine."
             ],
             [
               "sink",
-              "A naming word used when we talk about water, weather, living things and care."
+              "To go down under the water instead of staying on top."
             ]
           ]
         },
@@ -371,15 +381,15 @@
           "pairs": [
             [
               "sea",
-              "A naming word used when we talk about water, weather, living things and care."
+              "A huge amount of salty water with waves and fish."
             ],
             [
               "wash",
-              "An action word used when we talk about water, weather, living things and care."
+              "To make something clean again using water and a little soap."
             ],
             [
               "rainy",
-              "A describing word used when we talk about water, weather, living things and care."
+              "Describes a day when rain keeps falling from the sky."
             ]
           ]
         },
@@ -388,15 +398,15 @@
           "pairs": [
             [
               "windy",
-              "A describing word used when we talk about water, weather, living things and care."
+              "Describes weather when strong air pushes and moves things."
             ],
             [
               "frog",
-              "A naming word used when we talk about water, weather, living things and care."
+              "A small green animal that hops and swims in ponds."
             ],
             [
               "crocodile",
-              "A naming word used when we talk about water, weather, living things and care."
+              "A long river animal with sharp teeth and short legs."
             ]
           ]
         }
@@ -411,37 +421,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to water words?",
+          "prompt": "A leaf stays on top of the water. What is the leaf doing?",
           "choices": [
-            "wet",
-            "clean",
-            "float",
-            "sink"
+            "growing",
+            "sinking",
+            "melting",
+            "floating"
           ],
-          "answer": "wet",
-          "explanation": "wet is one of the Unit words for water words."
+          "answer": "floating",
+          "explanation": "Staying on top is called floating; sinking means going to the bottom."
         },
         {
-          "prompt": "Which word belongs to water words?",
+          "prompt": "Musa drops a heavy stone into a bucket of water. What does it do?",
           "choices": [
-            "dry",
-            "float",
             "sink",
-            "rain"
+            "grow",
+            "fly",
+            "float"
           ],
-          "answer": "dry",
-          "explanation": "dry is one of the Unit words for water words."
+          "answer": "sink",
+          "explanation": "A heavy stone sinks to the bottom; only light things like a leaf float on top."
         },
         {
-          "prompt": "Which is a useful complete pattern for Wonderful Water?",
+          "prompt": "Which of these needs water to stay alive?",
           "choices": [
-            "I use water to ___.",
-            "It is rainy.",
-            "A ___ needs water.",
-            "The ___ floats."
+            "a spoon",
+            "a plant",
+            "a chair",
+            "a rock"
           ],
-          "answer": "I use water to ___.",
-          "explanation": "The approved Unit pattern is: I use water to ___."
+          "answer": "a plant",
+          "explanation": "Plants are living and need water; a rock, a spoon and a chair are not alive."
         }
       ]
     },
@@ -454,37 +464,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to water words?",
-          "choices": [
-            "water",
-            "drop",
-            "wet",
-            "dry"
-          ],
-          "answer": "water",
-          "explanation": "water is one of the Unit words for water words."
-        },
-        {
-          "prompt": "Which word belongs to water words?",
+          "prompt": "Which word is a water word?",
           "choices": [
             "rain",
-            "wet",
-            "dry",
-            "clean"
+            "chair",
+            "book",
+            "shoe"
           ],
           "answer": "rain",
-          "explanation": "rain is one of the Unit words for water words."
+          "explanation": "Rain is water falling from the clouds; a chair, a shoe and a book have nothing to do with water."
         },
         {
-          "prompt": "Which word belongs to water words?",
+          "prompt": "Samira stood outside in the rain. How are her clothes now?",
           "choices": [
+            "hot",
+            "wet",
+            "dry",
+            "loud"
+          ],
+          "answer": "wet",
+          "explanation": "Rain makes clothes wet; dry is the opposite, and hot and loud do not describe rainy clothes."
+        },
+        {
+          "prompt": "Which word means the opposite of wet?",
+          "choices": [
+            "rain",
             "drop",
             "dry",
-            "clean",
             "float"
           ],
-          "answer": "drop",
-          "explanation": "drop is one of the Unit words for water words."
+          "answer": "dry",
+          "explanation": "Dry is the opposite of wet; rain, drop and float are all still to do with water."
         }
       ]
     }

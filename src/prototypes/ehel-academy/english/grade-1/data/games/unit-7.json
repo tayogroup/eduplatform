@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about transport, journeys and safe travel.",
+          "prompt": "Which word means: To go somewhere on your own two feet.",
           "choices": [
             "walk",
             "bicycle",
             "plane"
           ],
           "answer": "walk",
-          "explanation": "walk: A naming word used when we talk about transport, journeys and safe travel."
+          "explanation": "walk: To go somewhere on your own two feet."
         },
         {
-          "prompt": "Which word means: An action word used when we talk about transport, journeys and safe travel.",
+          "prompt": "Which word means: To make a car or bus go where you want.",
           "choices": [
             "walk",
             "bicycle",
             "drive"
           ],
           "answer": "drive",
-          "explanation": "drive: An action word used when we talk about transport, journeys and safe travel."
+          "explanation": "drive: To make a car or bus go where you want."
         },
         {
-          "prompt": "Which word means: A describing word used when we talk about transport, journeys and safe travel.",
+          "prompt": "Which word means: Moving very quickly, so you get there in no time.",
           "choices": [
             "bicycle",
             "fast",
             "walk"
           ],
           "answer": "fast",
-          "explanation": "fast: A describing word used when we talk about transport, journeys and safe travel."
+          "explanation": "fast: Moving very quickly, so you get there in no time."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about transport, journeys and safe travel.",
+          "clue": "A long vehicle that carries many people at once.",
           "answer": "bus"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about transport, journeys and safe travel.",
+          "clue": "Parts that wipe rain off a car window.",
           "answer": "wipers"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A describing word used when we talk about transport, journeys and safe travel.",
+          "clue": "Moving gently without hurrying, so you take a long time.",
           "answer": "slow"
         }
       ]
@@ -83,31 +83,38 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "walk.",
-            "a",
-            "is",
-            "This"
+            "morning.",
+            "every",
+            "school",
+            "to",
+            "walk",
+            "We"
           ],
-          "answer": "This is a walk."
+          "answer": "We walk to school every morning."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "helicopter.",
-            "a",
-            "is",
-            "This"
+            "clouds.",
+            "the",
+            "above",
+            "flies",
+            "plane",
+            "The"
           ],
-          "answer": "This is a helicopter."
+          "answer": "The plane flies above the clouds."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "fly.",
-            "can",
-            "I"
+            "school.",
+            "to",
+            "us",
+            "drive",
+            "will",
+            "Dad"
           ],
-          "answer": "I can fly."
+          "answer": "Dad will drive us to school."
         }
       ]
     },
@@ -120,37 +127,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for Let's Go!?",
+          "prompt": "Which sentence tells where a car goes?",
           "choices": [
-            "It goes on the ___.",
-            "I go by ___.",
-            "I can see a ___.",
-            "The ___ is fast."
+            "It goes on the road.",
+            "It goes in the sky.",
+            "It goes on the sea.",
+            "It goes on the rails."
           ],
-          "answer": "It goes on the ___.",
-          "explanation": "The approved Unit pattern is: It goes on the ___."
+          "answer": "It goes on the road.",
+          "explanation": "Cars drive on roads; the sea is for boats, the sky is for planes and the rails are for trains."
         },
         {
-          "prompt": "Which is a useful complete pattern for Let's Go!?",
+          "prompt": "Which word tells you that something moves very quickly?",
           "choices": [
-            "I can see a ___.",
-            "I go by ___.",
-            "It goes on the ___.",
-            "The ___ is fast."
+            "heavy",
+            "fast",
+            "slow",
+            "quiet"
           ],
-          "answer": "I can see a ___.",
-          "explanation": "The approved Unit pattern is: I can see a ___."
+          "answer": "fast",
+          "explanation": "Fast means quick; slow is the opposite, heavy tells weight and quiet tells sound."
         },
         {
-          "prompt": "Which is a useful complete pattern for Let's Go!?",
+          "prompt": "What should you do before you cross the road?",
           "choices": [
-            "The ___ is fast.",
-            "I go by ___.",
-            "It goes on the ___.",
-            "I can see a ___."
+            "Close your eyes.",
+            "Run across quickly.",
+            "Stop, look and listen.",
+            "Play on the road."
           ],
-          "answer": "The ___ is fast.",
-          "explanation": "The approved Unit pattern is: The ___ is fast."
+          "answer": "Stop, look and listen.",
+          "explanation": "Stopping, looking and listening keeps you safe; the other choices are all dangerous."
         }
       ]
     },
@@ -163,34 +170,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the Amal's Big Bus Ride story?",
+          "prompt": "What two colours was the big bus?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "walk"
+            "Yellow and red",
+            "She walked",
+            "She called out to her, and Amal ran and hugged her"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Yellow and red",
+          "explanation": "Review the unit text evidence: Yellow and red"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "How did Amal travel first, before she went by bus?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "walk",
-            "Accept an accurate detail from the source story."
+            "Slow and bumpy",
+            "I go by ___. (for example: I go by bus.)",
+            "She walked"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "She walked",
+          "explanation": "Review the unit text evidence: She walked"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "How do we know Grandmother was glad to see Amal?",
           "choices": [
-            "walk",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "It goes on the ___. (for example: on the road.)",
+            "She called out to her, and Amal ran and hugged her",
+            "Slow and bumpy"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "She called out to her, and Amal ran and hugged her",
+          "explanation": "Review the unit text evidence: She called out to her, and Amal ran and hugged her"
         }
       ]
     },
@@ -204,15 +211,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "I go by ___."
+          "target": "Point to transport pictures as an adult names them, then say your own."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "I can see a ___."
+          "target": "and answer about a busy street picture."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "We are ___ing."
+          "target": "Role-play a bus ride with your friends."
         }
       ]
     },
@@ -227,37 +234,36 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "road.",
-            "is",
-            "It"
+            "seat.",
+            "your",
+            "on",
+            "down",
+            "sit",
+            "Please"
           ],
-          "answer": "It is road."
+          "answer": "Please sit down on your seat."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "little.",
+            "fast.",
+            "very",
             "is",
-            "It"
+            "train",
+            "The"
           ],
-          "answer": "It is little."
+          "answer": "The train is very fast."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "travel.",
-            "to",
-            "ways",
-            "for",
-            "words",
-            "Unit",
-            "the",
-            "of",
-            "one",
+            "long.",
+            "very",
             "is",
-            "car"
+            "train",
+            "The"
           ],
-          "answer": "car is one of the Unit words for ways to travel."
+          "answer": "The train is very long."
         }
       ]
     },
@@ -272,32 +278,32 @@
         {
           "prompt": "What does 'float' mean in this unit?",
           "choices": [
-            "An action word used when we talk about transport, journeys and safe travel.",
-            "A naming word used when we talk about transport, journeys and safe travel.",
-            "A describing word used when we talk about transport, journeys and safe travel."
+            "To stay on top of water without sinking.",
+            "To go somewhere on your own two feet.",
+            "A vehicle with two wheels that you ride by pedalling."
           ],
-          "answer": "An action word used when we talk about transport, journeys and safe travel.",
-          "explanation": "float: An action word used when we talk about transport, journeys and safe travel."
+          "answer": "To stay on top of water without sinking.",
+          "explanation": "float: To stay on top of water without sinking."
         },
         {
           "prompt": "What does 'go' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about transport, journeys and safe travel.",
-            "An action word used when we talk about transport, journeys and safe travel.",
-            "A describing word used when we talk about transport, journeys and safe travel."
+            "To go somewhere on your own two feet.",
+            "A vehicle with two wheels that you ride by pedalling.",
+            "To start moving or leave for another place."
           ],
-          "answer": "A describing word used when we talk about transport, journeys and safe travel.",
-          "explanation": "go: A describing word used when we talk about transport, journeys and safe travel."
+          "answer": "To start moving or leave for another place.",
+          "explanation": "go: To start moving or leave for another place."
         },
         {
           "prompt": "What does 'bicycle' mean in this unit?",
           "choices": [
-            "A describing word used when we talk about transport, journeys and safe travel.",
-            "A naming word used when we talk about transport, journeys and safe travel.",
-            "An action word used when we talk about transport, journeys and safe travel."
+            "A vehicle with wings that flies high in the sky.",
+            "A vehicle with two wheels that you ride by pedalling.",
+            "To go somewhere on your own two feet."
           ],
-          "answer": "A naming word used when we talk about transport, journeys and safe travel.",
-          "explanation": "bicycle: A naming word used when we talk about transport, journeys and safe travel."
+          "answer": "A vehicle with two wheels that you ride by pedalling.",
+          "explanation": "bicycle: A vehicle with two wheels that you ride by pedalling."
         }
       ]
     },
@@ -354,15 +360,15 @@
           "pairs": [
             [
               "car",
-              "A naming word used when we talk about transport, journeys and safe travel."
+              "A vehicle with four wheels that a family rides in."
             ],
             [
               "plane",
-              "A naming word used when we talk about transport, journeys and safe travel."
+              "A vehicle with wings that flies high in the sky."
             ],
             [
               "sails",
-              "A naming word used when we talk about transport, journeys and safe travel."
+              "Big sheets of cloth that catch wind and move a boat."
             ]
           ]
         },
@@ -371,15 +377,15 @@
           "pairs": [
             [
               "fly",
-              "An action word used when we talk about transport, journeys and safe travel."
+              "To move through the air, like a bird or a plane."
             ],
             [
               "sit down",
-              "An action word used when we talk about transport, journeys and safe travel."
+              "To put your body onto a chair or the floor."
             ],
             [
               "road",
-              "A describing word used when we talk about transport, journeys and safe travel."
+              "A long hard path where cars and buses travel."
             ]
           ]
         },
@@ -388,15 +394,15 @@
           "pairs": [
             [
               "stop",
-              "A describing word used when we talk about transport, journeys and safe travel."
+              "To finish moving and stay still in one place."
             ],
             [
               "long",
-              "A describing word used when we talk about transport, journeys and safe travel."
+              "Going a big distance from one end to the other."
             ],
             [
               "blue",
-              "A describing word used when we talk about transport, journeys and safe travel."
+              "The colour of the sky and the deep sea."
             ]
           ]
         }
@@ -411,37 +417,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to ways to travel?",
+          "prompt": "Which one has only two wheels?",
           "choices": [
+            "bus",
             "bicycle",
-            "train",
-            "plane",
-            "helicopter"
+            "car",
+            "train"
           ],
           "answer": "bicycle",
-          "explanation": "bicycle is one of the Unit words for ways to travel."
+          "explanation": "A bicycle has two wheels; cars, buses and trains all have many more."
         },
         {
-          "prompt": "Which word belongs to ways to travel?",
+          "prompt": "Which one moves along rails?",
           "choices": [
-            "boat",
             "plane",
-            "helicopter",
-            "wheels"
+            "boat",
+            "train",
+            "car"
           ],
-          "answer": "boat",
-          "explanation": "boat is one of the Unit words for ways to travel."
+          "answer": "train",
+          "explanation": "A train runs on rails; a car uses the road, a boat uses water and a plane uses the sky."
         },
         {
-          "prompt": "Which is a useful complete pattern for Let's Go!?",
+          "prompt": "Musa comes to school in a bus. Which sentence is correct?",
           "choices": [
-            "I go by ___.",
-            "It goes on the ___.",
-            "I can see a ___.",
-            "The ___ is fast."
+            "I go by buses.",
+            "I go bus.",
+            "I by go bus.",
+            "I go by bus."
           ],
-          "answer": "I go by ___.",
-          "explanation": "The approved Unit pattern is: I go by ___."
+          "answer": "I go by bus.",
+          "explanation": "We say I go by bus for one bus; the other sentences have the words in the wrong order or the wrong form."
         }
       ]
     },
@@ -454,37 +460,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to ways to travel?",
+          "prompt": "Which word names a way to travel?",
           "choices": [
-            "walk",
-            "car",
-            "bicycle",
-            "boat"
-          ],
-          "answer": "walk",
-          "explanation": "walk is one of the Unit words for ways to travel."
-        },
-        {
-          "prompt": "Which word belongs to ways to travel?",
-          "choices": [
+            "window",
+            "apple",
             "bus",
-            "bicycle",
-            "boat",
-            "train"
+            "cloud"
           ],
           "answer": "bus",
-          "explanation": "bus is one of the Unit words for ways to travel."
+          "explanation": "You can travel in a bus; a window, an apple and a cloud do not take you anywhere."
         },
         {
-          "prompt": "Which word belongs to ways to travel?",
+          "prompt": "Which one travels on water?",
           "choices": [
-            "car",
+            "bicycle",
+            "train",
+            "bus",
+            "boat"
+          ],
+          "answer": "boat",
+          "explanation": "A boat goes on the water; a bus and a bicycle go on the road and a train goes on rails."
+        },
+        {
+          "prompt": "Which one flies in the sky?",
+          "choices": [
+            "plane",
             "boat",
             "train",
-            "plane"
+            "car"
           ],
-          "answer": "car",
-          "explanation": "car is one of the Unit words for ways to travel."
+          "answer": "plane",
+          "explanation": "A plane flies; a car and a train stay on the ground and a boat stays on the water."
         }
       ]
     }

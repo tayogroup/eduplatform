@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about school, colours and confident introductions.",
+          "prompt": "Which word means: A flat top with legs where we work or eat.",
           "choices": [
             "table",
             "whiteboard",
             "book"
           ],
           "answer": "table",
-          "explanation": "table: A naming word used when we talk about school, colours and confident introductions."
+          "explanation": "table: A flat top with legs where we work or eat."
         },
         {
-          "prompt": "Which word means: A describing word used when we talk about school, colours and confident introductions.",
+          "prompt": "Which word means: The colour of a tomato, a strawberry or a fire engine.",
           "choices": [
             "table",
             "whiteboard",
             "red"
           ],
           "answer": "red",
-          "explanation": "red: A describing word used when we talk about school, colours and confident introductions."
+          "explanation": "red: The colour of a tomato, a strawberry or a fire engine."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about school, colours and confident introductions.",
+          "prompt": "Which word means: A grown-up who helps you learn new things at school.",
           "choices": [
             "whiteboard",
             "teacher",
             "table"
           ],
           "answer": "teacher",
-          "explanation": "teacher: A naming word used when we talk about school, colours and confident introductions."
+          "explanation": "teacher: A grown-up who helps you learn new things at school."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about school, colours and confident introductions.",
+          "clue": "A seat with a back and four legs for one person.",
           "answer": "chair"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A describing word used when we talk about school, colours and confident introductions.",
+          "clue": "The colour of the sky on a sunny day.",
           "answer": "blue"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about school, colours and confident introductions.",
+          "clue": "Someone you like, play with and are kind to.",
           "answer": "friend"
         }
       ]
@@ -84,30 +84,37 @@
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "table.",
-            "a",
-            "is",
-            "This"
+            "the",
+            "on",
+            "books",
+            "our",
+            "put",
+            "We"
           ],
-          "answer": "This is a table."
+          "answer": "We put our books on the table."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "pencil.",
+            "night.",
+            "every",
+            "book",
             "a",
-            "is",
-            "This"
+            "read",
+            "I"
           ],
-          "answer": "This is a pencil."
+          "answer": "I read a book every night."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "yellow.",
+            "red.",
+            "bright",
             "is",
-            "It"
+            "jumper",
+            "My"
           ],
-          "answer": "It is yellow."
+          "answer": "My jumper is bright red."
         }
       ]
     },
@@ -120,37 +127,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for Welcome to School?",
+          "prompt": "Which sentence tells someone how old you are?",
           "choices": [
-            "It is ___.",
-            "This is a ___.",
-            "My name is ___.",
-            "I am ___ years old."
+            "I am six years old.",
+            "This is a chair.",
+            "I like red.",
+            "My name is Yusuf."
           ],
-          "answer": "It is ___.",
-          "explanation": "The approved Unit pattern is: It is ___."
+          "answer": "I am six years old.",
+          "explanation": "Only this sentence gives an age; the others give a name, name a thing, or tell what you like."
         },
         {
-          "prompt": "Which is a useful complete pattern for Welcome to School?",
+          "prompt": "Musa is holding up a pencil to show the class. What should he say?",
           "choices": [
-            "My name is ___.",
-            "This is a ___.",
-            "It is ___.",
-            "I am ___ years old."
+            "This is a clock.",
+            "This is a pencil.",
+            "I am six years old.",
+            "My name is Musa."
           ],
-          "answer": "My name is ___.",
-          "explanation": "The approved Unit pattern is: My name is ___."
+          "answer": "This is a pencil.",
+          "explanation": "He is showing a pencil, so he names that thing; the other sentences do not describe what he is holding."
         },
         {
-          "prompt": "Which is a useful complete pattern for Welcome to School?",
+          "prompt": "Which sentence tells something you are able to do?",
           "choices": [
-            "I am ___ years old.",
-            "This is a ___.",
-            "It is ___.",
-            "My name is ___."
+            "My name is Aisha.",
+            "This is a book.",
+            "I can read.",
+            "It is a pen."
           ],
-          "answer": "I am ___ years old.",
-          "explanation": "The approved Unit pattern is: I am ___ years old."
+          "answer": "I can read.",
+          "explanation": "The word can tells what you are able to do; the other sentences only name things or a person."
         }
       ]
     },
@@ -163,34 +170,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the Amal's First Day story?",
+          "prompt": "What is the name of the boy who smiles at Amal?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "table"
+            "Adam",
+            "Quietly",
+            "Happy"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Adam",
+          "explanation": "Review the unit text evidence: Adam"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "Amal spoke softly. Does softly mean loudly or quietly?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "table",
-            "Accept an accurate detail from the source story."
+            "They sang the alphabet song",
+            "My name is ___.",
+            "Quietly"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Quietly",
+          "explanation": "Review the unit text evidence: Quietly"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "How did Amal feel when Adam asked to be her friend?",
           "choices": [
-            "table",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "I can ___.",
+            "Happy",
+            "They sang the alphabet song"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Happy",
+          "explanation": "Review the unit text evidence: Happy"
         }
       ]
     },
@@ -204,15 +211,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "This is a ___."
+          "target": "Point to school things as an adult names them, then name them yourself."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "My name is ___."
+          "target": "I read a book every night."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "I can ___."
+          "target": "Play teacher and pupil with a partner."
         }
       ]
     },
@@ -227,38 +234,35 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "teacher.",
-            "a",
+            "purple.",
+            "dark",
             "is",
-            "This"
+            "scarf",
+            "My"
           ],
-          "answer": "This is a teacher."
+          "answer": "My scarf is dark purple."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "draw.",
-            "can",
+            "read.",
+            "me",
+            "helps",
+            "teacher",
+            "My"
+          ],
+          "answer": "My teacher helps me read."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "carefully.",
+            "name",
+            "my",
+            "write",
             "I"
           ],
-          "answer": "I can draw."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "objects.",
-            "classroom",
-            "for",
-            "words",
-            "Unit",
-            "the",
-            "of",
-            "one",
-            "is",
-            "chart",
-            "ABC"
-          ],
-          "answer": "ABC chart is one of the Unit words for classroom objects."
+          "answer": "I write my name carefully."
         }
       ]
     },
@@ -273,32 +277,32 @@
         {
           "prompt": "What does 'green' mean in this unit?",
           "choices": [
-            "A describing word used when we talk about school, colours and confident introductions.",
-            "A naming word used when we talk about school, colours and confident introductions.",
-            "An action word used when we talk about school, colours and confident introductions."
+            "The colour of grass and of leaves on a tree.",
+            "A flat top with legs where we work or eat.",
+            "A big white board the teacher writes on with special pens."
           ],
-          "answer": "A describing word used when we talk about school, colours and confident introductions.",
-          "explanation": "green: A describing word used when we talk about school, colours and confident introductions."
+          "answer": "The colour of grass and of leaves on a tree.",
+          "explanation": "green: The colour of grass and of leaves on a tree."
         },
         {
           "prompt": "What does 'boy' mean in this unit?",
           "choices": [
-            "A describing word used when we talk about school, colours and confident introductions.",
-            "An action word used when we talk about school, colours and confident introductions.",
-            "A naming word used when we talk about school, colours and confident introductions."
+            "A flat top with legs where we work or eat.",
+            "A big white board the teacher writes on with special pens.",
+            "A young male child, like a brother or a school friend."
           ],
-          "answer": "A naming word used when we talk about school, colours and confident introductions.",
-          "explanation": "boy: A naming word used when we talk about school, colours and confident introductions."
+          "answer": "A young male child, like a brother or a school friend.",
+          "explanation": "boy: A young male child, like a brother or a school friend."
         },
         {
           "prompt": "What does 'whiteboard' mean in this unit?",
           "choices": [
-            "An action word used when we talk about school, colours and confident introductions.",
-            "A naming word used when we talk about school, colours and confident introductions.",
-            "A describing word used when we talk about school, colours and confident introductions."
+            "Pages joined together with stories, pictures or words to read.",
+            "A big white board the teacher writes on with special pens.",
+            "A flat top with legs where we work or eat."
           ],
-          "answer": "A naming word used when we talk about school, colours and confident introductions.",
-          "explanation": "whiteboard: A naming word used when we talk about school, colours and confident introductions."
+          "answer": "A big white board the teacher writes on with special pens.",
+          "explanation": "whiteboard: A big white board the teacher writes on with special pens."
         }
       ]
     },
@@ -355,15 +359,15 @@
           "pairs": [
             [
               "whiteboard",
-              "A naming word used when we talk about school, colours and confident introductions."
+              "A big white board the teacher writes on with special pens."
             ],
             [
               "book",
-              "A naming word used when we talk about school, colours and confident introductions."
+              "Pages joined together with stories, pictures or words to read."
             ],
             [
               "crayon",
-              "A naming word used when we talk about school, colours and confident introductions."
+              "A coloured wax stick that we use for colouring pictures."
             ]
           ]
         },
@@ -372,15 +376,15 @@
           "pairs": [
             [
               "green",
-              "A describing word used when we talk about school, colours and confident introductions."
+              "The colour of grass and of leaves on a tree."
             ],
             [
               "purple",
-              "A describing word used when we talk about school, colours and confident introductions."
+              "A colour made from red and blue, like a grape."
             ],
             [
               "pink",
-              "A describing word used when we talk about school, colours and confident introductions."
+              "A light colour made from red and white, like a flower."
             ]
           ]
         },
@@ -389,15 +393,15 @@
           "pairs": [
             [
               "boy",
-              "A naming word used when we talk about school, colours and confident introductions."
+              "A young male child, like a brother or a school friend."
             ],
             [
               "write",
-              "An action word used when we talk about school, colours and confident introductions."
+              "To make letters and words with a pencil or pen."
             ],
             [
               "listen",
-              "An action word used when we talk about school, colours and confident introductions."
+              "To keep quiet and hear carefully with your ears."
             ]
           ]
         }
@@ -412,37 +416,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to classroom objects?",
+          "prompt": "Which word begins with the same sound as book?",
           "choices": [
-            "ABC chart",
-            "book",
-            "pencil",
-            "ruler"
+            "cup",
+            "bag",
+            "mat",
+            "pen"
           ],
-          "answer": "ABC chart",
-          "explanation": "ABC chart is one of the Unit words for classroom objects."
+          "answer": "bag",
+          "explanation": "Book and bag both start with /b/; pen starts with /p/, cup with /c/ and mat with /m/."
         },
         {
-          "prompt": "Which word belongs to classroom objects?",
+          "prompt": "What do you say to your teacher when you arrive at school in the morning?",
           "choices": [
-            "clock",
-            "pencil",
-            "ruler",
-            "crayon"
+            "Good night.",
+            "Sit down.",
+            "Good morning.",
+            "Goodbye."
           ],
-          "answer": "clock",
-          "explanation": "clock is one of the Unit words for classroom objects."
+          "answer": "Good morning.",
+          "explanation": "We greet people in the morning with Good morning; good night and goodbye are for leaving."
         },
         {
-          "prompt": "Which is a useful complete pattern for Welcome to School?",
+          "prompt": "Which sentence tells someone your name?",
           "choices": [
-            "This is a ___.",
-            "It is ___.",
-            "My name is ___.",
-            "I am ___ years old."
+            "I am six years old.",
+            "I can hop.",
+            "This is a book.",
+            "My name is Samira."
           ],
-          "answer": "This is a ___.",
-          "explanation": "The approved Unit pattern is: This is a ___."
+          "answer": "My name is Samira.",
+          "explanation": "Only this sentence gives a name; the others tell an age, point at a thing, or tell what you can do."
         }
       ]
     },
@@ -455,37 +459,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to classroom objects?",
+          "prompt": "Which word names something you find in your classroom?",
           "choices": [
-            "table",
+            "cloud",
+            "river",
             "whiteboard",
-            "ABC chart",
-            "clock"
-          ],
-          "answer": "table",
-          "explanation": "table is one of the Unit words for classroom objects."
-        },
-        {
-          "prompt": "Which word belongs to classroom objects?",
-          "choices": [
-            "chair",
-            "ABC chart",
-            "clock",
-            "book"
-          ],
-          "answer": "chair",
-          "explanation": "chair is one of the Unit words for classroom objects."
-        },
-        {
-          "prompt": "Which word belongs to classroom objects?",
-          "choices": [
-            "whiteboard",
-            "clock",
-            "book",
-            "pencil"
+            "camel"
           ],
           "answer": "whiteboard",
-          "explanation": "whiteboard is one of the Unit words for classroom objects."
+          "explanation": "A whiteboard is in the classroom; a camel, a river and a cloud are all found outside."
+        },
+        {
+          "prompt": "Which classroom thing do you sit on?",
+          "choices": [
+            "ruler",
+            "book",
+            "clock",
+            "chair"
+          ],
+          "answer": "chair",
+          "explanation": "We sit on a chair; a book is for reading, a clock shows the time and a ruler helps us measure."
+        },
+        {
+          "prompt": "Which classroom thing tells you the time?",
+          "choices": [
+            "clock",
+            "door",
+            "crayon",
+            "table"
+          ],
+          "answer": "clock",
+          "explanation": "A clock shows the time; a crayon colours, a table holds our work and a door opens and closes."
         }
       ]
     }

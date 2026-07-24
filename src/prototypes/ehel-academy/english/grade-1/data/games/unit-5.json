@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about farm animals, sounds, growing and work.",
+          "prompt": "Which word means: A big farm animal that gives us milk.",
           "choices": [
             "cow",
             "chick",
             "pig"
           ],
           "answer": "cow",
-          "explanation": "cow: A naming word used when we talk about farm animals, sounds, growing and work."
+          "explanation": "cow: A big farm animal that gives us milk."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about farm animals, sounds, growing and work.",
+          "prompt": "Which word means: The loud, short sound that a duck makes near the water.",
           "choices": [
             "cow",
             "chick",
             "quack"
           ],
           "answer": "quack",
-          "explanation": "quack: A naming word used when we talk about farm animals, sounds, growing and work."
+          "explanation": "quack: The loud, short sound that a duck makes near the water."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about farm animals, sounds, growing and work.",
+          "prompt": "Which word means: Something a hen lays that we can cook and eat.",
           "choices": [
             "chick",
             "egg",
             "cow"
           ],
           "answer": "egg",
-          "explanation": "egg: A naming word used when we talk about farm animals, sounds, growing and work."
+          "explanation": "egg: Something a hen lays that we can cook and eat."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about farm animals, sounds, growing and work.",
+          "clue": "A female farm bird that lays eggs for us.",
           "answer": "hen"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about farm animals, sounds, growing and work.",
+          "clue": "The soft, gentle sound that a sheep makes in the field.",
           "answer": "baa"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An action word used when we talk about farm animals, sounds, growing and work.",
+          "clue": "Giving food to animals or people so they are not hungry.",
           "answer": "feeding"
         }
       ]
@@ -83,32 +83,41 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "cow.",
-            "a",
-            "is",
-            "This"
+            "field.",
+            "the",
+            "in",
+            "grass",
+            "eats",
+            "cow",
+            "The"
           ],
-          "answer": "This is a cow."
+          "answer": "The cow eats grass in the field."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "horse.",
-            "a",
-            "is",
-            "This"
+            "mud.",
+            "wet",
+            "the",
+            "in",
+            "rolls",
+            "pig",
+            "The"
           ],
-          "answer": "This is a horse."
+          "answer": "The pig rolls in the wet mud."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "honk.",
-            "a",
-            "is",
-            "This"
+            "pond.",
+            "the",
+            "near",
+            "quack",
+            "says",
+            "duck",
+            "The"
           ],
-          "answer": "This is a honk."
+          "answer": "The duck says quack near the pond."
         }
       ]
     },
@@ -121,37 +130,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for On the Farm?",
+          "prompt": "Which farm animal can swim on the pond?",
           "choices": [
-            "The ___ says ___.",
-            "This is a ___.",
-            "The ___ is ___ing.",
-            "It has ___."
+            "duck",
+            "sheep",
+            "hen",
+            "goat"
           ],
-          "answer": "The ___ says ___.",
-          "explanation": "The approved Unit pattern is: The ___ says ___."
+          "answer": "duck",
+          "explanation": "A duck swims on water; hens, sheep and goats stay on the land."
         },
         {
-          "prompt": "Which is a useful complete pattern for On the Farm?",
+          "prompt": "Which sentence tells what the horse is doing right now?",
           "choices": [
-            "The ___ is ___ing.",
-            "This is a ___.",
-            "The ___ says ___.",
-            "It has ___."
+            "This is a horse.",
+            "The horse is running.",
+            "The horse is brown.",
+            "The horse has a long tail."
           ],
-          "answer": "The ___ is ___ing.",
-          "explanation": "The approved Unit pattern is: The ___ is ___ing."
+          "answer": "The horse is running.",
+          "explanation": "The -ing word running shows an action happening now; the others tell us a colour, a body part or a name."
         },
         {
-          "prompt": "Which is a useful complete pattern for On the Farm?",
+          "prompt": "Which sentence tells us what a sheep has?",
           "choices": [
-            "It has ___.",
-            "This is a ___.",
-            "The ___ says ___.",
-            "The ___ is ___ing."
+            "It has feathers.",
+            "It has wings.",
+            "It has soft wool.",
+            "It has fins."
           ],
-          "answer": "It has ___.",
-          "explanation": "The approved Unit pattern is: It has ___."
+          "answer": "It has soft wool.",
+          "explanation": "Sheep are covered in wool; feathers and wings belong to birds and fins belong to fish."
         }
       ]
     },
@@ -164,34 +173,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the Amal and the Little Hen story?",
+          "prompt": "Which animal did Amal and Ayeeyo go to see first?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "cow"
+            "The cow",
+            "A little white egg",
+            "The ___ says ___. (for example: The cow says moo.)"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "The cow",
+          "explanation": "Review the unit text evidence: The cow"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "What did Amal find in the straw after she fed the hen?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "cow",
-            "Accept an accurate detail from the source story."
+            "Tired, but happy",
+            "The ___ is ___ing.",
+            "A little white egg"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "A little white egg",
+          "explanation": "Review the unit text evidence: A little white egg"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "Why did the hen give Amal an egg?",
           "choices": [
-            "cow",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "The cow",
+            "Because Amal was kind and fed her",
+            "Tired, but happy"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Because Amal was kind and fed her",
+          "explanation": "Review the unit text evidence: Because Amal was kind and fed her"
         }
       ]
     },
@@ -205,15 +214,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "This is a ___."
+          "target": "Point to farm animals as an adult names them, then name them on your own."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "The ___ is ___ing."
+          "target": "and answer about what the farm animals are doing."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "First ___, then ___."
+          "target": "Act out the farmer's morning with a partner."
         }
       ]
     },
@@ -228,38 +237,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "seed.",
-            "a",
-            "is",
-            "This"
-          ],
-          "answer": "This is a seed."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "tomatoes.",
-            "a",
-            "is",
-            "This"
-          ],
-          "answer": "This is a tomatoes."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "animals.",
-            "farm",
-            "for",
-            "words",
-            "Unit",
+            "barn.",
             "the",
-            "of",
-            "one",
-            "is",
-            "chick"
+            "inside",
+            "sleeps",
+            "cow",
+            "The"
           ],
-          "answer": "chick is one of the Unit words for farm animals."
+          "answer": "The cow sleeps inside the barn."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "egg.",
+            "brown",
+            "a",
+            "lays",
+            "hen",
+            "The"
+          ],
+          "answer": "The hen lays a brown egg."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "field.",
+            "the",
+            "in",
+            "growing",
+            "is",
+            "wheat",
+            "The"
+          ],
+          "answer": "The wheat is growing in the field."
         }
       ]
     },
@@ -274,32 +284,32 @@
         {
           "prompt": "What does 'oink' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about farm animals, sounds, growing and work.",
-            "An action word used when we talk about farm animals, sounds, growing and work.",
-            "Accept an accurate detail from the source story."
+            "The short, snuffly sound that a pig makes in the mud.",
+            "A big farm animal that gives us milk.",
+            "A baby bird that has just come out of its shell."
           ],
-          "answer": "A naming word used when we talk about farm animals, sounds, growing and work.",
-          "explanation": "oink: A naming word used when we talk about farm animals, sounds, growing and work."
+          "answer": "The short, snuffly sound that a pig makes in the mud.",
+          "explanation": "oink: The short, snuffly sound that a pig makes in the mud."
         },
         {
           "prompt": "What does 'picking' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about farm animals, sounds, growing and work.",
-            "Accept an accurate detail from the source story.",
-            "An action word used when we talk about farm animals, sounds, growing and work."
+            "A big farm animal that gives us milk.",
+            "A baby bird that has just come out of its shell.",
+            "Taking fruit or vegetables off a plant with your hands."
           ],
-          "answer": "An action word used when we talk about farm animals, sounds, growing and work.",
-          "explanation": "picking: An action word used when we talk about farm animals, sounds, growing and work."
+          "answer": "Taking fruit or vegetables off a plant with your hands.",
+          "explanation": "picking: Taking fruit or vegetables off a plant with your hands."
         },
         {
           "prompt": "What does 'chick' mean in this unit?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "A naming word used when we talk about farm animals, sounds, growing and work.",
-            "An action word used when we talk about farm animals, sounds, growing and work."
+            "A pink farm animal with a curly tail and flat nose.",
+            "A baby bird that has just come out of its shell.",
+            "A big farm animal that gives us milk."
           ],
-          "answer": "A naming word used when we talk about farm animals, sounds, growing and work.",
-          "explanation": "chick: A naming word used when we talk about farm animals, sounds, growing and work."
+          "answer": "A baby bird that has just come out of its shell.",
+          "explanation": "chick: A baby bird that has just come out of its shell."
         }
       ]
     },
@@ -356,15 +366,15 @@
           "pairs": [
             [
               "chick",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "A baby bird that has just come out of its shell."
             ],
             [
               "pig",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "A pink farm animal with a curly tail and flat nose."
             ],
             [
               "moo",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "The deep, long sound that a cow makes in the field."
             ]
           ]
         },
@@ -373,15 +383,15 @@
           "pairs": [
             [
               "neigh",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "The loud, high sound that a horse makes in its stall."
             ],
             [
               "barn",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "A big farm building where animals and hay stay."
             ],
             [
               "wheat",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "A tall farm plant we use to make bread."
             ]
           ]
         },
@@ -390,15 +400,15 @@
           "pairs": [
             [
               "planting",
-              "An action word used when we talk about farm animals, sounds, growing and work."
+              "Putting seeds into the soil so plants can grow."
             ],
             [
               "growing",
-              "An action word used when we talk about farm animals, sounds, growing and work."
+              "Getting bigger, like a plant or a child."
             ],
             [
               "carrots",
-              "A naming word used when we talk about farm animals, sounds, growing and work."
+              "Long orange vegetables that grow under the soil."
             ]
           ]
         }
@@ -413,37 +423,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to farm animals?",
+          "prompt": "What sound does a cow make?",
+          "choices": [
+            "neigh",
+            "moo",
+            "quack",
+            "baa"
+          ],
+          "answer": "moo",
+          "explanation": "A cow says moo; quack is a duck, baa is a sheep and neigh is a horse."
+        },
+        {
+          "prompt": "Which animal says baa?",
           "choices": [
             "duck",
-            "pig",
+            "hen",
             "sheep",
-            "horse"
+            "cow"
           ],
-          "answer": "duck",
-          "explanation": "duck is one of the Unit words for farm animals."
+          "answer": "sheep",
+          "explanation": "A sheep says baa; a duck quacks, a cow moos and a hen clucks."
         },
         {
-          "prompt": "Which word belongs to farm animals?",
+          "prompt": "What do we call a baby hen?",
           "choices": [
-            "goose",
-            "sheep",
-            "horse",
-            "goat"
+            "calf",
+            "foal",
+            "lamb",
+            "chick"
           ],
-          "answer": "goose",
-          "explanation": "goose is one of the Unit words for farm animals."
-        },
-        {
-          "prompt": "Which is a useful complete pattern for On the Farm?",
-          "choices": [
-            "This is a ___.",
-            "The ___ says ___.",
-            "The ___ is ___ing.",
-            "It has ___."
-          ],
-          "answer": "This is a ___.",
-          "explanation": "The approved Unit pattern is: This is a ___."
+          "answer": "chick",
+          "explanation": "A baby hen is a chick; a calf is a baby cow, a lamb is a baby sheep and a foal is a baby horse."
         }
       ]
     },
@@ -456,37 +466,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to farm animals?",
+          "prompt": "Which word names a farm animal?",
           "choices": [
-            "cow",
-            "chick",
-            "duck",
-            "goose"
+            "tractor",
+            "barn",
+            "goat",
+            "grass"
           ],
-          "answer": "cow",
-          "explanation": "cow is one of the Unit words for farm animals."
+          "answer": "goat",
+          "explanation": "A goat is an animal; a tractor, a barn and grass are all found on a farm but they are not alive animals."
         },
         {
-          "prompt": "Which word belongs to farm animals?",
+          "prompt": "Which farm animal gives us milk?",
           "choices": [
+            "horse",
             "hen",
             "duck",
-            "goose",
-            "pig"
+            "cow"
           ],
-          "answer": "hen",
-          "explanation": "hen is one of the Unit words for farm animals."
+          "answer": "cow",
+          "explanation": "A cow gives milk; a hen and a duck give eggs and we do not milk a horse."
         },
         {
-          "prompt": "Which word belongs to farm animals?",
+          "prompt": "Which farm animal lays the eggs we eat for breakfast?",
           "choices": [
-            "chick",
-            "goose",
-            "pig",
-            "sheep"
+            "hen",
+            "sheep",
+            "cow",
+            "horse"
           ],
-          "answer": "chick",
-          "explanation": "chick is one of the Unit words for farm animals."
+          "answer": "hen",
+          "explanation": "A hen lays eggs; a sheep, a cow and a horse do not lay eggs at all."
         }
       ]
     }

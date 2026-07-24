@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about family, food, counting and helping.",
+          "prompt": "Which word means: The woman who has you as her child and cares for you.",
           "choices": [
             "mother",
             "dad",
             "grandma"
           ],
           "answer": "mother",
-          "explanation": "mother: A naming word used when we talk about family, food, counting and helping."
+          "explanation": "mother: The woman who has you as her child and cares for you."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about family, food, counting and helping.",
+          "prompt": "Which word means: Small dry food we eat in a bowl with milk.",
           "choices": [
             "mother",
             "dad",
             "cereal"
           ],
           "answer": "cereal",
-          "explanation": "cereal: A naming word used when we talk about family, food, counting and helping."
+          "explanation": "cereal: Small dry food we eat in a bowl with milk."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about family, food, counting and helping.",
+          "prompt": "Which word means: The number 5. It is how many fingers are on one hand.",
           "choices": [
             "dad",
             "five",
             "mother"
           ],
           "answer": "five",
-          "explanation": "five: A naming word used when we talk about family, food, counting and helping."
+          "explanation": "five: The number 5. It is how many fingers are on one hand."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about family, food, counting and helping.",
+          "clue": "Another word for mother that we use at home.",
           "answer": "mum"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about family, food, counting and helping.",
+          "clue": "A white drink that comes from cows and goats.",
           "answer": "milk"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about family, food, counting and helping.",
+          "clue": "The number 6. It comes after five and before seven.",
           "answer": "six"
         }
       ]
@@ -83,32 +83,36 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "mother.",
-            "a",
-            "is",
-            "This"
+            "food.",
+            "lovely",
+            "cooks",
+            "mother",
+            "My"
           ],
-          "answer": "This is a mother."
+          "answer": "My mother cooks lovely food."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "family.",
-            "a",
-            "is",
-            "This"
+            "stories.",
+            "lovely",
+            "us",
+            "tells",
+            "Grandma"
           ],
-          "answer": "This is a family."
+          "answer": "Grandma tells us lovely stories."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "fruit.",
-            "a",
-            "is",
-            "This"
+            "milk.",
+            "cold",
+            "with",
+            "cereal",
+            "eat",
+            "I"
           ],
-          "answer": "This is a fruit."
+          "answer": "I eat cereal with cold milk."
         }
       ]
     },
@@ -121,37 +125,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for Family Time?",
+          "prompt": "Which word completes the sentence: He ___ my brother.",
           "choices": [
-            "He is my ___.",
-            "This is my ___.",
-            "She is my ___.",
-            "Do you like ___?"
+            "am",
+            "are",
+            "is",
+            "be"
           ],
-          "answer": "He is my ___.",
-          "explanation": "The approved Unit pattern is: He is my ___."
+          "answer": "is",
+          "explanation": "We say he is for one person; are is for more than one and am only goes with I."
         },
         {
-          "prompt": "Which is a useful complete pattern for Family Time?",
+          "prompt": "Which sentence about counting your family is written correctly?",
           "choices": [
-            "She is my ___.",
-            "This is my ___.",
-            "He is my ___.",
-            "Do you like ___?"
+            "There are four person in my family.",
+            "There is four people in my family.",
+            "There four people in my family.",
+            "There are four people in my family."
           ],
-          "answer": "She is my ___.",
-          "explanation": "The approved Unit pattern is: She is my ___."
+          "answer": "There are four people in my family.",
+          "explanation": "For more than one we say there are and people; there is and person are for only one."
         },
         {
-          "prompt": "Which is a useful complete pattern for Family Time?",
+          "prompt": "Which one is a question you can ask your friend?",
           "choices": [
-            "Do you like ___?",
-            "This is my ___.",
-            "He is my ___.",
-            "She is my ___."
+            "Do you like dates?",
+            "I like dates.",
+            "Dates are nice.",
+            "We eat dates."
           ],
-          "answer": "Do you like ___?",
-          "explanation": "The approved Unit pattern is: Do you like ___?"
+          "answer": "Do you like dates?",
+          "explanation": "Only this one asks something and ends with a question mark; the others just tell us things."
         }
       ]
     },
@@ -164,34 +168,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the Breakfast at Grandma's House story?",
+          "prompt": "What is the name of Amal's baby brother?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "mother"
+            "Idris",
+            "She laid the table with five bowls",
+            "He is my ___."
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Idris",
+          "explanation": "Review the unit text evidence: Idris"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "What did Amal do to help before everyone sat down?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "mother",
-            "Accept an accurate detail from the source story."
+            "Soft",
+            "She is my ___.",
+            "She laid the table with five bowls"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "She laid the table with five bowls",
+          "explanation": "Review the unit text evidence: She laid the table with five bowls"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "Why did everyone laugh at baby Idris?",
           "choices": [
-            "mother",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "Idris",
+            "Because his cereal went on his nose",
+            "Soft"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Because his cereal went on his nose",
+          "explanation": "Review the unit text evidence: Because his cereal went on his nose"
         }
       ]
     },
@@ -205,15 +209,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "This is my ___."
+          "target": "Point to people in your family photo as an adult names them, then name them yourself."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "She is my ___."
+          "target": "and answer about the girls in your family."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "There are ___ ___."
+          "target": "Count the people at your table and tell someone."
         }
       ]
     },
@@ -228,37 +232,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "four.",
-            "a",
-            "is",
-            "This"
-          ],
-          "answer": "This is a four."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "work.",
-            "can",
+            "cereal.",
+            "my",
+            "with",
+            "strawberries",
+            "eat",
             "I"
           ],
-          "answer": "I can work."
+          "answer": "I eat strawberries with my cereal."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "members.",
-            "family",
-            "for",
-            "words",
-            "Unit",
-            "the",
-            "of",
-            "one",
-            "is",
-            "mum"
+            "hand.",
+            "my",
+            "on",
+            "fingers",
+            "five",
+            "have",
+            "I"
           ],
-          "answer": "mum is one of the Unit words for family members."
+          "answer": "I have five fingers on my hand."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "early.",
+            "work",
+            "to",
+            "goes",
+            "father",
+            "My"
+          ],
+          "answer": "My father goes to work early."
         }
       ]
     },
@@ -273,32 +279,32 @@
         {
           "prompt": "What does 'fruit' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about family, food, counting and helping.",
-            "An action word used when we talk about family, food, counting and helping.",
-            "Accept an accurate detail from the source story."
+            "Sweet food that grows on trees and plants, like apples.",
+            "The woman who has you as her child and cares for you.",
+            "Another word for father that we use at home."
           ],
-          "answer": "A naming word used when we talk about family, food, counting and helping.",
-          "explanation": "fruit: A naming word used when we talk about family, food, counting and helping."
+          "answer": "Sweet food that grows on trees and plants, like apples.",
+          "explanation": "fruit: Sweet food that grows on trees and plants, like apples."
         },
         {
           "prompt": "What does 'nine' mean in this unit?",
           "choices": [
-            "An action word used when we talk about family, food, counting and helping.",
-            "Accept an accurate detail from the source story.",
-            "A naming word used when we talk about family, food, counting and helping."
+            "The woman who has you as her child and cares for you.",
+            "Another word for father that we use at home.",
+            "The number 9. It comes after eight and before ten."
           ],
-          "answer": "A naming word used when we talk about family, food, counting and helping.",
-          "explanation": "nine: A naming word used when we talk about family, food, counting and helping."
+          "answer": "The number 9. It comes after eight and before ten.",
+          "explanation": "nine: The number 9. It comes after eight and before ten."
         },
         {
           "prompt": "What does 'dad' mean in this unit?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "A naming word used when we talk about family, food, counting and helping.",
-            "An action word used when we talk about family, food, counting and helping."
+            "The mother of your mum or your dad.",
+            "Another word for father that we use at home.",
+            "The woman who has you as her child and cares for you."
           ],
-          "answer": "A naming word used when we talk about family, food, counting and helping.",
-          "explanation": "dad: A naming word used when we talk about family, food, counting and helping."
+          "answer": "Another word for father that we use at home.",
+          "explanation": "dad: Another word for father that we use at home."
         }
       ]
     },
@@ -355,15 +361,15 @@
           "pairs": [
             [
               "father",
-              "A naming word used when we talk about family, food, counting and helping."
+              "The man who has you as his child and cares for you."
             ],
             [
               "grandma",
-              "A naming word used when we talk about family, food, counting and helping."
+              "The mother of your mum or your dad."
             ],
             [
               "grown-ups",
-              "A naming word used when we talk about family, food, counting and helping."
+              "People who are big, like mums, dads and teachers."
             ]
           ]
         },
@@ -372,15 +378,15 @@
           "pairs": [
             [
               "noodles",
-              "A naming word used when we talk about family, food, counting and helping."
+              "Long thin strips of food that we cook and eat."
             ],
             [
               "grapes",
-              "A naming word used when we talk about family, food, counting and helping."
+              "Small round fruits that grow together in a bunch."
             ],
             [
               "three",
-              "A naming word used when we talk about family, food, counting and helping."
+              "The number 3. It comes after two and before four."
             ]
           ]
         },
@@ -389,15 +395,15 @@
           "pairs": [
             [
               "seven",
-              "A naming word used when we talk about family, food, counting and helping."
+              "The number 7. It comes after six and before eight."
             ],
             [
               "work",
-              "An action word used when we talk about family, food, counting and helping."
+              "To do a job that needs care and effort."
             ],
             [
               "laugh",
-              "An action word used when we talk about family, food, counting and helping."
+              "To make a happy sound when something is funny."
             ]
           ]
         }
@@ -412,37 +418,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to family members?",
+          "prompt": "Samira is a girl. Which sentence about her is correct?",
           "choices": [
-            "dad",
-            "brother",
-            "grandma",
-            "grandpa"
+            "They is my sister.",
+            "It is my sister.",
+            "He is my sister.",
+            "She is my sister."
           ],
-          "answer": "dad",
-          "explanation": "dad is one of the Unit words for family members."
+          "answer": "She is my sister.",
+          "explanation": "We say she for a girl; he is for a boy, it is for a thing, and they is does not match."
         },
         {
-          "prompt": "Which word belongs to family members?",
+          "prompt": "Which word means the same as mum?",
           "choices": [
+            "mother",
             "sister",
-            "grandma",
             "grandpa",
-            "family"
+            "brother"
           ],
-          "answer": "sister",
-          "explanation": "sister is one of the Unit words for family members."
+          "answer": "mother",
+          "explanation": "Mum and mother are two words for the same person; a sister, grandpa and brother are different people."
         },
         {
-          "prompt": "Which is a useful complete pattern for Family Time?",
+          "prompt": "Aisha shows a photo of her father. Which sentence should she say?",
           "choices": [
-            "This is my ___.",
-            "He is my ___.",
-            "She is my ___.",
-            "Do you like ___?"
+            "This is my grandma.",
+            "This is my father.",
+            "This is my school.",
+            "This is my cat."
           ],
-          "answer": "This is my ___.",
-          "explanation": "The approved Unit pattern is: This is my ___."
+          "answer": "This is my father.",
+          "explanation": "The photo shows her father, so only this sentence tells the truth about the picture."
         }
       ]
     },
@@ -455,37 +461,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to family members?",
+          "prompt": "Which word names a person in your family?",
+          "choices": [
+            "grandma",
+            "bus",
+            "rain",
+            "pencil"
+          ],
+          "answer": "grandma",
+          "explanation": "A grandma is a family member; a pencil, rain and a bus are not people at all."
+        },
+        {
+          "prompt": "What do we call your mother's mother?",
+          "choices": [
+            "neighbour",
+            "grandma",
+            "sister",
+            "teacher"
+          ],
+          "answer": "grandma",
+          "explanation": "Your mother's mother is your grandma; a sister is a girl your own age in your family, and a teacher and neighbour are not family."
+        },
+        {
+          "prompt": "Yusuf is a boy in Aisha's family. Which word tells us who he is?",
           "choices": [
             "mother",
-            "father",
-            "dad",
-            "sister"
-          ],
-          "answer": "mother",
-          "explanation": "mother is one of the Unit words for family members."
-        },
-        {
-          "prompt": "Which word belongs to family members?",
-          "choices": [
-            "mum",
-            "dad",
-            "sister",
-            "brother"
-          ],
-          "answer": "mum",
-          "explanation": "mum is one of the Unit words for family members."
-        },
-        {
-          "prompt": "Which word belongs to family members?",
-          "choices": [
-            "father",
             "sister",
             "brother",
             "grandma"
           ],
-          "answer": "father",
-          "explanation": "father is one of the Unit words for family members."
+          "answer": "brother",
+          "explanation": "A boy in your family is your brother; sister, mother and grandma are all girls or women."
         }
       ]
     }

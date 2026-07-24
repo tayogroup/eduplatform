@@ -196,9 +196,15 @@ function buildPack(grade, unit, dictionary) {
   };
 }
 
+// Optional grade filter so a single grade can be regenerated after a content
+// fix without churning the rest: node tools/build-ehel-english-games.js 1 2
+const onlyGrades = process.argv.slice(2).map(Number).filter((n) => n >= 1 && n <= 8);
+
 let created = 0;
 let preserved = 0;
+let skipped = 0;
 for (let grade = 1; grade <= 8; grade += 1) {
+  if (onlyGrades.length && !onlyGrades.includes(grade)) { skipped += 1; continue; }
   const gradeRoot = path.join(englishRoot, `grade-${grade}`);
   const dataRoot = path.join(gradeRoot, "data");
   const manifest = JSON.parse(fs.readFileSync(path.join(dataRoot, "course-manifest.json"), "utf8"));
@@ -220,4 +226,8 @@ for (let grade = 1; grade <= 8; grade += 1) {
   }
 }
 
-console.log(JSON.stringify({ status: "PASS", created, preserved, total: created + preserved }, null, 2));
+console.log(JSON.stringify({
+  status: "PASS",
+  grades: onlyGrades.length ? onlyGrades : "all",
+  created, preserved, gradesSkipped: skipped, total: created + preserved,
+}, null, 2));

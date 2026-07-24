@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: An action word used when we talk about movement, body parts, position and fair play.",
+          "prompt": "Which word means: To make something jump up again after it hits the ground.",
           "choices": [
             "bounce",
             "throw",
             "run"
           ],
           "answer": "bounce",
-          "explanation": "bounce: An action word used when we talk about movement, body parts, position and fair play."
+          "explanation": "bounce: To make something jump up again after it hits the ground."
         },
         {
-          "prompt": "Which word means: An action word used when we talk about movement, body parts, position and fair play.",
+          "prompt": "Which word means: To turn a key so a toy can move by itself.",
           "choices": [
             "bounce",
             "throw",
             "wind up"
           ],
           "answer": "wind up",
-          "explanation": "wind up: An action word used when we talk about movement, body parts, position and fair play."
+          "explanation": "wind up: To turn a key so a toy can move by itself."
         },
         {
-          "prompt": "Which word means: A describing word used when we talk about movement, body parts, position and fair play.",
+          "prompt": "Which word means: A small word that shows something is above and touching, like 'on the table'.",
           "choices": [
             "throw",
             "on",
             "bounce"
           ],
           "answer": "on",
-          "explanation": "on: A describing word used when we talk about movement, body parts, position and fair play."
+          "explanation": "on: A small word that shows something is above and touching, like 'on the table'."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An action word used when we talk about movement, body parts, position and fair play.",
+          "clue": "To move along by turning over and over.",
           "answer": "roll"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about movement, body parts, position and fair play.",
+          "clue": "The part at the end of your arm with five fingers.",
           "answer": "hand"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A describing word used when we talk about movement, body parts, position and fair play.",
+          "clue": "A small word that shows something is below something else.",
           "answer": "under"
         }
       ]
@@ -83,30 +83,36 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "bounce.",
-            "can",
+            "outside.",
+            "ball",
+            "the",
+            "bounce",
             "I"
           ],
-          "answer": "I can bounce."
+          "answer": "I bounce the ball outside."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "jump.",
-            "can",
+            "playground.",
+            "the",
+            "in",
+            "run",
             "I"
           ],
-          "answer": "I can jump."
+          "answer": "I run in the playground."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "foot.",
-            "a",
-            "is",
-            "This"
+            "car.",
+            "toy",
+            "my",
+            "up",
+            "wind",
+            "I"
           ],
-          "answer": "This is a foot."
+          "answer": "I wind up my toy car."
         }
       ]
     },
@@ -119,37 +125,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for Fun and Games?",
+          "prompt": "The ball is under the table. Which word tells you where the ball is?",
           "choices": [
-            "Can you ___?",
-            "I can ___.",
-            "This is my ___.",
-            "The ball is on the ___."
+            "under",
+            "red",
+            "ball",
+            "table"
           ],
-          "answer": "Can you ___?",
-          "explanation": "The approved Unit pattern is: Can you ___?"
+          "answer": "under",
+          "explanation": "Under is the position word; ball and table are naming words and red is a colour."
         },
         {
-          "prompt": "Which is a useful complete pattern for Fun and Games?",
+          "prompt": "Which word completes the instruction: Touch your ___.",
           "choices": [
-            "This is my ___.",
-            "I can ___.",
-            "Can you ___?",
-            "The ball is on the ___."
+            "blue",
+            "nose",
+            "jump",
+            "fast"
           ],
-          "answer": "This is my ___.",
-          "explanation": "The approved Unit pattern is: This is my ___."
+          "answer": "nose",
+          "explanation": "You can touch a body part like your nose; jump is an action, fast tells speed and blue is a colour."
         },
         {
-          "prompt": "Which is a useful complete pattern for Fun and Games?",
+          "prompt": "What is a kind thing to say when you play a game with your friends?",
           "choices": [
-            "The ball is on the ___.",
-            "I can ___.",
-            "Can you ___?",
-            "This is my ___."
+            "Go away.",
+            "You cannot play.",
+            "It is your turn.",
+            "I always win."
           ],
-          "answer": "The ball is on the ___.",
-          "explanation": "The approved Unit pattern is: The ball is on the ___."
+          "answer": "It is your turn.",
+          "explanation": "Sharing turns is kind and fair; the other sentences would leave a friend out."
         }
       ]
     },
@@ -162,34 +168,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the Amal and the Big Ball story?",
+          "prompt": "What colour was Amal's big ball?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "bounce"
+            "Red",
+            "It went up into a big tree",
+            "Because he was tall and could shake the branch"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Red",
+          "explanation": "Review the unit text evidence: Red"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "What happened to the ball after Bilal threw it?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "bounce",
-            "Accept an accurate detail from the source story."
+            "On a branch of the big tree",
+            "The ball is on the ___.",
+            "It went up into a big tree"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "It went up into a big tree",
+          "explanation": "Review the unit text evidence: It went up into a big tree"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "Why could Ishmael get the ball down when the children could not?",
           "choices": [
-            "bounce",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "Can you ___?",
+            "Because he was tall and could shake the branch",
+            "On a branch of the big tree"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Because he was tall and could shake the branch",
+          "explanation": "Review the unit text evidence: Because he was tall and could shake the branch"
         }
       ]
     },
@@ -203,15 +209,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "I can ___."
+          "target": "Copy an adult's action, then say what you did."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "This is my ___."
+          "target": "Show your partner a body part or a toy and tell them about it."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "Touch your ___."
+          "target": "Play a giving-orders game with a friend."
         }
       ]
     },
@@ -226,31 +232,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "head.",
-            "a",
-            "is",
-            "This"
+            "hand.",
+            "my",
+            "with",
+            "shoulder",
+            "my",
+            "touch",
+            "I"
           ],
-          "answer": "This is a head."
+          "answer": "I touch my shoulder with my hand."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "left.",
+            "table.",
+            "the",
+            "on",
             "is",
-            "It"
+            "book",
+            "The"
           ],
-          "answer": "It is left."
+          "answer": "The book is on the table."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "bee.",
-            "a",
-            "is",
-            "This"
+            "pond.",
+            "the",
+            "on",
+            "swims",
+            "duck",
+            "The"
           ],
-          "answer": "This is a bee."
+          "answer": "The duck swims on the pond."
         }
       ]
     },
@@ -265,32 +279,32 @@
         {
           "prompt": "What does 'feet' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about movement, body parts, position and fair play.",
-            "An action word used when we talk about movement, body parts, position and fair play.",
-            "A describing word used when we talk about movement, body parts, position and fair play."
+            "More than one foot. We stand and walk on our feet.",
+            "To make something jump up again after it hits the ground.",
+            "To send something through the air with your hand."
           ],
-          "answer": "A naming word used when we talk about movement, body parts, position and fair play.",
-          "explanation": "feet: A naming word used when we talk about movement, body parts, position and fair play."
+          "answer": "More than one foot. We stand and walk on our feet.",
+          "explanation": "feet: More than one foot. We stand and walk on our feet."
         },
         {
           "prompt": "What does 'left' mean in this unit?",
           "choices": [
-            "An action word used when we talk about movement, body parts, position and fair play.",
-            "A naming word used when we talk about movement, body parts, position and fair play.",
-            "A describing word used when we talk about movement, body parts, position and fair play."
+            "To make something jump up again after it hits the ground.",
+            "To send something through the air with your hand.",
+            "One side of your body. Your left hand is on that side."
           ],
-          "answer": "A describing word used when we talk about movement, body parts, position and fair play.",
-          "explanation": "left: A describing word used when we talk about movement, body parts, position and fair play."
+          "answer": "One side of your body. Your left hand is on that side.",
+          "explanation": "left: One side of your body. Your left hand is on that side."
         },
         {
           "prompt": "What does 'throw' mean in this unit?",
           "choices": [
-            "A describing word used when we talk about movement, body parts, position and fair play.",
-            "An action word used when we talk about movement, body parts, position and fair play.",
-            "A naming word used when we talk about movement, body parts, position and fair play."
+            "To move your legs very fast, faster than walking.",
+            "To send something through the air with your hand.",
+            "To make something jump up again after it hits the ground."
           ],
-          "answer": "An action word used when we talk about movement, body parts, position and fair play.",
-          "explanation": "throw: An action word used when we talk about movement, body parts, position and fair play."
+          "answer": "To send something through the air with your hand.",
+          "explanation": "throw: To send something through the air with your hand."
         }
       ]
     },
@@ -347,15 +361,15 @@
           "pairs": [
             [
               "throw",
-              "An action word used when we talk about movement, body parts, position and fair play."
+              "To send something through the air with your hand."
             ],
             [
               "run",
-              "An action word used when we talk about movement, body parts, position and fair play."
+              "To move your legs very fast, faster than walking."
             ],
             [
               "touch",
-              "An action word used when we talk about movement, body parts, position and fair play."
+              "To put your hand or finger on something."
             ]
           ]
         },
@@ -364,15 +378,15 @@
           "pairs": [
             [
               "foot",
-              "A naming word used when we talk about movement, body parts, position and fair play."
+              "The part at the end of your leg that you stand on."
             ],
             [
               "shoulder",
-              "A naming word used when we talk about movement, body parts, position and fair play."
+              "The part where your arm joins your body, below your neck."
             ],
             [
               "arm",
-              "A naming word used when we talk about movement, body parts, position and fair play."
+              "The long part of your body from your shoulder to your hand."
             ]
           ]
         },
@@ -381,15 +395,15 @@
           "pairs": [
             [
               "next to",
-              "A describing word used when we talk about movement, body parts, position and fair play."
+              "Two small words that mean beside, right at the side of something."
             ],
             [
               "duck",
-              "A naming word used when we talk about movement, body parts, position and fair play."
+              "A bird that swims on water and says quack."
             ],
             [
               "bee",
-              "A naming word used when we talk about movement, body parts, position and fair play."
+              "A small flying insect that makes honey and buzzes softly."
             ]
           ]
         }
@@ -404,37 +418,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to games and action words?",
+          "prompt": "Musa throws a ball to Aisha. What should Aisha do with her hands?",
           "choices": [
-            "catch",
+            "hide it",
+            "catch it",
+            "drop it",
+            "throw it"
+          ],
+          "answer": "catch it",
+          "explanation": "You catch a ball that comes to you; throwing, dropping and hiding it would end the game."
+        },
+        {
+          "prompt": "Which word means to move very fast on your legs?",
+          "choices": [
+            "listen",
+            "sit",
             "run",
-            "jump",
-            "clap"
+            "look"
           ],
-          "answer": "catch",
-          "explanation": "catch is one of the Unit words for games and action words."
+          "answer": "run",
+          "explanation": "Running is fast leg movement; sitting is still, and looking and listening use your eyes and ears."
         },
         {
-          "prompt": "Which word belongs to games and action words?",
+          "prompt": "Which one is a question?",
           "choices": [
-            "hit",
-            "jump",
-            "clap",
-            "shake"
+            "The ball is red.",
+            "We catch the ball.",
+            "I can catch the ball.",
+            "Can you catch the ball?"
           ],
-          "answer": "hit",
-          "explanation": "hit is one of the Unit words for games and action words."
-        },
-        {
-          "prompt": "Which is a useful complete pattern for Fun and Games?",
-          "choices": [
-            "I can ___.",
-            "Can you ___?",
-            "This is my ___.",
-            "The ball is on the ___."
-          ],
-          "answer": "I can ___.",
-          "explanation": "The approved Unit pattern is: I can ___."
+          "answer": "Can you catch the ball?",
+          "explanation": "Only this one asks something and ends with a question mark; the others are telling sentences."
         }
       ]
     },
@@ -447,37 +461,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to games and action words?",
+          "prompt": "Which word is an action word, something you do?",
+          "choices": [
+            "rain",
+            "table",
+            "jump",
+            "shoe"
+          ],
+          "answer": "jump",
+          "explanation": "Jump is something your body does; a table, rain and a shoe are naming words, not actions."
+        },
+        {
+          "prompt": "Which action do you do by putting your two hands together?",
+          "choices": [
+            "jump",
+            "blink",
+            "run",
+            "clap"
+          ],
+          "answer": "clap",
+          "explanation": "Clapping uses two hands; you run and jump with your legs and blink with your eyes."
+        },
+        {
+          "prompt": "A ball hits the ground and comes back up. Which word tells what it does?",
           "choices": [
             "bounce",
-            "throw",
-            "catch",
-            "hit"
+            "sleep",
+            "eat",
+            "write"
           ],
           "answer": "bounce",
-          "explanation": "bounce is one of the Unit words for games and action words."
-        },
-        {
-          "prompt": "Which word belongs to games and action words?",
-          "choices": [
-            "roll",
-            "catch",
-            "hit",
-            "run"
-          ],
-          "answer": "roll",
-          "explanation": "roll is one of the Unit words for games and action words."
-        },
-        {
-          "prompt": "Which word belongs to games and action words?",
-          "choices": [
-            "throw",
-            "hit",
-            "run",
-            "jump"
-          ],
-          "answer": "throw",
-          "explanation": "throw is one of the Unit words for games and action words."
+          "explanation": "Going down and up again is called bouncing; sleeping, eating and writing are not ball movements."
         }
       ]
     }

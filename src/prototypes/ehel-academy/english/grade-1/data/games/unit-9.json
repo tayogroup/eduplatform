@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about town places, helpful people, safety and care.",
+          "prompt": "Which word means: A place in town where we buy food and things.",
           "choices": [
             "shop",
             "school",
             "mosque"
           ],
           "answer": "shop",
-          "explanation": "shop: A naming word used when we talk about town places, helpful people, safety and care."
+          "explanation": "shop: A place in town where we buy food and things."
         },
         {
-          "prompt": "Which word means: A naming word used when we talk about town places, helpful people, safety and care.",
+          "prompt": "Which word means: A person who helps you get better when you are ill.",
           "choices": [
             "shop",
             "school",
             "doctor"
           ],
           "answer": "doctor",
-          "explanation": "doctor: A naming word used when we talk about town places, helpful people, safety and care."
+          "explanation": "doctor: A person who helps you get better when you are ill."
         },
         {
-          "prompt": "Which word means: A describing word used when we talk about town places, helpful people, safety and care.",
+          "prompt": "Which word means: To start moving, like when the light turns green.",
           "choices": [
             "school",
             "go",
             "shop"
           ],
           "answer": "go",
-          "explanation": "go: A describing word used when we talk about town places, helpful people, safety and care."
+          "explanation": "go: To start moving, like when the light turns green."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about town places, helpful people, safety and care.",
+          "clue": "A busy place with many stalls selling fruit and vegetables.",
           "answer": "market"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about town places, helpful people, safety and care.",
+          "clue": "The person who sells you things inside a shop.",
           "answer": "shopkeeper"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about town places, helpful people, safety and care.",
+          "clue": "The colour of grass, and of the light meaning go.",
           "answer": "green"
         }
       ]
@@ -84,31 +84,39 @@
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "shop.",
-            "a",
-            "is",
-            "This"
+            "corner",
+            "the",
+            "at",
+            "bread",
+            "buy",
+            "We"
           ],
-          "answer": "This is a shop."
+          "answer": "We buy bread at the corner shop."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "park.",
-            "a",
-            "is",
-            "This"
+            "Friday.",
+            "on",
+            "mosque",
+            "the",
+            "at",
+            "pray",
+            "We"
           ],
-          "answer": "This is a park."
+          "answer": "We pray at the mosque on Friday."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "friend.",
-            "a",
-            "is",
-            "This"
+            "chest.",
+            "my",
+            "to",
+            "listens",
+            "doctor",
+            "The"
           ],
-          "answer": "This is a friend."
+          "answer": "The doctor listens to my chest."
         }
       ]
     },
@@ -121,37 +129,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for City Places?",
+          "prompt": "Who teaches the children at school?",
           "choices": [
-            "The ___ is next to the ___.",
-            "There is a ___.",
-            "A ___ works at the ___.",
-            "Stop. / Go."
+            "a teacher",
+            "a nurse",
+            "a pilot",
+            "a shopkeeper"
           ],
-          "answer": "The ___ is next to the ___.",
-          "explanation": "The approved Unit pattern is: The ___ is next to the ___."
+          "answer": "a teacher",
+          "explanation": "A teacher works at school; a nurse works at a hospital, a shopkeeper at a shop and a pilot flies a plane."
         },
         {
-          "prompt": "Which is a useful complete pattern for City Places?",
+          "prompt": "The traffic light turns red. What must you do?",
           "choices": [
-            "A ___ works at the ___.",
-            "There is a ___.",
-            "The ___ is next to the ___.",
-            "Stop. / Go."
+            "Turn around.",
+            "Stop.",
+            "Go.",
+            "Run."
           ],
-          "answer": "A ___ works at the ___.",
-          "explanation": "The approved Unit pattern is: A ___ works at the ___."
+          "answer": "Stop.",
+          "explanation": "Red means stop and wait; green is the light that means go."
         },
         {
-          "prompt": "Which is a useful complete pattern for City Places?",
+          "prompt": "The park is right beside the school. Which sentence says this?",
           "choices": [
-            "Stop. / Go.",
-            "There is a ___.",
-            "The ___ is next to the ___.",
-            "A ___ works at the ___."
+            "The park is inside the school.",
+            "The school is in the park.",
+            "The park is next to the school.",
+            "The park is under the school."
           ],
-          "answer": "Stop. / Go.",
-          "explanation": "The approved Unit pattern is: Stop. / Go."
+          "answer": "The park is next to the school.",
+          "explanation": "Next to means beside; under, inside and in tell us something different."
         }
       ]
     },
@@ -164,34 +172,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the A Walk Around Town story?",
+          "prompt": "What does the red traffic light mean in the story?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "shop"
+            "Stop",
+            "The doctor, Faduma",
+            "The mosque"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Stop",
+          "explanation": "Review the unit text evidence: Stop"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "Who works at the hospital in Amal's town?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "shop",
-            "Accept an accurate detail from the source story."
+            "He said sorry and put it in the bin",
+            "The ___ is next to the ___.",
+            "The doctor, Faduma"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "The doctor, Faduma",
+          "explanation": "Review the unit text evidence: The doctor, Faduma"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "Which quiet place did Amal and Mum visit last of all?",
           "choices": [
-            "shop",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "Stop",
+            "The mosque",
+            "He said sorry and put it in the bin"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "The mosque",
+          "explanation": "Review the unit text evidence: The mosque"
         }
       ]
     },
@@ -205,15 +213,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "There is a ___."
+          "target": "Point to town places as an adult names them, then name them on your own."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "A ___ works at the ___."
+          "target": "and answer about the people who help your town."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "I go to the ___."
+          "target": "Role-play a trip around your town."
         }
       ]
     },
@@ -228,30 +236,36 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "far.",
+            "there.",
+            "over",
             "is",
-            "It"
+            "mosque",
+            "The"
           ],
-          "answer": "It is far."
+          "answer": "The mosque is over there."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "yellow.",
-            "a",
-            "is",
-            "This"
+            "go.",
+            "can",
+            "we",
+            "means",
+            "Green"
           ],
-          "answer": "This is a yellow."
+          "answer": "Green means we can go."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "clean.",
+            "small.",
             "is",
-            "It"
+            "us",
+            "near",
+            "shop",
+            "The"
           ],
-          "answer": "It is clean."
+          "answer": "The shop near us is small."
         }
       ]
     },
@@ -266,32 +280,32 @@
         {
           "prompt": "What does 'neighbour' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about town places, helpful people, safety and care.",
-            "A describing word used when we talk about town places, helpful people, safety and care.",
-            "Accept an accurate detail from the source story."
+            "A person who lives in the house next to yours.",
+            "A place in town where we buy food and things.",
+            "The place where children come to learn and play together."
           ],
-          "answer": "A naming word used when we talk about town places, helpful people, safety and care.",
-          "explanation": "neighbour: A naming word used when we talk about town places, helpful people, safety and care."
+          "answer": "A person who lives in the house next to yours.",
+          "explanation": "neighbour: A person who lives in the house next to yours."
         },
         {
           "prompt": "What does 'green' mean in this unit?",
           "choices": [
-            "A describing word used when we talk about town places, helpful people, safety and care.",
-            "Accept an accurate detail from the source story.",
-            "A naming word used when we talk about town places, helpful people, safety and care."
+            "A place in town where we buy food and things.",
+            "The place where children come to learn and play together.",
+            "The colour of grass, and of the light meaning go."
           ],
-          "answer": "A naming word used when we talk about town places, helpful people, safety and care.",
-          "explanation": "green: A naming word used when we talk about town places, helpful people, safety and care."
+          "answer": "The colour of grass, and of the light meaning go.",
+          "explanation": "green: The colour of grass, and of the light meaning go."
         },
         {
           "prompt": "What does 'school' mean in this unit?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "A naming word used when we talk about town places, helpful people, safety and care.",
-            "A describing word used when we talk about town places, helpful people, safety and care."
+            "The building where Muslims gather to pray together.",
+            "The place where children come to learn and play together.",
+            "A place in town where we buy food and things."
           ],
-          "answer": "A naming word used when we talk about town places, helpful people, safety and care.",
-          "explanation": "school: A naming word used when we talk about town places, helpful people, safety and care."
+          "answer": "The place where children come to learn and play together.",
+          "explanation": "school: The place where children come to learn and play together."
         }
       ]
     },
@@ -348,15 +362,15 @@
           "pairs": [
             [
               "school",
-              "A naming word used when we talk about town places, helpful people, safety and care."
+              "The place where children come to learn and play together."
             ],
             [
               "park",
-              "A naming word used when we talk about town places, helpful people, safety and care."
+              "A green place in town with grass, trees and swings."
             ],
             [
               "teacher",
-              "A naming word used when we talk about town places, helpful people, safety and care."
+              "A person who helps children learn new things at school."
             ]
           ]
         },
@@ -365,15 +379,15 @@
           "pairs": [
             [
               "friend",
-              "A naming word used when we talk about town places, helpful people, safety and care."
+              "Someone you like to play with and help every day."
             ],
             [
               "there",
-              "A describing word used when we talk about town places, helpful people, safety and care."
+              "This word means in that place, away from you."
             ],
             [
               "stop",
-              "A describing word used when we talk about town places, helpful people, safety and care."
+              "To end moving and stand still, like at a red light."
             ]
           ]
         },
@@ -382,15 +396,15 @@
           "pairs": [
             [
               "green",
-              "A naming word used when we talk about town places, helpful people, safety and care."
+              "The colour of grass, and of the light meaning go."
             ],
             [
               "small",
-              "A describing word used when we talk about town places, helpful people, safety and care."
+              "Little in size, like a bird or a coin."
             ],
             [
               "clean",
-              "A describing word used when we talk about town places, helpful people, safety and care."
+              "Free from dirt and dust, fresh and tidy."
             ]
           ]
         }
@@ -405,37 +419,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to places in a town?",
+          "prompt": "Where do you go to buy bread and milk?",
           "choices": [
-            "hospital",
-            "park",
-            "road",
-            "bus stop"
+            "the hospital",
+            "the shop",
+            "the park",
+            "the mosque"
           ],
-          "answer": "hospital",
-          "explanation": "hospital is one of the Unit words for places in a town."
+          "answer": "the shop",
+          "explanation": "We buy food at the shop; you cannot buy bread at a hospital, a park or a mosque."
         },
         {
-          "prompt": "Which word belongs to places in a town?",
+          "prompt": "Where do you wait to get on a bus?",
           "choices": [
-            "mosque",
-            "road",
-            "bus stop",
-            "teacher"
+            "the hospital",
+            "the school",
+            "the bus stop",
+            "the mosque"
           ],
-          "answer": "mosque",
-          "explanation": "mosque is one of the Unit words for places in a town."
+          "answer": "the bus stop",
+          "explanation": "Buses pick people up at the bus stop; the other places are not for waiting for a bus."
         },
         {
-          "prompt": "Which is a useful complete pattern for City Places?",
+          "prompt": "Who looks after you when you are ill in hospital?",
           "choices": [
-            "There is a ___.",
-            "The ___ is next to the ___.",
-            "A ___ works at the ___.",
-            "Stop. / Go."
+            "a baker",
+            "a farmer",
+            "a driver",
+            "a doctor"
           ],
-          "answer": "There is a ___.",
-          "explanation": "The approved Unit pattern is: There is a ___."
+          "answer": "a doctor",
+          "explanation": "A doctor helps ill people; a farmer grows food, a driver drives and a baker makes bread."
         }
       ]
     },
@@ -448,37 +462,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to places in a town?",
+          "prompt": "Which word names a place in a town?",
           "choices": [
-            "shop",
-            "school",
-            "hospital",
-            "mosque"
-          ],
-          "answer": "shop",
-          "explanation": "shop is one of the Unit words for places in a town."
-        },
-        {
-          "prompt": "Which word belongs to places in a town?",
-          "choices": [
+            "pencil",
+            "wet",
             "market",
-            "hospital",
-            "mosque",
-            "park"
+            "goat"
           ],
           "answer": "market",
-          "explanation": "market is one of the Unit words for places in a town."
+          "explanation": "A market is a place you can go to; a pencil is a thing, a goat is an animal and wet describes something."
         },
         {
-          "prompt": "Which word belongs to places in a town?",
+          "prompt": "Where do you go if you are very ill and need a doctor?",
           "choices": [
-            "school",
-            "mosque",
-            "park",
-            "road"
+            "the school",
+            "the park",
+            "the shop",
+            "the hospital"
           ],
-          "answer": "school",
-          "explanation": "school is one of the Unit words for places in a town."
+          "answer": "the hospital",
+          "explanation": "Doctors and nurses work at the hospital; we go to the park to play, the shop to buy and the school to learn."
+        },
+        {
+          "prompt": "Where do Muslims go to pray together?",
+          "choices": [
+            "the mosque",
+            "the park",
+            "the bus stop",
+            "the market"
+          ],
+          "answer": "the mosque",
+          "explanation": "The mosque is the place for prayer; the market, park and bus stop are for shopping, playing and waiting."
         }
       ]
     }

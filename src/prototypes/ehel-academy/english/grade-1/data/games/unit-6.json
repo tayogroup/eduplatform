@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: An action word used when we talk about the senses, body parts, descriptions and comparison.",
+          "prompt": "Which word means: To use your eyes to look at something.",
           "choices": [
             "see",
             "smell",
             "eyes"
           ],
           "answer": "see",
-          "explanation": "see: An action word used when we talk about the senses, body parts, descriptions and comparison."
+          "explanation": "see: To use your eyes to look at something."
         },
         {
-          "prompt": "Which word means: An action word used when we talk about the senses, body parts, descriptions and comparison.",
+          "prompt": "Which word means: The two parts at the end of your arms.",
           "choices": [
             "see",
             "smell",
             "hands"
           ],
           "answer": "hands",
-          "explanation": "hands: An action word used when we talk about the senses, body parts, descriptions and comparison."
+          "explanation": "hands: The two parts at the end of your arms."
         },
         {
-          "prompt": "Which word means: A describing word used when we talk about the senses, body parts, descriptions and comparison.",
+          "prompt": "Which word means: Something flat is smooth with no bumps or hills.",
           "choices": [
             "smell",
             "flat",
             "see"
           ],
           "answer": "flat",
-          "explanation": "flat: A describing word used when we talk about the senses, body parts, descriptions and comparison."
+          "explanation": "flat: Something flat is smooth with no bumps or hills."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An action word used when we talk about the senses, body parts, descriptions and comparison.",
+          "clue": "To use your ears to know a sound.",
           "answer": "hear"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An action word used when we talk about the senses, body parts, descriptions and comparison.",
+          "clue": "The five thin parts on each of your hands.",
           "answer": "fingers"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A describing word used when we talk about the senses, body parts, descriptions and comparison.",
+          "clue": "Something short is not very long or tall.",
           "answer": "short"
         }
       ]
@@ -83,29 +83,39 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "see.",
+            "tonight.",
+            "moon",
+            "the",
+            "see",
             "can",
             "I"
           ],
-          "answer": "I can see."
+          "answer": "I can see the moon tonight."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "ears.",
-            "can",
-            "I"
+            "book.",
+            "my",
+            "read",
+            "me",
+            "help",
+            "eyes",
+            "My"
           ],
-          "answer": "I can ears."
+          "answer": "My eyes help me read my book."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hard.",
-            "is",
-            "It"
+            "eating.",
+            "before",
+            "hands",
+            "my",
+            "wash",
+            "I"
           ],
-          "answer": "It is hard."
+          "answer": "I wash my hands before eating."
         }
       ]
     },
@@ -118,37 +128,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for My Five Senses?",
+          "prompt": "Which word tells how honey tastes?",
           "choices": [
-            "I can hear with my ears.",
-            "I can see with my eyes.",
-            "It is ___.",
-            "This is ___ than that."
+            "noisy",
+            "rough",
+            "sweet",
+            "shiny"
           ],
-          "answer": "I can hear with my ears.",
-          "explanation": "The approved Unit pattern is: I can hear with my ears."
+          "answer": "sweet",
+          "explanation": "Honey tastes sweet; noisy is for sounds, shiny is for looks and rough is for touch."
         },
         {
-          "prompt": "Which is a useful complete pattern for My Five Senses?",
+          "prompt": "Which of these can you hear?",
           "choices": [
-            "It is ___.",
-            "I can see with my eyes.",
-            "I can hear with my ears.",
-            "This is ___ than that."
+            "a soft blanket",
+            "a red flower",
+            "a sweet date",
+            "a bell ringing"
           ],
-          "answer": "It is ___.",
-          "explanation": "The approved Unit pattern is: It is ___."
+          "answer": "a bell ringing",
+          "explanation": "A ringing bell makes a sound; the flower is for looking, the blanket for touching and the date for tasting."
         },
         {
-          "prompt": "Which is a useful complete pattern for My Five Senses?",
+          "prompt": "Which sentence about our senses is true?",
           "choices": [
-            "This is ___ than that.",
             "I can see with my eyes.",
-            "I can hear with my ears.",
-            "It is ___."
+            "I can hear with my nose.",
+            "I can see with my ears.",
+            "I can smell with my hands."
           ],
-          "answer": "This is ___ than that.",
-          "explanation": "The approved Unit pattern is: This is ___ than that."
+          "answer": "I can see with my eyes.",
+          "explanation": "Eyes are for seeing; ears hear, the nose smells and hands touch, so the other sentences are mixed up."
         }
       ]
     },
@@ -161,34 +171,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the Amal at the Market story?",
+          "prompt": "Who took Amal to the busy market?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "see"
+            "Her grandmother, Selma",
+            "'Fresh fish! Fresh fish!'",
+            "To give thanks for their wonderful senses"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "Her grandmother, Selma",
+          "explanation": "Review the unit text evidence: Her grandmother, Selma"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "What was the man calling out in the market?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "see",
-            "Accept an accurate detail from the source story."
+            "Soft",
+            "I can hear with my ears.",
+            "'Fresh fish! Fresh fish!'"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "'Fresh fish! Fresh fish!'",
+          "explanation": "Review the unit text evidence: 'Fresh fish! Fresh fish!'"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "Why did Selma say 'Alhamdulillah' at the end?",
           "choices": [
-            "see",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "I can see with my eyes.",
+            "To give thanks for their wonderful senses",
+            "Soft"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "To give thanks for their wonderful senses",
+          "explanation": "Review the unit text evidence: To give thanks for their wonderful senses"
         }
       ]
     },
@@ -202,15 +212,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "I can see with my eyes."
+          "target": "Point to the body part an adult names, then say the sentence back."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "It is ___."
+          "target": "Feel something hidden in a bag and describe it."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "These are my ___."
+          "target": "Play a body-part game and point as you speak."
         }
       ]
     },
@@ -225,37 +235,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
+            "quiet.",
+            "and",
+            "nice",
+            "is",
+            "library",
+            "The"
+          ],
+          "answer": "The library is nice and quiet."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
             "flat.",
+            "very",
             "is",
-            "It"
+            "top",
+            "table",
+            "The"
           ],
-          "answer": "It is flat."
+          "answer": "The table top is very flat."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "quieter.",
-            "is",
-            "It"
-          ],
-          "answer": "It is quieter."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "senses.",
-            "five",
+            "car.",
             "the",
-            "for",
-            "words",
-            "Unit",
-            "the",
-            "of",
-            "one",
+            "than",
+            "louder",
             "is",
-            "taste"
+            "tractor",
+            "The"
           ],
-          "answer": "taste is one of the Unit words for the five senses."
+          "answer": "The tractor is louder than the car."
         }
       ]
     },
@@ -270,32 +282,32 @@
         {
           "prompt": "What does 'soft' mean in this unit?",
           "choices": [
-            "A describing word used when we talk about the senses, body parts, descriptions and comparison.",
-            "An action word used when we talk about the senses, body parts, descriptions and comparison.",
-            "Accept an accurate detail from the source story."
+            "Something soft feels gentle and nice to touch.",
+            "To use your eyes to look at something.",
+            "To use your nose to find out what something is like."
           ],
-          "answer": "A describing word used when we talk about the senses, body parts, descriptions and comparison.",
-          "explanation": "soft: A describing word used when we talk about the senses, body parts, descriptions and comparison."
+          "answer": "Something soft feels gentle and nice to touch.",
+          "explanation": "soft: Something soft feels gentle and nice to touch."
         },
         {
           "prompt": "What does 'long' mean in this unit?",
           "choices": [
-            "An action word used when we talk about the senses, body parts, descriptions and comparison.",
-            "Accept an accurate detail from the source story.",
-            "A describing word used when we talk about the senses, body parts, descriptions and comparison."
+            "To use your eyes to look at something.",
+            "To use your nose to find out what something is like.",
+            "Something long goes a big way from end to end."
           ],
-          "answer": "A describing word used when we talk about the senses, body parts, descriptions and comparison.",
-          "explanation": "long: A describing word used when we talk about the senses, body parts, descriptions and comparison."
+          "answer": "Something long goes a big way from end to end.",
+          "explanation": "long: Something long goes a big way from end to end."
         },
         {
           "prompt": "What does 'smell' mean in this unit?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "An action word used when we talk about the senses, body parts, descriptions and comparison.",
-            "A describing word used when we talk about the senses, body parts, descriptions and comparison."
+            "The two parts of your face that help you see.",
+            "To use your nose to find out what something is like.",
+            "To use your eyes to look at something."
           ],
-          "answer": "An action word used when we talk about the senses, body parts, descriptions and comparison.",
-          "explanation": "smell: An action word used when we talk about the senses, body parts, descriptions and comparison."
+          "answer": "To use your nose to find out what something is like.",
+          "explanation": "smell: To use your nose to find out what something is like."
         }
       ]
     },
@@ -352,15 +364,15 @@
           "pairs": [
             [
               "smell",
-              "An action word used when we talk about the senses, body parts, descriptions and..."
+              "To use your nose to find out what something is like."
             ],
             [
               "eyes",
-              "An action word used when we talk about the senses, body parts, descriptions and..."
+              "The two parts of your face that help you see."
             ],
             [
               "tongue",
-              "An action word used when we talk about the senses, body parts, descriptions and..."
+              "The soft pink part inside your mouth that tastes food."
             ]
           ]
         },
@@ -369,15 +381,15 @@
           "pairs": [
             [
               "soft",
-              "A describing word used when we talk about the senses, body parts, descriptions and..."
+              "Something soft feels gentle and nice to touch."
             ],
             [
               "quiet",
-              "A describing word used when we talk about the senses, body parts, descriptions and..."
+              "A quiet sound is very small and soft."
             ],
             [
               "juicy",
-              "A describing word used when we talk about the senses, body parts, descriptions and..."
+              "Something juicy is full of juice that wets your fingers."
             ]
           ]
         },
@@ -386,15 +398,15 @@
           "pairs": [
             [
               "long",
-              "A describing word used when we talk about the senses, body parts, descriptions and..."
+              "Something long goes a big way from end to end."
             ],
             [
               "louder",
-              "A describing word used when we talk about the senses, body parts, descriptions and..."
+              "Making a bigger sound than another person or thing."
             ],
             [
               "colder",
-              "A describing word used when we talk about the senses, body parts, descriptions and..."
+              "Feeling more cold than another thing you touch."
             ]
           ]
         }
@@ -409,37 +421,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to the five senses?",
+          "prompt": "Which sense do you use with your tongue?",
           "choices": [
-            "taste",
-            "eyes",
-            "ears",
-            "nose"
+            "smell",
+            "see",
+            "hear",
+            "taste"
           ],
           "answer": "taste",
-          "explanation": "taste is one of the Unit words for the five senses."
+          "explanation": "The tongue tastes food; seeing, hearing and smelling use the eyes, ears and nose."
         },
         {
-          "prompt": "Which word belongs to the five senses?",
+          "prompt": "Which word names one of your five senses?",
           "choices": [
             "touch",
-            "ears",
-            "nose",
-            "tongue"
+            "Monday",
+            "jump",
+            "pencil"
           ],
           "answer": "touch",
-          "explanation": "touch is one of the Unit words for the five senses."
+          "explanation": "Touch is a sense; jump is an action, a pencil is a thing and Monday is a day."
         },
         {
-          "prompt": "Which is a useful complete pattern for My Five Senses?",
+          "prompt": "Aisha holds a piece of ice. How does it feel?",
           "choices": [
-            "I can see with my eyes.",
-            "I can hear with my ears.",
-            "It is ___.",
-            "This is ___ than that."
+            "sweet",
+            "cold",
+            "bright",
+            "loud"
           ],
-          "answer": "I can see with my eyes.",
-          "explanation": "The approved Unit pattern is: I can see with my eyes."
+          "answer": "cold",
+          "explanation": "Ice feels cold when you touch it; loud is a sound, bright is a sight and sweet is a taste."
         }
       ]
     },
@@ -452,37 +464,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to the five senses?",
+          "prompt": "Which body part do you use to see?",
           "choices": [
-            "see",
-            "smell",
-            "taste",
-            "touch"
-          ],
-          "answer": "see",
-          "explanation": "see is one of the Unit words for the five senses."
-        },
-        {
-          "prompt": "Which word belongs to the five senses?",
-          "choices": [
-            "hear",
-            "taste",
-            "touch",
-            "eyes"
-          ],
-          "answer": "hear",
-          "explanation": "hear is one of the Unit words for the five senses."
-        },
-        {
-          "prompt": "Which word belongs to the five senses?",
-          "choices": [
-            "smell",
-            "touch",
             "eyes",
-            "ears"
+            "nose",
+            "ears",
+            "hands"
           ],
-          "answer": "smell",
-          "explanation": "smell is one of the Unit words for the five senses."
+          "answer": "eyes",
+          "explanation": "We see with our eyes; ears are for hearing, the nose is for smelling and hands are for touching."
+        },
+        {
+          "prompt": "Which body part do you use to hear?",
+          "choices": [
+            "eyes",
+            "ears",
+            "tongue",
+            "feet"
+          ],
+          "answer": "ears",
+          "explanation": "We hear with our ears; eyes are for seeing, the tongue is for tasting and feet are for walking."
+        },
+        {
+          "prompt": "Which body part do you use to smell a flower?",
+          "choices": [
+            "eyes",
+            "ears",
+            "nose",
+            "hands"
+          ],
+          "answer": "nose",
+          "explanation": "We smell with our nose; hands touch, ears hear and eyes see."
         }
       ]
     }

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A naming word used when we talk about shapes, clothes, creativity and patience.",
+          "prompt": "Which word means: A shape with four straight sides that are all the same length.",
           "choices": [
             "square",
             "rectangle",
             "green"
           ],
           "answer": "square",
-          "explanation": "square: A naming word used when we talk about shapes, clothes, creativity and patience."
+          "explanation": "square: A shape with four straight sides that are all the same length."
         },
         {
-          "prompt": "Which word means: A describing word used when we talk about shapes, clothes, creativity and patience.",
+          "prompt": "Which word means: A shiny grey colour, like a spoon or a coin.",
           "choices": [
             "square",
             "rectangle",
             "silver"
           ],
           "answer": "silver",
-          "explanation": "silver: A describing word used when we talk about shapes, clothes, creativity and patience."
+          "explanation": "silver: A shiny grey colour, like a spoon or a coin."
         },
         {
-          "prompt": "Which word means: An action word used when we talk about shapes, clothes, creativity and patience.",
+          "prompt": "Which word means: A man in stories who rules a whole country.",
           "choices": [
             "rectangle",
             "king",
             "square"
           ],
           "answer": "king",
-          "explanation": "king: An action word used when we talk about shapes, clothes, creativity and patience."
+          "explanation": "king: A man in stories who rules a whole country."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about shapes, clothes, creativity and patience.",
+          "clue": "A round shape with no corners, like the sun.",
           "answer": "circle"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A describing word used when we talk about shapes, clothes, creativity and patience.",
+          "clue": "A shiny yellow colour, like a special ring.",
           "answer": "gold"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A naming word used when we talk about shapes, clothes, creativity and patience.",
+          "clue": "A brave person in stories who helps people in trouble.",
           "answer": "superhero"
         }
       ]
@@ -83,31 +83,38 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "square.",
+            "paper.",
+            "his",
+            "on",
+            "square",
             "a",
-            "is",
-            "This"
+            "draws",
+            "Musa"
           ],
-          "answer": "This is a square."
+          "answer": "Musa draws a square on his paper."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "yellow.",
-            "is",
-            "It"
+            "green.",
+            "leaves",
+            "the",
+            "paints",
+            "Aisha"
           ],
-          "answer": "It is yellow."
+          "answer": "Aisha paints the leaves green."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shirt.",
-            "a",
-            "is",
-            "This"
+            "silver.",
+            "star",
+            "paper",
+            "her",
+            "paints",
+            "Aisha"
           ],
-          "answer": "This is a shirt."
+          "answer": "Aisha paints her paper star silver."
         }
       ]
     },
@@ -120,37 +127,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which is a useful complete pattern for Making Things?",
+          "prompt": "Musa has made a red square. Which sentence describes it?",
           "choices": [
-            "It is a ___ ___.",
-            "This is a ___.",
-            "I am cutting ___.",
-            "I am making ___."
+            "It is a green triangle.",
+            "It is a blue square.",
+            "It is a red square.",
+            "It is a red circle."
           ],
-          "answer": "It is a ___ ___.",
-          "explanation": "The approved Unit pattern is: It is a ___ ___."
+          "answer": "It is a red square.",
+          "explanation": "The colour and the shape must both match, so only this sentence is true."
         },
         {
-          "prompt": "Which is a useful complete pattern for Making Things?",
+          "prompt": "Which thing do you use to cut paper?",
           "choices": [
-            "I am cutting ___.",
-            "This is a ___.",
-            "It is a ___ ___.",
-            "I am making ___."
+            "ruler",
+            "crayon",
+            "glue",
+            "scissors"
           ],
-          "answer": "I am cutting ___.",
-          "explanation": "The approved Unit pattern is: I am cutting ___."
+          "answer": "scissors",
+          "explanation": "Scissors cut; glue sticks, a crayon colours and a ruler helps draw straight lines."
         },
         {
-          "prompt": "Which is a useful complete pattern for Making Things?",
+          "prompt": "Which thing do you use to stick two pieces of paper together?",
           "choices": [
-            "I am making ___.",
-            "This is a ___.",
-            "It is a ___ ___.",
-            "I am cutting ___."
+            "glue",
+            "rubber",
+            "scissors",
+            "pencil"
           ],
-          "answer": "I am making ___.",
-          "explanation": "The approved Unit pattern is: I am making ___."
+          "answer": "glue",
+          "explanation": "Glue sticks things; scissors cut them apart, a pencil writes and a rubber takes writing away."
         }
       ]
     },
@@ -163,34 +170,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Who is in the Amal Makes a Mat story?",
+          "prompt": "What are Amal and Ayeeyo making under the big tree?",
           "choices": [
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern.",
-            "square"
+            "A mat, from soft grass",
+            "She wove the mat slowly and carefully, without rushing",
+            "To show her that trying again makes work better"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "A mat, from soft grass",
+          "explanation": "Review the unit text evidence: A mat, from soft grass"
         },
         {
-          "prompt": "What happens first?",
+          "prompt": "Ayeeyo said Amal was patient. What did Amal do slowly?",
           "choices": [
-            "Accept a relevant word, action or complete supported pattern.",
-            "square",
-            "Accept an accurate detail from the source story."
+            "She took a deep breath and tried again",
+            "I am cutting ___.",
+            "She wove the mat slowly and carefully, without rushing"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "She wove the mat slowly and carefully, without rushing",
+          "explanation": "Review the unit text evidence: She wove the mat slowly and carefully, without rushing"
         },
         {
-          "prompt": "How does the main character feel?",
+          "prompt": "Why did Ishmael tell Amal about his own first picture?",
           "choices": [
-            "square",
-            "Accept an accurate detail from the source story.",
-            "Accept a relevant word, action or complete supported pattern."
+            "I am wearing ___.",
+            "To show her that trying again makes work better",
+            "She took a deep breath and tried again"
           ],
-          "answer": "Accept an accurate detail from the source story.",
-          "explanation": "Review the unit text evidence: Accept an accurate detail from the source story."
+          "answer": "To show her that trying again makes work better",
+          "explanation": "Review the unit text evidence: To show her that trying again makes work better"
         }
       ]
     },
@@ -204,15 +211,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "This is a ___."
+          "target": "An adult holds up a shape card and names it, then you name the next one."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "I am cutting ___."
+          "target": "Tell your partner what you are cutting as you work."
         },
         {
           "prompt": "Speaking 5 - Role-play",
-          "target": "I am wearing ___."
+          "target": "Play a dressing-up game and say what you have on."
         }
       ]
     },
@@ -227,36 +234,38 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "princess.",
+            "school.",
+            "to",
+            "trousers",
+            "grey",
+            "wears",
+            "Yusuf"
+          ],
+          "answer": "Yusuf wears grey trousers to school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "crown.",
+            "gold",
             "a",
-            "is",
-            "This"
+            "wears",
+            "king",
+            "The"
           ],
-          "answer": "This is a princess."
+          "answer": "The king wears a gold crown."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "paint.",
-            "can",
-            "I"
+            "flowers.",
+            "big",
+            "paint",
+            "to",
+            "likes",
+            "Aisha"
           ],
-          "answer": "I can paint."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "shapes.",
-            "for",
-            "words",
-            "Unit",
-            "the",
-            "of",
-            "one",
-            "is",
-            "triangle"
-          ],
-          "answer": "triangle is one of the Unit words for shapes."
+          "answer": "Aisha likes to paint big flowers."
         }
       ]
     },
@@ -271,32 +280,32 @@
         {
           "prompt": "What does 'shirt' mean in this unit?",
           "choices": [
-            "A naming word used when we talk about shapes, clothes, creativity and patience.",
-            "A describing word used when we talk about shapes, clothes, creativity and patience.",
-            "An action word used when we talk about shapes, clothes, creativity and patience."
+            "Clothing for your top, with sleeves and buttons.",
+            "A shape with four straight sides that are all the same length.",
+            "A shape with four sides, two long and two short."
           ],
-          "answer": "A naming word used when we talk about shapes, clothes, creativity and patience.",
-          "explanation": "shirt: A naming word used when we talk about shapes, clothes, creativity and patience."
+          "answer": "Clothing for your top, with sleeves and buttons.",
+          "explanation": "shirt: Clothing for your top, with sleeves and buttons."
         },
         {
           "prompt": "What does 'cook' mean in this unit?",
           "choices": [
-            "A describing word used when we talk about shapes, clothes, creativity and patience.",
-            "An action word used when we talk about shapes, clothes, creativity and patience.",
-            "A naming word used when we talk about shapes, clothes, creativity and patience."
+            "A shape with four straight sides that are all the same length.",
+            "A shape with four sides, two long and two short.",
+            "A person who makes food for other people to eat."
           ],
-          "answer": "A naming word used when we talk about shapes, clothes, creativity and patience.",
-          "explanation": "cook: A naming word used when we talk about shapes, clothes, creativity and patience."
+          "answer": "A person who makes food for other people to eat.",
+          "explanation": "cook: A person who makes food for other people to eat."
         },
         {
           "prompt": "What does 'rectangle' mean in this unit?",
           "choices": [
-            "An action word used when we talk about shapes, clothes, creativity and patience.",
-            "A naming word used when we talk about shapes, clothes, creativity and patience.",
-            "A describing word used when we talk about shapes, clothes, creativity and patience."
+            "The colour of fresh grass and new leaves.",
+            "A shape with four sides, two long and two short.",
+            "A shape with four straight sides that are all the same length."
           ],
-          "answer": "A naming word used when we talk about shapes, clothes, creativity and patience.",
-          "explanation": "rectangle: A naming word used when we talk about shapes, clothes, creativity and patience."
+          "answer": "A shape with four sides, two long and two short.",
+          "explanation": "rectangle: A shape with four sides, two long and two short."
         }
       ]
     },
@@ -353,15 +362,15 @@
           "pairs": [
             [
               "triangle",
-              "A naming word used when we talk about shapes, clothes, creativity and patience."
+              "A shape with three straight sides and three pointy corners."
             ],
             [
               "green",
-              "A describing word used when we talk about shapes, clothes, creativity and patience."
+              "The colour of fresh grass and new leaves."
             ],
             [
               "black",
-              "A describing word used when we talk about shapes, clothes, creativity and patience."
+              "The darkest colour, like the sky at night."
             ]
           ]
         },
@@ -370,15 +379,15 @@
           "pairs": [
             [
               "hat",
-              "A naming word used when we talk about shapes, clothes, creativity and patience."
+              "Something you wear on your head to keep it warm."
             ],
             [
               "trousers",
-              "A naming word used when we talk about shapes, clothes, creativity and patience."
+              "Clothing for your legs, with one part for each leg."
             ],
             [
               "clown",
-              "A naming word used when we talk about shapes, clothes, creativity and patience."
+              "A funny person in a costume who makes people laugh."
             ]
           ]
         },
@@ -387,15 +396,15 @@
           "pairs": [
             [
               "pilot",
-              "A naming word used when we talk about shapes, clothes, creativity and patience."
+              "The person who flies an aeroplane through the sky."
             ],
             [
               "paint",
-              "An action word used when we talk about shapes, clothes, creativity and patience."
+              "To put colour on paper with a brush."
             ],
             [
               "thank",
-              "An action word used when we talk about shapes, clothes, creativity and patience."
+              "To tell someone you are happy for their kindness."
             ]
           ]
         }
@@ -410,37 +419,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "Which word belongs to shapes?",
+          "prompt": "Which shape is round with no corners?",
           "choices": [
             "rectangle",
+            "triangle",
+            "square",
+            "circle"
+          ],
+          "answer": "circle",
+          "explanation": "A circle is round and has no corners; the other three shapes all have corners."
+        },
+        {
+          "prompt": "Which of these words tells you the colour of something?",
+          "choices": [
+            "green",
+            "cut",
+            "round",
+            "paper"
+          ],
+          "answer": "green",
+          "explanation": "Green is a colour; round tells a shape, paper is a thing and cut is an action."
+        },
+        {
+          "prompt": "Aisha mixes red paint with yellow paint. Which colour does she make?",
+          "choices": [
+            "green",
+            "orange",
             "blue",
-            "green",
-            "yellow"
+            "black"
           ],
-          "answer": "rectangle",
-          "explanation": "rectangle is one of the Unit words for shapes."
-        },
-        {
-          "prompt": "Which word belongs to colours?",
-          "choices": [
-            "red",
-            "green",
-            "yellow",
-            "orange"
-          ],
-          "answer": "red",
-          "explanation": "red is one of the Unit words for colours."
-        },
-        {
-          "prompt": "Which is a useful complete pattern for Making Things?",
-          "choices": [
-            "This is a ___.",
-            "It is a ___ ___.",
-            "I am cutting ___.",
-            "I am making ___."
-          ],
-          "answer": "This is a ___.",
-          "explanation": "The approved Unit pattern is: This is a ___."
+          "answer": "orange",
+          "explanation": "Red and yellow together make orange; blue and yellow would make green."
         }
       ]
     },
@@ -453,37 +462,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "Which word belongs to shapes?",
-          "choices": [
-            "square",
-            "triangle",
-            "rectangle",
-            "red"
-          ],
-          "answer": "square",
-          "explanation": "square is one of the Unit words for shapes."
-        },
-        {
-          "prompt": "Which word belongs to shapes?",
+          "prompt": "Which word names a shape?",
           "choices": [
             "circle",
-            "rectangle",
-            "red",
-            "blue"
+            "glue",
+            "yellow",
+            "soft"
           ],
           "answer": "circle",
-          "explanation": "circle is one of the Unit words for shapes."
+          "explanation": "A circle is a shape; yellow is a colour, glue is a thing we use and soft tells how something feels."
         },
         {
-          "prompt": "Which word belongs to shapes?",
+          "prompt": "Which shape has three sides?",
           "choices": [
+            "circle",
             "triangle",
-            "red",
-            "blue",
-            "green"
+            "square",
+            "rectangle"
           ],
           "answer": "triangle",
-          "explanation": "triangle is one of the Unit words for shapes."
+          "explanation": "A triangle has three sides; a circle has none and a square and rectangle have four."
+        },
+        {
+          "prompt": "Which shape has four sides that are all the same length?",
+          "choices": [
+            "circle",
+            "line",
+            "square",
+            "triangle"
+          ],
+          "answer": "square",
+          "explanation": "All four sides of a square are equal; a triangle has three sides, a circle is round and a line is straight."
         }
       ]
     }

@@ -36,14 +36,14 @@
           "explanation": "gentle: Kind and soft in the way you act; not rough or loud."
         },
         {
-          "prompt": "Which word means: Very bad or cruel.",
+          "prompt": "Which word means: Very bad or cruel, wanting to cause harm to other people.",
           "choices": [
             "anxious",
             "evil",
             "nervous"
           ],
           "answer": "evil",
-          "explanation": "evil: Very bad or cruel."
+          "explanation": "evil: Very bad or cruel, wanting to cause harm to other people."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Feeling very worried, with lots of worried thoughts.",
+          "clue": "Feeling very worried, with lots of worried thoughts that will not go away.",
           "answer": "anxious"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Showing good manners and being kind to others.",
+          "clue": "Showing good manners and treating other people kindly with your words.",
           "answer": "polite"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Quiet and a little afraid to talk to other people.",
+          "clue": "Quiet and a little afraid to talk to people you do not know.",
           "answer": "shy"
         }
       ]
@@ -86,14 +86,15 @@
             "school.",
             "at",
             "test",
+            "spelling",
             "big",
-            "my",
+            "her",
             "before",
             "nervous",
             "felt",
-            "I"
+            "Amal"
           ],
-          "answer": "I felt nervous before my big test at school."
+          "answer": "Amal felt nervous before her big spelling test at school."
         },
         {
           "prompt": "Build the complete model sentence.",
@@ -111,17 +112,17 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "friend.",
-            "a",
+            "you.",
+            "thank",
+            "and",
+            "please",
+            "say",
             "to",
-            "snack",
-            "his",
-            "gave",
-            "boy",
-            "generous",
-            "The"
+            "polite",
+            "is",
+            "It"
           ],
-          "answer": "The generous boy gave his snack to a friend."
+          "answer": "It is polite to say please and thank you."
         }
       ]
     },
@@ -134,37 +135,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'gentle' mean?",
+          "prompt": "Complete this past simple sentence: “She ______ tired after the long party.”",
           "choices": [
-            "Happy to share or give to others.",
-            "Kind and soft in the way you act; not rough or loud.",
-            "Not joking or silly; important and needing attention.",
-            "Only caring about yourself and not about other people."
+            "feel",
+            "feels",
+            "felt",
+            "feeling"
           ],
-          "answer": "Kind and soft in the way you act; not rough or loud.",
-          "explanation": "She gave the puppy a gentle hug."
+          "answer": "felt",
+          "explanation": "Feel is irregular, so its past simple form is felt rather than feeled."
         },
         {
-          "prompt": "What does 'polite' mean?",
+          "prompt": "Which sentence gives advice using a modal verb?",
           "choices": [
-            "Funny, or making people laugh.",
-            "Not joking or silly; important and needing attention.",
-            "Only caring about yourself and not about other people.",
-            "Showing good manners and being kind to others."
+            "Don’t run in the hall.",
+            "You should be gentle with the puppy.",
+            "Are you feeling shy today?",
+            "The wind was fierce last night."
           ],
-          "answer": "Showing good manners and being kind to others.",
-          "explanation": "It is polite to say 'please' and 'thank you.'"
+          "answer": "You should be gentle with the puppy.",
+          "explanation": "Should is the modal verb. The first option is an imperative, the third is a question, and the fourth is past simple."
         },
         {
-          "prompt": "What does 'generous' mean?",
+          "prompt": "Which question about a life experience is written correctly?",
           "choices": [
-            "Funny, or making people laugh.",
-            "Happy to share or give to others.",
-            "Not joking or silly; important and needing attention.",
-            "Very strong, powerful, or angry."
+            "You have ever felt proud?",
+            "Have you ever proud felt?",
+            "Did you ever have felt proud?",
+            "Have you ever felt proud?"
           ],
-          "answer": "Happy to share or give to others.",
-          "explanation": "The generous boy gave his snack to a friend."
+          "answer": "Have you ever felt proud?",
+          "explanation": "A present perfect question puts have before the subject, then ever, then the past participle felt."
         }
       ]
     },
@@ -177,34 +178,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Why did Samira feel nervous?",
+          "prompt": "Why did Amal feel nervous while she sat at the kitchen table?",
           "choices": [
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "Feeling worried or a little afraid about something that might happen.",
-            "Feeling very worried, with lots of worried thoughts."
+            "She felt nervous because her big spelling test was the very next day.",
+            "They have practised hard, they must be gentle and polite backstage, and they should smile and keep going after a mistake.",
+            "It is a negative imperative, and it asks everybody to share the costumes fairly backstage."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "She felt nervous because her big spelling test was the very next day.",
+          "explanation": "Review the unit text evidence: She felt nervous because her big spelling test was the very next day."
         },
         {
-          "prompt": "What does the word ethnic mean in this text?",
+          "prompt": "Which part did Amal play in the school play, and why did it matter to her?",
           "choices": [
-            "Feeling worried or a little afraid about something that might happen.",
-            "Feeling very worried, with lots of worried thoughts.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+            "They have practised hard, they must be gentle and polite backstage, and they should smile and keep going after a mistake.",
+            "Maya felt proud because she showed her family's food to everybody at the fair.",
+            "She played the kind queen who helps people in need, and it was her first ever school play."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "She played the kind queen who helps people in need, and it was her first ever school play.",
+          "explanation": "Review the unit text evidence: She played the kind queen who helps people in need, and it was her first ever school play."
         },
         {
-          "prompt": "How does Hannah feel, and why?",
+          "prompt": "What made Maya feel proud when she went to the fair last year?",
           "choices": [
-            "Feeling very worried, with lots of worried thoughts.",
-            "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-            "Feeling worried or a little afraid about something that might happen."
+            "The new student looked terrified and stood alone, so walking away would put Amal's comfort first.",
+            "Maya felt proud because she showed her family's food to everybody at the fair.",
+            "Nora is curious because she is visiting a cultural fair tomorrow and has never tried food from so many places."
           ],
-          "answer": "Accept an accurate complete-sentence response supported by a relevant detail from the selected text.",
-          "explanation": "Review the unit text evidence: Accept an accurate complete-sentence response supported by a relevant detail from the selected text."
+          "answer": "Maya felt proud because she showed her family's food to everybody at the fair.",
+          "explanation": "Review the unit text evidence: Maya felt proud because she showed her family's food to everybody at the fair."
         }
       ]
     },
@@ -226,7 +227,7 @@
         },
         {
           "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
+          "target": "Explain one big idea from this unit in about six sentences, such as why kindness helps somebody who feels shy."
         }
       ]
     },
@@ -241,44 +242,45 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "laughed.",
-            "everyone",
-            "and",
-            "story,",
-            "humorous",
-            "a",
-            "told",
-            "teacher",
-            "The"
-          ],
-          "answer": "The teacher told a humorous story, and everyone laughed."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "mother.",
+            "face.",
             "her",
-            "behind",
-            "hid",
-            "girl",
-            "shy",
-            "The"
+            "on",
+            "look",
+            "serious",
+            "a",
+            "had",
+            "She"
           ],
-          "answer": "The shy girl hid behind her mother."
+          "answer": "She had a serious look on her face."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "risky.",
-            "is",
-            "helmet",
-            "a",
-            "without",
-            "bike",
-            "a",
-            "Riding"
+            "people.",
+            "hurt",
+            "to",
+            "wanted",
+            "who",
+            "villain",
+            "evil",
+            "an",
+            "had",
+            "story",
+            "The"
           ],
-          "answer": "Riding a bike without a helmet is risky."
+          "answer": "The story had an evil villain who wanted to hurt people."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bees.",
+            "many",
+            "attract",
+            "flowers",
+            "bright",
+            "The"
+          ],
+          "answer": "The bright flowers attract many bees."
         }
       ]
     },
@@ -293,32 +295,32 @@
         {
           "prompt": "What does 'generous' mean in this unit?",
           "choices": [
-            "Happy to share or give to others.",
+            "Happy to share what you have, or to give things to others.",
             "Feeling worried or a little afraid about something that might happen.",
-            "Feeling very worried, with lots of worried thoughts."
+            "Feeling very worried, with lots of worried thoughts that will not go away."
           ],
-          "answer": "Happy to share or give to others.",
-          "explanation": "generous: Happy to share or give to others."
+          "answer": "Happy to share what you have, or to give things to others.",
+          "explanation": "generous: Happy to share what you have, or to give things to others."
         },
         {
           "prompt": "What does 'ethnic' mean in this unit?",
           "choices": [
             "Feeling worried or a little afraid about something that might happen.",
-            "Feeling very worried, with lots of worried thoughts.",
-            "Belonging to a group of people who share the same culture, language, or history."
+            "Feeling very worried, with lots of worried thoughts that will not go away.",
+            "Belonging to a group who share the same culture, language or history."
           ],
-          "answer": "Belonging to a group of people who share the same culture, language, or history.",
-          "explanation": "ethnic: Belonging to a group of people who share the same culture, language, or history."
+          "answer": "Belonging to a group who share the same culture, language or history.",
+          "explanation": "ethnic: Belonging to a group who share the same culture, language or history."
         },
         {
           "prompt": "What does 'anxious' mean in this unit?",
           "choices": [
-            "Not sure that something is true or will happen.",
-            "Feeling very worried, with lots of worried thoughts.",
+            "Not sure that something is true or that it will really happen.",
+            "Feeling very worried, with lots of worried thoughts that will not go away.",
             "Feeling worried or a little afraid about something that might happen."
           ],
-          "answer": "Feeling very worried, with lots of worried thoughts.",
-          "explanation": "anxious: Feeling very worried, with lots of worried thoughts."
+          "answer": "Feeling very worried, with lots of worried thoughts that will not go away.",
+          "explanation": "anxious: Feeling very worried, with lots of worried thoughts that will not go away."
         }
       ]
     },
@@ -375,11 +377,11 @@
           "pairs": [
             [
               "terrified",
-              "Very, very scared."
+              "Feeling extremely frightened by something that scares you very badly indeed."
             ],
             [
               "curious",
-              "Really wanting to know or learn something."
+              "Really wanting to know or learn something new about the world."
             ],
             [
               "gentle",
@@ -392,15 +394,15 @@
           "pairs": [
             [
               "generous",
-              "Happy to share or give to others."
+              "Happy to share what you have, or to give things to others."
             ],
             [
               "serious",
-              "Not joking or silly; important and needing attention."
+              "Not joking or silly; important and needing your full attention."
             ],
             [
               "evil",
-              "Very bad or cruel."
+              "Very bad or cruel, wanting to cause harm to other people."
             ]
           ]
         },
@@ -409,15 +411,15 @@
           "pairs": [
             [
               "ethnic",
-              "Belonging to a group of people who share the same culture, language, or history."
+              "Belonging to a group who share the same culture, language or history."
             ],
             [
               "risky",
-              "Something that might be dangerous or have a bad result."
+              "Likely to be dangerous, or to end with a bad result."
             ],
             [
               "dishwasher",
-              "A machine that washes dirty plates, cups, and spoons."
+              "A machine that washes dirty plates, cups and spoons for you."
             ]
           ]
         }
@@ -432,37 +434,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'doubtful' mean?",
+          "prompt": "Which sentence shows selfish behaviour?",
           "choices": [
-            "Feeling happy about something you did or who you are.",
-            "Kind and soft in the way you act; not rough or loud.",
-            "Not sure that something is true or will happen.",
-            "Showing good manners and being kind to others."
+            "Sami gave half of his sandwich away.",
+            "Maya held the classroom door open for her teacher.",
+            "Amal listened while the new girl spoke.",
+            "A child kept every paintbrush and shared none."
           ],
-          "answer": "Not sure that something is true or will happen.",
-          "explanation": "He felt doubtful about winning the game."
+          "answer": "A child kept every paintbrush and shared none.",
+          "explanation": "Keeping everything for yourself is selfish. The other three sentences show generous, polite and gentle behaviour."
         },
         {
-          "prompt": "What does 'curious' mean?",
+          "prompt": "Complete this life-experience sentence: “I ______ never tried mango juice.”",
           "choices": [
-            "Happy to share or give to others.",
-            "Kind and soft in the way you act; not rough or loud.",
-            "Really wanting to know or learn something.",
-            "Showing good manners and being kind to others."
+            "have",
+            "has",
+            "am",
+            "will"
           ],
-          "answer": "Really wanting to know or learn something.",
-          "explanation": "The curious cat looked inside the open box."
+          "answer": "have",
+          "explanation": "The subject is I, so the present perfect uses have with the past participle tried."
         },
         {
-          "prompt": "What does 'proud' mean?",
+          "prompt": "Which sentence describes a plan that is already arranged for tomorrow?",
           "choices": [
-            "Feeling happy about something you did or who you are.",
-            "Happy to share or give to others.",
-            "Only caring about yourself and not about other people.",
-            "Showing good manners and being kind to others."
+            "We visited the fair yesterday.",
+            "We are visiting the fair tomorrow.",
+            "We visit the fair every single year.",
+            "We have visited the fair twice."
           ],
-          "answer": "Feeling happy about something you did or who you are.",
-          "explanation": "I am proud of my drawing because I worked hard on it."
+          "answer": "We are visiting the fair tomorrow.",
+          "explanation": "The present continuous plus a future time word signals an arranged plan, not a habit or a finished action."
         }
       ]
     },
@@ -475,37 +477,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'nervous' mean?",
+          "prompt": "Which word means feeling worried or a little afraid about something that might happen?",
           "choices": [
-            "Feeling worried or a little afraid about something that might happen.",
-            "Not sure that something is true or will happen.",
-            "Really wanting to know or learn something.",
-            "Very, very scared."
+            "attract",
+            "nervous",
+            "dishwasher",
+            "frequent"
           ],
-          "answer": "Feeling worried or a little afraid about something that might happen.",
-          "explanation": "I felt nervous before my big test at school."
+          "answer": "nervous",
+          "explanation": "Nervous names that worried feeling. Attract is an action, a dishwasher is a machine, and frequent describes how often something happens."
         },
         {
-          "prompt": "What does 'anxious' mean?",
+          "prompt": "Amal shook and could not sit still before her spelling test. Which word describes her best?",
           "choices": [
-            "Feeling happy about something you did or who you are.",
-            "Feeling very worried, with lots of worried thoughts.",
-            "Not sure that something is true or will happen.",
-            "Really wanting to know or learn something."
+            "generous",
+            "humorous",
+            "anxious",
+            "polite"
           ],
-          "answer": "Feeling very worried, with lots of worried thoughts.",
-          "explanation": "She was anxious about being in the dark."
+          "answer": "anxious",
+          "explanation": "Anxious describes a very worried feeling. Generous, humorous and polite all describe how a person behaves towards others."
         },
         {
-          "prompt": "What does 'terrified' mean?",
+          "prompt": "What does the word generous mean?",
           "choices": [
-            "Feeling happy about something you did or who you are.",
-            "Kind and soft in the way you act; not rough or loud.",
-            "Really wanting to know or learn something.",
-            "Very, very scared."
+            "Happy to share or give to others",
+            "Very bad or cruel",
+            "Happening often, or many times",
+            "Quiet and afraid to talk to people"
           ],
-          "answer": "Very, very scared.",
-          "explanation": "I was terrified when I saw the huge spider."
+          "answer": "Happy to share or give to others",
+          "explanation": "The other three options are the meanings of evil, frequent and shy."
         }
       ]
     }

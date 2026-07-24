@@ -83,44 +83,52 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "today.",
-            "mail",
+            "label.",
+            "Exhibition",
+            "every",
+            "for",
+            "use",
+            "we",
+            "language",
             "the",
+            "is",
+            "English"
+          ],
+          "answer": "English is the language we use for every Exhibition label."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "poster.",
+            "the",
+            "of",
+            "edges",
+            "the",
+            "curled",
+            "had",
+            "rain",
+            "the",
+            "from",
+            "Moisture"
+          ],
+          "answer": "Moisture from the rain had curled the edges of the poster."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "season.",
+            "all",
+            "sits",
+            "water",
+            "the",
+            "where",
+            "fields",
+            "wet",
             "in",
-            "letter",
-            "a",
-            "received",
-            "I"
+            "grows",
+            "Rice"
           ],
-          "answer": "I received a letter in the mail today."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "speak.",
-            "to",
-            "started",
-            "I",
-            "before",
-            "breath",
-            "deep",
-            "a",
-            "took",
-            "I"
-          ],
-          "answer": "I took a deep breath before I started to speak."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "chicken.",
-            "her",
-            "with",
-            "rice",
-            "ate",
-            "She"
-          ],
-          "answer": "She ate rice with her chicken."
+          "answer": "Rice grows in wet fields where the water sits all season."
         }
       ]
     },
@@ -133,37 +141,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'service' mean?",
+          "prompt": "Teacher Yasmin says the attic rule is not a choice. Which sentence states an obligation?",
           "choices": [
-            "An idea or opinion in your mind.",
-            "Facts or details about something.",
-            "Help or work done for others.",
-            "To find or learn something new."
+            "You might wear gloves in the attic.",
+            "You could wear gloves in the attic.",
+            "You have to wear gloves in the attic.",
+            "You would like to wear gloves in the attic."
           ],
-          "answer": "Help or work done for others.",
-          "explanation": "The library started a free book service for the town."
+          "answer": "You have to wear gloves in the attic.",
+          "explanation": "Have to states an obligation, while might and could only state a possibility."
         },
         {
-          "prompt": "What does 'deliver' mean?",
+          "prompt": "Which sentence compares three or more storms correctly?",
           "choices": [
-            "An idea or opinion in your mind.",
-            "To bring something to a person or place.",
-            "To find or learn something new.",
-            "What you know or learn."
+            "A tornado spins faster than a storm.",
+            "A tornado is the fastest storm of all.",
+            "A tornado spins more fast than a storm.",
+            "A tornado is more faster than a storm."
           ],
-          "answer": "To bring something to a person or place.",
-          "explanation": "The mail carrier will deliver our letters."
+          "answer": "A tornado is the fastest storm of all.",
+          "explanation": "The superlative the fastest compares one thing with every other, while faster compares only two."
         },
         {
-          "prompt": "What does 'gallop' mean?",
+          "prompt": "In the Year 4 Exhibition brief, how long must each learner's talk last?",
           "choices": [
-            "A shape that curls round and round, moving out from the centre.",
-            "How fast something happens, or how much of it there is.",
-            "To go forward or to keep going.",
-            "To run fast on four legs, like a horse."
+            "Two minutes.",
+            "Two hours.",
+            "Five minutes.",
+            "Ten seconds."
           ],
-          "answer": "To run fast on four legs, like a horse.",
-          "explanation": "The horse began to gallop across the field."
+          "answer": "Two minutes.",
+          "explanation": "Part 3 of the brief fixes the talk at two minutes, which is why speakers slow down rather than add pages."
         }
       ]
     },
@@ -176,34 +184,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What did Teacher Yasmin place on every desk, and what did she tell the class to choose?",
           "choices": [
-            "Accept an accurate response supported by the selected review text.",
-            "Letters and packages that are sent or delivered.",
-            "A way people talk and write to share ideas and feelings."
+            "She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice.",
+            "The pages must come from at least five different units, and the set must show reading, writing, speaking and new words.",
+            "She offers to let that learner present to her alone on Thursday, with nobody else in the room."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice.",
+          "explanation": "Review the unit text evidence: She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice."
         },
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "According to Part 3 of the brief, what three things does a speaker do during the two-minute talk, and in what order?",
           "choices": [
-            "Letters and packages that are sent or delivered.",
-            "A way people talk and write to share ideas and feelings.",
-            "Accept an accurate response supported by the selected review text."
+            "The pages must come from at least five different units, and the set must show reading, writing, speaking and new words.",
+            "She is most proud of page four, because she wrote it twice and the second time was far better.",
+            "The speaker opens with their name, then presents three pages, then answers two questions from the audience."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "The speaker opens with their name, then presents three pages, then answers two questions from the audience.",
+          "explanation": "Review the unit text evidence: The speaker opens with their name, then presents three pages, then answers two questions from the audience."
         },
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What does Teacher Yasmin offer a learner who feels too nervous to present on Friday?",
           "choices": [
-            "A way people talk and write to share ideas and feelings.",
-            "Accept an accurate response supported by the selected review text.",
-            "Letters and packages that are sent or delivered."
+            "It taught her to ask one question and then stop talking.",
+            "She offers to let that learner present to her alone on Thursday, with nobody else in the room.",
+            "The speaker opens with their name, then presents three pages, then answers two questions from the audience."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "She offers to let that learner present to her alone on Thursday, with nobody else in the room.",
+          "explanation": "Review the unit text evidence: She offers to let that learner present to her alone on Thursday, with nobody else in the room."
         }
       ]
     },
@@ -216,16 +224,16 @@
       "description": "Listen, record, review and submit useful unit language.",
       "rounds": [
         {
-          "prompt": "Portfolio choice conference",
-          "target": "Explain three portfolio choices and support each choice with a specific example."
+          "prompt": "Speaking 1 — Choosing My Six Pages",
+          "target": "I chose my ______ page from Unit ______ because it shows ______."
         },
         {
-          "prompt": "Vocabulary in context",
-          "target": "I took a deep breath before I started to speak."
+          "prompt": "Speaking 3 — Thirty Review Words in One Minute",
+          "target": "From Unit 2 I remember moisture, because our poster curled in the rain."
         },
         {
-          "prompt": "Question-and-answer practice",
-          "target": "six audience questions in complete, relevant sentences."
+          "prompt": "Speaking 5 — Answering Questions From Visitors",
+          "target": "Which page was hardest to finish, and why?"
         }
       ]
     },
@@ -240,45 +248,52 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "town.",
-            "our",
-            "about",
+            "week.",
+            "this",
+            "need",
+            "you",
             "information",
-            "useful",
-            "has",
-            "website",
+            "the",
+            "all",
+            "holds",
+            "brief",
+            "project",
             "The"
           ],
-          "answer": "The website has useful information about our town."
+          "answer": "The project brief holds all the information you need this week."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "ground.",
+            "cellar.",
             "the",
-            "on",
+            "to",
+            "down",
             "spiral",
+            "tight",
             "a",
             "in",
-            "moved",
-            "snail",
+            "turned",
+            "staircase",
             "The"
           ],
-          "answer": "The snail moved in a spiral on the ground."
+          "answer": "The staircase turned in a tight spiral down to the cellar."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
             "bridge.",
+            "river",
             "new",
-            "a",
-            "for",
-            "plans",
-            "drew",
+            "the",
+            "built",
+            "who",
             "engineer",
-            "The"
+            "the",
+            "is",
+            "Elena"
           ],
-          "answer": "The engineer drew plans for a new bridge."
+          "answer": "Elena is the engineer who built the new river bridge."
         }
       ]
     },
@@ -432,37 +447,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'sweat' mean?",
+          "prompt": "Omar sorts letters and parcels at the post counter every morning. What is he sorting?",
           "choices": [
-            "A deep valley with steep sides, often with a river at the bottom.",
-            "The clear water that comes from your skin when you are hot.",
-            "The soft hair that covers some animals' bodies.",
-            "The top or outside part of something."
+            "the mail",
+            "the spice",
+            "the equipment",
+            "the moisture"
           ],
-          "answer": "The clear water that comes from your skin when you are hot.",
-          "explanation": "After running in the sun, I wiped the sweat from my face."
+          "answer": "the mail",
+          "explanation": "Mail is the Unit 1 word for letters and packages that are sent or delivered."
         },
         {
-          "prompt": "What does 'sandwich' mean?",
+          "prompt": "Which sentence uses the past simple correctly after the helper did?",
           "choices": [
-            "A part of a plant, like pepper, that adds flavour to food.",
-            "A place where bread and cakes are made and sold.",
-            "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
-            "Small white or brown grains that people cook and eat."
+            "Yesterday we did not built the display board.",
+            "Yesterday we did not build the display board.",
+            "Yesterday we not build the display board.",
+            "Yesterday we does not build the display board."
           ],
-          "answer": "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
-          "explanation": "I ate a chicken sandwich for lunch."
+          "answer": "Yesterday we did not build the display board.",
+          "explanation": "The helper did already carries the past, so the main verb stays in its plain form."
         },
         {
-          "prompt": "What does 'lamb' mean?",
+          "prompt": "Complete the question tag: We are presenting on Friday, ______",
           "choices": [
-            "A part of a plant, like pepper, that adds flavour to food.",
-            "A place where bread and cakes are made and sold.",
-            "A young sheep, or the meat from it.",
-            "New and clean; not old or spoiled."
+            "isn't it?",
+            "don't we?",
+            "are we?",
+            "aren't we?"
           ],
-          "answer": "A young sheep, or the meat from it.",
-          "explanation": "We cooked lamb and rice for the guests."
+          "answer": "aren't we?",
+          "explanation": "The sentence is positive and uses are with we, so the tag flips to the negative aren't we."
         }
       ]
     },
@@ -475,37 +490,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'mail' mean?",
+          "prompt": "Nora touched the damp grass and said the ground was still wet. Which review word names that water?",
           "choices": [
-            "A person who belongs to a country and has rights there.",
-            "Letters and packages that are sent or delivered.",
-            "To have the same opinion, or to say yes to something.",
-            "To keep doing something without stopping."
+            "moisture",
+            "mail",
+            "spiral",
+            "service"
           ],
-          "answer": "Letters and packages that are sent or delivered.",
-          "explanation": "I received a letter in the mail today."
+          "answer": "moisture",
+          "explanation": "Moisture is the small amount of water sitting in the air or on a surface, as Unit 2 taught."
         },
         {
-          "prompt": "What does 'language' mean?",
+          "prompt": "The horse ran fast on four legs across the field. Which verb describes exactly what it did?",
           "choices": [
-            "A way people talk and write to share ideas and feelings.",
-            "To get something you want, or to become better at something.",
-            "To have the same opinion, or to say yes to something.",
-            "To keep doing something without stopping."
+            "agreed",
+            "delivered",
+            "proceeded",
+            "galloped"
           ],
-          "answer": "A way people talk and write to share ideas and feelings.",
-          "explanation": "English is a language that many people speak around the world."
+          "answer": "galloped",
+          "explanation": "Gallop is the Unit 5 verb for running fast on four legs; proceed only means to keep going."
         },
         {
-          "prompt": "What does 'breath' mean?",
+          "prompt": "Amal was not sure that her attic list was good enough to keep. Which word describes her?",
           "choices": [
-            "A small amount of water in the air or on a surface.",
-            "The air you take in and let out of your lungs.",
-            "The soft hair that covers some animals' bodies.",
-            "The top or outside part of something."
+            "terrified",
+            "generous",
+            "doubtful",
+            "fresh"
           ],
-          "answer": "The air you take in and let out of your lungs.",
-          "explanation": "I took a deep breath before I started to speak."
+          "answer": "doubtful",
+          "explanation": "Doubtful means not sure that something is true or good, which is milder than terrified."
         }
       ]
     }
